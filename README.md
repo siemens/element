@@ -17,7 +17,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 Code and documentation Copyright (c) Siemens 2016 - 2025.
 
-See [LICENSE.md](LICENSE.md).
+MIT, see [LICENSE.md](LICENSE.md).
 
 ### Bootstrap
 

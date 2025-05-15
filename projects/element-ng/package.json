@@ -2,7 +2,7 @@
   "name": "@siemens/element-ng",
   "description": "Element Angular component library, implementing the Siemens Design Language",
   "version": "47.11.0",
-  "license": "SEE LICENSE IN LICENSE.md",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git@github.com:siemens/element.git"
