@@ -16,7 +16,7 @@ which implement the Element design system. The components are developed in the
 
 ## Playground
 
-Open our [demo playground](https://element.siemens.io/demo/#/overview)
+Open our [demo playground](https://element.siemens.io/element-examples/#/overview)
 to see examples for all our components.
 
 ## Figma design assets
