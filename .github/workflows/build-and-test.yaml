@@ -1,11 +1,13 @@
-name: Build
+name: Build and Test
 on:
-  push:
-    branches:
-      - main
-      - maintenance/*
-      - next
+  workflow_call:
+    secrets:
+      SIEMENS_NPM_TOKEN:
+        required: true
+      SIEMENS_NPM_USER:
+        required: true
   pull_request:
+
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -98,25 +100,6 @@ jobs:
         with:
           name: pages
           path: dist/design
-
-  publish-documentation:
-    if: github.ref_name == github.event.repository.default_branch
-    runs-on: ubuntu-22.04
-    permissions:
-      pages: write
-      id-token: write
-    needs:
-      - documentation
-    steps:
-      - uses: actions/configure-pages@v5
-      - uses: actions/download-artifact@v4
-        with:
-          name: pages
-          path: dist/design
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: 'dist/design'
-      - uses: actions/deploy-pages@v4
 # TODO: add release job
 # TODO: build PR previews
 # TODO: e2e test
