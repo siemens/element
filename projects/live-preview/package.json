@@ -14,6 +14,9 @@
   },
   "homepage": "https://github.com/siemens/element",
   "bugs": "https://github.com/siemens/element/issues/new",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "codeflask": "^1.4.1",
     "qrcode-generator": "^1.4.4",

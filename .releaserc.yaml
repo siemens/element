@@ -37,5 +37,7 @@ plugins:
     - assets:
         - CHANGELOG.md
         - package.json
+        - package-lock.json
         - projects/*/package.json
       message: 'chore(release): ${nextRelease.version}'
+  - '@semantic-release/github'

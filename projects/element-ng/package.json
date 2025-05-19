@@ -13,6 +13,9 @@
   },
   "homepage": "https://github.com/siemens/element",
   "bugs": "https://github.com/siemens/element/issues/new",
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "peerDependencies": {
     "@angular/animations": "19",
