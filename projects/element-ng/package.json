@@ -1,7 +1,7 @@
 {
   "name": "@siemens/element-ng",
   "description": "Element Angular component library, implementing the Siemens Design Language",
-  "version": "47.11.0",
+  "version": "47.0.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -24,8 +24,8 @@
     "@angular/core": "19",
     "@angular/forms": "19",
     "@angular/router": "19",
-    "@siemens/element-translate-ng": "47.11.0",
-    "@siemens/element-theme": "47.11.0"
+    "@siemens/element-translate-ng": "47.0.0",
+    "@siemens/element-theme": "47.0.0"
   },
   "peerDependenciesMeta": {
     "@angular/animations": {
