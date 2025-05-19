@@ -50,6 +50,11 @@ We will then take care of the issue as soon as possible.
 > When contributing to this project, you must agree that you have authored 100%
 > of the content, that you have the necessary rights to the content and that the
 > content you contribute may be provided under the project license.
+>
+> Before submitting your contribution, you must accept and sign the
+> [Siemens Contributor License Agreement](https://cla-assistant.io/siemens/element).
+> The CLA assistant will automatically initiate this process when you create a
+> new pull request.
 
 ### Reporting Bugs
 
