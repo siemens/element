@@ -6,14 +6,15 @@ import { NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   inject,
   input,
   numberAttribute,
   OnChanges,
   SimpleChanges
 } from '@angular/core';
-import { EntityStatusType, STATUS_ICON, StatusIcon } from '@siemens/element-ng/common';
-import { SiIconModule } from '@siemens/element-ng/icon';
+import { EntityStatusType } from '@siemens/element-ng/common';
+import { SiIconNextComponent, STATUS_ICON_CONFIG } from '@siemens/element-ng/icon';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiAvatarBackgroundColorDirective } from './si-avatar-background-color.directive';
@@ -25,7 +26,7 @@ export type AvatarSize = 'tiny' | 'xsmall' | 'small' | 'regular' | 'large' | 'xl
   templateUrl: './si-avatar.component.html',
   styleUrl: './si-avatar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgClass, SiIconModule],
+  imports: [NgClass, SiIconNextComponent],
   hostDirectives: [
     {
       directive: SiAvatarBackgroundColorDirective,
@@ -37,6 +38,7 @@ export type AvatarSize = 'tiny' | 'xsmall' | 'small' | 'regular' | 'large' | 'xl
   }
 })
 export class SiAvatarComponent implements OnChanges {
+  private readonly statusIcons = inject(STATUS_ICON_CONFIG);
   /**
    * Size of the component.
    *
@@ -73,16 +75,14 @@ export class SiAvatarComponent implements OnChanges {
    */
   readonly statusAriaLabel = input<TranslatableString>();
 
-  protected statusIcon?: StatusIcon;
+  protected readonly statusIcon = computed(() => {
+    const status = this.status();
+    return status ? this.statusIcons[status] : undefined;
+  });
   protected displayInitials?: string;
   private readonly autoBackgroundColorDirective = inject(SiAvatarBackgroundColorDirective);
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.status) {
-      const status = this.status();
-      this.statusIcon = status ? STATUS_ICON[status] : undefined;
-    }
-
     if (changes.initials || changes.altText) {
       this.setInitials();
       this.autoBackgroundColorDirective.calculateColorFromInitials(this.displayInitials);

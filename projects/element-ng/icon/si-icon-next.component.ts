@@ -76,6 +76,9 @@ export const provideIconConfig = (config: IconConfig): Provider => ({
       }
     }
   `,
+  host: {
+    '[attr.data-icon]': 'icon()'
+  },
   imports: [NgClass],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

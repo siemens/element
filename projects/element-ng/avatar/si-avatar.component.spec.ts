@@ -86,9 +86,7 @@ describe('SiAvatarComponent', () => {
     fixture.detectChanges();
     tick();
 
-    expect(element.querySelector('si-icon')).toBeTruthy();
-    expect(element.querySelector('.element-circle-filled')).toBeTruthy();
-    expect(element.querySelector('.element-state-tick')).toBeTruthy();
+    expect(element.querySelector('.indicator')).toBeTruthy();
   }));
 
   it('should show different color', fakeAsync(() => {
