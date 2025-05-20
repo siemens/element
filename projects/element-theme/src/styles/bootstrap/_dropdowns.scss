@@ -55,15 +55,13 @@
     margin-block: -#{map.get(spacers.$spacers, 2)};
     margin-inline: auto -#{map.get(spacers.$spacers, 4)};
     font-size: 1.5rem !important; // stylelint-disable-line declaration-no-important
-
-    &::before {
-      transform: rotate(var(--caret-rotate));
-      transition: transform variables.$si-caret-transition-duration;
-      display: inline-block;
-    }
+    transform: rotate(var(--caret-rotate));
+    // adjust the origin to account for the negative margin. Otherwise the element would visually not rotate around the center.
+    transform-origin: calc(50% + #{map.get(spacers.$spacers, 1)}) 50%;
+    transition: transform variables.$si-caret-transition-duration;
   }
 
-  &.show .dropdown-caret::before {
+  &.show .dropdown-caret {
     transform: rotate(calc(var(--caret-rotate) + 180deg));
   }
 }
