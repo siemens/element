@@ -40,11 +40,11 @@
     "lib:test:browser": "cross-env HEADLESS=0 ng test element-ng",
     "translate:test": "ng test element-translate-ng",
     "translate:build": "ng build element-translate-ng && cpy LICENSE.md \"./dist/@siemens/element-translate-ng/\"",
-    "docs:prepare": "poetry install",
-    "docs:build": "poetry run mkdocs build --strict",
-    "docs:serve": "poetry run mkdocs serve",
+    "docs:build": "uv run mkdocs build --strict",
+    "docs:serve": "uv run mkdocs serve",
     "live-preview:build": "ng build live-preview",
     "prepare": "husky; exit 0",
+    "prepare-brand": "cpy --flat node_modules/@simpl/brand/src/favicon/sie-favicon_internet_64px.png docs/_src --rename=favicon.png && cpy --flat node_modules/@simpl/brand/src/favicon/sie-favicon_internet_64px.png src --rename=favicon.png",
     "postversion": "node ./postversion.js && npm run format"
   },
   "workspaces": [
@@ -117,7 +117,7 @@
   },
   "optionalDependencies": {
     "@playwright/test": "1.52.0",
-    "@simpl/brand": "^0.1.3",
+    "@simpl/brand": "^0.2.0",
     "@simpl/element-icons": "^1.28.0"
   }
 }

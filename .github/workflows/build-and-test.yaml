@@ -25,6 +25,7 @@ jobs:
       - run: npm ci --prefer-offline --no-audit --include=optional
       - run: npm run lint:commit
       - run: npm run build:all
+      - run: npm run prepare-brand
       - run: npm run build:examples
       - uses: actions/upload-artifact@v4
         with:
@@ -75,6 +76,7 @@ jobs:
         env:
           SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
       - run: npm ci --prefer-offline --no-audit --include=optional
+      - run: npm run prepare-brand
       - run: npm run build:examples:aot
       - run: npm run build:all:update-translatable-keys
       - run: git diff --exit-code "projects/**/*-translatable-keys.interface.ts"
@@ -90,6 +92,7 @@ jobs:
         with:
           name: dist
           path: dist
+      - run: cp dist/element-examples/favicon.png docs/_src/favicon.png
       - run: uv run mkdocs build
         env:
           UV_INDEX_CODE_DOCS_THEME_USERNAME: ${{ secrets.SIEMENS_NPM_USER }}
