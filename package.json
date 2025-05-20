@@ -48,6 +48,7 @@
     "postversion": "node ./postversion.js && npm run format"
   },
   "workspaces": [
+    "projects/element-translate-cli",
     "projects/element-translate-ng",
     "projects/element-theme",
     "projects/live-preview"

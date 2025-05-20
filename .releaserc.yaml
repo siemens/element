@@ -19,6 +19,8 @@ plugins:
     - pkgRoot: dist/@siemens/live-preview
   - - '@semantic-release/npm'
     - pkgRoot: projects/element-theme
+  - - '@semantic-release/npm'
+    - pkgRoot: projects/element-translate-cli
   # Only update remaining package.json that are not directly published
   - - '@semantic-release/npm'
     - pkgRoot: projects/element-ng

@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-/* eslint-disable prefer-arrow/prefer-arrow-functions */
 import { spawn } from 'child_process';
 import * as fs from 'fs';
 import { dirname } from 'path';

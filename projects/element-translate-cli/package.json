@@ -1,6 +1,6 @@
 {
-  "name": "@siemens/element-translate-ng",
-  "description": "Element translation abstraction layer.",
+  "name": "@siemens/element-translate-cli",
+  "description": "Element translation abstraction layer CLI.",
   "version": "47.0.0",
   "license": "MIT",
   "type": "module",
@@ -17,19 +17,10 @@
   "publishConfig": {
     "access": "public"
   },
-  "peerDependencies": {
-    "@angular/common": "19",
-    "@angular/core": "19",
-    "@ngx-translate/core": "15 - 16"
+  "bin": {
+    "update-translatable-keys": "bin/update-translatable-keys.js"
   },
-  "peerDependenciesMeta": {
-    "@ngx-translate/core": {
-      "optional": true
-    }
-  },
-  "exports": {
-    "./docs.json": {
-      "default": "./docs.json"
-    }
+  "dependencies": {
+    "fast-xml-parser": "4.5.0"
   }
 }
