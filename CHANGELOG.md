@@ -1,3 +1,15 @@
+# [47.1.0-next.3](https://github.com/siemens/element/compare/v47.1.0-next.2...v47.1.0-next.3) (2025-05-20)
+
+
+### Bug Fixes
+
+* **application-header:** announce logo text in Safari / VoiceOver ([71d02a7](https://github.com/siemens/element/commit/71d02a70f322ca9e3f00b9e2f8c8cddbdd87af3b))
+
+
+### Features
+
+* **icon:** introduce status icon ([5ce6727](https://github.com/siemens/element/commit/5ce67276ee0ca42c9056ce466bf80f256e4c3df3))
+
 # [47.1.0-next.2](https://github.com/siemens/element/compare/v47.1.0-next.1...v47.1.0-next.2) (2025-05-20)
 
 
