@@ -123,8 +123,8 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
   private rendererFactory = inject(DomRendererFactory2);
   private config = inject(SI_LIVE_PREVIEW_CONFIG);
   private internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
-  private activatedRouted = inject(ActivatedRoute);
-  private defaultRoutes = this.activatedRouted.routeConfig?.children ?? [];
+  private activatedRoute = inject(ActivatedRoute);
+  private defaultRoutes = this.activatedRoute.routeConfig?.children ?? [];
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.exampleUrl?.currentValue) {
@@ -333,7 +333,7 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
               self: true
             }) ?? self.defaultRoutes;
 
-          const route = self.activatedRouted.routeConfig;
+          const route = self.activatedRoute.routeConfig;
           if (route) {
             // cannot use router.resetConfig here as it destroys the components on child route navigations
             route.children = [...exampleRoutes];
