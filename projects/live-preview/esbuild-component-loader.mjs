@@ -4,7 +4,7 @@ import { globIterate } from 'glob';
 const livePreviewComponentLoader = {
   name: 'live-preview-component-loader',
   setup: build => {
-    build.onResolve({ filter: /@siemens\/live-preview\/component-loader.*/ }, args => {
+    build.onResolve({ filter: /(@siemens|@simpl)\/live-preview\/component-loader.*/ }, args => {
       const [data] = args.path.split('!');
       const url = new URL('fake:' + data);
       const root = url.searchParams.get('root');
@@ -24,7 +24,7 @@ const livePreviewComponentLoader = {
 
     build.onLoad(
       {
-        filter: /@siemens\/live-preview\/component-loader.*/,
+        filter: /(@siemens|@simpl)\/live-preview\/component-loader.*/,
         namespace: 'live-preview-component-loader'
       },
       async ({ pluginData: { root, webcomponents, examples } }) => {
