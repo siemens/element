@@ -67,17 +67,14 @@ img {
   inset-inline-end: var(--indicator-offset-x);
   font-size: var(--indicator-size);
 
-  ::ng-deep {
-    span {
-      text-shadow:
-        -1px 0 variables.$element-base-1,
-        0 1px variables.$element-base-1,
-        1px 0 variables.$element-base-1,
-        0 -1px variables.$element-base-1;
-    }
-
-    i {
-      text-shadow: none;
+  .drop-shadow {
+    ::ng-deep {
+      svg {
+        filter: drop-shadow(1px 0 0 variables.$element-base-1)
+          drop-shadow(-1px 0 0 variables.$element-base-1)
+          drop-shadow(0 1px 0 variables.$element-base-1)
+          drop-shadow(0 -1px 0 variables.$element-base-1);
+      }
     }
   }
 }

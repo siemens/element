@@ -11,14 +11,10 @@
     >{{ displayInitials }}</div
   >
 }
-@if (statusIcon) {
-  <si-icon
-    size="indicator-size"
-    class="indicator"
-    [alt]="statusAriaLabel() ?? ''"
-    [icon]="statusIcon.icon"
-    [color]="statusIcon.color"
-    [stackedIcon]="statusIcon.stacked"
-    [stackedColor]="statusIcon.stackedColor"
-  />
+@let iconConfig = statusIcon();
+@if (iconConfig) {
+  <span class="indicator-size indicator icon-stack">
+    <si-icon-next class="drop-shadow" [ngClass]="iconConfig.color" [icon]="iconConfig.icon" />
+    <si-icon-next [ngClass]="iconConfig.stackedColor" [icon]="iconConfig.stacked" />
+  </span>
 }

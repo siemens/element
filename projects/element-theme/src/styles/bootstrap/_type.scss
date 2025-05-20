@@ -150,6 +150,14 @@ h6,
   );
 }
 
+.si-title-1-bold {
+  @include typography.si-font(
+    typography.$si-font-size-title-1-bold,
+    typography.$si-line-height-title-1-bold,
+    typography.$si-font-weight-title-1-bold
+  );
+}
+
 .si-title-1 {
   @include typography.si-font(
     typography.$si-font-size-title-1,
@@ -163,6 +171,14 @@ h6,
     typography.$si-font-size-body-1,
     typography.$si-line-height-body-1,
     typography.$si-font-weight-body-1
+  );
+}
+
+.si-title-2-bold {
+  @include typography.si-font(
+    typography.$si-font-size-title-2-bold,
+    typography.$si-line-height-title-2-bold,
+    typography.$si-font-weight-title-2-bold
   );
 }
 

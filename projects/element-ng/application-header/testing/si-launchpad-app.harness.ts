@@ -22,9 +22,7 @@ export class SiLaunchpadAppHarness extends ComponentHarness {
 
   async isFavorite(): Promise<boolean> {
     return this.favorite().then(favorite =>
-      favorite
-        .getProperty('classList')
-        .then(classList => classList.contains('element-favorites-filled'))
+      favorite.getProperty('classList').then(classList => classList.contains('is-favorite'))
     );
   }
 
