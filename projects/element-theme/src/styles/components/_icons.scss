@@ -18,6 +18,16 @@
   -moz-osx-font-smoothing: auto !important; // stylelint-disable-line declaration-no-important
 }
 
+.icon-stack {
+  display: inline-flex;
+  vertical-align: middle;
+  line-height: 1;
+
+  > :not(:first-child) {
+    position: absolute;
+  }
+}
+
 @include utilities.rtl {
   .flip-rtl {
     transform: scaleX(-1);
