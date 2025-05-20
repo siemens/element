@@ -2,6 +2,7 @@
  * Copyright Siemens 2016 - 2025.
  * SPDX-License-Identifier: MIT
  */
+import { NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -56,27 +57,26 @@ export const provideIconConfig = (config: IconConfig): Provider => ({
  */
 @Component({
   selector: 'si-icon-next',
-  template: ``,
+  template: ` <div
+    aria-hidden="true"
+    [ngClass]="svgIcon() ? '' : fontIcon()"
+    [innerHTML]="svgIcon()"
+  ></div>`,
   styles: `
     :host {
-      display: inline-block;
+      display: inline-flex;
       font-weight: normal;
       vertical-align: middle;
       line-height: 1;
 
-      &.svg-icon ::ng-deep svg {
+      ::ng-deep svg {
         display: block;
         block-size: 1em;
         fill: currentColor;
       }
     }
   `,
-  host: {
-    '[class]': 'svgIcon() ? "svg-icon" : fontIcon()',
-    '[innerHTML]': 'svgIcon()',
-    // TODO: remove and actually hide the icon content. But wait until: https://github.com/microsoft/playwright/issues/35737 and https://github.com/dequelabs/axe-core/issues/4763 are fixed.
-    'aria-hidden': 'true'
-  },
+  imports: [NgClass],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiIconNextComponent {
