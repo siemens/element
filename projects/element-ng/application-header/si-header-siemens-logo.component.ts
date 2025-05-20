@@ -4,6 +4,8 @@
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
+import { SiHeaderLogoDirective } from './si-header-logo.directive';
+
 /**
  * The siemens logo.
  * Should be located inside `.header-brand`.
@@ -22,9 +24,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 @Component({
   selector: 'si-header-siemens-logo, [si-header-siemens-logo]',
   template: '',
-  host: {
-    class: 'header-logo px-6 focus-inside'
-  },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SiHeaderSiemensLogoComponent {}
+export class SiHeaderSiemensLogoComponent extends SiHeaderLogoDirective {}
