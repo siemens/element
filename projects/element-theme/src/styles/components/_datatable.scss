@@ -240,6 +240,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
       .datatable-body-cell-label {
         overflow: inherit;
         text-overflow: ellipsis;
+        inline-size: 100%;
       }
 
       &:hover:not(.active) {
