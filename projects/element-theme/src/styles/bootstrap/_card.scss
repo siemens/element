@@ -1,3 +1,4 @@
+@use '../variables/focus';
 @use '../variables/semantic-tokens';
 @use '../variables/spacers';
 @use '../variables/typography';
@@ -89,8 +90,22 @@
     line-height: typography.$si-font-size-title-2;
   }
 
-  &:first-child {
-    @extend %card-inner-radius-top;
+  + .card-body {
+    margin-block-start: map.get(spacers.$spacers, 2) * -1;
+    padding-block-start: map.get(spacers.$spacers, 2);
+  }
+
+  + .list-group {
+    margin-block-end: 0;
+    z-index: 0;
+
+    .list-group-item {
+      z-index: -1;
+    }
+  }
+
+  + :is(.list-group, .overflow-auto, [tabindex='0']) {
+    outline-offset: focus.$focus-style-outline-inside-offset;
   }
 }
 
@@ -102,6 +117,7 @@
   padding-block: variables.$card-spacer-y;
   padding-inline: variables.$card-spacer-x;
   color: variables.$card-color;
+  outline-offset: focus.$focus-style-outline-inside-offset !important; // stylelint-disable-line declaration-no-important
 }
 
 .card-title {
@@ -116,19 +132,19 @@
   margin-block-end: 0;
 }
 
-// If the card has a header, remove the top padding for the body.
-// Since we removed the separator line from the header, too much
-// padding looks weird.
-.card-header + .card-body {
-  padding-block-start: 0;
-}
-
 .card-footer {
-  @extend %card-inner-radius-bottom;
   padding-inline: variables.$card-cap-padding-x;
   padding-block-start: variables.$card-cap-padding-y;
   padding-block-end: variables.$card-cap-padding-x;
   background-color: variables.$card-cap-bg;
+}
+
+:is(.card-header, .card-body):first-child {
+  @extend %card-inner-radius-top;
+}
+
+:is(.card-body, .card-footer):last-child {
+  @extend %card-inner-radius-bottom;
 }
 
 .card-img-overlay {
