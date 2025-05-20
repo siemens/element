@@ -6,7 +6,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git@github.com:siemens/element.git"
+    "url": "git+ssh://git@github.com/siemens/element.git"
   },
   "author": {
     "name": "Siemens AG",
