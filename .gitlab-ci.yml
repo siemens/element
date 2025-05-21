@@ -1,0 +1,114 @@
+variables:
+  FF_USE_FASTZIP: 1
+  CACHE_COMPRESSION_LEVEL: fastest
+  GIT_LFS_SKIP_SMUDGE: 1
+  JOB_ARTIFACTS_URL: https://${CI_PROJECT_NAMESPACE}.${CI_PAGES_DOMAIN}/-/${CI_PROJECT_NAME}/-/jobs/${CI_JOB_ID}/artifacts
+  NPM_CONFIG_CACHE: .npm-cache
+
+default:
+  image: node:jod
+  interruptible: true
+  tags:
+    - DOCKER
+
+include:
+  - template: 'Workflows/MergeRequest-Pipelines.gitlab-ci.yml'
+
+.npm-install: &npm-install
+  - https_proxy=$CODE_PROXY no_proxy=$CODE_NO_PROXY npm ci --prefer-offline --no-audit || https_proxy=$CODE_PROXY no_proxy=$CODE_NO_PROXY npm ci --prefer-offline --no-audit
+
+.npm-cache: &npm-cache
+  policy: pull
+  key:
+    files:
+      - package-lock.json
+  paths:
+    - .npm-cache/
+
+library:
+  stage: build
+  cache:
+    <<: *npm-cache
+    policy: pull-push
+  script:
+    - *npm-install
+    - npm run lint:commit
+    - npm run build:all
+    - npm run build:examples:prod --progress=false ${CI_MERGE_REQUEST_IID+--source-map=false}
+  artifacts:
+    expire_in: 3h
+    paths:
+      - dist
+  environment:
+    name: demo/mr-${CI_MERGE_REQUEST_IID}
+    url: $JOB_ARTIFACTS_URL/dist/element-examples/index.html#/overview
+
+test:
+  stage: test
+  image:
+    name: mcr.microsoft.com/playwright:v1.52.0-noble
+    entrypoint: ['']
+  cache:
+    <<: *npm-cache
+  script:
+    - *npm-install
+    - npm run lint:format
+    - npm run lint:ng
+    - npm run translate:test -- --watch=false --progress=false --code-coverage
+    - npm run lib:test -- --watch=false --progress=false --code-coverage
+  coverage: '/Statements   \:\ \d+.\d+\%/'
+  artifacts:
+    expire_in: 3h
+    paths:
+      - dist/coverage
+    reports:
+      junit: dist/reports/*/**.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: dist/coverage/*/cobertura-coverage.xml
+  environment:
+    name: coverage/mr-${CI_MERGE_REQUEST_IID}
+    url: $JOB_ARTIFACTS_URL/dist/coverage/element-ng/index.html
+
+aot:
+  stage: build
+  cache:
+    <<: *npm-cache
+  script:
+    - *npm-install
+    - npm run build:examples:aot
+    - npm run build:all:update-translatable-keys
+    - git diff --exit-code "projects/**/*-translatable-keys.interface.ts"
+  needs: ['library']
+  artifacts:
+    expire_in: 3h
+
+design-system:
+  stage: build
+  image: ghcr.io/astral-sh/uv:alpine
+  variables:
+    UV_INDEX_CODE_DOCS_THEME_PASSWORD: ${CI_JOB_TOKEN}
+    UV_INDEX_CODE_DOCS_THEME_USERNAME: gitlab-ci-token
+    HTTPS_PROXY: $CODE_PROXY
+    NO_PROXY: $CODE_NO_PROXY
+  script:
+    # - https_proxy=$CODE_PROXY no_proxy=$CODE_NO_PROXY pip install --quiet uv==0.7.2
+    # To serve our documentation for MRs and releases, we use GitLab's pipeline artifacts directly.
+    # But loading the `index.html` files as default on directory URLs does not work for pipeline artifacts.
+    # Thus, we build our design system documentation for MRs and releases without `directory-urls` support
+    # and replace all absolute links to the playground (demo) with relative links.
+    - >
+      if [[ -v CI_MERGE_REQUEST_IID ]] || [[ -v CI_COMMIT_TAG ]]; then
+        EXAMPLES_BASE=$JOB_ARTIFACTS_URL/dist/element-examples/index.html uv run mkdocs --color build --no-directory-urls
+      else
+        EXAMPLES_BASE=/demo uv run mkdocs --color build
+      fi
+  needs: ['library']
+  artifacts:
+    expire_in: 3h
+    paths:
+      - dist/design
+      - dist/element-examples
+  environment:
+    name: docu/mr-${CI_MERGE_REQUEST_IID}
+    url: $JOB_ARTIFACTS_URL/dist/design/index.html
