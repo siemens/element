@@ -1,0 +1,46 @@
+@if (item().items || item().customContent) {
+  <button
+    type="button"
+    class="header-item focus-inside"
+    [class.active]="active"
+    [attr.aria-label]="item().title | translate"
+    [siHeaderDropdownTriggerFor]="dropdown"
+    (click)="click()"
+  >
+    <ng-container *ngTemplateOutlet="itemContent" />
+    <div class="element-down-2 dropdown-caret" aria-hidden="true"></div>
+  </button>
+} @else {
+  <a
+    class="header-item focus-inside"
+    activeClass="active"
+    [siLink]="item()"
+    [attr.aria-label]="item().title | translate"
+    (activeChange)="active = $event"
+    (click)="click()"
+  >
+    <ng-container *ngTemplateOutlet="itemContent" />
+  </a>
+}
+
+<ng-template #itemContent>
+  <div class="icon" aria-hidden="true" [ngClass]="item().icon"></div>
+  @if (item().badge) {
+    <div class="badge-text">{{ item().badge }}</div>
+  }
+  <ng-content select="si-avatar" />
+  <div class="item-title" [class.visually-hidden]="visuallyHideTitle">
+    {{ item().title | translate }}
+  </div>
+</ng-template>
+
+<ng-template #dropdown>
+  <si-header-dropdown>
+    @if (item().items) {
+      <si-header-dropdown-items-factory [items]="item().items!" (activeChange)="active = $event" />
+    }
+    @if (item().customContent) {
+      <ng-content />
+    }
+  </si-header-dropdown>
+</ng-template>

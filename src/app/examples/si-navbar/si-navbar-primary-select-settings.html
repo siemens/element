@@ -1,0 +1,16 @@
+<si-navbar-primary
+  appTitle="Navbar primary settings"
+  navAriaLabel="Primary"
+  [primaryItems]="primaryItems"
+  [account]="{
+    title: 'Jane Smith',
+    email: 'jane.smith.simpl@siemens.com',
+    company: 'Siemens',
+    role: 'Admin'
+  }"
+  [accountItems]="accountItems"
+>
+  <si-navbar-item quickAction [item]="themeToggleQuickAction" />
+</si-navbar-primary>
+
+<pre class="pt-6">{{ accountItems | json }}</pre>

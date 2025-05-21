@@ -1,0 +1,122 @@
+<si-application-header [launchpad]="newAppItems ? launchpad : undefined">
+  <si-header-brand>
+    @if (logoUrl()) {
+      <a class="header-logo header-custom-logo px-6 focus-inside" [siLink]="home()">
+        <img alt="Siemens logo" [src]="logoUrl()" />
+      </a>
+    } @else {
+      <a siHeaderLogo class="d-none d-md-flex" [siLink]="home()"></a>
+    }
+    @if (appTitle()) {
+      <span class="application-name">{{ appTitle() }}</span>
+    }
+  </si-header-brand>
+
+  @if (primaryItems().length) {
+    <si-header-navigation [attr.aria-label]="ariaLabelMainMenu()">
+      @for (item of primaryItems(); track $index) {
+        @if (item.items) {
+          <button
+            type="button"
+            si-header-navigation-item
+            [siHeaderDropdownTriggerFor]="dropdown"
+            [class.active]="active === item"
+          >
+            {{ item.title | translate }}
+            <ng-template #dropdown>
+              <si-header-dropdown>
+                <si-header-dropdown-items-factory
+                  [items]="item.items"
+                  (activeChange)="$event ? (active = item) : null"
+                />
+              </si-header-dropdown>
+            </ng-template>
+          </button>
+        } @else {
+          <a
+            si-header-navigation-item
+            activeClass="active"
+            [siLink]="item"
+            (activeChange)="$event ? (active = item) : null"
+          >
+            {{ item.title | translate }}
+          </a>
+        }
+      }
+    </si-header-navigation>
+  }
+  @if (navItemCount() || account()) {
+    <si-header-actions [attr.aria-label]="ariaLabelSecondaryMenu()">
+      @if (navItemCount()) {
+        @if (navItemCount() === 1) {
+          <ng-container *ngTemplateOutlet="actions" />
+        } @else {
+          <si-header-collapsible-actions>
+            <ng-container *ngTemplateOutlet="actions" />
+          </si-header-collapsible-actions>
+        }
+      }
+      @if (account()) {
+        <!--eslint-disable @angular-eslint/template/elements-content -->
+        <button
+          si-header-account-item
+          type="button"
+          [name]="account()!.title"
+          [initials]="account()!.initials"
+          [imageUrl]="account()!.image"
+          [siHeaderDropdownTriggerFor]="accountDropdown"
+        ></button>
+        <!--eslint-enable @angular-eslint/template/elements-content -->
+
+        <ng-template #accountDropdown>
+          <si-header-dropdown>
+            <div class="d-block userinfo mx-5 mb-4">
+              <div class="si-title-2 text-truncate">{{ account()!.title }}</div>
+              @if (account()!.email) {
+                <div class="email">{{ account()!.email }}</div>
+              }
+              <div class="d-flex align-items-center text-secondary mt-2">
+                @if (account()!.company) {
+                  <span class="label me-4">{{ account()!.company | translate }}</span>
+                }
+                @if (account()!.role) {
+                  <span class="ms-0 badge bg-default">
+                    {{ account()!.role | translate }}
+                  </span>
+                }
+              </div>
+            </div>
+            @if (accountItems()?.length) {
+              <div class="d-block dropdown-divider" role="separator"></div>
+              <si-header-dropdown-items-factory [items]="accountItems()!" />
+            }
+            @if (account()!.customContent) {
+              <div class="d-block dropdown-divider" role="separator"></div>
+              <ng-content />
+            }
+          </si-header-dropdown>
+        </ng-template>
+      }
+    </si-header-actions>
+  } @else {
+    <!-- Seems like @if makes ng-content believe that there is always a header-actions section. So we have to add it here. -->
+    <si-header-actions />
+  }
+</si-application-header>
+
+<ng-template #launchpad>
+  <si-launchpad-factory
+    [showLessAppsText]="showLessAppsTitle()"
+    [showMoreAppsText]="showMoreAppsTitle()"
+    [closeText]="closeAppSwitcherText()"
+    [titleText]="appSwitcherTitle()"
+    [subtitleText]="appSwitcherSubTitle()"
+    [enableFavorites]="appItemsFavorites()"
+    [favoriteAppsText]="favoriteAppsTitle()"
+    [apps]="newAppItems!"
+    (favoriteChange)="onFavoriteChange($event)"
+  />
+</ng-template>
+<ng-template #actions>
+  <ng-content select="si-navbar-item[quickAction], element-navbar-item[quickAction='true']" />
+</ng-template>
