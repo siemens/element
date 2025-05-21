@@ -1,0 +1,38 @@
+<si-navbar-primary
+  appTitle="Navbar primary custom content"
+  navAriaLabel="Primary"
+  [primaryItems]="primaryItems"
+  [account]="{
+    title: 'Jane Smith',
+    email: 'jane.smith.simpl@siemens.com',
+    company: 'Siemens',
+    role: 'Admin'
+  }"
+  [accountItems]="[
+    {
+      title: 'Messages',
+      icon: 'element-notification',
+      badge: 5,
+      badgeColor: 'danger',
+      link: '/messages'
+    },
+    { title: 'Profile', icon: 'element-settings', link: '/profile' },
+    { title: '-' },
+    { title: 'Logout', icon: 'element-logout', link: '/byebye' }
+  ]"
+>
+  <si-navbar-item
+    quickAction
+    [item]="{ title: 'Coffee time', icon: 'element-break', customContent: true }"
+  >
+    <p class="text-info">One covfefe please</p>
+  </si-navbar-item>
+  <si-navbar-item
+    quickAction
+    [item]="{ title: 'Cleaning time', icon: 'element-bath', customContent: true }"
+  >
+    <div class="m-4">
+      <span>Some custom content</span>
+    </div>
+  </si-navbar-item>
+</si-navbar-primary>
