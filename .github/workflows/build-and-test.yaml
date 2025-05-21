@@ -26,6 +26,8 @@ jobs:
       - run: npm run lint:commit
       - run: npm run build:all
       - run: npm run prepare-brand
+      - run: npm run build:all:update-translatable-keys # Output is needed in dist for providing default translations
+      - run: git diff --exit-code "projects/**/*-translatable-keys.interface.ts"
       - run: npm run build:examples
       - uses: actions/upload-artifact@v4
         with:
@@ -78,8 +80,6 @@ jobs:
       - run: npm ci --prefer-offline --no-audit --include=optional
       - run: npm run prepare-brand
       - run: npm run build:examples:aot
-      - run: npm run build:all:update-translatable-keys
-      - run: git diff --exit-code "projects/**/*-translatable-keys.interface.ts"
 
   documentation:
     runs-on: ubuntu-22.04
