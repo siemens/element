@@ -1,3 +1,6 @@
+import writerOpts from './tools/semantic-release/writer-opts.js';
+import { commitTypes, releaseRules } from './tools/semantic-release/config.js';
+
 export default {
   branches: [
     {
@@ -12,8 +15,29 @@ export default {
     }
   ],
   plugins: [
-    '@semantic-release/commit-analyzer',
-    '@semantic-release/release-notes-generator',
+    [
+      '@semantic-release/commit-analyzer',
+      {
+        preset: 'angular',
+        releaseRules,
+        parserOpts: {
+          noteKeywords: ['BREAKING CHANGE']
+        },
+        presetConfig: {
+          types: commitTypes
+        }
+      }
+    ],
+    [
+      '@semantic-release/release-notes-generator',
+      {
+        preset: 'angular',
+        parserOpts: {
+          noteKeywords: ['BREAKING CHANGE', 'NOTE', 'DEPRECATED']
+        },
+        writerOpts
+      }
+    ],
     '@semantic-release/changelog',
     // Packages to be pushed
     [
