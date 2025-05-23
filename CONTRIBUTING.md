@@ -276,7 +276,7 @@ create releases based on semantic versioning and automatically generate the
 changelog.
 
 Our formatting rules are based on the
-[Angular convention](https://github.com/angular/angular/blob/main/CONTRIBUTING.md#-commit-message-format)
+[Angular convention](https://github.com/angular/angular/blob/main/CONTRIBUTING.md#-commit-message-format),
 which has also evolved over time. We took the best parts and tailored them to
 our needs.
 
