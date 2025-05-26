@@ -18,6 +18,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: lts/jod
+          check-latest: true
           cache: 'npm'
       - run: npm config set //code.siemens.com/api/v4/packages/npm/:_authToken $SIEMENS_NPM_TOKEN
         env:
@@ -48,6 +49,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: lts/jod
+          check-latest: true
           cache: 'npm'
       - uses: actions/download-artifact@v4
         with:
@@ -69,6 +71,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: lts/jod
+          check-latest: true
           cache: 'npm'
       - uses: actions/download-artifact@v4
         with:
