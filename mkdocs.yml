@@ -44,6 +44,7 @@ nav:
       - Pagination:                       'components/layout-navigation/pagination.md'
     - Status & notifications:
       - Avatar:                           'components/status-notifications/avatar.md'
+      - Connection Strength:              'components/status-notifications/connection-strength.md'
       - Copyright Notice:                 'components/status-notifications/copyright-notice.md'
   - Architecture:
     - CSS framework:                      'architecture/css-framework.md'

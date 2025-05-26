@@ -18,6 +18,7 @@ documentation.
 ## C
 
 - [Copyright Notice](status-notifications/copyright-notice.md)
+- [Connection Strength](status-notifications/connection-strength.md)
 
 ## D
 

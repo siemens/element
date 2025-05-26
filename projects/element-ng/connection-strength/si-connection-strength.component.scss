@@ -1,0 +1,16 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+svg {
+  inline-size: 1em;
+  block-size: 1em;
+  fill: variables.$element-ui-1;
+
+  &.none,
+  &.none .inactive {
+    fill: variables.$element-status-danger;
+  }
+
+  .inactive {
+    fill: variables.$element-ui-3;
+  }
+}
