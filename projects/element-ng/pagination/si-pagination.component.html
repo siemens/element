@@ -1,0 +1,47 @@
+<nav role="navigation" [attr.aria-label]="navAriaLabel() | translate">
+  <ul class="pagination">
+    <li class="me-5">
+      <button
+        type="button"
+        class="page-item mx-4"
+        [class.disabled]="prevDisabled()"
+        [disabled]="prevDisabled()"
+        [attr.aria-label]="backButtonText() | translate"
+        (click)="direction($event, -1)"
+      >
+        <si-icon-next class="icon flip-rtl" [icon]="icons.elementLeft3" />
+      </button>
+    </li>
+    @for (page of pageButtons(); track $index) {
+      <li>
+        @if (!page.sep) {
+          <button
+            type="button"
+            class="page-item"
+            [attr.aria-current]="page.page === currentPage() ? 'page' : ''"
+            [class.active]="page.page === currentPage()"
+            [disabled]="page.page === currentPage()"
+            (click)="setPage($event, page.page)"
+          >
+            {{ page.page }}
+          </button>
+        }
+        @if (page.sep) {
+          <span class="page-item separator mx-2">&hellip;</span>
+        }
+      </li>
+    }
+    <li class="ms-5">
+      <button
+        type="button"
+        class="page-item mx-4"
+        [class.disabled]="nextDisabled()"
+        [disabled]="nextDisabled()"
+        [attr.aria-label]="forwardButtonText() | translate"
+        (click)="direction($event, 1)"
+      >
+        <si-icon-next class="icon flip-rtl" [icon]="icons.elementRight3" />
+      </button>
+    </li>
+  </ul>
+</nav>

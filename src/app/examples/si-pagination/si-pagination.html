@@ -1,0 +1,8 @@
+<si-pagination
+  navAriaLabel="first example"
+  [totalPages]="5"
+  [currentPage]="3"
+  (currentPageChange)="logEvent($event)"
+/>
+<si-pagination navAriaLabel="second example" [totalPages]="20" [(currentPage)]="currentPage" />
+Page: {{ currentPage }}

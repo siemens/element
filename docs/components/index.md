@@ -34,3 +34,7 @@ documentation.
 ## M
 
 - [Menu](buttons-menus/menu.md)
+
+## P
+
+- [Pagination](layout-navigation/pagination.md)

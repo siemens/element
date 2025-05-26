@@ -16,4 +16,7 @@ export interface SiTranslatableKeys {
   'SI_LAUNCHPAD.TITLE'?: string;
   'SI_NAVBAR.OPEN_LAUNCHPAD'?: string;
   'SI_NAVBAR.TOGGLE_NAVIGATION'?: string;
+  'SI_PAGINATION.BACK'?: string;
+  'SI_PAGINATION.FORWARD'?: string;
+  'SI_PAGINATION.NAV_LABEL'?: string;
 }
