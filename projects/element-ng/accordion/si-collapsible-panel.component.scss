@@ -1,0 +1,98 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  --__radius: var(--si-accordion-radius, #{variables.$element-button-radius});
+  display: flex;
+  flex-direction: column;
+  background: variables.$element-base-0;
+  padding-block-end: 2px;
+
+  &:not(.hcollapsed) {
+    .collapsed-icon,
+    .badge-text {
+      display: none;
+    }
+  }
+
+  &.hcollapsed {
+    background: variables.$element-base-1;
+
+    .collapsible-header .autohide,
+    .collapsible-content {
+      display: none;
+    }
+
+    .collapsible-header {
+      padding-block: map.get(variables.$spacers, 4);
+
+      &:hover {
+        background: variables.$element-base-1-hover;
+      }
+    }
+  }
+
+  &.full-height {
+    transition: flex-grow variables.$element-default-transition-duration;
+
+    &.opened,
+    .collapsible-content {
+      flex: 1 1 0;
+    }
+
+    .collapsible-content > div {
+      flex: 1 0 0;
+    }
+  }
+}
+
+.collapsible-header {
+  display: flex;
+  align-items: center;
+  background: variables.$element-base-1;
+  color: variables.$element-text-primary;
+  padding-block: map.get(variables.$spacers, 5);
+  border-radius: var(--__radius);
+
+  &.disabled {
+    color: variables.$element-text-disabled;
+  }
+
+  &.open {
+    border-end-start-radius: 0;
+    border-end-end-radius: 0;
+  }
+
+  &:not(.disabled) {
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: none;
+      background: variables.$element-base-1-hover;
+    }
+  }
+}
+
+.dropdown-caret {
+  transition: transform variables.$element-default-transition-duration;
+  color: variables.$element-ui-1;
+
+  .open & {
+    transform: rotate(180deg);
+  }
+}
+
+.collapsible-content {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: variables.$element-base-1;
+  border-end-start-radius: var(--__radius);
+  border-end-end-radius: var(--__radius);
+
+  &.full-height {
+    // cannot use class overflow-auto, as it is using !important which is breaking the animation
+    overflow: auto;
+  }
+}

@@ -1,0 +1,61 @@
+<div
+  class="collapsible-header focus-inside px-6"
+  role="button"
+  [ngClass]="headerCssClasses()"
+  [attr.tabindex]="disabled() ? '' : '0'"
+  [id]="headerId"
+  [class.open]="opened()"
+  [class.disabled]="disabled()"
+  [title]="hcollapsed() ? (heading() | translate) : ''"
+  [attr.aria-expanded]="opened() && !hcollapsed()"
+  [attr.aria-disabled]="disabled()"
+  [attr.aria-controls]="controlId"
+  [attr.aria-label]="hcollapsed() ? (heading() | translate) : ''"
+  (keydown)="keydown($event)"
+  (click)="doToggle($event)"
+>
+  @let headerIcon = icon();
+  @if (headerIcon) {
+    <si-icon-next
+      class="icon ms-n2 me-2"
+      [icon]="headerIcon"
+      [class.collapsed-icon]="isHCollapsible"
+    />
+  }
+  @if (icon() && badge() !== undefined && badge() !== '') {
+    <span class="badge-text">
+      {{ badge() }}
+    </span>
+  }
+  <div class="si-title-2 autohide">
+    {{ heading() | translate }}
+    <ng-content select="[si-panel-heading]" />
+  </div>
+
+  @if (badge() !== undefined && badge() !== '') {
+    <span class="badge autohide" [ngClass]="'bg-' + badgeColor()">
+      {{ badge() }}
+    </span>
+  }
+  <span class="ms-auto overflow-hidden">
+    <si-icon-next class="icon dropdown-caret" [icon]="icons.elementDown2" />
+  </span>
+</div>
+<div
+  #content
+  class="collapsible-content"
+  role="region"
+  [id]="controlId"
+  [ngClass]="contentBgClasses()"
+  [@showHide]="showHide"
+  [attr.aria-labelledby]="headerId"
+  [class.full-height]="fullHeight()"
+>
+  @if (opened()) {
+    <div>
+      <div [ngClass]="contentCssClasses()">
+        <ng-content />
+      </div>
+    </div>
+  }
+</div>

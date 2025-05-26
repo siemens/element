@@ -7,6 +7,7 @@ documentation.
 
 ## A
 
+- [Accordion](layout-navigation/accordion.md)
 - [Application Header](layout-navigation/application-header.md)
 - [Avatar](status-notifications/avatar.md)
 

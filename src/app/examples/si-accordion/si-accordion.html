@@ -1,0 +1,31 @@
+<div class="bg-base-0 p-5">
+  <h4>On base-0</h4>
+  <si-accordion>
+    <si-collapsible-panel heading="Hey there" (panelToggle)="logEvent('toggle Hey there', $event)">
+      <div class="p-6"> Here is some content </div>
+    </si-collapsible-panel>
+    <si-collapsible-panel
+      heading="Another one"
+      badge="5"
+      badgeColor="info"
+      contentCssClasses="p-6"
+      (panelToggle)="logEvent('toggle Another one', $event)"
+    >
+      And this is the content
+    </si-collapsible-panel>
+    <si-collapsible-panel
+      heading="Number three"
+      contentCssClasses="p-6"
+      (panelToggle)="logEvent('toggle Number three', $event)"
+    >
+      Nothing to see here
+    </si-collapsible-panel>
+    <si-collapsible-panel
+      contentCssClasses="p-6"
+      (panelToggle)="logEvent('toggle Number four', $event)"
+    >
+      <span si-panel-heading>Heading via content projection</span>
+      Nothing to see here
+    </si-collapsible-panel>
+  </si-accordion>
+</div>

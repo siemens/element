@@ -1,0 +1,23 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  &,
+  > div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &.full-height {
+    block-size: 100%;
+
+    > div {
+      overflow-y: auto;
+      flex: 1 1 0;
+    }
+  }
+
+  &.full-height.hcollapsed > div {
+    overflow-y: unset;
+    flex-basis: auto;
+  }
+}
