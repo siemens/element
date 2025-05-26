@@ -45,6 +45,7 @@ nav:
     - Status & notifications:
       - Avatar:                           'components/status-notifications/avatar.md'
       - Copyright Notice:                 'components/status-notifications/copyright-notice.md'
+      - Empty State:                      'components/status-notifications/empty-state.md'
   - Architecture:
     - CSS framework:                      'architecture/css-framework.md'
     - Theming:                            'architecture/theming.md'

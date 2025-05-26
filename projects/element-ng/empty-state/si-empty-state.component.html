@@ -1,0 +1,8 @@
+<div class="list-group-item-empty">
+  <si-icon-next class="state-icon" [icon]="icon()" />
+  <h3 class="my-6 text-center">{{ heading() | translate }}</h3>
+  @if (content()) {
+    <p class="text-pre-wrap text-center mb-6">{{ content() | translate }}</p>
+  }
+  <ng-content />
+</div>

@@ -1,0 +1,17 @@
+<si-empty-state
+  icon="element-users"
+  heading="No users"
+  content="There are no users within this group. Add users to get started."
+>
+  <p>
+    <button
+      type="button"
+      class="btn btn-tertiary me-6"
+      (click)="logEvent('Learn more button clicked')"
+      >Learn more</button
+    >
+    <button type="button" class="btn btn-primary" (click)="logEvent('Add user button clicked')"
+      >Add user</button
+    >
+  </p>
+</si-empty-state>
