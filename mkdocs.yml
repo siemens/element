@@ -42,6 +42,7 @@ nav:
       - Launchpad:                        'components/layout-navigation/launchpad.md'
     - Status & notifications:
       - Avatar:                           'components/status-notifications/avatar.md'
+      - Copyright Notice:                 'components/status-notifications/copyright-notice.md'
   - Architecture:
     - CSS framework:                      'architecture/css-framework.md'
     - Theming:                            'architecture/theming.md'

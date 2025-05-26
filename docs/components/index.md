@@ -15,6 +15,10 @@ documentation.
 
 - [Buttons](buttons-menus/buttons.md)
 
+## C
+
+- [Copyright Notice](status-notifications/copyright-notice.md)
+
 ## D
 
 - [Dropdowns](buttons-menus/dropdowns.md)
