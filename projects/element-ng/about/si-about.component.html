@@ -1,0 +1,118 @@
+<div class="row mx-6 mt-6">
+  <div class="col-md-6 mb-6">
+    <div class="card overflow-hidden">
+      <div class="card-header text-truncate">
+        {{ aboutTitle() }}
+      </div>
+
+      <div>
+        <div class="list-group-item text-center">
+          @let appIcon = iconName();
+          @if (icon()) {
+            <img
+              class="rounded-circle"
+              height="150"
+              [src]="icon()"
+              [alt]="appName() + '\'s Logo'"
+            />
+          } @else if (appIcon) {
+            <si-icon-next class="app-icon" [icon]="appIcon" />
+          }
+          <h3>{{ appName() }}</h3>
+          @for (item of subheading(); track $index) {
+            <p>{{ item }}</p>
+          }
+          <si-copyright-notice [copyright]="copyrightDetails()" />
+        </div>
+
+        @if (imprintLink()) {
+          <ng-container
+            [ngTemplateOutlet]="linkTemplate"
+            [ngTemplateOutletContext]="{ link: imprintLink() }"
+          />
+        }
+        @if (privacyLink()) {
+          <ng-container
+            [ngTemplateOutlet]="linkTemplate"
+            [ngTemplateOutletContext]="{ link: privacyLink() }"
+          />
+        }
+        @if (cookieNoticeLink()) {
+          <ng-container
+            [ngTemplateOutlet]="linkTemplate"
+            [ngTemplateOutletContext]="{ link: cookieNoticeLink() }"
+          />
+        }
+        @if (termsLink()) {
+          <ng-container
+            [ngTemplateOutlet]="linkTemplate"
+            [ngTemplateOutletContext]="{ link: termsLink() }"
+          />
+        }
+        @if (acceptableUsePolicyLink()) {
+          <ng-container
+            [ngTemplateOutlet]="linkTemplate"
+            [ngTemplateOutletContext]="{ link: acceptableUsePolicyLink() }"
+          />
+        }
+        @for (item of links(); track $index) {
+          <ng-container
+            [ngTemplateOutlet]="linkTemplate"
+            [ngTemplateOutletContext]="{ link: item }"
+          />
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 mb-6">
+    <div class="card overflow-hidden" [class.h-100]="licenseInfo().iframe">
+      <div class="card-header text-truncate">
+        {{ licenseInfo().title }}
+      </div>
+
+      <div class="h-100">
+        @if (licenseInfo().text) {
+          <pre class="list-group-item">{{ licenseInfo().text }}</pre>
+        }
+
+        @if (sanitizedUrl()) {
+          <iframe class="w-100 h-100" [src]="sanitizedUrl()" [title]="licenseInfo().title"></iframe>
+        }
+
+        @if (licenseInfo().api) {
+          @for (api of licenseApi(); track $index) {
+            <si-collapsible-panel
+              colorVariant="base-0"
+              class="license-api"
+              [heading]="api.name"
+              (panelToggle)="toggleLoadLicenseApi(api)"
+            >
+              @for (file of api.files; track $index) {
+                <si-collapsible-panel
+                  colorVariant="base-0"
+                  class="license-api-file"
+                  [icon]="licenseInfo().icon ? licenseInfo().icon : icons.elementDocument"
+                  [heading]="file.name"
+                  (panelToggle)="toggleLoadLicenseContent(file)"
+                >
+                  <pre class="license-api-file-content px-6 pt-6">{{ file.content }}</pre>
+                </si-collapsible-panel>
+              }
+            </si-collapsible-panel>
+          }
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #linkTemplate let-link="link">
+  <a
+    class="list-group-item si-title-2 text-body focus-inside"
+    siLinkDefaultTarget="_blank"
+    [siLink]="link"
+  >
+    {{ link.title | translate }}
+  </a>
+</ng-template>

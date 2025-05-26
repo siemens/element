@@ -1,0 +1,31 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+.list-group-item {
+  border-width: 0 0 1px;
+  padding-inline: map.get(variables.$spacers, 6);
+
+  &.with-border:first-child {
+    border-block-start-width: 1px;
+  }
+
+  &:last-child {
+    border-block-end-width: 0;
+  }
+}
+
+.app-icon {
+  font-size: 150px;
+}
+
+iframe {
+  border-style: none;
+  min-block-size: 500px;
+  margin-block-end: -5px;
+}
+
+pre {
+  word-break: break-word;
+  white-space: pre-wrap;
+}

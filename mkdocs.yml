@@ -118,6 +118,7 @@ nav:
         - Scatter Chart:                  'components/charts/scatter-chart.md'
         - Generic Chart:                  'components/charts/generic-chart.md'
     - Pages:
+      - About:                            'components/pages/about.md'
       - Info Page:                        'components/pages/info-page.md'
       - Unauthorized Page:                'components/pages/unauthorized-page.md'
   - Patterns:
