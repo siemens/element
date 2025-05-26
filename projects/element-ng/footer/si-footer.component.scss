@@ -1,0 +1,33 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+$page-footer-padding: map.get(variables.$spacers, 5);
+$footer-separator-content: '|' !default;
+$footer-separator-padding: map.get(variables.$spacers, 4);
+
+footer {
+  margin-block-end: 0;
+  background-color: variables.$element-base-0;
+  color: variables.$element-text-secondary;
+  font-size: variables.$si-font-size-caption-1;
+  border-block-start: 1px solid variables.$element-ui-4;
+
+  // Ensure we use the space in a surrounding container
+  overflow: auto;
+}
+
+a,
+span {
+  display: inline-flex;
+
+  + a::before,
+  + span::before {
+    content: $footer-separator-content;
+    padding-inline: $footer-separator-padding;
+  }
+}
+
+.container-fluid {
+  padding-block: $page-footer-padding;
+}

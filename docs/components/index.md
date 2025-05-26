@@ -23,6 +23,10 @@ documentation.
 
 - [Dropdowns](buttons-menus/dropdowns.md)
 
+## F
+
+- [Footer](layout-navigation/footer.md)
+
 ## L
 
 - [Launchpad](layout-navigation/launchpad.md)

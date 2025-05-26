@@ -1,0 +1,16 @@
+<footer>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-4 col-md-6"> © {{ copyright() }} </div>
+      <div class="col-sm-8 col-md-6 text-sm-end">
+        @for (link of links(); track $index) {
+          <span>
+            <a [siLink]="link">
+              {{ link.title | translate }}
+            </a>
+          </span>
+        }
+      </div>
+    </div>
+  </div>
+</footer>

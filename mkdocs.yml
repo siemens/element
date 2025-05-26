@@ -39,6 +39,7 @@ nav:
     - Layout & navigation:
       - Accordion:                        'components/layout-navigation/accordion.md'
       - Application header:               'components/layout-navigation/application-header.md'
+      - Footer:                           'components/layout-navigation/footer.md'
       - Launchpad:                        'components/layout-navigation/launchpad.md'
     - Status & notifications:
       - Avatar:                           'components/status-notifications/avatar.md'
