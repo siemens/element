@@ -32,6 +32,10 @@ documentation.
 
 - [Footer](layout-navigation/footer.md)
 
+## I
+
+- [Inline Notification](status-notifications/inline-notification.md)
+
 ## L
 
 - [Launchpad](layout-navigation/launchpad.md)

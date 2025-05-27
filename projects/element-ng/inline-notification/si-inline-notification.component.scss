@@ -1,0 +1,12 @@
+@use '@siemens/element-theme/src/styles/variables/semantic-tokens';
+
+:host {
+  display: block;
+  overflow: hidden;
+  flex-shrink: 0;
+  border-radius: semantic-tokens.$element-button-radius;
+}
+
+.alert :is(div, a) {
+  padding-block-start: 1px; // vertically align title/message with icon
+}

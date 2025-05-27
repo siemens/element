@@ -50,6 +50,7 @@ nav:
       - Connection Strength:              'components/status-notifications/connection-strength.md'
       - Copyright Notice:                 'components/status-notifications/copyright-notice.md'
       - Empty State:                      'components/status-notifications/empty-state.md'
+      - Inline Notification:              'components/status-notifications/inline-notification.md'
   - Architecture:
     - CSS framework:                      'architecture/css-framework.md'
     - Theming:                            'architecture/theming.md'

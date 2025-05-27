@@ -1,0 +1,25 @@
+<div
+  class="alert d-flex align-items-start"
+  role="alert"
+  aria-atomic="true"
+  aria-live="assertive"
+  [ngClass]="'alert-' + severity()"
+  [hidden]="!severity()"
+>
+  @let iconValue = icon();
+  <span class="icon icon-stack me-4 flex-shrink-0">
+    <si-icon-next [ngClass]="iconValue.color" [icon]="iconValue.icon" />
+    <si-icon-next [ngClass]="iconValue.stackedColor" [icon]="iconValue.stacked" />
+  </span>
+  <div class="d-flex flex-grow-1 flex-wrap mt-1">
+    @if (heading()) {
+      <strong class="pe-2">{{ heading() | translate: translationParams() }}: </strong>
+    }
+    <span>{{ message() | translate: translationParams() }}</span>
+  </div>
+  @if (action() && action()?.title) {
+    <a class="alert-link ms-4 flex-shrink-0 mt-1" [siLink]="action()">
+      {{ action()?.title | translate: translationParams() }}
+    </a>
+  }
+</div>
