@@ -19,4 +19,6 @@ export interface SiTranslatableKeys {
   'SI_PAGINATION.BACK'?: string;
   'SI_PAGINATION.FORWARD'?: string;
   'SI_PAGINATION.NAV_LABEL'?: string;
+  'SI_PASSWORD_TOGGLE.HIDE'?: string;
+  'SI_PASSWORD_TOGGLE.SHOW'?: string;
 }
