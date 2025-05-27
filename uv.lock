@@ -2,6 +2,12 @@ version = 1
 revision = 2
 requires-python = ">=3.11, <4"
 
+[manifest]
+members = [
+    "element",
+    "mkdocs-element-docs-builder",
+]
+
 [[package]]
 name = "babel"
 version = "2.17.0"
@@ -115,7 +121,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "mkdocs-code-siemens-code-docs-theme", specifier = ">=7.6.0,<8", index = "https://code.siemens.com/api/v4/groups/3259/-/packages/pypi/simple" },
-    { name = "mkdocs-element-docs-builder", editable = "projects/docs-builder" },
+    { name = "mkdocs-element-docs-builder", editable = "projects/element-docs-builder" },
     { name = "mkdocs-minify-html-plugin", specifier = "==0.3.1" },
 ]
 
@@ -258,7 +264,7 @@ wheels = [
 [[package]]
 name = "mkdocs-element-docs-builder"
 version = "1.0.0"
-source = { editable = "projects/docs-builder" }
+source = { editable = "projects/element-docs-builder" }
 
 [[package]]
 name = "mkdocs-get-deps"
