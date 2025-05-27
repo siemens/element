@@ -1,0 +1,21 @@
+<button
+  [type]="type()"
+  [ngClass]="buttonClass()"
+  [class.loading]="loading()"
+  [class.disabled]="loading()"
+  [disabled]="disabled()"
+  [attr.aria-disabled]="disabled() || loading()"
+  [attr.aria-label]="ariaLabel() | translate"
+  [attr.aria-labelledby]="ariaLabelledBy()"
+  [attr.tabindex]="loading() ? '-1' : null"
+  (click)="handleClick($event)"
+>
+  <div class="button-wrapper">
+    <ng-content />
+  </div>
+</button>
+@if (loading()) {
+  <div class="spinner-wrapper" (click)="$event.stopPropagation()">
+    <si-loading-spinner />
+  </div>
+}

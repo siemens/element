@@ -43,3 +43,7 @@ documentation.
 ## P
 
 - [Pagination](layout-navigation/pagination.md)
+
+## S
+
+- [Spinner](progress-indication/spinner.md)

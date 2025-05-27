@@ -1,0 +1,48 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+$loading-spinner-size: 64px;
+
+@keyframes spinner-fade {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.05;
+  }
+}
+
+.loading {
+  display: block;
+  text-align: center;
+}
+
+.blocking-spinner {
+  background: var(--element-base-translucent-1);
+}
+
+.spinner-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: variables.$zindex-fixed + 60;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+svg {
+  inline-size: var(--loading-spinner-size, $loading-spinner-size);
+  block-size: var(--loading-spinner-size, $loading-spinner-size);
+}
+
+path {
+  fill: var(--loading-spinner-color, variables.$element-ui-2);
+  animation: spinner-fade variables.element-transition-duration(1s) infinite linear;
+
+  @for $i from 0 through 9 {
+    &:nth-child(#{$i + 1}) {
+      animation-delay: #{$i * 0.1}s;
+      opacity: 1 - $i * 0.1;
+    }
+  }
+}

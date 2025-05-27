@@ -42,6 +42,8 @@ nav:
       - Footer:                           'components/layout-navigation/footer.md'
       - Launchpad:                        'components/layout-navigation/launchpad.md'
       - Pagination:                       'components/layout-navigation/pagination.md'
+    - Progress Indications:
+      - Spinner:                          'components/progress-indication/spinner.md'
     - Status & notifications:
       - Avatar:                           'components/status-notifications/avatar.md'
       - Connection Strength:              'components/status-notifications/connection-strength.md'

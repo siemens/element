@@ -1,0 +1,75 @@
+<div class="p-5 d-flex flex-wrap align-items-center gap-4">
+  <si-loading-button
+    buttonClass="btn btn-primary"
+    [loading]="loading"
+    (click)="handleClick('primary')"
+  >
+    Primary
+  </si-loading-button>
+  <si-loading-button
+    buttonClass="btn btn-secondary"
+    [loading]="loading"
+    (click)="handleClick('secondary')"
+  >
+    Secondary
+  </si-loading-button>
+  <si-loading-button
+    buttonClass="btn btn-secondary-warning"
+    [loading]="loading"
+    (click)="handleClick('secondary')"
+  >
+    Secondary
+  </si-loading-button>
+  <si-loading-button
+    buttonClass="btn btn-secondary-danger"
+    [loading]="loading"
+    (click)="handleClick('secondary')"
+  >
+    Secondary
+  </si-loading-button>
+  <si-loading-button
+    buttonClass="btn btn-tertiary"
+    [loading]="loading"
+    (click)="handleClick('tertiary')"
+  >
+    Tertiary
+  </si-loading-button>
+  <si-loading-button
+    buttonClass="btn btn-warning"
+    [loading]="loading"
+    (click)="handleClick('warning')"
+  >
+    Warning
+  </si-loading-button>
+  <si-loading-button
+    buttonClass="btn btn-danger"
+    [loading]="loading"
+    (click)="handleClick('danger')"
+  >
+    Danger
+  </si-loading-button>
+  <si-loading-button
+    buttonClass="btn btn-primary"
+    [loading]="loading"
+    (click)="handleClick('with icon')"
+  >
+    <i class="icon element-alarm-filled"></i>Default
+  </si-loading-button>
+  <si-loading-button
+    buttonClass="btn btn-circle btn-lg btn-primary element-clock"
+    ariaLabel="clock"
+    [loading]="loading"
+    (click)="handleClick('circle button')"
+  />
+  <si-loading-button
+    buttonClass="btn btn-circle btn-lg btn-ghost element-delete"
+    ariaLabel="clock"
+    [loading]="loading"
+    (click)="handleClick('ghost button')"
+  />
+</div>
+
+<div class="form-check p-5 e2e-ignore">
+  <input type="checkbox" class="form-check-input" id="disable-button" [(ngModel)]="loading" />
+  <label class="form-check-label" for="disable-button">Toggle loading</label>
+</div>

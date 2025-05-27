@@ -1,0 +1,58 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  inline-size: 100%;
+}
+
+button.loading {
+  .button-wrapper,
+  &::before {
+    // Need to hide the content. Using `visibility: hidden` doesn't work for a11y reasons.
+    opacity: 0;
+  }
+}
+
+.button-wrapper,
+.spinner-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner-wrapper {
+  --loading-spinner-size: 24px;
+  --loading-spinner-color: #{variables.$element-ui-6};
+  position: absolute;
+  inset: 0;
+}
+
+:is(.btn-secondary, .btn-tertiary) + .spinner-wrapper {
+  --loading-spinner-color: #{variables.$element-action-secondary-text};
+}
+
+.btn-danger + .spinner-wrapper {
+  --loading-spinner-color: #{variables.$element-action-danger-text};
+}
+
+.btn-warning + .spinner-wrapper {
+  --loading-spinner-color: #{variables.$element-action-warning-text};
+}
+
+.btn-ghost + .spinner-wrapper {
+  --loading-spinner-color: #{variables.$element-ui-2};
+}
+
+:is(.btn-secondary-warning, .btn-tertiary-warning) + .spinner-wrapper {
+  --loading-spinner-color: #{variables.$element-action-secondary-warning};
+}
+
+:is(.btn-secondary-danger, .btn-tertiary-danger) + .spinner-wrapper {
+  --loading-spinner-color: #{variables.$element-action-secondary-danger};
+}
