@@ -26,6 +26,10 @@ export const elementOctagonFilled =
   "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M320.2 77H191.8a24 24 0 0 0-17 7L84 174.83a24 24 0 0 0-7 17V320.2a24 24 0 0 0 7 17l90.8 90.8a24 24 0 0 0 17 7h128.4a24 24 0 0 0 17-7l90.8-90.8a24 24 0 0 0 7-17V191.8a24 24 0 0 0-7-17L337.17 84a24 24 0 0 0-16.97-7Z'/></svg>";
 export const elementPlus =
   "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M356 244h-88v-88a12 12 0 0 0-24 0v88h-88a12 12 0 0 0 0 24h88v88a12 12 0 0 0 24 0v-88h88a12 12 0 0 0 0-24Z'/></svg>";
+export const elementSoundMute =
+  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='m393 256 39.52-39.51a12 12 0 0 0-17-17L376 239l-39.51-39.52a12 12 0 0 0-17 17L359 256l-39.52 39.51a12 12 0 0 0 17 17L376 273l39.51 39.52a12 12 0 0 0 17-17ZM238 394a12 12 0 0 1-7.5-2.63L143.8 322H76a12 12 0 0 1-12-12V202a12 12 0 0 1 12-12h67.8l86.72-69.37A12 12 0 0 1 250 130v252a12 12 0 0 1-12 12ZM88 298h60a11.93 11.93 0 0 1 7.49 2.63L226 357.05V155l-70.5 56.36A11.93 11.93 0 0 1 148 214H88Z' /></svg>";
+export const elementSoundOn =
+  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M238 394a12 12 0 0 1-7.5-2.63L143.8 322H76a12 12 0 0 1-12-12V202a12 12 0 0 1 12-12h67.8l86.72-69.37A12 12 0 0 1 250 130v252a12 12 0 0 1-12 12ZM88 298h60a11.93 11.93 0 0 1 7.49 2.63L226 357.05V155l-70.5 56.36A11.93 11.93 0 0 1 148 214H88ZM383.29 395.27a12 12 0 0 1-8.48-20.48c65.48-65.5 65.48-172.08 0-237.58a12 12 0 1 1 17-17c74.83 74.86 74.83 196.66 0 271.52a12 12 0 0 1-8.52 3.54Zm-63.54-63.72a12 12 0 0 1-8.49-20.49 78.1 78.1 0 0 0 0-110.3 12 12 0 1 1 17-17 102.12 102.12 0 0 1 0 144.24 12 12 0 0 1-8.51 3.55Z' /></svg>";
 export const elementSquare45Filled =
   "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect x='113.17' y='113.17' width='285.65' height='285.65' rx='24' transform='rotate(-45 256 256.002)'/></svg>";
 export const elementSquareFilled =

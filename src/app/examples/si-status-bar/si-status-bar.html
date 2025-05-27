@@ -1,0 +1,39 @@
+<div class="p-5">
+  <si-status-bar
+    class="si-layout-status"
+    [items]="statusItems"
+    [compact]="compact"
+    [blink]="shouldBlink"
+    [muteButton]="showMute ? muteButton : undefined"
+    (muteToggle)="muteButton = !muteButton"
+  >
+    @if (customContent) {
+      <button type="button" class="btn btn-secondary mx-2 my-1">Add</button>
+    }
+  </si-status-bar>
+
+  <p>Here goes the content</p>
+</div>
+
+<div class="card m-5 e2e-ignore">
+  <div class="card-header">Control panel</div>
+  <div class="card-body">
+    <div class="row">
+      <si-form-item class="col-sm-3" label="Show mute button">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="showMute" />
+      </si-form-item>
+      <si-form-item class="col-sm-3" label="Compact mode">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="compact" />
+      </si-form-item>
+      <si-form-item class="col-sm-3" label="Show custom content">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="customContent" />
+      </si-form-item>
+    </div>
+    <div class="mt-3">
+      <button type="button" class="btn btn-secondary me-4" (click)="pause()">Pause blinking</button>
+      <button type="button" class="btn btn-secondary me-4" (click)="resume()"
+        >Resume blinking</button
+      >
+    </div>
+  </div>
+</div>

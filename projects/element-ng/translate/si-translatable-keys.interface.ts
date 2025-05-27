@@ -140,6 +140,10 @@ export interface SiTranslatableKeys {
   'SI_SLIDER.INCREMENT'?: string;
   'SI_SLIDER.LABEL'?: string;
   'SI_SORT_BAR.TITLE'?: string;
+  'SI_STATUS_BAR.ALL_OK'?: string;
+  'SI_STATUS_BAR.COLLAPSE'?: string;
+  'SI_STATUS_BAR.EXPAND'?: string;
+  'SI_STATUS_BAR.MUTE'?: string;
   'SI_TOAST.CLOSE'?: string;
   'SI_TYPEAHEAD.AUTOCOMPLETE_LIST_LABEL'?: string;
   'SI_WIZARD.BACK'?: string;

@@ -1,0 +1,30 @@
+<div class="p-5">
+  <si-status-bar
+    class="si-layout-status"
+    [items]="statusItems"
+    [compact]="true"
+    [blink]="shouldBlink"
+    [muteButton]="muteButton"
+    (muteToggle)="muteButton = !muteButton"
+  />
+
+  <div class="e2e-ignore">
+    <button type="button" class="btn btn-secondary me-4" (click)="pause()">Pause blinking</button>
+    <button type="button" class="btn btn-secondary me-4" (click)="resume()">Resume blinking</button>
+    <button type="button" class="btn btn-secondary" (click)="toggleBlinkButton()"
+      >Blink element</button
+    >
+
+    <div
+      class="my-5 p-4 rounded-2 demo-blink"
+      style="transition: background 0.5s"
+      [class.bg-base-warning]="blinkOn"
+    >
+      This can also blink
+    </div>
+
+    <div class="bg-base-1 mt-6 p-6">
+      <si-circle-status status="danger" icon="element-plant" [blink]="shouldBlink" />
+    </div>
+  </div>
+</div>

@@ -1,0 +1,124 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+$status-bar-padding: map.get(variables.$spacers, 4);
+$status-bar-padding-small: map.get(variables.$spacers, 1);
+$mute-padding: 44px;
+
+$blink-transition-duration: variables.$element-default-transition-duration;
+
+:host {
+  display: block;
+  position: relative;
+
+  ::ng-deep {
+    .blink {
+      transition: color $blink-transition-duration;
+    }
+
+    .bg {
+      transition: opacity $blink-transition-duration;
+    }
+  }
+}
+
+.pulse-off ::ng-deep .bg {
+  opacity: 0.1 !important; // stylelint-disable-line declaration-no-important
+}
+
+.status-bar-wrapper {
+  padding-inline: $status-bar-padding;
+  background-color: variables.$element-base-1;
+
+  > * {
+    display: flex;
+  }
+}
+
+.mobile-spacer {
+  margin-block: map.get(variables.$spacers, 2);
+  margin-inline: 0;
+  background: variables.$element-base-0;
+  block-size: 1px;
+}
+
+.bar-item {
+  margin-block: $status-bar-padding;
+}
+
+.custom-content {
+  margin-inline-start: auto; // put it on the right (in LTR)
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.mute-padding {
+  padding-inline-end: 44px;
+}
+
+.mobile-mute {
+  position: absolute;
+  inset-inline-end: $status-bar-padding;
+}
+
+.main-content .mute-button {
+  margin-inline-end: map.get(variables.$spacers, 2);
+}
+
+.collapse-expand {
+  background-color: variables.$element-base-1;
+  border-radius: 0 0 20px 20px;
+  inline-size: 40px;
+  cursor: pointer;
+
+  &.expanded {
+    box-shadow: 0 8px 8px var(--element-box-shadow-color-2);
+
+    si-icon-next {
+      transform: rotate(180deg);
+    }
+  }
+
+  si-icon-next {
+    margin-block-start: -4px;
+    transition: transform variables.element-transition-duration(0.4s);
+  }
+}
+
+.compact {
+  .bar-item {
+    margin-block: $status-bar-padding-small;
+  }
+}
+
+.responsive {
+  si-status-bar-item {
+    ::ng-deep .status-item {
+      max-inline-size: unset;
+      position: absolute;
+      inset-block: 0;
+      inset-inline: 0 map.get(variables.$spacers, 2);
+    }
+
+    &.mute-padding ::ng-deep .status-item {
+      inset-inline-end: $mute-padding;
+    }
+  }
+
+  &.expanded {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
+    z-index: variables.$zindex-statusbar;
+  }
+
+  .status-bar-wrapper {
+    > .main-content {
+      display: block;
+      transition: max-block-size variables.$element-default-transition-duration;
+    }
+  }
+}

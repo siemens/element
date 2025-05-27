@@ -1,0 +1,42 @@
+<div
+  class="status-item rounded-2 focus-inside d-flex align-items-center"
+  [class.text-muted]="!value()"
+  [class.blink]="blink() && value()"
+  [attr.tabindex]="clickable() ? '0' : ''"
+  [attr.aria-disabled]="!value()"
+>
+  <div
+    #bg
+    role="none"
+    class="bg focus-sub-inside"
+    [class.custom-color]="color()"
+    [class.contrast-fix]="contrastFix()"
+    [ngClass]="background()"
+    [class.d-none]="!value()"
+    [style.background-color]="blink() && color() ? color() : null"
+  ></div>
+  @let icon = statusIcon();
+  @if (!icon) {
+    <div
+      class="color-bar me-3 mt-1 mb-1"
+      [style.background-color]="value() && color() ? color() : null"
+    ></div>
+  }
+  @if (icon) {
+    <span class="indicator icon me-4 icon-stack">
+      <si-icon-next [ngClass]="value() ? icon.color : 'indicator-disabled'" [icon]="icon.icon" />
+      <si-icon-next
+        [ngClass]="value() ? icon.stackedColor : 'text-inverse'"
+        [icon]="icon.stacked"
+      />
+    </span>
+  }
+  <div class="overflow-hidden">
+    @if (value() !== undefined) {
+      <div class="item-value si-title-2 text-truncate">{{ value().toString() | translate }}</div>
+    }
+    @if (!valueOnly()) {
+      <div class="item-title text-truncate">{{ heading() | translate }}</div>
+    }
+  </div>
+</div>

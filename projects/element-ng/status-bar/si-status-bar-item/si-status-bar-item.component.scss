@@ -1,0 +1,97 @@
+@use 'sass:map';
+@use 'sass:math';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+$item-height-normal: 48px;
+$item-height-compact: 36px;
+$item-min-width: 100px;
+$item-padding: map.get(variables.$spacers, 4);
+$item-padding-small: map.get(variables.$spacers, 2);
+$item-spacing: map.get(variables.$spacers, 2);
+$colorbar-width: map.get(variables.$spacers, 2);
+
+:host {
+  position: relative;
+  padding-inline-end: $item-spacing;
+  block-size: $item-height-normal;
+
+  &.compact {
+    block-size: $item-height-compact;
+
+    .status-item {
+      padding-block: $item-padding-small;
+    }
+
+    .item-title {
+      margin-block-start: map.get(variables.$spacers, 1) * -1;
+    }
+  }
+
+  &.clickable:hover {
+    .status-item {
+      background-color: variables.$element-base-0 !important; // stylelint-disable-line declaration-no-important
+    }
+
+    .bg {
+      display: none !important; // stylelint-disable-line declaration-no-important
+    }
+  }
+
+  ::ng-deep .indicator-disabled {
+    color: variables.$element-ui-3;
+  }
+}
+
+.status-item {
+  position: relative;
+  padding-block: $item-padding;
+  padding-inline: $item-padding-small $item-padding;
+  min-inline-size: $item-min-width;
+  color: variables.$element-text-primary;
+  white-space: nowrap;
+
+  > * {
+    pointer-events: none;
+  }
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  border-radius: variables.$element-radius-2;
+  pointer-events: none;
+}
+
+.bg.custom-color {
+  opacity: 0.5;
+
+  &.contrast-fix {
+    opacity: 0.25;
+  }
+}
+
+.item-title,
+.item-value {
+  position: relative;
+
+  &::before {
+    content: '\200B'; // Zero-width-space to ensure label and value don't collapse if empty
+  }
+}
+
+.color-bar {
+  align-self: stretch;
+  min-inline-size: $colorbar-width;
+  border-radius: math.div($colorbar-width, 2);
+  background: variables.$element-ui-4;
+}
+
+.item-title {
+  margin-block-start: map.get(variables.$spacers, 1);
+  line-height: 1rem;
+}
+
+.item-value {
+  line-height: 1;
+}

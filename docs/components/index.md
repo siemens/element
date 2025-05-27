@@ -86,6 +86,7 @@ documentation.
 - [Sort Bar](sorting-filtering/sort-bar.md)
 - [Spinner](progress-indication/spinner.md)
 - [Split](layout-navigation/split.md)
+- [Status Bar](status-notifications/status-bar.md)
 - [Status Toggle](status-notifications/status-toggle.md)
 - [Summary Chip](status-notifications/summary-chip.md)
 - [Summary Widget](status-notifications/summary-widget.md)

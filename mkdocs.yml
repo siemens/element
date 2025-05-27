@@ -87,6 +87,7 @@ nav:
       - Icon Status:                      'components/status-notifications/icon-status.md'
       - Inline Notification:              'components/status-notifications/inline-notification.md'
       - Popover:                          'components/status-notifications/popover.md'
+      - Status Bar:                       'components/status-notifications/status-bar.md'
       - Status Toggle:                    'components/status-notifications/status-toggle.md'
       - Summary Chip:                     'components/status-notifications/summary-chip.md'
       - Summary Widget:                   'components/status-notifications/summary-widget.md'

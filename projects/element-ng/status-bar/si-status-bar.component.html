@@ -1,0 +1,119 @@
+<div
+  class="expand-placeholder"
+  [class.expanded]="expanded()"
+  [style.height.px]="placeholderHeight()"
+></div>
+<div
+  #thebar
+  aria-busy="true"
+  [class.responsive]="responsiveMode"
+  [class.expanded]="expanded()"
+  [class.compact]="responsiveMode || compact()"
+  [class.pulse-off]="blinkOnOff() === false"
+  [class.pulse-on]="blinkOnOff()"
+  [ngClass]="responsiveMode ? 'responsive-' + responsiveMode : ''"
+>
+  <div
+    class="status-bar-wrapper rounded-2"
+    [class.elevation-2]="expanded()"
+    [class.pe-2]="muteButton() !== undefined"
+  >
+    @if (responsiveMode) {
+      <div class="align-items-center overflow-hidden">
+        <div class="d-flex flex-fill position-relative">
+          @for (item of responsiveItems(); track $index) {
+            <si-status-bar-item
+              class="bar-item compact"
+              [value]="item.value"
+              [heading]="item.title"
+              [status]="item.status"
+              [color]="item.color"
+              [blink]="item.blink !== false && blink() && !expanded()"
+              [clickable]="!!item.action"
+              [class.mute-padding]="item.mutePadding && muteButton() !== undefined"
+              [style.flex-basis.%]="responsiveMode ? 100 / responsiveMode : null"
+              [valueOnly]="item.isSpecial"
+              (click)="onItemClicked(item)"
+              (keydown.enter)="onItemClicked(item)"
+            />
+          }
+        </div>
+        @if (muteButton() !== undefined) {
+          <div class="mobile-mute">
+            <ng-container *ngTemplateOutlet="muteButtonTemplate" />
+          </div>
+        }
+      </div>
+    }
+    <div
+      #content
+      class="main-content align-items-center overflow-hidden"
+      [style.max-height.px]="contentHeight()"
+    >
+      @if (responsiveMode) {
+        <div class="mobile-spacer"></div>
+      }
+      <div
+        class="d-flex flex-fill position-relative"
+        [id]="statusId"
+        [class.d-none]="responsiveMode && !expanded()"
+        [class.flex-wrap]="responsiveMode"
+      >
+        @for (item of items(); track $index) {
+          <si-status-bar-item
+            class="bar-item"
+            [class.compact]="responsiveMode || compact()"
+            [value]="item.value"
+            [heading]="item.title"
+            [status]="item.status"
+            [color]="item.color"
+            [blink]="item.blink !== false && blink()"
+            [clickable]="!!item.action"
+            [style.flex-basis.%]="responsiveMode ? 100 / responsiveMode : null"
+            (click)="onItemClicked(item)"
+            (keydown.enter)="onItemClicked(item)"
+          />
+        }
+      </div>
+      <div class="custom-content bar-item d-flex">
+        <div #custom [class.pb-2]="responsiveMode && expanded" (siResizeObserver)="resizeHandler()">
+          <ng-content />
+        </div>
+      </div>
+      @if (muteButton() !== undefined && !responsiveMode) {
+        <ng-container *ngTemplateOutlet="muteButtonTemplate" />
+      }
+    </div>
+  </div>
+  @if (responsiveMode) {
+    <div class="d-flex align-items-center justify-content-center">
+      <a
+        class="collapse-expand text-center p-0 focus-force"
+        tabindex="0"
+        role="button"
+        [attr.aria-label]="(expanded() ? collapseButtonText() : expandButtonText()) | translate"
+        [attr.aria-expanded]="!!expanded()"
+        [attr.aria-controls]="statusId"
+        [class.expanded]="expanded() === 2"
+        (keydown.enter)="toggleExpand()"
+        (click)="toggleExpand()"
+      >
+        <si-icon-next class="icon" [icon]="icons.elementDown2" />
+      </a>
+    </div>
+  }
+</div>
+
+<ng-template #muteButtonTemplate>
+  <button
+    type="button"
+    class="bar-item mute-button btn btn-circle btn-sm btn-tertiary ms-5"
+    [attr.aria-label]="muteButtonText() | translate"
+    (click)="muteToggle.emit()"
+  >
+    <si-icon-next
+      class="icon"
+      [icon]="muteButton() ? icons.elementSoundOn : icons.elementSoundMute"
+    />
+  </button>
+</ng-template>
