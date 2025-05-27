@@ -1,0 +1,94 @@
+<button type="button" class="btn btn-secondary me-5" (click)="openModal(template)"
+  >Create template modal</button
+>
+<button type="button" class="btn btn-secondary me-5" (click)="openModal(template, 'modal-lg')"
+  >Create large modal</button
+>
+<button
+  type="button"
+  class="btn btn-secondary me-5"
+  (click)="openModal(template, 'modal-dialog-centered')"
+  >Create centered modal</button
+>
+<button type="button" class="btn btn-secondary me-5" (click)="openModal(iconTemplate)"
+  >Create modal with icon</button
+>
+<button
+  type="button"
+  class="btn btn-secondary me-5"
+  (click)="openParentModal(nestedTemplate, 'modal-dialog-centered')"
+  >Create nested modal</button
+>
+
+<ng-template #template let-modalRef="modalRef">
+  <div class="modal-header">
+    <h4 class="modal-title" id="sample-modal-title">Modal</h4>
+    <button
+      type="button"
+      class="btn btn-circle btn-sm btn-ghost element-cancel"
+      aria-label="Close modal"
+      (click)="modalRef.hide('cancel')"
+    >
+    </button>
+  </div>
+  <div class="modal-body">
+    <span>This is the body.</span>
+  </div>
+  <div class="modal-footer">
+    <span>This is the footer.</span>
+    <button type="button" class="btn btn-secondary" (click)="modalRef.hide('close')">Close</button>
+  </div>
+</ng-template>
+
+<ng-template #nestedTemplate let-parentModalRef="modalRef" let-thing="someThing">
+  <div class="modal-header">
+    <h4 class="modal-title" id="sample-modal-title-parent">Modal</h4>
+    <button
+      type="button"
+      class="btn btn-circle btn-sm btn-ghost element-cancel"
+      aria-label="Close modal"
+      (click)="parentModalRef.hide('cancel')"
+    >
+    </button>
+  </div>
+  <div class="modal-body">
+    This is parent dialog.<br />
+    <code>someThing</code> from the context: {{ thing }}
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="openModal(template, 'modal-lg')"
+      >Proceed</button
+    >
+    <button type="button" class="btn btn-secondary" (click)="parentModalRef.hide('close')"
+      >Close</button
+    >
+  </div>
+</ng-template>
+
+<ng-template #iconTemplate let-iconModalRef="modalRef" let-thing="someThing">
+  <div class="modal-header">
+    <si-icon
+      icon="element-square-filled"
+      color="status-info"
+      stackedIcon="element-state-info"
+      stackedColor="status-info-contrast"
+    />
+    <h4 class="modal-title" id="sample-modal-title">Modal</h4>
+    <button
+      type="button"
+      class="btn btn-circle btn-sm btn-ghost element-cancel"
+      aria-label="Close modal"
+      (click)="iconModalRef.hide('cancel')"
+    >
+    </button>
+  </div>
+  <div class="modal-body">
+    <span>This is the body.</span>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="iconModalRef.hide('close')"
+      >Close</button
+    >
+    <button type="button" class="btn btn-primary" (click)="iconModalRef.hide('ok')">Accept</button>
+  </div>
+</ng-template>

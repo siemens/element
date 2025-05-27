@@ -41,6 +41,7 @@ nav:
       - Application header:               'components/layout-navigation/application-header.md'
       - Footer:                           'components/layout-navigation/footer.md'
       - Launchpad:                        'components/layout-navigation/launchpad.md'
+      - Modals:                           'components/layout-navigation/modals.md'
       - Pagination:                       'components/layout-navigation/pagination.md'
     - Status & notifications:
       - Avatar:                           'components/status-notifications/avatar.md'

@@ -39,6 +39,7 @@ documentation.
 ## M
 
 - [Menu](buttons-menus/menu.md)
+- [Modals](layout-navigation/modals.md)
 
 ## P
 

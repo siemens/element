@@ -1,0 +1,24 @@
+@if (showBackdropClass() !== undefined) {
+  <div
+    class="modal-backdrop"
+    [class.fade]="modalRef.data.animated !== false"
+    [class.show]="showBackdropClass()"
+  ></div>
+}
+@if (init) {
+  <div
+    #modalContainer
+    role="dialog"
+    class="modal d-block"
+    aria-modal="true"
+    [class.fade]="modalRef.data.animated !== false"
+    [class.show]="show()"
+    [attr.aria-labelledby]="titleId"
+  >
+    <div class="modal-dialog" cdkTrapFocus cdkTrapFocusAutoCapture [ngClass]="dialogClass">
+      <div class="modal-content">
+        <ng-content />
+      </div>
+    </div>
+  </div>
+}
