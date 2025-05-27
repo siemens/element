@@ -7,8 +7,8 @@
 // stylelint-disable selector-class-pattern
 
 $default: #000;
-$background: #fff;
-$background-readonly: #f9f9f9;
+$background: variables.$live-preview-editor-background-color;
+$background-readonly: variables.$live-preview-editor-background-color;
 $purple: #a626a4;
 $yellow: #986801;
 $yellow2: #c18401;
@@ -22,8 +22,8 @@ $lines-background: #eee;
 
 // join the dark side, we have cookies!
 $default-dark: #bcbcbc;
-$background-dark: #222;
-$background-readonly-dark: #333;
+$background-dark: variables.$live-preview-editor-background-color;
+$background-readonly-dark: variables.$live-preview-editor-background-color;
 $lines-color-dark: #eee;
 $lines-background-dark: #666;
 
