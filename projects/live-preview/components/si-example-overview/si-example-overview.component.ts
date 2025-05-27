@@ -2,7 +2,7 @@
  * Copyright Siemens 2016 - 2025.
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -27,13 +27,15 @@ interface TreeItem {
   templateUrl: './si-example-overview.component.html',
   styleUrl: './si-example-overview.component.scss'
 })
-export class SiExampleOverviewComponent implements OnInit {
+export class SiExampleOverviewComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private title = inject(Title);
   private config = inject(SI_LIVE_PREVIEW_CONFIG);
   private internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
   private componentList: string[] = [];
+  private darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  private mediaQueryListener = (): void => this.toggleDark(this.darkMediaQuery.matches);
 
   protected activeExampleRoute!: Observable<string>;
   protected tree: TreeItem[] = [];
@@ -73,6 +75,18 @@ export class SiExampleOverviewComponent implements OnInit {
           queryParamsHandling: 'merge'
         });
       });
+
+    this.mediaQueryListener();
+    this.darkMediaQuery.addEventListener('change', this.mediaQueryListener);
+  }
+
+  ngOnDestroy(): void {
+    this.darkMediaQuery.removeEventListener('change', this.mediaQueryListener);
+  }
+
+  private toggleDark(dark: boolean): void {
+    document.documentElement.classList.toggle('app--dark', dark);
+    document.documentElement.classList.toggle('app--light', !dark);
   }
 
   private makeTree(filterValue?: string): void {
