@@ -1,0 +1,137 @@
+<si-file-dropzone
+  #dropZone
+  [ngClass]="autoUpload() ? 'mb-8' : 'mb-4'"
+  [uploadTextFileSelect]="uploadTextFileSelect()"
+  [uploadDropText]="uploadDropText()"
+  [multiple]="maxFiles() > 1"
+  [directoryUpload]="directoryUpload()"
+  [maxFileSizeText]="maxFileSizeText()"
+  [acceptText]="acceptText()"
+  [errorTextFileType]="errorTextFileType()"
+  [errorTextFileMaxSize]="errorTextFileMaxSize()"
+  [accept]="accept()"
+  [maxFileSize]="maxFileSize()"
+  (filesAdded)="handleFiles($event)"
+/>
+
+@if (maxFilesReached) {
+  <si-inline-notification class="mb-4" severity="info" [message]="maxFilesReachedText()" />
+}
+
+<div class="file-list">
+  @for (file of files; track file) {
+    <div
+      class="file d-flex"
+      [ngClass]="autoUpload() ? 'mb-8' : 'mb-4'"
+      [class.fade-out]="file.fadeOut"
+    >
+      <si-icon-next class="icon align-self-center ms-6 me-4" [icon]="icons.elementDocument" />
+      <div class="flex-fill overflow-hidden">
+        <div class="file-info">
+          <div class="file-name text-truncate si-title-2">{{ file.fileName }}</div>
+          <div class="file-size text-secondary">{{ file.size }}</div>
+        </div>
+        @if (file.errorText) {
+          <div
+            class="error text-truncate d-flex align-items-center"
+            [class.text-warning]="file.status === 'invalid'"
+            [class.text-danger]="file.status === 'error'"
+          >
+            <si-icon
+              class="d-inline-block my-n2 me-2"
+              size="icon-small"
+              stackedIcon="element-state-exclamation-mark smooth-auto"
+              alt=""
+              [icon]="
+                file.status === 'invalid' ? 'element-triangle-filled' : 'element-circle-filled'
+              "
+              [color]="file.status === 'invalid' ? 'status-warning' : 'status-danger'"
+              [stackedColor]="
+                file.status === 'invalid' ? 'status-warning-contrast' : 'status-danger-contrast'
+              "
+            />
+            {{ file.errorText | translate }}
+            @if (file.httpErrorText) {
+              : {{ file.httpErrorText }}
+            }
+          </div>
+        }
+        @if (!file.errorText) {
+          <div class="position-relative">
+            <div class="position-absolute si-caption end-0 mt-n8">{{ file.progress }} %</div>
+            <si-progressbar
+              height="small"
+              [value]="file.progress"
+              [ariaLabel]="uploadingText() | translate"
+            />
+          </div>
+        }
+      </div>
+      <div class="status align-self-center text-nowrap ps-4 pe-6">
+        @if (file.status === 'error') {
+          <button
+            type="button"
+            class="btn btn-circle btn-sm btn-tertiary me-4"
+            [disabled]="!uploadEnabled"
+            [title]="uploadButtonText() | translate"
+            [attr.aria-label]="uploadButtonText() | translate"
+            (click)="retryUpload(file)"
+          >
+            <si-icon-next [icon]="icons.elementRedo" />
+          </button>
+        }
+        @if (file.status === 'added' || file.status === 'error' || file.status === 'invalid') {
+          <button
+            type="button"
+            class="btn btn-circle btn-sm btn-ghost"
+            [title]="removeButtonText() | translate"
+            [attr.aria-label]="removeButtonText() | translate"
+            (click)="removeFile($index)"
+          >
+            <si-icon-next [icon]="icons.elementDelete" />
+          </button>
+        }
+        @if (file.status === 'uploading' || file.status === 'queued') {
+          <button
+            type="button"
+            class="btn btn-circle btn-sm btn-tertiary"
+            [title]="cancelButtonText() | translate"
+            [attr.aria-label]="cancelButtonText() | translate"
+            (click)="cancelUpload(file)"
+          >
+            <si-icon-next [icon]="icons.elementCancel" />
+          </button>
+        }
+        @if (file.status === 'success') {
+          <si-icon
+            class="mx-2"
+            icon="element-circle-filled"
+            color="status-success"
+            stackedIcon="element-state-tick smooth-auto"
+            stackedColor="status-success-contrast"
+            [alt]="successTextTitle()"
+          />
+        }
+      </div>
+    </div>
+  }
+</div>
+
+@if (!autoUpload()) {
+  <div class="buttons text-end">
+    <button
+      type="button"
+      class="btn btn-secondary me-4"
+      [disabled]="pending || !files.length"
+      (click)="reset()"
+      >{{ clearButtonText() | translate }}</button
+    >
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="!uploadEnabled"
+      (click)="fileUpload()"
+      >{{ uploadButtonText() | translate }}</button
+    >
+  </div>
+}

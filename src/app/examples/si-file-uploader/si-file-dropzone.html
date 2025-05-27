@@ -1,0 +1,27 @@
+<div class="card">
+  <si-file-dropzone
+    class="card-body"
+    accept="image/*"
+    [maxFileSize]="maxFileSizeInBytes"
+    (filesAdded)="files = $event"
+  />
+</div>
+
+<div class="card mt-6 e2e-ignore">
+  <div class="card-body">
+    Files
+    <ul>
+      @for (file of files; track file) {
+        <li>
+          <b>name</b>: {{ file.fileName }}
+          <br />
+          <b>size</b>: {{ file.size }}
+          <br />
+          <b>state</b>: {{ file.status }}
+          <br />
+          <b>errorText</b>: {{ file.errorText }}
+        </li>
+      }
+    </ul>
+  </div>
+</div>

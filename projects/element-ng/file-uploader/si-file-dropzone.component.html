@@ -1,0 +1,39 @@
+<div
+  class="drag-and-drop rounded p-6"
+  [class.drag-over]="dragOver"
+  (drop)="dropHandler($event)"
+  (dragover)="dragOverHandler($event)"
+  (dragleave)="dragOver = false"
+>
+  <si-icon-next class="mb-6 si-display-3" [icon]="icons.elementUpload" />
+  <span class="drag-and-drop-description si-title-2 d-flex">
+    <span>{{ uploadDropText() | translate }}</span>
+    &nbsp;
+    <label class="select-file si-title-2 mb-0">
+      <span tabindex="0" (keydown.enter)="inputEnterHandler()">{{
+        uploadTextFileSelect() | translate
+      }}</span>
+      <input
+        #fileInput
+        type="file"
+        tabindex="-1"
+        class="d-none"
+        [attr.webkitdirectory]="directoryUpload() ? true : null"
+        [accept]="accept()"
+        [multiple]="multiple()"
+        (change)="inputHandler($event)"
+        (cancel)="$event.stopPropagation()"
+      />
+    </label>
+  </span>
+  @if (maxFileSize() || accept()) {
+    <div class="allowed si-caption mt-6">
+      @if (maxFileSize()) {
+        {{ maxFileSizeText() | translate }}: {{ maxFileSizeString() }}.
+      }
+      @if (accept()) {
+        {{ acceptText() | translate }}: {{ accept() }}.
+      }
+    </div>
+  }
+</div>
