@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="col-sm-4">
+    <label for="exampleInput" class="form-label" [class.required]="required && !readonly">
+      Number input
+    </label>
+    <si-number-input
+      #control="ngModel"
+      inputId="exampleInput"
+      class="form-control"
+      [min]="minValue"
+      [max]="maxValue"
+      [step]="stepSize"
+      [required]="required"
+      [readonly]="readonly"
+      [disabled]="disabled"
+      [unit]="unit"
+      [showButtons]="showButtons"
+      [class.text-end]="alignEnd"
+      [(ngModel)]="value"
+    />
+  </div>
+</div>
+
+<div class="card mt-6 e2e-ignore">
+  <div class="card-header">Control panel</div>
+  <div class="card-body">
+    <si-form-item class="mb-6 col-sm-4" label="Current value">
+      <input type="number" class="form-control" [(ngModel)]="value" />
+    </si-form-item>
+    <div class="mb-6"> Validation: {{ control.errors | json }} </div>
+    <div class="row">
+      <si-form-item class="col-sm-2" label="Readonly">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="readonly" />
+      </si-form-item>
+      <si-form-item class="col-sm-2" label="Required">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="required" />
+      </si-form-item>
+      <si-form-item class="col-sm-2" label="Disabled">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="disabled" />
+      </si-form-item>
+      <si-form-item class="col-sm-2" label="-/+ Buttons">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="showButtons" />
+      </si-form-item>
+      <si-form-item class="col-sm-3" label="Align end (right in LTR)">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="alignEnd" />
+      </si-form-item>
+    </div>
+    <div class="row">
+      <si-form-item class="col-sm-4" label="Min. value">
+        <input type="number" class="form-control" [(ngModel)]="minValue" />
+      </si-form-item>
+      <si-form-item class="col-sm-4" label="Max. value">
+        <input type="number" class="form-control" [(ngModel)]="maxValue" />
+      </si-form-item>
+      <si-form-item class="col-sm-4" label="Step size">
+        <input type="number" class="form-control" [(ngModel)]="stepSize" />
+      </si-form-item>
+      <si-form-item class="col-sm-4" label="Unit">
+        <input type="text" class="form-control" [(ngModel)]="unit" />
+      </si-form-item>
+    </div>
+  </div>
+</div>

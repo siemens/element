@@ -1,0 +1,54 @@
+<input
+  #inputElement
+  type="number"
+  class="focus-none"
+  [attr.id]="inputId()"
+  [step]="step()"
+  [readonly]="readonly()"
+  [disabled]="disabled()"
+  [attr.aria-label]="ariaLabel() | translate"
+  [attr.aria-describedby]="errormessageId"
+  [attr.placeholder]="placeholder() | translate"
+  [attr.min]="min()"
+  [attr.max]="max()"
+  (blur)="onTouched()"
+  (input)="modelChanged()"
+/>
+@if (unit()) {
+  <span class="unit ms-2" [class.text-secondary]="!disabled()" [class.text-disabled]="disabled()">{{
+    unit()
+  }}</span>
+} @else {
+  <!-- To reserve space for feedback icon -->
+  <span class="unit"></span>
+}
+@if (showButtons()) {
+  <button
+    type="button"
+    tabindex="-1"
+    aria-hidden="true"
+    class="dec btn btn-circle btn-tertiary btn-xs my-n3 ms-2"
+    [disabled]="disabled() || readonly() || !canDec"
+    (mousedown)="autoUpdateStart($event, false)"
+    (touchstart)="autoUpdateStart($event, false)"
+    (touchend)="autoUpdateStop()"
+    (mouseup)="autoUpdateStop()"
+    (mouseleave)="autoUpdateStop()"
+  >
+    <si-icon-next [icon]="icons.elementMinus" />
+  </button>
+  <button
+    type="button"
+    tabindex="-1"
+    aria-hidden="true"
+    class="inc btn btn-circle btn-tertiary btn-xs my-n3 me-n2"
+    [disabled]="disabled() || readonly() || !canInc"
+    (mousedown)="autoUpdateStart($event, true)"
+    (touchstart)="autoUpdateStart($event, true)"
+    (touchend)="autoUpdateStop()"
+    (mouseup)="autoUpdateStop()"
+    (mouseleave)="autoUpdateStop()"
+  >
+    <si-icon-next [icon]="icons.elementPlus" />
+  </button>
+}

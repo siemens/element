@@ -48,6 +48,10 @@ documentation.
 - [Menu](buttons-menus/menu.md)
 - [Modals](layout-navigation/modals.md)
 
+## N
+
+- [Number Input](forms-inputs/number-input.md)
+
 ## P
 
 - [Pagination](layout-navigation/pagination.md)

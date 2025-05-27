@@ -1,0 +1,28 @@
+/**
+ * Copyright Siemens 2016 - 2025.
+ * SPDX-License-Identifier: MIT
+ */
+import { JsonPipe } from '@angular/common';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { SiFormItemComponent } from '@siemens/element-ng/form';
+import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
+
+@Component({
+  selector: 'app-sample',
+  templateUrl: './si-number-input.html',
+  host: { class: 'p-5' },
+  imports: [FormsModule, SiFormItemComponent, SiNumberInputComponent, JsonPipe]
+})
+export class SampleComponent {
+  value = 42;
+  minValue = 0;
+  maxValue = 100;
+  stepSize = 1;
+  required = true;
+  readonly = false;
+  disabled = false;
+  unit = '°C';
+  showButtons = true;
+  alignEnd = true;
+}
