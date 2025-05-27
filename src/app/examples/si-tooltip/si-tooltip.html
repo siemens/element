@@ -1,0 +1,65 @@
+<div class="button-container pt-11 ps-8 d-flex flex-wrap gap-4">
+  <button
+    type="button"
+    class="btn btn-secondary"
+    siTooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+    placement="top"
+  >
+    Tooltip on top
+  </button>
+
+  <button
+    type="button"
+    class="btn btn-secondary"
+    siTooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+    placement="end"
+  >
+    Tooltip on end
+  </button>
+
+  <button type="button" class="btn btn-secondary" siTooltip="Vivamus." placement="auto">
+    Tooltip auto
+  </button>
+
+  <button
+    type="button"
+    class="btn btn-secondary"
+    siTooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+    placement="start"
+  >
+    Tooltip on start
+  </button>
+
+  <button
+    type="button"
+    class="btn btn-secondary"
+    siTooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+    placement="bottom"
+  >
+    Tooltip on bottom
+  </button>
+
+  <button
+    type="button"
+    class="btn btn-primary"
+    siTooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+    triggers="focus"
+  >
+    Dismissible tooltip
+  </button>
+
+  <button type="button" class="btn btn-secondary" placement="top" [siTooltip]="tooltipTemplateHtml">
+    Tooltip template html
+  </button>
+  <ng-template #tooltipTemplateHtml> Hello: <div [innerHtml]="html"></div> </ng-template>
+  <button type="button" class="btn btn-secondary" placement="top" [siTooltip]="tooltipTemplate">
+    Tooltip template
+  </button>
+
+  <ng-template #tooltipTemplate>
+    <div class="text-center">
+      <si-icon icon="element-info" size="display-4" />
+    </div>
+    <em>Hello, I'm a tooltip.</em>
+  </ng-template>
+</div>

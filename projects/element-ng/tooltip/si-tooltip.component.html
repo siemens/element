@@ -1,0 +1,21 @@
+<div
+  class="tooltip show position-relative"
+  role="tooltip"
+  [id]="id()"
+  [ngClass]="tooltipPositionClass()"
+>
+  <div
+    class="tooltip-arrow"
+    [style.left.px]="arrowPos()?.left"
+    [style.right.px]="arrowPos()?.right"
+  ></div>
+  <div class="tooltip-inner">
+    @if (tooltipText()) {
+      <div class="si-body-2">{{ tooltipText() | translate }}</div>
+    } @else if (tooltipTemplate()) {
+      <ng-template [ngTemplateOutlet]="tooltipTemplate()" />
+    } @else if (tooltipComponent()) {
+      <ng-container [ngComponentOutlet]="tooltipComponent()" />
+    }
+  </div>
+</div>

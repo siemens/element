@@ -48,3 +48,7 @@ documentation.
 ## S
 
 - [Spinner](progress-indication/spinner.md)
+
+## T
+
+- [Tooltip](status-notifications/tooltip.md)
