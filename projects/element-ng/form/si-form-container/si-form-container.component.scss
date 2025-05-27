@@ -1,0 +1,20 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+
+  ::slotted([si-form-container-message]),
+  ::ng-deep [si-form-container-message] {
+    max-inline-size: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.form-container-edit-help {
+  text-decoration: underline;
+  cursor: pointer;
+}

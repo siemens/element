@@ -1,0 +1,17 @@
+<div class="pt-1 pb-0">
+  <div class="form-label" [class.required]="isRequired()" [id]="labelId">{{
+    label() | translate
+  }}</div>
+</div>
+<div>
+  <ng-content />
+  @if (hasOnlyRadios()) {
+    <div class="invalid-feedback" [class.d-block]="touched()">
+      @for (error of errors(); track error) {
+        <div>
+          {{ error.message | translate: error.params }}
+        </div>
+      }
+    </div>
+  }
+</div>

@@ -1,0 +1,71 @@
+@if (!fieldControl()?.isFormCheck || (isLegacyMode() && label())) {
+  @if (label()) {
+    @let labeledBy = formItemLabelledBy;
+    @if (labeledBy) {
+      <span
+        class="text-break form-label"
+        [id]="labeledBy"
+        [class.required]="required() && !this.fieldset?.hasOnlyRadios()"
+        >{{ label() | translate }}</span
+      >
+    } @else {
+      <label class="text-break form-label" [for]="formItemId" [class.required]="required()">{{
+        label() | translate
+      }}</label>
+    }
+  }
+  <div class="form-item-content">
+    <ng-container [ngTemplateOutlet]="content" />
+    @if (printErrors() && !fieldset?.hasOnlyRadios()) {
+      <div class="invalid-feedback" [attr.id]="formItemErrormessageId">
+        @for (error of errors(); track error.key) {
+          <div>
+            {{ error.message | translate: error.params }}
+          </div>
+        }
+      </div>
+    }
+  </div>
+} @else {
+  <!--Block the space if no form-field is provided. Otherwise it looks weird.-->
+  @if (!fieldset) {
+    <div class="form-label"></div>
+  }
+  <div class="form-item-content">
+    <ng-container [ngTemplateOutlet]="checkbox" />
+    @if (label()) {
+      @if (fieldControl()?.labelledby) {
+        <span
+          class="text-break form-check-label"
+          [id]="fieldControl()!.labelledby"
+          [class.required]="required() && !this.fieldset?.hasOnlyRadios()"
+          >{{ label()! | translate }}</span
+        >
+      } @else {
+        <label
+          class="text-break form-check-label"
+          [for]="formItemId"
+          [class.required]="required() && !this.fieldset?.hasOnlyRadios()"
+          >{{ label()! | translate }}</label
+        >
+      }
+    }
+    <ng-container [ngTemplateOutlet]="content" />
+    @if (printErrors() && !fieldset?.hasOnlyRadios()) {
+      <div class="invalid-feedback" [attr.id]="formItemErrormessageId">
+        @for (error of errors(); track error.key) {
+          <div>
+            {{ error.message | translate: error.params }}
+          </div>
+        }
+      </div>
+    }
+  </div>
+}
+
+<ng-template #checkbox>
+  <ng-content select="input[type='checkbox'], input[type='radio']" />
+</ng-template>
+<ng-template #content>
+  <ng-content />
+</ng-template>

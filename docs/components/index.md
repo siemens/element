@@ -32,6 +32,7 @@ documentation.
 ## F
 
 - [Footer](layout-navigation/footer.md)
+- [Forms](forms-inputs/forms.md)
 
 ## I
 
