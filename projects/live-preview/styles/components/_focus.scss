@@ -1,0 +1,6 @@
+@use '../variables';
+
+*:focus-visible {
+  outline: variables.$live-preview-focus-outline;
+  outline-offset: variables.$live-preview-focus-outline-offset;
+}

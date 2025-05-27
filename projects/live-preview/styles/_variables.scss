@@ -15,7 +15,9 @@ $live-preview-button-background-color: variables.$element-action-secondary;
 
 $live-preview-control-fill-color: variables.$element-text-primary;
 
-$live-preview-focus-shadow-color: variables.$focus-style-outline;
+$live-preview-focus-outline: variables.$focus-style-outline;
+$live-preview-focus-outline-offset: variables.$focus-style-outline-offset;
+$live-preview-focus-outline-inside-offset: variables.$focus-style-outline-inside-offset;
 $live-preview-font-color: variables.$element-text-primary;
 
 $live-preview-link-color: variables.$element-action-secondary-text;

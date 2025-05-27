@@ -1,5 +1,6 @@
 @use '../../styles/variables';
 @use '../../styles/components/tabs';
+@use '../../styles/components/focus';
 
 .wrapper {
   background-color: variables.$live-preview-background-color;

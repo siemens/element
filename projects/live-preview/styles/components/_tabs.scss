@@ -11,6 +11,10 @@
   font-weight: 700;
 
   .tab-item {
+    &:focus-visible {
+      outline-offset: variables.$live-preview-focus-outline-inside-offset;
+    }
+
     &.tab-active {
       &.tab-link {
         color: variables.$live-preview-link-color;

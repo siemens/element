@@ -1,5 +1,6 @@
 @use '../../styles/variables';
 @use '../../styles/components/links';
+@use '../../styles/components/focus';
 @use 'ios';
 @use 'ios-with-notch';
 @use 'md';
@@ -120,10 +121,6 @@ iframe {
   margin-block: 0;
   display: flex;
   flex: 1;
-
-  &:focus {
-    box-shadow: 0 0 0 2px variables.$live-preview-focus-shadow-color;
-  }
 }
 
 .device {
