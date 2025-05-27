@@ -1,0 +1,15 @@
+- banner:
+  - button "Toggle navigation"
+  - text: My application
+  - button "Notifications"
+  - button "Toggle actions"
+  - button "Lars Vegas" [expanded]
+  - group "Lars Vegas":
+    - text: Lars Vegas lars.vegas@siemens.com Siemens AG Admin
+    - button "Language" [expanded]
+    - group "Language":
+      - text: Selection has no effect!
+      - button "German"
+      - button "English"
+    - button "Design"
+    - button "Profile"

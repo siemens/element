@@ -1,0 +1,12 @@
+- banner:
+  - button "Toggle navigation"
+  - text: My application
+  - button "Notifications"
+  - button "Toggle actions" [expanded]
+  - button "Tenant 1"
+  - button /\+\d+ Support/ [expanded]
+  - group /\+\d+ Support/:
+    - button "Help"
+    - button "Contact"
+  - button "Settings"
+  - button "Lars Vegas"

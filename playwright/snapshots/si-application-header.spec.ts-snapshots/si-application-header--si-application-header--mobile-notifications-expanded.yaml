@@ -1,0 +1,9 @@
+- banner:
+  - button "Toggle navigation"
+  - text: My application
+  - button "Notifications" [expanded]
+  - group "Notifications":
+    - button "Message 1"
+    - button "Message 2"
+  - button "Toggle actions"
+  - button "Lars Vegas"

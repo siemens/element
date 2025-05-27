@@ -56,6 +56,7 @@ jobs:
       - run: npm ci --prefer-offline --no-audit
       - run: npm run lint:format
       - run: npm run lint:ng
+      - run: npm run lint:playwright:eslint
       - run: npm run translate:test -- --watch=false --progress=false --code-coverage
       - run: npm run lib:test -- --watch=false --progress=false --code-coverage
       # TODO: Upload coverage reports
@@ -80,6 +81,70 @@ jobs:
       - run: npm ci --prefer-offline --no-audit --include=optional
       - run: npm run prepare-brand
       - run: npm run build:examples:aot
+
+  e2e:
+    runs-on: ubuntu-22.04
+    container: mcr.microsoft.com/playwright:v1.52.0-noble
+    needs:
+      - build
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [1, 2]
+        shardTotal: [2]
+    steps:
+      # We cannot use built-in LFS functionality due to the missing support of custom LFS endpoints.
+      # See: https://github.com/actions/checkout/issues/365
+      # As we are in another container, we even need to install LFS manually.
+      - name: Install LFS
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
+          apt install git-lfs
+      - uses: actions/checkout@v4
+      - run: git lfs pull
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/jod
+          cache: 'npm'
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+      # Not injecting the token will exclude the brand packages, but this is fine for e2e tests.
+      - run: npm ci --prefer-offline --no-audit --include=optional
+      - run: npx playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: blob-report-${{ matrix.shardIndex }}
+          path: blob-report
+          retention-days: 1
+
+  e2e-merge-reports:
+    # Merge reports after playwright-tests, even if some shards have failed
+    if: ${{ !cancelled() }}
+    container: mcr.microsoft.com/playwright:v1.52.0-noble
+    needs: [e2e]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          cache: 'npm'
+          node-version: lts/jod
+      - run: npm ci --prefer-offline --no-audit --include=optional
+      - uses: actions/download-artifact@v4
+        with:
+          path: all-blob-reports
+          pattern: blob-report-*
+          merge-multiple: true
+      - run: npx playwright merge-reports --reporter html ./all-blob-reports
+      - uses: actions/upload-artifact@v4
+        with:
+          name: html-report--attempt-${{ github.run_attempt }}
+          path: playwright-report
+          retention-days: 2
 
   documentation:
     runs-on: ubuntu-22.04

@@ -1,0 +1,16 @@
+- banner:
+  - link "Siemens logo":
+    - /url: "#/"
+  - text: My application
+  - navigation "Main navigation":
+    - link "Module 1":
+      - /url: "#/viewer/viewer/m1"
+    - button "Module 2"
+  - button "Tenant 2"
+  - button "Notifications" [expanded]
+  - group "Notifications":
+    - button "Message 1"
+    - button "Message 2"
+  - button /\+\d+ Support/
+  - button "Settings"
+  - button "Lars Vegas"

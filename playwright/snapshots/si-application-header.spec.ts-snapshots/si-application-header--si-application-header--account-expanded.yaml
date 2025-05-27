@@ -1,0 +1,22 @@
+- banner:
+  - link "Siemens logo":
+    - /url: "#/"
+  - text: My application
+  - navigation "Main navigation":
+    - link "Module 1":
+      - /url: "#/viewer/viewer/m1"
+    - button "Module 2"
+  - button "Tenant 2"
+  - button "Notifications"
+  - button /\+\d+ Support/
+  - button "Settings"
+  - button "Lars Vegas" [expanded]
+  - group "Lars Vegas":
+    - text: Lars Vegas lars.vegas@siemens.com Siemens AG Admin
+    - button "Language" [expanded]
+    - group "Language":
+      - text: Selection has no effect!
+      - button "German"
+      - button "English"
+    - button "Design"
+    - button "Profile"
