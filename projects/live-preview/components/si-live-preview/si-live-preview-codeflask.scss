@@ -245,21 +245,10 @@ $lines-background-dark: #666;
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :host ::ng-deep {
-    @include code-dark;
-  }
+:host ::ng-deep {
+  @include code-light;
 }
 
 :host-context(.app--dark) :host ::ng-deep {
   @include code-dark;
-}
-
-:host-context(.app--light) {
-  // For higher specificity
-  @media (min-width: 0) {
-    :host ::ng-deep {
-      @include code-light;
-    }
-  }
 }
