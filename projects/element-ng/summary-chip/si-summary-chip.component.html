@@ -1,0 +1,25 @@
+<div
+  class="chip"
+  role="checkbox"
+  [attr.tabindex]="disabled() ? '' : '0'"
+  [attr.aria-disabled]="disabled()"
+  [attr.aria-checked]="selected()"
+  [class.selected]="selected()"
+  [class.disabled]="disabled()"
+  (click)="toggleSelected()"
+  (keydown.enter)="toggleSelected()"
+>
+  @let actualIcon = statusIcon();
+  @if (actualIcon.icon) {
+    <span class="icon icon-stack my-n2 ms-n2">
+      <si-icon-next [ngClass]="actualIcon.color" [icon]="actualIcon.icon" />
+      @if (actualIcon.stacked) {
+        <si-icon-next [ngClass]="actualIcon.stackedColor" [icon]="actualIcon.stacked" />
+      }
+    </span>
+  }
+  <div class="si-body-2" [class.visually-hidden]="hideLabel()">
+    {{ label() | translate }}
+  </div>
+  <div class="si-title-2">{{ value() | translate }}</div>
+</div>

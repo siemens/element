@@ -1,0 +1,20 @@
+<div class="d-flex gap-4 p-5 bg-base-0">
+  <ng-container [ngTemplateOutlet]="chips" />
+</div>
+<div class="d-flex gap-4 p-5 bg-base-1">
+  <ng-container [ngTemplateOutlet]="chips" />
+</div>
+
+<ng-template #chips>
+  <si-summary-chip
+    icon="element-manual-filled"
+    color="status-warning"
+    label="Override"
+    value="128"
+  />
+  <si-summary-chip status="success" label="Success" value="128" hideLabel [selected]="true" />
+  <si-summary-chip status="danger" label="Danger" value="32" />
+  <si-summary-chip icon="element-not-checked" label="Override" value="128" />
+  <si-summary-chip status="caution" label="Caution" value="42" disabled />
+  <si-summary-chip label="Label" value="Value" />
+</ng-template>

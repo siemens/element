@@ -53,6 +53,7 @@ documentation.
 ## S
 
 - [Spinner](progress-indication/spinner.md)
+- [Summary Chip](status-notifications/summary-chip.md)
 
 ## T
 

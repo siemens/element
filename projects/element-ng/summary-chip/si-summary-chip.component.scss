@@ -1,0 +1,28 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid variables.$element-ui-3;
+  border-radius: map.get(variables.$spacers, 6);
+  padding-block: (map.get(variables.$spacers, 4) - 1px);
+  padding-inline: map.get(variables.$spacers, 4);
+  gap: map.get(variables.$spacers, 2);
+
+  &:not(.disabled) {
+    cursor: pointer;
+
+    &:not(.selected):hover {
+      background: variables.$element-base-1-hover;
+    }
+  }
+}
+
+.selected {
+  background: variables.$element-base-1-selected;
+}
+
+.disabled {
+  opacity: variables.$element-action-disabled-opacity;
+}
