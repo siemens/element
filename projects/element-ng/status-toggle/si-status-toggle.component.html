@@ -1,0 +1,54 @@
+<div
+  #container
+  role="radiogroup"
+  class="status-toggle-container"
+  [class.disabled]="isDisabled()"
+  (mousedown)="handleMouseDown($event)"
+  (touchstart)="handleTouchStart($event)"
+>
+  @let itemsValue = items();
+  <div
+    #draggable
+    class="toggle-draggable"
+    [class.animated]="animated()"
+    [class.disabled]="isDisabled()"
+    [style.inset-inline-start]="draggablePosition()"
+    [style.width.%]="100 / itemsValue.length"
+  >
+    <div class="visible-toggle-draggable"></div>
+  </div>
+
+  @let selIndexValue = selectedIndex();
+  @for (item of itemsValue; track $index) {
+    <div
+      #items
+      class="status-toggle-item focus-inside px-4"
+      role="radio"
+      [attr.aria-checked]="$index === selIndexValue"
+      [attr.tabindex]="isDisabled() || item.disabled ? '' : '0'"
+      [attr.aria-disabled]="isDisabled() || item.disabled"
+      [class.active]="$index === selIndexValue"
+      [class.disabled]="item.disabled"
+      [style.width.%]="100 / $count"
+      (keydown.enter)="selectItem($index)"
+    >
+      <si-icon
+        alt=""
+        [icon]="$index === selIndexValue ? (item.activeIcon ?? item.icon) : item.icon"
+        [stackedIcon]="$index === selIndexValue ? item.activeIconStacked : ''"
+        [stackedColor]="
+          $index === selIndexValue
+            ? (item.activeIconStackedClass ?? item.activeIconClass + '-contrast')
+            : ''
+        "
+        [ngClass]="$index === selIndexValue ? (item.activeIconClass ?? 'active') : ''"
+      />
+      <span
+        class="text-truncate"
+        [ngClass]="$index === selIndexValue ? (item.activeTextClass ?? 'active') : ''"
+      >
+        {{ item.text | translate }}
+      </span>
+    </div>
+  }
+</div>

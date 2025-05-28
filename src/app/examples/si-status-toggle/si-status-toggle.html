@@ -1,0 +1,40 @@
+<div class="p-5" style="max-inline-size: 500px">
+  <h6>Plain</h6>
+  <si-status-toggle
+    [items]="itemsPlain"
+    [(value)]="valuePlain"
+    (valueChange)="logEvent('Plain toggle value changed', $event)"
+    (itemClick)="logEvent('item click', $event)"
+  />
+
+  <button type="button" class="btn btn-secondary mt-6" (click)="changePlainValue()">
+    Switch by code
+  </button>
+
+  <h6 class="mt-6">Two items</h6>
+  <si-status-toggle
+    [items]="itemsTwoItems"
+    [(value)]="valueTwoItems"
+    (valueChange)="logEvent('Two items toggle value changed', $event)"
+  />
+
+  <h6 class="mt-6">Single disabled</h6>
+  <si-status-toggle
+    [items]="itemsSingleDisabled"
+    [(value)]="valueSingleDisabled"
+    (valueChange)="logEvent('Single disabled toggle value changed', $event)"
+  />
+
+  <h6 class="mt-6">All disabled</h6>
+  <si-status-toggle
+    [items]="itemsAllDisabled"
+    [disabled]="true"
+    [(value)]="valueAllDisabled"
+    (valueChange)="logEvent('All disabled toggle value changed', $event)"
+  />
+
+  <h6 class="mt-6">Form Element</h6>
+  <form>
+    <si-status-toggle [items]="itemsForm" [formControl]="formControl" />
+  </form>
+</div>

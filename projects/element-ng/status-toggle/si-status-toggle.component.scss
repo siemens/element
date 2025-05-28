@@ -1,0 +1,79 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: block;
+  block-size: 48px;
+  border: 1px solid variables.$element-ui-4;
+  border-radius: variables.$element-radius-2;
+  background: variables.$element-base-2;
+  padding: 2px;
+}
+
+.status-toggle-container {
+  position: relative;
+  display: flex;
+  gap: map.get(variables.$spacers, 1);
+  inline-size: 100%;
+  block-size: 100%;
+  border-radius: variables.$element-radius-1;
+  justify-content: space-around;
+  z-index: 0;
+  user-select: none;
+
+  &.disabled {
+    cursor: not-allowed;
+
+    .toggle-draggable {
+      display: none;
+    }
+
+    .status-toggle-item {
+      color: variables.$element-text-disabled;
+    }
+  }
+}
+
+.status-toggle-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 10;
+  color: variables.$element-text-secondary;
+  border-radius: 1px;
+  cursor: pointer;
+
+  &.active {
+    color: variables.$element-text-primary !important; // stylelint-disable-line declaration-no-important
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    color: variables.$element-text-disabled !important; // stylelint-disable-line declaration-no-important
+  }
+
+  span {
+    max-inline-size: 100%;
+    user-select: none;
+  }
+}
+
+.toggle-draggable {
+  position: absolute;
+  inset-block: 0;
+  z-index: 1;
+  cursor: pointer;
+
+  &.animated {
+    transition: all 0.4s ease;
+  }
+}
+
+.visible-toggle-draggable {
+  inline-size: 100%;
+  block-size: 100%;
+  border-radius: 1px;
+  background: variables.$element-base-1-selected;
+}

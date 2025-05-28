@@ -74,6 +74,7 @@ documentation.
 - [Select](forms-inputs/select.md)
 - [Sort Bar](sorting-filtering/sort-bar.md)
 - [Spinner](progress-indication/spinner.md)
+- [Status Toggle](status-notifications/status-toggle.md)
 - [Summary Chip](status-notifications/summary-chip.md)
 - [Summary Widget](status-notifications/summary-widget.md)
 - [Switch](forms-inputs/switch.md)
