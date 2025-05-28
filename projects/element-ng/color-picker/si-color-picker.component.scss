@@ -1,0 +1,67 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+.color-box {
+  position: relative;
+  block-size: map.get(variables.$spacers, 8);
+  inline-size: map.get(variables.$spacers, 8);
+
+  input:focus ~ & {
+    @include variables.make-outline-focus();
+  }
+}
+
+.input-color-box {
+  cursor: pointer;
+  position: relative;
+  block-size: map.get(variables.$spacers, 9);
+  inline-size: map.get(variables.$spacers, 9);
+  padding: (map.get(variables.$spacers, 4) - 1px);
+  border-radius: variables.$element-radius-1;
+  border-width: 1px;
+  border-style: solid;
+  border-color: variables.$element-ui-2;
+  background-color: variables.$element-base-1;
+
+  &:hover {
+    border-color: variables.$element-ui-1;
+  }
+
+  &:not(:hover) {
+    border-color: variables.$element-ui-2;
+
+    &.is-open {
+      border-color: variables.$element-ui-1;
+    }
+  }
+
+  &:disabled {
+    cursor: default;
+    border-color: variables.$element-ui-3;
+  }
+}
+
+.swatch {
+  block-size: map.get(variables.$spacers, 8);
+}
+
+.swatch-label {
+  cursor: pointer;
+
+  &:hover {
+    box-shadow:
+      0 0 0 1px variables.$element-button-focus-overlay-color,
+      0 0 0 2px variables.$element-ui-3;
+  }
+}
+
+.inside-box {
+  block-size: map.get(variables.$spacers, 6);
+  inline-size: map.get(variables.$spacers, 6);
+}
+
+.colors {
+  cursor: pointer;
+  inline-size: 136px;
+  min-block-size: 40px;
+}

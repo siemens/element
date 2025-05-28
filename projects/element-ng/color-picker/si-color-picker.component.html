@@ -1,0 +1,60 @@
+<button
+  #colorInputBox
+  #trigger="cdkOverlayOrigin"
+  cdkOverlayOrigin
+  class="input-color-box"
+  type="button"
+  [class.is-open]="isOverlayOpen()"
+  [attr.aria-label]="(ariaLabel() | translate) + ' ' + color()"
+  [disabled]="disabled()"
+  (keydown.arrowDown)="openOverlay()"
+  (blur)="blur()"
+  (click)="openOverlay()"
+>
+  <div class="inside-box" [style.background-color]="'var(--' + color() + ')'"></div>
+</button>
+
+<ng-template
+  cdkConnectedOverlay
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  [cdkConnectedOverlayHasBackdrop]="true"
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="isOverlayOpen()"
+  [cdkConnectedOverlayFlexibleDimensions]="true"
+  (backdropClick)="overlayDetach()"
+  (detach)="overlayDetach()"
+>
+  <div #colorPaletteRef role="grid" class="colors elevation-1 rounded-2 bg-base-1 p-4 mt-1">
+    <div role="row" class="d-flex flex-wrap gap-4">
+      @for (paint of colorPalette(); track $index) {
+        <div role="gridcell" class="swatch">
+          <input
+            type="radio"
+            name="color"
+            class="btn-check"
+            [id]="paint"
+            [attr.aria-label]="paint"
+            [value]="paint"
+            [checked]="color() === paint"
+            (change)="selectColor(paint)"
+            (keydown.enter)="selectColor(paint)"
+            (keydown.arrowUp)="arrowUp($index, $event)"
+            (keydown.arrowDown)="arrowDown($index, $event)"
+            (keydown.arrowLeft)="arrowLeft($index, $event)"
+            (keydown.arrowRight)="arrowRight($index, $event)"
+            (keydown.tab)="overlayDetach()"
+          />
+          <label
+            class="color-box swatch-label"
+            [attr.for]="paint"
+            [style.background]="'var(--' + paint + ')'"
+          >
+            @if (color() === paint) {
+              <si-icon-next class="icon text-inverse" [icon]="icons.elementOk" />
+            }
+          </label>
+        </div>
+      }
+    </div>
+  </div>
+</ng-template>

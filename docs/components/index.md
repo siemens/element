@@ -17,6 +17,7 @@ documentation.
 
 ## C
 
+- [Color Picker](forms-inputs/color-picker.md)
 - [Copyright Notice](status-notifications/copyright-notice.md)
 - [Connection Strength](status-notifications/connection-strength.md)
 

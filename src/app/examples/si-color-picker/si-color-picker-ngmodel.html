@@ -1,0 +1,10 @@
+<si-color-picker
+  [colorPalette]="palette"
+  [(ngModel)]="selectedColor"
+  (colorChange)="logEvent($event)"
+/>
+
+<div class="mt-10">
+  <label for="selected-token" class="form-label">Selected token</label>
+  <input type="text" id="selected-token" class="form-control" [(ngModel)]="selectedColor" />
+</div>
