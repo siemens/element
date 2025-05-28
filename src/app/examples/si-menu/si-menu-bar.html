@@ -1,0 +1,22 @@
+<si-menu-bar>
+  <si-menu-item icon="element-home" [cdkMenuTriggerFor]="subMenu">Item 1</si-menu-item>
+  <si-menu-item [cdkMenuTriggerFor]="subMenu">Item 2</si-menu-item>
+  <si-menu-item icon="element-tv">Item 3</si-menu-item>
+  <si-menu-item>Item 3</si-menu-item>
+  <si-menu-item disabled>Item 4</si-menu-item>
+  <si-menu-item
+    icon="element-options-vertical"
+    aria-label="Options"
+    [cdkMenuTriggerFor]="subMenu"
+  />
+  <si-menu-item icon="element-cancel" aria-label="Cancel" />
+</si-menu-bar>
+
+<ng-template #subMenu>
+  <si-menu>
+    <si-menu-item>Item 1</si-menu-item>
+    <si-menu-item>Item 2</si-menu-item>
+    <si-menu-item>Item 3</si-menu-item>
+    <si-menu-item>Item 4</si-menu-item>
+  </si-menu>
+</ng-template>

@@ -1,0 +1,175 @@
+<si-menu>
+  @for (item of items(); track item) {
+    <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item }" />
+  }
+  <ng-template #itemTemplate let-item siMenuFactoryItemGuard>
+    @if (isNewItemStyle(item)) {
+      @switch (item.type) {
+        @case ('group') {
+          <si-menu-item
+            [attr.data-id]="item.id"
+            [badge]="item.badge"
+            [badgeColor]="item.badgeColor ?? 'secondary'"
+            [disabled]="item.disabled"
+            [icon]="item.icon"
+            [iconBadgeDot]="item.iconBadge"
+            [cdkMenuTriggerFor]="submenu"
+            [cdkMenuTriggerData]="{ $implicit: item.children }"
+            >{{ item.label | translate }}
+          </si-menu-item>
+          <ng-template #submenu>
+            <si-menu-factory [items]="item.children" [actionParam]="actionParam()" />
+          </ng-template>
+        }
+        @case ('action') {
+          <si-menu-item
+            [attr.data-id]="item.id"
+            [badge]="item.badge"
+            [badgeColor]="item.badgeColor ?? 'secondary'"
+            [disabled]="item.disabled"
+            [icon]="item.icon"
+            [iconBadgeDot]="item.iconBadge"
+            (triggered)="runAction(item)"
+            >{{ item.label | translate }}
+          </si-menu-item>
+        }
+        @case ('router-link') {
+          <a
+            si-menu-item
+            [attr.data-id]="item.id"
+            [badge]="item.badge"
+            [badgeColor]="item.badgeColor ?? 'secondary'"
+            [disabled]="item.disabled"
+            [icon]="item.icon"
+            [iconBadgeDot]="item.iconBadge"
+            [routerLink]="item.routerLink"
+            [queryParams]="item.extras?.queryParams"
+            [queryParamsHandling]="item.extras?.queryParamsHandling"
+            [fragment]="item.extras?.fragment"
+            [state]="item.extras?.state"
+            [relativeTo]="item.extras?.relativeTo"
+            [preserveFragment]="item.extras?.preserveFragment"
+            [skipLocationChange]="item.extras?.skipLocationChange"
+            [replaceUrl]="item.extras?.replaceUrl"
+            >{{ item.label | translate }}
+          </a>
+        }
+        @case ('link') {
+          <a
+            si-menu-item
+            [attr.data-id]="item.id"
+            [badge]="item.badge"
+            [badgeColor]="item.badgeColor ?? 'secondary'"
+            [disabled]="item.disabled"
+            [icon]="item.icon"
+            [iconBadgeDot]="item.iconBadge"
+            [href]="item.href"
+            [target]="item.target"
+            >{{ item.label | translate }}
+          </a>
+        }
+        @case ('radio-group') {
+          <div cdkMenuGroup>
+            @for (radioItem of item.children; track radioItem) {
+              <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: radioItem }" />
+            }
+          </div>
+        }
+        @case ('radio') {
+          <si-menu-item-radio
+            [attr.data-id]="item.id"
+            [badge]="item.badge"
+            [badgeColor]="item.badgeColor ?? 'secondary'"
+            [disabled]="item.disabled"
+            [icon]="item.icon"
+            [iconBadgeDot]="item.iconBadge"
+            [checked]="item.checked"
+            (triggered)="runAction(item)"
+            >{{ item.label | translate }}
+          </si-menu-item-radio>
+        }
+        @case ('checkbox') {
+          <si-menu-item-checkbox
+            [attr.data-id]="item.id"
+            [badge]="item.badge"
+            [badgeColor]="item.badgeColor ?? 'secondary'"
+            [disabled]="item.disabled"
+            [icon]="item.icon"
+            [iconBadgeDot]="item.iconBadge"
+            [checked]="item.checked"
+            (triggered)="runAction(item)"
+            >{{ item.label | translate }}
+          </si-menu-item-checkbox>
+        }
+        @case ('header') {
+          <si-menu-header>{{ item.label | translate }}</si-menu-header>
+        }
+        @case ('divider') {
+          <si-menu-divider />
+        }
+      }
+    } @else if (isLegacyItemStyle(item)) {
+      @switch (item.type) {
+        @case ('radio') {
+          <si-menu-item-radio
+            [attr.data-id]="item.id"
+            [checked]="item.selectionState === 'radio'"
+            [badge]="item.badge"
+            [badgeColor]="item.badgeColor ?? 'secondary'"
+            [icon]="item.icon"
+            [disabled]="item.disabled"
+            [iconBadgeDot]="item.badgeDot"
+            (triggered)="radioOrCheckboxTriggered(item)"
+          >
+            {{ item.title | translate }}
+          </si-menu-item-radio>
+        }
+        @case ('check') {
+          <si-menu-item-checkbox
+            [attr.data-id]="item.id"
+            [checked]="item.selectionState === 'check'"
+            [badge]="item.badge"
+            [badgeColor]="item.badgeColor ?? 'secondary'"
+            [icon]="item.icon"
+            [disabled]="item.disabled"
+            [iconBadgeDot]="item.badgeDot"
+            (triggered)="radioOrCheckboxTriggered(item)"
+          >
+            {{ item.title | translate }}
+          </si-menu-item-checkbox>
+        }
+        @default {
+          @if (item.isHeading) {
+            <div class="dropdown-item-text dropdown-header">
+              {{ item.title | translate }}
+            </div>
+          } @else {
+            @if (item.title !== '-') {
+              <a
+                si-menu-item
+                activeClass="active"
+                [attr.data-id]="item.id"
+                [badge]="item.badge"
+                [badgeColor]="item.badgeColor ?? 'secondary'"
+                [icon]="item.icon"
+                [disabled]="item.disabled"
+                [siLink]="item"
+                [iconBadgeDot]="item.badgeDot"
+                [actionParam]="actionParam()"
+                [cdkMenuTriggerFor]="item.items ? submenu : null"
+                [cdkMenuTriggerData]="item"
+              >
+                {{ item.title | translate }}
+              </a>
+              <ng-template #submenu>
+                <si-menu-factory [items]="item.items!" [actionParam]="actionParam()" />
+              </ng-template>
+            } @else {
+              <div class="dropdown-divider"></div>
+            }
+          }
+        }
+      }
+    }
+  </ng-template>
+</si-menu>

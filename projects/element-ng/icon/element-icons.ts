@@ -40,6 +40,12 @@ export const elementStateTick =
   "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M222.25 345.88c-5.12 0-10.24-1.95-14.14-5.86l-56.25-56.25c-7.81-7.81-7.81-20.47 0-28.29s20.47-7.81 28.28 0l42.11 42.11 109.61-109.61c7.81-7.81 20.47-7.81 28.28 0s7.81 20.47 0 28.29L236.39 340.02a19.92 19.92 0 0 1-14.14 5.86Z' style='stroke-width:0'/></svg>";
 export const elementTriangleFilled =
   "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='m441.77 338.25-.1-.17L295.72 94.42a46.45 46.45 0 0 0-79.44 0 .21.21 0 0 0 0 .06L70.32 338.08l-.1.17a46.45 46.45 0 0 0 39.72 69.68h292.11a46.46 46.46 0 0 0 39.72-69.68Z'/></svg>";
+export const elementRight2 =
+  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M203.21 159.21a12.45 12.45 0 0 1 15.86-1.44l1.72 1.44 88 88a12.45 12.45 0 0 1 1.44 15.86l-1.44 1.72-88 88a12.43 12.43 0 0 1-19-15.86l1.44-1.72L282.42 256l-79.21-79.21a12.45 12.45 0 0 1-1.44-15.86Z' data-name='Arrow/Right-3'/></svg>";
+export const elementRecordFilled =
+  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M256 408c-41.88 0-78.06-14.95-107.55-44.44S104 297.87 104 256s15-78 44.45-107.55S214.13 104 256 104s78 15 107.54 44.45S408 214.15 408 256s-15 78.05-44.45 107.55S297.87 408 256 408Z'/></svg>";
+export const elementOk =
+  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='m379.51 156.76-173 173-74-74a12 12 0 1 0-17 17l82.5 82.5a12 12 0 0 0 17 0l181.5-181.5a12 12 0 0 0-17-17Z'/></svg>";
 export const elementLeft3 =
   "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M319.39 106.22a11.1 11.1 0 0 1-2.09 6.51L219.49 256l97.82 143.29a11.05 11.05 0 0 1 2.08 6.49 11.24 11.24 0 0 1-4.7 9.13 11.12 11.12 0 0 1-6.51 2.09 11.24 11.24 0 0 1-9.13-4.69L192.61 256 299 99.71a11.24 11.24 0 0 1 9.18-4.71 11.12 11.12 0 0 1 6.51 2.09 11.24 11.24 0 0 1 4.7 9.13Z'/></svg>";
 export const elementRight3 =

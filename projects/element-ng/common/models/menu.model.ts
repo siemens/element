@@ -13,8 +13,8 @@ import { Link } from '@siemens/element-ng/link';
  * - for {@link SiMenuFactoryComponent} use {@link @siemens/element-ng/menu#MenuItem}
  * - for {@link SiContentActionBarComponent} use {@link @siemens/element-ng/menu#MenuItem} and {@link ContentActionBarMainItem}
  * - for {@link SiNavbarVerticalComponent} use {@link NavbarVerticalItem}
- * - for {@link @simpl/dashboards-ng#SiFlexibleDashboardComponent}
- *   use {@link @simpl/dashboards-ng#DashboardToolbarItem}
+ * - for {@link @siemens/dashboards-ng#SiFlexibleDashboardComponent}
+ *   use {@link @siemens/dashboards-ng#DashboardToolbarItem}
  */
 export interface MenuItem extends Link {
   /**

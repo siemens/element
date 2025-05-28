@@ -1,0 +1,95 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+.item-wrapper {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-inline-size: 24px;
+}
+
+.item-title,
+.item-end {
+  &:empty {
+    // stylelint-disable-next-line declaration-no-important
+    display: none !important;
+  }
+}
+
+:host-context(si-menu-bar, si-content-action-bar) {
+  color: variables.$element-action-secondary-text;
+  background: variables.$element-base-1;
+  padding-inline: map.get(variables.$spacers, 4);
+
+  .item-wrapper {
+    justify-content: center;
+  }
+
+  .icon {
+    margin-inline: -#{map.get(variables.$spacers, 2)};
+  }
+
+  .item-end {
+    margin-inline-end: -#{map.get(variables.$spacers, 2)} !important; // stylelint-disable-line declaration-no-important
+  }
+
+  .item-title {
+    padding-inline-start: 0;
+    flex: 0 1 auto;
+
+    &:empty + .item-end {
+      .submenu {
+        display: none;
+      }
+    }
+  }
+
+  .icon + .item-title {
+    padding-inline-start: map.get(variables.$spacers, 4);
+  }
+
+  .item-end .submenu {
+    transform: rotate(90deg);
+  }
+
+  &[aria-expanded='true'] {
+    .item-end .submenu {
+      transform: rotate(270deg);
+    }
+  }
+
+  &[aria-haspopup] {
+    .icon {
+      margin-inline: 0;
+    }
+
+    .item-title {
+      padding-inline-start: map.get(
+        variables.$spacers,
+        2
+      ) !important; // stylelint-disable-line declaration-no-important
+    }
+  }
+
+  &:focus,
+  &.focus {
+    color: variables.$element-action-secondary-text;
+    background: variables.$element-base-1;
+  }
+
+  &:hover,
+  &.hover,
+  &:active,
+  &.active,
+  &[aria-expanded='true'] {
+    color: variables.$element-action-secondary-text-hover;
+    background: variables.$element-action-secondary-hover;
+  }
+
+  &:disabled,
+  &.disabled {
+    opacity: variables.$element-action-disabled-opacity;
+    color: variables.$element-action-secondary-text;
+    background: variables.$element-base-1;
+  }
+}

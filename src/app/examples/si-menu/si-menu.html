@@ -1,0 +1,72 @@
+<div
+  class="h-50 w-10 mb-3 d-flex align-items-center justify-content-center"
+  [cdkContextMenuTriggerFor]="contextMenu"
+>
+  <span>Right click here to open context menu</span>
+</div>
+<button type="button" class="btn btn-primary" [cdkMenuTriggerFor]="contextMenu">Open menu</button>
+
+<ng-template #contextMenu>
+  <si-menu>
+    <si-menu-header>Actions</si-menu-header>
+    <!-- Submenu using a template reference -->
+    <si-menu-item [cdkMenuTriggerFor]="fileTypes" [cdkMenuTriggerData]="{ disableOther: true }">
+      Download as
+    </si-menu-item>
+    <si-menu-item>Clear</si-menu-item>
+    <si-menu-item>Hide</si-menu-item>
+    <si-menu-item>Update</si-menu-item>
+    <si-menu-divider />
+    <si-menu-item-checkbox [checked]="isAwesome" (triggered)="isAwesome = !isAwesome">
+      Be awesome
+    </si-menu-item-checkbox>
+    <si-menu-item disabled>Do nothing</si-menu-item>
+    <si-menu-item disabled [cdkMenuTriggerFor]="disabledSubmenu"> Disabled menu</si-menu-item>
+    <si-menu-item [cdkMenuTriggerFor]="disabledItems"> Menu with disabled children</si-menu-item>
+    <si-menu-divider>Menu with disabled children</si-menu-divider>
+    <si-menu-item-radio [checked]="beverage === 'beer'" (triggered)="beverage = 'beer'">
+      Beer
+    </si-menu-item-radio>
+    <si-menu-item-radio [checked]="beverage === 'whisky'" (triggered)="beverage = 'whisky'">
+      Whisky
+    </si-menu-item-radio>
+    <si-menu-item-radio [checked]="beverage === 'gin'" (triggered)="beverage = 'gin'">
+      Gin
+    </si-menu-item-radio>
+    <si-menu-divider />
+    <si-menu-item badge="5" badgeColor="danger">Import</si-menu-item>
+    <si-menu-item icon="element-export">Export</si-menu-item>
+    <si-menu-divider />
+    <si-menu-item [cdkMenuTriggerFor]="fileTypes">Save as</si-menu-item>
+  </si-menu>
+</ng-template>
+
+<ng-template #fileTypes let-disableOther="disableOther">
+  <si-menu>
+    <si-menu-item>Image</si-menu-item>
+    <si-menu-item>File</si-menu-item>
+    <si-menu-item [disabled]="disableOther" [cdkMenuTriggerFor]="otherFileTypes">
+      Other
+    </si-menu-item>
+  </si-menu>
+</ng-template>
+
+<ng-template #otherFileTypes>
+  <si-menu>
+    <si-menu-item>Zip</si-menu-item>
+  </si-menu>
+</ng-template>
+
+<ng-template #disabledSubmenu>
+  <si-menu>
+    <si-menu-item>Items 1</si-menu-item>
+    <si-menu-item>Items 2</si-menu-item>
+  </si-menu>
+</ng-template>
+
+<ng-template #disabledItems>
+  <si-menu>
+    <si-menu-item disabled>Items 1</si-menu-item>
+    <si-menu-item disabled>Items 2</si-menu-item>
+  </si-menu>
+</ng-template>

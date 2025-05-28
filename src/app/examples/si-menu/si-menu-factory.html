@@ -1,0 +1,11 @@
+<div
+  class="h-50 w-10 mb-3 d-flex align-items-center justify-content-center"
+  [cdkContextMenuTriggerFor]="contextMenu"
+>
+  <span>Right click here to open context menu</span>
+</div>
+<button type="button" class="btn btn-primary" [cdkMenuTriggerFor]="contextMenu">Open menu</button>
+
+<ng-template #contextMenu>
+  <si-menu-factory [items]="items" />
+</ng-template>

@@ -1,0 +1,20 @@
+<div class="item-wrapper">
+  @let iconValue = icon();
+  @if (iconValue && !badgeDotHasContent()) {
+    <si-icon-next class="icon badge-dot" [class.badge-dot]="iconBadgeDot()" [icon]="iconValue" />
+  } @else if (iconValue && badgeDotHasContent()) {
+    <si-icon-next class="icon badge-dot" [icon]="iconValue" />
+    <span class="badge-text">{{ iconBadgeDot() }}</span>
+  }
+  <span class="item-title">
+    <ng-content />
+  </span>
+  <div class="item-end ms-2 d-flex me-n3 gap-1">
+    @if (badge()) {
+      <span class="mx-0 badge" [ngClass]="'bg-' + badgeColor()">{{ badge() }}</span>
+    }
+    @if (checked) {
+      <si-icon-next class="icon" [icon]="icons.elementOk" />
+    }
+  </div>
+</div>
