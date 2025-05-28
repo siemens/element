@@ -37,6 +37,8 @@ documentation.
 
 ## F
 
+- [Filter Bar](sorting-filtering/filter-bar.md)
+- [Filter Pills](sorting-filtering/filter-pills.md)
 - [Footer](layout-navigation/footer.md)
 - [Forms](forms-inputs/forms.md)
 - [File Uploader](forms-inputs/file-uploader.md)

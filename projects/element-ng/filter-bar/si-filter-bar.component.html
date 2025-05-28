@@ -1,0 +1,45 @@
+<div class="responsive py-2" siAutoCollapsableList>
+  @if (!this.filters().length) {
+    <span class="list-text">{{ filterDefaultText() | translate }}</span>
+  }
+  @for (filter of filters(); track $index) {
+    <div class="pill-wrapper" siAutoCollapsableListItem>
+      <si-filter-pill
+        [class.dark-background]="colorVariant() === 'base-0'"
+        [totalPills]="$count"
+        [filter]="filter"
+        [disabled]="disabled()"
+        (deleteFilters)="deleteFilters($event)"
+      />
+    </div>
+  }
+  <si-filter-pill
+    #overflowItem="siAutoCollapsableListOverflowItem"
+    siAutoCollapsableListOverflowItem
+    [class.dark-background]="colorVariant() === 'base-0'"
+    [disabled]="disabled()"
+    [filter]="{
+      description:
+        collapsedFiltersDescription()
+        | translate
+          : {
+              count: overflowItem.hiddenItemCount
+            },
+      title: '',
+      status: 'default',
+      filterName: ''
+    }"
+    (deleteFilters)="deleteOverflowFilter()"
+  />
+  @if (allowReset() && this.filters().length) {
+    <button
+      siAutoCollapsableListAdditionalContent
+      type="button"
+      class="text-nowrap btn btn-tertiary"
+      [disabled]="disabled()"
+      (click)="onResetFilters()"
+    >
+      {{ resetText() | translate }}
+    </button>
+  }
+</div>

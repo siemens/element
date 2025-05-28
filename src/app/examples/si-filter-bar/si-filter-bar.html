@@ -1,0 +1,27 @@
+<h4>Variant Light</h4>
+<div class="px-4">
+  <si-filter-bar [filters]="filters" (filtersChange)="logEvent($event)" />
+</div>
+
+<div class="clearfix mt-8"></div>
+<h4>Variant Dark</h4>
+<div class="bg-base-1 px-4">
+  <si-filter-bar colorVariant="base-0" [filters]="filters" (filtersChange)="logEvent($event)" />
+</div>
+
+<div class="clearfix mt-8"></div>
+<h4>Variant Light Disabled</h4>
+<div class="px-4">
+  <si-filter-bar disabled [filters]="filters" (filtersChange)="logEvent($event)" />
+</div>
+
+<div class="clearfix mt-8"></div>
+<h4>Variant Dark Disabled</h4>
+<div class="bg-base-1 px-4">
+  <si-filter-bar
+    disabled
+    colorVariant="base-0"
+    [filters]="filters"
+    (filtersChange)="logEvent($event)"
+  />
+</div>

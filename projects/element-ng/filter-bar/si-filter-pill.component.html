@@ -1,0 +1,32 @@
+<div
+  class="pill responsive"
+  [class.pe-0]="!disabled()"
+  [class.disabled]="disabled()"
+  [ngClass]="filter().status ? 'pill-' + filter().status : ''"
+  [attr.aria-disabled]="disabled()"
+>
+  <div class="wrapper">
+    @if (filter().title) {
+      <div class="name">{{ filter().title | translate }}</div>
+    }
+    @if (filter().title && filter().description) {
+      <span class="name pe-4">:</span>
+    }
+    <div class="value">{{ filter().description | translate }}</div>
+  </div>
+  @if (!disabled()) {
+    <ng-container *ngTemplateOutlet="remove" />
+  }
+</div>
+<ng-template #remove>
+  <button
+    type="button"
+    class="btn-remove element-cancel btn btn-circle btn-ghost focus-inside ms-0 btn-xs"
+    role="button"
+    aria-label="Remove"
+    [disabled]="disabled()"
+    (keydown.enter)="deleteClicked()"
+    (click)="deleteClicked()"
+  >
+  </button>
+</ng-template>

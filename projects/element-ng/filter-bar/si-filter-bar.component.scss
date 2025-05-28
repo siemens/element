@@ -1,0 +1,40 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/all-variables';
+
+$list-header-filter-padding-horizontal: map.get(all-variables.$spacers, 5);
+$list-header-filter-padding-vertical: map.get(all-variables.$spacers, 3);
+$filter-bar-background-color: all-variables.$element-base-0;
+$filter-pill-gap: map.get(all-variables.$spacers, 4); // Keep in sync with si-filter-pill.
+
+:host.reset .responsive .list-text {
+  line-height: calc(all-variables.$btn-font-size-lg + all-variables.$btn-padding-y * 2);
+}
+
+.list-text {
+  line-height: 24px; // Height of a pill, keep in sync with _pills.scss.
+}
+
+.pill-wrapper {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.responsive {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: $filter-pill-gap;
+
+  .list-text {
+    color: all-variables.$element-text-disabled;
+  }
+
+  .invisible {
+    position: absolute;
+  }
+
+  si-filter-pill::ng-deep .pill {
+    margin-inline-start: 0;
+  }
+}

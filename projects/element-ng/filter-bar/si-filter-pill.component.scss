@@ -1,0 +1,79 @@
+@use 'sass:map';
+@use 'sass:math';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+$filter-pill-height: map.get(variables.$spacers, 9);
+$filter-pill-gap: map.get(variables.$spacers, 4);
+
+:host {
+  --filter-pill-background-color: #{variables.$element-base-1};
+
+  &.dark-background {
+    --filter-pill-background-color: #{variables.$element-base-0};
+  }
+}
+
+.pill {
+  margin-inline-start: $filter-pill-gap;
+  background: var(--filter-pill-background-color);
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.pill.responsive {
+  .wrapper {
+    flex-direction: row;
+  }
+
+  .name {
+    font-weight: variables.$si-font-weight-title-2;
+    white-space: nowrap;
+  }
+
+  .value {
+    color: variables.$element-text-primary;
+    white-space: nowrap;
+    margin-inline-end: map.get(variables.$spacers, 2);
+  }
+
+  &.disabled,
+  &.disabled .value {
+    padding-inline-end: map.get(variables.$spacers, 1);
+    color: variables.$element-text-disabled;
+  }
+}
+
+@mixin filter-pill-variant($color) {
+  .value {
+    color: $color;
+  }
+}
+
+.pill,
+.pill-default {
+  @include filter-pill-variant(variables.$element-text-active);
+}
+
+.pill-success {
+  @include filter-pill-variant(variables.$element-text-success);
+}
+
+.pill-info {
+  @include filter-pill-variant(variables.$element-text-information);
+}
+
+.pill-warning {
+  @include filter-pill-variant(variables.$element-text-warning);
+}
+
+.pill-danger {
+  @include filter-pill-variant(variables.$element-text-danger);
+}
+
+.pill-inactive {
+  @include filter-pill-variant(variables.$element-text-secondary);
+}

@@ -71,6 +71,8 @@ nav:
       - Search Bar:                       'components/sorting-filtering/search-bar.md'
       - Sort Bar:                         'components/sorting-filtering/sort-bar.md'
       - Typeahead:                        'components/sorting-filtering/typeahead.md'
+      - Filter Bar:                       'components/sorting-filtering/filter-bar.md'
+      - Filter Pills:                     'components/sorting-filtering/filter-pills.md'
     - Status & notifications:
       - Avatar:                           'components/status-notifications/avatar.md'
       - Connection Strength:              'components/status-notifications/connection-strength.md'
