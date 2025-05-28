@@ -4,6 +4,10 @@
  */
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import {
+  SiPasswordStrengthComponent,
+  SiPasswordStrengthDirective
+} from '@siemens/element-ng/password-strength';
 import { SiPasswordToggleComponent } from '@siemens/element-ng/password-toggle';
 import { LOG_EVENT } from '@siemens/live-preview';
 
@@ -12,7 +16,12 @@ import { LOG_EVENT } from '@siemens/live-preview';
   templateUrl: './password.html',
   host: { class: 'p-5' },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiPasswordToggleComponent, FormsModule]
+  imports: [
+    SiPasswordStrengthComponent,
+    SiPasswordStrengthDirective,
+    SiPasswordToggleComponent,
+    FormsModule
+  ]
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);
