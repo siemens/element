@@ -1,0 +1,28 @@
+<div
+  class="widget ps-2 pe-4 gap-2"
+  role="checkbox"
+  [attr.tabindex]="interactive() ? '0' : ''"
+  [attr.aria-disabled]="!interactive()"
+  [attr.aria-checked]="selected()"
+  [class.selected]="selected()"
+  [class.disabled]="disabled()"
+  [class.interactive]="interactive()"
+  (click)="toggleSelected()"
+  (keydown.enter)="toggleSelected()"
+>
+  @let actualIcon = statusIcon();
+  @if (actualIcon.icon) {
+    <si-icon
+      size="icon"
+      alt=""
+      [icon]="actualIcon.icon"
+      [color]="actualIcon.color"
+      [stackedIcon]="actualIcon.stacked"
+      [stackedColor]="actualIcon.stackedColor"
+    />
+  }
+  <div class="d-flex flex-column py-2" [class.ps-2]="!actualIcon.icon">
+    <div class="si-title-2">{{ value() | translate }}</div>
+    <div class="si-body-2 text-secondary">{{ label() | translate }}</div>
+  </div>
+</div>

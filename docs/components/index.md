@@ -54,6 +54,7 @@ documentation.
 
 - [Spinner](progress-indication/spinner.md)
 - [Summary Chip](status-notifications/summary-chip.md)
+- [Summary Widget](status-notifications/summary-widget.md)
 
 ## T
 

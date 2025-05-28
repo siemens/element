@@ -1,0 +1,43 @@
+<div class="d-flex gap-4 p-5 bg-base-0">
+  <ng-container [ngTemplateOutlet]="widgets" />
+</div>
+<div class="d-flex gap-4 p-5 bg-base-1">
+  <ng-container [ngTemplateOutlet]="widgets" />
+</div>
+
+<ng-template #widgets>
+  <si-summary-widget
+    icon="element-connected"
+    color="status-success"
+    label="OCCP"
+    value="Connected"
+  />
+  <si-summary-widget
+    icon="element-checked"
+    color="status-success"
+    label="Connector DC"
+    value="Available"
+  />
+  <si-summary-widget
+    icon="element-in-use"
+    color="status-danger"
+    label="Connector AC"
+    value="Occupied"
+  />
+  <si-summary-widget
+    icon="element-code-working"
+    color="text-secondary"
+    label="Firmware"
+    value="v4.0.8.0-ga65b633"
+    readonly
+  />
+  <si-summary-widget icon="element-break" color="status-warning" label="Beverage" value="Coffee" />
+  <si-summary-widget
+    icon="element-wind"
+    color="status-danger"
+    label="Weather"
+    value="Windy"
+    disabled
+  />
+  <si-summary-widget label="Label" value="Value" />
+</ng-template>

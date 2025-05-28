@@ -54,6 +54,7 @@ nav:
       - Empty State:                      'components/status-notifications/empty-state.md'
       - Inline Notification:              'components/status-notifications/inline-notification.md'
       - Summary Chip:                     'components/status-notifications/summary-chip.md'
+      - Summary Widget:                   'components/status-notifications/summary-widget.md'
   - Architecture:
     - CSS framework:                      'architecture/css-framework.md'
     - Theming:                            'architecture/theming.md'

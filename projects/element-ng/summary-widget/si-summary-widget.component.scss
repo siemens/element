@@ -1,0 +1,25 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+.widget {
+  display: inline-flex;
+  align-items: start;
+  block-size: 100%;
+  border-radius: variables.$element-radius-1;
+
+  &.interactive {
+    cursor: pointer;
+
+    &:not(.selected):hover {
+      background: variables.$element-base-1-hover;
+    }
+  }
+}
+
+.selected {
+  background: variables.$element-base-1-selected;
+}
+
+.disabled {
+  opacity: variables.$element-action-disabled-opacity;
+}
