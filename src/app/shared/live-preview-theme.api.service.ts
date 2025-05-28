@@ -2,15 +2,20 @@
  * Copyright Siemens 2016 - 2025.
  * SPDX-License-Identifier: MIT
  */
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { SiThemeService } from '@siemens/element-ng/theme';
 import { SiLivePreviewThemeApi, ThemeType } from '@siemens/live-preview';
-import { NEVER, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class LivePreviewThemeApiService extends SiLivePreviewThemeApi {
-  setThemeFromPreviewer(theme: ThemeType): void {}
+  private themeSwitcher = inject(SiThemeService);
+
+  setThemeFromPreviewer(theme: ThemeType): void {
+    this.themeSwitcher.applyThemeType(theme);
+  }
 
   getApplicationThemeObservable(): Observable<ThemeType> {
-    return NEVER;
+    return this.themeSwitcher.resolvedColorScheme$;
   }
 }
