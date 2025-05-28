@@ -75,6 +75,7 @@ nav:
       - Status Toggle:                    'components/status-notifications/status-toggle.md'
       - Summary Chip:                     'components/status-notifications/summary-chip.md'
       - Summary Widget:                   'components/status-notifications/summary-widget.md'
+      - System banner:                    'components/status-notifications/system-banner.md'
       - Toast Notification:               'components/status-notifications/toast-notification.md'
       - Tooltip:                          'components/status-notifications/tooltip.md'
     - Pages:

@@ -1,0 +1,43 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: block;
+  inline-size: 100%;
+
+  .banner {
+    padding-block: map.get(variables.$spacers, 1);
+    padding-inline: map.get(variables.$spacers, 5);
+  }
+
+  &.banner-info {
+    background-color: variables.$element-status-information;
+    color: variables.$element-status-information-contrast;
+  }
+
+  &.banner-success {
+    background-color: variables.$element-status-success;
+    color: variables.$element-status-success-contrast;
+  }
+
+  &.banner-warning {
+    background-color: variables.$element-status-warning;
+    color: variables.$element-status-warning-contrast;
+  }
+
+  &.banner-caution {
+    background-color: variables.$element-status-caution;
+    color: variables.$element-status-caution-contrast;
+  }
+
+  &.banner-danger {
+    background-color: variables.$element-status-danger;
+    color: variables.$element-status-danger-contrast;
+  }
+
+  &.banner-critical {
+    background-color: variables.$element-status-critical;
+    color: variables.$element-status-critical-contrast;
+  }
+}
