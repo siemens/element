@@ -1,0 +1,46 @@
+@let loading = loading$ | async;
+<div class="modal-header">
+  @if (icon()) {
+    <si-icon-next class="icon" [icon]="icon()" />
+  }
+  <span class="modal-title" [id]="titleId()">{{ heading() | translate: translationParams() }}</span>
+  <button
+    type="button"
+    class="btn btn-circle btn-sm btn-ghost element-cancel"
+    [attr.aria-label]="cancelBtnName() | translate"
+    [disabled]="!!loading"
+    (click)="modalRef.messageOrHide('cancel')"
+  >
+  </button>
+</div>
+<div class="modal-body text-pre-wrap text-break">{{
+  (!disableSave() ? message() : disableSaveMessage()) | translate: translationParams()
+}}</div>
+<div class="modal-footer">
+  <si-loading-button
+    buttonClass="btn btn-secondary"
+    [disabled]="!!loading && loading !== 'cancel'"
+    [loading]="loading === 'cancel'"
+    (click)="modalRef.messageOrHide('cancel')"
+  >
+    {{ cancelBtnName() | translate }}
+  </si-loading-button>
+  <si-loading-button
+    buttonClass="btn btn-danger"
+    [disabled]="!!loading && loading !== 'discard'"
+    [loading]="loading === 'discard'"
+    (click)="modalRef.messageOrHide('discard')"
+  >
+    {{ (!disableSave() ? discardBtnName() : disableSaveDiscardBtnName()) | translate }}
+  </si-loading-button>
+  @if (!disableSave()) {
+    <si-loading-button
+      buttonClass="btn btn-primary"
+      [disabled]="!!loading && loading !== 'save'"
+      [loading]="loading === 'save'"
+      (click)="modalRef.messageOrHide('save')"
+    >
+      {{ saveBtnName() | translate }}
+    </si-loading-button>
+  }
+</div>
