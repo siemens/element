@@ -1,0 +1,25 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/all-variables';
+
+:host {
+  --language-switcher-color: #{all-variables.$element-text-active};
+}
+
+.language-switcher-select {
+  inline-size: 100%;
+  background-color: transparent;
+  border: 0;
+  border-block-end: 1px solid var(--input-border-color);
+  padding: map.get(all-variables.$spacers, 3);
+  cursor: pointer;
+  color: var(--language-switcher-color);
+
+  @include all-variables.media-breakpoint-up(md) {
+    max-inline-size: 200px;
+  }
+
+  option {
+    background-color: all-variables.$element-base-1;
+  }
+}

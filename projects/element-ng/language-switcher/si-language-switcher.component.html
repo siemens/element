@@ -1,0 +1,11 @@
+<select
+  class="si-title-2 language-switcher-select"
+  [attr.aria-label]="languageSwitcherLabel() | translate"
+  (change)="switchLanguage($event.target)"
+>
+  @for (language of availableIsoLanguages(); track language.value) {
+    <option [value]="language.value" [selected]="language.value === translate.currentLanguage">
+      {{ language.name | translate }}
+    </option>
+  }
+</select>
