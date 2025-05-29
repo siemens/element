@@ -1,0 +1,233 @@
+@if (!showCompletionPage()) {
+  @if (!verticalLayout()) {
+    <div class="container-wizard" [class.justify-content-center]="!inlineNavigation()">
+      @if (inlineNavigation()) {
+        <ng-container *ngTemplateOutlet="cancelBtnHorizontal" />
+        <ng-container *ngTemplateOutlet="backBtnHorizontal" />
+      }
+      <ng-container *ngTemplateOutlet="stepsTemplate" />
+      @if (inlineNavigation()) {
+        <ng-container *ngTemplateOutlet="nextBtnHorizontal" />
+      }
+    </div>
+
+    <ng-container *ngTemplateOutlet="stepContent" />
+    @if (inlineNavigation()) {
+      <ng-container *ngTemplateOutlet="saveBtn" />
+    } @else {
+      <ng-container *ngTemplateOutlet="footerVertical" />
+    }
+  } @else {
+    @if (showVerticalDivider()) {
+      <div class="container-wizard vertical">
+        <ng-container *ngTemplateOutlet="stepsTemplate" />
+        <div class="vertical-divider"></div>
+        <div class="d-flex flex-column w-100">
+          <div class="steps-content">
+            <ng-container *ngTemplateOutlet="stepContent" />
+          </div>
+          <ng-container *ngTemplateOutlet="footerVertical" />
+        </div>
+      </div>
+    } @else {
+      <div class="container-wizard vertical">
+        <ng-container *ngTemplateOutlet="stepsTemplate" />
+        <div class="steps-content">
+          <ng-container *ngTemplateOutlet="stepContent" />
+        </div>
+      </div>
+      <ng-container *ngTemplateOutlet="footerVertical" />
+    }
+  }
+} @else {
+  <div class="text-center">
+    <si-icon-next class="completion-icon-size text-success" [icon]="icons.elementChecked" />
+    <p class="si-title-1"> {{ completionText() | translate }}</p>
+  </div>
+}
+
+<ng-template #stepsTemplate>
+  <div
+    #containerSteps
+    class="container-steps"
+    [class.vertical]="verticalLayout()"
+    [class.mx-4]="inlineNavigation()"
+    [class.mt-4]="!verticalLayout() && inlineNavigation()"
+    (siResizeObserver)="calculateNumberOfVisibleSteps()"
+  >
+    @for (item of activeSteps(); track item.index) {
+      <div class="step">
+        <div
+          class="line previous"
+          [class.dashed]="$first && item.index > 0"
+          [class.vertical]="verticalLayout()"
+          [class.spacer]="$first && item.index === 0"
+          [ngClass]="getStateClass(item.index)"
+        ></div>
+        <a
+          class="focus-none"
+          [ngClass]="getStateClass(item.index)"
+          [attr.aria-current]="getAriaCurrent(item.index)"
+          [attr.href]="!canActivate(item.index) || !currentStep?.isNextNavigable() ? null : '#'"
+          (click)="activateStep($event, item.index)"
+        >
+          @if (showStepNumbers() && !item.step.failed()) {
+            <div
+              class="step-icon number-step d-flex justify-content-center align-items-center px-1"
+            >
+              <div class="circle" [class.status-warning]="item.step.failed()">
+                <span class="si-title-2 px-2" [class.completed-color]="item.index < index">
+                  {{ item.index + 1 }}
+                </span>
+              </div>
+            </div>
+          } @else {
+            <si-icon-next
+              class="icon step-icon"
+              [class.status-warning]="item.step.failed()"
+              [icon]="getState(item.step!, item.index)"
+            />
+          }
+          <div
+            class="title si-title-2"
+            [class.text-center]="!verticalLayout()"
+            [class.px-6]="!verticalLayout()"
+            [attr.aria-disabled]="getAriaDisabled(item.index)"
+            >{{ item.step.heading() | translate }}</div
+          >
+        </a>
+        @if (item.index + 1 < stepCount) {
+          <div
+            class="line"
+            [class.vertical]="verticalLayout()"
+            [ngClass]="getStateClass(item.index + 1)"
+            [class.dashed]="$last"
+          ></div>
+        }
+      </div>
+    }
+  </div>
+</ng-template>
+
+<ng-template #stepContent>
+  <div [class.flex-grow-1]="!verticalLayout()" [class.h-100]="verticalLayout()">
+    <ng-content />
+  </div>
+</ng-template>
+
+<ng-template #cancelBtnHorizontal>
+  @if (hasCancel()) {
+    <div class="me-7">
+      <div class="wizard-btn-container" (click)="wizardCancel.emit()">
+        <button
+          type="button"
+          class="btn btn-sm btn-circle btn-secondary mt-2 mb-4"
+          [attr.aria-label]="cancelText() | translate"
+        >
+          <si-icon-next [icon]="icons.elementCancel" />
+        </button>
+        <div class="si-title-2 text-primary">{{ cancelText() | translate }}</div>
+      </div>
+    </div>
+  }
+</ng-template>
+
+<ng-template #footerVertical>
+  <div class="d-flex flex-row justify-content-between pt-6">
+    <div>
+      @if (hasCancel()) {
+        <button
+          type="button"
+          class="btn btn-tertiary me-6"
+          [class.ms-6]="showVerticalDivider()"
+          [attr.aria-label]="cancelText() | translate"
+          (click)="wizardCancel.emit()"
+        >
+          {{ cancelText() | translate }}
+        </button>
+      }
+    </div>
+    <div class="d-flex">
+      @if (!shouldHideNavigation()) {
+        <button
+          type="button"
+          class="btn btn-secondary me-6"
+          [class.d-none]="index === 0"
+          [attr.aria-label]="backText() | translate"
+          (click)="back(1)"
+        >
+          {{ backText() | translate }}
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-primary"
+          [attr.aria-label]="nextText() | translate"
+          [disabled]="!currentStep?.isValid()"
+          [class.d-none]="index === steps.length - 1"
+          (click)="next(1)"
+        >
+          {{ nextText() | translate }}
+        </button>
+      }
+
+      <ng-container *ngTemplateOutlet="saveBtn" />
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #backBtnHorizontal>
+  <div class="wizard-btn-container">
+    @if (!shouldHideNavigation()) {
+      <div class="back" [class.invisible]="index === 0" (click)="back(1)">
+        <button
+          type="button"
+          class="btn btn-secondary btn-circle mb-2"
+          [attr.aria-label]="backText() | translate"
+        >
+          <si-icon-next class="flip-rtl" [icon]="icons.elementLeft4" />
+        </button>
+        <div class="si-title-2 text-primary">{{ backText() | translate }}</div>
+      </div>
+    }
+  </div>
+</ng-template>
+
+<ng-template #nextBtnHorizontal>
+  <div class="wizard-btn-container" [class.wizard-text-deactivate]="!currentStep?.isValid()">
+    @if (!shouldHideNavigation()) {
+      <div class="next" [class.invisible]="index === steps.length - 1" (click)="next(1)">
+        <button
+          type="button"
+          class="btn btn-primary btn-circle mb-2"
+          [disabled]="!currentStep?.isValid()"
+          [attr.aria-label]="nextText() | translate"
+        >
+          <si-icon-next class="flip-rtl" [icon]="icons.elementRight4" />
+        </button>
+        <div
+          class="si-title-2 text-primary"
+          [class.disabled]="!currentStep?.isValid()"
+          [attr.aria-disabled]="!currentStep?.isValid()"
+          >{{ nextText() | translate }}</div
+        >
+      </div>
+    }
+  </div>
+</ng-template>
+
+<ng-template #saveBtn>
+  @if (!hideSave()) {
+    <div [class.center-save]="!verticalLayout() && inlineNavigation()">
+      @if (index === steps.length - 1) {
+        <button
+          type="button"
+          class="btn btn-primary save"
+          [disabled]="!currentStep?.isValid() || !currentStep?.isNextNavigable()"
+          (click)="save()"
+          >{{ saveText() | translate }}</button
+        >
+      }
+    </div>
+  }
+</ng-template>

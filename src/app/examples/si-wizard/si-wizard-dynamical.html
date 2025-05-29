@@ -1,0 +1,11 @@
+<si-wizard [inlineNavigation]="false">
+  @for (item of steps$ | async; track item) {
+    <si-wizard-step
+      [heading]="item.heading"
+      (back)="logEvent('Back to Step ' + $index + '!')"
+      (next)="logEvent('Step ' + ($index + 1) + ' finished!')"
+    >
+      <si-empty-state [icon]="item.icon" [heading]="item.title" />
+    </si-wizard-step>
+  }
+</si-wizard>

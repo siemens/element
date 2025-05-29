@@ -1,0 +1,27 @@
+<si-wizard class="h-100" showStepNumbers="true" inlineNavigation="false">
+  @let steps =
+    [
+      'Step 1',
+      'Step 2',
+      'Step 3',
+      'Step 4',
+      'Step 5',
+      'Step 6',
+      'Step 7',
+      'Step 8',
+      'Step 9',
+      'Step 10'
+    ];
+  @for (step of steps; track step) {
+    <si-wizard-step [heading]="step" [failed]="step === 'Step 3'" [isValid]="stepIsValid">
+      <div class="card d-flex flex-column h-100 p-6">
+        <h1 class="text-center">{{ step }}</h1>
+        <p>Content with full height</p>
+        <label class="form-check">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="stepIsValid" />
+          <span class="form-check-label">Check, if the step is valid.</span>
+        </label>
+      </div>
+    </si-wizard-step>
+  }
+</si-wizard>

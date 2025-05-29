@@ -1,0 +1,32 @@
+<si-wizard [inlineNavigation]="false">
+  <si-wizard-step
+    heading="Step 1"
+    [isNextNavigable]="stepIsNextNavigable"
+    (next)="stepIsNextNavigable ? logEvent('Step 1 finished!') : f.form.markAsDirty()"
+    (back)="logEvent('Going back to step 1!')"
+  >
+    <form #f="ngForm" class="mb-6">
+      @if (f.dirty && !f.form.valid) {
+        <si-inline-notification
+          severity="danger"
+          heading="Navigation not possible"
+          message="Tick the checkbox"
+        />
+      }
+
+      <label class="form-check">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          name="validateStep"
+          [(ngModel)]="stepIsNextNavigable"
+        />
+        <span class="form-check-label">Check to make navigation to the next step possible.</span>
+      </label>
+    </form>
+  </si-wizard-step>
+
+  <si-wizard-step heading="Step 2" [isValid]="false" (save)="logEvent('Step 2 finished!')">
+    <h1 class="text-center">Step 2</h1>
+  </si-wizard-step>
+</si-wizard>

@@ -1,0 +1,28 @@
+<si-wizard [inlineNavigation]="false">
+  <si-wizard-step heading="Step 1" (next)="logEvent('Step 1 finished!')">
+    <h1 class="text-center">Step 1</h1>
+  </si-wizard-step>
+  <si-wizard-step
+    heading="Step 2"
+    [failed]="true"
+    [isValid]="stepIsValid"
+    (next)="logEvent('Step 2 finished!')"
+    (back)="logEvent('Going back to step 1!')"
+  >
+    <h1 class="text-center">Step 2</h1>
+    <div class="text-center">
+      <label class="form-check">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="stepIsValid" />
+        <span class="form-check-label">Check, if the step 2 is valid.</span>
+      </label>
+    </div>
+  </si-wizard-step>
+  <si-wizard-step
+    heading="Step 3"
+    [failed]="false"
+    [isValid]="false"
+    (save)="logEvent('Step 3 finished!')"
+  >
+    <h1 class="text-center">Step 3</h1>
+  </si-wizard-step>
+</si-wizard>
