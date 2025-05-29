@@ -30,7 +30,7 @@ export class SiCopyrightNoticeComponent {
   });
 
   protected readonly company = computed(
-    () => this.copyright()?.company ?? this.globalCopyrightInfo?.company ?? 'Sample Company'
+    () => this.copyright()?.company ?? this.globalCopyrightInfo?.company ?? 'Siemens'
   );
 
   protected readonly startYear = computed(
