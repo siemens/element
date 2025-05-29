@@ -1,0 +1,36 @@
+@let popover = popoverDirective();
+<div
+  #popoverWrapper
+  class="popover position-relative focus-inside"
+  role="dialog"
+  [attr.aria-labelledby]="labelledBy"
+  [attr.aria-describedby]="describedBy"
+  [ngClass]="[positionClass(), popover.containerClass()]"
+  (keydown.escape)="hide()"
+>
+  <div
+    class="popover-arrow"
+    [style.left.px]="arrowPos()?.left"
+    [style.right.px]="arrowPos()?.right"
+  ></div>
+  @if (popover.popoverTitle()) {
+    <div class="popover-header">
+      @let iconValue = popover.icon();
+      @if (iconValue) {
+        <si-icon-next class="icon me-1" [icon]="iconValue" />
+      }
+      <span class="si-title-2" [id]="labelledBy">{{ popover.popoverTitle() }}</span>
+    </div>
+  }
+  <div class="popover-body">
+    @if (!popoverTemplate) {
+      <div class="si-body-2" [id]="describedBy" [innerHTML]="popover.siPopoverNext()"></div>
+    } @else {
+      <ng-template
+        [ngTemplateOutlet]="popoverTemplate"
+        [ngTemplateOutletContext]="popover.popoverContext()"
+        [ngTemplateOutletInjector]="injector"
+      />
+    }
+  </div>
+</div>
