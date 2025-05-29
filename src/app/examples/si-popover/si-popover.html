@@ -1,0 +1,100 @@
+<!-- trigger="focus" dismiss popover on next click -->
+<div
+  class="button-container d-flex flex-wrap gap-4"
+  style="padding-block: 120px 0; padding-inline: 80px 0"
+>
+  <button
+    type="button"
+    class="btn btn-secondary"
+    siPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+    popoverTitle="Popover on top"
+    placement="top"
+    triggers="focus"
+    (shown)="logEvent('Popover visible')"
+    (hidden)="logEvent('Popover hidden')"
+  >
+    Popover on top
+  </button>
+
+  <button
+    type="button"
+    class="btn btn-secondary"
+    siPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+    popoverTitle="Popover on end"
+    placement="end"
+    triggers="focus"
+  >
+    Popover on end
+  </button>
+
+  <button
+    type="button"
+    class="btn btn-secondary"
+    siPopover="Vivamus sagittis."
+    popoverTitle="Popover auto"
+    placement="auto"
+    icon="element-info"
+    triggers="focus"
+    [outsideClick]="false"
+  >
+    Popover auto
+  </button>
+
+  <button
+    type="button"
+    class="btn btn-secondary"
+    siPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+    popoverTitle="Popover on start"
+    placement="start"
+    triggers="focus"
+  >
+    Popover on start
+  </button>
+
+  <button
+    type="button"
+    class="btn btn-secondary"
+    siPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+    popoverTitle="Popover on bottom"
+    placement="bottom"
+    triggers="focus"
+  >
+    Popover on bottom
+  </button>
+
+  <button
+    type="button"
+    class="btn btn-secondary"
+    placement="top"
+    triggers="click"
+    [siPopover]="popoverTemplate"
+  >
+    Popover with template
+  </button>
+
+  <button
+    type="button"
+    class="btn btn-secondary"
+    placement="top"
+    triggers="click"
+    [siPopover]="popoverTemplateWithContext"
+    [popoverContext]="myContext"
+  >
+    Popover with template and context
+  </button>
+</div>
+
+<ng-template #popoverTemplate>
+  <div class="text-center">
+    <si-icon icon="element-microwave-on" size="display-4" />
+  </div>
+  Hello, I'm a microwave.
+</ng-template>
+
+<ng-template #popoverTemplateWithContext let-data>
+  <div class="text-center">
+    <si-icon size="display-4" [icon]="data.icon" />
+  </div>
+  Hello, I'm a microwave.<br />
+  And I'm {{ data.state }} with {{ data.power }} for {{ data.duration }}.
+</ng-template>

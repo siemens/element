@@ -51,6 +51,7 @@ documentation.
 ## P
 
 - [Pagination](layout-navigation/pagination.md)
+- [Popover](status-notifications/popover.md)
 
 ## S
 

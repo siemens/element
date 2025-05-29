@@ -1,0 +1,29 @@
+<div
+  class="popover position-relative focus-outline-padding"
+  [ngClass]="[containerClass(), positionClass()]"
+>
+  <div
+    class="popover-arrow"
+    [style.left.px]="arrowPos()?.left"
+    [style.right.px]="arrowPos()?.right"
+  ></div>
+  @if (popoverTitle()) {
+    <div class="popover-header">
+      @let iconValue = icon();
+      @if (iconValue) {
+        <si-icon-next class="icon me-2" [icon]="iconValue" />
+      }
+      <span class="si-title-2">{{ popoverTitle() }}</span>
+    </div>
+  }
+  <div class="popover-body">
+    @if (!popoverTemplate) {
+      <div class="si-body-2" [innerHTML]="popover()"></div>
+    } @else {
+      <ng-template
+        [ngTemplateOutlet]="popoverTemplate"
+        [ngTemplateOutletContext]="popoverContext()"
+      />
+    }
+  </div>
+</div>
