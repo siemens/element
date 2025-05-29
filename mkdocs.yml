@@ -33,6 +33,7 @@ nav:
     - Overview:                           'components/index.md'
     - Buttons & menus:
       - Buttons:                          'components/buttons-menus/buttons.md'
+      - Content Action Bar:               'components/buttons-menus/content-actions.md'
       - Dropdowns:                        'components/buttons-menus/dropdowns.md'
       - Links:                            'components/buttons-menus/links.md'
       - Menu:                             'components/buttons-menus/menu.md'

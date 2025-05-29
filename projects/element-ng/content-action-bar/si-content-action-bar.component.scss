@@ -1,0 +1,25 @@
+@use '@siemens/element-theme/src/styles/variables/semantic-tokens';
+
+:host.mobile {
+  [siAutoCollapsableList] {
+    inline-size: 40px;
+  }
+}
+
+div > [si-content-action-bar-toggle] {
+  inline-size: 40px;
+  justify-content: center;
+  border-radius: semantic-tokens.$element-button-radius;
+}
+
+si-menu-bar {
+  > *:first-child {
+    border-start-start-radius: semantic-tokens.$element-button-radius;
+    border-end-start-radius: semantic-tokens.$element-button-radius;
+  }
+
+  > *:last-child {
+    border-start-end-radius: semantic-tokens.$element-button-radius;
+    border-end-end-radius: semantic-tokens.$element-button-radius;
+  }
+}

@@ -1,0 +1,70 @@
+<h4>Variation 1 - Label</h4>
+<div class="p-5 bg-base-0 d-flex">
+  <si-content-action-bar
+    class="ms-auto"
+    toggleItemLabel="toggle"
+    viewType="collapsible"
+    [primaryActions]="primaryActions"
+    [secondaryActions]="secondaryActions"
+  />
+</div>
+
+<div class="p-5 bg-base-1 d-flex">
+  <si-content-action-bar
+    class="ms-auto"
+    toggleItemLabel="toggle"
+    viewType="collapsible"
+    [primaryActions]="primaryActions"
+    [secondaryActions]="secondaryActions"
+  />
+</div>
+
+<br />
+<h4>Variation 2 - Label + Icon</h4>
+<div class="p-5 bg-base-0 d-flex">
+  <si-content-action-bar
+    class="ms-auto"
+    toggleItemLabel="toggle"
+    viewType="expanded"
+    [actionParam]="{ row: 'first', someThingElse: 37 }"
+    [primaryActions]="primaryActionsIcons"
+    [secondaryActions]="secondaryActionsIcons"
+  />
+</div>
+
+<div class="p-5 bg-base-1 d-flex">
+  <si-content-action-bar
+    class="ms-auto"
+    toggleItemLabel="toggle"
+    viewType="expanded"
+    [actionParam]="{ row: 'second', someThingElse: 42 }"
+    [primaryActions]="primaryActionsIcons"
+    [secondaryActions]="secondaryActionsIcons"
+  />
+</div>
+
+<br />
+<h4>Variation 3 - Label + Icon (prevent icons in dropdowns)</h4>
+<div class="p-5 bg-base-0 d-flex">
+  <si-content-action-bar
+    class="ms-auto"
+    toggleItemLabel="toggle"
+    viewType="expanded"
+    [actionParam]="{ row: 'first', someThingElse: 37 }"
+    [primaryActions]="primaryActionsIcons"
+    [secondaryActions]="secondaryActionsIcons"
+    [preventIconsInDropdownMenus]="true"
+  />
+</div>
+
+<div class="p-5 bg-base-1 d-flex">
+  <si-content-action-bar
+    class="ms-auto"
+    toggleItemLabel="toggle"
+    viewType="expanded"
+    [actionParam]="{ row: 'second', someThingElse: 42 }"
+    [primaryActions]="primaryActionsIcons"
+    [secondaryActions]="secondaryActionsIcons"
+    [preventIconsInDropdownMenus]="true"
+  />
+</div>

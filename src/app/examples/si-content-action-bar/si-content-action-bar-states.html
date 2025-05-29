@@ -1,0 +1,30 @@
+<h4>Mixed states</h4>
+<div class="p-5 bg-base-0 d-flex">
+  <si-content-action-bar
+    class="ms-auto"
+    [primaryActions]="primaryActions"
+    [secondaryActions]="secondaryActions"
+    [viewType]="viewType"
+  />
+</div>
+
+<h4>Disabled menu and menu item variations</h4>
+<div class="p-5 bg-base-0 d-flex">
+  <si-content-action-bar
+    class="ms-auto"
+    viewType="expanded"
+    [primaryActions]="disabledPrimaryItems"
+    [secondaryActions]="disabledPrimaryItems"
+  />
+</div>
+
+<h4>Completely disabled</h4>
+<div class="p-5 bg-base-0 d-flex">
+  <si-content-action-bar
+    class="ms-auto"
+    viewType="expanded"
+    [primaryActions]="disabledPrimaryItems"
+    [secondaryActions]="disabledPrimaryItems"
+    [disabled]="true"
+  />
+</div>

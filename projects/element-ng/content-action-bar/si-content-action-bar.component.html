@@ -1,0 +1,214 @@
+@if (viewType() !== 'mobile' && primaryActions()?.length) {
+  <div siAutoCollapsableList class="d-flex" [siAutoCollapsableListContainerElement]="parentElement">
+    @if (viewType() === 'collapsible' && !expanded && collapsibleListItem.canBeVisible()) {
+      <button
+        #expandElement
+        si-content-action-bar-toggle
+        type="button"
+        [icon]="icons.elementOptionsVertical"
+        [attr.aria-label]="toggleItemLabel() | translate"
+        (click)="expand()"
+      ></button>
+    }
+    <si-menu-bar
+      #collapsibleListItem="siAutoCollapsableListItem"
+      siAutoCollapsableListItem
+      [forceHide]="!expanded"
+      [disabled]="disabled()"
+    >
+      <!-- ?? syntax is not working for track -->
+      @for (primaryAction of primaryActions(); track primaryAction.id ? primaryAction.id : $index) {
+        @if (isNewItemStyle(primaryAction)) {
+          @switch (primaryAction.type) {
+            @case ('action') {
+              <button
+                type="button"
+                si-menu-item
+                [attr.data-id]="primaryAction.id"
+                [attr.title]="
+                  primaryAction.iconOnly ? (primaryAction.label | translate) : undefined
+                "
+                [badge]="primaryAction.badge"
+                [badgeColor]="primaryAction.badgeColor ?? 'secondary'"
+                [disabled]="primaryAction.disabled || disabled()"
+                [icon]="primaryAction.icon"
+                [iconBadgeDot]="primaryAction.iconBadge"
+                (triggered)="runAction(primaryAction)"
+              >
+                @if (!primaryAction.iconOnly) {
+                  {{ primaryAction.label | translate }}
+                }
+              </button>
+            }
+            @case ('group') {
+              <button
+                type="button"
+                si-menu-item
+                [attr.data-id]="primaryAction.id"
+                [attr.title]="
+                  primaryAction.iconOnly ? (primaryAction.label | translate) : undefined
+                "
+                [badge]="primaryAction.badge"
+                [badgeColor]="primaryAction.badgeColor ?? 'secondary'"
+                [disabled]="primaryAction.disabled || disabled()"
+                [icon]="primaryAction.icon"
+                [iconBadgeDot]="primaryAction.iconBadge"
+                [cdkMenuTriggerFor]="groupSubmenu"
+              >
+                @if (!primaryAction.iconOnly) {
+                  {{ primaryAction.label | translate }}
+                }
+              </button>
+              <!-- Cannot use template context because of https://github.com/angular/components/issues/26256 -->
+              <ng-template #groupSubmenu>
+                <si-menu-factory [items]="primaryAction.children" />
+              </ng-template>
+            }
+            @case ('router-link') {
+              <a
+                si-menu-item
+                [attr.data-id]="primaryAction.id"
+                [attr.title]="
+                  primaryAction.iconOnly ? (primaryAction.label | translate) : undefined
+                "
+                [badge]="primaryAction.badge"
+                [badgeColor]="primaryAction.badgeColor ?? 'secondary'"
+                [disabled]="primaryAction.disabled || disabled()"
+                [icon]="primaryAction.icon"
+                [iconBadgeDot]="primaryAction.iconBadge"
+                [routerLink]="primaryAction.routerLink"
+                [queryParams]="primaryAction.extras?.queryParams"
+                [queryParamsHandling]="primaryAction.extras?.queryParamsHandling"
+                [fragment]="primaryAction.extras?.fragment"
+                [state]="primaryAction.extras?.state"
+                [relativeTo]="primaryAction.extras?.relativeTo"
+                [preserveFragment]="primaryAction.extras?.preserveFragment"
+                [skipLocationChange]="primaryAction.extras?.skipLocationChange"
+                [replaceUrl]="primaryAction.extras?.replaceUrl"
+              >
+                @if (!primaryAction.iconOnly) {
+                  {{ primaryAction.label | translate }}
+                }
+              </a>
+            }
+            @case ('link') {
+              <a
+                si-menu-item
+                [attr.data-id]="primaryAction.id"
+                [attr.title]="
+                  primaryAction.iconOnly ? (primaryAction.label | translate) : undefined
+                "
+                [badge]="primaryAction.badge"
+                [badgeColor]="primaryAction.badgeColor ?? 'secondary'"
+                [disabled]="primaryAction.disabled || disabled()"
+                [icon]="primaryAction.icon"
+                [iconBadgeDot]="primaryAction.iconBadge"
+                [href]="primaryAction.href"
+                [target]="primaryAction.target"
+              >
+                @if (!primaryAction.iconOnly) {
+                  {{ primaryAction.label | translate }}
+                }
+              </a>
+            }
+          }
+        } @else {
+          @if (primaryAction.items) {
+            <a
+              si-menu-item
+              activeClass="active"
+              [attr.data-id]="primaryAction.id"
+              [siLink]="primaryAction"
+              [icon]="primaryAction.icon"
+              [attr.aria-label]="primaryAction.title | translate"
+              [badge]="primaryAction.badge"
+              [actionParam]="actionParam()"
+              [iconBadgeDot]="primaryAction.badgeDot"
+              [disabled]="primaryAction.disabled || disabled()"
+              [cdkMenuTriggerFor]="primaryAction.items ? mainItemSubmenu : null"
+            >
+              @if (!primaryAction.iconOnly && primaryAction.title) {
+                <span>{{ primaryAction.title | translate }}</span>
+              }
+              <!-- Cannot use template context because of https://github.com/angular/components/issues/26256 -->
+              <ng-template #mainItemSubmenu>
+                <si-menu-factory [items]="primaryAction.items" />
+              </ng-template>
+            </a>
+          }
+          @if (!primaryAction.items) {
+            <a
+              si-menu-item
+              activeClass="active"
+              [attr.data-id]="primaryAction.id"
+              [siLink]="primaryAction"
+              [icon]="primaryAction.icon"
+              [attr.aria-label]="primaryAction.title | translate"
+              [badge]="primaryAction.badge"
+              [actionParam]="actionParam()"
+              [iconBadgeDot]="primaryAction.badgeDot"
+              [disabled]="primaryAction.disabled || disabled()"
+            >
+              @if (!primaryAction.iconOnly && primaryAction.title) {
+                <span>{{ primaryAction.title | translate }}</span>
+              }
+            </a>
+          }
+        }
+      }
+      @if (secondaryActions()?.length) {
+        <button
+          type="button"
+          si-content-action-bar-toggle
+          cdkMenuItem
+          [icon]="icons.elementOptionsVertical"
+          [attr.aria-label]="toggleItemLabel() | translate"
+          [cdkMenuTriggerFor]="secondaryActionsMenu"
+          [disabled]="disabled()"
+        ></button>
+      }
+      @if (viewType() === 'collapsible') {
+        <button
+          type="button"
+          si-content-action-bar-toggle
+          cdkMenuItem
+          [icon]="icons.elementCancel"
+          [attr.aria-label]="toggleItemLabel() | translate"
+          [disabled]="disabled()"
+          (cdkMenuItemTriggered)="collapse()"
+        >
+        </button>
+      }
+    </si-menu-bar>
+    <button
+      si-content-action-bar-toggle
+      siAutoCollapsableListOverflowItem
+      type="button"
+      [icon]="icons.elementOptionsVertical"
+      [cdkMenuTriggerFor]="mobile"
+      [disabled]="disabled()"
+      [attr.aria-label]="toggleItemLabel() | translate"
+    >
+    </button>
+  </div>
+}
+
+@if (viewType() === 'mobile' || !primaryActions()?.length) {
+  <button
+    si-content-action-bar-toggle
+    type="button"
+    [icon]="icons.elementOptionsVertical"
+    [cdkMenuTriggerFor]="mobile"
+    [disabled]="disabled()"
+    [attr.aria-label]="toggleItemLabel() | translate"
+  >
+  </button>
+}
+
+<ng-template #secondaryActionsMenu>
+  <si-menu-factory [items]="secondaryActionsInternal()" [actionParam]="actionParam()" />
+</ng-template>
+
+<ng-template #mobile>
+  <si-menu-factory [items]="mobileActions()" [actionParam]="actionParam()" />
+</ng-template>
