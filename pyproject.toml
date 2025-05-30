@@ -27,8 +27,13 @@ explicit = true
 
 [tool.uv.sources]
 mkdocs-code-siemens-code-docs-theme = { index = "code-docs-theme" }
-mkdocs-element-docs-builder = { path = "projects/docs-builder", editable = true }
+mkdocs-element-docs-builder = { workspace = true }
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.uv.workspace]
+members = [
+    "projects/element-docs-builder",
+]
