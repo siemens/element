@@ -37,6 +37,7 @@ documentation.
 ## I
 
 - [Inline Notification](status-notifications/inline-notification.md)
+- [Input](forms-inputs/input.md)
 
 ## L
 

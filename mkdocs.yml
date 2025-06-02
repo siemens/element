@@ -37,6 +37,7 @@ nav:
       - Links:                            'components/buttons-menus/links.md'
       - Menu:                             'components/buttons-menus/menu.md'
     - Forms & Inputs:
+      - Input:                            'components/forms-inputs/input.md'
       - Color Picker:                     'components/forms-inputs/color-picker.md'
       - Forms:                            'components/forms-inputs/forms.md'
     - Layout & navigation:
