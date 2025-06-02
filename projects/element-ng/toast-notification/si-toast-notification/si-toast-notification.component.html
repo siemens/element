@@ -1,0 +1,33 @@
+<div class="si-toast elevation-2" [class.si-toast-auto-close]="!toast().disableAutoClose">
+  <div #autoCloseBar class="si-toast-timer-bar"></div>
+  <div class="bar" [ngClass]="statusColor()"></div>
+  <si-status-icon class="icon" [status]="status()" />
+
+  <div class="toast-content px-4">
+    <p class="toast-title"
+      ><b>{{ toast().title | translate: toast().translationParams }}</b></p
+    >
+    @if (toast().message) {
+      <p class="mt-4">{{ toast().message | translate: toast().translationParams }}</p>
+    }
+    @if (toast().action) {
+      <p [class.mt-3]="toast().message" [class.mt-4]="!toast().message">
+        <a [siLink]="toast().action">{{
+          toast().action!.title | translate: toast().translationParams
+        }}</a>
+      </p>
+    }
+  </div>
+  @if (!toast().disableManualClose) {
+    <button
+      type="button"
+      tabindex="0"
+      class="btn btn-circle btn-sm btn-ghost mt-n2 me-n2"
+      [attr.aria-label]="closeAriaLabel | translate"
+      (keydown.enter)="close()"
+      (click)="close()"
+    >
+      <si-icon-next [icon]="icons.elementCancel" />
+    </button>
+  }
+</div>

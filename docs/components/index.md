@@ -61,6 +61,7 @@ documentation.
 
 ## T
 
+- [Toast Notification](status-notifications/toast-notification.md)
 - [Tooltip](status-notifications/tooltip.md)
 
 ## W

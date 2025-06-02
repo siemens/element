@@ -59,6 +59,7 @@ nav:
       - Popover:                          'components/status-notifications/popover.md'
       - Summary Chip:                     'components/status-notifications/summary-chip.md'
       - Summary Widget:                   'components/status-notifications/summary-widget.md'
+      - Toast Notification:               'components/status-notifications/toast-notification.md'
       - Tooltip:                          'components/status-notifications/tooltip.md'
   - Architecture:
     - CSS framework:                      'architecture/css-framework.md'

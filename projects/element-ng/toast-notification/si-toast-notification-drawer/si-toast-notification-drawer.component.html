@@ -1,0 +1,8 @@
+@for (toast of toasts() | async; track toast) {
+  <si-toast-notification
+    @toastTrigger
+    class="position-relative"
+    [toast]="toast"
+    [@.disabled]="animationsDisabled"
+  />
+}

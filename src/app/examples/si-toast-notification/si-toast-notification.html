@@ -1,0 +1,77 @@
+<div class="button-container e2e-ignore">
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="
+      showToast(
+        'success',
+        'Email sent',
+        'Meeting minutes sent to Werner von Siemens',
+        undefined,
+        undefined,
+        4000
+      )
+    "
+  >
+    Success toast
+  </button>
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="showToast('danger', 'Security breach', 'Lab doors opened forcefully')"
+  >
+    Danger toast
+  </button>
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="
+      showToast(
+        'info',
+        'Window closed',
+        'Window in Lab 5 closed.
+    HVAC returned to normal operation'
+      )
+    "
+  >
+    Info toast
+  </button>
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="
+      showToast('warning', 'Overtemperature', 'Room temperature exceeds healthy environment')
+    "
+  >
+    Warning toast
+  </button>
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="
+      showActionableToast(
+        'info',
+        'Window opened',
+        'Window in Lab 5 opened on purpose',
+        'Acknowledge'
+      )
+    "
+  >
+    Actionable toast
+  </button>
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="showToast('info', 'Filter dirty', 'Replace filter within 2 weeks', true)"
+  >
+    Manual close only
+  </button>
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="showToast('info', 'Update installed', 'Computer restarts in 5 seconds', false, true)"
+  >
+    Auto close only
+  </button>
+  <button type="button" class="btn btn-tertiary" (click)="hideAll()"> Hide all </button>
+</div>

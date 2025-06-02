@@ -1,0 +1,87 @@
+@use 'sass:map';
+@use 'sass:math';
+
+@use '@siemens/element-theme/src/styles/all-variables';
+
+$toast-min-width: 250px;
+$toast-max-width: 400px;
+$toast-line-height: 1.125rem;
+$toast-padding: map.get(all-variables.$spacers, 4);
+$toast-window-margin: map.get(all-variables.$spacers, 7);
+$toast-timer-height: 2px;
+
+%si-toast-bottom-bar {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  block-size: $toast-timer-height;
+}
+
+:host {
+  display: block;
+}
+
+.si-toast {
+  block-size: auto;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  color: all-variables.$element-text-primary;
+  background: all-variables.$element-base-3;
+  border-radius: all-variables.$element-radius-2;
+  padding-inline: map.get(all-variables.$spacers, 5) $toast-padding;
+  padding-block: $toast-padding;
+  margin-block-end: $toast-window-margin;
+  font-size: all-variables.$si-font-size-body-1;
+  pointer-events: all;
+  overflow: hidden;
+  min-inline-size: $toast-min-width;
+  max-inline-size: calc(100vw - #{$toast-window-margin} * 2);
+
+  @include all-variables.media-breakpoint-up(md) {
+    max-inline-size: $toast-max-width;
+  }
+
+  &.si-toast-auto-close {
+    padding-block-end: $toast-padding + $toast-timer-height;
+
+    &::before {
+      @extend %si-toast-bottom-bar;
+      content: '';
+      background: all-variables.$element-ui-4;
+      inset-inline-end: 0;
+    }
+  }
+}
+
+.bar {
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  position: absolute;
+  inline-size: 4px;
+  block-size: 100%;
+  background: currentColor;
+}
+
+.si-toast-timer-bar {
+  @extend %si-toast-bottom-bar;
+  background-color: all-variables.$element-ui-0;
+}
+
+.toast-content {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+
+  p {
+    margin-block: 0;
+    line-height: $toast-line-height;
+    white-space: pre-line;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+
+  .toast-title {
+    line-height: all-variables.$si-icon-font-size;
+  }
+}
