@@ -9,10 +9,6 @@ $icon-font-path: '@simpl/element-icons/dist/fonts' !default;
 @use '@siemens/element-theme/src/styles/variables/semantic-tokens';
 @use '@siemens/live-preview/styles/live-preview';
 
-@use '@simpl/element-icons/dist/style/simpl-element-icons' with (
-  $font-path: $icon-font-path
-);
-
 @use '@simpl/brand/src/themes/element-theme-siemens-brand' with (
   $siemens-font-path: $siemens-font-path
 );
@@ -24,6 +20,11 @@ $icon-font-path: '@simpl/element-icons/dist/fonts' !default;
     'element'
   )
 );
+
+@use '@simpl/element-icons/dist/style/simpl-element-icons' with (
+  $font-path: $icon-font-path
+);
+
 @use '@siemens/element-theme/src/styles/themes';
 @include themes.make-theme(element-theme-siemens-brand.$theme-siemens-brand-light, 'siemens-brand');
 @include themes.make-theme(
