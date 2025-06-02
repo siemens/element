@@ -35,6 +35,7 @@
   &.bg-default {
     background-color: semantic-tokens.$element-base-0 !important;
     color: semantic-tokens.$element-text-primary;
+    outline: 1px solid semantic-tokens.$element-ui-4;
   }
 
   &.bg-primary {
@@ -75,6 +76,37 @@
   &.bg-inverse {
     background-color: semantic-tokens.$element-ui-1 !important;
     color: semantic-tokens.$element-text-inverse;
+  }
+
+  &.bg-info-emphasis {
+    background: semantic-tokens.$element-status-information;
+    color: semantic-tokens.$element-status-information-contrast;
+  }
+
+  &.bg-success-emphasis {
+    background: semantic-tokens.$element-status-success;
+    color: semantic-tokens.$element-status-success-contrast;
+  }
+
+  &.bg-warning-emphasis {
+    background: semantic-tokens.$element-status-warning;
+    color: semantic-tokens.$element-status-warning-contrast;
+  }
+
+  &.bg-danger-emphasis {
+    background: semantic-tokens.$element-status-danger;
+    color: semantic-tokens.$element-status-danger-contrast;
+  }
+
+  &.bg-caution-emphasis {
+    background: semantic-tokens.$element-status-caution;
+    color: semantic-tokens.$element-status-caution-contrast;
+  }
+
+  .icon {
+    font-size: 20px;
+    margin-inline-start: -4px;
+    margin-block-start: -2px;
   }
 }
 

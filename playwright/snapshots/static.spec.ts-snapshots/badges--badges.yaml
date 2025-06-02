@@ -1,0 +1,24 @@
+- text: Default Secondary Inverse This is the max width of pill badge
+- status: Default
+- status: Inverse
+- status: This is the max width of pill badge
+- text: Information Success Warning Danger Caution Information Success Warning Danger Caution
+- status: Information
+- status: Success
+- status: Warning
+- status: Danger
+- status: Caution
+- status: Information
+- status: Success
+- status: Warning
+- status: Danger
+- status: Caution
+- text: /1 2 3 5 7 \d+ \d+ \d+\+/
+- status: 1.8%
+- status: 2.9%
+- status: AI generated insights
+- status: 1.8%
+- status: 2.9%
+- status: Battery low
+- status: Maintenance
+- text: /  8  \d+\+/
