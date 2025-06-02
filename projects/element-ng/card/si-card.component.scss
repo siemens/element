@@ -1,0 +1,47 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  &.card-horizontal {
+    flex-direction: row;
+  }
+}
+
+.text-truncate {
+  flex: 0 1 auto;
+}
+
+.cab {
+  flex: 1 0 0;
+  min-inline-size: 40px;
+}
+
+.card-img-top {
+  block-size: 50%;
+  inline-size: auto;
+  object-fit: var(--si-card-img-object-fit, scale-down);
+  object-position: var(--si-card-img-object-position, center top);
+}
+
+.card-img-start {
+  block-size: auto;
+  inline-size: 50%;
+  object-fit: var(--si-card-img-object-fit, scale-down);
+  object-position: var(--si-card-img-object-position, left center);
+}
+
+.card-content-split {
+  flex: 0 0 50%;
+}
+
+.content-container {
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-inline-size: 0; // See https://github.com/twbs/bootstrap/pull/22740#issuecomment-305868106
+  word-wrap: break-word;
+  border-radius: inherit;
+}

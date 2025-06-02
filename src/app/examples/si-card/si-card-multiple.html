@@ -1,0 +1,19 @@
+<div class="p-6">
+  <div class="row" style="min-height: 400px">
+    @for (c of cards; track $index) {
+      <div class="col-xl-4 col-md-4 col-sm-6 mb-6">
+        <si-card
+          actionBarViewType="mobile"
+          [heading]="'Card ' + ($index + 1)"
+          [primaryActions]="primaryActions"
+          [secondaryActions]="secondaryActions"
+        >
+          <p class="card-body card-text" body>
+            Some quick example text to build on the card title and make up the bulk of the card's
+            content.
+          </p>
+        </si-card>
+      </div>
+    }
+  </div>
+</div>

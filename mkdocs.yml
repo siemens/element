@@ -56,6 +56,7 @@ nav:
       - Accordion:                        'components/layout-navigation/accordion.md'
       - Application header:               'components/layout-navigation/application-header.md'
       - Breadcrumb:                       'components/layout-navigation/breadcrumb.md'
+      - Card:                             'components/layout-navigation/card.md'
       - Electron Titlebar:                'components/layout-navigation/electron-titlebar.md'
       - Footer:                           'components/layout-navigation/footer.md'
       - Launchpad:                        'components/layout-navigation/launchpad.md'

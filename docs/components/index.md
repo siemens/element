@@ -18,6 +18,7 @@ documentation.
 
 ## C
 
+- [Cards](layout-navigation/cards.md)
 - [Checkbox](forms-inputs/checkbox.md)
 - [Color Picker](forms-inputs/color-picker.md)
 - [Copyright Notice](status-notifications/copyright-notice.md)

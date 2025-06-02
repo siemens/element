@@ -1,0 +1,35 @@
+@if (imgSrc()) {
+  <img
+    class="card-content-split"
+    [class.card-img-top]="imgDir() !== 'horizontal'"
+    [class.card-img-start]="imgDir() === 'horizontal'"
+    [attr.src]="imgSrc()"
+    [attr.alt]="imgAlt() | translate"
+  />
+}
+
+<div class="content-container" [class.card-content-split]="imgSrc()">
+  @if (heading() || displayContentActionBar()) {
+    <div class="card-header d-flex justify-content-between">
+      <ng-content #cardHeaderIcon select="[headerIcon]" />
+      @if (heading()) {
+        <div class="text-truncate">{{ heading() | translate }}</div>
+      }
+
+      <div class="cab d-flex ms-6 my-n4 me-n5">
+        @if (displayContentActionBar()) {
+          <si-content-action-bar
+            class="ms-auto"
+            [primaryActions]="primaryActions()"
+            [secondaryActions]="secondaryActions()"
+            [actionParam]="actionParam()"
+            [viewType]="actionBarViewType()"
+            [attr.title]="actionBarTitle() | translate"
+          />
+        }
+      </div>
+    </div>
+  }
+  <ng-content #cardBody select="[body]" />
+  <ng-content #cardFooter select="[footer]" />
+</div>

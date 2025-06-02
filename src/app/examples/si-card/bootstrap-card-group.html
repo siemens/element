@@ -1,0 +1,60 @@
+<div class="p-6">
+  <h4>Card group with bootstrap markup</h4>
+  <div class="card-group">
+    <div class="card">
+      <div class="card-header">Card 1</div>
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text"
+          >This is a wider card with supporting text below as a natural lead-in to additional
+          content. This content is a little bit longer.</p
+        >
+        <p class="card-text"><small class="text-secondary">Last updated 3 mins ago</small></p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text"
+          >This card has supporting text below as a natural lead-in to additional content.</p
+        >
+        <p class="card-text"><small class="text-secondary">Last updated 3 mins ago</small></p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text"
+          >This is a wider card with supporting text below as a natural lead-in to additional
+          content. This card has even longer content than the first to show that equal height
+          action.</p
+        >
+        <p class="card-text"><small class="text-secondary">Last updated 3 mins ago</small></p>
+      </div>
+    </div>
+  </div>
+
+  <h4 class="mt-8">Card group with si-card</h4>
+  <div class="card-group">
+    <si-card
+      heading="Card 1"
+      [primaryActions]="primaryActions"
+      [secondaryActions]="secondaryActions"
+    />
+    <si-card heading="Card 2">
+      <div class="card-body" body>
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text"
+          >This card has supporting text below as a natural lead-in to additional content.</p
+        >
+        <p class="card-text"><small class="text-secondary">Last updated 3 mins ago</small></p>
+      </div>
+    </si-card>
+    <si-card heading="Card 3">
+      <div class="card-body" body
+        >This is a wider card with supporting text below as a natural lead-in to additional content.
+        This card has even longer content than the first to show that equal height action.</div
+      >
+    </si-card>
+  </div>
+</div>
