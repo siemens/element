@@ -67,6 +67,7 @@ const hoverFix = async (page: Page): Promise<void> => page.mouse.move(-10, -10);
 
 class SiTestHelpers {
   private disableAnimationsTag: ElementHandle<Node> | undefined;
+  private showHideTag: ElementHandle<Node> | undefined;
 
   constructor(
     private page: Page,
@@ -164,6 +165,7 @@ class SiTestHelpers {
       axeRulesSet?: (string | { id: string; enabled: boolean })[];
       skipAriaSnapshot?: boolean;
       maxDiffPixels?: number;
+      snapshotDelay?: number;
     }
   ): Promise<void> {
     const example = this.getExampleName() ?? this.testInfo.title;
@@ -223,10 +225,14 @@ class SiTestHelpers {
           await expectNoA11yViolations(this.testInfo, axeResults.violations, testName);
         }
         if (isVrt) {
-          await expect(this.page).toHaveScreenshot(testName + '.png', {
-            maxDiffPixels: options?.maxDiffPixels,
-            stylePath: './playwright/support/vrt-styles.css'
-          });
+          try {
+            await this.showHideIgnores(this.page, false, options?.snapshotDelay);
+            await expect(this.page).toHaveScreenshot(testName + '.png', {
+              maxDiffPixels: options?.maxDiffPixels
+            });
+          } finally {
+            await this.showHideIgnores(this.page, true);
+          }
 
           if (!options?.skipAriaSnapshot && !this.testInfo.project.metadata.skipAriaSnapshot) {
             await expect(this.page.locator('body')).toMatchAriaSnapshot({
@@ -259,23 +265,30 @@ class SiTestHelpers {
   }
 
   private async enableDisableAnimations(page: Page, show: boolean): Promise<void> {
+    await this.disableAnimationsTag?.evaluate(element => element.parentNode?.removeChild(element));
+    await this.disableAnimationsTag?.dispose();
+    this.disableAnimationsTag = undefined;
     if (!show) {
-      await this.disableAnimationsTag?.evaluate(element =>
-        element.parentNode?.removeChild(element)
-      );
-      await this.disableAnimationsTag?.dispose();
       this.disableAnimationsTag = await page.addStyleTag({
         content: `*, *:before, *:after {
   transition-property: none !important;
   animation: none !important;
 }`
       });
-    } else {
-      await this.disableAnimationsTag?.evaluate(element =>
-        element.parentNode?.removeChild(element)
-      );
-      await this.disableAnimationsTag?.dispose();
-      this.disableAnimationsTag = undefined;
+    }
+  }
+
+  private async showHideIgnores(page: Page, show: boolean, delay?: number): Promise<void> {
+    await this.showHideTag?.evaluate(element => element.parentNode?.removeChild(element));
+    await this.showHideTag?.dispose();
+    this.showHideTag = undefined;
+    if (!show) {
+      this.showHideTag = await page.addStyleTag({
+        content: `.e2e-ignore { display: none; }`
+      });
+      if (delay) {
+        await page.waitForTimeout(delay);
+      }
     }
   }
 
