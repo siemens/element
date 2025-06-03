@@ -1,9 +1,21 @@
-# Siemens Element
+<p align="center">
+  <a href="https://element.siemens.io" target="_blank">
+    <img src="./element-logo.svg" alt="Element Website" height="132" width="132">
+  </a>
+</p>
 
-Siemens Element is a design system for products and digital experiences,
-grounded in the Siemens brand design language. It includes UI components
-(Angular), design tools and resources, human interface guidelines, and a
-vibrant community of contributors.
+<h1 align="center">Siemens Element</h1>
+
+<p></p>
+<p align="center">
+  Siemens Element is a design system for products and digital experiences,
+  grounded in the Siemens brand design language. It includes UI components
+  (Angular), design tools and resources, human interface guidelines, and a
+  vibrant community of contributors.
+</p>
+<p></p>
+
+<hr>
 
 ## Contributing
 
