@@ -1,0 +1,31 @@
+<div class="p-5 bg-base-1">
+  <h4>
+    <span id="lazy-options">Lazy options</span>
+  </h4>
+  <si-select
+    multi
+    labelledby="lazy-options"
+    class="form-control"
+    hasFilter
+    [optionSource]="optionSource"
+    [disabled]="disabled"
+    [readonly]="readonly"
+    [(value)]="value"
+    (valueChange)="selectionChanged($event)"
+  />
+</div>
+
+<div class="card mt-6 e2e-ignore">
+  <div class="card-header">Control panel</div>
+  <div class="card-body">
+    <div class="mb-6"> Current value: {{ value }} </div>
+    <div class="mb-6">
+      <si-form-item class="form-switch" label="Readonly">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="readonly" />
+      </si-form-item>
+      <si-form-item class="form-switch" label="Disabled">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="disabled" />
+      </si-form-item>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+@if (ariaLabel()) {
+  <span class="visually-hidden" [id]="baseId() + '-aria-label'">{{ ariaLabel() }}</span>
+}
+<div
+  class="d-flex align-items-center flex-grow-1"
+  [class.overflow-hidden]="!selectionStrategy.allowMultiple"
+  [id]="baseId() + '-content'"
+  [siAutoCollapsableList]="selectionStrategy.allowMultiple"
+>
+  @for (activeOption of selectedRows(); track activeOption) {
+    @if (activeOption) {
+      <si-select-option
+        siAutoCollapsableListItem
+        [option]="activeOption"
+        [optionTemplate]="optionTemplate()"
+        [class.overflow-hidden]="!selectionStrategy.allowMultiple"
+      />
+    }
+  } @empty {
+    <div class="text-secondary">{{ placeholder() | translate }}</div>
+  }
+  @if (selectionStrategy.allowMultiple) {
+    <div #overflowItem="siAutoCollapsableListOverflowItem" siAutoCollapsableListOverflowItem>
+      <div class="overflow-item"> {{ overflowItem.hiddenItemCount }}+</div>
+    </div>
+  }
+</div>
+<si-icon-next
+  class="dropdown-caret icon flip-rtl"
+  [class.text-muted]="readonly()"
+  [icon]="icons.elementDown2"
+/>

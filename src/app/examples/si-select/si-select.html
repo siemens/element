@@ -1,0 +1,159 @@
+<div class="p-5 bg-base-1">
+  <h4>
+    <span id="inline">Inline</span>
+  </h4>
+  <si-select
+    labelledby="inline"
+    [options]="optionsList"
+    [disabled]="disabled"
+    [readonly]="readonly"
+    [hasFilter]="withFilter"
+    [(value)]="value"
+    (valueChange)="selectionChanged($event)"
+  />
+
+  <h4 class="mt-5">
+    <span id="form-control">FormControl</span>
+  </h4>
+  <si-select
+    labelledby="form-control"
+    class="form-control"
+    [options]="optionsList"
+    [readonly]="readonly"
+    [hasFilter]="withFilter"
+    [formControl]="formControl"
+    (valueChange)="selectionChanged($event)"
+  />
+
+  <h4 class="mt-5">
+    <span id="multi-select">Multi select</span>
+  </h4>
+  <si-select
+    labelledby="multi-select"
+    multi
+    class="form-control"
+    placeholder="Select an option"
+    [options]="optionsList"
+    [disabled]="disabled"
+    [readonly]="readonly"
+    [hasFilter]="withFilter"
+    [(value)]="multiValue"
+    (valueChange)="logEvent($event)"
+  />
+
+  <h4 class="mt-5">
+    <span id="multi-select-with-groups">Multi-select with groups</span>
+  </h4>
+  <si-select
+    labelledby="multi-select-with-groups"
+    multi
+    class="form-control"
+    placeholder="Select on option"
+    [options]="groupedOptions"
+    [disabled]="disabled"
+    [readonly]="readonly"
+    [hasFilter]="withFilter"
+    [(value)]="groupedMultiValue"
+    (valueChange)="logEvent($event)"
+  />
+
+  <h4 class="mt-5">
+    <span id="custom-template">Select with custom template</span>
+  </h4>
+  <si-select
+    labelledby="custom-template"
+    class="form-control"
+    [options]="drinksOptions"
+    [disabled]="disabled"
+    [readonly]="readonly"
+    [hasFilter]="withFilter"
+    [optionEqualCheckFn]="drinksEqualCheckFn"
+    [(value)]="drinkValue"
+    (valueChange)="logEvent($event)"
+  >
+    <ng-template let-option siSelectOptionTemplate
+      >{{ option.label! | translate }} (Alc.:{{ option.value.alcohol | percent }})
+    </ng-template>
+    <ng-template let-group siSelectGroupTemplate>{{
+      group.label! | translate | titlecase
+    }}</ng-template>
+  </si-select>
+
+  <h4 class="mt-5">
+    <span id="actions">Select with actions</span>
+  </h4>
+  <si-select
+    labelledby="actions"
+    multi
+    class="form-control"
+    placeholder="Select an option"
+    [formControl]="actionsFormControl"
+    [hasFilter]="withFilter"
+    [options]="actionsOptions"
+    [readonly]="readonly"
+    (valueChange)="logEvent($event)"
+  >
+    <ng-template let-searchText="searchText" siSelectActions>
+      <button
+        siSelectAction
+        type="button"
+        class="btn btn-link"
+        aria-label="clear"
+        [disabled]="disableClearButton()"
+        (click)="actionsFormControl.setValue([])"
+        >Clear selection</button
+      >
+      @if (searchText && !containActionOption(searchText)) {
+        <button
+          siSelectAction
+          type="button"
+          class="btn btn-link"
+          aria-label="create"
+          (click)="createOption(searchText)"
+          >Create "{{ searchText }}" item</button
+        >
+      }
+      <button
+        siSelectAction
+        type="button"
+        class="btn btn-link"
+        aria-label="close"
+        [selectActionAutoClose]="true"
+        (click)="logEvent('Close action')"
+        >Close</button
+      >
+    </ng-template>
+  </si-select>
+</div>
+
+<div class="card mt-6 e2e-ignore">
+  <div class="card-header">Control panel</div>
+  <div class="card-body">
+    <div class="mb-6"> Current value: {{ value }} </div>
+    <div class="mb-6">
+      <div class="form-check form-check-inline">
+        <label>
+          <input type="checkbox" class="form-check-input" [(ngModel)]="readonly" />
+          <span class="form-check-label">Readonly</span>
+        </label>
+      </div>
+      <div class="form-check form-check-inline">
+        <label>
+          <input
+            type="checkbox"
+            class="form-check-input"
+            [(ngModel)]="disabled"
+            (ngModelChange)="disableChange()"
+          />
+          <span class="form-check-label">Disabled</span>
+        </label>
+      </div>
+      <div class="form-check form-check-inline">
+        <label>
+          <input type="checkbox" class="form-check-input" [(ngModel)]="withFilter" />
+          <span class="form-check-label">With filter</span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>

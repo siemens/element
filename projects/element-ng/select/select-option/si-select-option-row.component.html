@@ -1,0 +1,11 @@
+<span
+  class="form-check-input si-form-checkbox"
+  [class.checked]="selected()"
+  [class.disabled]="option().disabled"
+></span>
+<si-select-option [option]="option()" [optionTemplate]="optionTemplate()" />
+@if (selected()) {
+  <span class="ms-auto selected-marker" aria-hidden="true">
+    <si-icon-next [icon]="icons.elementOk" />
+  </span>
+}

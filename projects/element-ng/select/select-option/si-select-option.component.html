@@ -1,0 +1,17 @@
+<ng-container
+  [ngTemplateOutlet]="optionTemplate() ?? defaultOptionTemplate"
+  [ngTemplateOutletContext]="{ $implicit: option() }"
+/>
+
+<ng-template #defaultOptionTemplate let-item siSelectOptionTemplate>
+  @if (item.icon) {
+    <si-icon-next
+      class="icon me-2"
+      [icon]="item.icon"
+      [ngClass]="[(!item.disabled && item.iconColor) || '']"
+    />
+  }
+  @if (item.label) {
+    <span class="text-truncate">{{ item.label | translate }}</span>
+  }
+</ng-template>

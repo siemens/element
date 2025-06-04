@@ -1,0 +1,20 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: inline-block;
+  padding: 0;
+  block-size: 2rem;
+  --si-action-icon-offset: 20px;
+
+  &:focus-within,
+  &.open:not(.si-select-has-filter) {
+    @include variables.make-outline-focus();
+  }
+}
+
+:host {
+  &.readonly,
+  &.disabled {
+    pointer-events: none;
+  }
+}

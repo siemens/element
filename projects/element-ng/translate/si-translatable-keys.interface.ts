@@ -51,6 +51,8 @@ export interface SiTranslatableKeys {
   'SI_PASSWORD_TOGGLE.HIDE'?: string;
   'SI_PASSWORD_TOGGLE.SHOW'?: string;
   'SI_PROGRESSBAR.LABEL'?: string;
+  'SI_SELECT.NO-RESULTS-FOUND'?: string;
+  'SI_SELECT.SEARCH-PLACEHOLDER'?: string;
   'SI_SKIP_LINKS.JUMP_TO'?: string;
   'SI_TOAST.CLOSE'?: string;
   'SI_WIZARD.BACK'?: string;

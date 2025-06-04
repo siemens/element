@@ -1,0 +1,49 @@
+<si-select-input
+  #trigger="cdkOverlayOrigin"
+  cdkOverlayOrigin
+  [baseId]="id()"
+  [labelledby]="labelledby()"
+  [optionTemplate]="optionTemplate()"
+  [ariaLabel]="ariaLabel()"
+  [controls]="id() + '-listbox'"
+  [open]="isOpen()"
+  [placeholder]="placeholder()"
+  [readonly]="readonly()"
+  [attr.aria-describedby]="errormessageId"
+  (openListbox)="open()"
+/>
+
+<ng-template
+  cdkConnectedOverlay
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  [cdkConnectedOverlayHasBackdrop]="true"
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="isOpen()"
+  [cdkConnectedOverlayFlexibleDimensions]="true"
+  [cdkConnectedOverlayOffsetX]="-1"
+  [cdkConnectedOverlayMinWidth]="overlayWidth"
+  (backdropClick)="backdropClick()"
+  (detach)="close()"
+>
+  @if (!hasFilter()) {
+    <si-select-list
+      [baseId]="id()"
+      [optionTemplate]="optionTemplate()"
+      [groupTemplate]="groupTemplate()"
+      [labelledby]="labelledby()"
+      [actionsTemplate]="actionsTemplate()"
+      (closeOverlay)="close()"
+    />
+  } @else {
+    <si-select-list-has-filter
+      [baseId]="id()"
+      [filterPlaceholder]="filterPlaceholder()"
+      [noResultsFoundLabel]="noResultsFoundLabel()"
+      [optionTemplate]="optionTemplate()"
+      [groupTemplate]="groupTemplate()"
+      [labelledby]="labelledby()"
+      [actionsTemplate]="actionsTemplate()"
+      (closeOverlay)="close()"
+    />
+  }
+</ng-template>
