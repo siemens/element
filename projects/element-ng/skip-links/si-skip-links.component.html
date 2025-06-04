@@ -1,0 +1,14 @@
+@for (link of skipLinks(); track link) {
+  <div class="skip-link-wrapper">
+    <button
+      type="button"
+      role="link"
+      class="skip-link btn btn-secondary"
+      (click)="link.jumpToThisTarget()"
+    >
+      <span class="text-nowrap">
+        {{ jumpToLabel | translate: { link: link.name() | translate } }}
+      </span>
+    </button>
+  </div>
+}
