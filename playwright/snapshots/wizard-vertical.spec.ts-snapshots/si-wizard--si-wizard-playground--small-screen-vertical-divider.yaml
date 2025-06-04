@@ -1,0 +1,37 @@
+- link "Step 1":
+  - /url: "#"
+- text: Step 2
+- link "Step 3":
+  - /url: "#"
+- heading "Step 2" [level=1]
+- text: Content with full height
+- button "Cancel"
+- button "Back"
+- button "Next"
+- text: Control panel External navigation
+- button "Previous step"
+- text: 2 / 3
+- button "Next step"
+- checkbox "Card wizard" [checked]
+- text: Card wizard
+- checkbox "Vertical layout" [checked]
+- text: Vertical layout
+- checkbox "Show vertical divider" [checked]
+- text: Show vertical divider
+- checkbox "Show cancel button" [checked]
+- text: Show cancel button
+- checkbox "Show previous/next buttons" [checked]
+- text: Show previous/next buttons
+- checkbox "Enable completion page" [checked]
+- text: Enable completion page
+- checkbox "Valid step" [checked]
+- text: Valid step
+- checkbox "Number representation"
+- text: Number representation Completion page visible time (ms)
+- spinbutton "Completion page visible time (ms)"
+- text: Number of steps
+- spinbutton "Number of steps"
+- text: Vertical layout step container min-size (px)
+- spinbutton "Vertical layout step container min-size (px)"
+- text: Vertical layout step container max-size (px)
+- spinbutton "Vertical layout step container max-size (px)"

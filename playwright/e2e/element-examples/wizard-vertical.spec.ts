@@ -43,4 +43,15 @@ test.describe('si-wizard-vertical', () => {
 
     await si.runVisualAndA11yTests('step-numbers');
   });
+
+  test(example + ' small screen', async ({ page, si }) => {
+    await si.visitExample(example);
+    await page.getByLabel('Vertical layout', { exact: true }).check();
+    await page.getByLabel('Show cancel button').check();
+    await page.locator('si-wizard').getByLabel('Next').click();
+    await page.setViewportSize({ width: 400, height: 660 });
+    await si.runVisualAndA11yTests('small-screen', { snapshotDelay: 100 });
+    await page.getByLabel('Show vertical divider').check();
+    await si.runVisualAndA11yTests('small-screen-vertical-divider');
+  });
 });
