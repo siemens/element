@@ -1,8 +1,9 @@
 # Siemens Element Design System
 
-Siemens Element is a design system for products and digital experiences,
-grounded in the Siemens Design Language. It includes Angular UI components, design tools and resources, human interface guidelines, and a
-vibrant community of contributors.
+Siemens Element is a design system of the smart infrastructure domain
+that implements the Siemens Design Language in Angular. It includes UI
+components, design tools and resources, human interface guidelines, and
+a vibrant community of contributors.
 
 ![Moodboard components dark](images/mood-components-dark.png)
 
