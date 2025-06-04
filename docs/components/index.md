@@ -52,6 +52,7 @@ documentation.
 
 - [Pagination](layout-navigation/pagination.md)
 - [Popover](status-notifications/popover.md)
+- [Progress Bar](progress-indication/progress-bar.md)
 
 ## S
 

@@ -1,0 +1,8 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+$si-progressbar-small-height: 0.125rem;
+
+.si-progress-small {
+  block-size: $si-progressbar-small-height;
+  border-radius: $si-progressbar-small-height * 0.5;
+}

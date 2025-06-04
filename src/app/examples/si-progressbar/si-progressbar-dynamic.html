@@ -1,0 +1,16 @@
+<div class="mb-8">
+  <small><em>Graphical progress indication</em></small>
+  <si-progressbar
+    heading="Uploading asset information"
+    [progress]="dynamic + ' %'"
+    [max]="maxProgress"
+    [value]="dynamic"
+  />
+</div>
+<div class="mb-8">
+  <small><em>Small graphical progress indication without percentage and heading</em></small>
+  <si-progressbar height="small" [value]="dynamic"
+    ><b>{{ dynamic }}%</b></si-progressbar
+  >
+</div>
+<button type="button" class="btn btn-primary" (click)="random()">Randomize</button>

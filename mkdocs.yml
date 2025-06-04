@@ -49,6 +49,7 @@ nav:
       - Pagination:                       'components/layout-navigation/pagination.md'
       - Wizard:                           'components/layout-navigation/wizard.md'
     - Progress Indications:
+      - Progress Bar:                     'components/progress-indication/progress-bar.md'
       - Spinner:                          'components/progress-indication/spinner.md'
     - Status & notifications:
       - Avatar:                           'components/status-notifications/avatar.md'

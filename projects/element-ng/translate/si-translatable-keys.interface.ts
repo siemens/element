@@ -49,6 +49,7 @@ export interface SiTranslatableKeys {
   'SI_PAGINATION.NAV_LABEL'?: string;
   'SI_PASSWORD_TOGGLE.HIDE'?: string;
   'SI_PASSWORD_TOGGLE.SHOW'?: string;
+  'SI_PROGRESSBAR.LABEL'?: string;
   'SI_TOAST.CLOSE'?: string;
   'SI_WIZARD.BACK'?: string;
   'SI_WIZARD.CANCEL'?: string;

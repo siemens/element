@@ -1,0 +1,27 @@
+@if (heading() || progress()) {
+  <div
+    class="d-flex align-items-baseline"
+    [class.justify-content-end]="!heading()"
+    [class.justify-content-between]="heading()"
+  >
+    @if (heading()) {
+      <span class="si-title-2 mb-2">{{ heading() | translate }}</span>
+    }
+    @if (progress()) {
+      <small class="text-nowrap">{{ progress() }}</small>
+    }
+  </div>
+}
+<div class="progress" [class.si-progress-small]="height() === 'small'">
+  <div
+    class="progress-bar"
+    role="progressbar"
+    [attr.aria-valuemin]="0"
+    [attr.aria-valuemax]="max()"
+    [attr.aria-valuenow]="value()"
+    [attr.aria-valuetext]="value() !== undefined ? percent().toFixed(0) + '%' : null"
+    [attr.aria-label]="ariaLabel() | translate"
+    [style.width.%]="percent()"
+  >
+  </div>
+</div>
