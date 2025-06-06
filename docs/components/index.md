@@ -70,6 +70,7 @@ documentation.
 
 - [Toast Notification](status-notifications/toast-notification.md)
 - [Tooltip](status-notifications/tooltip.md)
+- [Typeahead](sorting-filtering/typeahead.md)
 
 ## W
 
