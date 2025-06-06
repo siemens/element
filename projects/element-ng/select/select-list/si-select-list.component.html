@@ -1,0 +1,64 @@
+<div
+  cdkListbox
+  class="si-select-filtered-items focus-none"
+  [id]="baseId() + '-listbox'"
+  [cdkListboxMultiple]="selectionStrategy.allowMultiple"
+  [cdkListboxValue]="selectionStrategy.arrayValue()"
+  [attr.aria-labelledby]="baseId() + '-aria-label' + ' ' + labelledby()"
+  (cdkListboxValueChange)="listBoxValueChange($event)"
+  (click)="closeOverlayIfSingle()"
+  (keydown.enter)="closeOverlayIfSingle()"
+  (keydown.space)="closeOverlayIfSingle()"
+>
+  @for (item of rows(); track item; let index = $index) {
+    @if (item.type === 'group') {
+      <div
+        role="group"
+        class="ps-0"
+        aria-disabled="false"
+        [attr.aria-labelledby]="baseId() + '-' + index + '-group-header'"
+      >
+        <span class="dropdown-header" [id]="baseId() + '-' + index + '-group-header'">
+          <ng-container
+            [ngTemplateOutlet]="groupTemplate() ?? defaultGroupTemplate"
+            [ngTemplateOutletContext]="{ $implicit: item }"
+          />
+        </span>
+        @for (optionRow of item.options; track optionRow) {
+          <ng-container
+            [ngTemplateOutlet]="optionRowTemplate"
+            [ngTemplateOutletContext]="{ $implicit: optionRow }"
+          />
+        }
+      </div>
+    }
+    @if (item.type === 'option') {
+      <ng-container
+        [ngTemplateOutlet]="optionRowTemplate"
+        [ngTemplateOutletContext]="{ $implicit: item }"
+      />
+    }
+  }
+  <ng-template #optionRowTemplate let-option siSelectOptionRowTemplate>
+    <si-select-option-row
+      #cdkOption="cdkOption"
+      [option]="option"
+      [optionTemplate]="optionTemplate()"
+      [cdkOption]="option.value"
+      [cdkOptionDisabled]="!!option.disabled"
+      [cdkOptionTypeaheadLabel]="(option.typeaheadLabel | translate)!"
+      [class.active]="cdkOption.isActive()"
+      [selected]="cdkOption.isSelected()"
+    />
+  </ng-template>
+</div>
+@if (actionsTemplate()) {
+  <div class="dropdown-divider"></div>
+  <div class="d-flex flex-column align-items-start">
+    <ng-container [ngTemplateOutlet]="actionsTemplate()!" />
+  </div>
+}
+
+<ng-template #defaultGroupTemplate let-group siSelectGroupTemplate>
+  {{ group.label | translate }}
+</ng-template>

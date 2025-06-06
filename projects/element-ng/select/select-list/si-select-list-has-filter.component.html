@@ -1,0 +1,95 @@
+<div class="pt-5 pb-5 px-5 top-0">
+  <div class="position-relative">
+    <input
+      #filter
+      #siAutocomplete="siAutocomplete"
+      siAutocomplete
+      class="form-control ps-9 border-0 rounded-2 bg-base-0"
+      [placeholder]="filterPlaceholder() | translate"
+      [id]="baseId() + 'filter-input'"
+      [attr.aria-labelledby]="baseId() + '-aria-label' + ' ' + labelledby()"
+      (input)="input()"
+    />
+    <si-icon-next
+      class="icon text-secondary position-absolute top-0 bottom-0 d-flex align-items-center ps-2"
+      [icon]="icons.elementSearch"
+    />
+    @if (selectOptions.loading?.()) {
+      <si-loading-spinner class="position-absolute end-0 bottom-0 d-flex align-items-center p-2" />
+    }
+  </div>
+</div>
+<div
+  class="si-select-filtered-items"
+  tabindex="-1"
+  [siAutocompleteListboxFor]="siAutocomplete"
+  [siAutocompleteDefaultIndex]="initIndex()"
+  [attr.aria-labelledby]="baseId() + '-aria-label' + ' ' + labelledby()"
+  (siAutocompleteOptionSubmitted)="select($event)"
+>
+  @if (!rows().length) {
+    <div
+      role="option"
+      aria-disabled="true"
+      aria-selected="false"
+      class="dropdown-item disabled text-secondary justify-content-center mb-2"
+    >
+      <span>{{ noResultsFoundLabel() | translate }}</span>
+    </div>
+  }
+  @for (item of rows(); track item; let index = $index) {
+    @if (item.type === 'group') {
+      <div
+        role="group"
+        class="ps-0"
+        aria-disabled="false"
+        [attr.aria-labelledby]="baseId() + '-' + index + '-group-header'"
+      >
+        <div class="dropdown-header" [id]="baseId() + '-' + index + '-group-header'">
+          <ng-container
+            [ngTemplateOutlet]="groupTemplate() ?? defaultGroupTemplate"
+            [ngTemplateOutletContext]="{ $implicit: item }"
+          />
+        </div>
+        @for (optionRow of item.options; track optionRow) {
+          <ng-container
+            [ngTemplateOutlet]="optionRowTemplate"
+            [ngTemplateOutletContext]="{ $implicit: optionRow }"
+          />
+        }
+      </div>
+    }
+    @if (item.type === 'option') {
+      <ng-container
+        [ngTemplateOutlet]="optionRowTemplate"
+        [ngTemplateOutletContext]="{ $implicit: item }"
+      />
+    }
+  }
+
+  <ng-template #optionRowTemplate let-option siSelectOptionRowTemplate>
+    <si-select-option-row
+      [option]="option"
+      [optionTemplate]="optionTemplate()"
+      [siAutocompleteOption]="option.value"
+      [disabled]="option.disabled"
+      [selected]="selectionStrategy.arrayValue().includes(option.value)"
+    />
+  </ng-template>
+</div>
+@if (actionsTemplate()) {
+  <div class="dropdown-divider"></div>
+  <div class="d-flex flex-column align-items-start">
+    <ng-container
+      [ngTemplateOutlet]="actionsTemplate()!"
+      [ngTemplateOutletContext]="{
+        searchText: filter.value,
+        visibleOptionsCount: rows().length
+      }"
+    />
+  </div>
+}
+
+<ng-template #defaultGroupTemplate let-group siSelectGroupTemplate>
+  {{ group.label | translate }}
+</ng-template>

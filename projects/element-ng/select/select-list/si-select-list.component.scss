@@ -1,0 +1,5 @@
+.si-select-filtered-items {
+  // 266px is based on figma and gives 6-8 items. Depending on the number of headings
+  max-block-size: min(100vh, 266px);
+  overflow-y: auto;
+}

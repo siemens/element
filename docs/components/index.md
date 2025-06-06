@@ -62,6 +62,7 @@ documentation.
 
 ## S
 
+- [Select](forms-inputs/select.md)
 - [Spinner](progress-indication/spinner.md)
 - [Summary Chip](status-notifications/summary-chip.md)
 - [Summary Widget](status-notifications/summary-widget.md)

@@ -1,0 +1,48 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  cursor: pointer;
+  font-weight: variables.$si-font-weight-title-2;
+  min-inline-size: 72px;
+  block-size: 100%;
+  color: variables.$element-text-primary;
+  padding-block: map.get(variables.$spacers, 2);
+  padding-inline-end: calc(map.get(variables.$spacers, 5) + var(--si-feedback-icon-offset, 0px));
+
+  &.disabled {
+    color: variables.$element-text-disabled;
+  }
+}
+
+:host-context(.form-control) {
+  :host {
+    font-weight: variables.$si-font-weight-normal;
+    padding-block: map.get(variables.$spacers, 2) - 1px;
+  }
+}
+
+:host-context(.dropdown:not(.form-control)) :host:not(.disabled) {
+  &:hover {
+    background: variables.$element-base-1-hover;
+  }
+
+  &.active {
+    background: variables.$element-base-1-selected;
+  }
+}
+
+si-select-option + si-select-option::before {
+  content: ',\00a0 ';
+}
+
+.overflow-item {
+  border-radius: variables.$element-radius-3;
+  background: variables.$element-base-0;
+  margin-inline-start: map.get(variables.$spacers, 2);
+  padding-inline: map.get(variables.$spacers, 4);
+}
+
+.dropdown-caret {
+  transform: translateX(var(--si-feedback-icon-offset, 0));
+}

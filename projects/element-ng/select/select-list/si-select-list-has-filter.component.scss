@@ -1,0 +1,12 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+.si-select-filtered-items {
+  // 266px is based on figma and gives 6-8 items. Depending on the number of headings$
+  // 56px is the height of the searchbar
+  max-block-size: min(calc(100vh - 56px), 266px);
+  overflow-y: auto;
+}
+
+si-loading-spinner {
+  --loading-spinner-size: #{variables.$si-icon-font-size};
+}
