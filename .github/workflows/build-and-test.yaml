@@ -55,6 +55,7 @@ jobs:
           path: dist
       - run: npm ci --prefer-offline --no-audit
       - run: npm run lint:format
+      - run: npm run lint:scss
       - run: npm run lint:ng
       - run: npm run lint:playwright:eslint
       - run: npm run translate:test -- --watch=false --progress=false --code-coverage
