@@ -1,0 +1,28 @@
+<!-- aria-required-children is disabled here -->
+@for (chip of pills(); track $index) {
+  <si-input-pill
+    role="option"
+    [id]="id() + '-pill-' + $index"
+    [class.active]="$index === activePillIndex()"
+    [hideClose]="disabled() || readonly()"
+    (deletePill)="remove($index)"
+  >
+    {{ chip }}
+  </si-input-pill>
+}
+@if (!readonly() && !disabled()) {
+  <div role="presentation" class="flex-fill">
+    <input
+      #inputElement
+      class="focus-none"
+      [id]="inputId()"
+      [attr.aria-label]="inputElementAriaLabel() | translate"
+      [placeholder]="!pills().length ? placeholder() : ''"
+      [value]="inputValue"
+      (keydown.enter)="keydownEnter($event)"
+      (keydown.backspace)="keydownBackspace($event)"
+      (input)="input()"
+      (blur)="blur()"
+    />
+  </div>
+}

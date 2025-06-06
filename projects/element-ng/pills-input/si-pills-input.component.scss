@@ -1,0 +1,32 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  gap: map.get(variables.$spacers, 2);
+  padding-block: 3px;
+  block-size: auto !important; // stylelint-disable-line declaration-no-important
+  min-block-size: calc(
+    #{variables.$si-line-height-body-2}em + #{2 * map.get(variables.$spacers, 4)}
+  );
+
+  &:focus-within {
+    @include variables.make-outline-focus();
+  }
+}
+
+input {
+  padding-inline: 0;
+  padding-block: 3px;
+  margin-inline: map.get(variables.$spacers, 2);
+  border: 0;
+  flex: 1;
+  background: transparent;
+  color: inherit;
+  inline-size: 100%;
+
+  &:focus {
+    min-inline-size: 100px;
+  }
+}
