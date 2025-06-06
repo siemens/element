@@ -89,7 +89,7 @@ export const STATUS_ICON_CONFIG = new InjectionToken<{ [key in EntityStatusType]
           color: 'status-critical',
           stacked: 'elementStateExclamationMark',
           stackedColor: 'status-critical-contrast',
-          background: 'bg-base-danger',
+          background: 'bg-base-critical',
           severity: 0
         },
         progress: {

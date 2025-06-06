@@ -62,7 +62,7 @@ export const STATUS_ICON: { [key in EntityStatusType]: StatusIcon } = {
     color: 'status-critical',
     stacked: 'element-state-exclamation-mark smooth-auto',
     stackedColor: 'status-critical-contrast',
-    background: 'bg-base-danger',
+    background: 'bg-base-critical',
     severity: 0
   },
   progress: {
