@@ -55,6 +55,7 @@ export interface SiTranslatableKeys {
   'SI_SELECT.SEARCH-PLACEHOLDER'?: string;
   'SI_SKIP_LINKS.JUMP_TO'?: string;
   'SI_TOAST.CLOSE'?: string;
+  'SI_TYPEAHEAD.AUTOCOMPLETE_LIST_LABEL'?: string;
   'SI_WIZARD.BACK'?: string;
   'SI_WIZARD.CANCEL'?: string;
   'SI_WIZARD.COMPLETED'?: string;

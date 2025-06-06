@@ -58,6 +58,8 @@ nav:
     - Progress Indications:
       - Progress Bar:                     'components/progress-indication/progress-bar.md'
       - Spinner:                          'components/progress-indication/spinner.md'
+    - Search, Filter & Sort:
+        - Typeahead:                        'components/sorting-filtering/typeahead.md'
     - Status & notifications:
       - Avatar:                           'components/status-notifications/avatar.md'
       - Connection Strength:              'components/status-notifications/connection-strength.md'

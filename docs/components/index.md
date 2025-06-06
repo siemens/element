@@ -78,6 +78,7 @@ documentation.
 - [Text Area](forms-inputs/text-area.md)
 - [Toast Notification](status-notifications/toast-notification.md)
 - [Tooltip](status-notifications/tooltip.md)
+- [Typeahead](sorting-filtering/typeahead.md)
 
 ## W
 
