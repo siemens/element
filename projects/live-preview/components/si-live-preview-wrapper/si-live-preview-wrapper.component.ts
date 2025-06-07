@@ -62,6 +62,8 @@ export class SiLivePreviewWrapperComponent {
   private webcomponentService = inject(SiLivePreviewWebComponentService, { optional: true });
 
   constructor() {
+    this.sendMessage('ready');
+
     this.themeApi
       ?.getApplicationThemeObservable()
       .pipe(takeUntilDestroyed(this.destroyRef))

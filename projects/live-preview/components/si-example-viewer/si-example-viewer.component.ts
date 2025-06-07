@@ -96,8 +96,8 @@ export class SiExampleViewerComponent {
         } else if (params.framework === 'js') {
           this.jsTemplate = params.t;
         } else {
-          this.template = params.t;
           recompile = recompile || this.template !== params.t;
+          this.template = params.t;
         }
       }
 
