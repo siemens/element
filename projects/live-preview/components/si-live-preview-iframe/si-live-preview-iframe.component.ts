@@ -133,6 +133,9 @@ export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
 
   private onMessageInZone(event: MessageEvent): void {
     switch (event.data.type) {
+      case 'ready':
+        this.sendMessage();
+        break;
       case 'landscapeMode':
         this.supportsLandscape = event.data.message;
         if (!this.supportsLandscape && this.landscape) {
@@ -185,10 +188,6 @@ export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
     this.landscape = !this.landscape;
     this.iFrameHeight = this.landscape ? this.selectedDevice?.width : this.selectedDevice?.height;
     this.iFrameWidth = this.landscape ? this.selectedDevice?.height : this.selectedDevice?.width;
-    this.sendMessage();
-  }
-
-  iframeLoaded(): void {
     this.sendMessage();
   }
 

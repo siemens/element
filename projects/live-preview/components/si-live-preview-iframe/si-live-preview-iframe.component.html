@@ -161,15 +161,9 @@
     }
 
     <div class="screen">
-      <iframe
-        #previewIframe
-        src="#/iframe"
-        [height]="iFrameHeight"
-        [width]="iFrameWidth"
-        (load)="iframeLoaded()"
-      ></iframe>
+      <iframe #previewIframe src="#/iframe" [height]="iFrameHeight" [width]="iFrameWidth"></iframe>
     </div>
   </div>
 } @else {
-  <iframe #previewIframe src="#/iframe" title="Example view" (load)="iframeLoaded()"></iframe>
+  <iframe #previewIframe src="#/iframe" title="Example view"></iframe>
 }
