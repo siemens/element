@@ -1,6 +1,4 @@
 @use 'sass:map';
-@use '@siemens/element-theme/src/theme/base-colors' as base;
-@use '@siemens/element-theme/src/theme/data-colors' as data;
 @use '@siemens/element-theme/src/styles/variables';
 
 :host {
@@ -39,6 +37,13 @@
   block-size: 48px;
   margin-block-end: map.get(variables.$spacers, 4);
   border-radius: variables.$element-radius-2;
+
+  &:is(si-icon-next) {
+    background: variables.$element-launchpad-app-background;
+    font-size: 40px;
+    padding: map.get(variables.$spacers, 2);
+    color: variables.$element-launchpad-app-color;
+  }
 }
 
 .favorite-icon {
