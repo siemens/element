@@ -43,6 +43,7 @@ nav:
       - Forms:                            'components/forms-inputs/forms.md'
       - Input:                            'components/forms-inputs/input.md'
       - Number Input:                     'components/forms-inputs/number-input.md'
+      - Pills Input:                      'components/forms-inputs/pills-input.md'
       - Radio:                            'components/forms-inputs/radio.md'
       - Select:                           'components/forms-inputs/select.md'
       - Switch:                           'components/forms-inputs/switch.md'

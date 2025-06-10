@@ -58,6 +58,7 @@ documentation.
 ## P
 
 - [Pagination](layout-navigation/pagination.md)
+- [Pills Input](forms-inputs/pills-input.md)
 - [Popover](status-notifications/popover.md)
 - [Progress Bar](progress-indication/progress-bar.md)
 

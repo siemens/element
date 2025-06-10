@@ -1,0 +1,8 @@
+<div class="text-truncate">
+  <ng-content />
+</div>
+@if (!hideClose()) {
+  <span class="ms-2 btn btn-circle btn-xs btn-ghost" aria-hidden="true" (click)="deletePill.emit()">
+    <si-icon-next [icon]="icons.elementCancel" />
+  </span>
+}

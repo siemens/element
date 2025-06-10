@@ -50,6 +50,7 @@ export interface SiTranslatableKeys {
   'SI_PAGINATION.NAV_LABEL'?: string;
   'SI_PASSWORD_TOGGLE.HIDE'?: string;
   'SI_PASSWORD_TOGGLE.SHOW'?: string;
+  'SI_PILLS_INPUT.INPUT_ELEMENT_ARIA_LABEL'?: string;
   'SI_PROGRESSBAR.LABEL'?: string;
   'SI_SELECT.NO-RESULTS-FOUND'?: string;
   'SI_SELECT.SEARCH-PLACEHOLDER'?: string;

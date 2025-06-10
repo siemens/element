@@ -1,0 +1,40 @@
+<form class="px-4" [formGroup]="group">
+  <si-form-item label="Tags">
+    <si-pills-input
+      placeholder="Tag name,Other tag"
+      formControlName="tagList"
+      [readonly]="readonly"
+    />
+  </si-form-item>
+  <si-form-item label="Comma-Separated Tags (or by semicolon)">
+    <si-pills-input
+      siPillsInputCsv
+      placeholder="Tag name,Other tag"
+      formControlName="csv"
+      [readonly]="readonly"
+    />
+  </si-form-item>
+  <si-form-item label="Email Recipients (separated by comma or semicolon)">
+    <si-pills-input
+      siPillsInputEmail
+      placeholder="example@example.com,other@example.com"
+      formControlName="email"
+      [readonly]="readonly"
+    />
+  </si-form-item>
+</form>
+<div class="card mt-8 e2e-ignore">
+  <div class="card-body">
+    <si-form-item class="form-switch" label="Disabled">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        [(ngModel)]="disabled"
+        (ngModelChange)="disabledToggled($event)"
+      />
+    </si-form-item>
+    <si-form-item class="form-switch" label="Readonly">
+      <input class="form-check-input" type="checkbox" [(ngModel)]="readonly" />
+    </si-form-item>
+  </div>
+</div>
