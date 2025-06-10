@@ -38,11 +38,15 @@ nav:
       - Links:                            'components/buttons-menus/links.md'
       - Menu:                             'components/buttons-menus/menu.md'
     - Forms & Inputs:
-      - Input:                            'components/forms-inputs/input.md'
+      - Checkbox:                         'components/forms-inputs/checkbox.md'
       - Color Picker:                     'components/forms-inputs/color-picker.md'
       - Forms:                            'components/forms-inputs/forms.md'
+      - Input:                            'components/forms-inputs/input.md'
       - Number Input:                     'components/forms-inputs/number-input.md'
+      - Radio:                            'components/forms-inputs/radio.md'
       - Select:                           'components/forms-inputs/select.md'
+      - Switch:                           'components/forms-inputs/switch.md'
+      - Text Area:                        'components/forms-inputs/text-area.md'
     - Layout & navigation:
       - Accordion:                        'components/layout-navigation/accordion.md'
       - Application header:               'components/layout-navigation/application-header.md'

@@ -1,0 +1,114 @@
+<h4>Vertical</h4>
+<form class="px-4">
+  <div class="mb-4">
+    <label for="exampleInput" class="form-label">Name</label>
+    <input type="text" class="form-control" id="exampleInput" placeholder="Placeholder" />
+    <small class="form-text">Message</small>
+  </div>
+  <div class="mb-4">
+    <label for="exampleDisabled" class="form-label">Disabled input</label>
+    <input
+      disabled
+      type="text"
+      class="form-control"
+      id="exampleDisabled"
+      value="This is the value"
+    />
+  </div>
+  <div class="mb-4">
+    <label for="exampleDisabledPlaceholder" class="form-label">
+      Disabled input (empty with placeholder)
+    </label>
+    <input
+      type="text"
+      class="form-control"
+      id="exampleDisabledPlaceholder"
+      placeholder="Not visible"
+      disabled
+    />
+    <small class="form-text">Placeholder text not displayed for disabled input</small>
+  </div>
+
+  <div class="mb-4">
+    <label for="exampleReadonly" class="form-label">Readonly input</label>
+    <input
+      readonly
+      type="text"
+      class="form-control"
+      id="exampleReadonly"
+      value="This is the value"
+    />
+  </div>
+
+  <div class="mb-4">
+    <label for="exampleInput2" class="form-label">Name</label>
+    <input type="text" class="form-control is-valid" id="exampleInput2" value="This is valid" />
+  </div>
+
+  <div class="mb-4">
+    <label for="exampleInput3" class="form-label">Name</label>
+    <input type="text" class="form-control is-warning" id="exampleInput3" value="This is ok-ish" />
+    <div class="warning-feedback">Warning Message</div>
+  </div>
+
+  <div class="mb-4">
+    <label for="exampleInput4" class="form-label">Name</label>
+    <input type="text" class="form-control is-invalid" id="exampleInput4" value="Just no" />
+    <div class="invalid-feedback">Error Message</div>
+  </div>
+</form>
+
+<h4>Horizontal</h4>
+<form class="px-4">
+  <div class="mb-4 row">
+    <label class="col-2 col-form-label" for="exampleInput5">Name</label>
+    <div class="col-10">
+      <input type="text" class="form-control" id="exampleInput5" placeholder="Placeholder" />
+      <small class="form-text">Message</small>
+    </div>
+  </div>
+
+  <div class="mb-4 row">
+    <label class="col-2 col-form-label" for="exampleInput6">Name</label>
+    <div class="col-10">
+      <input type="text" class="form-control is-valid" id="exampleInput6" value="This is valid" />
+    </div>
+  </div>
+
+  <div class="mb-4 row">
+    <label class="col-2 col-form-label" for="exampleInput7">Name</label>
+    <div class="col-10">
+      <input type="text" class="form-control is-warning" id="exampleInput7" value="Also ok-ish" />
+      <div class="warning-feedback">Warning Message</div>
+    </div>
+  </div>
+
+  <div class="mb-4 row">
+    <label class="col-2 col-form-label" for="exampleInput8">Name</label>
+    <div class="col-10">
+      <input type="text" class="form-control is-invalid" id="exampleInput8" value="No. No. No." />
+      <div class="invalid-feedback">Error Message</div>
+    </div>
+  </div>
+
+  <div class="mb-4 row">
+    <label class="col-2 col-form-label" for="exampleInput9">Name</label>
+    <div class="col-10">
+      <select class="form-control" id="exampleInput9">
+        <option>Some value</option>
+        <option>Another value</option>
+      </select>
+      <small class="form-text">This looks consistent across multiple browsers</small>
+    </div>
+  </div>
+  <div class="mb-4 row">
+    <label class="col-2 col-form-label" for="exampleInput10">Name</label>
+    <div class="col-10">
+      <select class="form-control is-invalid" id="exampleInput10">
+        <option>Some value</option>
+        <option>Another value pg</option>
+      </select>
+      <small class="form-text">And can have a validation icon</small>
+    </div>
+  </div>
+</form>

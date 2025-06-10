@@ -1,0 +1,48 @@
+<h4>Multi-Line</h4>
+<form class="px-4">
+  <div class="mb-6">
+    <label for="exampleInput" class="form-label">Name</label>
+    <textarea class="form-control" id="exampleInput" placeholder="Placeholder"></textarea>
+    <small class="form-text">Message</small>
+  </div>
+
+  <div class="mb-4">
+    <label for="exampleDisabledPlaceholder" class="form-label">
+      Disabled textarea (empty with placeholder)
+    </label>
+    <textarea
+      disabled
+      class="form-control"
+      id="exampleDisabledPlaceholder"
+      placeholder="Placeholder not visible"
+    >
+    </textarea>
+    <small class="form-text">Placeholder text not displayed for disabled textarea</small>
+  </div>
+  <div class="mb-4">
+    <label for="exampleInput1" class="form-label">Disabled textarea with value</label>
+    <textarea disabled class="form-control" id="exampleInput1">This is the value</textarea>
+  </div>
+
+  <div class="mb-4">
+    <label for="exampleInput2" class="form-label">Readonly textarea</label>
+    <textarea readonly class="form-control" id="exampleInput2">This is the value</textarea>
+  </div>
+
+  <div class="mb-4">
+    <label for="exampleInput3" class="form-label">Name</label>
+    <textarea class="form-control is-valid" id="exampleInput3">This is valid</textarea>
+  </div>
+
+  <div class="mb-4">
+    <label for="exampleInput4" class="form-label">Name</label>
+    <textarea class="form-control is-warning" id="exampleInput4">This is ok-ish</textarea>
+    <div class="warning-feedback">Warning Message</div>
+  </div>
+
+  <div class="mb-4">
+    <label for="exampleInput5" class="form-label">Name</label>
+    <textarea class="form-control is-invalid" id="exampleInput5">Just no</textarea>
+    <div class="invalid-feedback">Error Message</div>
+  </div>
+</form>

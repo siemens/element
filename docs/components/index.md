@@ -17,6 +17,7 @@ documentation.
 
 ## C
 
+- [Checkbox](forms-inputs/checkbox.md)
 - [Color Picker](forms-inputs/color-picker.md)
 - [Copyright Notice](status-notifications/copyright-notice.md)
 - [Connection Strength](status-notifications/connection-strength.md)
@@ -60,15 +61,21 @@ documentation.
 - [Popover](status-notifications/popover.md)
 - [Progress Bar](progress-indication/progress-bar.md)
 
+## R
+
+- [Radio](forms-inputs/radio.md)
+
 ## S
 
 - [Select](forms-inputs/select.md)
 - [Spinner](progress-indication/spinner.md)
 - [Summary Chip](status-notifications/summary-chip.md)
 - [Summary Widget](status-notifications/summary-widget.md)
+- [Switch](forms-inputs/switch.md)
 
 ## T
 
+- [Text Area](forms-inputs/text-area.md)
 - [Toast Notification](status-notifications/toast-notification.md)
 - [Tooltip](status-notifications/tooltip.md)
 
