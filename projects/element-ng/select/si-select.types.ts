@@ -49,6 +49,10 @@ export interface SelectOption<T> {
   icon?: string;
   /** The color of an icon. */
   iconColor?: string;
+  /** An optional stacked icon. */
+  stackedIcon?: string;
+  /** The color of a stacked icon. */
+  stackedIconColor?: string;
   /**
    * A label to be shown for this option.
    * Is optional if a custom template is provided or if the value should directly be rendered.

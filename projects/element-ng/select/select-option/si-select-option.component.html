@@ -5,11 +5,20 @@
 
 <ng-template #defaultOptionTemplate let-item siSelectOptionTemplate>
   @if (item.icon) {
-    <si-icon-next
-      class="icon me-2"
-      [icon]="item.icon"
-      [ngClass]="[(!item.disabled && item.iconColor) || '']"
-    />
+    <i class="icon-stack">
+      <si-icon-next
+        class="icon me-2"
+        [icon]="item.icon"
+        [ngClass]="[(!item.disabled && item.iconColor) || '']"
+      />
+      @if (item.stackedIcon) {
+        <si-icon-next
+          class="icon me-2"
+          [icon]="item.stackedIcon"
+          [ngClass]="item.stackedIconColor"
+        />
+      }
+    </i>
   }
   @if (item.label) {
     <span class="text-truncate">{{ item.label | translate }}</span>
