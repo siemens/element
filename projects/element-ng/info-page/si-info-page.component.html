@@ -1,0 +1,16 @@
+<div class="h-100 d-flex flex-column justify-content-center align-items-center p-6">
+  <ng-content select=".si-info-image">
+    <si-icon-next class="icon-size" [ngClass]="iconColor()" [icon]="icon()" />
+  </ng-content>
+  <h1 class="my-9">{{ titleText() | translate }}</h1>
+  @if (copyText()) {
+    <h2 class="mb-9">{{ copyText() | translate }}</h2>
+  }
+  @if (instructions()) {
+    <p class="text-pre-wrap text-center si-body-1 mb-9">{{ instructions() | translate }}</p>
+  }
+  @if (link()?.title) {
+    <a class="btn btn-primary" [siLink]="link()">{{ link()?.title | translate }}</a>
+  }
+  <ng-content select=".si-info-actions" />
+</div>

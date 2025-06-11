@@ -1,0 +1,42 @@
+<si-info-page
+  titleText="Does this ring a bell. All done?"
+  copyText="An error occurred while generating the report."
+  instructions="Contact your administrator to get more information. Help us to solve the issue by submitting error related information."
+>
+  <si-icon
+    icon="element-shield-filled"
+    class="si-info-image"
+    color="status-success"
+    stackedColor="status-success-contrast"
+    size="icon-size"
+    [stackedIcon]="face"
+  />
+
+  <div class="si-info-actions">
+    <a class="btn btn-secondary me-6 mb-6" href="/">Back to application link</a>
+    <button
+      type="button"
+      class="btn btn-secondary me-6 mb-6"
+      (click)="face = 'element-state-face-very-unhappy'"
+      >Not at all</button
+    >
+    <button
+      type="button"
+      class="btn btn-secondary me-6 mb-6"
+      (click)="face = 'element-state-face-confused'"
+      >No</button
+    >
+    <button
+      type="button"
+      class="btn btn-secondary me-6 mb-6"
+      (click)="face = 'element-state-face-happy'"
+      >A bit</button
+    >
+    <button
+      type="button"
+      class="btn btn-primary me-6 mb-6"
+      (click)="face = 'element-state-face-very-happy'"
+      >Yes</button
+    >
+  </div>
+</si-info-page>

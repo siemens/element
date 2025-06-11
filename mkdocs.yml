@@ -73,6 +73,8 @@ nav:
       - Summary Widget:                   'components/status-notifications/summary-widget.md'
       - Toast Notification:               'components/status-notifications/toast-notification.md'
       - Tooltip:                          'components/status-notifications/tooltip.md'
+    - Pages:
+      - Info Page:                        'components/pages/info-page.md'
   - Architecture:
     - CSS framework:                      'architecture/css-framework.md'
     - Theming:                            'architecture/theming.md'
