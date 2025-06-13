@@ -94,16 +94,16 @@ jobs:
         shardIndex: [1, 2]
         shardTotal: [2]
     steps:
-      # We cannot use built-in LFS functionality due to the missing support of custom LFS endpoints.
-      # See: https://github.com/actions/checkout/issues/365
-      # As we are in another container, we even need to install LFS manually.
+      # As we are in another container, we need to install LFS manually.
+      # See: https://github.com/orgs/community/discussions/160433
       - name: Install LFS
         run: |
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
           apt install git-lfs
       - uses: actions/checkout@v4
-      - run: git lfs pull
+        with:
+          lfs: true
       - uses: actions/setup-node@v4
         with:
           node-version: lts/jod
