@@ -119,6 +119,7 @@ Similarly, categories for typography colors are also defined in this system.
 | <si-docs-color style="background: #876d00;"></si-docs-color>   | <si-docs-color style="background: #fff2ba;"></si-docs-color>   | `$element-text-caution`          | Caution             | `$siemens-yellow-900`                      | `$siemens-yellow-100`                   |
 | <si-docs-color style="background: #c75300;"></si-docs-color>   | <si-docs-color style="background: #fee1cc;"></si-docs-color>   | `$element-text-warning`          | Warning             | `$siemens-orange-900`                      | `$siemens-orange-100`                   |
 | <si-docs-color style="background: #a60823;"></si-docs-color>   | <si-docs-color style="background: #fcccd7;"></si-docs-color>   | `$element-text-danger`           | Danger              | `$siemens-red-700`                         | `$siemens-red-100`                      |
+| <si-docs-color style="background: #a60823;"></si-docs-color>   | <si-docs-color style="background: #fcccd7;"></si-docs-color>   | `$element-text-critical`         | Critical            | `$siemens-red-700`                         | `$siemens-red-100`                      |
 
 ### Status
 

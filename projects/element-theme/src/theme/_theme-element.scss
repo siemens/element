@@ -71,6 +71,7 @@ $theme-element-light: (
   text-caution: base.$color-yellow-900,
   text-warning: base.$color-orange-900,
   text-danger: base.$color-red-700,
+  text-critical: base.$color-red-700,
 
   status-information: base.$color-blue-500,
   status-information-contrast: base.$color-white,
@@ -255,6 +256,7 @@ $theme-element-dark: (
   text-caution: base.$color-yellow-100,
   text-warning: base.$color-orange-100,
   text-danger: base.$color-red-100,
+  text-critical: base.$color-red-100,
 
   status-information: base.$color-blue-500,
   status-information-contrast: base.$color-white,
