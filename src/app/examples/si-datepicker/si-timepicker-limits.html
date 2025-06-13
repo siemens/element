@@ -1,0 +1,8 @@
+<div class="p-6">
+  <si-timepicker id="timepicker" [min]="min" [max]="max" [(ngModel)]="myTime" />
+  <ul class="ps-5">
+    <li>Time: {{ myTime | date: 'fullTime' }}</li>
+    <li>Min.: {{ min | date: 'fullTime' }}</li>
+    <li>Max.: {{ max | date: 'fullTime' }}</li>
+  </ul>
+</div>

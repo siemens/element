@@ -1,0 +1,76 @@
+<div class="header">
+  <si-calendar-direction-button
+    direction="left"
+    [ariaLabel]="previousLabel() | translate"
+    [disabled]="isPreviousButtonDisabled()"
+    (clicked)="setMonthOffset(-1)"
+  />
+  <div class="flex-fill">
+    <button
+      type="button"
+      class="open-month-view flex-fill text-end px-2 btn btn-tertiary calendar-button"
+      tabindex="0"
+      (click)="emitViewChange('month')"
+    >
+      {{ focusedDate() | date: 'MMMM' }}
+    </button>
+    <button
+      type="button"
+      class="open-year-view flex-fill text-start px-2 btn btn-tertiary calendar-button"
+      tabindex="0"
+      (click)="emitViewChange('year')"
+    >
+      {{ focusedDate() | date: 'yyyy' }}
+    </button>
+  </div>
+  <si-calendar-direction-button
+    direction="right"
+    [ariaLabel]="nextLabel() | translate"
+    [disabled]="isNextButtonDisabled()"
+    (clicked)="setMonthOffset(1)"
+  />
+</div>
+<table class="px-9 mt-6" role="grid">
+  <thead class="si-calendar-table-header">
+    <tr>
+      @if (!hideWeekNumbers()) {
+        <th scope="col" class="week-num">
+          <span class="visually-hidden">{{ calenderWeekLabel() | translate }}</span>
+        </th>
+      }
+      @for (day of days(); track $index) {
+        <th scope="col">
+          <span class="si-hidden-xs si-hidden-sm">{{ day }}</span>
+        </th>
+      }
+    </tr>
+  </thead>
+  <tbody
+    si-calendar-body
+    rowLabelCssClasses="week-num"
+    [focusedDate]="focusedDate()"
+    [compareAdapter]="compareAdapter"
+    [startDate]="startDate()"
+    [endDate]="endDate()"
+    [enableRangeSelection]="isRangeSelection()"
+    [previewRange]="previewRange()"
+    [rows]="weeks()"
+    [rowLabels]="hideWeekNumbers() ? undefined : weekNumbers()"
+    [activeHover]="activeHover()"
+    (activeHoverChange)="onActiveHoverChange($event)"
+    (selectedValueChange)="emitSelectedValue($event)"
+    (focusedDateChange)="emitActiveDate($event!)"
+    (keydown)="calendarBodyKeyDown($event)"
+  >
+  </tbody>
+</table>
+<div class="footer pt-2 ps-8 pe-8">
+  <button
+    type="button"
+    class="today-button btn btn-tertiary flex-fill"
+    [disabled]="isTodayButtonDisabled()"
+    (click)="goToToday()"
+  >
+    {{ todayLabel() ?? 'Today' | translate }}
+  </button>
+</div>

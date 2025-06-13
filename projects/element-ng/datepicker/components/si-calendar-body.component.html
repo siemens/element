@@ -1,0 +1,50 @@
+@for (row of rows(); track rowIndex; let rowIndex = $index) {
+  <tr role="row">
+    <!-- Typically used for week numbers -->
+    @if (rowLabels()) {
+      <td class="si-calendar-row-label" [attr.data-row]="rowIndex" [ngClass]="rowLabelCssClasses()">
+        {{ rowLabels()?.at(rowIndex) ?? '' }}
+      </td>
+    }
+    @for (col of row; track colIndex; let colIndex = $index) {
+      <td
+        role="gridcell"
+        class="si-calendar-cell"
+        [attr.data-row]="rowIndex"
+        [attr.data-col]="colIndex"
+        [class.range-hover]="
+          previewRange() && selection().previewRangeHover(col, activeHover(), startDate())
+        "
+        [class.range-hover-end]="
+          previewRange() && selection().previewRangeHoverEnd(col, activeHover(), startDate())
+        "
+        [class.range]="selection().inRange(col, startDate(), endDate())"
+        [class.range-start]="selection().isRangeSelected(col, startDate())"
+        [class.range-end]="selection().isRangeSelected(col, endDate())"
+      >
+        <button
+          siCalendarDateCell
+          type="button"
+          [cell]="col"
+          [compareAdapter]="compareAdapter()"
+          [ngClass]="cellCss(col)"
+          [attr.cdkFocusInitial]="isActive(col) ? '' : null"
+          [class.selected]="selection().isSelected(col, startDate(), endDate())"
+          [class.text-secondary]="
+            col.isPreview &&
+            !col.disabled &&
+            !selection().isRangeSelected(col, startDate()) &&
+            !selection().isRangeSelected(col, endDate()) &&
+            !selection().inRange(col, startDate(), endDate())
+          "
+          [tabindex]="isActive(col) ? '0' : '-1'"
+          (mouseover)="emitActiveHover(col)"
+          (click)="emitSelectCell(col)"
+          (focus)="emitActiveDateChange(col)"
+        >
+          {{ col.displayValue }}
+        </button>
+      </td>
+    }
+  </tr>
+}

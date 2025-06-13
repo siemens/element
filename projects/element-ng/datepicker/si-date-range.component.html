@@ -1,0 +1,39 @@
+<input
+  #startInput="ngModel"
+  type="text"
+  class="border-0 p-0 focus-none"
+  siDateInput
+  [ngModel]="value()?.start ?? null"
+  [siDatepickerConfig]="siDatepickerConfig()"
+  [placeholder]="startDatePlaceholder() | translate"
+  [attr.aria-label]="startDatePlaceholder() | translate"
+  [errormessageId]="errormessageId"
+  [disabled]="disabled()"
+  [readonly]="readonly()"
+  (ngModelChange)="onInputChanged({ start: $event, end: value()?.end })"
+/>
+<span class="mx-3">-</span>
+<input
+  #endInput="ngModel"
+  type="text"
+  class="border-0 p-0 focus-none text-end"
+  siDateInput
+  [ngModel]="value()?.end ?? null"
+  [siDatepickerConfig]="siDatepickerConfig()"
+  [placeholder]="endDatePlaceholder() | translate"
+  [attr.aria-label]="endDatePlaceholder() | translate"
+  [errormessageId]="errormessageId"
+  [disabled]="disabled()"
+  [readonly]="readonly()"
+  (ngModelChange)="onInputChanged({ start: value()?.start, end: $event })"
+/>
+<button
+  #button
+  type="button"
+  class="btn btn-circle btn-tertiary btn-xs"
+  [attr.aria-label]="ariaLabelCalendarButton() | translate"
+  [disabled]="disabled() || readonly()"
+  (click)="show()"
+>
+  <si-icon-next [icon]="icons.elementCalendar" />
+</button>

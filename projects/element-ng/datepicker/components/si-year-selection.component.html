@@ -1,0 +1,32 @@
+<div class="header">
+  <si-calendar-direction-button
+    direction="left"
+    [ariaLabel]="previousLabel()"
+    [disabled]="isPreviousButtonDisabled()"
+    (clicked)="changeVisibleYearRange(-1)"
+  />
+  <span class="year-range-label flex-fill mx-4 si-title-1 text-secondary calendar-button">
+    {{ fromYear() | date: 'yyyy' }} - {{ toYear() | date: 'yyyy' }}
+  </span>
+  <si-calendar-direction-button
+    direction="right"
+    [ariaLabel]="nextLabel()"
+    [disabled]="isNextButtonDisabled()"
+    (clicked)="changeVisibleYearRange(1)"
+  />
+</div>
+<table class="px-9 mt-6" role="grid">
+  <tbody
+    si-calendar-body
+    [focusedDate]="focusedDate()"
+    [compareAdapter]="compareAdapter"
+    [startDate]="startDate()"
+    [endDate]="endDate()"
+    [enableRangeSelection]="isRangeSelection()"
+    [previewRange]="previewRange()"
+    [rows]="yearCells"
+    (selectedValueChange)="emitSelectedValue($event)"
+    (keydown)="calendarBodyKeyDown($event)"
+  >
+  </tbody>
+</table>

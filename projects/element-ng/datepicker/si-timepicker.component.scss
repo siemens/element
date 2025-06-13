@@ -1,0 +1,14 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+$input-min-width: 35px;
+$input-max-width: 45px;
+
+:host {
+  display: block;
+}
+
+.min-width {
+  inline-size: 100%;
+  max-inline-size: $input-max-width;
+  min-inline-size: $input-min-width;
+}

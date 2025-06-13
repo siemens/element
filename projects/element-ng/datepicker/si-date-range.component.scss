@@ -1,0 +1,56 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/all-variables';
+
+:host {
+  display: block;
+  min-inline-size: 237px;
+  --si-action-icon-offset: 22px;
+}
+
+:host(:focus-within) {
+  @include all-variables.make-outline-focus();
+}
+
+input {
+  flex-grow: 1;
+  background-color: transparent;
+  min-inline-size: 80px;
+
+  &::placeholder {
+    opacity: 1;
+    color: all-variables.$element-text-secondary;
+  }
+
+  &:disabled,
+  &[readonly] {
+    background-color: all-variables.$element-base-1;
+    // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655.
+    opacity: 1;
+  }
+
+  &:disabled {
+    &::placeholder {
+      color: all-variables.$input-placeholder-disabled-color;
+    }
+  }
+
+  &,
+  &:focus {
+    &:not([readonly]):focus::placeholder {
+      color: transparent;
+    }
+  }
+}
+
+.disabled {
+  &,
+  &:hover,
+  &:focus {
+    --border-color: #{all-variables.$element-ui-3};
+    color: all-variables.$element-text-disabled;
+  }
+}
+
+.btn-circle {
+  margin-inline-start: var(--si-feedback-icon-offset, map.get(all-variables.$spacers, 2));
+}

@@ -40,6 +40,7 @@ nav:
     - Forms & Inputs:
       - Checkbox:                         'components/forms-inputs/checkbox.md'
       - Color Picker:                     'components/forms-inputs/color-picker.md'
+      - Date & Time:                      'components/forms-inputs/datepicker.md'
       - Forms:                            'components/forms-inputs/forms.md'
       - Input:                            'components/forms-inputs/input.md'
       - Number Input:                     'components/forms-inputs/number-input.md'

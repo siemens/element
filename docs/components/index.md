@@ -25,6 +25,7 @@ documentation.
 
 ## D
 
+- [Datepicker](forms-inputs/datepicker.md)
 - [Dropdowns](buttons-menus/dropdowns.md)
 
 ## E

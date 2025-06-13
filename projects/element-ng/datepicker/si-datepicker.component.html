@@ -1,0 +1,125 @@
+@if (!hideCalendar()) {
+  <div class="text-center pb-6 calendar">
+    @switch (view()) {
+      @case ('year') {
+        <si-year-selection
+          [focusedDate]="actualFocusedDate()"
+          [startDate]="startDate"
+          [endDate]="endDate"
+          [minDate]="config().minDate"
+          [maxDate]="config().maxDate"
+          [minMonth]="minMonth()"
+          [maxMonth]="maxMonth()"
+          [isRangeSelection]="config().enableDateRange!"
+          [previousLabel]="previousLabel() | translate"
+          [nextLabel]="nextLabel() | translate"
+          (selectedValueChange)="activeYearChange($event)"
+        />
+      }
+      @case ('month') {
+        <si-month-selection
+          [startDate]="startDate"
+          [endDate]="endDate"
+          [months]="months"
+          [minDate]="config().minDate"
+          [maxDate]="config().maxDate"
+          [minMonth]="minMonth()"
+          [maxMonth]="maxMonth()"
+          [isRangeSelection]="config().enableDateRange!"
+          [previewRange]="rangeType() === 'END'"
+          [previousLabel]="previousLabel() | translate"
+          [nextLabel]="nextLabel() | translate"
+          [activeHover]="activeHover()"
+          [focusedDate]="actualFocusedDate()"
+          (activeHoverChange)="onActiveHoverChange($event)"
+          (focusedDateChange)="focusedDate.set($event)"
+          (selectedValueChange)="activeMonthChange($event)"
+          (viewChange)="view.set($event)"
+        />
+      }
+      @case ('week') {
+        <si-day-selection
+          [initialFocus]="forceFocus()"
+          [startDate]="startDate"
+          [endDate]="dateRange()?.end"
+          [isRangeSelection]="config().enableDateRange!"
+          [previewRange]="rangeType() === 'END'"
+          [hideWeekNumbers]="hideWeekNumbers"
+          [minDate]="config().minDate"
+          [maxDate]="config().maxDate"
+          [minMonth]="minMonth()"
+          [weekStartDay]="weekStartDay"
+          [calenderWeekLabel]="calenderWeekLabel()"
+          [previousLabel]="previousLabel() | translate"
+          [nextLabel]="nextLabel() | translate"
+          [todayLabel]="config().todayText"
+          [activeHover]="activeHover()"
+          [focusedDate]="actualFocusedDate()"
+          (activeHoverChange)="onActiveHoverChange($event)"
+          (focusedDateChange)="focusedDate.set($event)"
+          (selectedValueChange)="selectionChange($event!)"
+          (viewChange)="view.set($event)"
+        />
+      }
+    }
+  </div>
+}
+@if (this.config().showTime) {
+  <div
+    class="timepicker-container px-9 pb-6"
+    [class.pt-6]="!hideCalendar()"
+    [class.border-top]="!hideCalendar()"
+  >
+    @if (!config().mandatoryTime && !hideTimeToggle()) {
+      <div class="mb-5 form-check form-switch">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          role="switch"
+          [id]="switchId"
+          [checked]="!disabledTime()"
+          (change)="toggleDisabledTime()"
+        />
+        <label class="form-check-label" [for]="switchId">{{
+          includeTimeLabel() | translate
+        }}</label>
+      </div>
+    }
+    <div class="mt-auto">
+      @if (timepickerLabel()) {
+        <label class="form-label" [for]="timepickerId">{{ timepickerLabel() | translate }}</label>
+      }
+      <si-timepicker
+        #timePicker
+        [id]="timepickerId"
+        [ngModel]="time"
+        [disabled]="disabledTime()"
+        [hoursLabel]="config().hoursLabel ?? timePicker.hoursLabel()"
+        [minutesLabel]="config().minutesLabel ?? timePicker.minutesLabel()"
+        [secondsLabel]="config().secondsLabel ?? timePicker.secondsLabel()"
+        [millisecondsLabel]="config().millisecondsLabel ?? timePicker.millisecondsLabel()"
+        [hideLabels]="config().hideLabels ?? timePicker.hideLabels()"
+        [hoursAriaLabel]="config().hoursAriaLabel ?? timePicker.hoursAriaLabel()"
+        [minutesAriaLabel]="config().minutesAriaLabel ?? timePicker.minutesAriaLabel()"
+        [secondsAriaLabel]="config().secondsAriaLabel ?? timePicker.secondsAriaLabel()"
+        [millisecondsAriaLabel]="
+          config().millisecondsAriaLabel ?? timePicker.millisecondsAriaLabel()
+        "
+        [hoursPlaceholder]="config().hoursPlaceholder ?? timePicker.hoursPlaceholder()"
+        [minutesPlaceholder]="config().minutesPlaceholder ?? timePicker.minutesPlaceholder()"
+        [secondsPlaceholder]="config().secondsPlaceholder ?? timePicker.secondsPlaceholder()"
+        [millisecondsPlaceholder]="
+          config().millisecondsPlaceholder ?? timePicker.millisecondsPlaceholder()
+        "
+        [meridians]="config().meridians ?? timePicker.meridians()"
+        [meridiansLabel]="config().meridiansLabel ?? timePicker.meridiansLabel()"
+        [meridiansAriaLabel]="config().meridiansAriaLabel ?? timePicker.meridiansAriaLabel()"
+        [showMinutes]="config().showMinutes ?? true"
+        [showSeconds]="config().showSeconds ?? false"
+        [showMilliseconds]="config().showMilliseconds ?? false"
+        [showMeridian]="time12h()"
+        (ngModelChange)="timeSelected($event)"
+      />
+    </div>
+  </div>
+}

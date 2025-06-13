@@ -1,0 +1,130 @@
+<div class="p-5">
+  <div class="row justify-content-center">
+    <div class="col-xs-12 col-12 col-md-6 my-6">
+      <label for="si-daterange-input-1" class="form-label" [class.required]="required && !readonly"
+        >Date Range Input</label
+      >
+      <si-date-range
+        id="si-daterange-input-1"
+        [formControl]="dateRange"
+        [siDatepickerConfig]="config"
+        [startDatePlaceholder]="startPlaceholder"
+        [endDatePlaceholder]="endPlaceholder"
+        [required]="required"
+        [readonly]="readonly"
+        [autoClose]="autoClose"
+        (siDatepickerRangeChange)="logEvent('siDatepickerRangeChange', $event)"
+        (disabledTimeChange)="disabledTime = $event"
+      />
+    </div>
+  </div>
+
+  <div class="card mt-11 e2e-ignore">
+    <div class="card-header">Control panel</div>
+    <div class="card-body">
+      <div class="row">
+        <si-form-item class="col-sm-3" label="Readonly">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="readonly" />
+        </si-form-item>
+        <si-form-item class="col-sm-3" label="Required">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="required" />
+        </si-form-item>
+        <si-form-item class="col-sm-3" label="Disabled">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            [ngModel]="false"
+            (ngModelChange)="disableChange($event)"
+          />
+        </si-form-item>
+        <si-form-item class="col-sm-3 form-check" label="Auto close on selection">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="autoClose" />
+        </si-form-item>
+      </div>
+      <form [formGroup]="configForm">
+        <div class="row">
+          <si-form-item class="col-sm-3 form-check" label="Hide week numbers">
+            <input type="checkbox" class="form-check-input" formControlName="hideWeekNumbers" />
+          </si-form-item>
+          <si-form-item class="col-sm-3 form-check" label="Two months">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              formControlName="enableTwoMonthDateRange"
+            />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Only month selection">
+            <input type="checkbox" class="form-check-input" formControlName="onlyMonthSelection" />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Show time">
+            <input type="checkbox" class="form-check-input" formControlName="showTime" />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Show seconds">
+            <input type="checkbox" class="form-check-input" formControlName="showSeconds" />
+          </si-form-item>
+          <si-form-item class="col-sm-3 form-check form-check-inline" label="Show milliseconds">
+            <input type="checkbox" class="form-check-input" formControlName="showMilliseconds" />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Disable time">
+            <input type="checkbox" class="form-check-input" formControlName="disabledTime" />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Mandatory time">
+            <input type="checkbox" class="form-check-input" formControlName="mandatoryTime" />
+          </si-form-item>
+        </div>
+        <div class="row">
+          <si-form-item class="col-sm-3" label="Min date">
+            <input type="date" class="form-control" formControlName="minDateString" />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Max date">
+            <input type="date" class="form-control" formControlName="maxDateString" />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Date format">
+            <input type="text" class="form-control" formControlName="dateFormat" />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Week start day">
+            <select class="form-control" formControlName="weekStartDay">
+              <option value="monday">Monday</option>
+              <option value="sunday">Sunday</option>
+              <option value="saturday">Saturday</option>
+            </select>
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Today text">
+            <input type="text" class="form-control" formControlName="todayText" />
+          </si-form-item>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row justify-content-center mx-0 mt-6">
+    <h4>Date range value</h4>
+    <span class="d-inline">
+      From <b>{{ dateRange.value?.start?.toDateString() }}</b>
+      {{ !disabledTime ? dateRange.value?.start?.toTimeString() : '' }}
+    </span>
+    <span class="d-inline">
+      to <b>{{ dateRange.value?.end?.toDateString() }}</b>
+      {{ !disabledTime ? dateRange.value?.end?.toTimeString() : '' }}
+    </span>
+    @if (dateRange.value?.start || dateRange.value?.end) {
+      <pre>
+          <div>{{ stringify(dateRange.value) }}</div>
+        </pre>
+    }
+
+    <h4 class="mt-6">Validation:</h4>
+    @switch (dateRange.valid) {
+      @case (true) {
+        <div>Date range is VALID</div>
+      }
+      @default {
+        <div>
+          @for (error of dateRange.errors | keyvalue; track $index) {
+            <div> {{ error.key }}: {{ error.value | json }} </div>
+          }
+        </div>
+      }
+    }
+  </div>
+</div>

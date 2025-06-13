@@ -1,0 +1,40 @@
+<div class="header">
+  <si-calendar-direction-button
+    direction="left"
+    [ariaLabel]="previousLabel()"
+    [disabled]="isPreviousButtonDisabled()"
+    (clicked)="setYearOffset(-1)"
+  />
+  <button
+    type="button"
+    class="open-year-view flex-fill mx-4 btn btn-tertiary calendar-button"
+    tabindex="0"
+    (click)="emitViewChange()"
+  >
+    {{ focusedDate() | date: 'yyyy' }}
+  </button>
+  <si-calendar-direction-button
+    direction="right"
+    [ariaLabel]="nextLabel()"
+    [disabled]="isNextButtonDisabled()"
+    (clicked)="setYearOffset(1)"
+  />
+</div>
+<table class="px-9 mt-6" role="grid">
+  <tbody
+    si-calendar-body
+    [focusedDate]="focusedDate()"
+    [compareAdapter]="compareAdapter"
+    [startDate]="startDate()"
+    [endDate]="endDate()"
+    [enableRangeSelection]="isRangeSelection()"
+    [previewRange]="previewRange()"
+    [rows]="monthCells"
+    [activeHover]="activeHover()"
+    (activeHoverChange)="onActiveHoverChange($event)"
+    (selectedValueChange)="emitSelectedValue($event)"
+    (focusedDateChange)="emitFocusedDate($event)"
+    (keydown)="calendarBodyKeyDown($event)"
+  >
+  </tbody>
+</table>

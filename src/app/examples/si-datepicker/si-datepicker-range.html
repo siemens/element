@@ -1,0 +1,13 @@
+<div class="d-flex align-items-start">
+  <si-datepicker
+    class="d-inline-block me-6"
+    [config]="{ enableDateRange: true }"
+    [(dateRange)]="myDateRange"
+  />
+  <si-datepicker
+    class="d-inline-block"
+    [config]="{ enableDateRange: true }"
+    [(dateRange)]="myDateRange"
+  />
+</div>
+<div class="mt-6">Selected date: {{ myDateRange | json }}</div>

@@ -1,0 +1,5 @@
+<div class="d-flex align-items-start">
+  <si-datepicker class="d-inline-block me-6" [(date)]="myDate" />
+  <si-datepicker class="d-inline-block" [(date)]="myDate" />
+</div>
+<div class="mt-6">Selected date: {{ myDate | date: 'full' }}</div>

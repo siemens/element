@@ -1,0 +1,21 @@
+<div class="row justify-content-center mx-0">
+  {{ date }}
+</div>
+<div class="row justify-content-center mx-0">
+  <div class="col-xs-12 col-12 col-md-4 my-6">
+    <si-form-item label="Datepicker">
+      <input
+        type="text"
+        class="form-control"
+        siDateInput
+        [siDatepickerConfig]="config"
+        [(ngModel)]="date"
+      />
+    </si-form-item>
+  </div>
+</div>
+<div class="row justify-content-center mx-0">
+  <div class="col-xs-12 col-12 col-md-4 my-6">
+    <si-datepicker class="d-inline-block me-6" [config]="config" [(date)]="date" />
+  </div>
+</div>

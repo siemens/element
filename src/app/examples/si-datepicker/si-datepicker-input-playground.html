@@ -1,0 +1,161 @@
+<div class="p-5">
+  <div class="row justify-content-center mx-0">
+    <div class="col-xs-12 col-12 col-md-4 my-6">
+      <si-form-item label="Date input (empty with placeholder)">
+        <input
+          autocomplete="off"
+          class="form-control"
+          id="si-datetime-input-0"
+          type="text"
+          siDatepicker
+          [placeholder]="placeholder"
+          [required]="required"
+          [readonly]="readonly"
+          [disabled]="disabled"
+          [autoClose]="autoClose"
+          [siDatepickerConfig]="config"
+          (siDatepickerClose)="logEvent('siDatepickerClosed', $event)"
+          (siDatepickerDisabledTime)="logEvent('siDatepickerDisabledTime', $event)"
+        />
+        <small class="form-text">Placeholder text not displayed for disabled input</small>
+      </si-form-item>
+    </div>
+  </div>
+  <div class="row justify-content-center mx-0">
+    <div class="col-xs-12 col-12 col-md-4 my-6">
+      <si-form-item label="Date input">
+        <input
+          #control="ngModel"
+          #validation="ngModel"
+          autocomplete="off"
+          class="form-control"
+          id="si-datetime-input-1"
+          type="text"
+          siDatepicker
+          [placeholder]="placeholder"
+          [required]="required"
+          [readonly]="readonly"
+          [disabled]="disabled"
+          [autoClose]="autoClose"
+          [siDatepickerConfig]="config"
+          [(ngModel)]="value"
+          (siDatepickerClose)="logEvent('siDatepickerClosed', $event)"
+          (siDatepickerDisabledTime)="logEvent('siDatepickerDisabledTime', $event)"
+        />
+      </si-form-item>
+    </div>
+  </div>
+  <div class="row justify-content-center mx-0">
+    <div class="col-xs-12 col-12 col-md-4 my-6">
+      <label for="si-datetime-input-2" class="form-label" [class.required]="required && !readonly">
+        Date input with calendar button
+      </label>
+      <si-calendar-button class="w-100">
+        <input
+          #control="ngModel"
+          #validation="ngModel"
+          autocomplete="off"
+          class="form-control"
+          id="si-datetime-input-2"
+          type="text"
+          siDatepicker
+          [placeholder]="placeholder"
+          [required]="required"
+          [readonly]="readonly"
+          [disabled]="disabled"
+          [autoClose]="autoClose"
+          [siDatepickerConfig]="config"
+          [(ngModel)]="value"
+          (siDatepickerClose)="logEvent('siDatepickerClosed', $event)"
+          (siDatepickerDisabledTime)="logEvent('siDatepickerDisabledTime', $event)"
+        />
+      </si-calendar-button>
+    </div>
+  </div>
+  <div class="card mt-6 e2e-ignore">
+    <div class="card-header">Control panel</div>
+    <div class="card-body">
+      <div class="mb-6"> Validation: {{ stringify(control.errors) }} </div>
+      <div class="row">
+        <si-form-item class="col-sm-3" label="Readonly">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="readonly" />
+        </si-form-item>
+        <si-form-item class="col-sm-3" label="Required">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="required" />
+        </si-form-item>
+        <si-form-item class="col-sm-3" label="Disabled">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="disabled" />
+        </si-form-item>
+        <si-form-item class="col-sm-3" label="Auto close on selection">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="autoClose" />
+        </si-form-item>
+      </div>
+      <form [formGroup]="configForm">
+        <div class="row">
+          <si-form-item class="col-sm-3" label="Show Time">
+            <input type="checkbox" class="form-check-input" formControlName="showTime" />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Disabled time">
+            <input type="checkbox" class="form-check-input" formControlName="disabledTime" />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Show minutes">
+            <input type="checkbox" class="form-check-input" formControlName="showMinutes" />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Show seconds">
+            <input type="checkbox" class="form-check-input" formControlName="showSeconds" />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Show milliseconds">
+            <input type="checkbox" class="form-check-input" formControlName="showMilliseconds" />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Only month selection">
+            <input type="checkbox" class="form-check-input" formControlName="onlyMonthSelection" />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Hide week numbers">
+            <input type="checkbox" class="form-check-input" formControlName="hideWeekNumbers" />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Mandatory time">
+            <input type="checkbox" class="form-check-input" formControlName="mandatoryTime" />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Enable time validation">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              formControlName="enableTimeValidation"
+            />
+          </si-form-item>
+        </div>
+        <div class="row">
+          <si-form-item class="col-sm-3" label="Min date">
+            <input type="datetime-local" class="form-control" formControlName="minDateString" />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Max date">
+            <input type="datetime-local" class="form-control" formControlName="maxDateString" />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Date format">
+            <input type="text" class="form-control" formControlName="dateFormat" />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Date time format">
+            <input type="text" class="form-control" formControlName="dateTimeFormat" />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Week start day">
+            <select class="form-control" formControlName="weekStartDay">
+              <option value="monday">Monday</option>
+              <option value="sunday">Sunday</option>
+              <option value="saturday">Saturday</option>
+            </select>
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Today text">
+            <input type="text" class="form-control" formControlName="todayText" />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Enabled time text">
+            <input type="text" class="form-control" formControlName="enabledTimeText" />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Disabled time text">
+            <input type="text" class="form-control" formControlName="disabledTimeText" />
+          </si-form-item>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="mt-6">Selected date: {{ value }}</div>
+</div>

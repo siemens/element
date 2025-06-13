@@ -1,0 +1,65 @@
+<div class="container-fluid">
+  <div class="mb-6 row">
+    <label for="timepickerLong" class="col-sm-2 col-form-label">Timepicker on date object</label>
+    <div class="col-sm-10">
+      <si-timepicker
+        id="timepickerLong"
+        [showMinutes]="true"
+        [showSeconds]="true"
+        [showMilliseconds]="true"
+        [showMeridian]="undefined"
+        [(ngModel)]="mytime"
+      />
+    </div>
+  </div>
+  <div class="mb-6 row">
+    <label for="timepickerShort" class="col-sm-2 col-form-label"
+      >2nd Timepicker on same date object with different config</label
+    >
+    <div class="col-sm-10">
+      <si-timepicker
+        id="timepickerShort"
+        [showMinutes]="true"
+        [showSeconds]="showSeconds"
+        [readonly]="readonly"
+        [disabled]="disabled"
+        [(ngModel)]="mytime"
+      />
+      <div class="mt-5">
+        <div class="form-check form-check-inline">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="showSeconds"
+            (change)="showSeconds = !showSeconds"
+          />
+          <label class="form-check-label" for="showSeconds"
+            >Show seconds in seconds timepicker</label
+          >
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" id="readonly" type="checkbox" [(ngModel)]="readonly" />
+          <label class="form-check-label" for="readonly">Readonly</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" id="disabled" type="checkbox" [(ngModel)]="disabled" />
+          <label class="form-check-label" for="disabled">Disabled</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mb-6 row">
+    <label for="fullDate" class="col-sm-2 col-form-label">Date</label>
+    <div class="col-sm-10" id="fullDate">{{ mytime | date: 'fullDate' }}</div>
+  </div>
+  <div class="mb-6 row">
+    <label for="fullTime" class="col-sm-2 col-form-label">Time</label>
+    <div class="col-sm-10" id="fullTime">{{ mytime | date: 'fullTime' }}</div>
+  </div>
+  <div class="mb-6 row">
+    <label for="dateTime" class="col-sm-2 col-form-label">Date & Time</label>
+    <div class="col-sm-10" id="dateTime">{{
+      mytime | date: 'EEEE, MMMM d, y, h:mm:ss:SSS a zzzz'
+    }}</div>
+  </div>
+</div>

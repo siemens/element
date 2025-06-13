@@ -1,0 +1,143 @@
+<div
+  class="d-flex flex-row flex-wrap"
+  cdkMonitorSubtreeFocus
+  (cdkFocusChange)="focusChange($event)"
+>
+  <label class="min-width">
+    @if (!hideLabels()) {
+      <span class="form-label">{{ (hoursLabel() | translate) || '&nbsp;' }}</span>
+    }
+    <input
+      #inputPart
+      type="text"
+      inputmode="numeric"
+      pattern="2[0-4]|[01]?[0-9]"
+      class="form-control hide-feedback-icon"
+      name="hours"
+      maxlength="2"
+      autocomplete="off"
+      [attr.aria-label]="hoursAriaLabel() | translate"
+      [attr.aria-describedby]="errormessageId"
+      [class.is-invalid]="invalidHours"
+      [disabled]="disabled()"
+      [readonly]="readonly()"
+      [placeholder]="hoursPlaceholder()"
+      [value]="hours"
+      (change)="updateHours(toHtmlInputElement($event.target).value)"
+      (blur)="updateHours(toHtmlInputElement($event.target).value)"
+      (keydown)="handleKeyPressEvent($event)"
+    />
+  </label>
+
+  @if (showMinutes()) {
+    <ng-container *ngTemplateOutlet="separator" />
+    <label class="min-width">
+      @if (!hideLabels()) {
+        <span class="form-label">{{ (minutesLabel() | translate) || '&nbsp;' }}</span>
+      }
+      <input
+        #inputPart
+        type="text"
+        inputmode="numeric"
+        pattern="[0-5]?[0-9]"
+        class="form-control hide-feedback-icon"
+        name="minutes"
+        maxlength="2"
+        autocomplete="off"
+        [attr.aria-label]="minutesAriaLabel() | translate"
+        [attr.aria-describedby]="errormessageId"
+        [class.is-invalid]="invalidMinutes"
+        [disabled]="disabled()"
+        [readonly]="readonly()"
+        [placeholder]="minutesPlaceholder()"
+        [value]="minutes"
+        (change)="updateMinutes(toHtmlInputElement($event.target).value)"
+        (blur)="updateMinutes(toHtmlInputElement($event.target).value)"
+        (keydown)="handleKeyPressEvent($event)"
+      />
+    </label>
+  }
+
+  @if (showSeconds()) {
+    <ng-container *ngTemplateOutlet="separator" />
+    <label class="min-width">
+      @if (!hideLabels()) {
+        <span class="form-label">{{ (secondsLabel() | translate) || '&nbsp;' }}</span>
+      }
+      <input
+        #inputPart
+        type="text"
+        inputmode="numeric"
+        pattern="[0-5]?[0-9]"
+        class="form-control hide-feedback-icon"
+        name="seconds"
+        maxlength="2"
+        autocomplete="off"
+        [attr.aria-label]="secondsAriaLabel() | translate"
+        [attr.aria-describedby]="errormessageId"
+        [class.is-invalid]="invalidSeconds"
+        [disabled]="disabled()"
+        [readonly]="readonly()"
+        [placeholder]="secondsPlaceholder()"
+        [value]="seconds"
+        (change)="updateSeconds(toHtmlInputElement($event.target).value)"
+        (blur)="updateSeconds(toHtmlInputElement($event.target).value)"
+        (keydown)="handleKeyPressEvent($event)"
+      />
+    </label>
+  }
+
+  @if (showMilliseconds()) {
+    <ng-container *ngTemplateOutlet="separator; context: { separator: '.' }" />
+    <label class="min-width">
+      @if (!hideLabels()) {
+        <span class="form-label">{{ (millisecondsLabel() | translate) || '&nbsp;' }}</span>
+      }
+      <input
+        #inputPart
+        type="text"
+        inputmode="numeric"
+        pattern="[0-9]{1,3}"
+        class="form-control hide-feedback-icon"
+        name="milliseconds"
+        maxlength="3"
+        autocomplete="off"
+        [attr.aria-label]="millisecondsAriaLabel() | translate"
+        [attr.aria-describedby]="errormessageId"
+        [class.is-invalid]="invalidMilliseconds"
+        [disabled]="disabled()"
+        [readonly]="readonly()"
+        [placeholder]="millisecondsPlaceholder()"
+        [value]="milliseconds"
+        (change)="updateMilliseconds(toHtmlInputElement($event.target).value)"
+        (blur)="updateMilliseconds(toHtmlInputElement($event.target).value)"
+        (keydown)="handleKeyPressEvent($event)"
+      />
+    </label>
+  }
+
+  @if (use12HourClock()) {
+    <label class="ms-2">
+      @if (!hideLabels()) {
+        <span class="form-label">{{ (meridiansLabel() | translate) || '&nbsp;' }}</span>
+      }
+      <select
+        #inputPart
+        class="form-control"
+        [attr.aria-label]="meridiansAriaLabel() | translate"
+        [attr.aria-describedby]="errormessageId"
+        [class.readonly]="readonly()"
+        [disabled]="disabled()"
+        (change)="toggleMeridian()"
+        (keydown)="handleKeyPressEvent($event)"
+      >
+        <option value="am" [selected]="meridian() === 'am'">{{ periods()[0] }}</option>
+        <option value="pm" [selected]="meridian() === 'pm'">{{ periods()[1] }}</option>
+      </select>
+    </label>
+  }
+</div>
+
+<ng-template #separator let-separator="separator">
+  <div class="align-self-end pb-3 px-1" aria-hidden="true">{{ separator ? separator : ':' }}</div>
+</ng-template>

@@ -1,0 +1,243 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+%selection-hover {
+  background: variables.$element-base-1-hover;
+  color: variables.$element-ui-0;
+}
+
+%table-cell-height-32 {
+  block-size: 32px;
+  line-height: 32px;
+  inline-size: 100%;
+}
+
+// Enforce square for date cells
+%square {
+  @extend %table-cell-height-32;
+  inline-size: 32px;
+}
+
+%table-cell-base {
+  margin-inline: auto;
+  position: relative;
+  border: unset;
+  background-color: unset;
+  padding: 0;
+  cursor: pointer;
+  border-radius: variables.$element-button-radius;
+}
+
+:host {
+  background: variables.$element-base-1;
+  border-radius: variables.$element-radius-2;
+  display: flex;
+  flex-direction: column;
+  inline-size: 348px;
+}
+
+// FIXME: this is a hack to avoid style leaking. File needs to be split to the components
+:host ::ng-deep {
+  .header,
+  .footer {
+    display: flex;
+    align-items: center;
+  }
+
+  .header {
+    padding-block-start: map.get(variables.$spacers, 5);
+    padding-block-end: map.get(variables.$spacers, 6);
+    padding-inline: map.get(variables.$spacers, 9);
+    border-block-end: 1px solid variables.$element-ui-4;
+
+    a {
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+
+  .footer {
+    margin-block-start: map.get(variables.$spacers, 2);
+    text-align: center;
+  }
+
+  table {
+    inline-size: 100%;
+    border-collapse: separate;
+    border-spacing: 0 3px;
+    table-layout: fixed;
+    margin-block-end: -3px;
+  }
+
+  // days cell class
+  .day {
+    @extend %square;
+    @extend %table-cell-base;
+
+    &.selected {
+      background: variables.$element-ui-0;
+      color: variables.$element-base-1;
+    }
+
+    &:not(.disabled):not(.selected):hover {
+      @extend %selection-hover;
+    }
+  }
+
+  // month cell class
+  .month {
+    @extend %table-cell-height-32;
+    @extend %table-cell-base;
+
+    &.selected {
+      background: variables.$element-ui-0;
+      color: variables.$element-base-1;
+    }
+
+    &:not(.disabled):not(.selected):hover {
+      @extend %selection-hover;
+    }
+  }
+
+  // month cell class
+  .year {
+    @extend %table-cell-height-32;
+    @extend %table-cell-base;
+
+    &.selected {
+      background: variables.$element-ui-0;
+      color: variables.$element-base-1;
+    }
+
+    &:not(.disabled):not(.selected):hover {
+      @extend %selection-hover;
+    }
+  }
+
+  td[role='gridcell'] {
+    text-align: center;
+  }
+
+  th {
+    font-weight: variables.$si-font-weight-caption-1;
+    text-align: center;
+    block-size: 32px;
+  }
+
+  .week-num,
+  th {
+    font-size: variables.$si-font-size-caption-1;
+    color: variables.$element-text-secondary;
+    inline-size: 32px;
+    cursor: default;
+  }
+
+  .today {
+    &.selected::before {
+      border-color: variables.$element-ui-5;
+    }
+
+    &::before {
+      position: absolute;
+      content: '';
+      inset: 1px;
+      border: 1px solid variables.$element-ui-1;
+      border-radius: variables.$element-radius-2;
+      display: inline-block;
+    }
+  }
+
+  .selection {
+    .month,
+    .year {
+      block-size: 30px;
+      line-height: 30px;
+      cursor: pointer;
+
+      &:not(.disabled):hover {
+        @extend %selection-hover;
+      }
+    }
+
+    .month {
+      inline-size: 50%;
+    }
+
+    .year {
+      inline-size: 33.3%;
+    }
+  }
+
+  .disabled {
+    color: variables.$element-text-disabled;
+    font-weight: variables.$si-font-weight-normal !important; // stylelint-disable-line declaration-no-important
+    cursor: default !important; // stylelint-disable-line declaration-no-important
+  }
+
+  .range {
+    background-color: variables.$element-ui-4;
+
+    &:hover {
+      background: variables.$element-base-1-hover;
+
+      div.si-title-1:hover {
+        background: transparent;
+      }
+    }
+  }
+
+  .range-hover {
+    background-color: variables.$element-base-1-hover;
+  }
+
+  .range-hover-end {
+    border-start-end-radius: variables.$element-button-radius;
+    border-end-end-radius: variables.$element-button-radius;
+  }
+
+  td:is(.range-start, .range-end) {
+    background: variables.$element-ui-0;
+    color: variables.$element-base-1;
+
+    div.si-title-1,
+    div.si-body-1 {
+      &:hover {
+        background: transparent;
+        color: variables.$element-base-1;
+      }
+    }
+
+    .today::before {
+      border-color: variables.$element-ui-5;
+    }
+  }
+
+  td.range-start {
+    border-start-start-radius: variables.$element-button-radius;
+    border-end-start-radius: variables.$element-button-radius;
+  }
+
+  td.range-end {
+    border-start-end-radius: variables.$element-button-radius;
+    border-end-end-radius: variables.$element-button-radius;
+  }
+
+  .calendar-button {
+    font-weight: variables.$si-font-weight-title-2;
+    font-size: variables.$si-font-size-title-2;
+    line-height: variables.$si-line-height-title-2;
+    color: variables.$element-text-active;
+    min-inline-size: 0 !important; // stylelint-disable-line declaration-no-important
+  }
+
+  .calendar {
+    block-size: 28em;
+  }
+
+  .timepicker-container {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,32 @@
+<button type="button" class="btn btn-secondary me-5" (click)="openModal(template)"
+  >Create template modal</button
+>
+<ng-template #template let-modalRef="modalRef">
+  <div class="modal-header">
+    <h4 class="modal-title" id="sample-modal-title">Modal</h4>
+    <button
+      type="button"
+      class="btn btn-circle btn-sm btn-ghost element-cancel"
+      aria-label="Close modal"
+      (click)="modalRef.hide()"
+    >
+    </button>
+  </div>
+  <div class="modal-body">
+    <si-form-item label="Date">
+      <si-calendar-button class="w-100">
+        <input
+          type="text"
+          placeholder="siDatepicker"
+          class="form-control"
+          siDatepicker
+          [(ngModel)]="date"
+        />
+      </si-calendar-button>
+    </si-form-item>
+  </div>
+  <div class="modal-footer">
+    <span>This is the footer.</span>
+    <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Close</button>
+  </div>
+</ng-template>

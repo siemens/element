@@ -1,0 +1,26 @@
+<div class="d-flex align-items-start">
+  <si-datepicker
+    class="d-inline-block me-6"
+    [config]="{
+      minDate: minDate,
+      showTime: true,
+      todayText: 'Today',
+      weekStartDay: 'monday',
+      hideWeekNumbers: false,
+      showMinutes: true,
+      showSeconds: true,
+      showMilliseconds: false,
+      mandatoryTime: false,
+      disabledTime: false,
+      enabledTimeText: 'Consider time',
+      disabledTimeText: 'Ignore time'
+    }"
+    [(date)]="myDate"
+  />
+  <si-datepicker
+    class="d-inline-block"
+    [config]="{ minDate: minDate, showTime: true, disabledTime: false }"
+    [(date)]="myDate"
+  />
+</div>
+<div class="mt-6">Selected date: {{ myDate | date: 'full' }}</div>

@@ -1,0 +1,53 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  max-block-size: max-content;
+  // Shrink the container when the two month layout wraps the content
+  // so that the scrollbar is positioned directly at the end of the content.
+  max-inline-size: min-content;
+
+  // Small screens display the calendar with similar animations as the dialog.
+  &.fade {
+    transition: transform variables.element-transition-duration(0.3s) ease-out;
+    transform: translate(0, -50px);
+  }
+
+  &.show {
+    transform: none;
+  }
+}
+
+.mobile-datepicker-overlay {
+  // When the second datepicker wrap, the parent container
+  // keeps it's width. As we apply the elevation on it, it appears
+  // on the full width. With this trick it looks good. But resizing
+  // and making the screen larger has no effect on expanding to two
+  // pickers again. Seems to be acceptable as size is adjusted after
+  // closing and reopening again.
+  max-inline-size: 348px;
+}
+
+.first-datepicker {
+  border-inline-end: 0;
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.second-datepicker {
+  border-inline-start: 0;
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+}
+
+.first-datepicker-mobile {
+  border-block-end: 0;
+  border-end-start-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.second-datepicker-mobile {
+  border-block-start: 0;
+  border-start-start-radius: 0;
+  border-start-end-radius: 0;
+}
