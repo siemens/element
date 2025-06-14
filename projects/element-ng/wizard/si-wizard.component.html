@@ -15,7 +15,7 @@
     @if (inlineNavigation()) {
       <ng-container *ngTemplateOutlet="saveBtn" />
     } @else {
-      <ng-container *ngTemplateOutlet="footerVertical" />
+      <ng-container *ngTemplateOutlet="footer" />
     }
   } @else {
     @if (showVerticalDivider()) {
@@ -26,7 +26,7 @@
           <div class="steps-content">
             <ng-container *ngTemplateOutlet="stepContent" />
           </div>
-          <ng-container *ngTemplateOutlet="footerVertical" />
+          <ng-container *ngTemplateOutlet="footer" />
         </div>
       </div>
     } @else {
@@ -36,7 +36,7 @@
           <ng-container *ngTemplateOutlet="stepContent" />
         </div>
       </div>
-      <ng-container *ngTemplateOutlet="footerVertical" />
+      <ng-container *ngTemplateOutlet="footer" />
     }
   }
 } @else {
@@ -132,27 +132,25 @@
   }
 </ng-template>
 
-<ng-template #footerVertical>
-  <div class="d-flex flex-row justify-content-between pt-6">
-    <div>
+<ng-template #footer>
+  <div class="wizard-footer pt-6">
+    <div class="wizard-footer-inner" [class.ms-6]="showVerticalDivider()">
       @if (hasCancel()) {
         <button
           type="button"
-          class="btn btn-tertiary me-6"
-          [class.ms-6]="showVerticalDivider()"
+          class="btn btn-tertiary"
           [attr.aria-label]="cancelText() | translate"
           (click)="wizardCancel.emit()"
         >
           {{ cancelText() | translate }}
         </button>
       }
-    </div>
-    <div class="d-flex">
       @if (!shouldHideNavigation()) {
         <button
           type="button"
-          class="btn btn-secondary me-6"
+          class="btn btn-secondary"
           [class.d-none]="index === 0"
+          [class.end]="index !== 0"
           [attr.aria-label]="backText() | translate"
           (click)="back(1)"
         >
@@ -165,13 +163,24 @@
           [attr.aria-label]="nextText() | translate"
           [disabled]="!currentStep?.isValid()"
           [class.d-none]="index === steps.length - 1"
+          [class.end]="index === 0"
           (click)="next(1)"
         >
           {{ nextText() | translate }}
         </button>
       }
 
-      <ng-container *ngTemplateOutlet="saveBtn" />
+      @if (!hideSave()) {
+        @if (index === steps.length - 1) {
+          <button
+            type="button"
+            class="btn btn-primary save"
+            [disabled]="!currentStep?.isValid() || !currentStep?.isNextNavigable()"
+            (click)="save()"
+            >{{ saveText() | translate }}</button
+          >
+        }
+      }
     </div>
   </div>
 </ng-template>
