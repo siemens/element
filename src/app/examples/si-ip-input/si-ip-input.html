@@ -1,0 +1,44 @@
+<div class="row justify-content-center">
+  <div class="col-12 col-md-4 my-6">
+    <si-form-item label="IP V4 address">
+      <input
+        type="text"
+        class="form-control"
+        siIpV4
+        [placeholder]="ipV4Placeholder()"
+        [cidr]="configForm.value.cidr"
+        [(ngModel)]="ipV4address"
+        (ngModelChange)="onIpChange('IPV4', $event)"
+      />
+    </si-form-item>
+  </div>
+</div>
+<div> Model: {{ ipV4address }} </div>
+<div class="row justify-content-center">
+  <div class="col-12 col-md-4 my-6">
+    <si-form-item label="IP V6 address">
+      <input
+        type="text"
+        class="form-control"
+        siIpV6
+        placeholder="2001:0DB8:85A3:0000:0000:8A2E:0370:7334"
+        [cidr]="configForm.value.cidr"
+        [(ngModel)]="ipV6address"
+        (ngModelChange)="onIpChange('IPV6', $event)"
+      />
+    </si-form-item>
+  </div>
+</div>
+<div> Model: {{ ipV6address }} </div>
+<div class="card mt-6 e2e-ignore">
+  <div class="card-header">Control panel</div>
+  <div class="card-body">
+    <form [formGroup]="configForm">
+      <div class="row">
+        <si-form-item class="col-sm-3" label="Enable CIDR notation e.g. 198.51.100.0/22">
+          <input type="checkbox" class="form-check-input" formControlName="cidr" />
+        </si-form-item>
+      </div>
+    </form>
+  </div>
+</div>
