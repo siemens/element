@@ -29,7 +29,7 @@ export class SampleComponent {
   readonly group = new FormGroup({
     tagList: new FormControl(['item-1', 'item-2']),
     csv: new FormControl(['item-1', 'item-2']),
-    email: new FormControl(['test-user@siemens.com'])
+    email: new FormControl(['test-user@example.org'])
   });
 
   readonly = false;
