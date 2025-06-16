@@ -1,0 +1,68 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/all-variables';
+
+:host:focus-within:not(.country-focus) {
+  @include all-variables.make-outline-focus();
+}
+
+.search-country {
+  display: inline-block;
+  margin-block-start: map.get(all-variables.$spacers, 4);
+  margin-block-end: map.get(all-variables.$spacers, 4);
+  margin-inline: map.get(all-variables.$spacers, 4);
+  inline-size: calc(100% - #{map.get(all-variables.$spacers, 6)});
+}
+
+.disabled {
+  pointer-events: none;
+
+  &,
+  &:hover,
+  &:focus {
+    --border-color: #{all-variables.$element-ui-3};
+    color: all-variables.$element-text-disabled;
+  }
+}
+
+.dropdown-toggle {
+  border-radius: all-variables.$element-input-radius;
+  min-inline-size: auto !important; // stylelint-disable-line declaration-no-important
+  background: transparent;
+
+  .fi.fi-xx {
+    background-image: none;
+    background-color: all-variables.$element-text-disabled;
+  }
+
+  &:disabled {
+    opacity: all-variables.$element-action-disabled-opacity;
+  }
+
+  &.readonly {
+    cursor: default;
+  }
+}
+
+.phone-number {
+  background-color: transparent;
+  inline-size: inherit;
+
+  &:disabled,
+  &[readonly] {
+    // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655.
+    opacity: 1;
+  }
+
+  &:disabled {
+    color: all-variables.$element-text-disabled;
+
+    &::placeholder {
+      color: all-variables.$input-placeholder-disabled-color;
+    }
+  }
+
+  &::placeholder {
+    color: all-variables.$element-text-secondary;
+  }
+}

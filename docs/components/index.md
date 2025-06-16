@@ -68,6 +68,7 @@ documentation.
 ## P
 
 - [Pagination](layout-navigation/pagination.md)
+- [Phone Number Input](forms-inputs/phone-number-input.md)
 - [Photo Uploader](forms-inputs/photo-upload.md)
 - [Pills Input](forms-inputs/pills-input.md)
 - [Popover](status-notifications/popover.md)

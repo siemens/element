@@ -10,6 +10,13 @@ $icon-font-path: '@simpl/element-icons/dist/fonts' !default;
 @use '@siemens/element-theme/src/styles/variables/utilities';
 @use '@siemens/live-preview/styles/live-preview';
 
+// Seems like an esbuild problem what we need to solve here.
+// Without this flag-icon would emit two icons with the same name although they are located in different directories.
+// Webpack could handle this, esbuild cannot.
+@use 'flag-icons/sass/flag-icons' with (
+  $flag-icons-use-square: false
+);
+
 @use '@simpl/brand/src/themes/element-theme-siemens-brand' with (
   $siemens-font-path: $siemens-font-path
 );

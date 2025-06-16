@@ -1,0 +1,41 @@
+<form class="p-5" [formGroup]="form">
+  <div class="form-group w-25">
+    <span id="phone-number-label" class="form-label">Phone number:</span>
+    <si-phone-number-input
+      class="form-control"
+      labelledby="phone-number-label"
+      formControlName="phoneNumber"
+      placeholderForSearch="FORM.SEARCH"
+      selectCountryAriaLabel="FORM.SELECT_COUNTRY"
+      aria-label="Phone Number"
+      defaultCountry="CH"
+      [supportedCountries]="['AU', 'CH', 'DE', 'FK', 'IN', 'US']"
+      (valueChange)="lastEventValue = $event"
+    />
+    <div class="invalid-feedback">
+      @if (form.controls.phoneNumber.errors?.invalidPhoneNumberFormat) {
+        <span>
+          {{ 'FORM.INVALID_PHONE' | translate }}
+        </span>
+      }
+      @if (form.controls.phoneNumber.errors?.notSupportedPhoneNumberCountry) {
+        <span>
+          {{ 'FORM.INVALID_PHONE_COUNTRY' | translate }}
+        </span>
+      }
+    </div>
+  </div>
+  <hr />
+  <div>
+    <span class="si-title-2">Last emitted change event: </span>
+    <pre>{{ lastEventValue | json }}</pre>
+  </div>
+  <div>
+    <span class="si-title-2">Current form value: </span>
+    <pre>{{ form.controls.phoneNumber.value | json }}</pre>
+  </div>
+  <div>
+    <span class="si-title-2">Validation Error: </span>
+    <pre>{{ form.controls.phoneNumber.errors | json }}</pre>
+  </div>
+</form>

@@ -1,0 +1,82 @@
+<div
+  class="btn-group w-100 d-flex shadow-none border-0"
+  [class.disabled]="disabled()"
+  [class.readonly]="readonly()"
+  [attr.aria-disabled]="disabled()"
+>
+  <button
+    #trigger="cdkOverlayOrigin"
+    cdkOverlayOrigin
+    siPhoneNumberInputSelect
+    class="dropdown-toggle d-flex align-items-center ms-n4 my-n4 py-2 px-4 border-0"
+    type="button"
+    role="combobox"
+    aria-haspopup="listbox"
+    [disabled]="disabled()"
+    [class.readonly]="readonly()"
+    [attr.aria-labelledby]="id() + '-aria-label ' + id() + '-value'"
+    [attr.aria-expanded]="open"
+    [complexOptions]="countryList()"
+    [value]="selectedCountry"
+    [valueProvider]="valueProvider"
+    [tabindex]="disabled() ? '-1' : '0'"
+    [attr.aria-controls]="id() + '-listbox'"
+    (valueChange)="countryInput($event)"
+    (click)="openOverlay()"
+    (focus)="countryFocused.set(true)"
+    (blur)="countryFocused.set(false)"
+  >
+    <span class="visually-hidden" [id]="id() + '-aria-label'">{{
+      selectCountryAriaLabel() | translate
+    }}</span>
+    <span
+      class="fi"
+      aria-hidden="true"
+      [ngClass]="'fi-' + (selectedCountry?.isoCode?.toLowerCase() ?? 'xx')"
+    ></span>
+    @if (selectedCountry) {
+      <span class="si-body-2 ms-4" [id]="id() + '-value'">
+        <span class="visually-hidden">{{ selectedCountry.name }}</span>
+        +{{ selectedCountry.countryCode }}
+      </span>
+    }
+    <si-icon-next class="icon dropdown-caret" [icon]="icons.elementDown2" />
+
+    <ng-template
+      cdkConnectedOverlay
+      cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+      [cdkConnectedOverlayHasBackdrop]="true"
+      [cdkConnectedOverlayOrigin]="trigger"
+      [cdkConnectedOverlayOpen]="open"
+      [cdkConnectedOverlayFlexibleDimensions]="true"
+      [cdkConnectedOverlayOffsetX]="-1"
+      [cdkConnectedOverlayWidth]="overlayWidth"
+      (backdropClick)="overlayDetach()"
+      (detach)="overlayDetach()"
+    >
+      <si-select-list-has-filter
+        [baseId]="id()"
+        [filterPlaceholder]="placeholderForSearch()"
+        [noResultsFoundLabel]="searchNoResultsFoundLabel()"
+        [optionTemplate]="optionTemplate"
+        (closeOverlay)="overlayDetach()"
+      />
+    </ng-template>
+    <ng-template #optionTemplate let-option>
+      <span class="fi me-5" [ngClass]="'fi-' + option.value.isoCode.toLowerCase()"></span>
+      {{ option.value.name }} +{{ option.value.countryCode }}
+    </ng-template>
+  </button>
+  <input
+    #phoneInput
+    type="tel"
+    class="ms-4 border-0 p-0 focus-none shadow-none flex-grow-1 phone-number"
+    [attr.aria-label]="phoneNumberAriaLabel() | translate"
+    [attr.aria-describedby]="errormessageId"
+    [placeholder]="placeholder"
+    [disabled]="disabled()"
+    [readonly]="readonly()"
+    (input)="input()"
+    (blur)="blur()"
+  />
+</div>
