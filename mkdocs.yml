@@ -48,6 +48,7 @@ nav:
       - Photo Uploader:                   'components/forms-inputs/photo-upload.md'
       - Radio:                            'components/forms-inputs/radio.md'
       - Select:                           'components/forms-inputs/select.md'
+      - Slider:                           'components/forms-inputs/slider.md'
       - Switch:                           'components/forms-inputs/switch.md'
       - Text Area:                        'components/forms-inputs/text-area.md'
     - Layout & navigation:

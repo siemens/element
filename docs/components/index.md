@@ -74,6 +74,7 @@ documentation.
 ## S
 
 - [Select](forms-inputs/select.md)
+- [Slider](forms-inputs/slider.md)
 - [Sort Bar](sorting-filtering/sort-bar.md)
 - [Spinner](progress-indication/spinner.md)
 - [Split](layout-navigation/split.md)

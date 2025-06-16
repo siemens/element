@@ -1,0 +1,85 @@
+<div class="slider-container">
+  <button
+    type="button"
+    class="btn btn-sm btn-circle btn-secondary decrement-button"
+    [disabled]="disabled()"
+    [attr.aria-label]="decrementLabel() | translate"
+    [attr.aria-describedby]="errormessageId"
+    (mousedown)="autoUpdateStart($event, false)"
+    (touchstart)="autoUpdateStart($event, false)"
+    (keydown.enter)="autoUpdateStart($event, false)"
+    (touchend)="autoUpdateStop()"
+    (mouseup)="autoUpdateStop()"
+    (keyup.enter)="autoUpdateStop()"
+    (mouseleave)="autoUpdateStop()"
+  >
+    <si-icon-next [icon]="icons.elementMinus" />
+  </button>
+
+  <div class="slider-wrapper">
+    <div class="value-indicator-wrapper">
+      <span class="value-indicator" [style.inset-inline-start.%]="indicatorPos()">
+        <span>
+          <ng-content />
+        </span>
+      </span>
+    </div>
+
+    <div class="slider" [class.dragging]="isDragging">
+      <div class="track"></div>
+      <div
+        class="thumb-handle-wrapper"
+        [class.dragging]="isDragging"
+        (mousedown)="handleMouseDown($event)"
+        (touchstart)="handleTouchStart($event)"
+      >
+        <div #handle class="thumb-handle" [style.inset-inline-start.%]="indicatorPos()">
+          <div
+            class="thumb"
+            tabindex="0"
+            role="slider"
+            [attr.aria-label]="sliderLabel() | translate"
+            [attr.aria-valuenow]="sliderValue()"
+            [attr.aria-describedby]="errormessageId"
+            [class.dragging]="isDragging"
+            (keydown)="autoUpdateKeydown($event)"
+            (keyup)="autoUpdateStop()"
+          >
+            @let iconValue = thumbIcon();
+            @if (iconValue) {
+              <si-icon-next [icon]="iconValue" />
+            } @else {
+              <div class="hover-circle"></div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button
+    type="button"
+    class="btn btn-sm btn-circle btn-secondary increment-button"
+    [disabled]="disabled()"
+    [attr.aria-label]="incrementLabel() | translate"
+    [attr.aria-describedby]="errormessageId"
+    (mousedown)="autoUpdateStart($event, true)"
+    (touchstart)="autoUpdateStart($event, true)"
+    (keydown.enter)="autoUpdateStart($event, true)"
+    (touchend)="autoUpdateStop()"
+    (mouseup)="autoUpdateStop()"
+    (keyup.enter)="autoUpdateStop()"
+    (mouseleave)="autoUpdateStop()"
+  >
+    <si-icon-next [icon]="icons.elementPlus" />
+  </button>
+</div>
+
+@if (minLabel() && maxLabel()) {
+  <div class="range-indicator-wrapper">
+    <div class="range-indicator">
+      <span>{{ minLabel() }}</span>
+      <span class="ms-auto">{{ maxLabel() }}</span>
+    </div>
+  </div>
+}

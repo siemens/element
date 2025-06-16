@@ -1,0 +1,164 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+$button-width: 32px;
+$button-height: 32px;
+$button-gap: 4px;
+
+$track-height: 4px;
+$thumb-size: 24px;
+
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.slider-container {
+  display: flex;
+  align-items: flex-end;
+}
+
+.decrement-button {
+  margin-inline-end: $button-gap;
+}
+
+.increment-button {
+  margin-inline-start: $button-gap;
+}
+
+.slider-wrapper {
+  position: relative;
+  flex: 1 1 0;
+  min-inline-size: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.value-indicator-wrapper {
+  position: relative;
+  margin-inline: calc($thumb-size / 2);
+  text-align: start;
+}
+
+.value-indicator {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+  color: variables.$element-text-secondary;
+
+  > span {
+    display: inline-block;
+    margin-inline-start: -50%;
+  }
+}
+
+.range-indicator-wrapper {
+  margin-block: 0;
+  margin-inline: calc($button-width + $button-gap);
+
+  .range-indicator {
+    display: inline-flex;
+    white-space: nowrap;
+    inline-size: 100%;
+    color: variables.$element-text-secondary;
+
+    > span {
+      display: inline-block;
+    }
+  }
+}
+
+.slider {
+  position: relative;
+  inline-size: 100%;
+  block-size: $button-height;
+  cursor: pointer;
+
+  &.dragging {
+    cursor: grabbing;
+  }
+
+  :host.disabled & {
+    cursor: default;
+  }
+
+  .track {
+    position: absolute;
+    inset-block-start: 50%;
+    border-radius: variables.$element-radius-1;
+    margin-block-start: calc($track-height / -2);
+    block-size: $track-height;
+    inline-size: 100%;
+    background: variables.$element-ui-4;
+    pointer-events: none;
+  }
+
+  .thumb-handle-wrapper {
+    position: absolute;
+    inset-block: 0;
+    inset-inline: calc($thumb-size / 2);
+
+    :host.disabled & {
+      pointer-events: none;
+    }
+  }
+
+  .thumb-handle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    inset-block-start: 50%;
+    margin-block-start: -20px;
+    margin-inline: -20px;
+    inline-size: 40px;
+    block-size: 40px;
+
+    :host.disabled & {
+      pointer-events: none;
+    }
+  }
+
+  .thumb {
+    --thumb-state-color: #{variables.$element-ui-0};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    block-size: $thumb-size;
+    min-block-size: $thumb-size;
+    inline-size: $thumb-size;
+    min-inline-size: $thumb-size;
+    border-radius: 50%;
+    border: 1px solid var(--thumb-state-color);
+    box-shadow: variables.$element-elevation-2;
+    background: variables.$element-base-1;
+
+    &:hover:not(.dragging) {
+      --thumb-state-color: #{variables.$element-ui-0-hover};
+      background: variables.$element-action-secondary-hover;
+    }
+
+    :host.disabled & {
+      --thumb-state-color: #{variables.$element-ui-3};
+    }
+
+    si-icon-next {
+      font-size: variables.$si-icon-font-size;
+      color: var(--thumb-state-color);
+    }
+  }
+
+  .thumb:hover .hover-circle,
+  .thumb:focus .hover-circle,
+  .thumb.dragging .hover-circle {
+    display: block;
+  }
+
+  .hover-circle {
+    display: none;
+    block-size: calc($thumb-size / 2);
+    inline-size: calc($thumb-size / 2);
+    border-radius: 50%;
+    background: var(--thumb-state-color);
+  }
+}

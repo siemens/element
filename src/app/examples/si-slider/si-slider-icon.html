@@ -1,0 +1,40 @@
+<form class="container-fluid">
+  <div class="mb-6 row">
+    <label for="number" class="col-sm-2 col-form-label">Slide</label>
+    <div class="col-sm-10">
+      <si-slider
+        thumbIcon="element-temperature"
+        [disabled]="disabled"
+        [min]="0"
+        [max]="100"
+        [step]="10"
+        [(value)]="slidingValue"
+        (valueChange)="logEvent($event)"
+      />
+    </div>
+  </div>
+  <div class="mb-6 row">
+    <label for="number" class="col-sm-2 col-form-label">Write</label>
+    <div class="col-sm-10">
+      <input
+        type="number"
+        class="form-control"
+        id="number"
+        name="number"
+        placeholder="0-100"
+        [min]="0"
+        [max]="100"
+        [step]="10"
+        [(ngModel)]="slidingValue"
+      />
+    </div>
+  </div>
+  <div class="mb-6 row">
+    <div class="offset-sm-2 col-sm-10">
+      <label class="form-check">
+        <input type="checkbox" class="form-check-input" name="disabled" [(ngModel)]="disabled" />
+        <span class="form-check-label">Disabled</span>
+      </label>
+    </div>
+  </div>
+</form>
