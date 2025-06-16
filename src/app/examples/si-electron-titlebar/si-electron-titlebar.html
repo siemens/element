@@ -1,0 +1,12 @@
+<!-- Only use this component if the application runs in electron
+Use it like this: <si-electron-titlebar *ngIf="runsInElectron" -->
+
+<si-electron-titlebar
+  appTitle="My Application"
+  [canGoBack]="true"
+  [canGoForward]="false"
+  [hasFocus]="true"
+  [menuItems]="items"
+  (forward)="goForward()"
+  (back)="goBack()"
+/>

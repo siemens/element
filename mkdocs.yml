@@ -52,6 +52,7 @@ nav:
     - Layout & navigation:
       - Accordion:                        'components/layout-navigation/accordion.md'
       - Application header:               'components/layout-navigation/application-header.md'
+      - Electron Titlebar:                'components/layout-navigation/electron-titlebar.md'
       - Footer:                           'components/layout-navigation/footer.md'
       - Launchpad:                        'components/layout-navigation/launchpad.md'
       - Modals:                           'components/layout-navigation/modals.md'

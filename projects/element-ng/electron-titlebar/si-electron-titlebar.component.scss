@@ -1,0 +1,29 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+.electron-title-bar-container {
+  block-size: variables.$si-titlebar-height;
+  z-index: variables.$zindex-application-header;
+  inset-block-start: variables.$si-system-banner-spacing;
+}
+
+.electron-title-bar {
+  position: absolute;
+  inset-inline-start: env(titlebar-area-x, 0);
+  inline-size: env(titlebar-area-width, 100%);
+}
+
+.electron-title-bar-app-name {
+  color: variables.$element-text-secondary;
+  -webkit-app-region: drag;
+  -webkit-user-select: none; // stylelint-disable-line property-no-vendor-prefix
+  user-select: none;
+}
+
+.electron-title-bar-draggable {
+  flex-basis: content;
+  -webkit-app-region: drag;
+}
+
+.unfocused {
+  color: variables.$element-ui-3;
+}

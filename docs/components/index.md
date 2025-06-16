@@ -30,6 +30,7 @@ documentation.
 
 ## E
 
+- [Electron Titlebar](layout-navigation/electron-titlebar.md)
 - [Empty State](status-notifications/empty-state.md)
 
 ## F

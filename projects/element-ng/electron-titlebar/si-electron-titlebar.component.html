@@ -1,0 +1,46 @@
+<div class="electron-title-bar-container w-100 bg-base-1 border-bottom fixed-top">
+  <div class="electron-title-bar align-items-center d-flex h-100 gap-6">
+    <span
+      class="mx-6 si-body-2 electron-title-bar-app-name text-truncate"
+      [class.unfocused]="!hasFocus()"
+      >{{ appTitle() }}</span
+    >
+    <button
+      type="button"
+      class="btn btn-circle btn-xs btn-tertiary"
+      [class.unfocused]="!hasFocus()"
+      [attr.aria-label]="ariaLabelBack() | translate"
+      [disabled]="!canGoBack()"
+      (click)="back.emit()"
+    >
+      <si-icon-next class="flip-rtl" [icon]="icons.elementLeft4" />
+    </button>
+    <button
+      type="button"
+      class="btn btn-circle btn-xs btn-tertiary"
+      [class.unfocused]="!hasFocus()"
+      [attr.aria-label]="ariaLabelForward() | translate"
+      [disabled]="!canGoForward()"
+      (click)="forward.emit()"
+    >
+      <si-icon-next class="flip-rtl" [icon]="icons.elementRight4" />
+    </button>
+    @if (menuItems().length > 0) {
+      <button
+        type="button"
+        class="btn btn-circle electron-title-bar-btn btn-tertiary btn-xs"
+        [class.unfocused]="!hasFocus()"
+        [attr.aria-label]="ariaLabelMenu() | translate"
+        [cdkMenuTriggerFor]="menu"
+      >
+        <si-icon-next [icon]="icons.elementOptionsVertical" />
+      </button>
+    }
+    <div class="electron-title-bar-draggable flex-grow-1 w-100 h-100"></div>
+  </div>
+</div>
+<ng-template #menu>
+  <div class="mt-2">
+    <si-menu-factory [items]="menuItems()" />
+  </div>
+</ng-template>
