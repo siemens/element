@@ -1,0 +1,9 @@
+<si-sort-bar
+  [sortCriteria]="[
+    { name: 'name', key: 1 },
+    { name: 'date', key: 2 },
+    { name: 'value', key: 3 }
+  ]"
+  [defaultSortCriteria]="1"
+  (sortChange)="logEvent($event)"
+/>

@@ -1,0 +1,20 @@
+<div class="list-header list-header-sorting">
+  <div class="list-title">{{ sortTitle() | translate }}:</div>
+  @for (item of sortCriteria(); track $index) {
+    <div
+      class="sort-item"
+      tabindex="0"
+      [attr.data-key]="item.key"
+      (click)="setActive(item.key)"
+      (keydown.enter)="setActive(item.key)"
+    >
+      <span>{{ item.name | translate }}</span>
+      @if (item.key === activeSortCriteria) {
+        <si-icon-next
+          class="icon"
+          [icon]="sortIsDescending ? icons.elementSortDown : icons.elementSortUp"
+        />
+      }
+    </div>
+  }
+</div>

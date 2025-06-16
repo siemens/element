@@ -1,0 +1,26 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+$list-sorting-bg: variables.$element-ui-4;
+$list-header-sorting-padding: map.get(variables.$spacers, 3) map.get(variables.$spacers, 5);
+
+.list-title {
+  font-weight: 500;
+  margin-inline-end: 5px;
+}
+
+.list-header-sorting {
+  background: $list-sorting-bg;
+  padding: $list-header-sorting-padding;
+  display: flex;
+  align-items: center;
+}
+
+.sort-item {
+  padding-block: 0;
+  padding-inline: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
