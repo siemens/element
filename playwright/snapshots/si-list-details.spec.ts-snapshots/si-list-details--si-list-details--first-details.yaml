@@ -1,0 +1,71 @@
+- textbox "Search"
+- button "Options":
+  - img "options vertical"
+- text: "/Date : \\d+-\\d+-\\d+/"
+- button "Remove"
+- text: "Location : Zug"
+- button "Remove"
+- button "Filters"
+- table:
+  - rowgroup:
+    - row "Name Role Company":
+      - columnheader "Name"
+      - columnheader "Role"
+      - columnheader "Company"
+  - rowgroup:
+    - row "Max Meier 0 Engineer Great Company 0":
+      - cell "Max Meier 0"
+      - cell "Engineer"
+      - cell "Great Company 0"
+    - row "Max Meier 1 Installer Great Company 1":
+      - cell "Max Meier 1"
+      - cell "Installer"
+      - cell "Great Company 1"
+    - row "Max Meier 2 Engineer Great Company 2":
+      - cell "Max Meier 2"
+      - cell "Engineer"
+      - cell "Great Company 2"
+    - row "Max Meier 3 Installer Great Company 3":
+      - cell "Max Meier 3"
+      - cell "Installer"
+      - cell "Great Company 3"
+    - row "Max Meier 4 Engineer Great Company 4":
+      - cell "Max Meier 4"
+      - cell "Engineer"
+      - cell "Great Company 4"
+    - row "Max Meier 5 Installer Great Company 0":
+      - cell "Max Meier 5"
+      - cell "Installer"
+      - cell "Great Company 0"
+    - row "Max Meier 6 Engineer Great Company 1":
+      - cell "Max Meier 6"
+      - cell "Engineer"
+      - cell "Great Company 1"
+    - row "Max Meier 7 Installer Great Company 2":
+      - cell "Max Meier 7"
+      - cell "Installer"
+      - cell "Great Company 2"
+    - row "Max Meier 8 Engineer Great Company 3":
+      - cell "Max Meier 8"
+      - cell "Engineer"
+      - cell "Great Company 3"
+    - row "Max Meier 9 Installer Great Company 4":
+      - cell "Max Meier 9"
+      - cell "Installer"
+      - cell "Great Company 4"
+    - row /Max Meier \d+ Engineer Great Company 0/:
+      - cell /Max Meier \d+/
+      - cell "Engineer"
+      - cell "Great Company 0"
+- text: Title
+- tablist:
+  - tab "Overview" [selected]
+  - tab "History"
+  - tab "Advanced"
+- tabpanel "Overview"
+- menubar:
+  - menuitem "Edit"
+  - menuitem "Refresh"
+- text: "{ \"id\": 0, \"name\": \"Max Meier 0\", \"role\": \"Engineer\", \"company\": \"Great Company 0\", \"age\": 0 }"
+- button "Discard"
+- button "Save"
