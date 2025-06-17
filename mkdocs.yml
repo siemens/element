@@ -45,6 +45,7 @@ nav:
       - Input:                            'components/forms-inputs/input.md'
       - Number Input:                     'components/forms-inputs/number-input.md'
       - Pills Input:                      'components/forms-inputs/pills-input.md'
+      - Photo Uploader:                   'components/forms-inputs/photo-upload.md'
       - Radio:                            'components/forms-inputs/radio.md'
       - Select:                           'components/forms-inputs/select.md'
       - Switch:                           'components/forms-inputs/switch.md'

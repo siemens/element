@@ -25,10 +25,14 @@
     "@angular/forms": "19",
     "@angular/router": "19",
     "@siemens/element-translate-ng": "47.3.0",
-    "@siemens/element-theme": "47.3.0"
+    "@siemens/element-theme": "47.3.0",
+    "ngx-image-cropper": "^9.0.0"
   },
   "peerDependenciesMeta": {
     "@angular/animations": {
+      "optional": true
+    },
+    "ngx-image-cropper": {
       "optional": true
     }
   }

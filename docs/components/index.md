@@ -62,6 +62,7 @@ documentation.
 ## P
 
 - [Pagination](layout-navigation/pagination.md)
+- [Photo Uploader](forms-inputs/photo-upload.md)
 - [Pills Input](forms-inputs/pills-input.md)
 - [Popover](status-notifications/popover.md)
 - [Progress Bar](progress-indication/progress-bar.md)

@@ -1,0 +1,37 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  --si-photo-upload-photo-width: 200px;
+  --si-photo-upload-photo-height: 200px;
+}
+
+.photo-upload {
+  box-sizing: content-box;
+  max-inline-size: var(--si-photo-upload-photo-width);
+}
+
+.photo-upload-photo,
+.photo-upload-placeholder {
+  display: block;
+  margin: auto;
+  inline-size: var(--si-photo-upload-photo-width);
+  max-inline-size: 100%;
+  block-size: var(--si-photo-upload-photo-height);
+  object-fit: contain; // maintain the aspect ratio of the image
+
+  &.round {
+    border-radius: 50%;
+  }
+}
+
+.photo-upload-placeholder {
+  background-color: var(--background);
+  color: variables.$element-ui-5;
+  font-size: 3rem;
+  text-align: center;
+  overflow: hidden;
+  word-break: break-all;
+  user-select: none;
+}

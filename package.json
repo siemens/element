@@ -65,6 +65,7 @@
     "@angular/platform-browser-dynamic": "19.0.6",
     "@angular/router": "19.0.6",
     "@ngx-translate/core": "16.0.4",
+    "ngx-image-cropper": "^9.0.0",
     "rxjs": "7.8.1",
     "tslib": "^2.8.1",
     "zone.js": "0.15.0"

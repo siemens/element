@@ -1,0 +1,143 @@
+<div class="photo-upload d-flex flex-column p-6">
+  <!-- File upload -->
+  <input
+    #fileInput
+    type="file"
+    class="d-none"
+    [accept]="acceptedUploadFormats()"
+    (change)="fileUpload($event)"
+  />
+
+  <!-- Image -->
+  @if (sanitizedPhotoUrl()) {
+    <img
+      class="photo-upload-photo"
+      [class.round]="roundImage()"
+      [src]="sanitizedPhotoUrl()"
+      [alt]="photoAltText() | translate"
+    />
+  } @else {
+    <span
+      class="photo-upload-placeholder d-flex align-items-center justify-content-center flex-none"
+      [class.round]="roundImage()"
+    >
+      {{ placeholderAltText() | translate }}
+    </span>
+  }
+  <!-- Buttons -->
+  @if (!readonly()) {
+    <div class="d-flex justify-content-center gap-6 mt-8">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="
+          (sourcePhoto() || sourcePhotoUrl()) && !disabledCropping()
+            ? showCroppingDialog()
+            : fileInput.click()
+        "
+      >
+        {{ editButtonText() | translate }}
+      </button>
+      @if (sanitizedPhotoUrl()) {
+        <button type="button" class="btn btn-danger" (click)="removePhoto()">
+          {{ removePhotoText() | translate }}
+        </button>
+      }
+    </div>
+  }
+
+  <!-- Error message -->
+  @if (uploadErrorMessage() && !modalRef) {
+    <div class="mt-6">
+      <ng-container [ngTemplateOutlet]="errorMessageTemplate" />
+    </div>
+  }
+</div>
+
+<!-- Template: modal -->
+<ng-template #editPhotoTemplate>
+  <!-- Header -->
+  <div class="modal-header">
+    <h4 class="modal-title" [id]="titleId">{{ modalHeader() | translate }}</h4>
+    <button
+      type="button"
+      class="btn btn-circle btn-sm btn-ghost"
+      [attr.aria-label]="cancelEditText() | translate"
+      (click)="imageCropperCanceled()"
+    >
+      <si-icon-next [icon]="icons.elementCancel" />
+    </button>
+  </div>
+  <!-- Content -->
+  <div class="modal-body">
+    @if (modalDescription()) {
+      <div class="mb-4">
+        <span class="text-secondary">{{ modalDescription() | translate }}</span>
+      </div>
+    }
+    <ng-container [ngTemplateOutlet]="imageCropperTemplate" />
+    @if (uploadErrorMessage()) {
+      <div class="d-flex mt-4">
+        <ng-container [ngTemplateOutlet]="errorMessageTemplate" />
+      </div>
+    }
+  </div>
+  <!-- Footer -->
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary me-auto" (click)="fileInput.click()">
+      {{ changePhotoText() | translate }}
+    </button>
+    <div class="d-flex gap-6">
+      <button type="button" class="btn btn-secondary" (click)="imageCropperCanceled()">
+        {{ cancelEditText() | translate }}
+      </button>
+      <button type="button" class="btn btn-primary" (click)="imageCropperApplied()">
+        {{ applyEditText() | translate }}
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Template: error message -->
+<ng-template #errorMessageTemplate>
+  <div class="d-flex align-items-center">
+    <span class="icon-small icon-stack d-inline-block my-n2 me-2">
+      <si-icon-next class="status-danger" [icon]="icons.elementCircleFilled" />
+      <si-icon-next class="status-danger-contrast" [icon]="icons.elementStateExclamationMark" />
+    </span>
+    <span class="text-danger">{{
+      uploadErrorMessage()
+        | translate
+          : {
+              mb: currentFileSizeMegabytes(),
+              kb: currentFileSizeKilobytes(),
+              maxSizeMb: maxSizeMb()
+            }
+    }}</span>
+  </div>
+</ng-template>
+
+<!-- Template: image cropper -->
+<ng-template #imageCropperTemplate>
+  <si-image-cropper-style>
+    <image-cropper
+      #imageCropper
+      output="base64"
+      [aspectRatio]="cropperAspectRatio()"
+      [containWithinAspectRatio]="cropperContainWithinAspectRatio()"
+      [cropperMinWidth]="cropperMinWidth()"
+      [cropperMinHeight]="cropperMinHeight()"
+      [cropperMaxWidth]="cropperMaxWidth()"
+      [cropperMaxHeight]="cropperMaxHeight()"
+      [cropperFrameAriaLabel]="cropperFrameAriaLabel() | translate"
+      [format]="cropperImageFormat()"
+      [imageBase64]="imageCropperPhoto()"
+      [imageURL]="sourcePhotoUrl()"
+      [maintainAspectRatio]="cropperMaintainAspectRatio()"
+      [onlyScaleDown]="true"
+      [roundCropper]="roundImage()"
+      (cropperReady)="cropperReady()"
+      (imageCropped)="cropperImageCropped($event)"
+    />
+  </si-image-cropper-style>
+</ng-template>

@@ -1,0 +1,41 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  ::ng-deep {
+    image-cropper {
+      // Ensure cropper dialog fit into screen
+      max-block-size: 70vh;
+      // map sass processed vars to CSS vars
+      --image-cropper-outline-color: var(--element-base-translucent-1);
+
+      // override CSS vars internally used by ngx-image-cropper
+      --cropper-outline-color: var(--image-cropper-outline-color);
+      --cropper-overlay-color: #{variables.$element-ui-5};
+
+      .ngx-ic-square {
+        /* stylelint-disable-next-line declaration-no-important */
+        background: variables.$element-ui-0 !important;
+      }
+
+      // we make use of the 'double selector' tactic to increase
+      // selector specificity whilst avoiding the use of '!important'
+      .ngx-ic-cropper.ngx-ic-cropper {
+        // Necessary to show the cropper rectangle on top of the image, by default the outline is removed by _focus.scss
+        /* stylelint-disable-next-line declaration-no-important */
+        outline: 2px solid variables.$element-ui-0 !important;
+
+        &::after {
+          z-index: 0;
+          border: unset;
+          box-shadow: 0 0 0 9999px var(--cropper-outline-color);
+        }
+
+        .ngx-ic-move.ngx-ic-move {
+          position: relative;
+          overflow: hidden;
+          border: 0;
+        }
+      }
+    }
+  }
+}
