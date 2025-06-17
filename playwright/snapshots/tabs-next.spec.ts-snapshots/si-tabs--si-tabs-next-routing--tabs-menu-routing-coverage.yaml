@@ -1,0 +1,10 @@
+- tablist:
+  - tab "Home"
+  - tab "Energy"
+  - tab "Test coverage" [selected]
+- tabpanel "Test coverage":
+  - text: "/Total test coverage: \\d+%/"
+  - link "Check E2E coverage details":
+    - /url: "#/viewer/viewer/tab-3/e2e-coverage"
+  - link "Check Unit tests coverage details":
+    - /url: "#/viewer/viewer/tab-3/unit-coverage"

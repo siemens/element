@@ -108,7 +108,8 @@ export const templateConfig = typescriptEslint.config({
           'innerHTML',
           'innerText',
           'outerHTML',
-          'title'
+          'title',
+          'si-tab-next'
         ]
       }
     ]

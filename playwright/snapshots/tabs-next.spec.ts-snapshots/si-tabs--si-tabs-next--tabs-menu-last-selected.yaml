@@ -1,0 +1,11 @@
+- tablist:
+  - tab /Reception \d+/
+  - tab "Conference room"
+  - tab "Lobby"
+  - tab "Pantry 1"
+  - tab "Washroom 2"
+  - tab "Deselectable" [selected]
+- tabpanel "Deselectable":
+  - paragraph: Uncheck to prevent switching to another tab.
+  - checkbox "Enable tab switching" [checked]
+  - text: Enable tab switching

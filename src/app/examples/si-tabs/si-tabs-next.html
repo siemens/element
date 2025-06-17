@@ -1,0 +1,21 @@
+<si-tabset-next (deselect)="deselection($event)">
+  @for (tab of tabs; track tab) {
+    <si-tab-next
+      [active]="tab.active ?? false"
+      [badgeColor]="tab.badgeColor"
+      [badgeContent]="tab.badgeContent"
+      [closable]="tab.closable"
+      [heading]="tab.heading"
+      (closeTriggered)="closeTab(tab)"
+    >
+      <p class="mt-4"> Content for {{ tab.heading }} </p>
+    </si-tab-next>
+  }
+  <si-tab-next heading="Deselectable">
+    <p class="mt-4">Uncheck to prevent switching to another tab.</p>
+    <label class="form-check">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="deselectable" />
+      <span class="form-check-label">Enable tab switching</span>
+    </label>
+  </si-tab-next>
+</si-tabset-next>

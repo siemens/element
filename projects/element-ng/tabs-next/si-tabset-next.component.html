@@ -1,0 +1,113 @@
+<div class="tabs-container">
+  <div
+    #tabContainer
+    class="tab-container-buttonbar-list nav nav-tabs"
+    (siResizeObserver)="resize($event)"
+  >
+    <div
+      #tabScrollContainer
+      role="tablist"
+      tabindex="-1"
+      class="d-flex tabs-wrapper"
+      [style.max-width.px]="maxWrapperWidth()"
+    >
+      <ng-content />
+    </div>
+
+    @if (visibleTabIndexes().length < tabPanels().length) {
+      <button
+        #menuButton
+        type="button"
+        class="dropdown btn btn-tertiary focus-inside"
+        tabindex="-1"
+        aria-hidden="true"
+        [cdkMenuTriggerFor]="tabsMenu"
+        (cdkMenuOpened)="menuOpened()"
+      >
+        <i class="icon element-options m-0"></i>
+      </button>
+    }
+  </div>
+  @let tabContent = this.activeTab()?.tabContent();
+  @let activeTab = this.activeTab();
+
+  @if (activeTab) {
+    <div
+      class="tab-content"
+      role="tabpanel"
+      [id]="'content-' + activeTab.tabId"
+      [attr.aria-labelledby]="'tab-' + activeTab.tabId"
+    >
+      @if (tabContent) {
+        <ng-container [ngTemplateOutlet]="tabContent" />
+      }
+
+      <ng-content select="router-outlet" />
+    </div>
+  }
+</div>
+
+<ng-template #tabsMenu>
+  <si-menu #menu>
+    @for (tab of tabPanels(); track tab) {
+      @let badgeColor = tab.badgeColor();
+      @let badgeIsNumber = tab.badgeIsNumber();
+
+      @if (badgeColor && badgeIsNumber) {
+        <!-- eslint-disable @angular-eslint/template/no-any -->
+        <a
+          #menuItem
+          si-menu-item
+          [disabled]="tab.disabledTab()"
+          [badgeColor]="badgeColor"
+          [badge]="$any(tab.badgeContent())"
+          [icon]="tab.icon()"
+          [routerLink]="tabIsLink(tab) ? tab.routerLink?.urlTree : undefined"
+          (keydown.enter)="tab.selectTab(true)"
+          (triggered)="tab.selectTab(true)"
+        >
+          <ng-container [ngTemplateOutlet]="badgeTemplate" [ngTemplateOutletContext]="{ tab }" />
+        </a>
+      } @else if (badgeIsNumber && badgeColor) {
+        <a
+          #menuItem
+          si-menu-item
+          [disabled]="tab.disabledTab()"
+          [icon]="tab.icon()"
+          [badgeColor]="badgeColor"
+          [badge]="$any(tab.badgeContent())"
+          [routerLink]="tabIsLink(tab) ? tab.routerLink?.urlTree : undefined"
+          (keydown.enter)="tab.selectTab(true)"
+          (triggered)="tab.selectTab(true)"
+        >
+          <!-- eslint-enable -->
+          <ng-container [ngTemplateOutlet]="badgeTemplate" [ngTemplateOutletContext]="{ tab }" />
+        </a>
+      } @else {
+        <a
+          #menuItem
+          si-menu-item
+          [disabled]="tab.disabledTab()"
+          [icon]="tab.icon()"
+          [routerLink]="tabIsLink(tab) ? tab.routerLink?.urlTree : undefined"
+          (keydown.enter)="tab.selectTab(true)"
+          (triggered)="tab.selectTab(true)"
+        >
+          <ng-container [ngTemplateOutlet]="badgeTemplate" [ngTemplateOutletContext]="{ tab }" />
+        </a>
+      }
+    }
+  </si-menu>
+</ng-template>
+
+<ng-template #badgeTemplate let-tab="tab">
+  <div class="d-flex align-items-center space-between flex-no-wrap justify-content-between">
+    {{ tab.heading() }}
+    @if (tab.badgeContent() === true) {
+      <span class="badge-dot"></span>
+    } @else if (tab.badgeContent() && !tab.badgeColor()) {
+      <!-- eslint-disable-next-line @angular-eslint/template/no-any -->
+      <span class="badge-text"> {{ $any(tab.badgeContent() ?? '') | translate }}</span>
+    }
+  </div>
+</ng-template>

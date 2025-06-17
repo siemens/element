@@ -1,0 +1,65 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: block;
+  flex-direction: column; // in case it's used as flex
+}
+
+.tabs-container {
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+  block-size: 100%;
+  min-block-size: 40px;
+
+  &::before {
+    inset-block-start: 38px;
+    inset-block-end: auto;
+  }
+}
+
+.tab-container-buttonbar-list {
+  display: flex;
+  min-block-size: 40px;
+  overflow: hidden;
+  flex: 1;
+  order: 1;
+  min-inline-size: 100px;
+}
+
+.btn.dropdown {
+  color: variables.$element-text-primary;
+  min-inline-size: 0;
+  border-block-end: 2px solid variables.$element-ui-4;
+  order: 2;
+  block-size: 40px;
+  padding-inline: map.get(variables.$spacers, 5);
+
+  &:hover {
+    border-color: variables.$element-ui-4;
+    color: variables.$element-action-secondary-text-hover;
+  }
+}
+
+a[si-menu-item] {
+  .badge-dot {
+    inset-block-end: 4px;
+    min-inline-size: 12px;
+    margin-inline-start: map.get(variables.$spacers, 2);
+  }
+}
+
+.tab-content {
+  inline-size: 100%;
+  block-size: calc(100% - 40px);
+  order: 3;
+}
+
+.tabs-wrapper {
+  overflow-y: hidden;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
