@@ -92,3 +92,7 @@ documentation.
 ## W
 
 - [Wizard](layout-navigation/wizard.md)
+
+## U
+
+- [Unauthorized Page](pages/unauthorized-page.md)

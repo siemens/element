@@ -1,0 +1,16 @@
+<div class="h-100 d-flex flex-column justify-content-center align-items-center p-6">
+  <si-icon-next class="status-warning icon-size" [icon]="icon()" />
+  @if (heading()) {
+    <h1 class="my-9">{{ heading() | translate }}</h1>
+  }
+  @if (subHeading()) {
+    <h2 class="mb-9">{{ subHeading() | translate }}</h2>
+  }
+  @if (description()) {
+    <p class="text-pre-wrap text-center si-body-1 mb-9">{{ description() | translate }}</p>
+  }
+  @if (link()?.title) {
+    <a class="btn btn-primary" [siLink]="link()">{{ link()?.title | translate }}</a>
+  }
+  <ng-content />
+</div>

@@ -1,0 +1,17 @@
+<si-unauthorized-page
+  heading="Access denied"
+  subHeading="You are not authorized to access this section."
+  description="Contact your administrator"
+>
+  <p>
+    <button type="button" class="btn btn-secondary me-6" (click)="logEvent('Secondary Action 2')"
+      >Secondary Action 2</button
+    >
+    <button type="button" class="btn btn-secondary me-6" (click)="logEvent('Secondary Action 1')"
+      >Secondary Action 1</button
+    >
+    <button type="button" class="btn btn-primary" (click)="logEvent('Primary Action')"
+      >Primary Action</button
+    >
+  </p>
+</si-unauthorized-page>
