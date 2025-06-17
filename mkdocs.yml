@@ -58,6 +58,7 @@ nav:
       - Launchpad:                        'components/layout-navigation/launchpad.md'
       - Modals:                           'components/layout-navigation/modals.md'
       - Pagination:                       'components/layout-navigation/pagination.md'
+      - Split:                            'components/layout-navigation/split.md'
       - Wizard:                           'components/layout-navigation/wizard.md'
     - Progress Indications:
       - Progress Bar:                     'components/progress-indication/progress-bar.md'

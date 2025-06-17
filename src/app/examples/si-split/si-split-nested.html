@@ -1,0 +1,30 @@
+<si-split orientation="horizontal" style="height: 500px" [sizes]="[30, 70]">
+  <si-split-part
+    heading="Outer Left"
+    collapseDirection="start"
+    class="bg-base-1"
+    [actions]="[
+      { iconClass: 'element-edit', click: logEvent, tooltip: 'edit' },
+      { iconClass: 'element-delete', click: logEvent, tooltip: 'delete' }
+    ]"
+    [minSize]="150"
+  >
+    <p class="p-4 text-secondary">Split Part #1</p>
+  </si-split-part>
+
+  <si-split-part heading="Outer Right" collapseDirection="end" class="bg-base-1">
+    <si-split orientation="vertical" [sizes]="[60, 40]">
+      <si-split-part
+        heading="Inner Top"
+        collapseDirection="start"
+        class="bg-base-1"
+        [actions]="[{ iconClass: 'element-edit', click: logEvent, tooltip: 'Edit' }]"
+      >
+        <p class="p-4 text-secondary">Split Part #2</p>
+      </si-split-part>
+      <si-split-part heading="Inner Bottom" collapseDirection="end" class="bg-base-1">
+        <p class="p-4 text-secondary">Split Part #3</p>
+      </si-split-part>
+    </si-split>
+  </si-split-part>
+</si-split>

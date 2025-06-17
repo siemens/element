@@ -1,0 +1,55 @@
+<si-split
+  orientation="horizontal"
+  stateId="split-mixed"
+  style="height: 300px"
+  [sizes]="[20, 60, 20]"
+>
+  <si-split-part
+    heading="Filters"
+    stateId="filters"
+    collapseDirection="start"
+    scale="none"
+    class="bg-base-1"
+    [actions]="[
+      { iconClass: 'element-edit', click: logEvent, tooltip: 'edit' },
+      { iconClass: 'element-delete', click: logEvent, tooltip: 'delete' }
+    ]"
+    (stateChange)="logEvent(format('left', $event))"
+  >
+    <p class="p-4 text-secondary">Split Part #1</p>
+  </si-split-part>
+
+  <si-split-part
+    heading="Employees"
+    stateId="employees"
+    scale="auto"
+    class="bg-base-1"
+    [showCollapseButton]="false"
+  >
+    <si-split orientation="vertical" stateId="vertical-split" [sizes]="[40, 60]">
+      <si-split-part
+        scale="none"
+        stateId="middle-top"
+        class="bg-base-1"
+        [showHeader]="false"
+        (stateChange)="logEvent(format('middle', $event))"
+      >
+        <p class="p-4 text-secondary">Split Part #2.1</p>
+      </si-split-part>
+      <si-split-part scale="auto" stateId="middle-bottom" class="bg-base-1" [showHeader]="false">
+        <p class="p-4 text-secondary">Split Part #2.2</p>
+      </si-split-part>
+    </si-split>
+  </si-split-part>
+
+  <si-split-part
+    heading="Details"
+    stateId="details"
+    collapseDirection="end"
+    scale="none"
+    class="bg-base-1"
+    (stateChange)="logEvent(format('right', $event))"
+  >
+    <p class="p-4 text-secondary">Split Part #3</p>
+  </si-split-part>
+</si-split>

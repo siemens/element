@@ -1,0 +1,41 @@
+<div class="h-100 si-layout-fixed-height">
+  <div class="row">
+    <div class="col">
+      <button type="button" class="btn btn-primary mb-4" (click)="showDetails = !showDetails">
+        Toggle details
+      </button>
+    </div>
+  </div>
+  <si-split class="si-layout-fixed-height" [orientation]="orientation" [sizes]="[20, 60, 20]">
+    <si-split-part
+      heading="Filters"
+      collapseDirection="start"
+      class="bg-base-1"
+      [actions]="[{ iconClass: 'element-edit', click: logEvent, tooltip: 'edit' }]"
+      [minSize]="100"
+    >
+      <p class="p-4 text-secondary">Split Part #1</p>
+    </si-split-part>
+
+    <si-split-part heading="Employees" collapseDirection="start" class="bg-base-1">
+      <div class="si-layout-fixed-height justify-content-center bg-secondary">
+        <p class="text-center text-inverse">Split Part with resizable content!</p>
+      </div>
+    </si-split-part>
+
+    @if (showDetails) {
+      <si-split-part heading="Details" collapseDirection="end" class="bg-base-1">
+        <p class="p-4 text-secondary">Split Part #3</p>
+      </si-split-part>
+    }
+  </si-split>
+
+  <p class="mt-8">
+    <button type="button" class="btn btn-primary me-6" (click)="orientation = 'vertical'"
+      >Set to vertical</button
+    >
+    <button type="button" class="btn btn-primary me-6" (click)="orientation = 'horizontal'"
+      >Set to horizontal</button
+    >
+  </p>
+</div>

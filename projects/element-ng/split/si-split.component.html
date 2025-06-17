@@ -1,0 +1,15 @@
+<ng-content />
+
+@for (gutter of gutters; track $index) {
+  @if ($index < parts.length - 1) {
+    <div
+      class="si-split-gutter"
+      [class.d-none]="!gutter.visible()"
+      [style.grid-area]="'g-' + $index"
+      [style.width.px]="orientation === 'horizontal' ? gutterSize : null"
+      [style.height.px]="orientation === 'vertical' ? gutterSize : null"
+      (mousedown)="resizeStart(gutter, $event)"
+      (touchstart)="resizeStart(gutter, $event)"
+    ></div>
+  }
+}

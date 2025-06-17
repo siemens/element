@@ -1,0 +1,47 @@
+@if (!headerTemplate && showHeader) {
+  <div class="si-split-part-header" [class.is-collapsed]="collapsedState()">
+    <div class="si-split-part-title text-truncate">
+      {{ heading | translate }}
+    </div>
+    @if (!collapsedState()) {
+      <div class="si-split-part-actions">
+        @for (action of actions; track $index) {
+          <button
+            type="button"
+            class="si-split-button"
+            [title]="action.tooltip || ''"
+            [attr.aria-label]="action.tooltip"
+            (click)="action.click($event)"
+          >
+            <si-icon-next [icon]="action.iconClass" />
+          </button>
+        }
+      </div>
+    }
+    @if (showCollapseButton) {
+      <div class="si-split-part-collapse-button">
+        <button
+          type="button"
+          class="si-split-button"
+          [attr.aria-label]="collapseLabel | translate"
+          (click)="toggleCollapse()"
+        >
+          <si-icon-next class="collapse-icon" [icon]="collapseIconClass" />
+        </button>
+      </div>
+    }
+  </div>
+}
+
+@if (headerTemplate) {
+  <ng-container *ngTemplateOutlet="headerTemplate; context: headerContext" />
+}
+
+<div
+  class="si-split-part-content"
+  [class.d-none]="!removeContentOnCollapse && collapsedState() && !collapseToMinSize"
+>
+  @if (!removeContentOnCollapse || !collapsedState()) {
+    <ng-content />
+  }
+</div>

@@ -1,0 +1,100 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/all-variables';
+
+$header-height: 40px;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.si-split-part-content {
+  flex: 1 1 auto;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+}
+
+.si-split-part-header {
+  display: flex;
+  flex-direction: row;
+  flex: none;
+  align-items: center;
+  padding: map.get(all-variables.$spacers, 3);
+  background: all-variables.$element-base-0;
+  block-size: $header-height;
+}
+
+// If the Split-Container is horizontal and collapsed,
+// we have to take care of the header-titles
+:host-context(.horizontal) > :host(.is-collapsed) .si-split-part-header {
+  flex: auto;
+  flex-direction: column;
+  max-block-size: 100%;
+  padding: map.get(all-variables.$spacers, 3);
+
+  .si-split-part-title {
+    inline-size: 100%;
+    writing-mode: vertical-rl; // sideways is currently only supported in FF
+    transform: rotate(180deg);
+  }
+
+  .si-split-part-collapse-button {
+    order: -1;
+  }
+}
+
+.si-split-part-title {
+  font-weight: all-variables.$si-font-weight-title-2;
+  flex: 1;
+}
+
+.si-split-part-actions {
+  padding-inline: map.get(all-variables.$spacers, 4);
+  flex: 0 0 auto;
+}
+
+.si-split-button {
+  display: inline-block;
+  padding: map.get(all-variables.$spacers, 2);
+  color: all-variables.$element-text-primary;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-decoration: none;
+  font-size: 20px;
+  line-height: 1;
+  vertical-align: middle;
+  user-select: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+
+  &:hover {
+    background: all-variables.$element-action-secondary-hover;
+  }
+
+  :host-context(.vertical) > :host & {
+    --orientation-rotate: rotate(90deg);
+  }
+
+  :host-context(.horizontal) > :host & {
+    @include all-variables.rtl {
+      --orientation-rtl: scaleX(-1);
+    }
+  }
+
+  :host(.is-collapsed) & {
+    --collapse-rotate: rotate(180deg);
+  }
+
+  :host(.collapse-start) & {
+    --collapse-direction: rotate(180deg);
+  }
+
+  .collapse-icon {
+    transform: var(--orientation-rotate, rotate(0)) var(--collapse-rotate, rotate(0))
+      var(--collapse-direction, rotate(0)) var(--orientation-rtl, scaleX(1));
+  }
+}

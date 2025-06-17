@@ -1,0 +1,19 @@
+<si-split orientation="vertical" style="height: 500px" [sizes]="[20, 60, 20]">
+  <si-split-part
+    heading="Filters"
+    collapseDirection="start"
+    class="bg-base-1"
+    [actions]="[{ iconClass: 'element-edit', click: logEvent, tooltip: 'edit' }]"
+    [minSize]="250"
+  >
+    <p class="p-4 text-secondary">Split Part #1</p>
+  </si-split-part>
+
+  <si-split-part heading="Employees" collapseDirection="start" class="bg-base-1">
+    <p class="p-4 text-secondary">Split Part #2</p>
+  </si-split-part>
+
+  <si-split-part heading="Details" collapseDirection="end" class="bg-base-1">
+    <p class="p-4 text-secondary">Split Part #3</p>
+  </si-split-part>
+</si-split>

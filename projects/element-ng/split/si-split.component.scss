@@ -1,0 +1,47 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+$handle-size: 6px;
+$handle-length: 40px;
+
+:host {
+  display: grid;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.si-split-gutter {
+  flex: 0 0 auto;
+  background: variables.$element-base-0;
+  cursor: ew-resize;
+
+  &::before {
+    display: block;
+    content: '';
+    position: relative;
+    inset-block-start: 50%;
+    margin-block-start: $handle-length * -0.5;
+    inset-inline-start: 50%;
+    margin-inline-start: $handle-size * -0.5;
+    inline-size: $handle-size;
+    block-size: $handle-length;
+    background: variables.$element-ui-2;
+    border-radius: $handle-size * 0.5;
+  }
+
+  :host(.vertical) > & {
+    inline-size: auto;
+    cursor: ns-resize;
+
+    &::before {
+      transform: rotate(90deg);
+    }
+  }
+
+  &:hover::before {
+    background: variables.$element-ui-0-hover;
+  }
+
+  &:active::before {
+    background: variables.$element-ui-0;
+  }
+}
