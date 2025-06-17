@@ -1,0 +1,53 @@
+<h2>Root as icon</h2>
+<si-breadcrumb
+  ariaLabel="root as icon breadcrumbs"
+  [items]="[
+    { title: 'Root', link: 'root' },
+    { title: 'Level 1', link: ['root', 'level1'] },
+    { title: 'Level 2 with a really long title', link: ['root', 'level1', 'level2'] },
+    { title: 'Level 3', link: ['root', 'level1', 'level2', 'level3'] },
+    { title: 'Level 4', link: ['root', 'level1', 'level2', 'level3', 'level4'] },
+    { title: 'Level 5', link: ['root', 'level1', 'level2', 'level3', 'level4', 'level5'] },
+    {
+      title: 'Level 6',
+      link: ['root', 'level1', 'level2', 'level3', 'level4', 'level5', 'level6']
+    },
+    {
+      title: 'Level 7',
+      link: ['root', 'level1', 'level2', 'level3', 'level4', 'level5', 'level6', 'level7']
+    },
+    {
+      title: 'Level 8 thisHasALongNonSeparableTitle',
+      link: ['root', 'level1', 'level2', 'level3', 'level4', 'level5', 'level6', 'level7', 'level8']
+    },
+    { title: 'Level 9', link: '.' }
+  ]"
+/>
+
+<br />
+<h2>Root as text</h2>
+<si-breadcrumb
+  ariaLabel="root as text breadcrumbs"
+  [items]="[
+    { title: 'Root', link: 'root' },
+    { title: 'Level 1', link: ['root', 'level1'] },
+    { title: 'Level 2 with a really long title', link: ['root', 'level1', 'level2'] },
+    { title: 'Level 3', link: ['root', 'level1', 'level2', 'level3'] },
+    { title: 'Level 4', link: ['root', 'level1', 'level2', 'level3', 'level4'] },
+    { title: 'Level 5', link: ['root', 'level1', 'level2', 'level3', 'level4', 'level5'] },
+    {
+      title: 'Level 6',
+      link: ['root', 'level1', 'level2', 'level3', 'level4', 'level5', 'level6']
+    },
+    {
+      title: 'Level 7',
+      link: ['root', 'level1', 'level2', 'level3', 'level4', 'level5', 'level6', 'level7']
+    },
+    {
+      title: 'Level 8 thisHasALongNonSeparableTitle',
+      link: ['root', 'level1', 'level2', 'level3', 'level4', 'level5', 'level6', 'level7', 'level8']
+    },
+    { title: 'Level 9', link: '.' }
+  ]"
+  [showRootAsText]="true"
+/>

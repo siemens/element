@@ -1,0 +1,110 @@
+<nav role="navigation" [attr.aria-label]="ariaLabel() | translate">
+  <ol #breadcrumb class="breadcrumb" (siResizeObserver)="resetBreadcrumb()">
+    @for (item of itemsShown; track $index; let isFirst = $first) {
+      @if (!breadcrumbShortened || item.level !== ellipsesLevel) {
+        @if (item.shortened) {
+          <li #breadcrumbItem class="item text-nowrap shortened">
+            @if (!isFirst) {
+              <si-icon-next class="separator flip-rtl" [icon]="icons.elementRight2" />
+            }
+            <div class="breadcrumb-dropdown-wrapper">
+              <ng-container
+                *ngTemplateOutlet="
+                  toggleTemplate;
+                  context: { item: item, title: item.shortenedTitle }
+                "
+              />
+              @if (addExpandDropdown) {
+                <div
+                  class="dropdown-menu"
+                  role="menu"
+                  [id]="controlId + item.level"
+                  [class.show]="breadcrumbDropdownOpen === item.level"
+                >
+                  <ng-container *ngTemplateOutlet="dropdownTemplate; context: { item: item }" />
+                </div>
+              }
+            </div>
+          </li>
+        }
+        @if (!item.shortened) {
+          <li #breadcrumbItem class="item">
+            @if (!isFirst) {
+              <si-icon-next class="separator flip-rtl" [icon]="icons.elementRight2" />
+            }
+            <ng-container *ngTemplateOutlet="itemTemplate; context: { item: item }" />
+          </li>
+        }
+      }
+      @if (breadcrumbShortened && item.level === ellipsesLevel) {
+        <li class="item breadcrumb-ellipses-item">
+          @if (!isFirst) {
+            <si-icon-next class="separator flip-rtl" [icon]="icons.elementRight2" />
+          }
+          <div class="breadcrumb-dropdown-wrapper">
+            <ng-container *ngTemplateOutlet="toggleTemplate; context: { item: item, title: '' }" />
+            <div
+              class="dropdown-menu"
+              role="menu"
+              [id]="controlId + item.level"
+              [class.show]="breadcrumbDropdownOpen === item.level"
+            >
+              @for (item of itemsHidden; track $index) {
+                <ng-container *ngTemplateOutlet="dropdownTemplate; context: { item: item }" />
+              }
+            </div>
+          </div>
+        </li>
+      }
+    }
+  </ol>
+</nav>
+
+<ng-template #itemTemplate let-item="item" siBreadcrumbItemTemplate>
+  <a
+    class="breadcrumb-link text-nowrap"
+    activeClass="active"
+    ariaCurrent="page"
+    [class.disable-router-link]="!item.link && !item.action && !item.href"
+    [class.text-secondary]="item.lastItem"
+    [siLink]="item"
+    [exactMatch]="true"
+    [attr.aria-label]="item.title"
+    [attr.aria-disabled]="!item.link && !item.href && !item.action"
+  >
+    @if (item.level === 0) {
+      <si-icon-next class="icon flip-rtl" [icon]="icons.elementBreadcrumbRoot" />
+    }
+    @if (item.level !== 0) {
+      <span>{{ item.title }}</span>
+    }
+  </a>
+</ng-template>
+
+<ng-template #toggleTemplate let-item="item" let-title="title" siBreadcrumbItemTemplate>
+  <div
+    class="breadcrumb-dropdown-toggle link"
+    role="button"
+    aria-haspopup="true"
+    tabindex="0"
+    [attr.aria-controls]="controlId + item.level"
+    [attr.aria-expanded]="breadcrumbDropdownOpen === item.level"
+    (keydown.enter)="toggleBreadcrumbDropdown(item.level)"
+    (click)="toggleBreadcrumbDropdown(item.level)"
+    >{{ title }}...</div
+  >
+</ng-template>
+
+<ng-template #dropdownTemplate let-item="item" siBreadcrumbItemTemplate>
+  <a
+    class="dropdown-item breadcrumb-link focus-inside"
+    activeClass="active"
+    ariaCurrent="page"
+    role="menuitem"
+    [class.disable-router-link]="!item.link && !item.action && !item.href"
+    [siLink]="item"
+    [exactMatch]="true"
+    [attr.aria-disabled]="!item.link && !item.action && !item.href"
+    >{{ item.title }}</a
+  >
+</ng-template>

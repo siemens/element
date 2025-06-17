@@ -14,6 +14,7 @@ documentation.
 ## B
 
 - [Buttons](buttons-menus/buttons.md)
+- [Breadcrumb](layout-navigation/breadcrumb.md)
 
 ## C
 
