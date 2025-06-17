@@ -1,0 +1,62 @@
+@use 'sass:math';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+$si-result-details-list-timeline-width: 1px;
+
+si-loading-spinner {
+  --loading-spinner-size: #{variables.$si-icon-font-size};
+  --loading-spinner-color: #{variables.$element-text-active};
+}
+
+.result-description {
+  flex: 2 1;
+  align-self: center;
+  overflow: hidden;
+}
+
+.result-value {
+  flex: 1 1;
+  white-space: nowrap;
+  align-self: top;
+}
+
+.result-detail {
+  letter-spacing: 0.15px;
+  display: block;
+  display: -webkit-box;
+  max-block-size: variables.$si-font-size-body-2 * variables.$si-line-height-body-2 * 2;
+  word-wrap: break-word;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+%timeline-bar {
+  content: '';
+  position: absolute;
+  inline-size: $si-result-details-list-timeline-width;
+  background-color: variables.$element-ui-2;
+  block-size: calc(50% - math.div(variables.$si-icon-font-size, 2));
+  margin-inline-start: calc(
+    math.div(variables.$si-icon-font-size, 2) - math.div($si-result-details-list-timeline-width, 2)
+  );
+}
+
+si-icon-next {
+  color: variables.$element-ui-2;
+}
+
+.timeline {
+  &:not(:first-child)::before {
+    @extend %timeline-bar;
+    inset-block-start: 0;
+  }
+
+  &:not(:last-child)::after {
+    @extend %timeline-bar;
+    inset-block-end: 0;
+  }
+}

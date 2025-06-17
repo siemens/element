@@ -75,6 +75,7 @@ documentation.
 ## R
 
 - [Radio](forms-inputs/radio.md)
+- [Result Details List](progress-indication/result-details-list.md)
 
 ## S
 
