@@ -67,6 +67,7 @@ nav:
       - Progress Bar:                     'components/progress-indication/progress-bar.md'
       - Spinner:                          'components/progress-indication/spinner.md'
     - Search, Filter & Sort:
+      - Search Bar:                       'components/sorting-filtering/search-bar.md'
       - Sort Bar:                         'components/sorting-filtering/sort-bar.md'
       - Typeahead:                        'components/sorting-filtering/typeahead.md'
     - Status & notifications:

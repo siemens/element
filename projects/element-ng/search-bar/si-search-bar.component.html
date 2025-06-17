@@ -1,0 +1,33 @@
+<div class="position-relative" [class.disabled]="disabled()" [class.focus]="inFocus">
+  @if (showIcon()) {
+    <si-icon-next class="search-bar-icon icon text-secondary" [icon]="icons.elementSearch" />
+  }
+  <input
+    #inputRef
+    type="text"
+    class="form-control"
+    [disabled]="disabled()"
+    [placeholder]="placeholder()"
+    [class.dark-background]="colorVariant() === 'base-0'"
+    [class.ps-9]="showIcon()"
+    [class.is-invalid]="isInvalid"
+    [class.icon-end]="searchValue()"
+    [attr.tabindex]="tabbable() ? '' : '-1'"
+    [readonly]="readonly()"
+    (focus)="inFocus = true"
+    (blur)="onBlur()"
+    (input)="input($event)"
+  />
+  @if (searchValue()) {
+    <button
+      type="button"
+      aria-label="clear"
+      class="btn btn-circle btn-xs btn-ghost cancel-button"
+      [disabled]="disabled() || readonly()"
+      (click)="resetForm()"
+      (focusin)="onCancelFocus($event)"
+    >
+      <si-icon-next [icon]="icons.elementCancel" />
+    </button>
+  }
+</div>

@@ -1,0 +1,73 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  --search-bar-icon-color: #{variables.$element-text-secondary};
+  --input-background-color: #{variables.$element-base-1};
+  --input-background-hover-color: #{variables.$element-base-1};
+
+  div:hover,
+  div.focus {
+    .search-bar-icon,
+    ::placeholder {
+      color: variables.$element-text-primary !important; // stylelint-disable-line declaration-no-important
+    }
+  }
+}
+
+.dark-background {
+  --input-background-color: #{variables.$element-base-0};
+  --input-background-hover-color: #{variables.$element-ui-4};
+}
+
+input {
+  transition: none;
+  background-color: var(--input-background-color);
+  border-radius: 4px;
+  border-width: 0;
+
+  &.form-control:focus-visible {
+    background-color: var(--input-background-color);
+  }
+}
+
+.cancel-button {
+  position: absolute;
+  inset-block-start: map.get(variables.$spacers, 2);
+  inset-inline-end: map.get(variables.$spacers, 2);
+}
+
+.is-invalid ~ .cancel-button {
+  color: variables.$element-status-danger;
+}
+
+.search-bar-icon {
+  position: absolute;
+  inset-block-start: map.get(variables.$spacers, 2);
+  inset-inline-start: map.get(variables.$spacers, 2);
+  color: var(--search-bar-icon-color);
+  line-height: 1;
+}
+
+.icon-end {
+  padding-inline-end: variables.$si-icon-font-size; // must equal delete button size
+}
+
+::placeholder {
+  color: variables.$element-text-secondary;
+  padding-inline-start: map.get(variables.$spacers, 1);
+}
+
+.disabled {
+  .search-bar-icon,
+  input,
+  .cancel-button,
+  ::placeholder {
+    color: variables.$element-text-disabled;
+  }
+
+  input {
+    background-color: var(--input-background-color);
+  }
+}

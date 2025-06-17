@@ -1,0 +1,22 @@
+<h4>Variant - base-1 (using FormControl)</h4>
+<div class="pb-8 mx-4 bg-base-0">
+  <si-search-bar
+    placeholder="Placeholder"
+    prohibitedCharacters="*?"
+    [formControl]="control"
+    [debounceTime]="400"
+    [showIcon]="true"
+  />
+</div>
+
+<h4>Variant - base-0</h4>
+<div class="py-8 px-4 bg-base-1 clearfix">
+  <si-search-bar
+    placeholder="Placeholder"
+    colorVariant="base-0"
+    prohibitedCharacters="*?"
+    [debounceTime]="400"
+    [showIcon]="true"
+    (searchChange)="logEvent($event)"
+  />
+</div>
