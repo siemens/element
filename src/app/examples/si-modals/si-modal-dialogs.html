@@ -1,0 +1,181 @@
+<h2>Alert Dialogs</h2>
+<div class="d-flex flex-wrap gap-5">
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="
+      showActionDialog({
+        type: 'alert',
+        icon: 'element-info',
+        heading: 'Alert',
+        message: 'This is all about modal dialogs'
+      })
+    "
+  >
+    Default Alert
+  </button>
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="
+      showActionDialog({
+        type: 'alert',
+        heading: 'Alert Title',
+        message: 'We provide awesome dialogs',
+        confirmBtnName: 'Got it'
+      })
+    "
+  >
+    Custom Alert
+  </button>
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="
+      showActionDialog({
+        type: 'alert',
+        icon: 'element-fire',
+        heading: 'This thing is on fire',
+        message: 'Deal with it',
+        delayDismiss: fakeLoading
+      })
+    "
+  >
+    Alert w/ dismiss delay
+  </button>
+</div>
+
+<h2 class="mt-6">Confirmation Dialogs</h2>
+<div class="d-flex flex-wrap gap-5">
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="
+      showActionDialog({
+        type: 'confirmation',
+        heading: 'My Question',
+        message: 'Do you really want to do this?'
+      })
+    "
+  >
+    Confirmation 1
+  </button>
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="
+      showActionDialog({
+        type: 'confirmation',
+        heading: 'My Question!',
+        message: 'Are you ok?',
+        confirmBtnName: 'I\'m fine',
+        declineBtnName: 'Moderately'
+      })
+    "
+  >
+    Confirmation 2
+  </button>
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="
+      showActionDialog({
+        type: 'confirmation',
+        heading: 'My question',
+        message: 'Do you really want do do this?',
+        delayDismiss: fakeLoading
+      })
+    "
+  >
+    Confirmation w/ dismiss delay
+  </button>
+</div>
+
+<h2 class="mt-6">Edit-Discard Dialog</h2>
+<div class="d-flex flex-wrap gap-5">
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="
+      showActionDialog({
+        type: 'edit-discard',
+        heading: 'DEMO.SAVE_CONFIRM_HEAD',
+        message: 'DEMO.SAVE_CONFIRM_MSG',
+        translationParams: { what: 'Scheduler 42' }
+      })
+    "
+  >
+    Edit-Discard
+  </button>
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="
+      showActionDialog({
+        type: 'edit-discard',
+        disableSave: true,
+        heading: 'DEMO.DISCARD_CONFIRM_HEAD',
+        disableSaveMessage: 'DEMO.DISCARD_CONFIRM_MSG',
+        translationParams: { what: 'Scheduler 42' }
+      })
+    "
+  >
+    Edit-Discard with disabled save
+  </button>
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="
+      showActionDialog({
+        type: 'edit-discard',
+        heading: 'Discard changes?',
+        message: 'Want to discard changes?',
+        delayDismiss: fakeLoading
+      })
+    "
+  >
+    Edit-Discard w/ dismiss delay
+  </button>
+</div>
+
+<h2 class="mt-6">Delete Confirmation Dialog</h2>
+<div class="d-flex flex-wrap gap-5">
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="
+      showActionDialog({
+        type: 'delete-confirm',
+        heading: 'DEMO.DELETE_CONFIRM_HEAD',
+        message: 'DEMO.DELETE_CONFIRM_MSG',
+        translationParams: { what: 'Scheduler 42' }
+      })
+    "
+  >
+    Delete Confirmation
+  </button>
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="
+      showActionDialog({
+        type: 'delete-confirm',
+        heading: 'Delete branch?',
+        message: 'Do you want to delete the branch?',
+        delayDismiss: fakeLoading
+      })
+    "
+  >
+    Delete confirm w/ dismiss delay
+  </button>
+</div>
+
+<h2 class="mt-6">Column Selection Dialog</h2>
+<button type="button" class="btn btn-secondary" (click)="showColumnSelection()">
+  Many columns
+</button>
+
+<h2 class="mt-6">Column Selection Dialog without visibility toggle</h2>
+<button type="button" class="btn btn-secondary" (click)="showColumnSelectionNoVisibilityDialog()">
+  Many columns
+</button>

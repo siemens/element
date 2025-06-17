@@ -1,0 +1,10 @@
+@use '@siemens/element-theme/src/styles/variables';
+@use 'sass:map';
+
+:host {
+  user-select: none;
+  max-block-size: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}

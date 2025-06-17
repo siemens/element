@@ -1,0 +1,49 @@
+<div class="d-flex p-4" (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
+  <div class="d-flex w-100" [attr.aria-label]="column().title">
+    @if (editing) {
+      <input
+        #title
+        type="text"
+        class="form-control w-100"
+        [attr.aria-label]="renameInputLabel()"
+        [value]="column().title"
+        (input)="updateTitle(title.value)"
+        (keydown.enter)="stopEdit()"
+        (blur)="stopEdit()"
+      />
+    } @else {
+      <span
+        class="form-control text-truncate w-100"
+        [class.border-0]="!column().editable"
+        [class.px-0]="!column().editable"
+        [class.disabled]="column().disabled"
+        (click)="startEdit()"
+        >{{ column().title }}</span
+      >
+    }
+  </div>
+
+  <div class="d-flex align-items-center">
+    @if (columnVisibilityConfigurable()) {
+      <span
+        class="btn btn-circle btn-sm btn-tertiary ms-4"
+        [class.text-primary]="!column().disabled"
+        [class.disabled]="column().disabled"
+        (click)="toggleVisibility()"
+      >
+        <si-icon-next [icon]="selected() ? icons.elementShow : icons.elementHide" />
+      </span>
+    }
+    <span
+      cdkDragHandle
+      class="btn btn-circle btn-sm btn-tertiary ms-4"
+      [class.disabled]="column().disabled"
+      [class.pe-none]="!column().draggable"
+    >
+      <si-icon-next
+        [class.pe-none]="!column().draggable"
+        [icon]="column().draggable ? icons.elementMenu : icons.elementLock"
+      />
+    </span>
+  </div>
+</div>

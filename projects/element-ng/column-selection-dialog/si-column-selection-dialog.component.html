@@ -1,0 +1,55 @@
+<div class="modal-header">
+  <span class="modal-title" [id]="titleId()">{{ heading() | translate: translationParams() }}</span>
+  <button
+    type="button"
+    class="btn btn-circle btn-sm btn-ghost"
+    [attr.aria-label]="cancelBtnName() | translate"
+    (click)="cancelColumnSelection()"
+  >
+    <si-icon-next [icon]="icons.elementCancel" />
+  </button>
+</div>
+<p class="text-secondary px-8 pb-5 mb-0">{{ bodyTitle() | translate: translationParams() }}</p>
+<div #modalBody class="modal-body" tabindex="-1" cdkScrollable>
+  <div
+    cdkListbox
+    cdkListboxMultiple
+    cdkDropList
+    [cdkListboxValue]="visibleIds"
+    [attr.aria-label]="listAriaLabel() | translate: translationParams"
+    (cdkListboxValueChange)="updateVisibility()"
+    (cdkDropListDropped)="drop($event)"
+  >
+    @for (column of columns(); track column) {
+      <si-column-selection-editor
+        #cdkOption="cdkOption"
+        cdkDrag
+        class="focus-inside"
+        [cdkDragDisabled]="!column.draggable"
+        [cdkOption]="column.id"
+        [cdkOptionDisabled]="column.disabled"
+        [column]="column"
+        [selected]="cdkOption.isSelected()"
+        [renameInputLabel]="renameInputAriaLabel() | translate: translationParams"
+        [columnVisibilityConfigurable]="columnVisibilityConfigurable()"
+        (titleChange)="emitChange()"
+        (visibilityChange)="updateVisibility()"
+        (keydown.alt.arrowUp)="moveUp($index, $event)"
+        (keydown.alt.arrowDown)="moveDown($index, $event)"
+      />
+    }
+  </div>
+</div>
+<div class="modal-footer">
+  @if (restoreEnabled()) {
+    <button type="button" class="btn btn-tertiary me-auto" (click)="restoreToDefault()">
+      {{ restoreToDefaultBtnName() | translate }}
+    </button>
+  }
+  <button type="button" class="btn btn-secondary" (click)="cancelColumnSelection()">
+    {{ cancelBtnName() | translate }}
+  </button>
+  <button type="button" class="btn btn-primary" (click)="submitColumnSelection()">
+    {{ submitBtnName() | translate }}
+  </button>
+</div>
