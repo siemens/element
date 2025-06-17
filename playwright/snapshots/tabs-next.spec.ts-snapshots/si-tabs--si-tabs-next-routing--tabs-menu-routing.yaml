@@ -1,0 +1,5 @@
+- tablist:
+  - tab "Home" [selected]
+  - tab "Energy"
+  - tab "Test coverage"
+- tabpanel "Home": This is the home page

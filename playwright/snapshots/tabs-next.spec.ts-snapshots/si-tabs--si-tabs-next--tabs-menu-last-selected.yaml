@@ -1,0 +1,7 @@
+- tablist:
+  - tab "Washroom 2"
+  - tab "Deselectable" [selected]
+- tabpanel "Deselectable":
+  - paragraph: Uncheck to prevent switching to another tab.
+  - checkbox "Enable tab switching" [checked]
+  - text: Enable tab switching

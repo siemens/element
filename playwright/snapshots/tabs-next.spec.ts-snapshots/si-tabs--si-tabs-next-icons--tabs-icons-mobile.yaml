@@ -1,0 +1,6 @@
+- tablist:
+  - tab /\d+/ [selected]
+  - tab
+  - tab
+- tabpanel /\d+/:
+  - paragraph: Content for Reception
