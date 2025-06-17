@@ -1,0 +1,73 @@
+<div class="card">
+  <si-file-uploader
+    class="card-body"
+    accept="image/*"
+    [style.max-height.px]="hasMaxHeight ? 400 : null"
+    [uploadConfig]="uploadConfig"
+    [maxFileSize]="maxFileSizeInBytes"
+    [maxFiles]="maxFiles"
+    [maxConcurrentUploads]="maxConcurrentUploads"
+    [showHttpError]="showHttpError"
+    [autoUpload]="autoUpload"
+    [directoryUpload]="directoryUpload"
+    (uploadCanceled)="logEvent('canceled', $event)"
+    (uploadCompleted)="logEvent('completed', $event)"
+  />
+</div>
+
+<div class="row mt-6 e2e-ignore">
+  <div class="col-md-6 mb-6">
+    <div class="card">
+      <div class="card-header">si-file-uploader settings</div>
+      <div class="card-body">
+        <si-form-item label="Show HTTP error">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="showHttpError" />
+        </si-form-item>
+        <si-form-item label="Auto-upload mode">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="autoUpload" />
+        </si-form-item>
+        <si-form-item label="Upload directory">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="directoryUpload" />
+        </si-form-item>
+        <si-form-item label="Max. files">
+          <si-number-input class="form-control" [(ngModel)]="maxFiles" />
+        </si-form-item>
+        <si-form-item label="Max. concurrent uploads">
+          <si-number-input class="form-control" [(ngModel)]="maxConcurrentUploads" />
+        </si-form-item>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 mb-6">
+    <div class="card">
+      <div class="card-header">Demo settings</div>
+      <div class="card-body">
+        <si-form-item label="Upload shall fail">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            [(ngModel)]="fileUploadInterceptor.uploadShallFail"
+          />
+        </si-form-item>
+        <si-form-item label="Fail two uploads and let the third try succeed">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            [disabled]="fileUploadInterceptor.uploadShallFail"
+            [(ngModel)]="fileUploadInterceptor.thirdTrySuccess"
+          />
+        </si-form-item>
+        <si-form-item label="Set a max-height">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="hasMaxHeight" />
+        </si-form-item>
+        <si-form-item label="No delay">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            [(ngModel)]="fileUploadInterceptor.noDelay"
+          />
+        </si-form-item>
+      </div>
+    </div>
+  </div>
+</div>

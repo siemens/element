@@ -5,7 +5,7 @@
 /// <reference types="node" />
 // only link node types here to prevent them from being used in other files
 
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -17,6 +17,7 @@ import {
   SimplLivePreviewRoutingModule
 } from '@siemens/live-preview';
 
+import { FileUploadInterceptor } from './examples/si-file-uploader/file-upload-interceptor';
 import { LivePreviewThemeApiService } from './shared/live-preview-theme.api.service';
 import { WebpackTranslateLoader } from './webpack-translate-loader';
 
@@ -50,6 +51,7 @@ export const APP_CONFIG: ApplicationConfig = {
       )
     ),
     { provide: SiLivePreviewThemeApi, useClass: LivePreviewThemeApiService },
+    { provide: HTTP_INTERCEPTORS, useExisting: FileUploadInterceptor, multi: true },
     provideAnimationsAsync(navigator.webdriver ? 'noop' : 'animations'),
     provideHttpClient(withInterceptorsFromDi()),
     provideNgxTranslateForElement(),

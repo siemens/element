@@ -1,0 +1,37 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+
+  > * {
+    min-inline-size: 320px;
+    max-inline-size: 680px;
+    inline-size: 100%;
+    align-self: center;
+  }
+}
+
+.file-list {
+  overflow-y: auto;
+}
+
+.file-info {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  block-size: map.get(variables.$spacers, 8) + map.get(variables.$spacers, 9);
+}
+
+.file {
+  min-block-size: map.get(variables.$spacers, 4) + map.get(variables.$spacers, 10);
+  transition: opacity variables.$element-default-transition-duration;
+}
+
+.fade-out {
+  opacity: 0;
+}

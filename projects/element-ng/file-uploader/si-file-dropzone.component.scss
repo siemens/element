@@ -1,0 +1,30 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: block;
+}
+
+.select-file {
+  margin-block-end: 0;
+  cursor: pointer;
+  color: variables.$element-ui-0;
+
+  &:hover,
+  &:active {
+    text-decoration: underline;
+  }
+}
+
+.drag-and-drop {
+  background-color: variables.$element-base-1;
+  border: 1px dashed variables.$element-ui-2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &.drag-over {
+    border: 1px solid variables.$element-focus-default;
+    box-shadow: 0 0 0 1px variables.$element-focus-default;
+  }
+}

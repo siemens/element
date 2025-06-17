@@ -38,6 +38,7 @@ documentation.
 
 - [Footer](layout-navigation/footer.md)
 - [Forms](forms-inputs/forms.md)
+- [File Uploader](forms-inputs/file-uploader.md)
 
 ## I
 
