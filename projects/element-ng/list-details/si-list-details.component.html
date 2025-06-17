@@ -1,0 +1,46 @@
+@if (!disableResizing() && hasLargeSize()) {
+  <si-split
+    class="w-100 flex-grow-1"
+    orientation="horizontal"
+    [stateId]="stateId()"
+    [sizes]="splitSizes()"
+    (sizesChange)="onSplitSizesChange($event)"
+  >
+    <si-split-part
+      scale="none"
+      [showCollapseButton]="false"
+      [showHeader]="false"
+      [minSize]="minListSize()"
+      [stateId]="listStateId()"
+    >
+      <ng-container *ngTemplateOutlet="listTemplate" />
+    </si-split-part>
+    <si-split-part
+      scale="auto"
+      [showCollapseButton]="false"
+      [showHeader]="false"
+      [minSize]="minDetailsSize()"
+      [stateId]="detailsStateId()"
+    >
+      <ng-container *ngTemplateOutlet="detailsTemplate" />
+    </si-split-part>
+  </si-split>
+} @else {
+  <div
+    class="list-details d-flex flex-row"
+    [class.gap-6]="hasLargeSize()"
+    [class.details-active]="detailsActive() && !hasLargeSize()"
+    [@detailsExpanded]="detailsExpandedAnimation()"
+  >
+    <ng-container *ngTemplateOutlet="listTemplate" />
+    <ng-container *ngTemplateOutlet="detailsTemplate" />
+  </div>
+}
+
+<ng-template #listTemplate>
+  <ng-content select="si-list-pane" />
+</ng-template>
+
+<ng-template #detailsTemplate>
+  <ng-content select="si-details-pane" />
+</ng-template>

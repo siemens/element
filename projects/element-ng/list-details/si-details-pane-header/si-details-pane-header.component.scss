@@ -1,0 +1,35 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  flex: none;
+  inline-size: 100%;
+  overflow: hidden;
+
+  &,
+  .title-subgroup {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: map.get(variables.$spacers, 3);
+
+    > .nav-link {
+      min-inline-size: auto;
+    }
+  }
+
+  .si-details-header-title {
+    cursor: unset;
+    color: variables.$element-text-secondary;
+
+    &:hover {
+      background-color: unset;
+      border-block-end-color: transparent;
+    }
+  }
+
+  ::ng-deep si-menu-bar si-menu-item {
+    block-size: auto;
+    margin-block-end: 2px; // So it's centered with the bottom line
+  }
+}

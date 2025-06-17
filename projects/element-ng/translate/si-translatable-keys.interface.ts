@@ -120,6 +120,7 @@ export interface SiTranslatableKeys {
   'SI_LAUNCHPAD.SUBTITLE'?: string;
   'SI_LAUNCHPAD.SUB_TITLE'?: string;
   'SI_LAUNCHPAD.TITLE'?: string;
+  'SI_LIST_DETAILS.BACK'?: string;
   'SI_LOADING_SPINNER.LABEL'?: string;
   'SI_NAVBAR.OPEN_LAUNCHPAD'?: string;
   'SI_NAVBAR.TOGGLE_NAVIGATION'?: string;
