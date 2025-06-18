@@ -135,15 +135,10 @@ export class SiModalService {
       positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),
       direction: isRTL() ? 'rtl' : 'ltr'
     });
-    return modalRef.overlayRef.attach(
-      new ComponentPortal(
-        SiModalComponent,
-        null,
-        injector,
-        null,
-        this.getContentProjectableNodes(injector, modalRef)
-      )
-    );
+    const compPortal = new ComponentPortal(SiModalComponent, null, injector);
+    // Ensure compatibility between Angular CDK 19 and 20 since constructor arguments have changed
+    compPortal.projectableNodes = this.getContentProjectableNodes(injector, modalRef);
+    return modalRef.overlayRef.attach(compPortal);
   }
 
   private getContentProjectableNodes<T, CT>(
