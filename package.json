@@ -125,7 +125,7 @@
     "typescript-eslint": "8.31.0"
   },
   "optionalDependencies": {
-    "@simpl/brand": "^0.2.0",
+    "@simpl/brand": "^0.3.1",
     "@simpl/element-icons": "^1.28.0"
   }
 }
