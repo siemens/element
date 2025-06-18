@@ -73,6 +73,11 @@
     color: semantic-tokens.$element-text-danger;
   }
 
+  &.bg-critical {
+    background-color: semantic-tokens.$element-base-critical !important;
+    color: semantic-tokens.$element-text-critical;
+  }
+
   &.bg-inverse {
     background-color: semantic-tokens.$element-ui-1 !important;
     color: semantic-tokens.$element-text-inverse;
@@ -96,6 +101,11 @@
   &.bg-danger-emphasis {
     background: semantic-tokens.$element-status-danger;
     color: semantic-tokens.$element-status-danger-contrast;
+  }
+
+  &.bg-critical-emphasis {
+    background: semantic-tokens.$element-status-critical;
+    color: semantic-tokens.$element-status-critical-contrast;
   }
 
   &.bg-caution-emphasis {

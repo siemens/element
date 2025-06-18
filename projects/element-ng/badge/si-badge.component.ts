@@ -10,11 +10,11 @@ export type BadgeType =
   | StatusType
   | 'default'
   | 'inverse'
-  | 'caution'
   | 'info-emphasis'
   | 'success-emphasis'
   | 'warning-emphasis'
   | 'danger-emphasis'
+  | 'critical-emphasis'
   | 'caution-emphasis';
 
 @Component({
