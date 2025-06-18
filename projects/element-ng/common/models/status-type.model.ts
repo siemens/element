@@ -2,8 +2,8 @@
  * Copyright Siemens 2016 - 2025.
  * SPDX-License-Identifier: MIT
  */
-export type StatusType = 'success' | 'info' | 'warning' | 'danger';
-export type ExtendedStatusType = StatusType | 'caution' | 'critical' | 'unknown';
+export type StatusType = 'success' | 'info' | 'warning' | 'danger' | 'caution' | 'critical';
+export type ExtendedStatusType = StatusType | 'unknown';
 export type EntityStatusType = ExtendedStatusType | 'pending' | 'progress';
 export type AccentLineType = StatusType | 'caution' | 'primary' | 'inactive';
 
