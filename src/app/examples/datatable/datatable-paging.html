@@ -1,0 +1,35 @@
+<div class="p-5 d-flex flex-column">
+  <ngx-datatable
+    #table
+    class="table-element"
+    siDatatableInteraction
+    [rows]="rows"
+    [columns]="[
+      { name: 'Name', sortable: false },
+      { name: 'Role', sortable: false },
+      { name: 'Company', sortable: false }
+    ]"
+    [columnMode]="ColumnMode.force"
+    [rowHeight]="tableConfig.rowHeightSmall"
+    [externalPaging]="true"
+    [ghostLoadingIndicator]="isLoading"
+    [count]="page.totalElements"
+    [offset]="page.pageNumber"
+    [limit]="page.size"
+    (page)="setPage($event)"
+  >
+    <ngx-datatable-footer>
+      <ng-template ngx-datatable-footer-template>
+        <si-pagination
+          class="ms-auto"
+          forwardButtonText="forward"
+          backButtonText="back"
+          [currentPage]="page.pageNumber + 1"
+          [totalRowCount]="page.totalElements"
+          [pageSize]="page.size"
+          (currentPageChange)="table.onFooterPage({ page: $event })"
+        />
+      </ng-template>
+    </ngx-datatable-footer>
+  </ngx-datatable>
+</div>

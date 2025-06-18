@@ -1,0 +1,25 @@
+<div class="p-5 clearfix si-layout-fixed-height h-100">
+  <ngx-datatable
+    #table
+    class="table-element si-layout-fixed-height"
+    columnMode="force"
+    siDatatableInteraction
+    [rows]="rows"
+    [columns]="[
+      { name: 'First name', prop: 'firstname' },
+      { name: 'Last name', prop: 'lastname' },
+      {
+        name: 'Age',
+        prop: 'age',
+        headerClass: 'justify-content-end',
+        cellClass: 'text-align-right-cell'
+      }
+    ]"
+    [virtualization]="false"
+    [rowHeight]="tableConfig.rowHeightSmall"
+    [scrollbarV]="true"
+    (siResizeObserver)="table.recalculate()"
+  >
+    ></ngx-datatable
+  >
+</div>

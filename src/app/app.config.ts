@@ -18,6 +18,7 @@ import {
 } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { provideSiDatatableConfig } from '@siemens/element-ng/datatable';
 import { provideIconConfig } from '@siemens/element-ng/icon';
 import {
   SI_LOCALE_CONFIG,
@@ -138,6 +139,7 @@ export const APP_CONFIG: ApplicationConfig = {
     provideAnimationsAsync(navigator.webdriver ? 'noop' : 'animations'),
     provideHttpClient(withInterceptorsFromDi()),
     provideNgxTranslateForElement(),
+    provideSiDatatableConfig(),
     provideIconConfig({ disableSvgIcons: false })
   ]
 };

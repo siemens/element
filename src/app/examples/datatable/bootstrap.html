@@ -1,0 +1,179 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <table class="table" [class.table-sm]="useSmallTable" [class.table-hover]="useHover">
+        <thead>
+          <tr>
+            <th scope="col" class="text-center">
+              <input
+                type="checkbox"
+                class="form-check-input float-none align-middle"
+                aria-label="all selected"
+              />
+            </th>
+            <th scope="col" class="text-center"><si-icon icon="element-expand-all" /></th>
+            <th scope="col" class="text-center">Type</th>
+            <th scope="col">Data point</th>
+            <th scope="col" class="text-center">Quality</th>
+            <th scope="col" class="text-center">Mode</th>
+            <th scope="col" class="text-center">Event</th>
+            <th scope="col">Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-center">
+              <input
+                type="checkbox"
+                class="form-check-input float-none align-middle"
+                aria-label="selected"
+              />
+            </td>
+            <td class="text-center">
+              <button
+                type="button"
+                class="btn btn-tertiary btn-circle btn-sm element-down-2"
+                title="open dropdown"
+                aria-label="open dropdown"
+              ></button>
+            </td>
+            <td class="text-center"><si-icon icon="element-config-value" /></td>
+            <td>
+              <span class="si-title-2">Cooling coil device mode</span><br /><span
+                class="si-body-2 text-secondary"
+                >B1'Flr_1'RSegm1'HVAC</span
+              >
+            </td>
+            <td class="text-center"
+              ><si-icon icon="element-transient" color="text-secondary" />
+            </td>
+            <td class="text-center">
+              <si-icon icon="element-maintenance-filled" color="status-warning" />
+            </td>
+            <td class="text-center"><si-icon icon="element-alarm" /></td>
+            <td class="si-body-2">
+              <input type="text" class="form-control" value="50%" aria-label="value" disabled />
+            </td>
+          </tr>
+          <tr>
+            <td class="text-center">
+              <input
+                type="checkbox"
+                class="form-check-input float-none align-middle"
+                aria-label="selected"
+              />
+            </td>
+            <td class="text-center">
+              <button
+                type="button"
+                class="btn btn-tertiary btn-circle btn-sm element-down-2"
+                title="open dropdown"
+                aria-label="open dropdown"
+              ></button>
+            </td>
+            <td class="text-center"><si-icon icon="element-physical-input" /></td>
+            <td class="si-title-2">Cooling coil cooling request</td>
+            <td class="text-center"></td>
+            <td class="text-center">
+              <si-icon icon="element-manual-filled" color="status-danger" />
+            </td>
+            <td class="text-center"></td>
+            <td class="si-body-2">
+              <select class="form-select" aria-label="value" disabled>
+                <option value="">Control Mode</option>
+              </select>
+            </td>
+          </tr>
+          <tr class="table-active">
+            <td class="text-center">
+              <input
+                type="checkbox"
+                class="form-check-input float-none align-middle"
+                aria-label="selected"
+              />
+            </td>
+            <td class="text-center">
+              <button
+                type="button"
+                class="btn btn-tertiary btn-circle btn-sm element-down-2"
+                title="open dropdown"
+                aria-label="open dropdown"
+              ></button>
+            </td>
+            <td class="text-center"><si-icon icon="element-physical-input" /></td>
+            <td class="si-title-2">Cooling coil dehumidification request</td>
+            <td class="text-center"></td>
+            <td class="text-center">
+              <si-icon icon="element-manual-filled" color="status-warning" />
+            </td>
+            <td class="text-center">
+              <si-icon icon="element-alarm-filled" color="status-danger" />
+            </td>
+            <td class="si-body-2">
+              <input type="text" class="form-control" value="50%" aria-label="value" disabled />
+            </td>
+          </tr>
+          <tr>
+            <td class="text-center">
+              <input
+                type="checkbox"
+                class="form-check-input float-none align-middle"
+                aria-label="selected"
+              />
+            </td>
+            <td class="text-center">
+              <button
+                type="button"
+                class="btn btn-tertiary btn-circle btn-sm element-down-2"
+                title="open dropdown"
+                aria-label="open dropdown"
+              ></button>
+            </td>
+            <td class="text-center"><si-icon icon="element-calculated-value" /></td>
+            <td class="si-title-2">Cooling coil available for cooling</td>
+            <td class="text-center">
+              <si-icon icon="element-cancel-filled" color="status-danger" />
+            </td>
+            <td class="text-center"></td>
+            <td class="text-center">
+              <si-icon
+                icon="element-alarm-background-filled"
+                color="status-danger"
+                stackedIcon="element-alarm-tick"
+                stackedColor="text-secondary"
+              />
+            </td>
+            <td class="si-body-2">
+              <input type="text" class="form-control" value="50%" aria-label="value" disabled />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row e2e-ignore">
+    <div class="col">
+      <div class="card">
+        <div class="card-header">Settings</div>
+        <div class="card-body">
+          <div class="mb-6 row">
+            <label class="col-form-label col-md-2" for="use-small-table">Condensed rows</label>
+            <div class="col-md-10">
+              <si-form-item label="Check to apply the table-sm class for condensed row height.">
+                <input type="checkbox" class="form-check-input" [(ngModel)]="useSmallTable" />
+              </si-form-item>
+            </div>
+          </div>
+          <div class="mb-6 row">
+            <label class="col-form-label col-md-2" for="use-hover">Hoverable rows</label>
+            <div class="col-md-10">
+              <si-form-item label="Check to apply the table-hover class.">
+                <input type="checkbox" class="form-check-input" [(ngModel)]="useHover" />
+              </si-form-item>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

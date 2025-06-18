@@ -67,6 +67,8 @@ nav:
       - Split:                            'components/layout-navigation/split.md'
       - Wizard:                           'components/layout-navigation/wizard.md'
       - Tabs:                             'components/layout-navigation/tabs.md'
+    - Lists, Tables & Trees:
+      - Table & Datatable:                'components/lists-tables-trees/datatable.md'
     - Progress Indications:
       - Progress Bar:                     'components/progress-indication/progress-bar.md'
       - Spinner:                          'components/progress-indication/spinner.md'

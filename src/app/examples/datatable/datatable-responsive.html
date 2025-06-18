@@ -1,0 +1,52 @@
+<div class="p-5 d-flex flex-column">
+  <ngx-datatable
+    #table
+    class="table-element"
+    columnMode="force"
+    siDatatableInteraction
+    [rows]="rows"
+    [columns]="columns"
+    [reorderable]="true"
+    [externalPaging]="false"
+    [limit]="8"
+    [offset]="pageNumber"
+    [selectionType]="selectionType"
+    [count]="rows.length"
+    [scrollbarH]="false"
+    [virtualization]="false"
+    [scrollbarV]="false"
+    (siResizeObserver)="tableResize($event)"
+  >
+    <ngx-datatable-footer>
+      <ng-template ngx-datatable-footer-template>
+        <si-pagination
+          class="ms-auto"
+          forwardButtonText="forward"
+          backButtonText="back"
+          [currentPage]="pageNumber + 1"
+          [totalRowCount]="rows.length"
+          (currentPageChange)="pageNumber = $event - 1"
+        />
+      </ng-template>
+    </ngx-datatable-footer>
+  </ngx-datatable>
+</div>
+
+<ng-template #statusCellTempl let-value="value" let-row="row" ngx-datatable-cell-template>
+  <si-circle-status icon="element-plant" [status]="row.status" />
+</ng-template>
+<ng-template #otherStatusCellTempl let-value="value" let-row="row" ngx-datatable-cell-template>
+  <si-icon icon="element-cancel-filled" color="status-danger" />
+  <si-icon icon="element-manual-filled" color="status-warning" />
+  <si-icon icon="element-alarm-filled" color="status-danger" />
+</ng-template>
+
+<ng-template #contextCellTempl let-value="value" let-row="row" ngx-datatable-cell-template>
+  <div role="button" aria-label="Context menu" [cdkMenuTriggerFor]="menu">
+    <i class="icon element-options-vertical"></i>
+  </div>
+</ng-template>
+
+<ng-template #menu>
+  <si-menu-factory [items]="contextItems" />
+</ng-template>

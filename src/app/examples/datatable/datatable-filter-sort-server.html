@@ -1,0 +1,28 @@
+<div class="p-5 h-100">
+  <div class="mb-4 col-sm-4">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Type to filter the name column..."
+      (keyup)="updateFilter($event)"
+    />
+  </div>
+  <ngx-datatable
+    class="table-element"
+    siDatatableInteraction
+    [rows]="rows"
+    [columns]="[
+      { name: 'Name', sortable: true },
+      { name: 'Role', sortable: true },
+      { name: 'Company', sortable: true }
+    ]"
+    [columnMode]="ColumnMode.force"
+    [rowHeight]="tableConfig.rowHeightSmall"
+    [footerHeight]="0"
+    [ghostLoadingIndicator]="isLoading"
+    [externalSorting]="true"
+    (sort)="onSort($event)"
+  >
+    <si-empty-state empty-content icon="element-users" heading="No users to display" />
+  </ngx-datatable>
+</div>

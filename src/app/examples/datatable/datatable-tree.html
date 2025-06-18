@@ -1,0 +1,17 @@
+<div class="p-5 clearfix">
+  <ngx-datatable
+    #table
+    class="material table-element table-custom"
+    columnMode="force"
+    siDatatableInteraction
+    treeFromRelation="manager"
+    treeToRelation="name"
+    [columns]="columns"
+    [footerHeight]="0"
+    [rowHeight]="tableConfig.rowHeightSmall"
+    [rows]="rows"
+    [offset]="pageNumber"
+    [count]="rows.length"
+    (treeAction)="onTreeAction($event)"
+  />
+</div>

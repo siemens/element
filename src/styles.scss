@@ -7,6 +7,7 @@ $icon-font-path: '@simpl/element-icons/dist/fonts' !default;
 @use '@siemens/element-ng/element-ng';
 @use '@siemens/element-theme/src/styles/variables/spacers';
 @use '@siemens/element-theme/src/styles/variables/semantic-tokens';
+@use '@siemens/element-theme/src/styles/variables/utilities';
 @use '@siemens/live-preview/styles/live-preview';
 
 @use '@simpl/brand/src/themes/element-theme-siemens-brand' with (
@@ -55,4 +56,20 @@ body {
 // Padding around "app-sample", move into examples
 si-live-preview-webcomponent > div {
   padding: 12px;
+}
+
+// Doing this here to use theme icons.
+.ngx-datatable.table-element {
+  .datatable-tree-button span i {
+    @extend .element-right-2;
+    @extend [class^='element-'];
+
+    @include utilities.rtl {
+      transform: scaleX(-1);
+    }
+  }
+
+  .datatable-tree-button span i.datatable-icon-down {
+    @extend .element-down-2;
+  }
 }

@@ -1,0 +1,23 @@
+<div class="p-5 clearfix">
+  <ngx-datatable
+    #table
+    class="table-element"
+    siDatatableInteraction
+    [rows]="rows"
+    [columns]="[
+      { name: 'Name', sortable: false },
+      { name: 'Role', sortable: false },
+      { name: 'Company', sortable: false }
+    ]"
+    [footerHeight]="0"
+    [rowHeight]="tableConfig.rowHeightSmall"
+    [externalPaging]="false"
+    [columnMode]="ColumnMode.force"
+    [count]="0"
+    [offset]="0"
+    [limit]="10"
+    [ghostLoadingIndicator]="!!isLoading"
+  >
+    <si-empty-state empty-content icon="element-technical-operator" heading="No data to display" />
+  </ngx-datatable>
+</div>

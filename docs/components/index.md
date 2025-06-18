@@ -94,6 +94,7 @@ documentation.
 
 ## T
 
+- [Table & Datatable](lists-tables-trees/datatable.md)
 - [Tabs](layout-navigation/tabs.md)
 - [Text Area](forms-inputs/text-area.md)
 - [Toast Notification](status-notifications/toast-notification.md)
