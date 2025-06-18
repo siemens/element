@@ -1,21 +1,5 @@
 <si-inline-notification
   class="mb-6"
-  severity="danger"
-  heading="Error"
-  message="Better description of the critical error."
-  [action]="{ title: 'Action' }"
-/>
-
-<si-inline-notification
-  class="mb-6"
-  severity="warning"
-  heading="Warning"
-  message="Better description of the warning."
-  [action]="{ title: 'Action' }"
-/>
-
-<si-inline-notification
-  class="mb-6"
   severity="info"
   heading="Information"
   message="Better description of what happened."
@@ -30,4 +14,34 @@
   [action]="{ title: 'Action' }"
 />
 
-<si-inline-notification severity="success" message="Better description of no heading." />
+<si-inline-notification
+  class="mb-6"
+  severity="caution"
+  heading="Caution"
+  message="Description goes here."
+/>
+
+<si-inline-notification
+  class="mb-6"
+  severity="warning"
+  heading="Warning"
+  message="Better description of the warning."
+  [action]="{ title: 'Action' }"
+/>
+
+<si-inline-notification
+  class="mb-6"
+  severity="danger"
+  heading="Error"
+  message="Better description of the critical error."
+  [action]="{ title: 'Action' }"
+/>
+
+<si-inline-notification
+  class="mb-6"
+  severity="critical"
+  heading="Critical"
+  message="Description goes here."
+/>
+
+<si-inline-notification class="mb-6" severity="success" message="Message without a heading" />

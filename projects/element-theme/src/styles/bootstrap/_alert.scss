@@ -47,10 +47,22 @@
   background: semantic-tokens.$element-base-warning;
 }
 
+.alert-caution {
+  --color-bar: #{semantic-tokens.$element-status-caution};
+  color: semantic-tokens.$element-text-caution;
+  background: semantic-tokens.$element-base-caution;
+}
+
 .alert-danger {
   --color-bar: #{semantic-tokens.$element-status-danger};
   color: semantic-tokens.$element-text-danger;
   background: semantic-tokens.$element-base-danger;
+}
+
+.alert-critical {
+  --color-bar: #{semantic-tokens.$element-status-critical};
+  color: semantic-tokens.$element-text-critical;
+  background: semantic-tokens.$element-base-critical;
 }
 
 .alert-info {
