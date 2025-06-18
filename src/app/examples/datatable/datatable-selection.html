@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm p-5 h-100">
+      <ngx-datatable
+        class="table-element"
+        style="height: 500px"
+        siDatatableInteraction
+        [rows]="rows"
+        [columns]="[
+          { name: 'First name', prop: 'firstname' },
+          { name: 'Last name', prop: 'lastname' },
+          {
+            name: 'Age',
+            prop: 'age',
+            headerClass: 'justify-content-end',
+            cellClass: 'text-align-right-cell'
+          }
+        ]"
+        [columnMode]="ColumnMode.force"
+        [rowHeight]="tableConfig.rowHeightSmall"
+        [footerHeight]="0"
+        [virtualization]="false"
+        [scrollbarV]="true"
+        [selectionType]="SelectionType.single"
+        [selected]="selected"
+        [datatableInteractionAutoSelect]="true"
+      />
+    </div>
+    <div class="col-sm p-5">
+      <si-card heading="Selection">
+        <div class="card-body" body>
+          @if (selected.length) {
+            {{ selected[0].firstname + ' ' + selected[0].lastname + ' - ' + selected[0].age }}
+          }
+          @if (!selected.length) {
+            None
+          }
+        </div>
+      </si-card>
+    </div>
+  </div>
+</div>

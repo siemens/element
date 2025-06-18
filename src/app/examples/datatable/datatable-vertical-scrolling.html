@@ -1,0 +1,34 @@
+<div class="p-5 clearfix si-layout-fixed-height h-100">
+  <ngx-datatable
+    #table
+    class="table-element si-layout-fixed-height"
+    columnMode="force"
+    siDatatableInteraction
+    [rows]="rows"
+    [columns]="columns"
+    [reorderable]="true"
+    [footerHeight]="0"
+    [selectionType]="selectionType"
+    [count]="rows.length"
+    [scrollbarV]="true"
+    [scrollbarVDynamic]="true"
+    (siResizeObserver)="resizeTable()"
+  >
+    >
+    <si-empty-state empty-content icon="element-users" heading="No users to display" />
+  </ngx-datatable>
+
+  <div class="mt-6 e2e-ignore">
+    <si-slider
+      [min]="0"
+      [max]="100"
+      [step]="1"
+      [(value)]="slidingValue"
+      (valueChange)="setupData($event)"
+    />
+  </div>
+</div>
+
+<ng-template #statusCellTempl let-value="value" let-row="row" ngx-datatable-cell-template>
+  <si-circle-status icon="element-user" [status]="row.status" />
+</ng-template>

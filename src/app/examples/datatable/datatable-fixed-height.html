@@ -1,0 +1,53 @@
+<div class="d-flex">
+  <si-card class="m-4 px-0 w-50" [heading]="'Table with fix height of ' + tableSize + 'px'">
+    <div class="card-body px-0" body>
+      <ngx-datatable
+        #table
+        class="table-element si-layout-fixed-height"
+        siDatatableInteraction
+        [style.height]="tableSize + 'px'"
+        [rows]="rows"
+        [columns]="[
+          { name: 'Name', sortable: false },
+          { name: 'Role', sortable: false },
+          { name: 'Company', sortable: false }
+        ]"
+        [columnMode]="ColumnMode.force"
+        [footerHeight]="0"
+        [rowHeight]="tableConfig.rowHeightSmall"
+        [externalPaging]="true"
+        [ghostLoadingIndicator]="isLoading"
+        [count]="page.totalElements"
+        [offset]="page.pageNumber"
+        [limit]="page.size"
+        (page)="setPage($event)"
+      />
+      <si-pagination
+        class="mt-2 float-end"
+        forwardButtonText="forward"
+        backButtonText="back"
+        [currentPage]="page.pageNumber + 1"
+        [totalRowCount]="page.totalElements"
+        [pageSize]="page.size"
+        (currentPageChange)="table.onFooterPage({ page: $event })"
+      />
+    </div>
+  </si-card>
+  <div class="w-50 px-8">
+    <label for="height-selector">Table height</label>
+    <div>
+      <select
+        value="base-1"
+        class="form-control"
+        id="height-selector"
+        [(ngModel)]="tableSize"
+        (change)="onTableSizeChange()"
+      >
+        <option value="300">300</option>
+        <option selected value="500">500</option>
+        <option value="800">800</option>
+        <option value="1000">1000</option>
+      </select>
+    </div>
+  </div>
+</div>

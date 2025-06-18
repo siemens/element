@@ -1,0 +1,106 @@
+<div class="p-5 d-flex flex-column">
+  <ngx-datatable
+    #table
+    class="table-element"
+    columnMode="force"
+    siDatatableInteraction
+    [rows]="rows"
+    [columns]="columns"
+    [reorderable]="true"
+    [externalPaging]="false"
+    [limit]="8"
+    [offset]="pageNumber"
+    [selectionType]="selectionType"
+    [count]="rows.length"
+    [virtualization]="false"
+    [scrollbarV]="false"
+  >
+    <ngx-datatable-footer>
+      <ng-template ngx-datatable-footer-template>
+        <si-pagination
+          class="ms-auto"
+          forwardButtonText="forward"
+          backButtonText="back"
+          [currentPage]="pageNumber + 1"
+          [totalRowCount]="rows.length"
+          (currentPageChange)="pageNumber = $event - 1"
+        />
+      </ng-template>
+    </ngx-datatable-footer>
+  </ngx-datatable>
+</div>
+
+<div class="p-5 e2e-ignore">
+  <div class="card">
+    <div class="card-header">Settings</div>
+    <div class="card-body">
+      <div class="row">
+        <si-form-item class="col-4" label="Selection type">
+          <select
+            class="form-control"
+            id="selection-type"
+            [(ngModel)]="selectionType"
+            (ngModelChange)="selectionTypeChanged(enforceCheckboxes)"
+          >
+            <option [ngValue]="undefined">undefined</option>
+            @for (selType of selectionTypes; track $index) {
+              <option [ngValue]="selType">{{ selType }}</option>
+            }
+          </select>
+        </si-form-item>
+        <si-form-item class="col-6" label="Enforce checkboxes">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            [(ngModel)]="enforceCheckboxes"
+            (ngModelChange)="selectionTypeChanged(!enforceCheckboxes)"
+          />
+        </si-form-item>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--
+  A header name must be always provided for a11y purposes.
+  If it shouldn't be visible it can be hidden using a custom header template and the class `visually-hidden`.
+  -->
+<ng-template #statusHeaderCellTemplate>
+  <span class="visually-hidden">Status</span>
+</ng-template>
+
+<ng-template #contextHeaderCellTemplate>
+  <span class="visually-hidden">Context options</span>
+</ng-template>
+<ng-template #statusCellTempl let-value="value" let-row="row" ngx-datatable-cell-template>
+  <si-circle-status icon="element-plant" [status]="row.status" />
+</ng-template>
+<ng-template #otherStatusCellTempl let-value="value" let-row="row" ngx-datatable-cell-template>
+  <si-icon icon="element-cancel-filled" color="status-danger" />
+  <si-icon icon="element-manual-filled" color="status-warning" />
+  <si-icon icon="element-alarm-filled" color="status-danger" />
+</ng-template>
+
+<ng-template #ageCellTempl let-value="value" let-row="row" ngx-datatable-cell-template>
+  <input
+    type="text"
+    class="form-control"
+    placeholder="Age"
+    required
+    minlength="2"
+    pattern="[0-9]{2}"
+    siFormValidationTooltip
+    aria-label="Age"
+    [ngModel]="row.age"
+  />
+</ng-template>
+
+<ng-template #contextCellTempl let-value="value" let-row="row" ngx-datatable-cell-template>
+  <div role="button" aria-label="Context menu" [cdkMenuTriggerFor]="menu">
+    <i class="icon element-options-vertical"></i>
+  </div>
+</ng-template>
+
+<ng-template #menu>
+  <si-menu-factory [items]="contextItems" />
+</ng-template>

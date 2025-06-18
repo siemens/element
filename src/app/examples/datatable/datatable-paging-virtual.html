@@ -1,0 +1,28 @@
+<div class="p-5 h-100">
+  <ngx-datatable
+    #table
+    class="table-element h-100"
+    siDatatableInteraction
+    [rows]="rows"
+    [columns]="[
+      { name: 'Name', sortable: false },
+      { name: 'Role', sortable: false },
+      { name: 'Company', sortable: false }
+    ]"
+    [columnMode]="ColumnMode.force"
+    [reorderable]="true"
+    [rowHeight]="tableConfig.rowHeightSmall"
+    [footerHeight]="0"
+    [ghostLoadingIndicator]="true"
+    [scrollbarV]="true"
+    [externalPaging]="true"
+    [externalSorting]="true"
+    [count]="totalElements"
+    [offset]="pageNumber"
+    [selectionType]="SelectionType.multi"
+    [datatableInteractionAutoSelect]="true"
+    (page)="setPage($event)"
+    (select)="onSelect($event)"
+    (siResizeObserver)="table.recalculate()"
+  />
+</div>
