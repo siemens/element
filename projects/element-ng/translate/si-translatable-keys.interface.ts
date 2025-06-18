@@ -158,6 +158,8 @@ export interface SiTranslatableKeys {
   'SI_STATUS_BAR.EXPAND'?: string;
   'SI_STATUS_BAR.MUTE'?: string;
   'SI_TOAST.CLOSE'?: string;
+  'SI_TREE_VIEW.COLLAPSE_ALL'?: string;
+  'SI_TREE_VIEW.EXPAND_ALL'?: string;
   'SI_TYPEAHEAD.AUTOCOMPLETE_LIST_LABEL'?: string;
   'SI_WIZARD.BACK'?: string;
   'SI_WIZARD.CANCEL'?: string;

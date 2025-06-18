@@ -1,0 +1,123 @@
+<div style="display: flex; position: absolute; top: 0; left: 0; right: 0; bottom: 0">
+  <div style="flex: 0 0 400px; min-width: 0; display: flex; flex-direction: column">
+    <si-tree-view
+      ariaLabel="Company locations"
+      style="flex: 1 0 0%; min-height: 0"
+      class="border"
+      [class.tree-sm]="classTreeSm"
+      [class.tree-xs]="classTreeXs"
+      [contextMenuItems]="menuItems"
+      [enableDataField1]="dataField1"
+      [enableDataField2]="dataField2"
+      [enableStateIndicator]="stateIndicator"
+      [enableIcon]="icon"
+      [enableCheckbox]="checkbox"
+      [enableOptionbox]="optionbox"
+      [inheritChecked]="inheritChecked"
+      [enableContextMenuButton]="menuButton"
+      [enableSelection]="selection"
+      [folderStateStart]="folderStateStart"
+      [singleSelectMode]="singleSelectMode"
+      [compactMode]="compactMode"
+      [flatTree]="flatTree"
+      [groupedList]="groupedList"
+      [isVirtualized]="isVirtualized"
+      [horizontalScrolling]="horizontalScrolling"
+      [pageSize]="10"
+      [pagesVirtualized]="6"
+      [items]="treeItems"
+      [expandOnClick]="expandOnClick"
+      [expandCollapseAll]="showExpandCollapseAll"
+      [disableFilledIcons]="disableFilledIcons"
+      (treeItemFolderClicked)="logEvent('treeItemFolderClicked', $event.treeItem.label)"
+      (treeItemFolderStateChanged)="logEvent('treeItemFolderStateChanged', $event.treeItem.label)"
+      (treeItemClicked)="logEvent('treeItemClicked', $event.label)"
+      (treeItemCheckboxClicked)="logEvent('treeItemCheckboxClicked', $event.target.label)"
+      (loadChildren)="loadChildren($event)"
+      (treeItemsSelected)="logTreeItems('treeItemsSelected', $event)"
+    />
+  </div>
+  <div style="flex: 1 0 0; min-width: 500px" class="card ms-5 p-5 overflow-auto e2e-ignore">
+    A complex example that allows playing with various settings of a si-tree-view.
+    <hr />
+    <si-form-item label="Flat tree">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="flatTree" />
+    </si-form-item>
+    <si-form-item label="Virtualized">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="isVirtualized" />
+    </si-form-item>
+    <si-form-item label="Grouped list">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="groupedList" />
+    </si-form-item>
+    <si-form-item label="Enable data field 1">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="dataField1" />
+    </si-form-item>
+    <si-form-item label="Enable data field 2">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="dataField2" />
+    </si-form-item>
+    <si-form-item label="Enable state indicator">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="stateIndicator" />
+    </si-form-item>
+    <si-form-item label="Enable icons">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="icon" />
+    </si-form-item>
+    <si-form-item label="Inherit checked state">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="inheritChecked" />
+    </si-form-item>
+    <si-form-item label="Enable checkboxes">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="checkbox" />
+    </si-form-item>
+    <si-form-item label="Enable option boxes">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="optionbox" />
+    </si-form-item>
+    <si-form-item label="Enable context menu button">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="menuButton" />
+    </si-form-item>
+    <si-form-item label="Selection">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="selection" />
+    </si-form-item>
+    <si-form-item label="Single select mode">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="singleSelectMode" />
+    </si-form-item>
+    <si-form-item label="Expand on click (toggle expand/collapse on click)">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="expandOnClick" />
+    </si-form-item>
+    <si-form-item label="Show expand/collapse all buttons">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="showExpandCollapseAll" />
+    </si-form-item>
+    <si-form-item label="Folder state start">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="folderStateStart" />
+    </si-form-item>
+    <si-form-item label="Horizontal scrolling">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="horizontalScrolling" />
+    </si-form-item>
+    <si-form-item label="Compact mode">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="compactMode" />
+    </si-form-item>
+    <si-form-item label="Apply class .tree-sm (32px row height)">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="classTreeSm" />
+    </si-form-item>
+    <si-form-item label="Apply class .tree-xs (24px row height)">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="classTreeXs" />
+    </si-form-item>
+    <si-form-item label="Disable filled icons">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="disableFilledIcons" />
+    </si-form-item>
+    <si-form-item class="col-3" label="Number of leaf items">
+      <si-number-input
+        class="form-control"
+        [min]="0"
+        [formControl]="children"
+        [showButtons]="true"
+      />
+    </si-form-item>
+    <si-form-item class="col-3" label="Number of folder items">
+      <si-number-input
+        class="form-control"
+        [min]="0"
+        [formControl]="folders"
+        [showButtons]="true"
+      />
+    </si-form-item>
+  </div>
+</div>

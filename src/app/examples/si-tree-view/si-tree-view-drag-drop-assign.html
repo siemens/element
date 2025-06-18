@@ -1,0 +1,47 @@
+<h3>Assign tree item to another tree item</h3>
+<div class="d-flex h-100" cdkDropListGroup>
+  <si-tree-view
+    #assignTreeOne
+    ariaLabel="Company locations"
+    class="me-8"
+    style="width: 300px; height: 500px"
+    [enableDataField1]="true"
+    [enableSelection]="true"
+    [items]="assignTreeOneList"
+    [flatTree]="false"
+  >
+    <div
+      cdkDropList
+      [cdkDropListSortingDisabled]="true"
+      [cdkDropListData]="assignTreeOne.dropListItems"
+    >
+      <ng-template let-item="treeItem" siTreeViewItem>
+        <si-tree-view-item cdkDrag [cdkDragData]="item">
+          <si-tree-view-item *cdkDragPreview />
+        </si-tree-view-item>
+      </ng-template>
+    </div>
+  </si-tree-view>
+
+  <si-tree-view
+    #assignTreeTwo
+    ariaLabel="Company locations"
+    style="width: 300px; height: 500px"
+    [enableDataField1]="true"
+    [enableSelection]="true"
+    [items]="assignTreeTwoList"
+    [flatTree]="false"
+  >
+    <ng-template let-item="treeItem" siTreeViewItem>
+      <si-tree-view-item
+        #assignTwoItem
+        cdkDropList
+        class="droppable-container"
+        [cdkDropListData]="item"
+        [cdkDropListSortingDisabled]="true"
+        [cdkDropListEnterPredicate]="allowDrop"
+        (cdkDropListDropped)="treeItemAssigned($event)"
+      />
+    </ng-template>
+  </si-tree-view>
+</div>

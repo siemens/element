@@ -1,0 +1,72 @@
+@if (!flatTree() && expandCollapseAll()) {
+  <div class="si-tree-view-expand-collapse-container p-4">
+    <button
+      class="btn btn-sm btn-circle btn-tertiary"
+      type="button"
+      [title]="expandAllTooltip() | translate"
+      (click)="expandAll()"
+    >
+      <span class="element-expand-all"></span>
+    </button>
+    <button
+      class="btn btn-sm btn-circle btn-tertiary ms-4"
+      type="button"
+      [title]="collapseAllTooltip() | translate"
+      (click)="collapseAll()"
+    >
+      <span class="element-collapse-all"></span>
+    </button>
+  </div>
+}
+@if (flatTree()) {
+  <div class="si-tree-view-header">
+    <span
+      class="si-tree-view-header-btn si-tree-view-header-root"
+      tabindex="0"
+      [class.disabled]="headerShowsRoot"
+      [ngClass]="computedIcons().headerHome"
+      (click)="onFlatTreeNavigateHome()"
+      (keydown.enter)="onFlatTreeNavigateHome()"
+    ></span>
+    @if (lastBreadCrumbItem) {
+      <span
+        class="si-tree-view-header-btn"
+        tabindex="0"
+        [class.disabled]="headerShowsRoot"
+        [ngClass]="computedIcons().headerArrow"
+        (click)="onFlatTreeNavigateUp()"
+        (keydown.enter)="onFlatTreeNavigateUp()"
+      ></span>
+    }
+    @if (lastBreadCrumbItem) {
+      <span class="text-center text-truncate">{{ lastBreadCrumbItem.label | translate }}</span>
+    }
+  </div>
+}
+<div
+  #treeViewInner
+  cdkScrollable
+  class="si-tree-view focus-inside"
+  role="tree"
+  [attr.aria-multiselectable]="!singleSelectMode()"
+  [attr.aria-label]="ariaLabel() ? (ariaLabel() | translate) : undefined"
+  [attr.aria-labelledby]="ariaLabelledBy()"
+  [class.si-tree-horizontal-scroll]="horizontalScrolling()"
+  [class.si-tree-view-flat]="flatTree()"
+  [class.si-tree-expand-collapse]="!flatTree() && expandCollapseAll()"
+>
+  @if (isVirtualized()) {
+    <div [class.w-100]="horizontalScrolling()" [style.height]="heightBefore"></div>
+  }
+  @if (itemsVirtualized) {
+    <div class="si-tree-view-root-ul">
+      <ng-content select="[cdkDropList], [siTreeViewItem]" />
+      @if (!treeItemContentTemplate) {
+        <si-tree-view-item *siTreeViewItem="let index = index; let treeItem = treeItem" />
+      }
+    </div>
+  }
+  @if (isVirtualized()) {
+    <div [class.w-100]="horizontalScrolling()" [style.height]="heightAfter"></div>
+  }
+</div>

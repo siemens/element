@@ -1,0 +1,66 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+@use 'si-tree-view-variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--si-tree-view-background);
+}
+
+.si-tree-view-header {
+  padding: calc(var(--si-tree-view-padding-base-horizontal) / 2);
+  border-block-end: 1px solid var(--si-tree-view-border-color);
+
+  > * {
+    align-self: center;
+  }
+}
+
+.si-tree-view-header-btn {
+  cursor: pointer;
+  margin-inline-end: calc(var(--si-tree-view-padding-base-horizontal) / 2);
+  font-size: var(--si-tree-view-icon-size);
+}
+
+.si-tree-view-header-root {
+  margin-inline-end: 0; // Compensate baked in margin of icon
+}
+
+.si-tree-view {
+  overflow: auto;
+  flex: 1 0 0; // note: this is important for scrolling
+  min-block-size: 0;
+
+  &.si-tree-horizontal-scroll {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+  }
+}
+
+.si-tree-view-root-ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1 1 auto;
+}
+
+::ng-deep {
+  .si-tree-view-top-level-item {
+    margin-block-start: map.get(variables.$spacers, 4);
+
+    .si-tree-expand-collapse &:first-child {
+      margin-block-start: 0;
+    }
+  }
+}
+
+/* CSS specific to iOS devices */
+@supports (-webkit-touch-callout: none) {
+  .si-tree-horizontal-scroll {
+    transform: translateZ(0); // iOS hides scrollbar behind sticky elements
+  }
+}

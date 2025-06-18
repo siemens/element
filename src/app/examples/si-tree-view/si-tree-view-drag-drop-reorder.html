@@ -1,0 +1,22 @@
+<h3>Reordering within same tree</h3>
+<si-tree-view
+  #treeWithDrag
+  ariaLabel="Company locations"
+  style="width: 300px; height: 500px"
+  [enableDataField1]="true"
+  [enableSelection]="true"
+  [items]="treeItems"
+  [flatTree]="false"
+>
+  <div
+    cdkDropList
+    [cdkDropListData]="treeWithDrag.dropListItems"
+    (cdkDropListDropped)="itemDropped($event)"
+  >
+    <ng-template siTreeViewItem>
+      <si-tree-view-item cdkDrag>
+        <si-tree-view-item *cdkDragPreview />
+      </si-tree-view-item>
+    </ng-template>
+  </div>
+</si-tree-view>

@@ -1,0 +1,216 @@
+@if (!isGroupedItem) {
+  <div
+    #contextMenuTrigger="cdkContextMenuTriggerFor"
+    class="si-tree-view-li si-tree-view-li-item focus-direct-sub-inside"
+    [class.si-tree-view-item-context-menu-visible]="
+      !!(contextMenuTrigger.isOpen() || menuTrigger?.isOpen())
+    "
+    [class.si-tree-view-item-active]="treeItem.active"
+    [class.si-tree-view-item-selected]="enableSelection() && treeItem.selected"
+    [class.si-tree-view-item-not-selectable]="!treeItem.selectable"
+    [style.padding-inline-start]="biggerPaddingStart"
+    [cdkContextMenuTriggerFor]="contextMenu"
+    [cdkContextMenuDisabled]="!isContextMenuButtonVisible() || !treeItem.selectable"
+    (cdkContextMenuOpened)="onToggleContextMenuOpen()"
+    (cdkContextMenuClosed)="onToggleContextMenuClose()"
+  >
+    <div class="si-tree-view-item" (mousedown)="onMouseDownTreeItem($event)">
+      @if (showFolderStateStart && treeItem.state !== 'leaf') {
+        <a
+          class="si-tree-stretch-center si-tree-view-item-toggle"
+          tabindex="-1"
+          [style.margin-inline-start]="'-' + biggerPaddingStart"
+          [style.padding-inline-start]="paddingStart"
+          (click)="onItemFolderClicked()"
+        >
+          @if (isExpanding) {
+            <si-loading-spinner [@.disabled]="true" />
+          }
+          @if (!isExpanding) {
+            <i
+              aria-hidden="true"
+              class="si-tree-view-item-dropdown-caret"
+              [ngClass]="getItemFolderStateClass()"
+            ></i>
+          }
+        </a>
+      }
+      @if (showCheckOrOptionBox) {
+        <a class="form-check input-box" tabindex="-1">
+          <input
+            class="form-check-input"
+            tabindex="-1"
+            [type]="getInputType()"
+            [indeterminate]="this.treeItem.checked === 'indeterminate' ? true : null"
+            [checked]="this.treeItem.checked === 'checked'"
+            [disabled]="!treeItem.selectable"
+            [attr.aria-label]="treeItem.label | translate"
+            (click)="onBoxClicked()"
+          />
+        </a>
+      }
+      <div
+        class="si-tree-view-item-main d-flex flex-grow-1 align-self-stretch grab-area"
+        (click)="onItemClicked($event)"
+      >
+        @if (showIcon()) {
+          <div class="si-tree-stretch-center">
+            <span class="si-tree-view-item-icon" [ngClass]="getIconClass()"></span>
+          </div>
+        }
+        <div
+          class="si-tree-view-item-object-data d-flex flex-column justify-content-center overflow-hidden"
+        >
+          @if (!templates.length) {
+            <h5 class="text-truncate">{{ treeItem.label | translate }}</h5>
+          }
+          @if (templates.length) {
+            <div>
+              <ng-container
+                *ngTemplateOutlet="
+                  renderMatchingTemplate(treeItem);
+                  context: { $implicit: treeItem }
+                "
+              />
+            </div>
+          }
+          @if (enableDataField1() && treeItem.dataField1) {
+            <p class="si-tree-view-item-object-data-field-1 text-truncate">{{
+              treeItem.dataField1 | translate
+            }}</p>
+          }
+          @if (enableDataField2() && treeItem.dataField2) {
+            <p class="si-tree-view-item-object-data-field-2 text-truncate">{{
+              treeItem.dataField2 | translate
+            }}</p>
+          }
+        </div>
+        @if (treeItem.badge) {
+          <span
+            class="badge flex-shrink-0"
+            [ngClass]="'bg-' + (treeItem.badgeColor || 'default')"
+            >{{ treeItem.badge }}</span
+          >
+        }
+      </div>
+      <div
+        class="si-tree-view-item-end-icons d-flex ms-2 align-items-center"
+        [class.si-tree-view-item-end-icons-sticky]="stickyEndItems()"
+      >
+        @if (showStateIndicator() && getStateIndicatorColor()) {
+          <div
+            class="si-tree-view-state-indicator"
+            [style.background-color]="getStateIndicatorColor()"
+            [class.si-tree-view-state-indicator-endmost]="
+              !enableContextMenuButton() && !showFolderStateEnd
+            "
+          ></div>
+        }
+        @if (isContextMenuButtonVisible()) {
+          <div class="si-tree-stretch-center si-tree-context-menu-btn">
+            <div
+              #menuTrigger="cdkMenuTriggerFor"
+              tabindex="-1"
+              aria-hidden="true"
+              [cdkMenuTriggerFor]="contextMenu"
+              (cdkMenuOpened)="onToggleContextMenuOpen()"
+              (cdkMenuClosed)="onToggleContextMenuClose()"
+            >
+              <i
+                aria-hidden="true"
+                class="si-tree-view-item-icon si-tree-view-menu-btn"
+                [ngClass]="icons().itemMenu"
+              ></i>
+            </div>
+          </div>
+        }
+        @if (showFolderStateEnd && treeItem.state !== 'leaf') {
+          <a
+            class="si-tree-stretch-center si-tree-view-item-toggle si-tree-view-item-toggle-end"
+            tabindex="-1"
+            [class.disabled]="!getItemFolderStateClass()"
+            (click)="onItemFolderClicked()"
+          >
+            @if (isExpanding) {
+              <si-loading-spinner class="si-tree-view-item-icon" />
+            }
+            @if (!isExpanding) {
+              <i
+                aria-hidden="true"
+                class="si-tree-view-item-icon"
+                [ngClass]="getItemFolderStateClass()"
+              ></i>
+            }
+          </a>
+        }
+        @if (showFolderStateEnd && treeItem.state === 'leaf') {
+          <div class="si-tree-stretch-center si-tree-view-item-toggle si-tree-view-item-toggle-end">
+            <i aria-hidden="true" class="si-tree-view-item-icon si-tree-view-item-icon-spacer"></i>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+}
+
+@if (isGroupedItem) {
+  <div class="si-tree-view-li focus-direct-sub-inside">
+    <div class="si-tree-view-item-group">
+      @if (showFolderStateStart) {
+        <a
+          class="si-tree-stretch-center si-tree-view-item-toggle"
+          tabindex="-1"
+          (click)="onItemFolderClicked()"
+        >
+          @if (isExpanding) {
+            <si-loading-spinner />
+          }
+          @if (!isExpanding) {
+            <i
+              aria-hidden="true"
+              class="si-tree-view-item-icon"
+              [ngClass]="getItemFolderStateClass()"
+            ></i>
+          }
+        </a>
+      }
+      @if (showCheckOrOptionBox) {
+        <a class="form-check input-box" tabindex="-1">
+          <input
+            class="form-check-input"
+            tabindex="-1"
+            [type]="getInputType()"
+            [indeterminate]="this.treeItem.checked === 'indeterminate' ? true : null"
+            [checked]="this.treeItem.checked === 'checked'"
+            [attr.aria-label]="treeItem.label | translate"
+            (click)="onBoxClicked()"
+          />
+        </a>
+      }
+      <p class="mb-0">{{ treeItem.label | translate }}</p>
+      @if (showFolderStateEnd) {
+        <a
+          class="si-tree-stretch-center"
+          tabindex="-1"
+          [class.disabled]="!getItemFolderStateClass()"
+          (click)="onItemFolderClicked()"
+        >
+          @if (isExpanding) {
+            <si-loading-spinner />
+          }
+          @if (!isExpanding) {
+            <i
+              aria-hidden="true"
+              class="si-tree-view-item-icon"
+              [ngClass]="getItemFolderStateClass()"
+            ></i>
+          }
+        </a>
+      }
+    </div>
+  </div>
+}
+
+<ng-template #contextMenu>
+  <si-menu-factory class="me-5" [items]="contextMenuItems()!" [actionParam]="treeItem" />
+</ng-template>

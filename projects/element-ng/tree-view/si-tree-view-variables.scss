@@ -1,0 +1,38 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+$si-tree-view-background: variables.$element-base-1;
+$si-tree-view-border-color: variables.$element-ui-4;
+$si-tree-view-icon-size: 24px;
+
+$si-tree-view-item-hover-color: variables.$element-base-1-hover;
+$si-tree-view-item-select-color: variables.$element-base-1-selected;
+$si-tree-view-item-line-height: variables.$si-line-height-body-2;
+$si-tree-view-item-min-height: 40px;
+$si-tree-view-item-object-data-field-1-color: variables.$element-text-secondary;
+$si-tree-view-item-object-data-h5-font-size: variables.$si-font-size-body-2;
+$si-tree-view-item-object-data-h5-font-weight: variables.$si-font-weight-normal;
+
+:host {
+  --si-tree-view-background: #{$si-tree-view-background};
+  --si-tree-view-border-color: #{$si-tree-view-border-color};
+  --si-tree-view-icon-size: #{$si-tree-view-icon-size};
+  --si-tree-view-padding-base-horizontal: 8px;
+  --si-tree-view-padding-base-vertical: 8px;
+  --si-tree-view-item-hover-color: #{$si-tree-view-item-hover-color};
+  --si-tree-view-item-select-color: #{$si-tree-view-item-select-color};
+  --si-tree-view-item-line-height: #{$si-tree-view-item-line-height};
+  --si-tree-view-item-min-height: #{$si-tree-view-item-min-height};
+  --si-tree-view-item-object-data-field-1-color: #{$si-tree-view-item-object-data-field-1-color};
+  --si-tree-view-item-object-data-h5-font-size: #{$si-tree-view-item-object-data-h5-font-size};
+  --si-tree-view-item-object-data-h5-font-weight: #{$si-tree-view-item-object-data-h5-font-weight};
+}
+
+:host-context(.tree-sm) {
+  --si-tree-view-item-min-height: 32px;
+  --si-tree-view-padding-base-vertical: 0px; // stylelint-disable-line length-zero-no-unit
+}
+
+:host-context(.tree-xs) {
+  --si-tree-view-item-min-height: 24px;
+  --si-tree-view-padding-base-vertical: 0px; // stylelint-disable-line length-zero-no-unit
+}

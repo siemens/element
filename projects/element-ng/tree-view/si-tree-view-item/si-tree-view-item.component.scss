@@ -1,0 +1,271 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+@use '../si-tree-view-variables';
+
+:host {
+  display: block;
+
+  &.cdk-drag-placeholder {
+    block-size: 0;
+    margin-inline: 8px;
+    margin-block: 0 !important; // stylelint-disable-line declaration-no-important
+    opacity: 1;
+    min-block-size: 0;
+    position: relative;
+    z-index: 999;
+
+    &::after {
+      position: absolute;
+      inline-size: 100%;
+      block-size: 2px;
+      content: '';
+      background-color: variables.$element-focus-default !important; // stylelint-disable-line declaration-no-important
+    }
+
+    > * {
+      display: none;
+    }
+  }
+
+  &.cdk-drag:not(.cdk-drag-placeholder) {
+    transform: none !important; // stylelint-disable-line declaration-no-important
+  }
+
+  &.cdk-drop-list-dragging,
+  .cdk-drop-list-dragging {
+    *:hover,
+    .si-tree-view-item-end-icons,
+    .si-tree-view-item-context-menu-visible {
+      background-color: transparent !important; // stylelint-disable-line declaration-no-important
+    }
+  }
+
+  &.cdk-drag-preview {
+    .si-tree-view-li.si-tree-view-li-item {
+      padding-inline-start: 8px !important; // stylelint-disable-line declaration-no-important
+      padding-inline-end: 12px !important; // stylelint-disable-line declaration-no-important
+
+      .si-tree-view-item-toggle {
+        padding-inline-start: 12px !important; // stylelint-disable-line declaration-no-important
+      }
+
+      .badge {
+        margin-inline-end: 0;
+      }
+    }
+
+    .si-tree-view-item-end-icons,
+    .si-tree-view-li.si-tree-view-li-item {
+      background-color: variables.$element-base-3 !important; // stylelint-disable-line declaration-no-important
+    }
+  }
+}
+
+.si-tree-view-li.si-tree-view-li-item {
+  position: relative;
+
+  &:hover,
+  &.si-tree-view-item-context-menu-visible {
+    background-color: var(--si-tree-view-item-hover-color);
+
+    .si-tree-view-item-end-icons {
+      background-color: var(--si-tree-view-item-hover-color);
+    }
+  }
+
+  &.si-tree-view-item-selected {
+    background-color: var(--si-tree-view-item-select-color);
+
+    .si-tree-view-item-end-icons {
+      background-color: var(--si-tree-view-item-select-color);
+    }
+
+    > .si-tree-view-item > .si-tree-view-item-main > .si-tree-view-item-object-data > h5 {
+      font-weight: variables.$si-font-weight-title-2;
+    }
+  }
+
+  &.si-tree-view-item-not-selectable {
+    &:hover,
+    .si-tree-view-item-end-icons {
+      background-color: unset;
+    }
+
+    .si-tree-view-item:hover {
+      cursor: default;
+      background-color: unset;
+    }
+
+    .si-tree-view-item-dropdown-caret {
+      cursor: pointer;
+    }
+
+    .si-tree-context-menu-btn > div[role='button'] {
+      cursor: pointer;
+    }
+
+    .si-tree-view-item-toggle-end {
+      cursor: pointer;
+
+      .si-tree-view-item-icon {
+        color: variables.$element-text-primary;
+      }
+    }
+  }
+
+  .si-tree-view-item-end-icons {
+    background-color: var(--si-tree-view-background);
+  }
+}
+
+%si-tree-view-item-all {
+  display: flex;
+  align-items: center;
+}
+
+.si-tree-stretch-center {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  text-decoration: none;
+}
+
+.si-tree-view-item-toggle.disabled .si-tree-view-item-icon {
+  inline-size: map.get(variables.$spacers, 8);
+}
+
+.si-tree-stretch-center + .si-tree-view-item-toggle-end .si-tree-view-item-icon {
+  margin-inline-start: -1 * map.get(variables.$spacers, 2);
+}
+
+.si-tree-view-item-icon {
+  padding-inline-end: map.get(variables.$spacers, 4);
+
+  &.si-tree-view-item-icon-spacer {
+    box-sizing: content-box;
+    inline-size: var(--si-tree-view-icon-size);
+  }
+}
+
+.si-tree-view-item-object-data,
+.si-tree-view-item-icon {
+  margin-block: 0;
+  margin-inline: calc(var(--si-tree-view-padding-base-horizontal) / 4);
+}
+
+.si-tree-view-item {
+  @extend %si-tree-view-item-all;
+  justify-content: space-between;
+
+  min-block-size: var(--si-tree-view-item-min-height);
+  padding-inline: var(--si-tree-view-padding-base-horizontal)
+    calc(var(--si-tree-view-padding-base-horizontal) / 4);
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+:host-context(.si-tree-view-flat) .si-tree-view-item {
+  padding-inline-start: calc(var(--si-tree-view-padding-base-horizontal) / 2);
+}
+
+.si-tree-view-state-indicator {
+  margin-block: 0;
+  margin-inline: calc(var(--si-tree-view-padding-base-horizontal) * 0.75);
+  min-inline-size: map.get(variables.$spacers, 3);
+  block-size: map.get(variables.$spacers, 3);
+  border-radius: 50%;
+
+  &.si-tree-view-state-indicator-endmost {
+    margin-inline-end: calc(var(--si-tree-view-padding-base-horizontal) * 1.75);
+  }
+}
+
+.si-tree-view-item-group {
+  @extend %si-tree-view-item-all;
+
+  padding-block: calc(2 * var(--si-tree-view-padding-base-vertical));
+
+  padding-inline: calc(var(--si-tree-view-padding-base-horizontal) / 2);
+  cursor: default;
+
+  .si-tree-view-item-dropdown-caret:hover,
+  .si-tree-view-item-icon:hover {
+    cursor: pointer;
+  }
+}
+
+.si-tree-view-item-dropdown-caret,
+.si-tree-view-item-dropdown-caret:hover,
+.si-tree-view-item-icon,
+.si-tree-view-item-icon:hover {
+  color: variables.$element-text-primary;
+  text-decoration: none;
+  font-size: var(--si-tree-view-icon-size);
+}
+
+.si-tree-view-item-main {
+  overflow-x: hidden;
+
+  > .badge {
+    margin-block: auto;
+  }
+}
+
+.si-tree-view-item-object-data {
+  > .si-tree-view-item-object-data-field-1 {
+    color: var(--si-tree-view-item-object-data-field-1-color);
+  }
+
+  :host.si-tree-ellipsis & {
+    overflow-x: hidden;
+  }
+
+  > * {
+    white-space: nowrap;
+    margin-block: 0;
+    line-height: var(--si-tree-view-item-line-height);
+
+    :host.si-tree-ellipsis & {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  > h5 {
+    font-size: var(--si-tree-view-item-object-data-h5-font-size);
+    font-weight: var(--si-tree-view-item-object-data-h5-font-weight);
+  }
+}
+
+.si-tree-view-menu-btn {
+  pointer-events: none;
+}
+
+.si-tree-view-item-end-icons {
+  block-size: calc(
+    var(--si-tree-view-item-min-height) - 2 *
+      (variables.$element-button-focus-width + variables.$element-button-focus-overlay-width)
+  );
+
+  &.si-tree-view-item-end-icons-sticky {
+    position: sticky;
+    inset-inline-end: 0;
+  }
+}
+
+.input-box {
+  margin-inline: map.get(variables.$spacers, 1) map.get(variables.$spacers, 5);
+}
+
+.form-check-input {
+  display: block;
+}
+
+si-loading-spinner {
+  --loading-spinner-size: var(--si-tree-view-icon-size);
+}

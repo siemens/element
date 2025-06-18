@@ -1,0 +1,13 @@
+<!--
+The tree doesn't have a default height, so you have to specify the `height` yourself. Otherwise, it will not be visible.
+When using `class="h-100"` as in the example below, the parent container must also have a (fixed) height.
+For production code, we recommend using flex-box in your whole application.
+-->
+<si-tree-view
+  ariaLabel="Company locations"
+  class="h-100"
+  [enableDataField1]="true"
+  [enableSelection]="true"
+  [items]="treeItems"
+  [contextMenuItems]="menuItemProvider"
+/>
