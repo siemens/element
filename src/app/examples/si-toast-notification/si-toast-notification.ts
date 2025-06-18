@@ -11,8 +11,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
   selector: 'app-sample',
   templateUrl: './si-toast-notification.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'p-5' },
-  styles: '.button-container .btn { margin: 5px }'
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

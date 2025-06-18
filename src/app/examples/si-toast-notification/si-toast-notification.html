@@ -1,4 +1,4 @@
-<div class="button-container e2e-ignore">
+<div class="d-flex flex-wrap gap-4 e2e-ignore">
   <button
     type="button"
     class="btn btn-secondary"
@@ -21,6 +21,20 @@
     (click)="showToast('danger', 'Security breach', 'Lab doors opened forcefully')"
   >
     Danger toast
+  </button>
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="showToast('caution', 'Caution', 'Description of the message')"
+  >
+    Caution toast
+  </button>
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="showToast('critical', 'Critical', 'Description of the message')"
+  >
+    Critical toast
   </button>
   <button
     type="button"
