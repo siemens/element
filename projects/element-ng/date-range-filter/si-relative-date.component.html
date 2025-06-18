@@ -1,0 +1,14 @@
+<si-number-input
+  class="form-control mb-4"
+  [aria-label]="valueLabel()"
+  [ngModel]="offset()"
+  (ngModelChange)="updateValue($event)"
+/>
+<si-select
+  class="form-control"
+  min="0"
+  [ariaLabel]="unitLabel()"
+  [options]="offsetList()"
+  [ngModel]="unit()"
+  (ngModelChange)="changeUnit($event)"
+/>

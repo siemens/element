@@ -1,0 +1,70 @@
+<button
+  #trigger="cdkOverlayOrigin"
+  type="button"
+  class="btn btn-input me-4"
+  cdkOverlayOrigin
+  (click)="open = true"
+>
+  <i class="icon element-calendar"></i>
+  @if (resolved?.valid) {
+    {{ resolved?.start | date: 'shortDate' }} -
+    {{ resolved?.end | date: 'shortDate' }}
+  } @else {
+    ?
+  }
+</button>
+
+<ng-template
+  cdkConnectedOverlay
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  cdkConnectedOverlayPush
+  [cdkConnectedOverlayOpen]="open"
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayHasBackdrop]="true"
+  (backdropClick)="open = false"
+  (detach)="open = false"
+>
+  <div cdkTrapFocus cdkTrapFocusAutoCapture>
+    <si-date-range-filter
+      class="elevation-2 rounded"
+      [enableTimeSelection]="enableTimeSelection"
+      [presetList]="showPresets ? presetList : []"
+      [basicMode]="inputMode ? 'input' : 'calendar'"
+      [showApplyButton]="showApply"
+      [(range)]="range"
+      (rangeChange)="updateResolved()"
+      (applyClicked)="open = false"
+    />
+  </div>
+</ng-template>
+
+<div class="e2e-ignore card mt-6">
+  <div class="card-body">
+    <form class="row">
+      <si-form-item class="col-sm-3" label="Input mode">
+        <input type="checkbox" class="form-check-input" name="inputMode" [(ngModel)]="inputMode" />
+      </si-form-item>
+      <si-form-item class="col-sm-3" label="With time">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          name="time"
+          [(ngModel)]="enableTimeSelection"
+          (ngModelChange)="updateResolved()"
+        />
+      </si-form-item>
+      <si-form-item class="col-sm-3" label="Show presets">
+        <input type="checkbox" class="form-check-input" name="presets" [(ngModel)]="showPresets" />
+      </si-form-item>
+      <si-form-item class="col-sm-3" label="Show apply button">
+        <input type="checkbox" class="form-check-input" name="apply" [(ngModel)]="showApply" />
+      </si-form-item>
+    </form>
+    object (JSON.stringify()): {{ range | json }}
+    <br />
+    resolved:
+    @if (resolved?.valid) {
+      {{ resolved?.start | date: 'medium' }} - {{ resolved?.end | date: 'medium' }}
+    }
+  </div>
+</div>

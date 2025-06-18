@@ -1,0 +1,56 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: inline-grid;
+  background: variables.$element-base-1;
+  grid-template-areas: 'preset main' 'footer footer';
+}
+
+.main-form {
+  inline-size: 348px;
+  grid-area: main;
+}
+
+.advanced-form {
+  // same height as date-picker (which is huge)
+  block-size: 392px;
+}
+
+.preset-select {
+  display: flex;
+  inline-size: 200px;
+  flex-direction: column;
+  grid-area: preset;
+}
+
+ul {
+  flex: 1 1 0;
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+.preset-item {
+  cursor: pointer;
+  line-height: variables.$si-line-height-body-2;
+
+  &:hover {
+    background: variables.$element-base-1-hover;
+  }
+}
+
+label {
+  display: inline-flex;
+  align-items: center;
+}
+
+.form-check-input {
+  inset-block-start: 0;
+}
+
+.element-zoom {
+  rotate: 45deg;
+}
+
+.footer {
+  grid-area: footer;
+}

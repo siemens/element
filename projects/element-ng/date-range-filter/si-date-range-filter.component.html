@@ -1,0 +1,203 @@
+@if (presetList()?.length) {
+  <div class="preset-select border-end">
+    @if (presetSearch()) {
+      <si-search-bar
+        colorVariant="base-0"
+        class="mx-6 mt-5 mb-6"
+        [placeholder]="searchLabel() | translate"
+        [showIcon]="true"
+        [(ngModel)]="presetFilter"
+      />
+    }
+    <ul class="overflow-auto" cdkListbox [attr.aria-label]="presetLabel() | translate">
+      @for (item of filteredPresetList(); track $index) {
+        @if (item.label | translate | presetMatchFilter: presetFilter()) {
+          <li
+            class="preset-item focus-inside px-8 py-5"
+            [cdkOption]="item.label"
+            (click)="selectPresetItem(item)"
+            (keydown.enter)="selectPresetItem(item)"
+          >
+            {{ item.label | translate }}
+          </li>
+        }
+      }
+    </ul>
+  </div>
+}
+<form class="main-form d-flex flex-column flex-fill">
+  @if (advancedMode || inputMode()) {
+    <div class="advanced-form px-6 py-4">
+      @if (!reverseInputFields()) {
+        <ng-container *ngTemplateOutlet="formReferencePoint" />
+      }
+
+      <div class="mb-8">
+        @if (point2Mode === 'date') {
+          <ng-container *ngTemplateOutlet="formPoint2Date" />
+        }
+        @if (point2Mode === 'duration') {
+          <ng-container *ngTemplateOutlet="formPoint2Duration" />
+        }
+      </div>
+
+      @if (reverseInputFields()) {
+        <ng-container *ngTemplateOutlet="formReferencePoint" />
+      }
+    </div>
+  } @else {
+    <si-datepicker
+      [config]="dateRangeConfig()"
+      [focusedDate]="dateRange.end ?? dateRange.start"
+      [(dateRange)]="dateRange"
+      (dateRangeChange)="updateFromDateRange()"
+    />
+  }
+
+  @if (advancedMode || !hideAdvancedMode()) {
+    <label class="form-switch form-check ms-6">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        name="advancedMode"
+        role="switch"
+        [(ngModel)]="advancedMode"
+        (ngModelChange)="updateOnModeChange()"
+      />
+      <span class="form-check-label">{{ advancedLabel() | translate }}</span>
+    </label>
+  }
+
+  <div class="mt-4 mb-6 ms-6">
+    {{ previewLabel() | translate }}:
+    <span class="preview">
+      @if (calculatedRange().valid) {
+        {{ calculatedRange().start | date: pipeFormat() }} -
+        {{ calculatedRange().end | date: pipeFormat() }}
+      } @else {
+        ?
+      }
+    </span>
+  </div>
+</form>
+
+@if (showApplyButton()) {
+  <div class="footer border-top px-6 py-5 d-flex">
+    <button type="button" class="btn btn-primary ms-auto" (click)="applyClicked.emit()">
+      {{ applyLabel() | translate }}
+    </button>
+  </div>
+}
+
+<ng-template #formReferencePoint>
+  <div class="mb-8">
+    <label class="d-block">
+      <span class="form-label">{{
+        (advancedMode ? refLabel() : reverseInputFields() ? toLabel() : fromLabel()) | translate
+      }}</span>
+      <si-calendar-button class="w-100">
+        <input
+          type="text"
+          class="form-control"
+          name="point1"
+          required
+          siDatepicker
+          [siDatepickerConfig]="datepickerConfigInternal()"
+          [disabled]="point1Now"
+          [placeholder]="datePlaceholder() | translate"
+          [(ngModel)]="point1date"
+          (ngModelChange)="point1Changed()"
+        />
+      </si-calendar-button>
+    </label>
+    <label class="ms-4 mt-4 text-nowrap form-check">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        name="point1now"
+        [(ngModel)]="point1Now"
+        (ngModelChange)="point1Changed()"
+      />
+      <span class="form-check-label">{{
+        (enableTimeSelection() ? nowLabel() : todayLabel()) | translate
+      }}</span>
+    </label>
+  </div>
+</ng-template>
+
+<ng-template #formPoint2Date>
+  <label class="d-block mb-4 bp-9">
+    <span class="form-label">{{
+      (reverseInputFields() ? fromLabel() : toLabel()) | translate
+    }}</span>
+    <si-calendar-button class="w-100">
+      <input
+        type="text"
+        class="form-control"
+        name="point2"
+        required
+        siDatepicker
+        [siDatepickerConfig]="datepickerConfigInternal()"
+        [attr.aria-label]="dateLabel() | translate"
+        [placeholder]="datePlaceholder() | translate"
+        [(ngModel)]="point2date"
+        (ngModelChange)="point2Changed()"
+      />
+    </si-calendar-button>
+  </label>
+</ng-template>
+
+<ng-template #formPoint2Duration>
+  <div>
+    <span class="form-label">{{ rangeLabel() | translate }}</span>
+    <si-relative-date
+      class="d-block mb-4"
+      [unitLabel]="unitLabel() | translate"
+      [valueLabel]="valueLabel() | translate"
+      [enableTimeSelection]="enableTimeSelection()"
+      [(value)]="point2offset"
+      (valueChange)="point2Changed()"
+    />
+    <div class="range-type ms-4">
+      <label class="form-check form-check-inline">
+        <input
+          type="radio"
+          class="form-check-input"
+          value="before"
+          name="point2range"
+          [(ngModel)]="point2range"
+          (ngModelChange)="point2Changed()"
+        />
+        <span class="form-check-label">
+          {{ beforeLabel() | translate }}
+        </span>
+      </label>
+      <label class="form-check form-check-inline">
+        <input
+          type="radio"
+          class="form-check-input"
+          value="after"
+          name="point2range"
+          [(ngModel)]="point2range"
+          (ngModelChange)="point2Changed()"
+        />
+        <span class="form-check-label">
+          {{ afterLabel() | translate }}
+        </span>
+      </label>
+      <label class="form-check form-check-inline">
+        <input
+          type="radio"
+          class="form-check-input"
+          value="within"
+          name="point2range"
+          [(ngModel)]="point2range"
+          (ngModelChange)="point2Changed()"
+        />
+        <span class="form-check-label">
+          {{ withinLabel() | translate }}
+        </span>
+      </label>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,62 @@
+<div class="card d-inline-block">
+  <si-date-range-filter
+    class="border"
+    [enableTimeSelection]="enableTimeSelection"
+    [presetList]="showPresets ? presetList : []"
+    [basicMode]="inputMode ? 'input' : 'calendar'"
+    [showApplyButton]="showApply"
+    [hideAdvancedMode]="hideAdvanced"
+    [reverseInputFields]="reverseInputFields"
+    [(range)]="range"
+    (rangeChange)="updateResolved()"
+    (applyClicked)="logEvent('apply clicked')"
+  />
+</div>
+
+<div class="e2e-ignore card mt-6">
+  <div class="card-body">
+    <form class="mb-4">
+      <label class="me-4">
+        <input type="checkbox" class="form-check-input" name="inputMode" [(ngModel)]="inputMode" />
+        <span class="form-check-label">Input mode</span>
+      </label>
+      <label class="me-4">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          name="time"
+          [(ngModel)]="enableTimeSelection"
+          (ngModelChange)="updateResolved()"
+        />
+        <span class="form-check-label">With time</span>
+      </label>
+      <label class="me-4">
+        <input type="checkbox" class="form-check-input" name="presets" [(ngModel)]="showPresets" />
+        <span class="form-check-label">Show presets</span>
+      </label>
+      <label class="me-4">
+        <input type="checkbox" class="form-check-input" name="apply" [(ngModel)]="showApply" />
+        <span class="form-check-label">Show apply button</span>
+      </label>
+      <label class="me-4">
+        <input type="checkbox" class="form-check-input" name="apply" [(ngModel)]="hideAdvanced" />
+        <span class="form-check-label">Hide advanced mode</span>
+      </label>
+      <label class="me-4">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          name="apply"
+          [(ngModel)]="reverseInputFields"
+        />
+        <span class="form-check-label">Reverse input fields</span>
+      </label>
+    </form>
+    object (JSON.stringify()): {{ range | json }}
+    <br />
+    resolved:
+    @if (resolved?.valid) {
+      {{ resolved?.start | date: 'medium' }} - {{ resolved?.end | date: 'medium' }}
+    }
+  </div>
+</div>
