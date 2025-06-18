@@ -1,0 +1,32 @@
+@if (props.hidden !== true) {
+  <div>
+    @if (props.label && props.plain !== true) {
+      <b>{{ props.label }}</b>
+    }
+    @if (props.description && props.plain !== true) {
+      <p>{{ props.description }}</p>
+    }
+    @if (displayErrorMessages) {
+      <div class="alert alert-danger" role="alert">
+        <formly-validation-message [field]="field" />
+      </div>
+    }
+    <div [class]="containerClass">
+      @for (row of rows; track $index) {
+        <div [class]="row.classes">
+          @for (column of row.columns; track $index) {
+            <div [class]="column.classes">
+              <si-form-container>
+                <div si-form-container-content>
+                  @for (f of column.fields; track $index) {
+                    <formly-field class="d-block" [field]="f" />
+                  }
+                </div>
+              </si-form-container>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+}

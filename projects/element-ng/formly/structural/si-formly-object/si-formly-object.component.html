@@ -1,0 +1,18 @@
+@if (props.hidden !== true) {
+  <div class="mb-3">
+    @if (props.label) {
+      <b>{{ props.label }}</b>
+    }
+    @if (props.description) {
+      <p>{{ props.description }}</p>
+    }
+    @if (showError && formControl.errors) {
+      <div class="alert alert-danger" role="alert">
+        <formly-validation-message [field]="field" />
+      </div>
+    }
+    @for (f of field.fieldGroup; track $index) {
+      <formly-field [field]="f" />
+    }
+  </div>
+}

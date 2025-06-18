@@ -1,0 +1,6 @@
+<si-form-fieldset [label]="label!" [labelWidth]="labelWidth" [required]="props.required">
+  <ng-template #fieldComponent />
+  <div class="invalid-feedback" [class.d-block]="showError">
+    <formly-validation-message [field]="field" />
+  </div>
+</si-form-fieldset>

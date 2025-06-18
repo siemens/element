@@ -1,0 +1,8 @@
+<div>
+  @if (props.description) {
+    <p>{{ props.description }}</p>
+  }
+  @for (f of field.fieldGroup; track $index) {
+    <formly-field [field]="f" />
+  }
+</div>

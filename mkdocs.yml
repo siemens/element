@@ -101,6 +101,7 @@ nav:
       - Unauthorized Page:                'components/pages/unauthorized-page.md'
   - Architecture:
     - CSS framework:                      'architecture/css-framework.md'
+    - Dynamic forms:                      'architecture/dynamic-forms.md'
     - Theming:                            'architecture/theming.md'
     - Motion and animation:               'architecture/motion-animation.md'
   - Contributing:                         'CONTRIBUTING.md'

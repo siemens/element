@@ -1,0 +1,34 @@
+@mixin si-layout-fixed-height {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-block-size: 0;
+}
+
+:host {
+  @include si-layout-fixed-height();
+
+  ::ng-deep {
+    si-form-container {
+      > div:only-child {
+        &,
+        > [siresponsivecontainer] {
+          @include si-layout-fixed-height();
+        }
+      }
+    }
+
+    si-formly.si-layout-fixed-height {
+      > formly-form {
+        &,
+        > formly-field:only-child {
+          @include si-layout-fixed-height();
+        }
+      }
+    }
+  }
+}
+
+.si-layout-fixed-height {
+  @include si-layout-fixed-height();
+}

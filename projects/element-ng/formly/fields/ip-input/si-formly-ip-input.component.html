@@ -1,0 +1,21 @@
+@if (field.type === 'ipv6') {
+  <input
+    type="text"
+    class="form-control"
+    siIpV6
+    [cidr]="props.cidr"
+    [formControl]="formControl"
+    [formlyAttributes]="field"
+    [id]="id"
+  />
+} @else {
+  <input
+    type="text"
+    class="form-control"
+    siIpV4
+    [cidr]="props.cidr"
+    [formControl]="formControl"
+    [formlyAttributes]="field"
+    [id]="id"
+  />
+}

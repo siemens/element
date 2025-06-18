@@ -1,0 +1,16 @@
+<button
+  type="button"
+  class="btn"
+  [id]="id"
+  [ngClass]="{
+    'btn-secondary': !props.btnType || props.btnType === 'secondary',
+    'btn-primary': props.btnType === 'primary',
+    'btn-tertiary': props.btnType === 'tertiary',
+    'btn-warning': props.btnType === 'warning',
+    'btn-danger': props.btnType === 'danger'
+  }"
+  [formlyAttributes]="field"
+  [hidden]="props.hidden"
+  (click)="click()"
+  >{{ props.label | translate }}</button
+>

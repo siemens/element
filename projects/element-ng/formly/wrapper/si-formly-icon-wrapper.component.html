@@ -1,0 +1,14 @@
+<div class="d-flex">
+  <div class="flex-1 me-2">
+    <ng-template #fieldComponent />
+  </div>
+  @if (props.icon) {
+    <div
+      class="wrapper-icon"
+      [style]="'font-size: ' + (props.iconSize ? props.iconSize : 24) + 'px'"
+      [siTooltip]="props.iconTooltip | translate"
+    >
+      <i [class]="props.icon"></i>
+    </div>
+  }
+</div>

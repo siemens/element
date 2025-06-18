@@ -1,0 +1,26 @@
+<si-accordion
+  #accordion
+  [expandFirstPanel]="props.expandFirstPanel ?? accordion.expandFirstPanel()"
+  [fullHeight]="props.fullHeight ?? accordion.fullHeight()"
+  [hcollapsed]="props.hcollapsed ?? accordion.collapsed()"
+  [colorVariant]="props.colorVariant"
+>
+  @for (f of field.fieldGroup; track $index) {
+    <si-collapsible-panel
+      #panel
+      [heading]="f.props?.label"
+      [contentCssClasses]="f.props?.cssClasses ?? 'p-5'"
+      [headerCssClasses]="f.props?.headerCssClasses ?? panel.headerCssClasses()"
+      [contentBgClasses]="f.props?.contentBgClasses ?? panel.contentBgClasses()"
+      [badge]="f.props?.badge ?? panel.badge()"
+      [badgeColor]="f.props?.badgeColor ?? panel.badgeColor()"
+      [icon]="f.props?.icon ?? panel.icon()"
+      [opened]="f.props?.opened ?? panel.opened()"
+      [disabled]="f.props?.disabled ?? panel.disabled()"
+      [colorVariant]="f.props?.colorVariant ?? panel.colorVariant()"
+      (panelToggle)="panelToggle($event, f)"
+    >
+      <formly-field [field]="f" [formlyAttributes]="field" />
+    </si-collapsible-panel>
+  }
+</si-accordion>

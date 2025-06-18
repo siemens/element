@@ -1,0 +1,20 @@
+@if (props.multi) {
+  <si-select
+    class="form-control"
+    multi
+    [id]="id"
+    [options]="props.optionsList"
+    [formControl]="formControl"
+    [formlyAttributes]="field"
+    [readonly]="props.readonly || false"
+  />
+} @else {
+  <si-select
+    class="form-control"
+    [id]="id"
+    [options]="props.optionsList"
+    [formControl]="formControl"
+    [formlyAttributes]="field"
+    [readonly]="props.readonly || false"
+  />
+}

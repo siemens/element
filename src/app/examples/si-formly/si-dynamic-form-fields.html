@@ -1,0 +1,23 @@
+<div class="container-fluid p-5">
+  <p>Showcase for all available standard components for input and output</p>
+  <p
+    >The form is completely configured in Typescript (See <em>Field configuration</em> at bottom)</p
+  >
+  <h1>Form</h1>
+  <si-form-container [form]="form">
+    <div si-form-container-content>
+      <si-formly
+        [labelWidth]="150"
+        [fields]="fields"
+        [model]="model"
+        [form]="form"
+        [options]="options"
+      />
+    </div>
+  </si-form-container>
+  <h1>Model</h1>
+  <pre tabindex="0">{{ model | json }}</pre>
+  <h1>Field configuration</h1>
+  <p>Array of FormlyFieldConfig</p>
+  <pre tabindex="0">{{ fieldsTmpl | json }}</pre>
+</div>

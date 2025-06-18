@@ -1,0 +1,38 @@
+<div class="container-fluid p-5">
+  <p>Showcase for all available standard components for input and output</p>
+  <p
+    >The form is completely configured in Typescript (See <em>Field configuration</em> at bottom)</p
+  >
+
+  <h2>Form Actions</h2>
+  <button type="button" class="btn btn-primary me-5" (click)="toggleObservableStateReadonly()">
+    Toggle readonlyObservable
+  </button>
+  <button type="button" class="btn btn-primary me-5" (click)="toggleObservableStateRequired()">
+    Toggle required Observable
+  </button>
+  <br /><br />
+  <button type="button" class="btn btn-primary me-5" (click)="toggleFormStatePermission()">
+    Toggle formState
+  </button>
+
+  <h1>Form</h1>
+  <si-form-container [form]="form">
+    <div si-form-container-content>
+      <si-formly
+        [labelWidth]="250"
+        [fields]="fields"
+        [form]="form"
+        [options]="options"
+        [(model)]="model"
+      />
+    </div>
+  </si-form-container>
+  <h1>Model</h1>
+  <pre>{{ model | json }}</pre>
+  <h1>Formstate</h1>
+  <pre>{{ options.formState | json }}</pre>
+
+  See also
+  <a href="https://formly.dev/guide/expression-properties">Formly Expression Documentation</a>
+</div>

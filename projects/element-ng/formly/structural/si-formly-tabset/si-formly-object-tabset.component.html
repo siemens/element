@@ -1,0 +1,13 @@
+<si-tabset
+  class="d-flex si-layout-fixed-height"
+  [selectedTabIndex]="options.formState?.selectedTabIndex ?? 0"
+  (selectedTabIndexChange)="tabIndexChange($event)"
+>
+  @for (f of field.fieldGroup; track $index) {
+    @if (!(f.props?.hidden === true)) {
+      <si-tab class="overflow-auto pt-8" [heading]="f.props?.label || ''">
+        <formly-field [field]="f" [formlyAttributes]="field" />
+      </si-tab>
+    }
+  }
+</si-tabset>

@@ -1,0 +1,13 @@
+<si-calendar-button class="w-100">
+  <input
+    type="text"
+    class="form-control"
+    siDatepicker
+    [id]="id"
+    [autoClose]="props.autoClose"
+    [placeholder]="props.placeholder"
+    [formControl]="formControl"
+    [siDatepickerConfig]="props.dateConfig"
+    [readonly]="props.readonly || false"
+  />
+</si-calendar-button>

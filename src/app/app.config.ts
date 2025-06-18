@@ -19,6 +19,7 @@ import {
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { provideSiDatatableConfig } from '@siemens/element-ng/datatable';
+import { SiFormlyModule } from '@siemens/element-ng/formly';
 import { provideIconConfig } from '@siemens/element-ng/icon';
 import {
   SI_LOCALE_CONFIG,
@@ -36,6 +37,7 @@ import {
 import { lastValueFrom, Observable, take } from 'rxjs';
 
 import { FileUploadInterceptor } from './examples/si-file-uploader/file-upload-interceptor';
+import { CustomWrapperComponent } from './examples/si-formly/dynamic-form-custom-wrapper';
 import { LivePreviewThemeApiService } from './shared/live-preview-theme.api.service';
 import { WebpackTranslateLoader } from './webpack-translate-loader';
 
@@ -116,7 +118,19 @@ export const APP_CONFIG: ApplicationConfig = {
       // App internal
       SimplLivePreviewModule.forRoot(
         {
-          modules: [],
+          modules: [
+            SiFormlyModule.forRoot({
+              wrappers: [
+                {
+                  name: 'custom-wrapper',
+                  component: CustomWrapperComponent
+                }
+              ],
+              extras: {
+                resetFieldOnHide: false
+              }
+            })
+          ],
           componentLoader,
           examplesBaseUrl: 'app/examples/',
           ticketBaseUrl: 'https://github.com/siemens/element/issues/new',

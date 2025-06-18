@@ -1,0 +1,16 @@
+<si-date-range
+  #dateRange
+  [id]="id"
+  [formlyAttributes]="field"
+  [formControl]="formControl"
+  [siDatepickerConfig]="props.siDatepickerConfig"
+  [startDatePlaceholder]="props.startDatePlaceholder ?? dateRange.startDatePlaceholder()"
+  [endDatePlaceholder]="props.endDatePlaceholder ?? dateRange.endDatePlaceholder()"
+  [ariaLabelCalendarButton]="props.ariaLabelCalendarButton ?? dateRange.ariaLabelCalendarButton()"
+  [startTimeLabel]="props.startTimeLabel ?? dateRange.startTimeLabel()"
+  [endTimeLabel]="props.endTimeLabel ?? dateRange.endTimeLabel()"
+  [debounceTime]="props.debounceTime ?? dateRange.debounceTime()"
+  [required]="props.required ?? false"
+  [readonly]="props.readonly ?? dateRange.readonly()"
+  [autoClose]="props.autoClose ?? dateRange.autoClose()"
+/>

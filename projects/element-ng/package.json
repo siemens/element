@@ -24,6 +24,8 @@
     "@angular/core": "19",
     "@angular/forms": "19",
     "@angular/router": "19",
+    "@ngx-formly/bootstrap": "^6.2.2",
+    "@ngx-formly/core": "^6.2.2",
     "@siemens/element-translate-ng": "47.4.0",
     "@siemens/element-theme": "47.4.0",
     "@siemens/ngx-datatable": "^22.0.0",
@@ -33,6 +35,12 @@
   },
   "peerDependenciesMeta": {
     "@angular/animations": {
+      "optional": true
+    },
+    "@ngx-formly/bootstrap": {
+      "optional": true
+    },
+    "@ngx-formly/core": {
       "optional": true
     },
     "@siemens/ngx-datatable": {

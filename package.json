@@ -64,6 +64,8 @@
     "@angular/platform-browser": "19.0.6",
     "@angular/platform-browser-dynamic": "19.0.6",
     "@angular/router": "19.0.6",
+    "@ngx-formly/bootstrap": "^6.2.2",
+    "@ngx-formly/core": "^6.2.2",
     "@ngx-translate/core": "16.0.4",
     "@siemens/ngx-datatable": "^22.4.1",
     "flag-icons": "7.3.2",

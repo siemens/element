@@ -1,0 +1,42 @@
+<div class="mb-3">
+  @if (props.label) {
+    <b>{{ props.label }}</b>
+  }
+  @if (props.description) {
+    <p>{{ props.description }}</p>
+  }
+  @if (showError && formControl.errors) {
+    <div class="alert alert-danger" role="alert">
+      <formly-validation-message [field]="field" />
+    </div>
+  }
+  @for (field of field.fieldGroup; track $index) {
+    <div class="row">
+      <formly-field class="col-10" [field]="field" />
+      @if (!props.readonly && !props.disabled && !props.noRemove) {
+        <div class="col-1 text-end">
+          @if (props.removeText) {
+            <button class="btn btn-danger" type="button" (click)="remove($index)">
+              {{ props.removeText | translate }}
+            </button>
+          }
+          @if (!props.removeText) {
+            <button class="btn btn-danger" type="button" (click)="remove($index)"> - </button>
+          }
+        </div>
+      }
+    </div>
+  }
+  @if (!props.readonly && !props.disabled && !props.noAdd) {
+    <div class="d-flex flex-row-reverse">
+      @if (props.addText) {
+        <button class="btn btn-primary" type="button" (click)="add()">
+          {{ props.addText | translate }}
+        </button>
+      }
+      @if (!props.addText) {
+        <button class="btn btn-primary" type="button" (click)="add()"> + </button>
+      }
+    </div>
+  }
+</div>

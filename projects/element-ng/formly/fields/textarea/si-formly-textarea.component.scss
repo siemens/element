@@ -1,0 +1,17 @@
+.textarea-grow-wrap {
+  display: grid;
+}
+
+.textarea-grow-wrap::after {
+  content: var(--content-grow);
+  white-space: pre-wrap;
+  visibility: hidden;
+  margin-block: 3px;
+}
+
+.textarea-grow-wrap > textarea,
+.textarea-grow-wrap::after {
+  grid-area: 1 / 1 / 2 / 2;
+  padding-block: 6px;
+  font: inherit;
+}

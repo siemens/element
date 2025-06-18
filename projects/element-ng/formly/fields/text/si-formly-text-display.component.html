@@ -1,0 +1,10 @@
+<input type="hidden" [id]="id" [formControl]="formControl" [formlyAttributes]="field" />
+<div>
+  @if (props.prefix) {
+    {{ props.prefix | translate }}
+  }
+  {{ value }}
+  @if (props.suffix) {
+    {{ props.suffix | translate }}
+  }
+</div>

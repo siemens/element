@@ -1,0 +1,18 @@
+<div
+  class="textarea-grow-wrap text-break"
+  [style.--content-grow]="contentGrowTextarea()"
+  [style.max-height]="maxHeightConfiguration()"
+>
+  <textarea
+    #textArea
+    class="form-control"
+    [id]="id"
+    [rows]="props.rows ?? 1"
+    [cols]="props.cols ?? 1"
+    [formControl]="formControl"
+    [formlyAttributes]="field"
+    [style.resize]="resizeConfiguration()"
+    [style.max-height]="maxHeightConfiguration()"
+  >
+  </textarea>
+</div>

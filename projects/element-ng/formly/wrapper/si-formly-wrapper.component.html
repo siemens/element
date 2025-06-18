@@ -1,0 +1,8 @@
+<si-form-item [label]="label" [labelWidth]="labelWidth" [required]="props.required">
+  <div class="w-100" siFormlyFormFieldProvider [field]="field">
+    <ng-template #fieldComponent />
+    <div class="invalid-feedback" [class.d-block]="showError">
+      <formly-validation-message [field]="field" />
+    </div>
+  </div>
+</si-form-item>

@@ -1,0 +1,10 @@
+<div class="form-container p-5">
+  <h1>Form</h1>
+  <si-form-container class="p-5" [form]="form">
+    <div si-form-container-content>
+      <si-formly [labelWidth]="100" [fields]="fields" [model]="model" [form]="form" />
+    </div>
+  </si-form-container>
+  <h1>Model</h1>
+  <pre>{{ model | json }}</pre>
+</div>
