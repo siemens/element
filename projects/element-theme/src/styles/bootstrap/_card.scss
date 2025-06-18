@@ -70,6 +70,10 @@
   &.accent-danger {
     border-inline-start: map.get(spacers.$spacers, 4) solid semantic-tokens.$element-status-danger;
   }
+
+  &.accent-critical {
+    border-inline-start: map.get(spacers.$spacers, 4) solid semantic-tokens.$element-status-critical;
+  }
 }
 
 .card-header {
