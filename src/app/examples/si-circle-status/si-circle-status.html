@@ -1,0 +1,114 @@
+<div class="p-6">
+  <div class="bg-base-1 p-6">
+    <si-circle-status status="info" class="me-5" [blink]="pulsing" />
+    <si-circle-status status="caution" class="me-5" [blink]="pulsing" />
+    <si-circle-status status="warning" class="me-5" [blink]="pulsing" />
+    <si-circle-status status="danger" class="me-5" [blink]="pulsing" />
+    <si-circle-status status="critical" class="me-5" [blink]="pulsing" />
+    <si-circle-status status="progress" class="me-5" [blink]="pulsing" />
+    <si-circle-status status="pending" class="me-5" [blink]="pulsing" />
+    <si-circle-status status="unknown" class="me-5" [blink]="pulsing" />
+    <si-circle-status color="#D72339" [blink]="pulsing" />
+
+    <h6 class="mt-6">Regular</h6>
+    <si-circle-status status="info" icon="element-plant" class="me-5" [blink]="pulsing" />
+    <si-circle-status
+      status="caution"
+      icon="element-plant"
+      class="me-5"
+      [blink]="pulsing"
+      [eventOut]="true"
+    />
+    <si-circle-status
+      status="caution"
+      icon="element-plant"
+      class="me-5"
+      eventIcon="element-left-4 flip-rtl"
+      [blink]="pulsing"
+    />
+    <si-circle-status status="warning" icon="element-plant" class="me-5" [blink]="pulsing" />
+    <si-circle-status status="danger" icon="element-plant" class="me-5" [blink]="pulsing" />
+    <si-circle-status status="critical" icon="element-plant" class="me-5" [blink]="pulsing" />
+    <si-circle-status status="progress" icon="element-plant" class="me-5" [blink]="pulsing" />
+    <si-circle-status status="pending" icon="element-plant" class="me-5" [blink]="pulsing" />
+    <si-circle-status status="unknown" icon="element-plant" class="me-5" [blink]="pulsing" />
+    <si-circle-status color="#D72339" icon="element-plant" [blink]="pulsing" />
+
+    <h6 class="mt-6">Small</h6>
+    <si-circle-status
+      status="info"
+      icon="element-plant"
+      size="small"
+      class="me-5"
+      [blink]="pulsing"
+    />
+    <si-circle-status
+      status="caution"
+      icon="element-plant"
+      size="small"
+      class="me-5"
+      [blink]="pulsing"
+      [eventOut]="true"
+    />
+    <si-circle-status
+      status="caution"
+      icon="element-plant"
+      size="small"
+      class="me-5"
+      eventIcon="element-left-4 flip-rtl"
+      [blink]="pulsing"
+    />
+    <si-circle-status
+      status="warning"
+      icon="element-plant"
+      size="small"
+      class="me-5"
+      [blink]="pulsing"
+    />
+    <si-circle-status
+      status="danger"
+      icon="element-plant"
+      size="small"
+      class="me-5"
+      [blink]="pulsing"
+    />
+    <si-circle-status
+      status="critical"
+      icon="element-plant"
+      size="small"
+      class="me-5"
+      [blink]="pulsing"
+    />
+    <si-circle-status
+      status="progress"
+      icon="element-plant"
+      size="small"
+      class="me-5"
+      [blink]="pulsing"
+    />
+    <si-circle-status
+      status="pending"
+      icon="element-plant"
+      size="small"
+      class="me-5"
+      [blink]="pulsing"
+    />
+    <si-circle-status
+      status="unknown"
+      icon="element-plant"
+      size="small"
+      class="me-5"
+      [blink]="pulsing"
+    />
+    <si-circle-status color="#D72339" icon="element-plant" size="small" [blink]="pulsing" />
+  </div>
+
+  <div class="mt-6 e2e-ignore">
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input" id="no-selection" [(ngModel)]="pulsing" />
+      <label class="form-check-label" for="no-selection"
+        >Check to simulate pulsing indication.</label
+      >
+    </div>
+  </div>
+</div>

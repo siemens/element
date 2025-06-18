@@ -20,6 +20,7 @@ documentation.
 
 - [Cards](layout-navigation/cards.md)
 - [Checkbox](forms-inputs/checkbox.md)
+- [Circle Status](status-notifications/circle-status.md)
 - [Color Picker](forms-inputs/color-picker.md)
 - [Copyright Notice](status-notifications/copyright-notice.md)
 - [Connection Strength](status-notifications/connection-strength.md)

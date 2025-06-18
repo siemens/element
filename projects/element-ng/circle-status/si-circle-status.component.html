@@ -1,0 +1,41 @@
+<div
+  class="status-indication d-flex align-items-center justify-content-center"
+  role="status"
+  [class.has-icon]="icon()"
+  [class.small]="size() === 'small'"
+  [attr.aria-label]="theAriaLabel() | translate"
+>
+  <div
+    #bg
+    class="bg"
+    [class.pulse]="blinkOn()"
+    [class.deprecated-color]="!status()"
+    [class.contrast-fix]="contrastFix()"
+    [ngClass]="backgroundClass()"
+    [style.background-color]="color()"
+  ></div>
+  @if (!status()) {
+    <div class="deprecated-dot" [style.background-color]="color()"></div>
+  }
+  @let iconConfig = statusIcon();
+  @if (iconConfig) {
+    <span class="status-icon icon-stack indicator">
+      <si-icon-next class="status-icon" [ngClass]="iconConfig.color" [icon]="iconConfig.icon" />
+      <si-icon-next
+        class="status-icon"
+        [ngClass]="iconConfig.stackedColor"
+        [icon]="iconConfig.stacked"
+      />
+    </span>
+  }
+  @let eventIconValue = eventIcon();
+  @if (eventOut()) {
+    <si-icon-next class="icon text-body event-out flip-rtl" [icon]="icons.elementRight4" />
+  } @else if (eventIconValue) {
+    <si-icon-next class="icon text-body event-out" [icon]="eventIconValue" />
+  }
+  @let iconValue = icon();
+  @if (iconValue) {
+    <si-icon-next class="icon position-relative text-body" [icon]="iconValue" />
+  }
+</div>

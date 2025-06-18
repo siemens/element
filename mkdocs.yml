@@ -76,6 +76,7 @@ nav:
       - Filter Pills:                     'components/sorting-filtering/filter-pills.md'
     - Status & notifications:
       - Avatar:                           'components/status-notifications/avatar.md'
+      - Circle Status:                    'components/status-notifications/circle-status.md'
       - Connection Strength:              'components/status-notifications/connection-strength.md'
       - Copyright Notice:                 'components/status-notifications/copyright-notice.md'
       - Empty State:                      'components/status-notifications/empty-state.md'

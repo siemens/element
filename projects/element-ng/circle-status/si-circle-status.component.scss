@@ -1,0 +1,119 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+$si-circle-status-size-regular: 40px;
+$si-circle-status-indicator-size-regular: 24px;
+$si-circle-status-bullet-size-regular: 10px;
+$si-circle-status-size-small: 32px;
+$si-circle-status-indicator-size-small: 16px;
+$si-circle-status-bullet-size-small: 8px;
+
+:host {
+  display: inline-block;
+  vertical-align: middle;
+
+  .status-indication {
+    ::ng-deep .status-icon {
+      font-size: $si-circle-status-indicator-size-regular;
+    }
+
+    &.has-icon.small ::ng-deep {
+      .status-icon,
+      .event-out {
+        font-size: $si-circle-status-indicator-size-small;
+      }
+    }
+  }
+}
+
+.deprecated-dot {
+  inline-size: $si-circle-status-bullet-size-regular;
+  block-size: $si-circle-status-bullet-size-regular;
+  border-radius: 50%;
+}
+
+.event-out {
+  position: absolute;
+  inset-block-end: -2px;
+  inset-inline-end: -13px;
+}
+
+.status-indication {
+  position: relative;
+  inline-size: $si-circle-status-size-regular;
+  block-size: $si-circle-status-size-regular;
+  border-radius: 50%;
+  border: 1px solid transparent;
+
+  &.has-icon {
+    border-color: #{variables.$element-ui-4};
+    background-color: variables.$element-base-1;
+    margin-block: 6px;
+    margin-inline: 0 12px;
+
+    .deprecated-dot,
+    .indicator {
+      position: absolute;
+    }
+
+    .deprecated-dot {
+      inset-block-start: -2px;
+      inset-inline-end: 0;
+    }
+
+    .indicator {
+      inset-block-start: -9px;
+      inset-inline-end: -13px;
+    }
+
+    &.small {
+      inline-size: $si-circle-status-size-small;
+      block-size: $si-circle-status-size-small;
+      margin-block: 4px;
+      margin-inline: 0 8px;
+
+      .event-out {
+        inset-block-end: 1px;
+        inset-inline-end: -9px;
+      }
+
+      .deprecated-dot {
+        inline-size: $si-circle-status-bullet-size-small;
+        block-size: $si-circle-status-bullet-size-small;
+        inset-block-start: -1px;
+        inset-inline-end: -1px;
+      }
+
+      .indicator {
+        inset-block-start: -6px;
+        inset-inline-end: -8px;
+      }
+    }
+  }
+
+  > * {
+    pointer-events: none;
+    line-height: 0;
+  }
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  transition: opacity variables.$element-default-transition-duration;
+  opacity: 0;
+}
+
+.pulse {
+  &.deprecated-color {
+    opacity: 0.5;
+
+    &.contrast-fix {
+      opacity: 0.25;
+    }
+  }
+
+  &:not(.deprecated-color) {
+    opacity: 1;
+  }
+}
