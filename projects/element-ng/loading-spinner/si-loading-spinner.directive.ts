@@ -4,7 +4,6 @@
  */
 import { ComponentPortal, DomPortalOutlet } from '@angular/cdk/portal';
 import {
-  ApplicationRef,
   booleanAttribute,
   computed,
   Directive,
@@ -15,7 +14,7 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
-  StaticProvider
+  ViewContainerRef
 } from '@angular/core';
 import { BehaviorSubject, combineLatest, merge, Subscription, timer } from 'rxjs';
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
@@ -52,7 +51,7 @@ export class SiLoadingSpinnerDirective implements OnInit, OnChanges, OnDestroy {
   readonly initialDelay = input(true, { transform: booleanAttribute });
 
   private el = inject(ElementRef);
-  private appRef = inject(ApplicationRef);
+  private readonly viewRef = inject(ViewContainerRef);
 
   private sub?: Subscription;
   private progressSubject = new BehaviorSubject(false);
@@ -60,7 +59,20 @@ export class SiLoadingSpinnerDirective implements OnInit, OnChanges, OnDestroy {
   private on$ = this.progressSubject.pipe(filter(val => val));
   private readonly initialWaitTime = computed(() => (this.initialDelay() ? 500 : 0));
   private minSpinTime = 500;
-  private compPortal = new ComponentPortal(SiLoadingSpinnerComponent);
+  private portalOutlet?: DomPortalOutlet;
+  private readonly compPortal = new ComponentPortal(
+    SiLoadingSpinnerComponent,
+    this.viewRef,
+    Injector.create({
+      providers: [
+        { provide: LOADING_SPINNER_BLOCKING, useFactory: () => this.blocking() },
+        {
+          provide: LOADING_SPINNER_OVERLAY,
+          useValue: true
+        }
+      ]
+    })
+  );
 
   // this makes sure the spinner only displays with a delay of 500ms and stays for 500ms so
   // that it doesn't flicker
@@ -79,20 +91,8 @@ export class SiLoadingSpinnerDirective implements OnInit, OnChanges, OnDestroy {
   );
 
   private createPortal(): void {
-    const providers: StaticProvider[] = [
-      { provide: LOADING_SPINNER_BLOCKING, useValue: this.blocking() },
-      {
-        provide: LOADING_SPINNER_OVERLAY,
-        useValue: true
-      }
-    ];
-    const outlet = new DomPortalOutlet(
-      this.el.nativeElement,
-      undefined,
-      this.appRef,
-      Injector.create({ providers })
-    );
-    this.compPortal.attach(outlet);
+    this.portalOutlet ??= new DomPortalOutlet(this.el.nativeElement);
+    this.compPortal.attach(this.portalOutlet);
   }
 
   ngOnInit(): void {
@@ -119,5 +119,6 @@ export class SiLoadingSpinnerDirective implements OnInit, OnChanges, OnDestroy {
     if (this.compPortal.isAttached) {
       this.compPortal.detach();
     }
+    this.portalOutlet?.dispose();
   }
 }
