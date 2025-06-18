@@ -1,0 +1,87 @@
+<div
+  class="nav nav-tabs tab-container-header focus-inside"
+  role="tablist"
+  [class.is-scrollable]="scrollable"
+  (siResizeObserver)="resize()"
+>
+  @if (scrollable) {
+    <button
+      type="button"
+      class="tab-container-control focus-inside"
+      tabindex="-1"
+      aria-hidden="true"
+      [hidden]="!xPos"
+      (keydown.enter)="scrollStart()"
+      (mousedown)="scrollStart()"
+    >
+      <si-icon-next class="icon flip-rtl" [icon]="icons.elementLeft3" />
+    </button>
+  }
+
+  <div #tabContainer class="tab-container-buttonbar" (wheel)="mouseScroll($event)">
+    <div #innerTabContainer class="tab-container-buttonbar-list focus-inside">
+      @for (tab of tabPanels; track $index) {
+        <button
+          #tabElement
+          type="button"
+          role="tab"
+          class="nav-link focus-inside px-5"
+          [attr.aria-controls]="tab.id"
+          [id]="tab.tabId"
+          [style.max-width.px]="tabButtonMaxWidth"
+          [tabindex]="!tab.disabled && tab.active() && focusedTabIndex === undefined ? 0 : -1"
+          [class.active]="tab.active()"
+          [attr.aria-selected]="tab.active()"
+          [class.disabled]="tab.disabled"
+          (click)="selectTab(tab)"
+          (keydown.arrowLeft)="focusPrevious()"
+          (keydown.arrowRight)="focusNext()"
+          (keydown.delete)="tab.closeTriggered.emit(tab)"
+          (blur)="blur()"
+          (focus)="focus($index)"
+        >
+          <span class="text-truncate">{{ tab.heading | translate }}</span>
+          @if (tab.icon) {
+            <si-icon-next
+              class="icon"
+              [attr.role]="tab.iconAltText ? 'img' : 'presentation'"
+              [icon]="tab.icon"
+              [attr.aria-label]="(tab.iconAltText | translate) ?? undefined"
+            />
+          }
+          @if (tab.badgeContent === true) {
+            <span class="badge-dot"></span>
+          } @else if (tab.badgeContent && tab.badgeColor) {
+            <span class="badge" [ngClass]="'bg-' + tab.badgeColor">
+              {{ tab.badgeContent | translate }}
+            </span>
+          } @else if (tab.badgeContent && !tab.badgeColor) {
+            <span class="badge-text"> {{ tab.badgeContent | translate }}</span>
+          }
+          @if (tab.closable && !tab.disabled) {
+            <si-icon-next
+              class="ms-4 me-n4 btn btn-circle btn-xs btn-ghost close"
+              [icon]="icons.elementCancel"
+              (click)="closeTab($event, tab)"
+            />
+          }
+        </button>
+      }
+    </div>
+  </div>
+  @if (scrollable) {
+    <button
+      type="button"
+      class="tab-container-control is-end focus-inside"
+      tabindex="-1"
+      aria-hidden="true"
+      [hidden]="endArrowDisabled"
+      (keydown.enter)="scrollEnd()"
+      (mousedown)="scrollEnd()"
+    >
+      <si-icon-next class="icon flip-rtl" [icon]="icons.elementRight3" />
+    </button>
+  }
+</div>
+
+<ng-content />

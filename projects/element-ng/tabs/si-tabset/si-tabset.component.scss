@@ -1,0 +1,66 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: block;
+  flex-direction: column; // in case it's used as flex
+}
+
+.tab-container-header {
+  overflow: hidden;
+  display: flex;
+}
+
+.tab-container-buttonbar {
+  flex: 1;
+  overflow: hidden;
+}
+
+.tab-container-buttonbar-list {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  transition: variables.element-transition-duration(250ms);
+}
+
+.tab-container-buttonbar-list-item {
+  flex: none;
+}
+
+.tab-container-control {
+  background: transparent;
+  border: 0;
+  user-select: none;
+  padding-inline: 0 7px;
+  padding-block: 6px 10px;
+
+  .is-end {
+    padding-inline: 7px 0;
+  }
+
+  &:hover {
+    color: variables.$element-text-active;
+  }
+
+  &:disabled {
+    color: variables.$element-text-disabled;
+    cursor: default;
+  }
+}
+
+.nav-link {
+  flex-shrink: 0;
+  // TODO: can define a max width here if this is desired
+  // max-inline-size: 240px;
+
+  span.badge-dot {
+    inset-block-end: 100%;
+    inset-inline-start: 12px;
+    margin-inline-end: 12px;
+  }
+
+  span.badge-text {
+    inset-block-end: calc(100% - 7px);
+    inset-inline-start: 2px;
+  }
+}
