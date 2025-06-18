@@ -1,0 +1,101 @@
+<div class="row mb-6 mx-0">
+  <div class="col-sm-6">
+    <h4>Language Switch</h4>
+    <si-language-switcher />
+  </div>
+  <div class="col-sm-6">
+    <h4>Datepicker</h4>
+    <div class="px-8 mb-7">
+      <input
+        type="text"
+        class="form-control"
+        siDatepicker
+        [placeholder]="'FORM.BIRTHDAY' | translate"
+      />
+    </div>
+  </div>
+</div>
+
+<div class="row mb-6 mx-0">
+  <div class="col-sm-6">
+    <h4>Date</h4>
+    <ul>
+      <li>default: {{ date | date }}</li>
+      <li>short: {{ date | date: 'short' }}</li>
+      <li>medium: {{ date | date: 'medium' }}</li>
+      <li>long: {{ date | date: 'long' }}</li>
+      <li>fullDate: {{ date | date: 'fullDate' }}</li>
+    </ul>
+  </div>
+  <div class="col-sm-6">
+    <h4>Currency</h4>
+    <ul>
+      <li>default: {{ currency | currency }}</li>
+      <li>EUR: {{ currency | currency: 'EUR' }}</li>
+      <li>CAD: {{ currency | currency: 'CAD' }}</li>
+      <li>EUR: {{ currency | currency: 'EUR' : 'code' : '4.2-3' }}</li>
+      <li>EUR: {{ currency | currency: 'EUR' : 'symbol' : '4.2-3' }}</li>
+    </ul>
+  </div>
+</div>
+
+<div class="row mx-0">
+  <div class="col-sm-6">
+    <h4>Decimal</h4>
+    <ul>
+      <li>default: {{ num | number }}</li>
+      <li>custom 1: {{ num | number: '2.2-2' }}</li>
+      <li>custom 2: {{ num | number: '1.4-6' }}</li>
+      <li>custom 3: {{ num | number: '1.6-8' }}</li>
+    </ul>
+  </div>
+  <div class="col-sm-6">
+    <h4>Percent</h4>
+    <ul>
+      <li>default: {{ percent | percent }}</li>
+      <li>custom 1: {{ percent | percent: '1.2-2' }}</li>
+      <li>custom 2: {{ percent | percent: '1.2-2' }}</li>
+    </ul>
+  </div>
+</div>
+
+<h4>Custom formats</h4>
+<p>
+  Sets a custom date format (<a href="https://angular.dev/api/common/DatePipe?tab=usage-notes"
+    >see DatePipe custom format options</a
+  >) to the <code>shortDate</code> date format of the current locale.
+</p>
+<p
+  ><code>date | date:'shortDate'</code> resolves to <code>{{ date | date: 'shortDate' }}</code></p
+>
+<si-form-container>
+  <div si-form-container-content class="p-6">
+    <si-form-item>
+      <div class="form-check form-check-inline">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          id="applyDatePattern"
+          [checked]="enableDatePattern"
+          (change)="toggleEnableCustomFormat()"
+        />
+        <label class="form-check-label" for="applyDatePattern"
+          >Enable custom date format pattern for the shortDate format.</label
+        >
+      </div>
+    </si-form-item>
+    <si-form-item label="Pattern">
+      <div class="form-inline w-100">
+        <input
+          type="text"
+          id="datePattern"
+          class="form-control flex-grow-1"
+          [(ngModel)]="datePattern"
+        />
+        <button type="button" class="ms-5 btn btn-secondary" (click)="applyDateFormat()"
+          >Apply</button
+        >
+      </div>
+    </si-form-item>
+  </div>
+</si-form-container>
