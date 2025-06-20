@@ -1,0 +1,65 @@
+<ul class="list-unstyled d-flex flex-column mb-0">
+  @for (step of steps(); track $index) {
+    <li
+      class="position-relative d-flex align-items-center timeline px-6 py-5"
+      [class.text-primary]="step.state === 'running'"
+    >
+      @if (step.state === 'running') {
+        <si-loading-spinner class="me-4" />
+      }
+      @if (step.icon && step.state !== 'running') {
+        <si-icon-next class="me-4 icon" [icon]="step.icon" />
+      }
+      @if (!step.icon && step.state !== 'running') {
+        @switch (step.state) {
+          @case ('passed') {
+            <span class="me-4 icon icon-stack">
+              <si-icon-next class="status-success" [icon]="icons.elementCircleFilled" />
+              <si-icon-next class="status-critical-contrast" [icon]="icons.elementStateTick" />
+            </span>
+          }
+          @case ('failed') {
+            <span class="me-4 icon icon-stack">
+              <si-icon-next class="status-danger" [icon]="icons.elementCircleFilled" />
+              <si-icon-next
+                class="status-critical-contrast"
+                [icon]="icons.elementStateExclamationMark"
+              />
+            </span>
+          }
+          @case ('not-started') {
+            <si-icon-next class="me-4 icon" [icon]="icons.elementNotChecked" />
+          }
+          @default {
+            <si-icon-next class="me-4 icon" [icon]="icons.elementOutOfService" />
+          }
+        }
+      }
+      <div class="d-flex flex-column justify-content-center w-100 overflow-hidden">
+        <div class="d-flex">
+          <div class="result-description">
+            <span class="si-title-2">{{
+              step.description | translate: step.translationParams
+            }}</span>
+            @if (step.detail) {
+              <div class="si-body-2 text-secondary result-detail">{{
+                step.detail | translate: step.translationParams
+              }}</div>
+            }
+            @if (step.errorMessage) {
+              <div class="si-title-2 text-danger">{{
+                step.errorMessage | translate: step.translationParams
+              }}</div>
+            }
+          </div>
+          @if (step.value) {
+            <span class="result-value">{{ step.value }}</span>
+          } @else if (stepHasValue()) {
+            <!-- empty placeholder to align step description with other steps-->
+            <span class="result-value"></span>
+          }
+        </div>
+      </div>
+    </li>
+  }
+</ul>
