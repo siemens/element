@@ -81,6 +81,7 @@ documentation.
 
 - [Search Bar](sorting-filtering/search-bar.md)
 - [Select](forms-inputs/select.md)
+- [Side Panel](layout-navigation/side-panel.md)
 - [Slider](forms-inputs/slider.md)
 - [Sort Bar](sorting-filtering/sort-bar.md)
 - [Spinner](progress-indication/spinner.md)

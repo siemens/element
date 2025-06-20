@@ -1,0 +1,138 @@
+@use '@siemens/element-theme/src/styles/all-variables';
+
+$rpanel-width-regular: 390px;
+$rpanel-width-wide: 500px;
+$rpanel-transition-duration: all-variables.$element-default-transition-duration;
+$rpanel-overlay-bg: rgba(0, 0, 0, 0.4);
+$rpanel-collapsed-width: 48px;
+
+:host {
+  --rpanel-collapsed-padding: 0;
+  --rpanel-size: #{$rpanel-width-regular};
+  display: block;
+  padding-inline-end: var(--rpanel-size);
+
+  &.ready {
+    transition: padding-inline-end $rpanel-transition-duration;
+
+    .side-panel {
+      transition: inline-size $rpanel-transition-duration;
+    }
+  }
+
+  .side-panel,
+  .side-panel > .inner {
+    inline-size: var(--rpanel-size);
+  }
+
+  &.collapsible,
+  &.collapsible-temp {
+    --rpanel-collapsed-width: #{$rpanel-collapsed-width};
+  }
+
+  &.rpanel-size--wide {
+    --rpanel-size: #{$rpanel-width-wide};
+  }
+
+  &.rpanel-resize-sm,
+  &.rpanel-resize-md,
+  &.rpanel-resize-lg,
+  &.rpanel-resize-xl {
+    &.rpanel-mode--over {
+      padding-inline-end: var(--rpanel-collapsed-width);
+
+      &:not(.rpanel-collapsed) .side-panel {
+        box-shadow: all-variables.$element-elevation-2;
+      }
+    }
+  }
+
+  &.rpanel-resize-lg {
+    &.rpanel-mode--scroll.rpanel-size--wide {
+      padding-inline-end: var(--rpanel-collapsed-width);
+    }
+  }
+
+  &.rpanel-resize-sm,
+  &.rpanel-resize-md {
+    &.rpanel-mode--scroll {
+      padding-inline-end: var(--rpanel-collapsed-width);
+
+      &:not(.rpanel-collapsed) .side-panel {
+        box-shadow: all-variables.$element-elevation-2;
+      }
+    }
+  }
+
+  &.rpanel-resize-xs {
+    &.rpanel-mode--over,
+    &.rpanel-mode--scroll {
+      padding-inline-end: var(--rpanel-collapsed-width);
+    }
+
+    .side-panel {
+      z-index: all-variables.$zindex-sidepanel-responsive;
+    }
+
+    &:not(.rpanel-collapsed) {
+      .side-panel,
+      .side-panel > .inner {
+        inline-size: 100%;
+      }
+    }
+  }
+
+  &.rpanel-hidden:not(.collapsible) .side-panel {
+    display: none;
+  }
+
+  &.rpanel-collapsed {
+    padding-inline-end: var(--rpanel-collapsed-width);
+
+    &:not(.collapsible) {
+      .side-panel {
+        inline-size: 0;
+        overflow: hidden;
+      }
+    }
+
+    &.collapsible {
+      .side-panel {
+        inline-size: var(--rpanel-collapsed-width);
+        overflow: hidden;
+      }
+    }
+  }
+}
+
+.side-panel {
+  position: fixed;
+  z-index: all-variables.$zindex-sidepanel;
+  inset-block-start: calc(
+    all-variables.$si-application-header-height + all-variables.$si-titlebar-spacing +
+      all-variables.$si-system-banner-spacing
+  );
+  inset-block-end: 0;
+  inset-inline-end: 0;
+  overflow-x: hidden;
+  background: all-variables.$element-base-1;
+
+  > .inner {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+  }
+}
+
+@include all-variables.media-breakpoint-down(sm) {
+  :host.enable-mobile {
+    padding-inline-end: 0 !important; // stylelint-disable-line declaration-no-important
+    --si-layout-header-first-element-offset-end: 40px;
+
+    &.rpanel-collapsed .side-panel {
+      inline-size: 0 !important; // stylelint-disable-line declaration-no-important
+    }
+  }
+}

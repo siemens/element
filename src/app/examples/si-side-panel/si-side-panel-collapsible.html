@@ -1,0 +1,119 @@
+<si-side-panel
+  #sidePanel
+  [collapsible]="true"
+  [mode]="mode"
+  [size]="size"
+  [enableMobile]="true"
+  (contentResize)="contentResize($event)"
+>
+  <div class="has-navbar-fixed-top px-6">
+    <si-application-header>
+      <si-header-brand>
+        <a siHeaderLogo routerLink="/" class="d-none d-md-flex"></a>
+        <span class="application-name">Side panel collapsible</span>
+      </si-header-brand>
+
+      <si-header-actions>
+        <button
+          type="button"
+          si-header-action-item
+          icon="element-layout-vertical-filled"
+          (click)="showHideLayout()"
+        >
+          Layout
+        </button>
+        <button type="button" si-header-action-item icon="element-help" (click)="showHideHelp()">
+          Help
+        </button>
+      </si-header-actions>
+    </si-application-header>
+    <br />
+    <div class="si-layout-top-element">
+      <button type="button" class="btn btn-secondary mt-2 ms-2" (click)="toggle()">
+        Toggle side panel
+      </button>
+      <button type="button" class="btn btn-secondary mt-2 ms-2" (click)="close()"> close </button>
+      <button type="button" class="btn btn-secondary mt-2 ms-2" (click)="toggleMode()">
+        {{ mode + ' - Mode' }}
+      </button>
+      <button type="button" class="btn btn-secondary mt-2 ms-2" (click)="changeSize()">
+        {{ size + ' - Width' }}
+      </button>
+    </div>
+    <hr />
+    <p>
+      Hey there! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Alias, ab ex quis iste
+      non nemo delectus sequi tempore nihil sit ducimus illo reprehenderit saepe iusto cum tenetur,
+      voluptatibus corrupti unde? Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat
+      autem ducimus minus! Ducimus qui quam laborum enim nihil, accusantium maiores inventore
+      aliquam laudantium eveniet reiciendis praesentium libero consectetur eum eius!
+    </p>
+  </div>
+
+  <si-side-panel-content
+    heading="Cooling coil"
+    [primaryActions]="primaryActions"
+    [secondaryActions]="secondaryActions"
+    [statusActions]="statusActions"
+    [searchable]="true"
+  >
+    <si-accordion [fullHeight]="true">
+      <si-collapsible-panel
+        heading="Properties"
+        badge="5"
+        badgeColor="info"
+        icon="element-settings"
+        contentCssClasses="p-6"
+      >
+        And here we have some content
+      </si-collapsible-panel>
+      <si-collapsible-panel heading="Documents" icon="element-document" contentCssClasses="p-6">
+        And this is the content
+      </si-collapsible-panel>
+      <si-collapsible-panel heading="Graphics" icon="element-image" contentCssClasses="p-6">
+        Nothing to see here
+      </si-collapsible-panel>
+    </si-accordion>
+  </si-side-panel-content>
+</si-side-panel>
+
+<ng-template #helpPanel cdkPortal>
+  <si-side-panel-content heading="Help">
+    <div class="p-6">Help yourself</div>
+  </si-side-panel-content>
+</ng-template>
+
+<ng-template #layoutPanel cdkPortal>
+  <si-side-panel-content heading="Layout">
+    <div class="p-6">
+      <p class="small">Status bar height</p>
+      <button type="button" class="layout-button btn btn-tertiary me-6 active">
+        <i class="element-layout-statusbar-small"></i>
+      </button>
+      <button type="button" class="layout-button btn btn-tertiary me-6">
+        <i class="element-layout-statusbar-large"></i>
+      </button>
+
+      <p class="small mt-5">Pane layout</p>
+      <button type="button" class="layout-button btn btn-tertiary me-6">
+        <i class="element-layout-pane-1"></i>
+      </button>
+      <button type="button" class="layout-button btn btn-tertiary me-6">
+        <i class="element-layout-pane-2"></i>
+      </button>
+      <button type="button" class="layout-button btn btn-tertiary me-6 active">
+        <i class="element-layout-pane-4"></i>
+      </button>
+    </div>
+  </si-side-panel-content>
+</ng-template>
+
+<style>
+  .layout-button {
+    width: 3rem !important;
+    min-width: 0 !important;
+    font-size: 3rem;
+    padding: 0;
+    color: var(--element-text-primary);
+  }
+</style>

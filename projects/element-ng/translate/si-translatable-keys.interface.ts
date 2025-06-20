@@ -132,6 +132,9 @@ export interface SiTranslatableKeys {
   'SI_PROGRESSBAR.LABEL'?: string;
   'SI_SELECT.NO-RESULTS-FOUND'?: string;
   'SI_SELECT.SEARCH-PLACEHOLDER'?: string;
+  'SI_SIDE_PANEL.CLOSE'?: string;
+  'SI_SIDE_PANEL.SEARCH_PLACEHOLDER'?: string;
+  'SI_SIDE_PANEL.TOGGLE'?: string;
   'SI_SKIP_LINKS.JUMP_TO'?: string;
   'SI_SLIDER.DECREMENT'?: string;
   'SI_SLIDER.INCREMENT'?: string;

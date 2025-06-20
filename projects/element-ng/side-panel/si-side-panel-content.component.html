@@ -1,0 +1,78 @@
+<div class="rpanel-header pt-5">
+  <p class="si-title-2 my-0 ms-6 auto-hide text-truncate">{{ heading() | translate }}</p>
+  @if ((primaryActions().length || secondaryActions().length) && focusable()) {
+    <si-content-action-bar
+      class="auto-hide ms-auto"
+      viewType="expanded"
+      [primaryActions]="primaryActions()"
+      [secondaryActions]="secondaryActions()"
+      [toggleItemLabel]="toggleItemLabel()"
+    />
+  }
+  <button
+    type="button"
+    class="close-button btn btn-circle btn-sm btn-ghost element-cancel me-4"
+    [attr.aria-label]="closeButtonLabel() | translate"
+    [tabindex]="focusable() ? '0' : '-1'"
+    (click)="toggleSidePanel($event)"
+  ></button>
+  <div class="collapse-toggle">
+    <button
+      type="button"
+      class="side-panel-collapse-toggle btn btn-circle btn-sm btn-ghost mx-4"
+      [attr.aria-label]="toggleItemLabel() | translate"
+      (click)="toggleSidePanel($event)"
+    >
+      <si-icon-next
+        class="flip-rtl"
+        [class.badge-dot]="showMobileDrawerBadge()"
+        [icon]="isCollapsed() ? icons.elementDoubleLeft : icons.elementDoubleRight"
+      />
+    </button>
+  </div>
+</div>
+<div class="rpanel-wrapper d-flex flex-column">
+  @if (statusActions().length && focusable()) {
+    <div class="rpanel-header rpanel-statusactions px-6">
+      @for (dp of statusActions(); track $index) {
+        @if (!dp.disabled) {
+          <a
+            class="rpanel-statusaction position-relative focus-inside"
+            [attr.aria-label]="!isCollapsed ? '' : (dp.title | translate)"
+            [siLink]="dp"
+          >
+            <si-icon-next class="icon" [icon]="dp.icon!" />
+            @if (dp.overlayIcon) {
+              <si-icon-next class="icon position-absolute" [icon]="dp.overlayIcon" />
+            }
+            <span class="ms-2 auto-hide">{{ dp.title | translate }}</span>
+          </a>
+        }
+        @if (dp.disabled) {
+          <div class="rpanel-statusaction dot-outer" aria-hidden="true">
+            <div class="dot text-muted text-center">&bull;</div>
+          </div>
+        }
+      }
+    </div>
+  }
+  @if (searchable() && focusable()) {
+    <div class="nav-search px-6 auto-hide">
+      <si-search-bar
+        #searchBar
+        class="m-0"
+        colorVariant="base-0"
+        prohibitedCharacters="*?"
+        [placeholder]="searchPlaceholder() | translate"
+        [debounceTime]="400"
+        [showIcon]="true"
+        (searchChange)="searchEvent.emit($event)"
+      />
+    </div>
+  }
+  @if (focusable()) {
+    <div class="rpanel-content">
+      <ng-content />
+    </div>
+  }
+</div>

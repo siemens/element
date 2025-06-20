@@ -1,0 +1,134 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/all-variables';
+
+:host {
+  --si-accordion-radius: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: map.get(all-variables.$spacers, 5);
+}
+
+:host-context(.collapsible) {
+  .close-button {
+    display: none;
+  }
+
+  .collapse-toggle {
+    display: block;
+  }
+
+  .rpanel-wrapper {
+    gap: map.get(all-variables.$spacers, 5);
+  }
+
+  :host.collapsed {
+    gap: 0;
+
+    .auto-hide {
+      display: none;
+    }
+
+    .rpanel-wrapper {
+      gap: 0;
+      inline-size: var(--rpanel-collapsed-width);
+    }
+
+    .rpanel-content {
+      flex: 0 0 auto;
+      margin-block-start: map.get(all-variables.$spacers, 4);
+    }
+
+    .rpanel-statusactions {
+      order: 3;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0 !important; // stylelint-disable-line declaration-no-important
+    }
+
+    .rpanel-statusaction {
+      padding-block: map.get(all-variables.$spacers, 4);
+      padding-inline: map.get(all-variables.$spacers, 5);
+
+      &:not(.dot-outer):hover {
+        background: all-variables.$element-base-1-hover;
+      }
+    }
+  }
+}
+
+.collapse-toggle {
+  display: none;
+
+  i {
+    vertical-align: bottom;
+  }
+}
+
+.rpanel-header,
+.rpanel-statusaction {
+  display: flex;
+  align-items: center;
+}
+
+.rpanel-header {
+  justify-content: space-between;
+}
+
+.rpanel-wrapper,
+.rpanel-content {
+  min-block-size: 0;
+  flex: 1 0 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.rpanel-statusaction {
+  text-decoration: none;
+
+  .dot {
+    inline-size: 24px;
+    line-height: 24px;
+  }
+
+  span {
+    font-size: 12px;
+    white-space: pre-wrap;
+    color: all-variables.$element-text-primary;
+  }
+
+  &:hover span {
+    color: all-variables.$element-text-active;
+  }
+}
+
+@include all-variables.media-breakpoint-down(sm) {
+  :host.enable-mobile {
+    // Fill space of button that is not there yet
+    &:not(.collapsed):not(.expanded) si-content-action-bar {
+      // Keep in sync with $btn-circle-size-sm
+      margin-inline-end: 32px + 2 * map.get(all-variables.$spacers, 4);
+    }
+
+    &:not(.expanded) .collapse-toggle {
+      position: fixed;
+      border: 0;
+      text-align: end;
+      padding-block: 4px !important; // stylelint-disable-line declaration-no-important
+      margin-block-start: 8px !important; // stylelint-disable-line declaration-no-important
+      inset-inline-end: 0;
+      inset-block-start: calc(
+        all-variables.$si-application-header-height + all-variables.$si-titlebar-spacing +
+          all-variables.$si-system-banner-spacing
+      );
+      border-start-start-radius: all-variables.$border-radius;
+      border-end-start-radius: all-variables.$border-radius;
+      border-start-end-radius: 0 !important; // stylelint-disable-line declaration-no-important
+      border-end-end-radius: 0 !important; // stylelint-disable-line declaration-no-important
+      background: all-variables.$element-base-1;
+      box-shadow: all-variables.$element-elevation-1;
+      z-index: 2;
+    }
+  }
+}

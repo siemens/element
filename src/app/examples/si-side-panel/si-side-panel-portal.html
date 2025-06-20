@@ -1,0 +1,56 @@
+<si-side-panel #sidePanel [collapsed]="true" [mode]="mode" [size]="size">
+  <div class="has-navbar-fixed-top px-6">
+    <si-application-header>
+      <si-header-brand>
+        <a siHeaderLogo routerLink="/" class="d-none d-md-flex"></a>
+        <span class="application-name">Side panel portal</span>
+      </si-header-brand>
+    </si-application-header>
+    <br />
+    <button type="button" class="btn btn-secondary mt-2 ms-2" (click)="toggle()">
+      Toggle side panel
+    </button>
+    <button type="button" class="btn btn-secondary mt-2 ms-2" (click)="toggleMode()">
+      {{ mode + ' - Mode' }}
+    </button>
+    <button type="button" class="btn btn-secondary mt-2 ms-2" (click)="changeSize()">
+      {{ size + ' - Width' }}
+    </button>
+    <button type="button" class="btn btn-secondary mt-2 ms-2" (click)="setContent1()"
+      >Content 1</button
+    >
+    <button type="button" class="btn btn-secondary mt-2 ms-2" (click)="setContent2()"
+      >Content 2</button
+    >
+    <hr />
+    <p>
+      Hey there! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Alias, ab ex quis iste
+      non nemo delectus sequi tempore nihil sit ducimus illo reprehenderit saepe iusto cum tenetur,
+      voluptatibus corrupti unde? Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat
+      autem ducimus minus! Ducimus qui quam laborum enim nihil, accusantium maiores inventore
+      aliquam laudantium eveniet reiciendis praesentium libero consectetur eum eius!
+    </p>
+  </div>
+</si-side-panel>
+
+<ng-template #content1 cdkPortal>
+  <si-side-panel-content heading="Content 1">
+    <si-accordion>
+      <si-collapsible-panel heading="Hey there️">
+        <div class="p-6"> And here we have some content </div>
+      </si-collapsible-panel>
+      <si-collapsible-panel heading="Another one">
+        <div class="p-6"> And this is the content </div>
+      </si-collapsible-panel>
+      <si-collapsible-panel heading="Number three">
+        <div class="p-6"> Nothing to see here </div>
+      </si-collapsible-panel>
+    </si-accordion>
+  </si-side-panel-content>
+</ng-template>
+
+<ng-template #content2 cdkPortal>
+  <si-side-panel-content heading="Content 2">
+    <div class="p-6">Different content</div>
+  </si-side-panel-content>
+</ng-template>
