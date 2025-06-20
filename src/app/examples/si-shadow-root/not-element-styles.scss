@@ -1,0 +1,31 @@
+/* stylelint-disable color-named, declaration-no-important */
+@use '@angular/cdk/overlay';
+
+@include overlay.overlay();
+
+.dropdown-menu {
+  display: flex;
+  flex-flow: column;
+  flex: auto 0 0;
+  margin-inline-end: auto;
+  color: black;
+  background: lightgoldenrodyellow;
+}
+
+.dropdown-item {
+  border-radius: 0;
+  border: 1px solid lightblue;
+  color: black;
+  background: lightslategrey;
+}
+
+:host {
+  display: flex !important;
+  gap: 8px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
