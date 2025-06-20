@@ -97,6 +97,10 @@ nav:
       - System banner:                    'components/status-notifications/system-banner.md'
       - Toast Notification:               'components/status-notifications/toast-notification.md'
       - Tooltip:                          'components/status-notifications/tooltip.md'
+    - Chat & Messages:
+      - Chat Input:                       'components/chat-messages/chat-input.md'
+      - User Message:                     'components/chat-messages/user-message.md'
+      - AI Message:                       'components/chat-messages/ai-message.md'
     - Pages:
       - Info Page:                        'components/pages/info-page.md'
       - Unauthorized Page:                'components/pages/unauthorized-page.md'
