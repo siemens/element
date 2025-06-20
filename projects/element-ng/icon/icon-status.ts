@@ -50,7 +50,8 @@ export const STATUS_ICON_CONFIG = new InjectionToken<{ [key in EntityStatusType]
           stacked: 'elementStateTick',
           stackedColor: 'status-success-contrast',
           background: 'bg-base-success',
-          severity: 5
+          severity: 5,
+          ariaLabel: $localize`:@@SI_ICON_STATUS.SUCCESS:Success`
         },
         info: {
           icon: 'elementSquareFilled',
@@ -58,7 +59,8 @@ export const STATUS_ICON_CONFIG = new InjectionToken<{ [key in EntityStatusType]
           stacked: 'elementStateInfo',
           stackedColor: 'status-info-contrast',
           background: 'bg-base-info',
-          severity: 4
+          severity: 4,
+          ariaLabel: $localize`:@@SI_ICON_STATUS.INFO:Info`
         },
         caution: {
           icon: 'elementSquare45Filled',
@@ -66,7 +68,8 @@ export const STATUS_ICON_CONFIG = new InjectionToken<{ [key in EntityStatusType]
           stacked: 'elementStateExclamationMark',
           stackedColor: 'status-caution-contrast',
           background: 'bg-base-caution',
-          severity: 3
+          severity: 3,
+          ariaLabel: $localize`:@@SI_ICON_STATUS.CAUTION:Caution`
         },
         warning: {
           icon: 'elementTriangleFilled',
@@ -74,7 +77,8 @@ export const STATUS_ICON_CONFIG = new InjectionToken<{ [key in EntityStatusType]
           stacked: 'elementStateExclamationMark',
           stackedColor: 'status-warning-contrast',
           background: 'bg-base-warning',
-          severity: 2
+          severity: 2,
+          ariaLabel: $localize`:@@SI_ICON_STATUS.WARNING:Warning`
         },
         danger: {
           icon: 'elementCircleFilled',
@@ -82,7 +86,8 @@ export const STATUS_ICON_CONFIG = new InjectionToken<{ [key in EntityStatusType]
           stacked: 'elementStateExclamationMark',
           stackedColor: 'status-danger-contrast',
           background: 'bg-base-danger',
-          severity: 1
+          severity: 1,
+          ariaLabel: $localize`:@@SI_ICON_STATUS.DANGER:Danger`
         },
         critical: {
           icon: 'elementOctagonFilled',
@@ -90,7 +95,8 @@ export const STATUS_ICON_CONFIG = new InjectionToken<{ [key in EntityStatusType]
           stacked: 'elementStateExclamationMark',
           stackedColor: 'status-critical-contrast',
           background: 'bg-base-critical',
-          severity: 0
+          severity: 0,
+          ariaLabel: $localize`:@@SI_ICON_STATUS.CRITICAL:Critical`
         },
         progress: {
           icon: 'elementCircleFilled',
@@ -98,7 +104,8 @@ export const STATUS_ICON_CONFIG = new InjectionToken<{ [key in EntityStatusType]
           stacked: 'elementStateProgress',
           stackedColor: 'status-info-contrast',
           background: 'bg-base-info',
-          severity: 7
+          severity: 7,
+          ariaLabel: $localize`:@@SI_ICON_STATUS.PROGRESS:Progress`
         },
         pending: {
           icon: 'elementCircleFilled',
@@ -106,7 +113,8 @@ export const STATUS_ICON_CONFIG = new InjectionToken<{ [key in EntityStatusType]
           stacked: 'elementStatePause',
           stackedColor: 'status-caution-contrast',
           background: 'bg-base-caution',
-          severity: 6
+          severity: 6,
+          ariaLabel: $localize`:@@SI_ICON_STATUS.PENDING:Pending`
         },
         unknown: {
           icon: 'elementCircleFilled',
@@ -114,7 +122,8 @@ export const STATUS_ICON_CONFIG = new InjectionToken<{ [key in EntityStatusType]
           stacked: 'elementStateQuestionMark',
           stackedColor: 'text-body',
           background: 'bg-base-0',
-          severity: 8
+          severity: 8,
+          ariaLabel: $localize`:@@SI_ICON_STATUS.UNKNOWN:Unknown`
         }
       };
     }
