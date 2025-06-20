@@ -122,6 +122,9 @@ theme:
     - page.toc
     - content.action.edit
 
+extra_javascript:
+  - '//w3.siemens.com/ote/ote_config.js'
+  - '//w3.siemens.com/ote/sinet/ote.js'
 extra:
   links:
     - name: 'GitHub'
