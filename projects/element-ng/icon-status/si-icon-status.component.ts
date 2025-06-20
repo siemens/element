@@ -5,12 +5,13 @@
 import { NgClass } from '@angular/common';
 import { booleanAttribute, Component, computed, input, numberAttribute } from '@angular/core';
 import { SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-icon-status',
   templateUrl: './si-icon-status.component.html',
   styleUrl: './si-icon-status.component.scss',
-  imports: [NgClass, SiIconNextComponent]
+  imports: [NgClass, SiIconNextComponent, SiTranslateModule]
 })
 export class SiIconStatusComponent {
   /** Icon to display. */
@@ -31,6 +32,9 @@ export class SiIconStatusComponent {
    * @defaultValue false
    */
   readonly disabled = input(false, { transform: booleanAttribute });
+
+  /** @defaultValue null */
+  readonly ariaLabel = input<TranslatableString>();
 
   readonly isDisabledOrCountZero = computed(() => !!this.disabled() || this.count() === 0);
 }

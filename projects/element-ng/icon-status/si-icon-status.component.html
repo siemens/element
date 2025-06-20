@@ -1,5 +1,5 @@
 @let iconValue = icon();
-<span class="icon icon-stack">
+<span class="icon icon-stack" [attr.aria-label]="ariaLabel() ? (ariaLabel() | translate) : null">
   <si-icon-next
     [ngClass]="isDisabledOrCountZero() ? undefined : color()"
     [class.inactive]="isDisabledOrCountZero()"

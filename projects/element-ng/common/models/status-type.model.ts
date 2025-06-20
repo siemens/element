@@ -2,6 +2,8 @@
  * Copyright Siemens 2016 - 2025.
  * SPDX-License-Identifier: MIT
  */
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
+
 export type StatusType = 'success' | 'info' | 'warning' | 'danger' | 'caution' | 'critical';
 export type ExtendedStatusType = StatusType | 'unknown';
 export type EntityStatusType = ExtendedStatusType | 'pending' | 'progress';
@@ -14,6 +16,7 @@ export interface StatusIcon {
   stackedColor: string;
   background: string;
   severity: number; // for sorting
+  ariaLabel?: TranslatableString;
 }
 
 export const STATUS_ICON: { [key in EntityStatusType]: StatusIcon } = {
