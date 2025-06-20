@@ -68,6 +68,7 @@ nav:
       - Split:                            'components/layout-navigation/split.md'
       - Tabs:                             'components/layout-navigation/tabs.md'
       - Tabs Next:                        'components/layout-navigation/tabs-next.md'
+      - Vertical Navigation:              'components/layout-navigation/vertical-navigation.md'
       - Wizard:                           'components/layout-navigation/wizard.md'
     - Lists, Tables & Trees:
       - Table & Datatable:                'components/lists-tables-trees/datatable.md'

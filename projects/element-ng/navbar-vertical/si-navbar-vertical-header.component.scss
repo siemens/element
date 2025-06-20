@@ -1,0 +1,12 @@
+@use '@siemens/element-theme/src/styles/variables';
+@use 'sass:map';
+
+:host {
+  display: flex;
+  align-items: center;
+}
+
+si-navbar-vertical-divider {
+  flex: 1;
+  margin-block: 0;
+}

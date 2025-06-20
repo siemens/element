@@ -1,0 +1,20 @@
+@if (item().icon) {
+  <i class="icon me-n2" aria-hidden="true" [ngClass]="[item().icon]"></i>
+}
+@if (item().icon && item().badge) {
+  <span class="badge-text">{{ item().badge }}</span>
+}
+<div
+  class="item-title text-truncate si-title-2"
+  [class.visually-hidden]="!this.parent && this.navbar.collapsed()"
+>
+  <ng-content />
+</div>
+@if (item().badge) {
+  <span class="badge" [ngClass]="'bg-' + item().badgeColor">
+    {{ item().badge }}
+  </span>
+}
+@if (group) {
+  <span aria-hidden="true" class="dropdown-caret element-down-2 me-0 text-body"></span>
+}

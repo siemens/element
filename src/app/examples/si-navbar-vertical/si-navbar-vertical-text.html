@@ -1,0 +1,42 @@
+<div class="has-navbar-fixed-top">
+  <si-application-header>
+    <si-header-brand>
+      <a routerLink="/" siHeaderLogo class="d-none d-md-flex"></a>
+      <span class="application-name">Navbar vertical text only</span>
+    </si-header-brand>
+    <si-header-actions>
+      <button
+        si-header-account-item
+        type="button"
+        name="Jane Smith"
+        [siHeaderDropdownTriggerFor]="account"
+      >
+      </button>
+    </si-header-actions>
+  </si-application-header>
+
+  <ng-template #account>
+    <si-header-dropdown>
+      <div class="mx-5">
+        <div class="si-title-2">Jane Smith</div>
+        <div>jane.smith.simpl&#64;example.org</div>
+        <div class="d-flex align-items-center text-secondary mt-2"> ExampleOrg </div>
+      </div>
+    </si-header-dropdown>
+  </ng-template>
+
+  <si-navbar-vertical
+    stateId="navbar-vertical-without-icons"
+    navbarCollapseButtonText="collapse"
+    navbarExpandButtonText="expand"
+    [items]="menuItems"
+    [textOnly]="true"
+  >
+    <div class="si-layout-main-padding">
+      <div class="si-layout-header">
+        <h2 class="si-layout-title si-layout-top-element">Here is a title</h2>
+      </div>
+      Here goes the content
+    </div>
+  </si-navbar-vertical>
+</div>

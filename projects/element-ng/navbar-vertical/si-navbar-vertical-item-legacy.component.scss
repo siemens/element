@@ -1,0 +1,9 @@
+.link-with-items {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: '- -' 'items items';
+}
+
+si-navbar-vertical-group {
+  grid-area: items;
+}

@@ -1,0 +1,29 @@
+<div class="has-navbar-fixed-top">
+  <si-navbar-primary
+    appTitle="Navbar vertical"
+    navAriaLabel="Primary"
+    [primaryItems]="[]"
+    [account]="{
+      title: 'Jane Smith',
+      email: 'jane.smith.simpl@example.org',
+      company: 'ExampleOrg'
+    }"
+  />
+
+  <si-navbar-vertical
+    stateId="navbar-vertical-with-icons"
+    navbarCollapseButtonText="collapse"
+    navbarExpandButtonText="expand"
+    searchPlaceholder="Search..."
+    [items]="menuItems"
+    [searchable]="true"
+    (itemsChange)="onItemsChange($event)"
+  >
+    <div class="si-layout-main-padding">
+      <div class="si-layout-header">
+        <h2 class="si-layout-title si-layout-top-element">Here is a title</h2>
+      </div>
+      Here goes the content
+    </div>
+  </si-navbar-vertical>
+</div>

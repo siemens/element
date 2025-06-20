@@ -1,0 +1,25 @@
+<div class="has-navbar-fixed-top">
+  <si-application-header>
+    <si-header-brand>
+      <a routerLink="home" siHeaderLogo></a>
+      <span class="application-name">Navbar Vertical Example</span>
+    </si-header-brand>
+  </si-application-header>
+
+  <si-navbar-vertical
+    stateId="navbar-vertical-with-icons"
+    navbarCollapseButtonText="collapse"
+    navbarExpandButtonText="expand"
+    searchPlaceholder="Search..."
+    [items]="menuItems"
+    [searchable]="true"
+  >
+    <div class="si-layout-main-padding">
+      <si-breadcrumb-router />
+      <div class="si-layout-header">
+        <h2 class="si-layout-title si-layout-top-element">Example with angular routing</h2>
+      </div>
+      <router-outlet />
+    </div>
+  </si-navbar-vertical>
+</div>

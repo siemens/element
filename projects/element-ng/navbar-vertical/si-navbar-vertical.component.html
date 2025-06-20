@@ -1,0 +1,170 @@
+@if (visible()) {
+  @if (smallScreen() && !collapsed()) {
+    <div
+      class="modal-backdrop"
+      [@backdrop]="smallScreen() && !collapsed() ? 'show' : 'hide'"
+      (click)="toggleCollapse()"
+    ></div>
+  }
+  <nav
+    tabindex="-1"
+    class="bg-base-1 focus-sub-inside"
+    [siSkipLinkTarget]="skipLinkNavigationLabel()"
+    [@collapse]="collapsed() ? 'collapsed' : 'expanded'"
+    [class.text-only]="textOnly()"
+  >
+    <div class="collapse-toggle ms-auto">
+      <div class="mobile-drawer focus-inside navbar-vertical-no-collapse">
+        <button
+          type="button"
+          class="btn btn-circle btn-sm btn-ghost flip-rtl"
+          [class.element-double-left]="!collapsed()"
+          [class.element-double-right]="collapsed()"
+          [attr.aria-label]="
+            (collapsed() ? navbarExpandButtonText() : navbarCollapseButtonText()) | translate
+          "
+          [attr.aria-expanded]="!collapsed()"
+          (click)="toggleCollapse()"
+        >
+        </button>
+      </div>
+    </div>
+    @if (searchable()) {
+      <div class="nav-search">
+        <si-search-bar
+          class="mx-4"
+          colorVariant="base-0"
+          prohibitedCharacters="*?"
+          [placeholder]="searchPlaceholder() | translate"
+          [debounceTime]="searchInputDelay"
+          [showIcon]="true"
+          (searchChange)="doSearch($event)"
+        />
+        <button
+          type="button"
+          class="btn-search bg-base-0 p-2 mx-4 mobile navbar-vertical-no-collapse text-secondary"
+          [attr.aria-label]="searchPlaceholder() | translate"
+          (click)="expandForSearch()"
+        >
+          <i class="icon element-search"></i>
+        </button>
+      </div>
+    }
+    <div class="nav-scroll">
+      @for (item of items(); track $index) {
+        @if (isLegacyStyle(item)) {
+          <si-navbar-vertical-item-legacy
+            [item]="item"
+            [navbarExpandButtonText]="navbarExpandButtonText() | translate"
+            [navbarCollapseButtonText]="navbarCollapseButtonText() | translate"
+            [expanded]="
+              (item.id ? uiStateExpandedItems()[item.id] : undefined) ?? item.expanded ?? false
+            "
+          />
+        } @else {
+          <ng-container *ngTemplateOutlet="navbarItems; context: { item }" />
+        }
+      }
+    </div>
+  </nav>
+}
+<main
+  class="si-layout-inner focus-none"
+  tabindex="-1"
+  [siSkipLinkTarget]="skipLinkMainContentLabel()"
+>
+  <ng-content />
+</main>
+
+<ng-template #navbarItems let-item="item" siNavbarVerticalItemGuard>
+  @switch (item.type) {
+    @case ('group') {
+      <button
+        type="button"
+        [si-navbar-vertical-item]="item"
+        [stateId]="item.id"
+        [siNavbarVerticalGroupTriggerFor]="group"
+        [groupData]="{ group: item }"
+        [expanded]="
+          (item.id ? uiStateExpandedItems()[item.id] : undefined) ?? item.expanded ?? false
+        "
+      >
+        {{ item.label | translate }}
+      </button>
+    }
+    @case ('action') {
+      <button type="button" [si-navbar-vertical-item]="item" [activeOverride]="item.active">
+        {{ item.label | translate }}
+      </button>
+    }
+    @case ('router-link') {
+      <a
+        routerLinkActive
+        [routerLinkActiveOptions]="item.activeMatchOptions ?? { exact: false }"
+        [si-navbar-vertical-item]="item"
+        [routerLink]="item.routerLink"
+        [queryParams]="item.extras?.queryParams"
+        [queryParamsHandling]="item.extras?.queryParamsHandling"
+        [fragment]="item.extras?.fragment"
+        [state]="item.extras?.state"
+        [relativeTo]="item.extras?.relativeTo ?? this.activatedRoute"
+        [preserveFragment]="item.extras?.preserveFragment"
+        [skipLocationChange]="item.extras?.skipLocationChange"
+        [replaceUrl]="item.extras?.replaceUrl"
+      >
+        {{ item.label | translate }}
+      </a>
+    }
+    @case ('link') {
+      <a [si-navbar-vertical-item]="item" [href]="item.href" [target]="item.target">
+        {{ item.label | translate }}
+      </a>
+    }
+    @case ('divider') {
+      <si-navbar-vertical-divider />
+    }
+    @case ('header') {
+      <si-navbar-vertical-header>
+        {{ item.label | translate }}
+      </si-navbar-vertical-header>
+    }
+  }
+</ng-template>
+
+<ng-template #group let-group="group" siNavbarVerticalItemGuard>
+  <si-navbar-vertical-group routerLinkActive>
+    @for (item of group.children; track $index) {
+      <!-- a copy from above, but we have to nest the items to make routerLink active work -->
+      @switch (item.type) {
+        @case ('router-link') {
+          <a
+            routerLinkActive
+            [routerLinkActiveOptions]="item.activeMatchOptions ?? { exact: false }"
+            [si-navbar-vertical-item]="item"
+            [routerLink]="item.routerLink"
+            [queryParams]="item.extras?.queryParams"
+            [queryParamsHandling]="item.extras?.queryParamsHandling"
+            [fragment]="item.extras?.fragment"
+            [state]="item.extras?.state"
+            [relativeTo]="item.extras?.relativeTo ?? this.activatedRoute"
+            [preserveFragment]="item.extras?.preserveFragment"
+            [skipLocationChange]="item.extras?.skipLocationChange"
+            [replaceUrl]="item.extras?.replaceUrl"
+          >
+            {{ item.label | translate }}
+          </a>
+        }
+        @case ('action') {
+          <button type="button" [si-navbar-vertical-item]="item" [activeOverride]="item.active">
+            {{ item.label | translate }}
+          </button>
+        }
+        @case ('link') {
+          <a [si-navbar-vertical-item]="item" [href]="item.href" [target]="item.target">
+            {{ item.label | translate }}
+          </a>
+        }
+      }
+    }
+  </si-navbar-vertical-group>
+</ng-template>

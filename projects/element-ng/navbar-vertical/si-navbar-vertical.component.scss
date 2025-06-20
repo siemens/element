@@ -1,0 +1,151 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/all-variables';
+
+$vertical-nav-width: 240px;
+$vertical-nav-collapsed-width: 48px;
+$vertical-nav-transition-duration: all-variables.$element-default-transition-duration;
+
+:host {
+  display: block;
+  transition: padding-inline-start $vertical-nav-transition-duration;
+  --si-layout-header-first-element-offset: 40px;
+
+  // This prevents applying the wrong padding-inline-start before the visible class is applied. This would trigger the animation
+  &.ready:not(.visible) {
+    padding-inline-start: 0 !important; // stylelint-disable-line declaration-no-important
+  }
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  z-index: all-variables.$zindex-vertical-nav;
+  inset-block-start: calc(
+    all-variables.$si-application-header-height + all-variables.$si-titlebar-spacing +
+      all-variables.$si-system-banner-spacing
+  );
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inline-size: 0;
+
+  :host(.nav-collapsed) & {
+    z-index: all-variables.$zindex-vertical-nav-collapsed;
+  }
+}
+
+.nav-scroll {
+  overflow-x: hidden;
+  min-block-size: 0;
+  flex: 1 0 0;
+  overflow-y: auto;
+  margin-block-start: map.get(all-variables.$spacers, 4);
+
+  :host(.nav-collapsed) & {
+    display: none;
+  }
+}
+
+.mobile-drawer {
+  display: block;
+  text-align: end;
+  border: 0;
+  inline-size: 48px;
+  color: all-variables.$element-text-primary;
+  padding-block: 4px;
+  padding-inline: 8px;
+  margin-block-start: 8px;
+  border-start-end-radius: all-variables.$border-radius;
+  border-end-end-radius: all-variables.$border-radius;
+}
+
+.nav-search {
+  display: flex;
+  align-items: center;
+  block-size: 40px;
+  margin-block-start: map.get(all-variables.$spacers, 4);
+  overflow-x: hidden;
+
+  :host(.nav-collapsed) & {
+    display: none;
+  }
+}
+
+si-search-bar {
+  inline-size: 100%;
+}
+
+.btn-search {
+  display: none;
+  border: 0;
+  border-radius: all-variables.$element-radius-2;
+}
+
+:host.nav-collapsed {
+  .mobile-drawer {
+    border: 0;
+    color: all-variables.$element-text-primary;
+    background: all-variables.$element-base-1;
+    text-align: end;
+    box-shadow: all-variables.$element-elevation-1;
+  }
+
+  si-search-bar {
+    display: none;
+  }
+}
+
+.modal-backdrop {
+  z-index: all-variables.$zindex-vertical-nav;
+  opacity: 0;
+}
+
+@include all-variables.media-breakpoint-up(sm) {
+  :host:not(.nav-text-only),
+  :host:not(.nav-collapsed) {
+    --si-layout-header-first-element-offset: 0;
+  }
+
+  :host:not(.nav-text-only) {
+    padding-inline-start: $vertical-nav-collapsed-width;
+
+    .mobile-drawer {
+      background: transparent;
+      box-shadow: none;
+    }
+
+    &.nav-collapsed {
+      .nav-scroll {
+        display: block;
+      }
+
+      .nav-search {
+        display: flex;
+      }
+    }
+  }
+
+  .btn-search {
+    display: none;
+  }
+
+  :host {
+    &.nav-collapsed {
+      .btn-search {
+        display: block;
+      }
+    }
+  }
+
+  :host:not(.nav-text-only) {
+    nav {
+      inline-size: $vertical-nav-collapsed-width;
+    }
+  }
+}
+
+@include all-variables.media-breakpoint-up(lg) {
+  :host:not(.nav-collapsed) {
+    padding-inline-start: $vertical-nav-width;
+  }
+}
