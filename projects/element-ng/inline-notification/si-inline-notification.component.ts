@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 import { NgClass } from '@angular/common';
-import { booleanAttribute, Component, computed, inject, input } from '@angular/core';
+import { booleanAttribute, Component, input } from '@angular/core';
 import { StatusType } from '@siemens/element-ng/common';
-import { SiIconNextComponent, STATUS_ICON_CONFIG } from '@siemens/element-ng/icon';
+import { SiStatusIconComponent } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
 import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
@@ -13,10 +13,9 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
   selector: 'si-inline-notification',
   templateUrl: './si-inline-notification.component.html',
   styleUrl: './si-inline-notification.component.scss',
-  imports: [NgClass, SiLinkDirective, SiIconNextComponent, SiTranslateModule]
+  imports: [NgClass, SiLinkDirective, SiTranslateModule, SiStatusIconComponent]
 })
 export class SiInlineNotificationComponent {
-  private readonly statusIcons = inject(STATUS_ICON_CONFIG);
   /**
    * Status of inline notification.
    */
@@ -53,8 +52,4 @@ export class SiInlineNotificationComponent {
    * @defaultValue false
    */
   readonly embedded = input(false, { transform: booleanAttribute });
-
-  protected readonly icon = computed(
-    () => this.statusIcons[this.severity()] ?? this.statusIcons.info
-  );
 }

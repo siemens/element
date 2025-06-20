@@ -6,11 +6,8 @@
   [ngClass]="'alert-' + severity()"
   [hidden]="!severity()"
 >
-  @let iconValue = icon();
-  <span class="icon icon-stack me-4 flex-shrink-0">
-    <si-icon-next [ngClass]="iconValue.color" [icon]="iconValue.icon" />
-    <si-icon-next [ngClass]="iconValue.stackedColor" [icon]="iconValue.stacked" />
-  </span>
+  <si-status-icon class="icon me-4 flex-shrink-0" [status]="severity()" />
+
   <div class="d-flex flex-grow-1 flex-wrap mt-1">
     @if (heading()) {
       <strong class="pe-2">{{ heading() | translate: translationParams() }}: </strong>
