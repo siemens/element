@@ -3,4 +3,4 @@
 
 <h1>Changelog</h1>
 
---8<-- "docs/changelog-symlink"
+--8<-- "CHANGELOG.md"

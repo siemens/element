@@ -11,7 +11,7 @@ edit_uri: 'blob/main/docs/'
 copyright: '&copy; Siemens 2016-2025'
 
 nav:
-  - Home:                                 'index.md'
+  - Home:                                 'README.md'
   - Fundamentals:
     - Typography:                         'fundamentals/typography.md'
     - Colors:
@@ -98,7 +98,7 @@ nav:
     - CSS framework:                      'architecture/css-framework.md'
     - Theming:                            'architecture/theming.md'
     - Motion and animation:               'architecture/motion-animation.md'
-  - Contributing:                         'contributing.md'
+  - Contributing:                         'CONTRIBUTING.md'
   - Changelog:                            'CHANGELOG.md'
 
 theme:
