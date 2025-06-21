@@ -1,0 +1,9 @@
+- tablist:
+  - tab /Reception \d+/ [selected]
+  - tab "Conference room"
+  - tab "Lobby"
+  - tab "Pantry 1"
+  - tab "Washroom 2"
+  - tab "Deselectable"
+- tabpanel /Reception \d+/:
+  - paragraph: Content for Reception

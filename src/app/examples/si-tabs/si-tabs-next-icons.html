@@ -1,0 +1,15 @@
+<si-tabset-next (deselect)="deselection($event)">
+  @for (tab of tabs; track tab) {
+    <si-tab-next
+      [active]="tab.active ?? false"
+      [badgeColor]="tab.badgeColor"
+      [badgeContent]="tab.badgeContent"
+      [closable]="tab.closable"
+      [heading]="tab.heading"
+      [icon]="tab.icon"
+      (closeTriggered)="closeTab(tab)"
+    >
+      <p class="mt-4"> Content for {{ tab.heading }} </p>
+    </si-tab-next>
+  }
+</si-tabset-next>
