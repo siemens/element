@@ -1,0 +1,17 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  inline-size: 100%;
+  flex: none;
+  gap: map.get(variables.$spacers, 3);
+  padding-block: map.get(variables.$spacers, 5);
+  padding-inline: map.get(variables.$spacers, 6);
+
+  ::ng-deep si-menu-bar si-menu-item {
+    block-size: auto;
+  }
+}

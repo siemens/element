@@ -1,0 +1,38 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: map.get(variables.$spacers, 6);
+  overflow-x: hidden; // So there is no horizontal scrollbar when the list details is not expanded
+
+  ::ng-deep {
+    si-split {
+      min-block-size: 0;
+    }
+
+    si-list-pane-header ~ si-list-pane-header {
+      padding-block-start: 0;
+    }
+  }
+
+  .list-details {
+    flex: 1 1 0;
+    min-block-size: 0;
+    inline-size: 100%;
+    position: relative;
+  }
+
+  &:not(.expanded) {
+    .list-details {
+      inline-size: 200%;
+      transform-origin: top left;
+      margin-inline-start: 0;
+
+      &.details-active {
+        margin-inline-start: -100%;
+      }
+    }
+  }
+}
