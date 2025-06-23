@@ -138,6 +138,7 @@ nav:
   - Patterns:
     - Overview:                           'patterns/index.md'
     - Backdrop:                           'patterns/backdrop.md'
+    - Drag & Drop:                        'patterns/drag-and-drop.md'
     - Loading:                            'patterns/loading.md'
     - Notifications:                      'patterns/notifications.md'
     - Filter:                             'patterns/filter.md'

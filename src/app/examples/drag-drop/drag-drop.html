@@ -1,0 +1,73 @@
+<div class="p-5">
+  <h2>Reorder within list or Move between list</h2>
+  <div class="d-flex gap-8">
+    <ul
+      #cdkListOne="cdkDropList"
+      aria-keyshortcuts="Alt+ArrowUp Alt+ArrowDown Cmd+X Cmd+V"
+      class="list-group list-group-flush"
+      cdkListbox
+      cdkDropList
+      [cdkDropListConnectedTo]="cdkListTwo"
+      [cdkDropListData]="listOne"
+      [tabindex]="0"
+      (cdkDropListDropped)="itemDropped($event)"
+    >
+      @for (item of listOne; track $index) {
+        <li
+          #listOneItem
+          class="list-group-item list-group-item-action"
+          cdkDrag
+          [cdkOption]="item"
+          [cdkDragData]="item"
+          [cdkDragDisabled]="item === 'Morbi leo risus'"
+          [cdkContextMenuTriggerFor]="contextMenu"
+          [cdkContextMenuTriggerData]="{ $implicit: { item: item, list: listOne, index: $index } }"
+          [style.opacity]="itemInClipboard()?.item === item ? 0.7 : 1"
+          (keydown)="keydown($event, { item: item, list: listOne, index: $index })"
+          (keydown.alt.arrowUp)="moveWithinList(listOne, $index, $index - 1)"
+          (keydown.alt.arrowDown)="moveWithinList(listOne, $index, $index + 1)"
+          >{{ item }}</li
+        >
+      }
+    </ul>
+
+    <ul
+      #cdkListTwo="cdkDropList"
+      aria-keyshortcuts="Alt+ArrowUp Alt+ArrowDown Cmd+X Cmd+V"
+      class="list-group list-group-flush"
+      cdkListbox
+      cdkDropList
+      [cdkDropListData]="listTwo"
+      [cdkDropListConnectedTo]="cdkListOne"
+      (cdkDropListDropped)="itemDropped($event)"
+    >
+      @for (item of listTwo; track $index) {
+        <li
+          #listTwoItem
+          class="list-group-item list-group-item-action"
+          cdkDrag
+          [cdkOption]="item"
+          [cdkContextMenuTriggerFor]="contextMenu"
+          [cdkContextMenuTriggerData]="{ $implicit: { item: item, list: listTwo, index: $index } }"
+          [style.opacity]="itemInClipboard()?.item === item ? 0.7 : 1"
+          (keydown)="keydown($event, { item: item, list: listTwo, index: $index })"
+          (keydown.alt.arrowUp)="moveWithinList(listTwo, $index, $index - 1)"
+          (keydown.alt.arrowDown)="moveWithinList(listTwo, $index, $index + 1)"
+          >{{ item }}</li
+        >
+      }
+    </ul>
+  </div>
+</div>
+
+<ng-template #contextMenu let-data>
+  <si-menu>
+    <si-menu-header>Actions</si-menu-header>
+    <si-menu-item [disabled]="data.item === 'Morbi leo risus'" (triggered)="cutItem(data)"
+      >Cut this item to move</si-menu-item
+    >
+    <si-menu-item [disabled]="!itemInClipboard()" (triggered)="pasteItem(data)"
+      >Paste below this item</si-menu-item
+    >
+  </si-menu>
+</ng-template>
