@@ -62,6 +62,7 @@ nav:
       - Electron Titlebar:                'components/layout-navigation/electron-titlebar.md'
       - Footer:                           'components/layout-navigation/footer.md'
       - Launchpad:                        'components/layout-navigation/launchpad.md'
+      - Main-Detail Container:            'components/layout-navigation/main-detail-container.md'
       - Modals:                           'components/layout-navigation/modals.md'
       - Pagination:                       'components/layout-navigation/pagination.md'
       - Side Panel:                       'components/layout-navigation/side-panel.md'

@@ -1,0 +1,110 @@
+@if (resizableParts() && hasLargeSize) {
+  <div class="main-detail-layout d-flex flex-column" [ngClass]="containerClass()">
+    <ng-container *ngTemplateOutlet="headingTemplate" />
+    <si-split
+      class="w-100 flex-grow-1"
+      orientation="horizontal"
+      [stateId]="stateId()"
+      [sizes]="splitSizes"
+      (sizesChange)="onSplitSizesChange($event)"
+    >
+      <si-split-part
+        scale="none"
+        [showCollapseButton]="false"
+        [showHeader]="false"
+        [minSize]="minMainSize()"
+        [stateId]="mainStateId()"
+      >
+        <ng-container *ngTemplateOutlet="mainTemplate" />
+      </si-split-part>
+      <si-split-part
+        scale="auto"
+        [showCollapseButton]="false"
+        [showHeader]="false"
+        [minSize]="minDetailSize()"
+        [stateId]="detailStateId()"
+      >
+        <ng-container *ngTemplateOutlet="detailTemplate" />
+      </si-split-part>
+    </si-split>
+  </div>
+} @else {
+  <div
+    class="main-detail-layout d-flex flex-column"
+    [ngClass]="containerClass()"
+    [class.large-size]="hasLargeSize"
+  >
+    <ng-container *ngTemplateOutlet="headingTemplate" />
+    <div
+      class="main-detail-container d-flex flex-grow-1"
+      [class.details-active]="detailsActive() && !hasLargeSize"
+    >
+      <ng-container
+        *ngTemplateOutlet="
+          mainTemplate;
+          context: { customClass: hasLargeSize ? 'col-3 ps-0 pe-4' : 'col-6 px-0' }
+        "
+      />
+      <ng-container
+        *ngTemplateOutlet="
+          detailTemplate;
+          context: { customClass: hasLargeSize ? 'col-9 ps-4 pe-0' : 'col-6 px-0' }
+        "
+      />
+    </div>
+  </div>
+}
+
+<!-- Templates -->
+<ng-template #headingTemplate>
+  @if (heading()) {
+    <div class="si-layout-header">
+      <h2 class="si-layout-title si-layout-top-element" [class.text-truncate]="truncateHeading()">{{
+        heading() | translate
+      }}</h2>
+    </div>
+  }
+</ng-template>
+
+<ng-template #mainTemplate let-customClass="customClass">
+  <div
+    class="main-container d-flex flex-column"
+    [ngClass]="[mainContainerClass(), customClass ? customClass : '']"
+    [style.max-inline-size]="maxMainSize"
+  >
+    <div class="main-search-actions d-flex align-items-center">
+      <ng-content select="[slot=mainSearch]" />
+      <ng-content select="[slot=mainActions]" />
+    </div>
+    <div class="main-data-container d-flex">
+      <ng-content select="[slot=mainData]" />
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #detailTemplate let-customClass="customClass">
+  <div
+    class="detail-container d-flex flex-column"
+    [ngClass]="[detailContainerClass(), customClass ? customClass : '']"
+    [style.max-inline-size]="maxDetailSize"
+    [attr.inert]="preventFocusDetails ? '' : null"
+  >
+    <div class="detail-heading-actions d-flex align-items-center">
+      @if (!this.hasLargeSize && !this.hideBackButton()) {
+        <button
+          type="button"
+          class="btn btn-circle btn-sm btn-secondary element-back"
+          (click)="detailsBackClicked()"
+          ><span class="visually-hidden">{{ detailsBackButtonText() | translate }}</span></button
+        >
+      }
+      @if (detailsHeading()) {
+        <span class="detail-heading si-title-1 me-auto ms-6 my-auto text-truncate">{{
+          detailsHeading() | translate
+        }}</span>
+      }
+      <ng-content select="[slot=detailActions]" />
+    </div>
+    <ng-content select="[slot=details]" />
+  </div>
+</ng-template>

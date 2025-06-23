@@ -1,0 +1,10 @@
+:host {
+  // "!important" needed here to override "display: block" of "app-sample"
+  display: flex !important; // stylelint-disable-line declaration-no-important
+  flex-direction: column;
+}
+
+.list-view {
+  border-end-end-radius: 0;
+  border-end-start-radius: 0;
+}

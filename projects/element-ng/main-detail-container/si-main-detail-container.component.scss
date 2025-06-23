@@ -1,0 +1,139 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  // deeply nested (slotted) elements
+  ::ng-deep {
+    [slot='mainSearch'] {
+      flex: 1 1 0;
+
+      + {
+        [slot='mainActions'] {
+          margin-inline-start: map.get(variables.$spacers, 5);
+        }
+      }
+    }
+
+    [slot='mainActions'] {
+      margin-inline-start: auto;
+    }
+
+    [slot='mainData'],
+    [slot='details'] {
+      flex: 1 1 0;
+      min-block-size: 0;
+    }
+
+    [slot='detailActions'] {
+      margin-inline-start: auto;
+    }
+
+    .detail-heading {
+      + [slot='detailActions'] {
+        margin-inline-start: map.get(variables.$spacers, 5);
+      }
+    }
+
+    si-split {
+      // change the background color of the resize element
+      --si-split-gutter-background: transparent;
+
+      min-block-size: 0;
+
+      si-split-part,
+      .si-split-container,
+      .si-split-part-content {
+        // trying to keep a nested box-shadow visible
+        // which would otherwise be clipped
+        overflow: visible;
+      }
+    }
+  }
+
+  &.animate {
+    --si-main-detail-animation-duration: #{variables.$element-default-transition-duration};
+  }
+}
+
+.main-detail-layout {
+  overflow-x: hidden;
+  position: relative;
+
+  &.large-size {
+    --si-main-detail-container-width: 100%;
+    --si-main-detail-container-transition: none;
+    --si-main-detail-container-transform: none;
+    --si-main-detail-transition: none;
+    --si-main-detail-opacity: 1;
+    --si-main-detail-pointer-events: auto;
+  }
+}
+
+.main-detail-container {
+  --si-main-detail-transition: opacity var(--si-main-detail-animation-duration, 0) ease-in-out;
+  --si-main-detail-detail-opacity: 0;
+  --si-main-detail-detail-pointer-events: none;
+
+  inline-size: var(--si-main-detail-container-width, 200%);
+  transform: var(--si-main-detail-container-transform, none);
+  transform-origin: top left;
+  transition: var(
+    --si-main-detail-container-transition,
+    transform var(--si-main-detail-animation-duration, 0) ease-in-out
+  );
+
+  &.details-active {
+    --si-main-detail-container-transform: translateX(-50%);
+    --si-main-detail-main-opacity: 0;
+    --si-main-detail-detail-opacity: 1;
+    --si-main-detail-main-pointer-events: none;
+    --si-main-detail-detail-pointer-events: auto;
+  }
+}
+
+/* To workaround flex issues */
+.main-detail-layout,
+.main-detail-container,
+.main-container,
+.detail-container,
+.main-data-container {
+  flex: 1 1 0;
+  min-block-size: 0;
+}
+
+.main-container,
+.detail-container {
+  transition: var(--si-main-detail-transition, none);
+}
+
+.main-container {
+  opacity: var(--si-main-detail-opacity, var(--si-main-detail-main-opacity, 1));
+  pointer-events: var(
+    --si-main-detail-pointer-events,
+    var(--si-main-detail-main-pointer-events, auto)
+  );
+}
+
+.detail-container {
+  opacity: var(--si-main-detail-opacity, var(--si-main-detail-detail-opacity, 1));
+  pointer-events: var(
+    --si-main-detail-pointer-events,
+    var(--si-main-detail-detail-pointer-events, auto)
+  );
+}
+
+.main-search-actions:not(:empty) {
+  min-block-size: map.get(variables.$spacers, 9);
+  margin-block-end: map.get(variables.$spacers, 6);
+}
+
+.detail-heading-actions:not(:empty) {
+  min-block-size: map.get(variables.$spacers, 9);
+  margin-block-end: map.get(variables.$spacers, 6);
+}

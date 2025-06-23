@@ -1,0 +1,90 @@
+<si-main-detail-container
+  style="height: 500px"
+  stateId="si-main-detail-demo"
+  [style.maxWidth.px]="containerMaxWidth ? containerMaxWidth : null"
+  [largeLayoutBreakpoint]="largeLayoutBreakpoint"
+  [heading]="heading"
+  [truncateHeading]="truncateHeading"
+  [detailsHeading]="detailsHeading"
+  [resizableParts]="resizableParts"
+  [hideBackButton]="false"
+  [(detailsActive)]="detailsActive"
+  (hasLargeSizeChange)="isLarge = $event"
+>
+  >
+  <si-search-bar
+    slot="mainSearch"
+    placeholder="Search"
+    (searchChange)="searchTermChanged($event)"
+  />
+  <si-content-action-bar slot="mainActions" [primaryActions]="mainActions" />
+
+  <ngx-datatable
+    #table
+    slot="mainData"
+    class="list-view table-element"
+    siDatatableInteraction
+    [cssClasses]="tableConfig.cssClasses"
+    [rows]="rows"
+    [columns]="[
+      { name: 'Name', sortable: false },
+      { name: 'Role', sortable: false },
+      { name: 'Company', sortable: false }
+    ]"
+    [columnMode]="ColumnMode.force"
+    [reorderable]="false"
+    [headerHeight]="tableConfig.headerHeight"
+    [rowHeight]="tableConfig.rowHeightSmall"
+    [footerHeight]="0"
+    [ghostLoadingIndicator]="isLoading > 0"
+    [scrollbarV]="true"
+    [externalPaging]="true"
+    [externalSorting]="true"
+    [count]="totalElements"
+    [offset]="pageNumber"
+    [selected]="selectedEntities"
+    [selectionType]="selectionType"
+    [datatableInteractionAutoSelect]="isLarge"
+    (page)="setPage($event)"
+    (select)="datatableOnSelect($event.selected)"
+  >
+    <si-empty-state empty-content icon="element-users" heading="No users to display" />
+  </ngx-datatable>
+
+  <!-- Detail (content slots: detailActions | details) -->
+  <!-- detailActions -->
+  <si-content-action-bar slot="detailActions" [primaryActions]="detailActions" />
+  <!-- details -->
+  <div slot="details" class="card">
+    <div class="card-body overflow-auto pt-4">
+      @if (selectedEntity) {
+        {{ selectedEntity | json }}
+      } @else {
+        <div class="mx-auto text-center">No entity selected.</div>
+      }
+    </div>
+  </div>
+</si-main-detail-container>
+
+<form class="p-5 e2e-ignore">
+  <div class="form-check">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      id="customCheckResizableParts"
+      [checked]="resizableParts"
+      (change)="resizableParts = !resizableParts"
+    />
+    <label class="form-check-label" for="customCheckResizableParts">Resizable Parts</label>
+  </div>
+  <div class="form-check">
+    <input
+      #checkbox
+      type="checkbox"
+      class="form-check-input"
+      id="customCheckMobileLayout"
+      (change)="toggleMobileLayout(checkbox.checked)"
+    />
+    <label class="form-check-label" for="customCheckMobileLayout">Simulate mobile layout</label>
+  </div>
+</form>

@@ -59,6 +59,7 @@ documentation.
 
 ## M
 
+- [Main-Detail Container](layout-navigation/main-detail-container.md)
 - [Menu](buttons-menus/menu.md)
 - [Modals](layout-navigation/modals.md)
 

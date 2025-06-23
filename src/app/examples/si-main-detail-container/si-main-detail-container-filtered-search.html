@@ -1,0 +1,71 @@
+<si-main-detail-container
+  stateId="si-main-detail-demo"
+  heading="Main-Detail Container Example"
+  detailsHeading="Details"
+  resizableParts="true"
+  truncateHeading="true"
+  [largeLayoutBreakpoint]="largeLayoutBreakpoint"
+  [mainContainerWidth]="50"
+  [minMainSize]="200"
+  [minDetailSize]="100"
+  [(detailsActive)]="detailsActive"
+  (hasLargeSizeChange)="isLarge = $event"
+  (mainContainerWidthChange)="onSplitChange($event)"
+>
+  <si-filtered-search
+    #search
+    slot="mainSearch"
+    showIcon="true"
+    disableFreeTextSearch="false"
+    strictCriterion="true"
+    [criteria]="[
+      { name: 'role', label: 'Role', options: ['Engineer', 'Installer'] },
+      { name: 'age', label: 'Age', operators: ['=', '>', '<'] },
+      { name: 'company', label: 'Company', options: ['Foo', 'Bar'] }
+    ]"
+    [searchCriteria]="searchCriteria"
+    (searchCriteriaChange)="updateFilter($event)"
+    (interceptDisplayedCriteria)="singleOccurrence($event)"
+  />
+
+  <si-content-action-bar slot="mainActions" [primaryActions]="mainActions" />
+
+  <ngx-datatable
+    #table
+    slot="mainData"
+    class="list-view table-element"
+    siDatatableInteraction
+    [cssClasses]="tableConfig.cssClasses"
+    [rows]="filteredRows"
+    [columns]="[
+      { name: 'Name', sortable: false },
+      { name: 'Role', sortable: false },
+      { name: 'Company', sortable: false },
+      { name: 'Age', sortable: false }
+    ]"
+    [columnMode]="ColumnMode.force"
+    [reorderable]="false"
+    [headerHeight]="tableConfig.headerHeight"
+    [rowHeight]="tableConfig.rowHeightSmall"
+    [footerHeight]="0"
+    [scrollbarV]="true"
+    [count]="filteredRows.length"
+    [selected]="selectedEntities"
+    [selectionType]="selectionType"
+    [datatableInteractionAutoSelect]="isLarge"
+    (select)="datatableOnSelect($event.selected)"
+  >
+    <si-empty-state empty-content icon="element-users" heading="No users to display" />
+  </ngx-datatable>
+
+  <!-- details -->
+  <div slot="details" class="card">
+    <div class="card-body overflow-auto pt-4">
+      @if (selectedEntity) {
+        {{ selectedEntity | json }}
+      } @else {
+        <div class="mx-auto text-center">No entity selected.</div>
+      }
+    </div>
+  </div>
+</si-main-detail-container>
