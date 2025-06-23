@@ -1,0 +1,27 @@
+<app-filter-settings
+  [(variant)]="variant"
+  [(disabled)]="disable"
+  [(disableFreeTextSearch)]="disableFreeTextSearch"
+>
+  <si-filtered-search
+    searchLabel="search"
+    clearButtonLabel="clear"
+    [colorVariant]="variant"
+    [disabled]="disable"
+    [disableFreeTextSearch]="disableFreeTextSearch"
+    [criteria]="[
+      { name: 'company', label: 'Company' },
+      { name: 'location', label: 'Location' },
+      { name: 'country', label: 'Country' }
+    ]"
+    [lazyValueProvider]="filteredSearch.lazyValueProvider"
+    [searchCriteria]="{
+      criteria: [
+        { name: 'location', value: 'Munich' },
+        { name: 'location', value: 'Hamburg' }
+      ],
+      value: ''
+    }"
+    (doSearch)="logEvent($event)"
+  />
+</app-filter-settings>

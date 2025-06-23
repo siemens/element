@@ -1,0 +1,26 @@
+<app-filter-settings
+  [(variant)]="variant"
+  [(disabled)]="disable"
+  [(disableFreeTextSearch)]="disableFreeTextSearch"
+>
+  <si-filtered-search
+    #search
+    placeholder="Search or filter"
+    searchLabel="search"
+    clearButtonLabel="clear"
+    [colorVariant]="variant"
+    [disabled]="disable"
+    [criteria]="[
+      { name: 'company', label: 'SI_FILTERED_SEARCH.COMPANY', options: ['Foo', 'Bar'] },
+      {
+        name: 'location',
+        label: 'SI_FILTERED_SEARCH.LOCATION',
+        options: ['Lünen', 'Karlsruhe', 'Munich', 'Zug']
+      },
+      { name: 'Name' }
+    ]"
+    [disableFreeTextSearch]="disableFreeTextSearch"
+    (doSearch)="logEvent($event)"
+  />
+  <button type="button" class="btn btn-secondary mt-5 mb-5" (click)="clear()"> Clear </button>
+</app-filter-settings>

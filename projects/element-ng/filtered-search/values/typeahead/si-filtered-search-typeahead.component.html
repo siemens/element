@@ -1,0 +1,48 @@
+@let value = criterionValue().value;
+@if (!active()) {
+  <div
+    class="criterion-value-text focus-inside px-4"
+    [tabindex]="disabled() ? -1 : 0"
+    (keydown.enter)="editValue.emit()"
+    (click)="editValue.emit()"
+  >
+    @if (!!value && hasMultiSelections()) {
+      @if (itemCountText()) {
+        {{ itemCountText() | translate: { itemCount: value.length } }}
+      } @else {
+        {{ value!.length }} {{ items() | translate }}
+      }
+    } @else if (optionValue()[0]) {
+      {{ optionValue()[0].label ?? optionValue()[0].value | translate }}
+    } @else {
+      {{ value }}
+    }
+  </div>
+} @else {
+  <input
+    #valueInput
+    typeaheadOptionField="translatedLabel"
+    class="px-4 py-0 border-0 focus-inside"
+    typeaheadScrollable
+    [type]="inputType()"
+    [step]="step()"
+    [ngModel]="valueLabel()"
+    [siTypeahead]="options() ?? []"
+    [typeaheadProcess]="definition().multiSelect || !onlySelectValue()"
+    [typeaheadMultiSelect]="definition().multiSelect"
+    [typeaheadMinLength]="0"
+    [typeaheadOptionsLimit]="maxCriteriaOptions()"
+    [typeaheadAutoSelectIndex]="definition().multiSelect || value?.length ? 0 : -1"
+    [readOnly]="
+      readonly() || onlySelectValue() || (definition().onlySelectValue && !definition().multiSelect)
+    "
+    [typeaheadOptionsInScrollableView]="optionsInScrollableView()"
+    [attr.aria-label]="searchLabel() | translate"
+    (keydown)="valueFilterKeys($event)"
+    (keydown.backspace)="valueBackspace()"
+    (keydown.enter)="valueEnter()"
+    (ngModelChange)="valueChange($event)"
+    (typeaheadOnFullMatch)="valueTypeaheadFullMatch($event)"
+    (typeaheadOnSelect)="valueTypeaheadSelect($event)"
+  />
+}

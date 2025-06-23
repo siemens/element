@@ -1,0 +1,38 @@
+<app-filter-settings
+  [(variant)]="variant"
+  [(disabled)]="disable"
+  [(disableFreeTextSearch)]="disableFreeTextSearch"
+>
+  <si-filtered-search
+    searchLabel="search"
+    clearButtonLabel="clear"
+    [colorVariant]="variant"
+    [disabled]="disable"
+    [disableFreeTextSearch]="disableFreeTextSearch"
+    [criteria]="[
+      { name: 'company', label: 'SI_FILTERED_SEARCH.COMPANY', options: ['Foo', 'Bar'] },
+      {
+        name: 'location',
+        label: 'SI_FILTERED_SEARCH.LOCATION',
+        options: ['Lünen', 'Karlsruhe', 'Munich', 'Zug']
+      },
+      {
+        name: 'country',
+        label: 'SI_FILTERED_SEARCH.COUNTRY',
+        options: [
+          { value: 'DE', label: 'SI_FILTERED_SEARCH.GERMANY' },
+          { value: 'CH', label: 'SI_FILTERED_SEARCH.SWITZERLAND' }
+        ]
+      }
+    ]"
+    [searchCriteria]="{
+      criteria: [
+        { name: 'location', value: 'Munich' },
+        { name: 'location', value: 'Hamburg' },
+        { name: 'country', value: 'CH' }
+      ],
+      value: 'Max'
+    }"
+    (doSearch)="logEvent($event)"
+  />
+</app-filter-settings>

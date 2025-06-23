@@ -81,6 +81,7 @@ nav:
       - Typeahead:                        'components/sorting-filtering/typeahead.md'
       - Filter Bar:                       'components/sorting-filtering/filter-bar.md'
       - Filter Pills:                     'components/sorting-filtering/filter-pills.md'
+      - Filtered Search:                  'components/sorting-filtering/filtered-search.md'
     - Status & notifications:
       - Avatar:                           'components/status-notifications/avatar.md'
       - Circle Status:                    'components/status-notifications/circle-status.md'

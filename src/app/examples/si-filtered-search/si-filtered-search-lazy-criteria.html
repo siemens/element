@@ -1,0 +1,16 @@
+<app-filter-settings
+  [(variant)]="variant"
+  [(disabled)]="disable"
+  [(disableFreeTextSearch)]="disableFreeTextSearch"
+>
+  <si-filtered-search
+    searchLabel="search"
+    clearButtonLabel="clear"
+    [colorVariant]="variant"
+    [disabled]="disable"
+    [disableFreeTextSearch]="disableFreeTextSearch"
+    [lazyCriterionProvider]="filteredSearch.lazyCriterionProvider"
+    [lazyValueProvider]="filteredSearch.lazyValueProvider"
+    (doSearch)="logEvent($event)"
+  />
+</app-filter-settings>

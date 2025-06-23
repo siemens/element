@@ -1,0 +1,57 @@
+<app-filter-settings
+  [(variant)]="variant"
+  [(disabled)]="disable"
+  [(disableFreeTextSearch)]="disableFreeTextSearch"
+>
+  <si-filtered-search
+    searchLabel="label"
+    clearButtonLabel="clear"
+    [colorVariant]="variant"
+    [disabled]="disable"
+    [disableFreeTextSearch]="disableFreeTextSearch"
+    [criteria]="[
+      {
+        name: 'Alarm',
+        label: 'SI_FILTERED_SEARCH.ALARM',
+        validationType: 'date-time',
+        operators: ['=', '≤', '≥'],
+        datepickerConfig: {
+          showTime: true,
+          todayText: 'Today',
+          weekStartDay: 'monday',
+          hideWeekNumbers: false,
+          showMinutes: true,
+          showSeconds: true,
+          showMilliseconds: false,
+          mandatoryTime: false,
+          disabledTime: false,
+          enabledTimeText: 'Consider time',
+          disabledTimeText: 'Ignore time',
+          minDate: minDate,
+          maxDate: maxDate
+        }
+      },
+      {
+        name: 'Birthday',
+        label: 'SI_FILTERED_SEARCH.BIRTHDAY',
+        validationType: 'date',
+        operators: ['=', '≤', '≥']
+      },
+      {
+        name: 'location',
+        label: 'SI_FILTERED_SEARCH.LOCATION',
+        multiSelect: true,
+        options: ['Lünen', 'Karlsruhe', 'Munich', 'Zug']
+      }
+    ]"
+    [searchCriteria]="{
+      criteria: [
+        { name: 'Alarm', operator: '≥', value: '2020-08-28T14:30:25.000Z' },
+        { name: 'Birthday', operator: '=', value: '1994-12-20' }
+      ],
+      value: 'Max'
+    }"
+    [doSearchOnInputChange]="false"
+    (doSearch)="logEvent($event)"
+  />
+</app-filter-settings>

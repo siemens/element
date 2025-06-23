@@ -1,0 +1,26 @@
+<app-filter-settings
+  [(variant)]="variant"
+  [(disabled)]="disable"
+  [(disableFreeTextSearch)]="disableFreeTextSearch"
+>
+  <si-filtered-search
+    placeholder="Search or filter"
+    searchLabel="search"
+    clearButtonLabel="clear"
+    [colorVariant]="variant"
+    [disabled]="disable"
+    [disableFreeTextSearch]="disableFreeTextSearch"
+    [criteria]="[
+      { name: 'company', label: 'SI_FILTERED_SEARCH.COMPANY', options: ['Foo', 'Bar'] },
+      {
+        name: 'location',
+        label: 'SI_FILTERED_SEARCH.LOCATION',
+        options: ['Lünen', 'Karlsruhe', 'Munich', 'Zug']
+      },
+      { name: 'Name' }
+    ]"
+    [doSearchOnInputChange]="true"
+    [searchDebounceTime]="200"
+    (doSearch)="logEvent($event)"
+  />
+</app-filter-settings>

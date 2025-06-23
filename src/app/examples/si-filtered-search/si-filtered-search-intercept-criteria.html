@@ -1,0 +1,17 @@
+<app-filter-settings
+  [(variant)]="variant"
+  [(disabled)]="disable"
+  [(disableFreeTextSearch)]="disableFreeTextSearch"
+>
+  <si-filtered-search
+    [colorVariant]="variant"
+    [disabled]="disable"
+    [doSearchOnInputChange]="false"
+    [criteria]="[
+      { name: 'foo', label: 'Foo' },
+      { name: 'bar', label: 'Bar' }
+    ]"
+    (doSearch)="logEvent($event)"
+    (interceptDisplayedCriteria)="customizeVisibleCriteria($event)"
+  />
+</app-filter-settings>

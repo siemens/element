@@ -1,0 +1,43 @@
+@use '@siemens/element-theme/src/styles/variables';
+@use 'sass:map';
+
+:host-context(.disabled) {
+  input,
+  ::placeholder {
+    color: variables.$element-text-disabled;
+  }
+}
+
+.pill {
+  background: var(--filter-pill-background-color);
+}
+
+.criteria {
+  display: flex;
+  cursor: pointer;
+  white-space: nowrap;
+  border-radius: 12px;
+
+  &.invalid-criterion {
+    box-shadow: 0 0 0 1px variables.$element-status-danger;
+  }
+
+  &:not(.invalid-criterion) .invalid-criterion {
+    box-shadow: inset 0 0 0 1px variables.$element-status-danger;
+  }
+
+  &.disabled {
+    cursor: inherit;
+    pointer-events: none;
+  }
+}
+
+.operator-input {
+  background: var(--filter-pill-background-color);
+  padding-inline: map.get(variables.$spacers, 2);
+  inline-size: calc(1ch + #{2 * map.get(variables.$spacers, 2)});
+}
+
+input {
+  background: transparent;
+}

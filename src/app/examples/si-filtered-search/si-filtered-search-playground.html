@@ -1,0 +1,168 @@
+<div class="p-5">
+  <div class="row">
+    <div class="my-6">
+      <span id="si-filtered-search-playground-label" class="form-label">Filtered Search</span>
+      <si-filtered-search
+        aria-labelledby="si-filtered-search-playground-label"
+        clearButtonLabel="clear"
+        placeholder="Just start typing or click in the input field..."
+        searchLabel="search"
+        items="Items"
+        itemCountText=""
+        [disabled]="configForm.value.disabled!"
+        [readonly]="configForm.value.readonly!"
+        [criteria]="[
+          {
+            name: 'country',
+            label: 'Country',
+            options: [
+              { value: 'DE', label: 'Germany' },
+              { value: 'CH', label: 'Switzerland' },
+              { value: 'LU', label: 'Luxembourg' }
+            ]
+          },
+          {
+            name: 'event',
+            label: 'Event',
+            validationType: 'date-time',
+            operators: ['=', '≤', '≥'],
+            datepickerConfig: {
+              showTime: true,
+              todayText: 'Today',
+              weekStartDay: 'monday',
+              hideWeekNumbers: false,
+              showMinutes: true,
+              showSeconds: true,
+              showMilliseconds: false,
+              mandatoryTime: false,
+              disabledTime: false,
+              enabledTimeText: 'Consider time',
+              disabledTimeText: 'Ignore time',
+              minDate: minDate,
+              maxDate: maxDate
+            }
+          },
+          { name: 'location', label: 'Location', options: ['Lünen', 'Karlsruhe', 'Munich', 'Zug'] },
+          { name: 'Name' },
+          {
+            name: 'score',
+            label: 'Score',
+            multiSelect: true,
+            options: [
+              { value: 'good', label: 'Good' },
+              { value: 'average', label: 'Average' },
+              { value: 'bad', label: 'Bad' }
+            ]
+          },
+          {
+            name: 'test-result',
+            label: 'Test Result',
+            options: [
+              { value: 'passed', label: 'Passed', iconClass: 'element-ok-filled' },
+              { value: 'failed', label: 'Failed', iconClass: 'element-cancel-filled' },
+              { value: 'not-tested', label: 'Not tested', iconClass: 'element-issue-filled' }
+            ]
+          }
+        ]"
+        [searchCriteria]="searchCriteria"
+        [disableFreeTextSearch]="configForm.value.disableFreeTextSearch!"
+        [strictCriterion]="configForm.value.strictCriterion!"
+        [strictValue]="configForm.value.strictValue!"
+        [exclusiveCriteria]="configForm.value.exclusiveCriteria!"
+        [onlySelectValue]="configForm.value.onlySelectValue!"
+        [searchDebounceTime]="configForm.value.searchDebounceTime!"
+        [doSearchOnInputChange]="configForm.value.doSearchOnInputChange!"
+        [optionsInScrollableView]="configForm.value.optionsInScrollableView!"
+        [maxCriteria]="configForm.value.maxCriteria"
+        [maxCriteriaOptions]="configForm.value.maxCriteriaOptions!"
+        (doSearch)="logEvent('doSearch:', $event)"
+      />
+    </div>
+  </div>
+  <div class="card mt-6 e2e-ignore">
+    <div class="card-header">Control panel</div>
+    <div class="card-body">
+      <form [formGroup]="configForm">
+        <div class="row">
+          <si-form-item class="col-sm-3" label="Readonly">
+            <input type="checkbox" class="form-check-input" formControlName="readonly" />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Disabled">
+            <input type="checkbox" class="form-check-input" formControlName="disabled" />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Search on input">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              formControlName="doSearchOnInputChange"
+            />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Disable free text search">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              formControlName="disableFreeTextSearch"
+            />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Only predefined criteria">
+            <input type="checkbox" class="form-check-input" formControlName="strictCriterion" />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Only predefined criterion options">
+            <input type="checkbox" class="form-check-input" formControlName="strictValue" />
+          </si-form-item>
+          <si-form-item
+            class="col-sm-3"
+            label="Only predefined criterion options and prevent typing"
+          >
+            <input type="checkbox" class="form-check-input" formControlName="onlySelectValue" />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Exclusive criteria">
+            <input type="checkbox" class="form-check-input" formControlName="exclusiveCriteria" />
+          </si-form-item>
+        </div>
+        <div class="row align-items-end">
+          <si-form-item class="col-sm-3" label="Search debounce time">
+            <si-number-input
+              class="form-control"
+              formControlName="searchDebounceTime"
+              [min]="0"
+              [showButtons]="true"
+            />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Number of visible options">
+            <si-number-input
+              class="form-control"
+              formControlName="optionsInScrollableView"
+              [min]="0"
+              [showButtons]="true"
+            />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Max criteria">
+            <si-number-input
+              class="form-control"
+              formControlName="maxCriteria"
+              [min]="0"
+              [showButtons]="true"
+            />
+          </si-form-item>
+          <si-form-item class="col-sm-3" label="Max options (0 means unlimited)">
+            <si-number-input
+              class="form-control"
+              formControlName="maxCriteriaOptions"
+              [min]="0"
+              [showButtons]="true"
+            />
+          </si-form-item>
+          <si-form-item label="Search criteria input">
+            <textarea
+              type="text"
+              class="form-control"
+              placeholder='Enter and assign search criteria as JSON e.g. { "criterias": [], "value": "test" }'
+              formControlName="searchCriteriaText"
+            ></textarea>
+          </si-form-item>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

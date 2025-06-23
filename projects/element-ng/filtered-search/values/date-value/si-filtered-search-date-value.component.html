@@ -1,0 +1,34 @@
+@let dateValue = criterionValue().dateValue;
+@if (!active()) {
+  <div
+    class="criterion-value-text focus-inside px-4"
+    [tabindex]="disabled() ? -1 : 0"
+    (keydown.enter)="editValue.emit()"
+    (click)="editValue.emit()"
+  >
+    @if (!validFormat()) {
+      <!-- DatePipe throws an error if the date is invalid, so we have to do it on our own. -->
+      <!-- We may should have a better solution here. Ideally we would keep the broken string so that a user can fix it later. -->
+      <!-- eslint-disable-next-line @angular-eslint/template/no-any -->
+      {{ $any(dateValue).toString() }}
+    } @else if (!disableTime() || definition().validationType === 'date-time') {
+      {{ dateValue | date: dateFormat() }}
+    } @else {
+      {{ dateValue | date: shortDateFormat }}
+    }
+  </div>
+} @else {
+  <input
+    #valueInput
+    type="text"
+    siDatepicker
+    class="px-4 py-0 border-0 focus-inside"
+    [attr.aria-label]="searchLabel() | translate"
+    [siDatepickerConfig]="dateConfig()"
+    [ngModel]="dateValue"
+    (keydown.backspace)="valueBackspace()"
+    (keydown.enter)="valueEnter()"
+    (siDatepickerDisabledTime)="disableTime.set($event)"
+    (ngModelChange)="valueDateSelect($event)"
+  />
+}

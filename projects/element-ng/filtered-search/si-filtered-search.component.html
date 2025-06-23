@@ -1,0 +1,78 @@
+<div
+  #scrollContainer
+  class="search-container d-flex align-items-center overflow-auto py-2 w-100 ps-2 pe-2"
+>
+  @for (criterion of values; track criterion) {
+    <si-filtered-search-value
+      [editOnCreation]="autoEditCriteria"
+      [definition]="criterion.config"
+      [value]="criterion.value"
+      [invalidCriterion]="!validateCriterionLabel(criterion.config)"
+      [disabled]="disabled()"
+      [items]="items()"
+      [clearButtonLabel]="clearButtonLabel()"
+      [disableSelectionByColonAndSemicolon]="disableSelectionByColonAndSemicolon()"
+      [isStrictOrOnlySelectValue]="isStrictOrOnlySelectValue()"
+      [itemCountText]="itemCountText()"
+      [lazyValueProvider]="lazyValueProvider()"
+      [maxCriteriaOptions]="maxCriteriaOptions()"
+      [optionsInScrollableView]="optionsInScrollableView()"
+      [readonly]="readonly()"
+      [searchLabel]="searchLabel()"
+      [onlySelectValue]="onlySelectValue()"
+      [searchDebounceTime]="searchDebounceTime()"
+      (submitCriterion)="focusNext($index, $event)"
+      (deleteCriterion)="deleteCriterion(criterion.value, $index, $event)"
+      (valueChange)="valueChange($event, criterion)"
+    />
+  }
+  <!-- criterion input -->
+  <input
+    #freeTextInputElement
+    type="text"
+    class="value-input ps-2 me-2 flex-grow-1"
+    typeaheadOptionField="translatedLabel"
+    [siTypeahead]="dataSource"
+    [typeaheadMinLength]="readonly() ? 1 : 0"
+    [typeaheadOptionsLimit]="typeaheadOptionsLimit()"
+    [typeaheadScrollable]="true"
+    [typeaheadOptionsInScrollableView]="optionsInScrollableView()"
+    [typeaheadAutoSelectIndex]="selectedCriteriaIndex() ?? (searchValue ? 0 : -1)"
+    [readonly]="readonly()"
+    [disabled]="disabled()"
+    [placeholder]="placeholder()"
+    [attr.aria-label]="searchLabel() | translate"
+    [value]="searchValue"
+    (focus)="freeTextFocus()"
+    (input)="freeTextInput($event)"
+    (keydown.backspace)="freeTextBackspace($event)"
+    (keydown.enter)="submit()"
+    (typeaheadOnSelect)="typeaheadOnSelectCriterion($event.option)"
+  />
+</div>
+<!-- clear all searchCriteria -->
+@if ((values.length || searchValue.length) && !readonly()) {
+  <div class="clear-button-container">
+    <button
+      type="button"
+      class="btn btn-circle btn-xs btn-ghost mx-2"
+      [disabled]="disabled()"
+      [attr.aria-label]="clearButtonLabel() | translate"
+      (click)="deleteAllCriteria($event)"
+    >
+      <si-icon-next [icon]="icons.elementCancel" />
+    </button>
+  </div>
+}
+
+@if (!disabled()) {
+  <button
+    type="button"
+    class="search-button btn btn-circle btn-xs btn-secondary focus-inside"
+    [disabled]="disabled()"
+    [attr.aria-label]="submitButtonLabel() | translate"
+    (click)="submit()"
+  >
+    <si-icon-next [icon]="icons.elementSearch" />
+  </button>
+}

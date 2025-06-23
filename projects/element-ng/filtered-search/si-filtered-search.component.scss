@@ -1,0 +1,86 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+$filtered-search-line-height: map.get(variables.$spacers, 8);
+$filtered-search-criteria-margin: map.get(variables.$spacers, 2);
+
+:host {
+  --search-bar-icon-color: #{variables.$element-text-primary};
+  --input-background-color: #{variables.$element-base-1};
+  --input-background-hover-color: #{variables.$element-base-1};
+  --filter-search-background-color: #{variables.$element-base-1};
+  --filter-pill-background-color: #{variables.$element-base-0};
+
+  &.dark-background {
+    --input-background-color: #{variables.$element-base-0};
+    --input-background-hover-color: #{variables.$element-ui-4};
+    --filter-search-background-color: #{variables.$element-base-0};
+    --filter-pill-background-color: #{variables.$element-base-1};
+  }
+
+  display: flex;
+  align-items: center;
+  line-height: $filtered-search-line-height;
+  // This is necessary to prevent the filtered-search from overflowing when it is used within the main-detail-layout
+  min-inline-size: 0;
+
+  &.disabled {
+    color: variables.$element-text-disabled;
+
+    input,
+    ::placeholder {
+      color: variables.$element-text-disabled;
+    }
+  }
+
+  si-filtered-search-value + input::placeholder {
+    color: transparent;
+  }
+}
+
+.search-container {
+  border-start-start-radius: 4px;
+  border-end-start-radius: 4px;
+  background-color: var(--filter-search-background-color);
+  gap: map.get(variables.$spacers, 2);
+}
+
+input {
+  background: transparent;
+  border: 0;
+  padding-block: 0;
+
+  &:hover::placeholder {
+    opacity: 1;
+  }
+
+  :host(.disabled) &::placeholder {
+    opacity: variables.$element-action-disabled-opacity;
+  }
+}
+
+.clear-button-container {
+  display: flex;
+  align-items: flex-start;
+  align-self: stretch;
+  padding-block: map.get(variables.$spacers, 2);
+  background-color: var(--filter-search-background-color);
+}
+
+.search-button {
+  align-self: stretch;
+  background-color: var(--filter-search-background-color);
+  border: 0;
+  border-radius: 0;
+  border-end-end-radius: 4px;
+  border-start-end-radius: 4px;
+  margin-block: 0;
+  margin-inline: 1px 0;
+  block-size: auto;
+  inline-size: auto;
+  padding-inline: map.get(
+    variables.$spacers,
+    2
+  ) !important; // stylelint-disable-line declaration-no-important
+}

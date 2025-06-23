@@ -1,0 +1,100 @@
+<div
+  cdkMonitorSubtreeFocus
+  class="criteria pill-group"
+  [class.disabled]="disabled()"
+  [attr.aria-disabled]="disabled()"
+  [class.invalid-criterion]="invalidCriterion()"
+  (cdkFocusChange)="focusChange($event)"
+>
+  <div class="pill pill-interactive criterion-label si-title-2" (click)="edit()">
+    {{ definition().label | translate }}
+  </div>
+  @if (definition().operators?.length) {
+    <div class="pill pill-interactive px-0 criterion-operator-section">
+      <!-- criterion operator input -->
+      @if (active()) {
+        <input
+          #operatorInput
+          type="text"
+          class="focus-inside operator-input py-0 border-0"
+          [siTypeahead]="definition().operators!"
+          [typeaheadProcess]="false"
+          [typeaheadAutoSelectIndex]="selectedOperatorIndex()"
+          [typeaheadMinLength]="0"
+          [typeaheadOptionsLimit]="0"
+          [readOnly]="false"
+          [typeaheadScrollable]="true"
+          [typeaheadOptionsInScrollableView]="optionsInScrollableView()"
+          [attr.aria-label]="searchLabel() | translate"
+          [attr.size]="longestOperatorLength()"
+          [ngModel]="value().operator"
+          (ngModelChange)="operatorUpdate($event)"
+          (keydown.backspace)="operatorBackspace()"
+          (keydown.enter)="operatorEnter()"
+          (typeaheadOnSelect)="operatorEnter()"
+          (blur)="operatorBlur()"
+        />
+      } @else {
+        <!-- criterion operator field -->
+        <div
+          class="criterion-operator-text px-2 focus-inside"
+          [tabindex]="!disabled() ? 0 : -1"
+          (keydown.enter)="edit('operator')"
+          (click)="edit('operator')"
+        >
+          {{ value().operator }}
+        </div>
+      }
+    </div>
+  }
+  @switch (type()) {
+    @case ('date') {
+      <si-filtered-search-date-value
+        [definition]="definition()"
+        [disabled]="disabled()"
+        [searchLabel]="searchLabel()"
+        [(active)]="active"
+        [(criterionValue)]="value"
+        (backspaceOverflow)="backspaceOverflow()"
+        (editValue)="edit('value')"
+        (submitValue)="submitCriterion.emit($event)"
+      />
+    }
+    @case ('typeahead') {
+      <si-filtered-search-typeahead
+        [definition]="definition()"
+        [disabled]="disabled()"
+        [searchLabel]="searchLabel()"
+        [searchDebounceTime]="searchDebounceTime()"
+        [onlySelectValue]="onlySelectValue()"
+        [optionsInScrollableView]="optionsInScrollableView()"
+        [maxCriteriaOptions]="maxCriteriaOptions()"
+        [lazyValueProvider]="lazyValueProvider()"
+        [itemCountText]="itemCountText()"
+        [isStrictOrOnlySelectValue]="isStrictOrOnlySelectValue()"
+        [disableSelectionByColonAndSemicolon]="disableSelectionByColonAndSemicolon()"
+        [items]="items()"
+        [readonly]="readonly()"
+        [(active)]="active"
+        [(criterionValue)]="value"
+        (backspaceOverflow)="backspaceOverflow()"
+        (editValue)="edit('value')"
+        (submitValue)="submitCriterion.emit($event)"
+      />
+    }
+  }
+  @if (!readonly()) {
+    <div class="pill px-0 ms-n1">
+      <button
+        type="button"
+        class="btn btn-circle btn-xs btn-ghost focus-inside"
+        [attr.aria-label]="clearButtonLabel() | translate"
+        [disabled]="disabled()"
+        (click)="clear()"
+        (mousedown)="$event.preventDefault()"
+      >
+        <si-icon-next [icon]="icons.elementCancel" />
+      </button>
+    </div>
+  }
+</div>

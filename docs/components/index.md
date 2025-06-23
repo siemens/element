@@ -41,6 +41,7 @@ documentation.
 
 - [Filter Bar](sorting-filtering/filter-bar.md)
 - [Filter Pills](sorting-filtering/filter-pills.md)
+- [Filtered Search](sorting-filtering/filtered-search.md)
 - [Footer](layout-navigation/footer.md)
 - [Forms](forms-inputs/forms.md)
 - [File Uploader](forms-inputs/file-uploader.md)

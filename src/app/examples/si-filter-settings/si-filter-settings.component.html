@@ -1,0 +1,64 @@
+<div class="p-5" [class.bg-base-1]="variant === 'base-0'">
+  <ng-content />
+
+  <si-card heading="Settings" class="mt-10 e2e-ignore">
+    <div class="card-body pt-1" body>
+      <div class="mb-6 row">
+        <label class="col-form-label col-2" for="variant-selector">Color Variant</label>
+        <div class="col-4">
+          <select
+            value="base-1"
+            class="form-control"
+            id="variant-selector"
+            [(ngModel)]="variant"
+            (change)="updateInput('variant')"
+          >
+            <option value="base-1">base-1</option>
+            <option value="base-0">base-0</option>
+          </select>
+        </div>
+        <div class="col-6">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="disableCheck"
+              [checked]="disabled"
+              [(ngModel)]="disabled"
+              (change)="updateInput('disabled')"
+            />
+            <label class="form-check-label" for="disableCheck">Disable</label>
+          </div>
+          @if (showIcon !== undefined) {
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="showIcon"
+                [checked]="showIcon"
+                [(ngModel)]="showIcon"
+                (change)="updateInput('showIcon')"
+              />
+              <label class="form-check-label" for="showIcon">Show Icon</label>
+            </div>
+          }
+          @if (disableFreeTextSearch !== undefined) {
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="disableFreeTextSearch"
+                [checked]="disableFreeTextSearch"
+                [(ngModel)]="disableFreeTextSearch"
+                (change)="updateInput('disableFreeTextSearch')"
+              />
+              <label class="form-check-label" for="disableFreeTextSearch"
+                >Disable free text search</label
+              >
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </si-card>
+</div>
