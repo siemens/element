@@ -18,8 +18,8 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@angular/common": "19",
-    "@angular/core": "19",
+    "@angular/common": "19 - 20",
+    "@angular/core": "19 - 20",
     "@ngx-translate/core": "15 - 16"
   },
   "peerDependenciesMeta": {

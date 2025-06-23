@@ -29,8 +29,8 @@
     "@types/react-dom": "^19.0.0"
   },
   "peerDependencies": {
-    "@angular/common": "19",
-    "@angular/core": "19",
+    "@angular/common": "19 - 20",
+    "@angular/core": "19 - 20",
     "react": "18 || 19",
     "react-dom": "18 || 19",
     "vue": "3",
