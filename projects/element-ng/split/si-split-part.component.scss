@@ -7,6 +7,32 @@ $header-height: 40px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  border-radius: all-variables.$card-border-radius;
+
+  // To have rounded corners but not be breaking and allow the user to change the background color
+  &.bg-base-1 {
+    background-color: transparent !important; // stylelint-disable-line declaration-no-important
+
+    .si-split-part-content {
+      background-color: all-variables.$element-base-1;
+    }
+  }
+
+  &.bg-base-0 {
+    background-color: transparent !important; // stylelint-disable-line declaration-no-important
+
+    .si-split-part-content {
+      background-color: all-variables.$element-base-0;
+    }
+  }
+
+  &.bg-secondary {
+    background-color: transparent !important; // stylelint-disable-line declaration-no-important
+
+    .si-split-part-content {
+      background-color: all-variables.$element-text-secondary;
+    }
+  }
 }
 
 .si-split-part-content {
@@ -14,6 +40,7 @@ $header-height: 40px;
   display: flex;
   overflow: hidden;
   flex-direction: column;
+  border-radius: all-variables.$card-border-radius;
 }
 
 .si-split-part-header {
@@ -24,6 +51,7 @@ $header-height: 40px;
   padding: map.get(all-variables.$spacers, 3);
   background: all-variables.$element-base-0;
   block-size: $header-height;
+  border-radius: all-variables.$card-border-radius;
 }
 
 // If the Split-Container is horizontal and collapsed,
