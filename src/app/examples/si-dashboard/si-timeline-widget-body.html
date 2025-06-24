@@ -1,0 +1,23 @@
+<div class="d-flex gap-4">
+  <si-timeline-widget-body
+    class="col-4"
+    [value]="historyItemsA"
+    [numberOfItems]="4"
+    [showLoadingIndicator]="false"
+  >
+    <si-empty-state
+      empty-state
+      icon="element-info"
+      heading="No events yet."
+      content="Events will appear here as they occur."
+    />
+  </si-timeline-widget-body>
+  <si-timeline-widget-body class="col-4" style="height: 220px" [value]="historyItemsB" />
+  <si-timeline-widget-body
+    class="col-4"
+    [value]="historyItemsC"
+    [showDescription]="false"
+    [numberOfItems]="4"
+    [showLoadingIndicator]="true"
+  />
+</div>

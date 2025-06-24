@@ -1,0 +1,31 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/all-variables';
+
+.si-dashboard {
+  &.sticky {
+    padding-inline-end: 0;
+    overflow-x: hidden;
+  }
+
+  .si-dashboard-header {
+    &.sticky {
+      padding-inline-end: map.get(all-variables.$spacers, 6);
+
+      @include all-variables.media-breakpoint-up(md) {
+        padding-inline-end: map.get(all-variables.$spacers, 9);
+      }
+    }
+  }
+
+  .si-dashboard-content {
+    &.sticky {
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+  }
+
+  .fix-si-layout-fixed-height {
+    min-block-size: auto;
+  }
+}

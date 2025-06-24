@@ -1,0 +1,71 @@
+<div class="row">
+  <si-timeline-widget
+    class="col-4 mb-6"
+    heading="Heading"
+    [primaryActions]="primaryActions"
+    [secondaryActions]="secondaryActions"
+    [value]="historyItemsA"
+    [link]="link"
+    [numberOfItems]="4"
+    [showLoadingIndicator]="true"
+  >
+    <si-empty-state
+      empty-state
+      icon="element-info"
+      heading="No events yet."
+      content="Events will appear here as they occur."
+    />
+  </si-timeline-widget>
+  <si-timeline-widget
+    class="col-4 mb-6"
+    heading="Heading"
+    [value]="historyItemsB"
+    [link]="simplActionLink"
+  >
+    <si-empty-state
+      empty-state
+      icon="element-info"
+      heading="No events yet."
+      content="Events will appear here as they occur."
+    />
+  </si-timeline-widget>
+  <si-timeline-widget
+    class="col-4 mb-6"
+    heading="Heading"
+    [value]="historyItemsC"
+    [showDescription]="false"
+    [showLoadingIndicator]="false"
+  >
+    <si-empty-state
+      empty-state
+      icon="element-info"
+      heading="No events yet."
+      content="Events will appear here as they occur."
+    />
+  </si-timeline-widget>
+</div>
+
+<div class="row">
+  <si-timeline-widget
+    class="col-4"
+    style="height: 250px"
+    heading="Heading"
+    [primaryActions]="primaryActions"
+    [secondaryActions]="secondaryActions"
+    [value]="historyItemsD"
+    [link]="link"
+  />
+  <si-timeline-widget
+    class="col-4"
+    style="height: 250px"
+    heading="Heading"
+    [value]="historyItemsE"
+    [link]="simplActionLink"
+  />
+  <si-timeline-widget
+    class="col-4"
+    style="height: 250px"
+    heading="Heading"
+    [value]="historyItemsF"
+  />
+</div>

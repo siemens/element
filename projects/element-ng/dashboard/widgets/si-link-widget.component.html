@@ -1,0 +1,20 @@
+@if (!showLoadingIndicator() && value()) {
+  @for (link of value(); track link) {
+    @if (link.action) {
+      <button type="button" class="btn btn-link" [siLink]="link">{{
+        link.title | translate
+      }}</button>
+    } @else {
+      <a [siLink]="link">
+        {{ link.title | translate }}
+        @if (showLinkIcons()) {
+          <si-icon-next class="link-icon link-end flip-rtl" [icon]="icons.elementRight2" />
+        }
+      </a>
+    }
+  }
+} @else {
+  @for (some of ghosts(); track $index) {
+    <div class="si-link-widget-skeleton"></div>
+  }
+}

@@ -1,0 +1,33 @@
+<si-card
+  class="h-100"
+  [ngClass]="accentClass()"
+  [heading]="heading()"
+  [primaryActions]="primaryActions()"
+  [secondaryActions]="secondaryActions()"
+>
+  <si-timeline-widget-body
+    body
+    [value]="value()"
+    [showDescription]="showDescription()"
+    [numberOfItems]="numberOfItems()"
+    [class.pb-6]="!link()"
+    [showLoadingIndicator]="showLoadingIndicator()"
+  >
+    <ng-content select="[empty-state]" empty-state />
+  </si-timeline-widget-body>
+  @let linkValue = link();
+  @if (linkValue) {
+    <div class="card-footer" footer>
+      @if (!linkValue.action) {
+        <a [siLink]="linkValue">
+          {{ linkValue.title }}
+          <i class="link-icon link-end element-right-2 flip-rtl"></i>
+        </a>
+      } @else {
+        <button type="button" class="btn btn-link" [siLink]="linkValue">{{
+          linkValue.title
+        }}</button>
+      }
+    </div>
+  }
+</si-card>

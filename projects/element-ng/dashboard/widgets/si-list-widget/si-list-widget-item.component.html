@@ -1,0 +1,48 @@
+@let valueObject = value();
+@if (!showLoadingIndicator() && valueObject) {
+  @if (valueObject.badge) {
+    <span class="mx-0 badge me-4" [ngClass]="badgeColor()">{{
+      valueObject.badge | translate
+    }}</span>
+  }
+  <span class="me-auto">
+    @if (!isLink()) {
+      <span class="si-title-2">{{ label() | translate }}</span>
+    } @else {
+      <a class="" [siLink]="link()"
+        >{{ link().title | translate
+        }}<si-icon-next class="link-icon link-start flip-rtl" [icon]="icons.elementRight2" />
+      </a>
+    }
+    @if (valueObject.description) {
+      <div class="mt-1 si-body-2 text-secondary">{{ valueObject.description | translate }}</div>
+    }
+  </span>
+  <span>{{ valueObject.text | translate }}</span>
+  @if (valueObject.action) {
+    @if (valueObject.action.action) {
+      <button
+        type="button"
+        class="btn btn-circle btn-sm btn-tertiary ms-4 p-2"
+        [attr.aria-label]="valueObject.action.title | translate"
+        [siLink]="valueObject.action"
+      >
+        @if (valueObject.actionIcon) {
+          <si-icon-next class="icon" [icon]="valueObject.actionIcon" />
+        }
+      </button>
+    } @else {
+      <a
+        class="ms-4 p-2"
+        [siLink]="valueObject.action"
+        [attr.aria-label]="valueObject.action.title | translate"
+      >
+        @if (valueObject.actionIcon) {
+          <si-icon-next class="icon" [icon]="valueObject.actionIcon" />
+        }
+      </a>
+    }
+  }
+} @else {
+  <div class="si-link-widget-skeleton my-4"></div>
+}

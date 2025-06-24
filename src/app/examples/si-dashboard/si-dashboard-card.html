@@ -1,0 +1,51 @@
+<div class="p-6">
+  <div class="position-relative w-100 border p-9" style="min-height: 400px">
+    <div class="w-75 h-75">
+      <si-dashboard-card
+        #card
+        heading="Natural Gas Usage"
+        [enableExpandInteraction]="enableExpandInteraction()"
+        [primaryActions]="primaryActions()"
+        [secondaryActions]="secondaryActions()"
+        (expandChange)="expanded($event)"
+      >
+        <p class="card-body card-text" body>
+          Some quick example text to build on the card title and make up the bulk of the card's
+          content.
+        </p>
+      </si-dashboard-card>
+    </div>
+  </div>
+  <div class="mt-2 e2e-ignore">
+    <button type="button" class="btn btn-secondary me-4 mb-5" (click)="card.expand()"
+      >Expand</button
+    >
+    <button type="button" class="btn btn-secondary mb-5" (click)="card.restore()">Restore</button>
+    <si-form-item label="Enable primary actions">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        id="enable-primary-actions"
+        [ngModel]="enablePrimaryActions()"
+        (ngModelChange)="toggleEnablePrimaryActions()"
+      />
+    </si-form-item>
+    <si-form-item label="Enable secondary actions">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        [ngModel]="enableSecondaryActions()"
+        (ngModelChange)="toggleEnableSecondaryActions()"
+      />
+      <label class="form-check-label" for="enable-secondary-actions"></label>
+    </si-form-item>
+    <si-form-item label="Enable expand interactions">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        [ngModel]="enableExpandInteraction()"
+        (ngModelChange)="toggleExpandInteraction()"
+      />
+    </si-form-item>
+  </div>
+</div>

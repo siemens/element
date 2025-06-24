@@ -1,0 +1,362 @@
+<div class="row">
+  <div class="col-4 mb-6">
+    <si-card
+      class="h-100"
+      heading="Heading"
+      [primaryActions]="primaryActions"
+      [secondaryActions]="secondaryActions"
+    >
+      <div class="overflow-auto px-6" body tabindex="0" role="list">
+        <div class="d-flex flex-row" role="listitem">
+          <div class="d-flex flex-column align-items-center gap-1 pt-4 pe-4">
+            <div class="p-5 si-skeleton"></div>
+          </div>
+          <div class="d-flex flex-column flex-grow-1 gap-1 py-4">
+            <span class="si-link-widget-skeleton"></span>
+            <span class="si-link-widget-skeleton"></span>
+            <span class="si-link-widget-skeleton w-50"></span>
+          </div>
+        </div>
+        <div class="d-flex flex-row" role="listitem">
+          <div class="d-flex flex-column align-items-center gap-1 pt-4 pe-4">
+            <div class="p-5 si-skeleton"></div>
+          </div>
+          <div class="d-flex flex-column flex-grow-1 gap-1 py-4">
+            <span class="si-link-widget-skeleton"></span>
+            <span class="si-link-widget-skeleton"></span>
+            <span class="si-link-widget-skeleton w-50"></span>
+          </div>
+        </div>
+        <div class="d-flex flex-row" role="listitem">
+          <div class="d-flex flex-column align-items-center gap-1 pt-4 pe-4">
+            <div class="p-5 si-skeleton"></div>
+          </div>
+          <div class="d-flex flex-column flex-grow-1 gap-1 py-4">
+            <span class="si-link-widget-skeleton"></span>
+            <span class="si-link-widget-skeleton"></span>
+            <span class="si-link-widget-skeleton w-50"></span>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer" footer>
+        <a [siLink]="link">
+          {{ link.title }}
+          <i class="link-icon link-end element-right-2 flip-rtl"></i>
+        </a>
+      </div>
+    </si-card>
+  </div>
+
+  <div class="col-4 mb-6">
+    <si-card class="h-100" heading="Heading" actionBarViewType="expanded" [primaryActions]="zoom">
+      <div class="overflow-auto ps-6 pe-4" body tabindex="0" role="list">
+        <div class="d-flex flex-row" role="listitem">
+          <div class="d-flex flex-column align-items-center gap-1 pt-4 pe-4">
+            <si-icon
+              icon="element-triangle-filled"
+              color="status-warning"
+              stackedIcon="element-state-exclamation-mark"
+              stackedColor="status-warning-contrast"
+            />
+            <div class="si-timeline-widget-item-lower-line"></div>
+          </div>
+          <div class="d-flex flex-column gap-1 py-4 flex-grow-1">
+            <span class="si-caption text-secondary">Today 23:59</span>
+            <span class="si-title-2">Title</span>
+            <span class="si-body-2 text-secondary">Description</span>
+          </div>
+          <button
+            type="button"
+            class="d-flex btn btn-tertiary align-self-center"
+            (click)="logEvent('Action clicked')"
+          >
+            Action
+          </button>
+        </div>
+        <div class="d-flex flex-row" role="listitem">
+          <div class="d-flex flex-column align-items-center gap-1 pt-4 pe-4">
+            <si-icon
+              icon="element-square-45-filled"
+              color="status-caution"
+              stackedIcon="element-state-exclamation-mark"
+              stackedColor="status-caution-contrast"
+            />
+            <div class="si-timeline-widget-item-lower-line"></div>
+          </div>
+          <div class="d-flex flex-column gap-1 py-4 flex-grow-1">
+            <span class="si-caption text-secondary">Today 23:59</span>
+            <span class="si-title-2">Title</span>
+            <span class="si-body-2 text-secondary">Description</span>
+          </div>
+          <button
+            type="button"
+            class="d-flex btn btn-tertiary align-self-center"
+            (click)="logEvent('Action clicked')"
+          >
+            Action
+          </button>
+        </div>
+        <div class="d-flex flex-row" role="listitem">
+          <div class="d-flex flex-column align-items-center gap-1 pt-4 pe-4">
+            <si-icon
+              icon="element-circle-filled"
+              color="status-danger"
+              stackedIcon="element-state-exclamation-mark"
+              stackedColor="status-danger-contrast"
+            />
+          </div>
+          <div class="d-flex flex-column gap-1 py-4 flex-grow-1">
+            <span class="si-caption text-secondary">Today 23:59</span>
+            <span class="si-title-2">Title</span>
+            <span class="si-body-2 text-secondary">Description</span>
+          </div>
+          <button
+            type="button"
+            class="d-flex btn btn-tertiary align-self-center"
+            (click)="logEvent('Action clicked')"
+          >
+            Action
+          </button>
+        </div>
+      </div>
+      <div class="card-footer" footer>
+        <button type="button" class="btn btn-link" [siLink]="simplActionLink">{{
+          simplActionLink.title
+        }}</button>
+      </div>
+    </si-card>
+  </div>
+
+  <div class="col-4 mb-6">
+    <si-card class="h-100" heading="Heading">
+      <div class="overflow-auto px-6 pb-6" body tabindex="0" role="list">
+        <div class="d-flex flex-row" role="listitem">
+          <div class="d-flex flex-column align-items-center gap-1 pt-4 pe-4">
+            <si-icon
+              icon="element-circle-filled"
+              color="status-info"
+              stackedIcon="element-state-progress"
+              stackedColor="status-info-contrast"
+            />
+            <div class="si-timeline-widget-item-lower-line"></div>
+          </div>
+          <div class="d-flex flex-column gap-1 py-4">
+            <span class="si-caption text-secondary">Just now</span>
+            <span class="si-title-2">In Progress</span>
+          </div>
+        </div>
+        <div class="d-flex flex-row" role="listitem">
+          <div class="d-flex flex-column align-items-center gap-1 pt-4 pe-4">
+            <si-icon
+              icon="element-square-filled"
+              color="status-info"
+              stackedIcon="element-state-info"
+              stackedColor="status-info-contrast"
+            />
+            <div class="si-timeline-widget-item-lower-line"></div>
+          </div>
+          <div class="d-flex flex-column gap-1 py-4">
+            <span class="si-caption text-secondary">30 minutes ago</span>
+            <span class="si-title-2">Info</span>
+          </div>
+        </div>
+        <div class="d-flex flex-row" role="listitem">
+          <div class="d-flex flex-column align-items-center gap-1 pt-4 pe-4">
+            <si-icon
+              icon="element-square-45-filled"
+              color="status-caution"
+              stackedIcon="element-state-exclamation-mark"
+              stackedColor="status-caution-contrast"
+            />
+            <div class="si-timeline-widget-item-lower-line"></div>
+          </div>
+          <div class="d-flex flex-column gap-1 py-4">
+            <span class="si-caption text-secondary">3 hours ago</span>
+            <span class="si-title-2">Caution</span>
+          </div>
+        </div>
+        <div class="d-flex flex-row" role="listitem">
+          <div class="d-flex flex-column align-items-center gap-1 pt-4 pe-4">
+            <si-icon
+              icon="element-circle-filled"
+              color="status-danger"
+              stackedIcon="element-state-exclamation-mark"
+              stackedColor="status-danger-contrast"
+            />
+          </div>
+          <div class="d-flex flex-column gap-1 py-4">
+            <span class="si-caption text-secondary">4 hours ago</span>
+            <span class="si-title-2">Danger</span>
+          </div>
+        </div>
+      </div>
+    </si-card>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-4 mb-6">
+    <si-card
+      style="height: 250px"
+      heading="Heading"
+      [primaryActions]="primaryActions"
+      [secondaryActions]="secondaryActions"
+    >
+      <div class="overflow-auto px-6" body tabindex="0" role="list">
+        <div class="d-flex flex-row" role="listitem">
+          <div class="d-flex flex-column align-items-center gap-1 pt-4 pe-4">
+            <div class="p-5 si-skeleton"></div>
+          </div>
+          <div class="d-flex flex-column flex-grow-1 gap-1 py-4">
+            <span class="si-link-widget-skeleton"></span>
+            <span class="si-link-widget-skeleton w-50"></span>
+          </div>
+        </div>
+        <div class="d-flex flex-row" role="listitem">
+          <div class="d-flex flex-column align-items-center gap-1 pt-4 pe-4">
+            <div class="p-5 si-skeleton"></div>
+          </div>
+          <div class="d-flex flex-column flex-grow-1 gap-1 py-4">
+            <span class="si-link-widget-skeleton"></span>
+            <span class="si-link-widget-skeleton w-50"></span>
+          </div>
+        </div>
+        <div class="d-flex flex-row" role="listitem">
+          <div class="d-flex flex-column align-items-center gap-1 pt-4 pe-4">
+            <div class="p-5 si-skeleton"></div>
+          </div>
+          <div class="d-flex flex-column flex-grow-1 gap-1 py-4">
+            <span class="si-link-widget-skeleton"></span>
+            <span class="si-link-widget-skeleton w-50"></span>
+          </div>
+        </div>
+        <div class="d-flex flex-row" role="listitem">
+          <div class="d-flex flex-column align-items-center gap-1 pt-4 pe-4">
+            <div class="p-5 si-skeleton"></div>
+          </div>
+          <div class="d-flex flex-column flex-grow-1 gap-1 py-4">
+            <span class="si-link-widget-skeleton"></span>
+            <span class="si-link-widget-skeleton w-50"></span>
+          </div>
+        </div>
+        <div class="d-flex flex-row" role="listitem">
+          <div class="d-flex flex-column align-items-center gap-1 pt-4 pe-4">
+            <div class="p-5 si-skeleton"></div>
+          </div>
+          <div class="d-flex flex-column flex-grow-1 gap-1 py-4">
+            <span class="si-link-widget-skeleton"></span>
+            <span class="si-link-widget-skeleton w-50"></span>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer" footer>
+        <a [siLink]="link">
+          {{ link.title }}
+          <i class="link-icon link-end element-right-2 flip-rtl"></i>
+        </a>
+      </div>
+    </si-card>
+  </div>
+
+  <div class="col-4 mb-6">
+    <si-card
+      style="height: 250px"
+      heading="Heading"
+      actionBarViewType="expanded"
+      [primaryActions]="share"
+    >
+      <div class="overflow-auto px-6" body tabindex="0" role="list">
+        <div class="d-flex flex-row" role="listitem">
+          <div class="d-flex flex-column align-items-center gap-1 pt-4 pe-4">
+            <si-icon
+              icon="element-square-filled"
+              color="status-info"
+              stackedIcon="element-state-info"
+              stackedColor="status-info-contrast"
+            />
+            <div class="si-timeline-widget-item-lower-line"></div>
+          </div>
+          <div class="d-flex flex-column gap-1 py-4">
+            <span class="si-caption text-secondary">2 minutes ago</span>
+            <span class="si-title-2">Title</span>
+            <span class="si-body-2 text-secondary">Description</span>
+          </div>
+        </div>
+        <div class="d-flex flex-row" role="listitem">
+          <div class="d-flex flex-column align-items-center gap-1 pt-4 pe-4">
+            <si-icon
+              icon="element-triangle-filled"
+              color="status-warning"
+              stackedIcon="element-state-exclamation-mark"
+              stackedColor="status-warning-contrast"
+            />
+            <div class="si-timeline-widget-item-lower-line"></div>
+          </div>
+          <div class="d-flex flex-column gap-1 py-4">
+            <span class="si-caption text-secondary">14 minutes ago</span>
+            <span class="si-title-2">Title</span>
+            <span class="si-body-2 text-secondary">Description</span>
+          </div>
+        </div>
+        <div class="d-flex flex-row" role="listitem">
+          <div class="d-flex flex-column align-items-center gap-1 pt-4 pe-4">
+            <si-icon
+              icon="element-circle-filled"
+              color="status-danger"
+              stackedIcon="element-state-exclamation-mark"
+              stackedColor="status-danger-contrast"
+            />
+          </div>
+          <div class="d-flex flex-column gap-1 py-4">
+            <span class="si-caption text-secondary">42 minutes ago</span>
+            <span class="si-title-2">Title</span>
+            <span class="si-body-2 text-secondary">Description</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer" footer>
+        <button type="button" class="btn btn-link" [siLink]="simplActionLink">{{
+          simplActionLink.title
+        }}</button>
+      </div>
+    </si-card>
+  </div>
+
+  <div class="col-4 mb-6">
+    <si-card style="height: 250px" heading="Heading">
+      <div class="overflow-auto px-6 pb-6" body tabindex="0" role="list">
+        <div class="d-flex flex-row" role="listitem">
+          <div class="d-flex flex-column align-items-center gap-1 pt-4 pe-4">
+            <si-icon icon="element-cloudy" />
+            <div class="si-timeline-widget-item-lower-line"></div>
+          </div>
+          <div class="d-flex flex-column gap-1 py-4">
+            <span class="si-caption text-secondary">Today 15:39</span>
+            <span class="si-title-2">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            </span>
+            <span class="si-body-2 text-secondary">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+            </span>
+          </div>
+        </div>
+        <div class="d-flex flex-row" role="listitem">
+          <div class="d-flex flex-column align-items-center gap-1 pt-4 pe-4">
+            <si-icon icon="element-sun" />
+          </div>
+          <div class="d-flex flex-column gap-1 py-4">
+            <span class="si-caption text-secondary">Today 11:18</span>
+            <span class="si-title-2">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            </span>
+            <span class="si-body-2 text-secondary"
+              >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis</span
+            >
+          </div>
+        </div>
+      </div>
+    </si-card>
+  </div>
+</div>

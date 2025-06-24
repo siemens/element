@@ -38,6 +38,13 @@ nav:
       - Split buttons:                    'components/buttons-menus/split-button.md'
       - Links:                            'components/buttons-menus/links.md'
       - Menu:                             'components/buttons-menus/menu.md'
+    - Dashboards:
+      - Overview:                         'components/dashboards/index.md'
+      - Dashboard:                        'components/dashboards/dashboard.md'
+      - Link Widget:                      'components/dashboards/link-widget.md'
+      - List Widget:                      'components/dashboards/list-widget.md'
+      - Timeline Widget:                  'components/dashboards/timeline-widget.md'
+      - Value Widget:                     'components/dashboards/value-widget.md'
     - Forms & Inputs:
       - Checkbox:                         'components/forms-inputs/checkbox.md'
       - Color Picker:                     'components/forms-inputs/color-picker.md'

@@ -1,0 +1,27 @@
+<div class="d-flex gap-4">
+  <si-list-widget-body class="col-6" search [value]="itemsA">
+    <si-empty-state
+      empty-state
+      icon="element-info"
+      heading="No buildings found."
+      content="Please refine your search."
+    />
+  </si-list-widget-body>
+
+  <si-list-widget-body class="col-4" [value]="itemsA" [showLoadingIndicator]="true">
+    <si-empty-state
+      empty-state
+      icon="element-info"
+      heading="No buildings found."
+      content="Please refine your search."
+    />
+  </si-list-widget-body>
+  <si-list-widget-body class="col-6" search style="height: 350px" [value]="itemsA">
+    <si-empty-state
+      empty-state
+      icon="element-info"
+      heading="No buildings found."
+      content="Please refine your search."
+    />
+  </si-list-widget-body>
+</div>

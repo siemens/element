@@ -1,0 +1,31 @@
+<si-card
+  class="h-100"
+  [ngClass]="accentClass()"
+  [heading]="heading()"
+  [primaryActions]="primaryActions()"
+  [secondaryActions]="secondaryActions()"
+  [imgSrc]="imgSrc()"
+  [imgDir]="imgDir()"
+  [imgAlt]="imgAlt()"
+  [imgObjectFit]="imgObjectFit()"
+  [imgObjectPosition]="imgObjectPosition()"
+>
+  <div class="card-body" body>
+    <si-value-widget-body
+      [value]="value()"
+      [unit]="unit()"
+      [icon]="icon()"
+      [status]="status()"
+      [description]="description()"
+      [disableAutoLoadingIndicator]="disableAutoLoadingIndicator()"
+      [showLoadingIndicator]="showLoadingIndicator()"
+      [initialLoadingIndicatorDebounceTime]="initialLoadingIndicatorDebounceTime()"
+    />
+  </div>
+  @let linkObject = link();
+  @if (linkObject) {
+    <div class="card-footer" footer>
+      <a [siLink]="linkObject">{{ linkObject.title | translate }}</a>
+    </div>
+  }
+</si-card>

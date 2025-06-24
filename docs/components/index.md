@@ -32,6 +32,7 @@ documentation.
 
 ## D
 
+- [Dashboard](dashboards/dashboard.md)
 - [Date Range Filter](forms-inputs/date-range-filter.md)
 - [Datepicker](forms-inputs/datepicker.md)
 - [Dropdowns](buttons-menus/dropdowns.md)

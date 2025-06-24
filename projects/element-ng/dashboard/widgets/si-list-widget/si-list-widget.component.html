@@ -1,0 +1,37 @@
+<si-card
+  class="h-100"
+  actionBarViewType="expanded"
+  [ngClass]="accentClass()"
+  [heading]="heading()"
+  [primaryActions]="sort() ? sortAction() : []"
+>
+  <si-list-widget-body
+    body
+    [compareFn]="compareFn()"
+    [filterFn]="filterFn()"
+    [numberOfLinks]="numberOfLinks()"
+    [searchPlaceholderLabel]="searchPlaceholderLabel()"
+    [search]="search()"
+    [sort]="sort()"
+    [value]="value()"
+    [showLoadingIndicator]="showLoadingIndicator()"
+  >
+    <ng-content select="[empty-state]" empty-state />
+  </si-list-widget-body>
+
+  @let linkValue = link();
+  @if (linkValue) {
+    <div class="card-footer" footer>
+      @if (!linkValue.action) {
+        <a [siLink]="linkValue">
+          {{ linkValue.title }}
+          <si-icon-next class="link-icon link-end flip-rtl" [icon]="icons.elementRight2" />
+        </a>
+      } @else {
+        <button type="button" class="btn btn-link" [siLink]="linkValue"
+          >{{ linkValue.title }}
+        </button>
+      }
+    </div>
+  }
+</si-card>

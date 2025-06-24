@@ -1,0 +1,77 @@
+<div class="row">
+  <div class="col-4 mb-6">
+    <si-card
+      class="h-100"
+      heading="Heading"
+      [primaryActions]="primaryActions"
+      [secondaryActions]="secondaryActions"
+    >
+      <div class="card-body" body>
+        <span class="si-value-widget-value w-100">
+          <div class="si-value-widget-value-skeleton"></div>
+        </span>
+        <div class="si-value-widget-description si-skeleton w-100"> </div>
+      </div>
+      <div class="card-footer" footer>
+        <a [siLink]="simplActionLink">Do something</a>
+      </div>
+    </si-card>
+  </div>
+
+  <div class="col-4 mb-6">
+    <si-card
+      class="h-100"
+      heading="Heading"
+      [primaryActions]="primaryActions"
+      [secondaryActions]="secondaryActions"
+    >
+      <div class="card-body" body>
+        <span class="si-value-widget-value">72</span>
+        <span class="si-value-widget-unit">kWh</span>
+        <div class="si-value-widget-description">
+          <si-icon icon="element-checked" />
+          <span>Description</span>
+        </div>
+      </div>
+      <div class="card-footer" footer>
+        <a [siLink]="simplActionLink">Do something</a>
+      </div>
+    </si-card>
+  </div>
+
+  <div class="col-4 mb-6">
+    <si-card
+      class="h-100"
+      heading="Heading"
+      [primaryActions]="primaryActions"
+      [secondaryActions]="secondaryActions"
+    >
+      <div class="card-body" body>
+        <span class="si-value-widget-value text-danger">72</span>
+        <span class="si-value-widget-unit">kWh</span>
+        <div class="si-value-widget-description text-warning">
+          <si-icon icon="element-checked" />
+          <span>Description</span>
+        </div>
+      </div>
+      <div class="card-footer" footer>
+        <a [siLink]="simplActionLink">Do something</a>
+      </div>
+    </si-card>
+  </div>
+
+  <div class="col-4 mb-6">
+    <si-card class="h-100">
+      <div class="card-body" body>
+        <span class="si-value-widget-value text-danger">72</span>
+        <span class="si-value-widget-unit">kWh</span>
+        <div class="si-value-widget-description text-info">
+          <span>Lorem ipsum dolor sit amet, consetetur sadipscing elitr</span>
+        </div>
+      </div>
+      <div class="card-footer" footer>
+        <a [siLink]="simplActionLink">Do something</a>
+      </div>
+    </si-card>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<si-card
+  heading="Composite Value Widget"
+  imgSrc="assets/images/beach.jpg"
+  imgDir="horizontal"
+  imgAlt="Beach in Greece"
+  style="width: 800px"
+>
+  <div class="card-body d-flex gap-6" body>
+    <si-value-widget-body
+      class="w-50"
+      unit="kWh"
+      icon="element-checked"
+      description="Description"
+      [value]="value1"
+    />
+    <si-value-widget-body
+      class="w-50"
+      unit="Euro"
+      icon="element-checked"
+      description="Description"
+      [value]="value2"
+    />
+  </div>
+  <div class="card-footer" footer>
+    <a [siLink]="simplActionLink">Link</a>
+  </div>
+</si-card>

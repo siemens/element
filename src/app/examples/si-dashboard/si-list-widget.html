@@ -1,0 +1,80 @@
+<div class="row">
+  <si-list-widget
+    class="col-4 mt-6"
+    search
+    heading="Heading"
+    sort="ASC"
+    [value]="itemsA"
+    [link]="link"
+  >
+    <si-empty-state
+      empty-state
+      icon="element-info"
+      heading="No buildings found."
+      content="Please refine your search."
+    />
+  </si-list-widget>
+
+  <si-list-widget class="col-4 mt-6" search heading="Heading" sort="ASC" [value]="itemsB">
+    <si-empty-state
+      empty-state
+      icon="element-info"
+      heading="No buildings found."
+      content="Please refine your search."
+    />
+  </si-list-widget>
+
+  <si-list-widget class="col-4 mt-6" heading="Heading" sort="ASC" [value]="itemsC" />
+  <si-list-widget class="col-4 mt-6" heading="Heading" sort="ASC" [value]="itemsD" [link]="link" />
+
+  <si-list-widget class="col-4 mt-6" heading="Heading" sort="ASC" [value]="itemsE" [link]="link">
+    <si-empty-state
+      empty-state
+      icon="element-info"
+      heading="No buildings found."
+      content="Please refine your search."
+    />
+  </si-list-widget>
+
+  <si-list-widget class="col-4 mt-6" heading="Heading" sort="ASC" [value]="itemsF" [link]="link">
+    <si-empty-state
+      empty-state
+      icon="element-info"
+      heading="No buildings found."
+      content="Please refine your search."
+    />
+  </si-list-widget>
+
+  <si-list-widget class="col-4 mt-6" heading="Heading" sort="ASC" [value]="itemsG" [link]="link">
+    <si-empty-state
+      empty-state
+      icon="element-info"
+      heading="No buildings found."
+      content="Please refine your search."
+    />
+  </si-list-widget>
+
+  <si-list-widget class="col-4 mt-6" heading="Heading" sort="DSC" [value]="itemsH" [link]="link">
+    <si-empty-state
+      empty-state
+      icon="element-info"
+      heading="No buildings found."
+      content="Please refine your search."
+    />
+  </si-list-widget>
+
+  <si-list-widget
+    class="col-4 mt-6"
+    heading="Heading"
+    sort="ASC"
+    [value]="itemsEmpty"
+    [link]="link"
+  >
+    <si-empty-state
+      empty-state
+      icon="element-info"
+      heading="No buildings found."
+      content="Please refine your search."
+    />
+  </si-list-widget>
+</div>

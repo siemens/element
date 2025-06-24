@@ -1,0 +1,219 @@
+<div class="si-layout-fixed-height h-100">
+  <si-dashboard heading="Dashboard" [sticky]="true">
+    <ng-container menubar>
+      <div class="d-flex">
+        <!-- eslint-disable @angular-eslint/template/no-any -->
+        <select
+          class="form-select d-inline w-25"
+          aria-label="selection of day"
+          (change)="onChange($any($event.target).value)"
+        >
+          @for (item of items; track $index) {
+            <option [value]="item.value">{{ item.title }}</option>
+          }
+        </select>
+        <!-- eslint-enable -->
+        <button type="button" class="btn btn-secondary ms-auto">Text</button>
+      </div>
+    </ng-container>
+    <ng-container dashboard>
+      <div class="row">
+        <div class="col-lg-4 mb-6">
+          <si-dashboard-card
+            #card
+            heading="LOC added/removed this week"
+            [enableExpandInteraction]="true"
+          >
+            <ng-container
+              *ngTemplateOutlet="
+                card.isExpanded() ? expanded : notExpanded;
+                context: { type: 'loc' }
+              "
+              body
+            />
+          </si-dashboard-card>
+        </div>
+        <div class="col-lg-4 mb-6">
+          <si-dashboard-card
+            heading="Today's motivation level (without global filter)"
+            [enableExpandInteraction]="true"
+            [showMenubar]="false"
+          >
+            <ng-container *ngTemplateOutlet="gauge" body />
+          </si-dashboard-card>
+        </div>
+        <div class="col-lg-4 mb-6">
+          <si-dashboard-card heading="Lorem ipsum">
+            <ng-container *ngTemplateOutlet="cardTemplate" body />
+          </si-dashboard-card>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 mb-6">
+          <si-dashboard-card
+            #dooreventscard
+            heading="Door access events this week"
+            [enableExpandInteraction]="true"
+          >
+            <ng-container
+              *ngTemplateOutlet="
+                dooreventscard.isExpanded() ? expanded : notExpanded;
+                context: { type: 'door' }
+              "
+              body
+            />
+          </si-dashboard-card>
+        </div>
+        <div class="col-lg-6 mb-6">
+          <si-dashboard-card
+            heading="Reasons to remember the name"
+            [enableExpandInteraction]="true"
+          >
+            <ng-container *ngTemplateOutlet="circlechart" body />
+          </si-dashboard-card>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-8 mb-6">
+          <si-dashboard-card heading="Daily requirements at work">
+            <ng-container *ngTemplateOutlet="progressChart" body />
+          </si-dashboard-card>
+        </div>
+        <div class="col-lg-4 mb-6">
+          <si-value-widget
+            heading="Contributions"
+            value="43"
+            unit="bits"
+            icon="element-checked"
+            description="Valuable bits commited to main."
+            [primaryActions]="primaryActions"
+            [link]="simplActionLink"
+          />
+        </div>
+      </div>
+    </ng-container>
+  </si-dashboard>
+</div>
+
+<ng-template #notExpanded let-type="type">
+  <div class="card-body card-text d-flex align-items-center justify-content-around">
+    @switch (type) {
+      @case ('door') {
+        <p class="display-1 text-center my-10">{{ doorEventsWeek | number }}</p>
+      }
+      @default {
+        <div class="text-center">
+          <p class="display-2"
+            >{{ linesAddedWeek }}
+            <si-icon icon="element-plus" size="display-2" color="status-success" />
+          </p>
+          <p class="display-2"
+            >{{ linesRemovedWeek }}
+            <si-icon icon="element-minus" size="display-2" color="status-danger" />
+          </p>
+        </div>
+      }
+    }
+  </div>
+</ng-template>
+
+<ng-template #expanded let-type="type">
+  <p class="card-body card-text" style="height: 450px">
+    @switch (type) {
+      @case ('door') {
+        <table class="table">
+          <thead>
+            <th>Day</th>
+            <th>Door access events</th>
+          </thead>
+          <tbody>
+            @for (event of doorAccessEventsfiltered; track event) {
+              <tr>
+                <td>{{ getDay(event) }}</td>
+                <td>{{ event }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+      @default {
+        <si-chart-cartesian
+          #chart
+          class="h-100"
+          title=""
+          [xAxis]="categories"
+          [yAxis]="{ type: 'value' }"
+          [series]="series"
+          (siResizeObserver)="chart.resize()"
+        />
+      }
+    }
+  </p>
+</ng-template>
+
+<ng-template #cardTemplate>
+  <p class="card-body card-text">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc at augue ornare, suscipit orci a,
+    dapibus enim. Duis nibh diam, consequat vitae dolor eu, consectetur hendrerit nulla. Nam
+    consectetur consequat suscipit. Nam consectetur pulvinar risus, nec auctor lorem. Sed eget magna
+    quis turpis finibus rhoncus.
+  </p>
+</ng-template>
+
+<ng-template #gauge>
+  <div class="card-body card-text" style="height: 450px">
+    <si-chart-gauge
+      #chart
+      class="bg-base-1 h-100"
+      title=""
+      [minValue]="0"
+      [maxValue]="100"
+      [value]="99"
+      [splitSteps]="10"
+      (siResizeObserver)="chart.resize()"
+    />
+  </div>
+</ng-template>
+
+<ng-template #progressChart>
+  <div class="card-body card-text" style="height: 450px">
+    <si-chart-progress-bar
+      #chart
+      class="bg-base-1 h-100"
+      title=""
+      [series]="[
+        { name: 'Coffee', percent: 60 },
+        { name: 'Water', percent: 30 },
+        { name: 'Food', percent: 20 },
+        { name: 'Beer', percent: 100 },
+        { name: 'Motivation', percent: 99 }
+      ]"
+      (siResizeObserver)="chart.resize()"
+    />
+  </div>
+</ng-template>
+
+<ng-template #circlechart>
+  <div class="card-body" style="height: 450px">
+    <si-chart-circle
+      #chart
+      class="bg-base-1 h-100"
+      title=""
+      [series]="[
+        {
+          name: 'Level',
+          radius: ['0', '60%'],
+          data: [
+            { value: 10, name: 'Luck' },
+            { value: 20, name: 'Skill' },
+            { value: 15, name: 'Power' },
+            { value: 5, name: 'Pleasure' },
+            { value: 50, name: 'Pain' }
+          ]
+        }
+      ]"
+      (siResizeObserver)="chart.resize()"
+    />
+  </div>
+</ng-template>

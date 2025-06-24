@@ -20,6 +20,8 @@ export interface SiTranslatableKeys {
   'SI_CONFIRMATION_DIALOG.NO'?: string;
   'SI_CONFIRMATION_DIALOG.YES'?: string;
   'SI_CONTENT_ACTION_BAR.TOGGLE'?: string;
+  'SI_DASHBOARD.EXPAND'?: string;
+  'SI_DASHBOARD.RESTORE'?: string;
   'SI_DATEPICKER.CALENDAR_TOGGLE_BUTTON'?: string;
   'SI_DATEPICKER.CALENDAR_WEEK_LABEL'?: string;
   'SI_DATEPICKER.DISABLED_TIME_TEXT'?: string;
@@ -127,6 +129,9 @@ export interface SiTranslatableKeys {
   'SI_LAUNCHPAD.SUB_TITLE'?: string;
   'SI_LAUNCHPAD.TITLE'?: string;
   'SI_LIST_DETAILS.BACK'?: string;
+  'SI_LIST_WIDGET.SEARCH_PLACEHOLDER'?: string;
+  'SI_LIST_WIDGET.SORT_ASCENDING'?: string;
+  'SI_LIST_WIDGET.SORT_DESCENDING'?: string;
   'SI_LOADING_SPINNER.LABEL'?: string;
   'SI_MAIN_DETAIL_CONTAINER.BACK'?: string;
   'SI_NAVBAR.OPEN_LAUNCHPAD'?: string;

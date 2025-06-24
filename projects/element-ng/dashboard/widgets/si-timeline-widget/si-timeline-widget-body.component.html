@@ -1,0 +1,24 @@
+@let valueObject = value();
+<div
+  class="focus-inside"
+  tabindex="0"
+  [attr.role]="
+    (!showLoadingIndicator() && valueObject && valueObject.length > 0) || showLoadingIndicator()
+      ? 'list'
+      : null
+  "
+>
+  @if (!showLoadingIndicator() && valueObject) {
+    @if (valueObject && valueObject.length > 0) {
+      @for (item of valueObject; track $index) {
+        <si-timeline-widget-item [value]="item" />
+      }
+    } @else {
+      <ng-content select="[empty-state]" />
+    }
+  } @else {
+    @for (some of ghosts(); track $index) {
+      <si-timeline-widget-item [value]="undefined" [showDescription]="showDescription()" />
+    }
+  }
+</div>

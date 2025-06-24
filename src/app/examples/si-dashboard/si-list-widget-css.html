@@ -1,0 +1,91 @@
+<div class="row">
+  <div class="col-4 mb-6">
+    <si-card
+      class="h-100"
+      heading="Heading"
+      actionBarViewType="expanded"
+      [primaryActions]="primaryActions"
+    >
+      <div class="d-flex flex-column flex-grow-1 flex-shrink-1" body>
+        <div class="px-6 py-4">
+          <si-search-bar showIcon colorVariant="base-0" />
+        </div>
+        <ul class="list-group list-group-lg">
+          <li class="list-group-item d-flex align-items-center">
+            <span class="badge bg-default mx-0">2</span>
+            <span class="ps-4 me-auto si-title-2">Building B</span>
+            <span class="">10.7</span>
+            <button
+              type="button"
+              class="btn btn-circle btn-sm btn-tertiary element-export ms-4"
+              aria-label="Action on building"
+              (click)="logEvent('Action on building')"
+            ></button>
+          </li>
+          <li class="list-group-item d-flex align-items-center">
+            <span class="badge bg-default mx-0">2</span>
+            <span class="ps-4 me-auto si-title-2">Building B</span>
+            <span class="">10.7</span>
+            <button
+              type="button"
+              class="btn btn-circle btn-sm btn-tertiary element-export ms-4"
+              aria-label="Action on building"
+              (click)="logEvent('Action on building')"
+            ></button>
+          </li>
+          <li class="list-group-item d-flex align-items-center">
+            <span class="badge bg-default mx-0">3</span>
+            <span class="ps-4 me-auto si-title-2">Building B</span>
+            <span class="">10.7</span>
+            <button
+              type="button"
+              class="btn btn-circle btn-sm btn-tertiary element-export ms-4"
+              aria-label="Action on building"
+              (click)="logEvent('Action on building')"
+            ></button>
+          </li>
+          <li class="list-group-item d-flex align-items-center">
+            <span class="badge bg-default mx-0">5</span>
+            <span class="ps-4 me-auto si-title-2">Building B</span>
+            <span class="">10.7</span>
+            <button
+              type="button"
+              class="btn btn-circle btn-sm btn-tertiary element-export ms-4"
+              aria-label="Action on building"
+              (click)="logEvent('Action on building')"
+            ></button>
+          </li>
+          <li class="list-group-item d-flex align-items-center">
+            <span class="badge bg-default mx-0">5</span>
+            <span class="ps-4 me-auto si-title-2">Building B</span>
+            <span class="">10.7</span>
+            <button
+              type="button"
+              class="btn btn-circle btn-sm btn-tertiary element-export ms-4"
+              aria-label="Action on building"
+              (click)="logEvent('Action on building')"
+            ></button>
+          </li>
+          <li class="list-group-item d-flex align-items-center">
+            <span class="badge bg-default mx-0">6</span>
+            <span class="ps-4 me-auto si-title-2">Building B</span>
+            <span class="">10.7</span>
+            <button
+              type="button"
+              class="btn btn-circle btn-sm btn-tertiary element-export ms-4"
+              aria-label="Action on building"
+              (click)="logEvent('Action on building')"
+            ></button>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card-footer" footer>
+        <a [siLink]="simplLink">
+          {{ simplLink.title }}
+          <i class="link-icon link-end element-right-2 flip-rtl"></i>
+        </a>
+      </div>
+    </si-card>
+  </div>
+</div>

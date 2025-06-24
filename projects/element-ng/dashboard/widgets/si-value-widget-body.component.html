@@ -1,0 +1,23 @@
+@if (!showLoadingIndicator()) {
+  @if (value()) {
+    <span class="si-value-widget-value">{{ value() | translate }}</span>
+    <span class="si-value-widget-unit">{{ unit() | translate }}</span>
+    @if (description()) {
+      <div class="si-value-widget-description">
+        @let statusValue = status();
+        @let iconValue = icon();
+        @if (statusValue) {
+          <si-status-icon class="icon" [status]="statusValue" />
+        } @else if (iconValue) {
+          <si-icon-next class="icon" [icon]="iconValue" />
+        }
+        <span>{{ description() | translate }}</span>
+      </div>
+    }
+  }
+} @else {
+  <span class="si-value-widget-value w-100">
+    <div class="si-value-widget-value-skeleton"></div>
+  </span>
+  <div class="si-value-widget-description si-skeleton w-100"></div>
+}

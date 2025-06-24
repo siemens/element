@@ -1,0 +1,19 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  background-color: variables.$element-base-1;
+  flex: auto;
+  overflow: hidden;
+
+  si-timeline-widget-item:last-child ::ng-deep .si-timeline-widget-item-lower-line {
+    display: none;
+  }
+}
+
+div {
+  block-size: 100%;
+  padding-inline: map.get(variables.$spacers, 6) map.get(variables.$spacers, 4);
+  overflow-y: auto;
+  overflow-x: hidden;
+}

@@ -1,0 +1,25 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  background-color: variables.$element-base-1;
+  border-radius: variables.$element-radius-3;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  overflow: hidden;
+
+  &:has(si-search-bar) {
+    padding-block-start: map.get(variables.$spacers, 4);
+  }
+}
+
+:host-context(si-card, si-dashboard-card) {
+  padding-block-start: unset !important; // stylelint-disable-line declaration-no-important
+}
+
+.list-group {
+  border-radius: inherit;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

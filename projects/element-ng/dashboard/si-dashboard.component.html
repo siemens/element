@@ -1,0 +1,32 @@
+<div
+  class="si-layout-fixed-height si-dashboard si-layout-main-padding py-6"
+  [class.sticky]="sticky()"
+>
+  <div class="si-dashboard-header" [class.sticky]="sticky()">
+    @if (heading()) {
+      <div class="si-layout-header">
+        <h2 class="si-layout-title si-layout-top-element">{{ heading() | translate }}</h2>
+      </div>
+    }
+    @if (!hideMenubarComputed()) {
+      <div class="mb-6" [class.si-layout-top-element]="!heading()">
+        <ng-content select="[menubar]" />
+      </div>
+    }
+  </div>
+  <div
+    #dashboardFrame
+    class="si-layout-fixed-height si-dashboard-content ps-2 pt-2 ms-n2 mt-n2"
+    [class.sticky]="sticky()"
+    [style.padding-inline-end.px]="dashboardFrameEndPadding"
+  >
+    <div class="si-layout-fixed-height" [class.d-none]="isExpanded">
+      <div #dashboard class="si-layout-fixed-height fix-si-layout-fixed-height">
+        <ng-content select="[dashboard]" />
+      </div>
+    </div>
+    <div class="position-relative flex-grow-1 flex-shrink-1 mb-6" [class.d-none]="!isExpanded">
+      <ng-container #expandedPortalOutlet cdkPortalOutlet />
+    </div>
+  </div>
+</div>

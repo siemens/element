@@ -1,0 +1,90 @@
+<div class="row">
+  <div class="col-6 mb-6">
+    <si-card
+      class="h-100"
+      heading="Heading"
+      [primaryActions]="primaryActions"
+      [secondaryActions]="secondaryActions"
+    >
+      <si-icon headerIcon icon="element-checked" class="me-3" />
+      <div class="card-body si-link-widget" body>
+        <a [siLink]="elementLink">
+          Card link
+          <i class="link-icon link-end element-right-2 flip-rtl"></i>
+        </a>
+        <a [siLink]="elementLink">
+          Card link
+          <i class="link-icon link-end element-right-2 flip-rtl"></i>
+        </a>
+        <a href="https://element.siemens.io">
+          Card link
+          <i class="link-icon link-end element-right-2 flip-rtl"></i>
+        </a>
+        <button type="button" class="btn btn-link" (click)="logEvent('Print job started.')">
+          Print action
+        </button>
+      </div>
+    </si-card>
+  </div>
+
+  <div class="col-6 mb-6">
+    <si-card
+      class="h-100"
+      heading="Heading"
+      [primaryActions]="primaryActions"
+      [secondaryActions]="secondaryActions"
+    >
+      <div class="card-body si-link-widget" body>
+        <a [siLink]="elementLink">
+          Card link
+          <i class="link-icon link-end element-right-2 flip-rtl"></i>
+        </a>
+        <a [siLink]="elementLink">
+          Card link
+          <i class="link-icon link-end element-right-2 flip-rtl"></i>
+        </a>
+        <a href="https://element.siemens.io">
+          Card link
+          <i class="link-icon link-end element-right-2 flip-rtl"></i>
+        </a>
+        <button type="button" class="btn btn-link" (click)="logEvent('Print job started.')">
+          Print action
+        </button>
+      </div>
+    </si-card>
+  </div>
+
+  <div class="col-6 mb-6">
+    <si-card class="h-100" heading="Heading">
+      <si-icon headerIcon icon="element-checked" class="me-3" />
+      <div class="card-body si-link-widget" body>
+        <a [siLink]="elementLink">
+          Card link
+          <i class="link-icon link-end element-right-2 flip-rtl"></i>
+        </a>
+        <a [siLink]="elementLink">
+          Card link
+          <i class="link-icon link-end element-right-2 flip-rtl"></i>
+        </a>
+        <a href="https://element.siemens.io">
+          Card link
+          <i class="link-icon link-end element-right-2 flip-rtl"></i>
+        </a>
+        <button type="button" class="btn btn-link" (click)="logEvent('Print job started.')">
+          Print action
+        </button>
+      </div>
+    </si-card>
+  </div>
+
+  <div class="col-6 mb-6">
+    <si-card class="h-100" heading="Heading">
+      <div class="card-body si-link-widget" body>
+        <div class="si-link-widget-skeleton"></div>
+        <div class="si-link-widget-skeleton"></div>
+        <div class="si-link-widget-skeleton"></div>
+        <div class="si-link-widget-skeleton"></div>
+      </div>
+    </si-card>
+  </div>
+</div>
