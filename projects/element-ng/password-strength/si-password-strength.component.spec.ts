@@ -7,9 +7,13 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { FormsModule } from '@angular/forms';
 import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
-import { SiPasswordStrengthModule, SiPasswordStrengthComponent as TestComponent } from '.';
+import {
+  PasswordPolicy,
+  SiPasswordStrengthModule,
+  SiPasswordStrengthComponent as TestComponent
+} from '.';
 
-const passwordStrengthValue = {
+const passwordStrengthValue: PasswordPolicy = {
   minLength: 8,
   uppercase: true,
   lowercase: true,
@@ -53,6 +57,12 @@ describe('SiPasswordStrengthDirective', () => {
   let inputElement: HTMLInputElement;
   let element: HTMLElement;
 
+  const setInput = (value: string): void => {
+    inputElement.value = value;
+    inputElement.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+    fixture.detectChanges();
+  };
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [SiPasswordStrengthModule, FormsModule, SiTranslateModule, WrapperComponent]
@@ -75,30 +85,15 @@ describe('SiPasswordStrengthDirective', () => {
       jasmine.any(Number)
     );
 
-    inputElement.value = 'f';
-    const firstEvent = new Event('input', {
-      bubbles: true,
-      cancelable: true
-    });
-    inputElement.dispatchEvent(firstEvent);
-
-    fixture.detectChanges();
+    setInput('f');
 
     expect(element.classList.length).not.toBe(0);
     expect(wrapperComponent.passwordStrengthChangedFunc).toHaveBeenCalledWith(-4);
     wrapperComponent.passwordStrengthChangedFunc.calls.reset();
 
-    inputElement.value = '';
-    const secondEvent = new Event('input', {
-      bubbles: true,
-      cancelable: true
-    });
-    inputElement.dispatchEvent(secondEvent);
-
-    fixture.detectChanges();
+    setInput('');
 
     expect(element.classList.length).toBe(0);
-
     expect(wrapperComponent.passwordStrengthChangedFunc).not.toHaveBeenCalledWith(
       jasmine.any(Number)
     );
@@ -107,141 +102,81 @@ describe('SiPasswordStrengthDirective', () => {
   it('should display bad when the field is filled by one letter', () => {
     fixture.detectChanges();
 
-    inputElement.value = 'f';
-    const firstEvent = new Event('input', {
-      bubbles: true,
-      cancelable: true
-    });
-    inputElement.dispatchEvent(firstEvent);
-
-    fixture.detectChanges();
+    setInput('f');
 
     expect(element.classList.contains('bad')).toBeTrue();
 
-    inputElement.value = '';
-    const secondEvent = new Event('input', {
-      bubbles: true,
-      cancelable: true
-    });
-    inputElement.dispatchEvent(secondEvent);
-
-    fixture.detectChanges();
+    setInput('');
 
     expect(element.classList.contains('bad')).toBeFalse();
-
     expect(wrapperComponent.passwordStrengthChangedFunc).toHaveBeenCalledWith(-4);
   });
 
   it('should display weak when the field is filled by one letter and one number', () => {
     fixture.detectChanges();
 
-    inputElement.value = 'f3';
-    const firstEvent = new Event('input', {
-      bubbles: true,
-      cancelable: true
-    });
-    inputElement.dispatchEvent(firstEvent);
-
-    fixture.detectChanges();
+    setInput('f3');
 
     expect(element.classList.contains('weak')).toBeTrue();
 
-    inputElement.value = '';
-    const secondEvent = new Event('input', {
-      bubbles: true,
-      cancelable: true
-    });
-    inputElement.dispatchEvent(secondEvent);
-
-    fixture.detectChanges();
+    setInput('');
 
     expect(element.classList.contains('weak')).toBeFalse();
-
     expect(wrapperComponent.passwordStrengthChangedFunc).toHaveBeenCalledWith(-3);
   });
 
   it('should display medium when the field is filled by one letter per case and one number', () => {
     fixture.detectChanges();
 
-    inputElement.value = 's3K';
-    const firstEvent = new Event('input', {
-      bubbles: true,
-      cancelable: true
-    });
-    inputElement.dispatchEvent(firstEvent);
-
-    fixture.detectChanges();
+    setInput('s3K');
 
     expect(element.classList.contains('medium')).toBeTrue();
 
-    inputElement.value = '';
-    const secondEvent = new Event('input', {
-      bubbles: true,
-      cancelable: true
-    });
-    inputElement.dispatchEvent(secondEvent);
-
-    fixture.detectChanges();
+    setInput('');
 
     expect(element.classList.contains('medium')).toBeFalse();
-
     expect(wrapperComponent.passwordStrengthChangedFunc).toHaveBeenCalledWith(-2);
   });
 
   it('should display good when the field is filled by one letter per case and one number and one symbol', () => {
     fixture.detectChanges();
 
-    inputElement.value = 's3K!';
-    const firstEvent = new Event('input', {
-      bubbles: true,
-      cancelable: true
-    });
-    inputElement.dispatchEvent(firstEvent);
-
-    fixture.detectChanges();
+    setInput('s3K!');
 
     expect(element.classList.contains('good')).toBeTrue();
 
-    inputElement.value = '';
-    const secondEvent = new Event('input', {
-      bubbles: true,
-      cancelable: true
-    });
-    inputElement.dispatchEvent(secondEvent);
-
-    fixture.detectChanges();
+    setInput('');
 
     expect(element.classList.contains('good')).toBeFalse();
-
     expect(wrapperComponent.passwordStrengthChangedFunc).toHaveBeenCalledWith(-1);
   });
 
   it('should display strong when the field is filled by letters of both cases and one number and one symbol and length of 8', () => {
     fixture.detectChanges();
 
-    inputElement.value = 's3K!TEst';
-    const firstEvent = new Event('input', {
-      bubbles: true,
-      cancelable: true
-    });
-    inputElement.dispatchEvent(firstEvent);
-
-    fixture.detectChanges();
+    setInput('s3K!TEst');
 
     expect(element.classList.contains('strong')).toBeTrue();
 
-    inputElement.value = '';
-    const secondEvent = new Event('input', {
-      bubbles: true,
-      cancelable: true
-    });
-    inputElement.dispatchEvent(secondEvent);
-
-    fixture.detectChanges();
+    setInput('');
 
     expect(element.classList.contains('strong')).toBeFalse();
-
     expect(wrapperComponent.passwordStrengthChangedFunc).toHaveBeenCalledWith(0);
+  });
+
+  it('should not allow whitespaces by default', () => {
+    fixture.detectChanges();
+
+    setInput('s3K! TEst');
+    expect(element.classList.length).toEqual(0);
+  });
+
+  it('should allow whitespaces when configured', () => {
+    wrapperComponent.passwordStrengthConfig = { ...passwordStrengthValue, allowWhitespace: true };
+    fixture.detectChanges();
+
+    setInput('s3K! TEst');
+    expect(element.classList.contains('strong')).toBeTrue();
   });
 
   it('should show the icon, toggle', fakeAsync(() => {

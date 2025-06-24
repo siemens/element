@@ -32,6 +32,10 @@ export interface PasswordPolicy {
    * Define if special characters are required in password.
    */
   special: boolean;
+  /**
+   * Whether to allow whitespaces. By default whitespaces are not allowed.
+   */
+  allowWhitespace?: boolean;
 }
 
 @Directive({
@@ -93,16 +97,18 @@ export class SiPasswordStrengthDirective implements Validator {
   }
 
   private getStrength(password: string): number {
+    const policy = this.siPasswordStrength();
     let strength = 0;
     if (password && password !== '') {
       // Strength check
-      strength += password.length >= this.siPasswordStrength().minLength ? 1 : 0;
-      strength += this.siPasswordStrength().uppercase && password.match(RE_UPPER_CASE) ? 1 : 0;
-      strength += this.siPasswordStrength().lowercase && password.match(RE_LOWER_CASE) ? 1 : 0;
-      strength += this.siPasswordStrength().digits && password.match(RE_DIGITS) ? 1 : 0;
-      strength += this.siPasswordStrength().special && password.match(RE_SPECIAL_CHARS) ? 1 : 0;
-      // Hard limit check
-      strength = password.match(RE_WHITESPACES) ? 0 : strength;
+      strength += password.length >= policy.minLength ? 1 : 0;
+      strength += policy.uppercase && password.match(RE_UPPER_CASE) ? 1 : 0;
+      strength += policy.lowercase && password.match(RE_LOWER_CASE) ? 1 : 0;
+      strength += policy.digits && password.match(RE_DIGITS) ? 1 : 0;
+      strength += policy.special && password.match(RE_SPECIAL_CHARS) ? 1 : 0;
+      if (policy.allowWhitespace !== true) {
+        strength = password.match(RE_WHITESPACES) ? 0 : strength;
+      }
       this.noValidation = true;
       // Notify listeners
       this.passwordStrengthChanged.emit(strength - this.maxStrength());
