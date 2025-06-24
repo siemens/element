@@ -42,6 +42,7 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "@babel/standalone",
+              "google-libphonenumber",
               "pbf",
               "rbush",
               "react-dom/client",
