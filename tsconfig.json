@@ -24,7 +24,11 @@
       "@siemens/element-translate-ng": ["dist/@siemens/element-translate-ng/public-api.ts"],
       "@siemens/element-translate-ng/*": ["dist/@siemens/element-translate-ng/*"],
       "@siemens/live-preview": ["projects/live-preview/public-api.ts"],
-      "@siemens/live-preview/*": ["projects/live-preview/*"]
+      "@siemens/live-preview/*": ["projects/live-preview/*"],
+      "@siemens/native-charts-ng": [
+        "projects/native-charts-ng/src/public-api.ts",
+        "projects/native-charts-ng"
+      ]
     }
   },
   "exclude": ["dist/**", "testing/**/*.ts"],

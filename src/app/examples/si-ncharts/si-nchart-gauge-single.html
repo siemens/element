@@ -1,0 +1,83 @@
+<div class="card">
+  <div class="card-header">Single value gauge with segments</div>
+  <div class="card-body">
+    <si-nchart-gauge
+      mode="single"
+      unit="%"
+      style="block-size: 250px"
+      [segments]="showSegments ? segments : []"
+      [series]="series"
+      [startAngle]="-90"
+      [endAngle]="90"
+      [min]="0"
+      [max]="100"
+      [minNumberOfDecimals]="minDecimals"
+      [maxNumberOfDecimals]="maxDecimals"
+      [axisNumberOfDecimals]="axisDecimals"
+      [showLegend]="false"
+      [showTicks]="showTicks"
+      [showRangeLabelsOutside]="showRangeLabelsOutside"
+    />
+  </div>
+</div>
+
+<div class="e2e-ignore card mt-6">
+  <div class="card-body row align-items-end">
+    <si-form-item class="col-sm-4" label="Min. decimals">
+      <si-number-input
+        required
+        class="form-control"
+        [ngModelOptions]="{ standalone: true }"
+        [step]="1"
+        [(ngModel)]="minDecimals"
+      />
+    </si-form-item>
+    <si-form-item class="col-sm-4" label="Max. decimals">
+      <si-number-input
+        required
+        class="form-control"
+        [ngModelOptions]="{ standalone: true }"
+        [step]="1"
+        [(ngModel)]="maxDecimals"
+      />
+    </si-form-item>
+    <si-form-item class="col-sm-4" label="Num. axis decimals">
+      <si-number-input
+        required
+        class="form-control"
+        [ngModelOptions]="{ standalone: true }"
+        [step]="1"
+        [(ngModel)]="axisDecimals"
+      />
+    </si-form-item>
+    <si-form-item class="col-sm-4" label="Show ticks">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        [ngModelOptions]="{ standalone: true }"
+        [(ngModel)]="showTicks"
+      />
+    </si-form-item>
+    <si-form-item class="col-sm-4" label="Show range labels outside">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        [ngModelOptions]="{ standalone: true }"
+        [(ngModel)]="showRangeLabelsOutside"
+      />
+    </si-form-item>
+    <si-form-item class="col-sm-4" label="Show segments">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        [ngModelOptions]="{ standalone: true }"
+        [(ngModel)]="showSegments"
+      />
+    </si-form-item>
+    <div class="col-sm-12 d-flex mt-5 gap-4">
+      <button type="button" class="btn btn-secondary" (click)="setValues(15)"> Value 15 </button>
+      <button type="button" class="btn btn-secondary" (click)="setValues(50)"> Value 50 </button>
+      <button type="button" class="btn btn-secondary" (click)="setValues(80)"> Value 80 </button>
+    </div>
+  </div>
+</div>

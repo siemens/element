@@ -8,7 +8,8 @@
       "@siemens/element-translate-ng": ["dist/@siemens/element-translate-ng"],
       "@siemens/element-translate-ng/*": ["dist/@siemens/element-translate-ng/*"],
       "@siemens/live-preview": ["dist/@siemens/live-preview"],
-      "@siemens/live-preview/*": ["dist/@siemens/live-preview/*"]
+      "@siemens/live-preview/*": ["dist/@siemens/live-preview/*"],
+      "@siemens/native-charts-ng": ["dist/@siemens/native-charts-ng"]
     },
     "useDefineForClassFields": true
   },

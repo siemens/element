@@ -1,0 +1,29 @@
+{
+  "name": "@siemens/native-charts-ng",
+  "description": "Element Native charts library.",
+  "version": "47.4.0",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/siemens/element.git"
+  },
+  "author": {
+    "name": "Siemens AG",
+    "email": "info@siemens.com"
+  },
+  "homepage": "https://github.com/siemens/element",
+  "bugs": "https://github.com/siemens/element/issues/new",
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "@angular/common": "19 - 20",
+    "@angular/core": "19 - 20"
+  },
+  "exports": {
+    "./docs.json": {
+      "default": "./docs.json"
+    }
+  }
+}

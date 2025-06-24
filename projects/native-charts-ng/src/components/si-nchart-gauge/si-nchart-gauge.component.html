@@ -1,0 +1,82 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  class="chart"
+  [attr.viewBox]="'0 0 ' + dim.width + ' ' + dim.height"
+  [attr.width]="dim.width"
+  [attr.height]="dim.height"
+>
+  <g class="ticks">
+    @for (tick of ticks; track $index) {
+      <path [attr.d]="tick.path" />
+    }
+  </g>
+  <g class="tick-labels text-secondary">
+    @for (tick of ticks; track $index) {
+      <text text-anchor="middle" [attr.x]="tick.textPos.x" [attr.y]="tick.textPos.y">
+        {{ tick.label }}
+      </text>
+    }
+  </g>
+  <g class="segments">
+    @for (seg of internalSegments; track $index) {
+      <path [attr.d]="seg.path" [style.stroke]="seg.colorVar" />
+    }
+  </g>
+  <g class="background">
+    <path [attr.d]="backgroundPath" />
+  </g>
+  <g class="data">
+    @for (series of internalSeries; track $index) {
+      @if (series.path) {
+        <path
+          [class.highlight]="series.highlight"
+          [attr.d]="series.path"
+          [attr.data-id]="series.series.id"
+          [style.stroke]="series.colorVar"
+          (mouseenter)="series.highlight = true"
+          (mouseleave)="series.highlight = false"
+        />
+      }
+    }
+  </g>
+  <text
+    class="text-body value"
+    x="50"
+    y="50"
+    text-anchor="middle"
+    [attr.dominant-baseline]="valignMiddle ? 'middle' : 'auto'"
+  >
+    {{ totalSumString }}
+    @if (unit()) {
+      <tspan class="unit">{{ unit() }}</tspan>
+    }
+  </text>
+</svg>
+
+@if (showLegend()) {
+  <table class="legend-table flex-fill">
+    <tbody>
+      @for (series of internalSeries; track $index) {
+        <tr [attr.data-id]="series.series.id">
+          <td>
+            <div
+              class="color"
+              [class.highlight]="series.highlight"
+              [style.color]="series.colorVar"
+              (mouseenter)="series.highlight = true"
+              (mouseleave)="series.highlight = false"
+            >
+            </div>
+          </td>
+          <td class="value">{{ series.valueString }}</td>
+          <td class="name">
+            <div class="text-truncate">{{ series.series.name }}</div>
+            @if (series.series.description) {
+              <div class="descr text-truncate">{{ series.series.description }}</div>
+            }
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}

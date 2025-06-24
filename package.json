@@ -35,7 +35,7 @@
     "build:examples": "ng build",
     "build:examples:prod": "ng build --configuration production",
     "build:examples:aot": "ng build --configuration aot",
-    "build:all": "npm run translate:build && npm run lib:build && npm run live-preview:build",
+    "build:all": "npm run translate:build && npm run lib:build && npm run live-preview:build && npm run native-charts:build",
     "build:all:update-translatable-keys": "npm exec update-translatable-keys",
     "lib:build": "ng build element-ng && cpy \"projects/element-ng/*.scss\" \"./dist/@siemens/element-ng\" && cpy \"{LICENSE.md,README.md}\" \"./dist/@siemens/element-ng/\"",
     "lib:test": "ng test element-ng",
@@ -47,13 +47,16 @@
     "live-preview:build": "ng build live-preview",
     "prepare": "husky; exit 0",
     "prepare-brand": "cpy --flat node_modules/@simpl/brand/src/favicon/sie-favicon_internet_64px.png docs/_src --rename=favicon.png && cpy --flat node_modules/@simpl/brand/src/favicon/sie-favicon_internet_64px.png src --rename=favicon.png",
-    "postversion": "node ./postversion.js && npm run format"
+    "postversion": "node ./postversion.js && npm run format",
+    "native-charts:test": "ng test native-charts-ng",
+    "native-charts:build": "ng build native-charts-ng && cpy \"{LICENSE.md,projects/native-charts-ng/README.md}\" \"./dist/@simpl/native-charts-ng/\""
   },
   "workspaces": [
     "projects/element-translate-cli",
     "projects/element-translate-ng",
     "projects/element-theme",
-    "projects/live-preview"
+    "projects/live-preview",
+    "projects/native-charts-ng"
   ],
   "dependencies": {
     "@angular/animations": "19.0.6",

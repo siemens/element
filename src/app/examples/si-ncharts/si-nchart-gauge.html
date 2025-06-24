@@ -1,0 +1,125 @@
+<div class="card" [style]="legendPosition === 'column' ? 'max-inline-size: 350px' : ''">
+  <div class="card-header">Energy consumption and production</div>
+  <div class="card-body">
+    <si-nchart-gauge
+      [style]="legendPosition !== 'column' ? 'block-size: 250px' : ''"
+      [series]="series"
+      [startAngle]="-angle"
+      [endAngle]="angle"
+      [min]="-range"
+      [max]="range"
+      [unit]="unit"
+      [minNumberOfDecimals]="minDecimals"
+      [maxNumberOfDecimals]="maxDecimals"
+      [axisNumberOfDecimals]="axisDecimals"
+      [legendPosition]="legendPosition"
+      [showLegend]="showLegend"
+      [showTicks]="showTicks"
+      [showRangeLabelsOutside]="showRangeLabelsOutside"
+    />
+  </div>
+</div>
+
+<div class="e2e-ignore card mt-6">
+  <div class="card-body row align-items-end">
+    <si-form-item class="col-sm-4" label="Angle">
+      <si-number-input
+        required
+        class="form-control"
+        [ngModelOptions]="{ standalone: true }"
+        [step]="10"
+        [(ngModel)]="angle"
+      />
+    </si-form-item>
+    <si-form-item class="col-sm-4" label="Value range">
+      <si-number-input
+        required
+        class="form-control"
+        [ngModelOptions]="{ standalone: true }"
+        [step]="10"
+        [(ngModel)]="range"
+      />
+    </si-form-item>
+    <si-form-item class="col-sm-4" label="Unit">
+      <input
+        type="text"
+        class="form-control"
+        [ngModelOptions]="{ standalone: true }"
+        [(ngModel)]="unit"
+      />
+    </si-form-item>
+    <si-form-item class="col-sm-4" label="Min. decimals">
+      <si-number-input
+        required
+        class="form-control"
+        [ngModelOptions]="{ standalone: true }"
+        [step]="1"
+        [(ngModel)]="minDecimals"
+      />
+    </si-form-item>
+    <si-form-item class="col-sm-4" label="Max. decimals">
+      <si-number-input
+        required
+        class="form-control"
+        [ngModelOptions]="{ standalone: true }"
+        [step]="1"
+        [(ngModel)]="maxDecimals"
+      />
+    </si-form-item>
+    <si-form-item class="col-sm-4" label="Num. axis decimals">
+      <si-number-input
+        required
+        class="form-control"
+        [ngModelOptions]="{ standalone: true }"
+        [step]="1"
+        [(ngModel)]="axisDecimals"
+      />
+    </si-form-item>
+    <si-form-item class="col-sm-4" label="Legend position">
+      <select
+        required
+        class="form-control"
+        [ngModelOptions]="{ standalone: true }"
+        [(ngModel)]="legendPosition"
+      >
+        <option value="column">In a column</option>
+        <option value="row">In a row</option>
+      </select>
+    </si-form-item>
+    <si-form-item class="col-sm-4" label="Show legend">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        [ngModelOptions]="{ standalone: true }"
+        [(ngModel)]="showLegend"
+      />
+    </si-form-item>
+    <si-form-item class="col-sm-4" label="Show ticks">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        [ngModelOptions]="{ standalone: true }"
+        [(ngModel)]="showTicks"
+      />
+    </si-form-item>
+    <si-form-item class="col-sm-4" label="Show range labels outside">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        [ngModelOptions]="{ standalone: true }"
+        [(ngModel)]="showRangeLabelsOutside"
+      />
+    </si-form-item>
+    <div class="col-sm-12 d-flex mt-5 gap-4">
+      <button type="button" class="btn btn-secondary" (click)="setValues(50, 100)">
+        Positive - Positive
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="setValues(-50, 100)">
+        Negative - Positive
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="setValues(-50, -100)">
+        Negative - Negative
+      </button>
+    </div>
+  </div>
+</div>

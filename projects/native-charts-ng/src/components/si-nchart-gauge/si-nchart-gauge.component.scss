@@ -1,0 +1,114 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: flex;
+
+  &.legend-column {
+    flex-direction: column;
+
+    .chart {
+      block-size: auto;
+      inline-size: 100%;
+      min-block-size: 120px;
+      max-block-size: 320px;
+    }
+  }
+
+  &.legend-row {
+    .chart {
+      block-size: 100%;
+      inline-size: auto;
+      min-inline-size: 200px;
+    }
+  }
+}
+
+.chart {
+  .background,
+  .data {
+    stroke-width: 4;
+    fill: none;
+  }
+
+  .background,
+  .ticks {
+    stroke: variables.$element-ui-4;
+  }
+
+  .ticks {
+    stroke-width: 0.5;
+  }
+
+  .segments {
+    stroke-width: 0.75;
+    fill: none;
+  }
+
+  .tick-labels,
+  .value {
+    fill: currentColor;
+  }
+
+  .data {
+    > .highlight {
+      stroke-width: 6;
+    }
+  }
+
+  .value {
+    font-size: 80%;
+  }
+
+  tspan.unit {
+    font-size: 40%;
+  }
+
+  .tick-labels {
+    font-size: 25%;
+  }
+}
+
+.legend-table {
+  border-collapse: collapse;
+  align-self: center;
+
+  td {
+    padding-block: map.get(variables.$spacers, 4);
+    padding-inline: map.get(variables.$spacers, 4);
+  }
+
+  .value {
+    text-align: end;
+    white-space: nowrap;
+  }
+
+  .name {
+    inline-size: 100%;
+    min-inline-size: map.get(variables.$spacers, 10);
+    max-inline-size: 0;
+  }
+
+  .descr {
+    color: variables.$element-text-secondary;
+  }
+}
+
+.color {
+  position: relative;
+  flex: 0 0 auto;
+  block-size: 16px;
+  inline-size: 16px;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: currentColor;
+    border-radius: 50%;
+  }
+
+  &.highlight::after {
+    inset: 0;
+  }
+}
