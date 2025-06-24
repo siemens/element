@@ -179,6 +179,15 @@ describe('SiPasswordStrengthDirective', () => {
     expect(element.classList.contains('strong')).toBeTrue();
   });
 
+  it('should allow setting minRequiredPolicies', () => {
+    wrapperComponent.passwordStrengthConfig = { ...passwordStrengthValue, minRequiredPolicies: 3 };
+    fixture.detectChanges();
+
+    // skip the uppercase
+    setInput('s3K!test');
+    expect(element.classList.contains('strong')).toBeTrue();
+  });
+
   it('should show the icon, toggle', fakeAsync(() => {
     fixture.detectChanges();
 

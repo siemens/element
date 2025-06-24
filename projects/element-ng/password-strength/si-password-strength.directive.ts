@@ -36,6 +36,18 @@ export interface PasswordPolicy {
    * Whether to allow whitespaces. By default whitespaces are not allowed.
    */
   allowWhitespace?: boolean;
+  /**
+   * Minimum required policies for valid password. When set to a number greater than 0,
+   * defines the number of policies that must be met for the password to be valid.
+   * E.g. when set to 3 and the policies uppercase/lowercase/digits/special are all set
+   * and the password contains 3 out of these four, the password will be valid.
+   */
+  minRequiredPolicies?: number;
+}
+
+interface StrengthCheck {
+  length: boolean;
+  strength: number;
 }
 
 @Directive({
@@ -90,32 +102,37 @@ export class SiPasswordStrengthDirective implements Validator {
 
   /** @internal */
   validate(control: AbstractControl): ValidationErrors {
-    if (this.getStrength(control.value) >= this.maxStrength()) {
+    const strength = this.getStrength(control.value);
+    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+    const requiredStrength = this.siPasswordStrength().minRequiredPolicies || this.maxStrength();
+    if (strength.length && strength.strength >= requiredStrength) {
       return {};
     }
     return { siPasswordStrength: true };
   }
 
-  private getStrength(password: string): number {
+  private getStrength(password: string): StrengthCheck {
     const policy = this.siPasswordStrength();
-    let strength = 0;
-    if (password && password !== '') {
-      // Strength check
-      strength += password.length >= policy.minLength ? 1 : 0;
-      strength += policy.uppercase && password.match(RE_UPPER_CASE) ? 1 : 0;
-      strength += policy.lowercase && password.match(RE_LOWER_CASE) ? 1 : 0;
-      strength += policy.digits && password.match(RE_DIGITS) ? 1 : 0;
-      strength += policy.special && password.match(RE_SPECIAL_CHARS) ? 1 : 0;
-      if (policy.allowWhitespace !== true) {
-        strength = password.match(RE_WHITESPACES) ? 0 : strength;
-      }
-      this.noValidation = true;
-      // Notify listeners
-      this.passwordStrengthChanged.emit(strength - this.maxStrength());
-      return strength;
+    if (!password) {
+      this.noValidation = false;
+      this.passwordStrengthChanged.emit();
+      return { length: false, strength: 0 };
     }
-    this.noValidation = false;
-    this.passwordStrengthChanged.emit();
-    return strength;
+
+    let strength = 0;
+    // Strength check
+    const length = password.length >= policy.minLength;
+    strength += length ? 1 : 0;
+    strength += policy.uppercase && password.match(RE_UPPER_CASE) ? 1 : 0;
+    strength += policy.lowercase && password.match(RE_LOWER_CASE) ? 1 : 0;
+    strength += policy.digits && password.match(RE_DIGITS) ? 1 : 0;
+    strength += policy.special && password.match(RE_SPECIAL_CHARS) ? 1 : 0;
+    if (policy.allowWhitespace !== true) {
+      strength = password.match(RE_WHITESPACES) ? 0 : strength;
+    }
+    this.noValidation = true;
+    // Notify listeners
+    this.passwordStrengthChanged.emit(strength - this.maxStrength());
+    return { length, strength };
   }
 }
