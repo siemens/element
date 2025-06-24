@@ -1,0 +1,34 @@
+- link "Jump to Main content"
+- link "Jump to Navigation"
+- banner:
+  - button "Launchpad"
+  - link "Siemens logo":
+    - /url: "#/"
+  - text: Smart Buildings
+  - button "API"
+  - button "Jane Smith"
+- navigation:
+  - button "collapse" [expanded]
+  - button "Home"
+  - button "Documentation"
+  - text: All the rest
+  - link "Energy & Operations":
+    - /url: "#/viewer/viewer/energy"
+  - link "Test Coverage":
+    - /url: "#/viewer/viewer/coverage"
+- main:
+  - heading "Dashboard" [level=2]
+  - combobox "selection of day":
+    - option "All days" [selected]
+    - option "Mon"
+    - option "Tue"
+    - option "Wed"
+    - option "Thu"
+    - option "Fri"
+    - option "Sat"
+    - option "Sun"
+  - button "Text"
+  - text: LOC added/removed this week
+  - menubar:
+    - menuitem "Restore"
+  - paragraph

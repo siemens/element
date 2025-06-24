@@ -1,0 +1,30 @@
+- img "Building 1"
+- text: Heading
+- button "Toggle"
+- link "Do something":
+  - /url: ""
+- img "Building 2"
+- text: /Heading \d+ kWh Description/
+- link "Do something":
+  - /url: ""
+- img "Beach in Greece"
+- button "Toggle"
+- text: /\d+ kWh Description/
+- link "Do something":
+  - /url: ""
+- img "Building 3"
+- text: /\d+ kWh Description/
+- link "Do something":
+  - /url: ""
+- img "Building 4"
+- text: Heading
+- button "Toggle"
+- text: /\d+ kWh Description/
+- img "Beach in Greece"
+- text: /Heading \d+ kWh Description/
+- button "Toggle"
+- text: /\d+ kWh Description \d+ kWh Caution Description for caution Heading/
+- button "Toggle"
+- text: /\d+ kWh Danger Description for danger Heading \d+ kWh/
+- button "Toggle"
+- text: /\d+ kWh \d+ kWh/

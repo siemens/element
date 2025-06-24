@@ -1,0 +1,197 @@
+- text: Heading
+- menubar:
+  - menuitem "Sort descending"
+- textbox "Search..."
+- list:
+  - listitem:
+    - text: 5 Burj Khalifa 4.5
+    - button "Building overview"
+  - listitem:
+    - text: /5 Colosseum \d+\.\d+/
+    - button "Building overview"
+  - listitem:
+    - text: 3 Eiffel Tower The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris. 8.3
+    - button "Building overview"
+  - listitem:
+    - text: /6 St\. Basil's Cathedral \d+\.\d+/
+    - button "Building overview"
+  - listitem:
+    - text: /\d+\+/
+    - link "Taj Mahal":
+      - /url: https://en.wikipedia.org/wiki/Taj_Mahal
+    - text: /The Taj Mahal is an ivory-white marble mausoleum \d+\.\d+/
+    - button "Building overview"
+  - listitem:
+    - text: info
+    - link "Tower of Pisa":
+      - /url: https://en.wikipedia.org/wiki/Leaning_Tower_of_Pisa
+    - text: The Leaning Tower of Pisa is the campanile of Pisa Cathedral. 9.7
+    - button "Building overview"
+- link "Home":
+  - /url: "#/"
+- text: Heading
+- menubar:
+  - menuitem "Sort descending"
+- textbox "Search..."
+- list:
+  - listitem:
+    - text: 5 Burj Khalifa
+    - button "Building overview"
+  - listitem:
+    - text: 5 Colosseum
+    - button "Building overview"
+  - listitem:
+    - text: 3 Eiffel Tower The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris.
+    - button "Building overview"
+  - listitem:
+    - text: 6 St. Basil's Cathedral
+    - button "Building overview"
+  - listitem:
+    - text: /\d+\+/
+    - link "Taj Mahal":
+      - /url: https://en.wikipedia.org/wiki/Taj_Mahal
+    - text: The Taj Mahal is an ivory-white marble mausoleum
+    - button "Building overview"
+  - listitem:
+    - text: info
+    - link "Tower of Pisa":
+      - /url: https://en.wikipedia.org/wiki/Leaning_Tower_of_Pisa
+    - text: The Leaning Tower of Pisa is the campanile of Pisa Cathedral.
+    - button "Building overview"
+- text: Heading
+- menubar:
+  - menuitem "Sort descending"
+- list:
+  - listitem:
+    - text: Burj Khalifa 4.5
+    - button "Building overview"
+  - listitem:
+    - text: /Colosseum \d+\.\d+/
+    - button "Building overview"
+  - listitem:
+    - text: Eiffel Tower The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris. 8.3
+    - button "Building overview"
+  - listitem:
+    - text: /St\. Basil's Cathedral \d+\.\d+/
+    - button "Building overview"
+  - listitem:
+    - link "Taj Mahal":
+      - /url: https://en.wikipedia.org/wiki/Taj_Mahal
+    - text: /The Taj Mahal is an ivory-white marble mausoleum \d+\.\d+/
+    - button "Building overview"
+  - listitem:
+    - link "Tower of Pisa":
+      - /url: https://en.wikipedia.org/wiki/Leaning_Tower_of_Pisa
+    - text: The Leaning Tower of Pisa is the campanile of Pisa Cathedral. 9.7
+    - button "Building overview"
+- text: Heading
+- menubar:
+  - menuitem "Sort descending"
+- list:
+  - listitem:
+    - text: Burj Khalifa
+    - button "Building overview"
+  - listitem:
+    - text: Colosseum
+    - button "Building overview"
+  - listitem:
+    - text: Eiffel Tower The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris.
+    - button "Building overview"
+  - listitem:
+    - text: St. Basil's Cathedral
+    - button "Building overview"
+  - listitem:
+    - link "Taj Mahal":
+      - /url: https://en.wikipedia.org/wiki/Taj_Mahal
+    - text: The Taj Mahal is an ivory-white marble mausoleum
+    - button "Building overview"
+  - listitem:
+    - link "Tower of Pisa":
+      - /url: https://en.wikipedia.org/wiki/Leaning_Tower_of_Pisa
+    - text: The Leaning Tower of Pisa is the campanile of Pisa Cathedral.
+    - button "Building overview"
+- link "Home":
+  - /url: "#/"
+- text: Heading
+- menubar:
+  - menuitem "Sort descending"
+- list:
+  - listitem: 5 Burj Khalifa 4.5
+  - listitem: /5 Colosseum \d+\.\d+/
+  - listitem: 3 Eiffel Tower The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris. 8.3
+  - listitem: /6 St\. Basil's Cathedral \d+\.\d+/
+  - listitem:
+    - text: /\d+\+/
+    - link "Taj Mahal":
+      - /url: https://en.wikipedia.org/wiki/Taj_Mahal
+    - text: /The Taj Mahal is an ivory-white marble mausoleum \d+\.\d+/
+  - listitem:
+    - text: info
+    - link "Tower of Pisa":
+      - /url: https://en.wikipedia.org/wiki/Leaning_Tower_of_Pisa
+    - text: The Leaning Tower of Pisa is the campanile of Pisa Cathedral. 9.7
+- link "Home":
+  - /url: "#/"
+- text: Heading
+- menubar:
+  - menuitem "Sort descending"
+- list:
+  - listitem: 5 Burj Khalifa
+  - listitem: 5 Colosseum
+  - listitem: 3 Eiffel Tower The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris.
+  - listitem: 6 St. Basil's Cathedral
+  - listitem:
+    - text: /\d+\+/
+    - link "Taj Mahal":
+      - /url: https://en.wikipedia.org/wiki/Taj_Mahal
+    - text: The Taj Mahal is an ivory-white marble mausoleum
+  - listitem:
+    - text: info
+    - link "Tower of Pisa":
+      - /url: https://en.wikipedia.org/wiki/Leaning_Tower_of_Pisa
+    - text: The Leaning Tower of Pisa is the campanile of Pisa Cathedral.
+- link "Home":
+  - /url: "#/"
+- text: Heading
+- menubar:
+  - menuitem "Sort descending"
+- list:
+  - listitem: Burj Khalifa 4.5
+  - listitem: /Colosseum \d+\.\d+/
+  - listitem: Eiffel Tower The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris. 8.3
+  - listitem: /St\. Basil's Cathedral \d+\.\d+/
+  - listitem:
+    - link "Taj Mahal":
+      - /url: https://en.wikipedia.org/wiki/Taj_Mahal
+    - text: /The Taj Mahal is an ivory-white marble mausoleum \d+\.\d+/
+  - listitem:
+    - link "Tower of Pisa":
+      - /url: https://en.wikipedia.org/wiki/Leaning_Tower_of_Pisa
+    - text: The Leaning Tower of Pisa is the campanile of Pisa Cathedral. 9.7
+- link "Home":
+  - /url: "#/"
+- text: Heading
+- menubar:
+  - menuitem "Sort ascending"
+- list:
+  - listitem:
+    - link "Tower of Pisa":
+      - /url: https://en.wikipedia.org/wiki/Leaning_Tower_of_Pisa
+    - text: The Leaning Tower of Pisa is the campanile of Pisa Cathedral.
+  - listitem:
+    - link "Taj Mahal":
+      - /url: https://en.wikipedia.org/wiki/Taj_Mahal
+    - text: The Taj Mahal is an ivory-white marble mausoleum
+  - listitem: St. Basil's Cathedral
+  - listitem: Eiffel Tower The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris.
+  - listitem: Colosseum
+  - listitem: Burj Khalifa
+- link "Home":
+  - /url: "#/"
+- text: Heading
+- menubar:
+  - menuitem "Sort descending"
+- heading "No buildings found." [level=3]
+- paragraph: Please refine your search.
+- link "Home":
+  - /url: "#/"

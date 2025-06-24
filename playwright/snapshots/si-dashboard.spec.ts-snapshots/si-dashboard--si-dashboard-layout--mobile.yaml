@@ -1,0 +1,47 @@
+- link "Jump to Main content"
+- link "Jump to Navigation"
+- banner:
+  - button "Launchpad"
+  - text: Smart Buildings
+  - button "API"
+  - button "Jane Smith"
+- navigation:
+  - button "expand"
+- main:
+  - heading "Dashboard" [level=2]
+  - combobox "selection of day":
+    - option "All days" [selected]
+    - option "Mon"
+    - option "Tue"
+    - option "Wed"
+    - option "Thu"
+    - option "Fri"
+    - option "Sat"
+    - option "Sun"
+  - button "Text"
+  - text: LOC added/removed this week
+  - menubar:
+    - menuitem "Expand"
+  - paragraph:
+    - text: /\d+/
+    - img "plus"
+  - paragraph:
+    - text: /\d+/
+    - img "minus"
+  - text: Today's motivation level (without global filter)
+  - menubar:
+    - menuitem "Expand"
+  - text: Lorem ipsum
+  - paragraph: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc at augue ornare, suscipit orci a, dapibus enim. Duis nibh diam, consequat vitae dolor eu, consectetur hendrerit nulla. Nam consectetur consequat suscipit. Nam consectetur pulvinar risus, nec auctor lorem. Sed eget magna quis turpis finibus rhoncus.
+  - text: Door access events this week
+  - menubar:
+    - menuitem "Expand"
+  - paragraph: /\d+,\d+/
+  - text: Reasons to remember the name
+  - menubar:
+    - menuitem "Expand"
+  - text: Daily requirements at work Contributions
+  - button "Toggle"
+  - text: /\d+ bits Valuable bits commited to main\./
+  - link "Do something":
+    - /url: ""

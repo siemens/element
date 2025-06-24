@@ -1,0 +1,11 @@
+- text: Natural Gas Usage
+- button "Toggle"
+- paragraph: Some quick example text to build on the card title and make up the bulk of the card's content.
+- button "Expand"
+- button "Restore"
+- checkbox "Enable primary actions" [checked]
+- text: Enable primary actions
+- checkbox "Enable secondary actions" [checked]
+- text: Enable secondary actions
+- checkbox "Enable expand interactions"
+- text: Enable expand interactions
