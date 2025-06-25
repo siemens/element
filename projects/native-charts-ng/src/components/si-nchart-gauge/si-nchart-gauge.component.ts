@@ -15,6 +15,7 @@ import {
   SimpleChanges
 } from '@angular/core';
 
+import { positiveNumberAttribute } from '../../utils/positive-number-attribute';
 import {
   Coordinate,
   makeArc,
@@ -134,17 +135,17 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
    * Min number of decimals.
    * @defaultValue 0
    */
-  readonly minNumberOfDecimals = input(0);
+  readonly minNumberOfDecimals = input(0, { transform: positiveNumberAttribute });
   /**
    * Max number of decimals.
    * @defaultValue 2
    */
-  readonly maxNumberOfDecimals = input(2);
+  readonly maxNumberOfDecimals = input(2, { transform: positiveNumberAttribute });
   /**
    * Number of decimals on the axis.
    * @defaultValue 0
    */
-  readonly axisNumberOfDecimals = input(0);
+  readonly axisNumberOfDecimals = input(0, { transform: positiveNumberAttribute });
   /**
    * Whether to show ticks
    *
