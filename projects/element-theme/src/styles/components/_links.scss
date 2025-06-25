@@ -17,6 +17,11 @@ a:active {
   @extend a;
 }
 
+.link-text {
+  @extend a;
+  text-decoration: underline;
+}
+
 .link-icon {
   font-size: $si-link-icon-size !important; // stylelint-disable-line declaration-no-important
   line-height: $si-link-icon-line-height !important; // stylelint-disable-line declaration-no-important
