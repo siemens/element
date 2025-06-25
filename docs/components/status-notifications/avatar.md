@@ -3,6 +3,8 @@
 Avatars use images, icons or initials to visually represent an individual or an organization.
 They can be a valuable tool for creating a more engaging and personalized user experience.
 
+HELLO WORLD
+
 ## Usage ---
 
 Avatars may appear in any number of places. The key is for the same image, initials or icon to appear for a given object instance throughout the application. The size of an avatar may vary.
