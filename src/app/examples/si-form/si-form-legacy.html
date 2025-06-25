@@ -1,0 +1,306 @@
+<div class="container-fluid">
+  <div class="row gy-5">
+    <div class="col">
+      <si-card heading="Form">
+        <div class="card-body" body>
+          <form class="d-flex h-100" [formGroup]="form" (ngSubmit)="save()">
+            <si-form-container
+              #formContainer
+              disableErrorPrinting
+              labelWidth="140px"
+              [readonly]="readonly"
+              [form]="form"
+              [errorCodeTranslateKeyMap]="errorCodeTranslateKeyMap"
+              [controlNameTranslateKeyMap]="controlNameTranslateKeyMap"
+            >
+              <div si-form-container-content>
+                <si-form-item>
+                  <div class="form-check form-check-inline">
+                    <input
+                      type="radio"
+                      formControlName="role"
+                      value="ENGINEER"
+                      id="role-engineer"
+                      class="form-check-input"
+                    />
+                    <label class="form-check-label" for="role-engineer">{{
+                      'FORM.ENGINEER' | translate
+                    }}</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input
+                      type="radio"
+                      formControlName="role"
+                      value="INSTALLER"
+                      id="role-installer"
+                      class="form-check-input"
+                    />
+                    <label class="form-check-label" for="role-installer">{{
+                      'FORM.INSTALLER' | translate
+                    }}</label>
+                  </div>
+                </si-form-item>
+                <si-form-item label="FORM.NAME" [required]="true">
+                  <div class="w-100">
+                    <input
+                      type="text"
+                      id="name"
+                      class="form-control"
+                      formControlName="name"
+                      required
+                      minlength="3"
+                      [readonly]="readonly"
+                    />
+                    <div class="invalid-feedback">
+                      @for (error of formContainer.getValidationErrors('name'); track $index) {
+                        <span>
+                          {{
+                            error.errorCodeTranslationKey
+                              ? (error.errorCodeTranslationKey | translate: error.errorParams)
+                              : error.errorCode
+                          }}
+                        </span>
+                      }
+                    </div>
+                  </div>
+                </si-form-item>
+                <si-form-item label="FORM.DESCRIPTION">
+                  <input
+                    type="text"
+                    id="description"
+                    class="w-100 form-control"
+                    formControlName="description"
+                    [readonly]="readonly"
+                  />
+                </si-form-item>
+                <si-form-item label="FORM.PHONE_NUMBER" [required]="false">
+                  <div class="w-100">
+                    <si-phone-number-input
+                      class="form-control"
+                      formControlName="phoneNumber"
+                      defaultCountry="CH"
+                      placeholderForSearch="FORM.SEARCH"
+                      selectCountryAriaLabel="FORM.SELECT_COUNTRY"
+                      [supportedCountries]="['AU', 'CH', 'DE', 'FK', 'IN', 'US']"
+                      [readonly]="readonly"
+                    />
+                    <div class="invalid-feedback">
+                      @for (
+                        error of formContainer.getValidationErrors('phoneNumber');
+                        track $index
+                      ) {
+                        <span>
+                          {{
+                            error.errorCodeTranslationKey
+                              ? (error.errorCodeTranslationKey | translate: error.errorParams)
+                              : error.errorCode
+                          }}
+                        </span>
+                      }
+                    </div>
+                  </div>
+                </si-form-item>
+                <si-form-item label="FORM.BIRTHDAY" [required]="true">
+                  <div class="w-100">
+                    <input
+                      type="text"
+                      id="birthday"
+                      class="w-100 form-control"
+                      autocomplete="off"
+                      formControlName="birthday"
+                      siDatepicker
+                      required
+                      [readonly]="readonly"
+                    />
+                    <div class="invalid-feedback">
+                      @if (form.controls.birthday.getError('invalid')) {
+                        <span>
+                          {{
+                            errorCodeTranslateKeyMap.get('birthday.invalid')!
+                              | translate: form.controls.birthday.getError('invalid')
+                          }}
+                        </span>
+                      } @else {
+                        @for (
+                          error of formContainer.getValidationErrors('birthday');
+                          track $index
+                        ) {
+                          <span>
+                            {{
+                              error.errorCodeTranslationKey
+                                ? (error.errorCodeTranslationKey | translate: error.errorParams)
+                                : error.errorCode
+                            }}
+                          </span>
+                        }
+                      }
+                    </div>
+                  </div>
+                </si-form-item>
+                <si-form-item label="FORM.TRAVEL_DATE" [required]="true">
+                  <si-date-range
+                    id="travelDate"
+                    required
+                    formControlName="travelDate"
+                    [readonly]="readonly"
+                  />
+                  <div class="invalid-feedback">
+                    @for (error of formContainer.getValidationErrors('travelDate'); track $index) {
+                      <span>
+                        {{ error.errorCodeTranslationKey! | translate: error.errorParams }}
+                      </span>
+                    }
+                  </div>
+                </si-form-item>
+                <si-form-item label="FORM.ARRIVAL" [required]="false">
+                  <si-timepicker
+                    id="arrival"
+                    formControlName="arrival"
+                    [hideLabels]="true"
+                    [readonly]="readonly"
+                  />
+                </si-form-item>
+                <si-form-item label="FORM.DEPARTURE" [required]="false">
+                  <si-timepicker
+                    id="departure"
+                    formControlName="departure"
+                    [hideLabels]="true"
+                    [readonly]="readonly"
+                  />
+                  <div class="invalid-feedback" [class.d-block]="departureErrors.length > 0">
+                    @for (error of departureErrors; track $index) {
+                      <span>
+                        {{
+                          error.errorCodeTranslationKey
+                            ? (error.errorCodeTranslationKey | translate: error.errorParams)
+                            : error.errorCode
+                        }}
+                      </span>
+                    }
+                  </div>
+                </si-form-item>
+                <si-form-item label="FORM.CLASS" inputId="form-class-label" [required]="false">
+                  <si-select
+                    class="form-control"
+                    formControlName="serviceClass"
+                    id="form-class-label"
+                    [ariaLabel]="'FORM.CLASS' | translate"
+                    [options]="optionsList"
+                    [readonly]="readonly"
+                  />
+                  <div class="invalid-feedback">
+                    @for (
+                      error of formContainer.getValidationErrors('serviceClass');
+                      track $index
+                    ) {
+                      <span>
+                        {{
+                          error.errorCodeTranslationKey
+                            ? (error.errorCodeTranslationKey | translate: error.errorParams)
+                            : error.errorCode
+                        }}
+                      </span>
+                    }
+                  </div>
+                </si-form-item>
+                <si-form-item label="FORM.ACCEPT_TERMS" [required]="true">
+                  <div class="form-check form-check-inline">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="termsAccepted"
+                      formControlName="termsAccepted"
+                      required
+                    />
+                    <label class="form-check-label" for="termsAccepted">{{
+                      'FORM.ACCEPT_TERMS_DESCRIPTION' | translate
+                    }}</label>
+                    <div class="invalid-feedback">
+                      @for (
+                        error of formContainer.getValidationErrors('termsAccepted');
+                        track $index
+                      ) {
+                        <span>
+                          {{
+                            error.errorCodeTranslationKey
+                              ? (error.errorCodeTranslationKey | translate: error.errorParams)
+                              : error.errorCode
+                          }}
+                        </span>
+                      }
+                    </div>
+                  </div>
+                </si-form-item>
+              </div>
+              <div si-form-container-buttons>
+                <button type="button" class="btn btn-secondary me-6" (click)="cancel()"
+                  >Cancel</button
+                >
+                <button id="save-button" type="button" class="btn btn-primary" (click)="save()"
+                  >Save</button
+                >
+              </div>
+            </si-form-container>
+          </form>
+        </div>
+      </si-card>
+    </div>
+    <div class="col">
+      <si-card class="e2e-ignore" heading="Debugging">
+        <form class="card-body" body>
+          <si-form-container>
+            <div si-form-container-content>
+              <si-form-item label="Actions">
+                <label class="ms-4 mb-3 form-switch">
+                  <input class="form-check-input" type="checkbox" (change)="toggleDisable()" />
+                  <span class="form-check-label">Disable form</span>
+                </label>
+                <label class="ms-4 mb-3 form-switch">
+                  <input class="form-check-input" type="checkbox" (change)="toggleReadonly()" />
+                  <span class="form-check-label">Readonly form</span>
+                </label>
+              </si-form-item>
+
+              @if (formContainer) {
+                <si-form-item label="Validation Status">{{ form.status }}</si-form-item>
+                <si-form-item label="Validation Details">
+                  <ul>
+                    @for (error of formContainer.getValidationErrors(); track $index) {
+                      <li>
+                        @if (error.controlName) {
+                          <span>Control: {{ error.controlName }}, </span>
+                        }
+                        @if (error.errorCode) {
+                          <span
+                            >error: {{ error.errorCode }},
+                            <span>{{ error.errorCode | translate: error.errorParams }}</span>
+                          </span>
+                        }
+                      </li>
+                    }
+                  </ul>
+                </si-form-item>
+                <si-form-item>
+                  <table class="table">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">Form Data</th>
+                        <th scope="col">Entity Data</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style="white-space: pre-wrap">{{ form.getRawValue() | json }}</td>
+                        <td style="white-space: pre-wrap">{{ (entity | json) ?? 'undefined' }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </si-form-item>
+              }
+            </div>
+          </si-form-container>
+        </form>
+      </si-card>
+    </div>
+  </div>
+</div>
