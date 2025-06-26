@@ -101,9 +101,7 @@ export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
         return;
       }
       this.autoSelectTimeout = setTimeout(() => {
-        const enterEvent = new KeyboardEvent('keydown', { key: 'enter' });
-        Object.defineProperty(enterEvent, 'keyCode', { get: () => 13 });
-        rowOrCell.dispatchEvent(enterEvent);
+        rowOrCell.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', keyCode: 13 }));
       }, 100);
     }
     if (this.element.classList.contains('virtualized')) {

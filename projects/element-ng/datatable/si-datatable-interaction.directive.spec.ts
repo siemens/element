@@ -100,13 +100,7 @@ describe('SiDatatableInteractionDirective', () => {
   };
 
   const keypress = (key: string, keyCode?: number): void => {
-    const event = new KeyboardEvent('keydown', { key });
-    // Since keyCode is deprecated and not supported by the TS KeyboardEvent constructor, assign it.
-    if (keyCode !== undefined) {
-      Object.defineProperty(event, 'keyCode', { get: () => keyCode });
-      Object.defineProperty(event, 'target', { get: () => document.activeElement });
-    }
-    document.activeElement?.dispatchEvent(event);
+    document.activeElement?.dispatchEvent(new KeyboardEvent('keydown', { key, keyCode }));
     refresh();
   };
 

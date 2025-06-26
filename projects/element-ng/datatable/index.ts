@@ -35,7 +35,7 @@ export interface INgxDatatableConfig {
  * Extends the original INgxDatatableConfig with additional properties and makes all fields required to maintain compatibility.
  */
 interface SiDatatableConfig extends INgxDatatableConfig {
-  cssClasses: INgxDatatableConfig['cssClasses'];
+  cssClasses: Exclude<INgxDatatableConfig['cssClasses'], undefined>;
   headerHeight: number;
   footerHeight: number;
   rowHeight: number;

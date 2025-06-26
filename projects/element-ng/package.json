@@ -28,7 +28,7 @@
     "@ngx-formly/core": "^6.2.2",
     "@siemens/element-translate-ng": "47.4.0",
     "@siemens/element-theme": "47.4.0",
-    "@siemens/ngx-datatable": "^22.0.0",
+    "@siemens/ngx-datatable": "22 - 23",
     "flag-icons": "^7.3.2",
     "google-libphonenumber": "^3.2.40",
     "ngx-image-cropper": "^9.0.0"

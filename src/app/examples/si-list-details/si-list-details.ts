@@ -137,7 +137,7 @@ export class SampleComponent {
   selectedEntities: CorporateEmployee[] = [];
   selectionType = SelectionType.single;
   tableConfig = SI_DATATABLE_CONFIG;
-  totalElements!: number;
+  totalElements = 0;
   searchTerm?: string;
 
   /**
