@@ -1,4 +1,4 @@
-# Code of Conduct - Siemens Lint
+# Code of Conduct - Siemens Element
 
 ## Our Pledge
 
