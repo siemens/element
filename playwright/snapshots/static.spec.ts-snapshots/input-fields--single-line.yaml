@@ -1,0 +1,34 @@
+- heading "Vertical" [level=4]
+- text: Name
+- textbox "Name"
+- text: Message Disabled input
+- textbox "Disabled input" [disabled]: This is the value
+- text: Disabled input (empty with placeholder)
+- textbox "Disabled input (empty with placeholder)" [disabled]
+- text: Placeholder text not displayed for disabled input Readonly input
+- textbox "Readonly input": This is the value
+- text: Name
+- textbox "Name": This is valid
+- text: Name
+- textbox "Name": This is ok-ish
+- text: Warning Message Name
+- textbox "Name": Just no
+- text: Error Message
+- heading "Horizontal" [level=4]
+- text: Name
+- textbox "Name"
+- text: Message Name
+- textbox "Name": This is valid
+- text: Name
+- textbox "Name": Also ok-ish
+- text: Warning Message Name
+- textbox "Name": No. No. No.
+- text: Error Message Name
+- combobox "Name":
+  - option "Some value" [selected]
+  - option "Another value"
+- text: This looks consistent across multiple browsers Name
+- combobox "Name":
+  - option "Some value" [selected]
+  - option "Another value pg"
+- text: And can have a validation icon

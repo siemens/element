@@ -1,0 +1,36 @@
+- navigation "first example":
+  - list:
+    - listitem:
+      - button "Back"
+    - listitem:
+      - button "1"
+    - listitem:
+      - button "2"
+    - listitem:
+      - button "3" [disabled]
+    - listitem:
+      - button "4"
+    - listitem:
+      - button "5"
+    - listitem:
+      - button "Forward"
+- navigation "second example":
+  - list:
+    - listitem:
+      - button "Back"
+    - listitem:
+      - button "1"
+    - listitem:
+      - button "2"
+    - listitem:
+      - button "3" [disabled]
+    - listitem:
+      - button "4"
+    - listitem:
+      - button "5"
+    - listitem: …
+    - listitem:
+      - button /\d+/
+    - listitem:
+      - button "Forward"
+- text: "Page: 3"

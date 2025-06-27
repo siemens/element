@@ -1,0 +1,153 @@
+- table:
+  - rowgroup:
+    - row "Status ID First Name Last Name Status Age Context options":
+      - columnheader "Status"
+      - columnheader "ID"
+      - columnheader "First Name"
+      - columnheader "Last Name"
+      - columnheader "Status"
+      - columnheader "Age"
+      - columnheader "Context options"
+  - rowgroup:
+    - row "plantstatus none 1 First 1 Last 1 cancel filled manual filled alarm filled 1 Context menu":
+      - cell "plantstatus none":
+        - status "plantstatus none"
+      - cell "1"
+      - cell "First 1"
+      - cell "Last 1"
+      - cell "cancel filled manual filled alarm filled":
+        - img "cancel filled"
+        - img "manual filled"
+        - img "alarm filled"
+      - cell "1":
+        - textbox "Age"
+      - cell "Context menu":
+        - button "Context menu"
+    - row /plantstatus none 2 First 2 Last 2 cancel filled manual filled alarm filled \d+ Context menu/:
+      - cell "plantstatus none":
+        - status "plantstatus none"
+      - cell "2"
+      - cell "First 2"
+      - cell "Last 2"
+      - cell "cancel filled manual filled alarm filled":
+        - img "cancel filled"
+        - img "manual filled"
+        - img "alarm filled"
+      - cell /\d+/:
+        - textbox "Age"
+      - cell "Context menu":
+        - button "Context menu"
+    - row /plantstatus none 3 First 3 Last 3 cancel filled manual filled alarm filled \d+ Context menu/:
+      - cell "plantstatus none":
+        - status "plantstatus none"
+      - cell "3"
+      - cell "First 3"
+      - cell "Last 3"
+      - cell "cancel filled manual filled alarm filled":
+        - img "cancel filled"
+        - img "manual filled"
+        - img "alarm filled"
+      - cell /\d+/:
+        - textbox "Age"
+      - cell "Context menu":
+        - button "Context menu"
+    - row /plant in status info 4 First 4 Last 4 cancel filled manual filled alarm filled \d+ Context menu/:
+      - cell "plant in status info":
+        - status "plant in status info"
+      - cell "4"
+      - cell "First 4"
+      - cell "Last 4"
+      - cell "cancel filled manual filled alarm filled":
+        - img "cancel filled"
+        - img "manual filled"
+        - img "alarm filled"
+      - cell /\d+/:
+        - textbox "Age"
+      - cell "Context menu":
+        - button "Context menu"
+    - row /plantstatus none 5 First 5 Last 5 cancel filled manual filled alarm filled \d+ Context menu/:
+      - cell "plantstatus none":
+        - status "plantstatus none"
+      - cell "5"
+      - cell "First 5"
+      - cell "Last 5"
+      - cell "cancel filled manual filled alarm filled":
+        - img "cancel filled"
+        - img "manual filled"
+        - img "alarm filled"
+      - cell /\d+/:
+        - textbox "Age"
+      - cell "Context menu":
+        - button "Context menu"
+    - row /plantstatus none 6 First 6 Last 6 cancel filled manual filled alarm filled \d+ Context menu/:
+      - cell "plantstatus none":
+        - status "plantstatus none"
+      - cell "6"
+      - cell "First 6"
+      - cell "Last 6"
+      - cell "cancel filled manual filled alarm filled":
+        - img "cancel filled"
+        - img "manual filled"
+        - img "alarm filled"
+      - cell /\d+/:
+        - textbox "Age"
+      - cell "Context menu":
+        - button "Context menu"
+    - row /plantstatus none 7 First 7 Last 7 cancel filled manual filled alarm filled \d+ Context menu/:
+      - cell "plantstatus none":
+        - status "plantstatus none"
+      - cell "7"
+      - cell "First 7"
+      - cell "Last 7"
+      - cell "cancel filled manual filled alarm filled":
+        - img "cancel filled"
+        - img "manual filled"
+        - img "alarm filled"
+      - cell /\d+/:
+        - textbox "Age"
+      - cell "Context menu":
+        - button "Context menu"
+    - row /plant in status warning 8 First 8 Last 8 cancel filled manual filled alarm filled \d+ Context menu/:
+      - cell "plant in status warning":
+        - status "plant in status warning"
+      - cell "8"
+      - cell "First 8"
+      - cell "Last 8"
+      - cell "cancel filled manual filled alarm filled":
+        - img "cancel filled"
+        - img "manual filled"
+        - img "alarm filled"
+      - cell /\d+/:
+        - textbox "Age"
+      - cell "Context menu":
+        - button "Context menu"
+- navigation "Pagination":
+  - list:
+    - listitem:
+      - button "back" [disabled]
+    - listitem:
+      - button "1" [disabled]
+    - listitem:
+      - button "2"
+    - listitem:
+      - button "3"
+    - listitem:
+      - button "4"
+    - listitem:
+      - button "5"
+    - listitem: …
+    - listitem:
+      - button /\d+/
+    - listitem:
+      - button "forward"
+- text: Settings Selection type
+- combobox "Selection type":
+  - option "undefined"
+  - option "single"
+  - option "multi"
+  - option "multiClick" [selected]
+  - option "cell"
+  - option "checkbox"
+- checkbox "Enforce checkboxes"
+- text: Enforce checkboxes
+- tooltip "The minimum number of characters is not met. The value does not match the predefined pattern."

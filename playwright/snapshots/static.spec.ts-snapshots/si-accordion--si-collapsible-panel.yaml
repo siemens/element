@@ -1,0 +1,10 @@
+- button "Hey there"
+- region "Hey there"
+- button "Another one"
+- region "Another one"
+- button "Number three"
+- region "Number three"
+- button "This is disabled" [disabled]
+- region "This is disabled"
+- button "Heading via content projection"
+- region "Heading via content projection"

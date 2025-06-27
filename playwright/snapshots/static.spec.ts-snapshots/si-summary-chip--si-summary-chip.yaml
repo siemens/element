@@ -1,0 +1,12 @@
+- checkbox /Override \d+/
+- checkbox /Success \d+/ [checked]
+- checkbox /Danger \d+/
+- checkbox /Override \d+/
+- checkbox /Caution \d+/ [disabled]
+- checkbox "Label Value"
+- checkbox /Override \d+/
+- checkbox /Success \d+/ [checked]
+- checkbox /Danger \d+/
+- checkbox /Override \d+/
+- checkbox /Caution \d+/ [disabled]
+- checkbox "Label Value"

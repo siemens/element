@@ -1,0 +1,5 @@
+- alert: This is an information
+- alert: This is a warning
+- alert: This is a caution
+- alert: This is an error
+- alert: This is a critical error

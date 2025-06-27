@@ -1,0 +1,12 @@
+- button "Create template modal"
+- button "Create large modal"
+- button "Create centered modal"
+- button "Create modal with icon"
+- button "Create nested modal"
+- dialog "Modal":
+  - img "square filled"
+  - heading "Modal" [level=4]
+  - button "Close modal"
+  - text: This is the body.
+  - button "Close"
+  - button "Accept"

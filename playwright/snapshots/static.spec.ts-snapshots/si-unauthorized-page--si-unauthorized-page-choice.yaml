@@ -1,0 +1,7 @@
+- heading "Access denied" [level=1]
+- heading "You are not authorized to access this section." [level=2]
+- paragraph: Contact your administrator
+- paragraph:
+  - button "Secondary Action 2"
+  - button "Secondary Action 1"
+  - button "Primary Action"

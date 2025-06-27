@@ -1,0 +1,59 @@
+- text: Form
+- radio "Engineer"
+- text: Engineer
+- radio "Installer"
+- text: Installer Name*
+- textbox "Name*"
+- text: Description
+- textbox "Description"
+- text: Phone number
+- group "Phone number":
+  - combobox /Select Country Switzerland \+\d+/
+  - textbox "Enter phone number"
+- text: Day of birth*
+- textbox "Day of birth*"
+- text: Travel Date*
+- group "Travel Date*":
+  - textbox "Start date"
+  - textbox "End date"
+  - button "Open calendar"
+- text: Arrival
+- group "Arrival":
+  - textbox "Hours"
+  - textbox "Minutes"
+  - combobox "Period":
+    - option "AM" [selected]
+    - option "PM"
+- text: Departure
+- group "Departure":
+  - textbox "Hours"
+  - textbox "Minutes"
+  - combobox "Period":
+    - option "AM" [selected]
+    - option "PM"
+- text: Class of service
+- combobox "Class of service Class of service"
+- text: Accept terms*
+- checkbox "Accept terms* I confirm that I accept all and everything."
+- text: I confirm that I accept all and everything.
+- button "Cancel"
+- button "Save"
+- text: Debugging Actions
+- checkbox "Disable form"
+- text: Disable form
+- checkbox "Readonly form"
+- text: Readonly form Validation Status INVALID Validation Details
+- list:
+  - listitem: "Control: name, error: required, required"
+  - listitem: "Control: birthday, error: required, required"
+  - listitem: "Control: travelDate, error: required, required"
+  - listitem: "Control: termsAccepted, error: required, required"
+- table:
+  - rowgroup:
+    - row "Form Data Entity Data":
+      - columnheader "Form Data"
+      - columnheader "Entity Data"
+  - rowgroup:
+    - 'row "{ \"name\": \"\", \"role\": null, \"description\": \"\", \"phoneNumber\": null, \"birthday\": \"\", \"travelDate\": null, \"arrival\": null, \"departure\": null, \"termsAccepted\": false, \"serviceClass\": \"first\" } undefined"':
+      - 'cell "{ \"name\": \"\", \"role\": null, \"description\": \"\", \"phoneNumber\": null, \"birthday\": \"\", \"travelDate\": null, \"arrival\": null, \"departure\": null, \"termsAccepted\": false, \"serviceClass\": \"first\" }"'
+      - cell "undefined"

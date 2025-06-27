@@ -1,0 +1,22 @@
+- button "Primary" [disabled]
+- img "Loading"
+- button "Secondary" [disabled]
+- img "Loading"
+- button "Secondary" [disabled]
+- img "Loading"
+- button "Secondary" [disabled]
+- img "Loading"
+- button "Tertiary" [disabled]
+- img "Loading"
+- button "Warning" [disabled]
+- img "Loading"
+- button "Danger" [disabled]
+- img "Loading"
+- button " Default" [disabled]
+- img "Loading"
+- button "clock" [disabled]
+- img "Loading"
+- button "clock" [disabled]
+- img "Loading"
+- checkbox "Toggle loading" [checked]
+- text: Toggle loading

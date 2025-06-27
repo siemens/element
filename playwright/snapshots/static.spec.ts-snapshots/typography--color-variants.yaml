@@ -1,0 +1,14 @@
+- heading "default" [level=3]
+- heading "default" [level=3]
+- separator
+- heading "text-secondary" [level=3]
+- heading "text-muted" [level=3]
+- heading "text-primary" [level=3]
+- separator
+- heading "text-inverse" [level=3]
+- separator
+- heading "text-success" [level=3]
+- heading "text-warning" [level=3]
+- heading "text-caution" [level=3]
+- heading "text-info" [level=3]
+- heading "text-danger" [level=3]

@@ -1,0 +1,11 @@
+- text: Filters
+- button "edit"
+- button "delete"
+- button "collapse"
+- paragraph: "Split Part #1"
+- text: Employees
+- paragraph: "Split Part #2.1"
+- paragraph: "Split Part #2.2"
+- text: Details
+- button "collapse"
+- paragraph: "Split Part #3"

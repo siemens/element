@@ -1,0 +1,12 @@
+- button "Primary"
+- button "Secondary"
+- button "Secondary"
+- button "Secondary"
+- button "Tertiary"
+- button "Warning"
+- button "Danger"
+- button " Default"
+- button "clock"
+- button "clock"
+- checkbox "Toggle loading"
+- text: Toggle loading

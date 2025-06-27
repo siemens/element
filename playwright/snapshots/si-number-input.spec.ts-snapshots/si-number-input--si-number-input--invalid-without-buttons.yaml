@@ -1,0 +1,22 @@
+- text: Number input *
+- spinbutton "Number input *"
+- text: °C Control panel Current value
+- spinbutton "Current value"
+- text: "Validation: { \"required\": true }"
+- checkbox "Readonly"
+- text: Readonly
+- checkbox "Required" [checked]
+- text: Required
+- checkbox "Disabled"
+- text: Disabled
+- checkbox "-/+ Buttons"
+- text: "-/+ Buttons"
+- checkbox "Align end (right in LTR)" [checked]
+- text: Align end (right in LTR) Min. value
+- spinbutton "Min. value"
+- text: Max. value
+- spinbutton "Max. value"
+- text: Step size
+- spinbutton "Step size"
+- text: Unit
+- textbox "Unit"

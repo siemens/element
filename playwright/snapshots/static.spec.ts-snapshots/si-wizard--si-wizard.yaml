@@ -1,0 +1,7 @@
+- text: Step 1
+- link "Step 2":
+  - /url: "#"
+- link "Step 3":
+  - /url: "#"
+- heading "Step 1" [level=1]
+- button "Next"
