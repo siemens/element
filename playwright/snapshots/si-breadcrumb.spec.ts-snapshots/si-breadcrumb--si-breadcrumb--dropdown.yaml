@@ -1,0 +1,47 @@
+- heading "Root as icon" [level=2]
+- navigation "root as icon breadcrumbs":
+  - list:
+    - listitem:
+      - link "Root":
+        - /url: "#/viewer/viewer/root"
+    - listitem:
+      - link "Level 1":
+        - /url: "#/viewer/viewer/root/level1"
+    - listitem:
+      - button "Level 2 with a really long..."
+    - listitem:
+      - link "Level 3":
+        - /url: "#/viewer/viewer/root/level1/level2/level3"
+    - listitem:
+      - button "..." [expanded]
+      - menu:
+        - menuitem "Level 4"
+        - menuitem "Level 5"
+        - menuitem "Level 6"
+        - menuitem "Level 7"
+    - listitem:
+      - button "Level 8 thisHasALongNonSepa..."
+    - listitem:
+      - link "Level 9":
+        - /url: "#/viewer/viewer"
+- heading "Root as text" [level=2]
+- navigation "root as text breadcrumbs":
+  - list:
+    - listitem:
+      - link "Root":
+        - /url: "#/viewer/viewer/root"
+    - listitem:
+      - link "Level 1":
+        - /url: "#/viewer/viewer/root/level1"
+    - listitem:
+      - button "Level 2 with a really long..."
+    - listitem:
+      - link "Level 3":
+        - /url: "#/viewer/viewer/root/level1/level2/level3"
+    - listitem:
+      - button "..."
+    - listitem:
+      - button "Level 8 thisHasALongNonSepa..."
+    - listitem:
+      - link "Level 9":
+        - /url: "#/viewer/viewer"

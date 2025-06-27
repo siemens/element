@@ -1,0 +1,30 @@
+- text: Timepicker on date object
+- group:
+  - text: hh
+  - textbox "Hours"
+  - text: mm
+  - textbox "Minutes"
+  - text: ss
+  - textbox "Seconds"
+  - text: ms
+  - textbox "Milliseconds"
+  - text: am/pm
+  - combobox "Period":
+    - option "AM" [selected]
+    - option "PM"
+- text: 2nd Timepicker on same date object with different config
+- group:
+  - text: hh
+  - textbox "Hours"
+  - text: mm
+  - textbox "Minutes"
+  - text: am/pm
+  - combobox "Period":
+    - option "AM" [selected]
+    - option "PM"
+- checkbox "Show seconds in seconds timepicker"
+- text: Show seconds in seconds timepicker
+- checkbox "Readonly"
+- text: Readonly
+- checkbox "Disabled"
+- text: /Disabled Date Wednesday, January \d+, \d+ Time 5:\d+:\d+ AM GMT\+\d+:\d+ Date & Time Wednesday, January \d+, \d+, 5:\d+:\d+:\d+ AM GMT\+\d+:\d+/

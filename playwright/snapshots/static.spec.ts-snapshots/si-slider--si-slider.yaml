@@ -1,0 +1,10 @@
+- text: Slide
+- group "Slide":
+  - button "Decrement"
+  - slider "Value"
+  - button "Increment"
+  - text: /0 % \d+ %/
+- text: Write
+- spinbutton "Write"
+- checkbox "Disabled"
+- text: Disabled

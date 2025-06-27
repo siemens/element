@@ -1,0 +1,21 @@
+- alert:
+  - strong: "Information:"
+  - text: Better description of what happened.
+  - link "Read More":
+    - /url: https://www.lipsum.com/
+- alert:
+  - strong: "Success:"
+  - text: Better description of the success. Action
+- alert:
+  - strong: "Caution:"
+  - text: Description goes here.
+- alert:
+  - strong: "Warning:"
+  - text: Better description of the warning. Action
+- alert:
+  - strong: "Error:"
+  - text: Better description of the critical error. Action
+- alert:
+  - strong: "Critical:"
+  - text: Description goes here.
+- alert: Message without a heading

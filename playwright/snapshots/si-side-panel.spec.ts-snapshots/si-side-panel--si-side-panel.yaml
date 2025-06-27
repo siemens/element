@@ -1,0 +1,17 @@
+- paragraph: Title
+- button "Close"
+- button "Hey there" [expanded]
+- region "Hey there": And here we have some content
+- button "Another one"
+- region "Another one"
+- button "Number three"
+- region "Number three"
+- banner:
+  - link "Siemens logo":
+    - /url: "#/"
+  - text: Side panel
+- button "Toggle side panel"
+- button "scroll - Mode"
+- button "regular - Width"
+- separator
+- paragraph: Hey there! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Alias, ab ex quis iste non nemo delectus sequi tempore nihil sit ducimus illo reprehenderit saepe iusto cum tenetur, voluptatibus corrupti unde? Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat autem ducimus minus! Ducimus qui quam laborum enim nihil, accusantium maiores inventore aliquam laudantium eveniet reiciendis praesentium libero consectetur eum eius!

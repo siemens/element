@@ -1,0 +1,6 @@
+- text: "Phone number:"
+- group "Phone number:":
+  - combobox /Select Country Switzerland \+\d+/
+  - textbox "Enter phone number"
+- separator
+- text: "Last emitted change event: Current form value: null Validation Error: null"

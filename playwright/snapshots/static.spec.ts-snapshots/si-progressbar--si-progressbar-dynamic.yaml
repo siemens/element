@@ -1,0 +1,6 @@
+- emphasis: Graphical progress indication
+- text: /Uploading asset information \d+ %/
+- progressbar "Progress"
+- emphasis: Small graphical progress indication without percentage and heading
+- progressbar "Progress"
+- button "Randomize"

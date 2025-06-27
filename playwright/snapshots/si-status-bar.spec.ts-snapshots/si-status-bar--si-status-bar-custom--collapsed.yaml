@@ -1,0 +1,8 @@
+- text: /4 Emergency \d+ Trouble \d+ Caution 1 Nasty long text that won't fit 8\+/
+- button "Mute/unmute"
+- button "Expand"
+- button "Pause blinking"
+- button "Resume blinking"
+- button "Blink element"
+- text: This can also blink
+- status "plant in status danger"

@@ -1,0 +1,4 @@
+- combobox "language switcher":
+  - option "English" [selected]
+  - option "Deutsch"
+  - option "Français"

@@ -1,0 +1,19 @@
+- text: Tags
+- listbox "Tags":
+  - option "item-1"
+  - option "item-2"
+  - option "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  - textbox "Create item"
+- text: Comma-Separated Tags (or by semicolon)
+- listbox "Comma-Separated Tags (or by semicolon)":
+  - option "item-1"
+  - option "item-2"
+  - textbox "Create item"
+- text: Email Recipients (separated by comma or semicolon)
+- listbox "Email Recipients (separated by comma or semicolon)":
+  - option "test-user@example.org"
+  - textbox "Create item"
+- checkbox "Disabled"
+- text: Disabled
+- checkbox "Readonly"
+- text: Readonly

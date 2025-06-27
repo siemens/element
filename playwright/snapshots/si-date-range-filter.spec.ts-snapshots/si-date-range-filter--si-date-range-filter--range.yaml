@@ -1,0 +1,36 @@
+- textbox "Search"
+- listbox "Presets":
+  - option /last \d+[hmsp]+/
+  - option "last 7 days"
+  - option /last \d+ days/
+  - option /last \d+ days/
+  - option /last \d+ days/
+  - option "last year"
+  - option "past month"
+- text: Reference point
+- textbox "Reference point Open calendar"
+- button "Open calendar"
+- checkbox "Today"
+- text: Today Range
+- spinbutton "Value"
+- combobox "Unit": Unit Days
+- radio "Before"
+- text: Before
+- radio "After" [checked]
+- text: After
+- radio "Within"
+- text: Within
+- switch "Advanced" [checked]
+- text: "/Advanced Preview: 8\\/\\d+\\/\\d+ - \\d+\\/\\d+\\/\\d+/"
+- checkbox "Input mode"
+- text: Input mode
+- checkbox "With time"
+- text: With time
+- checkbox "Show presets" [checked]
+- text: Show presets
+- checkbox "Show apply button"
+- text: Show apply button
+- checkbox "Hide advanced mode"
+- text: Hide advanced mode
+- checkbox "Reverse input fields"
+- text: "/Reverse input fields object \\(JSON\\.stringify\\(\\)\\): \\{ \"point1\": \"\\d+-\\d+-17T00:\\d+:\\d+\\.000Z\", \"point2\": \\d+, \"range\": \"after\" \\} resolved: Aug \\d+, \\d+, \\d+:\\d+:\\d+ AM - Dec \\d+, \\d+, \\d+:\\d+:\\d+ AM/"

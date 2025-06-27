@@ -1,0 +1,19 @@
+- text: Right click here to open context menu
+- button "Open menu" [expanded]
+- menu:
+  - text: Actions
+  - menuitem "Download as"
+  - menuitem "Clear"
+  - menuitem "Hide"
+  - menuitem "Update"
+  - menuitemcheckbox "Be awesome" [checked]
+  - menuitem "Do nothing" [disabled]
+  - menuitem "Disabled menu" [disabled]
+  - menuitem "Menu with disabled children"
+  - text: Menu with disabled children
+  - menuitemradio "Beer" [checked]
+  - menuitemradio "Whisky"
+  - menuitemradio "Gin"
+  - menuitem "Import 5"
+  - menuitem "Export"
+  - menuitem "Save as"

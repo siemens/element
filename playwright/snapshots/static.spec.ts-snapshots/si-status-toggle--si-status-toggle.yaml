@@ -1,0 +1,25 @@
+- heading "Plain" [level=6]
+- radiogroup:
+  - radio "Not checked"
+  - radio "Failed (error status)" [checked]
+  - radio "Passed"
+- button "Switch by code"
+- heading "Two items" [level=6]
+- radiogroup:
+  - radio "Not checked"
+  - radio "Passed" [checked]
+- heading "Single disabled" [level=6]
+- radiogroup:
+  - radio "Not checked" [checked]
+  - radio "Failed"
+  - radio "Passed" [disabled]
+- heading "All disabled" [level=6]
+- radiogroup:
+  - radio "Not checked" [disabled]
+  - radio "Failed" [disabled]
+  - radio "Passed" [disabled]
+- heading "Form Element" [level=6]
+- radiogroup:
+  - radio "Not checked"
+  - radio "Failed" [checked]
+  - radio "Passed"
