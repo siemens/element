@@ -1,0 +1,128 @@
+- button "Presets"
+- button "Previous"
+- button "April"
+- button /\d+/
+- button "Next"
+- grid:
+  - rowgroup:
+    - row "Calendar week Sun Mon Tue Wed Thu Fri Sat":
+      - columnheader "Calendar week"
+      - columnheader "Sun"
+      - columnheader "Mon"
+      - columnheader "Tue"
+      - columnheader "Wed"
+      - columnheader "Thu"
+      - columnheader "Fri"
+      - columnheader "Sat"
+  - rowgroup:
+    - row /\d+ Sun Mar \d+ \d+ Mon Apr \d+ \d+ Tue Apr \d+ \d+ Wed Apr \d+ \d+ Thu Apr \d+ \d+ Fri Apr \d+ \d+ Sat Apr \d+ \d+/:
+      - gridcell /\d+/
+      - gridcell /Sun Mar \d+ \d+/:
+        - button /Sun Mar \d+ \d+/
+      - gridcell /Mon Apr \d+ \d+/:
+        - button /Mon Apr \d+ \d+/
+      - gridcell /Tue Apr \d+ \d+/:
+        - button /Tue Apr \d+ \d+/
+      - gridcell /Wed Apr \d+ \d+/:
+        - button /Wed Apr \d+ \d+/
+      - gridcell /Thu Apr \d+ \d+/:
+        - button /Thu Apr \d+ \d+/
+      - gridcell /Fri Apr \d+ \d+/:
+        - button /Fri Apr \d+ \d+/
+      - gridcell /Sat Apr \d+ \d+/:
+        - button /Sat Apr \d+ \d+/
+    - row /\d+ Sun Apr \d+ \d+ Mon Apr \d+ \d+ Tue Apr \d+ \d+ Wed Apr \d+ \d+ Thu Apr \d+ \d+ Fri Apr \d+ \d+ Sat Apr \d+ \d+/:
+      - gridcell /\d+/
+      - gridcell /Sun Apr \d+ \d+/:
+        - button /Sun Apr \d+ \d+/
+      - gridcell /Mon Apr \d+ \d+/:
+        - button /Mon Apr \d+ \d+/
+      - gridcell /Tue Apr \d+ \d+/:
+        - button /Tue Apr \d+ \d+/
+      - gridcell /Wed Apr \d+ \d+/:
+        - button /Wed Apr \d+ \d+/
+      - gridcell /Thu Apr \d+ \d+/:
+        - button /Thu Apr \d+ \d+/
+      - gridcell /Fri Apr \d+ \d+/:
+        - button /Fri Apr \d+ \d+/
+      - gridcell /Sat Apr \d+ \d+/:
+        - button /Sat Apr \d+ \d+/
+    - row /\d+ Sun Apr \d+ \d+ Mon Apr \d+ \d+ Tue Apr \d+ \d+ Wed Apr \d+ \d+ Thu Apr \d+ \d+ Fri Apr \d+ \d+ Sat Apr \d+ \d+/:
+      - gridcell /\d+/
+      - gridcell /Sun Apr \d+ \d+/:
+        - button /Sun Apr \d+ \d+/
+      - gridcell /Mon Apr \d+ \d+/:
+        - button /Mon Apr \d+ \d+/
+      - gridcell /Tue Apr \d+ \d+/:
+        - button /Tue Apr \d+ \d+/
+      - gridcell /Wed Apr \d+ \d+/:
+        - button /Wed Apr \d+ \d+/
+      - gridcell /Thu Apr \d+ \d+/:
+        - button /Thu Apr \d+ \d+/
+      - gridcell /Fri Apr \d+ \d+/:
+        - button /Fri Apr \d+ \d+/
+      - gridcell /Sat Apr \d+ \d+/:
+        - button /Sat Apr \d+ \d+/
+    - row /\d+ Sun Apr \d+ \d+ Mon Apr \d+ \d+ Tue Apr \d+ \d+ Wed Apr \d+ \d+ Thu Apr \d+ \d+ Fri Apr \d+ \d+ Sat Apr \d+ \d+/:
+      - gridcell /\d+/
+      - gridcell /Sun Apr \d+ \d+/:
+        - button /Sun Apr \d+ \d+/
+      - gridcell /Mon Apr \d+ \d+/:
+        - button /Mon Apr \d+ \d+/
+      - gridcell /Tue Apr \d+ \d+/:
+        - button /Tue Apr \d+ \d+/
+      - gridcell /Wed Apr \d+ \d+/:
+        - button /Wed Apr \d+ \d+/
+      - gridcell /Thu Apr \d+ \d+/:
+        - button /Thu Apr \d+ \d+/
+      - gridcell /Fri Apr \d+ \d+/:
+        - button /Fri Apr \d+ \d+/
+      - gridcell /Sat Apr \d+ \d+/:
+        - button /Sat Apr \d+ \d+/
+    - row /\d+ Sun Apr \d+ \d+ Mon Apr \d+ \d+ Tue Apr \d+ \d+ Wed May \d+ \d+ Thu May \d+ \d+ Fri May \d+ \d+ Sat May \d+ \d+/:
+      - gridcell /\d+/
+      - gridcell /Sun Apr \d+ \d+/:
+        - button /Sun Apr \d+ \d+/
+      - gridcell /Mon Apr \d+ \d+/:
+        - button /Mon Apr \d+ \d+/
+      - gridcell /Tue Apr \d+ \d+/:
+        - button /Tue Apr \d+ \d+/
+      - gridcell /Wed May \d+ \d+/:
+        - button /Wed May \d+ \d+/
+      - gridcell /Thu May \d+ \d+/:
+        - button /Thu May \d+ \d+/
+      - gridcell /Fri May \d+ \d+/:
+        - button /Fri May \d+ \d+/
+      - gridcell /Sat May \d+ \d+/:
+        - button /Sat May \d+ \d+/
+    - row /\d+ Sun May \d+ \d+ Mon May \d+ \d+ Tue May \d+ \d+ Wed May \d+ \d+ Thu May \d+ \d+ Fri May \d+ \d+ Sat May \d+ \d+/:
+      - gridcell /\d+/
+      - gridcell /Sun May \d+ \d+/:
+        - button /Sun May \d+ \d+/
+      - gridcell /Mon May \d+ \d+/:
+        - button /Mon May \d+ \d+/
+      - gridcell /Tue May \d+ \d+/:
+        - button /Tue May \d+ \d+/
+      - gridcell /Wed May \d+ \d+/:
+        - button /Wed May \d+ \d+/
+      - gridcell /Thu May \d+ \d+/:
+        - button /Thu May \d+ \d+/
+      - gridcell /Fri May \d+ \d+/:
+        - button /Fri May \d+ \d+/
+      - gridcell /Sat May \d+ \d+/:
+        - button /Sat May \d+ \d+/
+- button "Today"
+- switch "Advanced"
+- text: "/Advanced Preview: 4\\/5\\/\\d+ - 8\\/\\d+\\/\\d+/"
+- checkbox "Input mode"
+- text: Input mode
+- checkbox "With time"
+- text: With time
+- checkbox "Show presets" [checked]
+- text: Show presets
+- checkbox "Show apply button"
+- text: Show apply button
+- checkbox "Hide advanced mode"
+- text: Hide advanced mode
+- checkbox "Reverse input fields"
+- text: "/Reverse input fields object \\(JSON\\.stringify\\(\\)\\): \\{ \"point1\": \"\\d+-\\d+-17T00:\\d+:\\d+\\.000Z\", \"point2\": \"\\d+-\\d+-05T00:\\d+:\\d+\\.000Z\" \\} resolved: Apr 5, \\d+, \\d+:\\d+:\\d+ AM - Aug \\d+, \\d+, \\d+:\\d+:\\d+ AM/"

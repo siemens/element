@@ -34,4 +34,13 @@ test.describe('si-date-range-filter', () => {
 
     await si.runVisualAndA11yTests('range');
   });
+
+  test(example + ' mobile', async ({ page, si }) => {
+    await page.setViewportSize({ width: 400, height: 660 });
+    await si.visitExample(example);
+    await si.runVisualAndA11yTests('mobile');
+
+    await page.locator('si-date-range-filter').getByText('Presets').click();
+    await si.runVisualAndA11yTests('mobile-presets');
+  });
 });

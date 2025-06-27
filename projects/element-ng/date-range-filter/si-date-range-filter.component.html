@@ -1,29 +1,44 @@
 @if (presetList()?.length) {
-  <div class="preset-select border-end">
-    @if (presetSearch()) {
-      <si-search-bar
-        colorVariant="base-0"
-        class="mx-6 mt-5 mb-6"
-        [placeholder]="searchLabel() | translate"
-        [showIcon]="true"
-        [(ngModel)]="presetFilter"
-      />
-    }
-    <ul class="overflow-auto" cdkListbox [attr.aria-label]="presetLabel() | translate">
-      @for (item of filteredPresetList(); track $index) {
-        @if (item.label | translate | presetMatchFilter: presetFilter()) {
-          <li
-            class="preset-item focus-inside px-8 py-5"
-            [cdkOption]="item.label"
-            (click)="selectPresetItem(item)"
-            (keydown.enter)="selectPresetItem(item)"
-          >
-            {{ item.label | translate }}
-          </li>
-        }
-      }
-    </ul>
-  </div>
+  @if (this.smallScreen) {
+    <div class="presets d-flex">
+      <button
+        #presetTrigger="cdkOverlayOrigin"
+        type="button"
+        class="btn btn-tertiary dropdown-toggle m-5 flex-grow-1"
+        cdkOverlayOrigin
+        [class.show]="presetOpen()"
+        [attr.aria-expanded]="presetOpen()"
+        (click)="presetOpen.set(true)"
+      >
+        {{ presetLabel() | translate }}
+        <si-icon-next class="dropdown-caret icon" [icon]="icons.elementDown2" />
+      </button>
+      <ng-template
+        cdkConnectedOverlay
+        cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+        cdkConnectedOverlayHasBackdrop
+        [cdkConnectedOverlayOpen]="presetOpen()"
+        [cdkConnectedOverlayOrigin]="presetTrigger"
+        [cdkConnectedOverlayMinWidth]="
+          presetTrigger.elementRef.nativeElement?.getBoundingClientRect().width
+        "
+        (backdropClick)="presetOpen.set(false)"
+        (detach)="presetOpen.set(false)"
+      >
+        <div
+          cdkTrapFocus
+          class="preset-select mobile elevation-2 rounded-2 w-100"
+          cdkTrapFocusAutoCapture
+        >
+          <ng-container *ngTemplateOutlet="presets" />
+        </div>
+      </ng-template>
+    </div>
+  } @else {
+    <div class="preset-select border-end">
+      <ng-container *ngTemplateOutlet="presets" />
+    </div>
+  }
 }
 <form class="main-form d-flex flex-column flex-fill">
   @if (advancedMode || inputMode()) {
@@ -88,7 +103,31 @@
     </button>
   </div>
 }
-
+<ng-template #presets>
+  @if (presetSearch()) {
+    <si-search-bar
+      colorVariant="base-0"
+      class="mx-6 mt-5 mb-6"
+      [placeholder]="searchLabel() | translate"
+      [showIcon]="true"
+      [(ngModel)]="presetFilter"
+    />
+  }
+  <ul class="overflow-auto" cdkListbox [attr.aria-label]="presetLabel() | translate">
+    @for (item of filteredPresetList(); track $index) {
+      @if (item.label | translate | presetMatchFilter: presetFilter()) {
+        <li
+          class="preset-item focus-inside px-8 py-5"
+          [cdkOption]="item.label"
+          (click)="selectPresetItem($event, item)"
+          (keydown.enter)="selectPresetItem($event, item)"
+        >
+          {{ item.label | translate }}
+        </li>
+      }
+    }
+  </ul>
+</ng-template>
 <ng-template #formReferencePoint>
   <div class="mb-8">
     <label class="d-block">
