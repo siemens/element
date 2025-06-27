@@ -1,0 +1,71 @@
+- tree "Company locations":
+  - treeitem "Company1  Company1" [expanded] [level=1]:
+    - checkbox "Company1"
+    - heading "Company1" [level=5]
+  - treeitem "Milano  Milano MIL" [level=2]:
+    - checkbox "Milano" [disabled]
+    - heading "Milano" [level=5]
+    - paragraph: MIL
+  - treeitem "Chicago  Chicago CHI" [level=2]:
+    - checkbox "Chicago"
+    - heading "Chicago" [level=5]
+    - paragraph: CHI
+  - treeitem "Pune  Pune PUN" [level=2] [selected]:
+    - checkbox "Pune"
+    - heading "Pune" [level=5]
+    - paragraph: PUN
+  - treeitem "Zug  Zug ZG" [level=2]:
+    - checkbox "Zug"
+    - heading "Zug" [level=5]
+    - paragraph: ZG
+  - treeitem "Company2  Company2 GG" [level=1]:
+    - checkbox "Company2"
+    - heading "Company2" [level=5]
+    - paragraph: GG
+- text: A complex example that allows playing with various settings of a si-tree-view.
+- separator
+- checkbox "Flat tree"
+- text: Flat tree
+- checkbox "Virtualized" [checked]
+- text: Virtualized
+- checkbox "Grouped list"
+- text: Grouped list
+- checkbox "Enable data field 1" [checked]
+- text: Enable data field 1
+- checkbox "Enable data field 2"
+- text: Enable data field 2
+- checkbox "Enable state indicator" [checked]
+- text: Enable state indicator
+- checkbox "Enable icons" [checked]
+- text: Enable icons
+- checkbox "Inherit checked state" [checked]
+- text: Inherit checked state
+- checkbox "Enable checkboxes" [checked]
+- text: Enable checkboxes
+- checkbox "Enable option boxes"
+- text: Enable option boxes
+- checkbox "Enable context menu button" [checked]
+- text: Enable context menu button
+- checkbox "Selection" [checked]
+- text: Selection
+- checkbox "Single select mode" [checked]
+- text: Single select mode
+- checkbox "Expand on click (toggle expand/collapse on click)"
+- text: Expand on click (toggle expand/collapse on click)
+- checkbox "Show expand/collapse all buttons"
+- text: Show expand/collapse all buttons
+- checkbox "Folder state start" [checked]
+- text: Folder state start
+- checkbox "Horizontal scrolling"
+- text: Horizontal scrolling
+- checkbox "Compact mode"
+- text: Compact mode
+- checkbox "Apply class .tree-sm (32px row height)"
+- text: Apply class .tree-sm (32px row height)
+- checkbox "Apply class .tree-xs (24px row height)"
+- text: Apply class .tree-xs (24px row height)
+- checkbox "Disable filled icons"
+- text: Disable filled icons Number of leaf items
+- spinbutton "Number of leaf items"
+- text: Number of folder items
+- spinbutton "Number of folder items"

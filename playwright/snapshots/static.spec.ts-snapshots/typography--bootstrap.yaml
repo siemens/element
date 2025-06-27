@@ -1,0 +1,78 @@
+- heading "Customizing headings" [level=2]
+- heading "Fancy display heading With faded secondary text" [level=3]
+- separator
+- heading "Display headings" [level=2]
+- heading "Display 1" [level=1]
+- heading "Display 2" [level=1]
+- heading "Display 3" [level=1]
+- heading "Display 4" [level=1]
+- separator
+- heading "Lead" [level=2]
+- paragraph: Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus.
+- separator
+- heading "Inline text elements" [level=2]
+- paragraph:
+  - text: You can use the mark tag to
+  - mark: highlight
+  - text: text.
+- paragraph:
+  - deletion: This line of text is meant to be treated as deleted text.
+- paragraph: This line of text is meant to be treated as no longer accurate.
+- paragraph:
+  - insertion: This line of text is meant to be treated as an addition to the document.
+- paragraph: This line of text will render as underlined
+- paragraph: This line of text is meant to be treated as fine print.
+- paragraph:
+  - strong: This line rendered as bold text.
+- paragraph:
+  - emphasis: This line rendered as italicized text.
+- separator
+- heading "Blockquotes" [level=2]
+- blockquote:
+  - paragraph: A well-known quote, contained in a blockquote element.
+- heading "Naming a source" [level=3]
+- figure "— Someone famous in Source Title":
+  - blockquote:
+    - paragraph: A well-known quote, contained in a blockquote element.
+- heading "Alignment" [level=3]
+- figure "— Someone famous in Source Title":
+  - blockquote:
+    - paragraph: A well-known quote, contained in a blockquote element.
+- separator
+- heading "Lists" [level=2]
+- heading "Unstyled" [level=3]
+- list:
+  - listitem: Lorem ipsum dolor sit amet
+  - listitem: Consectetur adipiscing elit
+  - listitem: Integer molestie lorem at massa
+  - listitem: Facilisis in pretium nisl aliquet
+  - listitem:
+    - text: Nulla volutpat aliquam velit
+    - list:
+      - listitem: Phasellus iaculis neque
+      - listitem: Purus sodales ultricies
+      - listitem: Vestibulum laoreet porttitor sem
+      - listitem: Ac tristique libero volutpat at
+  - listitem: Faucibus porta lacus fringilla vel
+  - listitem: Aenean sit amet erat nunc
+  - listitem: Eget porttitor lorem
+- heading "Inline" [level=3]
+- list:
+  - listitem: Lorem ipsum
+  - listitem: Phasellus iaculis
+  - listitem: Nulla volutpat
+- heading "Description list alignment" [level=3]
+- term: Description lists
+- definition: A description list is perfect for defining terms.
+- term: Euismod
+- definition:
+  - paragraph: Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.
+  - paragraph: Donec id elit non mi porta gravida at eget metus.
+- term: Malesuada porta
+- definition: Etiam porta sem malesuada magna mollis euismod.
+- term: Truncated term is truncated
+- definition: Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+- term: Nesting
+- definition:
+  - term: Nested definition list
+  - definition: Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc.

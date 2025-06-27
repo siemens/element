@@ -1,0 +1,26 @@
+- heading "Variant Light" [level=4]
+- text: "/Temperature : \\d+°/"
+- button "Remove"
+- text: "/Time : \\d+:\\d+ AM/"
+- button "Remove"
+- text: "/Date : \\d+-\\d+-\\d+/"
+- button "Remove"
+- text: + 4 filters
+- button "Remove"
+- button "Reset filters"
+- heading "Variant Dark" [level=4]
+- text: "/Temperature : \\d+°/"
+- button "Remove"
+- text: "/Time : \\d+:\\d+ AM/"
+- button "Remove"
+- text: "/Date : \\d+-\\d+-\\d+/"
+- button "Remove"
+- text: + 4 filters
+- button "Remove"
+- button "Reset filters"
+- heading "Variant Light Disabled" [level=4]
+- text: "/Temperature : \\d+° Time : \\d+:\\d+ AM Date : \\d+-\\d+-\\d+ \\+ 4 filters/"
+- button "Reset filters" [disabled]
+- heading "Variant Dark Disabled" [level=4]
+- text: "/Temperature : \\d+° Time : \\d+:\\d+ AM Date : \\d+-\\d+-\\d+ \\+ 4 filters/"
+- button "Reset filters" [disabled]

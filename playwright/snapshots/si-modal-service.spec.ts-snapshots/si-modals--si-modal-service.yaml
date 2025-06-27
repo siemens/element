@@ -1,0 +1,10 @@
+- button "Create template modal"
+- button "Create large modal"
+- button "Create centered modal"
+- button "Create modal with icon"
+- button "Create nested modal"
+- dialog "Modal":
+  - heading "Modal" [level=4]
+  - button "Close modal"
+  - text: This is the body. This is the footer.
+  - button "Close"

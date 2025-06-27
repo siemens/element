@@ -1,0 +1,10 @@
+- tablist:
+  - tab "Conference room" [selected]
+  - tab "Lobby Hall":
+    - img "Hall"
+  - tab "Pantry Kitchen 1":
+    - img "Kitchen"
+  - tab "Washroom 2"
+  - tab "Deselectable"
+- tabpanel "Conference room":
+  - paragraph: Content for Conference room

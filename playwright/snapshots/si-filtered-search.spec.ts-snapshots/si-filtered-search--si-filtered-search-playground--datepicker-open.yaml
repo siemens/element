@@ -1,0 +1,157 @@
+- text: Filtered Search Location Munich
+- button "clear"
+- text: Event
+- combobox "search"
+- textbox "search": /2\/\d+\/\d+, \d+:\d+:\d+ AM/
+- button "clear"
+- combobox "search"
+- button "clear"
+- button "Submit search"
+- text: Control panel
+- checkbox "Readonly"
+- text: Readonly
+- checkbox "Disabled"
+- text: Disabled
+- checkbox "Search on input" [checked]
+- text: Search on input
+- checkbox "Disable free text search"
+- text: Disable free text search
+- checkbox "Only predefined criteria"
+- text: Only predefined criteria
+- checkbox "Only predefined criterion options"
+- text: Only predefined criterion options
+- checkbox "Only predefined criterion options and prevent typing"
+- text: Only predefined criterion options and prevent typing
+- checkbox "Exclusive criteria"
+- text: Exclusive criteria Search debounce time
+- spinbutton "Search debounce time"
+- text: Number of visible options
+- spinbutton "Number of visible options"
+- text: Max criteria
+- spinbutton "Max criteria"
+- text: Max options (0 means unlimited)
+- spinbutton "Max options (0 means unlimited)"
+- text: Search criteria input
+- textbox "Search criteria input": "{ \"criteria\": [{\"name\":\"location\", \"value\":\"Munich\"}], \"value\": \"\" }"
+- button "Previous"
+- button "February"
+- button /\d+/
+- button "Next"
+- grid:
+  - rowgroup:
+    - row "Calendar week Mon Tue Wed Thu Fri Sat Sun":
+      - columnheader "Calendar week"
+      - columnheader "Mon"
+      - columnheader "Tue"
+      - columnheader "Wed"
+      - columnheader "Thu"
+      - columnheader "Fri"
+      - columnheader "Sat"
+      - columnheader "Sun"
+  - rowgroup:
+    - row /5 Mon Jan \d+ \d+ Tue Feb \d+ \d+ Wed Feb \d+ \d+ Thu Feb \d+ \d+ Fri Feb \d+ \d+ Sat Feb \d+ \d+ Sun Feb \d+ \d+/:
+      - gridcell "5"
+      - gridcell /Mon Jan \d+ \d+/:
+        - button /Mon Jan \d+ \d+/
+      - gridcell /Tue Feb \d+ \d+/:
+        - button /Tue Feb \d+ \d+/
+      - gridcell /Wed Feb \d+ \d+/:
+        - button /Wed Feb \d+ \d+/
+      - gridcell /Thu Feb \d+ \d+/:
+        - button /Thu Feb \d+ \d+/
+      - gridcell /Fri Feb \d+ \d+/:
+        - button /Fri Feb \d+ \d+/
+      - gridcell /Sat Feb \d+ \d+/:
+        - button /Sat Feb \d+ \d+/
+      - gridcell /Sun Feb \d+ \d+/:
+        - button /Sun Feb \d+ \d+/
+    - row /6 Mon Feb \d+ \d+ Tue Feb \d+ \d+ Wed Feb \d+ \d+ Thu Feb \d+ \d+ Fri Feb \d+ \d+ Sat Feb \d+ \d+ Sun Feb \d+ \d+/:
+      - gridcell "6"
+      - gridcell /Mon Feb \d+ \d+/:
+        - button /Mon Feb \d+ \d+/
+      - gridcell /Tue Feb \d+ \d+/:
+        - button /Tue Feb \d+ \d+/
+      - gridcell /Wed Feb \d+ \d+/:
+        - button /Wed Feb \d+ \d+/
+      - gridcell /Thu Feb \d+ \d+/:
+        - button /Thu Feb \d+ \d+/
+      - gridcell /Fri Feb \d+ \d+/:
+        - button /Fri Feb \d+ \d+/
+      - gridcell /Sat Feb \d+ \d+/:
+        - button /Sat Feb \d+ \d+/
+      - gridcell /Sun Feb \d+ \d+/:
+        - button /Sun Feb \d+ \d+/
+    - row /7 Mon Feb \d+ \d+ Tue Feb \d+ \d+ Wed Feb \d+ \d+ Thu Feb \d+ \d+ Fri Feb \d+ \d+ Sat Feb \d+ \d+ Sun Feb \d+ \d+/:
+      - gridcell "7"
+      - gridcell /Mon Feb \d+ \d+/:
+        - button /Mon Feb \d+ \d+/
+      - gridcell /Tue Feb \d+ \d+/:
+        - button /Tue Feb \d+ \d+/
+      - gridcell /Wed Feb \d+ \d+/:
+        - button /Wed Feb \d+ \d+/
+      - gridcell /Thu Feb \d+ \d+/:
+        - button /Thu Feb \d+ \d+/
+      - gridcell /Fri Feb \d+ \d+/:
+        - button /Fri Feb \d+ \d+/
+      - gridcell /Sat Feb \d+ \d+/:
+        - button /Sat Feb \d+ \d+/
+      - gridcell /Sun Feb \d+ \d+/:
+        - button /Sun Feb \d+ \d+/
+    - row /8 Mon Feb \d+ \d+ Tue Feb \d+ \d+ Wed Feb \d+ \d+ Thu Feb \d+ \d+ Fri Feb \d+ \d+ Sat Feb \d+ \d+ Sun Feb \d+ \d+/:
+      - gridcell "8"
+      - gridcell /Mon Feb \d+ \d+/:
+        - button /Mon Feb \d+ \d+/
+      - gridcell /Tue Feb \d+ \d+/:
+        - button /Tue Feb \d+ \d+/
+      - gridcell /Wed Feb \d+ \d+/:
+        - button /Wed Feb \d+ \d+/
+      - gridcell /Thu Feb \d+ \d+/:
+        - button /Thu Feb \d+ \d+/
+      - gridcell /Fri Feb \d+ \d+/:
+        - button /Fri Feb \d+ \d+/
+      - gridcell /Sat Feb \d+ \d+/:
+        - button /Sat Feb \d+ \d+/
+      - gridcell /Sun Feb \d+ \d+/:
+        - button /Sun Feb \d+ \d+/
+    - row /9 Mon Feb \d+ \d+ Tue Mar \d+ \d+ Wed Mar \d+ \d+ Thu Mar \d+ \d+ Fri Mar \d+ \d+ Sat Mar \d+ \d+ Sun Mar \d+ \d+/:
+      - gridcell "9"
+      - gridcell /Mon Feb \d+ \d+/:
+        - button /Mon Feb \d+ \d+/
+      - gridcell /Tue Mar \d+ \d+/:
+        - button /Tue Mar \d+ \d+/
+      - gridcell /Wed Mar \d+ \d+/:
+        - button /Wed Mar \d+ \d+/
+      - gridcell /Thu Mar \d+ \d+/:
+        - button /Thu Mar \d+ \d+/
+      - gridcell /Fri Mar \d+ \d+/:
+        - button /Fri Mar \d+ \d+/
+      - gridcell /Sat Mar \d+ \d+/:
+        - button /Sat Mar \d+ \d+/
+      - gridcell /Sun Mar \d+ \d+/:
+        - button /Sun Mar \d+ \d+/
+    - row /\d+ Mon Mar \d+ \d+ Tue Mar \d+ \d+ Wed Mar \d+ \d+ Thu Mar \d+ \d+ Fri Mar \d+ \d+ Sat Mar \d+ \d+ Sun Mar \d+ \d+/:
+      - gridcell /\d+/
+      - gridcell /Mon Mar \d+ \d+/:
+        - button /Mon Mar \d+ \d+/
+      - gridcell /Tue Mar \d+ \d+/:
+        - button /Tue Mar \d+ \d+/
+      - gridcell /Wed Mar \d+ \d+/:
+        - button /Wed Mar \d+ \d+/
+      - gridcell /Thu Mar \d+ \d+/:
+        - button /Thu Mar \d+ \d+/
+      - gridcell /Fri Mar \d+ \d+/:
+        - button /Fri Mar \d+ \d+/
+      - gridcell /Sat Mar \d+ \d+/:
+        - button /Sat Mar \d+ \d+/
+      - gridcell /Sun Mar \d+ \d+/:
+        - button /Sun Mar \d+ \d+/
+- button "Today" [disabled]
+- switch "Consider time" [checked]
+- text: Consider time
+- group:
+  - textbox "Hours"
+  - textbox "Minutes"
+  - textbox "Seconds"
+  - combobox "Period":
+    - option "AM" [selected]
+    - option "PM"

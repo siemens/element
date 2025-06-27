@@ -1,0 +1,22 @@
+- heading "Mixed states" [level=4]
+- menubar:
+  - menuitem "Title - Normal"
+  - menuitem "Title - Disabled" [disabled]
+  - menuitem "Primary-Sub-Menu"
+  - menuitem "Toggle"
+- heading "Disabled menu and menu item variations" [level=4]
+- menubar:
+  - menuitem "Menu 1" [disabled]
+  - menuitem "Menu 2" [disabled]
+  - menuitem "Long-List"
+  - menuitem "Menu 3"
+  - menuitem "Menu 4"
+  - menuitem "Toggle"
+- heading "Completely disabled" [level=4]
+- menubar:
+  - menuitem "Menu 1" [disabled]
+  - menuitem "Menu 2" [disabled]
+  - menuitem "Long-List" [disabled]
+  - menuitem "Menu 3" [disabled]
+  - menuitem "Menu 4" [disabled]
+  - menuitem "Toggle" [disabled]

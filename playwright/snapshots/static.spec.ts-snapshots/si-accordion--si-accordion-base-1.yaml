@@ -1,0 +1,9 @@
+- heading "On base-1" [level=4]
+- button "Hey there" [expanded]
+- region "Hey there": Here is some content
+- button "Another one 5"
+- region "Another one 5"
+- button "Number three"
+- region "Number three"
+- button "Heading via content projection"
+- region "Heading via content projection"
