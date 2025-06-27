@@ -1,0 +1,29 @@
+- paragraph: Cooling coil
+- menubar:
+  - menuitem "Path"
+  - menuitem "Edit"
+  - menuitem "Toggle"
+- button "Toggle"
+- link "Out of Service":
+  - /url: ""
+- link "Event source active, ack":
+  - /url: ""
+- textbox "Search..."
+- button "Properties 5" [expanded]
+- region "Properties 5": And here we have some content
+- button "Documents"
+- region "Documents"
+- button "Graphics"
+- region "Graphics"
+- banner:
+  - link "Siemens logo":
+    - /url: "#/"
+  - text: Side panel collapsible
+  - button "Layout"
+  - button "Help"
+- button "Toggle side panel"
+- button "close"
+- button "scroll - Mode"
+- button "regular - Width"
+- separator
+- paragraph: Hey there! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Alias, ab ex quis iste non nemo delectus sequi tempore nihil sit ducimus illo reprehenderit saepe iusto cum tenetur, voluptatibus corrupti unde? Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat autem ducimus minus! Ducimus qui quam laborum enim nihil, accusantium maiores inventore aliquam laudantium eveniet reiciendis praesentium libero consectetur eum eius!

@@ -1,0 +1,5 @@
+- heading "Report could not be generated." [level=1]
+- heading "An error occurred while generating the report." [level=2]
+- paragraph: Contact your administrator to get more information. Help us to solve the issue by submitting error related information.
+- link "Go back":
+  - /url: "#/"

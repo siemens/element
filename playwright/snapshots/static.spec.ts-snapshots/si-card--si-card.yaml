@@ -1,0 +1,35 @@
+- text: Natural Gas Usage
+- button "Toggle"
+- paragraph: Some quick example text to build on the card title and make up the bulk of the card's content.
+- img "fire"
+- text: FS20
+- paragraph: Too much wood is burning in the hot summer.
+- img "fire sensor"
+- paragraph: Use Siemens sensors to detect fire and save the planet.
+- text: Overflows
+- button "Toggle"
+- text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec ornare nunc, quis feugiat ex. Vivamus mollis nisi at dapibus vehicula. Curabitur dui ante, interdum pharetra hendrerit vel, efficitur in erat. Phasellus porttitor molestie orci, vel consectetur ipsum commodo eget. Pellentesque ac gravida mi, id vehicula purus. Sed egestas nisl est, eget faucibus velit hendrerit vulputate. Aenean et pretium enim, in facilisis est. Nam luctus felis ut auctor sollicitudin. Donec elementum nec lorem vitae scelerisque. Mauris elementum metus diam, sit amet ornare mi rhoncus sit amet. Nulla semper scelerisque molestie. Cras et purus et nisi interdum maximus sed et leo. Mauris bibendum hendrerit nunc, sed malesuada augue. Ut porttitor quam in lacinia sodales. Cras pellentesque feugiat sem, non tincidunt mauris mollis vitae. Praesent eleifend condimentum nisi. Quisque fringilla feugiat ornare. Nunc interdum lacinia felis. Duis molestie metus velit, a vestibulum eros blandit in. Donec ut erat posuere, ornare elit a, gravida magna. Pellentesque porta lacinia nisi eget bibendum. Nulla facilisi. Vestibulum fermentum ligula vitae mattis placerat. Nunc quis enim nec urna vehicula cursus id vel sem. Nunc luctus facilisis aliquam. Quisque vehicula imperdiet mauris, nec consectetur erat. Integer ullamcorper finibus lectus, eu faucibus nunc scelerisque id. Pellentesque in massa convallis, commodo turpis et, egestas sem. Sed in iaculis velit. Nam volutpat magna ac justo accumsan venenatis. Duis semper posuere magna vitae tincidunt. Nulla id faucibus ipsum. Morbi a orci in elit malesuada laoreet sed ac massa. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas sit amet massa lorem. Quisque mollis dui nec ipsum sollicitudin commodo. Donec pulvinar enim a erat maximus tempor. Maecenas ultrices gravida rutrum. Vivamus ornare leo id quam tincidunt iaculis. Aenean eget neque a augue faucibus pharetra et quis velit. Nulla facilisi. Vivamus massa nisl, consectetur et vehicula id, varius quis nulla. Aliquam bibendum interdum erat, vitae rutrum dui dapibus ac. Ut suscipit sodales arcu. Vivamus lacinia, augue et efficitur tincidunt, ligula sem iaculis odio, ac tincidunt ligula ex quis erat. Donec laoreet imperdiet arcu. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ultricies orci magna, eu consequat ex viverra rhoncus. Aliquam sodales eu urna et finibus. Vivamus fermentum turpis et dictum lobortis. Suspendisse pulvinar mauris ac leo interdum posuere. Integer porttitor augue laoreet, luctus erat vitae, varius purus.
+- img "Beach in Greece"
+- text: Natural Gas Usage
+- button "Toggle"
+- list:
+  - listitem: Cras justo odio
+  - listitem: Dapibus ac facilisis in
+  - listitem: Morbi leo risus
+  - listitem: Porta ac consectetur ac
+  - listitem: Vestibulum at eros
+  - listitem: Porta ac consectetur ac
+  - listitem: Vestibulum at eros
+- img "fire"
+- text: FS20
+- paragraph: Too much wood is burning in the hot summer.
+- img "fire sensor"
+- paragraph: Use Siemens sensors to detect fire and save the planet.
+- img "Beach in Greece"
+- text: Overflows
+- button "Toggle"
+- text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec ornare nunc, quis feugiat ex. Vivamus mollis nisi at dapibus vehicula. Curabitur dui ante, interdum pharetra hendrerit vel, efficitur in erat. Phasellus porttitor molestie orci, vel consectetur ipsum commodo eget. Pellentesque ac gravida mi, id vehicula purus. Sed egestas nisl est, eget faucibus velit hendrerit vulputate. Aenean et pretium enim, in facilisis est. Nam luctus felis ut auctor sollicitudin. Donec elementum nec lorem vitae scelerisque. Mauris elementum metus diam, sit amet ornare mi rhoncus sit amet. Nulla semper scelerisque molestie. Cras et purus et nisi interdum maximus sed et leo. Mauris bibendum hendrerit nunc, sed malesuada augue. Ut porttitor quam in lacinia sodales. Cras pellentesque feugiat sem, non tincidunt mauris mollis vitae. Praesent eleifend condimentum nisi. Quisque fringilla feugiat ornare. Nunc interdum lacinia felis. Duis molestie metus velit, a vestibulum eros blandit in. Donec ut erat posuere, ornare elit a, gravida magna. Pellentesque porta lacinia nisi eget bibendum. Nulla facilisi. Vestibulum fermentum ligula vitae mattis placerat. Nunc quis enim nec urna vehicula cursus id vel sem. Nunc luctus facilisis aliquam. Quisque vehicula imperdiet mauris, nec consectetur erat. Integer ullamcorper finibus lectus, eu faucibus nunc scelerisque id. Pellentesque in massa convallis, commodo turpis et, egestas sem. Sed in iaculis velit. Nam volutpat magna ac justo accumsan venenatis. Duis semper posuere magna vitae tincidunt. Nulla id faucibus ipsum. Morbi a orci in elit malesuada laoreet sed ac massa. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas sit amet massa lorem. Quisque mollis dui nec ipsum sollicitudin commodo. Donec pulvinar enim a erat maximus tempor. Maecenas ultrices gravida rutrum. Vivamus ornare leo id quam tincidunt iaculis. Aenean eget neque a augue faucibus pharetra et quis velit. Nulla facilisi. Vivamus massa nisl, consectetur et vehicula id, varius quis nulla. Aliquam bibendum interdum erat, vitae rutrum dui dapibus ac. Ut suscipit sodales arcu. Vivamus lacinia, augue et efficitur tincidunt, ligula sem iaculis odio, ac tincidunt ligula ex quis erat. Donec laoreet imperdiet arcu. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ultricies orci magna, eu consequat ex viverra rhoncus. Aliquam sodales eu urna et finibus. Vivamus fermentum turpis et dictum lobortis. Suspendisse pulvinar mauris ac leo interdum posuere. Integer porttitor augue laoreet, luctus erat vitae, varius purus.
+- checkbox "Enable primary actions" [checked]
+- text: Enable primary actions
+- checkbox "Enable secondary actions" [checked]
+- text: Enable secondary actions

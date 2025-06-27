@@ -1,0 +1,42 @@
+- text: Filtered Search Location Munich
+- button "clear"
+- text: /Event = 2\/\d+\/\d+, \d+:\d+:\d+ AM/
+- button "clear"
+- text: Score Good
+- button "clear"
+- combobox "search"
+- button "clear"
+- button "Submit search"
+- text: Control panel
+- checkbox "Readonly"
+- text: Readonly
+- checkbox "Disabled"
+- text: Disabled
+- checkbox "Search on input" [checked]
+- text: Search on input
+- checkbox "Disable free text search"
+- text: Disable free text search
+- checkbox "Only predefined criteria"
+- text: Only predefined criteria
+- checkbox "Only predefined criterion options"
+- text: Only predefined criterion options
+- checkbox "Only predefined criterion options and prevent typing"
+- text: Only predefined criterion options and prevent typing
+- checkbox "Exclusive criteria"
+- text: Exclusive criteria Search debounce time
+- spinbutton "Search debounce time"
+- text: Number of visible options
+- spinbutton "Number of visible options"
+- text: Max criteria
+- spinbutton "Max criteria"
+- text: Max options (0 means unlimited)
+- spinbutton "Max options (0 means unlimited)"
+- text: Search criteria input
+- textbox "Search criteria input": "{ \"criteria\": [{\"name\":\"location\", \"value\":\"Munich\"}], \"value\": \"\" }"
+- listbox "Suggestions":
+  - option "Country"
+  - option "Event"
+  - option "Location"
+  - option "Name"
+  - option "Score"
+  - option "Test Result"

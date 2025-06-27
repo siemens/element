@@ -1,0 +1,16 @@
+- heading "Multi-Line" [level=4]
+- text: Name
+- textbox "Name"
+- text: Message Disabled textarea (empty with placeholder)
+- textbox "Disabled textarea (empty with placeholder)" [disabled]
+- text: Placeholder text not displayed for disabled textarea Disabled textarea with value
+- textbox "Disabled textarea with value" [disabled]
+- text: Readonly textarea
+- textbox "Readonly textarea": This is the value
+- text: Name
+- textbox "Name": This is valid
+- text: Name
+- textbox "Name": This is ok-ish
+- text: Warning Message Name
+- textbox "Name": Just no
+- text: Error Message

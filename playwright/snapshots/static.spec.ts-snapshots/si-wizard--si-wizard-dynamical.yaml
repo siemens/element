@@ -1,0 +1,13 @@
+- text: Step 1
+- link "Step 2":
+  - /url: "#"
+- link "Step 3":
+  - /url: "#"
+- link "Step 4":
+  - /url: "#"
+- link "Step 5":
+  - /url: "#"
+- link "Step 6":
+  - /url: "#"
+- heading "Occupied" [level=3]
+- button "Next"

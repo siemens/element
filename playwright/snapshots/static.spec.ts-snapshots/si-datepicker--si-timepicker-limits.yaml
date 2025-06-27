@@ -1,0 +1,13 @@
+- group:
+  - text: hh
+  - textbox "Hours"
+  - text: mm
+  - textbox "Minutes"
+  - text: am/pm
+  - combobox "Period":
+    - option "AM" [selected]
+    - option "PM"
+- list:
+  - listitem: "/Time: 5:\\d+:\\d+ AM GMT\\+\\d+:\\d+/"
+  - listitem: "/Min\\.: 6:\\d+:\\d+ AM GMT\\+\\d+:\\d+/"
+  - listitem: "/Max\\.: 9:\\d+:\\d+ AM GMT\\+\\d+:\\d+/"

@@ -1,0 +1,73 @@
+- heading "Mixed states" [level=4]
+- menubar:
+  - menuitem "Title - Normal"
+  - menuitem "Title - Disabled" [disabled]
+  - menuitem "Primary-Sub-Menu"
+  - menuitem "Toggle"
+- heading "Disabled menu and menu item variations" [level=4]
+- menubar:
+  - menuitem "Menu 1" [disabled]
+  - menuitem "Menu 2" [disabled]
+  - menuitem "Long-List" [expanded]
+  - menuitem "Menu 3"
+  - menuitem "Menu 4"
+  - menuitem "Toggle"
+- heading "Completely disabled" [level=4]
+- menubar:
+  - menuitem "Menu 1" [disabled]
+  - menuitem "Menu 2" [disabled]
+  - menuitem "Long-List" [disabled]
+  - menuitem "Menu 3" [disabled]
+  - menuitem "Menu 4" [disabled]
+  - menuitem "Toggle" [disabled]
+- menu:
+  - menuitem "Item 1"
+  - menuitem "Item 2"
+  - menuitem "Item 3"
+  - menuitem "Item 4"
+  - menuitem "Item 5"
+  - menuitem "Item 6"
+  - menuitem "Item 7"
+  - menuitem "Item 8"
+  - menuitem "Item 9"
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/
+  - menuitem /Item \d+/

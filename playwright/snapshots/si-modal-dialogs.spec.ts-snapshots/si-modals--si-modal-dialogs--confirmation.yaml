@@ -1,0 +1,24 @@
+- heading "Alert Dialogs" [level=2]
+- button "Default Alert"
+- button "Custom Alert"
+- button "Alert w/ dismiss delay"
+- heading "Confirmation Dialogs" [level=2]
+- button "Confirmation 1"
+- button "Confirmation 2"
+- button "Confirmation w/ dismiss delay"
+- heading "Edit-Discard Dialog" [level=2]
+- button "Edit-Discard"
+- button "Edit-Discard with disabled save"
+- button "Edit-Discard w/ dismiss delay"
+- heading "Delete Confirmation Dialog" [level=2]
+- button "Delete Confirmation"
+- button "Delete confirm w/ dismiss delay"
+- heading "Column Selection Dialog" [level=2]
+- button "Many columns"
+- heading "Column Selection Dialog without visibility toggle" [level=2]
+- button "Many columns"
+- dialog "My Question":
+  - button "No"
+  - text: Do you really want to do this?
+  - button "No"
+  - button "Yes"

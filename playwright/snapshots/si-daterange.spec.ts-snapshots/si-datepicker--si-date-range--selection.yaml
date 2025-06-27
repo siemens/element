@@ -1,0 +1,122 @@
+- group:
+  - textbox "Start date"
+  - text: "-"
+  - textbox "End date": /2\/6\/\d+/
+  - button "Open calendar"
+- heading "Date range value" [level=4]
+- text: "/\\{ \"start\": \"\\d+-\\d+-01T00:\\d+:\\d+\\.000Z\", \"end\": \"\\d+-\\d+-06T00:\\d+:\\d+\\.000Z\" \\}/"
+- heading "Validation:" [level=4]
+- text: Date range is VALID
+- button "Previous"
+- button "February"
+- button /\d+/
+- button "Next"
+- grid:
+  - rowgroup:
+    - row "Calendar week Sun Mon Tue Wed Thu Fri Sat":
+      - columnheader "Calendar week"
+      - columnheader "Sun"
+      - columnheader "Mon"
+      - columnheader "Tue"
+      - columnheader "Wed"
+      - columnheader "Thu"
+      - columnheader "Fri"
+      - columnheader "Sat"
+  - rowgroup:
+    - row /5 Sun Jan \d+ \d+ Mon Jan \d+ \d+ Tue Feb \d+ \d+ Wed Feb \d+ \d+ Thu Feb \d+ \d+ Fri Feb \d+ \d+ Sat Feb \d+ \d+/:
+      - gridcell "5"
+      - gridcell /Sun Jan \d+ \d+/:
+        - button /Sun Jan \d+ \d+/
+      - gridcell /Mon Jan \d+ \d+/:
+        - button /Mon Jan \d+ \d+/
+      - gridcell /Tue Feb \d+ \d+/:
+        - button /Tue Feb \d+ \d+/
+      - gridcell /Wed Feb \d+ \d+/:
+        - button /Wed Feb \d+ \d+/
+      - gridcell /Thu Feb \d+ \d+/:
+        - button /Thu Feb \d+ \d+/
+      - gridcell /Fri Feb \d+ \d+/:
+        - button /Fri Feb \d+ \d+/
+      - gridcell /Sat Feb \d+ \d+/:
+        - button /Sat Feb \d+ \d+/
+    - row /6 Sun Feb \d+ \d+ Mon Feb \d+ \d+ Tue Feb \d+ \d+ Wed Feb \d+ \d+ Thu Feb \d+ \d+ Fri Feb \d+ \d+ Sat Feb \d+ \d+/:
+      - gridcell "6"
+      - gridcell /Sun Feb \d+ \d+/:
+        - button /Sun Feb \d+ \d+/
+      - gridcell /Mon Feb \d+ \d+/:
+        - button /Mon Feb \d+ \d+/
+      - gridcell /Tue Feb \d+ \d+/:
+        - button /Tue Feb \d+ \d+/
+      - gridcell /Wed Feb \d+ \d+/:
+        - button /Wed Feb \d+ \d+/
+      - gridcell /Thu Feb \d+ \d+/:
+        - button /Thu Feb \d+ \d+/
+      - gridcell /Fri Feb \d+ \d+/:
+        - button /Fri Feb \d+ \d+/
+      - gridcell /Sat Feb \d+ \d+/:
+        - button /Sat Feb \d+ \d+/
+    - row /7 Sun Feb \d+ \d+ Mon Feb \d+ \d+ Tue Feb \d+ \d+ Wed Feb \d+ \d+ Thu Feb \d+ \d+ Fri Feb \d+ \d+ Sat Feb \d+ \d+/:
+      - gridcell "7"
+      - gridcell /Sun Feb \d+ \d+/:
+        - button /Sun Feb \d+ \d+/
+      - gridcell /Mon Feb \d+ \d+/:
+        - button /Mon Feb \d+ \d+/
+      - gridcell /Tue Feb \d+ \d+/:
+        - button /Tue Feb \d+ \d+/
+      - gridcell /Wed Feb \d+ \d+/:
+        - button /Wed Feb \d+ \d+/
+      - gridcell /Thu Feb \d+ \d+/:
+        - button /Thu Feb \d+ \d+/
+      - gridcell /Fri Feb \d+ \d+/:
+        - button /Fri Feb \d+ \d+/
+      - gridcell /Sat Feb \d+ \d+/:
+        - button /Sat Feb \d+ \d+/
+    - row /8 Sun Feb \d+ \d+ Mon Feb \d+ \d+ Tue Feb \d+ \d+ Wed Feb \d+ \d+ Thu Feb \d+ \d+ Fri Feb \d+ \d+ Sat Feb \d+ \d+/:
+      - gridcell "8"
+      - gridcell /Sun Feb \d+ \d+/:
+        - button /Sun Feb \d+ \d+/
+      - gridcell /Mon Feb \d+ \d+/:
+        - button /Mon Feb \d+ \d+/
+      - gridcell /Tue Feb \d+ \d+/:
+        - button /Tue Feb \d+ \d+/
+      - gridcell /Wed Feb \d+ \d+/:
+        - button /Wed Feb \d+ \d+/
+      - gridcell /Thu Feb \d+ \d+/:
+        - button /Thu Feb \d+ \d+/
+      - gridcell /Fri Feb \d+ \d+/:
+        - button /Fri Feb \d+ \d+/
+      - gridcell /Sat Feb \d+ \d+/:
+        - button /Sat Feb \d+ \d+/
+    - row /9 Sun Feb \d+ \d+ Mon Feb \d+ \d+ Tue Mar \d+ \d+ Wed Mar \d+ \d+ Thu Mar \d+ \d+ Fri Mar \d+ \d+ Sat Mar \d+ \d+/:
+      - gridcell "9"
+      - gridcell /Sun Feb \d+ \d+/:
+        - button /Sun Feb \d+ \d+/
+      - gridcell /Mon Feb \d+ \d+/:
+        - button /Mon Feb \d+ \d+/
+      - gridcell /Tue Mar \d+ \d+/:
+        - button /Tue Mar \d+ \d+/
+      - gridcell /Wed Mar \d+ \d+/:
+        - button /Wed Mar \d+ \d+/
+      - gridcell /Thu Mar \d+ \d+/:
+        - button /Thu Mar \d+ \d+/
+      - gridcell /Fri Mar \d+ \d+/:
+        - button /Fri Mar \d+ \d+/
+      - gridcell /Sat Mar \d+ \d+/:
+        - button /Sat Mar \d+ \d+/
+    - row /\d+ Sun Mar \d+ \d+ Mon Mar \d+ \d+ Tue Mar \d+ \d+ Wed Mar \d+ \d+ Thu Mar \d+ \d+ Fri Mar \d+ \d+ Sat Mar \d+ \d+/:
+      - gridcell /\d+/
+      - gridcell /Sun Mar \d+ \d+/:
+        - button /Sun Mar \d+ \d+/
+      - gridcell /Mon Mar \d+ \d+/:
+        - button /Mon Mar \d+ \d+/
+      - gridcell /Tue Mar \d+ \d+/:
+        - button /Tue Mar \d+ \d+/
+      - gridcell /Wed Mar \d+ \d+/:
+        - button /Wed Mar \d+ \d+/
+      - gridcell /Thu Mar \d+ \d+/:
+        - button /Thu Mar \d+ \d+/
+      - gridcell /Fri Mar \d+ \d+/:
+        - button /Fri Mar \d+ \d+/
+      - gridcell /Sat Mar \d+ \d+/:
+        - button /Sat Mar \d+ \d+/
+- button "Today" [disabled]

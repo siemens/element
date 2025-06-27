@@ -1,0 +1,5 @@
+- heading "Access denied" [level=1]
+- heading "You are not authorized to access this section." [level=2]
+- paragraph: Contact your administrator
+- link "Go back":
+  - /url: "#/"

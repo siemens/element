@@ -1,0 +1,10 @@
+- heading "Dropdown inside Overlay" [level=2]
+- button "Open dropdown" [expanded]
+- heading "Dropdown outside Overlay" [level=2]
+- button "Action"
+- button "Action 2"
+- button "Action 3"
+- paragraph: This is appended to the body with copied styles from this shadow DOM.
+- button "Action"
+- button "Action 2"
+- button "Action 3"

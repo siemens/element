@@ -1,0 +1,29 @@
+- heading "Variation 1 - Label" [level=4]
+- button "toggle"
+- button "toggle"
+- heading "Variation 2 - Label + Icon" [level=4]
+- menubar:
+  - menuitem "Download"
+  - menuitem "Share"
+  - menuitem "Edit"
+  - menuitem "Copy"
+  - menuitem "toggle"
+- menubar:
+  - menuitem "Download"
+  - menuitem "Share"
+  - menuitem "Edit"
+  - menuitem "Copy"
+  - menuitem "toggle"
+- heading "Variation 3 - Label + Icon (prevent icons in dropdowns)" [level=4]
+- menubar:
+  - menuitem "Download"
+  - menuitem "Share"
+  - menuitem "Edit"
+  - menuitem "Copy"
+  - menuitem "toggle"
+- menubar:
+  - menuitem "Download"
+  - menuitem "Share"
+  - menuitem "Edit"
+  - menuitem "Copy"
+  - menuitem "toggle"

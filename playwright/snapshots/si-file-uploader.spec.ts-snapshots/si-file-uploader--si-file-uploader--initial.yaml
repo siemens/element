@@ -1,0 +1,22 @@
+- text: "/Drop files here or click to upload Maximum upload size: [\\d,.]+[bkmBKM]+\\. Accepted file types: image\\/\\*\\./"
+- button "Clear" [disabled]
+- button "Upload" [disabled]
+- text: si-file-uploader settings
+- checkbox "Show HTTP error"
+- text: Show HTTP error
+- checkbox "Auto-upload mode"
+- text: Auto-upload mode
+- checkbox "Upload directory"
+- text: Upload directory Max. files
+- spinbutton "Max. files"
+- text: Max. concurrent uploads
+- spinbutton "Max. concurrent uploads"
+- text: Demo settings
+- checkbox "Upload shall fail"
+- text: Upload shall fail
+- checkbox "Fail two uploads and let the third try succeed" [checked]
+- text: Fail two uploads and let the third try succeed
+- checkbox "Set a max-height"
+- text: Set a max-height
+- checkbox "No delay" [checked]
+- text: No delay

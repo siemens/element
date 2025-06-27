@@ -1,0 +1,13 @@
+- button "Success toast"
+- button "Danger toast"
+- button "Caution toast"
+- button "Critical toast"
+- button "Info toast"
+- button "Warning toast"
+- button "Actionable toast"
+- button "Manual close only"
+- button "Auto close only"
+- button "Hide all"
+- paragraph: Filter dirty
+- paragraph: Replace filter within 2 weeks
+- button "Close"

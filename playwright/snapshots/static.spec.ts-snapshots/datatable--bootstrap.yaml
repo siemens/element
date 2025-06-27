@@ -1,0 +1,80 @@
+- table:
+  - rowgroup:
+    - row "all selected expand all Type Data point Quality Mode Event Value":
+      - columnheader "all selected":
+        - checkbox "all selected"
+      - columnheader "expand all":
+        - img "expand all"
+      - columnheader "Type"
+      - columnheader "Data point"
+      - columnheader "Quality"
+      - columnheader "Mode"
+      - columnheader "Event"
+      - columnheader "Value"
+  - rowgroup:
+    - row /selected open dropdown config value Cooling coil device mode B1'Flr_1'RSegm1'HVAC transient maintenance filled alarm \d+%/:
+      - cell "selected":
+        - checkbox "selected"
+      - cell "open dropdown":
+        - button "open dropdown"
+      - cell "config value":
+        - img "config value"
+      - cell "Cooling coil device mode B1'Flr_1'RSegm1'HVAC"
+      - cell "transient":
+        - img "transient"
+      - cell "maintenance filled":
+        - img "maintenance filled"
+      - cell "alarm":
+        - img "alarm"
+      - cell /\d+%/:
+        - textbox "value" [disabled]
+    - row "selected open dropdown physical input Cooling coil cooling request manual filled Control Mode":
+      - cell "selected":
+        - checkbox "selected"
+      - cell "open dropdown":
+        - button "open dropdown"
+      - cell "physical input":
+        - img "physical input"
+      - cell "Cooling coil cooling request"
+      - cell
+      - cell "manual filled":
+        - img "manual filled"
+      - cell
+      - cell "Control Mode":
+        - combobox "value" [disabled]:
+          - option "Control Mode" [selected]
+    - row /selected open dropdown physical input Cooling coil dehumidification request manual filled alarm filled \d+%/:
+      - cell "selected":
+        - checkbox "selected"
+      - cell "open dropdown":
+        - button "open dropdown"
+      - cell "physical input":
+        - img "physical input"
+      - cell "Cooling coil dehumidification request"
+      - cell
+      - cell "manual filled":
+        - img "manual filled"
+      - cell "alarm filled":
+        - img "alarm filled"
+      - cell /\d+%/:
+        - textbox "value" [disabled]
+    - row /selected open dropdown calculated value Cooling coil available for cooling cancel filled alarm background filled \d+%/:
+      - cell "selected":
+        - checkbox "selected"
+      - cell "open dropdown":
+        - button "open dropdown"
+      - cell "calculated value":
+        - img "calculated value"
+      - cell "Cooling coil available for cooling"
+      - cell "cancel filled":
+        - img "cancel filled"
+      - cell
+      - cell "alarm background filled":
+        - img "alarm background filled"
+      - cell /\d+%/:
+        - textbox "value" [disabled]
+- text: Settings Condensed rows
+- checkbox "Check to apply the table-sm class for condensed row height."
+- text: Check to apply the table-sm class for condensed row height. Hoverable rows
+- checkbox "Check to apply the table-hover class."
+- text: Check to apply the table-hover class.

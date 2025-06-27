@@ -1,0 +1,7 @@
+- tree "Company locations":
+  - treeitem " Company1 SI" [level=1]:
+    - heading "Company1" [level=5]
+    - paragraph: SI
+  - treeitem " Company2 GG" [level=1]:
+    - heading "Company2" [level=5]
+    - paragraph: GG

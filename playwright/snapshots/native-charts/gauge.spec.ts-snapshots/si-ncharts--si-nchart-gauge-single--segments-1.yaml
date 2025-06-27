@@ -1,0 +1,17 @@
+- text: Single value gauge with segments
+- img: /\d+ \d+ 0 \d+ \d+\.\d+ %/
+- text: Min. decimals*
+- spinbutton "Min. decimals*"
+- text: Max. decimals*
+- spinbutton "Max. decimals*"
+- text: Num. axis decimals*
+- spinbutton "Num. axis decimals*"
+- checkbox "Show ticks" [checked]
+- text: Show ticks
+- checkbox "Show range labels outside"
+- text: Show range labels outside
+- checkbox "Show segments" [checked]
+- text: Show segments
+- button /Value \d+/
+- button /Value \d+/
+- button /Value \d+/

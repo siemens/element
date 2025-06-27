@@ -1,0 +1,13 @@
+- heading "Lazy options" [level=4]
+- combobox "Lazy options" [expanded]: CH - Switzerland , DE - Germany
+- text: "Control panel Current value: DE,CH"
+- checkbox "Readonly"
+- text: Readonly
+- checkbox "Disabled"
+- text: Disabled
+- combobox "Lazy options" [expanded]
+- listbox "Lazy options":
+  - option "BW - Botswana"
+  - option "SZ - Eswatini"
+  - option "SE - Sweden"
+  - option "CH - Switzerland" [selected]

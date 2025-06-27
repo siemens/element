@@ -1,0 +1,37 @@
+- text: Energy consumption and production
+- img: /-\d+ 0 \d+ \d+\.\d+ KWh/
+- table:
+  - rowgroup:
+    - row /-\d+\.\d+ Series 1/:
+      - cell
+      - cell /-\d+\.\d+/
+      - cell "Series 1"
+    - row /\d+\.\d+ Series 2 Optional description/:
+      - cell
+      - cell /\d+\.\d+/
+      - cell "Series 2 Optional description"
+- text: Angle*
+- spinbutton "Angle*"
+- text: Value range*
+- spinbutton "Value range*"
+- text: Unit
+- textbox "Unit"
+- text: Min. decimals*
+- spinbutton "Min. decimals*"
+- text: Max. decimals*
+- spinbutton "Max. decimals*"
+- text: Num. axis decimals*
+- spinbutton "Num. axis decimals*"
+- text: Legend position*
+- combobox "Legend position*":
+  - option "In a column" [selected]
+  - option "In a row"
+- checkbox "Show legend" [checked]
+- text: Show legend
+- checkbox "Show ticks" [checked]
+- text: Show ticks
+- checkbox "Show range labels outside"
+- text: Show range labels outside
+- button "Positive - Positive"
+- button "Negative - Positive"
+- button "Negative - Negative"

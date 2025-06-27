@@ -1,0 +1,13 @@
+- contentinfo:
+  - text: /© Siemens \d+-\d+/
+  - link "About":
+    - /url: "#/main/components/si-about"
+  - text: "|"
+  - link "Corporate Information":
+    - /url: http://www.siemens.com/corporate-information
+  - text: "|"
+  - link "Privacy Notice":
+    - /url: http://www.siemens.com/privacy-notice
+  - text: "|"
+  - link "Terms of Use":
+    - /url: http://www.siemens.com/terms-of-use

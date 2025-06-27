@@ -1,0 +1,25 @@
+- heading "Inline" [level=4]
+- combobox "Inline"
+- heading "FormControl" [level=4]
+- combobox "FormControl"
+- heading "Multi select" [level=4]
+- combobox "Multi select"
+- heading "Multi-select with groups" [level=4]
+- combobox "Multi-select with groups"
+- heading "Select with custom template" [level=4]
+- combobox "Select with custom template"
+- heading "Select with actions" [level=4]
+- combobox "Select with actions" [expanded]
+- text: "Control panel Current value: fair"
+- checkbox "Readonly"
+- text: Readonly
+- checkbox "Disabled"
+- text: Disabled
+- checkbox "With filter" [checked]
+- text: With filter
+- combobox "Select with actions" [expanded]
+- listbox "Select with actions":
+  - option "No results found" [disabled]
+- button "clear": Clear selection
+- button "create": Create "New option" item
+- button "close": Close

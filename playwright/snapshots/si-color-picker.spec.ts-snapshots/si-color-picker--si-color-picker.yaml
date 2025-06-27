@@ -1,0 +1,19 @@
+- button "undefined element-data-7"
+- grid:
+  - row "element-data-1 element-data-2 element-data-3 element-data-4 element-data-5 element-data-6 element-data-7 element-data-8":
+    - gridcell "element-data-1":
+      - radio "element-data-1"
+    - gridcell "element-data-2":
+      - radio "element-data-2"
+    - gridcell "element-data-3":
+      - radio "element-data-3"
+    - gridcell "element-data-4":
+      - radio "element-data-4"
+    - gridcell "element-data-5":
+      - radio "element-data-5"
+    - gridcell "element-data-6":
+      - radio "element-data-6"
+    - gridcell "element-data-7":
+      - radio "element-data-7" [checked]
+    - gridcell "element-data-8":
+      - radio "element-data-8"

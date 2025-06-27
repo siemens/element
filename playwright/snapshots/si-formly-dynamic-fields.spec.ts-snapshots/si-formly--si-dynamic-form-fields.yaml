@@ -1,0 +1,112 @@
+- paragraph: Showcase for all available standard components for input and output
+- paragraph:
+  - text: The form is completely configured in Typescript (See
+  - emphasis: Field configuration
+  - text: at bottom)
+- heading "Form" [level=1]
+- text: Display only text Read only text Text input*
+- textbox "Text input*": lorem ipsum
+- text: Icon input
+- textbox "Icon input": Input with icon for additional information tooltip
+- text:  Number input
+- spinbutton "Number input"
+- text: Password input*
+- textbox "Password input*"
+- button "show password"
+- text: Please enter a stronger password Email input
+- textbox "Email input": john.doe@example.org
+- text: Number Input
+- spinbutton: /\d+/
+- separator
+- paragraph:
+  - text: The date and datetime component is derived from
+  - code: SiDatePickerComponent
+  - text: and supports same configurations as
+  - code: SiDatePickerInputConfig
+- paragraph: The fields are displaying their model value in local time zone
+- text: Date
+- textbox "Date": /1\/1\/\d+/
+- button "Open calendar"
+- text: Datetime*
+- textbox "Datetime*": /8\/\d+\/\d+, 5:\d+:\d+ AM/
+- button "Open calendar"
+- text: Daterange
+- group:
+  - textbox "Start date"
+  - text: "-"
+  - textbox "End date": /8\/\d+\/\d+/
+  - button "Open calendar"
+- paragraph:
+  - text: The time component is derived from
+  - code: SiTimepickerComponent
+- paragraph: The fields are displaying their model value in local time zone
+- text: Time
+- group:
+  - textbox "Hours"
+  - textbox "Minutes"
+  - textbox "Seconds"
+  - textbox "Milliseconds"
+  - combobox "Period":
+    - option "AM" [selected]
+    - option "PM"
+- separator
+- text: Textarea
+- textbox "Textarea": lorem ipsum dolor
+- checkbox "Checkbox" [checked]
+- text: Checkbox
+- 'checkbox "Checkbox #2" [checked=mixed]'
+- text: "Checkbox #2"
+- separator
+- group "Multi-Checkbox":
+  - 'checkbox "Option #1" [checked]'
+  - 'checkbox "Option #2"'
+  - 'checkbox "Option #3" [checked]'
+  - 'checkbox "Option #4"'
+- separator
+- group "Radio":
+  - 'radio "Option #1"'
+  - text: "Option #1"
+  - 'radio "Option #2"'
+  - text: "Option #2"
+  - 'radio "Option #3" [checked]'
+  - text: "Option #3"
+  - 'radio "Option #4"'
+  - text: "Option #4"
+- separator
+- text: si-select*
+- combobox "si-select*"
+- text: Please choose an option si-select multi
+- combobox "si-select multi"
+- text: Select
+- combobox "Select":
+  - option "Rome"
+  - option "Berlin"
+  - option "Reykjavík" [selected]
+  - option "Helsinki"
+- separator
+- text: IPv4 Address*
+- textbox "IPv4 Address*"
+- text: IPv4 Address with CIDR*
+- textbox "IPv4 Address with CIDR*"
+- text: IPv6 Address*
+- textbox "IPv6 Address*": /\d+:0db8:85a3:\d+:\d+:8a2e:\d+:\d+/
+- text: IPv6 CIDR Address*
+- textbox "IPv6 CIDR Address*": /\d+:0db8:85a3:\d+:\d+:8a2e:\d+:\d+\/\d+/
+- separator
+- heading "Buttons" [level=2]
+- button "Button function handler"
+- button "Button expression handler"
+- button "Primary"
+- button "Secondary (Default)"
+- button "Tertiary"
+- button "Warning"
+- button "Danger"
+- separator
+- heading "Custom Wrapper" [level=2]
+- text: Sample card header
+- paragraph: sample card body value
+- heading "Model" [level=1]
+- text: "/\\{ \"text\": \"lorem ipsum\", \"textIcon\": \"Input with icon for additional information tooltip\", \"numberInput\": 5\\.5, \"password\": \"dolor\", \"email\": \"john\\.doe@example\\.org\", \"textarea\": \"lorem\\\\nipsum\\\\ndolor\", \"checkbox\": true, \"multiCheckbox\": \\{ \"#1\": true, \"#2\": false, \"#3\": true, \"#4\": false \\}, \"numberNew\": \\d+, \"radio\": \"#3\", \"customSelectMultiSelect\": \\[ \"good\", \"poor\" \\], \"select\": \"reykjavik\", \"date\": \"\\d+-\\d+-01T00:\\d+:\\d+\\.000Z\", \"datetime\": \"\\d+-\\d+-12T05:\\d+:\\d+\\.000Z\", \"time\": \"\\d+-\\d+-12T05:\\d+:\\d+\\.000Z\", \"textdisplay\": \"Read only text\", \"daterange\": \\{ \"start\": \"\\d+-\\d+-12T05:\\d+:\\d+\\.000Z\", \"end\": \"\\d+-\\d+-12T05:\\d+:\\d+\\.000Z\" \\}, \"ipV4Address\": \"\\d+\\.\\d+\\.0\\.1\", \"ipV4AddressCIDR\": \"\\d+\\.\\d+\\.0\\.1\\/\\d+\", \"ipV6Address\": \"\\d+:0db8:85a3:\\d+:\\d+:8a2e:\\d+:\\d+\", \"ipV6CIDRAddress\": \"\\d+:0db8:85a3:\\d+:\\d+:8a2e:\\d+:\\d+\\/\\d+\", \"card_text\": \"sample card body value\", \"i\": 1 \\}/"
+- heading "Field configuration" [level=1]
+- paragraph: Array of FormlyFieldConfig
+- text: "/\\[ \\{ \"key\": \"textdisplay\", \"type\": \"textdisplay\", \"wrappers\": \\[ \"form-field\" \\], \"props\": \\{ \"label\": \"Display only text\" \\} \\}, \\{ \"key\": \"text\", \"type\": \"input\", \"props\": \\{ \"required\": true, \"label\": \"Text input\" \\}, \"validation\": \\{ \"show\": true, \"messages\": \\{\\} \\} \\}, \\{ \"key\": \"textIcon\", \"type\": \"input\", \"wrappers\": \\[ \"form-field\", \"icon-wrapper\" \\], \"props\": \\{ \"label\": \"Icon input\", \"icon\": \"element-link\", \"iconSize\": \\d+, \"iconTooltip\": \"Translatable Text like \\\\\"foo\\.bar\\.SOME_KEY\\\\\"\" \\} \\}, \\{ \"key\": \"numberInput\", \"type\": \"input\", \"props\": \\{ \"type\": \"number\", \"label\": \"Number input\", \"min\": 0, \"max\": \\d+, \"step\": 0\\.1 \\} \\}, \\{ \"key\": \"password\", \"type\": \"password\", \"props\": \\{ \"type\": \"password\", \"required\": true, \"label\": \"Password input\" \\}, \"validation\": \\{ \"show\": true, \"messages\": \\{\\} \\} \\}, \\{ \"key\": \"email\", \"type\": \"input\", \"props\": \\{ \"type\": \"email\", \"label\": \"Email input\" \\} \\}, \\{ \"key\": \"numberNew\", \"type\": \"number\", \"props\": \\{ \"type\": \"number\", \"label\": \"Number Input\", \"numberStep\": 0\\.2, \"showButtons\": true \\} \\}, \\{ \"template\": \"<hr>\" \\}, \\{ \"template\": \"\\\\n <p>The date and datetime component is derived from <code>SiDatePickerComponent<\\/code>\\\\n and supports same configurations as <code>SiDatePickerInputConfig<\\/code><\\/p>\\\\n <p>The fields are displaying their model value in local time zone<\\/p>\\\\n \" \\}, \\{ \"key\": \"date\", \"type\": \"date\", \"props\": \\{ \"label\": \"Date\", \"dateFormat\": \"date\" \\} \\}, \\{ \"key\": \"datetime\", \"type\": \"datetime\", \"props\": \\{ \"label\": \"Datetime\", \"placeholder\": \"Enter a date\", \"dateConfig\": \\{ \"minDate\": \"\\d+-\\d+-05T00:\\d+:\\d+\\.000Z\", \"showTime\": true, \"showSeconds\": true, \"mandatoryTime\": true \\}, \"required\": true \\}, \"validation\": \\{ \"show\": true, \"messages\": \\{\\} \\} \\}, \\{ \"key\": \"daterange\", \"type\": \"date-range\", \"props\": \\{ \"label\": \"Daterange\", \"startPlaceholder\": \"Enter start date\", \"endPlaceholder\": \"Enter end date\", \"autoClose\": true, \"siDatepickerConfig\": \\{ \"enableTwoMonthDateRange\": true, \"showTime\": true, \"showSeconds\": false, \"showMilliseconds\": false, \"disabledTime\": true, \"mandatoryTime\": false \\} \\} \\}, \\{ \"template\": \"\\\\n <p>The time component is derived from <code>SiTimepickerComponent<\\/code>\\\\n <p>The fields are displaying their model value in local time zone<\\/p>\\\\n \" \\}, \\{ \"key\": \"time\", \"type\": \"time\", \"props\": \\{ \"label\": \"Time\", \"timeConfig\": \\{ \"showSeconds\": true, \"showMilliseconds\": true \\} \\} \\}, \\{ \"template\": \"<hr>\" \\}, \\{ \"key\": \"textarea\", \"type\": \"textarea\", \"props\": \\{ \"autoGrow\": true, \"resizable\": true, \"maxHeight\": \"100px\", \"label\": \"Textarea\" \\} \\}, \\{ \"key\": \"checkbox\", \"type\": \"checkbox\", \"props\": \\{ \"label\": \"Checkbox\" \\} \\}, \\{ \"key\": \"checkbox_left\", \"type\": \"checkbox\", \"props\": \\{ \"label\": \"Checkbox #2\", \"labelWidth\": 1 \\} \\}, \\{ \"template\": \"<hr>\" \\}, \\{ \"key\": \"multiCheckbox\", \"type\": \"multicheckbox\", \"props\": \\{ \"label\": \"Multi-Checkbox\", \"options\": \\[ \\{ \"label\": \"Option #1\", \"value\": \"#1\" \\}, \\{ \"label\": \"Option #2\", \"value\": \"#2\" \\}, \\{ \"label\": \"Option #3\", \"value\": \"#3\" \\}, \\{ \"label\": \"Option #4\", \"value\": \"#4\" \\} \\] \\} \\}, \\{ \"template\": \"<hr>\" \\}, \\{ \"key\": \"radio\", \"type\": \"radio\", \"props\": \\{ \"label\": \"Radio\", \"options\": \\[ \\{ \"label\": \"Option #1\", \"value\": \"#1\" \\}, \\{ \"label\": \"Option #2\", \"value\": \"#2\" \\}, \\{ \"label\": \"Option #3\", \"value\": \"#3\" \\}, \\{ \"label\": \"Option #4\", \"value\": \"#4\" \\} \\] \\} \\}, \\{ \"template\": \"<hr>\" \\}, \\{ \"key\": \"customSelect\", \"type\": \"si-select\", \"props\": \\{ \"type\": \"si-select\", \"required\": true, \"label\": \"si-select\", \"optionsList\": \\[ \\{ \"id\": \"good\", \"icon\": \"element-face-happy\", \"color\": \"status-success\", \"title\": \"Good\" \\}, \\{ \"id\": \"average\", \"icon\": \"element-face-neutral\", \"color\": \"status-warning\", \"title\": \"Average\" \\}, \\{ \"id\": \"poor\", \"icon\": \"element-face-unhappy\", \"color\": \"status-danger\", \"title\": \"Poor\" \\}, \\{ \"id\": \"unhealthy\", \"icon\": \"element-face-very-unhappy\", \"color\": \"status-critical\", \"title\": \"Unhealthy\", \"disabled\": true \\} \\] \\}, \"validation\": \\{ \"show\": true, \"messages\": \\{\\} \\} \\}, \\{ \"key\": \"customSelectMultiSelect\", \"type\": \"si-select\", \"props\": \\{ \"type\": \"si-select\", \"label\": \"si-select multi\", \"multi\": true, \"optionsList\": \\[ \\{ \"id\": \"good\", \"icon\": \"element-face-happy\", \"color\": \"status-success\", \"title\": \"Good\" \\}, \\{ \"id\": \"average\", \"icon\": \"element-face-neutral\", \"color\": \"status-warning\", \"title\": \"Average\" \\}, \\{ \"id\": \"poor\", \"icon\": \"element-face-unhappy\", \"color\": \"status-danger\", \"title\": \"Poor\" \\}, \\{ \"id\": \"unhealthy\", \"icon\": \"element-face-very-unhappy\", \"color\": \"status-critical\", \"title\": \"Unhealthy\", \"disabled\": true \\} \\] \\} \\}, \\{ \"key\": \"select\", \"type\": \"select\", \"props\": \\{ \"label\": \"Select\", \"options\": \\[ \\{ \"label\": \"Rome\", \"value\": \"rome\" \\}, \\{ \"label\": \"Berlin\", \"value\": \"berlin\" \\}, \\{ \"label\": \"Reykjavík\", \"value\": \"reykjavik\" \\}, \\{ \"label\": \"Helsinki\", \"value\": \"helsinki\" \\} \\] \\} \\}, \\{ \"template\": \"<hr>\" \\}, \\{ \"key\": \"ipV4Address\", \"type\": \"ipv4\", \"props\": \\{ \"label\": \"IPv4 Address\", \"placeholder\": \"Enter a IPv4 address\", \"required\": true \\}, \"validation\": \\{ \"show\": true, \"messages\": \\{\\} \\} \\}, \\{ \"key\": \"ipV4AddressCIDR\", \"type\": \"ipv4\", \"props\": \\{ \"cidr\": true, \"label\": \"IPv4 Address with CIDR\", \"placeholder\": \"Enter a IPv4 address with subnet mask\", \"required\": true \\}, \"validation\": \\{ \"show\": true, \"messages\": \\{\\} \\} \\}, \\{ \"key\": \"ipV6Address\", \"type\": \"ipv6\", \"props\": \\{ \"label\": \"IPv6 Address\", \"placeholder\": \"Enter a IPv6 address\", \"required\": true \\}, \"validation\": \\{ \"show\": true, \"messages\": \\{\\} \\} \\}, \\{ \"key\": \"ipV6CIDRAddress\", \"type\": \"ipv6\", \"props\": \\{ \"label\": \"IPv6 CIDR Address\", \"cidr\": true, \"placeholder\": \"Enter a IPv6 address\", \"required\": true \\}, \"validation\": \\{ \"show\": true, \"messages\": \\{\\} \\} \\}, \\{ \"template\": \"<hr><h2>Buttons<\\/h2>\" \\}, \\{ \"key\": \"btn_func\", \"type\": \"button\", \"wrappers\": \\[ \"form-field\" \\], \"props\": \\{ \"hideLabel\": true, \"label\": \"Button function handler\", \"clickArgs\": \\[ \"stringParam\", \\d+ \\] \\} \\}, \\{ \"key\": \"btn_exp\", \"type\": \"button\", \"wrappers\": \\[ \"form-field\" \\], \"props\": \\{ \"hideLabel\": true, \"label\": \"Button expression handler\", \"clickListener\": \"formState\\.btnClicked\", \"clickArgs\": \\[ \"1st\", \\d+ \\] \\} \\}, \\{ \"key\": \"btn_prim\", \"type\": \"button\", \"wrappers\": \\[ \"form-field\" \\], \"props\": \\{ \"hideLabel\": true, \"label\": \"Primary\", \"clickListener\": \"formState\\.btnClicked\", \"clickArgs\": \\[ \"primary\", \\d+ \\], \"btnType\": \"primary\" \\} \\}, \\{ \"key\": \"btn_sec\", \"type\": \"button\", \"wrappers\": \\[ \"form-field\" \\], \"props\": \\{ \"hideLabel\": true, \"label\": \"Secondary \\(Default\\)\", \"clickListener\": \"formState\\.btnClicked\", \"clickArgs\": \\[ \"secondary\", \\d+ \\], \"btnType\": \"secondary\" \\} \\}, \\{ \"key\": \"btn_tert\", \"type\": \"button\", \"wrappers\": \\[ \"form-field\" \\], \"props\": \\{ \"hideLabel\": true, \"label\": \"Tertiary\", \"clickListener\": \"formState\\.btnClicked\", \"clickArgs\": \\[ \"tertiary\", \\d+ \\], \"btnType\": \"tertiary\" \\} \\}, \\{ \"key\": \"btn_warn\", \"type\": \"button\", \"wrappers\": \\[ \"form-field\" \\], \"props\": \\{ \"hideLabel\": true, \"label\": \"Warning\", \"clickListener\": \"formState\\.btnClicked\", \"clickArgs\": \\[ \"warning\", \\d+ \\], \"btnType\": \"warning\" \\} \\}, \\{ \"key\": \"btn_danger\", \"type\": \"button\", \"wrappers\": \\[ \"form-field\" \\], \"props\": \\{ \"hideLabel\": true, \"label\": \"Danger\", \"clickListener\": \"formState\\.btnClicked\", \"clickArgs\": \\[ \"danger\", \\d+ \\], \"btnType\": \"danger\" \\} \\}, \\{ \"template\": \"<hr><h2>Custom Wrapper<\\/h2>\" \\}, \\{ \"key\": \"card_text\", \"type\": \"textdisplay\", \"wrappers\": \\[ \"custom-wrapper\" \\], \"props\": \\{ \"heading\": \"Sample card header\" \\} \\} \\]/"

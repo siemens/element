@@ -1,0 +1,12 @@
+- button "Building automation"
+- region "Building automation"
+- button "Building infrastructure"
+- region "Building infrastructure"
+- button "Fire"
+- region "Fire"
+- button "Security"
+- region "Security"
+- button "Energy management"
+- region "Energy management"
+- button "Management system" [disabled]
+- region "Management system"

@@ -1,0 +1,30 @@
+- textbox "Search"
+- listbox "Presets":
+  - option /last \d+[hmsp]+/
+  - option "last 7 days"
+  - option /last \d+ days/
+  - option /last \d+ days/
+  - option /last \d+ days/
+  - option "last year"
+  - option "past month"
+- text: From
+- textbox "From Open calendar"
+- button "Open calendar"
+- checkbox "Today"
+- text: Today To
+- textbox "Date": /4\/5\/\d+/
+- button "Open calendar"
+- switch "Advanced"
+- text: "/Advanced Preview: 4\\/5\\/\\d+ - 8\\/\\d+\\/\\d+/"
+- checkbox "Input mode" [checked]
+- text: Input mode
+- checkbox "With time"
+- text: With time
+- checkbox "Show presets" [checked]
+- text: Show presets
+- checkbox "Show apply button"
+- text: Show apply button
+- checkbox "Hide advanced mode"
+- text: Hide advanced mode
+- checkbox "Reverse input fields"
+- text: "/Reverse input fields object \\(JSON\\.stringify\\(\\)\\): \\{ \"point1\": \"\\d+-\\d+-17T00:\\d+:\\d+\\.000Z\", \"point2\": \"\\d+-\\d+-05T00:\\d+:\\d+\\.000Z\" \\} resolved: Apr 5, \\d+, \\d+:\\d+:\\d+ AM - Aug \\d+, \\d+, \\d+:\\d+:\\d+ AM/"

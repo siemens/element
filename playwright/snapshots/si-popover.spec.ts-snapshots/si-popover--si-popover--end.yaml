@@ -1,0 +1,8 @@
+- button "Popover on top"
+- button "Popover on end"
+- button "Popover auto"
+- button "Popover on start"
+- button "Popover on bottom"
+- button "Popover with template"
+- button "Popover with template and context"
+- text: Popover on end Vivamus sagittis lacus vel augue laoreet rutrum faucibus.
