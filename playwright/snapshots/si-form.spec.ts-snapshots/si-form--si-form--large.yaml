@@ -1,0 +1,68 @@
+- text: Form
+- group "Role*":
+  - radio "Engineer"
+  - text: Engineer
+  - radio "Installer"
+  - text: Installer
+- text: Name*
+- textbox "Name*"
+- text: Description
+- textbox "Description"
+- text: Phone number
+- group "Phone number":
+  - combobox /Select Country Switzerland \+\d+/
+  - textbox "Enter phone number"
+- text: Day of birth*
+- textbox "Day of birth*"
+- text: Travel Date*
+- group "Travel Date*":
+  - textbox "Start date"
+  - textbox "End date"
+  - button "Open calendar"
+- text: Arrival
+- group "Arrival":
+  - textbox "Hours"
+  - textbox "Minutes"
+  - combobox "Period":
+    - option "AM" [selected]
+    - option "PM"
+- text: Departure
+- group "Departure":
+  - textbox "Hours"
+  - textbox "Minutes"
+  - combobox "Period":
+    - option "AM" [selected]
+    - option "PM"
+- text: Class of service
+- combobox "Class of service"
+- text: Fellow passengers
+- spinbutton "Fellow passengers"
+- group "Accept terms":
+  - checkbox "I confirm that I accept all and everything.*"
+  - text: I confirm that I accept all and everything.*
+  - checkbox "I confirm that I do not care about my privacy.*"
+  - text: I confirm that I do not care about my privacy.*
+- button "Cancel"
+- button "Save"
+- text: Debugging Actions
+- checkbox "Disable form"
+- text: Disable form
+- checkbox "Readonly form"
+- text: Readonly form Validation Status INVALID Validation Details
+- list:
+  - listitem: "Control: name, error: required, required"
+  - listitem: "Control: role, error: required, required"
+  - listitem: "Control: birthday, error: required, required"
+  - listitem: "Control: travelDate, error: required, required"
+  - listitem: "Control: fellowPassengers, error: min, min"
+  - listitem: "Control: termsAccepted, error: required, required"
+  - listitem: "Control: privacyDeclined, error: required, required"
+- table:
+  - rowgroup:
+    - row "Form Data Entity Data":
+      - columnheader "Form Data"
+      - columnheader "Entity Data"
+  - rowgroup:
+    - 'row "{ \"name\": \"\", \"role\": null, \"description\": \"\", \"phoneNumber\": null, \"birthday\": \"\", \"travelDate\": null, \"arrival\": null, \"departure\": null, \"serviceClass\": \"first\", \"fellowPassengers\": 0, \"termsAccepted\": false, \"privacyDeclined\": false } undefined"':
+      - 'cell "{ \"name\": \"\", \"role\": null, \"description\": \"\", \"phoneNumber\": null, \"birthday\": \"\", \"travelDate\": null, \"arrival\": null, \"departure\": null, \"serviceClass\": \"first\", \"fellowPassengers\": 0, \"termsAccepted\": false, \"privacyDeclined\": false }"'
+      - cell "undefined"

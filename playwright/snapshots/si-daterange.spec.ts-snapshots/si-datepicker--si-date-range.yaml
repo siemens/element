@@ -1,0 +1,8 @@
+- group:
+  - textbox "Start date"
+  - text: "-"
+  - textbox "End date"
+  - button "Open calendar"
+- heading "Date range value" [level=4]
+- heading "Validation:" [level=4]
+- text: Date range is VALID

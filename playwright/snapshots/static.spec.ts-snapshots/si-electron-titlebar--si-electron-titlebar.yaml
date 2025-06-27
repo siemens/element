@@ -1,0 +1,4 @@
+- text: My Application
+- button "Back"
+- button "Forward" [disabled]
+- button "Menu"

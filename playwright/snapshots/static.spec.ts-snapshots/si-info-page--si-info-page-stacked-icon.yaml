@@ -1,0 +1,10 @@
+- img "shield filled"
+- heading "Does this ring a bell. All done?" [level=1]
+- heading "An error occurred while generating the report." [level=2]
+- paragraph: Contact your administrator to get more information. Help us to solve the issue by submitting error related information.
+- link "Back to application link":
+  - /url: /
+- button "Not at all"
+- button "No"
+- button "A bit"
+- button "Yes"

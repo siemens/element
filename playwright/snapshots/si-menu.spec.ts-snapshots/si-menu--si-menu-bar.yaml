@@ -1,0 +1,13 @@
+- menubar:
+  - menuitem "Item 1" [expanded]
+  - menuitem "Item 2"
+  - menuitem "Item 3"
+  - menuitem "Item 3"
+  - menuitem "Item 4" [disabled]
+  - menuitem "Options"
+  - menuitem "Cancel"
+- menu:
+  - menuitem "Item 1"
+  - menuitem "Item 2"
+  - menuitem "Item 3"
+  - menuitem "Item 4"

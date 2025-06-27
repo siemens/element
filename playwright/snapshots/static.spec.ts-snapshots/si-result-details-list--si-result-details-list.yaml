@@ -1,0 +1,10 @@
+- list:
+  - listitem: Volume flow sensor Additional detail about state
+  - listitem: Maximum differential pressure 4 kPa
+  - listitem: /Maximum volume flow Cannot reach maximum volume flow \d+ m³\/h/
+  - listitem:
+    - img "Loading"
+    - text: Nominal volume flow
+  - listitem: Nominal differential pressure
+  - listitem: A not supported step
+  - listitem: A step with a custom icon

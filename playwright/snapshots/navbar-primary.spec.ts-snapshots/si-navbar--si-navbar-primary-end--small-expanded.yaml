@@ -1,0 +1,15 @@
+- banner:
+  - button "Toggle navigation"
+  - text: Navbar primary end
+  - button "Toggle actions" [expanded]
+  - link "Messages":
+    - /url: "#/viewer/viewer/messages"
+  - button "Help" [expanded]
+  - group "Help":
+    - link "Help":
+      - /url: "#/viewer/viewer/help"
+    - link "About":
+      - /url: "#/viewer/viewer/about"
+    - link "Corporate Information":
+      - /url: http://www.siemens.com/corporate-information
+  - button "Jane Smith"

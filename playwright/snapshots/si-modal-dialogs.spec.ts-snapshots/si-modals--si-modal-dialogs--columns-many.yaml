@@ -1,0 +1,41 @@
+- heading "Alert Dialogs" [level=2]
+- button "Default Alert"
+- button "Custom Alert"
+- button "Alert w/ dismiss delay"
+- heading "Confirmation Dialogs" [level=2]
+- button "Confirmation 1"
+- button "Confirmation 2"
+- button "Confirmation w/ dismiss delay"
+- heading "Edit-Discard Dialog" [level=2]
+- button "Edit-Discard"
+- button "Edit-Discard with disabled save"
+- button "Edit-Discard w/ dismiss delay"
+- heading "Delete Confirmation Dialog" [level=2]
+- button "Delete Confirmation"
+- button "Delete confirm w/ dismiss delay"
+- heading "Column Selection Dialog" [level=2]
+- button "Many columns"
+- heading "Column Selection Dialog without visibility toggle" [level=2]
+- button "Many columns"
+- dialog "Customize columns":
+  - button "Cancel"
+  - paragraph: Customize view by selecting or ordering
+  - listbox "List of possible columns. Items can be moved using Alt+ArrowUp or Alt+ArrowDown. Press Enter to rename supported items.":
+    - option "Row 1 - not draggable"
+    - option "Row 2 - not draggable"
+    - option "Row 3 - not draggable" [disabled] [selected]
+    - option "Row 4 - not draggable" [disabled]
+    - option "Row 6" [disabled] [selected]
+    - option "Row 5" [selected]
+    - option "Row 7" [selected]
+    - option "Row 8 M" [selected]
+    - option "Row 9" [selected]
+    - option /Row \d+/ [selected]
+    - option /Row \d+/ [selected]
+    - option /Row \d+/ [selected]
+    - option /Row \d+/
+    - option /Row \d+ - not draggable/
+    - option /Row \d+ - not draggable/
+  - button "Restore to default"
+  - button "Cancel"
+  - button "Apply"

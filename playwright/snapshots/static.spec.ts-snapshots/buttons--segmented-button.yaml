@@ -1,0 +1,23 @@
+- heading "Single-select" [level=4]
+- group "Basic radio toggle button group":
+  - radio "Day" [checked]
+  - radio "Week"
+  - radio "Month"
+- group "Radio toggle button group with icon":
+  - radio "Comfort" [checked]
+  - radio "Pre-comfort"
+  - radio "Economy"
+- group "Layout selection toggle":
+  - radio "One pane" [checked]
+  - radio "Two panes"
+  - radio "Three panes"
+- heading "Small size" [level=5]
+- group "Basic radio toggle button group":
+  - radio "Day" [checked]
+  - radio "Week"
+  - radio "Month"
+- heading "Multi-select" [level=4]
+- group "Basic checkbox toggle button group":
+  - checkbox "€"
+  - checkbox "€€"
+  - checkbox "€€€"
