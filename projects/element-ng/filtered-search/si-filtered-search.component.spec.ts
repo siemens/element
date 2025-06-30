@@ -368,7 +368,7 @@ describe('SiFilteredSearchComponent', () => {
       ]);
       await criterion.value().then(value => value?.select({ text: 'foo2' }));
       criterionProvider.next([{ name: 'foo', label: 'Foo', options: ['foo3'] }]);
-      // TODO: it should immediately update the values. See https://code.siemens.com/simpl/simpl-element/-/issues/2011
+      // TODO: it should immediately update the values.
       await freeTextSearch.focus();
       await criterion.clickLabel();
       await criterion.value().then(value => value?.clearText());
