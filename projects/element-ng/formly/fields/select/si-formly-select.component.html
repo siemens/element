@@ -1,18 +1,30 @@
 @if (props.multi) {
   <si-select
+    #select
     class="form-control"
     multi
     [id]="id"
     [options]="props.optionsList"
+    [hasFilter]="props.hasFilter ?? select.hasFilter()"
+    [filterPlaceholder]="props.filterPlaceholder ?? select.filterPlaceholder()"
+    [placeholder]="props.placeholder ?? select.placeholder()"
+    [ariaLabel]="props.ariaLabel ?? select.ariaLabel()"
+    [noResultsFoundLabel]="props.noResultsFoundLabel ?? select.noResultsFoundLabel()"
     [formControl]="formControl"
     [formlyAttributes]="field"
     [readonly]="props.readonly || false"
   />
 } @else {
   <si-select
+    #select
     class="form-control"
     [id]="id"
     [options]="props.optionsList"
+    [hasFilter]="props.hasFilter ?? select.hasFilter()"
+    [filterPlaceholder]="props.filterPlaceholder ?? select.filterPlaceholder()"
+    [placeholder]="props.placeholder ?? select.placeholder()"
+    [ariaLabel]="props.ariaLabel ?? select.ariaLabel()"
+    [noResultsFoundLabel]="props.noResultsFoundLabel ?? select.noResultsFoundLabel()"
     [formControl]="formControl"
     [formlyAttributes]="field"
     [readonly]="props.readonly || false"

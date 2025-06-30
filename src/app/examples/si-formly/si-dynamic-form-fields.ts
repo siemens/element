@@ -320,6 +320,7 @@ export class SampleComponent {
         type: 'si-select',
         label: 'si-select multi',
         multi: true,
+        hasFilter: true,
         optionsList: [
           { id: 'good', icon: 'element-face-happy', color: 'status-success', title: 'Good' },
           {
