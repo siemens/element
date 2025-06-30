@@ -40,10 +40,15 @@ used as values for color tokens.
 | <si-docs-color style="background: #7d8099;"></si-docs-color> | `$siemens-deep-blue-500`     | `#7D8099`  |
 | <si-docs-color style="background: #66667e;"></si-docs-color> | `$siemens-deep-blue-600`     | `#66667E`  |
 | <si-docs-color style="background: #4c4c68;"></si-docs-color> | `$siemens-deep-blue-700`     | `#4C4C68`  |
+| <si-docs-color style="background: #333353;"></si-docs-color> | `$siemens-deep-blue-750`     | `#333353`  |
+| <si-docs-color style="background: #40405e;"></si-docs-color> | `$siemens-deep-blue-755`     | `#40405E`  |
 | <si-docs-color style="background: #23233c;"></si-docs-color> | `$siemens-deep-blue-800`     | `#23233C`  |
+| <si-docs-color style="background: #12122e;"></si-docs-color> | `$siemens-deep-blue-875`     | `#12122E`  |
 | <si-docs-color style="background: #000028;"></si-docs-color> | `$siemens-deep-blue-900`     | `#000028`  |
 | <si-docs-color style="background: #000000;"></si-docs-color> | `$siemens-black`             | `#000000`  |
 | <si-docs-color style="background: #f3f3f0;"></si-docs-color> | `$siemens-light-sand`        | `#F3F3F0`  |
+| <si-docs-color style="background: #edede8;"></si-docs-color> | `$siemens-soft-sand`         | `#EDEDE8`  |
+| <si-docs-color style="background: #DEDED7;"></si-docs-color> | `$siemens-dark-sand`         | `#DEDED7`  |
 | <si-docs-color style="background: #E8E8E3;"></si-docs-color> | `$siemens-sand`              | `#E8E8E3`  |
 | <si-docs-color style="background: #2D2D45;"></si-docs-color> | `$siemens-dark-grayish-navy` | `#2D2D45`  |
 | <si-docs-color style="background: #37374D;"></si-docs-color> | `$siemens-grayish-navy`      | `#37374D`  |
