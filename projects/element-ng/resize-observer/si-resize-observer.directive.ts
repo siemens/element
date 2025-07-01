@@ -2,7 +2,16 @@
  * Copyright Siemens 2016 - 2025.
  * SPDX-License-Identifier: MIT
  */
-import { Directive, ElementRef, inject, input, OnDestroy, OnInit, output } from '@angular/core';
+import {
+  booleanAttribute,
+  Directive,
+  ElementRef,
+  inject,
+  input,
+  OnDestroy,
+  OnInit,
+  output
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { ElementDimensions, ResizeObserverService } from './resize-observer.service';
@@ -23,6 +32,9 @@ import { ElementDimensions, ResizeObserverService } from './resize-observer.serv
 export class SiResizeObserverDirective implements OnInit, OnDestroy {
   /** @defaultValue 100 */
   readonly resizeThrottle = input(100);
+  /** @defaultValue true */
+  // TODO: switch default to false in v48.0.0
+  readonly emitInitial = input(true, { transform: booleanAttribute });
   readonly siResizeObserver = output<ElementDimensions>();
 
   private subs?: Subscription;
@@ -31,7 +43,7 @@ export class SiResizeObserverDirective implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subs = this.service
-      .observe(this.element.nativeElement, this.resizeThrottle(), true)
+      .observe(this.element.nativeElement, this.resizeThrottle(), this.emitInitial())
       .subscribe(value => this.siResizeObserver.emit(value));
   }
 
