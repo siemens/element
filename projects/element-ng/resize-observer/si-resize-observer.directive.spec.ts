@@ -21,6 +21,7 @@ import { SiResizeObserverDirective } from './si-resize-observer.directive';
       style="width: 100px; height: 100px;"
       [style.width.px]="width"
       [style.height.px]="height"
+      [emitInitial]="emitInitial"
       (siResizeObserver)="resizeHandler($event)"
     >
       Testli
@@ -31,6 +32,7 @@ import { SiResizeObserverDirective } from './si-resize-observer.directive';
 class TestHostComponent {
   width = 100;
   height = 100;
+  emitInitial = true;
 
   resizeHandler(dim: ElementDimensions): void {}
 }
@@ -93,5 +95,31 @@ describe('SiResizeObserverDirective', () => {
 
     flush();
     expect(component.resizeHandler).toHaveBeenCalledWith({ width: 100, height: 200 });
+  }));
+});
+
+describe('SiResizeObserverDirective with emitInitial=false', () => {
+  let fixture: ComponentFixture<TestHostComponent>;
+  let component: TestHostComponent;
+  let spy: jasmine.Spy<(dim: ElementDimensions) => void>;
+
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      imports: [TestHostComponent],
+      providers: []
+    }).compileComponents();
+  }));
+
+  beforeEach(fakeAsync(() => {
+    fixture = TestBed.createComponent(TestHostComponent);
+    component = fixture.componentInstance;
+    component.emitInitial = false;
+    spy = spyOn(component, 'resizeHandler');
+    fixture.detectChanges();
+    tick();
+  }));
+
+  it('does not emit initial size event', fakeAsync(() => {
+    expect(spy).not.toHaveBeenCalled();
   }));
 });
