@@ -2,6 +2,7 @@
   <div
     #tabContainer
     class="tab-container-buttonbar-list nav nav-tabs"
+    [emitInitial]="false"
     (siResizeObserver)="resize($event)"
   >
     <div
