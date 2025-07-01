@@ -20,4 +20,4 @@ You can set a seed for running the tests in a specific using an environment vari
 
 Code and documentation copyright 2024 Siemens AG.
 
-See [LICENSE.md](../../LICENSE.md).
+See [LICENSE.md](https://github.com/siemens/element/blob/main/LICENSE.md).
