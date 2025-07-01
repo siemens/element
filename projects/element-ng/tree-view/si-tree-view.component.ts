@@ -274,7 +274,7 @@ export class SiTreeViewComponent
   readonly enableIcon = input(true, { transform: booleanAttribute });
 
   /**
-   * Shows or hides context menu button.
+   * Shows or hides context menu button and also controls context menu visibility on right click.
    * @defaultValue true
    * @defaultref {@link SiTreeViewService#enableContextMenuButton}
    */
