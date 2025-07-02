@@ -10,7 +10,7 @@ jobs:
       SIEMENS_NPM_USER: ${{ secrets.SIEMENS_NPM_USER }}
 
   publish:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs:
       - build-and-test
     steps:
