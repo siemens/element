@@ -109,6 +109,7 @@ nav:
       - Unauthorized Page:                'components/pages/unauthorized-page.md'
   - Patterns:
     - Overview:                           'patterns/index.md'
+    - Backdrop:                           'patterns/backdrop.md'
     - AI:
       - Overview:                         'patterns/ai/overview.md'
       - AI chat:                          'patterns/ai/ai-chat.md'
