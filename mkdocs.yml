@@ -112,6 +112,7 @@ nav:
     - Overview:                           'patterns/index.md'
     - Backdrop:                           'patterns/backdrop.md'
     - Loading:                            'patterns/loading.md'
+    - Notifications:                      'patterns/notifications.md'
     - AI:
       - Overview:                         'patterns/ai/overview.md'
       - AI chat:                          'patterns/ai/ai-chat.md'
