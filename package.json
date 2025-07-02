@@ -49,7 +49,7 @@
     "prepare-brand": "cpy --flat node_modules/@simpl/brand/src/favicon/sie-favicon_internet_64px.png docs/_src --rename=favicon.png && cpy --flat node_modules/@simpl/brand/src/favicon/sie-favicon_internet_64px.png src --rename=favicon.png",
     "postversion": "node ./postversion.js && npm run format",
     "native-charts:test": "ng test native-charts-ng",
-    "native-charts:build": "ng build native-charts-ng && cpy \"{LICENSE.md,projects/native-charts-ng/README.md}\" \"./dist/@siemens/native-charts-ng/\""
+    "native-charts:build": "ng build native-charts-ng && cpy LICENSE.md \"./dist/@siemens/native-charts-ng/\""
   },
   "workspaces": [
     "projects/element-translate-cli",
