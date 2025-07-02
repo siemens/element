@@ -1,0 +1,19 @@
+- link "Jump to Main content"
+- link "Jump to Navigation"
+- banner:
+  - link "Siemens logo":
+    - /url: "#/"
+  - text: Navbar vertical text only
+  - button "Jane Smith"
+- navigation:
+  - button "collapse" [expanded]
+  - button "Home"
+  - button "Documentation"
+  - text: All the rest
+  - link "Energy & Operations":
+    - /url: "#/viewer/viewer/energy"
+  - link "Test Coverage":
+    - /url: "#/viewer/viewer/coverage"
+- main:
+  - heading "Here is a title" [level=2]
+  - text: Here goes the content

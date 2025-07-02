@@ -1,0 +1,29 @@
+- link "Jump to Main content"
+- link "Jump to Navigation"
+- banner:
+  - link "Siemens logo":
+    - /url: "#/"
+  - text: Navbar Vertical Example
+- navigation:
+  - button "collapse" [expanded]
+  - textbox "Search..."
+  - link "Home":
+    - /url: "#/viewer/viewer/home"
+  - text: Modules
+  - link "Energy & sustainability":
+    - /url: "#/viewer/viewer/energy"
+  - button "User management"
+  - link "Test coverage 4":
+    - /url: "#/viewer/viewer/coverage"
+  - button "Documentation" [expanded]
+  - group "Documentation":
+    - link "Sub item 4":
+      - /url: "#/viewer/viewer/subItem4"
+    - link "Sub item 5":
+      - /url: "#/viewer/viewer/subItem5"
+    - link "Sub item 6":
+      - /url: "#/viewer/viewer/subItem6"
+  - button "Action"
+- main:
+  - heading "Here is a title" [level=2]
+  - text: Content with path 'subItem4'

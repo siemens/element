@@ -1,0 +1,26 @@
+- link "Jump to Main content"
+- link "Jump to Navigation"
+- banner:
+  - link "Siemens logo":
+    - /url: "#/"
+  - text: Navbar vertical
+  - button "Jane Smith"
+- navigation:
+  - button "expand"
+  - button "Search..."
+  - button "expand Home"
+  - button "Documentation"
+  - group "Documentation":
+    - link "Sub Item 4":
+      - /url: "#/viewer/viewer/subItem4"
+    - link "Sub Item 5":
+      - /url: "#/viewer/viewer/subItem5"
+    - link "Sub Item 6":
+      - /url: "#/viewer/viewer/subItem6"
+  - link "Energy & Sustainability":
+    - /url: "#/viewer/viewer/energy"
+  - link "4 Test Coverage":
+    - /url: "#/viewer/viewer/coverage"
+- main:
+  - heading "Here is a title" [level=2]
+  - text: Here goes the content

@@ -1,0 +1,10 @@
+- link "Jump to Main content"
+- link "Jump to Navigation"
+- banner:
+  - text: Navbar vertical
+  - button "Jane Smith"
+- navigation:
+  - button "expand"
+- main:
+  - heading "Here is a title" [level=2]
+  - text: Here goes the content

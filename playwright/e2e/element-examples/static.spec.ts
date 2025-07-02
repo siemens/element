@@ -45,6 +45,7 @@ test('si-info-page/si-info-page-illustration', ({ si }) => si.static());
 test('si-inline-notification/si-inline-notification', ({ si }) => si.static());
 test('si-language-switcher/si-language-switcher', ({ si }) => si.static());
 test('si-loading-spinner/si-loading-spinner', ({ si }) => si.static({ maxDiffPixels: 31 }));
+test('si-navbar-vertical/si-navbar-vertical-text', ({ si }) => si.static());
 test('si-pagination/si-pagination', ({ si }) => si.static());
 test('si-phone-number-input/si-phone-number-input', ({ si }) => si.static());
 test('si-progressbar/si-progressbar-dynamic', ({ si }) => si.static());

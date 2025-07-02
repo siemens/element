@@ -1,0 +1,11 @@
+- link "Jump to Main content"
+- link "Jump to Navigation"
+- banner:
+  - link "Siemens logo":
+    - /url: "#/"
+  - text: Navbar Vertical Example
+- navigation:
+  - button "expand"
+- main:
+  - heading "Here is a title" [level=2]
+  - text: Content with path ''
