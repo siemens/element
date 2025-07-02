@@ -99,8 +99,7 @@ jobs:
       - name: Install LFS
         run: |
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
-          curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
-          apt install git-lfs
+          apt-get install git-lfs
       - uses: actions/checkout@v4
         with:
           lfs: true
