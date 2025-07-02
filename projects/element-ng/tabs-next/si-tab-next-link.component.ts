@@ -50,17 +50,4 @@ export class SiTabNextLinkComponent extends SiTabNextBaseDirective {
       }
     });
   }
-
-  /** @internal */
-  override selectTab(retainFocus?: boolean): void {
-    if (!this.isTabButtonFullyVisible()) {
-      this.tabset.updateVisibleTabIndexes(this.index(), 'next');
-      this.tabset.focusKeyManager?.updateActiveItem(this.index());
-    }
-    if (retainFocus) {
-      setTimeout(() => {
-        this.tabset.focusKeyManager?.setActiveItem(this);
-      });
-    }
-  }
 }

@@ -32,7 +32,7 @@ export class SiTabNextComponent extends SiTabNextBaseDirective implements OnDest
   override readonly active = model(false);
 
   /** @internal */
-  selectTab(retainFocus?: boolean): void {
+  override selectTab(retainFocus?: boolean): void {
     const tabs = this.tabset.tabPanels();
     const newTabIndex = this.index();
     const currentTabIndex = this.tabset.activeTabIndex();
@@ -55,16 +55,7 @@ export class SiTabNextComponent extends SiTabNextBaseDirective implements OnDest
 
     if (continueWithSelection) {
       this.active.set(true);
-      this.tabset.focusKeyManager?.updateActiveItem(newTabIndex);
-    }
-    if (!this.isTabButtonFullyVisible()) {
-      this.tabset.updateVisibleTabIndexes(newTabIndex, 'next');
-      this.tabset.focusKeyManager?.updateActiveItem(newTabIndex);
-    }
-    if (retainFocus) {
-      setTimeout(() => {
-        this.tabset.focusKeyManager?.activeItem?.focus();
-      });
+      super.selectTab(retainFocus);
     }
   }
 }

@@ -1,23 +1,19 @@
 <div class="tabs-container">
-  <div
-    #tabContainer
-    class="tab-container-buttonbar-list nav nav-tabs"
-    [emitInitial]="false"
-    (siResizeObserver)="resize($event)"
-  >
+  <div class="tab-container-buttonbar-list nav nav-tabs">
     <div
       #tabScrollContainer
       role="tablist"
       tabindex="-1"
       class="d-flex tabs-wrapper"
-      [style.max-width.px]="maxWrapperWidth()"
+      (siResizeObserver)="
+        resizeContainer(tabScrollContainer.clientWidth, tabScrollContainer.scrollWidth)
+      "
     >
       <ng-content />
     </div>
 
-    @if (visibleTabIndexes().length < tabPanels().length) {
+    @if (showMenuButton()) {
       <button
-        #menuButton
         type="button"
         class="dropdown btn btn-tertiary focus-inside"
         tabindex="-1"

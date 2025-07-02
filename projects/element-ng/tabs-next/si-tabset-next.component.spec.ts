@@ -97,7 +97,9 @@ class TestComponent {
 class TestRoutingComponent {
   readonly tabButtonMaxWidth = signal<number | undefined>(undefined);
   readonly wrapperWidth = signal(200);
-  protected readonly tabsObject = signal<{ heading: string; closable?: boolean }[]>([]);
+  protected readonly tabsObject = signal<
+    { heading: string; closable?: boolean; routerLinkUrl?: string }[]
+  >([]);
 
   set tabs(value: ({ heading: string; closable?: true; routerLinkUrl?: string } | string)[]) {
     this.tabsObject.set(
@@ -288,8 +290,11 @@ describe('SiTabsetNext', () => {
     expect(await tabsetHarness.isTabVisible(2)).toBe(false);
     expect(await tabsetHarness.getOptionsMenuButton()).toBeDefined();
 
-    (await tabsetHarness.getTabItemButtonAt(0)).click();
-    (await tabsetHarness.getTabItemButtonAt(0)).sendKeys(TestKey.DELETE);
+    await (await tabsetHarness.getTabItemButtonAt(0)).click();
+    await (await tabsetHarness.getTabItemButtonAt(0)).sendKeys(TestKey.DELETE);
+    // Firefox requires a slight delay, otherwise resize Event is not triggered.
+    await new Promise(resolve => setTimeout(resolve, 110));
+    fixture.detectChanges();
 
     expect(await tabsetHarness.getOptionsMenuButton()).toBe(null);
     expect(await tabsetHarness.isTabVisible(1)).toBe(true);

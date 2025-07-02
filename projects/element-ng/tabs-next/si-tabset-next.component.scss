@@ -36,6 +36,7 @@
   order: 2;
   block-size: 40px;
   padding-inline: map.get(variables.$spacers, 5);
+  flex-shrink: 0;
 
   &:hover {
     border-color: variables.$element-ui-4;

@@ -33,7 +33,7 @@ import { SI_TABSET_NEXT } from './si-tabs-tokens';
     '[attr.aria-controls]': "'content-' + tabId",
     '(keydown.arrowLeft)': 'tabset.focusPrevious($event)',
     '(keydown.arrowRight)': 'tabset.focusNext($event)',
-    '(keydown.delete)': 'closeTab($event, true)'
+    '(keydown.delete)': 'closeTab($event)'
   }
 })
 export abstract class SiTabNextBaseDirective implements OnDestroy, FocusableOption {
@@ -87,7 +87,6 @@ export abstract class SiTabNextBaseDirective implements OnDestroy, FocusableOpti
   readonly tabContent = viewChild('tabContent', { read: TemplateRef });
 
   private static tabCounter = 0;
-  private retainFocus = false;
   private indexBeforeClose = -1;
 
   /** @internal */
@@ -99,39 +98,18 @@ export abstract class SiTabNextBaseDirective implements OnDestroy, FocusableOpti
     this.tabset.tabPanels().findIndex(tab => tab.tabId === this.tabId)
   );
 
-  /** @internal */
-  isTabButtonFullyVisible(): boolean {
-    const tabButton = this.tabButton.nativeElement;
-    const tabsetElement = this.tabset.tabScrollContainer().nativeElement;
-
-    const tabButtonRect = tabButton.getBoundingClientRect();
-    const tabsetRect = tabsetElement.getBoundingClientRect();
-    return (
-      Math.round(tabButtonRect.left) >= Math.round(tabsetRect.left) &&
-      Math.round(tabButtonRect.right) <= Math.round(tabsetRect.right)
-    );
-  }
-
   ngOnDestroy(): void {
     // adjust the focus index and selected tab index if component is destroyed
     // as a side effect to close tab event
     if (this.indexBeforeClose >= 0) {
       const indexToFocus = this.tabset.getNextIndexToFocus(this.indexBeforeClose);
-      if (this.retainFocus) {
-        // wait for a cycle to render the tab if not visible
-        setTimeout(() => {
-          this.tabset.focusKeyManager?.setActiveItem(indexToFocus);
-        });
-      } else if (this.indexBeforeClose >= 0 && this.active()) {
+      if (this.active()) {
         this.tabset.focusKeyManager?.updateActiveItem(indexToFocus);
         this.tabset.tabPanels()[indexToFocus].tabButton.nativeElement.focus();
       } else {
-        let selectedItemIndex = this.tabset.activeTabIndex() ?? 0;
-        if (selectedItemIndex > this.indexBeforeClose) {
-          selectedItemIndex--;
-        }
+        const selectedItemIndex = this.tabset.activeTabIndex() ?? 0;
         this.tabset.focusKeyManager?.updateActiveItem(selectedItemIndex);
-        this.tabset.tabPanels()[selectedItemIndex].tabButton.nativeElement.focus();
+        this.tabset.tabPanels()[selectedItemIndex].focus();
       }
       // if this tab was the active one we need to select next tab as active
       if (this.active()) {
@@ -140,27 +118,37 @@ export abstract class SiTabNextBaseDirective implements OnDestroy, FocusableOpti
           targetActiveTab.active.set(true);
         }
       }
-      this.tabset.updateVisibleTabIndexes(indexToFocus, 'next', true);
     }
   }
 
-  protected closeTab(event: Event, retainFocus = false): void {
+  protected closeTab(event: Event): void {
     if (this.closable() && !this.disabledTab()) {
       event.stopPropagation();
       const index = this.index();
       this.closeTriggered.emit();
-      this.retainFocus = retainFocus;
       this.indexBeforeClose = index;
     }
   }
 
   focus(origin?: FocusOrigin): void {
-    this.tabButton.nativeElement.focus();
+    this.tabButton.nativeElement.focus({ preventScroll: true });
+    // The element is not fully scrolled into view when focused. So we prevent and scroll it manually.
+    this.tabButton.nativeElement.scrollIntoView({
+      inline: 'nearest',
+      block: 'nearest',
+      behavior: 'instant'
+    });
   }
 
   get disabled(): boolean {
     return this.disabledTab();
   }
 
-  abstract selectTab(retainFocus?: boolean): void;
+  selectTab(retainFocus?: boolean): void {
+    this.tabset.focusKeyManager?.updateActiveItem(this.index());
+    if (retainFocus) {
+      // We need the timeout to wait for cdkMenu to restore the focus before we move it again.
+      setTimeout(() => this.focus());
+    }
+  }
 }
