@@ -50,12 +50,12 @@ $datatable-ghost-cell-strip-radius: 0 !default;
 
   // any kind of selection: apply a row hover state
   &:is(
-      .single-selection,
-      .multi-selection,
-      .multi-click-selection,
-      .cell-selection,
-      .checkbox-selection
-    ) {
+    .single-selection,
+    .multi-selection,
+    .multi-click-selection,
+    .cell-selection,
+    .checkbox-selection
+  ) {
     .datatable-row-wrapper {
       &:hover {
         background-color: variables.$table-hover-bg;

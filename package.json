@@ -125,7 +125,7 @@
     "ng-packagr": "19.0.1",
     "postcss": "8.5.3",
     "postcss-scss": "4.0.9",
-    "prettier": "3.5.3",
+    "prettier": "3.6.0",
     "semantic-release": "^24.2.3",
     "stylelint": "16.19.0",
     "stylelint-scss": "6.11.1",

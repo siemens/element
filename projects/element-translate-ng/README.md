@@ -48,7 +48,6 @@ The config file looks like this
 - `files` is a glob pattern for defining the files to scan
 - `configs` is an array of configs. For mono-repos building multiple libraries, they can be
   separated into different configs. All keys are required:
-
   - `name` is a unique name
   - `locationsPrefix` defines the path prefix of the source files, important to distinguish
     between different libraries in a mono-repo
