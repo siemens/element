@@ -102,6 +102,7 @@ documentation.
 - [Table & Datatable](lists-tables-trees/datatable.md)
 - [Tabs](layout-navigation/tabs.md)
 - [Text Area](forms-inputs/text-area.md)
+- [Threshold](forms-inputs/threshold.md)
 - [Toast Notification](status-notifications/toast-notification.md)
 - [Tooltip](status-notifications/tooltip.md)
 - [Tree View](lists-tables-trees/tree-view.md)

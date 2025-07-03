@@ -1,0 +1,95 @@
+@for (step of thresholdSteps(); track step) {
+  <div class="ths-step">
+    @if (!$first) {
+      <div class="ths-value d-flex align-items-center">
+        @if (canAddRemoveSteps() && !readonly() && !readonlyConditions()) {
+          <button
+            type="button"
+            class="btn btn-circle btn-sm btn-ghost element-delete m-4"
+            [attr.aria-label]="deleteAriaLabel() | translate"
+            (click)="deleteStep($index)"
+          ></button>
+        }
+        @if (!canAddRemoveSteps() || readonly() || readonlyConditions()) {
+          <div class="py-4 my-4">&#8203;</div>
+        }
+        <div class="line">
+          <div class="segment" [ngClass]="colors()[$index - 1]"></div>
+          <div class="dot"></div>
+          <div class="segment" [ngClass]="colors()[$index]"></div>
+        </div>
+        <div class="d-flex align-items-center text-nowrap m-4">
+          <si-number-input
+            #valueInput="ngModel"
+            class="form-control text-end"
+            [class.is-invalid]="step.valid === false"
+            [aria-label]="inputAriaLabel() | translate"
+            [readonly]="readonly()"
+            [ngModelOptions]="{ standalone: true }"
+            [min]="minValue()"
+            [max]="maxValue()"
+            [step]="stepSize()"
+            [unit]="unit()"
+            [showButtons]="showDecIncButtons()"
+            [required]="true"
+            [(ngModel)]="step.value"
+            (ngModelChange)="stepChange()"
+          />
+        </div>
+      </div>
+    }
+    @if ($first && horizontalLayout()) {
+      <ng-container
+        [ngTemplateOutlet]="startend"
+        [ngTemplateOutletContext]="{ color: colors()[$index] }"
+      />
+    }
+    <div class="ths-option d-flex align-items-center">
+      @if (canAddRemoveSteps() && !readonly() && !readonlyConditions()) {
+        <button
+          type="button"
+          class="btn btn-circle btn-sm btn-secondary m-4"
+          [disabled]="maxSteps() && $count >= maxSteps()"
+          [attr.aria-label]="addAriaLabel() | translate"
+          (click)="addStep($index)"
+        >
+          <si-icon-next [icon]="icons.elementPlus" />
+        </button>
+      }
+      @if (!canAddRemoveSteps() || readonly() || readonlyConditions()) {
+        <div class="py-4 my-4">&#8203;</div>
+      }
+      <div class="line" [ngClass]="colors()[$index]">
+        <div class="segment"></div>
+      </div>
+      @if (!readonly() && !readonlyConditions()) {
+        <si-select
+          class="my-4"
+          [ariaLabel]="statusAriaLabel() | translate"
+          [readonly]="readonly()"
+          [options]="options()"
+          [(value)]="step.optionValue"
+          (valueChange)="stepChange()"
+        />
+      }
+      @if (readonly() || readonlyConditions()) {
+        <si-readonly-threshold-option [options]="options()" [value]="step.optionValue" />
+      }
+    </div>
+    @if ($last && horizontalLayout()) {
+      <ng-container
+        [ngTemplateOutlet]="startend"
+        [ngTemplateOutletContext]="{ color: colors()[$index] }"
+      />
+    }
+  </div>
+}
+
+<ng-template #startend let-color="color">
+  <div class="ths-value d-flex align-items-center startend">
+    <div class="py-4 my-4">&#8203;</div>
+    <div class="line">
+      <div class="segment" [ngClass]="color"></div>
+    </div>
+  </div>
+</ng-template>

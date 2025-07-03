@@ -170,6 +170,10 @@ export interface SiTranslatableKeys {
   'SI_STATUS_BAR.COLLAPSE'?: string;
   'SI_STATUS_BAR.EXPAND'?: string;
   'SI_STATUS_BAR.MUTE'?: string;
+  'SI_THRESHOLD.ADD'?: string;
+  'SI_THRESHOLD.DELETE'?: string;
+  'SI_THRESHOLD.INPUT_LABEL'?: string;
+  'SI_THRESHOLD.STATUS'?: string;
   'SI_TOAST.CLOSE'?: string;
   'SI_TREE_VIEW.COLLAPSE_ALL'?: string;
   'SI_TREE_VIEW.EXPAND_ALL'?: string;

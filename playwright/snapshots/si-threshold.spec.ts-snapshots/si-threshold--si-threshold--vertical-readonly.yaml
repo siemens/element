@@ -1,0 +1,40 @@
+- text: Unhealthy
+- spinbutton "Threshold value"
+- text: °C Poor
+- spinbutton "Threshold value"
+- text: °C Average
+- spinbutton "Threshold value"
+- text: °C Good
+- spinbutton "Threshold value"
+- text: °C Very good
+- spinbutton "Threshold value"
+- text: °C Good
+- spinbutton "Threshold value"
+- text: °C Average
+- spinbutton "Threshold value"
+- text: °C Poor
+- spinbutton "Threshold value"
+- text: "°C Unhealthy Control panel Validation: true"
+- checkbox "Can add/remove steps"
+- text: Can add/remove steps
+- checkbox "Horizontal layout"
+- text: Horizontal layout
+- checkbox "Readonly" [checked]
+- text: Readonly
+- checkbox "Readonly conditions"
+- text: Readonly conditions
+- checkbox "-/+ buttons" [checked]
+- text: "-/+ buttons"
+- checkbox "Validate" [checked]
+- text: Validate
+- checkbox "Can wrap"
+- text: Can wrap Max. steps
+- spinbutton "Max. steps"
+- text: Min. value
+- spinbutton "Min. value"
+- text: Max. value
+- spinbutton "Max. value"
+- text: Step size
+- spinbutton "Step size"
+- text: Unit
+- textbox "Unit"

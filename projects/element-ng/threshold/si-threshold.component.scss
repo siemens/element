@@ -1,0 +1,78 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+$ths-dot-size: 6px;
+
+:host {
+  --direction-main: column;
+  --direction-option: row;
+  --direction-value: row;
+  --input-width: calc(var(--input-base-width, 90px) + var(--buttons-width, 0px));
+
+  &.horizontal {
+    --direction-main: row;
+    --direction-option: column;
+    --direction-value: column-reverse;
+    --value-margin: #{map.get(variables.$spacers, 8) * -1};
+    padding-inline: calc(var(--value-margin) * -1);
+  }
+
+  &.dec-inc-buttons {
+    --buttons-width: 48px;
+  }
+}
+
+:host,
+.ths-step {
+  display: flex;
+  flex-direction: var(--direction-main);
+}
+
+.ths-option {
+  flex-direction: var(--direction-option);
+  min-inline-size: var(--option-width, 160px);
+}
+
+.ths-value {
+  flex-direction: var(--direction-value);
+  margin-inline: var(--value-margin);
+}
+
+si-select {
+  border-radius: variables.$element-button-radius;
+  overflow: hidden;
+}
+
+.form-control {
+  inline-size: var(--input-width);
+  // This is a weird one. When zooming, it seems like `border-width` and relative `line-height` are scaled differently on inputs
+  // Since the threshold needs correct size to keep the lines aligned, setting it to a fixed value here.
+  block-size: calc(1rem + (map.get(variables.$spacers, 4) * 2));
+}
+
+.line {
+  align-self: stretch;
+  flex-basis: map.get(variables.$spacers, 6);
+  display: flex;
+  flex-direction: var(--direction-main);
+  align-items: center;
+  color: variables.$element-ui-2;
+  gap: map.get(variables.$spacers, 2);
+}
+
+.segment {
+  flex: 1;
+  border: 1px solid currentColor;
+}
+
+.dot {
+  inline-size: $ths-dot-size;
+  block-size: $ths-dot-size;
+  border: 1px solid variables.$element-ui-2;
+  border-radius: 50%;
+}
+
+.startend {
+  inline-size: calc(var(--input-width) / 2);
+}

@@ -1,0 +1,49 @@
+- combobox "Status": Status Unhealthy
+- spinbutton "Threshold value"
+- text: °C
+- combobox "Status": Status Poor
+- spinbutton "Threshold value"
+- text: °C
+- combobox "Status": Status Average
+- spinbutton "Threshold value"
+- text: °C
+- combobox "Status": Status Good
+- spinbutton "Threshold value"
+- text: °C
+- combobox "Status": Status Very good
+- spinbutton "Threshold value"
+- text: °C
+- combobox "Status": Status Good
+- spinbutton "Threshold value"
+- text: °C
+- combobox "Status": Status Average
+- spinbutton "Threshold value"
+- text: °C
+- combobox "Status": Status Poor
+- spinbutton "Threshold value"
+- text: °C
+- combobox "Status": Status Unhealthy
+- text: "Control panel Validation: true"
+- checkbox "Can add/remove steps"
+- text: Can add/remove steps
+- checkbox "Horizontal layout"
+- text: Horizontal layout
+- checkbox "Readonly"
+- text: Readonly
+- checkbox "Readonly conditions"
+- text: Readonly conditions
+- checkbox "-/+ buttons" [checked]
+- text: "-/+ buttons"
+- checkbox "Validate" [checked]
+- text: Validate
+- checkbox "Can wrap"
+- text: Can wrap Max. steps
+- spinbutton "Max. steps"
+- text: Min. value
+- spinbutton "Min. value"
+- text: Max. value
+- spinbutton "Max. value"
+- text: Step size
+- spinbutton "Step size"
+- text: Unit
+- textbox "Unit"
