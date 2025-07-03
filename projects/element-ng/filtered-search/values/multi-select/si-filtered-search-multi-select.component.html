@@ -6,9 +6,10 @@
     (keydown.enter)="editValue.emit()"
     (click)="editValue.emit()"
   >
-    @let optionValue = this.optionValue();
-    @if (optionValue) {
-      {{ optionValue.label ?? optionValue.value | translate }}
+    @if (!!value && hasMultiSelections()) {
+      {{ itemCountText() | translate: { itemCount: value.length } }}
+    } @else if (optionValue()[0]) {
+      {{ optionValue()[0].label ?? optionValue()[0].value | translate }}
     } @else {
       {{ value }}
     }
@@ -19,22 +20,17 @@
     typeaheadOptionField="translatedLabel"
     class="px-4 py-0 border-0 focus-inside"
     typeaheadScrollable
+    typeaheadMultiSelect
     [type]="inputType()"
     [step]="step()"
-    [ngModel]="valueLabel()"
     [siTypeahead]="options() ?? []"
-    [typeaheadProcess]="!onlySelectValue()"
     [typeaheadMinLength]="0"
     [typeaheadOptionsLimit]="maxCriteriaOptions()"
-    [typeaheadAutoSelectIndex]="value?.length ? 0 : -1"
-    [readOnly]="readonly() || onlySelectValue() || definition().onlySelectValue"
+    [readOnly]="readonly() || onlySelectValue()"
     [typeaheadOptionsInScrollableView]="optionsInScrollableView()"
     [attr.aria-label]="searchLabel() | translate"
-    (keydown)="valueFilterKeys($event)"
     (keydown.backspace)="valueBackspace()"
     (keydown.enter)="valueEnter()"
-    (ngModelChange)="valueChange($event)"
-    (typeaheadOnFullMatch)="valueTypeaheadFullMatch($event)"
     (typeaheadOnSelect)="valueTypeaheadSelect($event)"
   />
 }
