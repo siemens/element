@@ -4,24 +4,18 @@ A shape is the form of an object. Shapes are used to identify components, direct
 
 ## Usage ---
 
-*Element* is primarily comprised of *circles* and *rectangles*. A set of standard shapes and sizes is used across the system.
-Shapes are an essential component of the *Element* brand.
-
-### Rectangles
-
-Rectangle shapes are used in buttons, headers, navigation menus and tabs.
-
-![Shapes - Rectangles](images/shapes-rectangles.png)
+Element is primarily comprised of circles and rounded rectangles. A set of standard shapes and sizes is used across the system.
+Shapes are an essential component of the Element brand.
 
 ### Rounded rectangles
 
 Rounded rectangles maintain a rectangular shape with softened corners. The corner radius varies depending on the element:
 
-- `2px radius`: Used for subtle softness while retaining a rectangular look, such as in inputs.
+- `2px radius`: Used for subtle softness while retaining a rectangular look, such as in buttons and inputs.
 - `4px radius`: The default for container elements like cards.
 - `100% radius` (fully rounded): Used for pill-shaped elements, like badges.
 
-![Shapes - Rounded Rectangles](images/shapes-rounded.png)
+![Shapes - rounded rectangles](images/shapes-rounded.png)
 
 ### Circles
 
@@ -53,7 +47,7 @@ classes.
 
 <si-docs-component example="shapes/shapes" height="300"></si-docs-component>
 
-### Sass Variables
+### Sass variables
 
 The shape tokens for each *Element* shape can also be alternatively used as SCSS
 variables within stylesheets.
