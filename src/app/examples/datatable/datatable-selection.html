@@ -5,6 +5,8 @@
         class="table-element"
         style="height: 500px"
         siDatatableInteraction
+        columnMode="force"
+        selectionType="single"
         [rows]="rows"
         [columns]="[
           { name: 'First name', prop: 'firstname' },
@@ -16,12 +18,10 @@
             cellClass: 'text-align-right-cell'
           }
         ]"
-        [columnMode]="ColumnMode.force"
         [rowHeight]="tableConfig.rowHeightSmall"
         [footerHeight]="0"
         [virtualization]="false"
         [scrollbarV]="true"
-        [selectionType]="SelectionType.single"
         [selected]="selected"
         [datatableInteractionAutoSelect]="true"
       />

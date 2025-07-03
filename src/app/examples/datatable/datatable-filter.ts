@@ -5,7 +5,7 @@
 import { Component, inject, viewChild } from '@angular/core';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
-import { ColumnMode, DatatableComponent, NgxDatatableModule } from '@siemens/ngx-datatable';
+import { DatatableComponent, NgxDatatableModule } from '@siemens/ngx-datatable';
 
 import { CorporateEmployee, DataService, PageRequest } from './data.service';
 
@@ -23,9 +23,6 @@ export class SampleComponent {
 
   rows: CorporateEmployee[] = [].constructor(5);
   temp: CorporateEmployee[] = [];
-
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  ColumnMode = ColumnMode;
   isLoading = 0;
 
   private dataService = inject(DataService);

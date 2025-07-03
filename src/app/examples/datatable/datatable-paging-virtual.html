@@ -3,13 +3,14 @@
     #table
     class="table-element h-100"
     siDatatableInteraction
+    columnMode="force"
+    selectionType="multi"
     [rows]="rows"
     [columns]="[
       { name: 'Name', sortable: false },
       { name: 'Role', sortable: false },
       { name: 'Company', sortable: false }
     ]"
-    [columnMode]="ColumnMode.force"
     [reorderable]="true"
     [rowHeight]="tableConfig.rowHeightSmall"
     [footerHeight]="0"
@@ -19,7 +20,6 @@
     [externalSorting]="true"
     [count]="totalElements"
     [offset]="pageNumber"
-    [selectionType]="SelectionType.multi"
     [datatableInteractionAutoSelect]="true"
     (page)="setPage($event)"
     (select)="onSelect($event)"

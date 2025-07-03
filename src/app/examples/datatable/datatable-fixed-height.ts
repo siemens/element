@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiPaginationComponent } from '@siemens/element-ng/pagination';
-import { ColumnMode, NgxDatatableModule } from '@siemens/ngx-datatable';
+import { NgxDatatableModule } from '@siemens/ngx-datatable';
 import { Subscription } from 'rxjs';
 
 import { CorporateEmployee, DataService, Page, PageRequest } from './data.service';
@@ -31,8 +31,6 @@ export class SampleComponent implements OnDestroy {
 
   page = new Page();
   rows = new Array<CorporateEmployee>();
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  ColumnMode = ColumnMode;
 
   isLoading = false;
   subscription?: Subscription;

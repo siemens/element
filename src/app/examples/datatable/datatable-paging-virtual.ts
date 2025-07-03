@@ -6,7 +6,7 @@ import { Component, inject } from '@angular/core';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
 import { LOG_EVENT } from '@siemens/live-preview';
-import { ColumnMode, NgxDatatableModule, SelectEvent, SelectionType } from '@siemens/ngx-datatable';
+import { NgxDatatableModule, SelectEvent } from '@siemens/ngx-datatable';
 
 import { CorporateEmployee, DataService, PageRequest } from './data.service';
 
@@ -18,9 +18,6 @@ import { CorporateEmployee, DataService, PageRequest } from './data.service';
   providers: [DataService]
 })
 export class SampleComponent {
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  protected readonly SelectionType = SelectionType;
-
   logEvent = inject(LOG_EVENT);
 
   tableConfig = SI_DATATABLE_CONFIG;
@@ -28,8 +25,6 @@ export class SampleComponent {
   pageNumber = 0;
 
   rows: CorporateEmployee[] = [];
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  ColumnMode = ColumnMode;
 
   isLoading = 0;
 

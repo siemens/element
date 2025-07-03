@@ -3,13 +3,13 @@
     #table
     class="table-element"
     siDatatableInteraction
+    columnMode="force"
     [rows]="rows"
     [columns]="[
       { name: 'Name', sortable: false },
       { name: 'Role', sortable: false },
       { name: 'Company', sortable: false }
     ]"
-    [columnMode]="ColumnMode.force"
     [rowHeight]="tableConfig.rowHeightSmall"
     [externalPaging]="true"
     [ghostLoadingIndicator]="isLoading"

@@ -9,12 +9,7 @@ import { SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
 import { SiSliderComponent } from '@siemens/element-ng/slider';
-import {
-  DatatableComponent,
-  NgxDatatableModule,
-  SelectionType,
-  TableColumn
-} from '@siemens/ngx-datatable';
+import { DatatableComponent, NgxDatatableModule, TableColumn } from '@siemens/ngx-datatable';
 
 @Component({
   selector: 'app-sample',
@@ -36,7 +31,6 @@ export class SampleComponent implements OnInit {
   rows: any[] = [];
   columns!: TableColumn[];
 
-  selectionType = SelectionType.single;
   statusTypes: StatusType[] = ['success', 'info', 'warning', 'danger'];
   nextStatusType = 0;
   slidingValue = 10;

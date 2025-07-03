@@ -35,6 +35,8 @@
     slot="mainData"
     class="list-view table-element"
     siDatatableInteraction
+    columnMode="force"
+    selectionType="single"
     [cssClasses]="tableConfig.cssClasses"
     [rows]="filteredRows"
     [columns]="[
@@ -43,7 +45,6 @@
       { name: 'Company', sortable: false },
       { name: 'Age', sortable: false }
     ]"
-    [columnMode]="ColumnMode.force"
     [reorderable]="false"
     [headerHeight]="tableConfig.headerHeight"
     [rowHeight]="tableConfig.rowHeightSmall"
@@ -51,7 +52,6 @@
     [scrollbarV]="true"
     [count]="filteredRows.length"
     [selected]="selectedEntities"
-    [selectionType]="selectionType"
     [datatableInteractionAutoSelect]="isLarge"
     (select)="datatableOnSelect($event.selected)"
   >

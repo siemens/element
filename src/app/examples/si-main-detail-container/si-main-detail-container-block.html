@@ -24,6 +24,8 @@
     slot="mainData"
     class="list-view table-element"
     siDatatableInteraction
+    columnMode="force"
+    selectionType="single"
     [cssClasses]="tableConfig.cssClasses"
     [rows]="rows"
     [columns]="[
@@ -31,7 +33,6 @@
       { name: 'Role', sortable: false },
       { name: 'Company', sortable: false }
     ]"
-    [columnMode]="ColumnMode.force"
     [reorderable]="false"
     [headerHeight]="tableConfig.headerHeight"
     [rowHeight]="tableConfig.rowHeightSmall"
@@ -43,7 +44,6 @@
     [count]="totalElements"
     [offset]="pageNumber"
     [selected]="selectedEntities"
-    [selectionType]="selectionType"
     [datatableInteractionAutoSelect]="isLarge"
     (page)="setPage($event)"
     (select)="datatableOnSelect($event.selected)"

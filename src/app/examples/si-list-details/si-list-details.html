@@ -48,6 +48,8 @@
         #table
         class="si-layout-fixed-height table-element focus-inside"
         siDatatableInteraction
+        selectionType="single"
+        columnMode="force"
         [cssClasses]="tableConfig.cssClasses"
         [rows]="rows"
         [columns]="[
@@ -55,7 +57,6 @@
           { name: 'Role', sortable: false },
           { name: 'Company', sortable: false }
         ]"
-        [columnMode]="ColumnMode.force"
         [reorderable]="false"
         [headerHeight]="tableConfig.headerHeight"
         [rowHeight]="tableConfig.rowHeightSmall"
@@ -67,7 +68,6 @@
         [count]="totalElements"
         [offset]="pageNumber"
         [selected]="selectedEntities"
-        [selectionType]="selectionType"
         [datatableInteractionAutoSelect]="container.hasLargeSize()"
         (page)="setPage($event)"
         (select)="datatableOnSelect($event.selected)"

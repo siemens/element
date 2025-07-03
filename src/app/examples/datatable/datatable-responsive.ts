@@ -15,7 +15,7 @@ import {
   ElementDimensions,
   SiResizeObserverModule
 } from '@siemens/element-ng/resize-observer';
-import { NgxDatatableModule, SelectionType, TableColumn } from '@siemens/ngx-datatable';
+import { NgxDatatableModule, TableColumn } from '@siemens/ngx-datatable';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -44,8 +44,6 @@ export class SampleComponent implements OnInit, OnDestroy {
   pageNumber = 0;
 
   noSelection = false;
-  selectionType = SelectionType.multiClick;
-  selectionTypes = Object.keys(SelectionType);
   statusTypes: StatusType[] = ['success', 'info', 'warning', 'danger'];
   nextStatusType = 0;
   enforceCheckboxes = false;

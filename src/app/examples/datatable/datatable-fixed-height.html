@@ -5,6 +5,7 @@
         #table
         class="table-element si-layout-fixed-height"
         siDatatableInteraction
+        columnMode="force"
         [style.height]="tableSize + 'px'"
         [rows]="rows"
         [columns]="[
@@ -12,7 +13,6 @@
           { name: 'Role', sortable: false },
           { name: 'Company', sortable: false }
         ]"
-        [columnMode]="ColumnMode.force"
         [footerHeight]="0"
         [rowHeight]="tableConfig.rowHeightSmall"
         [externalPaging]="true"

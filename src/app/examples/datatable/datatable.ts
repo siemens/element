@@ -58,9 +58,12 @@ export class SampleComponent implements OnInit {
   rows: any[] = [];
   columns!: TableColumn[];
   pageNumber = 0;
-  noSelection = false;
-  selectionType = SelectionType.multiClick;
-  selectionTypes = Object.keys(SelectionType);
+  // This type is NOT deprecated, but the value is.
+  // ESLint does not understand this.
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
+  selectionType: SelectionType = 'multiClick';
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
+  selectionTypes: SelectionType[] = ['single', 'multi', 'multiClick', 'cell', 'checkbox'];
   nextStatusType = 0;
   enforceCheckboxes = false;
 
@@ -86,7 +89,7 @@ export class SampleComponent implements OnInit {
   }
 
   private get showCheckboxes(): boolean {
-    return this.selectionType === SelectionType.checkbox || this.enforceCheckboxes;
+    return this.selectionType === 'checkbox' || this.enforceCheckboxes;
   }
 
   private initTableColumns(): void {

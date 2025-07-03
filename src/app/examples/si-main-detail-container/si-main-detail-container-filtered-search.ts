@@ -21,7 +21,7 @@ import {
 import { SiMainDetailContainerComponent } from '@siemens/element-ng/main-detail-container';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { LOG_EVENT } from '@siemens/live-preview';
-import { ColumnMode, NgxDatatableModule, SelectionType } from '@siemens/ngx-datatable';
+import { NgxDatatableModule } from '@siemens/ngx-datatable';
 
 import { CorporateEmployee } from '../datatable/data.service';
 
@@ -43,9 +43,6 @@ import { CorporateEmployee } from '../datatable/data.service';
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  ColumnMode = ColumnMode;
-
   searchCriteria = {
     criteria: [
       { name: 'role', value: 'Engineer' },
@@ -69,7 +66,6 @@ export class SampleComponent {
   allRows: CorporateEmployee[] = [];
   selectedEntity: CorporateEmployee | undefined;
   selectedEntities: CorporateEmployee[] = [];
-  selectionType = SelectionType.single;
   tableConfig = SI_DATATABLE_CONFIG;
 
   constructor() {

@@ -30,7 +30,7 @@ import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
 import { SiTabComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
 import { LOG_EVENT } from '@siemens/live-preview';
-import { ColumnMode, NgxDatatableModule, SelectionType } from '@siemens/ngx-datatable';
+import { NgxDatatableModule } from '@siemens/ngx-datatable';
 
 import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.service';
 
@@ -127,15 +127,12 @@ export class SampleComponent {
    * List data (table)
    */
   cache: any = {};
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  ColumnMode = ColumnMode;
   isLoading = 0;
   pageNumber = 0;
   pageSize = 50;
   rows: CorporateEmployee[] = [];
   selectedEntity: CorporateEmployee | undefined;
   selectedEntities: CorporateEmployee[] = [];
-  selectionType = SelectionType.single;
   tableConfig = SI_DATATABLE_CONFIG;
   totalElements = 0;
   searchTerm?: string;

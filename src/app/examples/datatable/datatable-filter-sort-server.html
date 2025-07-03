@@ -10,13 +10,13 @@
   <ngx-datatable
     class="table-element"
     siDatatableInteraction
+    columnMode="force"
     [rows]="rows"
     [columns]="[
       { name: 'Name', sortable: true },
       { name: 'Role', sortable: true },
       { name: 'Company', sortable: true }
     ]"
-    [columnMode]="ColumnMode.force"
     [rowHeight]="tableConfig.rowHeightSmall"
     [footerHeight]="0"
     [ghostLoadingIndicator]="isLoading"

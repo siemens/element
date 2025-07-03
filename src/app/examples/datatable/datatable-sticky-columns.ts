@@ -7,7 +7,7 @@ import { SiCircleStatusModule } from '@siemens/element-ng/circle-status';
 import { StatusType } from '@siemens/element-ng/common';
 import { SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiPaginationComponent } from '@siemens/element-ng/pagination';
-import { NgxDatatableModule, SelectionType, TableColumn } from '@siemens/ngx-datatable';
+import { NgxDatatableModule, TableColumn } from '@siemens/ngx-datatable';
 
 @Component({
   selector: 'app-sample',
@@ -23,11 +23,8 @@ export class SampleComponent implements OnInit {
   pageNumber = 0;
 
   noSelection = false;
-  selectionType = SelectionType.multiClick;
-  selectionTypes = Object.keys(SelectionType);
   statusTypes: StatusType[] = ['success', 'info', 'warning', 'danger'];
   nextStatusType = 0;
-  enforceCheckboxes = false;
   contextItems = [
     { title: 'Items 1', action: () => alert('Item 1') },
     { title: 'Items 2', action: () => alert('Item 2') }
@@ -51,26 +48,17 @@ export class SampleComponent implements OnInit {
     this.initTableColumns();
   }
 
-  selectionTypeChanged(enforceCheckboxes: boolean): void {
-    this.enforceCheckboxes = enforceCheckboxes;
-    this.initTableColumns();
-  }
-
-  private get showCheckboxes(): boolean {
-    return this.selectionType === SelectionType.checkbox || this.enforceCheckboxes;
-  }
-
   private initTableColumns(): void {
     this.columns = [
       {
         prop: 'user',
         name: '',
-        width: this.showCheckboxes ? 112 : 80,
+        width: 80,
         resizeable: true,
         canAutoResize: false,
         cellTemplate: this.statusCellTempl(),
-        checkboxable: this.showCheckboxes,
-        headerCheckboxable: this.showCheckboxes,
+        checkboxable: false,
+        headerCheckboxable: false,
         frozenLeft: true
       },
       {

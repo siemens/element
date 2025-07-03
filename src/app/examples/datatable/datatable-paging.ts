@@ -5,7 +5,7 @@
 import { Component, inject, OnDestroy } from '@angular/core';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiPaginationComponent } from '@siemens/element-ng/pagination';
-import { ColumnMode, NgxDatatableModule } from '@siemens/ngx-datatable';
+import { NgxDatatableModule } from '@siemens/ngx-datatable';
 import { Subscription } from 'rxjs';
 
 import { CorporateEmployee, DataService, Page, PageRequest } from './data.service';
@@ -22,8 +22,6 @@ export class SampleComponent implements OnDestroy {
 
   page = new Page();
   rows = new Array<CorporateEmployee>();
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  protected readonly ColumnMode = ColumnMode;
 
   isLoading = false;
   subscription?: Subscription;
