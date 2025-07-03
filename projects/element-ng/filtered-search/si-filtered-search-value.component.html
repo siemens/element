@@ -60,6 +60,27 @@
         (submitValue)="submitCriterion.emit($event)"
       />
     }
+    @case ('multi-select') {
+      <si-filtered-search-multi-select
+        [definition]="definition()"
+        [disabled]="disabled()"
+        [searchLabel]="searchLabel()"
+        [searchDebounceTime]="searchDebounceTime()"
+        [onlySelectValue]="onlySelectValue()"
+        [optionsInScrollableView]="optionsInScrollableView()"
+        [maxCriteriaOptions]="maxCriteriaOptions()"
+        [lazyValueProvider]="lazyValueProvider()"
+        [itemCountText]="itemCountText()"
+        [isStrictOrOnlySelectValue]="isStrictOrOnlySelectValue()"
+        [disableSelectionByColonAndSemicolon]="disableSelectionByColonAndSemicolon()"
+        [readonly]="readonly()"
+        [(active)]="active"
+        [(criterionValue)]="value"
+        (backspaceOverflow)="backspaceOverflow()"
+        (editValue)="edit('value')"
+        (submitValue)="submitCriterion.emit($event)"
+      />
+    }
     @case ('typeahead') {
       <si-filtered-search-typeahead
         [definition]="definition()"
@@ -70,7 +91,6 @@
         [optionsInScrollableView]="optionsInScrollableView()"
         [maxCriteriaOptions]="maxCriteriaOptions()"
         [lazyValueProvider]="lazyValueProvider()"
-        [itemCountText]="itemCountText()"
         [isStrictOrOnlySelectValue]="isStrictOrOnlySelectValue()"
         [disableSelectionByColonAndSemicolon]="disableSelectionByColonAndSemicolon()"
         [readonly]="readonly()"
