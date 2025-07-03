@@ -11,3 +11,5 @@ import { SiNChartGaugeComponent } from './components/si-nchart-gauge/si-nchart-g
   exports: [SiNChartGaugeComponent]
 })
 export class ElementNativeChartsNgModule {}
+
+export { ElementNativeChartsNgModule as SimplNativeChartsNgModule };
