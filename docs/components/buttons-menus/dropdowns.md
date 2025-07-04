@@ -1,69 +1,39 @@
 # Dropdowns
 
-<!-- markdownlint-disable MD029 -->
-
-Dropdowns are toggleable, contextual overlays for displaying actions related to the content.
-They consist of a dropdown toggle and an overlay containing the actions.
-The overlay is shown after clicking the dropdown toggle.
-Dropdown toggles are available with text only or with text and icon.
+**Dropdowns** are toggleable, contextual overlays for displaying actions related to the content.
 
 ## Usage ---
+
+They consist of a dropdown toggle and an overlay containing the actions.
+The overlay is shown after clicking the dropdown toggle.
+Dropdown are available with text only or with text and icon.
 
 ![Dropdown](images/dropdown.png)
 
 ### When to use
 
 - When there is a need for actions, which are related to each other
-  (e.g. Export: PDF, Excel, Word, ...)
-- When users need to make a choice among a list of mutually exclusive options
+  (e.g. Export: PDF, Excel, Word, ...).
+- When users need to make a choice among a list of mutually exclusive options.
 
-### When a Dropdown might not help
+### Best practices
 
-- When there are no other buttons with different actions
-- When there are more than 10 actions to choose from
-- When there are less than 2 actions to choose from (use [Button](buttons.md) instead)
-
-### Best Practices for Dropdown
-
-- Understand the context first in order to determine if a dropdown is indeed the
-  best possible solution
-- Place the default action on top of the menu (avoid extra searching)
-
-### Dos and don'ts
-
-- Do make a visual distinction between items that are disabled and the ones available
-- Do keep disabled items visible
-- Do support keyboard input to navigate within a dropdown
-- Don't use a dropdown in a button without text
+- Minimal button width is `100px`.
+- Menu container should be at least the same width as the button.
 
 ## Design ---
 
-### Interaction States
-
-Most Interaction states are identical to the [normal buttons](buttons.md).
-The exceptions are documented here.
-
-#### Active State
-
-Active state is used, while the user is selecting the underlying action.
+### Elements
 
 ![Dropdown - active](images/dropdown-active.png)
 
-> (1) Placeholder text, (2) Arrow, (3) Container, (4) [Menu container](menu.md), (5) Icon (optional)
+> 1. Placeholder text, 2. Arrow, 3. Container, 4. [Menu container](menu.md), 5. Icon (optional)
 
-!!! info "Arrow Direction"
-    Arrow changes direction when in active state.
-
-### Dropdown with different Button Types
-
-Dropdown is available for in each [rectangular Buttons style](buttons.md).
+### Variants
 
 ![Dropdown alternatives - text](images/dropdown-text.png)
 
-### Button Size
-
-- Minimal button width is `100px`
-- Menu container should be at least the same width as the button
+Interaction states are identical to the [normal buttons](buttons.md).
 
 ## Code ---
 
