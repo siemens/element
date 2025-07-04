@@ -1,11 +1,11 @@
-# Date Range Filter
+# Date range filter
 
-**Date Range Filter** allows users to select specific date intervals,
+**Date range filter** allows users to select specific date intervals,
 either by choosing two absolute dates or by defining a relative range based on a reference point.
 
 ## Usage ---
 
-The **Date Range Filter** provides options for both absolute and relative dates.
+The **date range filter** provides options for both absolute and relative dates.
 
 Users can select specific dates using either the calendar mode or the input mode.
 
@@ -14,7 +14,7 @@ which use offsets to specify dates in relation to a reference point (e.g., 7 day
 
 Additionally, it includes optional presets for quick access to common periods like "Last 7 days" or "Next month.
 
-![Date Range Filter](images/date-range-filter.png)
+![date range filter](images/date-range-filter.png)
 
 ### When to use
 
@@ -22,11 +22,11 @@ Additionally, it includes optional presets for quick access to common periods li
 - When the use case requires flexibility in selecting periods relative to a reference date/time (e.g., "5 days before").
 - When the use case involves advanced filtering capabilities, such as combining today or now with relative ranges.
 - To offer users quick access to common preset ranges.
-- Use a [*Date Picker*](../forms-inputs/datepicker.md) if simpler date selections are required.
+- Use a [date picker](../forms-inputs/datepicker.md) if simpler date selections are required.
 
-### Best practices for Date Range Filter
+### Best practices for date range filter
 
-- Use it in combination with [*Input Button*](../buttons-menus/buttons.md).
+- Use it in combination with [input button](../buttons-menus/buttons.md).
 - Use “Enter date” or the date format (i.e., MM/DD/YYYY) as placeholder.
 - Configure presets according to the use case.
 - If there are more than 10 presets, consider adding a search function.
@@ -41,7 +41,7 @@ For straightforward date selection, users can select absolute dates. This can be
 - **Input mode:** Users manually enter dates and optionally use a calendar.
   Use this mode when both date and time need to be specified.
 
-![Date Range Filter Default](images/date-range-filter-default.png)
+![date range filter default](images/date-range-filter-default.png)
 
 > 1. Presets (optional), 2. Calendar, 3. Advanced control , 4. Preview, 5. Apply button (optional), 6. Date picker controls
 
@@ -50,7 +50,7 @@ For straightforward date selection, users can select absolute dates. This can be
 Advanced function provides flexibility with relative dates. Users can select dates relative to a reference point
 (e.g., "5 days before today").
 
-![Date Range Filter Default](images/date-range-filter-advanced.png)
+![date range filter advanced](images/date-range-filter-advanced.png)
 
 > 1. Reference date, 2. Anchor to today/now, 3. Range value, 4. Time scale, 5. Offset period
 
