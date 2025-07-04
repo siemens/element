@@ -6,7 +6,7 @@ nature and vanish after the issue is resolved by user.
 
 ## Usage ---
 
-![Inline Notification](images/inline-notification.png)
+![Inline notification](images/inline-notification.png)
 
 ### When to use
 
@@ -28,7 +28,7 @@ The notification width varies based on the context and page layout. Their height
 is based on the content length, which should not exceed two lines of text. Some
 examples of layouts are form, right pane, banner etc.
 
-![Inline Notification Formatting](images/inline-notification-formatting.png)
+![Inline notification formatting](images/inline-notification-formatting.png)
 
 ### Where Inline Notifications may not help
 
@@ -36,7 +36,7 @@ These are not recommended to use for providing severe level feedbacks.
 
 ## Design ---
 
-![Inline Notification Specification](images/inline-notification-usage-construction.png)
+![Inline notification specification](images/inline-notification-usage-construction.png)
 
 1. **Icon:** Informs users about the severity of a notification.
 2. **Title:** Gives users a quick overview of the notification (*optional*).
@@ -49,20 +49,20 @@ A user should be able to quickly understand the notification and know what to do
 
 ### Action Button
 
-![Inline Notification Actions](images/inline-notification-usage-actions.png)
+![Inline notification actions](images/inline-notification-usage-actions.png)
 
 1. **No action:** Information only.
 2. **Action:** Provides an action button.
 
 ### Notification Types
 
-![Inline Notification Variations](images/inline-notification-usage-variations.png)
+![Inline notification variations](images/inline-notification-usage-variations.png)
 
 ## Code ---
 
 This component is used to bring attention of users to a result of some action.
-There are multiple options of what is the notification level: `danger`,
-`warning`, `information` and `success`.
+There are multiple options of what is the notification level: `information`,
+`success`, `caution`, `warning`, `danger` and `critical`.
 
 ### Usage
 
