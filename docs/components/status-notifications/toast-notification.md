@@ -5,14 +5,15 @@ These are best to use for providing system level feedback and status.
 
 ## Usage ---
 
-![Toast Notification](images/toast-notification.png)
+![Toast notification](images/toast-notification.png)
 
 ### When to use
 
 - Useful to show system or application level feedbacks and status.
   For example, lost network, number of items exceeded etc.
 - Toasts display time based short and clear messages to user.
-- Use these to give feedback based on information, warning, success and error.
+- Use these to give feedback based on `information`, `success`, `caution`, `warning`, `danger` and
+`critical`.
 
 ### Dos and don'ts
 
@@ -29,23 +30,23 @@ These are best to use for providing system level feedback and status.
 
 ## Design ---
 
-![Toast Notification Specification](images/toast-notification-usage-construction.png)
+![Toast notification specification](images/toast-notification-usage-construction.png)
 
 1. **Icon:** Informs users about the severity of a notification.
 2. **Title:** Provides user with a quick overview about notification. Avoid
-   words like `Information`, `Danger`, `Warning` or `Success` in the title, use
-   a real subject as a label.
+   words like `Information`, `Success`, `Caution`, `Warning`, `Danger` or
+`Critical`in the title, use a real subject as a label.
 3. **Content:** Provides additional details of the notification.
 4. **Close:** A button to manually dismiss the notification *(optional)*.
 5. **Timer:** Timer visualization until the notification disappears *(with timer variant)*.
 
 ### Notification Types
 
-![Toast Notification Types](images/toast-notification-usage-types.png)
+![Toast notification types](images/toast-notification-usage-types.png)
 
 ### Notification Variants
 
-![Toast Notification Variations](images/toast-notification-usage-variations.png)
+![Toast notification variations](images/toast-notification-usage-variations.png)
 
 ## Code ---
 
