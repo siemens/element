@@ -5,7 +5,7 @@ The **system banner** is a prominent message displayed at the top of the screen 
 ## Usage ---
 
 The system banner is placed above the a [application header](../layout-navigation/application-header.md) to highlight important system-wide messages.
-It supports various status types, including "information," "warning," "caution," "danger," and "critical."
+It supports various status types, including `information`, `success`, `caution`, `warning`, `danger` and `critical`.
 
 ![System banner](images/system-banner.png)
 
