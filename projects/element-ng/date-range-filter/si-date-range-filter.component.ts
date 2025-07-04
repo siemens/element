@@ -2,8 +2,11 @@
  * Copyright Siemens 2016 - 2025.
  * SPDX-License-Identifier: MIT
  */
+import { CdkTrapFocus } from '@angular/cdk/a11y';
+import { MediaMatcher } from '@angular/cdk/layout';
 import { CdkListbox, CdkOption } from '@angular/cdk/listbox';
-import { DatePipe, NgTemplateOutlet } from '@angular/common';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { DatePipe, NgClass, NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -28,6 +31,8 @@ import {
   SiDatepickerComponent,
   SiDatepickerDirective
 } from '@siemens/element-ng/datepicker';
+import { addIcons, elementDown2, SiIconNextComponent } from '@siemens/element-ng/icon';
+import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
 import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
@@ -55,20 +60,31 @@ export class PresetMatchFilterPipe implements PipeTransform {
   imports: [
     CdkOption,
     CdkListbox,
+    CdkTrapFocus,
     DatePipe,
     FormsModule,
+    NgClass,
     NgTemplateOutlet,
+    OverlayModule,
     PresetMatchFilterPipe,
     SiCalendarButtonComponent,
     SiDatepickerComponent,
     SiDatepickerDirective,
+    SiIconNextComponent,
     SiRelativeDateComponent,
     SiSearchBarComponent,
     SiTranslateModule
-  ]
+  ],
+  host: {
+    '[class.mobile]': 'smallScreen'
+  }
 })
 export class SiDateRangeFilterComponent implements OnChanges {
   private readonly service = inject(SiDateRangeCalculationService);
+  private readonly mediaMatcher = inject(MediaMatcher);
+  protected readonly smallScreen = this.mediaMatcher.matchMedia(
+    `(max-width: ${BOOTSTRAP_BREAKPOINTS.mdMinimum}px)`
+  ).matches;
 
   /** The filter range object */
   readonly range = model.required<DateRangeFilter>();
@@ -282,6 +298,7 @@ export class SiDateRangeFilterComponent implements OnChanges {
   /** Base configuration on how the dates should be displayed, parts of it may be overwritten internally. */
   readonly datepickerConfig = input<DatepickerInputConfig>();
 
+  protected readonly icons = addIcons({ elementDown2 });
   protected advancedMode = false;
   protected dateRange: DateRange = { start: undefined, end: undefined };
 
@@ -322,7 +339,7 @@ export class SiDateRangeFilterComponent implements OnChanges {
   });
 
   protected readonly presetFilter = signal('');
-
+  protected readonly presetOpen = signal(false);
   protected readonly inputMode = computed(
     () => this.basicMode() === 'input' || this.enableTimeSelection()
   );
@@ -484,7 +501,7 @@ export class SiDateRangeFilterComponent implements OnChanges {
     }
   }
 
-  protected selectPresetItem(item: DateRangePreset): void {
+  protected selectPresetItem(event: Event, item: DateRangePreset): void {
     const newRange: DateRangeFilter =
       item.type === 'custom'
         ? item.calculate(item, this.range())
@@ -494,6 +511,11 @@ export class SiDateRangeFilterComponent implements OnChanges {
       this.updateFromRange();
     } else {
       this.updateSimpleMode(newRange);
+    }
+    if (this.smallScreen) {
+      // Prevent re-opening the dropdown when pressing enter on the selected item
+      event.preventDefault();
+      this.presetOpen.set(false);
     }
   }
 }

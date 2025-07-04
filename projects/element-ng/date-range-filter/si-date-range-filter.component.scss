@@ -4,6 +4,15 @@
   display: inline-grid;
   background: variables.$element-base-1;
   grid-template-areas: 'preset main' 'footer footer';
+
+  &.mobile {
+    grid-template-areas: 'preset' 'main' 'footer';
+    justify-items: stretch;
+
+    .presets {
+      border-block-end: 1px solid variables.$element-ui-4;
+    }
+  }
 }
 
 .main-form {
@@ -21,10 +30,16 @@
   inline-size: 200px;
   flex-direction: column;
   grid-area: preset;
+  background: variables.$element-base-1;
+
+  &.mobile {
+    max-block-size: 346px;
+    inline-size: unset;
+  }
 }
 
 ul {
-  flex: 1 1 0;
+  flex: 1 1 auto;
   padding-inline-start: 0;
   list-style: none;
 }
