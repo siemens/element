@@ -51,8 +51,7 @@ To indicate the total count of active filters,
 ### Best practices for filters
 
 - Always make it clear which filters are active.
-- Understand a user’s priorities and consider them in the display order of
-  filters.
+- Organize filters by understanding and aligning with user priorities.
 - If a category has more than *7-10* options, consider ways to group filters or
   use a `Show more` type of functionality.
 - If there are many filter options, consider adding a search functionality
@@ -116,10 +115,7 @@ page, allowing users to access filters without leaving the main content.
 
 ### Advanced filtering
 
-For users to focus on refining their search, especially during complex tasks or
-guided searches, consider presenting filters in a [modal](../components/layout-navigation/modals.md)
-or a **separate page**.
-
+For complex searches, use a [modal](../components/layout-navigation/modals.md) or separate page to display filters—this helps users stay focused while refining results. 
 If many categories are present, they're arranged in columns of equal width.
 Users can scroll through the area for more options, and if the columns exceed
 the available horizontal space, they can be stacked.
