@@ -45,8 +45,8 @@ to display the specific filters that are applied. This is an optional feature,
 intended for situations where the current filter selection is not easily visible
 elsewhere.
 
-To indicate the total count of active filters,
-[badges](../components/status-notifications/badges.md).
+To indicate the total count of active filters, use the `information` type 
+[badge](../components/status-notifications/badges.md) component.
 
 ### Best practices for filters
 
