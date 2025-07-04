@@ -80,6 +80,7 @@ nav:
       - Result Details List:              'components/progress-indication/result-details-list.md'
       - Spinner:                          'components/progress-indication/spinner.md'
     - Search, Filter & Sort:
+      - Overview:                         'components/sorting-filtering/index.md'
       - Search Bar:                       'components/sorting-filtering/search-bar.md'
       - Sort Bar:                         'components/sorting-filtering/sort-bar.md'
       - Typeahead:                        'components/sorting-filtering/typeahead.md'
