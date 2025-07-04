@@ -22,7 +22,7 @@ presented.
 - **Single-select:** Only one attribute can be selected.
   E.g. using [radio buttons](../components/forms-inputs/radio.md) or [select](../components/forms-inputs/select.md).
 - **Multi-select:** Multiple attributes can be selected.
-  E.g. using [checkboxes](../components/forms-inputs/checkbox.md) or [advance select](../components/forms-inputs/select.md).
+  E.g. using [checkboxes](../components/forms-inputs/checkbox.md) or [advanced select](../components/forms-inputs/select.md).
 - **Range**: Allows selection within a defined numerical or date range.
   E.g. using [slider](../components/forms-inputs/slider.md) or [date range](../components/forms-inputs/date-range-filter.md).
 
@@ -77,7 +77,7 @@ access. They can be placed above specific parts of the page, making it clear
 that only those items will reflect the filter input. It's best suited for simple
 filter types.
 
-Use the [select, advance select*](../components/forms-inputs/select.md), and
+Use the [select, advanced select*](../components/forms-inputs/select.md), and
 [input button](../components/buttons-menus/buttons.md) for this
 filter type.
 
