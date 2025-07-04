@@ -2,30 +2,31 @@
 
 <!-- markdownlint-disable MD033 -->
 
-The **Content Action Bar** is a container for actions related to specific content.
+The **content action bar** is a container for actions related to specific content.
 Actions are available as buttons or dropdown menus, each triggering specific functionalities.
 
 ## Usage ---
 
-The Content Action Bar groups contextually related actions that serve a common purpose within a specific content area.
+The content action bar groups contextually related actions that serve a common purpose within a specific content area.
 For example, actions such as 'Edit', 'Delete', and 'Share' are used to manage specific pieces of content, like documents or images.
 
-The Content Action Bar groups primary and secondary actions and adjusts to the available space.
+The content action bar groups primary and secondary actions and adjusts to the available space.
 
 ![Content action bar](images/content-action-bar.png)
 
 ### When to use
 
 - When multiple actions that are closely related and need to be presented together.
-- When an action stands alone or does not relate to other actions, use a regular [*Button*](../buttons-menus/buttons.md).
+- When an action stands alone or does not relate to other actions, use a regular [button](../buttons-menus/buttons.md).
 - If the primary requirement is simply to have a menu that remains consistently collapsed,
-  use a tertiary [*Circle Button*](../buttons-menus/buttons.md) with a [*Menu*](../buttons-menus/menu.md).
+  use a tertiary [circle button](../buttons-menus/buttons.md) with a [menu](../buttons-menus/menu.md).
 
 ## Design ---
 
 ### Elements
 
-The Content Action Bar includes primary actions, which are always visible and prioritized, and optional secondary actions, which can be accessed through a menu.
+The content action bar includes primary actions, which are always visible and prioritized, and optional secondary actions,
+which can be accessed through a menu.
 
 ![Content action elements](images/content-action-bar-elements.png)
 
@@ -33,7 +34,7 @@ The Content Action Bar includes primary actions, which are always visible and pr
 
 ### Button types
 
-The Content Action Bar includes standard and dropdown buttons.
+The content action bar includes standard and dropdown buttons.
 Standard buttons can display text, icons, or both, while dropdowns support text or text with icons.
 
 ![Content action button types](images/content-action-bar-buttons.png)
@@ -44,7 +45,7 @@ Icons should be used as needed; however, avoid mixing text-with-icon buttons wit
 
 ### Variants
 
-The Content Action Bar can be set to behave in two main ways, depending on the layout needs:
+The content action bar can be set to behave in two main ways, depending on the layout needs:
 
 #### Expanded/Toolbar
 
@@ -56,7 +57,7 @@ This configuration is useful when actions need to be readily available, such as 
 
 #### Collapsible
 
-In the collapsible variant, users can expand the Content Action Bar as needed to reveal the available options.
+In the collapsible variant, users can expand the content action bar as needed to reveal the available options.
 Pressing the close button will collapse all actions under a menu.
 This setup allows for a more compact layout when space is limited or when actions are needed less frequently.
 
@@ -66,7 +67,7 @@ This setup allows for a more compact layout when space is limited or when action
 
 When the screen size is reduced, actions can automatically collapse into a menu in both the Toolbar and Collapsible variants.
 If the primary requirement is simply to have a menu that remains consistently collapsed,
-use a tertiary [*Circle Button*](../buttons-menus/buttons.md) with a [*Menu*](../buttons-menus/menu.md).
+use a tertiary [circle button](../buttons-menus/buttons.md) with a [menu](../buttons-menus/menu.md).
 
 ![Content action responsive](images/content-action-bar-responsive.png)
 
