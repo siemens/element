@@ -1,6 +1,6 @@
-# Date & Time
+# Date & time
 
-**Date pickers** and **Time pickers** allow users to select and navigate through
+**Date pickers** and **time pickers** allow users to select and navigate through
 past, present, and future dates and times.
 
 ## Usage ---
@@ -8,7 +8,7 @@ past, present, and future dates and times.
 These components are used in scenarios where users need to input specific dates, times, or date ranges.
 
 Date pickers typically include an expandable calendar menu and a text input field,
-while Time pickers focus solely on time selection, usually a text input
+while time pickers focus solely on time selection, usually a text input
 field or dropdown menu for selecting specific times.
 
 ![Date time](images/date-time.png)
@@ -17,14 +17,14 @@ field or dropdown menu for selecting specific times.
 
 - To collect absolute date and time inputs.
 - For scheduling tasks.
-- In [*Forms*](../forms-inputs/forms.md).
+- In [forms](../forms-inputs/forms.md).
 - To select date ranges for generating reports or viewing historical data.
-- For relative date selection, use [*Date Range Filter*](../forms-inputs/date-range-filter.md).
+- For relative date selection, use [date range filter](../forms-inputs/date-range-filter.md).
 
 ### Best practices
 
 - Ensure the format of dates and times adheres to the user's locale settings.
-  See [*Localization*](../../fundamentals/localization.md) for more details.
+  See [localization](../../fundamentals/localization.md) for more details.
 - Ensure placeholders are also localized to match the user's regional settings (e.g., "MM/DD/YYYY").
 - When required, validation can be set for all time inputs.
 - Provide clear and concise labels for input fields.
