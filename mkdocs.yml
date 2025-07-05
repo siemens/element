@@ -115,6 +115,7 @@ nav:
     - Backdrop:                           'patterns/backdrop.md'
     - Loading:                            'patterns/loading.md'
     - Notifications:                      'patterns/notifications.md'
+    - Filter:                             'patterns/filter.md'
     - AI:
       - Overview:                         'patterns/ai/overview.md'
       - AI chat:                          'patterns/ai/ai-chat.md'
