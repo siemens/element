@@ -45,6 +45,9 @@ export const tsConfig = typescriptEslint.config({
       'error',
       { preferInputSignals: false, preferQuerySignals: false }
     ],
+    '@angular-eslint/sort-keys-in-type-decorator': ['off'],
+    '@angular-eslint/prefer-inject': ['off'],
+    '@angular-eslint/prefer-output-emitter-ref': ['off'],
     'no-console': [
       'error',
       {
@@ -98,6 +101,8 @@ export const templateConfig = typescriptEslint.config({
     '@angular-eslint/template/prefer-ngsrc': ['off'],
     '@angular-eslint/template/no-inline-styles': ['off'],
     '@angular-eslint/template/interactive-supports-focus': ['off'],
+    '@angular-eslint/template/prefer-template-literal': ['off'],
+    '@angular-eslint/template/prefer-at-empty': ['off'],
     '@angular-eslint/template/elements-content': [
       'error',
       {

@@ -300,7 +300,7 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
       tmpPortalOutlet.attach(portal);
       this.showTempContent.set(true);
       this.openClose(true, true);
-    } else if (this.showTempContent) {
+    } else if (this.showTempContent()) {
       this.showTempContent.set(false);
       this.openClose(this.service.isOpen(), true);
     }

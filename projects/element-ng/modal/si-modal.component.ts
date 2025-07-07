@@ -94,7 +94,7 @@ export class SiModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private hideBackdrop(): void {
     clearTimeout(this.backdropTimer);
-    if (this.showBackdropClass !== undefined) {
+    if (this.showBackdropClass() !== undefined) {
       this.showBackdropClass.set(false);
     }
     if (this.origBodyOverflow !== undefined) {
