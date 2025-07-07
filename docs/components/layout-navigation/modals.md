@@ -19,7 +19,7 @@ with the modal itself before allowing to continue the workflow.
 - Use button texts which represent their intended action (e.g. use `Delete`
   instead of `Yes` on a delete confirmation dialog).
 - Be mindful **when** to show the modal to avoid interrupting the user flow.
-- Modals must always be used in combination with [Backdrop](../../patterns/backdrop.md)
+- Modals must always be used in combination with [backdrop](../../patterns/backdrop.md)
   to provide visual focus on the active modal content.
 - Don't use it for complex decision making that requires additional sources of
   information unavailable in the current context.
