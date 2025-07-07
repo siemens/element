@@ -74,6 +74,43 @@
   &.accent-critical {
     border-inline-start: map.get(spacers.$spacers, 4) solid semantic-tokens.$element-status-critical;
   }
+
+  &.action-card:not(:disabled) {
+    &:hover {
+      &,
+      .card-header,
+      .card-footer {
+        background-color: semantic-tokens.$element-base-1-hover;
+      }
+    }
+
+    &:active {
+      &,
+      .card-header,
+      .card-footer {
+        background-color: semantic-tokens.$element-base-1-selected;
+      }
+    }
+  }
+
+  &.selected {
+    box-shadow: 0 0 0 1px semantic-tokens.$element-ui-0;
+  }
+
+  &:focus-visible {
+    outline-offset: 2px;
+  }
+}
+
+button.card {
+  border: 0;
+  padding: 0;
+  overflow: hidden;
+  text-align: start;
+
+  &:disabled {
+    opacity: 0.5;
+  }
 }
 
 .card-header {

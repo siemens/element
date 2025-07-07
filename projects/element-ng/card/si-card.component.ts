@@ -12,27 +12,15 @@ import {
 import { MenuItem } from '@siemens/element-ng/menu';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
+import { SiCardBaseDirective } from './si-card-base.directive';
+
 @Component({
   selector: 'si-card',
   imports: [SiContentActionBarComponent, SiTranslatePipe],
   templateUrl: './si-card.component.html',
-  styleUrl: './si-card.component.scss',
-  host: {
-    class: 'card',
-    '[class.card-horizontal]': 'classCardHorizontal()',
-    '[style.--si-card-img-object-fit]': 'imgObjectFit()',
-    '[style.--si-card-img-object-position]': 'imgObjectPosition()'
-  }
+  styleUrl: './si-card.component.scss'
 })
-export class SiCardComponent {
-  /**
-   * Card header text.
-   */
-  readonly heading = input<TranslatableString>();
-  /**
-   * Card secondary header text.
-   */
-  readonly subHeading = input<TranslatableString>();
+export class SiCardComponent extends SiCardBaseDirective {
   /**
    * Input list of primary action items. Supports up to **4** actions and omits additional ones.
    *
@@ -66,38 +54,6 @@ export class SiCardComponent {
    * @defaultValue ''
    */
   readonly actionBarTitle = input<TranslatableString>('');
-  /**
-   * Image source for the card.
-   */
-  readonly imgSrc = input<string>();
-  /**
-   * Alt text for a provided image.
-   */
-  readonly imgAlt = input<TranslatableString>();
-  /**
-   * Defines if an image is placed on top or start (left) of the card.
-   *
-   * @defaultValue 'vertical'
-   */
-  readonly imgDir = input<('horizontal' | 'vertical') | undefined>('vertical');
-  /**
-   * Sets the image [object-fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) CSS property.
-   *
-   * @defaultValue 'scale-down'
-   */
-  readonly imgObjectFit = input<('contain' | 'cover' | 'fill' | 'none' | 'scale-down') | undefined>(
-    'scale-down'
-  );
-  /**
-   * Sets the image [object-position](https://developer.mozilla.org/en-US/docs/Web/CSS/object-position) CSS property.
-   */
-  readonly imgObjectPosition = input<string>();
-  /**
-   * In case the card uses an image and horizontal direction is used we set flex row direction.
-   */
-  protected readonly classCardHorizontal = computed(
-    () => !!this.imgSrc() && this.imgDir() === 'horizontal'
-  );
   /**
    * Returns `true` when primary or secondary actions are set.
    */
