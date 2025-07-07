@@ -22,11 +22,11 @@ Tabs are used to separate information into logical sections in the context of a 
 
 ### Elements
 
-![Tabs](images/tabs-usage-construction.png)
+![Tabs](images/tabs-elements.png)
 
-> 1. Current tab, 2. Tab label,  3. Badge, 4. Default tab, 5. Tab bar background pane, 6. Extension arrow, 7. Tab pane
+> 1. Active tab, 2. Badge (optional), 3. Default tab, 4. Overflow menu
 
-### Tab Label
+### Tab label
 
 ![Tabs](images/tabs-usage-behavior-long-label.png)
 
@@ -36,7 +36,7 @@ Tabs are used to separate information into logical sections in the context of a 
 - The label will not be truncated and uses the space it needs.
 - The minimum width of a tab is `124px`.
 
-### Number of Tabs
+### Number of tabs
 
 In most scenarios, you should use no more than six tabs. This ensures an uncluttered UI and reduces cognitive load for users.
 If more than six tabs are needed, consider other navigation patterns.
@@ -51,7 +51,7 @@ The order of all tabs should be consistent across all pages. Tabs with related c
 
 A small badge (dot) can be displayed in tabs to indicate when new information is available. The badge can also contain a number to display the amount of notifications.
 
-### Icon Tabs
+### Icon tabs
 
 ![Tabs](images/tabs-usage-icons.png)
 
@@ -67,12 +67,12 @@ This variation allows users to open multiple tabs for multitasking or comparing 
 
 > **Note:** Closable tabs cannot be used in combination with icons.
 
-### Responsive Behavior
+### Responsive behavior
 
-![Tabs](images/tabs-usage-behavior-responsive.png)
+When there isn’t enough space to display all the tabs, the ones that no longer fit collapse into a menu.
+This menu contains all the tabs in the same order, ensuring consistent navigation while optimizing space.
 
-The tab component adds symmetrically navigation arrows to either side when there is not enough space to display all the tabs.
-The newly selected tab will stay at its selected position (e.g. Tab 5).
+![Tabs](images/tabs-responsive.png)
 
 ## Code ---
 
