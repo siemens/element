@@ -1,6 +1,6 @@
 # Main-Detail Container
 
-**Main-Detail** is a layout pattern that shows a list of items and the corresponding
+**Main-detail** is a layout pattern that shows a list of items and the corresponding
 details of the selected item.
 It allows users to stay focused on the main content while accessing and editing
 related details without loosing context.
@@ -55,7 +55,7 @@ This way, the footer remains visible and accessible even when the content overfl
 
 ![Main-detail edit](images/main-detail-edit.png)
 
-### Search and Actions in Main
+### Search and actions in main
 
 These actions are designed to manipulate data in the main container.
 
@@ -69,7 +69,7 @@ However, if more than one action is needed, they should be collapsed over a menu
 
 ![Main-detail actions](images/main-actions.png)
 
-### Filtering in the Main
+### Filtering in the main
 
 If filters are needed in the main, a filter button can be placed above the content.
 Applied filters can be represented with a filter bar.
@@ -84,7 +84,7 @@ to update the displayed content based on the selected filters.
 
 ![Main-detail filters flow](images/main-detail-filters-flow.png)
 
-### Global Search and Actions
+### Global search and actions
 
 Unlike the actions that are exclusive to the 'Main' or 'Detail',
 global actions transcend specific areas and provide functionality that
@@ -95,7 +95,7 @@ E.g.: A 'Create' button that initiates the process to create a new entry to the 
 
 ### Bulk actions
 
-When multiple items can be selected, the detail view will display an [*Empty State*](../status-notifications/empty-state.md)
+When multiple items can be selected, the detail view will display an [empty state](../status-notifications/empty-state.md)
 guiding users to either perform an action or clear the selection.
 
 ![Main-detail bulk actions](images/main-detail-bulk-action.png)
@@ -107,7 +107,7 @@ or be user-initiated, where the detail view remains empty until an item is selec
 
 There can also be situations where the main view itself is not populated until the user creates or adds an item.
 
-In instances, where no data is immediately available, use an [*Empty State*](../status-notifications/empty-state.md)
+In instances, where no data is immediately available, use an [empty state](../status-notifications/empty-state.md)
 to guide the user.
 
 ![Main-detail initial interaction](images/main-detail-initial-interaction.png)
