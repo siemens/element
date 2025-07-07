@@ -2,7 +2,7 @@
  * Copyright Siemens 2016 - 2025.
  * SPDX-License-Identifier: MIT
  */
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, model, booleanAttribute } from '@angular/core';
 import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import {
   ContentActionBarMainItem,
@@ -20,7 +20,14 @@ import { SiTranslateModule, TranslatableString } from '@siemens/element-translat
     class: 'card',
     '[class.card-horizontal]': 'classCardHorizontal()',
     '[style.--si-card-img-object-fit]': 'imgObjectFit()',
-    '[style.--si-card-img-object-position]': 'imgObjectPosition()'
+    '[style.--si-card-img-object-position]': 'imgObjectPosition()',
+    '[class.selectable]': 'selectable()',
+    '[class.selected]': 'selectable() && selected()',
+    '[attr.role]': 'selectable() ? "button" : null',
+    '[attr.tabindex]': 'selectable() ? "0" : null',
+    '[attr.aria-pressed]': 'selectable() ? selected() : null',
+    '(click)': 'selectable() ? selected.set(!selected()) : null',
+    '(keyup.enter)': 'selectable() ? selected.set(!selected()) : null'
   },
   imports: [SiContentActionBarComponent, SiTranslateModule]
 })
@@ -89,6 +96,22 @@ export class SiCardComponent {
    * Sets the image [object-position](https://developer.mozilla.org/en-US/docs/Web/CSS/object-position) CSS property.
    */
   readonly imgObjectPosition = input<string>();
+
+  /**
+   * Makes whole card selectable.
+   *
+   * @defaultValue false
+   */
+  readonly selectable = input(false, {
+    transform: booleanAttribute
+  });
+  /**
+   * Indicates if the card is selected.
+   * Ignored when `selectable` is not set to `true`.
+   *
+   * @defaultValue false
+   * */
+  readonly selected = model(false);
   /**
    * In case the card uses an image and horizontal direction is used we set flex row direction.
    */
