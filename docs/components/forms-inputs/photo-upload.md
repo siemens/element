@@ -1,25 +1,25 @@
 # Photo Uploader
 
-**Photo Uploader** allows users to upload and manage an image used as avatar.
+**Photo uploader** allows users to upload and manage an image used as avatar.
 
 ## Usage ---
 
-The Photo Uploader allows users to upload an image via file browser.
+The photo uploader allows users to upload an image via file browser.
 It optionally provides an edit dialog for cropping the image.
 
 ![Photo upload](images/photo-upload.png)
 
 ### When to use
 
-- Use the Photo Uploader dialog in the user profile so the user can choose/change his avatar.
-- Use the Photo Uploader dialog when a user is created.
+- In the user profile so the user can choose/change his avatar.
+- When a user is created.
 
 ### Best practices
 
 - The original image is kept (if necessary, a compressed version of it) so the user can undo the cropping.
 - Display the compressed version of the image in the preview if compression is required.
 - Adjust the size according to layout needs.
-- The placeholder can use any of the [*Avatar*](../status-notifications/avatar.md) colors.
+- The placeholder can use any of the [avatar](../status-notifications/avatar.md) colors.
 
 ## Design ---
 
