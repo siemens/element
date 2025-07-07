@@ -105,6 +105,7 @@ documentation.
 - [Threshold](forms-inputs/threshold.md)
 - [Toast Notification](status-notifications/toast-notification.md)
 - [Tooltip](status-notifications/tooltip.md)
+- [Tour](layout-navigation/tour.md)
 - [Tree View](lists-tables-trees/tree-view.md)
 - [Typeahead](sorting-filtering/typeahead.md)
 

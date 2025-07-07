@@ -175,6 +175,12 @@ export interface SiTranslatableKeys {
   'SI_THRESHOLD.INPUT_LABEL'?: string;
   'SI_THRESHOLD.STATUS'?: string;
   'SI_TOAST.CLOSE'?: string;
+  'SI_TOUR.BACK'?: string;
+  'SI_TOUR.CLOSE'?: string;
+  'SI_TOUR.DONE'?: string;
+  'SI_TOUR.NEXT'?: string;
+  'SI_TOUR.PROGRESS'?: string;
+  'SI_TOUR.SKIP'?: string;
   'SI_TREE_VIEW.COLLAPSE_ALL'?: string;
   'SI_TREE_VIEW.EXPAND_ALL'?: string;
   'SI_TYPEAHEAD.AUTOCOMPLETE_LIST_LABEL'?: string;

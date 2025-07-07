@@ -1,0 +1,13 @@
+@use '@siemens/element-theme/src/styles/variables/semantic-tokens';
+
+.highlighter {
+  position: fixed;
+  box-shadow: semantic-tokens.$element-base-translucent-1 0 0 0 1000vmax;
+  pointer-events: none;
+}
+
+::ng-deep {
+  .cdk-global-overlay-wrapper:has(si-tour-highlight) {
+    z-index: 2000;
+  }
+}

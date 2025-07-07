@@ -1,0 +1,72 @@
+<div class="backdrop"></div>
+<div
+  #focusTrap="cdkTrapFocus"
+  class="tour-content popover position-relative"
+  role="dialog"
+  aria-labelledby="__si-tour-step-title"
+  cdkTrapFocus
+  cdkTrapFocusAutoCapture
+  [class.show]="show()"
+  [ngClass]="positionClass()"
+>
+  @if (arrowPos()) {
+    <div
+      class="popover-arrow"
+      [style.left.px]="arrowPos()?.left"
+      [style.right.px]="arrowPos()?.right"
+    ></div>
+  }
+  @if (step()) {
+    @let tourStep = step()!;
+    <div class="d-flex">
+      <div class="p-6 flex-fill">
+        <div class="pb-2 si-body-2 text-secondary">
+          {{ progressText | translate: { step: tourStep.stepNumber, total: tourStep.totalSteps } }}
+        </div>
+        <div id="__si-tour-step-title" class="si-title-1 mb-0">
+          {{ tourStep.step.title | translate }}
+        </div>
+      </div>
+      <button
+        type="button"
+        class="btn btn-circle btn-sm btn-ghost mt-4 me-5"
+        [attr.aria-label]="ariaLabelClose | translate"
+        (click)="action('cancel')"
+      >
+        <si-icon-next [icon]="icons.elementCancel" />
+      </button>
+    </div>
+    <div class="step-text si-body-2 px-6 pb-8">
+      {{ tourStep.step.text | translate }}
+    </div>
+    <div class="d-flex justify-content-end align-items-center p-6 gap-6">
+      @if (tourStep.stepNumber !== 1) {
+        <button
+          type="button"
+          class="btn btn-secondary"
+          [disabled]="tourToken.blocked()"
+          (click)="action('back')"
+        >
+          {{ backText | translate }}
+        </button>
+      } @else {
+        <button type="button" class="btn btn-tertiary" (click)="action('cancel')">
+          {{ skipText | translate }}
+        </button>
+      }
+      <button
+        type="button"
+        class="btn btn-primary"
+        cdkFocusInitial
+        [disabled]="tourToken.blocked()"
+        (click)="action(tourStep.stepNumber !== tourStep.totalSteps ? 'next' : 'complete')"
+      >
+        @if (tourStep.stepNumber !== tourStep.totalSteps) {
+          {{ nextText | translate }}
+        } @else {
+          {{ doneText | translate }}
+        }
+      </button>
+    </div>
+  }
+</div>

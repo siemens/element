@@ -1,0 +1,27 @@
+@use '@siemens/element-theme/src/styles/variables/semantic-tokens';
+
+.tour-content {
+  --popover-arrow-width: 24px;
+  --popover-arrow-height: 12px;
+  --popover-bg-color: #{semantic-tokens.$element-base-1};
+  max-inline-size: 400px;
+  inline-size: 100vw;
+  opacity: 0;
+
+  &.show {
+    opacity: 1;
+  }
+}
+
+.backdrop {
+  position: fixed;
+  // hack to ensure all outside clicks are still on the overlay
+  inset: -200vmax;
+}
+
+::ng-deep {
+  .cdk-overlay-connected-position-bounding-box:has(si-tour),
+  .cdk-global-overlay-wrapper:has(si-tour) {
+    z-index: 2000;
+  }
+}
