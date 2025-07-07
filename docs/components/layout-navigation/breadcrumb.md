@@ -1,26 +1,28 @@
 # Breadcrumb
 
-Breadcrumbs help users to see their current location in relation to the rest of the website or application.
-Breadcrumbs are very effective in products and experiences that have a large amount of content organized in a hierarchy of more than two levels.
-Breadcrumbs are always treated as secondary and should never entirely replace the primary navigation.
-
-By using the page hierarchy, breadcrumbs are easily understood, take up very little space on the page, and facilitate discovery.
-
-Breadcrumbs show the hierarchical progress from the highest entity level (root) to the lowest, one step at a time. This typically starts with the root page and goes to the current page or content.
-Breadcrumbs enable users to move quickly up to a parent level or previous step. All links in a breadcrumb should be clickable.
+**Breadcrumbs** help users to see their current location in relation to the rest of the website or application.
 
 ## Usage ---
+
+Breadcrumbs display the user's location within a hierarchical structure,
+showing the path from the highest-level entity (root) to the current page or content, one step at a time.
+
+They typically begin with the root page and progress to the active page,
+helping users understand where they are and navigate back to higher levels.
 
 ![Breadcrumb](images/breadcrumb.png)
 
 ### When to use
 
-- Use breadcrumbs when the user is most likely to have landed on the page from an external source
-- Use for large websites and products that have hierarchically arranged pages
+- Use breadcrumbs when the user is most likely to have landed on the page from an external source.
+- Use for applications that have that have a large amount of content organized in a hierarchy of more than two levels.
 
-### When a breadcrumb may not help
+### Best practices for breadcrumb
 
-- Don't use breadcrumbs for single-level websites that don't have a logical hierarchy or grouping.
+- Avoid using breadcrumbs on single-level sites or applications without a meaningful hierarchy.
+- All breadcrumb items should be clickable.
+- Breadcrumbs are secondary navigation, they should never replace the primary navigation.
+- Use consistent naming that matches page titles or navigation labels.
 
 ## Design ---
 
@@ -39,7 +41,7 @@ A breadcrumb consists of the following elements:
 
 The root element can either be the default icon `element-breadcrumb-root` or a meaningful text, like `Startpage`.
 
-![Breadcrumb Variants](images/breadcrumb-usage-variants.png)
+![Breadcrumb variants](images/breadcrumb-usage-variants.png)
 
 ### Responsive behavior
 
