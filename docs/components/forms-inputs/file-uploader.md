@@ -1,6 +1,6 @@
 # File Uploader
 
-The **File Uploader** component allows users to upload one or more files, such
+The **file uploader** component allows users to upload one or more files, such
 as images, documents or firmware. It shows the upload progress as well as a
 success/error status after an upload finishes.
 
@@ -13,21 +13,21 @@ Users can upload files by dragging and dropping them into the designated drop
 area. Alternatively, users can also use a browser's/OS' native file selection
 dialog by clicking the upload link within the drop zone.
 
-![File Uploader](images/file-uploader.png)
+![File uploader](images/file-uploader.png)
 
 ## Design ---
 
 ### Elements
 
-![File Uploader Elements](images/file-uploader-elements.png)
+![File uploader elements](images/file-uploader-elements.png)
 
 > 1. File selector/drop zone, 2. File upload progress, 3. Cancel file upload
 > button, 4. Upload issue feedback, 5. Upload successful icon , 6. Retry
 > button, 7. Delete file button, 8. Actions (optional)
 
-### Upload States
+### Upload states
 
-![File Uploader States](images/file-uploader-states.png)
+![File uploader states](images/file-uploader-states.png)
 
 ### Variants
 
@@ -35,7 +35,7 @@ The file uploader is available in two variants, either as just the file selector
 alone without any status or interaction controls or as the complete variant with
 file list and all other state management handling.
 
-![File Uploader Variants](images/file-uploader-variants.png)
+![File uploader variants](images/file-uploader-variants.png)
 
 The component can be set to either a fixed height or it supports a dynamically
 growing one to accommodate a longer list of uploaded files. When set to a fix
