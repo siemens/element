@@ -2,10 +2,10 @@
 
 <!-- markdownlint-disable MD013 -->
 
-> **Note:** The Siemens font is part of the Siemens branding and
-> cannot be used for none Siemens applications. Element comes with
-> a default font that is not part of the Siemens branding. The default
-> theme is not documented.
+> **Note:** The Siemens font is part of the official Siemens branding and must
+> not be used in non-Siemens applications. Element uses a default font that is
+> not associated with Siemens branding. Please note that the default theme is
+> currently undocumented.
 
 Typographic hierarchy is defined by text size and color. Each style can use
 color variants if necessary.
