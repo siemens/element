@@ -11,37 +11,29 @@ selection, e.g. in forms, modals, side panel, settings and more.
 
 ![Radio button use case](images/radio-use-case.png)
 
-### When not to use
-
-- Don’t use radio buttons to perform actions or commands.
-- For selecting multiple options, use the [*Checkbox*](checkbox.md) component
-  instead.
-
 ### Best practices for radio buttons
 
 - The list of options should be structured in a logical order, e.g. from
   simplest operation to the most complex one or least to most risk.
-- Options (*labels*) should be comprehensive and clearly distinct.
+- Options should be comprehensive and clearly distinct.
 - Radio buttons should always have exactly one option pre-selected. Select the
   safest and most secure option (*e.g. to prevent data loss*).
 - If users need to be able to skip any selection, provide a radio button for
   this choice labeled as "None".
 - Avoid nesting radio buttons with other radio buttons or checkboxes. Keep all
   options at the same level to avoid confusion.
+- For selecting multiple options, use the [checkbox](checkbox.md) component
+  instead.
 
 ## Design ---
 
 ### Interaction states
 
-![Radio Button States](images/radio-button-states.png)
-
-!!! info "Clickable area"
-    Users can trigger the interaction by clicking the radio button input or the
-    accompanying label.
+![Radio button states](images/radio-button-states.png)
 
 When possible, arrange the radio button groups vertically for easier reading.
 
-![Radio Button Alignment](images/radio-usage-alignment.png)
+![Radio button alignment](images/radio-usage-alignment.png)
 
 ### Labels
 
@@ -52,7 +44,7 @@ If labels are too extensive, try to reworded them to be shorter. If it's not
 possible, wrap the text to a second line so the radio button and label are top
 aligned.
 
-![Radio Button Label](images/radio-button-label.png)
+![Radio button label](images/radio-button-label.png)
 
 ## Code ---
 
