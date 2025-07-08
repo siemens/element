@@ -8,7 +8,8 @@ test.describe('filtered search', () => {
   test('should create remove criteria', async ({ si, page }) => {
     await page.clock.setFixedTime('2022-02-20');
     await si.visitExample('si-filtered-search/si-filtered-search-playground');
-    const freeTextSearch = page.getByLabel('search', { exact: true });
+    // FS lacks a11y features. One of the problems is that all inputs are labeled as search. The last one will always be the free text search.
+    const freeTextSearch = page.getByLabel('search', { exact: true }).last();
     await freeTextSearch.focus();
     await page.keyboard.type('Event');
     await page.getByLabel('Event', { exact: true }).click();
@@ -28,15 +29,22 @@ test.describe('filtered search', () => {
     await page.keyboard.press('Shift+Tab');
     await page.keyboard.press('Shift+Tab');
     await page.keyboard.press('Enter');
+    await expect(
+      page.locator('.pill-group', { hasText: 'Score' }).getByRole('combobox')
+    ).toBeFocused();
     await page.keyboard.press('Backspace');
     await page.keyboard.press('Escape');
-    await expect(page.getByLabel('Score')).not.toBeAttached();
+    await expect(page.getByText('Score')).not.toBeAttached();
     // remove event criterion
     await page.keyboard.press('Shift+Tab');
     await page.keyboard.press('Enter');
-    await freeTextSearch.focus();
-    await page.keyboard.press('Backspace');
+    await page.keyboard.press('Escape');
+    await expect(page.getByText('Event', { exact: true })).not.toBeAttached();
     // delete location criterion
+    await page.keyboard.press('Backspace');
+    await expect(
+      page.locator('.pill-group', { hasText: 'Location' }).getByRole('combobox')
+    ).toBeFocused();
     await page.keyboard.press('Control+KeyA');
     await page.keyboard.press('Backspace');
     await si.runVisualAndA11yTests('typeahead-open');
@@ -46,15 +54,19 @@ test.describe('filtered search', () => {
 
   test('should highlight invalid criterion and criterion values', async ({ si, page }) => {
     await si.visitExample('si-filtered-search/si-filtered-search-playground');
-    const freeTextSearch = page.getByLabel('search', { exact: true });
+    // FS lacks a11y features. One of the problems is that all inputs are labeled as search. The last one will always be the free text search.
+    const freeTextSearch = page.getByLabel('search', { exact: true }).last();
     await freeTextSearch.focus();
     await page.keyboard.press('Backspace');
+    await expect(
+      page.locator('.pill-group', { hasText: 'Location' }).getByRole('combobox')
+    ).toBeFocused();
     await page.keyboard.press('Control+KeyA');
     await page.keyboard.type('H');
     await expect(page.getByRole('option', { name: 'Karlsruhe' })).toHaveClass(/active/);
     await page.keyboard.type('annover');
     await page.keyboard.press('Enter');
-    await freeTextSearch.focus();
+    await expect(freeTextSearch).toBeFocused();
     await freeTextSearch.fill('Building:House');
     await page.keyboard.press('Enter');
     await page.getByLabel('Only predefined criteria').check();
