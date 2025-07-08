@@ -1,12 +1,19 @@
 # Circle status
 
-Circle status indicates states on a table or list.
+*Circle status* indicates states on a table or list.
 
 ## Usage ---
 
-![Status indication with icons](images/circle-status-row.png)
+The circle status shows a type icon with a status indicator overlay.
+The status can be a simple indication or a severity symbol: `Information`,
+`Caution`, `Warning`, `Danger`, `Critical`, `Pause`, `Progress` or `Unknown`.
+Circle status is available in two sizes: `Regular` or `Small`.
 
-> (1) Circle Status indication, (2) Status icon
+![Circle status](images/circle-status.png)
+
+![Status indication with icons](images/circle-status-usage.png)
+
+> 1. Circle status indication, 2. Status icon
 
 ### When to use
 
@@ -22,59 +29,44 @@ Circle status indicates states on a table or list.
 
 ## Best Practices
 
-- Badge on circle status shall be colored according definition for the [Status Colors](../../fundamentals/colors/ui-colors.md/#status)
-- Use a *Circle Status* with badge (dot on top right of the circle) for simple indications, with **one specific status type** (`critical`, `danger`, ...) per viewport only
+- Badge on circle status shall be colored according definition for the [Status colors](../../fundamentals/colors/ui-colors.md/#status)
 - Use a *Circle Status* with severity symbols when there is a need to identify different severities
-- The color of the icon should remain constant according definition in [UI Colors](../../fundamentals/colors/ui-colors.md/#ui)
-
-### Usage of Pulse feature
-
-The pulse feature (blinking) is used to indicate places on the screen, where the user has to take immediate action.
-
-!!! warning "Extensive use of pulse feature"
-    - The pulse feature is made for an event list.
-    - **Do not use the pulse feature outside of an event list**
-    - Too extensive use of the pulse feature is reducing the expected effect to the user
+- The color of the icon should remain constant according definition in [UI colors](../../fundamentals/colors/ui-colors.md/#ui)
 
 ## Design ---
 
-### Error state with badge
+There are some variations in the representation of the circle status.
 
-Use a *Circle Status* with badge for simple indications, with **one specific
-status type** (`critical`, `danger`, ...) per viewport only.
-The status is indicated by a badge on top right of the circle.
+![Status variation](images/circle-status-variation.png)
 
-![Status representations](images/circle-status-badge.png)
+> 1. Default state, 2. Variant with status symbol, 3. Variant with dot, 4. Pulsating state, 5. Supporting icon
 
-> (1) Error state, (2) Default state
+### Variant: Status symbol
 
-### Error state with severity symbols
+Use a circle status with status symbols when there is a need to identify
+different severities or states.
 
-Use a *Circle Status* with severity symbols when there is a need to identify
-different severities.
+### Variant: Dot
 
-![Status priority symbol](images/circle-status-priority-symbols.png)
+Use the circle status with dot for simple indications, with **one specific
+status color** (`critical`, `danger`, ...) per viewport only.
+The status is indicated by a dot on top right of the circle.
+To ensure accessibility, the circle status a severity symbol is the better choice.
 
-> (1) Danger state, (2) Default state
-
-### In and out events
-
-When needed, a *Circle Status* can be integrated with the "in and out" event
-representation.
-
-![Status in-out event](images/circle-status-in-out.png)
-
-> (1) Event in state, (2) Event out state
-
-### Pulsating state
+### Pulsating
 
 The pulse feature is adding a circle on the badge, which fades the opacity.
+The rhythm and the fading must be in synch with the [status bar](../status-notifications/status-bar.md).
 
-![Status with blinking](images/circle-status-pulse.png)
+The pulse feature (blinking) is used to indicate places on the screen, where the user has to take immediate action.
 
-> (1) Pulse state ON, (2) Pulse state OFF
+The pulse feature (blinking effect) is used to highlight areas where the user needs to take immediate action.
+It is intended specifically for event lists. Using it in other contexts or too frequently can reduce its effectiveness.
 
-The rhythm and the fading must be in synch with the [Status Bar](../status-notifications/status-bar.md).
+### Supporting icon
+
+Add a supporting icon when needed to provide extra context, such as indicating an 'in and out' event.
+While any icon can be assigned, ensure it adds meaningful context.
 
 ## Code ---
 
