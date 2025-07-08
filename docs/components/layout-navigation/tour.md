@@ -5,19 +5,19 @@ helping users understand and navigate the interface effectively.
 
 ## Usage ---
 
-Use the **Tour** to guide users through a series of steps or features within an application,
+Use the **tour** to guide users through a series of steps or features within an application,
 offering contextual information and instructions to enhance the user experience.
 
 ![Tour](images/tour.png)
 
-### When to Use
+### When to use
 
 - To introduce new users to the application and its primary features.
 - To guide users through a new workflow.
 - To highlight significant updates or changes in the interface.
 - To provide in-app training or onboarding for users.
 
-### Best Practices
+### Best practices
 
 - Keep tours between 3 and 15 steps.
 - Each step should have a clear and concise description.
@@ -37,7 +37,7 @@ Tours can be automatically launched for new users during their first login to gu
 Automatic tours are best for first-time use only.
 
 Users can access guided tours anytime from the
-Help menu in the [*Horizontal Navigation*](../layout-navigation/horizontal-navigation.md).
+Help menu in the [horizontal navigation](../layout-navigation/horizontal-navigation.md).
 
 If more than one tour is offered, they can be organized within the Help menu into categories such
 as "Getting started", "Advanced features" or "New features" for easy navigation.
