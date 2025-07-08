@@ -8,6 +8,7 @@
   [minListSize]="200"
   [minDetailsSize]="100"
   [(detailsActive)]="detailsActive"
+  (listWidthChange)="table?.recalculate()"
 >
   <si-list-pane class="card">
     <si-list-pane-header>
