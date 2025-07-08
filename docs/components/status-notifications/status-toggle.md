@@ -1,14 +1,14 @@
-# Status Toggle
+# Status toggle
 
 A status toggle allows a user to quickly set a status by tapping (primary action) on the desired status. Tap and drag to change the status (secondary-action) is also supported.
 
 ## Usage ---
 
-![Status Toggle](images/status-toggle.png)
+![Status toggle](images/status-toggle.png)
 
 ### When to use
 
-![Status Toggle Examples](images/status-toggle-examples.png)
+![Status toggle examples](images/status-toggle-examples.png)
 
 A status toggle is a good way to directly set a status on a screen, e.g. the result of a datapoint-test, home/away state, etc.
 
@@ -21,7 +21,7 @@ A status toggle is a good way to directly set a status on a screen, e.g. the res
 
 ### Elements
 
-![Status Toggle Specification](images/status-toggle-usage-construction.png)
+![Status toggle specification](images/status-toggle-usage-construction.png)
 
 > 1. Icon, 2. Label, 3. Selected state, 4. Unselected state
 
