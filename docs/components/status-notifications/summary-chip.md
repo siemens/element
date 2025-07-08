@@ -1,11 +1,11 @@
-# Summary Chip
+# Summary chip
 
-**Summary Chips** are compact components designed to quickly and concisely summarize data.
+**Summary chips** are compact components designed to quickly and concisely summarize data.
 They are often used to provide a condensed overview, summarize states, and allow for filtering of information in a visually appealing manner.
 
 ## Usage ---
 
-![Summary Chip](images/summary-chip.png)
+![Summary chip](images/summary-chip.png)
 
 There are basically two main use cases for the summary chip component:
 
@@ -18,22 +18,28 @@ Arrange one or more Summary Chips in a horizontal layout above or near the relat
 Chips can be combined with other supporting elements, such as badges, buttons, or links, to enhance functionality.
 Place them within a container that can use a background of `None`, `Base-0`, or `Base-1`, depending on the visual requirements.
 
-![Summary Chip Example](images/summary-chip-example.png)
+![Summary chip example](images/summary-chip-example.png)
 
 ## Design ---
 
 ### Elements
 
-![Summary Chip Construction](images/summary-chip-usage-construction.png)
+![Summary chip construction](images/summary-chip-usage-construction.png)
 
-> 1. Category icon or composite icon, 2. Value
+> 1. Category icon or composite icon (optional),  2. Label (optional),  3. Value (optional)
 
 The summary chip can hold an icon or a composite icon representing a state.
 The icon must be self-explanatory since there is no label.
 
 ### States
 
-![Summary Chip States](images/summary-chip-usage-states.png)
+![Summary chip states](images/summary-chip-usage-states.png)
+
+### Variants
+
+The component is very flexible, hence allowing the following variants:
+
+![Summary chip variants](images/summary-chip-usage-variants.png)
 
 ## Code ---
 
