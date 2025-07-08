@@ -36,7 +36,7 @@ Use a vertical wizard if:
 - When users lack domain knowledge.
 - When the user must complete steps in a specific sequence.
 
-### Best Practices for Wizards
+### Best practices for wizards
 
 - Minimize steps and keep the purpose clear.
 - Show where the user is in the process.
@@ -48,7 +48,7 @@ Use a vertical wizard if:
 
 ### Elements
 
-![Wizard - Elements](images/wizard-usage-construction.png)
+![Wizard - elements](images/wizard-usage-construction.png)
 
 > 1. Indication "*more steps*", 2. Step completed, 3. Current step, 4. Future
   step, 5. Indication "*more steps*", 6. Label
@@ -57,35 +57,35 @@ The vertical variant can also include an optional divider to visually separate
 steps and content for better clarity. Select the layout that aligns with the
 process's complexity, content length, and spatial requirements.
 
-![Wizard vertical - Divider](images/wizard-vertical-divider.png)
+![Wizard vertical - divider](images/wizard-vertical-divider.png)
 
-### Wizard Button Placement
+### Wizard button placement
 
 For both the horizontal and the vertical wizard, we recommend to place the
 buttons below the wizard content.
 
-![Wizard - Button Placement](images/wizard-usage-button-placement.png)
+![Wizard - button placement](images/wizard-usage-button-placement.png)
 
 > 1. Cancel button (optional), 2. Back button,  3. Next button
 
-#### Alternative Button Placement for Horizontal Wizard
+#### Alternative button placement for horizontal wizard
 
 To ensure a stable position for the controls when the wizard content consumes a
 significant amount of vertical space, buttons can be positioned alongside the
 horizontal wizard.
 
-![Wizard - Alternative Placement](images/wizard-usage-alternative-button-placement.png)
+![Wizard - alternative placement](images/wizard-usage-alternative-button-placement.png)
 
-### Responsive Behavior
+### Responsive behavior
 
 Steps may collapse or hide when space is limited and reappear as more space
 becomes available. For a vertical wizard, if the screen space becomes too
 constrained, consider switching to a horizontal layout after a defined
 breakpoint to preserve clarity.
 
-![Wizard - Responsive Behavior](images/wizard-usage-behavior-n-steps.png)
+![Wizard - responsive behavior](images/wizard-usage-behavior-n-steps.png)
 
-### Alternative Step Representation
+### Alternative step representation
 
 Step numbers are useful when users are less familiar with a process and need
 clear guidance on where they are in a sequence. They establish a clear visual
@@ -96,7 +96,7 @@ and provide a clear linear progression.
 one part of your application or website, try to use it for all other cases as
 well to maintain a cohesive user experience.
 
-![Wizard - Alternative Step Representation](images/wizard-usage-steps.png)
+![Wizard - alternative step representation](images/wizard-usage-steps.png)
 
 > 1. Standard representation 2. Step number representation
 
