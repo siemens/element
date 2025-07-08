@@ -121,6 +121,7 @@ nav:
     - Pages:
       - About:                            'components/pages/about.md'
       - Info Page:                        'components/pages/info-page.md'
+      - Landing Page:                     'components/pages/landing-page.md'
       - Unauthorized Page:                'components/pages/unauthorized-page.md'
   - Patterns:
     - Overview:                           'patterns/index.md'
