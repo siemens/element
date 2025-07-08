@@ -1,6 +1,6 @@
-# Status Bar
+# Status bar
 
-The **Status Bar** is used to convey crucial and system-wide information to
+The **status bar** is used to convey crucial and system-wide information to
 users. Different severity symbols help users to quickly evaluate and recognize
 the current system status, providing the required information to take
 appropriate actions.
@@ -9,7 +9,7 @@ appropriate actions.
 
 ![Statusbar](images/statusbar.png)
 
-The **Status Bar** component informs a user about events or actions that
+The **status bar** component informs a user about events or actions that
 requires their attention and provides an easily accessible and summarized
 overview of all ongoing events.
 
@@ -27,10 +27,10 @@ position at all times.
   regardless of how deep the user navigated within an application.
 - Use it to provide quick access to critical information that users need to be
   aware of at all times.
-- Use it in combination with the [*Circle Status*](./circle-status.md)
+- Use it in combination with the [*circle status*](./circle-status.md)
   component.
 
-### Best Practices for Status Bar
+### Best practices for status bar
 
 - Only include the most relevant status information.
 - Do not include more than `10` status categories.
@@ -39,14 +39,14 @@ position at all times.
 
 ### Elements
 
-![Status Bar Elements](images/status-bar-elements.png)
+![Status bar elements](images/status-bar-elements.png)
 
 > 1. Container, 2. Status item active, 3. Status item inactive, 4. Mute button (optional)
 
 Status items provide users with a quick way to see how many active events are
 associated with each event category.
 
-![Status Bar Item](images/status-bar-item.png)
+![Status bar item](images/status-bar-item.png)
 
 > 1. Event severity indicator, 2. Event category name, 3. Event counter
 
@@ -55,9 +55,9 @@ associated with each event category.
 If required, the status bar can be configured in a
 *reduced height*/*compact mode*.
 
-![Status Bar Sizes](images/status-bar-sizes.png)
+![Status bar sizes](images/status-bar-sizes.png)
 
-### Responsive Behavior
+### Responsive behavior
 
 The responsive behavior of the component ensures access to all information
 regardless of the available screen size.
@@ -68,14 +68,14 @@ regardless of the available screen size.
   will be moved to a collapsed menu and a summary indicator will be shown to
   indicate that more items are available.
 
-![Status Bar Responsive](images/status-bar-responsive.png)
+![Status bar responsive](images/status-bar-responsive.png)
 
-### Pulsating State (optional)
+### Pulsating state (optional)
 
 To steer a user's attention to new and unhandled events in the status bar, the
 status items support a *blinking* feature, which fades the background opacity.
 
-![Status Bar Blinking](images/status-bar-blink.png)
+![Status bar blinking](images/status-bar-blink.png)
 
 ## Code ---
 
