@@ -59,6 +59,7 @@ jobs:
       - run: npm run lint:ng
       - run: npm run lint:playwright:eslint
       - run: npm run translate:test -- --watch=false --progress=false --code-coverage
+      - run: npm run native-charts:test -- --watch=false --progress=false --code-coverage
       - run: npm run lib:test -- --watch=false --progress=false --code-coverage
       # TODO: Upload coverage reports
 
