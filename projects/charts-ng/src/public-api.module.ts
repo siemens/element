@@ -43,3 +43,5 @@ import { SiCustomLegendComponent } from './components/si-custom-legend/si-custom
   ]
 })
 export class SiChartsNgModule {}
+
+export { SiChartsNgModule as SimplChartsNgModule };

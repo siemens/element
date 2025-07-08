@@ -31,8 +31,8 @@ import { provideNgxTranslateForElement } from '@siemens/element-translate-ng/ngx
 import {
   SiLivePreviewLocaleApi,
   SiLivePreviewThemeApi,
-  SimplLivePreviewModule,
-  SimplLivePreviewRoutingModule
+  SiLivePreviewModule,
+  SiLivePreviewRoutingModule
 } from '@siemens/live-preview';
 import { lastValueFrom, Observable, take } from 'rxjs';
 
@@ -114,9 +114,9 @@ export const APP_CONFIG: ApplicationConfig = {
           useClass: WebpackTranslateLoader
         }
       }),
-      SimplLivePreviewRoutingModule,
+      SiLivePreviewRoutingModule,
       // App internal
-      SimplLivePreviewModule.forRoot(
+      SiLivePreviewModule.forRoot(
         {
           modules: [
             SiFormlyModule.forRoot({

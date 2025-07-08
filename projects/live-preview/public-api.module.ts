@@ -35,13 +35,13 @@ import {
   exports: [SiExampleOverviewComponent, SiExampleViewerComponent],
   providers: [{ provide: REMOVE_STYLES_ON_COMPONENT_DESTROY, useValue: true }]
 })
-export class SimplLivePreviewModule {
+export class SiLivePreviewModule {
   static forRoot(
     config: SiLivePreviewConfig,
     isMobile = false
-  ): ModuleWithProviders<SimplLivePreviewModule> {
+  ): ModuleWithProviders<SiLivePreviewModule> {
     return {
-      ngModule: SimplLivePreviewModule,
+      ngModule: SiLivePreviewModule,
       providers: [
         { provide: SI_LIVE_PREVIEW_CONFIG, useValue: config },
         {
@@ -52,3 +52,5 @@ export class SimplLivePreviewModule {
     };
   }
 }
+
+export { SiLivePreviewModule as SimplLivePreviewModule };

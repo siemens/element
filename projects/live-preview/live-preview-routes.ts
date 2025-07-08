@@ -55,4 +55,6 @@ export const livePreviewRoutes: Routes = [
   imports: [RouterModule.forRoot(livePreviewRoutes, { useHash: true })],
   exports: [RouterModule]
 })
-export class SimplLivePreviewRoutingModule {}
+export class SiLivePreviewRoutingModule {}
+
+export { SiLivePreviewRoutingModule as SimplLivePreviewRoutingModule };
