@@ -10,16 +10,28 @@ test.describe('filtered search', () => {
     await si.visitExample('si-filtered-search/si-filtered-search-playground');
     const freeTextSearch = page.getByLabel('search', { exact: true });
     await freeTextSearch.focus();
+    await expect(freeTextSearch).toBeFocused();
+
     await page.keyboard.type('Event');
-    await page.getByLabel('Event', { exact: true }).click();
+    const eventOption = page.getByLabel('Event', { exact: true });
+    await expect(eventOption).toBeVisible();
+    await eventOption.click();
+
     await si.runVisualAndA11yTests('operator-open');
     await page.getByLabel('=').click();
     await si.runVisualAndA11yTests('datepicker-open');
     await page.keyboard.press('Enter');
+
     await page.keyboard.type('Score');
-    await page.getByLabel('Score').click();
+    const scoreOption = page.getByLabel('Score');
+    await expect(scoreOption).toBeVisible();
+    await scoreOption.click();
     await si.runVisualAndA11yTests('multi-select-open');
-    await page.getByLabel('Good').click();
+
+    const goodOption = page.getByLabel('Good');
+    await expect(goodOption).toBeVisible();
+    await goodOption.click();
+
     await page.keyboard.press('Tab');
     await page.keyboard.press('Tab');
     await expect(freeTextSearch).toBeFocused();
@@ -35,9 +47,12 @@ test.describe('filtered search', () => {
     await page.keyboard.press('Shift+Tab');
     await page.keyboard.press('Enter');
     await freeTextSearch.focus();
-    await page.keyboard.press('Backspace');
+    await expect(freeTextSearch).toBeFocused();
+    await si.runVisualAndA11yTests('removed-score-and-event');
     // delete location criterion
+    await page.keyboard.press('Backspace');
     await page.keyboard.press('Control+KeyA');
+    await page.keyboard.press('Meta+A');
     await page.keyboard.press('Backspace');
     await si.runVisualAndA11yTests('typeahead-open');
     await page.keyboard.press('Backspace');
@@ -50,6 +65,7 @@ test.describe('filtered search', () => {
     await freeTextSearch.focus();
     await page.keyboard.press('Backspace');
     await page.keyboard.press('Control+KeyA');
+    await page.keyboard.press('Meta+A');
     await page.keyboard.type('H');
     await expect(page.getByRole('option', { name: 'Karlsruhe' })).toHaveClass(/active/);
     await page.keyboard.type('annover');

@@ -8,7 +8,7 @@ import { PlaywrightTestConfig } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 const config: PlaywrightTestConfig = {
-  testDir: './playwright/e2e/element',
+  testDir: './playwright/e2e/element-examples',
   snapshotDir: './playwright/snapshots',
   outputDir: './playwright/results/tests',
   reporter: [
