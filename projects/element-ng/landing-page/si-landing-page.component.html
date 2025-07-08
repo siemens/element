@@ -1,0 +1,82 @@
+@let announcementAlert = announcement();
+@let supportedLanguages = availableLanguages();
+@let loginAlertDetails = loginAlert();
+
+@if (announcementAlert) {
+  <si-inline-notification
+    class="rounded-0"
+    [severity]="announcementAlert.severity"
+    [heading]="announcementAlert.heading"
+    [message]="announcementAlert.message"
+    [action]="announcementAlert.action"
+    [translationParams]="announcementAlert.translationParams"
+  />
+}
+<div class="landing-page">
+  <div
+    class="landing-page-background d-none d-md-block"
+    [style.background-image]="'url(' + backgroundImageUrl() + ')'"
+  >
+  </div>
+  <div class="landing-page-content">
+    <div class="d-flex justify-content-between align-items-center pb-9">
+      @if (!logoUrl()) {
+        <span role="img" class="landing-page-logo"></span>
+      }
+      @if (logoUrl()) {
+        <img
+          class="landing-page-logo landing-page-custom-logo"
+          [src]="logoUrl()"
+          [alt]="heading() + '\'s Background'"
+        />
+      }
+      @if (supportedLanguages && supportedLanguages.length > 1) {
+        <div class="landing-page-language-switcher">
+          <si-language-switcher
+            [translationKey]="translationKey()"
+            [availableLanguages]="supportedLanguages"
+          />
+        </div>
+      }
+    </div>
+    <div class="landing-page-main">
+      @if (subheading()) {
+        <div class="si-h2">{{ subheading() }}</div>
+      }
+      <h1 class="si-h1-black my-2">{{ heading() }}</h1>
+      @if (!loginAlert()) {
+        <h2 class="mt-10 si-h2">{{ subtitle() }}</h2>
+      }
+      @if (loginAlertDetails) {
+        <si-inline-notification
+          class="my-6"
+          [severity]="loginAlertDetails.severity || 'danger'"
+          [heading]="loginAlertDetails.heading"
+          [message]="loginAlertDetails.message"
+        />
+      }
+      <div class="landing-page-custom-content">
+        <ng-content />
+      </div>
+    </div>
+    <footer>
+      <div>
+        <div class="d-flex justify-content-start flex-row flex-wrap mt-6">
+          @for (link of links(); track $index) {
+            <span>
+              <a siLinkDefaultTarget="_blank" class="si-body-2 d-flex-inline me-6" [siLink]="link">
+                {{ link.title | translate }}
+              </a>
+            </span>
+          }
+        </div>
+        <div class="si-caption mt-4 mb-6 text-secondary d-flex flex-wrap">
+          @if (version()) {
+            <span class="me-6">{{ version() }}</span>
+          }
+          <si-copyright-notice [copyright]="copyrightDetails()" />
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>

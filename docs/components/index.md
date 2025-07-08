@@ -64,6 +64,7 @@ documentation.
 
 ## L
 
+- [Landing Page](pages/landing-page.md)
 - [Launchpad](layout-navigation/launchpad.md)
 - [Line Chart](charts/line-chart.md)
 
