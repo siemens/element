@@ -1,0 +1,50 @@
+<div class="card m-5 p-3">
+  <si-chart-gauge
+    #chart
+    class="bg-base-1"
+    style="--si-chart-min-height: 0"
+    [style.height.px]="chartData.height"
+    [title]="chartData.title"
+    [unit]="chartData.unit"
+    [minValue]="chartData.minValue"
+    [maxValue]="chartData.maxValue"
+    [splitSteps]="chartData.splitSteps"
+    [colors]="chartData.colors"
+    [segments]="chartData.segments"
+    [showLegend]="chartData.showLegend"
+    [minNumberOfDecimals]="chartData.showDecimalDigit ? 1 : 0"
+    [maxNumberOfDecimals]="2"
+    (siResizeObserver)="chart.resize()"
+  />
+</div>
+
+@if (chartData.liveUpdate !== undefined) {
+  <div class="p-5">
+    <label class="me-4">
+      <span class="form-label">Chart height</span>
+      <select class="form-control" [(ngModel)]="chartData.height">
+        <option [value]="100">100px</option>
+        <option [value]="200">200px</option>
+        <option [value]="300">300px</option>
+        <option [value]="400">400px</option>
+        <option [value]="500">500px</option>
+      </select>
+    </label>
+    @if (chartData.liveUpdate) {
+      <button type="button" class="btn btn-secondary" (click)="stopLive()">Stop live update</button>
+    } @else {
+      <button type="button" class="btn btn-secondary" (click)="startLive()"
+        >Start live update</button
+      >
+    }
+    <button
+      type="button"
+      class="ms-4 btn btn-secondary"
+      (click)="
+        chartData.showDecimalDigit = !chartData.showDecimalDigit;
+        chartData.maxValue = chartData.maxValue + (chartData.showDecimalDigit ? 0.5 : -0.5)
+      "
+      >{{ chartData.showDecimalDigit ? 'Hide' : 'Show' }} decimal digit</button
+    >
+  </div>
+}

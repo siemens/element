@@ -1,0 +1,27 @@
+<si-chart-cartesian
+  #chart
+  class="bg-base-1"
+  style="height: 400px"
+  title="Changes per week day"
+  [xAxis]="{
+    type: 'category',
+    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  }"
+  [yAxis]="{ type: 'value' }"
+  [series]="[
+    {
+      type: 'line',
+      name: 'Lines added',
+      symbol: 'rect',
+      data: [50, 25, 10, 43, 58, 80, 0]
+    },
+    {
+      type: 'line',
+      name: 'Lines removed',
+      symbol: 'diamond',
+      data: [20, 10, 15, 29, 47, 0, 100]
+    }
+  ]"
+  [showCustomLegend]="true"
+  (siResizeObserver)="chart.resize()"
+/>

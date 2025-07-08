@@ -1,0 +1,29 @@
+<si-chart-progress-bar
+  #chart
+  class="bg-base-1"
+  style="height: 400px"
+  title="Daily requirements at work"
+  [series]="[
+    {
+      name: 'Coffee',
+      percent: 60
+    },
+    {
+      name: 'Water',
+      percent: 30
+    },
+    {
+      name: 'Food',
+      percent: 20
+    },
+    {
+      name: 'Beer',
+      percent: 100
+    },
+    {
+      name: 'Motivation',
+      percent: 99
+    }
+  ]"
+  (siResizeObserver)="chart.resize()"
+/>

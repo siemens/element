@@ -61,6 +61,12 @@ export default {
     [
       '@semantic-release/npm',
       {
+        pkgRoot: 'dist/@siemens/charts-ng'
+      }
+    ],
+    [
+      '@semantic-release/npm',
+      {
         pkgRoot: 'dist/@siemens/native-charts-ng'
       }
     ],
@@ -95,6 +101,13 @@ export default {
       '@semantic-release/npm',
       {
         pkgRoot: 'projects/live-preview',
+        npmPublish: false
+      }
+    ],
+    [
+      '@semantic-release/npm',
+      {
+        pkgRoot: 'projects/charts-ng',
         npmPublish: false
       }
     ],

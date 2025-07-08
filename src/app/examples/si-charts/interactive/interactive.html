@@ -1,0 +1,124 @@
+<div class="d-flex h-100 p-5">
+  <div class="wrapper">
+    <si-chart-cartesian
+      #trendChart
+      class="chart elevation-2 rounded-2 bg-base-1"
+      [additionalOptions]="additionalOptions"
+      [palette]="paletteName"
+      [series]="chartData.series"
+      [showLegend]="chartData.showLegend"
+      [zoomSlider]="chartData.zoomSlider"
+      [zoomInside]="chartData.zoomInside"
+      [autoZoomSeriesIndex]="chartData.autoZoomSeriesIndex"
+      [xAxis]="chartData.xAxis"
+      [yAxis]="chartData.yAxis"
+      [axisPointer]="axisPointer"
+      [dataZoomRange]="dataZoomRange"
+      [dataZoomMinValueSpan]="dataZoomMinValueSpan"
+      [showCustomLegend]="true"
+      [externalZoomSlider]="true"
+      [zoomMode]="zoomMode"
+      [showTimeRangeBar]="true"
+      (selectionChanged)="selectionChanged($event)"
+      (dataZoom)="dataZoom($event)"
+      (timeRangeChange)="currentTimeRange = $event"
+      (pointer)="printAxisDetails($event)"
+      (siResizeObserver)="trendChart.resize()"
+    >
+      <div slot="timeRangeBar" class="text-end py-5">
+        <ul class="nav nav-tabs small">
+          @for (range of timeRanges; track range) {
+            <li class="nav-item">
+              <a
+                tabindex="0"
+                class="nav-link focus-inside"
+                [class.active]="currentTimeRange === range.range"
+                (click)="trendChart.setTimeRange(range.range)"
+                (keydown.enter)="trendChart.setTimeRange(range.range)"
+              >
+                {{ range.label }}
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+    </si-chart-cartesian>
+  </div>
+  <div class="details">
+    <div class="card mb-6 elevation-2">
+      <div class="card-header">Visible Range</div>
+      <div class="card-body">
+        <ul>
+          <li>Start: {{ rangeStart }}</li>
+          <li>End: {{ rangeEnd }}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card mb-6 elevation-2">
+      <div class="card-header">Current Axis Values</div>
+      <div class="card-body">
+        <ul>
+          <li>xAxis: {{ xAxisCurrentValue }}</li>
+          <li>yAxis: {{ yAxisCurrentValue }}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card mb-6 elevation-2">
+      <div class="card-header">Options</div>
+      <div class="card-body">
+        <div class="mb-5 row">
+          <div class="form-check form-switch">
+            <input
+              class="form-check-input col-sm-2"
+              type="checkbox"
+              id="axisPointer"
+              role="switch"
+              [checked]="axisPointer"
+              (change)="toggleAxisPointer()"
+            />
+            <label class="form-check-label col-sm-8" for="axisPointer">Axis Pointer</label>
+          </div>
+        </div>
+        <div class="mb-5 row">
+          <div class="form-check form-switch">
+            <input
+              class="form-check-input col-sm-2"
+              type="checkbox"
+              id="liveUpdate"
+              role="switch"
+              [checked]="liveUpdate"
+              (change)="toggleLiveUpdate()"
+            />
+            <label class="form-check-label col-sm-8" for="liveUpdate">Live Update</label>
+          </div>
+        </div>
+        <div class="mb-5 row">
+          <div class="form-check form-switch">
+            <input
+              class="form-check-input col-sm-2"
+              type="checkbox"
+              id="visible"
+              role="switch"
+              [checked]="visible"
+              (change)="toggleVisible()"
+            />
+            <label class="form-check-label col-sm-8" for="visible">Visible</label>
+          </div>
+        </div>
+        <div class="mb-5 row">
+          <div class="form-check form-switch">
+            <input
+              class="form-check-input col-sm-2"
+              type="checkbox"
+              id="zoomMode"
+              role="switch"
+              [checked]="zoomMode"
+              (change)="toggleZoomMode()"
+            />
+            <label class="form-check-label col-sm-8" for="zoomMode">Zoom Mode</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

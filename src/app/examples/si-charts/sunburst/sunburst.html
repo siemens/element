@@ -1,0 +1,12 @@
+<div class="card m-5 p-3">
+  <si-chart-sunburst
+    #chart
+    class="bg-base-1"
+    style="height: 600px"
+    [title]="title"
+    [series]="chartData"
+    [toolTip]="toolTip"
+    [additionalOptions]="chartColors"
+    (siResizeObserver)="chart.resize()"
+  />
+</div>

@@ -1,0 +1,82 @@
+$tooltip-inner-color: #fff; // stylelint-disable-line color-no-hex
+$tooltip-inner-background-color: #162938; // stylelint-disable-line color-no-hex
+$ext-zoom-slider-height: 112px;
+
+:host {
+  block-size: 100%;
+  position: relative;
+  display: flex !important; // stylelint-disable-line declaration-no-important
+  flex-direction: column;
+  inline-size: 100%;
+}
+
+.chart-container-wrapper {
+  display: flex;
+  flex: 1 0 0;
+  inline-size: inherit;
+  overflow: hidden;
+}
+
+.chart-scroll {
+  overflow-y: auto;
+}
+
+.chart-container {
+  position: relative;
+  display: flex;
+  flex: 1 0 0;
+  overflow: hidden;
+}
+
+.echart-container {
+  flex: 1 0 0;
+  inline-size: 100%;
+  min-block-size: var(--si-chart-min-height, 200px);
+  overflow: hidden;
+}
+
+.custom-legend {
+  position: absolute;
+  z-index: 2;
+  inline-size: 100%;
+}
+
+.chart-title {
+  padding-block: 12px 8px;
+  padding-inline-start: 24px;
+}
+
+.external-zoom-container {
+  display: flex;
+  flex: 1 0 0;
+  inline-size: inherit;
+  max-block-size: $ext-zoom-slider-height;
+
+  &.has-time-range-bar {
+    max-block-size: calc($ext-zoom-slider-height + var(--time-bar-height));
+  }
+}
+
+.tooltip-inner {
+  max-inline-size: 375px;
+  min-inline-size: 375px;
+  color: $tooltip-inner-background-color;
+  font-size: 18px;
+  background-color: $tooltip-inner-background-color;
+}
+
+.time-range-bar {
+  position: absolute;
+  inset-inline: 0;
+  z-index: 2;
+}
+
+.progress-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

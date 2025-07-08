@@ -1,0 +1,20 @@
+<si-chart-circle
+  #chart
+  class="bg-base-1"
+  style="height: 400px"
+  title="Reasons to remember the name"
+  [series]="[
+    {
+      name: 'Level',
+      radius: ['50%', '75%'],
+      data: [
+        { value: 10, name: 'Luck' },
+        { value: 20, name: 'Skill' },
+        { value: 15, name: 'Concentrated power of will' },
+        { value: 5, name: 'Pleasure' },
+        { value: 50, name: 'Pain' }
+      ]
+    }
+  ]"
+  (siResizeObserver)="chart.resize()"
+/>

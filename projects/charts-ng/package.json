@@ -1,0 +1,30 @@
+{
+  "name": "@siemens/charts-ng",
+  "description": "Element Charts library.",
+  "version": "47.5.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/siemens/element.git"
+  },
+  "author": {
+    "name": "Siemens AG",
+    "email": "info@siemens.com"
+  },
+  "homepage": "https://github.com/siemens/element",
+  "bugs": "https://github.com/siemens/element/issues/new",
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@angular/common": "19 - 20",
+    "@angular/core": "19 - 20",
+    "echarts": "^5.6.0"
+  },
+  "exports": {
+    "./docs.json": {
+      "default": "./docs.json"
+    }
+  }
+}

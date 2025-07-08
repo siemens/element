@@ -1,0 +1,45 @@
+:host {
+  block-size: 100%;
+}
+
+.wrapper {
+  flex: 1 1 auto;
+  position: relative;
+}
+
+.chart {
+  overflow: hidden;
+  display: block;
+  margin-inline: auto;
+  position: absolute;
+  inset: 0;
+}
+
+.details {
+  padding-inline-start: 30px;
+  inline-size: 400px;
+
+  .switchers {
+    select {
+      inline-size: 150px;
+    }
+  }
+}
+
+.nav-tabs.small {
+  display: inline-flex;
+  block-size: 24px;
+
+  .nav-link {
+    font-size: 12px;
+    font-weight: normal;
+    block-size: inherit;
+    min-inline-size: unset;
+    padding-block: 2px;
+    padding-inline: 12px;
+
+    &.active {
+      isolation: isolate; // bug in element-theme
+    }
+  }
+}

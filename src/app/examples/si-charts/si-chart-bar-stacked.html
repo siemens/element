@@ -1,0 +1,25 @@
+<si-chart-cartesian
+  #chart
+  class="bg-base-1"
+  style="height: 400px"
+  title="Commits vs. Coffee"
+  [xAxis]="{
+    type: 'category',
+    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri']
+  }"
+  [yAxis]="{ type: 'value' }"
+  [stacked]="true"
+  [series]="[
+    {
+      type: 'bar',
+      name: 'Commits',
+      data: [10, 15, 20, 25, 30]
+    },
+    {
+      type: 'bar',
+      name: 'Coffee',
+      data: [3, 5, 7, 9, 10]
+    }
+  ]"
+  (siResizeObserver)="chart.resize()"
+/>

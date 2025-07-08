@@ -1,0 +1,106 @@
+@if (customLegend() && customLegend()?.customLegends) {
+  <div #customLegendContainer class="legend-container si-body-2">
+    @for (leg of customLegend()?.customLegends; track legendIndex; let legendIndex = $index) {
+      @if (legendIndex === 0 && leg && leg.list && leg.list.length > 0) {
+        <div
+          class="left-legends legend-item-container"
+          [class.legend-empty]="
+            customLegend()?.legendAxis !== 'left' && customLegend()?.legendAxis !== 'both'
+          "
+          [class.legend-single-axis]="customLegend()?.legendAxis === 'left'"
+          [class.both-legend-container]="customLegend()?.legendAxis === 'both'"
+        >
+          <div
+            class="both-scenario-left-unit-container"
+            [class.left-scenario-unit-container]="customLegend()?.legendAxis === 'left'"
+          >
+            <span class="text-secondary">{{ leg.unit }}</span>
+          </div>
+          <div
+            class="legend-item-container both-scenario-legend-container custom-legend-left"
+            [class.legend-single-axis]="customLegend()?.legendAxis === 'left'"
+          >
+            @for (legendItem of leg.list; track legendItem.name) {
+              <div class="legend-item" [class.hidden-legend]="!legendItem.selected">
+                <div
+                  class="me-2 mb-2"
+                  (click)="legendIconClick(legendItem)"
+                  (mouseenter)="legendHoverStartEvent.emit(legendItem)"
+                  (mouseleave)="legendHoverEndEvent.emit(legendItem)"
+                >
+                  <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg">
+                    <path [attr.d]="legendItem.symbol" [attr.fill]="legendItem.color" />
+                  </svg>
+                </div>
+                <span
+                  class="legend-text text-truncate"
+                  [style.color]="textColor()"
+                  (click)="legendClick(legendItem)"
+                  (mouseenter)="legendHoverStartEvent.emit(legendItem)"
+                  (mouseleave)="legendHoverEndEvent.emit(legendItem)"
+                >
+                  {{ legendItem.displayName }}
+                </span>
+                @if (legendItem.tooltip) {
+                  <div class="tooltip show bs-tooltip-bottom" role="tooltip">
+                    <div class="tooltip-arrow"></div>
+                    <div class="tooltip-inner">{{ legendItem.tooltip }}</div>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      }
+    }
+
+    @for (leg of customLegend()?.customLegends; track legendIndex; let legendIndex = $index) {
+      @if (legendIndex === 1 && leg && leg.list && leg.list.length > 0) {
+        <div
+          class="right-legends legend-item-container"
+          [class.legend-empty]="
+            customLegend()?.legendAxis !== 'right' && customLegend()?.legendAxis !== 'both'
+          "
+          [class.legend-single-axis]="customLegend()?.legendAxis === 'right'"
+          [class.both-legend-container]="customLegend()?.legendAxis === 'both'"
+        >
+          <div
+            class="legend-item-container custom-legend-right legend-item-container-right-floating-inner"
+          >
+            @for (legendItem of leg.list; track legendItem.name) {
+              <div
+                class="legend-item legend-item-right"
+                [class.hidden-legend]="!legendItem.selected"
+              >
+                <span
+                  class="legend-text text-truncate"
+                  [style.color]="textColor()"
+                  (click)="legendClick(legendItem)"
+                >
+                  {{ legendItem.displayName }}
+                </span>
+                <div class="right-legend-circle" (click)="legendIconClick(legendItem)">
+                  <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg">
+                    <path [attr.d]="legendItem.symbol" [attr.fill]="legendItem.color" />
+                  </svg>
+                </div>
+                @if (legendItem.tooltip) {
+                  <div class="tooltip show bs-tooltip-bottom" role="tooltip">
+                    <div class="tooltip-arrow"></div>
+                    <div class="tooltip-inner">{{ legendItem.tooltip }}</div>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+          <div
+            class="both-scenario-right-unit-container"
+            [class.right-scenario-unit-container]="customLegend()?.legendAxis === 'right'"
+          >
+            <span class="right-unit-text text-secondary">{{ leg.unit }}</span>
+          </div>
+        </div>
+      }
+    }
+  </div>
+}

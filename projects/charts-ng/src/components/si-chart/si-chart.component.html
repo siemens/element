@@ -1,0 +1,67 @@
+@if (showCustomLegend() && (title() || subTitle())) {
+  <div
+    class="si-title-2 chart-title chart-title-width"
+    [style.background-color]="backgroundColor()"
+  >
+    <div class="chart-title-text" [style.color]="titleColor()">{{ title() }}</div>
+    @if (subTitle()) {
+      <div class="si-body-2" [style.color]="subTitleColor()">{{ subTitle() }}</div>
+    }
+  </div>
+}
+
+<div
+  #chartContainerWrapper
+  class="chart-container-wrapper"
+  [class.chart-scroll]="containerHeight()"
+  [attr.tabindex]="containerHeight() ? '0' : null"
+>
+  <div class="chart-container" [style.height.px]="containerHeight()">
+    @if (showCustomLegend()) {
+      @for (cl of customLegend; track $index) {
+        <si-custom-legend
+          #siCustomLegend
+          class="custom-legend"
+          [style.top.px]="cl.top"
+          [title]="title()"
+          [subTitle]="subTitle()"
+          [customLegend]="cl"
+          [style.background-color]="backgroundColor()"
+          [titleColor]="titleColor()"
+          [subTitleColor]="subTitleColor()"
+          [textColor]="textColor()"
+          (legendIconClickEvent)="handleLegendClick($event)"
+          (legendClickEvent)="handleLegendClick($event)"
+          (legendHoverStartEvent)="handleLegendHover($event, true)"
+          (legendHoverEndEvent)="handleLegendHover($event, false)"
+        />
+      }
+    }
+    <div #chart class="echart-container" [style.height.px]="containerHeight()"></div>
+  </div>
+</div>
+@if (externalZoomSlider()) {
+  <div
+    #externalZoomSlider
+    class="external-zoom-container"
+    [class.has-time-range-bar]="showTimeRangeBar()"
+    [style.--time-bar-height.px]="timeBarHeight()"
+  ></div>
+}
+
+@if (showTimeRangeBar() && zoomSlider()) {
+  <div
+    class="time-range-bar"
+    [style.bottom.px]="timeBarBottom()"
+    [style.padding-left.px]="timeBarLeft()"
+    [style.padding-right.px]="timeBarRight()"
+  >
+    <ng-content select="[slot=timeRangeBar]" />
+  </div>
+}
+
+@if (inProgress()) {
+  <div class="progress-container">
+    <si-chart-loading-spinner />
+  </div>
+}

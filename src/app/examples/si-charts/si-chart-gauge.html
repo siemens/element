@@ -1,0 +1,16 @@
+<si-chart-gauge
+  #chart
+  class="bg-base-1"
+  style="height: 400px"
+  title="Today's motivation level"
+  unit="kWh"
+  [minValue]="0"
+  [maxValue]="100"
+  [value]="45.345"
+  [minNumberOfDecimals]="1"
+  [maxNumberOfDecimals]="2"
+  [axisNumberOfDecimals]="1"
+  [splitSteps]="10"
+  [additionalOptions]="additionalOptions"
+  (siResizeObserver)="chart.resize()"
+/>

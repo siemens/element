@@ -1,0 +1,51 @@
+<div class="card m-5 p-3">
+  <si-chart-cartesian
+    #chart
+    class="bg-base-1"
+    style="height: 500px"
+    [title]="chartData.title"
+    [series]="chartData.series"
+    [tooltipFormatter]="chartData.tooltip?.formatter"
+    [maxEntries]="chartData.maxEntries ?? 0"
+    [visibleEntries]="chartData.visibleEntries ?? 0"
+    [showLegend]="chartData.showLegend"
+    [zoomSlider]="!!chartData.zoomSlider"
+    [xAxis]="chartData.xAxis"
+    [yAxis]="chartData.yAxis"
+    [additionalOptions]="chartData.additionalOptions"
+    (siResizeObserver)="chart.resize()"
+  />
+</div>
+
+@if (chartData.liveUpdate !== undefined) {
+  <div class="p-5">
+    @if (chartData.liveUpdate) {
+      <button type="button" class="btn btn-secondary" (click)="stopLive()">Stop live update</button>
+    } @else {
+      <button type="button" class="btn btn-secondary" (click)="startLive()"
+        >Start live update</button
+      >
+    }
+  </div>
+}
+
+@if (chartData.progressIndication !== undefined) {
+  <div class="p-5">
+    @if (chartData.progressIndication) {
+      <button type="button" class="btn btn-secondary" (click)="stopProgressIndication()"
+        >Stop progress indication</button
+      >
+    } @else {
+      <button type="button" class="btn btn-secondary" (click)="startProgressIndication()"
+        >Start progress indication</button
+      >
+    }
+  </div>
+}
+
+@if (chartData.addSeries !== undefined) {
+  <div class="p-5">
+    <button type="button" class="btn btn-secondary" (click)="addSeries()">Add Series</button>
+    <button type="button" class="btn btn-secondary ms-4" (click)="changeData()">Change Data</button>
+  </div>
+}

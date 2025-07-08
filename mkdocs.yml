@@ -108,6 +108,15 @@ nav:
       - Chat Input:                       'components/chat-messages/chat-input.md'
       - User Message:                     'components/chat-messages/user-message.md'
       - AI Message:                       'components/chat-messages/ai-message.md'
+    - Charts:
+        - Overview:                       'components/charts/index.md'
+        - Bar Chart:                      'components/charts/bar-chart.md'
+        - Circle Chart:                   'components/charts/circle-chart.md'
+        - Gauge Chart:                    'components/charts/gauge-chart.md'
+        - Line Chart:                     'components/charts/line-chart.md'
+        - Progress Chart:                 'components/charts/progress-chart.md'
+        - Scatter Chart:                  'components/charts/scatter-chart.md'
+        - Generic Chart:                  'components/charts/generic-chart.md'
     - Pages:
       - Info Page:                        'components/pages/info-page.md'
       - Unauthorized Page:                'components/pages/unauthorized-page.md'

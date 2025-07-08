@@ -1,0 +1,25 @@
+<div class="card m-5 p-3">
+  <si-chart-progress-bar
+    #chart
+    class="bg-base-1"
+    style="height: 500px"
+    [title]="chartData.title"
+    [subTitle]="chartData.subTitle"
+    [series]="chartData.series"
+    [showLegend]="chartData.showLegend"
+    [labelPosition]="chartData.labelPosition"
+    (siResizeObserver)="chart.resize()"
+  />
+</div>
+
+@if (chartData.liveUpdate !== undefined) {
+  <div class="p-5">
+    @if (chartData.liveUpdate) {
+      <button type="button" class="btn btn-secondary" (click)="stopLive()">Stop live update</button>
+    } @else {
+      <button type="button" class="btn btn-secondary" (click)="startLive()"
+        >Start live update</button
+      >
+    }
+  </div>
+}

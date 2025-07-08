@@ -35,7 +35,7 @@
     "build:examples": "ng build",
     "build:examples:prod": "ng build --configuration production",
     "build:examples:aot": "ng build --configuration aot",
-    "build:all": "npm run translate:build && npm run lib:build && npm run live-preview:build && npm run native-charts:build",
+    "build:all": "npm run translate:build && npm run lib:build && npm run live-preview:build && npm run charts:build && npm run native-charts:build",
     "build:all:update-translatable-keys": "npm exec update-translatable-keys",
     "lib:build": "ng build element-ng && cpy \"projects/element-ng/*.scss\" \"./dist/@siemens/element-ng\" && cpy \"{LICENSE.md,README.md}\" \"./dist/@siemens/element-ng/\"",
     "lib:test": "ng test element-ng",
@@ -48,6 +48,8 @@
     "prepare": "husky; exit 0",
     "prepare-brand": "cpy --flat node_modules/@simpl/brand/src/favicon/sie-favicon_internet_64px.png docs/_src --rename=favicon.png && cpy --flat node_modules/@simpl/brand/src/favicon/sie-favicon_internet_64px.png src --rename=favicon.png",
     "postversion": "node ./postversion.js && npm run format",
+    "charts:test": "ng test charts-ng",
+    "charts:build": "ng build charts-ng && cpy \"{LICENSE.md,projects/charts-ng/README.md}\" \"./dist/@siemens/charts-ng/\"",
     "native-charts:test": "ng test native-charts-ng",
     "native-charts:build": "ng build native-charts-ng && cpy LICENSE.md \"./dist/@siemens/native-charts-ng/\""
   },
@@ -56,6 +58,7 @@
     "projects/element-translate-ng",
     "projects/element-theme",
     "projects/live-preview",
+    "projects/charts-ng",
     "projects/native-charts-ng"
   ],
   "dependencies": {
@@ -99,6 +102,7 @@
     "@siemens/prettier-config": "2.2.1",
     "@siemens/stylelint-config-scss": "2.2.1",
     "@types/jasmine": "5.1.8",
+    "echarts": "5.6.0",
     "@types/google-libphonenumber": "^7.4.23",
     "@types/node": "~22.16.0",
     "angular-eslint": "19.8.1",

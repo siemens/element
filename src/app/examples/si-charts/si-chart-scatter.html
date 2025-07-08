@@ -1,0 +1,10 @@
+<si-chart-cartesian
+  #chart
+  class="bg-base-1"
+  style="height: 400px"
+  title="Requests per day"
+  [xAxis]="{ type: 'category' }"
+  [yAxis]="{ type: 'value' }"
+  [series]="chartData"
+  (siResizeObserver)="chart.resize()"
+/>

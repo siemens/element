@@ -1,0 +1,186 @@
+// stylelint-disable property-no-vendor-prefix, liberty/use-logical-spec
+// stylelint-disable-next-line color-no-hex
+$legend-item-container-scrollbar-background-color: var(--element-base-0, #f0f2f5);
+// stylelint-disable-next-line color-no-hex
+$legend-item-container-track-background-color: var(--element-base-0, #f0f2f5);
+$legend-item-container-scrollbar-shadow: rgba(0, 0, 0, 0.3);
+$legend-max-height: 40px;
+$default-chart-padding: 32px;
+
+:host {
+  --flex-dir1: row;
+  --flex-dir2: row-reverse;
+  margin: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+:host-context(:dir(rtl)) {
+  --flex-dir1: row-reverse;
+  --flex-dir2: row;
+}
+
+:host-context([dir='rtl']) {
+  --flex-dir1: row-reverse;
+  --flex-dir2: row;
+}
+
+.legend-container {
+  display: flex;
+  flex-direction: var(--flex-dir1);
+  max-height: $legend-max-height;
+  flex: 1 1 auto;
+}
+
+.legend-item-container {
+  width: 50%;
+  vertical-align: top;
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1 1 100%;
+  flex-direction: var(--flex-dir1);
+  height: fit-content;
+  max-height: $legend-max-height;
+  max-width: 50%;
+  min-width: 50%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 6px;
+    background-color: $legend-item-container-scrollbar-background-color;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 12px;
+    -webkit-box-shadow: inset 0 0 6px $legend-item-container-scrollbar-shadow;
+  }
+
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px $legend-item-container-scrollbar-shadow;
+    border-radius: 12px;
+    background-color: $legend-item-container-track-background-color;
+  }
+
+  .custom-legend-left {
+    flex-direction: var(--flex-dir1);
+    flex: 1 1 50%;
+  }
+
+  .custom-legend-right {
+    flex-direction: var(--flex-dir2);
+    flex: 1 1 50%;
+  }
+}
+
+.legend-item-container-right-floating-inner {
+  max-width: calc(100% - #{$default-chart-padding});
+  min-width: calc(100% - #{$default-chart-padding});
+  padding-right: 12px;
+  float: left;
+}
+
+.legend-single-axis {
+  max-width: 100%;
+  min-width: 100%;
+}
+
+.legend-empty {
+  width: 0%;
+}
+
+.tooltip {
+  display: none;
+  max-width: 375px;
+  word-break: break-word;
+  margin-top: 16px;
+  inset-block-start: 0;
+  margin-inline-start: -6px;
+}
+
+.tooltip-arrow {
+  left: 12px;
+}
+
+.legend-item {
+  cursor: pointer;
+  margin-right: 8px;
+  display: flex;
+  flex-direction: var(--flex-dir1);
+  align-items: center;
+  height: 20px;
+  position: initial;
+  width: calc(100% - 12px);
+  max-width: fit-content;
+
+  &:hover {
+    .tooltip {
+      display: block;
+    }
+  }
+}
+
+.legend-item-right {
+  margin-right: 0;
+  margin-left: 12px;
+}
+
+.right-legend-circle {
+  margin-right: 0;
+  margin-left: 4px;
+}
+
+.legend-text {
+  box-sizing: inherit;
+  display: inline;
+  cursor: pointer;
+}
+
+.hidden-legend {
+  .right-legend-circle,
+  div:first-child,
+  .legend-text {
+    opacity: 0.4;
+  }
+}
+
+.both-scenario-left-unit-container,
+.both-scenario-right-unit-container {
+  min-width: $default-chart-padding;
+  max-width: $default-chart-padding;
+  overflow: hidden;
+}
+
+.both-scenario-right-unit-container {
+  max-height: 100%;
+}
+
+.both-scenario-left-unit-container {
+  min-height: 100%;
+}
+
+.both-scenario-legend-container {
+  max-width: calc(100% - #{$default-chart-padding});
+  min-width: calc(100% - #{$default-chart-padding});
+  padding-left: 12px;
+}
+
+.right-unit-text {
+  min-width: 100%;
+  min-height: 100%;
+  padding-left: 2px;
+}
+
+.left-legends {
+  padding-right: 36px;
+}
+
+.right-legends {
+  padding-left: 28px;
+}
+
+.both-legend-container {
+  padding-right: 0;
+  padding-left: 0;
+}

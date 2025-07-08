@@ -302,6 +302,38 @@
         }
       }
     },
+    "charts-ng": {
+      "projectType": "library",
+      "root": "projects/charts-ng",
+      "sourceRoot": "projects/charts-ng/src",
+      "prefix": "si",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/charts-ng/tsconfig.lib.json",
+            "project": "projects/charts-ng/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "builderMode": "application",
+            "polyfills": ["zone.js", "zone.js/testing"],
+            "tsConfig": "projects/charts-ng/tsconfig.spec.json",
+            "karmaConfig": "projects/charts-ng/karma.conf.cjs",
+            "codeCoverageExclude": ["projects/charts-ng/src/**/*.module.ts"]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/charts-ng/**/*.ts", "projects/charts-ng/**/*.html"],
+            "eslintConfig": "projects/charts-ng/eslint.config.js"
+          }
+        }
+      }
+    },
     "native-charts-ng": {
       "projectType": "library",
       "root": "projects/native-charts-ng",

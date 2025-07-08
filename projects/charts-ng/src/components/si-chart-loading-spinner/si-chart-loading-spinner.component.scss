@@ -1,0 +1,33 @@
+$loading-spinner-size: 64px;
+
+@keyframes spinner-fade {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.05;
+  }
+}
+
+.loading {
+  display: block;
+  text-align: center;
+}
+
+svg {
+  inline-size: var(--loading-spinner-size, $loading-spinner-size);
+  block-size: var(--loading-spinner-size, $loading-spinner-size);
+}
+
+path {
+  fill: var(--element-ui-2, #656a6f); // stylelint-disable-line color-no-hex
+  animation: spinner-fade 1s infinite linear;
+
+  @for $i from 0 through 9 {
+    &:nth-child(#{$i + 1}) {
+      animation-delay: #{$i * 0.1}s;
+      opacity: 1 - $i * 0.1;
+    }
+  }
+}

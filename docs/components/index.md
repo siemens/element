@@ -13,13 +13,16 @@ documentation.
 
 ## B
 
+- [Bar Chart](charts/bar-chart.md)
 - [Buttons](buttons-menus/buttons.md)
 - [Breadcrumb](layout-navigation/breadcrumb.md)
 
 ## C
 
 - [Cards](layout-navigation/cards.md)
+- [Charts](charts/index.md)
 - [Checkbox](forms-inputs/checkbox.md)
+- [Circle Chart](charts/circle-chart.md)
 - [Circle Status](status-notifications/circle-status.md)
 - [Color Picker](forms-inputs/color-picker.md)
 - [Copyright Notice](status-notifications/copyright-notice.md)
@@ -46,6 +49,11 @@ documentation.
 - [Forms](forms-inputs/forms.md)
 - [File Uploader](forms-inputs/file-uploader.md)
 
+## G
+
+- [Gauge Chart](charts/gauge-chart.md)
+- [Generic Chart](charts/generic-chart.md)
+
 ## I
 
 - [Icon Status](status-notifications/icon-status.md)
@@ -56,6 +64,7 @@ documentation.
 ## L
 
 - [Launchpad](layout-navigation/launchpad.md)
+- [Line Chart](charts/line-chart.md)
 
 ## M
 
@@ -75,6 +84,7 @@ documentation.
 - [Pills Input](forms-inputs/pills-input.md)
 - [Popover](status-notifications/popover.md)
 - [Progress Bar](progress-indication/progress-bar.md)
+- [Progress Chart](charts/progress-chart.md)
 
 ## R
 
@@ -83,6 +93,7 @@ documentation.
 
 ## S
 
+- [Scatter Chart](charts/scatter-chart.md)
 - [Search Bar](sorting-filtering/search-bar.md)
 - [Select](forms-inputs/select.md)
 - [Side Panel](layout-navigation/side-panel.md)

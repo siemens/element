@@ -1,0 +1,7 @@
+<si-chart
+  #chart
+  class="bg-base-1"
+  style="height: 400px"
+  [options]="genericChartOptions"
+  (siResizeObserver)="chart.resize()"
+/>
