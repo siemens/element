@@ -16,7 +16,7 @@ users select outside of them or complete an action within the popover.
 - For temporary content that doesn’t require a full page or modal view.
 - To provide contextual help, guiding users with explanations or assistance specific to their current task.
 
-### Best Practices for popover
+### Best practices for popover
 
 - Limit functionality to a few related tasks or brief information.
 - Avoid placing critical actions or decisions within a popover.
