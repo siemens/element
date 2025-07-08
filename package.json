@@ -101,7 +101,7 @@
     "@types/jasmine": "5.1.8",
     "@types/google-libphonenumber": "^7.4.23",
     "@types/node": "~22.16.0",
-    "angular-eslint": "19.8.1",
+    "angular-eslint": "20.1.1",
     "axe-html-reporter": "2.2.11",
     "cpy-cli": "5.0.0",
     "cross-env": "^7.0.3",
