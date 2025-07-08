@@ -1,7 +1,7 @@
 <div class="item-wrapper">
   @let iconValue = icon();
   @if (iconValue && !badgeDotHasContent()) {
-    <si-icon-next class="icon badge-dot" [class.badge-dot]="iconBadgeDot()" [icon]="iconValue" />
+    <si-icon-next class="icon" [class.badge-dot]="iconBadgeDot()" [icon]="iconValue" />
   } @else if (iconValue && badgeDotHasContent()) {
     <si-icon-next class="icon badge-dot" [icon]="iconValue" />
     <span class="badge-text">{{ iconBadgeDot() }}</span>
@@ -13,7 +13,7 @@
     @if (badge()) {
       <span class="mx-0 badge" [ngClass]="'bg-' + badgeColor()">{{ badge() }}</span>
     }
-    @if (checked) {
+    @if (checked && !hideCheckmark) {
       <si-icon-next class="icon" [icon]="icons.elementOk" />
     }
   </div>

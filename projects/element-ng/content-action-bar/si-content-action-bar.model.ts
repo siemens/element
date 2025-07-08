@@ -4,6 +4,7 @@
  */
 import {
   MenuItemAction,
+  MenuItemCheckbox,
   MenuItemGroup,
   MenuItemLink,
   MenuItemRouterLink
@@ -13,6 +14,7 @@ export type ViewType = 'collapsible' | 'expanded' | 'mobile';
 
 export type ContentActionBarMainItem = (
   | MenuItemAction
+  | MenuItemCheckbox
   | MenuItemLink
   | MenuItemRouterLink
   | MenuItemGroup

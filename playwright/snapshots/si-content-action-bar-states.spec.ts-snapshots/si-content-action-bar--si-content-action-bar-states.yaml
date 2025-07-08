@@ -3,6 +3,7 @@
   - menuitem "Title - Normal"
   - menuitem "Title - Disabled" [disabled]
   - menuitem "Primary-Sub-Menu"
+  - menuitemcheckbox "Toggle" [checked]
   - menuitem "Toggle"
 - heading "Disabled menu and menu item variations" [level=4]
 - menubar:

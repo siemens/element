@@ -40,6 +40,28 @@
                 }
               </button>
             }
+            @case ('checkbox') {
+              <button
+                type="button"
+                si-menu-item-checkbox
+                [attr.data-id]="primaryAction.id"
+                [attr.title]="
+                  primaryAction.iconOnly ? (primaryAction.label | translate) : undefined
+                "
+                [checked]="primaryAction.checked"
+                [badge]="primaryAction.badge"
+                [badgeColor]="primaryAction.badgeColor ?? 'secondary'"
+                [class.active]="primaryAction.checked"
+                [disabled]="primaryAction.disabled || disabled()"
+                [icon]="primaryAction.icon"
+                [iconBadgeDot]="primaryAction.iconBadge"
+                (triggered)="runAction(primaryAction)"
+              >
+                @if (!primaryAction.iconOnly) {
+                  {{ primaryAction.label | translate }}
+                }
+              </button>
+            }
             @case ('group') {
               <button
                 type="button"

@@ -96,6 +96,14 @@ export class SampleComponent {
           disabled: true
         }
       ]
+    },
+    {
+      type: 'checkbox',
+      label: 'Toggle',
+      icon: 'element-edit',
+      iconOnly: true,
+      checked: true,
+      action: (_, item) => (item.checked = !item.checked)
     }
   ];
 
