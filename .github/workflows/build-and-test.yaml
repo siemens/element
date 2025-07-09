@@ -156,6 +156,7 @@ jobs:
       - run: npm ci --prefer-offline --no-audit --include=optional
       - run: npm run prepare-brand
       - run: npm run build:examples:aot -- --define="maptilerKey='$MAPTILER_KEY'" --define="maptilerUrl='$MAPTILER_URL'"
+      - run: npm run api-goldens:test
 
   e2e:
     runs-on: ubuntu-24.04
