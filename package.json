@@ -71,7 +71,10 @@
     "dashboards-demo:build:demo": "ng build dashboards-demo --configuration demo-deployment",
     "dashboards-demo:build:prod": "ng build dashboards-demo --configuration production",
     "dashboards-demo:build:webcomponents": "ng build dashboards-demo-webcomponents --configuration production --output-hashing none && node projects/dashboards-demo/webcomponents/concat.cjs",
-    "dashboards-demo:build:mfe": "ng build dashboards-demo-mfe --configuration production --output-hashing none"
+    "dashboards-demo:build:mfe": "ng build dashboards-demo-mfe --configuration production --output-hashing none",
+    "api-goldens:test": "npm exec tsx tools/api-goldens/index",
+    "api-goldens:accept": "npm exec tsx tools/api-goldens/index -- accept",
+    "api-goldens:build-accept": "rimraf .angular dist && npm run build:all && npm run api-goldens:accept"
   },
   "workspaces": [
     "projects/element-ng",
@@ -124,6 +127,7 @@
     "@commitlint/cli": "20.1.0",
     "@commitlint/config-conventional": "20.0.0",
     "@eslint/js": "9.38.0",
+    "@microsoft/api-extractor": "7.52.8",
     "@playwright/test": "1.56.1",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/git": "10.0.1",
@@ -160,6 +164,7 @@
     "karma-junit-reporter": "2.0.1",
     "karma-spec-reporter": "0.0.36",
     "ng-packagr": "20.1.0",
+    "piscina": "5.1.3",
     "postcss": "8.5.6",
     "postcss-scss": "4.0.9",
     "prettier": "3.6.2",

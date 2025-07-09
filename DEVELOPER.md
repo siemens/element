@@ -69,6 +69,22 @@ npm run lint:ng
 npm run lint:scss
 ```
 
+## API Goldens
+
+We guard our APIs against unintentional changes using API goldens based on [API Extractor](https://api-extractor.com/).
+Whenever the public API is changed, the corresponding golden must be updated.
+
+```shell
+# Build and updates the API goldens. This is the main command needed for local development.
+npm run api-goldens:build-accept
+
+# Update the API goldens without building. !Important: APIs are generated based on the build output.
+npm run api-goldens:accept
+
+# Check the API goldens without updating them. !Important: this requires a build first.
+npm run api-goldens:test
+```
+
 ## Unit Tests
 
 Run the unit tests using the corresponding npm script:
