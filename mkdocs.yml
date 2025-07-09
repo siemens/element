@@ -117,6 +117,7 @@ nav:
         - Progress Chart:                 'components/charts/progress-chart.md'
         - Scatter Chart:                  'components/charts/scatter-chart.md'
         - Generic Chart:                  'components/charts/generic-chart.md'
+        - Micro Charts:                   'components/charts/micro-charts.md'
     - Pages:
       - About:                            'components/pages/about.md'
       - Info Page:                        'components/pages/info-page.md'

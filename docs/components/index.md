@@ -71,6 +71,7 @@ documentation.
 
 - [Main-Detail Container](layout-navigation/main-detail-container.md)
 - [Menu](buttons-menus/menu.md)
+- [Micro charts](charts/micro-charts.md)
 - [Modals](layout-navigation/modals.md)
 
 ## N
