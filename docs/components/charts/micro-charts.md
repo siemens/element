@@ -1,20 +1,23 @@
 # Micro charts
 
-**Micro charts** are compact, data-rich visual elements designed to convey trends, comparisons, and progress at a glance. They are ideal for dashboards, tables, and summary views where space is limited but insight is essential.
+**Micro charts** are compact, data-rich visual elements designed to convey trends, comparisons, and progress at a glance.
 
 ## Usage ---
+
+They are ideal for dashboards, tables, and summary views where space is limited but insight is essential.
 
 ![Micro charts usage](images/micro-chart-usage.png)
 
 ### When to use
 
-- You need to show data trends or comparisons in a compact space.
+- To show data trends or comparisons in a compact space.
 - Users benefit from visual context without needing full chart interactivity.
-- You’re summarizing performance metrics, KPIs, or status indicators.
+- Summarizing performance metrics, KPIs, or status indicators.
 - Common use cases: Table rows with performance data, dashboard widgets, inline summaries in reports or cards.
 
 ### Best practices for micro charts
 
+- Micro charts are typically non-interactive and represent a single value or series.
 - All micro charts should follow a standard size for uniformity.
 - Pair micro charts with clear labels or tooltips for context.
 - Use consistent chart types across similar data sets.
@@ -24,7 +27,6 @@
 
 ## Design ---
 
-Micro charts are typically non-interactive and represent a single value or series.
 They are minimalistic in design and keep visual noise low to maintain clarity.
 
 ### Types of micro charts
@@ -39,7 +41,7 @@ They are minimalistic in design and keep visual noise low to maintain clarity.
 
 ### Colors
 
-Make use of data visualization colors.
+Make use of data visualization [categorial colors](../../fundamentals/colors/data-visualization-colors.md/#categorical-colors).
 
 ![Micro charts colors](images/micro-chart-colors.png)
 
