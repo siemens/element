@@ -1,11 +1,11 @@
-# Tree View
+# Tree view
 
 The tree component is used to display hierarchical data and supports a wide range of
 configurable options and features.
 
 ## Usage ---
 
-![Tree View](images/tree-view.png)
+![Tree view](images/tree-view.png)
 
 ### When to use
 
@@ -13,12 +13,6 @@ configurable options and features.
   include directory, organization and location structures.
 - Apply a tree view to large data sets that can be categorized into two or more
   levels.
-
-### Does and Don'ts
-
-- Use nodes with icons only if you have meaningful icons available.
-- Don't mix **nodes with icons** and nodes with **just a label** within the same
-  hierarchy.
 
 ### Best practices
 
@@ -28,6 +22,9 @@ configurable options and features.
 - Use a natural hierarchical structure that is familiar to most users. Balance
   discoverability with a predictable user model that minimizes confusion.
 - A tree view should be supported by a breadcrumb within the content area.
+- Use nodes with icons only if you have meaningful icons available.
+- Don't mix **nodes with icons** and nodes with **just a label** within the same
+  hierarchy.
 
 ## Design ---
 
@@ -35,7 +32,7 @@ configurable options and features.
 
 A tree view consists of the following elements:
 
-![Tree View - Specification](images/tree-view-usage-construction.png)
+![Tree view elements](images/tree-view-usage-construction.png)
 
 1. Expand/collapse icon
 2. Node icon *(optional)*
@@ -51,7 +48,7 @@ A tree view consists of the following elements:
 
 The standard tree view component supports 2 different node representations:
 
-![Tree View - Item Variants](images/tree-view-usage-item-variant.png)
+![Tree view item representation](images/tree-view-usage-item-variant.png)
 
 1. Node with main-label
 2. Node with main-label and sub-label
@@ -80,7 +77,7 @@ The tree view component has the following features:
 
 The tree view component supports expanding and collapsing of all child elements:
 
-![Tree View - Expand/Collapse](images/tree-view-usage-item-expand-collapse.png)
+![Tree view expanse/collapse](images/tree-view-usage-item-expand-collapse.png)
 
 1. Expand all
 2. Collapse all
@@ -89,14 +86,14 @@ The tree view component supports expanding and collapsing of all child elements:
 
 If the tree view is the main navigation of a page, then it's placed to the left.
 
-![Tree View - Main Navigation](images/tree-view-usage-main-navigation.png)
+![Tree view main navigation](images/tree-view-usage-main-navigation.png)
 
 If the tree view is part of a page then it will be represented as a card.
 
 > **Note:** This pattern is still work in progress and might therefore be
 > subject to change.
 
-![Tree View - Component in Card](images/tree-view-usage-vertical-navigation.png)
+![Tree view in a card](images/tree-view-usage-vertical-navigation.png)
 
 ### Responsive behavior
 
@@ -114,7 +111,7 @@ be truncated at the end with 3 `...`, if there is no sufficient space.
 
 Showing the tree in flat mode with back-navigation on top:
 
-![Tree View - Flat Mode](images/tree-view-usage-flat.png)
+![Tree view flat mode](images/tree-view-usage-flat.png)
 
 In flat mode, a node also offers a third node representation format with (1)
 **item with main-label, sub-label and value**.
