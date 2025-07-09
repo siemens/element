@@ -6,7 +6,7 @@ no data is left after filtering. You can customize the icon and text to your nee
 
 ## Design ---
 
-![Empty State - Specification](images/empty-state-usage-construction.png)
+![Empty state specification](images/empty-state-usage-construction.png)
 
 An empty state component consists of the following elements:
 
