@@ -43,6 +43,8 @@ $theme-element-light: (
   base-critical: base.$color-red-100,
   base-translucent-1: rgba(base.$color-black, 0.3),
   base-translucent-2: rgba(base.$color-deep-blue-900, 0.88),
+  // EXPERIMENTAL: Do not use
+  base-input-experimental: base.$color-experimental-deep-blue-25,
   action-primary: base.$color-interactive-blue-500,
   action-primary-hover: base.$color-teal,
   action-primary-text: base.$color-white,
@@ -229,6 +231,8 @@ $theme-element-dark: (
   base-critical: base.$color-red-900,
   base-translucent-1: rgba(base.$color-black, 0.7),
   base-translucent-2: rgba(base.$color-white, 0.88),
+  // EXPERIMENTAL: Do not use
+  base-input-experimental: base.$color-experimental-deep-blue-850,
   action-primary: base.$color-interactive-coral,
   action-primary-hover: base.$color-bold-green,
   action-primary-text: base.$color-deep-blue-900,
