@@ -59,8 +59,10 @@ test.describe('si-modal-dialogs', () => {
 
     await page.getByRole('option', { name: 'Row 5' }).locator('.cdk-drag-handle').hover();
     await page.mouse.down();
-    await page.mouse.move(700, 380, { steps: 5 }); // CDK Overlay swallows events. So using step makes sure some at least arrive.
-    await page.waitForTimeout(500); // To wait for the moving animation to finish.
+    // PW is sometimes faster than Angular. So we need to make sure events arrive.
+    await page.mouse.move(600, 280, { steps: 5 }); // CDK will only create a preview if the element is actually moved.
+    await expect(page.locator('.cdk-drag-preview')).toBeVisible(); // We need to wait for the CDK creating the element.
+    await page.mouse.move(700, 380, { steps: 5 }); // After the element is created, we can move it the actual position.
     // Those rules are triggered because of the draggable element.
     // This is not relevant, as only no-sr user will drag elements.
     await si.runVisualAndA11yTests('dragging', {
@@ -73,6 +75,7 @@ test.describe('si-modal-dialogs', () => {
     await page.mouse.up();
 
     await page.getByRole('option', { name: 'Row 8' }).press('Enter');
+    await expect(page.getByRole('textbox', { name: 'Rename column' })).toBeFocused();
     await page.keyboard.type(' M');
     await page.getByRole('option', { name: 'Row 8' }).press('Enter');
     await page.getByRole('option', { name: 'Row 8' }).press('Space');
