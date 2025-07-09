@@ -6,6 +6,7 @@ dist
 tmp
 playwright/snapshots
 CHANGELOG.md
+api-goldens
 
 # Formatting is broken
 docs
