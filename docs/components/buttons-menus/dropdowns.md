@@ -27,7 +27,7 @@ Dropdown are available with text only or with text and icon.
 
 ![Dropdown - active](images/dropdown-active.png)
 
-> 1. Placeholder text, 2. Arrow, 3. Container, 4. [Menu container](menu.md), 5. Icon (optional)
+> 1. Placeholder text, 2. Arrow, 3. Container, 4. [menu container](menu.md), 5. Icon (optional)
 
 ### Variants
 
