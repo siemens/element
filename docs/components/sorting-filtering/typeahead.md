@@ -1,20 +1,20 @@
 # Typeahead
 
-Typeahead provides real-time, context-aware text completion.
+**Typeahead** provides real-time, context-aware text completion.
 
 ## Usage ---
-
-![Typeahead](images/typeahead.png)
 
 Typeahead is a behavior that helps users search for and select from a list of
 suggested options by automatically predicting and completing their search
 queries as they type.
 
-This is commonly used in the [Search Bar](../sorting-filtering/search-bar.md),
-[Filtered Search](../sorting-filtering/filtered-search.md), and other places
+This is commonly used in the [search bar](../sorting-filtering/search-bar.md),
+[filtered search](../sorting-filtering/filtered-search.md), and other places
 where users need to input text and select options from a list.
 
-### Best practices for Typeahead
+![Typeahead](images/typeahead.png)
+
+### Best practices
 
 - Provide accurate and relevant suggestions.
 - Avoid long lists by displaying between 5 to 10 suggestions at a time.
@@ -23,7 +23,7 @@ where users need to input text and select options from a list.
 
 ## Design ---
 
-![Typeahead Elements](images/typeahead-elements.png)
+![Typeahead elements](images/typeahead-elements.png)
 
 > 1. Active suggestion item, 2. Suggestion item
 
