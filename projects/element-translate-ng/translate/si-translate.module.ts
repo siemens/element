@@ -17,7 +17,7 @@ import { SiTranslateServiceBuilder } from './si-translate.service-builder';
  * @internal
  */
 @NgModule({
-  declarations: [SiTranslatePipe],
+  imports: [SiTranslatePipe],
   exports: [SiTranslatePipe],
   providers: [
     /* This is needed for ngx-translate when using the isolated mode for lazy child routes.
