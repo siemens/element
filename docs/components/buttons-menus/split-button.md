@@ -1,6 +1,6 @@
 # Split button
 
-A **split button** combines a primary action with a secondary dropdown menu, allowing users to either trigger a default action or choose from a list of related options. It’s ideal for streamlining workflows while offering flexibility.
+A **split button** combines a primary action with a secondary dropdown menu, allowing users to either trigger a default action or choose from a list of related options.
 
 ## Usage ---
 
@@ -14,16 +14,14 @@ Split buttons can be styled as primary, secondary, or tertiary buttons, and may 
 - There are closely related secondary actions that should be accessible but not dominant.
 - To reduce visual clutter by grouping similar actions under one control.
 
-### Dos and don'ts
+### Best practices
 
-- Do make the primary action clear and meaningful.
-- Do keep secondary options closely related to the main action.
-- Do use concise, scannable labels and icons in the dropdown.
-- Do ensure keyboard and screen reader accessibility for both parts of the button.
-- Don’t overload the dropdown with unrelated or excessive options.
+- Make the primary action clear and meaningful.
+- Keep secondary options closely related to the main action.
+- Use concise, scannable labels and icons in the dropdown.
 - Don’t use a split button if there’s no clear primary action.
-- Don’t hide critical actions that users need to access frequently.
-- Don’t use split buttons for destructive actions like `Delete` or `Reset`.
+- Avoid hiding critical actions that users need to access frequently.
+- Split buttons should not be used for destructive actions like `Delete` or `Reset`.
 
 ## Design ---
 
