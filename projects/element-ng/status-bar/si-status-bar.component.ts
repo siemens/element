@@ -33,7 +33,10 @@ import {
   ResizeObserverService,
   SiResizeObserverDirective
 } from '@siemens/element-ng/resize-observer';
-import { SiTranslateModule, SiTranslateService } from '@siemens/element-translate-ng/translate';
+import {
+  injectSiTranslateService,
+  SiTranslateModule
+} from '@siemens/element-translate-ng/translate';
 import { Observable, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
@@ -164,7 +167,7 @@ export class SiStatusBarComponent implements DoCheck, OnDestroy, OnChanges {
 
   private readonly element = inject(ElementRef);
   private readonly blinkService = inject(BlinkService);
-  private readonly translateService = inject(SiTranslateService);
+  private readonly translateService = injectSiTranslateService();
   private readonly resizeObserver = inject(ResizeObserverService);
   private readonly measureService = inject(TextMeasureService);
   private readonly destroyRef = inject(DestroyRef);

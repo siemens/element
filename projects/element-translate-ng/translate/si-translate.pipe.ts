@@ -5,6 +5,7 @@
 import { ChangeDetectorRef, inject, OnDestroy, Pipe, PipeTransform } from '@angular/core';
 import { Subscription } from 'rxjs';
 
+import { injectSiTranslateService } from './si-translate.inject';
 import { SiTranslateService } from './si-translate.service';
 
 /**
@@ -18,15 +19,13 @@ import { SiTranslateService } from './si-translate.service';
 @Pipe({
   name: 'translate',
   // eslint-disable-next-line @angular-eslint/no-pipe-impure
-  pure: false,
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  pure: false
 })
 export class SiTranslatePipe implements PipeTransform, OnDestroy {
   private lastKeyParams?: string;
   private value = '';
   private subscription?: Subscription;
-  private siTranslateService = inject(SiTranslateService);
+  private siTranslateService = injectSiTranslateService();
   private cdRef = inject(ChangeDetectorRef);
 
   /**

@@ -27,8 +27,8 @@ import {
 import { addIcons, elementCancel, SiIconNextComponent } from '@siemens/element-ng/icon';
 import { ModalRef } from '@siemens/element-ng/modal';
 import {
+  injectSiTranslateService,
   SiTranslateModule,
-  SiTranslateService,
   TranslatableString
 } from '@siemens/element-translate-ng/translate';
 import { first } from 'rxjs/operators';
@@ -178,7 +178,7 @@ export class SiColumnSelectionDialogComponent implements OnInit {
   protected visibleIds: string[] = [];
 
   private readonly liveAnnouncer = inject(LiveAnnouncer);
-  private readonly translateService = inject(SiTranslateService);
+  private readonly translateService = injectSiTranslateService();
 
   ngOnInit(): void {
     this.setupColumnData();
