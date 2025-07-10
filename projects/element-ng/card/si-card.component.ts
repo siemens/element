@@ -75,7 +75,7 @@ export class SiCardComponent {
    *
    * @defaultValue 'vertical'
    */
-  readonly imgDir = input<('horizontal' | 'vertical') | undefined>('vertical');
+  readonly imgDir = input<('horizontal' | 'vertical' | 'change') | undefined>('vertical');
   /**
    * Sets the image [object-fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) CSS property,
    * Sets the image [object-fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) CSS property.
