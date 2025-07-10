@@ -64,3 +64,11 @@ export type CartesianChartSeries =
 export type MarkAreaData = NonNullable<MarkAreaComponentOption['data']>;
 export type MarkPointData = NonNullable<MarkPointComponentOption['data']>;
 export type MarkLineData = NonNullable<MarkLineComponentOption['data']>;
+
+export type {
+  SiLineSeriesOption as SimplLineSeriesOption,
+  SiBarSeriesOption as SimplBarSeriesOption,
+  SiHeatmapSeriesOption as SimplHeatmapSeriesOption,
+  SiScatterSeriesOption as SimplScatterSeriesOption,
+  SiCandlestickSeriesOption as SimplCandlestickSeriesOption
+};

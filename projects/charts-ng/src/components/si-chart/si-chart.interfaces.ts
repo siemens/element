@@ -107,3 +107,5 @@ export interface SiSeriesOption {
   customLegendToolTip?: string;
   visible?: boolean;
 }
+
+export type { SiSeriesOption as SimplSeriesOption };
