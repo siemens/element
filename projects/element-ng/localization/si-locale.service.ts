@@ -7,7 +7,7 @@ import { inject, Injectable, InjectionToken, PLATFORM_ID } from '@angular/core';
 import {
   getBrowserCultureLanguage,
   getBrowserLanguage,
-  SiTranslateService
+  injectSiTranslateService
 } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { first } from 'rxjs/operators';
@@ -74,7 +74,7 @@ export class SiLocaleService {
 
   private _nextLocale!: string;
   private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
-  private translate = inject(SiTranslateService);
+  private translate = injectSiTranslateService();
   private localeStore =
     inject(SiLocaleStore, { optional: true }) ?? new SiDefaultLocaleStore(this.isBrowser);
   /**

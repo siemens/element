@@ -24,6 +24,8 @@ export const getBrowserLanguage = (): string | undefined =>
  * Wrapper around an actual translation framework which is meant to be used internally by Element.
  * Applications must not use this service.
  *
+ * Use {@link injectSiTranslateService} to get an instance of the translation service.
+ *
  * @internal
  */
 @Injectable()

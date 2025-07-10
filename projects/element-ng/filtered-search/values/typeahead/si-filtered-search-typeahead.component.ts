@@ -20,7 +20,10 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { SiTypeaheadDirective, TypeaheadMatch } from '@siemens/element-ng/typeahead';
-import { SiTranslateModule, SiTranslateService } from '@siemens/element-translate-ng/translate';
+import {
+  injectSiTranslateService,
+  SiTranslateModule
+} from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
 import { debounceTime, first, map, tap } from 'rxjs/operators';
 
@@ -66,7 +69,7 @@ export class SiFilteredSearchTypeaheadComponent
   protected readonly optionValue = signal<OptionCriterion[]>([]);
 
   private readonly destroyRef = inject(DestroyRef);
-  private readonly translateService = inject(SiTranslateService);
+  private readonly translateService = injectSiTranslateService();
 
   readonly inputType = computed(() =>
     this.definition().validationType === 'integer' || this.definition().validationType === 'float'

@@ -24,7 +24,10 @@ import {
 } from '@siemens/element-ng/icon';
 import { SiLinkDirective } from '@siemens/element-ng/link';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
-import { SiTranslateModule, SiTranslateService } from '@siemens/element-translate-ng/translate';
+import {
+  injectSiTranslateService,
+  SiTranslateModule
+} from '@siemens/element-translate-ng/translate';
 import { merge, of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
@@ -106,7 +109,7 @@ export class SiBreadcrumbComponent implements OnChanges, OnDestroy {
   private readonly breadcrumbElements = viewChildren<ElementRef>('breadcrumbItem');
 
   private changeDetector = inject(ChangeDetectorRef);
-  private translate = inject(SiTranslateService);
+  private translate = injectSiTranslateService();
 
   ngOnChanges(): void {
     // Reprocess items on every change and on init

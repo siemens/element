@@ -31,8 +31,8 @@ import {
 } from '@siemens/element-ng/icon';
 import { SiTypeaheadDirective, TypeaheadOption } from '@siemens/element-ng/typeahead';
 import {
+  injectSiTranslateService,
   SiTranslateModule,
-  SiTranslateService,
   TranslatableString
 } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, Observable, of, Subject, switchMap } from 'rxjs';
@@ -361,7 +361,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges, OnDestroy {
   private searchEmitQueue = new Subject<SearchCriteria | undefined>();
   private destroySubscriptions = new Subject<boolean>();
   private cdRef = inject(ChangeDetectorRef);
-  private translateService = inject(SiTranslateService);
+  private translateService = injectSiTranslateService();
   private locale = inject(LOCALE_ID).toString();
   /**
    * The cache is used to control when the interceptDisplayedCriteria event needs to be called.

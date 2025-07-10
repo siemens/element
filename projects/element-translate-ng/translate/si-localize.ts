@@ -25,18 +25,17 @@ const $localize = (strings: TemplateStringsArray, ...expressions: string[]): Tra
 const siResolveLocalize = (key: string, value: string): TranslatableString =>
   inject(SiTranslatableService).resolveText(key, value);
 
-/**
- * Initializes the Element version of $localize. Can be called multiple times.
- */
-export const initSiLocalize = (): void => {
-  (Zone.current as any)._properties.siResolveLocalize = siResolveLocalize;
-  globalScope.$localize = $localize;
-};
+// Always register in the current zone. This is needed in MFE setups, where $localize is already patched.
+(Zone.current as any)._properties.siResolveLocalize = siResolveLocalize;
 
-// Init $localize in the current zone
+// Patch $localize in the global scope if it was not already patched by ourselves or Angular.
+// The default $localize function by Angular just throws an error.
 try {
   // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   globalScope.$localize`:@@si-localize:This is a test for $localize`;
 } catch {
-  initSiLocalize();
+  globalScope.$localize = $localize;
 }
+
+/** @deprecated $localize is now automatically initialized. Drop all calls of this function. */
+export const initSiLocalize = (): void => {};

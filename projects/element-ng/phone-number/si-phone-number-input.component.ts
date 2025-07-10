@@ -31,7 +31,10 @@ import {
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
 import { elementDown2, addIcons, SiIconNextComponent } from '@siemens/element-ng/icon';
 import { SiSelectListHasFilterComponent } from '@siemens/element-ng/select';
-import { SiTranslateModule, SiTranslateService } from '@siemens/element-translate-ng/translate';
+import {
+  injectSiTranslateService,
+  SiTranslateModule
+} from '@siemens/element-translate-ng/translate';
 import { PhoneNumber, PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
 
 import { SiPhoneNumberInputSelectDirective } from './si-phone-number-input-select.directive';
@@ -82,7 +85,7 @@ export class SiPhoneNumberInputComponent
   private static idCounter = 0;
 
   private phoneUtil = PhoneNumberUtil.getInstance();
-  private translate = inject(SiTranslateService);
+  private translate = injectSiTranslateService();
   private changeDetectorRef = inject(ChangeDetectorRef);
   private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
 

@@ -9,6 +9,7 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
 import { SiTranslateService } from '@siemens/element-ng/translate';
+import { provideMockTranslateServiceBuilder } from '@siemens/element-translate-ng/translate';
 
 import { SiFormlyButtonComponent } from './si-formly-button.component';
 
@@ -38,12 +39,9 @@ describe('formly button type', () => {
     TestBed.overrideComponent(SiFormlyButtonComponent, {
       add: {
         providers: [
-          {
-            provide: SiTranslateService,
-            useValue: {
-              translate: translateSpy
-            }
-          }
+          provideMockTranslateServiceBuilder(
+            () => ({ translate: translateSpy }) as unknown as SiTranslateService
+          )
         ]
       }
     });

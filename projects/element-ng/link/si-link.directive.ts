@@ -19,7 +19,7 @@ import {
   signal
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, NavigationExtras, Router, UrlTree } from '@angular/router';
-import { SiTranslateService } from '@siemens/element-translate-ng/translate';
+import { injectSiTranslateService } from '@siemens/element-translate-ng/translate';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
@@ -71,7 +71,7 @@ export class SiLinkDirective implements DoCheck, OnChanges, OnDestroy {
   private router = inject(Router, { optional: true });
   private activatedRoute = inject(ActivatedRoute, { optional: true });
   private locationStrategy = inject(LocationStrategy, { optional: true });
-  private translateService = inject(SiTranslateService);
+  private translateService = injectSiTranslateService();
   private actionService = inject(SiLinkActionService, { optional: true });
   private defaultNavigationExtra = inject(SI_LINK_DEFAULT_NAVIGATION_EXTRA, { optional: true });
 

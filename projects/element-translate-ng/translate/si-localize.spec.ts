@@ -5,7 +5,6 @@
 import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { initSiLocalize } from './si-localize';
 import { SiTranslatableService } from './si-translatable.service';
 
 describe('siLocalize', () => {
@@ -24,7 +23,6 @@ describe('siLocalize', () => {
         }
       ]
     });
-    initSiLocalize();
   });
 
   it('should resolve $localize calls', () => {
