@@ -9,7 +9,7 @@ cd $(dirname $0)
 export MSYS_NO_PATHCONV=1
 
 # Keep image version in sync with the image used in .github/workflows/build-and-test.yaml
-PLAYWRIGHT_IMAGE="mcr.microsoft.com/playwright:v1.53.2-noble"
+PLAYWRIGHT_IMAGE="mcr.microsoft.com/playwright:v1.54.0-noble"
 OS=$(uname -s)
 CWD=$(pwd)
 

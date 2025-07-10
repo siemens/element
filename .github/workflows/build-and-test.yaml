@@ -37,7 +37,7 @@ jobs:
   test:
     runs-on: ubuntu-24.04
     # We use playwright browser to run karma tests
-    container: mcr.microsoft.com/playwright:v1.53.2-noble
+    container: mcr.microsoft.com/playwright:v1.54.0-noble
     env:
       # See: https://github.com/microsoft/playwright/issues/27620
       HOME: /root
@@ -86,7 +86,7 @@ jobs:
 
   e2e:
     runs-on: ubuntu-24.04
-    container: mcr.microsoft.com/playwright:v1.53.2-noble
+    container: mcr.microsoft.com/playwright:v1.54.0-noble
     needs:
       - build
     strategy:
@@ -126,7 +126,7 @@ jobs:
   e2e-merge-reports:
     # Merge reports after playwright-tests, even if some shards have failed
     if: ${{ !cancelled() }}
-    container: mcr.microsoft.com/playwright:v1.53.2-noble
+    container: mcr.microsoft.com/playwright:v1.54.0-noble
     needs: [e2e]
     runs-on: ubuntu-latest
     steps:
