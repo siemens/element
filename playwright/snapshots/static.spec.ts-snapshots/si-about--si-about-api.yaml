@@ -1,0 +1,20 @@
+- text: About
+- img "Application title's Logo"
+- heading "Application title" [level=3]
+- paragraph: app version v0.1.2.alpha4
+- paragraph: /© Sample Company \d+-\d+/
+- link "Corporate Information":
+  - /url: http://www.examples.org/corporate-information
+- link "Privacy Notice":
+  - /url: http://www.examples.org/privacy-notice
+- link "Cookie Notice":
+  - /url: https://www.examples.org/cookie-notice
+- link "Terms of Use":
+  - /url: http://www.examples.org/terms-of-use
+- link "Acceptable Use Policy":
+  - /url: https://www.examples.org/sw-terms/aup
+- link "Some other link":
+  - /url: http://www.examples.org
+- link "More information about stuff":
+  - /url: http://www.examples.org
+- text: License

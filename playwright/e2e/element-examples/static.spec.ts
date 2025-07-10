@@ -19,6 +19,9 @@ test('datatable/datatable-footer', async ({ si }) => {
 });
 test('input-fields/multi-line', ({ si }) => si.static());
 test('input-fields/single-line', ({ si }) => si.static());
+test('si-about/si-about-api', ({ si }) => si.static());
+test('si-about/si-about-text-api', ({ si }) => si.static());
+test('si-about/si-about-text', ({ si }) => si.static());
 test('si-accordion/si-accordion', ({ si }) => si.static());
 test('si-accordion/si-accordion-base-1', ({ si }) => si.static());
 test('si-accordion/si-collapsible-panel-icons', ({ si }) => si.static());
