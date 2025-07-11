@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { HarnessPredicate, TestKey } from '@angular/cdk/testing';
-import { SiSelectListBaseHarness } from '@siemens/element-ng/select/testing/si-select-list-base.harness';
+
+import { SiSelectListBaseHarness } from './si-select-list-base.harness';
 
 export class SiSelectListHarness extends SiSelectListBaseHarness {
   static hostSelector = '.cdk-listbox';

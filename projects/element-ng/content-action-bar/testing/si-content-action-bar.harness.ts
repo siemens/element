@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ComponentHarness, parallel, TestElement } from '@angular/cdk/testing';
-
-import { SiMenuHarness, SiMenuItemHarness } from '../../menu/testing/si-menu.harness';
+import { SiMenuHarness, SiMenuItemHarness } from '@siemens/element-ng/menu/testing';
 
 export class SiContentActionBarHarness extends ComponentHarness {
   static hostSelector = 'si-content-action-bar';
