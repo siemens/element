@@ -58,8 +58,6 @@ let controlIdCounter = 1;
 
 @Component({
   selector: 'si-breadcrumb',
-  templateUrl: './si-breadcrumb.component.html',
-  styleUrl: './si-breadcrumb.component.scss',
   imports: [
     NgTemplateOutlet,
     SiIconNextComponent,
@@ -67,7 +65,9 @@ let controlIdCounter = 1;
     SiResizeObserverDirective,
     SiTranslateModule,
     SiBreadcrumbItemTemplateDirective
-  ]
+  ],
+  templateUrl: './si-breadcrumb.component.html',
+  styleUrl: './si-breadcrumb.component.scss'
 })
 export class SiBreadcrumbComponent implements OnChanges, OnDestroy {
   /** Array of breadcrumb items. */

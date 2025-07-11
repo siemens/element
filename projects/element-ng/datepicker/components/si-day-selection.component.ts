@@ -46,14 +46,14 @@ import { SiInitialFocusComponent } from './si-initial-focus.component';
  */
 @Component({
   selector: 'si-day-selection',
-  templateUrl: './si-day-selection.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     DatePipe,
     SiCalendarBodyComponent,
     SiCalendarDirectionButtonComponent,
     SiTranslateModule
-  ]
+  ],
+  templateUrl: './si-day-selection.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiDaySelectionComponent extends SiInitialFocusComponent {
   /**

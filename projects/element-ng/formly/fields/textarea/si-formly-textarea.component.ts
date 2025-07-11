@@ -8,9 +8,9 @@ import { FieldType, FieldTypeConfig, FormlyModule } from '@ngx-formly/core';
 
 @Component({
   selector: 'si-formly-textarea',
-  styleUrl: './si-formly-textarea.component.scss',
+  imports: [FormsModule, ReactiveFormsModule, FormlyModule],
   templateUrl: './si-formly-textarea.component.html',
-  imports: [FormsModule, ReactiveFormsModule, FormlyModule]
+  styleUrl: './si-formly-textarea.component.scss'
 })
 export class SiFormlyTextareaComponent
   extends FieldType<FieldTypeConfig>

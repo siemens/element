@@ -12,9 +12,9 @@ import { CircleChartSeries, CircleValueUpdate } from './si-chart-circle.interfac
 
 @Component({
   selector: 'si-chart-circle',
+  imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
   templateUrl: '../si-chart/si-chart.component.html',
-  styleUrl: '../si-chart/si-chart.component.scss',
-  imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent]
+  styleUrl: '../si-chart/si-chart.component.scss'
 })
 export class SiChartCircleComponent extends SiChartComponent {
   readonly series = input<CircleChartSeries[]>();

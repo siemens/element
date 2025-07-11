@@ -27,8 +27,10 @@ import { Subscription, timer } from 'rxjs';
 
 @Component({
   selector: 'si-slider',
+  imports: [SiIconNextComponent, SiTranslateModule],
   templateUrl: './si-slider.component.html',
   styleUrl: './si-slider.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -40,8 +42,6 @@ import { Subscription, timer } from 'rxjs';
       useExisting: SiSliderComponent
     }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiIconNextComponent, SiTranslateModule],
   host: {
     role: 'group',
     '[class.disabled]': 'disabled()',

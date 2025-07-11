@@ -21,10 +21,10 @@ import { UploadFile } from './si-file-uploader.model';
 
 @Component({
   selector: 'si-file-dropzone',
+  imports: [SiIconNextComponent, SiTranslateModule],
   templateUrl: './si-file-dropzone.component.html',
   styleUrl: './si-file-dropzone.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiIconNextComponent, SiTranslateModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiFileDropzoneComponent {
   /**

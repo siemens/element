@@ -22,13 +22,13 @@ class ButtonHarness extends ComponentHarness {
 }
 
 @Component({
+  imports: [SiMenuModule, SiTranslateModule, CdkMenuTrigger],
   template: `
     <button class="btn" type="button" [cdkMenuTriggerFor]="menu">Toggle Menu</button>
     <ng-template #menu>
       <si-menu-factory actionParam="action!" [items]="items" />
     </ng-template>
-  `,
-  imports: [SiMenuModule, SiTranslateModule, CdkMenuTrigger]
+  `
 })
 class TestLegacyObjectComponent {
   items: MenuItem[] = [

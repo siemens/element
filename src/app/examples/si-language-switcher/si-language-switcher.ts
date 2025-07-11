@@ -7,9 +7,9 @@ import { SiLanguageSwitcherComponent } from '@siemens/element-ng/language-switch
 
 @Component({
   selector: 'app-sample',
+  imports: [SiLanguageSwitcherComponent],
   templateUrl: './si-language-switcher.html',
-  host: { class: 'p-5' },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiLanguageSwitcherComponent]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {}

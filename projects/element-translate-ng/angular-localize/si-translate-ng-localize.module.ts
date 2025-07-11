@@ -15,9 +15,7 @@ import { SiTranslateNgLocalizeServiceBuilder } from './si-translate-ng-localize-
  * It should only be imported once in an application's root module (typically `app.module.ts`)
  */
 @NgModule({
-  providers: [
-    { provide: SiTranslateServiceBuilder, useClass: SiTranslateNgLocalizeServiceBuilder }
-  ],
-  imports: [SiTranslateModule]
+  imports: [SiTranslateModule],
+  providers: [{ provide: SiTranslateServiceBuilder, useClass: SiTranslateNgLocalizeServiceBuilder }]
 })
 export class SiTranslateNgLocalizeModule {}

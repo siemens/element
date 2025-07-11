@@ -10,8 +10,8 @@ import { SiFormlyFormFieldProviderDirective } from './si-formly-form-field-provi
 
 @Component({
   selector: 'si-formly-wrapper',
-  templateUrl: './si-formly-wrapper.component.html',
-  imports: [SiFormItemComponent, FormlyModule, SiFormlyFormFieldProviderDirective]
+  imports: [SiFormItemComponent, FormlyModule, SiFormlyFormFieldProviderDirective],
+  templateUrl: './si-formly-wrapper.component.html'
 })
 export class SiFormlyWrapperComponent extends FieldWrapper {
   protected get label(): string | undefined {

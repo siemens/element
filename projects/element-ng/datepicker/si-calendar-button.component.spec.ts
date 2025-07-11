@@ -9,6 +9,7 @@ import { SiDatepickerDirective } from '@siemens/element-ng/datepicker';
 import { SiCalendarButtonComponent } from './si-calendar-button.component';
 
 @Component({
+  imports: [SiCalendarButtonComponent, SiDatepickerDirective],
   template: `
     <si-calendar-button class="w-100">
       <input
@@ -20,8 +21,7 @@ import { SiCalendarButtonComponent } from './si-calendar-button.component';
       />
     </si-calendar-button>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiCalendarButtonComponent, SiDatepickerDirective]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
   readonly disabled = signal(false);

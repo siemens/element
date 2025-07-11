@@ -9,9 +9,9 @@ import { SiTimepickerComponent } from '@siemens/element-ng/datepicker';
 
 @Component({
   selector: 'app-sample',
+  imports: [CommonModule, SiTimepickerComponent, FormsModule],
   templateUrl: './si-timepicker.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, SiTimepickerComponent, FormsModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   mytime = new Date('2022-01-12T05:00:00.000Z');

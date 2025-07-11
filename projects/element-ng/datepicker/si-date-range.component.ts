@@ -55,6 +55,7 @@ import { DatepickerInputConfig, DateRange } from './si-datepicker.model';
 
 @Component({
   selector: 'si-date-range',
+  imports: [FormsModule, SiDateInputDirective, SiIconNextComponent, SiTranslateModule, A11yModule],
   templateUrl: './si-date-range.component.html',
   styleUrl: './si-date-range.component.scss',
   host: {
@@ -85,8 +86,7 @@ import { DatepickerInputConfig, DateRange } from './si-datepicker.model';
       directive: SiDatepickerOverlayDirective,
       outputs: ['siDatepickerClose']
     }
-  ],
-  imports: [FormsModule, SiDateInputDirective, SiIconNextComponent, SiTranslateModule, A11yModule]
+  ]
 })
 export class SiDateRangeComponent
   implements ControlValueAccessor, Validator, AfterViewInit, OnChanges, SiFormItemControl

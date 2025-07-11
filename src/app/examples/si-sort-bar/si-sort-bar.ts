@@ -8,10 +8,10 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiSortBarComponent],
   templateUrl: './si-sort-bar.html',
-  host: { class: 'p-5' },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiSortBarComponent]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

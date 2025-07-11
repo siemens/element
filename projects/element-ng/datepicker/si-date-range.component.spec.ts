@@ -26,14 +26,14 @@ const endInput = (element: HTMLElement): HTMLInputElement =>
   element.querySelectorAll<HTMLInputElement>('input')[1];
 
 @Component({
+  imports: [SiDatepickerModule, FormsModule, ReactiveFormsModule, TestComponent],
   template: `<si-date-range
     [siDatepickerConfig]="{ dateFormat: 'dd-MM-yyyy' }"
     [autoClose]="autoClose"
     [formControl]="dateRange"
     (siDatepickerRangeChange)="rangeChanged($event)"
   />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiDatepickerModule, FormsModule, ReactiveFormsModule, TestComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
   dateRange = new FormControl<DateRange | null>(null);
@@ -202,11 +202,11 @@ describe('SiDateRangeComponent', () => {
 });
 
 @Component({
+  imports: [SiDatepickerModule, FormsModule, ReactiveFormsModule, TestComponent],
   template: `<form [formGroup]="form">
     <si-date-range formControlName="dateRange" [siDatepickerConfig]="config()" />
   </form>`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiDatepickerModule, FormsModule, ReactiveFormsModule, TestComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class FormWrapperComponent {
   form = new FormGroup({

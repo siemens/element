@@ -13,6 +13,7 @@ import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 import { SiCardComponent } from './index';
 
 @Component({
+  imports: [SiCardComponent, RouterModule],
   template: `
     <div>
       <si-card
@@ -29,8 +30,7 @@ import { SiCardComponent } from './index';
       />
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiCardComponent, RouterModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
   heading = '';

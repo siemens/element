@@ -14,14 +14,14 @@ describe('SiTooltipDirective', () => {
     let button: HTMLButtonElement;
 
     @Component({
+      imports: [SiTooltipModule],
       template: `<button
         type="button"
         siTooltip="test tooltip"
         [isDisabled]="isDisabled"
         [triggers]="triggers"
         >Test</button
-      >`,
-      imports: [SiTooltipModule]
+      >`
     })
     class TestHostComponent {
       isDisabled = false;
@@ -88,9 +88,9 @@ describe('SiTooltipDirective', () => {
     let button: HTMLButtonElement;
 
     @Component({
+      imports: [SiTooltipModule],
       template: ` <button type="button" [siTooltip]="template">Test</button>
-        <ng-template #template let-tooltip>Template content</ng-template>`,
-      imports: [SiTooltipModule]
+        <ng-template #template let-tooltip>Template content</ng-template>`
     })
     class TestHostComponent {}
 

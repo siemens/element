@@ -24,8 +24,6 @@ import {
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-application-header.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     SiApplicationHeaderComponent,
     SiHeaderActionItemComponent,
@@ -42,7 +40,9 @@ import {
     SiHeaderBrandDirective,
     SiHeaderSelectionItemComponent,
     SiHeaderLogoDirective
-  ]
+  ],
+  templateUrl: './si-application-header.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   allTenants = ['Tenant 1', 'Tenant 2', 'Tenant 3'];

@@ -47,6 +47,7 @@ class BreakpointObserverMock implements Partial<BreakpointObserver> {
 class EmptyComponent {}
 
 @Component({
+  imports: [SiNavbarVerticalComponent],
   template: `<si-navbar-vertical
     [items]="items"
     [searchable]="searchable"
@@ -55,8 +56,7 @@ class EmptyComponent {}
     [collapsed]="collapsed"
     (searchEvent)="searchEvent($event)"
     (itemsChange)="itemsChange($event)"
-  />`,
-  imports: [SiNavbarVerticalComponent]
+  />`
 })
 class TestHostComponent {
   items: (MenuItem | NavbarVerticalItem)[] = [

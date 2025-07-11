@@ -88,8 +88,6 @@ interface ExtUploadFile extends UploadFile {
 
 @Component({
   selector: 'si-file-uploader',
-  templateUrl: './si-file-uploader.component.html',
-  styleUrl: './si-file-uploader.component.scss',
   imports: [
     NgClass,
     SiFileDropzoneComponent,
@@ -98,7 +96,9 @@ interface ExtUploadFile extends UploadFile {
     SiInlineNotificationComponent,
     SiProgressbarComponent,
     SiTranslateModule
-  ]
+  ],
+  templateUrl: './si-file-uploader.component.html',
+  styleUrl: './si-file-uploader.component.scss'
 })
 export class SiFileUploaderComponent implements OnChanges {
   /**

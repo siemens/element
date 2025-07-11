@@ -15,11 +15,11 @@ import {
 import { SiBreadcrumbDefaultResolverService } from './si-breadcrumb-default-resolver.service';
 
 @Component({
+  imports: [TestComponent, RouterOutlet],
   template: `
     <si-breadcrumb-router />
     <router-outlet />
-  `,
-  imports: [TestComponent, RouterOutlet]
+  `
 })
 class WrapperComponent {
   readonly breadcrumbResolver = viewChild.required(TestComponent, { read: ElementRef });

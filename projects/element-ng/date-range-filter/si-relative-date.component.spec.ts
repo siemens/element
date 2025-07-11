@@ -11,6 +11,7 @@ const ONE_MINUTE = 60 * 1000;
 const ONE_DAY = ONE_MINUTE * 60 * 24;
 
 @Component({
+  imports: [SiRelativeDateComponent],
   template: `<si-relative-date
     [enableTimeSelection]="enableTimeSelection"
     [value]="value()"
@@ -18,8 +19,7 @@ const ONE_DAY = ONE_MINUTE * 60 * 24;
     [valueLabel]="valueLabel"
     (valueChange)="value.set($event)"
   /> `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiRelativeDateComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   readonly value = signal(0);

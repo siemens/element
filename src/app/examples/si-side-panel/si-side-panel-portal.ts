@@ -21,8 +21,6 @@ import {
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-side-panel-portal.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     SiSidePanelComponent,
     SiSidePanelContentComponent,
@@ -33,7 +31,9 @@ import {
     SiApplicationHeaderComponent,
     SiHeaderBrandDirective,
     SiHeaderLogoDirective
-  ]
+  ],
+  templateUrl: './si-side-panel-portal.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnDestroy {
   mode: SidePanelMode = 'scroll';

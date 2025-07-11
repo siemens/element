@@ -9,14 +9,14 @@ import { ResizeObserverService } from '@siemens/element-ng/resize-observer';
 import { SiStatusBarComponent, StatusBarItem } from './index';
 
 @Component({
+  imports: [SiStatusBarComponent],
   template: `<si-status-bar [items]="items" [muteButton]="muteButton" /> `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: `
     :host {
       display: block;
     }
   `,
-  imports: [SiStatusBarComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   items: StatusBarItem[] = [];

@@ -140,9 +140,9 @@ class RangeSelectionStrategy extends SelectionStrategy {
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: '[si-calendar-body]',
+  imports: [NgClass, A11yModule, SiCalendarDateCellDirective],
   templateUrl: './si-calendar-body.component.html',
   exportAs: 'siCalendarBody',
-  imports: [NgClass, A11yModule, SiCalendarDateCellDirective],
   host: {
     class: 'si-calendar-body'
   }

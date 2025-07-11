@@ -36,15 +36,15 @@ import { SelectGroup, SelectItem, SelectOption } from './si-select.types';
 
 @Component({
   selector: 'si-select',
-  templateUrl: './si-select.component.html',
-  styleUrl: './si-select.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     OverlayModule,
     SiSelectInputComponent,
     SiSelectListComponent,
     SiSelectListHasFilterComponent
   ],
+  templateUrl: './si-select.component.html',
+  styleUrl: './si-select.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'dropdown',
     '[class.readonly]': 'readonly()',

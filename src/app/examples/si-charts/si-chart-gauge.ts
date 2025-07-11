@@ -10,9 +10,9 @@ themeSupport.setDefault(themeElement);
 
 @Component({
   selector: 'app-sample',
+  imports: [SiChartGaugeComponent, SiResizeObserverDirective],
   templateUrl: './si-chart-gauge.html',
-  host: { class: 'p-5' },
-  imports: [SiChartGaugeComponent, SiResizeObserverDirective]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   additionalOptions = {

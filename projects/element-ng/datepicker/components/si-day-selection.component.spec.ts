@@ -20,6 +20,7 @@ import { SiDaySelectionComponent as TestComponent } from './si-day-selection.com
 import { CalenderTestHelper, generateKeyEvent } from './test-helper.spec';
 
 @Component({
+  imports: [TestComponent],
   template: `<si-day-selection
     previousLabel="Previous Month"
     nextLabel="Next Month"
@@ -36,8 +37,7 @@ import { CalenderTestHelper, generateKeyEvent } from './test-helper.spec';
     (activeMonthChange)="activeMonthChange($event)"
     (viewChange)="viewChange($event)"
   />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TestComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class SingleSelectComponent {
   readonly focusedDate = signal(new Date('2022-03-26'));
@@ -67,6 +67,7 @@ class SingleSelectComponent {
 }
 
 @Component({
+  imports: [TestComponent],
   template: `<si-day-selection
     isRangeSelection="true"
     previousLabel="Previous Month"
@@ -82,8 +83,7 @@ class SingleSelectComponent {
     (selectedValueChange)="selectionChange($event)"
     (activeMonthChange)="activeMonthChange($event)"
   />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TestComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class RangeSelectComponent {
   readonly focusedDate = signal(new Date('2022-03-26'));

@@ -12,6 +12,7 @@ import { SiMonthSelectionComponent as TestComponent } from './si-month-selection
 import { CalenderTestHelper, generateKeyEvent } from './test-helper.spec';
 
 @Component({
+  imports: [SiDatepickerModule, A11yModule, TestComponent],
   template: `<si-month-selection
     previousLabel="Previous Year"
     nextLabel="Next Year"
@@ -24,8 +25,7 @@ import { CalenderTestHelper, generateKeyEvent } from './test-helper.spec';
     (selectedValueChange)="selectionChange($event)"
     (viewChange)="viewChange($event)"
   />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiDatepickerModule, A11yModule, TestComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
   readonly focusedDate = signal(new Date(2022, 2, 26));

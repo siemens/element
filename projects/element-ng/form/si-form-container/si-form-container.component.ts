@@ -21,9 +21,9 @@ export interface SiFormValidationError {
 
 @Component({
   selector: 'si-form-container',
+  imports: [NgTemplateOutlet, SiResponsiveContainerDirective, SiTranslateModule],
   templateUrl: './si-form-container.component.html',
   styleUrl: './si-form-container.component.scss',
-  imports: [NgTemplateOutlet, SiResponsiveContainerDirective, SiTranslateModule],
   host: {
     '[style.--si-form-label-width]': 'labelWidth()'
   }

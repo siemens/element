@@ -19,9 +19,9 @@ import { SiTranslateService, TranslationResult } from './si-translate.service';
 import { provideMockTranslateServiceBuilder } from './testing/si-translate.mock-service-builder.factory';
 
 @Component({
+  imports: [SiTranslateModule],
   template: `{{ toTranslateKey | translate: params }}`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiTranslateModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestComponent {
   toTranslateKey = $localize`:@@KEY:Test {{value}}`;

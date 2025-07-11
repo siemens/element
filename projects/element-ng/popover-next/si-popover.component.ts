@@ -24,8 +24,8 @@ import { SiPopoverNextDirective } from './si-popover-next.directive';
 
 @Component({
   selector: 'si-popover',
-  templateUrl: './si-popover.component.html',
   imports: [NgClass, NgTemplateOutlet, SiIconNextComponent],
+  templateUrl: './si-popover.component.html',
   host: {
     '[id]': 'this.popoverDirective().popoverId'
   }

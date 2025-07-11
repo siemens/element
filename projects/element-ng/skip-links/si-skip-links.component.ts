@@ -9,9 +9,9 @@ import { SiSkipLinkTargetDirective } from './si-skip-link-target.directive';
 
 @Component({
   selector: 'si-skip-links',
+  imports: [SiTranslateModule],
   templateUrl: './si-skip-links.component.html',
   styleUrl: './si-skip-links.component.scss',
-  imports: [SiTranslateModule],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiSkipLinksComponent {

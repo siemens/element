@@ -26,9 +26,6 @@ import { SiSelectListBase } from './si-select-list.base';
 
 @Component({
   selector: 'si-select-list-has-filter',
-  templateUrl: './si-select-list-has-filter.component.html',
-  styleUrl: './si-select-list-has-filter.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NgTemplateOutlet,
     SiAutocompleteDirective,
@@ -40,6 +37,9 @@ import { SiSelectListBase } from './si-select-list.base';
     SiAutocompleteModule,
     SiLoadingSpinnerComponent
   ],
+  templateUrl: './si-select-list-has-filter.component.html',
+  styleUrl: './si-select-list-has-filter.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'pt-0',
     '[attr.id]': 'id()'

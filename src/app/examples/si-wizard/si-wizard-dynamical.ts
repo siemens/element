@@ -17,9 +17,9 @@ interface StepInfo {
 
 @Component({
   selector: 'app-sample',
+  imports: [AsyncPipe, SiWizardComponent, SiWizardStepComponent, SiEmptyStateComponent],
   templateUrl: './si-wizard-dynamical.html',
-  host: { class: 'p-5' },
-  imports: [AsyncPipe, SiWizardComponent, SiWizardStepComponent, SiEmptyStateComponent]
+  host: { class: 'p-5' }
 })
 export class SampleComponent implements OnInit {
   logEvent = inject(LOG_EVENT);

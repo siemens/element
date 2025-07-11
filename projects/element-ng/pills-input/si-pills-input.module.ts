@@ -9,7 +9,7 @@ import { SiPillsInputEmailDirective } from './si-pills-input-email.directive';
 import { SiPillsInputComponent } from './si-pills-input.component';
 
 @NgModule({
-  exports: [SiPillsInputComponent, SiPillsInputCsvDirective, SiPillsInputEmailDirective],
-  imports: [SiPillsInputComponent, SiPillsInputCsvDirective, SiPillsInputEmailDirective]
+  imports: [SiPillsInputComponent, SiPillsInputCsvDirective, SiPillsInputEmailDirective],
+  exports: [SiPillsInputComponent, SiPillsInputCsvDirective, SiPillsInputEmailDirective]
 })
 export class SiPillsInputModule {}

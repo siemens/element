@@ -9,8 +9,8 @@ import { DateRange, SiDateRangeComponent } from '@siemens/element-ng/datepicker'
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-date-range.html',
-  imports: [CommonModule, SiDateRangeComponent, ReactiveFormsModule]
+  imports: [CommonModule, SiDateRangeComponent, ReactiveFormsModule],
+  templateUrl: './si-date-range.html'
 })
 export class SampleComponent {
   dateRange = new FormControl<DateRange | null>(null);

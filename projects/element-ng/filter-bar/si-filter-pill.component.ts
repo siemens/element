@@ -10,9 +10,9 @@ import { Filter } from './filter';
 
 @Component({
   selector: 'si-filter-pill',
+  imports: [NgClass, NgTemplateOutlet, SiTranslateModule],
   templateUrl: './si-filter-pill.component.html',
-  styleUrl: './si-filter-pill.component.scss',
-  imports: [NgClass, NgTemplateOutlet, SiTranslateModule]
+  styleUrl: './si-filter-pill.component.scss'
 })
 export class SiFilterPillComponent {
   /**

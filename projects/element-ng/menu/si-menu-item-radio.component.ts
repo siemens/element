@@ -11,10 +11,10 @@ import { SiMenuItemBase } from './si-menu-item-base.directive';
 
 @Component({
   selector: 'si-menu-item-radio',
+  imports: [NgClass, SiIconNextComponent],
   templateUrl: './si-menu-item-radio.component.html',
   styleUrl: './si-menu-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgClass, SiIconNextComponent],
   hostDirectives: [
     {
       directive: CdkMenuItemRadio,

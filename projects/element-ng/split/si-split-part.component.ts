@@ -25,9 +25,9 @@ import { Action, CollapseTo, PartState, Scale, SplitOrientation } from './si-spl
 
 @Component({
   selector: 'si-split-part',
+  imports: [NgTemplateOutlet, SiIconNextComponent, SiTranslateModule],
   templateUrl: './si-split-part.component.html',
   styleUrl: './si-split-part.component.scss',
-  imports: [NgTemplateOutlet, SiIconNextComponent, SiTranslateModule],
   // Signals cannot be used directly with @HostBinding. See: https://github.com/angular/angular/issues/53888#issuecomment-1888935225
   // Having every binding here for consistency.
   host: {

@@ -103,20 +103,20 @@ const rootDefaults: TreeItem = {
  */
 @Component({
   selector: 'si-tree-view',
-  providers: [
-    SiTreeViewConverterService,
-    SiTreeViewItemHeightService,
-    SiTreeViewService,
-    SiTreeViewVirtualizationService
-  ],
-  templateUrl: './si-tree-view.component.html',
-  styleUrl: './si-tree-view.component.scss',
   imports: [
     NgClass,
     SiTranslateModule,
     SiTreeViewItemComponent,
     CdkScrollableModule,
     SiTreeViewItemDirective
+  ],
+  templateUrl: './si-tree-view.component.html',
+  styleUrl: './si-tree-view.component.scss',
+  providers: [
+    SiTreeViewConverterService,
+    SiTreeViewItemHeightService,
+    SiTreeViewService,
+    SiTreeViewVirtualizationService
   ]
 })
 export class SiTreeViewComponent

@@ -42,8 +42,6 @@ export interface ThresholdStep {
 
 @Component({
   selector: 'si-threshold',
-  templateUrl: './si-threshold.component.html',
-  styleUrl: './si-threshold.component.scss',
   imports: [
     FormsModule,
     NgClass,
@@ -56,6 +54,8 @@ export interface ThresholdStep {
     SiTranslateModule,
     SiReadonlyThresholdOptionComponent
   ],
+  templateUrl: './si-threshold.component.html',
+  styleUrl: './si-threshold.component.scss',
   host: {
     '[class.add-remove]': 'canAddRemoveSteps()',
     '[class.horizontal]': 'horizontalLayout()',

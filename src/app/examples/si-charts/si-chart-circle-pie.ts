@@ -10,8 +10,8 @@ themeSupport.setDefault(themeElement);
 
 @Component({
   selector: 'app-sample',
+  imports: [SiChartCircleComponent, SiResizeObserverDirective],
   templateUrl: './si-chart-circle-pie.html',
-  host: { class: 'p-5' },
-  imports: [SiChartCircleComponent, SiResizeObserverDirective]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {}

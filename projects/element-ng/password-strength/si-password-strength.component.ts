@@ -17,13 +17,13 @@ import { SiPasswordStrengthDirective } from './si-password-strength.directive';
 
 @Component({
   selector: 'si-password-strength',
+  imports: [SiPasswordToggleComponent],
   template: `
     <si-password-toggle [showVisibilityIcon]="showVisibilityIcon()" (typeChange)="toggle($event)">
       <ng-content />
     </si-password-toggle>
   `,
   styleUrl: './si-password-strength.component.scss',
-  imports: [SiPasswordToggleComponent],
   host: {
     '[class.bad]': 'bad()',
     '[class.weak]': 'weak()',

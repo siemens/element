@@ -13,15 +13,15 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './password.html',
-  host: { class: 'p-5' },
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     SiPasswordStrengthComponent,
     SiPasswordStrengthDirective,
     SiPasswordToggleComponent,
     FormsModule
-  ]
+  ],
+  templateUrl: './password.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

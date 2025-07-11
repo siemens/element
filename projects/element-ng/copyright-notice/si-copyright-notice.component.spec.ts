@@ -9,9 +9,9 @@ import { CopyrightDetails, SI_COPYRIGHT_DETAILS } from '@siemens/element-ng/copy
 import { SiCopyrightNoticeComponent } from './si-copyright-notice.component';
 
 @Component({
+  imports: [SiCopyrightNoticeComponent],
   template: `<si-copyright-notice />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiCopyrightNoticeComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {}
 describe('SiCopyrightNoticeComponent', () => {
@@ -64,9 +64,9 @@ describe('SiCopyrightNoticeComponent', () => {
 });
 
 @Component({
+  imports: [SiCopyrightNoticeComponent],
   template: `<si-copyright-notice [copyright]="copyrightInfo" />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiCopyrightNoticeComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperWithInputComponent {
   copyrightInfo: CopyrightDetails | undefined = {

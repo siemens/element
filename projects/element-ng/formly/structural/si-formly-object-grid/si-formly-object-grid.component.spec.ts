@@ -14,9 +14,9 @@ import { SiFormlyObjectGridComponent } from './si-formly-object-grid.component';
 
 @Component({
   selector: 'si-formly-test',
+  imports: [ReactiveFormsModule, SiFormModule, FormlyModule],
   template: ` <formly-form [form]="form" [fields]="fields" [model]="model" [options]="options" /> `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, SiFormModule, FormlyModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class FormlyTestComponent {
   form = new FormRecord({});

@@ -23,10 +23,10 @@ export type AvatarSize = 'tiny' | 'xsmall' | 'small' | 'regular' | 'large' | 'xl
 
 @Component({
   selector: 'si-avatar',
+  imports: [NgClass, SiIconNextComponent],
   templateUrl: './si-avatar.component.html',
   styleUrl: './si-avatar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgClass, SiIconNextComponent],
   hostDirectives: [
     {
       directive: SiAvatarBackgroundColorDirective,

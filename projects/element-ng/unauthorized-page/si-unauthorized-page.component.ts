@@ -18,10 +18,10 @@ import { SiTranslateModule, TranslatableString } from '@siemens/element-translat
  */
 @Component({
   selector: 'si-unauthorized-page',
+  imports: [SiLinkDirective, SiIconNextComponent, SiTranslateModule],
   templateUrl: './si-unauthorized-page.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './si-unauthorized-page.component.scss',
-  imports: [SiLinkDirective, SiIconNextComponent, SiTranslateModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiUnauthorizedPageComponent {
   /**

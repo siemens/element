@@ -11,9 +11,9 @@ import { NgxDatatableModule, TableColumn } from '@siemens/ngx-datatable';
 
 @Component({
   selector: 'app-sample',
+  imports: [NgxDatatableModule, SiDatatableModule, SiPaginationComponent, SiCircleStatusModule],
   templateUrl: './datatable-sticky-columns.html',
-  styleUrl: './datatable.scss',
-  imports: [NgxDatatableModule, SiDatatableModule, SiPaginationComponent, SiCircleStatusModule]
+  styleUrl: './datatable.scss'
 })
 export class SampleComponent implements OnInit {
   readonly statusCellTempl = viewChild.required<TemplateRef<any>>('statusCellTempl');

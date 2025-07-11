@@ -28,9 +28,9 @@ import { SiToast } from '../si-toast.model';
 
 @Component({
   selector: 'si-toast-notification',
+  imports: [NgClass, SiLinkModule, SiIconNextComponent, SiStatusIconComponent, SiTranslateModule],
   templateUrl: './si-toast-notification.component.html',
-  styleUrl: './si-toast-notification.component.scss',
-  imports: [NgClass, SiLinkModule, SiIconNextComponent, SiStatusIconComponent, SiTranslateModule]
+  styleUrl: './si-toast-notification.component.scss'
 })
 export class SiToastNotificationComponent implements OnChanges {
   private readonly statusIcons = inject(STATUS_ICON_CONFIG);

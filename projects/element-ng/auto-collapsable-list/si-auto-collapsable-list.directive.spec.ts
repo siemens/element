@@ -9,6 +9,7 @@ import { SiAutoCollapsableListItemDirective } from './si-auto-collapsable-list-i
 import { SiAutoCollapsableListModule } from './si-auto-collapsable-list.module';
 
 @Component({
+  imports: [SiAutoCollapsableListModule],
   template: `
     <div #containerElement [style.width.px]="containerWidth">
       <div
@@ -44,8 +45,7 @@ import { SiAutoCollapsableListModule } from './si-auto-collapsable-list.module';
       flex: 0 0 100px;
       block-size: 1px;
     }
-  `,
-  imports: [SiAutoCollapsableListModule]
+  `
 })
 class TestComponent {
   width = 600;

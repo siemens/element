@@ -31,11 +31,11 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'si-main-detail-container',
+  imports: [NgClass, NgTemplateOutlet, SiSplitComponent, SiSplitPartComponent, SiTranslateModule],
   templateUrl: './si-main-detail-container.component.html',
   styleUrl: './si-main-detail-container.component.scss',
-  host: { class: 'si-layout-inner' },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgClass, NgTemplateOutlet, SiSplitComponent, SiSplitPartComponent, SiTranslateModule]
+  host: { class: 'si-layout-inner' }
 })
 export class SiMainDetailContainerComponent implements OnInit, OnChanges, OnDestroy {
   private animationDuration = 500;

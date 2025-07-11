@@ -13,6 +13,7 @@ import { addIcons, elementDown2, SiIconNextComponent } from '@siemens/element-ng
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'button[si-header-navigation-item], a[si-header-navigation-item]',
+  imports: [SiIconNextComponent],
   template: `
     <div class="item-title">
       <ng-content />
@@ -21,15 +22,14 @@ import { addIcons, elementDown2, SiIconNextComponent } from '@siemens/element-ng
       <si-icon-next class="dropdown-caret" [icon]="icons.elementDown2" />
     }
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'header-item focus-inside',
     '[class.dropdown-toggle]': '!!dropdownTrigger'
   },
   providers: [
     { provide: SI_HEADER_DROPDOWN_OPTIONS, useValue: { disableRootFocusTrapForInlineMode: true } }
-  ],
-  imports: [SiIconNextComponent],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  ]
 })
 export class SiHeaderNavigationItemComponent {
   /** @internal */

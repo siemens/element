@@ -9,11 +9,11 @@ import { Filter } from './filter';
 import { SiFilterPillComponent } from './index';
 
 @Component({
+  imports: [SiFilterPillComponent],
   template: `
     <si-filter-pill [totalPills]="1" [filter]="filter" (deleteFilters)="deleteFilters($event)" />
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiFilterPillComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   filter!: Filter;

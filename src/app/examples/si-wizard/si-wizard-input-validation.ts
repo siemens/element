@@ -10,9 +10,9 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiWizardComponent, SiWizardStepComponent, SiInlineNotificationComponent, FormsModule],
   templateUrl: './si-wizard-input-validation.html',
-  host: { class: 'p-5' },
-  imports: [SiWizardComponent, SiWizardStepComponent, SiInlineNotificationComponent, FormsModule]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

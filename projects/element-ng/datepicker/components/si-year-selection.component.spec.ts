@@ -11,6 +11,7 @@ import { SiYearSelectionComponent as TestComponent } from './si-year-selection.c
 import { CalenderTestHelper, generateKeyEvent } from './test-helper.spec';
 
 @Component({
+  imports: [SiDatepickerModule, A11yModule, TestComponent],
   template: `<si-year-selection
     previousLabel="Previous Year Range"
     nextLabel="Next Year Range"
@@ -21,8 +22,7 @@ import { CalenderTestHelper, generateKeyEvent } from './test-helper.spec';
     (selectedValueChange)="selectionChange($event)"
     (yearRangeChange)="yearRangeChange($event)"
   />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiDatepickerModule, A11yModule, TestComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
   readonly focusedDate = signal(new Date(2022, 2, 26));

@@ -38,6 +38,7 @@ import { SidePanelMode, SidePanelSize } from './side-panel.model';
 
 @Component({
   selector: 'si-side-panel',
+  imports: [PortalModule],
   templateUrl: './si-side-panel.component.html',
   styleUrl: './si-side-panel.component.scss',
   host: {
@@ -57,8 +58,7 @@ import { SidePanelMode, SidePanelSize } from './side-panel.model';
     '[class.rpanel-resize-md]': 'isMd()',
     '[class.rpanel-resize-lg]': 'isLg()',
     '[class.rpanel-resize-xl]': 'isXl()'
-  },
-  imports: [PortalModule]
+  }
 })
 export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
   /**

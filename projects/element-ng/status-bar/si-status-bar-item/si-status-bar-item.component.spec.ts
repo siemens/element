@@ -10,6 +10,7 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 import { SiStatusBarItemComponent } from './si-status-bar-item.component';
 
 @Component({
+  imports: [SiIconModule, SiTranslateModule, SiStatusBarItemComponent],
   template: `
     <si-status-bar-item
       #item
@@ -19,8 +20,7 @@ import { SiStatusBarItemComponent } from './si-status-bar-item.component';
       [blink]="blink"
     />
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiIconModule, SiTranslateModule, SiStatusBarItemComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   status?: string;

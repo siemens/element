@@ -9,9 +9,9 @@ import { SiSidePanelModule } from './si-side-panel.module';
 import { SiSidePanelService } from './si-side-panel.service';
 
 @Component({
+  imports: [SiSidePanelModule],
   template: `<si-side-panel-content heading="Title" /> `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiSidePanelModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {}
 

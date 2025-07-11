@@ -9,9 +9,9 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiIconModule],
   templateUrl: './si-modal-service.html',
-  host: { class: 'p-5' },
-  imports: [SiIconModule]
+  host: { class: 'p-5' }
 })
 export class SampleComponent implements OnDestroy {
   private ref?: ModalRef<unknown>;

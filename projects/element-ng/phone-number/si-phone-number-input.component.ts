@@ -39,8 +39,18 @@ import { CountryInfo, PhoneDetails } from './si-phone-number-input.models';
 
 @Component({
   selector: 'si-phone-number-input',
+  imports: [
+    CdkOverlayOrigin,
+    CdkConnectedOverlay,
+    NgClass,
+    SiIconNextComponent,
+    SiPhoneNumberInputSelectDirective,
+    SiSelectListHasFilterComponent,
+    SiTranslateModule
+  ],
   templateUrl: './si-phone-number-input.component.html',
   styleUrl: './si-phone-number-input.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALIDATORS,
@@ -56,16 +66,6 @@ import { CountryInfo, PhoneDetails } from './si-phone-number-input.models';
       provide: SI_FORM_ITEM_CONTROL,
       useExisting: SiPhoneNumberInputComponent
     }
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    CdkOverlayOrigin,
-    CdkConnectedOverlay,
-    NgClass,
-    SiIconNextComponent,
-    SiPhoneNumberInputSelectDirective,
-    SiSelectListHasFilterComponent,
-    SiTranslateModule
   ],
   host: {
     'role': 'group',

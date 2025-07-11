@@ -8,9 +8,9 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-footer',
+  imports: [SiLinkDirective, SiTranslateModule],
   templateUrl: './si-footer.component.html',
-  styleUrl: './si-footer.component.scss',
-  imports: [SiLinkDirective, SiTranslateModule]
+  styleUrl: './si-footer.component.scss'
 })
 export class SiFooterComponent {
   /**

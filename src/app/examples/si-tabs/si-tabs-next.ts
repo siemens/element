@@ -24,9 +24,9 @@ interface TabModel {
 
 @Component({
   selector: 'app-sample',
+  imports: [FormsModule, SiTabsetNextComponent, SiTabNextComponent],
   templateUrl: './si-tabs-next.html',
-  host: { class: 'p-5' },
-  imports: [FormsModule, SiTabsetNextComponent, SiTabNextComponent]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   selectedTabIndex = 0;

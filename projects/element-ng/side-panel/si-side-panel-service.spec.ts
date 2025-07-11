@@ -11,11 +11,11 @@ import { SiSidePanelService } from './si-side-panel.service';
 
 @Component({
   selector: 'si-mock-component',
+  imports: [CommonModule, PortalModule],
   template: `<ng-template #helpPanel cdkPortal>
       <h3>Help Panel</h3>
     </ng-template>
-    <div>Test Mock Component</div>`,
-  imports: [CommonModule, PortalModule]
+    <div>Test Mock Component</div>`
 })
 class MockComponent {
   readonly helpPanel = viewChild.required<CdkPortal, CdkPortal>('helpPanel', { read: CdkPortal });

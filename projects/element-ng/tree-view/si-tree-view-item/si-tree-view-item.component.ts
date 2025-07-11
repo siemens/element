@@ -47,8 +47,6 @@ import {
 
 @Component({
   selector: 'si-tree-view-item',
-  templateUrl: './si-tree-view-item.component.html',
-  styleUrl: './si-tree-view-item.component.scss',
   imports: [
     CdkContextMenuTrigger,
     CdkMenuTrigger,
@@ -58,6 +56,8 @@ import {
     SiMenuFactoryComponent,
     SiTranslateModule
   ],
+  templateUrl: './si-tree-view-item.component.html',
+  styleUrl: './si-tree-view-item.component.scss',
   host: {
     role: 'treeitem',
     '[attr.tabindex]':

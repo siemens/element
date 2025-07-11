@@ -11,10 +11,10 @@ import { SiMenuItemBase } from './si-menu-item-base.directive';
 
 @Component({
   selector: 'si-menu-item, a[si-menu-item], button[si-menu-item]',
+  imports: [NgClass, SiIconNextComponent],
   templateUrl: './si-menu-item.component.html',
   styleUrl: './si-menu-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgClass, SiIconNextComponent],
   hostDirectives: [
     {
       directive: CdkMenuItem,

@@ -11,6 +11,7 @@ import { SiShadowRootDirective } from './si-shadow-root.directive';
 describe('ShadowRootDirective', () => {
   @Component({
     selector: 'si-test',
+    imports: [CdkConnectedOverlay, CdkOverlayOrigin],
     template: ` <button #trigger="cdkOverlayOrigin" type="button" cdkOverlayOrigin>Open</button>
       <ng-template
         cdkConnectedOverlay
@@ -19,13 +20,12 @@ describe('ShadowRootDirective', () => {
       >
         <span id="in-shadow" class="test-style">Text</span>
       </ng-template>`,
-    encapsulation: ViewEncapsulation.ShadowDom,
     styles: `
       .test-style {
         color: #fff;
       }
     `,
-    imports: [CdkConnectedOverlay, CdkOverlayOrigin],
+    encapsulation: ViewEncapsulation.ShadowDom,
     hostDirectives: [SiShadowRootDirective]
   })
   class WithOverlayComponent {
@@ -33,11 +33,11 @@ describe('ShadowRootDirective', () => {
   }
 
   @Component({
+    imports: [WithOverlayComponent],
     template: `
       <span id="out-shadow" class="test-style">Text</span>
       <si-test [open]="open()" />
     `,
-    imports: [WithOverlayComponent],
     styles: `
       .test-style {
         color: #000 !important;

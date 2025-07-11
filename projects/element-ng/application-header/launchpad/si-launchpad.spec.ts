@@ -13,12 +13,12 @@ import { App, AppCategory } from './si-launchpad.model';
 
 describe('SiLaunchpad', () => {
   @Component({
+    imports: [SiLaunchpadFactoryComponent],
     template: `<si-launchpad-factory
       [enableFavorites]="enableFavorites"
       [apps]="apps"
       (favoriteChange)="favoriteChange($event)"
-    />`,
-    imports: [SiLaunchpadFactoryComponent]
+    />`
   })
   class TestHostComponent {
     apps: App[] | AppCategory[] = [];

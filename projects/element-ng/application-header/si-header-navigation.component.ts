@@ -11,6 +11,7 @@ import { SiApplicationHeaderComponent } from './si-application-header.component'
 
 @Component({
   selector: 'si-header-navigation',
+  imports: [NgClass, SiTranslateModule, SiIconNextComponent],
   template: `
     @if (header.launchpad()) {
       <button
@@ -25,7 +26,6 @@ import { SiApplicationHeaderComponent } from './si-application-header.component'
     }
     <ng-content />
   `,
-  imports: [NgClass, SiTranslateModule, SiIconNextComponent],
   host: { class: 'header-navigation', role: 'navigation' }
 })
 export class SiHeaderNavigationComponent implements OnDestroy {

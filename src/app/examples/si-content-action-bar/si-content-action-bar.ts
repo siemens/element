@@ -12,9 +12,9 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiContentActionBarComponent],
   templateUrl: './si-content-action-bar.html',
-  host: { class: 'p-5' },
-  imports: [SiContentActionBarComponent]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

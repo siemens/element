@@ -22,6 +22,7 @@ import {
 import { SiMainDetailContainerComponent } from './si-main-detail-container.component';
 
 @Component({
+  imports: [SiMainDetailContainerComponent],
   template: `
     <si-main-detail-container
       class="vh-100"
@@ -43,8 +44,7 @@ import { SiMainDetailContainerComponent } from './si-main-detail-container.compo
       <span slot="details">details</span>
     </si-main-detail-container>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiMainDetailContainerComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
   readonly mainDetail = viewChild.required(SiMainDetailContainerComponent);

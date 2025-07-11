@@ -119,7 +119,6 @@ const dynamicUiConfig = (translate: SiTranslateService): ConfigOption => {
 
 @NgModule({
   declarations: [SiFormlyComponent],
-  exports: [SiFormlyComponent],
   imports: [
     CommonModule,
     FormlyBootstrapModule,
@@ -144,6 +143,7 @@ const dynamicUiConfig = (translate: SiTranslateService): ConfigOption => {
     SiFormlyWrapperComponent,
     SiFormModule
   ],
+  exports: [SiFormlyComponent],
   providers: [
     {
       provide: FORMLY_CONFIG,

@@ -8,10 +8,10 @@ import { SiTranslateModule, TranslatableString } from '@siemens/element-translat
 
 @Component({
   selector: 'si-icon',
+  imports: [NgClass, SiTranslateModule],
   templateUrl: './si-icon.component.html',
   styles: ':host, span { line-height: 1; }',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgClass, SiTranslateModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiIconComponent {
   /** Icon token, see {@link https://element.siemens.io/icons/element} */

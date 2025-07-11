@@ -7,10 +7,10 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-progressbar',
+  imports: [SiTranslateModule],
   templateUrl: './si-progressbar.component.html',
   styleUrl: './si-progressbar.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiTranslateModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiProgressbarComponent {
   /**

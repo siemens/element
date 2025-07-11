@@ -17,9 +17,9 @@ import { SiFormlySelectComponent } from './si-formly-select.component';
 
 @Component({
   selector: 'si-formly-test',
+  imports: [ReactiveFormsModule, SiSelectModule, FormlyModule],
   template: `<formly-form [form]="form" [fields]="fields" [model]="model" /> `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, SiSelectModule, FormlyModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class FormlyTestComponent {
   form = new FormRecord({});

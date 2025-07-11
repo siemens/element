@@ -10,9 +10,9 @@ import { SiLoadingSpinnerComponent } from './si-loading-spinner.component';
 
 @Component({
   selector: 'si-loading-button',
+  imports: [SiLoadingSpinnerComponent, NgClass, SiTranslateModule],
   templateUrl: './si-loading-button.component.html',
   styleUrl: './si-loading-button.component.scss',
-  imports: [SiLoadingSpinnerComponent, NgClass, SiTranslateModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.pe-none]': 'disabled()'

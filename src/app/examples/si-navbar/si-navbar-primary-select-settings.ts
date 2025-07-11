@@ -13,9 +13,9 @@ import { SiThemeService, ThemeType } from '@siemens/element-ng/theme';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiNavbarModule, JsonPipe],
   templateUrl: './si-navbar-primary-select-settings.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiNavbarModule, JsonPipe]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   private readonly availableLanguages = ['en', 'de', 'fr'];

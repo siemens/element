@@ -29,9 +29,6 @@ import { TypeaheadMatch } from './si-typeahead.model';
 
 @Component({
   selector: 'si-typeahead',
-  templateUrl: './si-typeahead.component.html',
-  styleUrl: './si-typeahead.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     SiAutocompleteListboxDirective,
     SiAutocompleteOptionDirective,
@@ -39,6 +36,9 @@ import { TypeaheadMatch } from './si-typeahead.model';
     NgTemplateOutlet,
     SiTranslateModule
   ],
+  templateUrl: './si-typeahead.component.html',
+  styleUrl: './si-typeahead.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'w-100' }
 })
 export class SiTypeaheadComponent implements OnDestroy, OnInit, AfterViewInit {

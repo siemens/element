@@ -19,8 +19,6 @@ import { NavbarVerticalItem, SiNavbarVerticalComponent } from '@siemens/element-
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-navbar-vertical-text.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     SiApplicationHeaderComponent,
     SiHeaderActionsDirective,
@@ -31,7 +29,9 @@ import { NavbarVerticalItem, SiNavbarVerticalComponent } from '@siemens/element-
     SiNavbarVerticalComponent,
     RouterLink,
     SiHeaderLogoDirective
-  ]
+  ],
+  templateUrl: './si-navbar-vertical-text.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   menuItems: NavbarVerticalItem[] = [

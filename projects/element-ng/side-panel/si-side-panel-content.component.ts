@@ -44,9 +44,6 @@ export interface StatusItem extends MenuItemLegacy {
 
 @Component({
   selector: 'si-side-panel-content',
-  templateUrl: './si-side-panel-content.component.html',
-  providers: [SiAccordionHCollapseService],
-  styleUrl: './si-side-panel-content.component.scss',
   imports: [
     SiContentActionBarComponent,
     SiIconNextComponent,
@@ -54,6 +51,9 @@ export interface StatusItem extends MenuItemLegacy {
     SiSearchBarComponent,
     SiTranslateModule
   ],
+  templateUrl: './si-side-panel-content.component.html',
+  styleUrl: './si-side-panel-content.component.scss',
+  providers: [SiAccordionHCollapseService],
   host: {
     '[class.collapsed]': 'isCollapsed()',
     '[class.expanded]': 'isExpanded()',

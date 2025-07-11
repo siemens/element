@@ -8,9 +8,9 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiPaginationComponent],
   templateUrl: './si-pagination.html',
-  host: { class: 'p-5' },
-  imports: [SiPaginationComponent]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

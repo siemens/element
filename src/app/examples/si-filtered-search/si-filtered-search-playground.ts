@@ -11,14 +11,14 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-filtered-search-playground.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ReactiveFormsModule,
     SiFilteredSearchComponent,
     SiFormItemComponent,
     SiNumberInputComponent
-  ]
+  ],
+  templateUrl: './si-filtered-search-playground.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnInit {
   // injected by the live-previewer

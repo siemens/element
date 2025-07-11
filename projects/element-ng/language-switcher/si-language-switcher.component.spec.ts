@@ -10,13 +10,13 @@ import { SiTranslateNgxTModule } from '@siemens/element-translate-ng/ngx-transla
 import { IsoLanguageValue, SiLanguageSwitcherComponent } from './index';
 
 @Component({
+  imports: [SiLanguageSwitcherComponent, SiTranslateNgxTModule],
   template: `<si-language-switcher
     [translationKey]="translationKey"
     [languageSwitcherLabel]="languageSwitcherLabel"
     [availableLanguages]="availableLanguages"
   />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiLanguageSwitcherComponent, SiTranslateNgxTModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   availableLanguages: string[] | IsoLanguageValue[] = [

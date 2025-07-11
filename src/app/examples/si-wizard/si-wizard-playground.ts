@@ -12,7 +12,6 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-wizard-playground.html',
   imports: [
     ReactiveFormsModule,
     SiNumberInputComponent,
@@ -20,7 +19,8 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiWizardComponent,
     SiWizardStepComponent,
     NgClass
-  ]
+  ],
+  templateUrl: './si-wizard-playground.html'
 })
 export class SampleComponent implements OnInit {
   protected readonly logEvent = inject(LOG_EVENT);

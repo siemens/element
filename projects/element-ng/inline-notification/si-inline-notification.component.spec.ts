@@ -13,6 +13,7 @@ import { of } from 'rxjs';
 import { SiInlineNotificationComponent } from './index';
 
 @Component({
+  imports: [SiInlineNotificationComponent],
   template: `
     <si-inline-notification
       [severity]="severity"
@@ -22,8 +23,7 @@ import { SiInlineNotificationComponent } from './index';
       [translationParams]="translationParams"
     />
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiInlineNotificationComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   severity!: StatusType;

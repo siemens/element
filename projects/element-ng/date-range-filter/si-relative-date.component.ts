@@ -30,16 +30,16 @@ interface OffsetOption extends SelectOption<string> {
 
 @Component({
   selector: 'si-relative-date',
-  templateUrl: './si-relative-date.component.html',
-  styleUrl: './si-relative-date.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule,
     SiNumberInputComponent,
     SiSelectComponent,
     SiSelectSingleValueDirective,
     SiSelectSimpleOptionsDirective
-  ]
+  ],
+  templateUrl: './si-relative-date.component.html',
+  styleUrl: './si-relative-date.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiRelativeDateComponent implements OnChanges {
   /** @defaultValue 0 */

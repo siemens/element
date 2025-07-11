@@ -10,6 +10,7 @@ import { By } from '@angular/platform-browser';
 import { SiIp4InputDirective } from './si-ip4-input.directive';
 
 @Component({
+  imports: [FormsModule, SiIp4InputDirective],
   template: `<input
     #validation="ngModel"
     siIpV4
@@ -19,8 +20,7 @@ import { SiIp4InputDirective } from './si-ip4-input.directive';
     [ngModel]="address()"
     (ngModelChange)="address.set($event)"
   />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule, SiIp4InputDirective]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
   readonly validation = viewChild.required<NgControl>('validation');

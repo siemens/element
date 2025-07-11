@@ -42,6 +42,7 @@ import { SiDatepickerDirective } from './si-datepicker.directive';
  */
 @Component({
   selector: 'si-calendar-button',
+  imports: [SiIconNextComponent, SiTranslateModule],
   template: `<ng-content />
     <button
       #calendarButton
@@ -55,13 +56,12 @@ import { SiDatepickerDirective } from './si-datepicker.directive';
       <si-icon-next [icon]="icons.elementCalendar" />
     </button>`,
   styles: ':host {--si-action-icon-offset: 24px;}',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'd-inline-block position-relative form-control-wrapper',
     '[class.ng-invalid]': 'showValidationMessages()',
     '[class.ng-touched]': 'showValidationMessages()'
-  },
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiIconNextComponent, SiTranslateModule]
+  }
 })
 export class SiCalendarButtonComponent implements OnInit, AfterContentInit, DoCheck {
   /**

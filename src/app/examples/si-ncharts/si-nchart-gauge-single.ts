@@ -11,9 +11,9 @@ import { GaugeSegment, GaugeSeries, SiNChartGaugeComponent } from '@siemens/nati
 
 @Component({
   selector: 'app-sample',
+  imports: [FormsModule, SiFormItemComponent, SiNumberInputComponent, SiNChartGaugeComponent],
   templateUrl: './si-nchart-gauge-single.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule, SiFormItemComponent, SiNumberInputComponent, SiNChartGaugeComponent],
   host: {
     class: 'p-5'
   }

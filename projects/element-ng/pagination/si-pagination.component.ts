@@ -13,9 +13,9 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-pagination',
+  imports: [SiIconNextComponent, SiTranslateModule],
   templateUrl: './si-pagination.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiIconNextComponent, SiTranslateModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiPaginationComponent {
   private static maxItems = 7;

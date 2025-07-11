@@ -9,9 +9,9 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 import { ResultDetailStep, SiResultDetailsListComponent } from '.';
 
 @Component({
+  imports: [SiResultDetailsListComponent, SiTranslateModule],
   template: `<si-result-details-list [steps]="steps" /> `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiResultDetailsListComponent, SiTranslateModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TestHostComponent {
   steps: ResultDetailStep[] = [];

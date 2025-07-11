@@ -13,6 +13,7 @@ import { PhoneDetails, SiPhoneNumberInputComponent } from '.';
 import { SiSelectFilterListHarness } from '../select/testing/si-select-filter-list.harness';
 
 @Component({
+  imports: [SiPhoneNumberInputComponent, CommonModule, ReactiveFormsModule],
   template: `
     <form [formGroup]="form">
       <si-phone-number-input
@@ -27,8 +28,7 @@ import { SiSelectFilterListHarness } from '../select/testing/si-select-filter-li
         (valueChange)="valueChange($event)"
       />
     </form>
-  `,
-  imports: [SiPhoneNumberInputComponent, CommonModule, ReactiveFormsModule]
+  `
 })
 class WrapperComponent {
   country = 'DE';

@@ -32,8 +32,10 @@ import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'si-search-bar',
+  imports: [SiIconNextComponent],
   templateUrl: './si-search-bar.component.html',
   styleUrl: './si-search-bar.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -41,11 +43,9 @@ import { debounceTime } from 'rxjs/operators';
       multi: true
     }
   ],
-  imports: [SiIconNextComponent],
   host: {
     '[class.readonly]': 'readonly()'
-  },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  }
 })
 export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAccessor, OnChanges {
   private readonly inputRef = viewChild.required<ElementRef<HTMLInputElement>>('inputRef');

@@ -9,7 +9,7 @@ import { SiIp4InputDirective, SiIp6InputDirective } from '@siemens/element-ng/ip
 
 @Component({
   selector: 'si-formly-ip-address',
-  templateUrl: './si-formly-ip-input.component.html',
-  imports: [ReactiveFormsModule, FormlyModule, SiIp4InputDirective, SiIp6InputDirective]
+  imports: [ReactiveFormsModule, FormlyModule, SiIp4InputDirective, SiIp6InputDirective],
+  templateUrl: './si-formly-ip-input.component.html'
 })
 export class SiFormlyIpInputComponent extends FieldType<FieldTypeConfig> {}

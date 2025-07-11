@@ -19,14 +19,14 @@ class RootTestService {
 }
 
 @Component({
-  template: `<router-outlet />`,
-  imports: [SiTranslateNgxTModule, RouterOutlet]
+  imports: [SiTranslateNgxTModule, RouterOutlet],
+  template: `<router-outlet />`
 })
 class HostComponent {}
 
 @Component({
-  template: `{{ missingKey | translate }}-{{ existingKey | translate }}`,
-  imports: [SiTranslateModule]
+  imports: [SiTranslateModule],
+  template: `{{ missingKey | translate }}-{{ existingKey | translate }}`
 })
 class TestWithDefaultHostComponent {
   missingKey = $localize`:@@KEY-MISSING:VALUE-MISSING-FALLBACK`;

@@ -7,7 +7,7 @@ import { FieldType, FormlyModule } from '@ngx-formly/core';
 
 @Component({
   selector: 'si-formly-object',
-  templateUrl: './si-formly-object.component.html',
-  imports: [FormlyModule]
+  imports: [FormlyModule],
+  templateUrl: './si-formly-object.component.html'
 })
 export class SiFormlyObjectComponent extends FieldType {}

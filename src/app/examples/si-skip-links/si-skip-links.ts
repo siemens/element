@@ -15,8 +15,6 @@ import { SiSkipLinkTargetDirective } from '@siemens/element-ng/skip-links';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-skip-links.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     SiSkipLinkTargetDirective,
     SiApplicationHeaderComponent,
@@ -25,6 +23,8 @@ import { SiSkipLinkTargetDirective } from '@siemens/element-ng/skip-links';
     RouterLink,
     SiHeaderBrandDirective,
     SiHeaderLogoDirective
-  ]
+  ],
+  templateUrl: './si-skip-links.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {}

@@ -10,10 +10,10 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiSearchBarComponent, ReactiveFormsModule],
   templateUrl: './si-search-bar.html',
-  host: { class: 'p-5' },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiSearchBarComponent, ReactiveFormsModule]
+  host: { class: 'p-5' }
 })
 export class SampleComponent implements OnInit {
   control = new FormControl('');
