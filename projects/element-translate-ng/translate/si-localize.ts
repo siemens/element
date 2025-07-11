@@ -32,3 +32,11 @@ export const initSiLocalize = (): void => {
   (Zone.current as any)._properties.siResolveLocalize = siResolveLocalize;
   globalScope.$localize = $localize;
 };
+
+// Init $localize in the current zone
+try {
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+  globalScope.$localize`:@@si-localize:This is a test for $localize`;
+} catch {
+  initSiLocalize();
+}
