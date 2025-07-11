@@ -44,9 +44,6 @@ const dragConfig = {
 
 @Component({
   selector: 'si-column-selection-dialog',
-  templateUrl: './si-column-selection-dialog.component.html',
-  styleUrl: './si-column-selection-dialog.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CdkDrag,
     CdkDropList,
@@ -57,6 +54,9 @@ const dragConfig = {
     SiTranslateModule,
     SiColumnSelectionEditorComponent
   ],
+  templateUrl: './si-column-selection-dialog.component.html',
+  styleUrl: './si-column-selection-dialog.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{ provide: CDK_DRAG_CONFIG, useValue: dragConfig }]
 })
 export class SiColumnSelectionDialogComponent implements OnInit {

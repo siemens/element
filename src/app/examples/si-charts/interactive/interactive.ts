@@ -59,9 +59,9 @@ const mulberry32 = (seed: number) => () => {
 
 @Component({
   selector: 'app-sample',
+  imports: [SiChartCartesianComponent, SiResizeObserverDirective],
   templateUrl: './interactive.html',
-  styleUrl: './interactive.scss',
-  imports: [SiChartCartesianComponent, SiResizeObserverDirective]
+  styleUrl: './interactive.scss'
 })
 export class SampleComponent implements OnInit, OnDestroy {
   readonly trendChart = viewChild.required<SiChartCartesianComponent>('trendChart');

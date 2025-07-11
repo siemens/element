@@ -19,9 +19,9 @@ import { ResultDetailStep } from './si-result-details-list.datamodel';
 
 @Component({
   selector: 'si-result-details-list',
+  imports: [SiLoadingSpinnerComponent, SiIconNextComponent, SiTranslateModule],
   templateUrl: './si-result-details-list.component.html',
-  styleUrl: './si-result-details-list.component.scss',
-  imports: [SiLoadingSpinnerComponent, SiIconNextComponent, SiTranslateModule]
+  styleUrl: './si-result-details-list.component.scss'
 })
 export class SiResultDetailsListComponent {
   /**

@@ -9,6 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SiFileDropzoneComponent, UploadFile } from './index';
 
 @Component({
+  imports: [SiFileDropzoneComponent],
   template: `
     <si-file-dropzone
       [maxFileSize]="maxFileSize()"
@@ -21,8 +22,7 @@ import { SiFileDropzoneComponent, UploadFile } from './index';
       (filesAdded)="filesAdded()"
     />
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiFileDropzoneComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   readonly fileDropzone = viewChild.required(SiFileDropzoneComponent);

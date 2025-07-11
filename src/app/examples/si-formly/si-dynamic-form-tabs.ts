@@ -10,9 +10,9 @@ import { SiFormlyModule } from '@siemens/element-ng/formly';
 
 @Component({
   selector: 'app-sample',
-  styleUrl: './si-dynamic-form-tabs.scss',
-  templateUrl: './si-dynamic-form-tabs.html',
   imports: [SiFormModule, SiFormlyModule],
+  templateUrl: './si-dynamic-form-tabs.html',
+  styleUrl: './si-dynamic-form-tabs.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {

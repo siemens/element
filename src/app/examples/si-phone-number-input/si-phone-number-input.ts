@@ -10,9 +10,9 @@ import { PhoneDetails, SiPhoneNumberInputComponent } from '@siemens/element-ng/p
 
 @Component({
   selector: 'app-sample',
+  imports: [CommonModule, SiPhoneNumberInputComponent, ReactiveFormsModule, TranslateModule],
   templateUrl: './si-phone-number-input.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, SiPhoneNumberInputComponent, ReactiveFormsModule, TranslateModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   lastEventValue!: PhoneDetails;

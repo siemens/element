@@ -11,9 +11,9 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-inline-notification',
+  imports: [NgClass, SiLinkDirective, SiTranslateModule, SiStatusIconComponent],
   templateUrl: './si-inline-notification.component.html',
-  styleUrl: './si-inline-notification.component.scss',
-  imports: [NgClass, SiLinkDirective, SiTranslateModule, SiStatusIconComponent]
+  styleUrl: './si-inline-notification.component.scss'
 })
 export class SiInlineNotificationComponent {
   /**

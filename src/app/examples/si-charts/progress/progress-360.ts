@@ -8,8 +8,8 @@ import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './chart.html',
-  imports: [SiChartProgressComponent, SiResizeObserverDirective]
+  imports: [SiChartProgressComponent, SiResizeObserverDirective],
+  templateUrl: './chart.html'
 })
 export class SampleComponent {
   chartData = {

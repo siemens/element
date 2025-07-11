@@ -16,9 +16,9 @@ import { SiFilterSettingsComponent } from '../si-filter-settings/si-filter-setti
 
 @Component({
   selector: 'app-sample',
+  imports: [SiFilterSettingsComponent, SiFilteredSearchComponent],
   templateUrl: './si-filtered-search-lazy-values.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiFilterSettingsComponent, SiFilteredSearchComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   variant: BackgroundColorVariant = 'base-1';

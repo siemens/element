@@ -37,6 +37,7 @@ interface TestForm {
 }
 
 @Component({
+  imports: [ReactiveFormsModule, SiFormContainerComponent],
   template: `
     <si-form-container
       #formContainer
@@ -44,8 +45,7 @@ interface TestForm {
       [errorCodeTranslateKeyMap]="customErrorMapper"
     />
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, SiFormContainerComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TestHostComponent {
   cdRef = inject(ChangeDetectorRef);
@@ -59,14 +59,14 @@ export class TestHostComponent {
 }
 
 @Component({
+  imports: [SiFormContainerComponent],
   template: `
     <si-form-container style="inline-size: 100px" [form]="form">
       <si-form-container si-form-container-content [form]="form">
         <div si-form-container-content style="block-size: 10px"></div>
       </si-form-container>
     </si-form-container>
-  `,
-  imports: [SiFormContainerComponent]
+  `
 })
 class TestHostWithNestingComponent {
   form = new FormGroup({});

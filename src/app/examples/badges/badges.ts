@@ -7,10 +7,10 @@ import { SiBadgeComponent } from '@siemens/element-ng/badge';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiBadgeComponent],
   templateUrl: './badges.html',
   host: {
     class: 'p-5 bg-base-1'
-  },
-  imports: [SiBadgeComponent]
+  }
 })
 export class SampleComponent {}

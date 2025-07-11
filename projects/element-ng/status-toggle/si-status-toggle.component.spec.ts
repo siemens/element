@@ -10,8 +10,8 @@ import { SiStatusToggleComponent } from './si-status-toggle.component';
 import { StatusToggleItem } from './status-toggle.model';
 
 @Component({
-  template: `<si-status-toggle #toggle [items]="items" [disabled]="disabled" [(value)]="value" />`,
-  imports: [SiStatusToggleComponent]
+  imports: [SiStatusToggleComponent],
+  template: `<si-status-toggle #toggle [items]="items" [disabled]="disabled" [(value)]="value" />`
 })
 class HostComponent {
   disabled = false;
@@ -25,8 +25,8 @@ class HostComponent {
 }
 
 @Component({
-  template: `<si-status-toggle #toggle [items]="items" [formControl]="formControl" />`,
-  imports: [SiStatusToggleComponent, ReactiveFormsModule]
+  imports: [SiStatusToggleComponent, ReactiveFormsModule],
+  template: `<si-status-toggle #toggle [items]="items" [formControl]="formControl" />`
 })
 class FormHostComponent {
   readonly formControl = new FormControl('A');

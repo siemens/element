@@ -23,6 +23,7 @@ export class EnergyComponent {}
 
 @Component({
   selector: 'app-test-coverage',
+  imports: [RouterOutlet, SiLinkDirective],
   template: `<div class="p-5"
     >Total test coverage: 80%
     <br />
@@ -33,8 +34,7 @@ export class EnergyComponent {}
     <br />
     <br />
     <router-outlet />
-  </div>`,
-  imports: [RouterOutlet, SiLinkDirective]
+  </div>`
 })
 export class TestCoverageComponent {
   e2eRouterLink: Link = { link: 'e2e-coverage' };
@@ -55,9 +55,9 @@ export class UnitCoverageComponent {}
 
 @Component({
   selector: 'app-sample',
+  imports: [SiTabsetNextComponent, SiTabNextLinkComponent, RouterOutlet, RouterLink],
   templateUrl: './si-tabs-next-routing.html',
   host: { class: 'p-5' },
-  imports: [SiTabsetNextComponent, SiTabNextLinkComponent, RouterOutlet, RouterLink],
   providers: [
     provideExampleRoutes([
       {

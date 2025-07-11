@@ -8,9 +8,9 @@ import { NgxDatatableModule, TableColumn } from '@siemens/ngx-datatable';
 
 @Component({
   selector: 'app-sample',
+  imports: [NgxDatatableModule, SiDatatableModule],
   templateUrl: './datatable-tree.html',
-  styleUrl: './datatable.scss',
-  imports: [NgxDatatableModule, SiDatatableModule]
+  styleUrl: './datatable.scss'
 })
 export class SampleComponent implements OnInit {
   rows: any[] = [];

@@ -20,11 +20,6 @@ import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.s
 
 @Component({
   selector: 'app-sample',
-  styleUrl: './si-main-detail-container.scss',
-  templateUrl: './si-main-detail-container.html',
-  host: {
-    class: 'si-layout-fixed-height'
-  },
   imports: [
     CommonModule,
     SiMainDetailContainerComponent,
@@ -34,6 +29,11 @@ import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.s
     SiDatatableModule,
     SiEmptyStateComponent
   ],
+  templateUrl: './si-main-detail-container.html',
+  styleUrl: './si-main-detail-container.scss',
+  host: {
+    class: 'si-layout-fixed-height'
+  },
   providers: [DataService]
 })
 export class SampleComponent {

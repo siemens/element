@@ -14,6 +14,7 @@ import { SiTranslateModule, TranslatableString } from '@siemens/element-translat
 
 @Component({
   selector: 'si-card',
+  imports: [SiContentActionBarComponent, SiTranslateModule],
   templateUrl: './si-card.component.html',
   styleUrl: './si-card.component.scss',
   host: {
@@ -21,8 +22,7 @@ import { SiTranslateModule, TranslatableString } from '@siemens/element-translat
     '[class.card-horizontal]': 'classCardHorizontal()',
     '[style.--si-card-img-object-fit]': 'imgObjectFit()',
     '[style.--si-card-img-object-position]': 'imgObjectPosition()'
-  },
-  imports: [SiContentActionBarComponent, SiTranslateModule]
+  }
 })
 export class SiCardComponent {
   /**

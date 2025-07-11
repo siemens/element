@@ -14,6 +14,7 @@ import { runOnPushChangeDetection } from '../test-helpers/change-detection.helpe
 import { SiThresholdComponent, ThresholdStep } from './index';
 
 @Component({
+  imports: [SiThresholdComponent],
   template: `
     <si-threshold
       [options]="options"
@@ -33,8 +34,7 @@ import { SiThresholdComponent, ThresholdStep } from './index';
       (thresholdStepsChange)="thresholdStepsChange($event)"
     />
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiThresholdComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   options!: SelectOption<string>[] | SelectOptionLegacy[];

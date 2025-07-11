@@ -13,9 +13,9 @@ import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiFormItemComponent, SiStatusBarComponent, FormsModule],
   templateUrl: './si-status-bar.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiFormItemComponent, SiStatusBarComponent, FormsModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnInit {
   readonly logEvent = inject(LOG_EVENT);

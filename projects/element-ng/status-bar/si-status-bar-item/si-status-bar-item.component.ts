@@ -18,9 +18,9 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-status-bar-item',
+  imports: [NgClass, SiIconNextComponent, SiTranslateModule],
   templateUrl: './si-status-bar-item.component.html',
   styleUrl: './si-status-bar-item.component.scss',
-  imports: [NgClass, SiIconNextComponent, SiTranslateModule],
   host: {
     '[class.clickable]': 'clickable()'
   }

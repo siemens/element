@@ -11,10 +11,10 @@ import { SiThresholdComponent, ThresholdStep } from '@siemens/element-ng/thresho
 
 @Component({
   selector: 'app-sample',
+  imports: [FormsModule, SiFormItemComponent, SiNumberInputComponent, SiThresholdComponent],
   templateUrl: './si-threshold.html',
-  host: { class: 'p-5' },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule, SiFormItemComponent, SiNumberInputComponent, SiThresholdComponent]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   readonly optionsList: SelectOption<string>[] = [

@@ -22,9 +22,9 @@ const categorizedAppItems: AppItemCategory[] = [
 ];
 
 @Component({
+  imports: [SiNavbarPrimaryComponent],
   template: ` <si-navbar-primary [appItems]="appItems" [appCategoryItems]="categorizedAppItems" />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiNavbarPrimaryComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TestHostComponent {
   readonly component = viewChild.required(TestComponent);

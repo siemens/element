@@ -13,8 +13,8 @@ import {
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-menu-factory.html',
-  imports: [CdkContextMenuTrigger, CdkMenuTrigger, SiMenuFactoryComponent]
+  imports: [CdkContextMenuTrigger, CdkMenuTrigger, SiMenuFactoryComponent],
+  templateUrl: './si-menu-factory.html'
 })
 export class SampleComponent {
   items: MenuItem[] = [

@@ -9,12 +9,12 @@ import { FormsModule } from '@angular/forms';
 import { SiPillsInputModule } from './si-pills-input.module';
 
 @Component({
+  imports: [SiPillsInputModule, FormsModule],
   template: `
     <si-pills-input [readonly]="readonly" [(ngModel)]="value" />
     <si-pills-input class="csv" siPillsInputCsv [(ngModel)]="csvValue" />
     <si-pills-input class="email" siPillsInputEmail [(ngModel)]="emailValue" />
-  `,
-  imports: [SiPillsInputModule, FormsModule]
+  `
 })
 class TestHostComponent {
   showVisibilityIcon = true;

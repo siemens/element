@@ -20,9 +20,6 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-select.html',
-  host: { class: 'p-5' },
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule,
     PercentPipe,
@@ -36,7 +33,10 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiSelectOptionTemplateDirective,
     TitleCasePipe,
     TranslateModule
-  ]
+  ],
+  templateUrl: './si-select.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   readonly logEvent = inject(LOG_EVENT);

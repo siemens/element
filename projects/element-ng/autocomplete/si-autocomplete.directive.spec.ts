@@ -12,6 +12,7 @@ import { SiAutocompleteOptionDirective } from './si-autocomplete-option.directiv
 import { SiAutocompleteDirective } from './si-autocomplete.directive';
 
 @Component({
+  imports: [SiAutocompleteDirective, SiAutocompleteListboxDirective, SiAutocompleteOptionDirective],
   template: `
     <input #autocomplete="siAutocomplete" siAutocomplete />
     @if (showList) {
@@ -28,8 +29,7 @@ import { SiAutocompleteDirective } from './si-autocomplete.directive';
         }
       </div>
     }
-  `,
-  imports: [SiAutocompleteDirective, SiAutocompleteListboxDirective, SiAutocompleteOptionDirective]
+  `
 })
 class TestHostComponent {
   showList = false;

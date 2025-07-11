@@ -15,7 +15,7 @@ import { SiTranslateNgxTServiceBuilder } from './si-translate-ngxt.service-build
  * It should only be imported once in an applications root module (typically `app.module.ts`)
  */
 @NgModule({
-  providers: [{ provide: SiTranslateServiceBuilder, useClass: SiTranslateNgxTServiceBuilder }],
-  imports: [SiTranslateModule]
+  imports: [SiTranslateModule],
+  providers: [{ provide: SiTranslateServiceBuilder, useClass: SiTranslateNgxTServiceBuilder }]
 })
 export class SiTranslateNgxTModule {}

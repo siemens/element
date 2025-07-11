@@ -9,8 +9,8 @@ import { SiCalendarButtonComponent, SiDatepickerDirective } from '@siemens/eleme
 
 @Component({
   selector: 'si-formly-datetime',
-  templateUrl: './si-formly-datetime.component.html',
-  imports: [FormsModule, ReactiveFormsModule, SiCalendarButtonComponent, SiDatepickerDirective]
+  imports: [FormsModule, ReactiveFormsModule, SiCalendarButtonComponent, SiDatepickerDirective],
+  templateUrl: './si-formly-datetime.component.html'
 })
 export class SiFormlyDateTimeComponent extends FieldType<FieldTypeConfig> implements OnInit {
   ngOnInit(): void {

@@ -69,6 +69,21 @@ export class SiNavbarVerticalItemGuardDirective {
 
 @Component({
   selector: 'si-navbar-vertical',
+  imports: [
+    SiNavbarVerticalItemLegacyComponent,
+    SiSearchBarComponent,
+    SiSkipLinkTargetDirective,
+    SiTranslateModule,
+    SiNavbarVerticalItemComponent,
+    RouterLink,
+    SiNavbarVerticalItemGuardDirective,
+    NgTemplateOutlet,
+    SiNavbarVerticalGroupComponent,
+    RouterLinkActive,
+    SiNavbarVerticalGroupTriggerDirective,
+    SiNavbarVerticalDividerComponent,
+    SiNavbarVerticalHeaderComponent
+  ],
   templateUrl: './si-navbar-vertical.component.html',
   styleUrl: './si-navbar-vertical.component.scss',
   host: {
@@ -127,21 +142,6 @@ export class SiNavbarVerticalItemGuardDirective {
       state('hide', style({ 'opacity': '0' })),
       transition('* <=> *', [animate('0.15s linear')])
     ])
-  ],
-  imports: [
-    SiNavbarVerticalItemLegacyComponent,
-    SiSearchBarComponent,
-    SiSkipLinkTargetDirective,
-    SiTranslateModule,
-    SiNavbarVerticalItemComponent,
-    RouterLink,
-    SiNavbarVerticalItemGuardDirective,
-    NgTemplateOutlet,
-    SiNavbarVerticalGroupComponent,
-    RouterLinkActive,
-    SiNavbarVerticalGroupTriggerDirective,
-    SiNavbarVerticalDividerComponent,
-    SiNavbarVerticalHeaderComponent
   ]
 })
 export class SiNavbarVerticalComponent implements OnChanges, OnInit, OnDestroy {

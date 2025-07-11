@@ -20,8 +20,6 @@ import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './datatable-responsive.html',
-  styleUrl: './datatable.scss',
   imports: [
     NgxDatatableModule,
     SiDatatableModule,
@@ -31,7 +29,9 @@ import { Subject } from 'rxjs';
     SiIconModule,
     SiMenuFactoryComponent,
     CdkMenuTrigger
-  ]
+  ],
+  templateUrl: './datatable-responsive.html',
+  styleUrl: './datatable.scss'
 })
 export class SampleComponent implements OnInit, OnDestroy {
   readonly statusCellTempl = viewChild.required<TemplateRef<any>>('statusCellTempl');

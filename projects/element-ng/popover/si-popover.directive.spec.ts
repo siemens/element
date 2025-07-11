@@ -8,10 +8,10 @@ import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from '@angu
 import { SiPopoverDirective } from './si-popover.directive';
 
 @Component({
+  imports: [SiPopoverDirective],
   template: `
     <button type="button" siPopover="test popover content" [triggers]="triggers">Test</button>
-  `,
-  imports: [SiPopoverDirective]
+  `
 })
 export class TestHostComponent {
   public triggers = 'click';

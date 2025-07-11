@@ -10,8 +10,8 @@ themeSupport.setDefault(themeElement);
 
 @Component({
   selector: 'app-sample',
+  imports: [SiChartProgressBarComponent, SiResizeObserverDirective],
   templateUrl: './si-chart-progress-bar.html',
-  host: { class: 'p-5' },
-  imports: [SiChartProgressBarComponent, SiResizeObserverDirective]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {}

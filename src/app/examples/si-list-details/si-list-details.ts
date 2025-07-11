@@ -46,10 +46,6 @@ interface TabModel {
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-list-details.html',
-  host: {
-    class: 'si-layout-fixed-height'
-  },
   imports: [
     CommonModule,
     SiListDetailsComponent,
@@ -74,6 +70,10 @@ interface TabModel {
     SiMenuHeaderDirective,
     CdkMenuTrigger
   ],
+  templateUrl: './si-list-details.html',
+  host: {
+    class: 'si-layout-fixed-height'
+  },
   providers: [DataService]
 })
 export class SampleComponent {

@@ -9,10 +9,9 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiNavbarModule],
   templateUrl: './si-navbar-primary-custom-content.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-
-  imports: [SiNavbarModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   primaryItems = [

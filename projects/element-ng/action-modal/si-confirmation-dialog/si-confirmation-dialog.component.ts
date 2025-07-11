@@ -14,9 +14,9 @@ import { ConfirmationDialogResult } from '../si-action-dialog.types';
 
 @Component({
   selector: 'si-confirmation-dialog',
+  imports: [AsyncPipe, SiIconNextComponent, SiTranslateModule, SiLoadingButtonComponent],
   templateUrl: './si-confirmation-dialog.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AsyncPipe, SiIconNextComponent, SiTranslateModule, SiLoadingButtonComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiConfirmationDialogComponent {
   readonly titleId = input<string>();

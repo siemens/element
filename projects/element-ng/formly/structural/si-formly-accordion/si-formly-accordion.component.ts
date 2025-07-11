@@ -8,8 +8,8 @@ import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/elem
 
 @Component({
   selector: 'si-formly-accordion',
-  templateUrl: './si-formly-accordion.component.html',
-  imports: [SiCollapsiblePanelComponent, FormlyModule, SiAccordionComponent]
+  imports: [SiCollapsiblePanelComponent, FormlyModule, SiAccordionComponent],
+  templateUrl: './si-formly-accordion.component.html'
 })
 export class SiFormlyAccordionComponent extends FieldType implements AfterViewInit {
   protected panelToggle(toggle: boolean, fieldGroup: FormlyFieldConfig): void {

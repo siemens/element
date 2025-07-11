@@ -18,6 +18,7 @@ import { SiLinkActionService } from './si-link-action.service';
 import { SI_LINK_DEFAULT_NAVIGATION_EXTRA, SiLinkDirective } from './si-link.directive';
 
 @Component({
+  imports: [SiLinkDirective],
   template: `<a
     activeClass="active"
     [siLink]="link"
@@ -26,8 +27,7 @@ import { SI_LINK_DEFAULT_NAVIGATION_EXTRA, SiLinkDirective } from './si-link.dir
   >
     Testli
   </a>`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiLinkDirective]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   link?: Link = {};

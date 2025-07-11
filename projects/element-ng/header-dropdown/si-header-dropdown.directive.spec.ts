@@ -15,6 +15,11 @@ import { HeaderWithDropdowns, SI_HEADER_WITH_DROPDOWNS } from './si-header.model
 import { SiHeaderDropdownTriggerHarness } from './testing/si-header-dropdown-trigger.harness';
 
 @Component({
+  imports: [
+    SiHeaderDropdownComponent,
+    SiHeaderDropdownItemComponent,
+    SiHeaderDropdownTriggerDirective
+  ],
   template: `
     <button id="outside-button" type="button">Outside</button>
 
@@ -35,11 +40,6 @@ import { SiHeaderDropdownTriggerHarness } from './testing/si-header-dropdown-tri
       </si-header-dropdown>
     </ng-template>
   `,
-  imports: [
-    SiHeaderDropdownComponent,
-    SiHeaderDropdownItemComponent,
-    SiHeaderDropdownTriggerDirective
-  ],
   providers: [{ provide: SI_HEADER_WITH_DROPDOWNS, useExisting: TestHostComponent }]
 })
 class TestHostComponent implements HeaderWithDropdowns {

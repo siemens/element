@@ -33,6 +33,7 @@ import { SiFilteredSearchCriterionHarness } from './testing/si-filtered-search-c
 import { SiFilteredSearchHarness } from './testing/si-filtered-search.harness';
 
 @Component({
+  imports: [SiFilteredSearchComponent],
   template: ` <si-filtered-search
     searchLabel="search"
     [disabled]="disabled"
@@ -56,8 +57,7 @@ import { SiFilteredSearchHarness } from './testing/si-filtered-search.harness';
     (searchCriteriaChange)="searchCriteriaChange($event)"
     (interceptDisplayedCriteria)="showCriteria($event)"
   />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiFilteredSearchComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   readonly filteredSearch = viewChild.required(SiFilteredSearchComponent);

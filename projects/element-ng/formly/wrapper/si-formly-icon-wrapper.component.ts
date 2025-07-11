@@ -9,8 +9,8 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-formly-icon-wrapper',
-  styleUrl: './si-formly-icon-wrapper.component.scss',
+  imports: [SiTooltipDirective, SiTranslateModule],
   templateUrl: './si-formly-icon-wrapper.component.html',
-  imports: [SiTooltipDirective, SiTranslateModule]
+  styleUrl: './si-formly-icon-wrapper.component.scss'
 })
 export class SiFormlyIconWrapperComponent extends FieldWrapper {}

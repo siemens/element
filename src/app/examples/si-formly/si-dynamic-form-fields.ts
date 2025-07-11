@@ -12,8 +12,8 @@ import { SiFormlyModule } from '@siemens/element-ng/formly';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-dynamic-form-fields.html',
-  imports: [CommonModule, SiFormModule, SiFormlyModule]
+  imports: [CommonModule, SiFormModule, SiFormlyModule],
+  templateUrl: './si-dynamic-form-fields.html'
 })
 export class SampleComponent {
   form = new FormRecord({});

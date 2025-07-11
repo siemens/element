@@ -12,10 +12,10 @@ import { SiTabNextBaseDirective } from './si-tab-next-base.directive';
 /** @experimental */
 @Component({
   selector: 'si-tab-next',
+  imports: [NgClass, SiIconNextComponent, SiTranslateModule],
   templateUrl: './si-tab-next.component.html',
   styleUrl: './si-tab-next.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgClass, SiIconNextComponent, SiTranslateModule],
   host: {
     '[class.active]': 'active()',
     '[attr.aria-selected]': 'active()',

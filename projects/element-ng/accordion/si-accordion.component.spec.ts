@@ -11,6 +11,7 @@ import { SiAccordionComponent } from './si-accordion.component';
 import { SiCollapsiblePanelComponent } from './si-collapsible-panel.component';
 
 @Component({
+  imports: [SiTranslateModule, SiAccordionComponent, SiCollapsiblePanelComponent],
   template: `
     <si-accordion [expandFirstPanel]="expandFirstPanel()">
       <si-collapsible-panel heading="one"><div>content</div></si-collapsible-panel>
@@ -18,8 +19,7 @@ import { SiCollapsiblePanelComponent } from './si-collapsible-panel.component';
       <si-collapsible-panel heading="three"><div>content</div></si-collapsible-panel>
     </si-accordion>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiTranslateModule, SiAccordionComponent, SiCollapsiblePanelComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   readonly component = viewChild.required(SiAccordionComponent);

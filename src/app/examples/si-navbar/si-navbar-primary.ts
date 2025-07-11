@@ -8,8 +8,8 @@ import { SiNavbarModule } from '@siemens/element-ng/navbar';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiNavbarModule],
   templateUrl: './si-navbar-primary.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiNavbarModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {}

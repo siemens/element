@@ -7,9 +7,9 @@ import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/elem
 
 @Component({
   selector: 'app-sample',
+  imports: [SiAccordionComponent, SiCollapsiblePanelComponent],
   templateUrl: './si-accordion-full-height.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiAccordionComponent, SiCollapsiblePanelComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   moreContent = false;

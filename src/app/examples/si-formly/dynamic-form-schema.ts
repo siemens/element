@@ -16,8 +16,8 @@ export interface Person {
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './dynamic-form-schema.html',
   imports: [SiFormModule, SiFormlyModule],
+  templateUrl: './dynamic-form-schema.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {

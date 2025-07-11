@@ -11,8 +11,8 @@ import { TranslatableString, SiTranslateModule } from '@siemens/element-translat
  * Use this component for displaying system level messages on top of the page.
  */
 @Component({
-  imports: [SiTranslateModule],
   selector: 'si-system-banner',
+  imports: [SiTranslateModule],
   templateUrl: './system-banner.component.html',
   styleUrl: './system-banner.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

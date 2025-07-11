@@ -15,9 +15,9 @@ themeSupport.setDefault(themeElement);
 
 @Component({
   selector: 'app-sample',
+  imports: [SiChartCartesianComponent, SiResizeObserverDirective],
   templateUrl: './si-chart-scatter.html',
-  host: { class: 'p-5' },
-  imports: [SiChartCartesianComponent, SiResizeObserverDirective]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   chartData: CartesianChartSeries[] = [

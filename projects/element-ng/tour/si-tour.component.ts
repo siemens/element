@@ -27,10 +27,10 @@ import { PositionChange, SI_TOUR_TOKEN, TourAction, TourStepInternal } from './s
 
 @Component({
   selector: 'si-tour',
+  imports: [A11yModule, NgClass, SiIconNextComponent, SiTranslateModule],
   templateUrl: './si-tour.component.html',
   styleUrl: './si-tour.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [A11yModule, NgClass, SiIconNextComponent, SiTranslateModule],
   host: {
     '[attr.data-step-id]': 'step()?.step.id'
   }

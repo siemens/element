@@ -10,9 +10,9 @@ import { SiFormlyModule } from '@siemens/element-ng/formly';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiFormModule, SiFormlyModule],
   templateUrl: './si-dynamic-form-accordion.html',
   styleUrl: './si-dynamic-form-tabs.scss',
-  imports: [SiFormModule, SiFormlyModule],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {

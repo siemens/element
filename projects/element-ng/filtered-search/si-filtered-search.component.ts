@@ -56,8 +56,6 @@ import {
 
 @Component({
   selector: 'si-filtered-search',
-  templateUrl: './si-filtered-search.component.html',
-  styleUrl: './si-filtered-search.component.scss',
   imports: [
     FormsModule,
     SiIconNextComponent,
@@ -65,6 +63,8 @@ import {
     SiTranslateModule,
     SiFilteredSearchValueComponent
   ],
+  templateUrl: './si-filtered-search.component.html',
+  styleUrl: './si-filtered-search.component.scss',
   host: {
     '[class.disabled]': 'disabled()',
     '[class.dark-background]': "colorVariant() === 'base-0'"

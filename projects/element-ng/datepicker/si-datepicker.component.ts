@@ -54,8 +54,6 @@ export type RangeType = 'START' | 'END' | undefined;
 
 @Component({
   selector: 'si-datepicker',
-  templateUrl: './si-datepicker.component.html',
-  styleUrl: './si-datepicker.component.scss',
   imports: [
     SiYearSelectionComponent,
     SiMonthSelectionComponent,
@@ -63,7 +61,9 @@ export type RangeType = 'START' | 'END' | undefined;
     SiTimepickerComponent,
     FormsModule,
     SiTranslateModule
-  ]
+  ],
+  templateUrl: './si-datepicker.component.html',
+  styleUrl: './si-datepicker.component.scss'
 })
 export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
   private readonly locale = inject(LOCALE_ID).toString();

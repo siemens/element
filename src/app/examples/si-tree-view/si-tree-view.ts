@@ -7,10 +7,10 @@ import { MenuItemsProvider, SiTreeViewComponent, TreeItem } from '@siemens/eleme
 
 @Component({
   selector: 'app-sample',
+  imports: [SiTreeViewComponent],
   templateUrl: './si-tree-view.html',
-  host: { class: 'p-5' },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiTreeViewComponent]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   menuItems: MenuItemsProvider = item =>

@@ -9,9 +9,9 @@ import { NgxDatatableModule } from '@siemens/ngx-datatable';
 
 @Component({
   selector: 'app-sample',
+  imports: [NgxDatatableModule, SiDatatableModule, SiEmptyStateComponent],
   templateUrl: './datatable-empty-custom.html',
-  styleUrl: './datatable.scss',
-  imports: [NgxDatatableModule, SiDatatableModule, SiEmptyStateComponent]
+  styleUrl: './datatable.scss'
 })
 export class SampleComponent {
   tableConfig = SI_DATATABLE_CONFIG;

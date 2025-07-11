@@ -9,8 +9,8 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-popover.html',
-  imports: [SiPopoverDirective, SiIconComponent]
+  imports: [SiPopoverDirective, SiIconComponent],
+  templateUrl: './si-popover.html'
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

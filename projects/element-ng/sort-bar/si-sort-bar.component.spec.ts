@@ -9,13 +9,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SiSortBarComponent } from './si-sort-bar.component';
 
 @Component({
+  imports: [SiSortBarComponent],
   template: `<si-sort-bar
     [sortCriteria]="sortCriteria"
     [defaultSortCriteria]="defaultSortCriteria"
     (sortChange)="logEvent($event)"
   />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiSortBarComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   readonly component = viewChild.required(SiSortBarComponent);

@@ -10,9 +10,9 @@ import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
 
 @Component({
   selector: 'app-sample',
+  imports: [FormsModule, SiFormItemComponent, SiNumberInputComponent, JsonPipe],
   templateUrl: './si-number-input.html',
-  host: { class: 'p-5' },
-  imports: [FormsModule, SiFormItemComponent, SiNumberInputComponent, JsonPipe]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   value = 42;

@@ -10,6 +10,7 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-readonly-threshold-option',
+  imports: [NgClass, SiTranslateModule, SiIconNextComponent],
   template: `@let opt = option();
     @if (opt && opt.icon) {
       <i class="icon-stack">
@@ -28,9 +29,8 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
       </i>
     }
     <span class="text-truncate">{{ label() | translate }}</span>`,
-  host: { class: 'd-flex align-items-center py-2 my-4 px-4 si-title-2' },
-  imports: [NgClass, SiTranslateModule, SiIconNextComponent],
-  styleUrl: './si-readonly-threshold-option.component.scss'
+  styleUrl: './si-readonly-threshold-option.component.scss',
+  host: { class: 'd-flex align-items-center py-2 my-4 px-4 si-title-2' }
 })
 export class SiReadonlyThresholdOptionComponent {
   readonly value = input.required<string>();

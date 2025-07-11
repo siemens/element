@@ -50,9 +50,6 @@ class CountryOptionSource implements SelectOptionSource<string> {
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-select-lazy-load.html',
-  host: { class: 'p-5' },
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule,
     SiFormItemComponent,
@@ -60,7 +57,10 @@ class CountryOptionSource implements SelectOptionSource<string> {
     SiSelectMultiValueDirective,
     SiSelectLazyOptionsDirective
   ],
-  styles: 'si-select { max-inline-size: 300px}'
+  templateUrl: './si-select-lazy-load.html',
+  styles: 'si-select { max-inline-size: 300px}',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   readonly logEvent = inject(LOG_EVENT);

@@ -7,9 +7,9 @@ import { CopyrightDetails, SiCopyrightNoticeComponent } from '@siemens/element-n
 
 @Component({
   selector: 'app-sample',
+  imports: [SiCopyrightNoticeComponent],
   templateUrl: './si-copyright-notice.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiCopyrightNoticeComponent],
   host: { class: 'p-5' }
 })
 export class SampleComponent {

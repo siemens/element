@@ -14,10 +14,10 @@ import { FileUploadInterceptor } from './file-upload-interceptor';
 
 @Component({
   selector: 'app-sample',
+  imports: [FormsModule, SiFileUploaderComponent, SiFormItemComponent, SiNumberInputComponent],
   templateUrl: './si-file-uploader.html',
-  host: { class: 'p-5' },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule, SiFileUploaderComponent, SiFormItemComponent, SiNumberInputComponent]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   readonly logEvent = inject(LOG_EVENT);

@@ -9,9 +9,9 @@ import { SiIconComponent } from '@siemens/element-ng/icon';
 
 @Component({
   selector: 'app-sample',
+  imports: [FormsModule, SiFormItemComponent, SiIconComponent],
   templateUrl: './bootstrap.html',
-  host: { class: 'p-5' },
-  imports: [FormsModule, SiFormItemComponent, SiIconComponent]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   useHover = false;

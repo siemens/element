@@ -14,14 +14,15 @@ const generateKeyEvent = (key: string): KeyboardEvent => {
 };
 
 @Component({
-  template: ` <button type="button" siPopoverNext="test popover content">Test</button> `,
-  imports: [SiPopoverNextDirective]
+  imports: [SiPopoverNextDirective],
+  template: ` <button type="button" siPopoverNext="test popover content">Test</button> `
 })
 export class HostComponent {
   readonly popoverOverlay = viewChild(SiPopoverNextDirective);
 }
 
 @Component({
+  imports: [SiPopoverNextDirective],
   template: `
     <button type="button" [siPopoverNext]="popoverTemplate"> Test with custom template </button>
     <ng-template #popoverTemplate>
@@ -30,8 +31,7 @@ export class HostComponent {
         <button type="button" id="button-1">Button 1</button>
       </div>
     </ng-template>
-  `,
-  imports: [SiPopoverNextDirective]
+  `
 })
 export class CustomTemplateHostComponent {}
 

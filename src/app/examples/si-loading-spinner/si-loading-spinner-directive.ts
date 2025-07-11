@@ -8,8 +8,8 @@ import { SiLoadingSpinnerDirective } from '@siemens/element-ng/loading-spinner';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-loading-spinner-directive.html',
-  imports: [SiCardComponent, SiLoadingSpinnerDirective]
+  imports: [SiCardComponent, SiLoadingSpinnerDirective],
+  templateUrl: './si-loading-spinner-directive.html'
 })
 export class SampleComponent {
   loading = false;

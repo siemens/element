@@ -31,6 +31,7 @@ class SynchronousMockStore implements UIStateStorage {
 }
 
 @Component({
+  imports: [SiSplitModule],
   template: `
     <div
       style="position: relative;"
@@ -114,8 +115,7 @@ class SynchronousMockStore implements UIStateStorage {
       </si-split>
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiSplitModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
   readonly split = viewChild.required(TestComponent);

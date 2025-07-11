@@ -7,8 +7,8 @@ import { SiUnauthorizedPageModule } from '@siemens/element-ng/unauthorized-page'
 
 @Component({
   selector: 'app-sample',
+  imports: [SiUnauthorizedPageModule],
   templateUrl: './si-unauthorized-page.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiUnauthorizedPageModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {}

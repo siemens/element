@@ -10,9 +10,9 @@ themeSupport.setDefault(themeElement);
 
 @Component({
   selector: 'app-sample',
+  imports: [SiChartComponent, SiResizeObserverDirective],
   templateUrl: './si-chart-generic.html',
-  host: { class: 'p-5' },
-  imports: [SiChartComponent, SiResizeObserverDirective]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   public genericChartOptions: EChartOption = {

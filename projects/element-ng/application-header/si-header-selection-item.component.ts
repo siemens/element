@@ -10,8 +10,8 @@ import { SiHeaderActionItemBase } from './si-header-action-item.base';
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'button[si-header-selection-item]',
-  templateUrl: './si-header-selection-item.component.html',
   imports: [SiIconNextComponent],
+  templateUrl: './si-header-selection-item.component.html',
   host: {
     class: 'header-item header-selection-item focus-inside dropdown-toggle',
     '[class.show]': 'open()'

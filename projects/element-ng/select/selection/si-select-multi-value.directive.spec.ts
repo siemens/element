@@ -12,6 +12,7 @@ import { SiSelectModule } from '@siemens/element-ng/select';
 import { SiSelectHarness } from '../testing/si-select.harness';
 
 @Component({
+  imports: [SiSelectModule, ReactiveFormsModule],
   template: `
     <si-select
       multi
@@ -21,8 +22,7 @@ import { SiSelectHarness } from '../testing/si-select.harness';
       (valueChange)="valueChange($event)"
     />
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiSelectModule, ReactiveFormsModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestComponent {
   options = ['a', 'b', 'c', 'd', 'e', 'f'];

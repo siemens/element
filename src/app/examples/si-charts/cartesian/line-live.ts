@@ -16,8 +16,8 @@ import { ChartBase, ChartData } from './chart-base';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './chart.html',
-  imports: [SiChartCartesianComponent, SiResizeObserverDirective]
+  imports: [SiChartCartesianComponent, SiResizeObserverDirective],
+  templateUrl: './chart.html'
 })
 export class SampleComponent extends ChartBase implements OnDestroy {
   chartData: ChartData = {

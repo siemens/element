@@ -22,9 +22,9 @@ import { GaugeChartSeries } from './si-chart-gauge.interface';
 
 @Component({
   selector: 'si-chart-gauge',
+  imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
   templateUrl: '../si-chart/si-chart.component.html',
-  styleUrl: '../si-chart/si-chart.component.scss',
-  imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent]
+  styleUrl: '../si-chart/si-chart.component.scss'
 })
 export class SiChartGaugeComponent extends SiChartComponent implements OnChanges {
   /** @defaultValue 0 */

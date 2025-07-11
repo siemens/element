@@ -14,8 +14,6 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-navbar-vertical.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     SiNavbarVerticalComponent,
     SiApplicationHeaderComponent,
@@ -23,7 +21,9 @@ import { LOG_EVENT } from '@siemens/live-preview';
     RouterLink,
     RouterOutlet,
     SiHeaderLogoDirective
-  ]
+  ],
+  templateUrl: './si-navbar-vertical.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   menuItems: NavbarVerticalItem[] = [

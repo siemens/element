@@ -12,9 +12,9 @@ import { SiFormlyIpInputComponent } from './si-formly-ip-input.component';
 
 @Component({
   selector: 'si-formly-test',
+  imports: [FormlyModule],
   template: `<formly-form [form]="form" [fields]="fields" [model]="model" [options]="options" />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormlyModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class FormlyTestComponent {
   form = new FormRecord({});

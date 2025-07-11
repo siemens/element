@@ -25,6 +25,7 @@ import {
 import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 @Component({
+  imports: [SiTranslateModule, SiTreeViewModule, DragDropModule],
   template: `<div class="d-flex" style="height: 300px">
     <si-tree-view
       #treeOne
@@ -51,8 +52,7 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
       </ng-template>
     </si-tree-view>
   </div>`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiTranslateModule, SiTreeViewModule, DragDropModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
   @ViewChild('treeOne', { read: CdkDropList }) treeOneList!: CdkDropList;

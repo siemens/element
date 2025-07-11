@@ -27,18 +27,13 @@ import createSpy = jasmine.createSpy;
 
 describe('SelectLazyOptionsDirective', () => {
   @Component({
-    template: ` <si-select
-      multi
-      hasFilter
-      [optionSource]="optionSource"
-      [formControl]="control"
-    />`,
     imports: [
       SiSelectComponent,
       SiSelectLazyOptionsDirective,
       ReactiveFormsModule,
       SiSelectMultiValueDirective
-    ]
+    ],
+    template: ` <si-select multi hasFilter [optionSource]="optionSource" [formControl]="control" />`
   })
   class TestHostComponent {
     readonly optionSource: SelectOptionSource<string> = {

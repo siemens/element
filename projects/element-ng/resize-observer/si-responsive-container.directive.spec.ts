@@ -15,12 +15,12 @@ import {
 import { ResizeObserverService, SiResponsiveContainerDirective } from './index';
 
 @Component({
+  imports: [SiResponsiveContainerDirective],
   template: `
     <div siResponsiveContainer style="width: 100px" [resizeThrottle]="10" [style.width.px]="width">
       Testli
     </div>
-  `,
-  imports: [SiResponsiveContainerDirective]
+  `
 })
 class TestHostComponent {
   width = 100;

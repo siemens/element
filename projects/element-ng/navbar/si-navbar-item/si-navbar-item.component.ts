@@ -27,7 +27,6 @@ import { SiNavbarPrimaryComponent } from '../si-navbar-primary/si-navbar-primary
 /** @deprecated Use the new `si-application-header` instead. */
 @Component({
   selector: 'si-navbar-item',
-  templateUrl: './si-navbar-item.component.html',
   imports: [
     SiLinkDirective,
     SiTranslateModule,
@@ -37,6 +36,7 @@ import { SiNavbarPrimaryComponent } from '../si-navbar-primary/si-navbar-primary
     SiHeaderDropdownItemsFactoryComponent,
     SiHeaderDropdownTriggerDirective
   ],
+  templateUrl: './si-navbar-item.component.html',
   host: { class: 'd-contents' }
 })
 export class SiNavbarItemComponent implements OnInit, DoCheck, OnDestroy {

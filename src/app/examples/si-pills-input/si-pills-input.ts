@@ -13,8 +13,6 @@ import {
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-pills-input.html',
-  host: { class: 'p-5' },
   imports: [
     FormsModule,
     ReactiveFormsModule,
@@ -23,7 +21,9 @@ import {
     SiPillsInputEmailDirective,
     SiFormItemComponent
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './si-pills-input.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   readonly group = new FormGroup({

@@ -26,12 +26,12 @@ const OPTIONS_LIST_NEXT: readonly SelectOption<number>[] = [
 ];
 
 @Component({
+  imports: [FormsModule, ReactiveFormsModule, SiSelectModule],
   template: `
     <form [formGroup]="form">
       <si-select #select formControlName="input" [options]="options" [readonly]="readonly" />
     </form>
-  `,
-  imports: [FormsModule, ReactiveFormsModule, SiSelectModule]
+  `
 })
 class FormHostComponent {
   readonly form = new FormGroup({
@@ -44,6 +44,7 @@ class FormHostComponent {
 }
 
 @Component({
+  imports: [SiSelectModule],
   template: `
     <si-select
       inputId="test-select"
@@ -53,8 +54,7 @@ class FormHostComponent {
       [hasFilter]="hasFilter"
       [(value)]="value"
     />
-  `,
-  imports: [SiSelectModule]
+  `
 })
 class TestHostComponent {
   readonly selectComponent = viewChild.required(SiSelectComponent);
@@ -68,6 +68,7 @@ class TestHostComponent {
 }
 
 @Component({
+  imports: [SiSelectModule],
   template: `
     <si-select
       inputId="test-select"
@@ -77,8 +78,7 @@ class TestHostComponent {
       [hasFilter]="hasFilter"
       [(value)]="value"
     />
-  `,
-  imports: [SiSelectModule]
+  `
 })
 class TestHostNumberComponent {
   readonly selectComponent = viewChild.required(SiSelectComponent);
@@ -92,6 +92,7 @@ class TestHostNumberComponent {
 }
 
 @Component({
+  imports: [SiSelectModule],
   template: `
     <si-select
       multi
@@ -106,8 +107,7 @@ class TestHostNumberComponent {
       [(value)]="values"
       (valueChange)="selectionChanged($event)"
     />
-  `,
-  imports: [SiSelectModule]
+  `
 })
 class TestHostMultiComponent {
   readonly selectComponent = viewChild.required(SiSelectComponent);
@@ -124,16 +124,17 @@ class TestHostMultiComponent {
 }
 
 @Component({
+  imports: [SiSelectModule],
   template: ` <si-select [hasFilter]="hasFilter" [complexOptions]="[]">
     <ng-template let-option siSelectOptionTemplate>{{ option }}</ng-template>
-  </si-select>`,
-  imports: [SiSelectModule]
+  </si-select>`
 })
 class WithFilterInvalidTestComponent {
   hasFilter = true;
 }
 
 @Component({
+  imports: [SiSelectModule],
   template: `
     <si-select inputId="test-select" [options]="options">
       <ng-template siSelectActions>
@@ -151,8 +152,7 @@ class WithFilterInvalidTestComponent {
         </button>
       </ng-template>
     </si-select>
-  `,
-  imports: [SiSelectModule]
+  `
 })
 class TestHostCustomActionComponent {
   options?: readonly SelectOptionLegacy[] = OPTIONS_LIST;

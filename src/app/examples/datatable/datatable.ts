@@ -16,8 +16,6 @@ import { NgxDatatableModule, SelectionType, TableColumn } from '@siemens/ngx-dat
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './datatable.html',
-  styleUrl: './datatable.scss',
   imports: [
     FormsModule,
     NgxDatatableModule,
@@ -29,7 +27,9 @@ import { NgxDatatableModule, SelectionType, TableColumn } from '@siemens/ngx-dat
     SiMenuFactoryComponent,
     CdkMenuTrigger,
     SiFormValidationTooltipDirective
-  ]
+  ],
+  templateUrl: './datatable.html',
+  styleUrl: './datatable.scss'
 })
 export class SampleComponent implements OnInit {
   readonly statusCellTempl = viewChild.required('statusCellTempl', {

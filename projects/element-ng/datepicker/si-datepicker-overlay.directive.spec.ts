@@ -20,15 +20,15 @@ import { CloseCause, SiDatepickerOverlayDirective } from './si-datepicker-overla
 import { DatepickerConfig } from './si-datepicker.model';
 
 @Component({
+  imports: [FormsModule, SiDateInputDirective],
   template: `<input siDateInput type="text" class="form-control" [(ngModel)]="inputText" />`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   hostDirectives: [
     {
       directive: SiDatepickerOverlayDirective,
       outputs: ['siDatepickerClose']
     }
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule, SiDateInputDirective]
+  ]
 })
 class WrapperComponent {
   inputText = '02.01.2022';

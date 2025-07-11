@@ -29,6 +29,7 @@ export class EnergyComponent {}
 
 @Component({
   selector: 'app-test-coverage',
+  imports: [RouterOutlet, SiLinkDirective],
   template: `Total test coverage: 80%
     <br />
     <br />
@@ -37,8 +38,7 @@ export class EnergyComponent {}
     <a [siLink]="unitRouterLink">Check Unit tests coverage details</a>
     <br />
     <br />
-    <router-outlet /> `,
-  imports: [RouterOutlet, SiLinkDirective]
+    <router-outlet /> `
 })
 export class TestCoverageComponent {
   e2eRouterLink: Link = { link: 'e2e-coverage' };
@@ -78,8 +78,6 @@ export const ROUTES: Route[] = [
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-navbar-vertical-routing.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     SiNavbarVerticalComponent,
     SiApplicationHeaderComponent,
@@ -89,6 +87,8 @@ export const ROUTES: Route[] = [
     RouterOutlet,
     SiBreadcrumbRouterComponent
   ],
+  templateUrl: './si-navbar-vertical-routing.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [provideExampleRoutes(ROUTES)]
 })
 export class SampleComponent {

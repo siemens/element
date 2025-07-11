@@ -7,9 +7,9 @@ import { SiProgressbarComponent } from '@siemens/element-ng/progressbar';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiProgressbarComponent],
   templateUrl: './si-progressbar-dynamic.html',
-  host: { class: 'p-5' },
-  imports: [SiProgressbarComponent]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   maxProgress = 200;

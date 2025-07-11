@@ -14,7 +14,6 @@ import {
 
 @Component({
   selector: 'si-formly-select',
-  templateUrl: './si-formly-select.component.html',
   imports: [
     FormsModule,
     ReactiveFormsModule,
@@ -23,6 +22,7 @@ import {
     SiSelectSimpleOptionsDirective,
     SiSelectMultiValueDirective,
     SiSelectSingleValueDirective
-  ]
+  ],
+  templateUrl: './si-formly-select.component.html'
 })
 export class SiFormlySelectComponent extends FieldType<FieldTypeConfig> {}

@@ -14,9 +14,9 @@ import { SiFormlyModule } from '../../si-formly.module';
 import { SiFormlyObjectPlainComponent as TestComponent } from './si-formly-object-plain.component';
 
 @Component({
+  imports: [SiFormlyModule, FormlyModule],
   template: ` <formly-form [form]="form" [fields]="fields" [model]="model" [options]="options" /> `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiFormlyModule, FormlyModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
   form = new FormRecord({});

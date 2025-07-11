@@ -12,9 +12,9 @@ import { CorporateEmployee, DataService, Page, PageRequest } from './data.servic
 
 @Component({
   selector: 'app-sample',
+  imports: [NgxDatatableModule, SiDatatableModule, SiPaginationComponent],
   templateUrl: './datatable-paging.html',
   styleUrl: './datatable.scss',
-  imports: [NgxDatatableModule, SiDatatableModule, SiPaginationComponent],
   providers: [DataService]
 })
 export class SampleComponent implements OnDestroy {

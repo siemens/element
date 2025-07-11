@@ -9,13 +9,13 @@ import { SiCustomLegendComponent } from './si-custom-legend.component';
 import { CustomLegend, CustomLegendItem } from './si-custom-legend.interface';
 
 @Component({
+  imports: [SiCustomLegendComponent],
   template: `<si-custom-legend
     [title]="title"
     [subTitle]="subTitle"
     [customLegend]="customLegend"
   />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiCustomLegendComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   customLegend?: CustomLegend;

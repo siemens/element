@@ -9,6 +9,7 @@ import { SiChartProgressComponent } from './si-chart-progress.component';
 import { ProgressChartSeries } from './si-chart-progress.interface';
 
 @Component({
+  imports: [SiChartProgressComponent],
   template: `<si-chart-progress
     style="inline-size: 300px; block-size: 300px"
     [series]="series"
@@ -16,8 +17,7 @@ import { ProgressChartSeries } from './si-chart-progress.interface';
     [title]="title"
     [subTitle]="subTitle"
   />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiChartProgressComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   readonly chartProgressComponent = viewChild.required(SiChartProgressComponent);

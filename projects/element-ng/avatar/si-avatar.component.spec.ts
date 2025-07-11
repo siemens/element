@@ -10,6 +10,7 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 import { SiAvatarComponent } from './index';
 
 @Component({
+  imports: [SiAvatarComponent],
   template: `<si-avatar
     #ref
     [altText]="altText"
@@ -19,8 +20,7 @@ import { SiAvatarComponent } from './index';
     [initials]="initials"
     [color]="color"
     [autoColor]="autoColor"
-  />`,
-  imports: [SiAvatarComponent]
+  />`
 })
 class TestHostComponent {
   imageUrl?: string;

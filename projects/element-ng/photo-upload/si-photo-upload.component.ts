@@ -44,8 +44,6 @@ import { SiImageCropperStyleComponent } from './si-image-cropper-style.component
  */
 @Component({
   selector: 'si-photo-upload',
-  styleUrl: './si-photo-upload.component.scss',
-  templateUrl: './si-photo-upload.component.html',
   imports: [
     NgTemplateOutlet,
     ImageCropperComponent,
@@ -54,6 +52,8 @@ import { SiImageCropperStyleComponent } from './si-image-cropper-style.component
     SiImageCropperStyleComponent,
     SiTranslateModule
   ],
+  templateUrl: './si-photo-upload.component.html',
+  styleUrl: './si-photo-upload.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   hostDirectives: [
     {

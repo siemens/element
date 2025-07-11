@@ -15,9 +15,6 @@ export const DATE_PATTERN_ENABLE = 'date-pattern.enable';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-localization.html',
-  host: { class: 'p-5' },
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     SiLanguageSwitcherComponent,
@@ -25,7 +22,10 @@ export const DATE_PATTERN_ENABLE = 'date-pattern.enable';
     SiDatepickerDirective,
     SiFormModule,
     FormsModule
-  ]
+  ],
+  templateUrl: './si-localization.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   date = new Date();

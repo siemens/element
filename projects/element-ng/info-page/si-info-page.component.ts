@@ -16,10 +16,10 @@ import { SiTranslateModule, TranslatableString } from '@siemens/element-translat
  */
 @Component({
   selector: 'si-info-page',
+  imports: [NgClass, SiLinkDirective, SiIconNextComponent, SiTranslateModule],
   templateUrl: './si-info-page.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './si-info-page.component.scss',
-  imports: [NgClass, SiLinkDirective, SiIconNextComponent, SiTranslateModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiInfoPageComponent {
   /**

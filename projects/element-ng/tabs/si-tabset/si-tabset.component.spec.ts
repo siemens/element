@@ -10,6 +10,7 @@ import { SiTabsModule } from '../si-tabs.module';
 import { SiTabsetComponent } from './si-tabset.component';
 
 @Component({
+  imports: [SiTabsModule],
   template: `
     <div class="tab-wrapper">
       <si-tabset [tabButtonMaxWidth]="tabButtonMaxWidth">
@@ -27,8 +28,7 @@ import { SiTabsetComponent } from './si-tabset.component';
     .tab-wrapper {
       width: 200px;
     }
-  `,
-  imports: [SiTabsModule]
+  `
 })
 class TestComponent {
   tabButtonMaxWidth?: number;

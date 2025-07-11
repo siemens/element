@@ -14,9 +14,9 @@ import { EditDiscardDialogResult } from '../si-action-dialog.types';
 
 @Component({
   selector: 'si-edit-discard-dialog',
+  imports: [AsyncPipe, SiIconNextComponent, SiTranslateModule, SiLoadingButtonComponent],
   templateUrl: './si-edit-discard-dialog.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AsyncPipe, SiIconNextComponent, SiTranslateModule, SiLoadingButtonComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiEditDiscardDialogComponent {
   readonly titleId = input<string>();

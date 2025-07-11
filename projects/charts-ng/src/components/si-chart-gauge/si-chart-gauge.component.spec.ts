@@ -8,6 +8,7 @@ import { TestBed } from '@angular/core/testing';
 import { SiChartGaugeComponent } from './si-chart-gauge.component';
 
 @Component({
+  imports: [SiChartGaugeComponent],
   template: `<si-chart-gauge
     style="inline-size: 300px; block-size: 300px"
     [minValue]="minValue"
@@ -16,8 +17,7 @@ import { SiChartGaugeComponent } from './si-chart-gauge.component';
     [title]="title"
     [subTitle]="subTitle"
   />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiChartGaugeComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   readonly chartGaugeComponent = viewChild.required(SiChartGaugeComponent);

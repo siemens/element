@@ -14,9 +14,9 @@ import { AlertDialogResult } from '../si-action-dialog.types';
 
 @Component({
   selector: 'si-alert-dialog',
+  imports: [AsyncPipe, SiIconNextComponent, SiTranslateModule, SiLoadingButtonComponent],
   templateUrl: './si-alert-dialog.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AsyncPipe, SiIconNextComponent, SiTranslateModule, SiLoadingButtonComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiAlertDialogComponent {
   readonly titleId = input<string>();

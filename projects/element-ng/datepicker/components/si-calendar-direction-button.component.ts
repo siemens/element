@@ -22,6 +22,7 @@ export type Direction = 'left' | 'right';
 
 @Component({
   selector: 'si-calendar-direction-button',
+  imports: [NgClass, SiIconNextComponent],
   template: `<button
     role="button"
     type="button"
@@ -33,8 +34,7 @@ export type Direction = 'left' | 'right';
   >
     <si-icon-next class="icon flip-rtl" [icon]="icon()" />
   </button>`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgClass, SiIconNextComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiCalendarDirectionButtonComponent {
   readonly ariaLabel = input.required<string>();

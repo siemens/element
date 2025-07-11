@@ -17,9 +17,9 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-electron-titlebar',
+  imports: [CdkMenuTrigger, SiMenuFactoryComponent, SiIconNextComponent, SiTranslateModule],
   templateUrl: './si-electron-titlebar.component.html',
-  styleUrl: './si-electron-titlebar.component.scss',
-  imports: [CdkMenuTrigger, SiMenuFactoryComponent, SiIconNextComponent, SiTranslateModule]
+  styleUrl: './si-electron-titlebar.component.scss'
 })
 export class SiElectrontitlebarComponent {
   /**

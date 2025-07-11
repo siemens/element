@@ -8,7 +8,7 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-formly-array',
-  templateUrl: './si-formly-array.component.html',
-  imports: [FormlyModule, SiTranslateModule]
+  imports: [FormlyModule, SiTranslateModule],
+  templateUrl: './si-formly-array.component.html'
 })
 export class SiFormlyArrayComponent extends FieldArrayType {}

@@ -14,9 +14,9 @@ import { SiFormlyDateTimeComponent } from './si-formly-datetime.component';
 
 @Component({
   selector: 'si-formly-test',
+  imports: [ReactiveFormsModule, SiDatepickerModule, FormlyModule],
   template: ` <formly-form [form]="form" [fields]="fields" [model]="model" [options]="options" /> `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, SiDatepickerModule, FormlyModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class FormlyTestComponent {
   form = new FormRecord({});

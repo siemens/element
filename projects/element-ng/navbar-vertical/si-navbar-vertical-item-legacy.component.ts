@@ -15,8 +15,6 @@ import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
 
 @Component({
   selector: 'si-navbar-vertical-item-legacy',
-  templateUrl: './si-navbar-vertical-item-legacy.component.html',
-  styleUrl: './si-navbar-vertical-item-legacy.component.scss',
   imports: [
     SiLinkDirective,
     SiTranslateModule,
@@ -25,6 +23,8 @@ import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
     SiNavbarVerticalGroupComponent,
     SiNavbarVerticalHeaderComponent
   ],
+  templateUrl: './si-navbar-vertical-item-legacy.component.html',
+  styleUrl: './si-navbar-vertical-item-legacy.component.scss',
   host: {
     'class': 'd-block mb-4'
   }

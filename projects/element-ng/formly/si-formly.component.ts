@@ -19,9 +19,9 @@ import { JSONSchema7 } from 'json-schema';
 
 @Component({
   selector: 'si-formly',
-  templateUrl: './si-formly.component.html',
   // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false
+  standalone: false,
+  templateUrl: './si-formly.component.html'
 })
 export class SiFormlyComponent<TControl extends { [K in keyof TControl]: AbstractControl }>
   implements OnInit

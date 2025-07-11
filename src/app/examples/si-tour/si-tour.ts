@@ -29,7 +29,6 @@ import { SiTourService, TourStep } from '@siemens/element-ng/tour';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-tour.html',
   imports: [
     SiAccordionComponent,
     SiBreadcrumbComponent,
@@ -50,7 +49,8 @@ import { SiTourService, TourStep } from '@siemens/element-ng/tour';
     SiHeaderDropdownItemComponent,
     SiLaunchpadFactoryComponent,
     SiHeaderLogoDirective
-  ]
+  ],
+  templateUrl: './si-tour.html'
 })
 export class SampleComponent implements AfterViewInit, OnDestroy {
   breadcrumbItems: BreadcrumbItem[] = [

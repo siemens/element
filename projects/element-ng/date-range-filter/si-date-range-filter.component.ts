@@ -54,9 +54,6 @@ export class PresetMatchFilterPipe implements PipeTransform {
 
 @Component({
   selector: 'si-date-range-filter',
-  templateUrl: './si-date-range-filter.component.html',
-  styleUrl: './si-date-range-filter.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CdkOption,
     CdkListbox,
@@ -75,6 +72,9 @@ export class PresetMatchFilterPipe implements PipeTransform {
     SiSearchBarComponent,
     SiTranslateModule
   ],
+  templateUrl: './si-date-range-filter.component.html',
+  styleUrl: './si-date-range-filter.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.mobile]': 'smallScreen'
   }

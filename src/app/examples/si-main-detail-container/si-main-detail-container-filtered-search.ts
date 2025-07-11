@@ -27,10 +27,6 @@ import { CorporateEmployee } from '../datatable/data.service';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-main-detail-container-filtered-search.html',
-  host: {
-    class: 'si-layout-fixed-height'
-  },
   imports: [
     NgxDatatableModule,
     JsonPipe,
@@ -39,7 +35,11 @@ import { CorporateEmployee } from '../datatable/data.service';
     SiEmptyStateComponent,
     SiFilteredSearchComponent,
     SiMainDetailContainerComponent
-  ]
+  ],
+  templateUrl: './si-main-detail-container-filtered-search.html',
+  host: {
+    class: 'si-layout-fixed-height'
+  }
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

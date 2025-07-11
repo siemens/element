@@ -23,8 +23,8 @@ import { SiSelectListBase } from './si-select-list.base';
     SiSelectGroupTemplateDirective,
     SiSelectOptionRowComponent
   ],
-  styleUrl: './si-select-list.component.scss',
   templateUrl: './si-select-list.component.html',
+  styleUrl: './si-select-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiSelectListComponent<T> extends SiSelectListBase<T> implements OnInit {

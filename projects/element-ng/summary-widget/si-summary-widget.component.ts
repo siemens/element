@@ -16,10 +16,10 @@ import { SiTranslateModule, TranslatableString } from '@siemens/element-translat
 
 @Component({
   selector: 'si-summary-widget',
+  imports: [SiIconComponent, SiTranslateModule],
   templateUrl: './si-summary-widget.component.html',
   styleUrl: './si-summary-widget.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiIconComponent, SiTranslateModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiSummaryWidgetComponent {
   /** Status. Alternatively, use {@link icon} and {@link color}. */

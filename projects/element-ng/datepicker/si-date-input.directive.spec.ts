@@ -12,6 +12,7 @@ import { DatepickerInputConfig } from './si-datepicker.model';
 import { SiDatepickerModule } from './si-datepicker.module';
 
 @Component({
+  imports: [SiDatepickerModule, FormsModule],
   template: `<input
     #siDateInput
     #validation="ngModel"
@@ -24,8 +25,7 @@ import { SiDatepickerModule } from './si-datepicker.module';
     [ngModel]="date"
     (ngModelChange)="onModelChange($event)"
   />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiDatepickerModule, FormsModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
   readonly siDateInput = viewChild.required<ElementRef>('siDateInput');

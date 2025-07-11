@@ -10,6 +10,7 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 import { SiSliderComponent } from './si-slider.component';
 
 @Component({
+  imports: [FormsModule, ReactiveFormsModule, SiTranslateModule, SiSliderComponent],
   template: `<si-slider
     [min]="min"
     [max]="max"
@@ -22,8 +23,7 @@ import { SiSliderComponent } from './si-slider.component';
       display: block;
       width: 300px;
     }
-  `,
-  imports: [FormsModule, ReactiveFormsModule, SiTranslateModule, SiSliderComponent]
+  `
 })
 class HostComponent {
   readonly value = signal<number | undefined>(10);
@@ -34,10 +34,10 @@ class HostComponent {
 }
 
 @Component({
+  imports: [FormsModule, ReactiveFormsModule, SiTranslateModule, SiSliderComponent],
   template: `<form [formGroup]="form">
     <si-slider formControlName="slider" />
-  </form>`,
-  imports: [FormsModule, ReactiveFormsModule, SiTranslateModule, SiSliderComponent]
+  </form>`
 })
 class FormHostComponent {
   readonly form: FormGroup;

@@ -12,15 +12,15 @@ import {
 
 @Component({
   selector: 'si-formly-password',
-  templateUrl: './si-formly-password.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule,
     ReactiveFormsModule,
     FormlyModule,
     SiPasswordStrengthComponent,
     SiPasswordStrengthDirective
-  ]
+  ],
+  templateUrl: './si-formly-password.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiFormlyPasswordComponent extends FieldType<FieldTypeConfig> {
   /*

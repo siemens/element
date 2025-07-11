@@ -22,7 +22,6 @@ import { SiMenuDirective } from './si-menu.directive';
 
 @Component({
   selector: 'si-menu-factory',
-  templateUrl: './si-menu-factory.component.html',
   imports: [
     SiMenuDirective,
     SiMenuItemComponent,
@@ -37,7 +36,8 @@ import { SiMenuDirective } from './si-menu.directive';
     NgTemplateOutlet,
     RouterLink,
     SiMenuFactoryItemGuardDirective
-  ]
+  ],
+  templateUrl: './si-menu-factory.component.html'
 })
 export class SiMenuFactoryComponent {
   readonly items = input<readonly (MenuItemLegacy | MenuItem)[]>();

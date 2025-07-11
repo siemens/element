@@ -11,13 +11,13 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiCardComponent, SiIconModule],
   templateUrl: './si-card.html',
   styles: `
     .card-size {
       height: 250px;
     }
-  `,
-  imports: [SiCardComponent, SiIconModule]
+  `
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

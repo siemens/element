@@ -26,12 +26,12 @@ import { SiApplicationHeaderComponent } from './si-application-header.component'
   selector: 'si-header-collapsible-actions',
   imports: [SiTranslateModule, A11yModule, SiIconNextComponent],
   templateUrl: './si-header-collapsible-actions.component.html',
-  host: { class: 'd-contents' },
+  styles: '.badge-dot::after { inset-inline-end: 4px; }',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'd-contents' },
   providers: [
     { provide: SI_HEADER_DROPDOWN_OPTIONS, useValue: { disableRootFocusTrapForInlineMode: true } }
-  ],
-  styles: '.badge-dot::after { inset-inline-end: 4px; }'
+  ]
 })
 export class SiHeaderCollapsibleActionsComponent implements OnDestroy {
   private static idCounter = 0;

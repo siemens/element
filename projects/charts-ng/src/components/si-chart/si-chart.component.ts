@@ -54,9 +54,9 @@ import {
 
 @Component({
   selector: 'si-chart',
+  imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
   templateUrl: './si-chart.component.html',
-  styleUrl: './si-chart.component.scss',
-  imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent]
+  styleUrl: './si-chart.component.scss'
 })
 export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDestroy {
   /**

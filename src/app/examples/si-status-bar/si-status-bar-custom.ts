@@ -12,9 +12,9 @@ import { Subscription, timer } from 'rxjs';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiStatusBarComponent, SiCircleStatusModule],
   templateUrl: './si-status-bar-custom.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiStatusBarComponent, SiCircleStatusModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnInit {
   logEvent = inject(LOG_EVENT);

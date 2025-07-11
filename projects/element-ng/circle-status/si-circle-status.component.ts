@@ -29,10 +29,10 @@ import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'si-circle-status',
+  imports: [NgClass, SiIconNextComponent, SiTranslateModule],
   templateUrl: './si-circle-status.component.html',
   styleUrl: './si-circle-status.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgClass, SiIconNextComponent, SiTranslateModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiCircleStatusComponent implements OnChanges, OnDestroy {
   private readonly statusIcons = inject(STATUS_ICON_CONFIG);

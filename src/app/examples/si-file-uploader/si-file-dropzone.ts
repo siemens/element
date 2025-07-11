@@ -7,10 +7,10 @@ import { SiFileDropzoneComponent, UploadFile } from '@siemens/element-ng/file-up
 
 @Component({
   selector: 'app-sample',
+  imports: [SiFileDropzoneComponent],
   templateUrl: './si-file-dropzone.html',
-  host: { class: 'p-5' },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiFileDropzoneComponent]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   maxFileSizeInBytes = 524_288; // 0.5mb

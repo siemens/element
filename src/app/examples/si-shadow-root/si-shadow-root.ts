@@ -10,12 +10,12 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
+  imports: [CdkOverlayOrigin, CdkConnectedOverlay, CdkTrapFocus],
+  standalone: true,
   templateUrl: './si-shadow-root.html',
   styleUrl: 'not-element-styles.scss',
-  host: { class: 'p-5' },
-  standalone: true,
-  imports: [CdkOverlayOrigin, CdkConnectedOverlay, CdkTrapFocus],
   encapsulation: ViewEncapsulation.ShadowDom,
+  host: { class: 'p-5' },
   hostDirectives: [SiShadowRootDirective]
 })
 export class SampleComponent {

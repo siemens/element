@@ -16,6 +16,7 @@ import { SiFormlyComponent } from './si-formly.component';
 import { SiFormlyModule } from './si-formly.module';
 
 @Component({
+  imports: [ReactiveFormsModule, FormlyBootstrapModule, SiFormlyModule],
   template: `<si-formly
     [model]="model"
     [schema]="schema"
@@ -24,8 +25,7 @@ import { SiFormlyModule } from './si-formly.module';
     [labelWidth]="labelWidth"
     (formChange)="formChanged()"
   />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, FormlyBootstrapModule, SiFormlyModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
   readonly formly = viewChild.required(SiFormlyComponent<Record<string, any>>);

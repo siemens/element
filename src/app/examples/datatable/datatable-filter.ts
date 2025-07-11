@@ -11,9 +11,9 @@ import { CorporateEmployee, DataService, PageRequest } from './data.service';
 
 @Component({
   selector: 'app-sample',
+  imports: [NgxDatatableModule, SiDatatableModule, SiEmptyStateComponent],
   templateUrl: './datatable-filter.html',
   styleUrl: './datatable.scss',
-  imports: [NgxDatatableModule, SiDatatableModule, SiEmptyStateComponent],
   providers: [DataService]
 })
 export class SampleComponent {

@@ -12,9 +12,9 @@ import { ProgressChartSeries, ProgressValueUpdate } from './si-chart-progress.in
 
 @Component({
   selector: 'si-chart-progress',
+  imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
   templateUrl: '../si-chart/si-chart.component.html',
-  styleUrl: '../si-chart/si-chart.component.scss',
-  imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent]
+  styleUrl: '../si-chart/si-chart.component.scss'
 })
 export class SiChartProgressComponent extends SiChartComponent {
   readonly series = input<ProgressChartSeries[]>();

@@ -8,8 +8,8 @@ import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './sankey.html',
-  imports: [SiChartSankeyComponent, SiResizeObserverDirective]
+  imports: [SiChartSankeyComponent, SiResizeObserverDirective],
+  templateUrl: './sankey.html'
 })
 export class SampleComponent {
   title = 'Sankey Chart';

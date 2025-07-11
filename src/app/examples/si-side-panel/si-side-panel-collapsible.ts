@@ -28,8 +28,6 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-side-panel-collapsible.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     PortalModule,
     SiSidePanelComponent,
@@ -42,7 +40,9 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiHeaderActionsDirective,
     SiHeaderBrandDirective,
     SiHeaderLogoDirective
-  ]
+  ],
+  templateUrl: './si-side-panel-collapsible.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnDestroy {
   mode: SidePanelMode = 'scroll';

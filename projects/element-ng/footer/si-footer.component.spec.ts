@@ -11,9 +11,9 @@ import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 import { SiFooterComponent } from './index';
 
 @Component({
+  imports: [SiFooterComponent],
   template: `<si-footer copyright="copyright" [links]="links" />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiFooterComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   readonly component = viewChild.required(SiFooterComponent);

@@ -13,6 +13,7 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-formly-test',
+  imports: [SiTranslateModule, SiFormlyModule],
   template: `
     <si-formly
       class="si-layout-fixed-height"
@@ -22,8 +23,7 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
       [form]="form"
     />
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiTranslateModule, SiFormlyModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class FormlyTestComponent {
   form = new FormRecord({});

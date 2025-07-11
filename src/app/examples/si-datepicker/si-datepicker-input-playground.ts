@@ -17,15 +17,15 @@ import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-datepicker-input-playground.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule,
     ReactiveFormsModule,
     SiDatepickerDirective,
     SiCalendarButtonComponent,
     SiFormItemComponent
-  ]
+  ],
+  templateUrl: './si-datepicker-input-playground.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnInit {
   readonly logEvent = inject(LOG_EVENT);

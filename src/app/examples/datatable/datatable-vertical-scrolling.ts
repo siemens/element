@@ -13,8 +13,6 @@ import { DatatableComponent, NgxDatatableModule, TableColumn } from '@siemens/ng
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './datatable-vertical-scrolling.html',
-  styleUrl: './datatable.scss',
   imports: [
     NgxDatatableModule,
     SiResizeObserverModule,
@@ -22,7 +20,9 @@ import { DatatableComponent, NgxDatatableModule, TableColumn } from '@siemens/ng
     SiEmptyStateComponent,
     SiSliderComponent,
     SiCircleStatusModule
-  ]
+  ],
+  templateUrl: './datatable-vertical-scrolling.html',
+  styleUrl: './datatable.scss'
 })
 export class SampleComponent implements OnInit {
   readonly table = viewChild(DatatableComponent);

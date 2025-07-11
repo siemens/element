@@ -9,6 +9,7 @@ import { CircleChartSeries } from '../si-chart-circle/si-chart-circle.interface'
 import { SiChartCircleComponent } from './si-chart-circle.component';
 
 @Component({
+  imports: [SiChartCircleComponent],
   template: `
     <si-chart-circle
       style="inline-size: 300px; block-size: 300px"
@@ -17,8 +18,7 @@ import { SiChartCircleComponent } from './si-chart-circle.component';
       [title]="title"
       [subTitle]="subTitle"
     />
-  `,
-  imports: [SiChartCircleComponent]
+  `
 })
 class TestHostComponent {
   readonly chartCircleComponent = viewChild.required(SiChartCircleComponent);

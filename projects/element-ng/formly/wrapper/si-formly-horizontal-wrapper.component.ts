@@ -7,7 +7,7 @@ import { FieldWrapper, FormlyModule } from '@ngx-formly/core';
 
 @Component({
   selector: 'si-formly-horizontal-wrapper',
-  templateUrl: './si-formly-horizontal-wrapper.component.html',
-  imports: [FormlyModule]
+  imports: [FormlyModule],
+  templateUrl: './si-formly-horizontal-wrapper.component.html'
 })
 export class SiFormlyHorizontalWrapperComponent extends FieldWrapper {}

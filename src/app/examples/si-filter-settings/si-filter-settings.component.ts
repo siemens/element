@@ -8,8 +8,8 @@ import { SiCardComponent } from '@siemens/element-ng/card';
 import { BackgroundColorVariant } from '@siemens/element-ng/common';
 @Component({
   selector: 'app-filter-settings',
-  templateUrl: './si-filter-settings.component.html',
-  imports: [SiCardComponent, FormsModule]
+  imports: [SiCardComponent, FormsModule],
+  templateUrl: './si-filter-settings.component.html'
 })
 export class SiFilterSettingsComponent {
   @Input() variant: BackgroundColorVariant = 'base-1';

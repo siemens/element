@@ -8,7 +8,7 @@ import { SiSummaryChipComponent } from '@siemens/element-ng/summary-chip';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-summary-chip.html',
-  imports: [NgTemplateOutlet, SiSummaryChipComponent]
+  imports: [NgTemplateOutlet, SiSummaryChipComponent],
+  templateUrl: './si-summary-chip.html'
 })
 export class SampleComponent {}

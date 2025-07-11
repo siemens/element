@@ -35,8 +35,6 @@ import { ContentActionBarMainItem, ViewType } from './si-content-action-bar.mode
 
 @Component({
   selector: 'si-content-action-bar',
-  templateUrl: './si-content-action-bar.component.html',
-  styleUrl: './si-content-action-bar.component.scss',
   imports: [
     SiMenuModule,
     CdkMenuModule,
@@ -46,10 +44,11 @@ import { ContentActionBarMainItem, ViewType } from './si-content-action-bar.mode
     SiContentActionBarToggleComponent,
     RouterLink
   ],
+  templateUrl: './si-content-action-bar.component.html',
+  styleUrl: './si-content-action-bar.component.scss',
   host: {
     '[class]': 'viewType()'
   }
-  // OnPush cannot be enabled. This breaks cdkMenu. Try with ng17 again
 })
 export class SiContentActionBarComponent implements OnChanges, AfterViewInit {
   /**

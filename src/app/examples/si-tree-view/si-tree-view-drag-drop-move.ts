@@ -17,10 +17,10 @@ import { treeItemsUnderMaintenance, treeItemsWithCompletedMaintenance } from './
 
 @Component({
   selector: 'app-sample',
+  imports: [SiTreeViewComponent, SiTreeViewItemComponent, SiTreeViewItemDirective, DragDropModule],
   templateUrl: './si-tree-view-drag-drop-move.html',
-  host: { class: 'p-5' },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiTreeViewComponent, SiTreeViewItemComponent, SiTreeViewItemDirective, DragDropModule]
+  host: { class: 'p-5' }
 })
 // NOTE: This example is to demonstrate CDK drag drop API capabilities with SiTreeViewItemNextComponent
 // and it is not yet production ready.

@@ -10,15 +10,15 @@ import { SiFormItemComponent } from '@siemens/element-ng/form';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-datepicker-input.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     FormsModule,
     SiDatepickerDirective,
     SiCalendarButtonComponent,
     SiFormItemComponent
-  ]
+  ],
+  templateUrl: './si-datepicker-input.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   date = new Date('2022-03-12');

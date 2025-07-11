@@ -8,10 +8,10 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiColorPickerComponent],
   templateUrl: './si-color-picker.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'p-5' },
-  imports: [SiColorPickerComponent]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

@@ -11,9 +11,9 @@ import { SiCustomLegendComponent } from '../si-custom-legend/si-custom-legend.co
 
 @Component({
   selector: 'si-chart-sunburst',
+  imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
   templateUrl: '../si-chart/si-chart.component.html',
-  styleUrl: '../si-chart/si-chart.component.scss',
-  imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent]
+  styleUrl: '../si-chart/si-chart.component.scss'
 })
 export class SiChartSunburstComponent extends SiChartComponent {
   readonly series = input<SunburstSeriesOption>();

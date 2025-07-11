@@ -24,13 +24,13 @@ describe('SiSearchBarComponent', () => {
   const getParameterFromSpy = (spy: any): string => (spy as jasmine.Spy).calls.mostRecent().args[0];
 
   @Component({
+    imports: [CommonModule, ReactiveFormsModule, SiSearchBarComponent],
     template: `<si-search-bar
       [placeholder]="placeholder"
       [showIcon]="true"
       [formControl]="search"
       [prohibitedCharacters]="prohibitedCharacters"
-    />`,
-    imports: [CommonModule, ReactiveFormsModule, SiSearchBarComponent]
+    />`
   })
   class TestComponent {
     placeholder = 'Placeholder';

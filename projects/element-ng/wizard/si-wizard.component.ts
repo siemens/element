@@ -45,9 +45,6 @@ interface StepItem {
 
 @Component({
   selector: 'si-wizard',
-  templateUrl: './si-wizard.component.html',
-  styleUrl: './si-wizard.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NgClass,
     SiIconNextComponent,
@@ -55,6 +52,9 @@ interface StepItem {
     SiTranslateModule,
     NgTemplateOutlet
   ],
+  templateUrl: './si-wizard.component.html',
+  styleUrl: './si-wizard.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'py-6 px-8 d-flex flex-column',
     '[class.vertical]': 'verticalLayout()',

@@ -7,8 +7,8 @@ import { SiFooterComponent } from '@siemens/element-ng/footer';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiFooterComponent],
   templateUrl: './si-footer.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiFooterComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {}

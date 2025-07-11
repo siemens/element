@@ -12,9 +12,9 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiSplitComponent, SiSplitPartComponent],
   templateUrl: './si-split-auto.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiSplitComponent, SiSplitPartComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

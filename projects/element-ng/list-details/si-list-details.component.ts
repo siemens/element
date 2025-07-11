@@ -33,8 +33,10 @@ import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 /** @experimental */
 @Component({
   selector: 'si-list-details',
+  imports: [NgTemplateOutlet, SiSplitComponent, SiSplitPartComponent, SiTranslateModule],
   templateUrl: './si-list-details.component.html',
   styleUrl: './si-list-details.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('detailsExpanded', [
       state(
@@ -56,9 +58,7 @@ import { BehaviorSubject, Subject, Subscription } from 'rxjs';
     class: 'si-layout-inner list-details-layout d-flex flex-column',
     '[class.expanded]': 'hasLargeSize()',
     '[style.opacity]': 'opacity()'
-  },
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgTemplateOutlet, SiSplitComponent, SiSplitPartComponent, SiTranslateModule]
+  }
 })
 export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
   private resizeSubs?: Subscription;

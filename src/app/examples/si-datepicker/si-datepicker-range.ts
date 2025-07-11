@@ -8,10 +8,10 @@ import { DateRange, SiDatepickerComponent } from '@siemens/element-ng/datepicker
 
 @Component({
   selector: 'app-sample',
+  imports: [CommonModule, SiDatepickerComponent],
   templateUrl: './si-datepicker-range.html',
-  host: { class: 'p-5' },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, SiDatepickerComponent]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   myDateRange: DateRange = {

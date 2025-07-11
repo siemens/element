@@ -18,10 +18,10 @@ import { SiTranslateModule, TranslatableString } from '@siemens/element-translat
 
 @Component({
   selector: 'si-summary-chip',
+  imports: [NgClass, SiIconNextComponent, SiTranslateModule],
   templateUrl: './si-summary-chip.component.html',
   styleUrl: './si-summary-chip.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgClass, SiIconNextComponent, SiTranslateModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiSummaryChipComponent {
   private readonly statusIcons = inject(STATUS_ICON_CONFIG);

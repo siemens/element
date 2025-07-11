@@ -12,9 +12,9 @@ import { CorporateEmployee, DataService, PageRequest } from './data.service';
 
 @Component({
   selector: 'app-sample',
+  imports: [NgxDatatableModule, SiResizeObserverModule, SiDatatableModule],
   templateUrl: './datatable-paging-virtual.html',
   styleUrl: './datatable.scss',
-  imports: [NgxDatatableModule, SiResizeObserverModule, SiDatatableModule],
   providers: [DataService]
 })
 export class SampleComponent {

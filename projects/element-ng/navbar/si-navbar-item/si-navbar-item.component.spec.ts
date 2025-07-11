@@ -12,9 +12,9 @@ import { NEVER } from 'rxjs';
 import { SiNavbarItemComponent } from './si-navbar-item.component';
 
 @Component({
+  imports: [SiNavbarItemComponent],
   template: ` <si-navbar-item #testComponent [item]="item" [quickAction]="quickAction" /> `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiNavbarItemComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
   item!: MenuItem;

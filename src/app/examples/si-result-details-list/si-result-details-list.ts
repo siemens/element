@@ -10,10 +10,10 @@ import {
 
 @Component({
   selector: 'app-sample',
+  imports: [SiResultDetailsListComponent],
   templateUrl: './si-result-details-list.html',
-  host: { class: 'p-5' },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiResultDetailsListComponent]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   steps: ResultDetailStep[] = [

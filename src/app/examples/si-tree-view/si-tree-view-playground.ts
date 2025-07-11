@@ -12,16 +12,16 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-tree-view-playground.html',
-  host: { class: 'p-5' },
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     SiTreeViewComponent,
     FormsModule,
     ReactiveFormsModule,
     SiFormItemComponent,
     SiNumberInputComponent
-  ]
+  ],
+  templateUrl: './si-tree-view-playground.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   readonly logEvent = inject(LOG_EVENT);

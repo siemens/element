@@ -9,8 +9,8 @@ import { SiMenuModule } from '@siemens/element-ng/menu';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-menu-factory-legacy.html',
-  imports: [SiMenuModule, CdkContextMenuTrigger, CdkMenuTrigger]
+  imports: [SiMenuModule, CdkContextMenuTrigger, CdkMenuTrigger],
+  templateUrl: './si-menu-factory-legacy.html'
 })
 export class SampleComponent {
   // eslint-disable-next-line @typescript-eslint/no-deprecated

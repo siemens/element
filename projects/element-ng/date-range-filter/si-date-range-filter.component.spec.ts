@@ -20,6 +20,7 @@ const getRangePastMonth = (): DateRangeFilter => {
 };
 
 @Component({
+  imports: [SiDateRangeFilterComponent],
   template: `
     <si-date-range-filter
       [presetList]="presetList"
@@ -28,8 +29,7 @@ const getRangePastMonth = (): DateRangeFilter => {
       [(range)]="range"
     />
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiDateRangeFilterComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   readonly component = viewChild.required(SiDateRangeFilterComponent);

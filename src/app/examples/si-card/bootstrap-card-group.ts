@@ -8,8 +8,8 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './bootstrap-card-group.html',
-  imports: [SiCardComponent]
+  imports: [SiCardComponent],
+  templateUrl: './bootstrap-card-group.html'
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

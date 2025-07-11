@@ -62,9 +62,6 @@ let idCounter = 1;
  */
 @Component({
   selector: 'si-status-bar',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './si-status-bar.component.html',
-  styleUrl: './si-status-bar.component.scss',
   imports: [
     NgClass,
     NgTemplateOutlet,
@@ -72,7 +69,10 @@ let idCounter = 1;
     SiStatusBarItemComponent,
     SiResizeObserverDirective,
     SiTranslateModule
-  ]
+  ],
+  templateUrl: './si-status-bar.component.html',
+  styleUrl: './si-status-bar.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiStatusBarComponent implements DoCheck, OnDestroy, OnChanges {
   private static readonly itemMinWidth = 100;

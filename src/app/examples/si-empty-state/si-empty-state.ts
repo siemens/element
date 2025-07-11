@@ -8,8 +8,8 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-empty-state.html',
-  imports: [SiEmptyStateComponent]
+  imports: [SiEmptyStateComponent],
+  templateUrl: './si-empty-state.html'
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

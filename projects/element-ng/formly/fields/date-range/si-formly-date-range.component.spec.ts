@@ -14,9 +14,9 @@ import { SiFormlyDateRangeComponent } from './si-formly-date-range.component';
 
 @Component({
   selector: 'si-formly-test',
+  imports: [ReactiveFormsModule, FormlyModule],
   template: ` <formly-form [form]="form" [fields]="fields" [model]="model" [options]="options" /> `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, FormlyModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class FormlyTestComponent {
   form = new FormRecord({});

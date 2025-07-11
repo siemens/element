@@ -8,8 +8,8 @@ import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-tooltip.html',
-  imports: [SiIconModule, SiTooltipDirective]
+  imports: [SiIconModule, SiTooltipDirective],
+  templateUrl: './si-tooltip.html'
 })
 export class SampleComponent {
   html = `<span>I am a <strong>bold text</strong> tooltip.</span>`;

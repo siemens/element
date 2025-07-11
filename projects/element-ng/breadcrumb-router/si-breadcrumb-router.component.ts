@@ -12,8 +12,8 @@ import { SI_BREADCRUMB_RESOLVER_SERVICE } from './si-breadcrumb-router.model';
 
 @Component({
   selector: 'si-breadcrumb-router',
-  templateUrl: './si-breadcrumb-router.component.html',
-  imports: [SiBreadcrumbComponent]
+  imports: [SiBreadcrumbComponent],
+  templateUrl: './si-breadcrumb-router.component.html'
 })
 export class SiBreadcrumbRouterComponent implements OnInit, OnDestroy {
   /**

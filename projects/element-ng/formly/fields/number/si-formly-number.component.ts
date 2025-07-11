@@ -9,8 +9,8 @@ import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
 
 @Component({
   selector: 'si-formly-number',
+  imports: [ReactiveFormsModule, FormlyModule, SiNumberInputComponent],
   templateUrl: './si-formly-number.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, FormlyModule, SiNumberInputComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiFormlyNumberComponent extends FieldType<FieldTypeConfig> {}

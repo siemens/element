@@ -17,6 +17,7 @@ export const LOADING_SPINNER_OVERLAY = new InjectionToken<boolean>('isSpinnerOve
 
 @Component({
   selector: 'si-loading-spinner',
+  imports: [SiTranslateModule],
   templateUrl: './si-loading-spinner.component.html',
   styleUrl: './si-loading-spinner.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,8 +26,7 @@ export const LOADING_SPINNER_OVERLAY = new InjectionToken<boolean>('isSpinnerOve
       transition(':enter', [style({ opacity: 0 }), animate('200ms ease-in')]),
       transition(':leave', animate('200ms ease-out', style({ opacity: 0 })))
     ])
-  ],
-  imports: [SiTranslateModule]
+  ]
 })
 export class SiLoadingSpinnerComponent {
   @HostBinding('@fadeAnimation') protected fadeAnimation = '';

@@ -294,9 +294,9 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
     this.updateDynamicTemplate();
 
     @Component({
-      template: '',
       // eslint-disable-next-line @angular-eslint/prefer-standalone
       standalone: false,
+      template: '',
       jit: true
     })
     class AbstractRuntimeComponent implements DoCheck, AfterViewInit {

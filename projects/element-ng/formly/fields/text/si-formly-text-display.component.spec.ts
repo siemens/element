@@ -17,9 +17,9 @@ import { SiFormlyTextDisplayComponent } from './si-formly-text-display.component
 
 @Component({
   selector: 'si-formly-test',
+  imports: [FormlyModule],
   template: ` <formly-form [form]="form" [fields]="fields" [model]="model" [options]="options" /> `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormlyModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class FormlyTestComponent {
   form = new FormRecord({});

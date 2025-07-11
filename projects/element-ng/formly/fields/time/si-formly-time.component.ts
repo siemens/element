@@ -9,6 +9,7 @@ import { SiTimepickerComponent } from '@siemens/element-ng/datepicker';
 
 @Component({
   selector: 'si-formly-time',
+  imports: [SiTimepickerComponent, ReactiveFormsModule],
   template: `<si-timepicker
     [id]="id"
     [hideLabels]="props.timeConfig?.hideLabels ?? true"
@@ -18,8 +19,7 @@ import { SiTimepickerComponent } from '@siemens/element-ng/datepicker';
     [showMeridian]="props.timeConfig?.showMeridian"
     [formControl]="formControl"
     [readonly]="props.readonly || false"
-  />`,
-  imports: [SiTimepickerComponent, ReactiveFormsModule]
+  />`
 })
 export class SiFormlyTimeComponent extends FieldType<FieldTypeConfig> implements OnInit {
   ngOnInit(): void {

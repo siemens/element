@@ -15,6 +15,7 @@ import { ContentActionBarMainItem, ViewType } from './si-content-action-bar.mode
 import { SiContentActionBarHarness } from './testing/si-content-action-bar.harness';
 
 @Component({
+  imports: [SiContentActionBarComponent],
   template: `
     <div class="d-flex">
       <si-content-action-bar
@@ -26,8 +27,7 @@ import { SiContentActionBarHarness } from './testing/si-content-action-bar.harne
         [preventIconsInDropdownMenus]="preventIconsInDropdownMenus"
       />
     </div>
-  `,
-  imports: [SiContentActionBarComponent]
+  `
 })
 class TestComponent {
   @Input() primaryActions: ContentActionBarMainItem[] = [];

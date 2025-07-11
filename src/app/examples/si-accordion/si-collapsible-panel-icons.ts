@@ -7,8 +7,8 @@ import { SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiCollapsiblePanelComponent],
   templateUrl: './si-collapsible-panel-icons.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiCollapsiblePanelComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {}

@@ -24,8 +24,6 @@ import { ApiInfo, LicenseInfo } from './si-about-data.model';
 
 @Component({
   selector: 'si-about',
-  templateUrl: './si-about.component.html',
-  styleUrl: './si-about.component.scss',
   imports: [
     NgTemplateOutlet,
     SiCollapsiblePanelComponent,
@@ -34,6 +32,8 @@ import { ApiInfo, LicenseInfo } from './si-about-data.model';
     SiLinkDirective,
     SiTranslateModule
   ],
+  templateUrl: './si-about.component.html',
+  styleUrl: './si-about.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiAboutComponent implements OnInit {

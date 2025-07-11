@@ -27,17 +27,17 @@ import { Column } from '../si-column-selection-dialog.types';
 
 @Component({
   selector: 'si-column-selection-editor',
-  templateUrl: './si-column-selection-editor.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CdkDragHandle, SiIconNextComponent],
-  host: {
-    class: 'd-block my-4 mx-1 rounded-2 elevation-1'
-  },
+  templateUrl: './si-column-selection-editor.component.html',
   styles: `
     .form-control {
       cursor: text;
     }
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: 'd-block my-4 mx-1 rounded-2 elevation-1'
+  }
 })
 export class SiColumnSelectionEditorComponent {
   readonly column = input.required<Column>();

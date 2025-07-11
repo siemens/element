@@ -10,6 +10,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SiNumberInputComponent } from './si-number-input.component';
 
 @Component({
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, SiNumberInputComponent],
   template: `<si-number-input
     #input
     [min]="min"
@@ -18,8 +19,7 @@ import { SiNumberInputComponent } from './si-number-input.component';
     [placeholder]="placeholder"
     [(value)]="value"
     (valueChange)="valueChange($event)"
-  />`,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, SiNumberInputComponent]
+  />`
 })
 class HostComponent {
   value?: number = 10;
@@ -32,10 +32,10 @@ class HostComponent {
 }
 
 @Component({
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, SiNumberInputComponent],
   template: `<form [formGroup]="form">
     <si-number-input #input formControlName="input" [required]="required" [min]="min" [max]="max" />
-  </form>`,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, SiNumberInputComponent]
+  </form>`
 })
 class FormHostComponent {
   required?: boolean;
@@ -46,8 +46,8 @@ class FormHostComponent {
 }
 
 @Component({
-  template: ` <si-number-input min="some text" max="100" />`,
-  imports: [CommonModule, SiNumberInputComponent]
+  imports: [CommonModule, SiNumberInputComponent],
+  template: ` <si-number-input min="some text" max="100" />`
 })
 class AttributeComponent {
   readonly siNumberInput = viewChild.required(SiNumberInputComponent);

@@ -7,7 +7,7 @@ import { NgModule } from '@angular/core';
 import { SiPasswordToggleComponent } from './si-password-toggle.component';
 
 @NgModule({
-  exports: [SiPasswordToggleComponent],
-  imports: [SiPasswordToggleComponent]
+  imports: [SiPasswordToggleComponent],
+  exports: [SiPasswordToggleComponent]
 })
 export class SiPasswordToggleModule {}

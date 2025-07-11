@@ -9,13 +9,13 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 import { SiFormItemComponent } from './si-form-item.component';
 
 @Component({
+  imports: [SiTranslateModule, SiFormItemComponent],
   template: `
     <si-form-item [label]="label()">
       <input type="text" id="name" class="form-control" />
     </si-form-item>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiTranslateModule, SiFormItemComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TestHostComponent {
   readonly formItem = viewChild.required(SiFormItemComponent);

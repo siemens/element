@@ -7,8 +7,8 @@ import { SiInfoPageComponent } from '@siemens/element-ng/info-page';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiInfoPageComponent],
   templateUrl: './si-info-page.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiInfoPageComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {}

@@ -14,8 +14,6 @@ import { CorporateEmployee, DataService, Page, PageRequest } from './data.servic
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './datatable-fixed-height.html',
-  styleUrl: './datatable.scss',
   imports: [
     NgxDatatableModule,
     SiCardComponent,
@@ -23,6 +21,8 @@ import { CorporateEmployee, DataService, Page, PageRequest } from './data.servic
     SiPaginationComponent,
     FormsModule
   ],
+  templateUrl: './datatable-fixed-height.html',
+  styleUrl: './datatable.scss',
   providers: [DataService]
 })
 export class SampleComponent implements OnDestroy {

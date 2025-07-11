@@ -35,13 +35,7 @@ import { DatepickerConfig, DateRange } from './si-datepicker.model';
 
 @Component({
   selector: 'si-datepicker-overlay',
-  host: {
-    class: 'mt-md-1 d-flex elevation-2 rounded-2 overflow-auto align-items-stretch',
-    '[class.flex-wrap]': 'isMobile()',
-    '[class.mobile-datepicker-overlay]': 'isMobile()',
-    '[class.fade]': 'isMobile()',
-    '[class.show]': 'completeAnimation()'
-  },
+  imports: [SiDatepickerComponent, A11yModule],
   template: `
     <si-datepicker
       #datepicker
@@ -92,7 +86,13 @@ import { DatepickerConfig, DateRange } from './si-datepicker.model';
   `,
   styleUrl: './si-datepicker-overlay.component.scss',
   changeDetection: ChangeDetectionStrategy.Default,
-  imports: [SiDatepickerComponent, A11yModule]
+  host: {
+    class: 'mt-md-1 d-flex elevation-2 rounded-2 overflow-auto align-items-stretch',
+    '[class.flex-wrap]': 'isMobile()',
+    '[class.mobile-datepicker-overlay]': 'isMobile()',
+    '[class.fade]': 'isMobile()',
+    '[class.show]': 'completeAnimation()'
+  }
 })
 export class SiDatepickerOverlayComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
   protected readonly minMonth = signal<Date | undefined>(undefined);

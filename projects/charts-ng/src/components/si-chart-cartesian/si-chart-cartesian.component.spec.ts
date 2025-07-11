@@ -11,6 +11,7 @@ import { SiChartCartesianComponent } from './si-chart-cartesian.component';
 import { CartesianChartSeries } from './si-chart-cartesian.interfaces';
 
 @Component({
+  imports: [SiChartCartesianComponent],
   template: `<si-chart-cartesian
     style="inline-size: 300px; block-size: 300px"
     [options]="options"
@@ -22,8 +23,7 @@ import { CartesianChartSeries } from './si-chart-cartesian.interfaces';
     [title]="title"
     [subTitle]="subTitle"
   />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiChartCartesianComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   readonly chartCartesianComponent = viewChild.required(SiChartCartesianComponent);

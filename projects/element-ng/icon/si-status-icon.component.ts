@@ -12,6 +12,7 @@ import { SiIconNextComponent } from './si-icon-next.component';
 
 @Component({
   selector: 'si-status-icon',
+  imports: [NgClass, SiIconNextComponent, SiTranslateModule],
   template: `
     @let iconValue = statusIcon();
     @if (iconValue) {
@@ -21,7 +22,6 @@ import { SiIconNextComponent } from './si-icon-next.component';
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgClass, SiIconNextComponent, SiTranslateModule],
   host: { class: 'icon-stack' }
 })
 export class SiStatusIconComponent {

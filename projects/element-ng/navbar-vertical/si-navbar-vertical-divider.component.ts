@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 // We need a component to attach the stylesheet
 @Component({
   selector: 'si-navbar-vertical-divider',
-  styleUrl: './si-navbar-vertical-divider.component.scss',
-  template: ''
+  template: '',
+  styleUrl: './si-navbar-vertical-divider.component.scss'
 })
 export class SiNavbarVerticalDividerComponent {}

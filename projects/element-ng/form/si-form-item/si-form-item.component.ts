@@ -48,9 +48,9 @@ export interface SiFormError {
 
 @Component({
   selector: 'si-form-item',
-  styleUrl: '../si-form.shared.scss',
-  templateUrl: './si-form-item.component.html',
   imports: [SiTranslateModule, NgTemplateOutlet],
+  templateUrl: './si-form-item.component.html',
+  styleUrl: '../si-form.shared.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.required]': 'required()',

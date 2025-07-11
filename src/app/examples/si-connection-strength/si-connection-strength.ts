@@ -7,8 +7,8 @@ import { SiConnectionStrengthComponent } from '@siemens/element-ng/connection-st
 
 @Component({
   selector: 'app-sample',
+  imports: [SiConnectionStrengthComponent],
   templateUrl: './si-connection-strength.html',
-  host: { class: 'p-5' },
-  imports: [SiConnectionStrengthComponent]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {}

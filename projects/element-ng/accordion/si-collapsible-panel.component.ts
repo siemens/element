@@ -30,8 +30,10 @@ let controlIdCounter = 1;
 
 @Component({
   selector: 'si-collapsible-panel',
+  imports: [NgClass, SiIconNextComponent, SiTranslateModule],
   templateUrl: './si-collapsible-panel.component.html',
   styleUrl: './si-collapsible-panel.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('showHide', [
       transition('*=>hide', [
@@ -52,8 +54,6 @@ let controlIdCounter = 1;
       ])
     ])
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgClass, SiIconNextComponent, SiTranslateModule],
   host: {
     '[class]': 'colorVariant()',
     '[class.opened]': 'opened()',

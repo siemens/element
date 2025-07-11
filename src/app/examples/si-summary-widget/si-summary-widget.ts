@@ -8,7 +8,7 @@ import { SiSummaryWidgetComponent } from '@siemens/element-ng/summary-widget';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-summary-widget.html',
-  imports: [NgTemplateOutlet, SiSummaryWidgetComponent]
+  imports: [NgTemplateOutlet, SiSummaryWidgetComponent],
+  templateUrl: './si-summary-widget.html'
 })
 export class SampleComponent {}

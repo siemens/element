@@ -20,8 +20,6 @@ import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.s
 
 @Component({
   selector: 'app-sample',
-  styleUrl: './si-main-detail-container-block.scss',
-  templateUrl: './si-main-detail-container-block.html',
   imports: [
     CommonModule,
     SiMainDetailContainerComponent,
@@ -31,6 +29,8 @@ import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.s
     SiDatatableModule,
     SiEmptyStateComponent
   ],
+  templateUrl: './si-main-detail-container-block.html',
+  styleUrl: './si-main-detail-container-block.scss',
   providers: [DataService]
 })
 export class SampleComponent {

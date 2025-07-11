@@ -12,8 +12,6 @@ import { SelectOption } from '../si-select.types';
 
 @Component({
   selector: 'si-select-option',
-  templateUrl: './si-select-option.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NgClass,
     NgTemplateOutlet,
@@ -21,6 +19,8 @@ import { SelectOption } from '../si-select.types';
     SiTranslateModule,
     SiSelectOptionTemplateDirective
   ],
+  templateUrl: './si-select-option.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'd-flex align-items-center overflow-hidden'
   }

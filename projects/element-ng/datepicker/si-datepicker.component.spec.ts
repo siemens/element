@@ -16,6 +16,7 @@ import { SiCalendarCellHarness } from './testing/si-calendar-cell.harness';
 import { SiDatepickerComponentHarness } from './testing/si-datepicker.harness';
 
 @Component({
+  imports: [SiDatepickerModule],
   template: `<si-datepicker
     [config]="config()"
     [dateRange]="dateRange()"
@@ -23,8 +24,7 @@ import { SiDatepickerComponentHarness } from './testing/si-datepicker.harness';
     (dateChange)="date.set($event); changedDate = $event"
     (dateRangeChange)="rangeChanged($event)"
   />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiDatepickerModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   readonly datePicker = viewChild.required(SiDatepickerComponent);

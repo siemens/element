@@ -12,10 +12,10 @@ import { SiToast } from '../si-toast.model';
 import { SiToastNotificationDrawerComponent } from './si-toast-notification-drawer.component';
 
 @Component({
-  template: `<si-toast-notification-drawer [toasts]="toasts" /> `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [SiToastNotificationDrawerComponent],
   standalone: true,
-  imports: [SiToastNotificationDrawerComponent]
+  template: `<si-toast-notification-drawer [toasts]="toasts" /> `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   toasts: Observable<SiToast[]> = new Subject<SiToast[]>();

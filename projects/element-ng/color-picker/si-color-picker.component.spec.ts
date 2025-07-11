@@ -9,9 +9,9 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { SiColorPickerComponent as TestComponent } from './index';
 
 @Component({
+  imports: [ReactiveFormsModule, TestComponent],
   template: `<si-color-picker [formControl]="colorPickerControl" />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, TestComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class FormHostComponent {
   readonly colorPickerComp = viewChild.required(TestComponent);

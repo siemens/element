@@ -22,6 +22,7 @@ const passwordStrengthValue: PasswordPolicy = {
 };
 
 @Component({
+  imports: [SiPasswordStrengthModule, FormsModule, SiTranslateModule],
   template: `
     <si-password-strength>
       <input
@@ -37,8 +38,7 @@ const passwordStrengthValue: PasswordPolicy = {
       />
     </si-password-strength>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiPasswordStrengthModule, FormsModule, SiTranslateModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
   readonly passwordStrength = viewChild.required<TestComponent, ElementRef<TestComponent>>(

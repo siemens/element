@@ -42,7 +42,6 @@ describe('SiApplicationHeaderComponent', () => {
         SiHeaderNavigationComponent,
         SiHeaderActionsDirective
       ],
-      changeDetection: ChangeDetectionStrategy.OnPush,
       template: `
         <si-application-header expandBreakpoint="never">
           <si-header-navigation>
@@ -89,7 +88,8 @@ describe('SiApplicationHeaderComponent', () => {
             <si-header-dropdown-item>DItem 2</si-header-dropdown-item>
           </si-header-dropdown>
         </ng-template>
-      `
+      `,
+      changeDetection: ChangeDetectionStrategy.OnPush
     })
     class TestHostComponent {}
 
@@ -181,6 +181,12 @@ describe('SiApplicationHeaderComponent', () => {
 
   describe('with badges', () => {
     @Component({
+      imports: [
+        SiApplicationHeaderComponent,
+        SiHeaderCollapsibleActionsComponent,
+        SiHeaderActionItemComponent,
+        SiHeaderActionsDirective
+      ],
       template: `
         <si-application-header expandBreakpoint="never">
           <si-header-actions>
@@ -195,12 +201,6 @@ describe('SiApplicationHeaderComponent', () => {
           </si-header-actions>
         </si-application-header>
       `,
-      imports: [
-        SiApplicationHeaderComponent,
-        SiHeaderCollapsibleActionsComponent,
-        SiHeaderActionItemComponent,
-        SiHeaderActionsDirective
-      ],
       changeDetection: ChangeDetectionStrategy.OnPush
     })
     class TestHostComponent {
@@ -271,6 +271,12 @@ describe('SiApplicationHeaderComponent', () => {
 
   describe('with resizing', () => {
     @Component({
+      imports: [
+        SiApplicationHeaderComponent,
+        SiHeaderCollapsibleActionsComponent,
+        SiHeaderActionsDirective,
+        SiHeaderNavigationComponent
+      ],
       template: `
         <si-application-header>
           <si-header-actions>
@@ -279,12 +285,6 @@ describe('SiApplicationHeaderComponent', () => {
           </si-header-actions>
         </si-application-header>
       `,
-      imports: [
-        SiApplicationHeaderComponent,
-        SiHeaderCollapsibleActionsComponent,
-        SiHeaderActionsDirective,
-        SiHeaderNavigationComponent
-      ],
       changeDetection: ChangeDetectionStrategy.OnPush
     })
     class TestHostComponent {}
@@ -331,6 +331,11 @@ describe('SiApplicationHeaderComponent', () => {
 
   describe('with launchpad', () => {
     @Component({
+      imports: [
+        SiApplicationHeaderComponent,
+        SiLaunchpadFactoryComponent,
+        SiHeaderNavigationComponent
+      ],
       template: `
         <si-application-header expandBreakpoint="never" [launchpad]="launchpad">
           <si-header-navigation />
@@ -338,12 +343,7 @@ describe('SiApplicationHeaderComponent', () => {
         <ng-template #launchpad>
           <si-launchpad-factory [apps]="[]" />
         </ng-template>
-      `,
-      imports: [
-        SiApplicationHeaderComponent,
-        SiLaunchpadFactoryComponent,
-        SiHeaderNavigationComponent
-      ]
+      `
     })
     class TestHostComponent {}
 

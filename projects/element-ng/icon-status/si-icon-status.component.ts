@@ -8,9 +8,9 @@ import { SiIconNextComponent } from '@siemens/element-ng/icon';
 
 @Component({
   selector: 'si-icon-status',
+  imports: [NgClass, SiIconNextComponent],
   templateUrl: './si-icon-status.component.html',
-  styleUrl: './si-icon-status.component.scss',
-  imports: [NgClass, SiIconNextComponent]
+  styleUrl: './si-icon-status.component.scss'
 })
 export class SiIconStatusComponent {
   /** Icon to display. */

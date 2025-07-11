@@ -57,6 +57,7 @@ export const provideIconConfig = (config: IconConfig): Provider => ({
  */
 @Component({
   selector: 'si-icon-next',
+  imports: [NgClass],
   template: ` <div
     aria-hidden="true"
     [ngClass]="svgIcon() ? '' : fontIcon()"
@@ -76,11 +77,10 @@ export const provideIconConfig = (config: IconConfig): Provider => ({
       }
     }
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[attr.data-icon]': 'icon()'
-  },
-  imports: [NgClass],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  }
 })
 export class SiIconNextComponent {
   /**

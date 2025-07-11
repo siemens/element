@@ -11,6 +11,7 @@ import { runOnPushChangeDetection } from '../test-helpers/change-detection.helpe
 import { SiWizardStepComponent, SiWizardComponent as TestComponent } from './index';
 
 @Component({
+  imports: [TestComponent, SiResizeObserverModule, SiWizardStepComponent],
   template: `
     <si-wizard
       #wizard
@@ -32,8 +33,7 @@ import { SiWizardStepComponent, SiWizardComponent as TestComponent } from './ind
       display: block;
       width: 1200px;
     }
-  `,
-  imports: [TestComponent, SiResizeObserverModule, SiWizardStepComponent]
+  `
 })
 class TestHostComponent {
   steps!: string[];

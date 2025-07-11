@@ -8,8 +8,8 @@ import { FieldType, FieldTypeConfig, FormlyModule } from '@ngx-formly/core';
 
 @Component({
   selector: 'si-formly-email',
-  templateUrl: './si-formly-email.component.html',
-  imports: [FormsModule, ReactiveFormsModule, FormlyModule]
+  imports: [FormsModule, ReactiveFormsModule, FormlyModule],
+  templateUrl: './si-formly-email.component.html'
 })
 export class SiFormlyEmailComponent extends FieldType<FieldTypeConfig> {
   // Patterns are not recommended to validate email addresses.

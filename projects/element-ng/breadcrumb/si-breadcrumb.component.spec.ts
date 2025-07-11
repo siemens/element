@@ -39,9 +39,9 @@ const TEST_ITEMS = [
 const ROOT_ICON_WIDTH = 24;
 
 @Component({
+  imports: [TestComponent, SiTranslateNgxTModule],
   template: `<si-breadcrumb [items]="items" [showRootAsText]="showRootAsText" /> `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TestComponent, SiTranslateNgxTModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
   items: BreadcrumbItem[] = [];

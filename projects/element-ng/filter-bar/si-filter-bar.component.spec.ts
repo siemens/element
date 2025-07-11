@@ -8,6 +8,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Filter, SiFilterBarComponent } from './index';
 
 @Component({
+  imports: [SiFilterBarComponent],
   template: `
     <si-filter-bar
       class="d-block"
@@ -19,8 +20,7 @@ import { Filter, SiFilterBarComponent } from './index';
       (filtersChange)="filtersChange($event)"
     />
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiFilterBarComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   readonly filterBar = viewChild.required(SiFilterBarComponent);

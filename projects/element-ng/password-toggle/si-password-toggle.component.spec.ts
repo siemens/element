@@ -10,12 +10,12 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 import { SiPasswordToggleModule } from './si-password-toggle.module';
 
 @Component({
+  imports: [FormsModule, SiPasswordToggleModule, SiTranslateModule],
   template: `
     <si-password-toggle #toggle [showVisibilityIcon]="showVisibilityIcon()">
       <input [attr.type]="toggle.inputType" />
     </si-password-toggle>
-  `,
-  imports: [FormsModule, SiPasswordToggleModule, SiTranslateModule]
+  `
 })
 class TestHostComponent {
   readonly showVisibilityIcon = input(true);

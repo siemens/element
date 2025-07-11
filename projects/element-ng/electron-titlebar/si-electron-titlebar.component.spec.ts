@@ -10,6 +10,7 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 import { SiElectrontitlebarComponent } from './si-electron-titlebar.component';
 
 @Component({
+  imports: [SiElectrontitlebarComponent, SiTranslateModule],
   template: `
     <si-electron-titlebar
       [appTitle]="appTitle"
@@ -21,8 +22,7 @@ import { SiElectrontitlebarComponent } from './si-electron-titlebar.component';
       (back)="goBack()"
     />
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiElectrontitlebarComponent, SiTranslateModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   appTitle!: string;

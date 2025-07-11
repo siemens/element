@@ -7,8 +7,8 @@ import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notifi
 
 @Component({
   selector: 'app-sample',
+  imports: [SiInlineNotificationComponent],
   templateUrl: './si-inline-notification.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiInlineNotificationComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {}

@@ -12,9 +12,9 @@ import { IsoLanguageValue } from './iso-language-value';
 
 @Component({
   selector: 'si-language-switcher',
+  imports: [SiTranslateModule],
   templateUrl: './si-language-switcher.component.html',
-  styleUrl: './si-language-switcher.component.scss',
-  imports: [SiTranslateModule]
+  styleUrl: './si-language-switcher.component.scss'
 })
 export class SiLanguageSwitcherComponent {
   /**

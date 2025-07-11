@@ -9,6 +9,7 @@ import { SankeySeriesOption } from '../../shared/echarts.model';
 import { SiChartSankeyComponent } from './si-chart-sankey.component';
 
 @Component({
+  imports: [SiChartSankeyComponent],
   template: `
     <si-chart-sankey
       style="inline-size: 300px; block-size: 300px"
@@ -16,8 +17,7 @@ import { SiChartSankeyComponent } from './si-chart-sankey.component';
       [title]="title"
       [subTitle]="subTitle"
     />
-  `,
-  imports: [SiChartSankeyComponent]
+  `
 })
 class TestHostComponent {
   readonly chartSankeyComponent = viewChild.required(SiChartSankeyComponent);

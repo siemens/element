@@ -18,6 +18,7 @@ import { SiTypeaheadHarness } from './testing/si-typeahead.harness';
 const testItems = ['test', 'item'];
 
 @Component({
+  imports: [SiTypeaheadDirective, FormsModule, SiTranslateModule],
   template: `
     <ng-template #testTemplate let-matchItem="match">
       <div>Test Template: {{ matchItem.text }}</div>
@@ -45,8 +46,7 @@ const testItems = ['test', 'item'];
       (ngModelChange)="onModelChange($event)"
     />
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiTypeaheadDirective, FormsModule, SiTranslateModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
   items: Typeahead = testItems;

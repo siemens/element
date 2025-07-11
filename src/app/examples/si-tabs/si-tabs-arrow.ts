@@ -7,8 +7,8 @@ import { SiTabComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiTabComponent, SiTabsetComponent],
   templateUrl: './si-tabs-arrow.html',
-  host: { class: 'p-5' },
-  imports: [SiTabComponent, SiTabsetComponent]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {}

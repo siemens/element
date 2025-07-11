@@ -77,10 +77,6 @@ export const noEconomy: ValidatorFn = control => {
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-form.html',
-  providers: [JsonPipe],
-  host: { class: 'p-5' },
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     SiCardComponent,
     SiFormModule,
@@ -93,7 +89,11 @@ export const noEconomy: ValidatorFn = control => {
     SiNumberInputComponent,
     JsonPipe,
     ReactiveFormsModule
-  ]
+  ],
+  templateUrl: './si-form.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [JsonPipe],
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   optionsList: SelectOption<string>[] = [

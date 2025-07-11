@@ -13,8 +13,15 @@ import { SiToast } from '../si-toast.model';
 
 @Component({
   selector: 'si-toast-notification-drawer',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [AsyncPipe, SiToastNotificationComponent],
   templateUrl: './si-toast-notification-drawer.component.html',
+  // workaround for cdk-overlay not supporting the order of overlays
+  styles: `
+    ::ng-deep .cdk-global-overlay-wrapper:has(si-toast-notification-drawer) {
+      z-index: 2000;
+    }
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('toastTrigger', [
       transition(':enter', [
@@ -30,16 +37,9 @@ import { SiToast } from '../si-toast.model';
       ])
     ])
   ],
-  imports: [AsyncPipe, SiToastNotificationComponent],
   host: {
     'aria-live': 'polite'
-  },
-  // workaround for cdk-overlay not supporting the order of overlays
-  styles: `
-    ::ng-deep .cdk-global-overlay-wrapper:has(si-toast-notification-drawer) {
-      z-index: 2000;
-    }
-  `
+  }
 })
 export class SiToastNotificationDrawerComponent {
   readonly toasts = input<Observable<SiToast[]>>();
