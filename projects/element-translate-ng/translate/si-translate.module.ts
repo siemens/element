@@ -2,13 +2,11 @@
  * Copyright Siemens 2016 - 2025.
  * SPDX-License-Identifier: MIT
  */
-import { inject, Injector, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 
-import { initSiLocalize } from './si-localize';
-import { SiNoTranslateServiceBuilder } from './si-no-translate.service-builder';
+import { injectSiTranslateService } from './si-translate.inject';
 import { SiTranslatePipe } from './si-translate.pipe';
 import { SiTranslateService } from './si-translate.service';
-import { SiTranslateServiceBuilder } from './si-translate.service-builder';
 
 /**
  * This provides declares SiTranslatePipe and provides a respective SiTranslateService.
@@ -17,7 +15,7 @@ import { SiTranslateServiceBuilder } from './si-translate.service-builder';
  * @internal
  */
 @NgModule({
-  declarations: [SiTranslatePipe],
+  imports: [SiTranslatePipe],
   exports: [SiTranslatePipe],
   providers: [
     /* This is needed for ngx-translate when using the isolated mode for lazy child routes.
@@ -28,17 +26,8 @@ import { SiTranslateServiceBuilder } from './si-translate.service-builder';
      */
     {
       provide: SiTranslateService,
-      useFactory: (injector: Injector, noTranslateBuilder: SiNoTranslateServiceBuilder) =>
-        injector.get(SiTranslateServiceBuilder, noTranslateBuilder).buildService(injector),
-      deps: [Injector, SiNoTranslateServiceBuilder]
+      useFactory: () => injectSiTranslateService()
     }
   ]
 })
-export class SiTranslateModule {
-  constructor() {
-    const translateService = inject(SiTranslateService);
-    if (!translateService.prevent$LocalizeInit) {
-      initSiLocalize();
-    }
-  }
-}
+export class SiTranslateModule {}

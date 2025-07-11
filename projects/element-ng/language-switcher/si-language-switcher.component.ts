@@ -2,8 +2,11 @@
  * Copyright Siemens 2016 - 2025.
  * SPDX-License-Identifier: MIT
  */
-import { Component, computed, inject, input } from '@angular/core';
-import { SiTranslateModule, SiTranslateService } from '@siemens/element-translate-ng/translate';
+import { Component, computed, input } from '@angular/core';
+import {
+  injectSiTranslateService,
+  SiTranslateModule
+} from '@siemens/element-translate-ng/translate';
 
 import { IsoLanguageValue } from './iso-language-value';
 
@@ -40,7 +43,7 @@ export class SiLanguageSwitcherComponent {
    */
   readonly availableLanguages = input<(string | IsoLanguageValue)[] | null>(null);
 
-  protected readonly translate = inject(SiTranslateService);
+  protected readonly translate = injectSiTranslateService();
 
   protected readonly availableIsoLanguages = computed(() => {
     let languages = this.availableLanguages() ?? this.translate.availableLanguages;

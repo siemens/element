@@ -6,7 +6,11 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@
 import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
-import { SiTranslateModule, SiTranslateService } from '@siemens/element-translate-ng/translate';
+import {
+  provideMockTranslateServiceBuilder,
+  SiTranslateModule,
+  SiTranslateService
+} from '@siemens/element-translate-ng/translate';
 import { of } from 'rxjs';
 
 import { Link, LinkAction } from './link.model';
@@ -49,12 +53,12 @@ describe('SiLinkDirective', () => {
       providers: [
         SiLinkActionService,
         provideRouter([]),
-        {
-          provide: SiTranslateService,
-          useValue: {
-            translateAsync: (keys, params) => of(`translated=>${keys}-${JSON.stringify(params)}`)
-          } as SiTranslateService
-        }
+        provideMockTranslateServiceBuilder(
+          () =>
+            ({
+              translateAsync: (keys, params) => of(`translated=>${keys}-${JSON.stringify(params)}`)
+            }) as SiTranslateService
+        )
       ]
     }).compileComponents();
   }));

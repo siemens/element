@@ -8,7 +8,10 @@ import { FormRecord } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
-import { SiTranslateService } from '@siemens/element-ng/translate';
+import {
+  provideMockTranslateServiceBuilder,
+  SiTranslateService
+} from '@siemens/element-ng/translate';
 
 import { SiFormlyTextDisplayComponent } from './si-formly-text-display.component';
 
@@ -35,12 +38,9 @@ describe('formly text-display-type', () => {
     TestBed.overrideComponent(SiFormlyTextDisplayComponent, {
       add: {
         providers: [
-          {
-            provide: SiTranslateService,
-            useValue: {
-              translate: translateSpy
-            }
-          }
+          provideMockTranslateServiceBuilder(
+            () => ({ translate: translateSpy }) as unknown as SiTranslateService
+          )
         ]
       }
     });
