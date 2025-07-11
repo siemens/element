@@ -1,0 +1,14 @@
+- button "Natural Gas Usage Some quick example text to build on the card title and make up the bulk of the card's content.":
+  - paragraph: Some quick example text to build on the card title and make up the bulk of the card's content.
+- button "fire FS20 Too much wood is burning in the hot summer. fire sensor Use Siemens sensors to detect fire and save the planet." [pressed]:
+  - img "fire"
+  - paragraph: Too much wood is burning in the hot summer.
+  - img "fire sensor"
+  - paragraph: Use Siemens sensors to detect fire and save the planet.
+- button
+- button:
+  - img "Beach in Greece"
+- button "Caution accent Some quick example text to build on the card title and make up the bulk of the card's content.":
+  - paragraph: Some quick example text to build on the card title and make up the bulk of the card's content.
+- button "Info accent Some quick example text to build on the card title and make up the bulk of the card's content.":
+  - paragraph: Some quick example text to build on the card title and make up the bulk of the card's content.

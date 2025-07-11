@@ -4,6 +4,7 @@
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { ContentActionBarMainItem, ViewType } from '@siemens/element-ng/content-action-bar';
@@ -26,6 +27,8 @@ import { SiCardComponent } from './index';
         [imgDir]="imgDir"
         [imgObjectFit]="imgObjectFit"
         [imgObjectPosition]="imgObjectPosition"
+        [selectable]="selectable"
+        [(selected)]="selected"
       />
     </div>
   `,
@@ -44,6 +47,9 @@ class WrapperComponent {
   imgDir?: 'horizontal' | 'vertical' = 'vertical';
   imgObjectFit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
   imgObjectPosition?: string;
+
+  selectable = false;
+  selected = false;
 }
 
 describe('SiCardComponent', () => {
@@ -227,6 +233,45 @@ describe('SiCardComponent', () => {
 
       img = element.querySelector('img');
       expect(getComputedStyleProp(img, 'object-position')?.toString()).toBe('0% 50%');
+    });
+  });
+
+  describe('selectable', () => {
+    it('should not be selectable by default', () => {
+      fixture.detectChanges();
+      const card = element.querySelector('si-card');
+      expect(card?.classList.contains('selectable')).toBe(false);
+      expect(card?.classList.contains('selected')).toBe(false);
+    });
+
+    it('should be selectable when enabled', () => {
+      wrapperComponent.selectable = true;
+      fixture.detectChanges();
+      expect(wrapperComponent.selected).toBe(false);
+      fixture.debugElement.query(By.css('si-card'))?.triggerEventHandler('click', null);
+      expect(wrapperComponent.selected).toBe(true);
+    });
+
+    it('should toggle selected state on click', () => {
+      wrapperComponent.selectable = true;
+      fixture.detectChanges();
+      const card = fixture.debugElement.query(By.css('si-card'));
+      expect(wrapperComponent.selected).toBe(false);
+      card.triggerEventHandler('click', null);
+      expect(wrapperComponent.selected).toBe(true);
+      card.triggerEventHandler('click', null);
+      expect(wrapperComponent.selected).toBe(false);
+    });
+
+    it('should toggle selected state on Enter key press', () => {
+      wrapperComponent.selectable = true;
+      fixture.detectChanges();
+      const card = fixture.debugElement.query(By.css('si-card'));
+      expect(wrapperComponent.selected).toBe(false);
+      card.triggerEventHandler('keyup.enter', null);
+      expect(wrapperComponent.selected).toBe(true);
+      card.triggerEventHandler('keyup.enter', null);
+      expect(wrapperComponent.selected).toBe(false);
     });
   });
 });

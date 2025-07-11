@@ -1,0 +1,81 @@
+<div class="p-6">
+  <h4>Selectable Card grid with bootstrap markup</h4>
+  <div class="row row-cols-1 row-cols-md-3">
+    <div class="col mb-6">
+      <div
+        role="button"
+        tabindex="0"
+        class="card h-100 selectable"
+        [class.selected]="selectedCard === 'card1'"
+        [attr.aria-pressed]="selectedCard === 'card1'"
+        (click)="onCardSelect('card1')"
+        (keyup.enter)="onCardSelect('card1')"
+      >
+        <div class="card-header">Card header</div>
+        <div class="card-body">
+          <p class="card-text"
+            >This is a longer card with supporting text below as a natural lead-in to additional
+            content. This content is a little bit longer.</p
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col mb-6">
+      <div
+        role="button"
+        tabindex="0"
+        class="card h-100 selectable"
+        [class.selected]="selectedCard === 'card2'"
+        [attr.aria-pressed]="selectedCard === 'card2'"
+        (click)="onCardSelect('card2')"
+        (keyup.enter)="onCardSelect('card2')"
+      >
+        <div class="card-header">Card header</div>
+        <div class="card-body">
+          <p class="card-text"
+            >This is a longer card with supporting text below as a natural lead-in to additional
+            content. This content is a little bit longer.</p
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col mb-6">
+      <div
+        role="button"
+        tabindex="0"
+        class="card h-100 selectable"
+        [class.selected]="selectedCard === 'card3'"
+        [attr.aria-pressed]="selectedCard === 'card3'"
+        (click)="onCardSelect('card3')"
+        (keyup.enter)="onCardSelect('card3')"
+      >
+        <div class="card-header">Card header</div>
+        <div class="card-body">
+          <p class="card-text"
+            >This is a longer card with supporting text below as a natural lead-in to additional
+            content.</p
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col h-100 mb-6">
+      <div
+        role="button"
+        tabindex="0"
+        class="card selectable"
+        [class.selected]="selectedCard === 'card4'"
+        [attr.aria-pressed]="selectedCard === 'card4'"
+        (click)="onCardSelect('card4')"
+        (keyup.enter)="onCardSelect('card4')"
+      >
+        <div class="card-header">Card header</div>
+        <div class="card-body">
+          <p class="card-text"
+            >This is a longer card with supporting text below as a natural lead-in to additional
+            content. This content is a little bit longer.</p
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
