@@ -2,9 +2,8 @@
  * Copyright Siemens 2016 - 2025.
  * SPDX-License-Identifier: MIT
  */
-import { inject, Injector, NgModule } from '@angular/core';
+import { Injector, NgModule } from '@angular/core';
 
-import { initSiLocalize } from './si-localize';
 import { SiNoTranslateServiceBuilder } from './si-no-translate.service-builder';
 import { SiTranslatePipe } from './si-translate.pipe';
 import { SiTranslateService } from './si-translate.service';
@@ -34,11 +33,4 @@ import { SiTranslateServiceBuilder } from './si-translate.service-builder';
     }
   ]
 })
-export class SiTranslateModule {
-  constructor() {
-    const translateService = inject(SiTranslateService);
-    if (!translateService.prevent$LocalizeInit) {
-      initSiLocalize();
-    }
-  }
-}
+export class SiTranslateModule {}
