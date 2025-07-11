@@ -24,6 +24,11 @@
               "src/favicon.png",
               "src/app/examples",
               {
+                "glob": "*",
+                "input": "projects/element-ng/assets/images",
+                "output": "assets/images"
+              },
+              {
                 "glob": "**/*",
                 "input": "src/assets/",
                 "ignore": ["**/i18n/*.json", "**/i18n/"],

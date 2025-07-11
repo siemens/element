@@ -1,0 +1,41 @@
+<si-landing-page
+  heading="Element App"
+  subheading="Building X"
+  version="Version: 3.05"
+  [copyrightDetails]="copyrightDetails"
+  [subtitle]="'APP.CLAIM' | translate"
+  [links]="[
+    { title: 'Corporate Information', href: 'http://www.examples.org/corporate-information' },
+    { title: 'Privacy Notice', href: 'http://www.examples.org/privacy-notice' },
+    { title: 'Terms of Use', href: 'http://www.examples.org/terms-of-use' }
+  ]"
+  [availableLanguages]="[
+    { value: 'en', name: 'English' },
+    { value: 'de', name: 'Deutsch' },
+    { value: 'fr', name: 'Français' }
+  ]"
+>
+  <form>
+    <div class="mb-4">
+      <label for="username" class="form-label">Username</label>
+      <input id="username" type="email" class="form-control" />
+    </div>
+    <div class="mb-4">
+      <label for="password" class="form-label">Password</label>
+      <si-password-toggle #toggle>
+        <input id="password" class="form-control" [type]="toggle.inputType" />
+      </si-password-toggle>
+    </div>
+    <a routerLink="./" class="si-title-2">Forgot Password</a>
+    <button type="submit" class="btn btn-primary mt-8 w-100"> Log in </button>
+  </form>
+  <br />
+  <div class="si-body-2">
+    Don't have an account? <a routerLink="./" class="si-title-2 ms-6">Register now</a>
+  </div>
+  <div class="si-title-2 text-secondary mt-8"> Productive Data </div>
+  <div class="si-body-2 text-secondary mt-4">
+    You are about to connect to productive data. Please note that changes will take effect
+    immediately
+  </div>
+</si-landing-page>

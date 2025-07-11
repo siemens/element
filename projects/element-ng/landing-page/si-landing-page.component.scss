@@ -1,0 +1,116 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/all-variables';
+
+$margin-content: map.get(all-variables.$spacers, 11);
+$margin-content-large-tablet: map.get(all-variables.$spacers, 10);
+$margin-content-tablet: map.get(all-variables.$spacers, 9);
+$margin-content-mobile: map.get(all-variables.$spacers, 9);
+
+$margin-bottom-header: map.get(all-variables.$spacers, 9);
+$margin-bottom-footer: map.get(all-variables.$spacers, 9);
+
+:host {
+  display: flex;
+  flex-direction: column;
+  block-size: 100%;
+  padding-block-start: calc(
+    all-variables.$si-titlebar-spacing + all-variables.$si-system-banner-spacing
+  );
+}
+
+.landing-page {
+  display: flex;
+  flex-direction: row-reverse;
+  flex-grow: 1;
+}
+
+.landing-page-background {
+  background-size: cover;
+  background-position: center;
+
+  inline-size: 60%;
+}
+
+.landing-page-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  inline-size: 40%;
+  background-color: all-variables.$element-base-0;
+  padding-block: $margin-bottom-header $margin-bottom-footer;
+  padding-inline: $margin-content;
+}
+
+.landing-page-logo {
+  block-size: var(--landing-page-logo-height, all-variables.$element-brand-logo-height);
+  inline-size: var(--landing-page-logo-width, all-variables.$element-brand-logo-width);
+  content: var(--landing-page-logo, all-variables.$element-brand-logo) /
+    all-variables.$element-brand-logo-text;
+  box-sizing: content-box;
+}
+
+.landing-page-custom-logo {
+  // The custom logo will never have the theme logo dimension, so do not use them here.
+  block-size: var(--landing-page-logo-height);
+  inline-size: var(--landing-page-logo-width, 180px);
+  content: none;
+}
+
+.landing-page-custom-content {
+  margin-block: map.get(all-variables.$spacers, 6);
+  margin-inline: 0;
+}
+
+.landing-page-links a {
+  font-size: 12px;
+}
+
+footer {
+  color: all-variables.$element-text-secondary;
+  // Ensure we use the space in a surrounding container
+  overflow: auto;
+}
+
+// large tablet
+@include all-variables.media-breakpoint-down(xl) {
+  .landing-page-background {
+    padding: $margin-content-large-tablet;
+  }
+
+  .landing-page-content {
+    padding-block: $margin-bottom-header $margin-bottom-footer;
+    padding-inline: $margin-content-large-tablet;
+  }
+}
+
+// tablet
+@include all-variables.media-breakpoint-down(lg) {
+  .landing-page-background {
+    padding: $margin-content-tablet;
+  }
+
+  .landing-page-content {
+    padding-block: $margin-bottom-header $margin-bottom-footer;
+    padding-inline: $margin-content-tablet;
+  }
+}
+
+// mobile
+@include all-variables.media-breakpoint-down(md) {
+  .landing-page {
+    flex-direction: column;
+  }
+
+  .landing-page-custom-logo {
+    transform: scale(0.6);
+    transform-origin: top left;
+  }
+
+  .landing-page-content {
+    inline-size: 100%;
+    flex-grow: 1;
+    padding: $margin-content-mobile;
+  }
+}
