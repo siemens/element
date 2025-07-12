@@ -8,8 +8,8 @@ import { SiCircleStatusComponent } from '@siemens/element-ng/circle-status';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-circle-status.html',
-  imports: [SiCircleStatusComponent, FormsModule]
+  imports: [SiCircleStatusComponent, FormsModule],
+  templateUrl: './si-circle-status.html'
 })
 export class SampleComponent {
   pulsing = false;

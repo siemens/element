@@ -9,8 +9,8 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-formly-button',
-  templateUrl: './si-formly-button.component.html',
-  imports: [NgClass, SiTranslateModule, FormlyModule]
+  imports: [NgClass, SiTranslateModule, FormlyModule],
+  templateUrl: './si-formly-button.component.html'
 })
 export class SiFormlyButtonComponent extends FieldType {
   protected click(): void {

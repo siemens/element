@@ -16,6 +16,7 @@ import { ElementDimensions, ResizeObserverService } from './index';
 import { SiResizeObserverDirective } from './si-resize-observer.directive';
 
 @Component({
+  imports: [SiResizeObserverDirective],
   template: `
     <div
       style="width: 100px; height: 100px;"
@@ -26,8 +27,7 @@ import { SiResizeObserverDirective } from './si-resize-observer.directive';
     >
       Testli
     </div>
-  `,
-  imports: [SiResizeObserverDirective]
+  `
 })
 class TestHostComponent {
   width = 100;

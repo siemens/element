@@ -11,8 +11,8 @@ import { getFieldValue, getKeyPath } from '../../utils';
 
 @Component({
   selector: 'si-formly-text-display',
-  templateUrl: './si-formly-text-display.component.html',
-  imports: [FormlyModule, ReactiveFormsModule, SiTranslateModule]
+  imports: [FormlyModule, ReactiveFormsModule, SiTranslateModule],
+  templateUrl: './si-formly-text-display.component.html'
 })
 export class SiFormlyTextDisplayComponent extends FieldType<FieldTypeConfig> {
   protected get value(): any {

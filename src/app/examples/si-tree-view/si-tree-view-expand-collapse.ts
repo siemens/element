@@ -8,10 +8,10 @@ import { SiTreeViewComponent, TreeItem } from '@siemens/element-ng/tree-view';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiTreeViewComponent],
   templateUrl: './si-tree-view-expand-collapse.html',
-  host: { class: 'p-5' },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiTreeViewComponent]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   menuItems: MenuItem[] = [

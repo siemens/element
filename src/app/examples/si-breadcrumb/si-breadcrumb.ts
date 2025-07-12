@@ -7,8 +7,8 @@ import { SiBreadcrumbModule } from '@siemens/element-ng/breadcrumb';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiBreadcrumbModule],
   templateUrl: './si-breadcrumb.html',
-  host: { class: 'p-5' },
-  imports: [SiBreadcrumbModule]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {}

@@ -9,6 +9,7 @@ import { NgxDatatableModule } from '@siemens/ngx-datatable';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '.';
 
 @Component({
+  imports: [SiDatatableModule, NgxDatatableModule],
   template: `
     <ngx-datatable
       style="height: 500px;"
@@ -29,8 +30,7 @@ import { SI_DATATABLE_CONFIG, SiDatatableModule } from '.';
       [selected]="selected"
       [datatableInteractionAutoSelect]="datatableInteractionAutoSelect"
     />
-  `,
-  imports: [SiDatatableModule, NgxDatatableModule]
+  `
 })
 class WrapperComponent {
   selectionType = 'multi';

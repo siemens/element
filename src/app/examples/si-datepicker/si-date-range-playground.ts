@@ -17,8 +17,6 @@ import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-date-range-playground.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule,
     JsonPipe,
@@ -26,7 +24,9 @@ import { filter, map } from 'rxjs/operators';
     ReactiveFormsModule,
     SiDateRangeComponent,
     SiFormItemComponent
-  ]
+  ],
+  templateUrl: './si-date-range-playground.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnInit {
   readonly logEvent = inject(LOG_EVENT);

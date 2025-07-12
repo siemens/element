@@ -45,9 +45,6 @@ export interface SiTabNextDeselectionEvent {
 /** @experimental */
 @Component({
   selector: 'si-tabset-next',
-  templateUrl: './si-tabset-next.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrl: './si-tabset-next.component.scss',
   imports: [
     SiTranslateModule,
     SiMenuDirective,
@@ -57,6 +54,9 @@ export interface SiTabNextDeselectionEvent {
     SiResizeObserverModule,
     RouterLink
   ],
+  templateUrl: './si-tabset-next.component.html',
+  styleUrl: './si-tabset-next.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: SI_TABSET_NEXT,

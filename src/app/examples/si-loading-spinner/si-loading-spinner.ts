@@ -7,8 +7,8 @@ import { SiLoadingSpinnerComponent } from '@siemens/element-ng/loading-spinner';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-loading-spinner.html',
-  imports: [SiLoadingSpinnerComponent]
+  imports: [SiLoadingSpinnerComponent],
+  templateUrl: './si-loading-spinner.html'
 })
 export class SampleComponent {
   loading = true;

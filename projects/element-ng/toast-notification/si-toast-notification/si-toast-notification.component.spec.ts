@@ -12,9 +12,9 @@ import { SiToast } from '../si-toast.model';
 import { SiToastNotificationComponent } from './si-toast-notification.component';
 
 @Component({
+  imports: [SiToastNotificationComponent],
   template: `<si-toast-notification [toast]="toast" />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiToastNotificationComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   readonly siToastComponent = viewChild.required(SiToastNotificationComponent);

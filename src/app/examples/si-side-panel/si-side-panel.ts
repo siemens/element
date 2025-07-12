@@ -21,8 +21,6 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-side-panel.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     SiSidePanelComponent,
     SiSidePanelContentComponent,
@@ -32,7 +30,9 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiCollapsiblePanelComponent,
     SiApplicationHeaderComponent,
     SiHeaderLogoDirective
-  ]
+  ],
+  templateUrl: './si-side-panel.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   collapsed = true;

@@ -9,6 +9,7 @@ import { SunburstSeriesOption } from '../../shared/echarts.model';
 import { SiChartSunburstComponent } from './si-chart-sunburst.component';
 
 @Component({
+  imports: [SiChartSunburstComponent],
   template: `
     <si-chart-sunburst
       style="inline-size: 300px; block-size: 300px"
@@ -16,8 +17,7 @@ import { SiChartSunburstComponent } from './si-chart-sunburst.component';
       [title]="title"
       [subTitle]="subTitle"
     />
-  `,
-  imports: [SiChartSunburstComponent]
+  `
 })
 class TestHostComponent {
   readonly chartSunburstComponent = viewChild.required(SiChartSunburstComponent);

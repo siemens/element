@@ -9,8 +9,8 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 import { of } from 'rxjs';
 
 @Component({
-  template: `{{ 'KEY-1' | translate }}`,
-  imports: [TranslateModule]
+  imports: [TranslateModule],
+  template: `{{ 'KEY-1' | translate }}`
 })
 class TestComponent {}
 

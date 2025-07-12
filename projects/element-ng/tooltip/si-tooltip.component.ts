@@ -19,8 +19,8 @@ import { SiTranslateModule, TranslatableString } from '@siemens/element-translat
 
 @Component({
   selector: 'si-tooltip',
-  templateUrl: './si-tooltip.component.html',
-  imports: [NgClass, NgTemplateOutlet, SiTranslateModule, NgComponentOutlet]
+  imports: [NgClass, NgTemplateOutlet, SiTranslateModule, NgComponentOutlet],
+  templateUrl: './si-tooltip.component.html'
 })
 export class TooltipComponent {
   /** @defaultValue '' */

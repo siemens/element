@@ -10,15 +10,15 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-ip-input.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule,
     ReactiveFormsModule,
     SiIp4InputDirective,
     SiIp6InputDirective,
     SiFormItemComponent
-  ]
+  ],
+  templateUrl: './si-ip-input.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   protected readonly logEvent = inject(LOG_EVENT);

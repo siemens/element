@@ -11,6 +11,7 @@ import { runOnPushChangeDetection } from '../test-helpers/change-detection.helpe
 import { FileUploadResult, SiFileUploaderComponent, UploadFile } from './index';
 
 @Component({
+  imports: [SiFileUploaderComponent],
   template: `
     <si-file-uploader
       [uploadConfig]="uploadConfig"
@@ -34,8 +35,7 @@ import { FileUploadResult, SiFileUploaderComponent, UploadFile } from './index';
       (uploadCanceled)="uploadCanceled($event)"
     />
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiFileUploaderComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   readonly fileUploader = viewChild.required(SiFileUploaderComponent);

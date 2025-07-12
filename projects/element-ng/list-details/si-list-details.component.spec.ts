@@ -28,6 +28,14 @@ import { SiListPaneHeaderComponent } from './si-list-pane-header/si-list-pane-he
 import { SiListPaneComponent } from './si-list-pane/si-list-pane.component';
 
 @Component({
+  imports: [
+    SiListDetailsComponent,
+    SiListPaneComponent,
+    SiDetailsPaneComponent,
+    SiListPaneHeaderComponent,
+    SiDetailsPaneHeaderComponent,
+    SiDetailsPaneFooterComponent
+  ],
   template: `
     <si-list-details
       class="vh-100"
@@ -54,15 +62,7 @@ import { SiListPaneComponent } from './si-list-pane/si-list-pane.component';
       </si-details-pane>
     </si-list-details>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    SiListDetailsComponent,
-    SiListPaneComponent,
-    SiDetailsPaneComponent,
-    SiListPaneHeaderComponent,
-    SiDetailsPaneHeaderComponent,
-    SiDetailsPaneFooterComponent
-  ]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
   @ViewChild(SiListDetailsComponent, { static: true })

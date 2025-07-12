@@ -13,9 +13,9 @@ import { SiFormItemComponent } from '@siemens/element-ng/form';
 
 @Component({
   selector: 'app-sample',
+  imports: [FormsModule, SiDateInputDirective, SiDatepickerComponent, SiFormItemComponent],
   templateUrl: './si-date-input.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule, SiDateInputDirective, SiDatepickerComponent, SiFormItemComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   date = new Date('2022-03-12');

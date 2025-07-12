@@ -10,9 +10,9 @@ import { ModalRef, SiModalService } from '@siemens/element-ng/modal';
 
 @Component({
   selector: 'app-sample',
+  imports: [FormsModule, SiDatepickerDirective, SiCalendarButtonComponent, SiFormItemComponent],
   templateUrl: './si-modal-service.html',
-  host: { class: 'p-5' },
-  imports: [FormsModule, SiDatepickerDirective, SiCalendarButtonComponent, SiFormItemComponent]
+  host: { class: 'p-5' }
 })
 export class SampleComponent implements OnDestroy {
   private ref?: ModalRef<unknown>;

@@ -10,8 +10,8 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-loading-button.html',
-  imports: [FormsModule, SiLoadingButtonComponent, CommonModule]
+  imports: [FormsModule, SiLoadingButtonComponent, CommonModule],
+  templateUrl: './si-loading-button.html'
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

@@ -15,9 +15,9 @@ import { SiTabNextBaseDirective } from './si-tab-next-base.directive';
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'a[si-tab-next][routerLink]',
+  imports: [NgClass, SiIconNextComponent, SiTranslateModule],
   templateUrl: './si-tab-next.component.html',
   styleUrl: './si-tab-next.component.scss',
-  imports: [NgClass, SiIconNextComponent, SiTranslateModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.active]': 'routerLinkActive.isActive',

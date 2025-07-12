@@ -10,8 +10,8 @@ import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './chart.html',
-  imports: [FormsModule, SiChartGaugeComponent, SiResizeObserverDirective]
+  imports: [FormsModule, SiChartGaugeComponent, SiResizeObserverDirective],
+  templateUrl: './chart.html'
 })
 export class SampleComponent implements OnDestroy {
   chartData = {

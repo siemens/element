@@ -10,8 +10,8 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-status-toggle.html',
-  imports: [ReactiveFormsModule, SiStatusToggleComponent]
+  imports: [ReactiveFormsModule, SiStatusToggleComponent],
+  templateUrl: './si-status-toggle.html'
 })
 export class SampleComponent implements OnInit {
   logEvent = inject(LOG_EVENT);

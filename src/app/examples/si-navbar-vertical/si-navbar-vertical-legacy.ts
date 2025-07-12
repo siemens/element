@@ -11,9 +11,9 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiNavbarModule, SiNavbarVerticalModule],
   templateUrl: './si-navbar-vertical-legacy.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiNavbarModule, SiNavbarVerticalModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   menuItems: MenuItem[] = [

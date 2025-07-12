@@ -17,8 +17,6 @@ import { SiFilterPillComponent } from './si-filter-pill.component';
 
 @Component({
   selector: 'si-filter-bar',
-  templateUrl: './si-filter-bar.component.html',
-  styleUrl: './si-filter-bar.component.scss',
   imports: [
     SiAutoCollapsableListDirective,
     SiAutoCollapsableListItemDirective,
@@ -27,6 +25,8 @@ import { SiFilterPillComponent } from './si-filter-pill.component';
     SiFilterPillComponent,
     SiTranslateModule
   ],
+  templateUrl: './si-filter-bar.component.html',
+  styleUrl: './si-filter-bar.component.scss',
   host: {
     '[class.reset]': 'allowReset()'
   }

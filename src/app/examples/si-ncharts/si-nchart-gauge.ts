@@ -11,9 +11,9 @@ import { GaugeSeries, SiNChartGaugeComponent } from '@siemens/native-charts-ng';
 
 @Component({
   selector: 'app-sample',
+  imports: [FormsModule, SiFormItemComponent, SiNumberInputComponent, SiNChartGaugeComponent],
   templateUrl: './si-nchart-gauge.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule, SiFormItemComponent, SiNumberInputComponent, SiNChartGaugeComponent],
   host: {
     class: 'p-5'
   }

@@ -28,9 +28,9 @@ import { StatusToggleItem } from './status-toggle.model';
 
 @Component({
   selector: 'si-status-toggle',
+  imports: [NgClass, SiIconComponent, SiTranslateModule],
   templateUrl: './si-status-toggle.component.html',
   styleUrl: './si-status-toggle.component.scss',
-  imports: [NgClass, SiIconComponent, SiTranslateModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {

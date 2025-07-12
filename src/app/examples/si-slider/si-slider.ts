@@ -9,9 +9,9 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiSliderComponent, FormsModule],
   templateUrl: './si-slider.html',
-  host: { class: 'p-5' },
-  imports: [SiSliderComponent, FormsModule]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   slidingValue = 50;

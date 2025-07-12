@@ -16,6 +16,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SiLoadingSpinnerModule } from './si-loading-spinner.module';
 
 @Component({
+  imports: [SiLoadingSpinnerModule],
   template: `
     <div [siLoading]="loading" [blocking]="blocking">
       Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
@@ -26,8 +27,7 @@ import { SiLoadingSpinnerModule } from './si-loading-spinner.module';
       et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
       sanctus est Lorem ipsum dolor sit amet.
     </div>
-  `,
-  imports: [SiLoadingSpinnerModule]
+  `
 })
 export class TestHostComponent {
   public loading = true;

@@ -11,8 +11,8 @@ import { SiFormlyModule } from '@siemens/element-ng/formly';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-dynamic-form-array.html',
   imports: [CommonModule, SiFormModule, SiFormlyModule],
+  templateUrl: './si-dynamic-form-array.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {

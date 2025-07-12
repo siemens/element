@@ -7,12 +7,12 @@ import { SiCardComponent } from '@siemens/element-ng/card';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiCardComponent],
   templateUrl: './si-card-accent.html',
   styles: `
     .card-size {
       height: 200px;
     }
-  `,
-  imports: [SiCardComponent]
+  `
 })
 export class SampleComponent {}

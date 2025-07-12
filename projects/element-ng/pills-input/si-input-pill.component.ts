@@ -7,8 +7,8 @@ import { addIcons, elementCancel, SiIconNextComponent } from '@siemens/element-n
 
 @Component({
   selector: 'si-input-pill',
-  templateUrl: './si-input-pill.component.html',
   imports: [SiIconNextComponent],
+  templateUrl: './si-input-pill.component.html',
   host: {
     class: 'pill pe-0',
     '[class.pe-4]': 'hideClose()'

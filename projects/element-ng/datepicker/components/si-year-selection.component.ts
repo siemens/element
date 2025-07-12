@@ -35,9 +35,9 @@ import { SiInitialFocusComponent } from './si-initial-focus.component';
  */
 @Component({
   selector: 'si-year-selection',
+  imports: [SiCalendarDirectionButtonComponent, SiCalendarBodyComponent, DatePipe],
   templateUrl: './si-year-selection.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiCalendarDirectionButtonComponent, SiCalendarBodyComponent, DatePipe]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiYearSelectionComponent extends SiInitialFocusComponent implements OnChanges {
   /**

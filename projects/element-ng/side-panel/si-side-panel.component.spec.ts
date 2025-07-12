@@ -14,6 +14,7 @@ import { SiSidePanelService } from './si-side-panel.service';
 import { SidePanelMode } from './side-panel.model';
 
 @Component({
+  imports: [SiSidePanelModule, PortalModule],
   template: `<si-side-panel
       [collapsible]="collapsible()"
       [collapsed]="collapsed()"
@@ -27,8 +28,7 @@ import { SidePanelMode } from './side-panel.model';
         <div class="dynamic-content">Different content</div>
       </si-side-panel-content>
     </ng-template> `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiSidePanelModule, PortalModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   readonly sidePanel = viewChild.required(SiSidePanelComponent);

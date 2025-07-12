@@ -10,9 +10,9 @@ import { EChartOption } from '../../shared/echarts.model';
 import { SiChartComponent } from './si-chart.component';
 
 @Component({
+  imports: [SiChartComponent],
   template: `<si-chart style="inline-size: 300px; block-size: 300px" [options]="options" />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiChartComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   readonly chartComponent = viewChild.required(SiChartComponent);

@@ -15,9 +15,15 @@ import { SiFormlyObjectTabsetComponent } from './si-formly-object-tabset.compone
 
 @Component({
   selector: 'si-formly-test',
+  imports: [
+    ReactiveFormsModule,
+    SiTabComponent,
+    SiTabsetComponent,
+    SiTranslateModule,
+    FormlyModule
+  ],
   template: ` <formly-form [form]="form" [fields]="fields" [model]="model" [options]="options" /> `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, SiTabComponent, SiTabsetComponent, SiTranslateModule, FormlyModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class FormlyTestComponent {
   form = new FormRecord({});

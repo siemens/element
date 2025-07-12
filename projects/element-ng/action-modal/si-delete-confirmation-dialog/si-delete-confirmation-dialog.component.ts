@@ -14,9 +14,9 @@ import { DeleteConfirmationDialogResult } from '../si-action-dialog.types';
 
 @Component({
   selector: 'si-delete-confirmation-dialog',
+  imports: [AsyncPipe, SiIconNextComponent, SiTranslateModule, SiLoadingButtonComponent],
   templateUrl: './si-delete-confirmation-dialog.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AsyncPipe, SiIconNextComponent, SiTranslateModule, SiLoadingButtonComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiDeleteConfirmationDialogComponent {
   readonly titleId = input<string>();

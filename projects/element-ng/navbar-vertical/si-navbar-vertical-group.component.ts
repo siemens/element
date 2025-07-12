@@ -15,6 +15,7 @@ import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
 // We have to use a component to build animations.
 @Component({
   selector: 'si-navbar-vertical-group',
+  imports: [CdkTrapFocus],
   template: `<div [cdkTrapFocus]="flyout" [cdkTrapFocusAutoCapture]="flyout">
     <ng-content />
   </div>`,
@@ -31,7 +32,6 @@ import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
     '[class.dropdown-menu]': 'flyout',
     '[@collapse]': 'state() ?? "collapsed"'
   },
-  imports: [CdkTrapFocus],
   animations: [
     trigger('collapse', [
       state('collapsed', style({ display: 'none' })),

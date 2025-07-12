@@ -43,17 +43,17 @@ const defaultDataColors: string[] = [
 ];
 @Component({
   selector: 'si-color-picker',
+  imports: [SiIconNextComponent, SiTranslateModule, CdkConnectedOverlay, CdkOverlayOrigin],
   templateUrl: './si-color-picker.component.html',
   styleUrl: './si-color-picker.component.scss',
-  imports: [SiIconNextComponent, SiTranslateModule, CdkConnectedOverlay, CdkOverlayOrigin],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: SiColorPickerComponent,
       multi: true
     }
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  ]
 })
 export class SiColorPickerComponent implements ControlValueAccessor {
   // eslint-disable-next-line defaultValue/tsdoc-defaultValue-annotation

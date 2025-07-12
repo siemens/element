@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'si-image-cropper-style',
-  styleUrl: './si-image-cropper-style.component.scss',
-  template: '<ng-content />'
+  template: '<ng-content />',
+  styleUrl: './si-image-cropper-style.component.scss'
 })
 export class SiImageCropperStyleComponent {}

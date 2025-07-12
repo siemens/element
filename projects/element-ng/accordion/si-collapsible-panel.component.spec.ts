@@ -11,6 +11,7 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 import { SiCollapsiblePanelComponent } from './index';
 
 @Component({
+  imports: [SiTranslateModule, SiCollapsiblePanelComponent],
   template: `
     <si-collapsible-panel [heading]="heading">
       <div style="height: 100px;">This is the content</div>
@@ -22,8 +23,7 @@ import { SiCollapsiblePanelComponent } from './index';
       <div style="height: 100px;">This is the content</div>
     </si-collapsible-panel>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiTranslateModule, SiCollapsiblePanelComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   heading!: string;

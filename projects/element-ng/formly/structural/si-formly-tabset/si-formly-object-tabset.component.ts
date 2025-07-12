@@ -8,8 +8,8 @@ import { SiTabComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
 
 @Component({
   selector: 'si-formly-object-tabset',
-  templateUrl: './si-formly-object-tabset.component.html',
-  imports: [SiTabsetComponent, SiTabComponent, FormlyModule]
+  imports: [SiTabsetComponent, SiTabComponent, FormlyModule],
+  templateUrl: './si-formly-object-tabset.component.html'
 })
 export class SiFormlyObjectTabsetComponent extends FieldType {
   protected tabIndexChange(selectedTab: number): void {

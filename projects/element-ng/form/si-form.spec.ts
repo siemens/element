@@ -25,6 +25,12 @@ import { SiFormItemHarness } from './testing/si-form-item.harness';
 describe('SiForm', () => {
   describe('with container', () => {
     @Component({
+      imports: [
+        ReactiveFormsModule,
+        SiFormFieldsetComponent,
+        SiFormItemComponent,
+        SiFormContainerComponent
+      ],
       template: `
         <si-form-container
           [errorCodeTranslateKeyMap]="{
@@ -64,13 +70,7 @@ describe('SiForm', () => {
           </form>
         </si-form-container>
       `,
-      changeDetection: ChangeDetectionStrategy.OnPush,
-      imports: [
-        ReactiveFormsModule,
-        SiFormFieldsetComponent,
-        SiFormItemComponent,
-        SiFormContainerComponent
-      ]
+      changeDetection: ChangeDetectionStrategy.OnPush
     })
     class TestHostComponent {
       form = new FormGroup({
@@ -149,14 +149,14 @@ describe('SiForm', () => {
 
   describe('without container', () => {
     @Component({
+      imports: [ReactiveFormsModule, SiFormItemComponent],
       template: `
         <form [formGroup]="form">
           <si-form-item label="Input" [disableErrorPrinting]="false">
             <input formControlName="input" />
           </si-form-item>
         </form>
-      `,
-      imports: [ReactiveFormsModule, SiFormItemComponent]
+      `
     })
     class TestHostComponent {
       form = new FormGroup({
@@ -202,14 +202,14 @@ describe('SiForm', () => {
 
   describe('with template driven forms', () => {
     @Component({
+      imports: [SiFormItemComponent, FormsModule],
       template: `
         <form>
           <si-form-item label="Input" [disableErrorPrinting]="false">
             <input name="value" [required]="required" [(ngModel)]="value" />
           </si-form-item>
         </form>
-      `,
-      imports: [SiFormItemComponent, FormsModule]
+      `
     })
     class TestHostComponent {
       value = '';
@@ -244,13 +244,13 @@ describe('SiForm', () => {
 
   describe('with error mapper', () => {
     @Component({
+      imports: [ReactiveFormsModule, SiFormItemComponent],
       template: `
         <si-form-item label="Input">
           <input type="text" id="email" class="form-control" [formControl]="email" />
         </si-form-item>
       `,
-      changeDetection: ChangeDetectionStrategy.OnPush,
-      imports: [ReactiveFormsModule, SiFormItemComponent]
+      changeDetection: ChangeDetectionStrategy.OnPush
     })
     class TestHostComponent {
       readonly email = new FormControl('email', [Validators.email]);

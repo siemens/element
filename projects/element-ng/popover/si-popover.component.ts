@@ -10,8 +10,8 @@ import { SiIconNextComponent } from '@siemens/element-ng/icon';
 
 @Component({
   selector: 'si-popover',
-  templateUrl: './si-popover.component.html',
-  imports: [NgClass, NgTemplateOutlet, SiIconNextComponent]
+  imports: [NgClass, NgTemplateOutlet, SiIconNextComponent],
+  templateUrl: './si-popover.component.html'
 })
 export class PopoverComponent implements OnInit {
   readonly popover = input<string | TemplateRef<any>>();

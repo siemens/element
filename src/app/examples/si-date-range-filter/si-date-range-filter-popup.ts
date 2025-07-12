@@ -27,9 +27,6 @@ const ONE_DAY = 60 * 60 * 24 * 1000;
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-date-range-filter-popup.html',
-  host: { class: 'p-5' },
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     A11yModule,
     DatePipe,
@@ -38,7 +35,10 @@ const ONE_DAY = 60 * 60 * 24 * 1000;
     OverlayModule,
     SiDateRangeFilterComponent,
     SiFormItemComponent
-  ]
+  ],
+  templateUrl: './si-date-range-filter-popup.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'p-5' }
 })
 export class SampleComponent implements OnInit {
   protected readonly logEvent = inject(LOG_EVENT);

@@ -21,6 +21,7 @@ export type Spied<T> = {
 };
 
 @Component({
+  imports: [SiDatepickerModule, FormsModule],
   template: `<input
     #siDatePicker
     #validation="ngModel"
@@ -34,8 +35,7 @@ export type Spied<T> = {
     [ngModel]="date()"
     (ngModelChange)="date.set($event)"
   />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiDatepickerModule, FormsModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
   readonly siDatePicker = viewChild.required<ElementRef>('siDatePicker');

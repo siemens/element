@@ -19,9 +19,9 @@ export interface SortCriteria {
 
 @Component({
   selector: 'si-sort-bar',
+  imports: [SiIconNextComponent, SiTranslateModule],
   templateUrl: './si-sort-bar.component.html',
-  styleUrl: './si-sort-bar.component.scss',
-  imports: [SiIconNextComponent, SiTranslateModule]
+  styleUrl: './si-sort-bar.component.scss'
 })
 export class SiSortBarComponent implements OnInit {
   /**

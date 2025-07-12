@@ -8,8 +8,8 @@ import { SiMenuModule } from '@siemens/element-ng/menu';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-menu-bar.html',
-  imports: [SiMenuModule, CdkMenuTrigger]
+  imports: [SiMenuModule, CdkMenuTrigger],
+  templateUrl: './si-menu-bar.html'
 })
 export class SampleComponent {
   isAwesome = true;

@@ -21,9 +21,9 @@ import { ModalRef } from './modalref';
 
 @Component({
   selector: 'si-modal',
+  imports: [A11yModule, NgClass],
   templateUrl: './si-modal.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [A11yModule, NgClass]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiModalComponent implements OnInit, AfterViewInit, OnDestroy {
   protected modalRef = inject(ModalRef<unknown, any>);

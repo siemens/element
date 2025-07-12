@@ -12,8 +12,8 @@ import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-dynamic-form-expressions.html',
   imports: [CommonModule, SiFormModule, SiFormlyModule],
+  templateUrl: './si-dynamic-form-expressions.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {

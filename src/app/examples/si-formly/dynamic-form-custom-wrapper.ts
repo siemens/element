@@ -10,8 +10,8 @@ import { SiCardComponent } from '@siemens/element-ng/card';
 Sample component to test custom type registration in SiFormlyModule
 */
 @Component({
-  imports: [SiCardComponent],
   selector: 'app-custom-type',
+  imports: [SiCardComponent],
   template: `
     <div class="col mb-6">
       <si-card [heading]="props.heading">

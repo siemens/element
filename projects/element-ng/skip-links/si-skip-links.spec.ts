@@ -8,11 +8,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SiSkipLinkTargetDirective } from './si-skip-link-target.directive';
 
 @Component({
+  imports: [SiSkipLinkTargetDirective],
   template: `
     <button siSkipLinkTarget="T1" type="button">Target 1</button>
     <button siSkipLinkTarget="T2" type="button">Target 2</button>
-  `,
-  imports: [SiSkipLinkTargetDirective]
+  `
 })
 class TestHostComponent {}
 

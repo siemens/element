@@ -10,9 +10,9 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiElectrontitlebarComponent],
   templateUrl: './si-electron-titlebar.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiElectrontitlebarComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   private _location = inject(Location);

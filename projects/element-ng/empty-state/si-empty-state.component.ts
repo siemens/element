@@ -8,10 +8,10 @@ import { SiTranslateModule, TranslatableString } from '@siemens/element-translat
 
 @Component({
   selector: 'si-empty-state',
+  imports: [SiIconNextComponent, SiTranslateModule],
   templateUrl: './si-empty-state.component.html',
   styleUrl: './si-empty-state.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiIconNextComponent, SiTranslateModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiEmptyStateComponent {
   /**

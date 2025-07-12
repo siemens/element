@@ -8,9 +8,9 @@ import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiAccordionComponent, SiCollapsiblePanelComponent],
   templateUrl: './si-accordion-base-1.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiAccordionComponent, SiCollapsiblePanelComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

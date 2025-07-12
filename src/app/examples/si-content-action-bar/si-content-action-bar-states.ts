@@ -12,9 +12,9 @@ import { MenuItem } from '@siemens/element-ng/menu';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiContentActionBarComponent],
   templateUrl: './si-content-action-bar-states.html',
-  host: { class: 'p-5' },
-  imports: [SiContentActionBarComponent]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   viewType: ViewType = 'expanded';

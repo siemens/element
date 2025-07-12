@@ -7,8 +7,8 @@ import { SiIconStatusComponent } from '@siemens/element-ng/icon-status';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiIconStatusComponent],
   templateUrl: './si-icon-status.html',
-  host: { class: 'p-5' },
-  imports: [SiIconStatusComponent]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {}

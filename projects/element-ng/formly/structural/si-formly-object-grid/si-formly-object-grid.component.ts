@@ -10,8 +10,8 @@ import { GridColumnConfig, GridRow, ToGridRowConfig } from './si-formly-object-g
 
 @Component({
   selector: 'si-formly-object-grid',
-  templateUrl: './si-formly-object-grid.component.html',
-  imports: [FormlyModule, SiFormContainerComponent]
+  imports: [FormlyModule, SiFormContainerComponent],
+  templateUrl: './si-formly-object-grid.component.html'
 })
 export class SiFormlyObjectGridComponent extends FieldType implements OnInit {
   protected rows: GridRow[] = [];

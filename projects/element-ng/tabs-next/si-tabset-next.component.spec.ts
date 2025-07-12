@@ -28,6 +28,7 @@ import { SiTabsetNextHarness } from './testing/si-tabset-next.harness';
 class SiTabRouteComponent {}
 
 @Component({
+  imports: [SiTabsetNextComponent, SiTabNextComponent],
   template: `
     <div class="tab-wrapper" [style.width.px]="wrapperWidth()">
       @if (tabsObject().length) {
@@ -44,8 +45,7 @@ class SiTabRouteComponent {}
         </si-tabset-next>
       }
     </div>
-  `,
-  imports: [SiTabsetNextComponent, SiTabNextComponent]
+  `
 })
 class TestComponent {
   readonly tabButtonMaxWidth = signal<number | undefined>(undefined);
@@ -73,6 +73,7 @@ class TestComponent {
 }
 
 @Component({
+  imports: [SiTabsetNextComponent, SiTabNextLinkComponent, RouterOutlet, RouterLink],
   template: `
     <div class="tab-wrapper" [style.width.px]="wrapperWidth()">
       @if (tabsObject().length) {
@@ -91,8 +92,7 @@ class TestComponent {
         </si-tabset-next>
       }
     </div>
-  `,
-  imports: [SiTabsetNextComponent, SiTabNextLinkComponent, RouterOutlet, RouterLink]
+  `
 })
 class TestRoutingComponent {
   readonly tabButtonMaxWidth = signal<number | undefined>(undefined);

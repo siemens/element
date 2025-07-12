@@ -12,9 +12,9 @@ import { CorporateEmployee, DataService, PageRequest } from './data.service';
 
 @Component({
   selector: 'app-sample',
+  imports: [NgxDatatableModule, SiDatatableModule, SiEmptyStateComponent],
   templateUrl: './datatable-filter-sort-server.html',
   styleUrl: './datatable.scss',
-  imports: [NgxDatatableModule, SiDatatableModule, SiEmptyStateComponent],
   providers: [DataService]
 })
 export class SampleComponent implements OnDestroy {

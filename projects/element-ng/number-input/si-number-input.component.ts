@@ -35,8 +35,10 @@ import { Subscription, timer } from 'rxjs';
 
 @Component({
   selector: 'si-number-input',
+  imports: [SiIconNextComponent, SiTranslateModule],
   templateUrl: './si-number-input.component.html',
   styleUrl: './si-number-input.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -53,8 +55,6 @@ import { Subscription, timer } from 'rxjs';
       useExisting: SiNumberInputComponent
     }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiIconNextComponent, SiTranslateModule],
   host: {
     '[class.show-step-buttons]': 'showButtons()',
     '[class.disabled]': 'disabled()',

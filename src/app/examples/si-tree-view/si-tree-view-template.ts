@@ -11,10 +11,10 @@ import {
 
 @Component({
   selector: 'app-sample',
+  imports: [SiTreeViewComponent, SiTreeViewItemTemplateDirective],
   templateUrl: './si-tree-view-template.html',
-  host: { class: 'p-5' },
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiTreeViewComponent, SiTreeViewItemTemplateDirective]
+  host: { class: 'p-5' }
 })
 export class SampleComponent {
   treeItems: TreeItem[] = [

@@ -8,9 +8,9 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-password-toggle',
+  imports: [SiIconNextComponent, SiTranslateModule],
   templateUrl: './si-password-toggle.component.html',
   styleUrl: './si-password-toggle.component.scss',
-  imports: [SiIconNextComponent, SiTranslateModule],
   host: {
     '[class.show-visibility-icon]': 'showVisibilityIcon()'
   }

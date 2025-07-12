@@ -14,9 +14,9 @@ import { ProgressBarChartSeries, ProgressBarValueUpdate } from './si-chart-progr
 
 @Component({
   selector: 'si-chart-progress-bar',
+  imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
   templateUrl: '../si-chart/si-chart.component.html',
-  styleUrl: '../si-chart/si-chart.component.scss',
-  imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent]
+  styleUrl: '../si-chart/si-chart.component.scss'
 })
 export class SiChartProgressBarComponent extends SiChartComponent {
   readonly series = input<ProgressBarChartSeries[]>();

@@ -46,7 +46,6 @@ import { AppItem, AppItemCategory } from './si-navbar-primary.model';
 /** @deprecated Use the new `si-application-header` instead. */
 @Component({
   selector: 'si-navbar-primary',
-  templateUrl: './si-navbar-primary.component.html',
   imports: [
     A11yModule,
     NgTemplateOutlet,
@@ -65,6 +64,7 @@ import { AppItem, AppItemCategory } from './si-navbar-primary.model';
     SiHeaderCollapsibleActionsComponent,
     SiHeaderLogoDirective
   ],
+  templateUrl: './si-navbar-primary.component.html',
   styles: `
     .header-custom-logo {
       content: initial;

@@ -7,7 +7,7 @@ import { SiSystemBannerComponent } from '@siemens/element-ng/system-banner';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './si-system-banner.html',
-  imports: [SiSystemBannerComponent]
+  imports: [SiSystemBannerComponent],
+  templateUrl: './si-system-banner.html'
 })
 export class SampleComponent {}

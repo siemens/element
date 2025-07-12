@@ -13,6 +13,7 @@ import { LicenseInfo } from './si-about-data.model';
 import { SiAboutComponent } from './si-about.component';
 
 @Component({
+  imports: [SiAboutComponent],
   template: `
     <si-about
       [aboutTitle]="aboutTitle"
@@ -28,8 +29,7 @@ import { SiAboutComponent } from './si-about.component';
       [links]="links"
     />
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiAboutComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
   aboutTitle!: string;

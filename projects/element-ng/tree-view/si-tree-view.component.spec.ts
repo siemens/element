@@ -26,6 +26,7 @@ import { SiTreeViewComponent } from './si-tree-view.component';
 import { LoadChildrenEventArgs, TreeItem } from './si-tree-view.model';
 
 @Component({
+  imports: [SiLoadingSpinnerModule, SiTranslateModule, SiTreeViewModule],
   template: `<si-tree-view
     class="vh-100"
     [style]="style"
@@ -57,8 +58,7 @@ import { LoadChildrenEventArgs, TreeItem } from './si-tree-view.model';
     [expandCollapseAll]="expandCollapseAll"
     (loadChildren)="loadChildren($event)"
   />`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SiLoadingSpinnerModule, SiTranslateModule, SiTreeViewModule]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
   @ViewChild(SiTreeViewComponent, { static: true }) treeViewComponent!: SiTreeViewComponent;

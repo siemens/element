@@ -55,16 +55,16 @@ const SCROLL_INCREMENT = 55;
 
 @Component({
   selector: 'si-tabset',
-  templateUrl: './si-tabset.component.html',
-  styleUrl: './si-tabset.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NgClass,
     SiIconNextComponent,
     SiIconComponent,
     SiResizeObserverDirective,
     SiTranslateModule
-  ]
+  ],
+  templateUrl: './si-tabset.component.html',
+  styleUrl: './si-tabset.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiTabsetComponent implements AfterViewInit, OnDestroy {
   /**

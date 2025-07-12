@@ -17,8 +17,8 @@ const point = (): number => Math.round(Math.random() * 100);
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './chart.html',
-  imports: [SiChartCartesianComponent, SiResizeObserverDirective]
+  imports: [SiChartCartesianComponent, SiResizeObserverDirective],
+  templateUrl: './chart.html'
 })
 export class SampleComponent extends ChartBase {
   chartData: ChartData = {
