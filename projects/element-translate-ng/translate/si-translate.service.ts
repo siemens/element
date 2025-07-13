@@ -3,8 +3,11 @@
  * SPDX-License-Identifier: MIT
  */
 import { DOCUMENT } from '@angular/common';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, Injector } from '@angular/core';
 import { NEVER, Observable } from 'rxjs';
+
+import { SiNoTranslateServiceBuilder } from './si-no-translate.service-builder';
+import { SiTranslateServiceBuilder } from './si-translate.service-builder';
 
 export type TranslationResult<T> = T extends string ? string : Record<string, string>;
 
@@ -20,9 +23,23 @@ export const getBrowserCultureLanguage = (): string | undefined =>
 export const getBrowserLanguage = (): string | undefined =>
   getBrowserCultureLanguage()?.split(/-|_/)[0];
 
+/** Injects a {@link SiTranslateService} based on the global configuration. */
+export const injectSiTranslateService = (): SiTranslateService =>
+  /* This is needed for ngx-translate when using the isolated mode for lazy child routes.
+   * In that case, a new TranslateService is created by ngx-translate which also needs to be used
+   * by Element components within that route.
+   * The Builder can be used to check if a new service is available
+   * and then provide a corresponding SiTranslateService.
+   */
+  (
+    inject(SiTranslateServiceBuilder, { optional: true }) ?? inject(SiNoTranslateServiceBuilder)
+  ).buildService(inject(Injector));
+
 /**
  * Wrapper around an actual translation framework which is meant to be used internally by Element.
  * Applications must not use this service.
+ *
+ * Use {@link injectSiTranslateService} to get an instance of the translation service.
  *
  * @internal
  */
