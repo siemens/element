@@ -23,6 +23,7 @@ import { Observable } from 'rxjs';
 
 import { CriterionDefinition, CriterionValue, OptionType } from './si-filtered-search.model';
 import { SiFilteredSearchDateValueComponent } from './values/date-value/si-filtered-search-date-value.component';
+import { SiFilteredSearchMultiSelectComponent } from './values/multi-select/si-filtered-search-multi-select.component';
 import { SiFilteredSearchValueBase } from './values/si-filtered-search-value.base';
 import { SiFilteredSearchTypeaheadComponent } from './values/typeahead/si-filtered-search-typeahead.component';
 
@@ -35,7 +36,8 @@ import { SiFilteredSearchTypeaheadComponent } from './values/typeahead/si-filter
     SiTranslateModule,
     SiFilteredSearchDateValueComponent,
     SiFilteredSearchTypeaheadComponent,
-    SiIconNextComponent
+    SiIconNextComponent,
+    SiFilteredSearchMultiSelectComponent
   ],
   templateUrl: './si-filtered-search-value.component.html',
   styleUrl: './si-filtered-search-value.component.scss',
@@ -78,7 +80,11 @@ export class SiFilteredSearchValueComponent implements OnInit {
       case 'date-time':
         return 'date';
       default:
-        return 'typeahead';
+        if (this.definition().multiSelect) {
+          return 'multi-select';
+        } else {
+          return 'typeahead';
+        }
     }
   });
   readonly selectedOperatorIndex = computed(() => {
