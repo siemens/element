@@ -1,5 +1,5 @@
 /**
- * Copyright Siemens 2016 - 2025.
+ * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, inject, Injectable } from '@angular/core';

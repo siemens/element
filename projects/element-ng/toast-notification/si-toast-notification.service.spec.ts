@@ -1,5 +1,5 @@
 /**
- * Copyright Siemens 2016 - 2025.
+ * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
 import { fakeAsync, flush, TestBed, tick } from '@angular/core/testing';

@@ -1,5 +1,5 @@
 /**
- * Copyright Siemens 2016 - 2025.
+ * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
 import { Link } from '@siemens/element-ng/link';

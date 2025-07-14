@@ -1,5 +1,5 @@
 /**
- * Copyright Siemens 2016 - 2025.
+ * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
 import { selectOptions, toInternalCriteria, toOptionCriteria } from './si-filtered-search-helper';

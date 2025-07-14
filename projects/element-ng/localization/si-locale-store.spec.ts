@@ -1,5 +1,5 @@
 /**
- * Copyright Siemens 2016 - 2025.
+ * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
 import { SI_LOCALE_LOCAL_STORAGE_KEY, SiDefaultLocaleStore } from './si-locale-store';
