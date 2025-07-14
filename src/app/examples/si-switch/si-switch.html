@@ -1,0 +1,32 @@
+<form class="p-4">
+  <div class="mb-6 row">
+    <div class="col-sm-2 col-form-label">Power</div>
+    <div class="col-sm-10 py-4 form-check form-switch">
+      <input type="checkbox" class="form-check-input" role="switch" id="switch4" />
+      <label for="switch4" class="form-check-label">This one's enabled</label>
+    </div>
+  </div>
+
+  <div class="mb-6 row">
+    <div class="col-sm-2 col-form-label">Disabled</div>
+    <div class="col-sm-10 py-4 form-check form-switch">
+      <input type="checkbox" class="form-check-input" role="switch" id="switch5" disabled />
+      <label for="switch5" class="form-check-label">This one's disabled in off state</label>
+    </div>
+  </div>
+
+  <div class="mb-6 row">
+    <div class="col-sm-2 col-form-label">Disabled (on)</div>
+    <div class="col-sm-10 py-4 form-check form-switch">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        role="switch"
+        id="switch6"
+        checked
+        [disabled]="true"
+      />
+      <label for="switch6" class="form-check-label">This one's disabled in on state</label>
+    </div>
+  </div>
+</form>

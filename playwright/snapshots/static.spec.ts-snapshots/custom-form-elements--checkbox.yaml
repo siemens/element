@@ -1,0 +1,20 @@
+- heading "Checkbox" [level=3]
+- checkbox "Check this custom checkbox"
+- text: Check this custom checkbox
+- checkbox "Disabled checkbox" [disabled]
+- text: Disabled checkbox
+- checkbox "Disabled checked checkbox" [checked] [disabled]
+- text: Disabled checked checkbox
+- checkbox "Indeterminate custom checkbox" [checked=mixed]
+- text: Indeterminate custom checkbox
+- heading "Checkbox inline" [level=3]
+- checkbox "Check this custom checkbox"
+- text: Check this custom checkbox
+- checkbox "Disabled checkbox" [disabled]
+- text: Disabled checkbox
+- checkbox "Disabled checkbox" [checked] [disabled]
+- text: Disabled checkbox
+- separator
+- heading "Configuration" [level=3]
+- checkbox "Simulate validation"
+- text: Simulate validation

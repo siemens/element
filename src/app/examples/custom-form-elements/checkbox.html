@@ -1,0 +1,92 @@
+<h3>Checkbox</h3>
+<form class="px-4" [class.was-validated]="validation">
+  <div class="form-check mb-2">
+    <label>
+      <input type="checkbox" class="form-check-input" [required]="validation" />
+      <span class="form-check-label">Check this custom checkbox</span>
+    </label>
+    <div class="invalid-feedback">Example invalid feedback text</div>
+    <div class="valid-feedback">Example valid feedback text</div>
+  </div>
+  <div class="form-check mb-2">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      id="custom-check-4"
+      disabled
+      [required]="validation"
+    />
+    <label class="form-check-label" for="custom-check-4">Disabled checkbox</label>
+    <div class="invalid-feedback">Example invalid feedback text</div>
+    <div class="valid-feedback">Example valid feedback text</div>
+  </div>
+  <div class="form-check mb-2">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      id="custom-check-5"
+      disabled
+      checked
+      [required]="validation"
+    />
+    <label class="form-check-label" for="custom-check-5">Disabled checked checkbox</label>
+    <div class="invalid-feedback">Example invalid feedback text</div>
+    <div class="valid-feedback">Example valid feedback text</div>
+  </div>
+  <div class="form-check mb-2">
+    <label>
+      <input #indeterminate type="checkbox" class="form-check-input" [required]="validation" />
+      <span class="form-check-label">Indeterminate custom checkbox</span>
+    </label>
+  </div>
+</form>
+
+<h3 class="mt-8">Checkbox inline</h3>
+<form class="px-4" [class.was-validated]="validation">
+  <div class="form-check form-check-inline mb-2">
+    <input type="checkbox" class="form-check-input" id="inline-check-1" [required]="validation" />
+    <label class="form-check-label" for="inline-check-1">Check this custom checkbox</label>
+    <div class="invalid-feedback">Example invalid feedback text</div>
+    <div class="valid-feedback">Example valid feedback text</div>
+  </div>
+  <div class="form-check form-check-inline mb-2">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      id="inline-check-2"
+      disabled
+      [required]="validation"
+    />
+    <label class="form-check-label" for="inline-check-2">Disabled checkbox</label>
+    <div class="invalid-feedback">Example invalid feedback text</div>
+    <div class="valid-feedback">Example valid feedback text</div>
+  </div>
+  <div class="form-check form-check-inline">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      id="inline-check-3"
+      disabled
+      checked
+      [required]="validation"
+    />
+    <label class="form-check-label" for="inline-check-3">Disabled checkbox</label>
+    <div class="invalid-feedback">Example invalid feedback text</div>
+    <div class="valid-feedback">Example valid feedback text</div>
+  </div>
+</form>
+
+<hr />
+<h3 class="mt-8">Configuration</h3>
+<div class="px-4">
+  <div class="form-check form-check-inline">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      id="validation-checkbox"
+      [checked]="validation"
+      (change)="validation = !validation"
+    />
+    <label class="form-check-label" for="validation-checkbox">Simulate validation</label>
+  </div>
+</div>

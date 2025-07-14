@@ -1,0 +1,96 @@
+<h3>Radio</h3>
+<form class="px-4" [class.was-validated]="validation">
+  <div class="form-check mb-2">
+    <input
+      type="radio"
+      id="custom-radio-1"
+      name="customRadio"
+      class="form-check-input"
+      [required]="validation"
+    />
+    <label class="form-check-label" for="custom-radio-1">Toggle this custom radio</label>
+    <div class="invalid-feedback">Example invalid feedback text</div>
+    <div class="valid-feedback">Example valid feedback text</div>
+  </div>
+  <div class="form-check mb-2">
+    <input
+      type="radio"
+      id="custom-radio-2"
+      name="customRadio"
+      class="form-check-input"
+      [required]="validation"
+    />
+    <label class="form-check-label" for="custom-radio-2">Or toggle this other custom radio</label>
+    <div class="invalid-feedback">Example invalid feedback text</div>
+    <div class="valid-feedback">Example valid feedback text</div>
+  </div>
+  <div class="form-check">
+    <input
+      type="radio"
+      id="custom-radio-3"
+      name="customRadio"
+      class="form-check-input"
+      disabled
+      [required]="validation"
+    />
+    <label class="form-check-label" for="custom-radio-3">Disabled custom radio</label>
+    <div class="invalid-feedback">Example invalid feedback text</div>
+    <div class="valid-feedback">Example valid feedback text</div>
+  </div>
+</form>
+
+<h3 class="mt-8">Radio inline</h3>
+<form class="px-4" [class.was-validated]="validation">
+  <div class="form-check form-check-inline mb-2">
+    <input
+      type="radio"
+      id="custom-radio-6"
+      name="custom-radio-1"
+      class="form-check-input"
+      [required]="validation"
+    />
+    <label class="form-check-label" for="custom-radio-6">Toggle this custom radio</label>
+    <div class="invalid-feedback">Example invalid feedback text</div>
+    <div class="valid-feedback">Example valid feedback text</div>
+  </div>
+  <div class="form-check form-check-inline mb-2">
+    <input
+      type="radio"
+      id="custom-radio-7"
+      name="custom-radio-1"
+      class="form-check-input"
+      [required]="validation"
+    />
+    <label class="form-check-label" for="custom-radio-7">Or toggle this other custom radio</label>
+    <div class="invalid-feedback">Example invalid feedback text</div>
+    <div class="valid-feedback">Example valid feedback text</div>
+  </div>
+  <div class="form-check form-check-inline">
+    <input
+      type="radio"
+      id="custom-radio-8"
+      name="custom-radio-1"
+      class="form-check-input"
+      disabled
+      [required]="validation"
+    />
+    <label class="form-check-label" for="custom-radio-8">Disabled custom radio</label>
+    <div class="invalid-feedback">Example invalid feedback text</div>
+    <div class="valid-feedback">Example valid feedback text</div>
+  </div>
+</form>
+
+<hr />
+<h3 class="mt-8">Configuration</h3>
+<div class="px-4">
+  <div class="form-check form-check-inline">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      id="validationCheckbox"
+      [checked]="validation"
+      (change)="validation = !validation"
+    />
+    <label class="form-check-label" for="validationCheckbox">Simulate validation</label>
+  </div>
+</div>

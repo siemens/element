@@ -1,0 +1,7 @@
+- text: Power
+- switch "This one's enabled"
+- text: This one's enabled Disabled
+- switch "This one's disabled in off state" [disabled]
+- text: This one's disabled in off state Disabled (on)
+- switch "This one's disabled in on state" [checked] [disabled]
+- text: This one's disabled in on state

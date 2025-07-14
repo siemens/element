@@ -1,0 +1,18 @@
+- heading "Radio" [level=3]
+- radio "Toggle this custom radio"
+- text: Toggle this custom radio
+- radio "Or toggle this other custom radio"
+- text: Or toggle this other custom radio
+- radio "Disabled custom radio" [disabled]
+- text: Disabled custom radio
+- heading "Radio inline" [level=3]
+- radio "Toggle this custom radio"
+- text: Toggle this custom radio
+- radio "Or toggle this other custom radio"
+- text: Or toggle this other custom radio
+- radio "Disabled custom radio" [disabled]
+- text: Disabled custom radio
+- separator
+- heading "Configuration" [level=3]
+- checkbox "Simulate validation"
+- text: Simulate validation

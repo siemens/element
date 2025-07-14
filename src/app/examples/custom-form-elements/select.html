@@ -1,0 +1,61 @@
+<h3>Select</h3>
+<form [class.was-validated]="validation">
+  <div class="position-relative">
+    <select aria-label="number" class="form-select" [required]="validation">
+      <option value="">Open this select menu</option>
+      <option value="1">One</option>
+      <option value="2">Two</option>
+      <option value="3">Three</option>
+    </select>
+    <div class="invalid-feedback">Example invalid feedback text</div>
+    <div class="valid-feedback">Example valid feedback text</div>
+  </div>
+  <p></p>
+  <div class="position-relative">
+    <select aria-label="number" class="form-select" disabled [required]="validation">
+      <option value="">Disabled</option>
+      <option value="1">One</option>
+      <option value="2">Two</option>
+      <option value="3">Three</option>
+    </select>
+    <div class="invalid-feedback">Example invalid feedback text</div>
+    <div class="valid-feedback">Example valid feedback text</div>
+  </div>
+  <p></p>
+  <div class="position-relative">
+    <select aria-label="number" class="form-select" multiple [required]="validation">
+      <option value="">Multiselect</option>
+      <option value="1">One</option>
+      <option value="2">Two</option>
+      <option value="3">Three</option>
+    </select>
+    <div class="invalid-feedback">Example invalid feedback text</div>
+    <div class="valid-feedback">Example valid feedback text</div>
+  </div>
+  <p></p>
+  <div class="position-relative">
+    <select aria-label="number" class="form-select" multiple disabled [required]="validation">
+      <option value="">Disabled multiselect</option>
+      <option value="1">One</option>
+      <option value="2">Two</option>
+      <option value="3">Three</option>
+    </select>
+    <div class="invalid-feedback">Example invalid feedback text</div>
+    <div class="valid-feedback">Example valid feedback text</div>
+  </div>
+</form>
+
+<hr />
+<h3 class="mt-8">Configuration</h3>
+<div class="mx-4">
+  <div class="form-check form-check-inline">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      id="validationCheckbox"
+      [checked]="validation"
+      (change)="validation = !validation"
+    />
+    <label class="form-check-label" for="validationCheckbox">Simulate validation</label>
+  </div>
+</div>

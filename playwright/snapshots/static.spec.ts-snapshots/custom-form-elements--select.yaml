@@ -1,0 +1,28 @@
+- heading "Select" [level=3]
+- combobox "number":
+  - option "Open this select menu" [selected]
+  - option "One"
+  - option "Two"
+  - option "Three"
+- paragraph
+- combobox "number" [disabled]:
+  - option "Disabled" [selected]
+  - option "One"
+  - option "Two"
+  - option "Three"
+- paragraph
+- listbox "number":
+  - option "Multiselect"
+  - option "One"
+  - option "Two"
+  - option "Three"
+- paragraph
+- listbox "number" [disabled]:
+  - option "Disabled multiselect"
+  - option "One"
+  - option "Two"
+  - option "Three"
+- separator
+- heading "Configuration" [level=3]
+- checkbox "Simulate validation"
+- text: Simulate validation

@@ -7,6 +7,9 @@ import { test } from '../../support/test-helpers';
 test('badges/badges', ({ si }) => si.static());
 test('buttons/buttons', ({ si }) => si.static());
 test('buttons/segmented-button', ({ si }) => si.static());
+test('custom-form-elements/checkbox', ({ si }) => si.static());
+test('custom-form-elements/radio', ({ si }) => si.static());
+test('custom-form-elements/select', ({ si }) => si.static());
 test('datatable/bootstrap', ({ si }) => si.static());
 // (disabled rule as long as siDatatableInteraction is used a tabindex=0 isn't needed on datatable-body)
 test('datatable/datatable-selection', async ({ si }) => {
@@ -63,6 +66,7 @@ test('si-split/si-split-mixed', ({ si }) => si.static());
 test('si-summary-chip/si-summary-chip', ({ si }) => si.static());
 test('si-summary-widget/si-summary-widget', ({ si }) => si.static());
 test('si-status-toggle/si-status-toggle', ({ si }) => si.static());
+test('si-switch/si-switch', ({ si }) => si.static());
 test('si-tree-view/si-tree-view', ({ si }) => si.static());
 test('si-unauthorized-page/si-unauthorized-page-choice', ({ si }) => si.static());
 test('si-unauthorized-page/si-unauthorized-page', ({ si }) => si.static());
