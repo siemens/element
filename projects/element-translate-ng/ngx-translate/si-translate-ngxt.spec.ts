@@ -3,19 +3,22 @@
  * SPDX-License-Identifier: MIT
  */
 import { DOCUMENT } from '@angular/common';
-import { Component, inject, Injectable } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { SiTranslateNgxTService } from '@siemens/element-translate-ng/ngx-translate/si-translate-ngxt.service';
-import { SiTranslateModule, SiTranslateService } from '@siemens/element-translate-ng/translate';
+import {
+  injectSiTranslateService,
+  SiTranslateModule
+} from '@siemens/element-translate-ng/translate';
 import { Observable, of, Subject } from 'rxjs';
 
 import { SiTranslateNgxTModule } from './si-translate-ngxt.module';
 
 @Injectable()
 class RootTestService {
-  siTranslateService = inject(SiTranslateService);
+  siTranslateService = injectSiTranslateService();
 }
 
 @Component({
@@ -106,7 +109,9 @@ describe('SiTranslateNgxT', () => {
       });
     });
     beforeEach(() => {
-      service = TestBed.inject(SiTranslateService) as SiTranslateNgxTService;
+      service = TestBed.runInInjectionContext(() =>
+        injectSiTranslateService()
+      ) as SiTranslateNgxTService;
       service.setCurrentLanguage('test');
     });
 

@@ -7,6 +7,7 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate-type
 
 import { SiNoTranslateService } from './si-no-translate.service';
 import { SI_TRANSLATABLE_VALUES } from './si-translatable.model';
+import { injectSiTranslateService } from './si-translate.inject';
 import { SiTranslateService } from './si-translate.service';
 
 @Injectable({
@@ -18,8 +19,7 @@ export class SiTranslatableService {
   private readonly siTranslateService: SiTranslateService;
 
   constructor() {
-    this.siTranslateService =
-      inject(SiTranslateService, { optional: true }) ?? inject(SiNoTranslateService);
+    this.siTranslateService = injectSiTranslateService();
     const translateValues = inject(SI_TRANSLATABLE_VALUES, { optional: true });
 
     this.translatableValues = translateValues?.reduce((a, b) => ({ ...a, ...b })) ?? {};

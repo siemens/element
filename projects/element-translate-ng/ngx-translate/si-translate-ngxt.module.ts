@@ -3,10 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { NgModule } from '@angular/core';
-import {
-  SiTranslateModule,
-  SiTranslateServiceBuilder
-} from '@siemens/element-translate-ng/translate';
+import { SiTranslateServiceBuilder } from '@siemens/element-translate-ng/translate';
 
 import { SiTranslateNgxTServiceBuilder } from './si-translate-ngxt.service-builder';
 
@@ -15,7 +12,6 @@ import { SiTranslateNgxTServiceBuilder } from './si-translate-ngxt.service-build
  * It should only be imported once in an applications root module (typically `app.module.ts`)
  */
 @NgModule({
-  imports: [SiTranslateModule],
   providers: [{ provide: SiTranslateServiceBuilder, useClass: SiTranslateNgxTServiceBuilder }]
 })
 export class SiTranslateNgxTModule {}

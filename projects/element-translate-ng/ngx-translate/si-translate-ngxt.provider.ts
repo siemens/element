@@ -2,11 +2,8 @@
  * Copyright Siemens 2016 - 2025.
  * SPDX-License-Identifier: MIT
  */
-import { EnvironmentProviders, importProvidersFrom, Provider } from '@angular/core';
-import {
-  SiTranslateModule,
-  SiTranslateServiceBuilder
-} from '@siemens/element-translate-ng/translate';
+import { EnvironmentProviders, Provider } from '@angular/core';
+import { SiTranslateServiceBuilder } from '@siemens/element-translate-ng/translate';
 
 import { SiTranslateNgxTServiceBuilder } from './si-translate-ngxt.service-builder';
 
@@ -15,8 +12,5 @@ import { SiTranslateNgxTServiceBuilder } from './si-translate-ngxt.service-build
  * It should only be imported once in an application's configuration (typically `app.config.ts`)
  */
 export const provideNgxTranslateForElement = (): (EnvironmentProviders | Provider)[] => {
-  return [
-    { provide: SiTranslateServiceBuilder, useClass: SiTranslateNgxTServiceBuilder },
-    importProvidersFrom(SiTranslateModule)
-  ];
+  return [{ provide: SiTranslateServiceBuilder, useClass: SiTranslateNgxTServiceBuilder }];
 };
