@@ -16,7 +16,6 @@ import {
   FormlyModule
 } from '@ngx-formly/core';
 import { SiFormModule } from '@siemens/element-ng/form';
-import { SiTranslateService } from '@siemens/element-translate-ng/translate';
 
 import { SiFormlyButtonComponent } from './fields/button/si-formly-button.component';
 import { SiFormlyDateRangeComponent } from './fields/date-range/si-formly-date-range.component';
@@ -42,7 +41,7 @@ import { SiFormlyHorizontalWrapperComponent } from './wrapper/si-formly-horizont
 import { SiFormlyIconWrapperComponent } from './wrapper/si-formly-icon-wrapper.component';
 import { SiFormlyWrapperComponent } from './wrapper/si-formly-wrapper.component';
 
-const dynamicUiConfig = (translate: SiTranslateService): ConfigOption => {
+const dynamicUiConfig = (): ConfigOption => {
   return {
     types: [
       { name: 'string', extends: 'input' },
@@ -111,7 +110,7 @@ const dynamicUiConfig = (translate: SiTranslateService): ConfigOption => {
     extensions: [
       {
         name: 'translate',
-        extension: new SiFormlyTranslateExtension(translate)
+        extension: new SiFormlyTranslateExtension()
       }
     ]
   };
@@ -148,8 +147,7 @@ const dynamicUiConfig = (translate: SiTranslateService): ConfigOption => {
     {
       provide: FORMLY_CONFIG,
       multi: true,
-      useFactory: dynamicUiConfig,
-      deps: [SiTranslateService]
+      useFactory: dynamicUiConfig
     }
   ]
 })

@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: MIT
  */
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { SiTranslateService } from '@siemens/element-translate-ng/translate';
+import { injectSiTranslateService } from '@siemens/element-translate-ng/translate';
 
 export class SiFormlyTranslateExtension {
-  constructor(private translate: SiTranslateService) {}
+  private translate = injectSiTranslateService();
   prePopulate(field: FormlyFieldConfig): void {
     const to = field.props ?? {};
     if (to.translate === false || to._translated) {

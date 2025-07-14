@@ -7,7 +7,10 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormRecord } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
-import { SiTranslateService } from '@siemens/element-ng/translate';
+import {
+  provideMockTranslateServiceBuilder,
+  SiTranslateService
+} from '@siemens/element-ng/translate';
 import { of } from 'rxjs';
 
 import { SiFormlyModule } from '../../si-formly.module';
@@ -44,15 +47,15 @@ describe('ElementFormComponent', () => {
         WrapperComponent
       ],
       providers: [
-        {
-          provide: SiTranslateService,
-          useValue: {
-            translate: (key: string, params: Record<string, any>) =>
-              `translated=>${key}-${JSON.stringify(params)}`,
-            translateAsync: (key: string, params: Record<string, any>) =>
-              of(`translated=>${key}-${JSON.stringify(params)}`)
-          } as SiTranslateService
-        }
+        provideMockTranslateServiceBuilder(
+          () =>
+            ({
+              translate: (key: string, params: Record<string, any>) =>
+                `translated=>${key}-${JSON.stringify(params)}`,
+              translateAsync: (key: string, params: Record<string, any>) =>
+                of(`translated=>${key}-${JSON.stringify(params)}`)
+            }) as SiTranslateService
+        )
       ]
     }).compileComponents();
   }));

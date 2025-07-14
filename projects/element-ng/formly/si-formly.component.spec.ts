@@ -9,6 +9,7 @@ import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 import { SiTranslateService } from '@siemens/element-ng/translate';
+import { provideMockTranslateServiceBuilder } from '@siemens/element-translate-ng/translate';
 import { JSONSchema7 } from 'json-schema';
 import { of } from 'rxjs';
 
@@ -47,15 +48,15 @@ describe('ElementFormComponent', () => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, FormlyBootstrapModule, SiFormlyModule, WrapperComponent],
       providers: [
-        {
-          provide: SiTranslateService,
-          useValue: {
-            translate: (key: string, params: Record<string, any>) =>
-              `translated=>${key}-${JSON.stringify(params)}`,
-            translateAsync: (key: string, params: Record<string, any>) =>
-              of(`translated=>${key}-${JSON.stringify(params)}`)
-          } as SiTranslateService
-        }
+        provideMockTranslateServiceBuilder(
+          () =>
+            ({
+              translate: (key: string, params: Record<string, any>) =>
+                `translated=>${key}-${JSON.stringify(params)}`,
+              translateAsync: (key: string, params: Record<string, any>) =>
+                of(`translated=>${key}-${JSON.stringify(params)}`)
+            }) as SiTranslateService
+        )
       ]
     }).compileComponents();
   }));

@@ -2,8 +2,10 @@
  * Copyright Siemens 2016 - 2025.
  * SPDX-License-Identifier: MIT
  */
+import { TestBed } from '@angular/core/testing';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { SiTranslateService } from '@siemens/element-ng/translate';
+import { provideMockTranslateServiceBuilder } from '@siemens/element-translate-ng/translate';
 import { of } from 'rxjs';
 
 import { SiFormlyTranslateExtension } from './si-formly-translate.extension';
@@ -15,7 +17,10 @@ describe('Formly translations', () => {
   beforeEach(() => {
     mockTranslationService = jasmine.createSpyObj<SiTranslateService>(['translateAsync']);
     mockTranslationService.translateAsync.and.returnValue(of('translated'));
-    extension = new SiFormlyTranslateExtension(mockTranslationService);
+    TestBed.configureTestingModule({
+      providers: [provideMockTranslateServiceBuilder(() => mockTranslationService)]
+    });
+    extension = TestBed.runInInjectionContext(() => new SiFormlyTranslateExtension());
   });
 
   it('should not be called if translate is prohibited', () => {

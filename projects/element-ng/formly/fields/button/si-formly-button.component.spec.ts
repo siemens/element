@@ -9,7 +9,10 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
 import { SiTranslateService } from '@siemens/element-ng/translate';
-import { provideMockTranslateServiceBuilder } from '@siemens/element-translate-ng/translate';
+import {
+  injectSiTranslateService,
+  provideMockTranslateServiceBuilder
+} from '@siemens/element-translate-ng/translate';
 
 import { SiFormlyButtonComponent } from './si-formly-button.component';
 
@@ -25,7 +28,8 @@ class FormlyTestComponent {
   model: any;
   options: FormlyFormOptions = {};
 
-  constructor(readonly translate: SiTranslateService) {}
+  readonly translate = injectSiTranslateService();
+
   click(f: string, s: number): void {}
 }
 
