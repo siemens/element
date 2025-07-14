@@ -6,11 +6,10 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   HostBinding,
   Input,
   OnChanges,
-  Output,
+  output,
   signal
 } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -58,7 +57,7 @@ export class SiTabComponent implements OnChanges {
    */
   @Input({ transform: booleanAttribute }) closable? = false;
   /** Event emitter to notify when a tab is closed. */
-  @Output() readonly closeTriggered = new EventEmitter<SiTabComponent>();
+  readonly closeTriggered = output<SiTabComponent>();
 
   /** @internal */
   @HostBinding('id') id = `__si-tab-panel-${SiTabComponent.idCounter++}`;

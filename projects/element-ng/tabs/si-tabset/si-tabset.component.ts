@@ -11,14 +11,13 @@ import {
   Component,
   ContentChildren,
   ElementRef,
-  EventEmitter,
   inject,
   Input,
   OnDestroy,
-  Output,
   QueryList,
+  viewChildren,
   viewChild,
-  viewChildren
+  output
 } from '@angular/core';
 import { isRTL, WebComponentContentChildren } from '@siemens/element-ng/common';
 import {
@@ -115,12 +114,12 @@ export class SiTabsetComponent implements AfterViewInit, OnDestroy {
    * use bi-directional binding with [(selectedTabIndex)] or separate both with
    * [selectedTabIndex]=... and (selectedTabIndexChange)=...
    */
-  @Output() readonly selectedTabIndexChange = new EventEmitter<number>();
+  readonly selectedTabIndexChange = output<number>();
 
   /**
    * Event emitter to notify when a tab became inactive.
    */
-  @Output() readonly deselect = new EventEmitter<SiTabDeselectionEvent>();
+  readonly deselect = output<SiTabDeselectionEvent>();
 
   private initTabIndex = 0;
   private initialized = false;
