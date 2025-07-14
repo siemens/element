@@ -87,7 +87,7 @@ export const tsConfig = typescriptEslint.config({
       'error',
       {
         'source': 'string',
-        'content': 'Copyright Siemens 2016 - 2025.\nSPDX-License-Identifier: MIT'
+        'content': 'Copyright (c) Siemens 2016 - 2025\nSPDX-License-Identifier: MIT'
       }
     ]
   }
