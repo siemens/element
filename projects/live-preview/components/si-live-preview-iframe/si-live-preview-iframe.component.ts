@@ -6,14 +6,13 @@ import {
   Component,
   DestroyRef,
   ElementRef,
-  EventEmitter,
   HostBinding,
   inject,
   Input,
   NgZone,
   OnChanges,
   OnInit,
-  Output,
+  output,
   SimpleChanges,
   viewChild
 } from '@angular/core';
@@ -53,13 +52,13 @@ export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
   @Input() loadJs?: boolean;
   @Input() reactVueTemplate?: string;
 
-  @Output() readonly templateFromComponent = new EventEmitter<string | undefined>(true);
-  @Output() readonly logClear = new EventEmitter();
-  @Output() readonly logMessage = new EventEmitter<string>();
-  @Output() readonly logRenderingError = new EventEmitter<any>();
-  @Output() readonly inProgress = new EventEmitter<boolean>();
-  @Output() readonly themeChange = new EventEmitter<string>();
-  @Output() readonly localeChange = new EventEmitter<string>();
+  readonly templateFromComponent = output<string | undefined>();
+  readonly logClear = output<void>();
+  readonly logMessage = output<string>();
+  readonly logRenderingError = output<any>();
+  readonly inProgress = output<boolean>();
+  readonly themeChange = output<string>();
+  readonly localeChange = output<string>();
 
   private originalTemplate = '';
   private templateModified = false;

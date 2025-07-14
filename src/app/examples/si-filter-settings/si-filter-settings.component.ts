@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { booleanAttribute, Component, EventEmitter, Input, Output } from '@angular/core';
+import { booleanAttribute, Component, Input, output, OutputEmitterRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { BackgroundColorVariant } from '@siemens/element-ng/common';
@@ -13,20 +13,20 @@ import { BackgroundColorVariant } from '@siemens/element-ng/common';
 })
 export class SiFilterSettingsComponent {
   @Input() variant: BackgroundColorVariant = 'base-1';
-  @Output() readonly variantChange = new EventEmitter<BackgroundColorVariant>();
+  readonly variantChange = output<BackgroundColorVariant>();
 
   @Input({ transform: booleanAttribute }) disabled = false;
-  @Output() readonly disabledChange = new EventEmitter<boolean>();
+  readonly disabledChange = output<boolean>();
 
   @Input({ transform: booleanAttribute }) showIcon?: boolean;
-  @Output() readonly showIconChange = new EventEmitter<boolean>();
+  readonly showIconChange = output<boolean>();
 
   @Input({ transform: booleanAttribute }) disableFreeTextSearch = false;
-  @Output() readonly disableFreeTextSearchChange = new EventEmitter<boolean>();
+  readonly disableFreeTextSearchChange = output<boolean>();
 
   updateInput(field: 'variant' | 'disabled' | 'showIcon' | 'disableFreeTextSearch'): void {
     if (field) {
-      (this[`${field}Change` as keyof SiFilterSettingsComponent] as EventEmitter<any>).emit(
+      (this[`${field}Change` as keyof SiFilterSettingsComponent] as OutputEmitterRef<any>).emit(
         this[field]
       );
     }

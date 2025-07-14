@@ -14,7 +14,6 @@ import {
   DoCheck,
   ElementRef,
   EnvironmentInjector,
-  EventEmitter,
   HostBinding,
   inject,
   Injector,
@@ -23,12 +22,12 @@ import {
   NgModuleRef,
   OnChanges,
   OnDestroy,
-  Output,
   ɵresetCompiledComponents as resetCompiledComponents,
   SimpleChanges,
   ViewContainerRef,
   viewChild,
-  ViewChild
+  ViewChild,
+  output
 } from '@angular/core';
 import { ɵDomRendererFactory2 as DomRendererFactory2 } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
@@ -83,12 +82,12 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
 
   @Input() template = '';
 
-  @Output() readonly templateFromComponent = new EventEmitter<string | undefined>(true);
-  @Output() readonly logClear = new EventEmitter();
-  @Output() readonly logMessage = new EventEmitter<string>(true);
-  @Output() readonly logRenderingError = new EventEmitter<any>(true);
-  @Output() readonly inProgress = new EventEmitter<boolean>();
-  @Output() readonly supportsLandscapeMode = new EventEmitter<boolean>();
+  readonly templateFromComponent = output<string | undefined>();
+  readonly logClear = output<void>();
+  readonly logMessage = output<string>();
+  readonly logRenderingError = output<any>();
+  readonly inProgress = output<boolean>();
+  readonly supportsLandscapeMode = output<boolean>();
 
   private componentRef?: ComponentRef<unknown>;
   private moduleRef?: NgModuleRef<unknown>;
