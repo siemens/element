@@ -135,7 +135,7 @@
     "stylelint-scss": "6.12.1",
     "stylelint-use-logical-spec": "5.0.1",
     "typescript": "5.5.3",
-    "typescript-eslint": "8.36.0"
+    "typescript-eslint": "8.37.0"
   },
   "optionalDependencies": {
     "@simpl/brand": "^0.3.1",
