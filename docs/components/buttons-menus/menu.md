@@ -3,9 +3,9 @@
 Contextual menus are lists of commands that are based on the context of a selection, mouse hover or keyboard focus.
 They are one of the most effective and highly used command surfaces, and can be used in a variety of places.
 
-![Menu](images/menu.png)
-
 ## Usage ---
+
+![Menu](images/menu.png)
 
 ### When to use
 
@@ -14,10 +14,10 @@ They are one of the most effective and highly used command surfaces, and can be 
 
 ### When a menu might not help
 
-- If there is one action only use [Button](buttons.md) or [Link](links.md) instead
+- If there is one action only use [button](buttons.md) or [link](links.md) instead
 - If there is no interaction element to open the menu
 
-### Best practices for menu
+### Best practices
 
 - Understand the context first in order to determine if a menu is
   indeed the best possible solution
@@ -37,13 +37,13 @@ They are one of the most effective and highly used command surfaces, and can be 
 
 ### Elements
 
-![Menu - elements](images/menu-elements.png)
+![Elements](images/menu-elements.png)
 
 > (1) Hover state, (2) Entry with submenu, (3) Header, (4) Entry menu with icon, (5) Disabled state, (6) Indication for submenu, (7) Divider
 
 ### Alternatives
 
-![Menu - alternatives](images/menu-alternatives.png)
+![Alternatives](images/menu-alternatives.png)
 
 - Single choice should be used if the user has to select one of the options only. Make sure, that the options are grouped correctly.
 - Multi choice can be used, if the user can enable or disable some functionality over the menu.
