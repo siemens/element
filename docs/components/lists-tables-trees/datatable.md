@@ -341,7 +341,7 @@ resizeTable() {
 > the `setTimeout()` has to be used.
 
 The recalculation can either be triggered whenever changes on the DOM are made
-(e.g. when panels are collapsed/expanded) or by using SiMPL's `siResizeObserver`
+(e.g. when panels are collapsed/expanded) or by using Element's `siResizeObserver`
 directive. If you use `siResizeObserver` directive ensure that you have imported
 `SiResizeObserverDirective` in your standalone component or module.
 

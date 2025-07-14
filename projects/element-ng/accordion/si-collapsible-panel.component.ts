@@ -108,7 +108,7 @@ export class SiCollapsiblePanelComponent {
    */
   readonly badge = input<string | number>();
   /**
-   * Defines the background color of the badge. Default is specific to SiMPL flavour.
+   * Defines the background color of the badge. Default is specific to Element flavour.
    */
   readonly badgeColor = input<string>();
 
