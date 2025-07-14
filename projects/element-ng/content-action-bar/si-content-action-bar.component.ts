@@ -21,14 +21,14 @@ import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { addIcons, elementCancel, elementOptionsVertical } from '@siemens/element-ng/icon';
 import { SiLinkModule } from '@siemens/element-ng/link';
 import {
+  MenuItem,
   MenuItemAction,
   MenuItemCheckbox,
-  MenuItem,
   MenuItemRadio,
   SiMenuActionService,
   SiMenuModule
 } from '@siemens/element-ng/menu';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiContentActionBarToggleComponent } from './si-content-action-bar-toggle.component';
 import { ContentActionBarMainItem, ViewType } from './si-content-action-bar.model';
@@ -39,7 +39,7 @@ import { ContentActionBarMainItem, ViewType } from './si-content-action-bar.mode
     SiMenuModule,
     CdkMenuModule,
     SiAutoCollapsableListModule,
-    SiTranslateModule,
+    SiTranslatePipe,
     SiLinkModule,
     SiContentActionBarToggleComponent,
     RouterLink

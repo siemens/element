@@ -11,13 +11,14 @@ import {
   InjectionToken,
   input
 } from '@angular/core';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+
 export const LOADING_SPINNER_BLOCKING = new InjectionToken<boolean>('isBlockingSpinner');
 export const LOADING_SPINNER_OVERLAY = new InjectionToken<boolean>('isSpinnerOverlay');
 
 @Component({
   selector: 'si-loading-spinner',
-  imports: [SiTranslateModule],
+  imports: [SiTranslatePipe],
   templateUrl: './si-loading-spinner.component.html',
   styleUrl: './si-loading-spinner.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

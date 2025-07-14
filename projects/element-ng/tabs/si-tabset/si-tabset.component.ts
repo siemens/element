@@ -17,20 +17,19 @@ import {
   OnDestroy,
   Output,
   QueryList,
-  viewChildren,
-  viewChild
+  viewChild,
+  viewChildren
 } from '@angular/core';
 import { isRTL, WebComponentContentChildren } from '@siemens/element-ng/common';
 import {
+  addIcons,
   elementCancel,
   elementLeft3,
   elementRight3,
-  addIcons,
-  SiIconComponent,
   SiIconNextComponent
 } from '@siemens/element-ng/icon';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { asyncScheduler, Subscription } from 'rxjs';
 import { first, observeOn } from 'rxjs/operators';
 
@@ -55,13 +54,7 @@ const SCROLL_INCREMENT = 55;
 
 @Component({
   selector: 'si-tabset',
-  imports: [
-    NgClass,
-    SiIconNextComponent,
-    SiIconComponent,
-    SiResizeObserverDirective,
-    SiTranslateModule
-  ],
+  imports: [NgClass, SiIconNextComponent, SiResizeObserverDirective, SiTranslatePipe],
   templateUrl: './si-tabset.component.html',
   styleUrl: './si-tabset.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

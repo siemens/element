@@ -13,7 +13,7 @@ import {
   viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiListDetailsComponent } from '../si-list-details.component';
 
@@ -23,7 +23,7 @@ import { SiListDetailsComponent } from '../si-list-details.component';
   host: {
     class: 'nav nav-tabs' // To allow nav-link styling.
   },
-  imports: [SiTranslateModule],
+  imports: [SiTranslatePipe],
   templateUrl: './si-details-pane-header.component.html',
   styleUrl: './si-details-pane-header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

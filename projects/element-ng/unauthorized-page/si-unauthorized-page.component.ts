@@ -5,7 +5,7 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { SiIconNextComponent } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 /**
  * The component shall be use to indicate that an authenticated
@@ -18,7 +18,7 @@ import { SiTranslateModule, TranslatableString } from '@siemens/element-translat
  */
 @Component({
   selector: 'si-unauthorized-page',
-  imports: [SiLinkDirective, SiIconNextComponent, SiTranslateModule],
+  imports: [SiLinkDirective, SiIconNextComponent, SiTranslatePipe],
   templateUrl: './si-unauthorized-page.component.html',
   styleUrl: './si-unauthorized-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

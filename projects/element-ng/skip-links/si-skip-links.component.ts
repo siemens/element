@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiSkipLinkTargetDirective } from './si-skip-link-target.directive';
 
 @Component({
   selector: 'si-skip-links',
-  imports: [SiTranslateModule],
+  imports: [SiTranslatePipe],
   templateUrl: './si-skip-links.component.html',
   styleUrl: './si-skip-links.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

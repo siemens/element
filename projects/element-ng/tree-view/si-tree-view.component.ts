@@ -36,7 +36,7 @@ import {
 import { buildTrackByIdentity, MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { ElementDimensions, ResizeObserverService } from '@siemens/element-ng/resize-observer';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { asyncScheduler, defer, fromEvent, merge, Observable, Subject, Subscription } from 'rxjs';
 import { map, withLatestFrom } from 'rxjs/operators';
 
@@ -105,7 +105,7 @@ const rootDefaults: TreeItem = {
   selector: 'si-tree-view',
   imports: [
     NgClass,
-    SiTranslateModule,
+    SiTranslatePipe,
     SiTreeViewItemComponent,
     CdkScrollableModule,
     SiTreeViewItemDirective

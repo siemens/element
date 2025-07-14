@@ -5,7 +5,6 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { EntityStatusType } from '@siemens/element-ng/common';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 import { SiAvatarComponent } from './index';
 
@@ -39,7 +38,7 @@ describe('SiAvatarComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [SiAvatarComponent, TestHostComponent, SiTranslateModule]
+      imports: [SiAvatarComponent, TestHostComponent]
     }).compileComponents()
   );
 

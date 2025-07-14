@@ -32,7 +32,7 @@ import {
   SiIconNextComponent
 } from '@siemens/element-ng/icon';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -49,7 +49,7 @@ interface StepItem {
     NgClass,
     SiIconNextComponent,
     SiResizeObserverDirective,
-    SiTranslateModule,
+    SiTranslatePipe,
     NgTemplateOutlet
   ],
   templateUrl: './si-wizard.component.html',

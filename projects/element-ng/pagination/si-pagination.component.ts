@@ -5,15 +5,15 @@
 import { ChangeDetectionStrategy, Component, computed, input, model } from '@angular/core';
 import {
   addIcons,
-  SiIconNextComponent,
   elementLeft3,
-  elementRight3
+  elementRight3,
+  SiIconNextComponent
 } from '@siemens/element-ng/icon';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-pagination',
-  imports: [SiIconNextComponent, SiTranslateModule],
+  imports: [SiIconNextComponent, SiTranslatePipe],
   templateUrl: './si-pagination.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

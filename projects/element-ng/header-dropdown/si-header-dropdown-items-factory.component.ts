@@ -5,7 +5,7 @@
 import { Component, input, output } from '@angular/core';
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiLinkDirective } from '@siemens/element-ng/link';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiHeaderDropdownItemComponent } from './si-header-dropdown-item.component';
 import { SiHeaderDropdownTriggerDirective } from './si-header-dropdown-trigger.directive';
@@ -22,7 +22,7 @@ import { SiHeaderDropdownComponent } from './si-header-dropdown.component';
   imports: [
     SiHeaderDropdownComponent,
     SiHeaderDropdownItemComponent,
-    SiTranslateModule,
+    SiTranslatePipe,
     SiLinkDirective,
     SiHeaderDropdownTriggerDirective
   ],

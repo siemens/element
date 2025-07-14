@@ -5,13 +5,13 @@
 import { NgClass } from '@angular/common';
 import { Component, inject, OnDestroy } from '@angular/core';
 import { addIcons, elementThumbnails, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiApplicationHeaderComponent } from './si-application-header.component';
 
 @Component({
   selector: 'si-header-navigation',
-  imports: [NgClass, SiTranslateModule, SiIconNextComponent],
+  imports: [NgClass, SiTranslatePipe, SiIconNextComponent],
   template: `
     @if (header.launchpad()) {
       <button

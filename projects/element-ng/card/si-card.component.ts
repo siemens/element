@@ -10,11 +10,11 @@ import {
   ViewType
 } from '@siemens/element-ng/content-action-bar';
 import { MenuItem } from '@siemens/element-ng/menu';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-card',
-  imports: [SiContentActionBarComponent, SiTranslateModule],
+  imports: [SiContentActionBarComponent, SiTranslatePipe],
   templateUrl: './si-card.component.html',
   styleUrl: './si-card.component.scss',
   host: {

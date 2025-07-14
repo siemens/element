@@ -10,7 +10,10 @@ import { SiTranslateService } from './si-translate.service';
 
 /**
  * This provides declares SiTranslatePipe and provides a respective SiTranslateService.
- * It should be used internally of Element but NOT by any application
+ * It should be used internally of Element but NOT by any application.
+ *
+ * @deprecated This module is no longer needed.
+ * Replace it with the {@link SiTranslatePipe} if needed, otherwise drop it without replacement.
  *
  * @internal
  */

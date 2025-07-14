@@ -5,12 +5,11 @@
 import { ChangeDetectionStrategy, Component, ElementRef, viewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 import {
   PasswordPolicy,
-  SiPasswordStrengthModule,
-  SiPasswordStrengthComponent as TestComponent
+  SiPasswordStrengthComponent as TestComponent,
+  SiPasswordStrengthModule
 } from '.';
 
 const passwordStrengthValue: PasswordPolicy = {
@@ -22,7 +21,7 @@ const passwordStrengthValue: PasswordPolicy = {
 };
 
 @Component({
-  imports: [SiPasswordStrengthModule, FormsModule, SiTranslateModule],
+  imports: [SiPasswordStrengthModule, FormsModule],
   template: `
     <si-password-strength>
       <input
@@ -65,7 +64,7 @@ describe('SiPasswordStrengthDirective', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SiPasswordStrengthModule, FormsModule, SiTranslateModule, WrapperComponent]
+      imports: [SiPasswordStrengthModule, FormsModule, WrapperComponent]
     }).compileComponents();
   });
 

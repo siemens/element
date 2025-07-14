@@ -5,13 +5,12 @@
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 import { SiAccordionComponent } from './si-accordion.component';
 import { SiCollapsiblePanelComponent } from './si-collapsible-panel.component';
 
 @Component({
-  imports: [SiTranslateModule, SiAccordionComponent, SiCollapsiblePanelComponent],
+  imports: [SiAccordionComponent, SiCollapsiblePanelComponent],
   template: `
     <si-accordion [expandFirstPanel]="expandFirstPanel()">
       <si-collapsible-panel heading="one"><div>content</div></si-collapsible-panel>
@@ -33,7 +32,7 @@ describe('SiAccordion', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [SiTranslateModule, NoopAnimationsModule, TestHostComponent]
+      imports: [NoopAnimationsModule, TestHostComponent]
     }).compileComponents();
   }));
 

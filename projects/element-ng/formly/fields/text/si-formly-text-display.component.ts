@@ -5,13 +5,13 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FieldType, FieldTypeConfig, FormlyModule } from '@ngx-formly/core';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { getFieldValue, getKeyPath } from '../../utils';
 
 @Component({
   selector: 'si-formly-text-display',
-  imports: [FormlyModule, ReactiveFormsModule, SiTranslateModule],
+  imports: [FormlyModule, ReactiveFormsModule, SiTranslatePipe],
   templateUrl: './si-formly-text-display.component.html'
 })
 export class SiFormlyTextDisplayComponent extends FieldType<FieldTypeConfig> {

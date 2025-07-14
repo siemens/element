@@ -29,13 +29,13 @@ import {
   Validators
 } from '@angular/forms';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
-import { elementMinus, elementPlus, addIcons, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { addIcons, elementMinus, elementPlus, SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { Subscription, timer } from 'rxjs';
 
 @Component({
   selector: 'si-number-input',
-  imports: [SiIconNextComponent, SiTranslateModule],
+  imports: [SiIconNextComponent, SiTranslatePipe],
   templateUrl: './si-number-input.component.html',
   styleUrl: './si-number-input.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

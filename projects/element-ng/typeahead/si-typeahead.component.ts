@@ -21,7 +21,7 @@ import {
   SiAutocompleteOptionDirective
 } from '@siemens/element-ng/autocomplete';
 import { SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { Subscription } from 'rxjs';
 
 import { SiTypeaheadDirective } from './si-typeahead.directive';
@@ -34,7 +34,7 @@ import { TypeaheadMatch } from './si-typeahead.model';
     SiAutocompleteOptionDirective,
     SiIconNextComponent,
     NgTemplateOutlet,
-    SiTranslateModule
+    SiTranslatePipe
   ],
   templateUrl: './si-typeahead.component.html',
   styleUrl: './si-typeahead.component.scss',

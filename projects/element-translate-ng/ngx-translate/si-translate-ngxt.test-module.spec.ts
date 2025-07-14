@@ -5,7 +5,6 @@
 import { Component, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 import { of } from 'rxjs';
 
 @Component({
@@ -25,7 +24,6 @@ class TestComponent {}
       },
       isolate: true
     }),
-    SiTranslateModule,
     RouterModule.forChild([{ path: '', component: TestComponent, pathMatch: 'full' }]),
     TestComponent
   ]

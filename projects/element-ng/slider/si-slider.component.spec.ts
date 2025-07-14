@@ -5,12 +5,11 @@
 import { Component, inject, signal } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 import { SiSliderComponent } from './si-slider.component';
 
 @Component({
-  imports: [FormsModule, ReactiveFormsModule, SiTranslateModule, SiSliderComponent],
+  imports: [FormsModule, ReactiveFormsModule, SiSliderComponent],
   template: `<si-slider
     [min]="min"
     [max]="max"
@@ -34,7 +33,7 @@ class HostComponent {
 }
 
 @Component({
-  imports: [FormsModule, ReactiveFormsModule, SiTranslateModule, SiSliderComponent],
+  imports: [FormsModule, ReactiveFormsModule, SiSliderComponent],
   template: `<form [formGroup]="form">
     <si-slider formControlName="slider" />
   </form>`
@@ -69,7 +68,7 @@ describe('SiSliderComponent', () => {
       imports: [
         FormsModule,
         ReactiveFormsModule,
-        SiTranslateModule,
+
         SiSliderComponent,
         FormHostComponent,
         HostComponent

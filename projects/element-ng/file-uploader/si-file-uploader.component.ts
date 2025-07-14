@@ -35,7 +35,7 @@ import {
 } from '@siemens/element-ng/icon';
 import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
 import { SiProgressbarComponent } from '@siemens/element-ng/progressbar';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { Observable, Subscription } from 'rxjs';
 import { retry } from 'rxjs/operators';
 
@@ -95,7 +95,7 @@ interface ExtUploadFile extends UploadFile {
     SiIconNextComponent,
     SiInlineNotificationComponent,
     SiProgressbarComponent,
-    SiTranslateModule
+    SiTranslatePipe
   ],
   templateUrl: './si-file-uploader.component.html',
   styleUrl: './si-file-uploader.component.scss'

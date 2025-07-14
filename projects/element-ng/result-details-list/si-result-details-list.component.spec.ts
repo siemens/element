@@ -4,12 +4,11 @@
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 import { ResultDetailStep, SiResultDetailsListComponent } from '.';
 
 @Component({
-  imports: [SiResultDetailsListComponent, SiTranslateModule],
+  imports: [SiResultDetailsListComponent],
   template: `<si-result-details-list [steps]="steps" /> `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -24,7 +23,7 @@ describe('SiResultDetailsListComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [SiTranslateModule, TestHostComponent]
+      imports: [TestHostComponent]
     })
   );
 

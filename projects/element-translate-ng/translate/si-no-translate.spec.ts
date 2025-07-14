@@ -4,19 +4,14 @@
  */
 import { TestBed } from '@angular/core/testing';
 
-import { SiTranslateModule } from './si-translate.module';
+import { injectSiTranslateService } from './si-translate.inject';
 import { SiTranslateService } from './si-translate.service';
 
 describe('SiNoTranslate', () => {
   let service: SiTranslateService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [SiTranslateModule]
-    });
-  });
-  beforeEach(() => {
-    service = TestBed.inject(SiTranslateService);
+    service = TestBed.runInInjectionContext(() => injectSiTranslateService());
   });
 
   it('should translate', () => {

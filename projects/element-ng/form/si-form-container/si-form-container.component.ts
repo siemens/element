@@ -6,7 +6,6 @@ import { NgTemplateOutlet } from '@angular/common';
 import { booleanAttribute, Component, computed, inject, input } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Breakpoints, SiResponsiveContainerDirective } from '@siemens/element-ng/resize-observer';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 import { SiFormValidationErrorMapper } from '../si-form-validation-error.model';
 import { SiFormValidationErrorService } from '../si-form-validation-error.service';
@@ -21,7 +20,7 @@ export interface SiFormValidationError {
 
 @Component({
   selector: 'si-form-container',
-  imports: [NgTemplateOutlet, SiResponsiveContainerDirective, SiTranslateModule],
+  imports: [NgTemplateOutlet, SiResponsiveContainerDirective],
   templateUrl: './si-form-container.component.html',
   styleUrl: './si-form-container.component.scss',
   host: {

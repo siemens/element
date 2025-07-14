@@ -5,14 +5,14 @@
 import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, model, OnDestroy } from '@angular/core';
 import { SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiTabNextBaseDirective } from './si-tab-next-base.directive';
 
 /** @experimental */
 @Component({
   selector: 'si-tab-next',
-  imports: [NgClass, SiIconNextComponent, SiTranslateModule],
+  imports: [NgClass, SiIconNextComponent, SiTranslatePipe],
   templateUrl: './si-tab-next.component.html',
   styleUrl: './si-tab-next.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

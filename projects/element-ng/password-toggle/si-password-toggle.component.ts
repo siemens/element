@@ -4,11 +4,11 @@
  */
 import { Component, input, output, signal } from '@angular/core';
 import { addIcons, elementHide, elementShow, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-password-toggle',
-  imports: [SiIconNextComponent, SiTranslateModule],
+  imports: [SiIconNextComponent, SiTranslatePipe],
   templateUrl: './si-password-toggle.component.html',
   styleUrl: './si-password-toggle.component.scss',
   host: {

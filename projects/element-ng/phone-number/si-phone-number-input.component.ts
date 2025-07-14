@@ -29,12 +29,9 @@ import {
   Validator
 } from '@angular/forms';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
-import { elementDown2, addIcons, SiIconNextComponent } from '@siemens/element-ng/icon';
+import { addIcons, elementDown2, SiIconNextComponent } from '@siemens/element-ng/icon';
 import { SiSelectListHasFilterComponent } from '@siemens/element-ng/select';
-import {
-  injectSiTranslateService,
-  SiTranslateModule
-} from '@siemens/element-translate-ng/translate';
+import { injectSiTranslateService, SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { PhoneNumber, PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
 
 import { SiPhoneNumberInputSelectDirective } from './si-phone-number-input-select.directive';
@@ -49,7 +46,7 @@ import { CountryInfo, PhoneDetails } from './si-phone-number-input.models';
     SiIconNextComponent,
     SiPhoneNumberInputSelectDirective,
     SiSelectListHasFilterComponent,
-    SiTranslateModule
+    SiTranslatePipe
   ],
   templateUrl: './si-phone-number-input.component.html',
   styleUrl: './si-phone-number-input.component.scss',

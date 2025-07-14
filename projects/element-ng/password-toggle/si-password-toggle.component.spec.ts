@@ -5,12 +5,11 @@
 import { Component, input } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 import { SiPasswordToggleModule } from './si-password-toggle.module';
 
 @Component({
-  imports: [FormsModule, SiPasswordToggleModule, SiTranslateModule],
+  imports: [FormsModule, SiPasswordToggleModule],
   template: `
     <si-password-toggle #toggle [showVisibilityIcon]="showVisibilityIcon()">
       <input [attr.type]="toggle.inputType" />
@@ -27,7 +26,7 @@ describe('SiPasswordToggleComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule, SiPasswordToggleModule, SiTranslateModule, TestHostComponent]
+      imports: [FormsModule, SiPasswordToggleModule, TestHostComponent]
     });
   });
 

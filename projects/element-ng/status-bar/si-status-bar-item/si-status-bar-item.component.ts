@@ -14,11 +14,11 @@ import {
 } from '@angular/core';
 import { ExtendedStatusType } from '@siemens/element-ng/common';
 import { SiIconNextComponent, STATUS_ICON_CONFIG } from '@siemens/element-ng/icon';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-status-bar-item',
-  imports: [NgClass, SiIconNextComponent, SiTranslateModule],
+  imports: [NgClass, SiIconNextComponent, SiTranslatePipe],
   templateUrl: './si-status-bar-item.component.html',
   styleUrl: './si-status-bar-item.component.scss',
   host: {

@@ -15,11 +15,11 @@ import {
   Type
 } from '@angular/core';
 import { calculateOverlayArrowPosition, OverlayArrowPosition } from '@siemens/element-ng/common';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-tooltip',
-  imports: [NgClass, NgTemplateOutlet, SiTranslateModule, NgComponentOutlet],
+  imports: [NgClass, NgTemplateOutlet, SiTranslatePipe, NgComponentOutlet],
   templateUrl: './si-tooltip.component.html'
 })
 export class TooltipComponent {

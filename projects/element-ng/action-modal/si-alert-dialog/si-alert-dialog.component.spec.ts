@@ -4,7 +4,6 @@
  */
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ModalRef } from '@siemens/element-ng/modal';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 import { SiAlertDialogComponent } from './si-alert-dialog.component';
 
@@ -16,7 +15,7 @@ describe('SiAlertDialogComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [SiTranslateModule, SiAlertDialogComponent],
+      imports: [SiAlertDialogComponent],
       providers: [ModalRef]
     }).compileComponents();
     modalRef = TestBed.inject(ModalRef);

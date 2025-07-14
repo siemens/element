@@ -3,16 +3,13 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, computed, input } from '@angular/core';
-import {
-  injectSiTranslateService,
-  SiTranslateModule
-} from '@siemens/element-translate-ng/translate';
+import { injectSiTranslateService, SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { IsoLanguageValue } from './iso-language-value';
 
 @Component({
   selector: 'si-language-switcher',
-  imports: [SiTranslateModule],
+  imports: [SiTranslatePipe],
   templateUrl: './si-language-switcher.component.html',
   styleUrl: './si-language-switcher.component.scss'
 })

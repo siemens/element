@@ -9,19 +9,12 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
 import { SiTabComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 import { SiFormlyObjectTabsetComponent } from './si-formly-object-tabset.component';
 
 @Component({
   selector: 'si-formly-test',
-  imports: [
-    ReactiveFormsModule,
-    SiTabComponent,
-    SiTabsetComponent,
-    SiTranslateModule,
-    FormlyModule
-  ],
+  imports: [ReactiveFormsModule, FormlyModule],
   template: ` <formly-form [form]="form" [fields]="fields" [model]="model" [options]="options" /> `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -42,7 +35,7 @@ describe('formly tabset type', () => {
         ReactiveFormsModule,
         SiTabComponent,
         SiTabsetComponent,
-        SiTranslateModule,
+
         FormlyModule.forRoot({
           types: [
             {

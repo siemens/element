@@ -8,7 +8,6 @@ import { provideRouter, Router } from '@angular/router';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 import {
   provideMockTranslateServiceBuilder,
-  SiTranslateModule,
   SiTranslateService
 } from '@siemens/element-translate-ng/translate';
 import { of } from 'rxjs';
@@ -49,7 +48,7 @@ describe('SiLinkDirective', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [SiTranslateModule, SiLinkDirective, TestHostComponent],
+      imports: [SiLinkDirective, TestHostComponent],
       providers: [
         SiLinkActionService,
         provideRouter([]),
@@ -219,7 +218,7 @@ describe('SiLinkDirective', () => {
       beforeEach(() => {
         TestBed.resetTestingModule();
         TestBed.configureTestingModule({
-          imports: [SiTranslateModule, SiLinkDirective, TestHostComponent],
+          imports: [SiLinkDirective, TestHostComponent],
           providers: [
             SiLinkActionService,
             provideRouter([]),

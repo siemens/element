@@ -29,14 +29,14 @@ import {
   SiIconNextComponent
 } from '@siemens/element-ng/icon';
 import { BOOTSTRAP_BREAKPOINTS, Breakpoints } from '@siemens/element-ng/resize-observer';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { defer, of, Subject } from 'rxjs';
 import { map, skip, takeUntil } from 'rxjs/operators';
 
 /** Root component for the application header. */
 @Component({
   selector: 'si-application-header',
-  imports: [SiTranslateModule, NgClass, A11yModule, NgTemplateOutlet, SiIconNextComponent],
+  imports: [SiTranslatePipe, NgClass, A11yModule, NgTemplateOutlet, SiIconNextComponent],
   templateUrl: './si-application-header.component.html',
   styleUrl: './si-application-header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

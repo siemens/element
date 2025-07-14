@@ -9,7 +9,6 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiLinkActionService } from '@siemens/element-ng/link';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 import { SiMenuModule } from './si-menu.module';
 import { SiMenuItemHarness } from './testing/si-menu.harness';
@@ -22,7 +21,7 @@ class ButtonHarness extends ComponentHarness {
 }
 
 @Component({
-  imports: [SiMenuModule, SiTranslateModule, CdkMenuTrigger],
+  imports: [SiMenuModule, CdkMenuTrigger],
   template: `
     <button class="btn" type="button" [cdkMenuTriggerFor]="menu">Toggle Menu</button>
     <ng-template #menu>

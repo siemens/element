@@ -5,12 +5,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MenuItem } from '@siemens/element-ng/menu';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 import { SiElectrontitlebarComponent } from './si-electron-titlebar.component';
 
 @Component({
-  imports: [SiElectrontitlebarComponent, SiTranslateModule],
+  imports: [SiElectrontitlebarComponent],
   template: `
     <si-electron-titlebar
       [appTitle]="appTitle"
@@ -46,7 +45,7 @@ describe('SiElectrontitlebarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SiTranslateModule, TestHostComponent]
+      imports: [TestHostComponent]
     }).compileComponents();
   });
 

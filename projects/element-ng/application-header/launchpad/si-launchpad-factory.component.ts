@@ -20,7 +20,7 @@ import {
   SiIconNextComponent
 } from '@siemens/element-ng/icon';
 import { SiLinkModule } from '@siemens/element-ng/link';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiApplicationHeaderComponent } from '../si-application-header.component';
 import { SiLaunchpadAppComponent } from './si-launchpad-app.component';
@@ -37,7 +37,7 @@ export interface FavoriteChangeEvent {
     A11yModule,
     CommonModule,
     SiLinkModule,
-    SiTranslateModule,
+    SiTranslatePipe,
     SiLaunchpadAppComponent,
     SiIconNextComponent
   ],

@@ -20,7 +20,7 @@ import {
 import { RouterLink } from '@angular/router';
 import { SiMenuDirective, SiMenuItemComponent } from '@siemens/element-ng/menu';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiTabNextLinkComponent } from './si-tab-next-link.component';
 import { SiTabNextComponent } from './si-tab-next.component';
@@ -46,7 +46,7 @@ export interface SiTabNextDeselectionEvent {
 @Component({
   selector: 'si-tabset-next',
   imports: [
-    SiTranslateModule,
+    SiTranslatePipe,
     SiMenuDirective,
     SiMenuItemComponent,
     CdkMenuTrigger,

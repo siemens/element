@@ -38,7 +38,7 @@ import { MenuItem, SI_UI_STATE_SERVICE } from '@siemens/element-ng/common';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
 import { SiSkipLinkTargetDirective } from '@siemens/element-ng/skip-links';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -73,7 +73,7 @@ export class SiNavbarVerticalItemGuardDirective {
     SiNavbarVerticalItemLegacyComponent,
     SiSearchBarComponent,
     SiSkipLinkTargetDirective,
-    SiTranslateModule,
+    SiTranslatePipe,
     SiNavbarVerticalItemComponent,
     RouterLink,
     SiNavbarVerticalItemGuardDirective,

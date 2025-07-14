@@ -4,7 +4,6 @@
  */
 import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 import { SiProgressbarComponent as TestComponent } from './si-progressbar.component';
 
@@ -15,7 +14,7 @@ describe('SiProgressbarComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [SiTranslateModule, TestComponent]
+      imports: [TestComponent]
     })
   );
 

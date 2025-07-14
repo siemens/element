@@ -6,7 +6,7 @@ import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { SiIconNextComponent } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 /**
  * The component displays application info messages. A message uses an icon and a title, optionally a copy text,
@@ -16,7 +16,7 @@ import { SiTranslateModule, TranslatableString } from '@siemens/element-translat
  */
 @Component({
   selector: 'si-info-page',
-  imports: [NgClass, SiLinkDirective, SiIconNextComponent, SiTranslateModule],
+  imports: [NgClass, SiLinkDirective, SiIconNextComponent, SiTranslatePipe],
   templateUrl: './si-info-page.component.html',
   styleUrl: './si-info-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

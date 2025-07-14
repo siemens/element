@@ -5,7 +5,6 @@
 import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SiIconModule } from '@siemens/element-ng/icon';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 import { SiIconStatusComponent as TestComponent } from './si-icon-status.component';
 
@@ -21,7 +20,7 @@ describe('SiIconStatusComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SiIconModule, SiTranslateModule, TestComponent]
+      imports: [SiIconModule, TestComponent]
     }).compileComponents();
   });
 

@@ -10,16 +10,16 @@ import {
   Injectable
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { injectSiTranslateService } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { SiTranslateModule } from './si-translate.module';
 import { SiTranslatePipe } from './si-translate.pipe';
 import { SiTranslateService, TranslationResult } from './si-translate.service';
 import { provideMockTranslateServiceBuilder } from './testing/si-translate.mock-service-builder.factory';
 
 @Component({
-  imports: [SiTranslateModule],
+  imports: [SiTranslatePipe],
   template: `{{ toTranslateKey | translate: params }}`,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -96,7 +96,9 @@ describe('SiTranslatePipe', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(TestComponent);
       component = fixture.componentInstance;
-      translateService = TestBed.inject(SiTranslateService) as SiAsyncTranslateService;
+      translateService = TestBed.runInInjectionContext(() =>
+        injectSiTranslateService()
+      ) as SiAsyncTranslateService;
       nativeElement = fixture.nativeElement;
       fixture.detectChanges();
     });
@@ -131,7 +133,7 @@ describe('SiTranslatePipe', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [SiTranslateModule, TestComponent],
+        imports: [TestComponent],
         providers: [
           provideMockTranslateServiceBuilder(
             () =>
@@ -175,7 +177,7 @@ describe('SiTranslatePipe', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [SiTranslateModule, TestComponent]
+        imports: [TestComponent]
       }).compileComponents();
     });
 

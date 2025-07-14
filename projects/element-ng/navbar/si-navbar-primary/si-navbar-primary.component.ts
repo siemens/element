@@ -37,7 +37,7 @@ import {
   SiHeaderDropdownTriggerDirective
 } from '@siemens/element-ng/header-dropdown';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { defer } from 'rxjs';
 
 import { AccountItem } from '../account.model';
@@ -50,7 +50,7 @@ import { AppItem, AppItemCategory } from './si-navbar-primary.model';
     A11yModule,
     NgTemplateOutlet,
     SiLinkDirective,
-    SiTranslateModule,
+    SiTranslatePipe,
     SiApplicationHeaderComponent,
     SiLaunchpadFactoryComponent,
     SiHeaderAccountItemComponent,

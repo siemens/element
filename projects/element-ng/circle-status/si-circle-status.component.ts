@@ -24,12 +24,12 @@ import {
   SiIconNextComponent,
   STATUS_ICON_CONFIG
 } from '@siemens/element-ng/icon';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'si-circle-status',
-  imports: [NgClass, SiIconNextComponent, SiTranslateModule],
+  imports: [NgClass, SiIconNextComponent, SiTranslatePipe],
   templateUrl: './si-circle-status.component.html',
   styleUrl: './si-circle-status.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

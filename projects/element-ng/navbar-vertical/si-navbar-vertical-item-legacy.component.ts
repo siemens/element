@@ -5,7 +5,7 @@
 import { Component, computed, inject, input, model, viewChildren } from '@angular/core';
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiLinkDirective } from '@siemens/element-ng/link';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiNavbarVerticalGroupTriggerDirective } from './si-navbar-vertical-group-trigger.directive';
 import { SiNavbarVerticalGroupComponent } from './si-navbar-vertical-group.component';
@@ -17,7 +17,7 @@ import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
   selector: 'si-navbar-vertical-item-legacy',
   imports: [
     SiLinkDirective,
-    SiTranslateModule,
+    SiTranslatePipe,
     SiNavbarVerticalItemComponent,
     SiNavbarVerticalGroupTriggerDirective,
     SiNavbarVerticalGroupComponent,

@@ -18,7 +18,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiInputPillComponent } from './si-input-pill.component';
 import {
@@ -28,7 +28,7 @@ import {
 
 @Component({
   selector: 'si-pills-input',
-  imports: [SiInputPillComponent, SiTranslateModule],
+  imports: [SiInputPillComponent, SiTranslatePipe],
   templateUrl: './si-pills-input.component.html',
   styleUrl: './si-pills-input.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

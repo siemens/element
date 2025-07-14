@@ -6,7 +6,7 @@ import { CdkTrapFocus } from '@angular/cdk/a11y';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { CdkListbox, CdkOption } from '@angular/cdk/listbox';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { DatePipe, NgClass, NgTemplateOutlet } from '@angular/common';
+import { DatePipe, NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -34,7 +34,7 @@ import {
 import { addIcons, elementDown2, SiIconNextComponent } from '@siemens/element-ng/icon';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiDateRangeCalculationService } from './si-date-range-calculation.service';
 import {
@@ -60,7 +60,6 @@ export class PresetMatchFilterPipe implements PipeTransform {
     CdkTrapFocus,
     DatePipe,
     FormsModule,
-    NgClass,
     NgTemplateOutlet,
     OverlayModule,
     PresetMatchFilterPipe,
@@ -70,7 +69,7 @@ export class PresetMatchFilterPipe implements PipeTransform {
     SiIconNextComponent,
     SiRelativeDateComponent,
     SiSearchBarComponent,
-    SiTranslateModule
+    SiTranslatePipe
   ],
   templateUrl: './si-date-range-filter.component.html',
   styleUrl: './si-date-range-filter.component.scss',

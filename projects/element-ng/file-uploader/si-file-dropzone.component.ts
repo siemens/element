@@ -15,13 +15,13 @@ import {
   viewChild
 } from '@angular/core';
 import { addIcons, elementUpload, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { UploadFile } from './si-file-uploader.model';
 
 @Component({
   selector: 'si-file-dropzone',
-  imports: [SiIconNextComponent, SiTranslateModule],
+  imports: [SiIconNextComponent, SiTranslatePipe],
   templateUrl: './si-file-dropzone.component.html',
   styleUrl: './si-file-dropzone.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

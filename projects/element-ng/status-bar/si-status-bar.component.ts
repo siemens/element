@@ -23,20 +23,17 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { BlinkService, STATUS_ICON, TextMeasureService } from '@siemens/element-ng/common';
 import {
+  addIcons,
   elementDown2,
   elementSoundMute,
   elementSoundOn,
-  addIcons,
   SiIconNextComponent
 } from '@siemens/element-ng/icon';
 import {
   ResizeObserverService,
   SiResizeObserverDirective
 } from '@siemens/element-ng/resize-observer';
-import {
-  injectSiTranslateService,
-  SiTranslateModule
-} from '@siemens/element-translate-ng/translate';
+import { injectSiTranslateService, SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { Observable, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
@@ -68,7 +65,7 @@ let idCounter = 1;
     SiIconNextComponent,
     SiStatusBarItemComponent,
     SiResizeObserverDirective,
-    SiTranslateModule
+    SiTranslatePipe
   ],
   templateUrl: './si-status-bar.component.html',
   styleUrl: './si-status-bar.component.scss',

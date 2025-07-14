@@ -4,11 +4,11 @@
  */
 import { Component } from '@angular/core';
 import { FieldArrayType, FormlyModule } from '@ngx-formly/core';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-formly-array',
-  imports: [FormlyModule, SiTranslateModule],
+  imports: [FormlyModule, SiTranslatePipe],
   templateUrl: './si-formly-array.component.html'
 })
 export class SiFormlyArrayComponent extends FieldArrayType {}

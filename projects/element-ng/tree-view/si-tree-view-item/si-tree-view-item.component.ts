@@ -25,7 +25,7 @@ import {
 import { correctKeyRTL, MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { SiLoadingSpinnerComponent } from '@siemens/element-ng/loading-spinner';
 import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { asyncScheduler, Subject, Subscription } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
@@ -54,7 +54,7 @@ import {
     NgTemplateOutlet,
     SiLoadingSpinnerComponent,
     SiMenuFactoryComponent,
-    SiTranslateModule
+    SiTranslatePipe
   ],
   templateUrl: './si-tree-view-item.component.html',
   styleUrl: './si-tree-view-item.component.scss',

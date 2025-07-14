@@ -7,11 +7,11 @@ import { booleanAttribute, Component, input } from '@angular/core';
 import { StatusType } from '@siemens/element-ng/common';
 import { SiStatusIconComponent } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-inline-notification',
-  imports: [NgClass, SiLinkDirective, SiTranslateModule, SiStatusIconComponent],
+  imports: [NgClass, SiLinkDirective, SiTranslatePipe, SiStatusIconComponent],
   templateUrl: './si-inline-notification.component.html',
   styleUrl: './si-inline-notification.component.scss'
 })

@@ -16,9 +16,9 @@ import {
 import { DomSanitizer } from '@angular/platform-browser';
 import { SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
 import { CopyrightDetails, SiCopyrightNoticeComponent } from '@siemens/element-ng/copyright-notice';
-import { addIcons, SiIconNextComponent, elementDocument } from '@siemens/element-ng/icon';
+import { addIcons, elementDocument, SiIconNextComponent } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { ApiInfo, LicenseInfo } from './si-about-data.model';
 
@@ -30,7 +30,7 @@ import { ApiInfo, LicenseInfo } from './si-about-data.model';
     SiCopyrightNoticeComponent,
     SiIconNextComponent,
     SiLinkDirective,
-    SiTranslateModule
+    SiTranslatePipe
   ],
   templateUrl: './si-about.component.html',
   styleUrl: './si-about.component.scss',

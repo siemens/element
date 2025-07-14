@@ -28,7 +28,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { createDate } from './date-time-helper';
 
@@ -45,7 +45,7 @@ interface TimeComponents {
 
 @Component({
   selector: 'si-timepicker',
-  imports: [NgTemplateOutlet, FormsModule, SiTranslateModule, A11yModule],
+  imports: [NgTemplateOutlet, FormsModule, SiTranslatePipe, A11yModule],
   templateUrl: './si-timepicker.component.html',
   styleUrl: './si-timepicker.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

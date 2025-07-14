@@ -5,11 +5,11 @@
 import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
 import { FieldType, FormlyModule } from '@ngx-formly/core';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-formly-button',
-  imports: [NgClass, SiTranslateModule, FormlyModule],
+  imports: [NgClass, SiTranslatePipe, FormlyModule],
   templateUrl: './si-formly-button.component.html'
 })
 export class SiFormlyButtonComponent extends FieldType {

@@ -22,13 +22,13 @@ import {
   STATUS_ICON_CONFIG
 } from '@siemens/element-ng/icon';
 import { SiLinkModule } from '@siemens/element-ng/link';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiToast } from '../si-toast.model';
 
 @Component({
   selector: 'si-toast-notification',
-  imports: [NgClass, SiLinkModule, SiIconNextComponent, SiStatusIconComponent, SiTranslateModule],
+  imports: [NgClass, SiLinkModule, SiIconNextComponent, SiStatusIconComponent, SiTranslatePipe],
   templateUrl: './si-toast-notification.component.html',
   styleUrl: './si-toast-notification.component.scss'
 })

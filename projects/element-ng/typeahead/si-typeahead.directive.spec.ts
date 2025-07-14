@@ -8,7 +8,6 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ChangeDetectionStrategy, Component, TemplateRef, viewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, of } from 'rxjs';
 
 import { SiTypeaheadDirective, Typeahead, TypeaheadMatch, TypeaheadOptionItemContext } from '.';
@@ -18,7 +17,7 @@ import { SiTypeaheadHarness } from './testing/si-typeahead.harness';
 const testItems = ['test', 'item'];
 
 @Component({
-  imports: [SiTypeaheadDirective, FormsModule, SiTranslateModule],
+  imports: [SiTypeaheadDirective, FormsModule],
   template: `
     <ng-template #testTemplate let-matchItem="match">
       <div>Test Template: {{ matchItem.text }}</div>
@@ -95,7 +94,7 @@ describe('SiTypeaheadDirective', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SiTypeaheadDirective, FormsModule, SiTranslateModule, WrapperComponent]
+      imports: [SiTypeaheadDirective, FormsModule, WrapperComponent]
     }).compileComponents();
     fixture = TestBed.createComponent(WrapperComponent);
     wrapperComponent = fixture.componentInstance;

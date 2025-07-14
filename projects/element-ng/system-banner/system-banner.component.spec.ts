@@ -4,7 +4,6 @@
  */
 import { NgClass } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 import { SiSystemBannerComponent } from './system-banner.component';
 
@@ -14,7 +13,7 @@ describe('SiSystemBannerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SiSystemBannerComponent, NgClass, SiTranslateModule]
+      imports: [SiSystemBannerComponent, NgClass]
     }).compileComponents();
   });
 

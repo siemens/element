@@ -17,7 +17,6 @@ import { SiLoadingSpinnerModule } from '@siemens/element-ng/loading-spinner';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { ResizeObserverService } from '@siemens/element-ng/resize-observer';
 import { MenuItemsProvider, SiTreeViewModule } from '@siemens/element-ng/tree-view';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject } from 'rxjs';
 
 import { runOnPushChangeDetection } from '../test-helpers';
@@ -26,7 +25,7 @@ import { SiTreeViewComponent } from './si-tree-view.component';
 import { LoadChildrenEventArgs, TreeItem } from './si-tree-view.model';
 
 @Component({
-  imports: [SiLoadingSpinnerModule, SiTranslateModule, SiTreeViewModule],
+  imports: [SiLoadingSpinnerModule, SiTreeViewModule],
   template: `<si-tree-view
     class="vh-100"
     [style]="style"
@@ -130,13 +129,7 @@ describe('SiTreeViewComponent', () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-      imports: [
-        SiLoadingSpinnerModule,
-        NoopAnimationsModule,
-        SiTranslateModule,
-        SiTreeViewModule,
-        WrapperComponent
-      ]
+      imports: [SiLoadingSpinnerModule, NoopAnimationsModule, SiTreeViewModule, WrapperComponent]
     });
   });
 

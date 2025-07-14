@@ -9,11 +9,10 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { SiFormlyModule } from '@siemens/element-ng/formly';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-formly-test',
-  imports: [SiTranslateModule, SiFormlyModule],
+  imports: [SiFormlyModule],
   template: `
     <si-formly
       class="si-layout-fixed-height"
@@ -97,7 +96,7 @@ describe('formly accordion type', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, SiTranslateModule, SiFormlyModule, FormlyTestComponent]
+      imports: [NoopAnimationsModule, SiFormlyModule, FormlyTestComponent]
     }).compileComponents();
   });
 

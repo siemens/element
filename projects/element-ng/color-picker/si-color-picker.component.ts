@@ -17,7 +17,7 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { isRTL } from '@siemens/element-ng/common';
 import { addIcons, elementOk, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 /**
  * The Element data color palette is used as default.
@@ -43,7 +43,7 @@ const defaultDataColors: string[] = [
 ];
 @Component({
   selector: 'si-color-picker',
-  imports: [SiIconNextComponent, SiTranslateModule, CdkConnectedOverlay, CdkOverlayOrigin],
+  imports: [SiIconNextComponent, SiTranslatePipe, CdkConnectedOverlay, CdkOverlayOrigin],
   templateUrl: './si-color-picker.component.html',
   styleUrl: './si-color-picker.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

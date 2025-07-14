@@ -45,7 +45,7 @@ import {
 } from '@siemens/element-ng/common';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
 import { addIcons, elementCalendar, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { getMaxDate, getMinDate } from './date-time-helper';
 import { SiDateInputDirective } from './si-date-input.directive';
@@ -55,7 +55,7 @@ import { DatepickerInputConfig, DateRange } from './si-datepicker.model';
 
 @Component({
   selector: 'si-date-range',
-  imports: [FormsModule, SiDateInputDirective, SiIconNextComponent, SiTranslateModule, A11yModule],
+  imports: [FormsModule, SiDateInputDirective, SiIconNextComponent, SiTranslatePipe, A11yModule],
   templateUrl: './si-date-range.component.html',
   styleUrl: './si-date-range.component.scss',
   host: {

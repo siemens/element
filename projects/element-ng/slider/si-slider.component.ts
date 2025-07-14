@@ -21,13 +21,13 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { correctKeyRTL, isRTL, listenGlobal } from '@siemens/element-ng/common';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
-import { elementMinus, elementPlus, addIcons, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { addIcons, elementMinus, elementPlus, SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { Subscription, timer } from 'rxjs';
 
 @Component({
   selector: 'si-slider',
-  imports: [SiIconNextComponent, SiTranslateModule],
+  imports: [SiIconNextComponent, SiTranslatePipe],
   templateUrl: './si-slider.component.html',
   styleUrl: './si-slider.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

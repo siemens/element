@@ -4,13 +4,13 @@
  */
 import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { booleanAttribute, Component, input, output } from '@angular/core';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { Filter } from './filter';
 
 @Component({
   selector: 'si-filter-pill',
-  imports: [NgClass, NgTemplateOutlet, SiTranslateModule],
+  imports: [NgClass, NgTemplateOutlet, SiTranslatePipe],
   templateUrl: './si-filter-pill.component.html',
   styleUrl: './si-filter-pill.component.scss'
 })

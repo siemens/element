@@ -10,7 +10,7 @@ import {
   SiAutoCollapsableListOverflowItemDirective
 } from '@siemens/element-ng/auto-collapsable-list';
 import { BackgroundColorVariant } from '@siemens/element-ng/common';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { Filter } from './filter';
 import { SiFilterPillComponent } from './si-filter-pill.component';
@@ -23,7 +23,7 @@ import { SiFilterPillComponent } from './si-filter-pill.component';
     SiAutoCollapsableListOverflowItemDirective,
     SiAutoCollapsableListAdditionalContentDirective,
     SiFilterPillComponent,
-    SiTranslateModule
+    SiTranslatePipe
   ],
   templateUrl: './si-filter-bar.component.html',
   styleUrl: './si-filter-bar.component.scss',

@@ -5,7 +5,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 import { Observable, Subject } from 'rxjs';
 
 import { SiToast } from '../si-toast.model';
@@ -27,7 +26,7 @@ describe('SiToastNotificationDrawerComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [SiTranslateModule, NoopAnimationsModule, TestHostComponent]
+      imports: [NoopAnimationsModule, TestHostComponent]
     }).compileComponents();
   }));
 

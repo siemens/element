@@ -24,10 +24,7 @@ import {
 } from '@siemens/element-ng/icon';
 import { SiLinkDirective } from '@siemens/element-ng/link';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
-import {
-  injectSiTranslateService,
-  SiTranslateModule
-} from '@siemens/element-translate-ng/translate';
+import { injectSiTranslateService, SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { merge, of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
@@ -66,7 +63,7 @@ let controlIdCounter = 1;
     SiIconNextComponent,
     SiLinkDirective,
     SiResizeObserverDirective,
-    SiTranslateModule,
+    SiTranslatePipe,
     SiBreadcrumbItemTemplateDirective
   ],
   templateUrl: './si-breadcrumb.component.html',

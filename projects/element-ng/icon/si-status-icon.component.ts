@@ -5,14 +5,14 @@
 import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { EntityStatusType } from '@siemens/element-ng/common';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { STATUS_ICON_CONFIG } from './icon-status';
 import { SiIconNextComponent } from './si-icon-next.component';
 
 @Component({
   selector: 'si-status-icon',
-  imports: [NgClass, SiIconNextComponent, SiTranslateModule],
+  imports: [NgClass, SiIconNextComponent, SiTranslatePipe],
   template: `
     @let iconValue = statusIcon();
     @if (iconValue) {

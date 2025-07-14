@@ -4,7 +4,7 @@
  */
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { ExtendedStatusType } from '@siemens/element-ng/common';
-import { TranslatableString, SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 /**
  * The system banner component displays a message with specific status as background.
@@ -12,7 +12,7 @@ import { TranslatableString, SiTranslateModule } from '@siemens/element-translat
  */
 @Component({
   selector: 'si-system-banner',
-  imports: [SiTranslateModule],
+  imports: [SiTranslatePipe],
   templateUrl: './system-banner.component.html',
   styleUrl: './system-banner.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

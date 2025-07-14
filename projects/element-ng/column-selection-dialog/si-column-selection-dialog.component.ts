@@ -28,7 +28,7 @@ import { addIcons, elementCancel, SiIconNextComponent } from '@siemens/element-n
 import { ModalRef } from '@siemens/element-ng/modal';
 import {
   injectSiTranslateService,
-  SiTranslateModule,
+  SiTranslatePipe,
   TranslatableString
 } from '@siemens/element-translate-ng/translate';
 import { first } from 'rxjs/operators';
@@ -51,7 +51,7 @@ const dragConfig = {
     CdkOption,
     CdkScrollableModule,
     SiIconNextComponent,
-    SiTranslateModule,
+    SiTranslatePipe,
     SiColumnSelectionEditorComponent
   ],
   templateUrl: './si-column-selection-dialog.component.html',

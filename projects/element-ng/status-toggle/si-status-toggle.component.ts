@@ -22,13 +22,13 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { isRTL, listenGlobal } from '@siemens/element-ng/common';
 import { SiIconComponent } from '@siemens/element-ng/icon';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { StatusToggleItem } from './status-toggle.model';
 
 @Component({
   selector: 'si-status-toggle',
-  imports: [NgClass, SiIconComponent, SiTranslateModule],
+  imports: [NgClass, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-status-toggle.component.html',
   styleUrl: './si-status-toggle.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

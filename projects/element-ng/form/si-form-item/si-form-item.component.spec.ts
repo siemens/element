@@ -4,12 +4,11 @@
  */
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, waitForAsync } from '@angular/core/testing';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 import { SiFormItemComponent } from './si-form-item.component';
 
 @Component({
-  imports: [SiTranslateModule, SiFormItemComponent],
+  imports: [SiFormItemComponent],
   template: `
     <si-form-item [label]="label()">
       <input type="text" id="name" class="form-control" />
@@ -32,7 +31,7 @@ describe('SiFormItemComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [SiTranslateModule, TestHostComponent]
+      imports: [TestHostComponent]
     }).compileComponents();
   }));
 

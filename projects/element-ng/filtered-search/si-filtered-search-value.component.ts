@@ -16,9 +16,9 @@ import {
   viewChild
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { addIcons, SiIconNextComponent, elementCancel } from '@siemens/element-ng/icon';
+import { addIcons, elementCancel, SiIconNextComponent } from '@siemens/element-ng/icon';
 import { SiTypeaheadDirective } from '@siemens/element-ng/typeahead';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { Observable } from 'rxjs';
 
 import { CriterionDefinition, CriterionValue, OptionType } from './si-filtered-search.model';
@@ -32,7 +32,7 @@ import { SiFilteredSearchTypeaheadComponent } from './values/typeahead/si-filter
     CdkMonitorFocus,
     SiTypeaheadDirective,
     FormsModule,
-    SiTranslateModule,
+    SiTranslatePipe,
     SiFilteredSearchDateValueComponent,
     SiFilteredSearchTypeaheadComponent,
     SiIconNextComponent

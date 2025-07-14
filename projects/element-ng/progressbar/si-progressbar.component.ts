@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-progressbar',
-  imports: [SiTranslateModule],
+  imports: [SiTranslatePipe],
   templateUrl: './si-progressbar.component.html',
   styleUrl: './si-progressbar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

@@ -20,7 +20,7 @@ import {
   SiHeaderDropdownTriggerDirective
 } from '@siemens/element-ng/header-dropdown';
 import { SiLinkDirective } from '@siemens/element-ng/link';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiNavbarPrimaryComponent } from '../si-navbar-primary/si-navbar-primary.component';
 
@@ -29,7 +29,7 @@ import { SiNavbarPrimaryComponent } from '../si-navbar-primary/si-navbar-primary
   selector: 'si-navbar-item',
   imports: [
     SiLinkDirective,
-    SiTranslateModule,
+    SiTranslatePipe,
     NgClass,
     NgTemplateOutlet,
     SiHeaderDropdownComponent,

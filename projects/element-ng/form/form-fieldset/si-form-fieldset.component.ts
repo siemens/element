@@ -12,13 +12,13 @@ import {
   input,
   signal
 } from '@angular/core';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiFormItemComponent } from '../si-form-item/si-form-item.component';
 
 @Component({
   selector: 'si-form-fieldset',
-  imports: [SiTranslateModule],
+  imports: [SiTranslatePipe],
   templateUrl: './si-form-fieldset.component.html',
   styleUrl: '../si-form.shared.scss',
   host: {

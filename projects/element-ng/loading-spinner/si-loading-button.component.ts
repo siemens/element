@@ -4,13 +4,13 @@
  */
 import { NgClass } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiLoadingSpinnerComponent } from './si-loading-spinner.component';
 
 @Component({
   selector: 'si-loading-button',
-  imports: [SiLoadingSpinnerComponent, NgClass, SiTranslateModule],
+  imports: [SiLoadingSpinnerComponent, NgClass, SiTranslatePipe],
   templateUrl: './si-loading-button.component.html',
   styleUrl: './si-loading-button.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

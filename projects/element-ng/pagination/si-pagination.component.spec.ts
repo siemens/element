@@ -4,7 +4,6 @@
  */
 import { CommonModule } from '@angular/common';
 import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 import { SiPaginationComponent as TestComponent } from '.';
 
@@ -23,7 +22,7 @@ describe('SiPaginationComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, SiTranslateModule, TestComponent]
+      imports: [CommonModule, TestComponent]
     }).compileComponents();
   }));
 

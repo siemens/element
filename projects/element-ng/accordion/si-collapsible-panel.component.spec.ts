@@ -6,12 +6,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 import { SiCollapsiblePanelComponent } from './index';
 
 @Component({
-  imports: [SiTranslateModule, SiCollapsiblePanelComponent],
+  imports: [SiCollapsiblePanelComponent],
   template: `
     <si-collapsible-panel [heading]="heading">
       <div style="height: 100px;">This is the content</div>
@@ -39,12 +38,7 @@ describe('SiCollapsiblePanel', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        SiTranslateModule,
-        NoopAnimationsModule,
-        SiCollapsiblePanelComponent,
-        TestHostComponent
-      ]
+      imports: [NoopAnimationsModule, SiCollapsiblePanelComponent, TestHostComponent]
     }).compileComponents();
   }));
 

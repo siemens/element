@@ -22,16 +22,16 @@ import {
   SiContentActionBarComponent
 } from '@siemens/element-ng/content-action-bar';
 import {
+  addIcons,
   elementDoubleLeft,
   elementDoubleRight,
-  addIcons,
   SiIconNextComponent
 } from '@siemens/element-ng/icon';
 import { SiLinkDirective } from '@siemens/element-ng/link';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiSidePanelService } from './si-side-panel.service';
 
@@ -49,7 +49,7 @@ export interface StatusItem extends MenuItemLegacy {
     SiIconNextComponent,
     SiLinkDirective,
     SiSearchBarComponent,
-    SiTranslateModule
+    SiTranslatePipe
   ],
   templateUrl: './si-side-panel-content.component.html',
   styleUrl: './si-side-panel-content.component.scss',

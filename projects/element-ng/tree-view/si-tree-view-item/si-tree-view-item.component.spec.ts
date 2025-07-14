@@ -22,10 +22,9 @@ import {
   transferTreeItem,
   TreeItem
 } from '@siemens/element-ng/tree-view';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 @Component({
-  imports: [SiTranslateModule, SiTreeViewModule, DragDropModule],
+  imports: [SiTreeViewModule, DragDropModule],
   template: `<div class="d-flex" style="height: 300px">
     <si-tree-view
       #treeOne
@@ -129,7 +128,7 @@ describe('SiTreeViewComponentWithDragDrop', () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-      imports: [SiTranslateModule, SiTreeViewModule, DragDropModule, WrapperComponent]
+      imports: [SiTreeViewModule, DragDropModule, WrapperComponent]
     });
   });
 

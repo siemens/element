@@ -21,14 +21,14 @@ import {
   SiDatepickerDirective,
   SiDatepickerOverlayDirective
 } from '@siemens/element-ng/datepicker';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { getISODateString } from '../../si-filtered-search-helper';
 import { SiFilteredSearchValueBase } from '../si-filtered-search-value.base';
 
 @Component({
   selector: 'si-filtered-search-date-value',
-  imports: [DatePipe, FormsModule, SiDatepickerDirective, SiTranslateModule],
+  imports: [DatePipe, FormsModule, SiDatepickerDirective, SiTranslatePipe],
   templateUrl: './si-filtered-search-date-value.component.html',
   styleUrl: './si-filtered-search-date-value.component.scss',
   providers: [

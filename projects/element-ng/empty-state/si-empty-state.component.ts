@@ -4,11 +4,11 @@
  */
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-empty-state',
-  imports: [SiIconNextComponent, SiTranslateModule],
+  imports: [SiIconNextComponent, SiTranslatePipe],
   templateUrl: './si-empty-state.component.html',
   styleUrl: './si-empty-state.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

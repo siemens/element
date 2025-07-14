@@ -15,7 +15,7 @@ import {
   output
 } from '@angular/core';
 import { isRTL } from '@siemens/element-ng/common';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import {
   addDaysInRange,
@@ -46,12 +46,7 @@ import { SiInitialFocusComponent } from './si-initial-focus.component';
  */
 @Component({
   selector: 'si-day-selection',
-  imports: [
-    DatePipe,
-    SiCalendarBodyComponent,
-    SiCalendarDirectionButtonComponent,
-    SiTranslateModule
-  ],
+  imports: [DatePipe, SiCalendarBodyComponent, SiCalendarDirectionButtonComponent, SiTranslatePipe],
   templateUrl: './si-day-selection.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

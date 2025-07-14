@@ -8,7 +8,7 @@ import { Component, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { SiLinkActionService, SiLinkModule } from '@siemens/element-ng/link';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiMenuActionService } from './si-menu-action.service';
 import { SiMenuDividerDirective } from './si-menu-divider.directive';
@@ -17,7 +17,7 @@ import { SiMenuHeaderDirective } from './si-menu-header.directive';
 import { SiMenuItemCheckboxComponent } from './si-menu-item-checkbox.component';
 import { SiMenuItemRadioComponent } from './si-menu-item-radio.component';
 import { SiMenuItemComponent } from './si-menu-item.component';
-import { MenuItemAction, MenuItemCheckbox, MenuItem, MenuItemRadio } from './si-menu-model';
+import { MenuItem, MenuItemAction, MenuItemCheckbox, MenuItemRadio } from './si-menu-model';
 import { SiMenuDirective } from './si-menu.directive';
 
 @Component({
@@ -31,7 +31,7 @@ import { SiMenuDirective } from './si-menu.directive';
     SiMenuDividerDirective,
     SiLinkModule,
     CdkMenuTrigger,
-    SiTranslateModule,
+    SiTranslatePipe,
     CdkMenuGroup,
     NgTemplateOutlet,
     RouterLink,

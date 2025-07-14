@@ -20,14 +20,14 @@ import {
   OverlayArrowPosition
 } from '@siemens/element-ng/common';
 import { addIcons, elementCancel, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { Subscription } from 'rxjs';
 
 import { PositionChange, SI_TOUR_TOKEN, TourAction, TourStepInternal } from './si-tour-token.model';
 
 @Component({
   selector: 'si-tour',
-  imports: [A11yModule, NgClass, SiIconNextComponent, SiTranslateModule],
+  imports: [A11yModule, NgClass, SiIconNextComponent, SiTranslatePipe],
   templateUrl: './si-tour.component.html',
   styleUrl: './si-tour.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

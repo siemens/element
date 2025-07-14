@@ -10,7 +10,7 @@ import {
   elementSortUp,
   SiIconNextComponent
 } from '@siemens/element-ng/icon';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 export interface SortCriteria {
   name: string;
@@ -19,7 +19,7 @@ export interface SortCriteria {
 
 @Component({
   selector: 'si-sort-bar',
-  imports: [SiIconNextComponent, SiTranslateModule],
+  imports: [SiIconNextComponent, SiTranslatePipe],
   templateUrl: './si-sort-bar.component.html',
   styleUrl: './si-sort-bar.component.scss'
 })

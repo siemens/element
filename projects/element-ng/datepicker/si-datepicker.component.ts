@@ -21,7 +21,7 @@ import {
   viewChild
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { Cell } from './components/si-calendar-body.component';
 import { SiDaySelectionComponent } from './components/si-day-selection.component';
@@ -60,7 +60,7 @@ export type RangeType = 'START' | 'END' | undefined;
     SiDaySelectionComponent,
     SiTimepickerComponent,
     FormsModule,
-    SiTranslateModule
+    SiTranslatePipe
   ],
   templateUrl: './si-datepicker.component.html',
   styleUrl: './si-datepicker.component.scss'

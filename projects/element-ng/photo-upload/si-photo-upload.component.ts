@@ -26,11 +26,10 @@ import {
   elementCancel,
   elementCircleFilled,
   elementStateExclamationMark,
-  SiIconComponent,
   SiIconNextComponent
 } from '@siemens/element-ng/icon';
 import { ModalRef, SiModalService } from '@siemens/element-ng/modal';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { CropperPosition, ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
 
 import { SiImageCropperStyleComponent } from './si-image-cropper-style.component';
@@ -47,10 +46,9 @@ import { SiImageCropperStyleComponent } from './si-image-cropper-style.component
   imports: [
     NgTemplateOutlet,
     ImageCropperComponent,
-    SiIconComponent,
     SiIconNextComponent,
     SiImageCropperStyleComponent,
-    SiTranslateModule
+    SiTranslatePipe
   ],
   templateUrl: './si-photo-upload.component.html',
   styleUrl: './si-photo-upload.component.scss',

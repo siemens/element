@@ -5,12 +5,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SiIconModule } from '@siemens/element-ng/icon';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 import { SiStatusBarItemComponent } from './si-status-bar-item.component';
 
 @Component({
-  imports: [SiIconModule, SiTranslateModule, SiStatusBarItemComponent],
+  imports: [SiIconModule, SiStatusBarItemComponent],
   template: `
     <si-status-bar-item
       #item
@@ -37,7 +36,7 @@ describe('SiStatusBarItemComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [SiIconModule, SiTranslateModule, SiStatusBarItemComponent, TestHostComponent]
+      imports: [SiIconModule, SiStatusBarItemComponent, TestHostComponent]
     }).compileComponents()
   );
 

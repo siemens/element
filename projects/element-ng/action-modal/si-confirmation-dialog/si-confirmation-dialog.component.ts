@@ -7,14 +7,14 @@ import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core
 import { SiIconNextComponent } from '@siemens/element-ng/icon';
 import { SiLoadingButtonComponent } from '@siemens/element-ng/loading-spinner';
 import { ModalRef } from '@siemens/element-ng/modal';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { take } from 'rxjs';
 
 import { ConfirmationDialogResult } from '../si-action-dialog.types';
 
 @Component({
   selector: 'si-confirmation-dialog',
-  imports: [AsyncPipe, SiIconNextComponent, SiTranslateModule, SiLoadingButtonComponent],
+  imports: [AsyncPipe, SiIconNextComponent, SiTranslatePipe, SiLoadingButtonComponent],
   templateUrl: './si-confirmation-dialog.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

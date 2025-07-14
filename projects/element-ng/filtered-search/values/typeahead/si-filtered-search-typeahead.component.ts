@@ -20,10 +20,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { SiTypeaheadDirective, TypeaheadMatch } from '@siemens/element-ng/typeahead';
-import {
-  injectSiTranslateService,
-  SiTranslateModule
-} from '@siemens/element-translate-ng/translate';
+import { injectSiTranslateService, SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
 import { debounceTime, first, map, tap } from 'rxjs/operators';
 
@@ -38,7 +35,7 @@ import { SiFilteredSearchValueBase } from '../si-filtered-search-value.base';
 
 @Component({
   selector: 'si-filtered-search-typeahead',
-  imports: [SiTypeaheadDirective, FormsModule, SiTranslateModule],
+  imports: [SiTypeaheadDirective, FormsModule, SiTranslatePipe],
   templateUrl: './si-filtered-search-typeahead.component.html',
   styleUrl: './si-filtered-search-typeahead.component.scss',
   providers: [

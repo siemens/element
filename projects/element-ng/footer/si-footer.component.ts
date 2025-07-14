@@ -4,11 +4,11 @@
  */
 import { Component, input } from '@angular/core';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-footer',
-  imports: [SiLinkDirective, SiTranslateModule],
+  imports: [SiLinkDirective, SiTranslatePipe],
   templateUrl: './si-footer.component.html',
   styleUrl: './si-footer.component.scss'
 })

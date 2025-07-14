@@ -27,13 +27,12 @@ import {
   ResizeObserverService
 } from '@siemens/element-ng/resize-observer';
 import { SiSplitComponent, SiSplitPartComponent } from '@siemens/element-ng/split';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 
 /** @experimental */
 @Component({
   selector: 'si-list-details',
-  imports: [NgTemplateOutlet, SiSplitComponent, SiSplitPartComponent, SiTranslateModule],
+  imports: [NgTemplateOutlet, SiSplitComponent, SiSplitPartComponent],
   templateUrl: './si-list-details.component.html',
   styleUrl: './si-list-details.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

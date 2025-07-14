@@ -24,7 +24,7 @@ import {
   SiSelectSimpleOptionsDirective,
   SiSelectSingleValueDirective
 } from '@siemens/element-ng/select';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiReadonlyThresholdOptionComponent } from './si-readonly-threshold-option.component';
 
@@ -51,7 +51,7 @@ export interface ThresholdStep {
     SiSelectComponent,
     SiSelectSingleValueDirective,
     SiSelectSimpleOptionsDirective,
-    SiTranslateModule,
+    SiTranslatePipe,
     SiReadonlyThresholdOptionComponent
   ],
   templateUrl: './si-threshold.component.html',

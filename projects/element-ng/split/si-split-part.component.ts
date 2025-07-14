@@ -19,13 +19,13 @@ import {
   TemplateRef
 } from '@angular/core';
 import { SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { Action, CollapseTo, PartState, Scale, SplitOrientation } from './si-split.interfaces';
 
 @Component({
   selector: 'si-split-part',
-  imports: [NgTemplateOutlet, SiIconNextComponent, SiTranslateModule],
+  imports: [NgTemplateOutlet, SiIconNextComponent, SiTranslatePipe],
   templateUrl: './si-split-part.component.html',
   styleUrl: './si-split-part.component.scss',
   // Signals cannot be used directly with @HostBinding. See: https://github.com/angular/angular/issues/53888#issuecomment-1888935225

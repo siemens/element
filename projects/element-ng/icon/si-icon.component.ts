@@ -4,11 +4,11 @@
  */
 import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-icon',
-  imports: [NgClass, SiTranslateModule],
+  imports: [NgClass, SiTranslatePipe],
   templateUrl: './si-icon.component.html',
   styles: ':host, span { line-height: 1; }',
   changeDetection: ChangeDetectionStrategy.OnPush

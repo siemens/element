@@ -30,7 +30,7 @@ import {
   ValidationErrors,
   ValidatorFn
 } from '@angular/forms';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiFormFieldsetComponent } from '../form-fieldset/si-form-fieldset.component';
 import { SiFormContainerComponent } from '../si-form-container/si-form-container.component';
@@ -48,7 +48,7 @@ export interface SiFormError {
 
 @Component({
   selector: 'si-form-item',
-  imports: [SiTranslateModule, NgTemplateOutlet],
+  imports: [SiTranslatePipe, NgTemplateOutlet],
   templateUrl: './si-form-item.component.html',
   styleUrl: '../si-form.shared.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

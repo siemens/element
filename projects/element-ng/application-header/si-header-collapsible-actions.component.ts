@@ -15,7 +15,7 @@ import {
 } from '@angular/core';
 import { SI_HEADER_DROPDOWN_OPTIONS } from '@siemens/element-ng/header-dropdown';
 import { addIcons, elementOptionsVertical, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { Subscription } from 'rxjs';
 import { skip, takeUntil } from 'rxjs/operators';
 
@@ -24,7 +24,7 @@ import { SiApplicationHeaderComponent } from './si-application-header.component'
 /** Container for actions that should be collapsed in mobile mode. */
 @Component({
   selector: 'si-header-collapsible-actions',
-  imports: [SiTranslateModule, A11yModule, SiIconNextComponent],
+  imports: [SiTranslatePipe, A11yModule, SiIconNextComponent],
   templateUrl: './si-header-collapsible-actions.component.html',
   styles: '.badge-dot::after { inset-inline-end: 4px; }',
   changeDetection: ChangeDetectionStrategy.OnPush,

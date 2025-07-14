@@ -19,8 +19,8 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { areAnimationsDisabled, BackgroundColorVariant } from '@siemens/element-ng/common';
-import { addIcons, SiIconNextComponent, elementDown2 } from '@siemens/element-ng/icon';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { addIcons, elementDown2, SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { filter } from 'rxjs';
 
 import { SiAccordionHCollapseService } from './si-accordion-hcollapse.service';
@@ -30,7 +30,7 @@ let controlIdCounter = 1;
 
 @Component({
   selector: 'si-collapsible-panel',
-  imports: [NgClass, SiIconNextComponent, SiTranslateModule],
+  imports: [NgClass, SiIconNextComponent, SiTranslatePipe],
   templateUrl: './si-collapsible-panel.component.html',
   styleUrl: './si-collapsible-panel.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

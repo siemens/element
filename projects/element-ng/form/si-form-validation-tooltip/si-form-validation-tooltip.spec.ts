@@ -6,18 +6,13 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 import { SiFormValidationTooltipHarness } from '../testing/si-form-validation-tooltip.harness';
 import { SiFormValidationTooltipDirective } from './si-form-validation-tooltip.directive';
 
 describe('SiFormValidationTooltipDirective', () => {
   @Component({
-    // We need the SiTranslateModule here,
-    // as the directive depends on the validation error resolver service which itself may calls $localize.
-    // TODO: this is a potential bug, yet it won't have any impact.
-    // Fix requires refactoring of the translation layer.
-    imports: [SiFormValidationTooltipDirective, ReactiveFormsModule, SiTranslateModule],
+    imports: [SiFormValidationTooltipDirective, ReactiveFormsModule],
     template: `<input siFormValidationTooltip required [formControl]="control" />`
   })
   class TestHostComponent {

@@ -4,7 +4,6 @@
  */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ModalRef } from '@siemens/element-ng/modal';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 import { SiDeleteConfirmationDialogComponent } from './si-delete-confirmation-dialog.component';
 
@@ -16,7 +15,7 @@ describe('SiDeleteConfirmationDialogComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SiTranslateModule, SiDeleteConfirmationDialogComponent],
+      imports: [SiDeleteConfirmationDialogComponent],
       providers: [ModalRef]
     });
     modalRef = TestBed.inject(ModalRef);

@@ -6,11 +6,11 @@ import { NgClass } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
 import { SiIconNextComponent } from '@siemens/element-ng/icon';
 import { SelectOption, SelectOptionLegacy } from '@siemens/element-ng/select';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-readonly-threshold-option',
-  imports: [NgClass, SiTranslateModule, SiIconNextComponent],
+  imports: [NgClass, SiTranslatePipe, SiIconNextComponent],
   template: `@let opt = option();
     @if (opt && opt.icon) {
       <i class="icon-stack">
