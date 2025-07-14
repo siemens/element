@@ -124,8 +124,8 @@ jobs:
           retention-days: 1
 
   e2e-merge-reports:
-    # Merge reports after playwright-tests, even if some shards have failed
-    if: ${{ !cancelled() }}
+    # Merge reports after playwright-tests, only if some shards have failed
+    if: ${{ !cancelled() && !success() }}
     container: mcr.microsoft.com/playwright:v1.54.1-noble
     needs: [e2e]
     runs-on: ubuntu-latest
