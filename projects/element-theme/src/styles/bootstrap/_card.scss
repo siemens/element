@@ -74,6 +74,34 @@
   &.accent-critical {
     border-inline-start: map.get(spacers.$spacers, 4) solid semantic-tokens.$element-status-critical;
   }
+
+  &.selectable {
+    cursor: pointer;
+
+    &:hover {
+      &,
+      .card-header,
+      .card-footer {
+        background-color: semantic-tokens.$element-base-1-hover;
+      }
+    }
+
+    &:active {
+      &,
+      .card-header,
+      .card-footer {
+        background-color: semantic-tokens.$element-base-1-selected;
+      }
+    }
+  }
+
+  &.selected {
+    box-shadow: 0 0 0 1px semantic-tokens.$element-ui-0;
+  }
+
+  &:focus-visible {
+    outline-offset: 2px;
+  }
 }
 
 .card-header {
