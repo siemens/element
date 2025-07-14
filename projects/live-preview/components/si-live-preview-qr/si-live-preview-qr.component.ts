@@ -16,8 +16,6 @@ import qrcode from 'qrcode-generator';
 
 @Component({
   selector: 'si-live-preview-qr',
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false,
   templateUrl: './si-live-preview-qr.component.html',
   styleUrl: './si-live-preview-qr.component.scss'
 })

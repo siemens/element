@@ -58,8 +58,6 @@ const getCircularReplacer = (): ((_key: any, value: any | null) => any) => {
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'app-sample',
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false,
   template: '',
   jit: true
 })
@@ -67,8 +65,6 @@ export class DummyAppSampleComponent {}
 
 @Component({
   selector: 'si-live-preview-renderer',
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false,
   template: '<div #renderedExample></div><div #react id="app"></div>'
 })
 export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {

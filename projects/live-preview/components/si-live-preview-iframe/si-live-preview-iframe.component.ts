@@ -18,18 +18,19 @@ import {
   viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormsModule } from '@angular/forms';
 import { fromEvent } from 'rxjs';
 
 import {
   SI_LIVE_PREVIEW_CONFIG,
   SI_LIVE_PREVIEW_INTERNALS
 } from '../../interfaces/live-preview-config';
+import { SiLivePreviewQrComponent } from '../si-live-preview-qr/si-live-preview-qr.component';
 import { availableDevices, Device } from './devices';
 
 @Component({
   selector: 'si-live-preview-iframe',
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false,
+  imports: [FormsModule, SiLivePreviewQrComponent],
   templateUrl: './si-live-preview-iframe.component.html',
   styleUrl: './si-live-preview-iframe.component.scss'
 })

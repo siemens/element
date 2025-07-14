@@ -16,11 +16,11 @@ import {
   ThemeType
 } from '../../interfaces/si-live-preview.api';
 import { SiLivePreviewRendererComponent } from '../si-live-preview-renderer/si-live-preview-renderer.component';
+import { SiLivePreviewComponent } from '../si-live-preview/si-live-preview.component';
 
 @Component({
   selector: 'si-example-viewer',
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false,
+  imports: [SiLivePreviewComponent, SiLivePreviewRendererComponent],
   templateUrl: './si-example-viewer.component.html',
   styleUrl: './si-example-viewer.component.scss'
 })

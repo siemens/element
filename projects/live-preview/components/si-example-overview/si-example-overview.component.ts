@@ -2,10 +2,11 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { AsyncPipe } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 
@@ -13,6 +14,7 @@ import {
   SI_LIVE_PREVIEW_CONFIG,
   SI_LIVE_PREVIEW_INTERNALS
 } from '../../interfaces/live-preview-config';
+import { SiLivePreviewComponent } from '../si-live-preview/si-live-preview.component';
 
 interface TreeItem {
   label: string;
@@ -22,8 +24,7 @@ interface TreeItem {
 
 @Component({
   selector: 'si-example-overview',
-  // eslint-disable-next-line  @angular-eslint/prefer-standalone
-  standalone: false,
+  imports: [AsyncPipe, ReactiveFormsModule, RouterLink, RouterLinkActive, SiLivePreviewComponent],
   templateUrl: './si-example-overview.component.html',
   styleUrl: './si-example-overview.component.scss'
 })

@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { KeyValuePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import {
   AfterViewInit,
@@ -18,21 +19,23 @@ import {
   viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormsModule } from '@angular/forms';
 import CodeFlask from 'codeflask';
 import { Subject } from 'rxjs';
 import { retry, throttleTime, timeout } from 'rxjs/operators';
-import 'prismjs/components/prism-typescript';
 
 import {
   SI_LIVE_PREVIEW_CONFIG,
   SI_LIVE_PREVIEW_INTERNALS
 } from '../../interfaces/live-preview-config';
+import 'prismjs/components/prism-typescript';
+
 import { SiLivePreviewLocaleApi } from '../../interfaces/si-live-preview.api';
+import { SiLivePreviewIframeComponent } from '../si-live-preview-iframe/si-live-preview-iframe.component';
 
 @Component({
   selector: 'si-live-preview',
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false,
+  imports: [KeyValuePipe, FormsModule, SiLivePreviewIframeComponent],
   templateUrl: './si-live-preview.component.html',
   styleUrls: ['./si-live-preview.component.scss', './si-live-preview-codeflask.scss']
 })

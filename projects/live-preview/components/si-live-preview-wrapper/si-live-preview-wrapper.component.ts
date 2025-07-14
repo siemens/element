@@ -31,8 +31,7 @@ const filterTargets = ['_self', '_top', '_parent', ''];
 
 @Component({
   selector: 'si-live-preview-wrapper',
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false,
+  imports: [SiLivePreviewRendererComponent],
   templateUrl: './si-live-preview-wrapper.component.html',
   styles: 'si-live-preview-renderer { flex: 1;}'
 })

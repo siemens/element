@@ -18,8 +18,6 @@ import { SiLivePreviewConfig } from '../../../interfaces/live-preview-config';
 
 @Component({
   selector: 'si-live-preview-webcomponent',
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false,
   template: '<div #root id="app"></div>'
 })
 export class SiLivePreviewWebComponent implements OnChanges {

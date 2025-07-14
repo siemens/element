@@ -7,8 +7,6 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'si-dummy',
-  // eslint-disable-next-line @angular-eslint/prefer-standalone
-  standalone: false,
   template: `<div class="ion-padding"> Content with path '{{ path }}'</div>`
 })
 export class SiDummyComponent {
