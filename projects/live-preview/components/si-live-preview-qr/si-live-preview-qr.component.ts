@@ -5,11 +5,10 @@
 import {
   AfterViewInit,
   Component,
-  EventEmitter,
   Input,
   OnChanges,
   OnDestroy,
-  Output,
+  output,
   SimpleChanges
 } from '@angular/core';
 import qrcode from 'qrcode-generator';
@@ -22,7 +21,7 @@ import qrcode from 'qrcode-generator';
 export class SiLivePreviewQrComponent implements AfterViewInit, OnDestroy, OnChanges {
   @Input() url?: string;
   @Input() urlShort?: string;
-  @Output() readonly closed = new EventEmitter<void>();
+  readonly closed = output<void>();
 
   qrImg = '';
   qrShort = false;

@@ -12,10 +12,9 @@ import {
   Injectable,
   Injector,
   OnDestroy,
+  OutputRefSubscription,
   reflectComponentType
 } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 import { SiLivePreviewWebComponent } from './si-live-preview-web.component';
 import { SiLivePreviewWebComponentService } from './si-live-webcomponent.service';
@@ -30,7 +29,7 @@ export class SiWebComponentRenderService
   private appRef = inject(ApplicationRef);
   private injector = inject(Injector);
   private environmentInjector = inject(EnvironmentInjector);
-  private destroyer = new Subject<void>();
+  private outputSubscription: OutputRefSubscription | null = null;
 
   injectComponent(element: ElementRef, inputs: any, outputs: any): void {
     this.destroyComponent();
@@ -42,7 +41,8 @@ export class SiWebComponentRenderService
     this.componentMirror?.inputs.forEach(value => {
       this.componentRef.setInput(value.propName, inputs[value.propName]);
     });
-    this.componentRef.instance.inProgress.pipe(takeUntil(this.destroyer)).subscribe(event => {
+
+    this.outputSubscription = this.componentRef.instance.inProgress.subscribe(event => {
       outputs.inProgress('progress', event);
     });
 
@@ -55,7 +55,7 @@ export class SiWebComponentRenderService
   }
 
   ngOnDestroy(): void {
-    this.destroyer.next();
-    this.destroyer.complete();
+    this.outputSubscription?.unsubscribe();
+    this.outputSubscription = null;
   }
 }

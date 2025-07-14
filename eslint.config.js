@@ -46,7 +46,6 @@ export const tsConfig = typescriptEslint.config({
       'error',
       { preferInputSignals: false, preferQuerySignals: false }
     ],
-    '@angular-eslint/prefer-output-emitter-ref': ['off'],
     '@angular-eslint/no-experimental': ['off'],
     '@angular-eslint/no-developer-preview': ['off'],
     'no-console': [

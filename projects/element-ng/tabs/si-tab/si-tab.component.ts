@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+/* eslint-disable @angular-eslint/prefer-output-emitter-ref */
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
