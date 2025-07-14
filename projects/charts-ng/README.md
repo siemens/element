@@ -42,6 +42,9 @@ You can set a seed for running the tests in a specific using an environment vari
 
 ## License
 
-Code and documentation copyright 2018-2024 Siemens AG.
+The following applies for code and documentation of the git repository,
+unless explicitly mentioned.
 
-See [LICENSE.md](https://github.com/siemens/element/blob/main/LICENSE.md).
+Copyright (c) Siemens 2016 - 2025
+
+MIT, see [LICENSE.md](LICENSE.md).

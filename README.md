@@ -27,7 +27,10 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
-Code and documentation Copyright (c) Siemens 2016 - 2025.
+The following applies for code and documentation of the git repository,
+unless explicitly mentioned.
+
+Copyright (c) Siemens 2016 - 2025
 
 MIT, see [LICENSE.md](LICENSE.md).
 

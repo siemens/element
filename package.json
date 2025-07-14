@@ -44,7 +44,7 @@
     "translate:build": "ng build element-translate-ng && cpy LICENSE.md \"./dist/@siemens/element-translate-ng/\"",
     "docs:build": "uv run mkdocs build --strict",
     "docs:serve": "uv run mkdocs serve",
-    "live-preview:build": "ng build live-preview",
+    "live-preview:build": "ng build live-preview && cpy LICENSE.md \"./dist/@siemens/live-preview/\"",
     "prepare": "husky; exit 0",
     "prepare-brand": "cpy --flat node_modules/@simpl/brand/src/favicon/sie-favicon_internet_64px.png docs/_src --rename=favicon.png && cpy --flat node_modules/@simpl/brand/src/favicon/sie-favicon_internet_64px.png src --rename=favicon.png",
     "postversion": "node ./postversion.js && npm run format",
