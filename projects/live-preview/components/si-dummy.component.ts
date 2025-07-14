@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -11,8 +11,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SiDummyComponent {
   path = '';
+  activeRoute = inject(ActivatedRoute);
 
-  constructor(activeRoute: ActivatedRoute) {
-    activeRoute.url.subscribe(url => (this.path = url.toString()));
+  constructor() {
+    this.activeRoute.url.subscribe(url => (this.path = url.toString()));
   }
 }

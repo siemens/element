@@ -23,6 +23,7 @@ export class SiTranslateNgxTService extends SiTranslateService {
   private defaultTranslations: Record<string, string> = {};
   private originalMissingHandler: MissingTranslationHandler;
 
+  // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(ngxTranslateService: TranslateService) {
     super();
     this.ngxTranslateService = ngxTranslateService;

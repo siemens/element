@@ -52,6 +52,7 @@ export class SiFormValidationErrorService {
     skipSelf: true
   });
 
+  // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(private errorMapper: SiFormValidationErrorMapper) {}
 
   /**
