@@ -1,0 +1,18 @@
+- text: "Model: \"al\""
+- combobox "States" [expanded]:
+  - textbox "Placeholder"
+  - button "clear"
+- text: Settings Color Variant
+- combobox "Color Variant":
+  - option "base-1" [selected]
+  - option "base-0"
+- checkbox "Disable"
+- text: Disable
+- checkbox "Show Icon"
+- text: Show Icon
+- checkbox "Disable free text search"
+- text: Disable free text search
+- listbox "Suggestions":
+  - option "Alabama": Al abama
+  - option "Alaska": Al aska
+  - option "California": C al ifornia

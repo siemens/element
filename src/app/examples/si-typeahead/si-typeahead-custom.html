@@ -1,0 +1,28 @@
+<app-filter-settings [(variant)]="variant" [(disabled)]="disable" [(showIcon)]="showIcon">
+  <ng-template #newItemTemplate let-match="match" siTypeaheadTemplate>
+    <span class="text-info me-2">sweet home</span>
+    @for (segment of match.result; track $index) {
+      <span [class.typeahead-match-segment-matching]="segment.isMatching">{{ segment.text }}</span>
+    }
+  </ng-template>
+
+  @if (!selectedOption) {
+    <p class="mt-11">Home sweet home</p>
+  }
+  @if (selectedOption) {
+    <p class="mt-11">Sweet home {{ selectedOption }}</p>
+  }
+  <si-search-bar
+    typeaheadMatchAllTokens="once"
+    typeaheadFullWidth
+    aria-label="States"
+    placeholder="Placeholder"
+    [siTypeahead]="states"
+    [colorVariant]="variant"
+    [disabled]="disable"
+    [showIcon]="showIcon"
+    [typeaheadItemTemplate]="newItemTemplate"
+    [(ngModel)]="selected"
+    (typeaheadOnSelect)="onOptionSelected($event)"
+  />
+</app-filter-settings>

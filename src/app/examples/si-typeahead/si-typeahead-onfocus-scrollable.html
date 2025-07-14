@@ -1,0 +1,18 @@
+<app-filter-settings [(variant)]="variant" [(disabled)]="disable" [(showIcon)]="showIcon">
+  <pre class="code-preview">Model: {{ selected | json }}</pre>
+  <si-search-bar
+    aria-label="States"
+    [siTypeahead]="states"
+    [typeaheadSkipSortingMatches]="false"
+    [typeaheadTokenize]="false"
+    [colorVariant]="variant"
+    [disabled]="disable"
+    [showIcon]="showIcon"
+    [typeaheadMinLength]="0"
+    [typeaheadWaitMs]="500"
+    [typeaheadScrollable]="true"
+    [typeaheadOptionsInScrollableView]="4"
+    [typeaheadScrollableAdditionalHeight]="12"
+    [(ngModel)]="selected"
+  />
+</app-filter-settings>
