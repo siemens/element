@@ -90,6 +90,7 @@ nav:
       - Filtered Search:                  'components/sorting-filtering/filtered-search.md'
     - Status & notifications:
       - Avatar:                           'components/status-notifications/avatar.md'
+      - Badges:                           'components/status-notifications/badges.md'
       - Circle Status:                    'components/status-notifications/circle-status.md'
       - Connection Strength:              'components/status-notifications/connection-strength.md'
       - Copyright Notice:                 'components/status-notifications/copyright-notice.md'
