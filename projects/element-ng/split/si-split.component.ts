@@ -10,18 +10,19 @@ import {
   Component,
   computed,
   ContentChildren,
+  DestroyRef,
   ElementRef,
-  EventEmitter,
   inject,
   Input,
   NgZone,
   OnChanges,
-  Output,
+  output,
   QueryList,
   signal,
   Signal,
   SimpleChanges
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   isRTL,
   SI_UI_STATE_SERVICE,
@@ -82,7 +83,7 @@ export class SiSplitComponent implements AfterContentInit, OnChanges {
    */
   @Input() stateId?: string;
 
-  @Output() readonly sizesChange = new EventEmitter<number[]>();
+  readonly sizesChange = output<number[]>();
 
   @WebComponentContentChildren(SiSplitPartComponent)
   @ContentChildren(SiSplitPartComponent)
@@ -104,6 +105,7 @@ export class SiSplitComponent implements AfterContentInit, OnChanges {
   // New parts won't be measured, so we need this to scale up their fractional size to the expanded size.
   // Using 10, as the sum of all fractional sizes is 1, so we need to scale them up as fr-values should be >= 1.
   private fractionalSizeToExpandedSizeFactor = 10;
+  private destroyRef = inject(DestroyRef);
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.sizes && !changes.sizes.firstChange) {
@@ -265,6 +267,7 @@ export class SiSplitComponent implements AfterContentInit, OnChanges {
             merge(fromEvent(this.document, 'mouseup'), fromEvent(this.document, 'touchend'))
           )
         )
+        .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: move => {
             let delta = this.getPosition(move) - startPosition;
