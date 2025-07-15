@@ -1,6 +1,6 @@
 # Threshold
 
-The **Threshold** component compares an input signal to specific threshold
+The **threshold** component compares an input signal to specific threshold
 values and produces an output based on whether the input signal is above or
 below the threshold.
 
@@ -29,24 +29,24 @@ in terms of:
 
 ### Elements
 
-![Threshold Elements](images/threshold-usage-specification.png)
+![Threshold elements](images/threshold-usage-specification.png)
 
 1. **Threshold value:** Allows users to input a numeric value. The unit
    (optional) is configurable to a specific to need and has to be the same for
-   all threshold values. See the [*Number Input*](../forms-inputs/number-input.md)
+   all threshold values. See the [*number input*](../forms-inputs/number-input.md)
    component to for its interaction states.
 2. **Connector:** Visually links the different steps together. It can assume
    different colors according to the selected condition.
-3. **Condition:** Allows users to select a condition. See the [*Select*](../forms-inputs/select.md)
+3. **Condition:** Allows users to select a condition. It can have an icon or a composite icon. See the [*select*](../forms-inputs/select.md)
    component for further details.
 
-### Number of Thresholds
+### Number of thresholds
 
 The number of thresholds is defined by the use-case but limited by the available
 space based on viewport and orientation. There should be at least a single
 threshold and ideally not more than 6.
 
-![Number of Thresholds](images/threshold-usage-number.png)
+![Number of thresholds](images/threshold-usage-number.png)
 
 ### Layout
 
@@ -65,7 +65,9 @@ modes:
 - **Configurable:** In addition to the static mode, the user can also add and
   remove thresholds.
 
-![Threshold Modes](images/threshold-usage-configuration.png)
+![Threshold modes](images/threshold-usage-configuration.png)
+
+> 1. Add, 2. Delete
 
 ### Validation
 
@@ -73,7 +75,7 @@ Threshold values have to be in an ascending and logical order. If the threshold
 values are not entered in a ascending order by the user, then he will get a
 feedback.
 
-![Threshold Validation](images/threshold-usage-validation.png)
+![Threshold validation](images/threshold-usage-validation.png)
 
 ## Code ---
 
