@@ -27,16 +27,6 @@
   [attr.aria-labelledby]="baseId() + '-aria-label' + ' ' + labelledby()"
   (siAutocompleteOptionSubmitted)="select($event)"
 >
-  @if (!rows().length) {
-    <div
-      role="option"
-      aria-disabled="true"
-      aria-selected="false"
-      class="dropdown-item disabled text-secondary justify-content-center mb-2"
-    >
-      <span>{{ noResultsFoundLabel() | translate }}</span>
-    </div>
-  }
   @for (item of rows(); track item; let index = $index) {
     @if (item.type === 'group') {
       <div
@@ -65,6 +55,15 @@
         [ngTemplateOutletContext]="{ $implicit: item }"
       />
     }
+  } @empty {
+    <div
+      role="option"
+      aria-disabled="true"
+      aria-selected="false"
+      class="dropdown-item disabled text-secondary justify-content-center mb-2"
+    >
+      <span>{{ noResultsFoundLabel() | translate }}</span>
+    </div>
   }
 
   <ng-template #optionRowTemplate let-option siSelectOptionRowTemplate>

@@ -1,7 +1,4 @@
 <div class="responsive py-2" siAutoCollapsableList>
-  @if (!this.filters().length) {
-    <span class="list-text">{{ filterDefaultText() | translate }}</span>
-  }
   @for (filter of filters(); track $index) {
     <div class="pill-wrapper" siAutoCollapsableListItem>
       <si-filter-pill
@@ -12,6 +9,8 @@
         (deleteFilters)="deleteFilters($event)"
       />
     </div>
+  } @empty {
+    <span class="list-text">{{ filterDefaultText() | translate }}</span>
   }
   <si-filter-pill
     #overflowItem="siAutoCollapsableListOverflowItem"
