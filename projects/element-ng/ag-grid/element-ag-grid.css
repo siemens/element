@@ -1,0 +1,9 @@
+ag-grid-angular {
+  /* stylelint-disable-next-line color-named */
+  --ag-background-color: red;
+  --ag-header-background-color: transparent;
+  --ag-text-color: var(--element-text-primary);
+  --ag-row-hover-color: var(--element-base-1-hover);
+  --ag-selected-row-background-color: var(--element-base-1-selected);
+  --ag-header-height: 40px;
+}
