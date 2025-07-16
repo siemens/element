@@ -1,0 +1,33 @@
+<div class="p-5 clearfix si-layout-fixed-height h-100">
+  <ngx-datatable
+    #table
+    class="table-element elevation-1 si-layout-fixed-height"
+    columnMode="force"
+    siDatatableInteraction
+    groupRowsBy="system"
+    selectionType="multiClick"
+    [rows]="rows"
+    [columns]="columns"
+    [scrollbarV]="true"
+    [virtualization]="false"
+    [groupExpansionDefault]="true"
+    (siResizeObserver)="table.recalculate()"
+  >
+    <ngx-datatable-group-header [rowHeight]="50" [checkboxable]="true">
+      <ng-template let-group="group" let-expanded="expanded" ngx-datatable-group-header-template>
+        <div style="height: 48px" class="d-flex align-items-center ps-6">
+          <button
+            type="button"
+            class="btn btn-circle btn-sm btn-tertiary me-5"
+            [attr.aria-label]="expanded ? 'Collapse group' : 'Expand group'"
+            [class.element-down-2]="!expanded"
+            [class.element-up-2]="expanded"
+            (click)="toggleExpandGroup(group)"
+          >
+          </button>
+          <b>{{ group.value[0].system }}</b>
+        </div>
+      </ng-template>
+    </ngx-datatable-group-header>
+  </ngx-datatable>
+</div>

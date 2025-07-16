@@ -57,7 +57,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
     .checkbox-selection
   ) {
     .datatable-row-wrapper {
-      &:hover {
+      .datatable-body-row:hover {
         background-color: variables.$table-hover-bg;
       }
     }
@@ -232,7 +232,8 @@ $datatable-ghost-cell-strip-radius: 0 !default;
       inline-size: 100%;
     }
 
-    .datatable-body-row {
+    .datatable-body-row,
+    .datatable-group-header {
       border-block-end: 1px solid $datatable-header-border-color;
       inline-size: 100% !important; // stylelint-disable-line declaration-no-important
       min-inline-size: fit-content;
@@ -243,7 +244,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
         inline-size: 100%;
       }
 
-      &:hover:not(.active) {
+      &.datatable-body-row:hover:not(.active) {
         background-color: variables.$table-hover-bg;
 
         :is(.datatable-row-left, .datatable-row-right) {
@@ -253,6 +254,14 @@ $datatable-ghost-cell-strip-radius: 0 !default;
 
       :is(.datatable-row-left, .datatable-row-right) {
         background-color: variables.$table-bg;
+      }
+    }
+
+    .datatable-group-header {
+      .datatable-group-cell {
+        display: flex;
+        align-items: center;
+        padding-inline-start: map.get(spacers.$spacers, 6);
       }
     }
 

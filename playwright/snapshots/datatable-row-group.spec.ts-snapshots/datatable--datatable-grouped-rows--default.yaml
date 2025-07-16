@@ -1,0 +1,107 @@
+- table:
+  - rowgroup:
+    - row "Select all rows Component Location Status Energy Consumption (kWh)":
+      - columnheader "Select all rows":
+        - checkbox "Select all rows"
+      - columnheader "Component"
+      - columnheader "Location"
+      - columnheader "Status"
+      - columnheader "Energy Consumption (kWh)"
+  - rowgroup:
+    - checkbox "Select row group"
+    - button "Collapse group"
+    - text: HVAC
+    - row /Select row Air Conditioner Floor 1 Operational \d+/:
+      - cell
+      - cell "Select row Air Conditioner":
+        - checkbox "Select row"
+      - cell "Floor 1"
+      - cell "Operational"
+      - cell /\d+/
+    - row /Select row Heater Floor 2 Operational \d+/:
+      - cell
+      - cell "Select row Heater":
+        - checkbox "Select row"
+      - cell "Floor 2"
+      - cell "Operational"
+      - cell /\d+/
+    - row /Select row Ventilation Fan Roof Maintenance Required \d+/:
+      - cell
+      - cell "Select row Ventilation Fan":
+        - checkbox "Select row"
+      - cell "Roof"
+      - cell "Maintenance Required"
+      - cell /\d+/
+    - checkbox "Select row group"
+    - button "Collapse group"
+    - text: Lighting
+    - row /Select row LED Panel Conference Room Operational \d+/:
+      - cell
+      - cell "Select row LED Panel":
+        - checkbox "Select row"
+      - cell "Conference Room"
+      - cell "Operational"
+      - cell /\d+/
+    - row /Select row Smart Bulb Office A Operational \d+/:
+      - cell
+      - cell "Select row Smart Bulb":
+        - checkbox "Select row"
+      - cell "Office A"
+      - cell "Operational"
+      - cell /\d+/
+    - row "Select row Emergency Light Corridor Operational 5":
+      - cell
+      - cell "Select row Emergency Light":
+        - checkbox "Select row"
+      - cell "Corridor"
+      - cell "Operational"
+      - cell "5"
+    - checkbox "Select row group"
+    - button "Collapse group"
+    - text: Security
+    - row /Select row CCTV Camera Main Entrance Operational \d+/:
+      - cell
+      - cell "Select row CCTV Camera":
+        - checkbox "Select row"
+      - cell "Main Entrance"
+      - cell "Operational"
+      - cell /\d+/
+    - row /Select row Access Control Server Room Operational \d+/:
+      - cell
+      - cell "Select row Access Control":
+        - checkbox "Select row"
+      - cell "Server Room"
+      - cell "Operational"
+      - cell /\d+/
+    - row /Select row Motion Sensor Parking Lot Operational \d+/:
+      - cell
+      - cell "Select row Motion Sensor":
+        - checkbox "Select row"
+      - cell "Parking Lot"
+      - cell "Operational"
+      - cell /\d+/
+    - checkbox "Select row group"
+    - button "Collapse group"
+    - text: Energy Management
+    - row "Select row Smart Meter Utility Room Operational 5":
+      - cell
+      - cell "Select row Smart Meter":
+        - checkbox "Select row"
+      - cell "Utility Room"
+      - cell "Operational"
+      - cell "5"
+    - row /Select row Solar Panel Rooftop Operational -\d+/:
+      - cell
+      - cell "Select row Solar Panel":
+        - checkbox "Select row"
+      - cell "Rooftop"
+      - cell "Operational"
+      - cell /-\d+/
+    - row /Select row Battery Storage Basement Operational \d+/:
+      - cell
+      - cell "Select row Battery Storage":
+        - checkbox "Select row"
+      - cell "Basement"
+      - cell "Operational"
+      - cell /\d+/
+- text: /0 selected \/ \d+ total/
