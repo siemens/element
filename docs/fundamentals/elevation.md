@@ -25,17 +25,17 @@ These are independent color tokens and are designed to work across all base laye
 
 ![Elevation usage example](images/elevation-usage-example.png)
 
-The system is intentionally mostly flat, and we aim to avoid excessive layering or "boxes within boxes," as this can reduce clarity and compromise usability.
+The system is intentionally mostly flat, and we aim to avoid excessive layering or "boxes within boxes", as this can reduce clarity.
 
 ![Elevation layers do's and don'ts](images/elevation-do-and-donts.png)
 
-However, in specific cases where additional differentiation is necessary, is possible to use other elements (?)
+However, in specific cases where additional differentiation is necessary:
 
-- Use an outline with `ui-4` to define boundaries between elements on the same layer, such as layout sections. It adds subtle structure without changing the background.
-- Use `base-4` when a stronger distinction is needed, especially to  highlight a container. It works on both base-0 and base-1.
+- Use an outline with `ui-4` to define boundaries between elements on the same layer,
+  such as layout sections or grouped content
+- Use `base-4` when a stronger distinction is needed, especially to  highlight a container.
 
-[image here]
-
+![Elevation exceptions example](images/elevation-exceptions.png)
 
 ### Shadows
 
