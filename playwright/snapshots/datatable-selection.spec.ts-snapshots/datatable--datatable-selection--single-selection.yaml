@@ -5,6 +5,10 @@
       - columnheader "Last name"
       - columnheader "Age"
   - rowgroup:
+    - row /\d+/:
+      - cell
+      - cell
+      - cell /\d+/
     - row /First 1 Last 1 \d+/:
       - cell "First 1"
       - cell "Last 1"
