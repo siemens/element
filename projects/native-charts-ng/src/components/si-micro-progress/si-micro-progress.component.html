@@ -1,0 +1,17 @@
+<div class="pb-1 pt-1" [style.width.px]="barWidth()">
+  <div class="text-secondar si-body-2"> {{ series()?.valuePercent ?? 0 }}% </div>
+
+  <div
+    class="bar-background w-100"
+    [style.height.px]="barHeight()"
+    [style.border-radius.px]="barHeight() / 2"
+  >
+    <div
+      class="bar-foreground h-100"
+      [style.width.%]="series()?.valuePercent ?? 0"
+      [style.backgroundColor]="'var(--' + series()?.colorToken + ')'"
+      [style.height.px]="barHeight()"
+      [style.border-radius.px]="barHeight() / 2"
+    ></div>
+  </div>
+</div>
