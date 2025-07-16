@@ -1,0 +1,90 @@
+<div class="p-6">
+  <si-dashboard-card heading="Max Xantos" actionBarViewType="expanded" [primaryActions]="actions">
+    <div class="card-body card-text" body>
+      <div class="d-inline-block text-center">
+        <si-photo-upload
+          #photoUpload
+          autoColor="true"
+          modalDescription="Choose the part of the image you want to use as your avatar."
+          placeholderAltText="MX"
+          photoAltText="Photo alt text"
+          acceptedUploadFormats=".png, .jpg, .jpeg"
+          uploadErrorWrongType="Not a valid image file. Please upload PNG or JP(E)G."
+          [sourcePhoto]="sourcePhoto()"
+          [sourcePhotoUrl]="sourcePhotoUrl()"
+          [croppedPhoto]="croppedPhoto()"
+          [readonly]="readonly"
+          [disabledCropping]="disabledCropping"
+          [roundImage]="roundedMask"
+          [maxFileSize]="2048"
+          [cropperMinWidth]="50"
+          [cropperMaxWidth]="0"
+          [cropperMinHeight]="50"
+          [cropperMaxHeight]="0"
+          (sourcePhotoChange)="sourcePhotoChanged($event)"
+          (croppedPhotoChange)="croppedPhotoChanged($event)"
+        />
+        <span>Max Xantos</span>
+      </div>
+    </div>
+  </si-dashboard-card>
+
+  <div class="card mt-6 e2e-ignore">
+    <div class="card-header">Control panel</div>
+    <div class="card-body">
+      <div class="mb-6">
+        <div class="form-check form-check-inline">
+          <label>
+            <input type="checkbox" class="form-check-input" [(ngModel)]="roundedMask" />
+            <span class="form-check-label">Rounded Mask</span>
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <label>
+            <input type="checkbox" class="form-check-input" [(ngModel)]="disabledCropping" />
+            <span class="form-check-label">Disable Cropping</span>
+          </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <label for="sourcePhotoUrl" class="form-label"
+            >Source photo URL (e.g. ./assets/images/beach.jpg)</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="sourcePhotoUrl"
+            [ngModel]="sourcePhotoUrl()"
+            (ngModelChange)="sourcePhotoUrlChanged($event)"
+          />
+          <label for="sourcePhoto" class="form-label">Source photo (base64 Data URL)</label>
+          <textarea
+            type="text"
+            class="form-control"
+            id="sourcePhoto"
+            [ngModel]="sourcePhoto()"
+            (ngModelChange)="sourcePhotoChanged($event)"
+          ></textarea>
+          <img
+            class="mt-4"
+            alt="Image within the photo-upload component"
+            style="width: 300px"
+            [src]="sourcePhoto()"
+          />
+        </div>
+        <div class="col-6">
+          <label for="croppedPhoto" class="form-label">Cropped photo</label>
+          <textarea
+            disabled
+            type="text"
+            class="form-control"
+            id="croppedPhoto"
+            [ngModel]="croppedPhoto()"
+          ></textarea>
+          <img class="mt-4" alt="Cropped image" style="width: 300px" [src]="croppedPhoto()" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
