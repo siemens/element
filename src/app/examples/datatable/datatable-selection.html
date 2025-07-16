@@ -23,6 +23,8 @@
             cellClass: 'text-align-right-cell'
           }
         ]"
+        [summaryRow]="selectionType === 'single'"
+        [summaryHeight]="tableConfig.summaryHeight"
         [rowHeight]="tableConfig.rowHeightSmall"
         [footerHeight]="0"
         [virtualization]="false"
