@@ -155,51 +155,7 @@ Enhancement suggestions are tracked as [GitHub issues](https://github.com/siemen
 
 ### Your First Code Contribution
 
-#### Step 1 - Set up the development environment
-
-You need to set up your development environment before you can do anything.
-
-Install [Node.js® and npm](https://nodejs.org/en/about/) if they are not already
-on your machine.
-
-This project is based on command line tools and does not rely or enforce any
-kind of development environment. However, we recommend
-[Visual Studio Code](https://code.visualstudio.com) which is a great free open
-source IDE.
-
-#### Step 2 - Set up the project and install dependencies
-
-To locally setup this projects, use following steps:
-
-```sh
-# Clone the repository
-git clone git@github.com:siemens/element.git
-
-# Change into project directory
-cd element
-
-# Install all dependencies
-npm install
-```
-
-#### Step 3 - Make your changes, build, and test
-
-Open the project in your editor of choice and make your changes.
-
-To build the outputs and run all the required tests, run the following commands:
-
-```sh
-npm run build
-npm run format:check
-npm run lint:commit
-npm run lint
-npm run test
-```
-
-When all commands succeeded and didn't produce any errors, you can add your
-changes to a new commit, push it to GitHub, and create a new pull request.
-
-Make sure to read and follow all the other chapters of this contributing guide.
+Read the [developer guide](https://github.com/siemens/element/blob/main/DEVELOPER.md) to get started with the development of Siemens Element.
 
 ## Styleguides
 
