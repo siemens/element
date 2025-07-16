@@ -32,7 +32,7 @@
       ]
     }
   },
-  "exclude": ["dist/**", "testing/**/*.ts"],
+  "exclude": ["dist/**"],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
