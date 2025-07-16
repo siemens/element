@@ -14,6 +14,8 @@ $datatable-header-background-color: transparent !default;
 $datatable-header-color: semantic-tokens.$element-text-primary !default;
 $datatable-footer-background-color: transparent !default;
 
+$datatable-summary-background-color: semantic-tokens.$element-base-4 !default;
+
 $datatable-header-height: 40px !default;
 $datatable-cell-min-width: 40px !default;
 $datatable-body-row-min-height: 48px !default;
@@ -244,6 +246,12 @@ $datatable-ghost-cell-strip-radius: 0 !default;
     .datatable-header-cell:focus-visible {
       @include focus.make-outline-focus();
     }
+  }
+
+  // Summary Styles
+  .datatable-summary-row .datatable-body-row {
+    background-color: $datatable-summary-background-color;
+    font-weight: typography.$si-font-weight-title-2;
   }
 
   // Body Styles
