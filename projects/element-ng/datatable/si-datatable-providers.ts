@@ -80,6 +80,7 @@ interface SiDatatableConfig extends NgxDatatableConfig {
   rowHeightSmall: number;
   rowHeightExtraSmall: number;
   rowHeightTiny: number;
+  summaryHeight: number;
 }
 
 export const SI_DATATABLE_CONFIG: SiDatatableConfig = {
@@ -100,7 +101,8 @@ export const SI_DATATABLE_CONFIG: SiDatatableConfig = {
   rowHeight: 64,
   rowHeightSmall: 48,
   rowHeightExtraSmall: 32,
-  rowHeightTiny: 24
+  rowHeightTiny: 24,
+  summaryHeight: 32
 };
 
 /**
