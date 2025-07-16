@@ -6,6 +6,7 @@ import { test } from '../../support/test-helpers';
 
 test('badges/badges', ({ si }) => si.static());
 test('buttons/buttons', ({ si }) => si.static());
+test('colors/color-utils', ({ si }) => si.static());
 test('buttons/segmented-button', ({ si }) => si.static());
 test('custom-form-elements/checkbox', ({ si }) => si.static());
 test('custom-form-elements/radio', ({ si }) => si.static());
