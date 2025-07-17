@@ -315,9 +315,10 @@ describe('SiSelectComponent', () => {
       it('should navigate list with keys', async () => {
         expect(await selectHarness.getSelectedTexts()).toEqual(['a']);
         await selectHarness.open();
-        await selectHarness
-          .getList()
-          .then(list => list!.sendKeys('b', TestKey.DOWN_ARROW, TestKey.ENTER));
+        await selectHarness.getList().then(async list => {
+          await list!.sendKeys('b');
+          await list!.sendKeys(TestKey.DOWN_ARROW, TestKey.ENTER);
+        });
         expect(await selectHarness.getSelectedTexts()).toEqual(['b']);
         expect(hostComponent.value).toBe('b');
       });
@@ -334,11 +335,11 @@ describe('SiSelectComponent', () => {
         expect(hostComponent.value).toBe('ab');
       });
 
-      it('should focus first selected element', async () => {
+      it('should not focus first selected element', async () => {
         hostComponent.value = 'c';
         await selectHarness.open();
         const item = await selectHarness.getList().then(list => list!.getItemByText('c'));
-        expect(await item.isActive()).toBeTrue();
+        expect(await item.isActive()).toBeFalse();
       });
     });
   });
