@@ -1,4 +1,4 @@
-# UI Colors
+# UI colors
 
 <!-- markdownlint-disable MD013 MD046 -->
 
@@ -159,7 +159,7 @@ recommended to use semantic colors whenever possible to reduce the impact on
 an application if the color system is getting updated. Use design system colors
 if a design specification specifically demands it.
 
-### Contextual Colors
+### Contextual colors
 
 The contextual colors represent the primary colors of each specific use-case and
 are defined by Bootstrap. They can be consumed directly using Bootstraps color

@@ -9,12 +9,12 @@ conditions.
 
 ## Usage ---
 
-![Threshold](images/threshold.png)
-
 A threshold editor component is typically used in situations where a user needs
 to set a specific threshold value or range for a particular parameter or setting.
 This can be useful in a variety of contexts, such as setting comfort-levels, air
 quality-levels and more.
+
+![Threshold](images/threshold.png)
 
 The component is highly flexible and can be customized to specific project needs
 in terms of:

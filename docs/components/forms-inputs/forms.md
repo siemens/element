@@ -11,7 +11,7 @@ information.
 
 ![Form](images/form.png)
 
-### Best Practices for Forms
+### Best practices
 
 - Keep it short. Remove fields that collect redundant, untimely, or unnecessary
   information.
@@ -199,7 +199,7 @@ This is often required for radio inputs, but works for every other type as well.
 </si-form-fieldset>
 ```
 
-### Custom Controls
+### Custom controls
 
 `si-form-item` provides an API for being linked to custom controls implemented by an application.
 Custom controls must implement the `SiFormItemControl` interface and provide themselves as `SI_FORM_ITEM_CONTROL`:

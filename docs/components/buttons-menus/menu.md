@@ -11,27 +11,16 @@ They are one of the most effective and highly used command surfaces, and can be 
 
 - If users need to perform several actions on a content
 - If the actions are not used on a daily basis
-
-### When a menu might not help
-
-- If there is one action only use [button](buttons.md) or [link](links.md) instead
-- If there is no interaction element to open the menu
+- If there is one action only, use [button](buttons.md) or [link](links.md) instead
 
 ### Best practices
 
-- Understand the context first in order to determine if a menu is
-  indeed the best possible solution
 - Analyze what actions are most important. Order the actions accordingly.
-- Do group similar actions
-- Do move less important actions to a submenu
-- Do support keyboard input to navigate within a menu
-
-### Dos and don'ts
-
-- Do make a visual distinction between actions that are disabled and the ones available
-- Do keep disabled actions visible
-- Do not use more than 2 submenus in a nested way
-- Do not have a long and flat list of actions, which might not have space on a small screen
+- Group similar actions.
+- Move less important actions to a submenu.
+- Keep disabled actions visible.
+- Do not use more than 2 submenus in a nested way.
+- Do not have a long and flat list of actions, which might not have space on a small screen.
 
 ## Design ---
 

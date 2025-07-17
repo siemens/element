@@ -1,32 +1,30 @@
-# Phone Number Input
+# Phone number input
 
-The **Phone Number Input** allows a user to enter a phone number by selecting the country
+The **phone number input** allows a user to enter a phone number by selecting the country
 (international area code) from a dropdown list and entering the rest of the number in
 a text input field.
 
 ## Usage ---
 
-![Phone Number Input](images/phone-input.png)
+![Phone number input](images/phone-input.png)
 
 ### When to use
 
 - For allowing users to enter or update a phone number.
 - When validation and formatting of international phone numbers are required.
 
-### When not to use
-
-- When collecting non-phone number data, a standard [*Input*](../forms-inputs/input.md) component should be used.
-
-### Best Practices for Phone Number Input
+### Best practices
 
 - Ensure the input field is wide enough to accommodate different international phone number formats.
 - Use smart defaults, such as showing the country code and phone number format based on the user's location.
+- When collecting non-phone number data, a standard [input](../forms-inputs/input.md) component should be used.
+
 
 ## Design ---
 
 ### Elements
 
-![Phone Number Input - Elements](images/phone-input-elements.png)
+![Phone number input - Elements](images/phone-input-elements.png)
 
 > Label (optional) 2. Content/placeholder text, 3. Container, 4. Menu, 5. Country code with flag.
 
@@ -34,14 +32,14 @@ a text input field.
 
 Effective form labeling helps users understand what information to enter.
 
-![Phone Number Input - Label](images/phone-input-label.png)
+![Phone number input - Label](images/phone-input-label.png)
 
 - Keep labels short and clear (should not be wider than the input field).
 - A mandatory field is marked with an **`*`-asterisk.**
 
-### Interaction States
+### Interaction states
 
-![Number Input - States](images/phone-input-states.png)
+![Number input - States](images/phone-input-states.png)
 
 ### Validation
 
@@ -49,7 +47,7 @@ Real-time validation ensures that the data being entered is within a specific
 range or follows certain rules, preventing errors and ensuring the integrity of
 the data.
 
-![Phone Number Input - Validation](images/phone-input-validation.png)
+![Phone number input - Validation](images/phone-input-validation.png)
 
 ## Code ---
 

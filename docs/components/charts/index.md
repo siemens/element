@@ -1,6 +1,6 @@
 # Charts
 
-The **Element Charts** library is a collection of charts based on [ECharts](https://echarts.apache.org/).
+The **Element charts** library is a collection of charts based on [ECharts](https://echarts.apache.org/).
 It features a variety of chart styles for different kind of datasets. The source
 code can be found in the [charts-ng folder](https://github.com/siemens/element/blob/main/projects/charts-ng).
 
@@ -14,36 +14,36 @@ select the chart based on your analysis. The following graphic is a suggested
 chart usage. Use good judgement to select the best representation for the data
 available.
 
-![Chart Decision Tree](images/charts-decision-tree.png)
+![Chart decision tree](images/charts-decision-tree.png)
 
 - **Range**
-    - [Gauge Chart](gauge-chart.md)
+    - [Gauge chart](gauge-chart.md)
     - Bullet chart
     - Consumption chart
 
 - **Comparison**
-    - [Bar Chart](bar-chart.md)
-    - [Line Chart](line-chart.md)
-    - Area Chart
+    - [Bar chart](bar-chart.md)
+    - [Line chart](line-chart.md)
+    - Area chart
 
 - **Distribution**
-    - Bubble Chart
-    - [Scatter Plot Chart](scatter-chart.md)
+    - Bubble chart
+    - [Scatter plot chart](scatter-chart.md)
     - Histogram
 
 - **Composition**
     - Heatmap
-    - [Pie/Donut Chart](circle-chart.md)
-    - Stacked Bar Chart
-    - Stacked Area Chart
+    - [Pie/Donut chart](circle-chart.md)
+    - Stacked bar chart
+    - Stacked area chart
 
-There is also a [*Generic Chart*](generic-chart.md) which provides full
+There is also a [generic chart](generic-chart.md) which provides full
 flexibility by supporting all ECharts options.
 
 More examples can be found in our [playground](https://element.siemens.io/element-examples/#/overview?q=si-charts)
 by filtering for `si-charts`.
 
-### Axis and Labels
+### Axis and labels
 
 The axis and labels of a chart are crucial to provide context and structure to
 the data being displayed. Use **clear, concise and accurate metrics** to reflect
@@ -54,17 +54,17 @@ be scaled consistently to ensure accurate comparison. Be mindful about using
 two axis since they are more complex and difficult to interpret than single axis
 charts.
 
-![Dual Axis Chart](images/chart-axis-dual.png)
+![Dual axis chart](images/chart-axis-dual.png)
 
-### Missing Data
+### Missing data
 
 Use a **range band** to represent instances where there is no data available for
 a specific time period.
 
-Use [*Empty State*](../status-notifications/empty-state.md) if the data cannot
+Use [empty state](../status-notifications/empty-state.md) if the data cannot
 be retrieved for the whole chart.
 
-![Missing Data Chart](images/chart-missing-data.png)
+![Missing data chart](images/chart-missing-data.png)
 
 ### Legends
 
@@ -81,15 +81,15 @@ the graph.
 
 ### Interactions
 
-![Chart Interactions](images/chart-interaction.png)
+![Chart interactions](images/chart-interaction.png)
 
-#### Select to Hide
+#### Select to hide
 
 Data series can be hidden/shown by selecting the corresponding legend.
 
-#### Data Switch
+#### Data switch
 
-If needed, use a [*Select*](../forms-inputs/select.md) component to allow the
+If needed, use a [select](../forms-inputs/select.md) component to allow the
 user to switch between different data sets or representations within the same
 chart.
 

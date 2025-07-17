@@ -55,9 +55,9 @@ where a regular button would be too bulky.
 
 ![Button link comparisson](images/button-link.png)
 
-### Best practices for buttons
+### Best practices
 
-- Use only one *primary* button per page.
+- Use only one primary button per page.
 - Ensure call-to-action labels are straightforward and concise.
 - Use single-line text for button labels; avoid multi-line text.
 - Use circular shapes for icon-only buttons.

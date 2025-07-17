@@ -1,4 +1,4 @@
-# AI Message
+# AI message
 
 The **AI message** component displays the AI system’s response to a user’s input.
 

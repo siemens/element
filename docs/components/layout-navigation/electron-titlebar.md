@@ -1,4 +1,4 @@
-# Electron Titlebar
+# Electron titlebar
 
 This is a titlebar which is used in electron applications. The titlebar will be positioned above the primary navbar and provide forward/backward functionality as well as zoom and custom functions.
 
@@ -7,9 +7,6 @@ This is a titlebar which is used in electron applications. The titlebar will be 
 ### When to use
 
 The electron-titlebar is mandatory when the application is running in electron
-
-### When not to use
-
 The electron-titlebar should not be used in not electron applications
 
 ## Code ---

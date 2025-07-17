@@ -1,4 +1,4 @@
-# User Message
+# User message
 
 The **user message** displays input submitted by the user in conversational interfaces.
 It can appear in interactions with an AI assistant or in peer-to-peer conversations,

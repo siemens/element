@@ -15,7 +15,7 @@ They are ideal for dashboards, tables, and summary views where space is limited 
 - Summarizing performance metrics, KPIs, or status indicators.
 - Common use cases: Table rows with performance data, dashboard widgets, inline summaries in reports or cards.
 
-### Best practices for micro charts
+### Best practices
 
 - Micro charts are typically non-interactive and represent a single value or series.
 - All micro charts should follow a standard size for uniformity.

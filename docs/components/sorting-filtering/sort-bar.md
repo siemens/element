@@ -1,4 +1,4 @@
-# Sort Bar
+# Sort bar
 
 Used for sorting tables, lists, etc. This component serves as visual component,
 and always maintains the state of current active sorts.

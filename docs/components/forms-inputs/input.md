@@ -37,9 +37,9 @@ It supports different types of input formats like **text**, **number**, **passwo
 
 ![Input specification](images/input-usage-construction.png)
 
-> 1. Label (Optional), 2. Content / Placeholder text, 3. Container, 4. Icons (Optional), 5. Message (Optional)
+> 1. Label (optional), 2. Content / Placeholder text, 3. Container, 4. Icons (optional), 5. Message (optional)
 
-### Label (Optional)
+### Label (optional)
 
 Precise labeling helps users understand what information to enter.
 

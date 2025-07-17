@@ -23,7 +23,7 @@ adjustments with direct feedback.
 - Use it for making selections from a range of values.
 - Use it when the range is more important than precision.
 
-### When to consider something else
+### Best practices
 
 - Use a regular value input, if a user needs to enter a precise number.
 - Sliders shouldn’t be used to adjust settings with any delay in providing user
@@ -37,15 +37,15 @@ adjustments with direct feedback.
 
 > 1. +/- Button, 2. Thumb, 3. Thumb icon (Optional), 4. Track, 5. Range values (Optional)
 
-### Slider Variations
+### Slider variations
 
-![Slider Variations](images/slider-variations.png)
+![Slider variations](images/slider-variations.png)
 
-### Thumb Interaction States
+### Thumb interaction states
 
 The thumb can optionally contain an icon.
 
-![Slider Thumb States](images/slider-thumb-states.png)
+![Slider thumb states](images/slider-thumb-states.png)
 
 ## Code ---
 

@@ -14,7 +14,7 @@ with the modal itself before allowing to continue the workflow.
 - Use it to interrupt a flow and to catch the user’s full attention.
 - Use it to prompt a user to enter information crucial to continuing a process.
 
-### Best Practices
+### Best practices
 
 - Use button texts which represent their intended action (e.g. use `Delete`
   instead of `Yes` on a delete confirmation dialog).
@@ -129,18 +129,18 @@ interrupted and the user needs to confirm to this alert. The result
 is just `confirm`, which indicates that the users took notice of
 the dialog.
 
-##### Confirmation Dialog
+##### Confirmation dialog
 
 Use the confirmation dialog to request a yes-no or agree-disagree confirm-decline
 answer from the user. Default button labels are yes and no. Closing the dialog
 with the close button returns a decline.
 
-##### Delete Confirmation Dialog
+##### Delete confirmation dialog
 
 Use the delete confirmation dialog to request user confirmation before
 deleting any object.
 
-##### Edit-Discard Dialog
+##### Edit-discard dialog
 
 Use the edit-discard dialog when leaving or canceling a data form
 that was modified. User results are `Save`, `Discard`, or `Cancel`.

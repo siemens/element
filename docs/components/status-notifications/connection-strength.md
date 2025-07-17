@@ -1,4 +1,4 @@
-# Connection Strength
+# Connection strength
 
 The **connection-strength**-component informs the user about the signal quality of a connection in a simplified and graphical way.
 It informs the user if there is an **issue with the signal** or about the signal quality [**strong**, **medium**, **low**].

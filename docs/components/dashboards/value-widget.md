@@ -1,4 +1,4 @@
-# Value Dashboard Widget
+# Value dashboard widget
 
 **Value dashboard widget** displays key information and offers interactive features
 for direct user interaction.
@@ -22,7 +22,7 @@ It can include:
 - To provide an at-a-glance overview of key metrics or information.
 - To present actionable cards that lead to more detailed content or follow-up actions.
 
-### Best practices for value dashboard widget
+### Best practices
 
 - Display only the most relevant data.
 - Prevent overcrowding by limiting the number of actions or visual elements.
@@ -133,7 +133,7 @@ component.
 
 <si-docs-component example="si-dashboard/si-value-widget-css" height="400"></si-docs-component>
 
-### Value Widget Body component
+### Value widget body component
 
 The body of the `<si-value-widget>` is implemented in the component `<si-value-widget-body>`. You can
 use it for compositions.

@@ -10,7 +10,7 @@ The launchpad provides a way for the user to easily navigate between application
 
 - Use a launchpad to give the user the possibility to launch apps or switch between apps easily within one application.
 
-### Dos and don'ts
+### Best practices
 
 - If there are a lot of apps, it's recommended for this component to include recently used apps, frequently used apps.
 - If the list is a manageable size, include all apps or products available on the system.
@@ -35,22 +35,22 @@ The app is represented by the app logo or alternatively by an icon.
 
 > (1) Current app, (2) Hover state, (3) Focused, (4) Disabled
 
-### Categories (Optional)
+### Categories (optional)
 
-![Launchpad Categories](images/launchpad-usage-categories.png)
+![Launchpad categories](images/launchpad-usage-categories.png)
 
 > (1) Category title
 
 If there is a large number of applications it is possible to organize and group them for a better overview.
 Apps should be grouped in a logical and meaningful way.
 
-### Favorites (Optional)
+### Favorites (optional)
 
-![Launchpad Favorites](images/launchpad-usage-favorites-collapsed.png)
+![Launchpad favorites](images/launchpad-usage-favorites-collapsed.png)
 
 For a better overview, the concept of **favorites** allows the user to only show the most important apps at at a glance and to hide less frequent used ones.
 
-![Launchpad Favorites Expanded](images/launchpad-usage-favorites-expanded.png)
+![Launchpad favorites expanded](images/launchpad-usage-favorites-expanded.png)
 
 > (1) Title, (2) Expand/Collapse-toggle, (3) Favorite app, (4) Standard app
 
@@ -60,7 +60,7 @@ To unstar an app the user simply clicks on the **star**-icon again.
 
 Both concepts of **Categories** and **Favorites** can be mixed if necessary.
 
-### Launch of external app (Optional)
+### Launch of external app (optional)
 
 ![Launchpad External App](images/launchpad-usage-external-app.png)
 

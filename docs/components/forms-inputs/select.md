@@ -17,14 +17,14 @@ mentioned capabilities are necessary.
 
 ![Select input field](images/select-input.png)
 
-### When to use select input fields
+### When to use
 
 - When users need to make a choice among a list of options.
 - When there are more than 5 options to choose from.
 - When options can be logically grouped (e.g., countries, cities, etc.).
 - Use it in forms and for atribute selection.
 
-### Best practices for select input field
+### Best practices
 
 - Don't use it if there are less than three options available for selection.
 - Analyze what actions will save more time for the user (e.g. selecting an item
@@ -70,7 +70,7 @@ Effective form labeling helps users understand what information to enter.
 
 ![Select input label](images/select-input-label.png)
 
-### Validation states
+### Validation
 
 The select input field has the same validation states as a
 [input component](input.md).

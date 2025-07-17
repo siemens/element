@@ -1,17 +1,17 @@
-# Filter Pills
+# Filter pills
 
-The **Filter Pills** represent a set of filters, allowing users to see which
+The **filter pills** represent a set of filters, allowing users to see which
 ones are applied while also allowing to edit and/or remove them. They consume a
 minimal amount of space while providing good situational awareness to users.
 
 ## Usage ---
 
-![Filter Pills](images/filter-pills.png)
-
 Filter pills are used to visually represent applied filters in combination
-with the [*Filter Bar*](filter-bar.md) and [*Filtered Search* component](filtered-search.md).
+with the [filter bar](filter-bar.md) and [filtered search component](filtered-search.md).
 
-### Filter Pills Best Practices
+![Filter pills](images/filter-pills.png)
+
+### Filter pills
 
 - Only use pills without a key/category if the value on its own is easily
   understandable. E.g. `Last year` does not need the key `Time range`.
@@ -26,19 +26,19 @@ with the [*Filter Bar*](filter-bar.md) and [*Filtered Search* component](filtere
 
 ### Elements
 
-![Filter Pills - Elements](images/filter-pills-elements.png)
+![Filter pills - Elements](images/filter-pills-elements.png)
 
 > 1. Key (optional), 2. Operator (optional), 3. Value, 4. Remove button
 > (optional)
 
-### Filter Anatomy
+### Filter anatomy
 
 Filter pills can be editable or read-only, depending on the use case.
 
-When used in combination with the [*Filter Bar* component](filter-bar.md), they
+When used in combination with the [filter bar component](filter-bar.md), they
 are read-only and cannot be edited.
 
-When used in combination with the [*Filtered Search* component](filtered-search.md),
+When used in combination with the [filtered search component](filtered-search.md),
 they are editable and support several different interaction states.
 
 Filter pills are composed of three different elements:
@@ -50,11 +50,11 @@ Filter pills are composed of three different elements:
 
 Combine the elements according to the required complexity.
 
-![Filter Pills - Anatomy](images/filter-pills-anatomy.png)
+![Filter pills - Anatomy](images/filter-pills-anatomy.png)
 
-### Interaction States
+### Interaction states
 
 The filter pill container color should always be in contrast to its surrounding
 background. Use `base-0` or `base-1` accordingly.
 
-![Filter Pills - States](images/filter-pills-states.png)
+![Filter pills - States](images/filter-pills-states.png)

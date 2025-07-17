@@ -6,21 +6,18 @@ A card is a content container to display important and useful information, e.g. 
 
 ![Card](images/card.png)
 
-!!! info "Blue Area is only a Placeholder"
-    The content in the blue area within the image above is only for representative purposes and not part of the cards component.
-
 ### When to use
 
 - To cluster information.
 
-### Best practices for cards
+### Best practices
 
 - Only include the most relevant information.
 - Set an appropriate size (height and width) of the card to give the content the space needed to convey the information.
 
 ## Design ---
 
-### Basic card elements
+### Elements
 
 Every card contains the following elements:
 
@@ -31,7 +28,7 @@ By dragging the title bar, a user can move the card to another position.
 
 ![Basic Card Elements](images/card-usage-construction.png)
 
-### Content actions (Optional)
+### Content actions (optional)
 
 The content actions component is specified on [this page](../buttons-menus/content-actions.md).
 
@@ -58,16 +55,16 @@ Use distinct colors, such as `$element-ui-0`, to emphasize information without i
 
 ![Card accent line](images/card-accent-line.png)
 
-For status indication, refer to the [*Value Widget*](../dashboards/value-widget.md).
+For status indication, refer to the [value widget](../dashboards/value-widget.md).
 
 ### Card sizes
 
-![Card Sizes](images/card-usage-sizes.png)
+![Card sizes](images/card-usage-sizes.png)
 
 To ensure an aligned visual grid and proper aesthetic of dashboards, card sizes follow the underlying 12 column grid of the work area.
 The card can span over 3, 4, 6, 9 or 12 columns.
 
-![Card Grid](images/card-usage-grid.png)
+![Card grid](images/card-usage-grid.png)
 
 The card's width is defined by a horizontal grid system. The necessary height is primarily driven by the content.
 For visual aesthetic and reordering reasons, the number of height-sizes should be kept low and consistent.
@@ -85,7 +82,7 @@ With the bootstrap 12 column grid system in place, cards will first vary their w
 
 ## Code ---
 
-The card component is based on the [Bootstrap Cards](https://getbootstrap.com/docs/5.1/components/card/).
+The card component is based on the [Bootstrap cards](https://getbootstrap.com/docs/5.1/components/card/).
 
 For the maximize/restore functionality to work correctly the cards container/working area needs to have `position: relative;`.
 

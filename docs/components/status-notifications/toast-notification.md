@@ -1,4 +1,4 @@
-# Toast Notification
+# Toast notification
 
 Toasts are short, time based notifications that slide in and out of a page.
 These are best to use for providing system level feedback and status.
@@ -15,15 +15,12 @@ These are best to use for providing system level feedback and status.
 - Use these to give feedback based on `information`, `success`, `caution`, `warning`, `danger` and
 `critical`.
 
-### Dos and don'ts
+### Best practices
 
 - Keep the message context-based and under two lines.
 - Appearance should be on the bottom right corner.
 - Make toasts last for minimum 4-5 seconds.
 - Toast notifications have a fixed width.
-
-### Where Toast Notifications may not help
-
 - Do not use for critical feedbacks.
 - Do not use toasts for synchronous/co-occurring tasks like showing progress.
 - Success toasts should not be used for every minor level use cases.
@@ -40,11 +37,11 @@ These are best to use for providing system level feedback and status.
 4. **Close:** A button to manually dismiss the notification *(optional)*.
 5. **Timer:** Timer visualization until the notification disappears *(with timer variant)*.
 
-### Notification Types
+### Notification types
 
 ![Toast notification types](images/toast-notification-usage-types.png)
 
-### Notification Variants
+### Notification variants
 
 ![Toast notification variations](images/toast-notification-usage-variations.png)
 

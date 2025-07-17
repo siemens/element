@@ -1,4 +1,4 @@
-# Generic Chart
+# Generic chart
 
 A generic chart with full support for [ECharts options](https://echarts.apache.org/en/option.html#title).
 

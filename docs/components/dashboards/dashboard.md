@@ -20,7 +20,7 @@ Before starting to design a dashboard, it is important to understand the purpose
 and the goals it aims to achieve. This will help to identify the key metrics and
 information that need to be displayed.
 
-### Best Practices for Dashboards
+### Best practices
 
 - Keep it simple. Avoid clutter caused by too much information or showing
   irrelevant metrics.

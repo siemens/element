@@ -17,7 +17,7 @@ provides fundamental information users need while navigating the page.
 - To maintain design consistency across pages, creating a familiar and
   predictable pattern for users.
 
-### Best practices for page header
+### Best practices
 
 - The title should be short and to the point.
 - Maximal 1 page header per page.

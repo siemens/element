@@ -26,7 +26,7 @@ pre-defined widths to choose from, either *regular* (`390px`) or *wide*
 - Use it for notifications to alert users about important updates, events or
   more.
 
-### Best practices for side panel
+### Best practices
 
 - Don't use it for permanent information. The content should be changing based
   on the context.

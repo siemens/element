@@ -15,7 +15,7 @@ The timeline dashboard widget displays time-sensitive data and ordered events, a
 - When users need an at-a-glance overview of past and present events.
 - To highlight time-sensitive updates, such as comments, milestones, or activities.
 
-### Best practices for timeline dashboard widget
+### Best practices
 
 - Use appropriate timestamps, such as full dates for history and relative time (e.g., "2 hours ago") for recent events.
 - Use the footer link to direct users to more detailed information about the timeline items.
@@ -57,7 +57,7 @@ We support the the timeline widget in two ways:
   effort on the application development.
 - HTML and CSS-based to support maximum flexibility.
 
-### Timeline Widget Component
+### Timeline widget component
 
 To simplify the usage and reduce the code, Element offers a Angular component as wrapper
 with streamlined inputs. The component is a wrapper around the [card](../layout-navigation/cards.md)
@@ -78,7 +78,7 @@ import { SiTimelineWidgetComponent } from '@siemens/element-ng/dashboard';
 
 <si-docs-api component="SiTimelineWidgetComponent"></si-docs-api>
 
-### Timeline Widget Body Component
+### Timeline widget body component
 
 The body of the `<si-timeline-widget>` is implemented in the component `<si-timeline-widget-body>`.
 You can use it for compositions.

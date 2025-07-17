@@ -1,6 +1,6 @@
-# Color Picker
+# Color picker
 
-The **Color Picker** is an input element for selecting a color from a set of predefined swatches.
+The **Color picker** is an input element for selecting a color from a set of predefined swatches.
 
 ## Usage ---
 
@@ -14,7 +14,7 @@ The specific colors and the number of swatches can be adjusted according to the 
 - When users need the flexibility to customize colors to suit their specific preferences or needs.
 - When color selection is integral to the user’s workflow, such as in dashboards, or customization interfaces.
 
-### Best practices for Color Picker
+### Best practices
 
 - Limit the number of swatches to avoid overwhelming users.
 - When using the component for dashboards or chart configurations, use the palette defined

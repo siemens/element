@@ -1,4 +1,4 @@
-# Color Palette
+# Color palette
 
 <!-- markdownlint-disable MD013 MD038 -->
 
@@ -27,7 +27,7 @@ used as values for color tokens.
 
 ![Element color palette](images/color-palette.png)
 
-## Deep Blue / Gray
+## Deep blue / gray
 
 | Sample                                                       | Color Variable               | Color Code |
 |--------------------------------------------------------------|------------------------------|------------|

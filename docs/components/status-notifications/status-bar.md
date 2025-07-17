@@ -27,10 +27,10 @@ position at all times.
   regardless of how deep the user navigated within an application.
 - Use it to provide quick access to critical information that users need to be
   aware of at all times.
-- Use it in combination with the [*circle status*](./circle-status.md)
+- Use it in combination with the [circle status](./circle-status.md)
   component.
 
-### Best practices for status bar
+### Best practices
 
 - Only include the most relevant status information.
 - Do not include more than `10` status categories.

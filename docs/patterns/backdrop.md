@@ -18,7 +18,7 @@ parts of it.
 - As background for modals to catch the user’s full attention to something more
   important.
 
-### Dos and don'ts
+### Best practices
 
 - Allow to *tap outside* to give the user a way to escape.
 - Do not use the pattern backdrop to show error, success, or warning messages.

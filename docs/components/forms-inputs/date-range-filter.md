@@ -24,7 +24,7 @@ Additionally, it includes optional presets for quick access to common periods li
 - To offer users quick access to common preset ranges.
 - Use a [date picker](../forms-inputs/datepicker.md) if simpler date selections are required.
 
-### Best practices for date range filter
+### Best practices
 
 - Use it in combination with [input button](../buttons-menus/buttons.md).
 - Use “Enter date” or the date format (i.e., MM/DD/YYYY) as placeholder.

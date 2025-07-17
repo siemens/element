@@ -8,17 +8,14 @@ Pagination is used for splitting up content or data into several pages, with a c
 
 ### When to use
 
-Generally, pagination is used if there are more than 25 items displayed in one view. The default number displayed will vary depending on the context.
-
-### When pagination may not help
-
-Pagination should not be shown if only one page is available.
+- When there are more than 25 items displayed in one view.
+  Pagination should not be shown if only one page is available.
 
 ### Alternative
 
-From an UX point of view an alternative and better approach is called "Load More" pagination.
-When users scroll down to the bottom of the results page, they can consciously decide whether they want to see more results or not.
-If they want to continue browsing, they simply need to click on the button “Load More”. New results will either be appended under the current page or the whole page will be refreshed with new results.
+Consider using a “Load more” pattern as an alternative to classical pagination.
+This approach offers users more control by allowing them to load additional results only when they choose to.
+Instead of navigating between pages, users click a “Load more” button at the end of the current list.
 
 ## Design ---
 
@@ -28,7 +25,7 @@ If they want to continue browsing, they simply need to click on the button “Lo
 
 > 1. Navigation arrows, 2. Current page,  3. "More" indicator
 
-### Number of Pages
+### Number of pages
 
 A maximum of 7 pages or items can be displayed.
 

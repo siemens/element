@@ -1,6 +1,6 @@
-# Copyright Notice
+# Copyright notice
 
-Copyright Notice is a component to display an application's copyright information,
+**Copyright notice** is a component to display an application's copyright information,
 including the company name along with the copyright's start and last-updated year.
 
 ## Code ---

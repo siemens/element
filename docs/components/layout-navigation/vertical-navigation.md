@@ -18,7 +18,7 @@ Both variants can be collapsed to free up additional screen space.
 
 - When the application requires a persistent side menu for organizing navigation elements in a clear, accessible manner.
 
-### Best practices for vertical navigation
+### Best practices
 
 - Only use icons if they clearly convey the intended meaning.
 - Limit navigation to two tiers. For deeper content organization, consider using tabs, accordions or another navigation pattern.

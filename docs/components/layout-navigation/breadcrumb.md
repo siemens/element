@@ -17,7 +17,7 @@ helping users understand where they are and navigate back to higher levels.
 - Use breadcrumbs when the user is most likely to have landed on the page from an external source.
 - Use for applications that have that have a large amount of content organized in a hierarchy of more than two levels.
 
-### Best practices for breadcrumb
+### Best practices
 
 - Avoid using breadcrumbs on single-level sites or applications without a meaningful hierarchy.
 - All breadcrumb items should be clickable.

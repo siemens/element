@@ -1,6 +1,6 @@
 # Illustrations
 
-Our illustrations follow the [Brandville Guidelines](https://brandville.siemens.com/en/design-elements/illustrations)
+Our illustrations follow the [Brandville guidelines](https://brandville.siemens.com/en/design-elements/illustrations)
 to ensure visual harmony and strengthen brand identity across all user experiences.
 
 ## Usage ---
@@ -9,9 +9,9 @@ Illustrations support communication, add personality, and engage users without o
 
 ![Illustrations](images/illustrations.png)
 
-## Core Principles
+## Core principles
 
-### Consistency with Brand style
+### Consistency with brand style
 
 All illustrations must adhere to the Brandville Guidelines for color, line weight, and styling to ensure a consistent look and feel. Use the approved color palette, primarily focusing on brand colors,
 and avoid heavy gradients or patterns unless specified by the style guide.
@@ -32,7 +32,7 @@ and represent diverse and inclusive characters and scenarios where applicable.
 - In tutorials and help screens, to explain how to use a feature or functionality.
 - In marketing materials.
 
-### Best practices for illustrations
+### Best practices
 
 - Use illustrations sparingly; consider if an icon would be more appropriate.
 - Ensure the illustration adapts well across different screen sizes.
@@ -41,7 +41,7 @@ and represent diverse and inclusive characters and scenarios where applicable.
 ## Resources
 
 In addition to the brand guidelines, we offer extra resources to support design consistency.
-Refer to the [Illustration figma file](https://www.figma.com/design/T6JFbikBWHOy0kL40FaGsS/Illustrations?node-id=186-19&t=juJ6oifXfOUCmFdm-1) for examples and assets for Adobe Illustrator and Figma.
+Refer to the [illustration figma file](https://www.figma.com/design/T6JFbikBWHOy0kL40FaGsS/Illustrations?node-id=186-19&t=juJ6oifXfOUCmFdm-1) for examples and assets for Adobe Illustrator and Figma.
 
 ## Design ---
 

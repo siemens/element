@@ -1,4 +1,4 @@
-# List Dashboard Widget
+# List dashboard widget
 
 **List dashboard widget** provides a quick-glance overview of list items,
 offering users a shortcut to view and access key information directly.
@@ -22,7 +22,7 @@ and interact with items quickly. It optionally allows search and sorting. It can
 - To summarize essential metrics, statuses, or items at a glance.
 - When displaying frequently updated data in a compact format.
 
-### Best practices for list dashboard widget
+### Best practices
 
 - Prioritize relevant information.
 - Limit additional elements (e.g., badges or actions) to avoid visual clutter and improve readability.
@@ -64,7 +64,7 @@ We support the the list widget in two ways:
   effort on the application development.
 - HTML and CSS-based to support maximum flexibility.
 
-### List Widget Component
+### List widget component
 
 To simplify the usage and reduce the code, Element offers a Angular component as wrapper
 with streamlined inputs. The component is a wrapper around the [card](../layout-navigation/cards.md)
@@ -92,7 +92,7 @@ Add the empty state component by content projection with the `empty-state` slot.
 
 <si-docs-api component="SiListWidgetComponent"></si-docs-api>
 
-### List Widget Body Component
+### List widget body component
 
 The body of the `<si-list-widget>` is implemented in the component `<si-list-widget-body>`. You can
 use it for compositions.

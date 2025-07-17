@@ -1,6 +1,6 @@
-# Gauge Chart
+# Gauge chart
 
-**Gauge Charts** are data visualization elements that represent a value as a
+**Gauge charts** are data visualization elements that represent a value as a
 position on a radial scale. It displays a simple and concise single value in
 comparison to a maximum and minimum limit.
 
@@ -15,9 +15,9 @@ thresholds. The gauge shows the value and its position between the minimum and
 maximum, highlighted with a color that corresponds to the range the value
 currently falls into.
 
-![Gauge Chart](images/gauge-chart.png)
+![Gauge chart](images/gauge-chart.png)
 
-### Best practices for Gauge Charts
+### Best practices
 
 - Ensure that the numeric scale used is clear and easy to understand. It's
   helpful to include the maximum and minimum values, as well as any threshold or
@@ -35,7 +35,7 @@ currently falls into.
 A gauge chart displays data similar to a circle chart, but with a needle or dial
 to indicate where the data point(s) falls over a particular range.
 
-![Gauge Chart Elements](images/gauge-chart-elements.png)
+![Gauge chart elements](images/gauge-chart-elements.png)
 
 > 1. Progress, 2. Qualitative Range (Optional), 3. Base, 4. Unit, 5. Value, 6. Scale (Optional)
 

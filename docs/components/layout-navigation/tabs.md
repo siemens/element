@@ -13,7 +13,7 @@ Tabs are used to separate information into logical sections in the context of a 
 - Use tabs to make the content accessible without navigating across pages or compromising on space.
 - Different tab-panes should be logically related but mutually exclusive. A content element should only be in one tab at a time.
 
-### When tabs may not help
+### Best practices
 
 - Don't mix different content types within the same tab structure.
 - Avoid nested tabs (2 levels of tabs stacked on top of each other) since they add visual complexity, and are harder to navigate.

@@ -36,7 +36,7 @@ Use a vertical wizard if:
 - When users lack domain knowledge.
 - When the user must complete steps in a specific sequence.
 
-### Best practices for wizards
+### Best practices
 
 - Minimize steps and keep the purpose clear.
 - Show where the user is in the process.

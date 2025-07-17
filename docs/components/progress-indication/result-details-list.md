@@ -1,6 +1,6 @@
-# Result Details List
+# Result details list
 
-The **Result Details List** component allows to visualize a set of steps as part
+The **result details list** component allows to visualize a set of steps as part
 of a procedure or process as well as their current status.
 
 ## Usage ---
@@ -9,7 +9,7 @@ It helps to visualize and communicate the steps (including status and results)
 of a procedure or process. This can be used for scenarios like self-test
 procedures, onboarding processes and more.
 
-![Result Details List](images/result-details-list.png)
+![Result details list](images/result-details-list.png)
 
 ### When to use
 
@@ -20,7 +20,7 @@ procedures, onboarding processes and more.
 
 ## Design ---
 
-![Result Details List Specification](images/result-details-list-usage-construction.png)
+![Result details list specification](images/result-details-list-usage-construction.png)
 
 > 1. Icon, 2. Label, 3. Feedback (Optional), 4. Result value (Optional)
 
@@ -33,7 +33,7 @@ procedures, onboarding processes and more.
 
 ### Variations
 
-![Result Details List Variations](images/result-details-list-usage-variations.png)
+![Result details list variations](images/result-details-list-usage-variations.png)
 
 > 1. Open step, 2. In progress, 3. Done, 4. Issue with optional feedback, 5. Unsupported step, 6. Customized icon
 

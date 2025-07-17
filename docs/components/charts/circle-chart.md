@@ -1,6 +1,6 @@
-# Circle Chart
+# Circle chart
 
-The circle chart, displayed as a pie or donut chart, shows how much each part of
+The **circle chart**, displayed as a pie or donut chart, shows how much each part of
 something makes up the whole. Each arc length represents a proportion of each
 category, while the full circle represents the total sum of all the data, equal
 to 100%.
@@ -31,7 +31,7 @@ display the data.
 
 ![Pie chart basic](images/pie-chart-basic.png)
 
-### Best practices for circle charts
+### Best practices
 
 - Use pie charts sparingly.
 - Don't plot more than five categories on the same circle chart. If needed,

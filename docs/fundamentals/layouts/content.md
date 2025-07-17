@@ -37,7 +37,7 @@ to allow sections to be rearranged, draggable, or expandable based on user needs
 requirements. This flexibility can be applied across the different layout structures,
 allowing for adaptive content management.
 
-### Best practices for content layouts
+### Best practices
 
 - Understand user needs. Choose the right layout based on the content.
 - Adapt layouts to match content requirements.

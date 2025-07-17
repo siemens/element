@@ -1,6 +1,6 @@
-# Inline Notification
+# Inline notification
 
-Inline notifications show up in the task flow to provide feedback or the status
+**Inline notifications** show up in the task flow to provide feedback or the status
 of an action. These notifications are task generated. They are persistent in
 nature and vanish after the issue is resolved by user.
 
@@ -16,7 +16,7 @@ nature and vanish after the issue is resolved by user.
   danger.
 - Usual places its usage are input fields like forms to show errors etc.
 
-### Dos and don'ts
+### Best practices
 
 - Messaging should be context-based, short and concise.
 - Do not overlap rest of the content.
@@ -30,10 +30,6 @@ examples of layouts are form, right pane, banner etc.
 
 ![Inline notification formatting](images/inline-notification-formatting.png)
 
-### Where Inline Notifications may not help
-
-These are not recommended to use for providing severe level feedbacks.
-
 ## Design ---
 
 ![Inline notification specification](images/inline-notification-usage-construction.png)
@@ -43,18 +39,18 @@ These are not recommended to use for providing severe level feedbacks.
 3. **Body Content:** Provides additional details of the notification.
 4. **Action Button:** Area to take actions like canceling or resolving a notification (*optional*).
 
-### Title and Body Content
+### Title and body content
 
 A user should be able to quickly understand the notification and know what to do next.
 
-### Action Button
+### Action button
 
 ![Inline notification actions](images/inline-notification-usage-actions.png)
 
 1. **No action:** Information only.
 2. **Action:** Provides an action button.
 
-### Notification Types
+### Notification types
 
 ![Inline notification variations](images/inline-notification-usage-variations.png)
 

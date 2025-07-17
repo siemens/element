@@ -13,7 +13,7 @@ Spinners can be used in many different locations, e.g. cards, lists, empty scree
 - To inform the user that something is happening.
 - While handling asynchronous requests.
 
-### Do's and Don'ts
+### Best practices
 
 - Use spinners only for fast actions (2–10 seconds). A users will loose patience if it takes longer than that.
 - Keep loading comments concise and short.
@@ -36,7 +36,7 @@ import { SiLoadingSpinnerComponent } from '@siemens/element-ng/loading-spinner';
 
 <si-docs-api component="SiLoadingSpinnerComponent"></si-docs-api>
 
-### Spinner Directive
+### Spinner directive
 
 You can use loading spinner directive to enable the spinner on a specific element.
 
@@ -48,7 +48,7 @@ Additionally, you can enable semi-transparent overlay and initial loading time f
 
 <si-docs-api directive="SiLoadingSpinnerDirective"></si-docs-api>
 
-### Loading Button
+### Loading button
 
 Use the `si-loading-button` component when you need to show a loading indicator
 on a button. The `si-loading-button` is implemented as a wrapper around a normal

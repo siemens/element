@@ -12,7 +12,7 @@ color variants if necessary.
 
 ## Usage ---
 
-For a cohesive typography experience, *Element*'s type scale uses the Siemens
+For a cohesive typography experience, Element's type scale uses the Siemens
 Sans typeface.
 Hierarchy is communicated through differences in font weight (Roman/Regular and Bold) and
 size.
@@ -29,7 +29,7 @@ Headings, subheadings, and body text each serve distinct functions and should be
 
 ## Design ---
 
-*Element* defines 9 different type styles. It follows the
+Element defines 9 different type styles. It follows the
 HTML semantic, while omitting the `H4`, `H5` and `H6` heading to reduce visual
 complexity of titles within an application.
 
@@ -55,10 +55,9 @@ Display 2        | 3          | 4                 | Siemens Sans | Roman
 Display 3        | 2.5        | 3.25              | Siemens Sans | **Black**
 Display 4        | 2.5        | 3.25              | Siemens Sans | Roman
 
-!!! info "Type Style Font Sizes"
-    All font sizes are defined in **rem** (the root em size) based on the root
-    element size. The Element Design System defines **1 rem as 16 px** while
-    also applying this fixed conversion ratio within the implementation.
+All font sizes are defined in **rem** (the root em size) based on the root
+element size. The Element Design System defines **1 rem as 16 px** while
+also applying this fixed conversion ratio within the implementation.
 
 ### Applying the type scale
 
@@ -71,7 +70,7 @@ Display 4        | 2.5        | 3.25              | Siemens Sans | Roman
 - Use **Caption** for small, supplementary text providing additional context.
 - Use **Display** styles in widgets, key visual elements, hero sections or any area where more prominence is required.
 
-![Typography Styles](images/typography-styles.png)
+![Typography styles](images/typography-styles.png)
 
 ### Using the bounding box
 
@@ -109,7 +108,7 @@ See the [Text Colors](colors/ui-colors.md#text) chapter.
 
 ## Code ---
 
-### Type Styles Classes
+### Type styles classes
 
 Implementation of typography is done via [Bootstrap's typography system](https://getbootstrap.com/docs/5.1/content/typography/).
 Mosts scenarios allow you to use the HTML semantic (e.g. `h1`, `p`) directly, all the required
@@ -121,14 +120,14 @@ semantic, you can use the `.si-` text classes.
 
 <si-docs-component example="typography/type-styles" height="300"></si-docs-component>
 
-### Display Styles Classes
+### Display styles classes
 
 The display styles are provided as `si-display-{1,2,3,4}` and are
 mapped to the related Bootstrap classes.
 
 <si-docs-component example="typography/display-styles" height="280"></si-docs-component>
 
-### Typography Specification
+### Typography specification
 
 All font-sizes, line-heights and font-weights are specified as SASS
 variables, which can be used if required. The variables come in the form of
@@ -146,7 +145,7 @@ font-weight: variables.$si-font-weight-h1;
 We use the specifications for defining the style CSS classes and for configuring
 Bootstrap's typography system.
 
-### Color Variants Classes
+### Color variants classes
 
 Changing the color of a text can be done using bootstraps utility classes,
 without the need to of any custom SASS styling and is recommended in most cases.
@@ -173,7 +172,7 @@ background-color: variables.$element-status-danger;
 
 See [_semantic-tokens](https://github.com/siemens/element/tree/main/projects/element-theme/src/styles/variables/_semantic-tokens.scss).
 
-### Bootstrap Typography Utilities
+### Bootstrap typography utilities
 
 Further typographical styling can be done using Bootstrap's wide range of font
 and text utility classes. They closely follow the HTML semantic and can be used

@@ -21,16 +21,10 @@ Circle status is available in two sizes: `Regular` or `Small`.
 - At the beginning (left side) of a row
 - Indicate the status on a type icon
 
-### When a circle status might not help
+## Best practices
 
-- Outside of a table or list component
-- Somewhere in the middle of the row
-- In combination with a state icon
-
-## Best Practices
-
-- Badge on circle status shall be colored according definition for the [Status colors](../../fundamentals/colors/ui-colors.md/#status)
-- Use a *Circle Status* with severity symbols when there is a need to identify different severities
+- Badge on circle status shall be colored according definition for the [status colors](../../fundamentals/colors/ui-colors.md/#status)
+- Use it with severity symbols when there is a need to identify different severities
 - The color of the icon should remain constant according definition in [UI colors](../../fundamentals/colors/ui-colors.md/#ui)
 
 ## Design ---
@@ -41,12 +35,12 @@ There are some variations in the representation of the circle status.
 
 > 1. Default state, 2. Variant with status symbol, 3. Variant with dot, 4. Pulsating state, 5. Supporting icon
 
-### Variant: Status symbol
+### Variant: status symbol
 
 Use a circle status with status symbols when there is a need to identify
 different severities or states.
 
-### Variant: Dot
+### Variant: dot
 
 Use the circle status with dot for simple indications, with **one specific
 status color** (`critical`, `danger`, ...) per viewport only.

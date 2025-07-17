@@ -1,4 +1,4 @@
-# Bar Chart
+# Bar chart
 
 Shows the differences or similarities between values. Bar chart data answers the
 question of "*how many?*" in each category.
@@ -9,29 +9,29 @@ Use it to perform a comparison of values across different subgroups of data.
 From a bar chart, it can be seen which groups are highest or most common, and
 how groups compare against each other.
 
-### Basic Variant
+### Basic variant
 
 The basic bar chart shows numerical comparisons across categories. One axis of
 the chart shows the specific categories being compared and the other axis is
 numeric in nature.
 
-![Basic Bar Chart](images/bar-chart-basic.png)
+![Basic bar chart](images/bar-chart-basic.png)
 
-### Multi-Set Variant
+### Multi-set variant
 
 This variation is used when two or more data series are plotted side-by-side and
 grouped together under categories, all on the same axis.
 
-![Multi-Set Bar Chart](images/bar-chart-multiset.png)
+![Multi-set bar chart](images/bar-chart-multiset.png)
 
-### Stacked Variant
+### Stacked variant
 
 The stacked bar chart is used to show how a category is divided. It helps to
 understand what relationship each part has with the total amount.
 
-![Stacked Bar Chart](images/bar-chart-stacked.png)
+![Stacked bar chart](images/bar-chart-stacked.png)
 
-### Best Practices for Bar Charts
+### Best practices
 
 - Plot the bars against a zero-value baseline to accurately reflect the
   difference in the data.

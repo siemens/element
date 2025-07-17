@@ -7,7 +7,7 @@ It communicates relationships, context, and actions a user can take within an ap
 
 ![Application header](images/application-header.png)
 
-There are variations of the *Application header*: Standard version and [with Launchpad](launchpad.md) support.
+There are variations of the application header: Standard version and [with launchpad](launchpad.md) support.
 
 ### When to use
 
@@ -17,7 +17,7 @@ If you have up to four primary navigation items
 
 ### Elements
 
-The *Application header* consists of the following elements:
+The application header consists of the following elements:
 
 ![Application header](images/application-header-usage-construction.png)
 
@@ -34,7 +34,7 @@ The toolbar contains all the additional navigation and indication elements, whic
 
 ![Application header](images/application-header-usage-toolbar-menu.png)
 
-#### Help Menu
+#### Help menu
 
 The help menu is **mandatory** for all applications, because it has legal relevant aspects.
 The help menu is located left of the user avatar and uses `element-help` as icon.
@@ -43,7 +43,7 @@ The user menu is based on the [menu container](../buttons-menus/menu.md).
 
 ![Menu - help](images/application-header-usage-menu-help.png)
 
-1. Help *(optional)*
+1. Help (optional)
 2. Additional information for providing help to the user *(optional)*
 3. Link to the *About* page *(mandatory)*
 4. Link to the *Corporate Information* page *(mandatory)*
@@ -53,7 +53,7 @@ The user menu is based on the [menu container](../buttons-menus/menu.md).
 - The help menu should provide a fast overview about related content.
 - Other legal links should be part of the about page.
 
-#### User Menu (optional)
+#### User menu (optional)
 
 The user menu is mandatory for all applications, which are providing content to
 a signed in user. This menu is not needed for pages without user management.
@@ -74,7 +74,7 @@ The user menu is based on the [menu container](../buttons-menus/menu.md).
 
 ![Application header](images/application-header-usage-responsive-behavior.png)
 
-(A) The *Application header* spans over the whole screen width.
+(A) The application header spans over the whole screen width.
 
 On smaller screens it behaves according to the following rule set:
 

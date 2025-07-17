@@ -11,7 +11,7 @@ selection, e.g. in forms, modals, side panel, settings and more.
 
 ![Radio button use case](images/radio-use-case.png)
 
-### Best practices for radio buttons
+### Best practices
 
 - The list of options should be structured in a logical order, e.g. from
   simplest operation to the most complex one or least to most risk.

@@ -1,4 +1,4 @@
-# Link Dashboard Widget
+# Link dashboard widget
 
 **Link dashboard widget** is a list of [links](../buttons-menus/links.md) that provides quick access
 to frequently used functions, pages, or external resources.
@@ -12,7 +12,7 @@ to frequently used functions, pages, or external resources.
 - In dashboards and [tile layouts](../../fundamentals/layouts/content.md#tile-layout).
 - To provide a list of navigation or action links.
 
-### Best practices for link dashboard widget
+### Best practices
 
 - Prevent overcrowding by keeping the number of links between 2 and 6.
 - Keep labels short and clear, directly indicating the link's purpose and destination.

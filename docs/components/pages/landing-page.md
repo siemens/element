@@ -1,11 +1,11 @@
-# Landing Page
+# Landing page
 
 This component provides an application landing page, which is usually the first
 page shown to a user.
 
 ## Usage ---
 
-The Landing Page is a part of an overarching concept for guiding a user into a
+The landing page is a part of an overarching concept for guiding a user into a
 product. Legal guidelines are crucial for the sign-up and sign-in process.
 
 ### When to use
@@ -15,7 +15,7 @@ product. Legal guidelines are crucial for the sign-up and sign-in process.
 
 ## Design ---
 
-The Landing Page provides the first impression of a product to the users. It has
+The landing page provides the first impression of a product to the users. It has
 to meet multiple goals:
 
 - **Functionality:** This is the major driver for having a landing page. The
@@ -29,19 +29,19 @@ to meet multiple goals:
 Covering those need solely for large screen might lead to overloaded content.
 The design is therefore done using the **mobile first** approach.
 
-![Landing Page](images/landing-page.png)
+![Landing page](images/landing-page.png)
 
 > 1. Brand logo, 2. Language selector, 3. Marketing image, 4. Product info, 5.
 > Marketing claim (Optional), 6. Functional UI elements, 7. Registration
 > (Optional), 8. Additional legal info, 9. Footer with version (optional), copyright and legal links
 
-### Functional UI Elements
+### Functional UI elements
 
-#### Two-step Login
+#### Two-step login
 
 The *two step login* pattern should be used by default.
 
-![Landing Page - Login 2 Steps](images/landing-page-login-2-step.png)
+![Landing page - Login 2 steps](images/landing-page-login-2-step.png)
 
 The user interaction is done in the following 2 steps:
 
@@ -63,13 +63,13 @@ shown when all the credentials (incl. password) were provided. This pattern
 prevents user name enumeration attacks. The error message must be along the
 lines of `Wrong credentials`.
 
-![Landing Page - Login 2 Steps Notifications](images/landing-page-login-2-step-notifications.png)
+![Landing page - Login 2 steps notifications](images/landing-page-login-2-step-notifications.png)
 
-#### User Name / Password Login (deprecated)
+#### User name / Password login (deprecated)
 
 This is the classical way to login into a product.
 
-![Landing Page - Login 1 Step](images/landing-page-login-1-step.png)
+![Landing page - Login 1 Step](images/landing-page-login-1-step.png)
 
 This pattern can be used for LDAP and Role Based Accounts login only. OpenID
 Connect Accounts are not supported.
@@ -79,53 +79,53 @@ the creation of new accounts is not supported. A login failure should only be
 shown when all the credentials (incl. password) were provided. The error
 message must be along the lines of `Wrong credentials`.
 
-![Landing Page - Login 1 Step Notifications](images/landing-page-login-1-step-notifications.png)
+![Landing page - Login 1 step notifications](images/landing-page-login-1-step-notifications.png)
 
 The *two step login* pattern should be used to provide an uniform experience.
 
-#### Button Forwarding Login (deprecated)
+#### Button forwarding login (deprecated)
 
 The single button approach works for a single OpenID Connect provider only.
 
-![Landing Page - Button (deprecated)](images/landing-page-login-button.png)
+![Landing page - Button (deprecated)](images/landing-page-login-button.png)
 
 The *two step login* pattern should be used to provide an uniform experience.
 This enables support for multiple OpenID Connect providers, LDAP and Role Based
 accounts within the same product.
 
-#### Initial Password Change
+#### Initial password change
 
 Some systems may require the user to perform a password change upon first login.
 
-![Landing Page - Initial Password Change](images/landing-page-password-change.png)
+![Landing page - Initial password change](images/landing-page-password-change.png)
 
 > 1. Heading / explanation, 2. Change password fields, 3. Password policy
 
-### Legal UI Elements
+### Legal UI elements
 
 #### Footer
 
 The footer shows the copyright information and links to legal artifacts.
 
-#### Explicit Legal Acknowledge
+#### Explicit legal acknowledge
 
 Some legal artifact (e.g. EULA) needs to be explicitly acknowledged by a user.
 
-![Landing Page - Legal - User Acknowledge](images/landing-page-legal-user-acknowledge.png)
+![Landing page - Legal - User acknowledge](images/landing-page-legal-user-acknowledge.png)
 
-#### Implicit Legal Acknowledge
+#### Implicit legal acknowledge
 
 Some legal artifact (e.g. Terms of Use) needs more attention by a user before
 login to product.
 
-![Landing Page - Legal - Implicit Acknowledge](images/landing-page-legal-implicit-acknowledge.png)
+![Landing page - Legal - Implicit acknowledge](images/landing-page-legal-implicit-acknowledge.png)
 
 #### Warning
 
 A warning can be shown, if there is no legal artifact which needs immediate user
 attention.
 
-![Landing page - Legal - Live Data](images/landing-page-legal-live-data.png)
+![Landing page - Legal - Live data](images/landing-page-legal-live-data.png)
 
 ## Code ---
 
@@ -142,14 +142,14 @@ import { SiLandingPageComponent } from '@siemens/element-ng/landing-page';
 })
 ```
 
-### Landing Page - Basic
+### Landing page - Basic
 
 The size of the logo is changeable with CSS Variable `--landing-page-logo-width`
 (default: 180px) and `--landing-page-logo-height` (default: auto).
 
 <si-docs-component example="si-landing-page/si-landing-page" height="500"></si-docs-component>
 
-### Custom Background Image and Logo
+### Custom background image and logo
 
 The background image can be changed with the input property `backgroundImageUrl`.
 Note that the background image is `center` positioned by default so that the

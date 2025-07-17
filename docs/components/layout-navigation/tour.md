@@ -37,7 +37,7 @@ Tours can be automatically launched for new users during their first login to gu
 Automatic tours are best for first-time use only.
 
 Users can access guided tours anytime from the
-Help menu in the [horizontal navigation](../layout-navigation/horizontal-navigation.md).
+Help menu in the [application header](../layout-navigation/application-header.md.md).
 
 If more than one tour is offered, they can be organized within the Help menu into categories such
 as "Getting started", "Advanced features" or "New features" for easy navigation.

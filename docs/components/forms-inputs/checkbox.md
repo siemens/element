@@ -1,24 +1,24 @@
 # Checkbox
 
-Checkboxes are used for multiple choices in a list, for filters etc. Users can
+**Checkboxes** are used for multiple choices in a list, for filters etc. Users can
 select zero, one, or multiple number of items.
 
 ## Usage ---
 
 ![Checkbox](images/checkbox-usage.png)
 
-### When and where to use
+### When to use
 
 - In lists or data tables for batch editing purposes.
 - In forms.
 - For selection or filtering options.
 - For setting preferences or settings.
 
-### When checkbox might not help
+### Best practices
 
 - Checkboxes should not be used to toggle a single option or setting. Use
-  [*Toggle Switch*](switch.md) instead.
-- If options are mutually exclusive, use [*Radio Buttons*](radio.md) instead.
+  [switch](switch.md) instead.
+- If options are mutually exclusive, use [radio buttons](radio.md) instead.
 - Checkboxes should not be used to make important decisions, like confirming
   deletion, as they are easily overlooked by users.
 
@@ -26,11 +26,10 @@ select zero, one, or multiple number of items.
 
 ### Interaction states
 
-![Checkbox States](images/checkbox-states.png)
+Users can trigger the interaction by clicking the checkbox input or the
+accompanying label.
 
-!!! info "Clickable area"
-    Users can trigger the interaction by clicking the checkbox input or the
-    accompanying label.
+![Checkbox dtates](images/checkbox-states.png)
 
 ### Labels
 
@@ -41,7 +40,7 @@ If labels are too extensive, try to reworded them to be shorter. If it's not
 possible, wrap the text to a second line so the checkbox and label are top
 aligned.
 
-![Checkbox Label](images/checkbox-label.png)
+![Checkbox label](images/checkbox-label.png)
 
 ## Code ---
 

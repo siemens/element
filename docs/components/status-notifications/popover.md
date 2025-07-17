@@ -16,7 +16,7 @@ users select outside of them or complete an action within the popover.
 - For temporary content that doesn’t require a full page or modal view.
 - To provide contextual help, guiding users with explanations or assistance specific to their current task.
 
-### Best practices for popover
+### Best practices
 
 - Limit functionality to a few related tasks or brief information.
 - Avoid placing critical actions or decisions within a popover.
@@ -44,9 +44,9 @@ Popovers can include text, links, buttons, and other interactive elements releva
 
 ![Popover content](images/popover-content.png)
 
-### Tooltips vs. Popovers
+### Tooltips vs. popovers
 
-[*Tooltips*](../status-notifications/tooltip.md) are meant for supplementary,
+[Tooltips](../status-notifications/tooltip.md) are meant for supplementary,
 non-essential information. They’re limited to brief, non-interactive text and **appear on hover**,
 making them inaccessible on touch devices.
 

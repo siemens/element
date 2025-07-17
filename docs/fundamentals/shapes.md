@@ -38,7 +38,7 @@ Radius is set for all 4 sides unless specified otherwise.
 
 ## Code ---
 
-All *Element* shape variants are accessible as `rounded-` CSS utility classes.
+All Element shape variants are accessible as `rounded-` CSS utility classes.
 
 Besides that, the full range of [Bootstrap's border utilities](https://getbootstrap.com/docs/5.1/utilities/borders/#border-radius)
 can be used. Since `rounded-2` is the default shape for *Element*, it is also
@@ -49,7 +49,7 @@ classes.
 
 ### Sass variables
 
-The shape tokens for each *Element* shape can also be alternatively used as SCSS
+The shape tokens for each Element shape can also be alternatively used as SCSS
 variables within stylesheets.
 
 ```scss

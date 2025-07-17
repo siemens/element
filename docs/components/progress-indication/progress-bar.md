@@ -1,4 +1,4 @@
-# Progress Bar
+# Progress bar
 
 **Progress bars** notify users that an app needs more time to process a user action,
 and if possible tell how much time (approximately) it will take.
@@ -13,22 +13,22 @@ documents or data, submitting a form, saving data and more.
 Use a progress bar for any action that takes longer than about **one second**.
 Anything shorter than that will act distracting to users.
 
-### Dos and don'ts
+### Best practices
 
 - An application should provide visual feedback for any extended waiting/loading period.
 - Progress bars shall be used for non-blocking waiting/loading actions.
 
 ## Design ---
 
-A Progress Bar consists of the following elements:
+A Progress bar consists of the following elements:
 
-![Progressbar](images/progress-bar.png)
+![Progress bar](images/progress-bar.png)
 
 > 1. Label (optional), 2. Progress, 3. Track, 4. Value (optional)
 
 Besides the default size, there is also a small variant available.
 
-![Progressbar Variations](images/progress-bar-usage-variations.png)
+![Progressbar variations](images/progress-bar-usage-variations.png)
 
 > 1. Default, 2. Small
 

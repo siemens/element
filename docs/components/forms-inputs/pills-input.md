@@ -1,4 +1,4 @@
-# Pills Input
+# Pills input
 
 **Pills input** allows users to enter multiple items, such as tags or email addresses, into a single input field.
 
@@ -16,7 +16,7 @@ Existing pills can be deleted as needed.
 - To enter email addresses or names, allowing users to easily add or remove recipients.
 - For selecting multiple options from a wide range of choices.
 
-### Best practices for pills input
+### Best practices
 
 - Guide users with examples in the placeholder, like "Enter tags, separated by commas."
 - If needed, set a maximum number of pills to keep the interface clean.
@@ -35,7 +35,7 @@ Existing pills can be deleted as needed.
 
 ![Pills input interaction states](images/pills-input-states.png)
 
-### Optional label
+### Label (optional)
 
 Effective labeling helps users understand what information to enter.
 

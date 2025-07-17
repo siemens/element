@@ -40,11 +40,11 @@ For records that only have a single word name, use the first two letters of that
 Depending on the situation, you can use a variety of options for the color.
 The avatar color system presents 15 tokenized colors, each showcasing a distinct appearance in both light and dark themes.
 
-![Avatar Colors](images/avatar-usage-colors.png)
+![Avatar colors](images/avatar-usage-colors.png)
 
 Avatars can be colored with 'neutral' or 'vibrant' colors, depending on the needs of the application and the desired visual focus.
 
-![Avatar Color Variations](images/avatar-usage-color-variations.png)
+![Avatar color variations](images/avatar-usage-color-variations.png)
 
 ### Status
 
@@ -54,7 +54,7 @@ The component allows a colored indicator to be displayed in the top right corner
 
 ### Sizes
 
-![Avatar Sizes](images/avatar-usage-sizes.png)
+![Avatar sizes](images/avatar-usage-sizes.png)
 
 The **avatar** component can be sized according to the project needs. Use a size which fits to the standard spacing and grid requirements.
 

@@ -57,7 +57,7 @@ The main purpose of a notification is to redirect users to the relevant page, ta
 - Acknowledge: Confirms receipt, indicating that the user is informed and may take further action.
 - Resolve: Used when the system can fix the issue automatically or the user is guided through a resolution process.
 
-### Best practices for notifications
+### Best practices
 
 - Deliver notifications at the right moment to avoid unnecessary distractions.
 - Categorize notifications to prioritize critical events.

@@ -1,6 +1,6 @@
 # Footer
 
-The footer provides legal information like copyrights and further links to legal
+The **footer** provides legal information like copyrights and further links to legal
 artifacts to users.
 
 ## Usage ---
@@ -11,13 +11,11 @@ The footer is a part of an overarching concept for legal guidelines.
 
 The footer is mandatory in the following cases:
 
-- On the [Landing Page](../pages/landing-page.md).
-- On all other pages, where no [Horizontal Navigation](horizontal-navigation.md)
+- On the [landing page](../pages/landing-page.md).
+- On all other pages, where no [application header](../layout-navigation/application-header.md)
   is provided, which contains the legal information.
 
-### When not to use
-
-The footer **must not be used** on pages, where a [Horizontal Navigation](horizontal-navigation.md)
+The footer **must not be used** on pages, where the [application header](../layout-navigation/application-header.md)
 is provided, and contains the legal information.
 
 ## Design ---
@@ -26,7 +24,7 @@ is provided, and contains the legal information.
 
 The footer contains the `Copyright Notice` and a link list to (legal) artifacts.
 
-![Footer Construction](images/footer-usage-construction.png)
+![Footer construction](images/footer-usage-construction.png)
 
  > 1. Link list, 2. Copyright notice
 

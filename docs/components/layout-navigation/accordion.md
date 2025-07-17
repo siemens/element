@@ -23,7 +23,7 @@ total number of items.
 - When **space is limited**, allowing users to hide irrelevant content, especially in [side panel](side-panel.md) or on mobile screens.
 - Use it for content that is **not immediately necessary** but still useful for users to access when they need it.
 
-### Best practices for accordions
+### Best practices
 
 - Don't use it when users need most or all of the content on the page to accomplish their task.
 - Keep the number of sections manageable to avoid clutter.

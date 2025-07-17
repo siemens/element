@@ -1,6 +1,6 @@
-# Line Chart
+# Line chart
 
-**Line Charts** help to understand shifts or changes in data. They are usually
+**Line charts** help to understand shifts or changes in data. They are usually
 used to track changes over a period of time. When grouped with other lines
 (other data series), individual lines can be compared to one another.
 
@@ -15,7 +15,7 @@ decisions.
 Line charts connect a series of data points using a line. It displays
 quantitative data series over continuous intervals.
 
-![Basic Line Chart](images/line-chart-basic.png)
+![Basic line chart](images/line-chart-basic.png)
 
 ### Multiple line chart
 
@@ -23,7 +23,7 @@ Use it to visualize trends and relationships in multiple data sets. It compares
 different data groups on the same scale to find out how each of them is
 performing compared to the others.
 
-![Multiple Line Chart](images/line-chart-multiple.png)
+![Multiple line chart](images/line-chart-multiple.png)
 
 ### Step-line chart
 
@@ -31,9 +31,9 @@ Use it to visualize trends for a particular event that is not continuous in
 nature. This chart compares the magnitude of change in value and helps to
 discern the intermittent pattern of the trend.
 
-![Step Line Chart](images/line-chart-step.png)
+![Step line chart](images/line-chart-step.png)
 
-### Best practices for Line charts
+### Best practices
 
 - Use appropriate time periods to ensure accurate insights.
 - Choose a baseline that suits the data; choosing a zero baseline may not always
@@ -44,7 +44,7 @@ discern the intermittent pattern of the trend.
 
 ## Design ---
 
-![Line Chart Elements](images/line-chart-elements.png)
+![Line chart elements](images/line-chart-elements.png)
 
 > 1. Chart title, 2. Y axis, 3. X axis, 4. Line graph, 5. Legend, 6. Grid-lines
 

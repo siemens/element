@@ -1,12 +1,12 @@
-# Filtered Search
+# Filtered search
 
-*Filtered Search* enables to search for free text in combination with structured
+**Filtered search** enables to search for free text in combination with structured
 search criteria. The criteria are any numbers of criterion objects with a name
 and a value.
 
 ## Usage ---
 
-![Filtered Search](images/filtered-search.png)
+![Filtered search](images/filtered-search.png)
 
 ### When to use
 
@@ -15,11 +15,11 @@ and a value.
 - Use it to create filter formulas by adding or excluding conditions.
 - Use it where there is enough horizontal space to display filter options without cluttering the interface.
 - If users need to apply many filters, especially with nested or hierarchical structures, consider other
-  [Filter patterns](../../patterns/filter.md).
+  [filter patterns](../../patterns/filter.md).
 
-### Filtered Search Best Practices
+### Best practices
 
-- Use *Filtered Search* with simple filter patterns (e.g. string, enumeration,
+- Use filtered Search with simple filter patterns (e.g. string, enumeration,
   integer, date/time) only.
 - Always use strict criteria functionality and provide an explicit list of
   criteria.
@@ -31,18 +31,18 @@ and a value.
 
 ### Elements
 
-![Filtered Search Elements](images/filtered-search-elements.png)
+![Filtered search elements](images/filtered-search-elements.png)
 
 > 1. Placeholder, 2. Container, 3. Search button, 4. Clear button
 
-### Interaction States
+### Interaction states
 
-The *Filtered Search* container color should always be in contrast with its
+The filtered search container color should always be in contrast with its
 surrounding background. Use `base-0` or `base-1` according to that.
 
-![Filtered Search States](images/filtered-search-states.png)
+![Filtered search states](images/filtered-search-states.png)
 
-### Filter Anatomy
+### Filter anatomy
 
 Filtered Search is used in combination with the Filter Pills.
 The filter can be composed of three different elements:
@@ -53,35 +53,35 @@ The filter can be composed of three different elements:
 
 Combine the elements according to the complexity needed.
 
-![Filter Elements](images/filter-elements.png)
+![Filter elements](images/filter-elements.png)
 
-### Filter Patterns
+### Filter patterns
 
-#### Character Value (string)
+#### Character value (string)
 
 It allows to input text to find content without a predefined set of options.
 
-![Filtered Search Free text](images/filtered-search-character.png)
+![Filtered search free text](images/filtered-search-character.png)
 
-#### Numeric Value (integer / float)
+#### Numeric value (integer / float)
 
 It allows to input numbers.
 Usually has an operator and allows range filtering.
 
-![Filtered Search Free text](images/filtered-search-numeric.png)
+![Filtered search free text](images/filtered-search-numeric.png)
 
 #### Enumeration
 
 Enumeration contain a predefined set of values, from which the user can select
-one option (Single Selection) or many (Multi - Selection). Combine with a
-[Typeahead Behavior](typeahead.md) so users can enter the search value.
+one option (single selection) or many (multi-selection). Combine with a
+[typeahead behavior](typeahead.md) so users can enter the search value.
 
-![Filtered Search Enumeration](images/filtered-search-enumeration.png)
+![Filtered search enumeration](images/filtered-search-enumeration.png)
 
 If more than one value is selected, an item count shall be shown in the filter
 pill.
 
-![Filtered Search Pills](images/filtered-search-pills.png)
+![Filtered search pills](images/filtered-search-pills.png)
 
 ## Code ---
 
@@ -130,7 +130,7 @@ import { SiFilteredSearchComponent } from '@siemens/element-ng/filtered-search';
 })
 ```
 
-### Filtered Search - Basic
+### Filtered search - Basic
 
 The following provides a basic example with pre-configured criteria and their
 options. At a minimum, you must define the criteria. Other optional parameters
@@ -142,13 +142,13 @@ to define are:
 
 <si-docs-component example="si-filtered-search/si-filtered-search-basic" height="300"></si-docs-component>
 
-### Filtered Search - Basic with predefined search criteria
+### Filtered search - Basic with predefined search criteria
 
 This sample extends the first one by preselecting criteria.
 
 <si-docs-component example="si-filtered-search/si-filtered-search-search-criteria" height="300"></si-docs-component>
 
-### Filtered Search - Lazy loaded criteria values
+### Filtered search - Lazy loaded criteria values
 
 In many cases, your application defines the criteria, but the values need to be
 loaded from a server. In this case you can provide an function that returns the
@@ -156,7 +156,7 @@ possible criterion options as an Observable.
 
 <si-docs-component example="si-filtered-search/si-filtered-search-lazy-values" height="300"></si-docs-component>
 
-### Filtered Search - Lazy loaded criteria and category values
+### Filtered search - Lazy loaded criteria and category values
 
 In addition to lazy loaded value, you can also lazy load the criteria itself.
 
@@ -168,7 +168,7 @@ If you only allow the criteria defined, use `[strictCriterion]` to specify it.
 
 <si-docs-component example="si-filtered-search/si-filtered-search-strict-criteria" height="300"></si-docs-component>
 
-### Filtered Search - Strict category values
+### Filtered search - Strict category values
 
 If you only allow the criteria options defined, use `[strictValue]` to specify
 it.
@@ -177,7 +177,7 @@ it.
 
 <si-docs-component example="si-filtered-search/si-filtered-search-strict-values" height="300"></si-docs-component>
 
-### Filtered Search - Trigger Search Value Input
+### Filtered search - Trigger search value input
 
 `[doSearchOnInputChange]` filters not applied explicitly ("Apply search criteria") only but implicitly
 while typing or selecting the search criteria.
@@ -187,7 +187,7 @@ and the search emission.
 
 <si-docs-component example="si-filtered-search/si-filtered-search-value-trigger-search" height="300"></si-docs-component>
 
-### Filtered Search - Custom Operators
+### Filtered search - Custom operators
 
 For more advanced use cases, the `Criterion` type also allows to specify custom
 comparison operators via the `operators` property. The operators are an array of
@@ -199,13 +199,13 @@ temperature range:
 
 <si-docs-component example="si-filtered-search/si-filtered-search-operators" height="300"></si-docs-component>
 
-### Filtered Search - DatePicker
+### Filtered search - DatePicker
 
 The following example shows the datepicker's use:
 
 <si-docs-component example="si-filtered-search/si-filtered-search-datetime" height="300"></si-docs-component>
 
-### Filtered Search - Multi Select
+### Filtered search - Multi Select
 
 The following example shows the use of multi select criterion:
 

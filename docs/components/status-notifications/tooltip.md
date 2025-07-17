@@ -16,7 +16,7 @@ Since tooltips are temporary and generally not accessible on touch devices,
 - To clarify an element’s function or provide extra context for icons or buttons.
 - For supplementary, non-essential information only.
 
-### Best practices for Tooltips
+### Best practices
 
 - Keep text brief.
 - Text should rarely exceed min. width of tooltip display box.
@@ -63,7 +63,7 @@ ensuring information is available at the right moment.
 
 #### Use disclosures
 
-Leverage expandable elements like dropdowns, [*accordions*](../layout-navigation/accordion.md),
+Leverage expandable elements like dropdowns, [accordions](../layout-navigation/accordion.md),
 or show/hide buttons to reveal additional information as needed, providing deeper context only when required.
 
 ![Tooltip alternative - disclosure](images/tooltip-disclosure.png)
@@ -76,7 +76,7 @@ If space is limited, ensure the legend is accessible elsewhere for users to unde
 
 #### Use popovers
 
-For information that needs detailed explanation, use [*popovers*](../status-notifications/popover.md), which are triggered explicitly and can hold more content.
+For information that needs detailed explanation, use [popovers](../status-notifications/popover.md), which are triggered explicitly and can hold more content.
 
 | Component         | Tooltip                                            | Popover                                                  |
 |-------------------|----------------------------------------------------|----------------------------------------------------------|

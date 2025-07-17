@@ -1,6 +1,6 @@
-# Scatter Chart
+# Scatter chart
 
-A **Scatter Chart** uses dots to represent values for two different numeric
+A **Scatter chart** uses dots to represent values for two different numeric
 variables. The position of each dot on the horizontal and vertical axis
 represents the values of an individual data point.
 
@@ -13,9 +13,9 @@ Different shapes can be used to make the information more accessible. The circle
 is the default shape, but it can be combined with rectangle, triangle or diamond
 shapes as needed.
 
-![Scatter Chart](images/scatter-chart.png)
+![Scatter chart](images/scatter-chart.png)
 
-### Best practices for Scatter Charts
+### Best practices
 
 - Use colors and shapes to help differentiate between data points.
 - Provide context for the data by including relevant annotations and explaining
@@ -33,7 +33,7 @@ shapes as needed.
 If you want to display values as a collection of points, a scatter chart would
 be your best choice.
 
-![Scatter Chart Elements](images/scatter-chart-elements.png)
+![Scatter chart elements](images/scatter-chart-elements.png)
 
 > 1. Chart title, 2. Legend, 3. Points, 4. X axis, 5. Y axis
 

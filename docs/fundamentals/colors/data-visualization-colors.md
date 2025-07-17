@@ -1,4 +1,4 @@
-# Data Visualization Colors
+# Data visualization colors
 
 <!-- markdownlint-disable MD013 MD038 -->
 
@@ -37,7 +37,7 @@ Naming colors semantically has two benefits:
 
 The following color palettes are specific to the context of data visualization:
 
-### Categorical Colors
+### Categorical colors
 
 They are used to indicate distinctly different categories. Use these color
 palettes for small areas such as lines, dashes, or dots (e.g. trend, line chart).
@@ -77,9 +77,9 @@ of the data in a scale such as poor, average, and good.
 | <si-docs-color style="background: #9EC625;"></si-docs-color> | `$element-color-good`      | Good      | `$siemens-data-avocado-400` |
 | <si-docs-color style="background: #00A327;"></si-docs-color> | `$element-color-excellent` | Excellent | `$siemens-data-green-500`   |
 
-### Sequential Colors
+### Sequential colors
 
-#### Data Green
+#### Data green
 
 | Value light                                                  | Value dark                                                   | Token                   | Associated color - light  | Associated color - dark   |
 |--------------------------------------------------------------|--------------------------------------------------------------|-------------------------|---------------------------|---------------------------|
@@ -88,7 +88,7 @@ of the data in a scale such as poor, average, and good.
 | <si-docs-color style="background: #00890E;"></si-docs-color> | <si-docs-color style="background: #00A327;"></si-docs-color> | `$element-data-green-3` | `$siemens-data-green-700` | `$siemens-data-green-500` |
 | <si-docs-color style="background: #005700;"></si-docs-color> | <si-docs-color style="background: #00890E;"></si-docs-color> | `$element-data-green-4` | `$siemens-data-green-900` | `$siemens-data-green-700` |
 
-#### Data Turquoise
+#### Data turquoise
 
 | Value light                                                  | Value dark                                                   | Token                       | Associated color - light      | Associated color - dark       |
 |--------------------------------------------------------------|--------------------------------------------------------------|-----------------------------|-------------------------------|-------------------------------|
@@ -97,7 +97,7 @@ of the data in a scale such as poor, average, and good.
 | <si-docs-color style="background: #1A747D;"></si-docs-color> | <si-docs-color style="background: #00AF8E;"></si-docs-color> | `$element-data-turquoise-3` | `$siemens-data-turquoise-700` | `$siemens-data-turquoise-500` |
 | <si-docs-color style="background: #005159;"></si-docs-color> | <si-docs-color style="background: #1A747D;"></si-docs-color> | `$element-data-turquoise-4` | `$siemens-data-turquoise-900` | `$siemens-data-turquoise-700` |
 
-#### Data Interactive Coral
+#### Data interactive coral
 
 | Value light                                                  | Value dark                                                   | Token                               | Associated color - light              | Associated color - dark               |
 |--------------------------------------------------------------|--------------------------------------------------------------|-------------------------------------|---------------------------------------|---------------------------------------|
@@ -106,7 +106,7 @@ of the data in a scale such as poor, average, and good.
 | <si-docs-color style="background: #007082;"></si-docs-color> | <si-docs-color style="background: #00A3AB;"></si-docs-color> | `$element-data-interactive-coral-3` | `$siemens-data-interactive-coral-700` | `$siemens-data-interactive-coral-500` |
 | <si-docs-color style="background: #002949;"></si-docs-color> | <si-docs-color style="background: #007082;"></si-docs-color> | `$element-data-interactive-coral-4` | `$siemens-data-interactive-coral-900` | `$siemens-data-interactive-coral-700` |
 
-#### Data Purple
+#### Data purple
 
 | Value light                                                  | Value dark                                                   | Token                    | Associated color - light   | Associated color - dark    |
 |--------------------------------------------------------------|--------------------------------------------------------------|--------------------------|----------------------------|----------------------------|
@@ -115,7 +115,7 @@ of the data in a scale such as poor, average, and good.
 | <si-docs-color style="background: #7353E5;"></si-docs-color> | <si-docs-color style="background: #805CFF;"></si-docs-color> | `$element-data-purple-3` | `$siemens-data-purple-700` | `$siemens-data-purple-500` |
 | <si-docs-color style="background: #553BA3;"></si-docs-color> | <si-docs-color style="background: #7353E5;"></si-docs-color> | `$element-data-purple-4` | `$siemens-data-purple-900` | `$siemens-data-purple-700` |
 
-#### Data Plum
+#### Data plum
 
 | Value light                                                  | Value dark                                                   | Token                  | Associated color - light | Associated color - dark  |
 |--------------------------------------------------------------|--------------------------------------------------------------|------------------------|--------------------------|--------------------------|
@@ -124,7 +124,7 @@ of the data in a scale such as poor, average, and good.
 | <si-docs-color style="background: #9F1853;"></si-docs-color> | <si-docs-color style="background: #C04774;"></si-docs-color> | `$element-data-plum-3` | `$siemens-data-plum-700` | `$siemens-data-plum-500` |
 | <si-docs-color style="background: #4F153D;"></si-docs-color> | <si-docs-color style="background: #9F1853;"></si-docs-color> | `$element-data-plum-4` | `$siemens-data-plum-900` | `$siemens-data-plum-700` |
 
-#### Data Red
+#### Data red
 
 | Value light                                                  | Value dark                                                   | Token                 | Associated color - light | Associated color - dark  |
 |--------------------------------------------------------------|--------------------------------------------------------------|-----------------------|--------------------------|--------------------------|
@@ -133,7 +133,7 @@ of the data in a scale such as poor, average, and good.
 | <si-docs-color style="background: #D72339;"></si-docs-color> | <si-docs-color style="background: #FF2640;"></si-docs-color> | `$element-data-red-3` | `$siemens-data-red-700`  | `$siemens-data-red-500`  |
 | <si-docs-color style="background: #990000;"></si-docs-color> | <si-docs-color style="background: #D72339;"></si-docs-color> | `$element-data-red-4` | `$siemens-data-red-900`  | `$siemens-data-red-700`  |
 
-#### Data Orange
+#### Data orange
 
 | Value light                                                  | Value dark                                                   | Token                    | Associated color - light   | Associated color - dark    |
 |--------------------------------------------------------------|--------------------------------------------------------------|--------------------------|----------------------------|----------------------------|
@@ -142,7 +142,7 @@ of the data in a scale such as poor, average, and good.
 | <si-docs-color style="background: #E57700;"></si-docs-color> | <si-docs-color style="background: #E57700;"></si-docs-color> | `$element-data-orange-3` | `$siemens-data-orange-500` | `$siemens-data-orange-500` |
 | <si-docs-color style="background: #BC551E;"></si-docs-color> | <si-docs-color style="background: #BC551E;"></si-docs-color> | `$element-data-orange-4` | `$siemens-data-orange-700` | `$siemens-data-orange-700` |
 
-#### Data Sand
+#### Data sand
 
 | Value light                                                  | Value dark                                                   | Token                  | Associated color - light | Associated color - dark  |
 |--------------------------------------------------------------|--------------------------------------------------------------|------------------------|--------------------------|--------------------------|
@@ -151,7 +151,7 @@ of the data in a scale such as poor, average, and good.
 | <si-docs-color style="background: #757563;"></si-docs-color> | <si-docs-color style="background: #AAAA96;"></si-docs-color> | `$element-data-sand-3` | `$siemens-data-sand-700` | `$siemens-data-sand-500` |
 | <si-docs-color style="background: #5E5E4A;"></si-docs-color> | <si-docs-color style="background: #757563;"></si-docs-color> | `$element-data-sand-4` | `$siemens-data-sand-900` | `$siemens-data-sand-700` |
 
-## Color Palette ---
+## Color palette ---
 
 *Element* has the concept of an *additional color palette*, in case the [standard colors](color-palette.md)
 don't offer enough variety for use cases where many different colors are used at once.
@@ -174,7 +174,7 @@ used as values for color tokens.
 | <si-docs-color style="background: #009999;"></si-docs-color> | `$siemens-data-petrol`       | `#009999`  |
 | <si-docs-color style="background: #00FFB9;"></si-docs-color> | `$siemens-data-bold-green`   | `#00FFB9`  |
 
-### Deep Blue
+### Deep blue
 
 | Sample                                                       | Color Variable                | Color Code |
 |-------------------------------------------------------------|-------------------------------|------------|
@@ -207,7 +207,7 @@ used as values for color tokens.
 | <si-docs-color style="background: #757563;"></si-docs-color> | `$siemens-data-sand-700` | `#757563`  |
 | <si-docs-color style="background: #5E5E4A;"></si-docs-color> | `$siemens-data-sand-900` | `#5E5E4A`  |
 
-### Royal Blue
+### Royal blue
 
 | Sample                                                       | Color Variable                 | Color Code |
 |-------------------------------------------------------------|--------------------------------|------------|
@@ -229,7 +229,7 @@ used as values for color tokens.
 | <si-docs-color style="background: #0087BE;"></si-docs-color> | `$siemens-data-blue-700` | `#0087BE`  |
 | <si-docs-color style="background: #00557C;"></si-docs-color> | `$siemens-data-blue-900` | `#00557C`  |
 
-### Interactive Coral
+### Interactive coral
 
 | Sample                                                       | Color Variable                        | Color Code |
 |-------------------------------------------------------------|---------------------------------------|------------|

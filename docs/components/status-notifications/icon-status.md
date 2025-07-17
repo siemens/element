@@ -1,6 +1,6 @@
-# Icon Status
+# Icon status
 
-The **Icon Status** component represents a customizable icon with a counter.
+The **icon status** component represents a customizable icon with a counter.
 
 ## Code ---
 

@@ -48,7 +48,7 @@ elsewhere.
 To indicate the total count of active filters, use the `information` type 
 [badge](../components/status-notifications/badges.md) component.
 
-### Best practices for filters
+### Best practices
 
 - Always make it clear which filters are active.
 - Organize filters by understanding and aligning with user priorities.

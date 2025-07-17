@@ -1,10 +1,10 @@
-# Unauthorized Page
+# Unauthorized page
 
 This page can be used when user is authenticated but does not have required access permissions.
 
 !!! warning "Deprecation warning"
     The `si-unauthorized-page` component has been deprecated and will be
-    removed in the future. Use the [Info Page](./info-page.md) instead.
+    removed in the future. Use the [info page](./info-page.md) instead.
     It is a superset and supports the same and even more use cases.
 
 ## Usage ---

@@ -1,46 +1,42 @@
-# Search Bar
+# Search bar
 
-The *Search Bar* allows users to quickly find content using free text.
-
-![Search Bar](images/search-bar.png)
+The **search bar** allows users to quickly find content using free text.
 
 ## Usage ---
+
+![Search bar](images/search-bar.png)
 
 ### When to use
 
 - Use it if a full text search is required.
 
-### Best Practices for Search Bar
+### Best practices
 
 - Ignore punctuation within searches.
-- Combine with the [*Typeahead Behavior*](../sorting-filtering/typeahead.md) to
+- Combine with the [typeahead behavior](../sorting-filtering/typeahead.md) to
   assist users when searching.
 - Don't use wildcard encoding for more complex search statements.
 - Consider adding other search capabilities according to project needs (e.g. use
   quotes to search for exact matches).
 - The placement of the *Search Bar* depends on the layout of the viewport. See
-  the [Main-Detail Container](../layout-navigation/main-detail-container.md)
-  for placement guidance. See [Data Table](../lists-tables-trees/datatable.md)
+  the [main-detail container](../layout-navigation/main-detail-container.md)
+  for placement guidance. See [data table](../lists-tables-trees/datatable.md)
   for search placement within a data table.
 
 ## Design ---
 
 ### Elements
 
-![Search Bar Elements](images/search-bar-elements.png)
+![Search bar elements](images/search-bar-elements.png)
 
 > 1. Search icon, 2. Content, 3. Container, 4. Clear button
 
-!!! info "Visibility of the clear button"
-    The Clear button should only be visible when the user added content to the
-    field.
+### Interaction states
 
-### Interaction States
-
-The *Search Bar* container color should always be in contrast with its
+The search bar container color should always be in contrast with its
 surrounding background. Use `base-0` or `base-1` accordingly.
 
-![Search Bar States](images/search-bar-states.png)
+![search bar states](images/search-bar-states.png)
 
 ## Code ---
 

@@ -1,4 +1,4 @@
-# File Uploader
+# File uploader
 
 The **file uploader** component allows users to upload one or more files, such
 as images, documents or firmware. It shows the upload progress as well as a

@@ -1,21 +1,19 @@
 # Switch
 
-The **si-switch** component allows to toggle settings between two states.
+The **switch** component allows to toggle settings between two states.
 
 ## Usage ---
+
+Switches immediately trigger an effect when being clicked.
+Examples are: `On`/`Off`, `Online`/`Offline` or `Installed`/`Not installed`.
 
 ![Switch](images/switch.png)
 
 ### When to use
 
-Use a **si-switch** component when there is a binary state that the user should
-be able to toggle instantly.
+- When there is a binary state that the user should be able to toggle instantly.
 
-Examples are: `On`/`Off`, `Online`/`Offline` or `Installed`/`Not installed`.
-
-Switches immediately trigger an effect when being clicked.
-
-### Dos and don'ts
+### Best practices
 
 - A label next to the switch must describe the affected property.
 - Don't use the label to describe the states of the switch.

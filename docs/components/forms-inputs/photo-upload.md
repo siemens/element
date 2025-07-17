@@ -1,4 +1,4 @@
-# Photo Uploader
+# Photo uploader
 
 **Photo uploader** allows users to upload and manage an image used as avatar.
 

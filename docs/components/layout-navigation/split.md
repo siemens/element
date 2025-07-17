@@ -1,6 +1,6 @@
 # Split
 
-The **Split** component enables the division of the content area in two or more
+The **split** component enables the division of the content area in two or more
 distinct sections, with a draggable handlebar between them. Parts can be
 resized, collapsed and expanded accordingly.
 
@@ -13,7 +13,7 @@ panes. Each pane can contain a variety of components, such as tables, lists,
 images, or maps. Panes are separated by the handlebar that support a dragging
 action for resizing.
 
-### When to use Split
+### When to use
 
 - Use it when the content needs to be divided in different sections, allowing
   users some freedom in regards of viewport arrangement (e.g. give more space to
@@ -22,7 +22,7 @@ action for resizing.
   in size so users can focus on their current task.
 - Use it when all sections are relevant in combination to each other.
 
-### Best Practices for Split
+### Best practices
 
 - Be mindful about its use. Content can quickly become overly partitioned,
   increasing the interaction cost. Don't split the content in more than three
@@ -42,11 +42,11 @@ action for resizing.
 > 1. Title (optional), 2. Pane, 3. Handlebar, 4. Additional actions (optional), 5. Expanse/collapse button (optional)
 
 Panes are structural placeholders that divide content into sections.
-According to the [*Layout guidelines*](../../fundamentals/layouts/overview.md),
+According to the [layout guidelines](../../fundamentals/layouts/overview.md),
 content should be grouped into cards with 4px rounded corners.
 
 Given that panes are used to organize content, the same principle applies.
-To maintain consistency, use the [*Card component*](../layout-navigation/cards.md) inside panes.
+To maintain consistency, use the [card component](../layout-navigation/cards.md) inside panes.
 If that's not feasible, apply the `element-radius-2` class for 4px rounded corners to align with design standards.
 
 ### Layout orientation
@@ -75,7 +75,7 @@ the application allows said actions.
 
 Ensure that the chosen layout works well on all device types. For small screen
 sizes, consider changing the layout to an interactive one where users can switch
-between panes. See the [*Main-Detail*](../layout-navigation/main-detail-container.md)
+between panes. See the [main-detail](../layout-navigation/main-detail-container.md)
 pattern's responsive behavior as an example.
 
 ## Code ---
@@ -108,19 +108,19 @@ import { SiSplitComponent, SiSplitPartComponent } from '@siemens/element-ng/spli
 })
 ```
 
-### Horizontal Split with auto scale
+### Horizontal split with auto scale
 
 <si-docs-component example="si-split/si-split-auto"></si-docs-component>
 
-### Horizontal Split with mixed scale (none/auto)
+### Horizontal split with mixed scale (none/auto)
 
 <si-docs-component example="si-split/si-split-mixed"></si-docs-component>
 
-### Vertical Split
+### Vertical split
 
 <si-docs-component example="si-split/si-split-vertical"></si-docs-component>
 
-### Nested Splits
+### Nested splits
 
 <si-docs-component example="si-split/si-split-nested"></si-docs-component>
 

@@ -1,4 +1,4 @@
-# Main-Detail Container
+# Main-detail container
 
 **Main-detail** is a layout pattern that shows a list of items and the corresponding
 details of the selected item.
@@ -20,7 +20,7 @@ responsive behavior to adapt to various screen sizes.
 
 ![Main-detail](images/main-detail.png)
 
-### When to Use
+### When to use
 
 - For navigating through hierarchical data structures, making it easier for users to explore and understand content.
 - When there's a need to navigate through large amounts of data or items but only focus on one item at a time.
@@ -33,7 +33,7 @@ responsive behavior to adapt to various screen sizes.
 ![Main-detail elements](images/main-detail-elements.png)
 
 1. **Main container:** Displays content types such as lists, tables or trees.
-1. **Main Actions (optional):** These are the functions that a user can perform within the main container.
+1. **Main actions (optional):** These are the functions that a user can perform within the main container.
 1. **Detail container:** Displays information from the selected node, such as tables, forms or KPIs.
 1. **Detail title (optional):** It provides context about the information displayed, e.g. name of the selected item
 1. **Detail actions(optional):** Functions that can be performed within the detail container.

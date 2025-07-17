@@ -1,4 +1,4 @@
-# Dashboards Overview
+# Dashboards overview
 
 **Dashboards** are a visual representations of different data and information
 sources, that provides a summarized overview of multiple key performance
