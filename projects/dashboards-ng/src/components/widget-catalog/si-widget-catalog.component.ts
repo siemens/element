@@ -20,10 +20,10 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
-import { SiCircleStatusModule } from '@siemens/element-ng/circle-status';
+import { SiCircleStatusComponent } from '@siemens/element-ng/circle-status';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
-import { SiSearchBarModule } from '@siemens/element-ng/search-bar';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { Subscription } from 'rxjs';
 
 import {
@@ -45,7 +45,7 @@ import { setupWidgetEditor } from '../../widget-loader';
  */
 @Component({
   selector: 'si-widget-catalog',
-  imports: [SiSearchBarModule, SiCircleStatusModule, SiEmptyStateComponent, SiTranslateModule],
+  imports: [SiSearchBarComponent, SiCircleStatusComponent, SiEmptyStateComponent, SiTranslatePipe],
   templateUrl: './si-widget-catalog.component.html',
   styleUrl: './si-widget-catalog.component.scss'
 })
