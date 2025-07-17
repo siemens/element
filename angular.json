@@ -655,7 +655,7 @@
             "tsConfig": "projects/dashboards-demo/mfe/tsconfig.app.json",
             "aot": true,
             "assets": [
-              "projects/dashboards-demo/mfe/src/favicon.ico",
+              "projects/dashboards-demo/mfe/src/favicon.png",
               "projects/dashboards-demo/mfe/src/assets"
             ],
             "stylePreprocessorOptions": {
