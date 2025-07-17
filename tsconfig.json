@@ -29,7 +29,9 @@
       "@siemens/native-charts-ng": [
         "projects/native-charts-ng/src/public-api.ts",
         "projects/native-charts-ng"
-      ]
+      ],
+      "@siemens/dashboards-ng": ["projects/dashboards-ng/src/public-api.ts"],
+      "@siemens/dashboards-ng/*": ["projects/dashboards-ng/*"]
     }
   },
   "exclude": ["dist/**", "testing/**/*.ts"],

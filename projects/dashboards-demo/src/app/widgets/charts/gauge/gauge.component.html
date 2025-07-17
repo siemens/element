@@ -1,0 +1,8 @@
+<si-chart-gauge
+  #gauge
+  [value]="(data | async) ?? 0"
+  [minValue]="gaugeConfig.minValue"
+  [maxValue]="gaugeConfig.maxValue"
+  [splitSteps]="gaugeConfig.splitSteps"
+  (siResizeObserver)="gauge.resize()"
+/>

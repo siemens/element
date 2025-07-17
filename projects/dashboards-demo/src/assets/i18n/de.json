@@ -1,0 +1,51 @@
+{
+  "MODAL": {
+    "ADD_WIDGET": "Widget hinzufügen",
+    "ADD_WIDGET_FROM_LIBRARY": "Widget von Bibliothek hinzufügen",
+    "ADD_EMPTY_WIDGET": "Leeres Widget hinzufügen",
+    "RESET": "Zurücksetzen",
+    "CANCEL": "Abbrechen",
+    "SAVE": "Speichern"
+  },
+  "WIDGET": {
+    "LINE_CHART": "Liniendiagramm",
+    "BAR_CHART": "Balkendiagramm",
+    "CIRCLE_CHART": "Kuchendiagramm"
+  },
+  "TOOLBAR": {
+    "SAVE_AS_DEFAULTS": "Als Standard speichern",
+    "RESTORE_DEFAULTS": "Standard wiederherstellen"
+  },
+  "EDIT_WIDGET_MODAL": {
+    "EDIT_WIDGET": "Widget bearbeiten",
+    "DATA_SOURCE": "Datenquelle",
+    "PREVIEW": "Vorschau",
+    "DATA": "Daten",
+    "DESIGN": "Design",
+    "TYPE": "Typ",
+    "CONTENT": "Inhalt",
+    "BLOCKQUOTE": "Blockzitat",
+    "INNER_RADIUS": "Innerer Radius",
+    "OUTER_RADIUS": "Äusserer Radius",
+    "CATEGORY": "Kategorie",
+    "CASE_1": "Fall 1",
+    "CASE_2": "Fall 2",
+    "NAME": "Name",
+    "VALUE": "Wert",
+    "LINE": "Linie",
+    "BAR": "Balken",
+    "PIE": "Kuchen",
+    "CARD": "Karte",
+    "GAUGE": "Tachometer",
+    "HEADING": "Üerschrift",
+    "MIN_VALUE": "Min Wert",
+    "MAX_VALUE": "Max Wert",
+    "SPLIT_STEPS": "Geteilte Schritte",
+    "SHOW_LEGEND": "Legende anzeigen",
+    "STACKED": "Gestapelt",
+    "THEMES": "Designs",
+    "RED_SERIES": "Rote Serie",
+    "BLUE_SERIES": "Blaue Serie",
+    "GREEN_SERIES": "Grüne Serie"
+  }
+}

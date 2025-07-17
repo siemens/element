@@ -1,0 +1,15 @@
+:host {
+  inline-size: 100%;
+}
+
+form {
+  .form-container {
+    align-items: center;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  select {
+    min-inline-size: 100px;
+  }
+}

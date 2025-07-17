@@ -1,0 +1,46 @@
+{
+  "DASHBOARD": {
+    "EDIT": "Bearbeiten",
+    "SAVE": "Speichern",
+    "CANCEL": "Abbrechen",
+    "ADD_WIDGET": "Widget hinzufügen",
+    "REMOVE_WIDGET_CONFIRMATION_DIALOG": {
+      "HEADING": "Widget entfernen",
+      "MESSAGE": "Möchten Sie wirklich das Widget entfernen?",
+      "REMOVE": "Entfernen",
+      "CANCEL": "Abbrechen"
+    },
+    "WIDGET_LIBRARY": {
+      "TITLE": "Widget hinzufügen",
+      "CANCEL": "Abbrechen",
+      "ADD": "Hinzufügen",
+      "NEXT": "Weiter",
+      "PREVIOUS": "Zurück",
+      "EMPTY": "Es sind keine Widgets vorhanden.",
+      "DISCARD_CONFIG_CHANGE_DIALOG": {
+        "HEADING": "Widgetkonfiguration geändert",
+        "MESSAGE": "Die Widgetkonfiguration wurde geändert. Möchten Sie die Änderungen verwerfen?",
+        "DISCARD": "Verwerfen",
+        "CANCEL": "Abbrechen"
+      }
+    },
+    "WIDGET_EDITOR_DIALOG": {
+      "TITLE": "Bearbeiten",
+      "CANCEL": "Abbrechen",
+      "SAVE": "Speichern",
+      "DISCARD_CONFIG_CHANGE_DIALOG": {
+        "HEADING": "Widgetkonfiguration geändert",
+        "MESSAGE": "Die Widgetkonfiguration wurde geändert. Möchten Sie die Änderungen verwerfen?",
+        "SAVE": "Speichern",
+        "DISCARD": "Verwerfen",
+        "CANCEL": "Abbrechen"
+      }
+    },
+    "WIDGET": {
+      "REMOVE": "Entfernen",
+      "EDIT": "Bearbeiten",
+      "EXPAND": "Vergrößern",
+      "RESTORE": "Verkleinern"
+    }
+  }
+}

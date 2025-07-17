@@ -373,6 +373,348 @@
           }
         }
       }
+    },
+    "dashboards-ng": {
+      "projectType": "library",
+      "root": "projects/dashboards-ng",
+      "sourceRoot": "projects/dashboards-ng/src",
+      "prefix": "si",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/dashboards-ng/tsconfig.lib.json",
+            "project": "projects/dashboards-ng/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "builderMode": "browser",
+            "polyfills": ["zone.js", "zone.js/testing"],
+            "tsConfig": "projects/dashboards-ng/tsconfig.spec.json",
+            "karmaConfig": "projects/dashboards-ng/karma.conf.cjs",
+            "codeCoverageExclude": ["projects/dashboards-ng/src/**/*.module.ts"]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/dashboards-ng/**/*.ts",
+              "projects/dashboards-ng/**/*.html"
+            ],
+            "eslintConfig": "projects/dashboards-ng/eslint.config.js"
+          }
+        }
+      }
+    },
+    "dashboards-demo": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/dashboards-demo",
+      "sourceRoot": "projects/dashboards-demo/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "ngx-build-plus:browser",
+          "options": {
+            "outputPath": "dist/dashboards-demo",
+            "index": "projects/dashboards-demo/src/index.html",
+            "main": "projects/dashboards-demo/src/main.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "projects/dashboards-demo/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/dashboards-demo/src/assets",
+              "projects/dashboards-demo/src/favicon.png",
+              {
+                "glob": "*",
+                "input": "projects/dashboards-ng/assets/i18n",
+                "output": "assets/i18n/dashboards-ng/"
+              }
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["node_modules/"]
+            },
+            "styles": [
+              "projects/dashboards-demo/src/styles.scss",
+              "node_modules/gridstack/dist/gridstack.css",
+              "node_modules/gridstack/dist/gridstack-extra.css"
+            ],
+            "extraWebpackConfig": "projects/dashboards-demo/webpack.config.cjs",
+            "allowedCommonJsDependencies": ["echarts", "gridstack"],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/dashboards-demo/tsconfig.app.prod.json",
+              "fileReplacements": [
+                {
+                  "replace": "projects/dashboards-demo/src/environments/environment.ts",
+                  "with": "projects/dashboards-demo/src/environments/environment.prod.ts"
+                }
+              ],
+              "crossOrigin": "use-credentials",
+              "optimization": true,
+              "outputHashing": "all",
+              "namedChunks": false,
+              "extractLicenses": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            },
+            "demo-deployment": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/dashboards-demo/src/environments/environment.ts",
+                  "with": "projects/dashboards-demo/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "ngx-build-plus:dev-server",
+          "options": {
+            "extraWebpackConfig": "projects/dashboards-demo/webpack.config.cjs",
+            "buildTarget": "dashboards-demo:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "dashboards-demo:build:production",
+              "extraWebpackConfig": "projects/dashboards-demo/webpack.config.prod.cjs"
+            },
+            "development": {
+              "buildTarget": "dashboards-demo:build"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "builderMode": "application",
+            "polyfills": ["zone.js", "zone.js/testing"],
+            "tsConfig": "projects/dashboards-demo/tsconfig.spec.json",
+            "karmaConfig": "projects/dashboards-demo/karma.conf.cjs",
+            "assets": [
+              "projects/dashboards-demo/src/assets",
+              "projects/dashboards-demo/src/favicon.png",
+              {
+                "glob": "*",
+                "input": "projects/dashboards-ng/assets/i18n",
+                "output": "assets/i18n/dashboards-ng/"
+              }
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["node_modules/"]
+            },
+            "styles": ["projects/dashboards-demo/src/styles.scss"],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/dashboards-demo/src/**/*.ts",
+              "projects/dashboards-demo/src/**/*.html"
+            ],
+            "eslintConfig": "projects/dashboards-demo/eslint.config.js"
+          }
+        }
+      }
+    },
+    "dashboards-demo-webcomponents": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/dashboards-demo/webcomponents",
+      "sourceRoot": "projects/dashboards-demo/webcomponents/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/dashboards-demo-webcomponents",
+            "index": "projects/dashboards-demo/webcomponents/src/index.html",
+            "main": "projects/dashboards-demo/webcomponents/src/main.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "projects/dashboards-demo/webcomponents/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [],
+            "styles": ["projects/dashboards-demo/webcomponents/src/styles.scss"],
+            "scripts": [],
+            "extractLicenses": false
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/dashboards-demo/webcomponents/tsconfig.app.prod.json",
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "1mb",
+                  "maximumError": "2mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "dashboards-demo-webcomponents:build:production"
+            },
+            "development": {
+              "buildTarget": "dashboards-demo-webcomponents:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "builderMode": "application",
+            "polyfills": ["zone.js", "zone.js/testing"],
+            "tsConfig": "projects/dashboards-demo/webcomponents/tsconfig.spec.json",
+            "karmaConfig": "projects/dashboards-demo/webcomponents/karma.conf.cjs",
+            "inlineStyleLanguage": "scss",
+            "assets": [],
+            "styles": ["projects/dashboards-demo/webcomponents/src/styles.scss"],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/dashboards-demo/webcomponents/**/*.ts",
+              "projects/dashboards-demo/webcomponents/**/*.html"
+            ],
+            "eslintConfig": "projects/dashboards-demo/webcomponents/eslint.config.js"
+          }
+        }
+      }
+    },
+    "dashboards-demo-mfe": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/dashboards-demo/mfe",
+      "sourceRoot": "projects/dashboards-demo/mfe/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "ngx-build-plus:browser",
+          "options": {
+            "outputPath": "dist/dashboards-demo-mfe",
+            "index": "projects/dashboards-demo/mfe/src/index.html",
+            "main": "projects/dashboards-demo/mfe/src/main.ts",
+            "polyfills": ["zone.js"],
+            "tsConfig": "projects/dashboards-demo/mfe/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/dashboards-demo/mfe/src/favicon.ico",
+              "projects/dashboards-demo/mfe/src/assets"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["node_modules/"]
+            },
+            "styles": ["projects/dashboards-demo/mfe/src/styles.scss"],
+            "scripts": [],
+            "extraWebpackConfig": "projects/dashboards-demo/mfe/webpack.config.cjs",
+            "commonChunk": false
+          },
+          "configurations": {
+            "development": {
+              "optimization": false,
+              "sourceMap": true,
+              "buildOptimizer": false
+            },
+            "production": {
+              "crossOrigin": "use-credentials",
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "extraWebpackConfig": "projects/dashboards-demo/mfe/webpack.prod.config.cjs"
+            }
+          }
+        },
+        "serve": {
+          "builder": "ngx-build-plus:dev-server",
+          "options": {
+            "buildTarget": "dashboards-demo-mfe:build",
+            "publicHost": "http://localhost:4203",
+            "port": 4203,
+            "extraWebpackConfig": "projects/dashboards-demo/mfe/webpack.config.cjs"
+          },
+          "configurations": {
+            "development": {
+              "buildTarget": "dashboards-demo-mfe:build:development",
+              "extraWebpackConfig": "projects/dashboards-demo/mfe/webpack.prod.config.cjs"
+            },
+            "production": {
+              "buildTarget": "dashboards-demo-mfe:build:production",
+              "extraWebpackConfig": "projects/dashboards-demo/mfe/webpack.prod.config.cjs"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/dashboards-demo/mfe/**/*.ts",
+              "projects/dashboards-demo/mfe/**/*.html"
+            ],
+            "eslintConfig": "projects/dashboards-demo/mfe/eslint.config.js"
+          }
+        }
+      }
     }
   },
   "version": 1,

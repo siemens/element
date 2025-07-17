@@ -1,0 +1,21 @@
+<si-flexible-dashboard
+  #dashboard
+  [heading]="'Demo Dashboard ' + dashboardId"
+  [dashboardId]="dashboardId"
+  [widgetCatalog]="widgetCatalog"
+  (isModified)="appStateService.editable$.next($event)"
+>
+  <app-dashboard-filters menubar filters-slot />
+  <si-empty-state
+    empty-state
+    icon="element-dashboard"
+    heading="Use the widget catalog to design your dashboard."
+    content="No widgets have been added yet. Start right now and explore the world of widgets."
+  >
+    @if (!dashboard.editable()) {
+      <button type="button" class="btn btn-primary" (click)="dashboard.showWidgetCatalog()">
+        Add widget
+      </button>
+    }
+  </si-empty-state>
+</si-flexible-dashboard>

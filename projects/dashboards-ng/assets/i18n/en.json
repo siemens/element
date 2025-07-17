@@ -1,0 +1,46 @@
+{
+  "DASHBOARD": {
+    "EDIT": "Edit",
+    "SAVE": "Save",
+    "CANCEL": "Cancel",
+    "ADD_WIDGET": "Add widget",
+    "REMOVE_WIDGET_CONFIRMATION_DIALOG": {
+      "HEADING": "Remove widget",
+      "MESSAGE": "Do you really want to remove the widget?",
+      "REMOVE": "Remove",
+      "CANCEL": "Cancel"
+    },
+    "WIDGET_LIBRARY": {
+      "TITLE": "Add widget",
+      "CANCEL": "Cancel",
+      "ADD": "Add",
+      "NEXT": "Next",
+      "PREVIOUS": "Previous",
+      "EMPTY": "No widgets available.",
+      "DISCARD_CONFIG_CHANGE_DIALOG": {
+        "HEADING": "Widget configuration changed",
+        "MESSAGE": "The widget configuration changed. Do you want to discard the changes?",
+        "DISCARD": "Discard",
+        "CANCEL": "Cancel"
+      }
+    },
+    "WIDGET_EDITOR_DIALOG": {
+      "TITLE": "Edit",
+      "CANCEL": "Cancel",
+      "SAVE": "Save",
+      "DISCARD_CONFIG_CHANGE_DIALOG": {
+        "HEADING": "Widget configuration changed",
+        "MESSAGE": "The widget configuration changed. Do you want to discard the changes?",
+        "SAVE": "Save",
+        "DISCARD": "Discard",
+        "CANCEL": "Cancel"
+      }
+    },
+    "WIDGET": {
+      "REMOVE": "Remove",
+      "EDIT": "Edit",
+      "EXPAND": "Expand",
+      "RESTORE": "Restore"
+    }
+  }
+}

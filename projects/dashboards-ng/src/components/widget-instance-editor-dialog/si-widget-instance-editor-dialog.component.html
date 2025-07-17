@@ -1,0 +1,32 @@
+<div class="si-layout-fixed-height mb-8 mx-0 overflow-auto px-2 pt-2">
+  <ng-container #editorHost />
+</div>
+
+<div class="editor-footer px-2">
+  <button type="button" class="btn btn-secondary" (click)="onCancel()">{{
+    labelCancel | translate
+  }}</button>
+
+  @if (showPreviousButton()) {
+    <button
+      type="button"
+      class="btn btn-secondary"
+      [disabled]="disablePreviousButton()"
+      (click)="onPrevious()"
+      >{{ labelPrevious | translate }}</button
+    >
+  }
+  @if (showNextButton()) {
+    <button
+      type="button"
+      class="btn btn-secondary"
+      [disabled]="disableNextButton()"
+      (click)="onNext()"
+      >{{ labelNext | translate }}</button
+    >
+  }
+
+  <button type="button" class="btn btn-primary" [disabled]="invalidConfig()" (click)="onSave()">{{
+    labelSave | translate
+  }}</button>
+</div>

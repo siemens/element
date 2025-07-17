@@ -1,0 +1,50 @@
+<div class="grid-stack-item-content p-4">
+  @if (editable$ | async) {
+    <div class="resize-handle">
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g>
+          <path d="M16 16H18V18H16V16Z" fill="currentColor" />
+          <path d="M11 16H13V18H11V16Z" fill="currentColor" />
+          <path d="M11 11H13V13H11V11Z" fill="currentColor" />
+          <path d="M6 16H8V18H6V16Z" fill="currentColor" />
+          <path d="M16 11H18V13H16V11Z" fill="currentColor" />
+          <path d="M16 6H18V8H16V6Z" fill="currentColor" />
+        </g>
+      </svg>
+    </div>
+    <div class="draggable-overlay"></div>
+  }
+  <si-dashboard-card
+    #card
+    class="h-100 dragging-card"
+    [ngClass]="accentLine"
+    [expandText]="labelExpand"
+    [restoreText]="labelRestore"
+    [heading]="widgetConfig().heading"
+    [primaryActions]="primaryActions"
+    [secondaryActions]="secondaryActions"
+    [actionBarViewType]="actionBarViewType"
+    [enableExpandInteraction]="widgetConfig().expandable"
+    [imgAlt]="widgetConfig().image?.alt"
+    [imgDir]="widgetConfig().image?.dir"
+    [imgObjectFit]="widgetConfig().image?.objectFit"
+    [imgObjectPosition]="widgetConfig().image?.objectPosition"
+    [imgSrc]="widgetConfig().image?.src"
+  >
+    <div class="card-body overflow-auto" body>
+      <ng-container #widgetHost />
+    </div>
+
+    @if (widgetInstanceFooter) {
+      <div class="card-footer" footer>
+        <ng-container *ngTemplateOutlet="widgetInstanceFooter" />
+      </div>
+    }
+  </si-dashboard-card>
+</div>

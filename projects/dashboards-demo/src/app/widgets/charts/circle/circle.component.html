@@ -1,0 +1,5 @@
+<si-chart-circle
+  #circle
+  [series]="(data | async) ?? undefined"
+  (siResizeObserver)="circle.resize()"
+/>

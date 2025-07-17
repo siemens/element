@@ -1,0 +1,23 @@
+{
+  "name": "@siemens/dashboards-demo",
+  "version": "47.7.0",
+  "description": "Siemens Dashboards demo",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/siemens/element.git"
+  },
+  "author": {
+    "name": "Siemens AG",
+    "email": "info@siemens.com"
+  },
+  "homepage": "https://github.com/siemens/element",
+  "bugs": "https://github.com/siemens/element/issues/new",
+  "type": "module",
+  "dependencies": {
+    "ngx-translate-multi-http-loader": "19.0.2"
+  },
+  "devDependencies": {
+    "ngx-build-plus": "^19.0.0"
+  }
+}

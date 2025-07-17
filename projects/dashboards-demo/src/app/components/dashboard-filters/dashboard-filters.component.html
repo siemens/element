@@ -1,0 +1,19 @@
+<form [formGroup]="form">
+  <div class="form-container">
+    <div class="me-3">
+      <select formControlName="day" aria-label="number" class="form-select">
+        @for (day of days; track $index) {
+          <option [value]="day">{{ day }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="me-3">
+      <select formControlName="severity" aria-label="number" class="form-select">
+        @for (sev of severity; track $index) {
+          <option [value]="sev">{{ sev }}</option>
+        }
+      </select>
+    </div>
+  </div>
+</form>

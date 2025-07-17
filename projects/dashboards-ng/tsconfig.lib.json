@@ -1,0 +1,24 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../out-tsc/lib",
+    "declaration": true,
+    "inlineSources": true,
+    "types": ["../element-translate-ng/localize-types/index.ts", "zone.js"],
+    "lib": ["dom", "es2018"],
+    "paths": {
+      "@siemens/element-translate-ng": ["dist/@siemens/element-translate-ng"],
+      "@siemens/element-translate-ng/*": ["dist/@siemens/element-translate-ng/*"],
+      "@siemens/element-ng": ["dist/@siemens/element-ng"],
+      "@siemens/element-ng/*": ["dist/@siemens/element-ng/*"]
+    }
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true,
+    "enableResourceInlining": true,
+    "compilationMode": "partial"
+  },
+  "exclude": ["**/*.spec.ts", "test"]
+}

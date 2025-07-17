@@ -1,0 +1,35 @@
+<si-dashboard #dashboard [heading]="pageTitle()" [sticky]="true">
+  <si-dashboard-toolbar
+    #toolbar
+    menubar
+    [class.d-none]="!isDashboardVisible()"
+    [primaryEditActions]="(primaryEditActions$ | async) ?? []"
+    [secondaryEditActions]="(secondaryEditActions$ | async) ?? []"
+    [editable]="editable()"
+    [disabled]="(grid.isLoading | async) ?? false"
+    [hideEditButton]="hideEditButton()"
+    [showEditButtonLabel]="showEditButtonLabel()"
+    (editableChange)="grid.edit()"
+    (save)="grid.save()"
+    (cancel)="grid.cancel()"
+  >
+    <ng-content select="[filters-slot]" filters-slot />
+  </si-dashboard-toolbar>
+
+  <div dashboard class="d-contents">
+    <si-grid
+      #grid
+      [class.d-none]="!isDashboardVisible()"
+      [gridConfig]="config()?.grid"
+      [dashboardId]="dashboardId()"
+      [widgetCatalog]="widgetCatalog()"
+      [hideProgressIndicator]="hideProgressIndicator()"
+      [widgetInstanceEditorDialogComponent]="widgetInstanceEditorDialogComponent()"
+      [emitWidgetInstanceEditEvents]="true"
+      (isModified)="onModified($event)"
+    >
+      <ng-content select="[empty-state]" empty-state />
+    </si-grid>
+    <ng-container #catalogHost />
+  </div>
+</si-dashboard>

@@ -1,0 +1,34 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  margin-inline: -1 * map.get(variables.$spacers, 2);
+  margin-block-start: -1 * map.get(variables.$spacers, 2);
+}
+
+.widget-list {
+  background-color: variables.$element-base-1;
+  border: 1px solid variables.$element-ui-4;
+  border-radius: variables.$element-radius-2;
+  overflow-x: auto;
+}
+
+.list-group-item {
+  border-inline-color: transparent;
+  border-radius: 0;
+}
+
+.catalog-footer {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+
+  > * {
+    margin-inline-start: map.get(variables.$spacers, 6);
+  }
+}

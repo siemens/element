@@ -1,0 +1,74 @@
+<div class="si-layout-fixed-height mb-8 mx-0 overflow-auto px-2 pt-2">
+  @if (view() === 'list') {
+    <div class="si-layout-fixed-height">
+      <div class="mx-0">
+        <si-search-bar
+          class="w-100"
+          colorVariant="base-1"
+          showIcon="true"
+          [placeholder]="searchPlaceholder() | translate"
+          [value]="searchTerm"
+          (searchChange)="onSearch($event)"
+        />
+      </div>
+      <div
+        class="si-layout-fixed-height text-pre-wrap text-break overflow-y-auto widget-list mt-6 bg-base-1"
+      >
+        @if (filteredWidgetCatalog.length > 0) {
+          <div class="si-layout-fixed-height list-group">
+            @for (widget of filteredWidgetCatalog; track $index) {
+              <button
+                type="button"
+                class="list-group-item list-group-item-action d-flex"
+                [class.active]="selected() === widget"
+                (click)="selectWidget(widget)"
+              >
+                <si-circle-status class="my-n4 me-5" [icon]="widget.iconClass" />
+                <div class="d-flex flex-column align-items-start">
+                  <span class="si-title-2">{{ widget.name }}</span>
+                  <span class="si-body-2">{{ widget.description?.trim() }}</span>
+                </div>
+              </button>
+            }
+          </div>
+        } @else {
+          <div>
+            <si-empty-state icon="element-report" [heading]="labelEmpty" />
+          </div>
+        }
+      </div>
+    </div>
+  }
+  <ng-container #editorHost />
+</div>
+
+<div class="catalog-footer py-0 px-2">
+  <button type="button" class="btn btn-secondary" (click)="onCancel()">{{
+    labelCancel | translate
+  }}</button>
+  @if (showPreviousButton()) {
+    <button type="button" class="btn btn-secondary" (click)="onPrevious()">{{
+      labelPrevious | translate
+    }}</button>
+  }
+  @if (showNextButton()) {
+    <button
+      type="button"
+      class="btn"
+      [class.btn-primary]="view() === 'list'"
+      [class.btn-secondary]="view() !== 'list'"
+      [disabled]="disableNextButton()"
+      (click)="onNext()"
+      >{{ labelNext | translate }}</button
+    >
+  }
+  @if (showAddButton()) {
+    <button
+      type="button"
+      class="btn btn-primary"
+      [disabled]="disableAddButton()"
+      (click)="onAddWidget()"
+      >{{ labelAdd | translate }}</button
+    >
+  }
+</div>

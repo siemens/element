@@ -1,0 +1,22 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+::ng-deep {
+  .si-grid-stack-placeholder {
+    background-color: variables.$element-base-information;
+    opacity: 0.3;
+  }
+}
+
+:host {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  // grid-items have a positioning
+  margin-inline-start: -8px;
+  margin-inline-end: -8px;
+  margin-block-start: -8px;
+}
+
+.grid-stack {
+  display: block;
+}

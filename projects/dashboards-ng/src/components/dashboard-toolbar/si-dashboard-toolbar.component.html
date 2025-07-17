@@ -1,0 +1,116 @@
+<div class="row mb-3" siResponsiveContainer>
+  <div class="col-12 d-flex justify-content-between">
+    @if (!editable()) {
+      <ng-content select="[filters-slot]" />
+      @if (!hideEditButton()) {
+        <button
+          type="button"
+          class="btn ms-auto"
+          [ngClass]="
+            showEditButtonLabelDesktop()
+              ? 'btn-secondary'
+              : 'btn-circle btn-sm btn-tertiary element-edit'
+          "
+          [attr.aria-label]="labelEdit | translate"
+          [disabled]="disabled()"
+          (click)="onEdit()"
+        >
+          @if (showEditButtonLabelDesktop()) {
+            {{ labelEdit | translate }}
+          }
+        </button>
+      }
+    } @else {
+      @if (showContentActionBar()) {
+        <si-content-action-bar
+          toggleItemLabel="toggle"
+          viewType="expanded"
+          [disabled]="disabled()"
+          [primaryActions]="primaryEditActions()"
+          [secondaryActions]="secondaryEditActions()"
+        />
+      } @else {
+        <div>
+          @for (action of editActions(); track $index) {
+            @if (isToolbarItem(action)) {
+              @if (disabled()) {
+                <!-- Links do not support disabled, so we need to render a button instead in this case. -->
+                <button type="button" class="btn btn-secondary me-4" disabled>
+                  {{ action.label! | translate }}
+                </button>
+              } @else {
+                @switch (action.type) {
+                  @case ('action') {
+                    <!-- eslint-disable @angular-eslint/template/no-any -->
+                    <!-- This item has a patched action which will inject the grid. But our types do not reflect this. -->
+                    <!-- TODO: make our types reflect that this item has a patched action. -->
+                    <button
+                      type="button"
+                      class="btn btn-secondary me-4"
+                      (click)="$any(action.action)()"
+                    >
+                      {{ action.label! | translate }}
+                    </button>
+                    <!-- eslint-disable-enable @angular-eslint/template/no-any -->
+                  }
+                  @case ('router-link') {
+                    <a
+                      class="btn btn-secondary me-4"
+                      [routerLink]="action.routerLink"
+                      [queryParams]="action.extras?.queryParams"
+                      [queryParamsHandling]="action.extras?.queryParamsHandling"
+                      [fragment]="action.extras?.fragment"
+                      [state]="action.extras?.state"
+                      [relativeTo]="action.extras?.relativeTo ?? activatedRoute"
+                      [preserveFragment]="action.extras?.preserveFragment"
+                      [skipLocationChange]="action.extras?.skipLocationChange"
+                      [replaceUrl]="action.extras?.replaceUrl"
+                    >
+                      {{ action.label! | translate }}
+                    </a>
+                  }
+                  @case ('link') {
+                    <a class="btn btn-secondary me-4" [href]="action.href" [target]="action.target">
+                      {{ action.label! | translate }}
+                    </a>
+                  }
+                }
+              }
+            } @else {
+              <button
+                type="button"
+                class="btn btn-secondary me-4"
+                [disabled]="disabled()"
+                [siLink]="action"
+              >
+                {{ action.title! | translate }}
+              </button>
+            }
+          }
+        </div>
+      }
+      <div>
+        <button
+          type="button"
+          class="btn btn-secondary me-4"
+          [disabled]="disabled()"
+          (click)="onCancel()"
+        >
+          {{ labelCancel | translate }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          [disabled]="disableSaveButton() || disabled()"
+          (click)="onSave()"
+        >
+          @if (disabled()) {
+            <si-loading-spinner />
+          } @else {
+            <span>{{ labelSave | translate }}</span>
+          }
+        </button>
+      </div>
+    }
+  </div>
+</div>

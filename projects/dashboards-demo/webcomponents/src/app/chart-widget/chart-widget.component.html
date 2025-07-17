@@ -1,0 +1,10 @@
+<si-chart-cartesian
+  #cartesian
+  [stacked]="cartesianConfig.stacked"
+  [showLegend]="cartesianConfig.showLegend"
+  [xAxis]="(data | async)?.xAxis"
+  [yAxis]="(data | async)?.yAxis"
+  [series]="(data | async)?.series"
+  [themeCustomization]="cartesianConfig.themeCustomization"
+  (siResizeObserver)="cartesian.resize()"
+/>

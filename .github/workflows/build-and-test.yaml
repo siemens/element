@@ -29,6 +29,9 @@ jobs:
       - run: npm run build:all:update-translatable-keys # Output is needed in dist for providing default translations
       - run: git diff --exit-code "projects/**/*-translatable-keys.interface.ts"
       - run: npm run build:examples
+      - run: npm run dashboards-demo:build
+      - run: npm run dashboards-demo:build:webcomponents
+      - run: npm run dashboards-demo:build:mfe
       - uses: actions/upload-artifact@v4
         with:
           name: dist
@@ -61,6 +64,7 @@ jobs:
       - run: npm run translate:test -- --watch=false --progress=false --code-coverage
       - run: npm run lib:test -- --watch=false --progress=false --code-coverage
       - run: npm run charts:test -- --watch=false --progress=false
+      - run: npm run dashboards:test -- --watch=false --progress=false
       # TODO: Upload coverage reports
 
   aot:

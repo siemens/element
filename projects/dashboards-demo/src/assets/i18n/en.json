@@ -1,0 +1,51 @@
+{
+  "MODAL": {
+    "ADD_WIDGET": "Add widget",
+    "ADD_WIDGET_FROM_LIBRARY": "Add widget from widget catalog",
+    "ADD_EMPTY_WIDGET": "Add an empty widget",
+    "RESET": "Reset",
+    "CANCEL": "Cancel",
+    "SAVE": "Save"
+  },
+  "WIDGET": {
+    "LINE_CHART": "Line Chart",
+    "BAR_CHART": "Bar Chart",
+    "CIRCLE_CHART": "Circle Chart"
+  },
+  "TOOLBAR": {
+    "SAVE_AS_DEFAULTS": "Save as defaults",
+    "RESTORE_DEFAULTS": "Restore defaults"
+  },
+  "EDIT_WIDGET_MODAL": {
+    "EDIT_WIDGET": "Edit Widget",
+    "DATA_SOURCE": "Data source",
+    "PREVIEW": "Preview",
+    "DATA": "Data",
+    "DESIGN": "Design",
+    "TYPE": "Type",
+    "CONTENT": "Content",
+    "BLOCKQUOTE": "Blockquote",
+    "INNER_RADIUS": "Inner Radius",
+    "OUTER_RADIUS": "Outer Radius",
+    "CATEGORY": "Category",
+    "CASE_1": "Case 1",
+    "CASE_2": "Case 2",
+    "NAME": "Name",
+    "VALUE": "Value",
+    "LINE": "Line",
+    "BAR": "Bar",
+    "PIE": "Pie",
+    "CARD": "Card",
+    "GAUGE": "Gauge",
+    "HEADING": "Heading",
+    "MIN_VALUE": "Min value",
+    "MAX_VALUE": "Max value",
+    "SPLIT_STEPS": "Split steps",
+    "SHOW_LEGEND": "Show legend",
+    "STACKED": "Stacked",
+    "THEMES": "Themes",
+    "RED_SERIES": "Red series",
+    "BLUE_SERIES": "Blue series",
+    "GREEN_SERIES": "Green series"
+  }
+}

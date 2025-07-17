@@ -1,0 +1,60 @@
+<form [formGroup]="form">
+  @switch (currentPage()) {
+    @case (0) {
+      <h2>Personal Information ({{ currentPage() + 1 }} / {{ pageCount }})</h2>
+      <div formGroupName="personal">
+        <si-form-item label="First Name">
+          <input
+            type="text"
+            id="firstName"
+            class="form-control"
+            formControlName="firstName"
+            required
+            minlength="3"
+            pattern="^[A-Z].*"
+          />
+        </si-form-item>
+        <si-form-item label="Last Name">
+          <input
+            type="text"
+            id="lastName"
+            class="form-control"
+            formControlName="lastName"
+            required
+            minlength="3"
+            pattern="^[A-Z].*"
+          />
+        </si-form-item>
+        <si-form-item label="Birthday">
+          <si-calendar-button class="w-100">
+            <input
+              type="text"
+              id="birthday"
+              class="form-control"
+              autocomplete="off"
+              formControlName="birthday"
+              siDatepicker
+            />
+          </si-calendar-button>
+        </si-form-item>
+      </div>
+    }
+    @case (1) {
+      <h2>Company Information ({{ currentPage() + 1 }} / {{ pageCount }})</h2>
+      <div formGroupName="company">
+        <si-form-item label="Job title">
+          <input type="text" id="jobTitle" class="form-control" formControlName="jobTitle" />
+        </si-form-item>
+        <si-form-item label="Company">
+          <input type="text" id="company" class="form-control" formControlName="company" />
+        </si-form-item>
+        <si-form-item label="Email">
+          <input type="text" id="email" class="form-control" formControlName="email" />
+        </si-form-item>
+        <si-form-item label="Phone">
+          <input type="text" id="phone" class="form-control" formControlName="phone" />
+        </si-form-item>
+      </div>
+    }
+  }
+</form>

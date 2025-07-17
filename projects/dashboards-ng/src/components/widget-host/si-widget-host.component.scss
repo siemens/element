@@ -1,0 +1,63 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: flex;
+}
+
+::ng-deep {
+  si-content-action-bar {
+    // Lift the content action bar above the draggable-overlay
+    // to enable users to click the edit button, when an image
+    // is displayed vertically and the draggable-overlay spans
+    // the complete card, including the content-action-bar.
+    z-index: 500;
+  }
+
+  &.ui-droppable.ui-droppable-over > *:not(.ui-droppable) {
+    cursor: move !important; // stylelint-disable-line declaration-no-important
+    pointer-events: inherit !important; // stylelint-disable-line declaration-no-important
+  }
+
+  .ui-draggable-dragging,
+  .ui-resizable-resizing {
+    .dragging-card {
+      box-shadow: variables.$element-elevation-2 !important; // stylelint-disable-line declaration-no-important
+    }
+
+    > .grid-stack-item-content {
+      box-shadow: none;
+      opacity: 1;
+    }
+  }
+
+  .ui-resizable-handle {
+    // Overwrite to always show the handle in edit mode
+    display: block !important; // stylelint-disable-line declaration-no-important
+  }
+
+  .ui-resizable-se {
+    // Overwrite to hide the gridstack.js icon
+    background-image: none !important; // stylelint-disable-line declaration-no-important
+    transform: none !important; // stylelint-disable-line declaration-no-important
+  }
+}
+
+.resize-handle {
+  inset-block-end: map.get(variables.$spacers, 3);
+  color: variables.$element-ui-2;
+  pointer-events: none;
+  position: absolute;
+  inset-inline-end: map.get(variables.$spacers, 3);
+  text-align: center;
+  z-index: 10;
+}
+
+.draggable-overlay {
+  cursor: move;
+  inset-block-end: map.get(variables.$spacers, 8);
+  inset-block-start: 40px;
+  inset-inline: map.get(variables.$spacers, 8);
+  position: absolute;
+  z-index: 100;
+}

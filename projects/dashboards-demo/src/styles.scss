@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+$siemens-font-path: '~@simpl/brand/src/fonts' !default;
+$icon-font-path: '~@simpl/element-icons/dist/fonts' !default;
+
+@use '@simpl/brand/src/themes/element-theme-siemens-brand' with (
+  $siemens-font-path: $siemens-font-path
+);
+
+@use '@siemens/element-theme/src/theme' with (
+  $element-theme-default: 'siemens-brand',
+  $element-themes: (
+    'siemens-brand',
+    'element'
+  )
+);
+
+@use '@simpl/element-icons/dist/style/simpl-element-icons' with (
+  $font-path: $icon-font-path
+);
+
+@use '@siemens/element-theme/src/styles/themes';
+@include themes.make-theme(element-theme-siemens-brand.$theme-siemens-brand-light, 'siemens-brand');
+@include themes.make-theme(
+  element-theme-siemens-brand.$theme-siemens-brand-dark,
+  'siemens-brand',
+  true
+);

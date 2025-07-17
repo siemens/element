@@ -1,0 +1,28 @@
+<div class="si-layout-fixed-height h-100">
+  <si-application-header>
+    <si-header-brand>
+      <a siHeaderLogo routerLink="/" class="d-none d-md-flex"></a>
+      <span class="application-name">Siemens Dashboards</span>
+    </si-header-brand>
+
+    <si-header-actions>
+      <button
+        type="button"
+        si-header-action-item
+        [icon]="theme === 'dark' ? 'element-sun' : 'element-economy'"
+        (click)="toggleDark()"
+        >Toggle theme</button
+      >
+    </si-header-actions>
+  </si-application-header>
+
+  <si-navbar-vertical
+    navbarCollapseButtonText="collapse"
+    navbarExpandButtonText="expand"
+    [items]="menuItems"
+    [collapsed]="collapsed"
+    [textOnly]="true"
+  >
+    <router-outlet />
+  </si-navbar-vertical>
+</div>

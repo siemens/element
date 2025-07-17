@@ -1,0 +1,17 @@
+<si-flexible-dashboard
+  #dashboard
+  heading="Dashboard with a custom library component"
+  dashboardId="custom-library"
+  [widgetCatalogComponent]="customWidgetCatalogComponent"
+  [widgetCatalog]="widgetCatalog"
+  (editableChange)="onEditableChange($event)"
+  (isModified)="appStateService.editable$.next($event)"
+>
+  <si-empty-state empty-state heading="Your own dashboard" [icon]="emptyIcon" [content]="emptyText">
+    @if (!dashboard.editable()) {
+      <button type="button" class="btn btn-primary" (click)="dashboard.showWidgetCatalog()">
+        Add widget
+      </button>
+    }
+  </si-empty-state>
+</si-flexible-dashboard>

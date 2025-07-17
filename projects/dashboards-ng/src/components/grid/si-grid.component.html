@@ -1,0 +1,13 @@
+@if (showEmptyState) {
+  <ng-content select="[empty-state]" />
+}
+<si-gridstack-wrapper
+  [widgetConfigs]="(visibleWidgetInstances$ | async) ?? []"
+  [gridConfig]="gridConfig()"
+  [editable]="editable()"
+  [siLoading]="!hideProgressIndicator() && initialLoad && (isLoading | async)!"
+  [blocking]="false"
+  (gridEvent)="handleGridEvent($event)"
+  (widgetInstanceRemove)="removeWidgetInstance($event)"
+  (widgetInstanceEdit)="editWidgetInstance($event)"
+/>

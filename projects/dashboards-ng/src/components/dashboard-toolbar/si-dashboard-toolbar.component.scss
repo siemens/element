@@ -1,0 +1,12 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+}
+
+si-loading-spinner {
+  --loading-spinner-size: #{variables.$si-font-size-body-1};
+  --loading-spinner-color: #{variables.$element-text-inverse};
+}

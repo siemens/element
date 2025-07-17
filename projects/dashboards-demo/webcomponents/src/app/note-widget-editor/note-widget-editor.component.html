@@ -1,0 +1,20 @@
+<div class="mb-6">
+  <label for="heading" class="form-label">Title</label>
+  <input
+    type="text"
+    class="form-control"
+    id="heading"
+    [(ngModel)]="heading"
+    (ngModelChange)="onChange()"
+  />
+</div>
+<div class="mb-6">
+  <label for="message" class="form-label">Message</label>
+  <input
+    type="text"
+    class="form-control"
+    id="message"
+    [(ngModel)]="message"
+    (ngModelChange)="onChange()"
+  />
+</div>

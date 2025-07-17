@@ -1,0 +1,28 @@
+@let payload = config.payload;
+<h3 class="si-h1-black" bold>{{ payload.firstName }} {{ payload.lastName }}</h3>
+<dl class="mt-6 mb-0">
+  @if (payload.birthday) {
+    <dt class="si-body-2 text-secondary">Birthday</dt>
+    <dd class="si-title-2">{{ payload.birthday | date }}</dd>
+  }
+
+  @if (payload.jobTitle) {
+    <dt class="si-body-2 text-secondary">Job title</dt>
+    <dd class="si-title-2">{{ payload.jobTitle }}</dd>
+  }
+
+  @if (payload.company) {
+    <dt class="si-body-2 text-secondary">Company</dt>
+    <dd class="si-title-2">{{ payload.company }}</dd>
+  }
+
+  @if (payload.email || payload.phone) {
+    <dt class="si-body-2 text-secondary">Contact</dt>
+    @if (payload.email) {
+      <dd class="si-title-2">{{ payload.email }}</dd>
+    }
+    @if (payload.phone) {
+      <dd class="si-title-2">{{ payload.phone }}</dd>
+    }
+  }
+</dl>
