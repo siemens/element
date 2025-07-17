@@ -2,29 +2,42 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { createPart, createTheme, iconOverrides, Theme } from 'ag-grid-community';
+import {
+  elementFilter,
+  elementMenu,
+  elementSortDown,
+  elementSortUp
+} from '@siemens/element-ng/icon';
+import { iconOverrides, Theme, themeQuartz } from 'ag-grid-community';
 
+import { elementColorScheme } from './element-datatable-theme';
 
-const elementVariables = createPart({
-  feature: 'colorScheme',
-  params: {},
-  modeParams: {
-    // for data-ag-theme-mode="mode"
-    light: {},
-    dark: {}
-  }
-});
-
+// sample icon override
 const elementIconOverrides = iconOverrides({
   type: 'image',
-  // override IconSet with element icons
+  mask: true,
   icons: {
-    '': {
-      svg: ''
+    'menu': {
+      svg: elementMenu.split(',')[1]
+    },
+    'filter': {
+      svg: elementFilter.split(',')[1]
+    },
+    'asc': {
+      svg: elementSortUp.split(',')[1]
+    },
+    'desc': {
+      svg: elementSortDown.split(',')[1]
+    },
+    'grip': {
+      svg: elementMenu.split(',')[1]
     }
   }
 });
 
-export const elementGridTheme: Theme = createTheme()
-  .withPart(elementVariables)
-  .withPart(elementIconOverrides);
+export const elementGridTheme: Theme = themeQuartz
+  .withPart(elementColorScheme)
+  .withPart(elementIconOverrides)
+  .withParams({
+    fontFamily: 'Siemens Sans, sans-serif'
+  });
