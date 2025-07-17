@@ -29,9 +29,9 @@ jobs:
       - run: npm run build:all:update-translatable-keys # Output is needed in dist for providing default translations
       - run: git diff --exit-code "projects/**/*-translatable-keys.interface.ts"
       - run: npm run build:examples
-      - run: npm run dashboards-demo:build
-      - run: npm run dashboards-demo:build:webcomponents
-      - run: npm run dashboards-demo:build:mfe
+      - run: npm run dashboards-demo:build:demo -- --progress=false
+      - run: npm run dashboards-demo:build:webcomponents -- --progress=false
+      - run: npm run dashboards-demo:build:mfe -- --progress=false
       - uses: actions/upload-artifact@v4
         with:
           name: dist
@@ -170,6 +170,7 @@ jobs:
           UV_INDEX_CODE_DOCS_THEME_PASSWORD: ${{ secrets.SIEMENS_NPM_TOKEN }}
           EXAMPLES_BASE: /element-examples
       - run: mv dist/element-examples/ dist/design/
+      - run: mv dist/dashboards-demo/ dist/design/
       - uses: actions/upload-artifact@v4
         with:
           name: pages

@@ -62,7 +62,7 @@
     "dashboards-demo:build:demo": "ng build dashboards-demo --configuration demo-deployment",
     "dashboards-demo:build:prod": "ng build dashboards-demo --configuration production",
     "dashboards-demo:build:webcomponents": "ng build dashboards-demo-webcomponents --configuration production --output-hashing none && node projects/dashboards-demo/webcomponents/concat.cjs",
-    "dashboards-demo:build:mfe": "ng build dashboards-demo-mfe --configuration production --output-hashing none "
+    "dashboards-demo:build:mfe": "ng build dashboards-demo-mfe --configuration production --output-hashing none"
   },
   "workspaces": [
     "projects/element-translate-cli",

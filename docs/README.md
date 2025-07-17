@@ -20,6 +20,10 @@ which implement the Element design system. The components are developed in the
 Open our [demo playground](https://element.siemens.io/element-examples/#/overview)
 to see examples for all our components.
 
+## Flexible dashboard demo
+
+Open our [flexible dashboard demo](https://element.siemens.io/dashboards-demo/).
+
 ## Figma design assets
 
 Our Figma library contains all designed components, styles, and blueprints

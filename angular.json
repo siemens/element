@@ -648,7 +648,7 @@
         "build": {
           "builder": "ngx-build-plus:browser",
           "options": {
-            "outputPath": "dist/dashboards-demo-mfe",
+            "outputPath": "dist/dashboards-demo/mfe",
             "index": "projects/dashboards-demo/mfe/src/index.html",
             "main": "projects/dashboards-demo/mfe/src/main.ts",
             "polyfills": ["zone.js"],
