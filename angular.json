@@ -494,6 +494,7 @@
         "serve": {
           "builder": "ngx-build-plus:dev-server",
           "options": {
+            "port": 4201,
             "extraWebpackConfig": "projects/dashboards-demo/webpack.config.cjs",
             "buildTarget": "dashboards-demo:build"
           },

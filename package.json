@@ -54,7 +54,7 @@
     "native-charts:build": "ng build native-charts-ng && cpy LICENSE.md \"./dist/@siemens/native-charts-ng/\"",
     "dashboards:test": "ng test dashboards-ng",
     "dashboards:build": "ng build dashboards-ng && cpy LICENSE.md \"./dist/@siemens/dashboards-ng/\"",
-    "dashboards-demo:start": "ng serve dashboards-demo --port 4201",
+    "dashboards-demo:start": "ng serve dashboards-demo",
     "dashboards-demo:start:prod": "http-server dist/dashboards-demo -s -p 4201 -a 127.0.0.1",
     "dashboards-demo:start:webcomponents": "http-server dist/dashboards-demo-webcomponents -s -p 4202",
     "dashboards-demo:start:mfe": "ng serve dashboards-demo-mfe",
