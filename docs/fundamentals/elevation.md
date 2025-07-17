@@ -25,7 +25,7 @@ These are independent color tokens and are designed to work across all base laye
 
 ![Elevation usage example](images/elevation-usage-example.png)
 
-The system is intentionally mostly flat, and we aim to avoid excessive layering or "boxes within boxes", as this can reduce clarity.
+The system is intentionally designed to be mostly flat, minimizing unnecessary layers or 'boxes within boxes' to maintain clarity and ease of use.
 
 ![Elevation layers do's and don'ts](images/elevation-do-and-donts.png)
 
