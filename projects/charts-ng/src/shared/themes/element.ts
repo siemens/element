@@ -22,7 +22,8 @@ const tooltipFormatter = (p: object | object[]): string => {
     const name = isPie
       ? series.data.name
       : useName
-        ? (series.name ?? series.seriesName)
+        ? // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+          series.name || series.seriesName
         : series.seriesName;
     const valIndex = (series.encode.value ?? series.encode.y)[0];
     const value = isCandle
