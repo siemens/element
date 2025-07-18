@@ -216,7 +216,7 @@
         </button>
         <div
           class="si-title-2 text-primary"
-          [class.disabled]="!currentStep?.isValid()"
+          [class.text-muted]="!currentStep?.isValid()"
           [attr.aria-disabled]="!currentStep?.isValid()"
           >{{ nextText() | translate }}</div
         >

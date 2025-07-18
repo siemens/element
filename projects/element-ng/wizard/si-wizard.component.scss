@@ -140,10 +140,6 @@ $wizard-vertical-divider-border-color: variables.$element-ui-4;
     border-color: $wizard-active-color;
   }
 
-  &.disabled {
-    opacity: 0.5;
-  }
-
   &.dashed {
     &.vertical {
       min-block-size: map.get(variables.$spacers, 5);
@@ -208,7 +204,14 @@ $wizard-vertical-divider-border-color: variables.$element-ui-4;
   .disabled:hover,
   a.disabled > * {
     cursor: default;
-    opacity: 0.5;
+
+    .title {
+      color: variables.$element-text-disabled;
+    }
+
+    .step-icon {
+      color: variables.$element-ui-3;
+    }
   }
 
   a:not(.disabled):hover {
@@ -273,15 +276,10 @@ $wizard-vertical-divider-border-color: variables.$element-ui-4;
   cursor: pointer;
 
   &.wizard-text-deactivate:hover {
-    cursor: not-allowed;
-    color: $wizard-default-color;
+    cursor: default;
   }
 
-  .disabled {
-    opacity: 0.5;
-  }
-
-  &:hover .text-primary {
+  &:not(.wizard-text-deactivate):hover .text-primary {
     color: $wizard-hover-color !important; // stylelint-disable-line declaration-no-important
   }
 }

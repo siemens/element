@@ -54,4 +54,14 @@ test.describe('si-wizard-vertical', () => {
     await page.getByLabel('Show vertical divider').check();
     await si.runVisualAndA11yTests('small-screen-vertical-divider');
   });
+
+  test(example + ' disabled steps', async ({ page, si }) => {
+    await si.visitExample(example);
+    await page.getByLabel('Vertical layout', { exact: true }).check();
+    await page.getByLabel('Valid step', { exact: true }).uncheck();
+    await si.runVisualAndA11yTests('disabled-steps');
+
+    await page.getByLabel('Number representation', { exact: true }).check();
+    await si.runVisualAndA11yTests('disabled-steps-numbered');
+  });
 });
