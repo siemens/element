@@ -1,0 +1,14 @@
+- heading "Styles" [level=4]
+- img "John Doe"
+- text: JD 
+- 'heading "Status (use only with sizes `regular` or `small`)" [level=4]'
+- text: JD JD JD JD JD  JD JD JD JD JD 
+- heading "Colors" [level=4]
+- text: JD JD JD JD JD JD JD JD JD JD JD JD JD JD JD JD JD
+- heading "Image sizes" [level=4]
+- img "John Doe"
+- img "John Doe"
+- img "John Doe"
+- img "John Doe"
+- img "John Doe"
+- img "John Doe"

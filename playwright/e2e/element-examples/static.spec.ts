@@ -33,6 +33,7 @@ test('si-accordion/si-accordion', ({ si }) => si.static());
 test('si-accordion/si-accordion-base-1', ({ si }) => si.static());
 test('si-accordion/si-collapsible-panel-icons', ({ si }) => si.static());
 test('si-accordion/si-collapsible-panel', ({ si }) => si.static());
+test('si-avatar/si-avatar', ({ si }) => si.static());
 test('si-circle-status/si-circle-status', ({ si }) => si.static());
 test('si-connection-strength/si-connection-strength', ({ si }) => si.static());
 test('si-content-action-bar/si-content-action-bar-states', ({ si }) => si.static());
