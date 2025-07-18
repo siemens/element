@@ -1,0 +1,32 @@
+<button
+  #trigger="cdkOverlayOrigin"
+  type="button"
+  class="btn btn-primary dropdown-toggle"
+  cdkOverlayOrigin
+  [class.show]="open"
+  [attr.aria-expanded]="open"
+  (click)="open = true"
+>
+  Overlay trigger / origin
+  <i class="dropdown-caret icon element-down-2"></i>
+</button>
+
+<ng-template
+  cdkConnectedOverlay
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
+  [cdkConnectedOverlayOpen]="open"
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayHasBackdrop]="true"
+  (backdropClick)="open = false"
+  (detach)="open = false"
+>
+  <div
+    class="dropdown-menu position-static d-block"
+    [cdkTrapFocus]="true"
+    [cdkTrapFocusAutoCapture]="true"
+  >
+    <button class="dropdown-item" type="button" (click)="logEvent('Action')">Action</button>
+    <button class="dropdown-item" type="button" (click)="logEvent('Action 2')">Action 2</button>
+    <button class="dropdown-item" type="button" (click)="logEvent('Action 3')">Action 3</button>
+  </div>
+</ng-template>

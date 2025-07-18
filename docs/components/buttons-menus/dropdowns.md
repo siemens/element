@@ -47,7 +47,7 @@ without special keyboard handling and aria-roles.
 The example uses the markup of [Bootstrap dropdown](https://getbootstrap.com/docs/5.1/components/dropdowns/).
 It is also possible to use the CDK directives without using markup related to the `dropdown-menu`.
 
-<si-docs-component example="si-dropdown/si-dropdown-with-overlay" height="200"></si-docs-component>
+<si-docs-component example="dropdown/dropdown-with-overlay" height="200"></si-docs-component>
 
 The overlay is toggled by the `open` property which needs to be updated properly.
 We added a transparent backdrop to the overlay so that we can listen for `(backdropClick)` which should close the overlay.
