@@ -1,0 +1,25 @@
+- banner:
+  - button "Launchpad" [expanded]
+  - link "Siemens logo":
+    - /url: https://element.siemens.io/
+  - text: Application name
+  - navigation "Header main":
+    - link "Item 1":
+      - /url: "#/viewer/viewer/item1"
+    - link "Item 2":
+      - /url: "#/viewer/viewer/item2"
+  - button "Help"
+  - button "Jane Smith"
+- paragraph: Launchpad
+- paragraph: Access all your apps
+- link:
+  - /url: .
+- link:
+  - /url: .
+- link:
+  - /url: .
+- link:
+  - /url: .
+- link "Add more":
+  - /url: https://example.org
+- button "Close launchpad"

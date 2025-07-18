@@ -1,0 +1,57 @@
+<si-navbar-primary
+  appTitle="Application name"
+  navAriaLabel="Primary"
+  closeAppSwitcherText="Close launchpad"
+  openAppSwitcherText="Open launchpad"
+  [primaryItems]="[
+    { title: 'Item 1', link: 'item1' },
+    { title: 'Item 2', link: 'item2' }
+  ]"
+  [account]="{
+    title: 'Jane Smith',
+    email: 'jane.smith@example.org',
+    company: 'ExampleOrg',
+    role: 'Admin'
+  }"
+  [accountItems]="[
+    {
+      title: 'Company',
+      icon: 'element-shuffle',
+      items: [
+        { title: 'ExampleOrg', link: '/company/example' },
+        { title: 'RSS Region A', link: '/company/regionA' },
+        { title: 'RSS Region B', link: '/company/regionB' },
+        { title: 'RSS Region C', link: '/company/regionC' }
+      ]
+    },
+    { title: '-' },
+    {
+      title: 'Messages',
+      icon: 'element-notification',
+      badge: 5,
+      badgeColor: 'danger',
+      link: '/messages'
+    },
+    { title: 'Profile', icon: 'element-account', link: '/profile' },
+    { title: '-' },
+    { title: 'Logout', icon: 'element-logout', link: '/byebye' }
+  ]"
+  [appCategoryItems]="appCategories"
+  [allAppsLink]="{ title: 'Add more', href: 'https://example.org' }"
+  [appItemsFavorites]="true"
+  (appItemFavoriteChanged)="favoriteChanged($event)"
+>
+  <si-navbar-item
+    quickAction
+    [item]="{
+      title: 'Help',
+      icon: 'element-help',
+      items: [
+        { title: 'Help', link: 'help' },
+        { title: '-' },
+        { title: 'About', link: 'about' },
+        { title: 'Corporate Information', href: 'http://www.example.org/corporate-information' }
+      ]
+    }"
+  />
+</si-navbar-primary>

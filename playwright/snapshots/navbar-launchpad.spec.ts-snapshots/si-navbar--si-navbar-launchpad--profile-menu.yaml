@@ -1,0 +1,22 @@
+- banner:
+  - button "Launchpad"
+  - link "Siemens logo":
+    - /url: https://element.siemens.io/
+  - text: Application name
+  - navigation "Header main":
+    - link "Item 1":
+      - /url: "#/viewer/viewer/item1"
+    - link "Item 2":
+      - /url: "#/viewer/viewer/item2"
+  - button "Help"
+  - button "Jane Smith" [expanded]
+  - group "Jane Smith":
+    - text: Jane Smith jane.smith@example.org ExampleOrg Admin
+    - separator
+    - button "Company"
+    - link "Messages 5":
+      - /url: "#/messages"
+    - link "Profile":
+      - /url: "#/profile"
+    - link "Logout":
+      - /url: "#/byebye"
