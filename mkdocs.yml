@@ -29,6 +29,18 @@ nav:
       - Spacing:                          'fundamentals/layouts/spacing.md'
     - Elevation:                          'fundamentals/elevation.md'
     - Localization:                       'fundamentals/localization.md'
+    - UX Writing:
+      - Overview:                           'fundamentals/ux-text-style-guide/index.md'
+      - Basics:                             'fundamentals/ux-text-style-guide/basics.md'
+      - Grammar and vocabulary:             'fundamentals/ux-text-style-guide/grammar-and-vocabulary.md'
+      - Punctuation:                        'fundamentals/ux-text-style-guide/punctuation.md'
+      - Proper nouns:                       'fundamentals/ux-text-style-guide/proper-nouns.md'
+      - Main menu functions:                'fundamentals/ux-text-style-guide/main-menu-functions.md'
+      - Frequent app functions:             'fundamentals/ux-text-style-guide/frequent-app-functions.md'
+      - Inappropriate terms:                'fundamentals/ux-text-style-guide/inappropriate-terms.md'
+      - Best practices:                     'fundamentals/ux-text-style-guide/best-practices.md'
+      - Errors, warnings and notifications: 'fundamentals/ux-text-style-guide/error-messages.md'
+      - Dialogs and buttons:                'fundamentals/ux-text-style-guide/dialogs-and-buttons.md'
   - Components:
     - Overview:                           'components/index.md'
     - Buttons & menus:
