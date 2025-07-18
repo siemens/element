@@ -1,0 +1,31 @@
+- text: 1 Step 1 2 Step 2 3 Step 3
+- heading "Step 1" [level=1]
+- text: Content with full height
+- button "Next" [disabled]
+- text: Control panel External navigation
+- button "Previous step"
+- text: 1 / 3
+- button "Next step"
+- checkbox "Card wizard" [checked]
+- text: Card wizard
+- checkbox "Vertical layout" [checked]
+- text: Vertical layout
+- checkbox "Show vertical divider"
+- text: Show vertical divider
+- checkbox "Show cancel button"
+- text: Show cancel button
+- checkbox "Show previous/next buttons" [checked]
+- text: Show previous/next buttons
+- checkbox "Enable completion page" [checked]
+- text: Enable completion page
+- checkbox "Valid step"
+- text: Valid step
+- checkbox "Number representation" [checked]
+- text: Number representation Completion page visible time (ms)
+- spinbutton "Completion page visible time (ms)"
+- text: Number of steps
+- spinbutton "Number of steps"
+- text: Vertical layout step container min-size (px)
+- spinbutton "Vertical layout step container min-size (px)"
+- text: Vertical layout step container max-size (px)
+- spinbutton "Vertical layout step container max-size (px)"
