@@ -147,8 +147,9 @@ nav:
   - Architecture:
     - CSS framework:                      'architecture/css-framework.md'
     - Dynamic forms:                      'architecture/dynamic-forms.md'
-    - Theming:                            'architecture/theming.md'
     - Motion and animation:               'architecture/motion-animation.md'
+    - Theming:                            'architecture/theming.md'
+    - UI state:                           'architecture/ui-state.md'
   - Contributing:                         'CONTRIBUTING.md'
   - Changelog:                            'CHANGELOG.md'
 
