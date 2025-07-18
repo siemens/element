@@ -20,6 +20,7 @@ test('datatable/datatable-footer', async ({ si }) => {
   test.setTimeout(60000);
   await si.static({ disabledA11yRules: ['scrollable-region-focusable'] });
 });
+test('elevation/elevation', ({ si }) => si.static());
 test('icons/icons', ({ si }) => si.static());
 test('input-fields/multi-line', ({ si }) => si.static());
 test('input-fields/single-line', ({ si }) => si.static());
