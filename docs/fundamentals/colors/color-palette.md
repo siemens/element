@@ -59,7 +59,7 @@ used as values for color tokens.
 |--------------------------------------------------------------|-----------------------------------|------------|
 | <si-docs-color style="background: #e0f1f4;"></si-docs-color> | `$siemens-interactive-blue-100`   | `#E0F1F4`  |
 | <si-docs-color style="background: #73bac9;"></si-docs-color> | `$siemens-interactive-blue-300`   | `#73BAC9`  |
-| <si-docs-color style="background: #00738A;"></si-docs-color> | `$siemens-interactive-blue-500`   | `#00738A`  |
+| <si-docs-color style="background: #006B80;"></si-docs-color> | `$siemens-interactive-blue-500`   | `#006B80`  |
 | <si-docs-color style="background: #004f60;"></si-docs-color> | `$siemens-interactive-blue-700`   | `#004F60`  |
 | <si-docs-color style="background: #00333e;"></si-docs-color> | `$siemens-interactive-blue-900`   | `#00333E`  |
 | <si-docs-color style="background: #00ffb9;"></si-docs-color> | `$siemens-bold-green`             | `#00FFB9`  |
