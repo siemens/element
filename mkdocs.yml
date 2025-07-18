@@ -89,7 +89,7 @@ nav:
     - Progress Indications:
       - Progress Bar:                     'components/progress-indication/progress-bar.md'
       - Result Details List:              'components/progress-indication/result-details-list.md'
-      - Sekeleton:                        'components/progress-indication/sekeleton.md'
+      - Skeleton:                         'components/progress-indication/skeleton.md'
       - Spinner:                          'components/progress-indication/spinner.md'
     - Search, Filter & Sort:
       - Overview:                         'components/sorting-filtering/index.md'
