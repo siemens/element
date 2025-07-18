@@ -8,21 +8,17 @@
   - button "expand"
   - button "Search..."
   - link "Home":
-    - /url: "#/viewer/viewer/home"
+    - /url: "#/viewer/viewer/route1"
   - link "Energy & sustainability":
-    - /url: "#/viewer/viewer/energy"
+    - /url: "#/viewer/viewer/route2"
   - button "User management"
   - group "User management":
-    - link "Sub item 4":
-      - /url: "#/viewer/viewer/subItem"
-    - link "Sub item 2":
-      - /url: "#/viewer/viewer/subItem2"
-    - link "Sub item 3":
-      - /url: "#/viewer/viewer/subItem3"
+    - link "Sub item 1 4":
+      - /url: "#/viewer/viewer/route3"
   - link "4 Test coverage":
-    - /url: "#/viewer/viewer/coverage"
+    - /url: "#/viewer/viewer/route4"
   - button "Documentation"
   - button "Action"
 - main:
   - heading "Here is a title" [level=2]
-  - text: Content with path 'subItem2'
+  - text: Sub item 1 content

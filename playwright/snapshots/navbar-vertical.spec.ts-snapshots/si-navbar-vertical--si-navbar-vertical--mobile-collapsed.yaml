@@ -8,4 +8,4 @@
   - button "expand"
 - main:
   - heading "Here is a title" [level=2]
-  - text: Content with path ''
+  - text: Default path content

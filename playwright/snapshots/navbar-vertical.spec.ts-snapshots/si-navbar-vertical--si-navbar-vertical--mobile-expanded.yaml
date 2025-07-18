@@ -8,22 +8,18 @@
   - button "collapse" [expanded]
   - textbox "Search..."
   - link "Home":
-    - /url: "#/viewer/viewer/home"
+    - /url: "#/viewer/viewer/route1"
   - text: Modules
   - link "Energy & sustainability":
-    - /url: "#/viewer/viewer/energy"
+    - /url: "#/viewer/viewer/route2"
   - button "User management"
   - link "Test coverage 4":
-    - /url: "#/viewer/viewer/coverage"
+    - /url: "#/viewer/viewer/route4"
   - button "Documentation" [expanded]
   - group "Documentation":
-    - link "Sub item 4":
-      - /url: "#/viewer/viewer/subItem4"
-    - link "Sub item 5":
-      - /url: "#/viewer/viewer/subItem5"
-    - link "Sub item 6":
-      - /url: "#/viewer/viewer/subItem6"
+    - link "Sub item 2":
+      - /url: "#/viewer/viewer/route5"
   - button "Action"
 - main:
   - heading "Here is a title" [level=2]
-  - text: Content with path 'subItem4'
+  - text: Sub item 2 content

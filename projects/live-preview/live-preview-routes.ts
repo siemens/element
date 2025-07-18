@@ -15,11 +15,51 @@ export const livePreviewRoutes: Routes = [
     path: 'overview',
     children: [
       // those need to be explicit for Ionic router related components like tabs
-      { path: 'route1', component: SiDummyComponent },
-      { path: 'route2', component: SiDummyComponent },
-      { path: 'route3', component: SiDummyComponent },
-      { path: 'route4', component: SiDummyComponent },
-      { path: 'route5', component: SiDummyComponent },
+      {
+        path: 'route1',
+        component: SiDummyComponent,
+        children: [
+          { path: 'child1', component: SiDummyComponent },
+          { path: 'child2', component: SiDummyComponent },
+          { path: 'child3', component: SiDummyComponent }
+        ]
+      },
+      {
+        path: 'route2',
+        component: SiDummyComponent,
+        children: [
+          { path: 'child1', component: SiDummyComponent },
+          { path: 'child2', component: SiDummyComponent },
+          { path: 'child3', component: SiDummyComponent }
+        ]
+      },
+      {
+        path: 'route3',
+        component: SiDummyComponent,
+        children: [
+          { path: 'child1', component: SiDummyComponent },
+          { path: 'child2', component: SiDummyComponent },
+          { path: 'child3', component: SiDummyComponent }
+        ]
+      },
+      {
+        path: 'route4',
+        component: SiDummyComponent,
+        children: [
+          { path: 'child1', component: SiDummyComponent },
+          { path: 'child2', component: SiDummyComponent },
+          { path: 'child3', component: SiDummyComponent }
+        ]
+      },
+      {
+        path: 'route5',
+        component: SiDummyComponent,
+        children: [
+          { path: 'child1', component: SiDummyComponent },
+          { path: 'child2', component: SiDummyComponent },
+          { path: 'child3', component: SiDummyComponent }
+        ]
+      },
       { path: '**', component: SiExampleOverviewComponent }
     ]
   },
@@ -27,23 +67,111 @@ export const livePreviewRoutes: Routes = [
     path: 'viewer/:mode',
     component: SiExampleViewerComponent,
     children: [
-      { path: 'route1', component: SiDummyComponent },
-      { path: 'route2', component: SiDummyComponent },
-      { path: 'route3', component: SiDummyComponent },
-      { path: 'route4', component: SiDummyComponent },
-      { path: 'route5', component: SiDummyComponent },
-      { path: '**', component: SiDummyComponent }
+      {
+        path: 'route1',
+        component: SiDummyComponent,
+        children: [
+          { path: 'child1', component: SiDummyComponent },
+          { path: 'child2', component: SiDummyComponent },
+          { path: 'child3', component: SiDummyComponent }
+        ]
+      },
+      {
+        path: 'route2',
+        component: SiDummyComponent,
+        children: [
+          { path: 'child1', component: SiDummyComponent },
+          { path: 'child2', component: SiDummyComponent },
+          { path: 'child3', component: SiDummyComponent }
+        ]
+      },
+      {
+        path: 'route3',
+        component: SiDummyComponent,
+        children: [
+          { path: 'child1', component: SiDummyComponent },
+          { path: 'child2', component: SiDummyComponent },
+          { path: 'child3', component: SiDummyComponent }
+        ]
+      },
+      {
+        path: 'route4',
+        component: SiDummyComponent,
+        children: [
+          { path: 'child1', component: SiDummyComponent },
+          { path: 'child2', component: SiDummyComponent },
+          { path: 'child3', component: SiDummyComponent }
+        ]
+      },
+      {
+        path: 'route5',
+        component: SiDummyComponent,
+        children: [
+          { path: 'child1', component: SiDummyComponent },
+          { path: 'child2', component: SiDummyComponent },
+          { path: 'child3', component: SiDummyComponent }
+        ]
+      },
+      {
+        path: '**',
+        component: SiDummyComponent,
+        children: [
+          { path: 'child1', component: SiDummyComponent },
+          { path: 'child2', component: SiDummyComponent },
+          { path: 'child3', component: SiDummyComponent }
+        ]
+      }
     ]
   },
   {
     path: 'iframe',
     component: SiLivePreviewWrapperComponent,
     children: [
-      { path: 'route1', component: SiDummyComponent },
-      { path: 'route2', component: SiDummyComponent },
-      { path: 'route3', component: SiDummyComponent },
-      { path: 'route4', component: SiDummyComponent },
-      { path: 'route5', component: SiDummyComponent },
+      {
+        path: 'route1',
+        component: SiDummyComponent,
+        children: [
+          { path: 'child1', component: SiDummyComponent },
+          { path: 'child2', component: SiDummyComponent },
+          { path: 'child3', component: SiDummyComponent }
+        ]
+      },
+      {
+        path: 'route2',
+        component: SiDummyComponent,
+        children: [
+          { path: 'child1', component: SiDummyComponent },
+          { path: 'child2', component: SiDummyComponent },
+          { path: 'child3', component: SiDummyComponent }
+        ]
+      },
+      {
+        path: 'route3',
+        component: SiDummyComponent,
+        children: [
+          { path: 'child1', component: SiDummyComponent },
+          { path: 'child2', component: SiDummyComponent },
+          { path: 'child3', component: SiDummyComponent }
+        ]
+      },
+      {
+        path: 'route4',
+        component: SiDummyComponent,
+        children: [
+          { path: 'child1', component: SiDummyComponent },
+          { path: 'child2', component: SiDummyComponent },
+          { path: 'child3', component: SiDummyComponent }
+        ]
+      },
+      {
+        path: 'route5',
+        component: SiDummyComponent,
+        children: [
+          { path: 'child1', component: SiDummyComponent },
+          { path: 'child2', component: SiDummyComponent },
+          { path: 'child3', component: SiDummyComponent }
+        ]
+      },
       { path: '**', component: SiDummyComponent }
     ]
   },
