@@ -150,12 +150,6 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
               "tsConfig": "src/tsconfig.app.prod.json",
               "crossOrigin": "use-credentials",
               "optimization": true,
