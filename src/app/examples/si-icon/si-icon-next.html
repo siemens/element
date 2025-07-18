@@ -1,0 +1,19 @@
+<!-- Preferred approach: using the object to add the icon. This is typesafe and ensure that the icon was imported. -->
+<si-icon-next [icon]="icons.elementUser" />
+<si-icon-next class="icon" [icon]="icons.elementUser" />
+<si-icon-next class="display-1" [icon]="icons.elementUser" />
+<!-- This will load the SVG as well, as we imported element-plus, but less save. Only use the string directly for dynamic values from the backend. -->
+<si-icon-next icon="element-2d-editor" />
+<si-icon-next class="icon" icon="element-2d-editor" />
+<si-icon-next class="display-1" icon="element-2d-editor" />
+
+<!-- Stacked in template -->
+<span class="icon icon-stack">
+  <si-icon-next class="status-danger" [icon]="icons.elementAlarmFilled" />
+  <si-icon-next class="text-secondary" [icon]="icons.elementAlarmTick" />
+</span>
+
+<!-- Icons are hidden in the a11y tree. Add an aria-label if no other descriptive text is provided.-->
+<button class="btn btn-primary btn-circle btn-xs" type="button" aria-label="Cancel">
+  <si-icon-next [icon]="icons.elementCancel" />
+</button>

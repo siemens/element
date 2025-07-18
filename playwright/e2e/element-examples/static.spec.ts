@@ -20,6 +20,7 @@ test('datatable/datatable-footer', async ({ si }) => {
   test.setTimeout(60000);
   await si.static({ disabledA11yRules: ['scrollable-region-focusable'] });
 });
+test('icons/icons', ({ si }) => si.static());
 test('input-fields/multi-line', ({ si }) => si.static());
 test('input-fields/single-line', ({ si }) => si.static());
 test('si-about/si-about-api', ({ si }) => si.static());
@@ -51,6 +52,9 @@ test('si-datepicker/si-timepicker', ({ si }) => si.static());
 test('si-electron-titlebar/si-electron-titlebar', ({ si }) => si.static());
 test('si-empty-state/si-empty-state', ({ si }) => si.static());
 test('si-footer/si-footer', ({ si }) => si.static());
+test('si-icon/si-icon-composite', ({ si }) => si.static());
+test('si-icon/si-icon', ({ si }) => si.static());
+test('si-icon/si-icon-next', ({ si }) => si.static({ skipAriaSnapshot: true }));
 test('si-icon-status/si-icon-status', ({ si }) => si.static());
 test('si-info-page/si-info-page', ({ si }) => si.static());
 test('si-info-page/si-info-page-stacked-icon', ({ si }) => si.static());

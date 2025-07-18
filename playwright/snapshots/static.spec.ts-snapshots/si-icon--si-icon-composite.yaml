@@ -1,0 +1,12 @@
+- heading "Event state" [level=2]
+- img "alarm"
+- img "alarm background"
+- img "alarm filled"
+- img "alarm background filled"
+- heading "Severity symbols" [level=2]
+- img "octagon filled"
+- img "circle filled"
+- img "triangle filled"
+- img /square \d+ filled/
+- img "square filled"
+- img "circle filled"
