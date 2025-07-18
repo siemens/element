@@ -1,0 +1,104 @@
+<div class="has-navbar-fixed-top si-layout-fixed-height h-100">
+  <si-application-header>
+    <si-header-brand>
+      <a siHeaderLogo routerLink="/" class="d-none d-md-flex"></a>
+      <span class="application-name">Application name</span>
+    </si-header-brand>
+
+    <si-header-actions>
+      <button
+        si-header-account-item
+        type="button"
+        name="Jane Smith"
+        [siHeaderDropdownTriggerFor]="account"
+      >
+      </button>
+      <ng-template #account>
+        <si-header-dropdown>
+          <div class="mx-5">
+            <div class="si-title-2">Jane Smith</div>
+            <div>jane.smith&#64;example.org</div>
+            <div class="d-flex align-items-center text-secondary mt-2">ExampleOrg</div>
+          </div>
+        </si-header-dropdown>
+      </ng-template>
+    </si-header-actions>
+  </si-application-header>
+
+  <div class="si-layout-fixed-height si-layout-main-padding">
+    <div class="si-layout-header">
+      <h2 class="si-layout-title si-layout-top-element"
+        >Title describing what page content to expect</h2
+      >
+      <p class="si-layout-subtitle"
+        >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</p
+      >
+    </div>
+
+    <div class="row gy-6 mb-6">
+      <si-search-bar placeholder="Search" class="col-12 col-md" [showIcon]="true" />
+      <div class="col-auto">
+        <select aria-label="number" class="form-select">
+          <option value="0">No filter</option>
+          <option value="1">Admin</option>
+          <option value="2">Controller</option>
+          <option value="3">User</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row si-layout-fixed-height flex-row">
+      <div class="col-sm-12 col-md-6 si-layout-fixed-height mb-6">
+        <ngx-datatable
+          #table
+          class="table-element si-layout-fixed-height"
+          style="min-height: 300px"
+          siDatatableInteraction
+          columnMode="force"
+          selectionType="multi"
+          [rows]="rows"
+          [columns]="[
+            { name: 'Name', sortable: false },
+            { name: 'Role', sortable: false },
+            { name: 'Company', sortable: false }
+          ]"
+          [reorderable]="true"
+          [rowHeight]="tableConfig.rowHeightSmall"
+          [footerHeight]="0"
+          [ghostLoadingIndicator]="true"
+          [scrollbarV]="true"
+          [externalPaging]="true"
+          [externalSorting]="true"
+          [count]="totalElements"
+          [offset]="pageNumber"
+          [datatableInteractionAutoSelect]="true"
+          (page)="setPage($event)"
+          (select)="onSelect($event)"
+          (siResizeObserver)="table.recalculate()"
+        />
+      </div>
+      <div class="col-sm-12 col-md-6 si-layout-fixed-height mb-6">
+        <si-chart-circle
+          #chart
+          class="bg-base-1 rounded-2"
+          style="min-height: 300px"
+          title="Reasons to remember the name"
+          [series]="[
+            {
+              name: 'Level',
+              radius: ['0', '60%'],
+              data: [
+                { value: 10, name: 'Luck' },
+                { value: 20, name: 'Skill' },
+                { value: 15, name: 'Concentrated power of will' },
+                { value: 5, name: 'Pleasure' },
+                { value: 50, name: 'Pain' }
+              ]
+            }
+          ]"
+          (siResizeObserver)="chart.resize()"
+        />
+      </div>
+    </div>
+  </div>
+</div>

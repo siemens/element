@@ -1,0 +1,101 @@
+<si-side-panel #sidePanel [collapsed]="collapsed" [mode]="mode" [size]="size">
+  <div class="has-navbar-fixed-top" [class.has-system-banner]="(hideSystembanner | async) !== true">
+    @if ((hideSystembanner | async) !== true) {
+      <si-system-banner
+        class="fixed-top"
+        message="System maintenance scheduled for 2 AM - 4 AM UTC"
+        status="caution"
+      />
+    }
+
+    <si-application-header [launchpad]="launchpad">
+      <si-header-brand>
+        <a siHeaderLogo routerLink="/" class="d-none d-md-flex"></a>
+        <span class="application-name">Application name</span>
+      </si-header-brand>
+
+      <si-header-actions>
+        <button
+          si-header-account-item
+          type="button"
+          name="Jane Smith"
+          [siHeaderDropdownTriggerFor]="account"
+        >
+        </button>
+        <ng-template #account>
+          <si-header-dropdown>
+            <div class="mx-5">
+              <div class="si-title-2">Jane Smith</div>
+              <div>jane.smith&#64;example.org</div>
+              <div class="d-flex align-items-center text-secondary mt-2">ExampleOrg</div>
+            </div>
+          </si-header-dropdown>
+        </ng-template>
+      </si-header-actions>
+    </si-application-header>
+    <ng-template #launchpad>
+      <si-launchpad-factory [apps]="[]" />
+    </ng-template>
+    <si-navbar-vertical
+      navbarCollapseButtonText="collapse"
+      navbarExpandButtonText="expand"
+      [items]="menuItems"
+    >
+      <div class="si-layout-main-padding">
+        <si-status-bar
+          class="si-layout-status si-layout-top-element"
+          [items]="statusItems"
+          [blink]="shouldBlink"
+        />
+
+        <div class="si-layout-header">
+          <h2 class="si-layout-title">Title describing what page content to expect</h2>
+          <p class="si-layout-subtitle"
+            >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</p
+          >
+        </div>
+
+        <div class="row mt-8 mb-6">
+          <div class="col">
+            <si-card class="h-100" heading="Toggle the side panel">
+              <div class="card-body" style="height: 300px" body>
+                <button type="button" class="btn btn-secondary mt-2" (click)="toggle()">
+                  Toggle side panel
+                </button>
+                <button type="button" class="btn btn-secondary mt-2 ms-2" (click)="toggleMode()">
+                  {{ mode + ' - Mode' }}
+                </button>
+                <button type="button" class="btn btn-secondary mt-2 ms-2" (click)="changeSize()">
+                  {{ size + ' - Width' }}
+                </button>
+              </div>
+            </si-card>
+          </div>
+        </div>
+
+        <div class="row">
+          @for (key of counter(9); track $index) {
+            <div class="col-xl-4 col-md-4 col-sm-6 mb-6">
+              <si-card class="h-100" [heading]="'Card Heading ' + $index">
+                <div class="card-body" style="height: 200px" body>Content {{ $index }}</div>
+              </si-card>
+            </div>
+          }
+        </div>
+      </div>
+    </si-navbar-vertical>
+  </div>
+  <si-side-panel-content heading="Title">
+    <si-accordion>
+      <si-collapsible-panel heading="Hey there">
+        <div class="p-6"> And here we have some content </div>
+      </si-collapsible-panel>
+      <si-collapsible-panel heading="Another one">
+        <div class="p-6"> And this is the content </div>
+      </si-collapsible-panel>
+      <si-collapsible-panel heading="Number three">
+        <div class="p-6"> Nothing to see here </div>
+      </si-collapsible-panel>
+    </si-accordion>
+  </si-side-panel-content>
+</si-side-panel>

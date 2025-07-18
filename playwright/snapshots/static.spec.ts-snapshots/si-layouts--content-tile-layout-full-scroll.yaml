@@ -1,0 +1,14 @@
+- banner:
+  - link "Siemens logo":
+    - /url: "#/"
+  - text: Application name
+  - button "Jane Smith"
+- heading "Title describing what page content to expect" [level=2]
+- paragraph: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+- textbox "Search"
+- combobox "number":
+  - option "No filter" [selected]
+  - option "Admin"
+  - option "Controller"
+  - option "User"
+- text: Card 1 Card Heading 0 Content 0 Card Heading 1 Content 1 Card Heading 2 Content 2 Card Heading 3 Content 3 Card Heading 4 Content 4 Card Heading 5 Content 5 Card Heading 6 Content 6 Card Heading 7 Content 7 Card Heading 8 Content 8

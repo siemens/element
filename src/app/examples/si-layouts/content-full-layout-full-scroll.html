@@ -1,0 +1,89 @@
+<div class="has-navbar-fixed-top">
+  <si-application-header>
+    <si-header-brand>
+      <a siHeaderLogo routerLink="/" class="d-none d-md-flex"></a>
+      <span class="application-name">Application name</span>
+    </si-header-brand>
+
+    <si-header-actions>
+      <button
+        si-header-account-item
+        type="button"
+        name="Jane Smith"
+        [siHeaderDropdownTriggerFor]="account"
+      >
+      </button>
+      <ng-template #account>
+        <si-header-dropdown>
+          <div class="mx-5">
+            <div class="si-title-2">Jane Smith</div>
+            <div>jane.smith&#64;example.org</div>
+            <div class="d-flex align-items-center text-secondary mt-2">ExampleOrg</div>
+          </div>
+        </si-header-dropdown>
+      </ng-template>
+    </si-header-actions>
+  </si-application-header>
+
+  <div class="si-layout-main-padding">
+    <div class="si-layout-header">
+      <h2 class="si-layout-title si-layout-top-element"
+        >Title describing what page content to expect</h2
+      >
+      <p class="si-layout-subtitle"
+        >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</p
+      >
+    </div>
+
+    <div class="row gy-6 mb-6">
+      <si-search-bar placeholder="Search" class="col-12 col-md" [showIcon]="true" />
+      <div class="col-auto">
+        <select aria-label="number" class="form-select">
+          <option value="0">No filter</option>
+          <option value="1">Admin</option>
+          <option value="2">Controller</option>
+          <option value="3">User</option>
+        </select>
+      </div>
+    </div>
+
+    <ngx-datatable
+      #table
+      class="table-element mb-4"
+      style="height: 600px"
+      siDatatableInteraction
+      columnMode="force"
+      selectionType="single"
+      [cssClasses]="tableConfig.cssClasses"
+      [rows]="rows"
+      [columns]="[
+        { name: 'Name', sortable: false },
+        { name: 'Role', sortable: false },
+        { name: 'Company', sortable: false }
+      ]"
+      [headerHeight]="tableConfig.headerHeight"
+      [footerHeight]="tableConfig.footerHeight"
+      [rowHeight]="tableConfig.rowHeightSmall"
+      [externalPaging]="true"
+      [count]="page.totalElements"
+      [offset]="page.pageNumber"
+      [limit]="page.size"
+      [ghostLoadingIndicator]="isLoading > 0"
+      (page)="setPage($event)"
+      (siResizeObserver)="updateTableData($event)"
+    >
+      <ngx-datatable-footer>
+        <ng-template ngx-datatable-footer-template>
+          <si-pagination
+            class="ms-auto"
+            forwardButtonText="forward"
+            backButtonText="back"
+            [currentPage]="page.pageNumber + 1"
+            [totalRowCount]="rows.length"
+            (currentPageChange)="table.onFooterPage({ page: $event })"
+          />
+        </ng-template>
+      </ngx-datatable-footer>
+    </ngx-datatable>
+  </div>
+</div>
