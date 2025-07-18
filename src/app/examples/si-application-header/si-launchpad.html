@@ -1,0 +1,9 @@
+<si-application-header [launchpad]="launchpad">
+  <si-header-brand>
+    <a siHeaderLogo routerLink="/"></a>
+  </si-header-brand>
+</si-application-header>
+
+<ng-template #launchpad>
+  <si-launchpad-factory enableFavorites [apps]="apps" (favoriteChange)="updateFavorite($event)" />
+</ng-template>

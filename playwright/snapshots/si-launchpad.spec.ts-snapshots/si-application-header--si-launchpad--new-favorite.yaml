@@ -1,0 +1,19 @@
+- banner:
+  - button "Launchpad" [expanded]
+  - link "Siemens logo":
+    - /url: "#/"
+- paragraph: Launchpad
+- paragraph: Access all your apps
+- text: Favorite apps
+- link "Fischbach":
+  - /url: .
+- button "Show less"
+- link "Assets":
+  - /url: .
+- link "Fischbach":
+  - /url: .
+- link "Rocket":
+  - /url: .
+- link "Statistics":
+  - /url: .
+- button "Close launchpad"
