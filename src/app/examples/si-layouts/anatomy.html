@@ -1,0 +1,137 @@
+<div class="has-navbar-fixed-top has-system-banner si-layout-fixed-height h-100">
+  <si-system-banner
+    class="fixed-top"
+    message="System maintenance scheduled for 2 AM - 4 AM UTC"
+    status="info"
+  />
+  <si-application-header [launchpad]="launchpad">
+    <si-header-brand>
+      <a siHeaderLogo routerLink="/"></a>
+      <span class="application-name">Application name</span>
+    </si-header-brand>
+
+    <si-header-actions>
+      <si-header-collapsible-actions>
+        <button
+          si-header-action-item
+          type="button"
+          icon="element-help"
+          [siHeaderDropdownTriggerFor]="support"
+          >Support</button
+        >
+        <button si-header-action-item type="button" icon="element-settings" [badge]="true"
+          >Settings</button
+        >
+      </si-header-collapsible-actions>
+
+      <button
+        si-header-account-item
+        type="button"
+        name="Lars Vegas"
+        [siHeaderDropdownTriggerFor]="account"
+      >
+      </button>
+    </si-header-actions>
+  </si-application-header>
+
+  <si-navbar-vertical
+    navbarCollapseButtonText="collapse"
+    navbarExpandButtonText="expand"
+    [items]="verticalNavbarItems"
+  >
+    <si-side-panel mode="scroll" [collapsible]="true">
+      <div class="si-layout-main-padding si-layout-fixed-height">
+        <si-status-bar class="si-layout-status si-layout-top-element" blink [items]="statusItems" />
+        <si-breadcrumb class="si-layout-breadcrumb" [items]="breadcrumbItems" />
+        <div class="si-layout-header">
+          <h2 class="si-layout-title">Title describing what page content to expect</h2>
+          <p class="si-layout-subtitle">Lorem ipsum dolor sit amet, ...</p>
+
+          <si-content-action-bar
+            class="si-layout-actions"
+            viewType="expanded"
+            [primaryActions]="primaryActions"
+            [secondaryActions]="secondaryActions"
+          />
+        </div>
+
+        <div class="mb-6">
+          <div class="row gy-6">
+            <si-search-bar placeholder="Search" class="col-12 col-md" [showIcon]="true" />
+            <div class="col-auto">
+              <button type="button" class="btn btn-secondary">Toolbar item</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="border rounded-2 si-layout-fixed-height p-4 mb-5"
+          >Placeholder for the content of the page, using the fixed height layout.</div
+        >
+      </div>
+
+      <si-side-panel-content heading="Cooling coil" [searchable]="true">
+        <si-accordion [fullHeight]="true">
+          <si-collapsible-panel
+            heading="Properties"
+            icon="element-settings"
+            contentCssClasses="p-6"
+          >
+            And here we have some content
+          </si-collapsible-panel>
+          <si-collapsible-panel heading="Documents" icon="element-document" contentCssClasses="p-6">
+            And this is the content
+          </si-collapsible-panel>
+          <si-collapsible-panel heading="Graphics" icon="element-image" contentCssClasses="p-6">
+            Nothing to see here
+          </si-collapsible-panel>
+        </si-accordion>
+      </si-side-panel-content>
+    </si-side-panel>
+  </si-navbar-vertical>
+</div>
+
+<ng-template #launchpad>
+  <si-launchpad-factory
+    enableFavorites
+    [apps]="categories"
+    (favoriteChange)="updateFavorite($event)"
+  />
+</ng-template>
+
+<ng-template #support>
+  <si-header-dropdown>
+    <button si-header-dropdown-item type="button">Help</button>
+    <button si-header-dropdown-item type="button">Contact</button>
+  </si-header-dropdown>
+</ng-template>
+
+<ng-template #account>
+  <si-header-dropdown>
+    <div class="mx-5">
+      <div class="si-title-2">Lars Vegas</div>
+      <div>lars.vegas&#64;example.org</div>
+      <div class="d-flex align-items-center text-secondary mt-2">
+        ExampleOrg
+        <span class="badge bg-default">Admin</span>
+      </div>
+    </div>
+    <div class="dropdown-divider"></div>
+    <button
+      si-header-dropdown-item
+      icon="element-language"
+      type="button"
+      [siHeaderDropdownTriggerFor]="language"
+    >
+      Language
+    </button>
+    <button si-header-dropdown-item icon="element-palette" type="button">Design</button>
+    <button si-header-dropdown-item icon="element-user" type="button">Profile</button>
+  </si-header-dropdown>
+</ng-template>
+
+<ng-template #language>
+  <si-header-dropdown>
+    <button si-header-dropdown-item type="button">German</button>
+    <button si-header-dropdown-item type="button">English</button>
+  </si-header-dropdown>
+</ng-template>
