@@ -12,11 +12,6 @@ test('custom-form-elements/checkbox', ({ si }) => si.static());
 test('custom-form-elements/radio', ({ si }) => si.static());
 test('custom-form-elements/select', ({ si }) => si.static());
 test('datatable/bootstrap', ({ si }) => si.static());
-// (disabled rule as long as siDatatableInteraction is used a tabindex=0 isn't needed on datatable-body)
-test('datatable/datatable-selection', async ({ si }) => {
-  test.setTimeout(60000);
-  await si.static({ disabledA11yRules: ['scrollable-region-focusable'] });
-});
 test('datatable/datatable-footer', async ({ si }) => {
   test.setTimeout(60000);
   await si.static({ disabledA11yRules: ['scrollable-region-focusable'] });
