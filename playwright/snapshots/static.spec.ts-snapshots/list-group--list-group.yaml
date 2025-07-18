@@ -1,0 +1,144 @@
+- heading "Basic" [level=2]
+- list:
+  - listitem: Cras justo odio
+  - listitem: Dapibus ac facilisis in
+  - listitem: Morbi leo risus
+  - listitem: Porta ac consectetur ac
+  - listitem: Vestibulum at eros
+- heading "Large list group items with large status indication" [level=2]
+- list:
+  - listitem:
+    - status "door in status info out"
+    - text: Cras justo odio
+  - listitem:
+    - status "lock in status danger"
+    - text: Dapibus ac facilisis in
+  - listitem:
+    - status "light in status warning"
+    - text: Morbi leo risus
+  - listitem:
+    - status "cooling in status info"
+    - text: Porta ac consectetur ac
+  - listitem:
+    - status "user in status danger"
+    - text: Vestibulum at eros
+  - listitem:
+    - status "bath in status success"
+    - text: Cras justo odio
+  - listitem:
+    - status "lightstatus none"
+    - text: Dapibus ac facilisis in
+- heading "Medium list group items with small status indication" [level=2]
+- list:
+  - listitem:
+    - status "door in status info out"
+    - text: Cras justo odio
+  - listitem:
+    - status "lock in status danger"
+    - text: Dapibus ac facilisis in
+  - listitem:
+    - status "light in status warning"
+    - text: Morbi leo risus
+  - listitem:
+    - status "cooling in status info"
+    - text: Porta ac consectetur ac
+  - listitem:
+    - status "user in status danger"
+    - text: Vestibulum at eros
+  - listitem:
+    - status "bath in status success"
+    - text: Cras justo odio
+  - listitem:
+    - status "lightstatus none"
+    - text: Dapibus ac facilisis in
+- heading "Active & disabled items" [level=2]
+- list:
+  - listitem: Cras justo odio (active)
+  - listitem: Dapibus ac facilisis in (disabled)
+  - listitem: Morbi leo risus
+  - listitem: Porta ac consectetur ac
+  - listitem: Vestibulum at eros
+- heading "Links" [level=2]
+- link "Cras justo odio":
+  - /url: "#"
+- link "Dapibus ac facilisis in":
+  - /url: "#"
+- link "Morbi leo risus":
+  - /url: "#"
+- link "Porta ac consectetur ac":
+  - /url: "#"
+- link "Vestibulum at eros" [disabled]:
+  - /url: "#"
+- heading "Buttons" [level=2]
+- button "Cras justo odio"
+- button "Dapibus ac facilisis in"
+- button "Morbi leo risus"
+- button "Porta ac consectetur ac"
+- button "Vestibulum at eros" [disabled]
+- heading "Flush" [level=2]
+- list:
+  - listitem: Cras justo odio
+  - listitem: Dapibus ac facilisis in
+  - listitem: Morbi leo risus
+  - listitem: Porta ac consectetur ac
+  - listitem: Vestibulum at eros
+- heading "Horizontal" [level=2]
+- list:
+  - listitem: Cras justo odio
+  - listitem: Dapibus ac facilisis in
+  - listitem: Morbi leo risus
+- list:
+  - listitem: Cras justo odio
+  - listitem: Dapibus ac facilisis in
+  - listitem: Morbi leo risus
+- list:
+  - listitem: Cras justo odio
+  - listitem: Dapibus ac facilisis in
+  - listitem: Morbi leo risus
+- list:
+  - listitem: Cras justo odio
+  - listitem: Dapibus ac facilisis in
+  - listitem: Morbi leo risus
+- list:
+  - listitem: Cras justo odio
+  - listitem: Dapibus ac facilisis in
+  - listitem: Morbi leo risus
+- heading "Contextual classes" [level=2]
+- list:
+  - listitem: Dapibus ac facilisis in
+  - listitem: A simple secondary list group item
+  - listitem: A simple success list group item
+  - listitem: A simple danger list group item
+  - listitem: A simple warning list group item
+  - listitem: A simple caution list group item
+  - listitem: A simple info list group item
+- link "Dapibus ac facilisis in":
+  - /url: "#"
+- link "A simple secondary list group item":
+  - /url: "#"
+- link "A simple success list group item":
+  - /url: "#"
+- link "A simple danger list group item":
+  - /url: "#"
+- link "A simple warning list group item":
+  - /url: "#"
+- link "A simple info list group item":
+  - /url: "#"
+- heading "Badges" [level=2]
+- list:
+  - listitem: /Cras justo odio \d+/
+  - listitem: Dapibus ac facilisis in 2
+  - listitem: Morbi leo risus 1
+- heading "Custom content" [level=2]
+- link "List group item heading 3 days ago Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit. Donec id elit non mi porta.":
+  - /url: "#"
+  - heading "List group item heading" [level=3]
+  - paragraph: Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
+- link "List group item heading 3 days ago Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit. Donec id elit non mi porta.":
+  - /url: "#"
+  - heading "List group item heading" [level=3]
+  - paragraph: Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
+- link "List group item heading 3 days ago Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit. Donec id elit non mi porta.":
+  - /url: "#"
+  - heading "List group item heading" [level=3]
+  - paragraph: Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.

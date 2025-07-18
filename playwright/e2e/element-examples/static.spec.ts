@@ -24,6 +24,7 @@ test('elevation/elevation', ({ si }) => si.static());
 test('icons/icons', ({ si }) => si.static());
 test('input-fields/multi-line', ({ si }) => si.static());
 test('input-fields/single-line', ({ si }) => si.static());
+test('list-group/list-group', ({ si }) => si.static());
 test('si-about/si-about-api', ({ si }) => si.static());
 test('si-about/si-about-text-api', ({ si }) => si.static());
 test('si-about/si-about-text', ({ si }) => si.static());
