@@ -1,0 +1,30 @@
+- link "Jump to Main content"
+- link "Jump to Navigation"
+- button "Toggle"
+- banner:
+  - link "Siemens logo":
+    - /url: "#/"
+  - text: Page header
+- navigation:
+  - button "Expand"
+- main:
+  - heading "Page Title" [level=2]
+  - paragraph: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+  - menubar:
+    - menuitem "Print"
+    - menuitem "Share"
+    - menuitem "Save As"
+    - menuitem "Toggle"
+  - textbox "Search"
+  - button "Toolbar item"
+  - text: Page Header Controls
+  - checkbox "Status"
+  - text: Status
+  - checkbox "Breadcrumb"
+  - text: Breadcrumb
+  - checkbox "Description" [checked]
+  - text: Description
+  - checkbox "Actions" [checked]
+  - text: Actions
+  - checkbox "Toolbar" [checked]
+  - text: Toolbar

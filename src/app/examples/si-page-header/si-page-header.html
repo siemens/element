@@ -1,0 +1,79 @@
+<si-side-panel size="regular" [collapsible]="true" [enableMobile]="true">
+  <div class="has-navbar-fixed-top">
+    <si-application-header>
+      <si-header-brand>
+        <a siHeaderLogo routerLink="/"></a>
+        <span class="application-name">Page header</span>
+      </si-header-brand>
+    </si-application-header>
+
+    <si-navbar-vertical>
+      <div class="si-layout-main-padding">
+        @if (status) {
+          <si-status-bar class="si-layout-top-element si-layout-status" [items]="statusItems" />
+        }
+
+        @if (breadcrumb) {
+          <si-breadcrumb
+            class="si-layout-breadcrumb"
+            [class.si-layout-top-element]="!status"
+            [items]="breadcrumbItems"
+          />
+        }
+
+        <div class="si-layout-header">
+          <h2 class="si-layout-title" [class.si-layout-top-element]="!status && !breadcrumb"
+            >Page Title</h2
+          >
+
+          @if (description) {
+            <p class="si-layout-subtitle"
+              >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</p
+            >
+          }
+
+          @if (actions) {
+            <si-content-action-bar
+              class="si-layout-actions"
+              viewType="expanded"
+              [primaryActions]="primaryActions"
+              [secondaryActions]="secondaryActions"
+            />
+          }
+        </div>
+
+        @if (toolbar) {
+          <div class="mb-6">
+            <div class="row gy-6">
+              <si-search-bar placeholder="Search" class="col-12 col-md" [showIcon]="true" />
+              <div class="col-auto">
+                <button type="button" class="btn btn-secondary">Toolbar item</button>
+              </div>
+            </div>
+          </div>
+        }
+
+        <si-card heading="Page Header Controls" class="e2e-ignore">
+          <div class="card-body" body>
+            <si-form-item class="form-switch" label="Status">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="status" />
+            </si-form-item>
+            <si-form-item class="form-switch" label="Breadcrumb">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="breadcrumb" />
+            </si-form-item>
+            <si-form-item class="form-switch" label="Description">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="description" />
+            </si-form-item>
+            <si-form-item class="form-switch" label="Actions">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="actions" />
+            </si-form-item>
+            <si-form-item class="form-switch" label="Toolbar">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="toolbar" />
+            </si-form-item>
+          </div>
+        </si-card>
+      </div>
+    </si-navbar-vertical>
+  </div>
+  <si-side-panel-content />
+</si-side-panel>

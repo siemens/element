@@ -1,0 +1,42 @@
+- link "Jump to Main content"
+- link "Jump to Navigation"
+- button "Toggle"
+- banner:
+  - link "Siemens logo":
+    - /url: "#/"
+  - text: Page header
+- navigation:
+  - button "Collapse" [expanded]
+- main:
+  - text: /0 Security 0 Supervisory \d+ Not clickable/
+  - navigation "Breadcrumbs":
+    - list:
+      - listitem:
+        - link "Root":
+          - /url: "#/viewer/viewer/root"
+      - listitem:
+        - link "Level 1":
+          - /url: "#/viewer/viewer/root/level1"
+      - listitem:
+        - link "Level 2":
+          - /url: "#/viewer/viewer/root/level1/level2"
+  - heading "Page Title" [level=2]
+  - paragraph: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+  - menubar:
+    - menuitem "Print"
+    - menuitem "Share"
+    - menuitem "Save As"
+    - menuitem "Toggle"
+  - textbox "Search"
+  - button "Toolbar item"
+  - text: Page Header Controls
+  - checkbox "Status" [checked]
+  - text: Status
+  - checkbox "Breadcrumb" [checked]
+  - text: Breadcrumb
+  - checkbox "Description" [checked]
+  - text: Description
+  - checkbox "Actions" [checked]
+  - text: Actions
+  - checkbox "Toolbar" [checked]
+  - text: Toolbar
