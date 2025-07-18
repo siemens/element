@@ -14,6 +14,7 @@ documentation.
 
 ## B
 
+- [Badges](status-notifications/badges.md)
 - [Bar Chart](charts/bar-chart.md)
 - [Buttons](buttons-menus/buttons.md)
 - [Breadcrumb](layout-navigation/breadcrumb.md)
@@ -47,6 +48,7 @@ documentation.
 - [Filter Bar](sorting-filtering/filter-bar.md)
 - [Filter Pills](sorting-filtering/filter-pills.md)
 - [Filtered Search](sorting-filtering/filtered-search.md)
+- [Flexible Dashboards](dashboards/flexible-dashboards.md)
 - [Footer](layout-navigation/footer.md)
 - [Forms](forms-inputs/forms.md)
 - [File Uploader](forms-inputs/file-uploader.md)
@@ -68,6 +70,7 @@ documentation.
 - [Landing Page](pages/landing-page.md)
 - [Launchpad](layout-navigation/launchpad.md)
 - [Line Chart](charts/line-chart.md)
+- [List Group](lists-tables-trees/list-group.md)
 
 ## M
 
@@ -101,6 +104,7 @@ documentation.
 - [Search Bar](sorting-filtering/search-bar.md)
 - [Select](forms-inputs/select.md)
 - [Side Panel](layout-navigation/side-panel.md)
+- [Sekeleton](progress-indication/sekeleton.md)
 - [Slider](forms-inputs/slider.md)
 - [Sort Bar](sorting-filtering/sort-bar.md)
 - [Spinner](progress-indication/spinner.md)

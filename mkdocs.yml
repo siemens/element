@@ -41,6 +41,7 @@ nav:
     - Dashboards:
       - Overview:                         'components/dashboards/index.md'
       - Dashboard:                        'components/dashboards/dashboard.md'
+      - Flexible Dashboards:              'components/dashboards/flexible-dashboards.md'
       - Link Widget:                      'components/dashboards/link-widget.md'
       - List Widget:                      'components/dashboards/list-widget.md'
       - Timeline Widget:                  'components/dashboards/timeline-widget.md'
@@ -82,11 +83,13 @@ nav:
       - Vertical Navigation:              'components/layout-navigation/vertical-navigation.md'
       - Wizard:                           'components/layout-navigation/wizard.md'
     - Lists, Tables & Trees:
+      - List Group:                       'components/lists-tables-trees/list-group.md'
       - Table & Datatable:                'components/lists-tables-trees/datatable.md'
       - Tree View:                        'components/lists-tables-trees/tree-view.md'
     - Progress Indications:
       - Progress Bar:                     'components/progress-indication/progress-bar.md'
       - Result Details List:              'components/progress-indication/result-details-list.md'
+      - Sekeleton:                        'components/progress-indication/sekeleton.md'
       - Spinner:                          'components/progress-indication/spinner.md'
     - Search, Filter & Sort:
       - Overview:                         'components/sorting-filtering/index.md'
@@ -98,6 +101,7 @@ nav:
       - Filtered Search:                  'components/sorting-filtering/filtered-search.md'
     - Status & notifications:
       - Avatar:                           'components/status-notifications/avatar.md'
+      - Badges:                           'components/status-notifications/badges.md'
       - Circle Status:                    'components/status-notifications/circle-status.md'
       - Connection Strength:              'components/status-notifications/connection-strength.md'
       - Copyright Notice:                 'components/status-notifications/copyright-notice.md'
