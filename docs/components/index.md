@@ -14,6 +14,7 @@ documentation.
 
 ## B
 
+- [Badges](status-notifications/badges.md)
 - [Bar Chart](charts/bar-chart.md)
 - [Buttons](buttons-menus/buttons.md)
 - [Breadcrumb](layout-navigation/breadcrumb.md)
