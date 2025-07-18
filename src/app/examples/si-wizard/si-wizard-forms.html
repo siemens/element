@@ -1,0 +1,78 @@
+<button type="button" class="btn btn-secondary" (click)="showUserForm()">Show form</button>
+
+<ng-template #wizardForm>
+  <div class="modal-header">
+    <h4 class="modal-title" id="sample-modal-title">Title</h4>
+    <button
+      type="button"
+      class="btn btn-circle btn-sm btn-ghost element-cancel"
+      aria-label="Close modal"
+      (click)="modalRef?.hide('cancel')"
+    >
+    </button>
+  </div>
+  <si-wizard
+    class="h-100"
+    [inlineNavigation]="false"
+    [hasCancel]="true"
+    (wizardCancel)="modalRef?.hide('cancel')"
+  >
+    <si-wizard-step heading="Step start" [isValid]="!form1.pristine && form1.valid">
+      <form [formGroup]="form1">
+        <si-form-item label="Label 1">
+          <input formControlName="label1" class="form-control" type="text" required />
+        </si-form-item>
+        <si-form-item label="Label 2">
+          <textarea formControlName="label2" class="form-control"></textarea>
+        </si-form-item>
+        <si-form-fieldset label="Section title">
+          <si-form-item class="form-switch" label="Toggle label">
+            <input
+              formControlName="toggleLabel"
+              class="form-check-input"
+              type="checkbox"
+              required
+            />
+          </si-form-item>
+        </si-form-fieldset>
+      </form>
+    </si-wizard-step>
+    <si-wizard-step heading="Step 2" [isValid]="!form2.pristine && form2.valid">
+      <form si-form-container-content [formGroup]="form2">
+        <si-form-item label="Label 3">
+          <si-number-input formControlName="label3" class="form-control" />
+        </si-form-item>
+        <si-form-item label="Label 4">
+          <si-select
+            multi
+            required
+            class="form-control"
+            formControlName="multiValue"
+            [hasFilter]="true"
+            [options]="multiValueOptions"
+          />
+        </si-form-item>
+      </form>
+    </si-wizard-step>
+    <si-wizard-step heading="Group step" (save)="logEvent('Save')">
+      <form si-form-container-content [formGroup]="form3">
+        <si-form-fieldset label="Check group title">
+          <si-form-item label="Check 1">
+            <input type="checkbox" class="form-check-input" formControlName="check1" />
+          </si-form-item>
+          <si-form-item label="Check 2">
+            <input type="checkbox" class="form-check-input" formControlName="check2" />
+          </si-form-item>
+        </si-form-fieldset>
+        <si-form-fieldset label="Radio group title">
+          <si-form-item label="Radio 1">
+            <input type="radio" class="form-check-input" formControlName="radio" value="radio-1" />
+          </si-form-item>
+          <si-form-item label="Radio 2">
+            <input type="radio" class="form-check-input" formControlName="radio" value="radio-2" />
+          </si-form-item>
+        </si-form-fieldset>
+      </form>
+    </si-wizard-step>
+  </si-wizard>
+</ng-template>
