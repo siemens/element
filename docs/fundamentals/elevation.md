@@ -9,7 +9,7 @@ creating depth and spatial associations without unnecessary stylistic elements.
 
 ### Base color layers
 
-At the core of the layering model are the **Base-0** and **Base-1** tokens:
+At the core of the layering model are the **base-0** and **base-1** tokens:
 
 - `base-0`: Is placed on the lowest position of the stack order, serving as the foundational background for the UI.
 - `base-1`: Is placed on top of `base-0` and is the default layer for container elements like cards,
@@ -21,12 +21,22 @@ reserved for components like popovers and toasts to enhance depth in low-light e
 
 Complementary tokens like `base-1-hover` and `base-1-selected` are used
 to indicate interaction states while maintaining the visual layering logic.
+These are independent color tokens and are designed to work across all base layers.
 
 ![Elevation usage example](images/elevation-usage-example.png)
 
-Avoid adding unnecessary layers or "boxes in boxes", as this can compromise clarity and usability.
+The system is intentionally designed to be mostly flat, minimizing unnecessary layers or
+'boxes within boxes' to maintain clarity and ease of use.
 
 ![Elevation layers do's and don'ts](images/elevation-do-and-donts.png)
+
+However, in specific cases where additional differentiation is necessary:
+
+- Use an outline with `ui-4` to define boundaries between elements on the same layer,
+  such as layout sections or grouped content
+- Use `base-4` when a stronger distinction is needed, especially to  highlight a container.
+
+![Elevation exceptions example](images/elevation-exceptions.png)
 
 ### Shadows
 
