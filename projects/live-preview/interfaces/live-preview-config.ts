@@ -26,6 +26,8 @@ export interface SiLivePreviewInternals {
   titleBase: string;
 }
 
+export type ExampleRouteMap = Record<string, any>;
+
 export const SI_LIVE_PREVIEW_CONFIG = new InjectionToken<SiLivePreviewConfig>(
   'SI_LIVE_PREVIEW_CONFIG'
 );
@@ -35,3 +37,4 @@ export const SI_LIVE_PREVIEW_INTERNALS = new InjectionToken<SiLivePreviewInterna
 export const SI_LIVE_PREVIEW_EXAMPLE_ROUTES = new InjectionToken<Route[]>(
   'SI_LIVE_PREVIEW_EXAMPLE_ROUTES'
 );
+export const EXAMPLE_ROUTE_MAP = new InjectionToken<ExampleRouteMap>('EXAMPLE_ROUTE_MAP');
