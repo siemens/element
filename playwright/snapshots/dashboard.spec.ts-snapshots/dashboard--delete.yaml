@@ -1,0 +1,86 @@
+- link "Jump to Main content"
+- link "Jump to Navigation"
+- banner:
+  - link "Siemens logo":
+    - /url: "#/"
+  - text: Siemens Dashboards
+  - button "Toggle theme"
+- navigation:
+  - button "expand"
+- main:
+  - heading "Sample Dashboard" [level=2]
+  - button "Add widget"
+  - button "Cancel"
+  - button "Save"
+  - img
+  - img "Buildings at scale"
+  - text: Project Issues!
+  - button "Toggle"
+  - text: /\d+ Issues Number of contributing issues/
+  - link "Go to issues":
+    - /url: https://github.com/siemens/element/issues
+  - img
+  - text: Bar Chart
+  - menubar:
+    - menuitem "Remove"
+    - menuitem "Expand"
+  - img
+  - text: Full Speed
+  - menubar:
+    - menuitem "Remove"
+  - img
+  - text: Line Chart
+  - menubar:
+    - menuitem "Remove"
+    - menuitem "Expand"
+  - img
+  - text: List Widget
+  - menubar:
+    - menuitem "Remove"
+  - textbox "Search..."
+  - list:
+    - listitem:
+      - text: /\d+\+/
+      - link "Taj Mahal":
+        - /url: https://en.wikipedia.org/wiki/Taj_Mahal
+      - text: /The Taj Mahal is an ivory-white marble mausoleum \d+\.\d+/
+      - button "Building overview"
+    - listitem:
+      - text: info
+      - link "Tower of Pisa":
+        - /url: https://en.wikipedia.org/wiki/Leaning_Tower_of_Pisa
+      - text: The Leaning Tower of Pisa is the campanile of Pisa Cathedral. 9.7
+      - button "Building overview"
+    - listitem:
+      - text: 3 Eiffel Tower The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris. 8.3
+      - button "Building overview"
+    - listitem:
+      - text: /5 Colosseum \d+\.\d+/
+      - button "Building overview"
+    - listitem:
+      - text: 5 Burj Khalifa 4.5
+      - button "Building overview"
+    - listitem:
+      - text: /6 St\. Basil's Cathedral \d+\.\d+/
+      - button "Building overview"
+  - link "Go to...":
+    - /url: https://github.com/siemens/element/issues
+  - img
+  - text: Timeline Widget
+  - menubar:
+    - menuitem "Remove"
+  - list:
+    - listitem:
+      - img "triangle filled"
+      - text: /Today \d+:\d+ Title Description/
+    - listitem:
+      - img /square \d+ filled/
+      - text: /Today \d+:\d+ Title Description/
+    - listitem:
+      - img "square filled"
+      - text: /Today \d+:\d+ Title Description/
+    - listitem:
+      - img "circle filled"
+      - text: /Today \d+:\d+ Title Description/
+  - link "Go to...":
+    - /url: https://github.com/siemens/element/issues

@@ -6,10 +6,12 @@ import { devices, type PlaywrightTestConfig } from '@playwright/test';
 
 const isContainer = !!process.env.PLAYWRIGHT_CONTAINER;
 const port = process.env.PORT ?? '4200';
+const dashboardsPort = process.env.DASHBOARDS_PORT ?? '4201';
 const localAddress = process.env.LOCAL_ADDRESS ?? 'localhost';
 const onDifferentLocalAddress = localAddress !== 'localhost';
 const isCI = !!process.env.CI;
 const webServerCommand = 'npx http-server dist/element-examples -s -p 4200 -a 127.0.0.1';
+const dashboardsServerCommand = 'npx http-server dist/dashboards-demo -s -p 4201 -a 127.0.0.1';
 let isA11y =
   !!process.env.PLAYWRIGHT_isa11y && process.env.PLAYWRIGHT_isa11y.toLocaleLowerCase() !== 'false';
 let isVrt =
@@ -20,7 +22,12 @@ if (!isA11y && !isVrt) {
   isVrt = true;
 }
 // List of all projects, which will be used to automatically start the web server if necessary.
-let projectsToRun = [`element-examples/chromium/light`, `element-examples/chromium/dark`];
+let projectsToRun = [
+  `element-examples/chromium/light`,
+  `element-examples/chromium/dark`,
+  `dashboards-demo/chromium/light`,
+  `dashboards-demo/chromium/dark`
+];
 
 // Check if only one is run using the command-line arguments. Do not use for any other reason because this won't be set for runner subprocesses.
 const onlySelectProjects = process.argv.find(val => val.startsWith('--project='));
@@ -137,6 +144,22 @@ const config: PlaywrightTestConfig = {
       name: `element-examples/chromium/dark`,
       metadata: { livePreviewer: true, theme: 'dark', skipAriaSnapshot: true },
       testDir: './playwright/e2e/element-examples'
+    },
+    {
+      name: `dashboards-demo/chromium/light`,
+      metadata: { theme: 'light' },
+      use: {
+        baseURL: `http://${localAddress}:${dashboardsPort}`
+      },
+      testDir: './playwright/e2e/dashboards-demo'
+    },
+    {
+      name: `dashboards-demo/chromium/dark`,
+      metadata: { theme: 'dark', skipAriaSnapshot: true },
+      use: {
+        baseURL: `http://${localAddress}:${dashboardsPort}`
+      },
+      testDir: './playwright/e2e/dashboards-demo'
     }
   ],
   webServer: !onDifferentLocalAddress
@@ -146,6 +169,15 @@ const config: PlaywrightTestConfig = {
               {
                 command: webServerCommand,
                 url: `http://${localAddress}:${port}`,
+                reuseExistingServer: !isCI
+              }
+            ]
+          : []),
+        ...(projectsToRun.find(project => project.startsWith('dashboards-demo/chromium'))
+          ? [
+              {
+                command: dashboardsServerCommand,
+                url: `http://${localAddress}:${dashboardsPort}`,
                 reuseExistingServer: !isCI
               }
             ]

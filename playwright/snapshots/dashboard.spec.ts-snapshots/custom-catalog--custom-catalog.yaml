@@ -1,0 +1,15 @@
+- link "Jump to Main content"
+- link "Jump to Navigation"
+- banner:
+  - link "Siemens logo":
+    - /url: "#/"
+  - text: Siemens Dashboards
+  - button "Toggle theme"
+- navigation:
+  - button "expand"
+- main:
+  - heading "Dashboard with a custom library component" [level=2]
+  - button "Edit"
+  - heading "Your own dashboard" [level=3]
+  - paragraph: No widgets have been added yet. Start right now and discover the world of widgets.
+  - button "Add widget"

@@ -1,0 +1,24 @@
+- link "Jump to Main content"
+- link "Jump to Navigation"
+- banner:
+  - link "Siemens logo":
+    - /url: "#/"
+  - text: Siemens Dashboards
+  - button "Toggle theme"
+- navigation:
+  - button "expand"
+- main:
+  - heading "Add widget" [level=2]
+  - heading "Company Information (2 / 2)" [level=2]
+  - text: Job title*
+  - textbox "Job title*"
+  - text: Company
+  - textbox "Company"
+  - text: Email
+  - textbox "Email"
+  - text: Phone
+  - textbox "Phone"
+  - button "Cancel"
+  - button "Previous"
+  - button "Next" [disabled]
+  - button "Add" [disabled]

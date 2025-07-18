@@ -1,0 +1,42 @@
+- link "Jump to Main content"
+- link "Jump to Navigation"
+- banner:
+  - link "Siemens logo":
+    - /url: "#/"
+  - text: Siemens Dashboards
+  - button "Toggle theme"
+- navigation:
+  - button "expand"
+- main:
+  - heading "Add widget" [level=2]
+  - textbox "Search widget"
+  - button "reportstatus none Hello World A dummy widget for testing.":
+    - status "reportstatus none"
+  - button "userstatus none Contact Add a contact card to your dashboard.":
+    - status "userstatus none"
+  - button "trendstatus none Line Chart A line chart is a type of chart used to show information that changes over time. Line charts are created by plotting a series of several points and connecting them with a straight line. Line charts are used to track changes over short and long periods.":
+    - status "trendstatus none"
+  - button "trendstatus none Bar Chart This is a bar chart widget.":
+    - status "trendstatus none"
+  - button "trendstatus none Circle Chart This is a cart with a circle.":
+    - status "trendstatus none"
+  - button "trendstatus none Gauge Chart A nice gauge charts":
+    - status "trendstatus none"
+  - button "trendstatus none List Widget Displays a list of items":
+    - status "trendstatus none"
+  - button "trendstatus none Timeline Widget Displays events or steps over a period of time":
+    - status "trendstatus none"
+  - button "trendstatus none Value Widget Displays a single KPI":
+    - status "trendstatus none"
+  - button "status none Note (web-component)":
+    - status "status none"
+  - button "status none Contact (web-component)":
+    - status "status none"
+  - button "status none Chart (web-component)":
+    - status "status none"
+  - button "status none Download (module-federation)":
+    - status "status none"
+  - button "status none Upload (module-federation)":
+    - status "status none"
+  - button "Cancel"
+  - button "Next"
