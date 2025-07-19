@@ -133,7 +133,7 @@
     "eslint-plugin-tsdoc": "0.4.0",
     "http-server": "14.1.1",
     "husky": "9.1.7",
-    "jasmine-core": "5.8.0",
+    "jasmine-core": "5.9.0",
     "karma": "6.4.4",
     "karma-chrome-launcher": "3.2.0",
     "karma-coverage": "2.2.1",
