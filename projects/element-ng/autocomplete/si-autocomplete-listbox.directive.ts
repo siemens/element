@@ -55,7 +55,8 @@ export class SiAutocompleteListboxDirective<T> implements OnInit, OnChanges, Aft
 
   readonly siAutocompleteOptionSubmitted = output<T | undefined>();
 
-  private keyManager?: ActiveDescendantKeyManager<SiAutocompleteOptionDirective<T>>;
+  /** @internal */
+  keyManager?: ActiveDescendantKeyManager<SiAutocompleteOptionDirective<T>>;
 
   private changeDetectorRef = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);

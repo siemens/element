@@ -35,9 +35,16 @@ export class SiSelectListComponent<T> extends SiSelectListBase<T> implements OnI
     }
   );
 
+  private readonly cdkListbox = viewChild.required<CdkListbox>(CdkListbox);
+
+  protected initial = true;
+
   override ngOnInit(): void {
     super.ngOnInit();
-    setTimeout(() => this.listbox().nativeElement.focus());
+    setTimeout(() => {
+      this.listbox().nativeElement.focus();
+      this.cdkListbox()._setActiveOption(-1 as any);
+    });
   }
 
   protected listBoxValueChange(changeEvent: ListboxValueChangeEvent<T>): void {

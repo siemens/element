@@ -56,6 +56,9 @@ export class SiSelectListHasFilterComponent<T> extends SiSelectListBase<T> imple
   protected readonly id = computed(() => `${this.baseId()}-listbox`);
   protected readonly icons = addIcons({ elementSearch });
 
+  private readonly siAutocomplete =
+    viewChild.required<SiAutocompleteDirective<T>>(SiAutocompleteDirective);
+
   constructor() {
     super();
     if (!this.selectOptions.onFilter) {
@@ -74,7 +77,10 @@ export class SiSelectListHasFilterComponent<T> extends SiSelectListBase<T> imple
   override ngOnInit(): void {
     super.ngOnInit();
     this.selectOptions.onFilter!();
-    setTimeout(() => this.filterInput().nativeElement.focus());
+    setTimeout(() => {
+      this.filterInput().nativeElement.focus();
+      this.siAutocomplete().listbox?.keyManager?.setActiveItem(-1);
+    });
   }
 
   protected input(): void {
