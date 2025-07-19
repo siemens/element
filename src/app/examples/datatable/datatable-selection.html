@@ -6,10 +6,15 @@
         style="height: 500px"
         siDatatableInteraction
         columnMode="force"
-        selectionType="single"
+        [selectionType]="selectionType!"
         [rows]="rows"
         [columns]="[
-          { name: 'First name', prop: 'firstname' },
+          {
+            name: 'First name',
+            prop: 'firstname',
+            checkboxable: selectionType === 'checkbox',
+            headerCheckboxable: selectionType === 'checkbox'
+          },
           { name: 'Last name', prop: 'lastname' },
           {
             name: 'Age',
@@ -24,17 +29,33 @@
         [scrollbarV]="true"
         [selected]="selected"
         [datatableInteractionAutoSelect]="true"
+        (select)="selected = $event.selected"
       />
     </div>
     <div class="col-sm p-5">
       <si-card heading="Selection">
         <div class="card-body" body>
-          @if (selected.length) {
-            {{ selected[0].firstname + ' ' + selected[0].lastname + ' - ' + selected[0].age }}
-          }
-          @if (!selected.length) {
+          @for (item of selected; track item) {
+            <div class="mb-2">
+              {{ item.firstname + ' ' + item.lastname + ' - ' + item.age }}
+            </div>
+          } @empty {
             None
           }
+        </div>
+      </si-card>
+      <si-card class="mt-4" heading="Selection type">
+        <div class="card-body" body>
+          <div class="row">
+            <si-form-item class="col-6" label="Selection type">
+              <select class="form-control" id="selection-type" [(ngModel)]="selectionType">
+                <option [ngValue]="undefined">Choose selection type</option>
+                @for (selType of selectionTypes; track $index) {
+                  <option [ngValue]="selType">{{ selType }}</option>
+                }
+              </select>
+            </si-form-item>
+          </div>
         </div>
       </si-card>
     </div>

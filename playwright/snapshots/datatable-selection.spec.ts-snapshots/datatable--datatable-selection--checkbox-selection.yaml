@@ -1,0 +1,1266 @@
+- table:
+  - rowgroup:
+    - row "Select all rows First name Last name Age":
+      - columnheader "Select all rows First name":
+        - checkbox "Select all rows"
+      - columnheader "Last name"
+      - columnheader "Age"
+  - rowgroup:
+    - row /Select row First 1 Last 1 \d+/:
+      - cell "Select row First 1":
+        - checkbox "Select row"
+      - cell "Last 1"
+      - cell /\d+/
+    - row /Select row First 2 Last 2 \d+/:
+      - cell "Select row First 2":
+        - checkbox "Select row" [checked]
+      - cell "Last 2"
+      - cell /\d+/
+    - row /Select row First 3 Last 3 \d+/:
+      - cell "Select row First 3":
+        - checkbox "Select row" [checked]
+      - cell "Last 3"
+      - cell /\d+/
+    - row /Select row First 4 Last 4 \d+/:
+      - cell "Select row First 4":
+        - checkbox "Select row"
+      - cell "Last 4"
+      - cell /\d+/
+    - row /Select row First 5 Last 5 \d+/:
+      - cell "Select row First 5":
+        - checkbox "Select row"
+      - cell "Last 5"
+      - cell /\d+/
+    - row /Select row First 6 Last 6 \d+/:
+      - cell "Select row First 6":
+        - checkbox "Select row"
+      - cell "Last 6"
+      - cell /\d+/
+    - row /Select row First 7 Last 7 \d+/:
+      - cell "Select row First 7":
+        - checkbox "Select row"
+      - cell "Last 7"
+      - cell /\d+/
+    - row /Select row First 8 Last 8 \d+/:
+      - cell "Select row First 8":
+        - checkbox "Select row"
+      - cell "Last 8"
+      - cell /\d+/
+    - row /Select row First 9 Last 9 \d+/:
+      - cell "Select row First 9":
+        - checkbox "Select row"
+      - cell "Last 9"
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+    - row /Select row First \d+ Last \d+ \d+/:
+      - cell /Select row First \d+/:
+        - checkbox "Select row"
+      - cell /Last \d+/
+      - cell /\d+/
+- text: /Selection First 2 Last 2 - \d+ First 3 Last 3 - \d+ Selection type Selection type/
+- combobox "Selection type":
+  - option "Choose selection type"
+  - option "single"
+  - option "multi"
+  - option "multiClick"
+  - option "checkbox" [selected]
+  - option "cell"

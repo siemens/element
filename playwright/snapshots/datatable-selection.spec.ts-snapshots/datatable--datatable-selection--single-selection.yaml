@@ -1005,4 +1005,11 @@
       - cell /First \d+/
       - cell /Last \d+/
       - cell /\d+/
-- text: Selection None
+- text: /Selection First 2 Last 2 - \d+ Selection type Selection type/
+- combobox "Selection type":
+  - option "Choose selection type"
+  - option "single" [selected]
+  - option "multi"
+  - option "multiClick"
+  - option "checkbox"
+  - option "cell"
