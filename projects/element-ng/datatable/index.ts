@@ -37,6 +37,7 @@ export interface INgxDatatableConfig {
 interface SiDatatableConfig extends INgxDatatableConfig {
   cssClasses: Exclude<INgxDatatableConfig['cssClasses'], undefined>;
   headerHeight: number;
+  summaryHeight: number;
   footerHeight: number;
   rowHeight: number;
   rowHeightSmall: number;
@@ -55,6 +56,7 @@ export const SI_DATATABLE_CONFIG: SiDatatableConfig = {
     sortUnset: ''
   },
   headerHeight: 40,
+  summaryHeight: 32,
   footerHeight: 40,
   rowHeight: 64,
   rowHeightSmall: 48,
