@@ -1,0 +1,39 @@
+<div class="p-5">
+  <h2>Horizontal wrapping cards</h2>
+  <div>
+    <div
+      class="d-flex flex-wrap gap-4"
+      cdkListbox
+      cdkDropList
+      cdkDropListOrientation="mixed"
+      cdkListboxOrientation="horizontal"
+      [cdkDropListData]="cards"
+      (cdkDropListDropped)="itemDropped($event)"
+    >
+      @for (item of cards; track $index) {
+        <si-card
+          #card
+          cdkDrag
+          cdkOption
+          class="card-size"
+          [heading]="item.heading"
+          [cdkDragDisabled]="item?.dragDisabled"
+        >
+          <p class="card-body card-text overflow-auto" body>
+            {{ item.text }}
+          </p>
+        </si-card>
+      }
+    </div>
+  </div>
+  <hr />
+  <h2>Free drag</h2>
+  <div>
+    <div class="card h-100 elevation-1" style="width: 250px" cdkDrag>
+      <div class="card-header">Drag without boundries</div>
+      <div class="card-body">
+        <p class="card-text">This card can be dragged anywhere on screen.</p>
+      </div>
+    </div>
+  </div>
+</div>
