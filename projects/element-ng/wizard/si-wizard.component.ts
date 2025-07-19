@@ -185,9 +185,9 @@ export class SiWizardComponent implements AfterContentInit, OnDestroy {
   /**
    * Set false to show navigation buttons in footer instead of inline.
    *
-   * @defaultValue true
+   * @defaultValue false
    */
-  readonly inlineNavigation = input(true, { transform: booleanAttribute });
+  readonly inlineNavigation = input(false, { transform: booleanAttribute });
   /**
    * Use number representation for steps.
    *
