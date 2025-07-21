@@ -45,7 +45,7 @@ Each item can display a title or a [link](../buttons-menus/links.md), with an op
 
 ![List dashboard widget title examples](images/list-widget-titles.png)
 
-The indicator can be customized to show an [icon](../../fundamentals/icons.md), status
+The indicator can be customized to show an icon, status
 or a [badge](../status-notifications/badges.md).
 
 ![List dashboard widget indicator examples](images/list-widget-indicators.png)

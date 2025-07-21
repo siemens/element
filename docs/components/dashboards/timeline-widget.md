@@ -31,7 +31,7 @@ The timeline dashboard widget displays time-sensitive data and ordered events, a
 
 > 1. Heading, 2. Header action (optional), 3. Footer link (optional), 4. Indicator, 5. Timestamp, 6. Title, 7. Description (optional), 8. Action (optional)
 
-The indicator displays an [icon](../../fundamentals/icons.md) or status.
+The indicator displays an icons or status.
 The header action can support any action as needed.
 
 ![Timeline dashboard widget variants](images/timeline-widget-variants.png)

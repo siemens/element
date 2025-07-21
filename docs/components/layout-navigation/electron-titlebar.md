@@ -58,7 +58,7 @@ constructor() {
 Following components are affected when using the `si-electron-titlebar`:
 
 - When the `div` with the `class="si-layout-main-padding"` is in use
-- [si-navbar-primary](../layout-navigation/horizontal-navigation.md)
+- [si-application-header](../layout-navigation/application-header.md)
 - [si-navbar-vertical](../layout-navigation/vertical-navigation.md)
 - [si-side-panel](../layout-navigation/side-panel.md)
 - [si-landing-page](../pages/landing-page.md)
