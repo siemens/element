@@ -1,0 +1,33 @@
+- link "Default Link":
+  - /url: "#"
+- link "Link in new Window":
+  - /url: "#"
+- link " Default Icon Link":
+  - /url: "#"
+- link " Icon Link in new Window":
+  - /url: "#"
+- link "Default Icon Link ":
+  - /url: "#"
+- link "Icon Link in new Window ":
+  - /url: "#"
+- link "Default Link":
+  - /url: "#"
+- link "Link in new Window":
+  - /url: "#"
+- link " Default Icon Link":
+  - /url: "#"
+- link " Icon Link in new Window":
+  - /url: "#"
+- link "Default Icon Link ":
+  - /url: "#"
+- link "Icon Link in new Window ":
+  - /url: "#"
+- button "Button Link"
+- button "Button Link with icon "
+- paragraph:
+  - text: This is a paragraph of text with an
+  - link "embedded link":
+    - /url: "#"
+  - text: that needs the class
+  - code: .link-text
+  - text: to be accessible.

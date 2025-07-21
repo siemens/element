@@ -1,0 +1,29 @@
+- alert: System is currently under maintenance
+- alert: Warning System is currently under maintenance
+- img "Element App's Background"
+- combobox "Language switcher":
+  - option "English" [selected]
+  - option "Deutsch"
+  - option "Français"
+- heading "Element App" [level=1]
+- alert: Danger Sample login error message
+- text: Username
+- textbox "Username"
+- text: Password
+- textbox "Password"
+- button "show password"
+- link "Forgot Password":
+  - /url: "#/viewer/viewer"
+- button "Log in"
+- text: Don't have an account?
+- link "Register now":
+  - /url: "#/viewer/viewer"
+- text: Productive Data You are about to connect to productive data. Please note that changes will take effect immediately
+- contentinfo:
+  - link "Corporate Information":
+    - /url: http://www.examples.org/corporate-information
+  - link "Privacy Notice":
+    - /url: http://www.examples.org/privacy-notice
+  - link "Terms of Use":
+    - /url: http://www.examples.org/terms-of-use
+  - paragraph: /© Example Company \d+/

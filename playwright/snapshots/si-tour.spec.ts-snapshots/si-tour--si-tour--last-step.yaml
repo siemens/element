@@ -1,0 +1,48 @@
+- link "Jump to Main content"
+- link "Jump to Navigation"
+- banner:
+  - button "Launchpad"
+  - link "Siemens logo":
+    - /url: "#/"
+  - text: Application name
+  - button "Help"
+  - button "Jane Smith"
+- navigation:
+  - button "collapse" [expanded]
+  - button "Home"
+  - button "Documentation"
+  - link "Energy":
+    - /url: "#/viewer/viewer/energy"
+  - link "Test Coverage":
+    - /url: "#/viewer/viewer/coverage"
+- main:
+  - button "Toggle"
+  - button "Properties"
+  - button "Documents"
+  - button "Graphics"
+  - text: /4 Security \d+ Update \d+ Information/
+  - navigation "Breadcrumbs":
+    - list:
+      - listitem:
+        - link "Root":
+          - /url: "#/viewer/viewer/root"
+      - listitem:
+        - link "Level 1":
+          - /url: "#/viewer/viewer/root/level1"
+      - listitem:
+        - link "Level 2":
+          - /url: "#/viewer/viewer/root/level1/level2"
+  - heading "Title describing what page content to expect" [level=2]
+  - paragraph: Lorem ipsum dolor sit amet, ...
+  - button "Print"
+  - button "Tour"
+  - textbox "Search"
+  - button "Toolbar item"
+  - text: Placeholder for the content of the page, using the fixed height layout.
+- text: Status bar Page title Thank you
+- dialog "Tour completed":
+  - text: 7 of 7 Tour completed
+  - button "Close"
+  - text: The guided tour is now complete. Thank you.
+  - button "Back"
+  - button "Done"
