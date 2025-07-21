@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkDragDrop, CdkDropList, DragDropModule } from '@angular/cdk/drag-drop';
-import { ChangeDetectionStrategy, Component, DebugElement, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DebugElement, viewChild } from '@angular/core';
 import {
   ComponentFixture,
   discardPeriodicTasks,
@@ -31,7 +31,7 @@ import {
       class="tree-one h-100"
       cdkDropList
       [items]="items"
-      [cdkDropListData]="treeOne.dropListItems"
+      [cdkDropListData]="treeOneComponent().dropListItems"
       (cdkDropListDropped)="itemDropped($event)"
     >
       <ng-template siTreeViewItem>
@@ -43,7 +43,7 @@ import {
       class="h-100"
       cdkDropList
       [items]="treeTwoItems"
-      [cdkDropListData]="treeTwo.dropListItems"
+      [cdkDropListData]="treeTwoComponent().dropListItems"
       (cdkDropListDropped)="itemDropped($event)"
     >
       <ng-template siTreeViewItem>
@@ -54,11 +54,11 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
-  @ViewChild('treeOne', { read: CdkDropList }) treeOneList!: CdkDropList;
-  @ViewChild('treeTwo', { read: CdkDropList }) treeTwoList!: CdkDropList;
+  readonly treeOneList = viewChild.required('treeOne', { read: CdkDropList });
+  readonly treeTwoList = viewChild.required('treeTwo', { read: CdkDropList });
 
-  @ViewChild('treeOne', { read: SiTreeViewComponent }) treeOne!: SiTreeViewComponent;
-  @ViewChild('treeTwo', { read: SiTreeViewComponent }) treeTwo!: SiTreeViewComponent;
+  readonly treeOneComponent = viewChild.required('treeOne', { read: SiTreeViewComponent });
+  readonly treeTwoComponent = viewChild.required('treeTwo', { read: SiTreeViewComponent });
 
   items: TreeItem[] = [
     {
@@ -160,8 +160,8 @@ describe('SiTreeViewComponentWithDragDrop', () => {
     debugElement.query(By.css('si-tree-view')).triggerEventHandler('cdkDropListDropped', {
       currentIndex: 1,
       previousIndex: 0,
-      previousContainer: fixture.componentInstance.treeOneList,
-      container: fixture.componentInstance.treeOneList
+      previousContainer: fixture.componentInstance.treeOneList(),
+      container: fixture.componentInstance.treeOneList()
     });
     fixture.detectChanges();
     expect(fixture.componentInstance.items[0].label).toBe('Company2');
@@ -176,8 +176,8 @@ describe('SiTreeViewComponentWithDragDrop', () => {
     debugElement.query(By.css('si-tree-view')).triggerEventHandler('cdkDropListDropped', {
       currentIndex: 0,
       previousIndex: 0,
-      previousContainer: fixture.componentInstance.treeOneList,
-      container: fixture.componentInstance.treeOneList
+      previousContainer: fixture.componentInstance.treeOneList(),
+      container: fixture.componentInstance.treeOneList()
     });
     fixture.detectChanges();
     expect(fixture.componentInstance.items[0].label).toBe('Company1');
@@ -192,8 +192,8 @@ describe('SiTreeViewComponentWithDragDrop', () => {
     debugElement.query(By.css('si-tree-view')).triggerEventHandler('cdkDropListDropped', {
       currentIndex: 2,
       previousIndex: 0,
-      previousContainer: fixture.componentInstance.treeOneList,
-      container: fixture.componentInstance.treeTwoList
+      previousContainer: fixture.componentInstance.treeOneList(),
+      container: fixture.componentInstance.treeTwoList()
     });
     fixture.detectChanges();
     expect(fixture.componentInstance.items[0].label).toBe('Company2');
@@ -226,8 +226,8 @@ describe('SiTreeViewComponentWithDragDrop', () => {
     debugElement.query(By.css('si-tree-view')).triggerEventHandler('cdkDropListDropped', {
       currentIndex: 1,
       previousIndex: 0,
-      previousContainer: fixture.componentInstance.treeOneList,
-      container: fixture.componentInstance.treeOneList
+      previousContainer: fixture.componentInstance.treeOneList(),
+      container: fixture.componentInstance.treeOneList()
     });
     expect(console.error).toHaveBeenCalledWith('Cannot move parent into its own child');
   });
@@ -268,8 +268,8 @@ describe('SiTreeViewComponentWithDragDrop', () => {
     debugElement.query(By.css('si-tree-view')).triggerEventHandler('cdkDropListDropped', {
       currentIndex: 1,
       previousIndex: 0,
-      previousContainer: fixture.componentInstance.treeOneList,
-      container: fixture.componentInstance.treeOneList
+      previousContainer: fixture.componentInstance.treeOneList(),
+      container: fixture.componentInstance.treeOneList()
     });
     fixture.detectChanges();
     expect(

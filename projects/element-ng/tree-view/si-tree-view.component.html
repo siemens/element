@@ -61,7 +61,7 @@
   @if (itemsVirtualized) {
     <div class="si-tree-view-root-ul">
       <ng-content select="[cdkDropList], [siTreeViewItem]" />
-      @if (!treeItemContentTemplate) {
+      @if (!treeItemContentTemplate()) {
         <si-tree-view-item *siTreeViewItem="let index = index; let treeItem = treeItem" />
       }
     </div>

@@ -3,7 +3,7 @@
     #contextMenuTrigger="cdkContextMenuTriggerFor"
     class="si-tree-view-li si-tree-view-li-item focus-direct-sub-inside"
     [class.si-tree-view-item-context-menu-visible]="
-      !!(contextMenuTrigger.isOpen() || menuTrigger?.isOpen())
+      !!(contextMenuTrigger.isOpen() || menuTrigger()?.isOpen())
     "
     [class.si-tree-view-item-active]="treeItem.active"
     [class.si-tree-view-item-selected]="enableSelection() && treeItem.selected"
@@ -61,10 +61,9 @@
         <div
           class="si-tree-view-item-object-data d-flex flex-column justify-content-center overflow-hidden"
         >
-          @if (!templates.length) {
+          @if (!templates().length) {
             <h5 class="text-truncate">{{ treeItem.label | translate }}</h5>
-          }
-          @if (templates.length) {
+          } @else {
             <div>
               <ng-container
                 *ngTemplateOutlet="

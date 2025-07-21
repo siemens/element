@@ -17,10 +17,9 @@ import {
   inject,
   OnDestroy,
   OnInit,
-  QueryList,
   signal,
   TemplateRef,
-  ViewChild
+  viewChild
 } from '@angular/core';
 import { correctKeyRTL, MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { SiLoadingSpinnerComponent } from '@siemens/element-ng/loading-spinner';
@@ -30,7 +29,6 @@ import { asyncScheduler, Subject, Subscription } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
 import { TREE_ITEM_CONTEXT } from '../si-tree-view-item-context';
-import { SiTreeViewItemTemplateDirective } from '../si-tree-view-item-template.directive';
 import {
   CheckboxClickEventArgs,
   ClickEventArgs,
@@ -82,8 +80,7 @@ export class SiTreeViewItemComponent
   private scrollIntoView: Subject<TreeItem> = this.treeViewComponent.scrollChildIntoView;
   private childrenLoaded: Subject<TreeItem> = this.treeViewComponent.childrenLoaded;
 
-  protected templates: QueryList<SiTreeViewItemTemplateDirective> =
-    this.treeViewComponent.templates;
+  protected templates = this.treeViewComponent.templates;
 
   private readonly _contextMenuItems = this.treeViewComponent.contextMenuItems;
 
@@ -106,7 +103,7 @@ export class SiTreeViewItemComponent
   private subscriptions: Subscription[] = [];
   private indentLevel = this.treeItem.level ?? 0;
   private nextSiblingElement!: HTMLElement;
-  @ViewChild(CdkMenuTrigger) protected menuTrigger?: CdkMenuTrigger;
+  protected readonly menuTrigger = viewChild(CdkMenuTrigger);
 
   @HostBinding('attr.aria-level')
   protected get ariaLevel(): number {
@@ -402,8 +399,8 @@ export class SiTreeViewItemComponent
   protected onToggleContextMenuOpen(): void {
     setActive(this.treeItem, true);
     this.siTreeViewService.scroll$
-      .pipe(takeUntil(this.menuTrigger!.closed), take(1))
-      .subscribe(() => this.menuTrigger?.close());
+      .pipe(takeUntil(this.menuTrigger()!.closed), take(1))
+      .subscribe(() => this.menuTrigger()?.close());
   }
 
   protected onToggleContextMenuClose(): void {
@@ -429,8 +426,8 @@ export class SiTreeViewItemComponent
 
   protected renderMatchingTemplate(treeItem: TreeItem): TemplateRef<any> {
     // we check in the HTML template if templates exist.
-    const templateDirective = this.templates!.find(td => td.name() === treeItem.templateName);
-    return templateDirective ? templateDirective.template : this.templates!.toArray()[0].template;
+    const templateDirective = this.templates()!.find(td => td.name() === treeItem.templateName);
+    return templateDirective ? templateDirective.template : this.templates()![0].template;
   }
 
   @HostListener('contextmenu', ['$event']) protected onContextMenu(event: Event): boolean {
@@ -501,8 +498,9 @@ export class SiTreeViewItemComponent
       // Event suppression does not work.
       // Re-check in the future if FF fixes it.
       setTimeout(() => {
-        this.menuTrigger?.open();
-        this.menuTrigger?.getMenu()!.focusFirstItem('keyboard');
+        const menuTrigger = this.menuTrigger();
+        menuTrigger?.open();
+        menuTrigger?.getMenu()!.focusFirstItem('keyboard');
       });
     } else {
       event.preventDefault();

@@ -16,8 +16,6 @@ import {
   ChangeDetectorRef,
   Component,
   computed,
-  ContentChild,
-  ContentChildren,
   ElementRef,
   HostListener,
   inject,
@@ -26,12 +24,15 @@ import {
   OnDestroy,
   OnInit,
   output,
-  QueryList,
   signal,
   SimpleChanges,
   TemplateRef,
-  ViewChild,
-  ViewChildren
+  contentChildren,
+  contentChild,
+  viewChildren,
+  Signal,
+  INJECTOR,
+  viewChild
 } from '@angular/core';
 import { buildTrackByIdentity, MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { MenuItem } from '@siemens/element-ng/menu';
@@ -383,8 +384,7 @@ export class SiTreeViewComponent
   /**
    * The injected content with included SiTreeViewItemTemplateDirective.
    */
-  @ContentChildren(SiTreeViewItemTemplateDirective)
-  templates!: QueryList<SiTreeViewItemTemplateDirective>;
+  readonly templates = contentChildren(SiTreeViewItemTemplateDirective);
 
   private initialized = false;
   private updateTreeItemHeightRequired = true; // must be set to true so the height is initially calculated once at least
@@ -406,6 +406,7 @@ export class SiTreeViewComponent
   private siTreeViewItemHeightService = inject(SiTreeViewItemHeightService);
   private cdRef = inject(ChangeDetectorRef);
   private resizeObserver = inject(ResizeObserverService);
+  private injector = inject(INJECTOR);
   /**
    * Create a virtual root node so there is just a single root node. This makes sure the tree
    * can be fully traversed starting from any node. This is needed e.g. for recursively
@@ -469,14 +470,13 @@ export class SiTreeViewComponent
       : this.siTreeViewConverterService.flattenedTrees;
   }
 
-  @ViewChildren(SiTreeViewItemComponent)
-  protected children!: QueryList<SiTreeViewItemComponent>;
+  protected readonly children = viewChildren(SiTreeViewItemComponent);
 
-  @ContentChild(SiTreeViewItemDirective, { read: TemplateRef })
-  protected treeItemContentTemplate!: TemplateRef<any>;
+  protected readonly treeItemContentTemplate = contentChild(SiTreeViewItemDirective, {
+    read: TemplateRef
+  });
 
-  @ContentChildren(SiTreeViewItemComponent, { descendants: true })
-  private nextItmes!: QueryList<SiTreeViewItemComponent>;
+  private readonly nextItmes = contentChildren(SiTreeViewItemComponent, { descendants: true });
 
   private keyManager!: FocusKeyManager<SiTreeViewItemComponent>;
 
@@ -546,7 +546,7 @@ export class SiTreeViewComponent
   }
 
   ngOnInit(): void {
-    this.scroll$ = defer(() => fromEvent(this.treeViewInnerElement.nativeElement, 'scroll'));
+    this.scroll$ = defer(() => fromEvent(this.treeViewInnerElement().nativeElement, 'scroll'));
     this.siTreeViewService.scroll$ = this.scroll$;
     if (this.isVirtualized()) {
       this.subscriptions.push(this.scroll$.subscribe(event => this.onScroll(event)));
@@ -599,7 +599,7 @@ export class SiTreeViewComponent
   ngAfterViewInit(): void {
     this.addClassObserver();
     this.subscriptions.push(this.monitorTreeSizeChanges().subscribe(d => this.updatePageSize(d)));
-    this.keyManager = new FocusKeyManager(this.getChildren())
+    this.keyManager = new FocusKeyManager(this.getChildren(), this.injector)
       .withWrap()
       .withAllowedModifierKeys(['shiftKey'])
       .withHomeAndEnd()
@@ -617,14 +617,14 @@ export class SiTreeViewComponent
       let newHeight: number | undefined;
       if (this.isVirtualized()) {
         newHeight = this.siTreeViewItemHeightService.updateItemHeight(
-          this.treeViewInnerElement.nativeElement,
+          this.treeViewInnerElement().nativeElement,
           this.siTreeViewConverterService.flattenedTrees,
           this.siTreeViewVirtualizationService.itemBaseIdx,
           this.siTreeViewVirtualizationService.itemsVirtualizedCount
         );
       } else {
         newHeight = this.siTreeViewItemHeightService.updateItemHeight(
-          this.treeViewInnerElement.nativeElement,
+          this.treeViewInnerElement().nativeElement,
           this.siTreeViewConverterService.flattenedTrees,
           0,
           this.siTreeViewConverterService.flattenedTrees.length
@@ -651,14 +651,14 @@ export class SiTreeViewComponent
       let newHeight: number | undefined;
       if (this.isVirtualized()) {
         newHeight = this.siTreeViewItemHeightService.updateGroupedItemHeight(
-          this.treeViewInnerElement.nativeElement,
+          this.treeViewInnerElement().nativeElement,
           this.siTreeViewConverterService.flattenedTrees,
           this.siTreeViewVirtualizationService.itemBaseIdx,
           this.siTreeViewVirtualizationService.itemsVirtualizedCount
         );
       } else {
         newHeight = this.siTreeViewItemHeightService.updateGroupedItemHeight(
-          this.treeViewInnerElement.nativeElement,
+          this.treeViewInnerElement().nativeElement,
           this.siTreeViewConverterService.flattenedTrees,
           0,
           this.siTreeViewConverterService.flattenedTrees.length
@@ -743,13 +743,13 @@ export class SiTreeViewComponent
     this.focusFirstItemFlattened();
   }
 
-  private getChildren(): QueryList<SiTreeViewItemComponent> {
-    return !this.treeItemContentTemplate ? this.children : this.nextItmes;
+  private getChildren(): Signal<readonly SiTreeViewItemComponent[]> {
+    return !this.treeItemContentTemplate() ? this.children : this.nextItmes;
   }
 
   private focusItem(item: TreeItem): void {
     const children = this.getChildren();
-    const component = children?.find(child => child.treeItem === item);
+    const component = children()?.find(child => child.treeItem === item);
     if (component) {
       this.keyManager.setActiveItem(component);
     }
@@ -766,7 +766,7 @@ export class SiTreeViewComponent
     const firstChild = item.children?.[0];
     if (firstChild) {
       const children = this.getChildren();
-      const firstChildComponent = children?.find(child => child.treeItem === firstChild);
+      const firstChildComponent = children()?.find(child => child.treeItem === firstChild);
       if (firstChildComponent) {
         this.keyManager.setActiveItem(firstChildComponent);
       }
@@ -1107,8 +1107,8 @@ export class SiTreeViewComponent
     return undefined;
   }
 
-  @ViewChild('treeViewInner', { read: ElementRef, static: true })
-  protected treeViewInnerElement!: ElementRef<HTMLDivElement>;
+  protected readonly treeViewInnerElement =
+    viewChild.required<ElementRef<HTMLDivElement>>('treeViewInner');
 
   private onItemFolderClicked(eventArgs: FolderStateEventArgs): void {
     this.treeItemFolderClicked.emit(eventArgs);
