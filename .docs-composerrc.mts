@@ -20,7 +20,8 @@ export const config: Config = {
   },
   build: {
     typedocExternalWarningsExceptions: ['@siemens/ngx-datatable'],
-    typedocWarningsIgnoreFilter: ['echarts.', 'will not be copied to the output directory']
+    typedocWarningsIgnoreFilter: ['echarts.', 'will not be copied to the output directory'],
+    demoPath: 'element-examples/index.html'
   },
   angular: true
 };
