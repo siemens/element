@@ -1,0 +1,81 @@
+- link "Jump to Main content"
+- link "Jump to Navigation"
+- text: My Application
+- button "Back"
+- button "Forward" [disabled]
+- button "Menu"
+- banner:
+  - button "Launchpad"
+  - link "Siemens logo":
+    - /url: "#/"
+  - text: Application name
+  - button "Layout"
+  - button "Help"
+  - button "Jane Smith"
+- navigation:
+  - button "collapse" [expanded]
+  - button "Home"
+  - button "Documentation"
+  - link "Energy & Sustainability":
+    - /url: "#/viewer/viewer/energy"
+  - link "Test Coverage":
+    - /url: "#/viewer/viewer/coverage"
+- main:
+  - button "Toggle"
+  - button "Properties"
+  - button "Documents"
+  - button "Graphics"
+  - text: /4 Emergency \d+ Trouble \d+ Success/
+  - button "Expand"
+  - heading "Here is a title" [level=2]
+  - text: A nice list of things
+  - button "Toggle"
+  - list:
+    - listitem:
+      - status "door in status info"
+      - text: Use the content action bar to toggle side panel
+    - listitem:
+      - status "lock in status danger"
+      - text: Dapibus ac facilisis in
+    - listitem:
+      - status "cooling in status info out"
+      - text: Porta ac consectetur ac
+    - listitem:
+      - status "user in status danger"
+      - text: Vestibulum at eros
+    - listitem:
+      - status "door in status info out"
+      - text: Cras justo odio
+    - listitem:
+      - status "lock in status danger"
+      - text: Dapibus ac facilisis in
+    - listitem:
+      - status "cooling in status info"
+      - text: Porta ac consectetur ac
+    - listitem:
+      - status "user in status danger"
+      - text: Vestibulum at eros
+    - listitem:
+      - status "door in status info"
+      - text: Cras justo odio
+    - listitem:
+      - status "lock in status danger"
+      - text: Dapibus ac facilisis in
+    - listitem:
+      - status "cooling in status info"
+      - text: Porta ac consectetur ac
+    - listitem:
+      - status "user in status danger"
+      - text: Vestibulum at eros
+    - listitem:
+      - status "door in status info"
+      - text: Cras justo odio
+    - listitem:
+      - status "lock in status danger"
+      - text: Dapibus ac facilisis in
+    - listitem:
+      - status "cooling in status info"
+      - text: Porta ac consectetur ac
+    - listitem:
+      - status "user in status danger"
+      - text: Vestibulum at eros

@@ -1,0 +1,220 @@
+<div class="has-navbar-fixed-top si-layout-fixed-height h-100 in-electron">
+  <si-electron-titlebar
+    appTitle="My Application"
+    [canGoBack]="true"
+    [canGoForward]="false"
+    [menuItems]="titlebarItems"
+  />
+
+  <si-application-header [launchpad]="launchpad">
+    <si-header-brand>
+      <a siHeaderLogo routerLink="/" class="d-none d-md-flex"></a>
+      <span class="application-name">Application name</span>
+    </si-header-brand>
+
+    <si-header-actions>
+      <button
+        type="button"
+        si-header-action-item
+        icon="element-layout-vertical-filled"
+        (click)="showLayout()"
+      >
+        Layout
+      </button>
+      <button type="button" si-header-action-item icon="element-help" (click)="showHelp()">
+        Help
+      </button>
+
+      <button
+        si-header-account-item
+        type="button"
+        name="Jane Smith"
+        [siHeaderDropdownTriggerFor]="account"
+      >
+      </button>
+      <ng-template #account>
+        <si-header-dropdown>
+          <div class="mx-5">
+            <div class="si-title-2">Jane Smith</div>
+            <div>jane.smith&#64;example.org</div>
+            <div class="d-flex align-items-center text-secondary mt-2">ExampleOrg</div>
+          </div>
+        </si-header-dropdown>
+      </ng-template>
+    </si-header-actions>
+
+    <ng-template #launchpad>
+      <si-launchpad-factory [apps]="appItems" />
+    </ng-template>
+  </si-application-header>
+  <si-navbar-vertical
+    navbarCollapseButtonText="collapse"
+    navbarExpandButtonText="expand"
+    [items]="menuItems"
+  >
+    <si-side-panel mode="scroll" [collapsible]="true">
+      <div class="si-layout-fixed-height mb-6 si-layout-main-padding">
+        <si-status-bar
+          class="si-layout-top-element si-layout-status"
+          [items]="statusItems"
+          [blink]="shouldBlink"
+          [compact]="statusBarCompact"
+        />
+
+        <div class="si-layout-header">
+          <h2 class="si-layout-title">Here is a title</h2>
+        </div>
+
+        <si-card
+          heading="A nice list of things"
+          class="si-layout-fixed-height"
+          [primaryActions]="primaryActions"
+        >
+          <ul class="list-group overflow-auto ms-6 mb-6 rounded-0 border-0" tabindex="0" body>
+            <li class="list-group-item d-flex align-items-center">
+              <si-circle-status status="info" icon="element-door" class="my-n4 me-5" />
+              Use the content action bar to toggle side panel
+            </li>
+            <li class="list-group-item d-flex align-items-center"
+              ><si-circle-status status="danger" icon="element-lock" class="my-n4 me-5" />Dapibus ac
+              facilisis in</li
+            >
+            <li class="list-group-item d-flex align-items-center"
+              ><si-circle-status
+                status="info"
+                icon="element-cooling"
+                class="my-n4 me-5"
+                [eventOut]="true"
+              />Porta ac consectetur ac</li
+            >
+            <li class="list-group-item d-flex align-items-center"
+              ><si-circle-status status="danger" icon="element-user" class="my-n4 me-5" />Vestibulum
+              at eros</li
+            >
+            <li class="list-group-item d-flex align-items-center"
+              ><si-circle-status
+                status="info"
+                icon="element-door"
+                class="my-n4 me-5"
+                [eventOut]="true"
+              />Cras justo odio</li
+            >
+            <li class="list-group-item d-flex align-items-center"
+              ><si-circle-status status="danger" icon="element-lock" class="my-n4 me-5" />Dapibus ac
+              facilisis in</li
+            >
+            <li class="list-group-item d-flex align-items-center"
+              ><si-circle-status status="info" icon="element-cooling" class="my-n4 me-5" />Porta ac
+              consectetur ac</li
+            >
+            <li class="list-group-item d-flex align-items-center"
+              ><si-circle-status status="danger" icon="element-user" class="my-n4 me-5" />Vestibulum
+              at eros</li
+            >
+            <li class="list-group-item d-flex align-items-center"
+              ><si-circle-status status="info" icon="element-door" class="my-n4 me-5" />Cras justo
+              odio</li
+            >
+            <li class="list-group-item d-flex align-items-center"
+              ><si-circle-status status="danger" icon="element-lock" class="my-n4 me-5" />Dapibus ac
+              facilisis in</li
+            >
+            <li class="list-group-item d-flex align-items-center"
+              ><si-circle-status status="info" icon="element-cooling" class="my-n4 me-5" />Porta ac
+              consectetur ac</li
+            >
+            <li class="list-group-item d-flex align-items-center"
+              ><si-circle-status status="danger" icon="element-user" class="my-n4 me-5" />Vestibulum
+              at eros</li
+            >
+            <li class="list-group-item d-flex align-items-center"
+              ><si-circle-status status="info" icon="element-door" class="my-n4 me-5" />Cras justo
+              odio</li
+            >
+            <li class="list-group-item d-flex align-items-center"
+              ><si-circle-status status="danger" icon="element-lock" class="my-n4 me-5" />Dapibus ac
+              facilisis in</li
+            >
+            <li class="list-group-item d-flex align-items-center"
+              ><si-circle-status status="info" icon="element-cooling" class="my-n4 me-5" />Porta ac
+              consectetur ac</li
+            >
+            <li class="list-group-item d-flex align-items-center"
+              ><si-circle-status status="danger" icon="element-user" class="my-n4 me-5" />Vestibulum
+              at eros</li
+            >
+          </ul>
+        </si-card>
+      </div>
+
+      <si-side-panel-content heading="Cooling coil" [searchable]="true">
+        <si-accordion [fullHeight]="true">
+          <si-collapsible-panel
+            heading="Properties"
+            icon="element-settings"
+            contentCssClasses="p-6"
+          >
+            And here we have some content
+          </si-collapsible-panel>
+          <si-collapsible-panel heading="Documents" icon="element-document" contentCssClasses="p-6">
+            And this is the content
+          </si-collapsible-panel>
+          <si-collapsible-panel heading="Graphics" icon="element-image" contentCssClasses="p-6">
+            Nothing to see here
+          </si-collapsible-panel>
+        </si-accordion>
+      </si-side-panel-content>
+    </si-side-panel>
+  </si-navbar-vertical>
+</div>
+
+<ng-template #helpPanel cdkPortal>
+  <si-side-panel-content heading="Help">
+    <div class="p-6">Help yourself</div>
+  </si-side-panel-content>
+</ng-template>
+
+<ng-template #layoutPanel cdkPortal>
+  <si-side-panel-content heading="Layout">
+    <div class="p-6">
+      <p class="small">Status bar height</p>
+      <button
+        type="button"
+        class="layout-button btn btn-tertiary me-6"
+        [class.active]="statusBarCompact"
+        (click)="statusBarCompact = true"
+      >
+        <i class="element-layout-statusbar-small"></i>
+      </button>
+      <button
+        type="button"
+        class="layout-button btn btn-tertiary me-6"
+        [class.active]="!statusBarCompact"
+        (click)="statusBarCompact = false"
+      >
+        <i class="element-layout-statusbar-large"></i>
+      </button>
+
+      <p class="small mt-5">Pane layout</p>
+      <button type="button" class="layout-button btn btn-tertiary me-6">
+        <i class="element-layout-pane-1"></i>
+      </button>
+      <button type="button" class="layout-button btn btn-tertiary me-6">
+        <i class="element-layout-pane-2"></i>
+      </button>
+      <button type="button" class="layout-button btn btn-tertiary me-6 active">
+        <i class="element-layout-pane-4"></i>
+      </button>
+    </div>
+  </si-side-panel-content>
+</ng-template>
+
+<style>
+  .layout-button {
+    width: 3rem !important;
+    min-width: 0 !important;
+    font-size: 3rem;
+    padding: 0;
+    color: var(--element-text-primary);
+  }
+</style>

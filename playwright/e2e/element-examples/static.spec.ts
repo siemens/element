@@ -50,6 +50,7 @@ test('si-dashboard/si-value-widget', ({ si }) => si.static());
 test('si-datepicker/si-timepicker-limits', ({ si }) => si.static());
 test('si-datepicker/si-timepicker', ({ si }) => si.static());
 test('si-electron-titlebar/si-electron-titlebar', ({ si }) => si.static());
+test('si-electron-titlebar/si-fixed-height-layout-side-panel', ({ si }) => si.static());
 test('si-empty-state/si-empty-state', ({ si }) => si.static());
 test('si-footer/si-footer', ({ si }) => si.static());
 test('si-icon/si-icon-composite', ({ si }) => si.static());
