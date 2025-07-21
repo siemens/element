@@ -118,14 +118,6 @@ export class SiCollapsiblePanelComponent {
    */
   readonly panelToggle = output<boolean>();
 
-  /**
-   * An event emitted when the user triggered expand/collapse.
-   * The event is emitted before the animation happens.
-   * @deprecated use {@link panelToggle} instead
-   */
-  // eslint-disable-next-line @angular-eslint/no-output-native
-  readonly toggle = output<boolean>();
-
   protected readonly hcollapsed = computed(
     () => this.accordionHCollapseService?.hcollapsed() ?? false
   );
@@ -153,8 +145,6 @@ export class SiCollapsiblePanelComponent {
         filter(item => item !== this)
       )
       .subscribe(() => this.openClose(false));
-
-    this.panelToggle.subscribe(open => this.toggle.emit(open));
   }
 
   protected get showHide(): string {
