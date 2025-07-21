@@ -4,18 +4,17 @@
  */
 import { NgClass, NgTemplateOutlet } from '@angular/common';
 import {
-  AfterContentInit,
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
   computed,
-  ContentChildren,
+  contentChildren,
   ElementRef,
   input,
-  OnDestroy,
+  linkedSignal,
   output,
-  QueryList,
   signal,
+  untracked,
   viewChild
 } from '@angular/core';
 import { WebComponentContentChildren } from '@siemens/element-ng/common';
@@ -33,8 +32,6 @@ import {
 } from '@siemens/element-ng/icon';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 import { SiWizardStepComponent } from './si-wizard-step.component';
 
@@ -62,11 +59,7 @@ interface StepItem {
     '[style.--wizard-vertical-max-size]': 'verticalMaxSize()'
   }
 })
-export class SiWizardComponent implements AfterContentInit, OnDestroy {
-  @WebComponentContentChildren(SiWizardStepComponent)
-  @ContentChildren(SiWizardStepComponent)
-  private wizardSteps!: QueryList<SiWizardStepComponent>;
-
+export class SiWizardComponent {
   protected readonly containerSteps = viewChild<ElementRef<HTMLDivElement>>('containerSteps');
 
   /**
@@ -224,7 +217,7 @@ export class SiWizardComponent implements AfterContentInit, OnDestroy {
 
   /** Get number of wizard steps. */
   get stepCount(): number {
-    return this.steps.length;
+    return this.steps().length;
   }
 
   /** Get current visible wizard step. */
@@ -232,17 +225,33 @@ export class SiWizardComponent implements AfterContentInit, OnDestroy {
     return this._currentStep();
   }
 
-  protected steps: SiWizardStepComponent[] = [];
-  protected visibleSteps = 0;
+  @WebComponentContentChildren(SiWizardStepComponent)
+  protected readonly steps = contentChildren(SiWizardStepComponent);
+  protected readonly visibleSteps = linkedSignal(() => this.calculateVisibleStepCount());
   protected readonly showCompletionPage = signal(false);
   /** The list of visible steps. */
-  protected readonly activeSteps = signal<StepItem[]>([]);
+  protected readonly activeSteps = computed(() => this.computeVisibleSteps());
   protected readonly shouldHideNavigation = computed(() => {
     return this.hideNavigation() || !this.hasNavigation();
   });
 
-  private readonly _index = signal(0);
-  private readonly _currentStep = signal<SiWizardStepComponent | undefined>(undefined);
+  private readonly _index = linkedSignal(() => {
+    const currentStep = this._currentStep();
+    const currentStepIndex = currentStep ? this.steps().indexOf(currentStep) : 0;
+    return currentStepIndex < 0 ? 0 : currentStepIndex;
+  });
+  private readonly _currentStep = linkedSignal(() => {
+    const steps = this.steps();
+    const currentActive = steps.find(step => step.isActive());
+    if (currentActive) {
+      return currentActive;
+    } else if (steps.length) {
+      untracked(() => steps[0].isActive.set(true));
+      return steps[0];
+    } else {
+      return undefined;
+    }
+  });
   protected readonly icons = addIcons({
     elementCancel,
     elementChecked,
@@ -253,39 +262,6 @@ export class SiWizardComponent implements AfterContentInit, OnDestroy {
     elementRadioChecked,
     elementWarningFilled
   });
-  private destroyer = new Subject<void>();
-
-  ngAfterContentInit(): void {
-    this.updateSteps();
-    this._currentStep.set(this.steps[0]);
-    queueMicrotask(() => {
-      if (this.steps.length > 0) {
-        this.steps[0].isActive.set(true);
-      }
-    });
-
-    this.wizardSteps.changes.pipe(takeUntil(this.destroyer)).subscribe(() => {
-      this.updateSteps();
-      if (!this.wizardSteps.some(step => step === this.currentStep)) {
-        this._currentStep.set(this.wizardSteps.first);
-        this._index.set(0);
-      } else {
-        const updatedIndex = this.currentStep ? this.steps.indexOf(this.currentStep) : 0;
-        this._index.set(updatedIndex);
-      }
-      queueMicrotask(() => {
-        if (this.currentStep) {
-          this.activate(this.currentStep);
-        }
-        this.calculateNumberOfVisibleSteps();
-      });
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.destroyer.next();
-    this.destroyer.complete();
-  }
 
   protected canActivate(stepIndex: number): boolean {
     if (stepIndex < 0) {
@@ -301,7 +277,7 @@ export class SiWizardComponent implements AfterContentInit, OnDestroy {
     }
     // Fast-forward: check all steps if they are valid
     for (let i = this.index; i < stepIndex; i++) {
-      const theStep = this.steps[i];
+      const theStep = this.steps()[i];
       if (!theStep.isValid()) {
         return false;
       }
@@ -353,11 +329,12 @@ export class SiWizardComponent implements AfterContentInit, OnDestroy {
    * @param delta - optional number of steps to move forward.
    */
   next(delta: number = 1): void {
-    if (this.index === this.steps.length) {
+    const steps = this.steps();
+    if (this.index === steps.length - 1) {
       return;
     }
     const stepIndex = this.index + delta;
-    const nextStep = this.steps[stepIndex];
+    const nextStep = steps[stepIndex];
     if (this.canActivate(stepIndex)) {
       this.currentStep?.next.emit();
       if (this.currentStep?.isNextNavigable()) {
@@ -375,7 +352,7 @@ export class SiWizardComponent implements AfterContentInit, OnDestroy {
       return;
     }
     this.currentStep?.back.emit();
-    this.activate(this.steps[this.index - delta]);
+    this.activate(this.steps()[this.index - delta]);
   }
 
   /** Triggers the save action to complete the wizard. */
@@ -408,14 +385,20 @@ export class SiWizardComponent implements AfterContentInit, OnDestroy {
 
     step.isActive.set(true);
     this._currentStep.set(step);
-    this._index.set(this.steps.indexOf(step));
-    this.updateVisibleSteps();
+    this._index.set(this.steps().indexOf(step));
   }
 
-  protected calculateNumberOfVisibleSteps(): void {
+  protected updateVisibleSteps(): void {
+    const newVisibleSteps = this.calculateVisibleStepCount();
+    if (newVisibleSteps !== this.visibleSteps()) {
+      this.visibleSteps.set(newVisibleSteps);
+    }
+  }
+
+  private calculateVisibleStepCount(): number {
     const containerSteps = this.containerSteps();
     if (!containerSteps) {
-      return;
+      return 0;
     }
     if (this.verticalLayout()) {
       const computedStyle = getComputedStyle(containerSteps.nativeElement);
@@ -423,32 +406,26 @@ export class SiWizardComponent implements AfterContentInit, OnDestroy {
         containerSteps.nativeElement.clientHeight -
         parseInt(computedStyle.paddingBlockStart) -
         parseInt(computedStyle.paddingBlockEnd);
-      this.visibleSteps = Math.max(Math.floor(clientHeight / 48), 1);
+      return Math.max(Math.floor(clientHeight / 48), 1);
     } else {
       const clientWidth = containerSteps.nativeElement.clientWidth;
-      this.visibleSteps = Math.max(Math.floor(clientWidth / 150), 1);
+      return Math.max(Math.floor(clientWidth / 150), 1);
     }
-    this.updateVisibleSteps();
   }
 
-  private updateSteps(): void {
-    this.steps = this.wizardSteps.toArray();
-    this.updateVisibleSteps();
-  }
-
-  private updateVisibleSteps(): void {
-    const create = (index: number): StepItem => ({ index, step: this.steps[index] });
-    if (this.steps.length === 0) {
-      this.activeSteps.set([]);
-    } else if (this.visibleSteps <= 1) {
-      this.activeSteps.set([create(this.index)]);
-    } else if (this.stepCount <= this.visibleSteps) {
-      this.activeSteps.set(this.steps.map((_, i) => create(i)));
+  private computeVisibleSteps(): StepItem[] {
+    const create = (index: number): StepItem => ({ index, step: this.steps()[index] });
+    if (this.steps().length === 0) {
+      return [];
+    } else if (this.visibleSteps() <= 1) {
+      return [create(this.index)];
+    } else if (this.stepCount <= this.visibleSteps()) {
+      return this.steps().map((_, i) => create(i));
     } else {
       const steps = [this.index];
       for (
         let i = 1, left = this.index - 1, right = this.index + 1;
-        i < this.visibleSteps;
+        i < this.visibleSteps();
         right++, left--
       ) {
         // Iterate in both directions to check current step is in visible range.
@@ -456,13 +433,13 @@ export class SiWizardComponent implements AfterContentInit, OnDestroy {
           steps.push(right);
           i++;
         }
-        if (left >= 0 && i < this.visibleSteps) {
+        if (left >= 0 && i < this.visibleSteps()) {
           steps.push(left);
           i++;
         }
       }
 
-      this.activeSteps.set(steps.sort((l, r) => l - r).map(i => create(i)));
+      return steps.sort((l, r) => l - r).map(i => create(i));
     }
   }
 }
