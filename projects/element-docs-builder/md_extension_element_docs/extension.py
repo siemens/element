@@ -118,7 +118,8 @@ class ElementExamplePreProcessor(ElementHtmlPreProcessor):
     element.set('class', 'component-preview')
     # on server: ../../../demo/index.html
     # dev: http://localhost:4200
-    element.set('data-src', f'{self.examples_base}#/viewer/editor?{urlencode({'base': examples_base if examples_base else '','e': list(map(lambda x: f'{x[0]};{x[1]}' if len(x) > 1 else x[0], examples))}, doseq=True)}')
+    encode_object = {'base': examples_base if examples_base else '','e': list(map(lambda x: f'{x[0]};{x[1]}' if len(x) > 1 else x[0], examples))}
+    element.set('data-src', f'{self.examples_base}#/viewer/editor?{urlencode(encode_object, doseq=True)}')
     prev_height = element.get("height")
     element.set('height', f'{int(prev_height if prev_height else 204) + 411}px')
     element.set('width', f'100%')

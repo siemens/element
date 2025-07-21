@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://element.siemens.io" target="_blank">
-    <img src="./element-logo.svg" alt="Element Website" height="132" width="132">
+    <img src="https://raw.githubusercontent.com/siemens/element/refs/heads/main/element-logo.svg" alt="Element Website" height="132" width="132">
   </a>
 </p>
 

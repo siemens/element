@@ -163,12 +163,34 @@ jobs:
         with:
           name: dist
           path: dist
-      - run: cp dist/element-examples/favicon.png docs/_src/favicon.png
-      - run: uv run mkdocs build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/jod
+          cache: 'npm'
+      - run: npm config set //code.siemens.com/api/v4/packages/npm/:_authToken $SIEMENS_NPM_TOKEN
         env:
+          SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
+      - run: npm ci --prefer-offline --no-audit --include=optional
+      - run: cp dist/element-examples/favicon.png docs/_src/favicon.png
+      # uv sync in custom location to avoid issues with commonJS for JSPYBrdige
+      - run: mkdir -p /opt/uv/
+      - run: uv venv
+        working-directory: /opt/uv
+      - run: uv sync --active
+        env:
+          VIRTUAL_ENV: '/opt/uv/.venv'
           UV_INDEX_CODE_DOCS_THEME_USERNAME: ${{ secrets.SIEMENS_NPM_USER }}
           UV_INDEX_CODE_DOCS_THEME_PASSWORD: ${{ secrets.SIEMENS_NPM_TOKEN }}
+      - run: npm run docs:build:generate
+        env:
+          VIRTUAL_ENV: '/opt/uv/.venv'
           EXAMPLES_BASE: /element-examples
+        if: ${{ github.ref == 'refs/heads/main' }}
+      - run: npm run docs:build:api
+        env:
+          VIRTUAL_ENV: '/opt/uv/.venv'
+          EXAMPLES_BASE: /element-examples
+        if: ${{ github.ref != 'refs/heads/main' }}
       - run: mv dist/element-examples/ dist/design/
       - run: mv dist/dashboards-demo/ dist/design/
       - uses: actions/upload-artifact@v4
@@ -178,4 +200,3 @@ jobs:
 # TODO: add release job
 # TODO: build PR previews
 # TODO: e2e test
-

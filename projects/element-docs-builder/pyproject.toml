@@ -8,20 +8,34 @@ version = "1.0.0"
 description = "Element Design System documentation and core components for web applications."
 authors = [{ name = "Siemens AG", email = "info@siemens.com" }]
 requires-python = "~=3.11"
-readme = "../../README.md"
 license = "MIT"
+dependencies = [
+    "javascript==1!1.2.2",
+]
 
 [project.urls]
 Homepage = "https://github.com/siemens/element"
 Repository = "https://github.com/siemens/element.git"
 Documentation = "https://element.siemens.io"
 
+[tool.hatch.build]
+include = [
+  "mkdocs_element_docs_builder/index.mjs",
+  "mkdocs_element_docs_builder/package.json",
+  "mkdocs_element_docs_builder/plugin.py",
+  "mkdocs_element_docs_builder/__init__.py",
+  "mkdocs_element_docs_builder/docs-builder.css",
+  "mkdocs_element_docs_builder/docs-builder.js",
+  "md_extension_element_docs",
+  "md_extension_element_docs_composer",
+]
 
 [tool.hatch.build.targets.wheel]
-packages = ["md_extension_element_docs", "mkdocs_element_docs_builder"]
+packages = ["md_extension_element_docs", "md_extension_element_docs_composer", "mkdocs_element_docs_builder"]
 
 [project.entry-points."mkdocs.plugins"]
 element-docs-builder = "mkdocs_element_docs_builder.plugin:ElementDocsBuilderPlugin"
 
 [project.entry-points."markdown.extensions"]
 element-docs = "md_extension_element_docs.extension:ElementDocsExtension"
+element-docs-composer = "md_extension_element_docs_composer.extension:DocsComposerExtension"
