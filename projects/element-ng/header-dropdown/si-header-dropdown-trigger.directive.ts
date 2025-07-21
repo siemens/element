@@ -86,7 +86,8 @@ export class SiHeaderDropdownTriggerDirective implements OnChanges, OnInit, OnDe
   @HostBinding('id') readonly id =
     `si-navbar-dropdown-trigger-${SiHeaderDropdownTriggerDirective.idCounter++}`;
 
-  @HostBinding('class.show') @HostBinding('attr.aria-expanded') private _isOpen = false;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  @HostBinding('class.show') @HostBinding('attr.aria-expanded') protected _isOpen = false;
 
   /** @internal */
   @HostBinding('attr.aria-controls') readonly ariaControls =

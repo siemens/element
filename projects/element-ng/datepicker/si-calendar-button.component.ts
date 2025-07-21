@@ -86,7 +86,7 @@ export class SiCalendarButtonComponent implements OnInit, AfterContentInit, DoCh
   private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
   // Add classes here to enable error messages in si-form-item
-  private readonly showValidationMessages = signal(false);
+  protected readonly showValidationMessages = signal(false);
 
   ngOnInit(): void {
     // Monitor input state changes and update the button accordingly

@@ -4,6 +4,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/app",
+    "skipLibCheck": true,
     "types": ["../element-translate-ng/localize-types/index.ts", "zone.js"]
   },
   "files": ["src/main.ts"],

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkPortalOutlet, DomPortal, PortalModule } from '@angular/cdk/portal';
-import { DOCUMENT, ViewportScroller } from '@angular/common';
+import { ViewportScroller } from '@angular/common';
 import {
   AfterViewInit,
   booleanAttribute,
@@ -17,7 +17,8 @@ import {
   OnDestroy,
   signal,
   SimpleChanges,
-  viewChild
+  viewChild,
+  DOCUMENT
 } from '@angular/core';
 import { ScrollbarHelper } from '@siemens/element-ng/common';
 import {

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkPortalOutlet, Portal, PortalModule } from '@angular/cdk/portal';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectorRef,
@@ -21,7 +21,8 @@ import {
   PLATFORM_ID,
   signal,
   SimpleChanges,
-  viewChild
+  viewChild,
+  DOCUMENT
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {

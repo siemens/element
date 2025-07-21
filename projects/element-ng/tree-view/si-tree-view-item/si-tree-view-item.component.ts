@@ -73,7 +73,7 @@ export class SiTreeViewItemComponent
   private element = inject(ElementRef);
   private siTreeViewService = inject(SiTreeViewService);
   private cdRef = inject(ChangeDetectorRef);
-  private treeItemContext = inject(TREE_ITEM_CONTEXT);
+  protected treeItemContext = inject(TREE_ITEM_CONTEXT);
   protected treeViewComponent = this.treeItemContext.parent;
   /** @internal */
   treeItem: TreeItem = this.treeItemContext.record.item;

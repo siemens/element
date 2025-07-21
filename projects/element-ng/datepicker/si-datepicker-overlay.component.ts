@@ -8,7 +8,6 @@ import {
   ConfigurableFocusTrapFactory,
   FocusMonitor
 } from '@angular/cdk/a11y';
-import { DOCUMENT } from '@angular/common';
 import {
   AfterViewInit,
   booleanAttribute,
@@ -25,7 +24,8 @@ import {
   output,
   signal,
   SimpleChanges,
-  viewChild
+  viewChild,
+  DOCUMENT
 } from '@angular/core';
 
 import { Cell } from './components/si-calendar-body.component';

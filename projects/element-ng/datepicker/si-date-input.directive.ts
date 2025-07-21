@@ -35,7 +35,7 @@ import { DatepickerInputConfig, getDatepickerFormat } from './si-datepicker.mode
  * Base directive for date input fields.
  */
 @Directive({
-  selector: '[siDateInput]',
+  selector: 'input[siDateInput]',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -224,8 +224,9 @@ export class SiDateInputDirective
    * Handles `input` events on the input element.
    * @param value - current input value.
    */
-  @HostListener('input', ['$event.target.value'])
-  protected onInput(value: string): void {
+  @HostListener('input', ['$event'])
+  protected onInput(event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
     const parsedDate = parseDate(value, this.getFormat(), this.locale);
 
     // Is same date

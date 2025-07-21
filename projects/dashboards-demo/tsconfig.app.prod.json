@@ -4,6 +4,7 @@
   "extends": "../../src/tsconfig.app.prod.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/app",
+    "skipLibCheck": true,
     "types": []
   },
   "files": ["src/main.ts"],

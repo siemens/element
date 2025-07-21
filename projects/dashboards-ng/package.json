@@ -18,8 +18,8 @@
   "bugs": "https://github.com/siemens/element/issues/new",
   "type": "module",
   "peerDependencies": {
-    "@angular/common": "19 - 20",
-    "@angular/core": "19 - 20",
+    "@angular/common": "20",
+    "@angular/core": "20",
     "@ngx-translate/core": "15 - 16",
     "@siemens/element-ng": "47.8.0",
     "@siemens/element-theme": "47.8.0",

@@ -84,7 +84,7 @@ export class SiDatepickerDirective extends SiDateInputDirective implements After
   /**
    * On click shall show datepicker.
    */
-  @HostListener('click', ['$event'])
+  @HostListener('click')
   protected onClick(): void {
     if (!this.externalTrigger) {
       this.show();

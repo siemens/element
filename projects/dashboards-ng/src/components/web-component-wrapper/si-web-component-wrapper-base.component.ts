@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { DOCUMENT } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -10,7 +9,8 @@ import {
   inject,
   Input,
   Renderer2,
-  ViewChild
+  ViewChild,
+  DOCUMENT
 } from '@angular/core';
 
 import { WidgetConfig } from '../../model/widgets.model';

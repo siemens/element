@@ -344,7 +344,7 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
   }
 
   @HostListener('keydown.space', ['$event'])
-  protected onKeydownSpace(event: KeyboardEvent): void {
+  protected onKeydownSpace(event: Event): void {
     if (this.typeaheadMultiSelect()) {
       // Avoid space character to be inserted into the input field
       event.preventDefault();

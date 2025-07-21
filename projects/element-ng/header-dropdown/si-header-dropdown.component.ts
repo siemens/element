@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 import { A11yModule, CdkTrapFocus } from '@angular/cdk/a11y';
-import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   HostBinding,
   HostListener,
   inject,
-  viewChild
+  viewChild,
+  DOCUMENT
 } from '@angular/core';
 
 import { SiHeaderDropdownTriggerDirective } from './si-header-dropdown-trigger.directive';

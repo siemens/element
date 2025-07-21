@@ -4,6 +4,7 @@
     "outDir": "./out-tsc/app",
     "noUnusedLocals": false,
     "useDefineForClassFields": true,
+    "skipLibCheck": true,
     "types": ["../projects/element-translate-ng/localize-types/index.d.ts", "zone.js"]
   },
   "include": ["**/*.ts"],

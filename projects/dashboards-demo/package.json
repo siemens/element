@@ -18,6 +18,6 @@
     "ngx-translate-multi-http-loader": "19.0.3"
   },
   "devDependencies": {
-    "ngx-build-plus": "^19.0.0"
+    "ngx-build-plus": "20.0.0"
   }
 }

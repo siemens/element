@@ -47,7 +47,8 @@ export class SiYearSelectionComponent extends SiInitialFocusComponent implements
   /** Emits when the active focused date changed to another month / year, typically during keyboard navigation. */
   readonly yearRangeChange = output<Date[]>();
   /** Listen Escape event to switch view back */
-  @HostListener('keydown.Escape', ['$event']) triggerEsc(event: KeyboardEvent): void {
+  @HostListener('keydown.Escape', ['$event'])
+  triggerEsc(event: Event): void {
     this.selectedValueChange.emit(null);
     event.preventDefault();
     event.stopPropagation(); // Prevents the overlay from closing.

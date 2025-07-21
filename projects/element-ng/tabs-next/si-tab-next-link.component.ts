@@ -35,7 +35,7 @@ export class SiTabNextLinkComponent extends SiTabNextBaseDirective {
   override readonly active = signal(false);
   /** @internal */
   routerLink = inject(RouterLink, { optional: true, self: true });
-  private routerLinkActive = inject(RouterLinkActive, { self: true });
+  protected routerLinkActive = inject(RouterLinkActive, { self: true });
   constructor() {
     super();
     this.routerLinkActive.isActiveChange

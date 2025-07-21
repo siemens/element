@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { DOCUMENT } from '@angular/common';
 import {
   AfterContentInit,
   ChangeDetectionStrategy,
@@ -20,7 +19,8 @@ import {
   QueryList,
   signal,
   Signal,
-  SimpleChanges
+  SimpleChanges,
+  DOCUMENT
 } from '@angular/core';
 import {
   isRTL,

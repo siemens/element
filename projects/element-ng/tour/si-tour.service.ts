@@ -10,8 +10,7 @@ import {
   PositionStrategy
 } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { DOCUMENT } from '@angular/common';
-import { ElementRef, inject, Injectable, Injector, signal } from '@angular/core';
+import { ElementRef, inject, Injectable, Injector, signal, DOCUMENT } from '@angular/core';
 import { makeOverlay, makePositionStrategy } from '@siemens/element-ng/common';
 import { ResizeObserverService } from '@siemens/element-ng/resize-observer';
 import { map, merge, Subject, Subscription, tap, throttleTime } from 'rxjs';

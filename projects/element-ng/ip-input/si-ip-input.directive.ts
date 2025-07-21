@@ -33,6 +33,7 @@ export interface AddrInputEvent {
  * Base directive for ip address input fields.
  */
 @Directive({
+  selector: 'input[siIpInput]',
   providers: [
     {
       provide: SI_FORM_ITEM_CONTROL,
@@ -95,10 +96,10 @@ export abstract class SiIpInputDirective {
   }
 
   @HostListener('input', ['$event'])
-  protected onInput(e: InputEvent): void {
+  protected onInput(e: Event): void {
     const el = e.target as HTMLInputElement;
     const selStart = el.selectionStart ?? 0;
-    const { inputType, data } = e;
+    const { inputType, data } = e as InputEvent;
     const len = data?.length ?? 0;
     this.maskInput({
       value: el.value,
