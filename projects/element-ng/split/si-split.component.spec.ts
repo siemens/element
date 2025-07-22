@@ -52,8 +52,6 @@ class SynchronousMockStore implements UIStateStorage {
           [collapseDirection]="collapseDirection1"
           [collapseIconClass]="collapseIconClass1"
           [collapseToMinSize]="collapseToMinSize1"
-          [headerStatusColor]="headerStatusColor1"
-          [headerStatusIconClass]="headerStatusIconClass1"
           [headerTemplate]="headerTemplate1"
           [heading]="heading1"
           [minSize]="minSize1"
@@ -74,8 +72,6 @@ class SynchronousMockStore implements UIStateStorage {
           [collapseDirection]="collapseDirection2"
           [collapseIconClass]="collapseIconClass2"
           [collapseToMinSize]="collapseToMinSize2"
-          [headerStatusColor]="headerStatusColor2"
-          [headerStatusIconClass]="headerStatusIconClass2"
           [headerTemplate]="headerTemplate2"
           [heading]="heading2"
           [minSize]="minSize2"
@@ -97,8 +93,6 @@ class SynchronousMockStore implements UIStateStorage {
           [collapseDirection]="collapseDirection3"
           [collapseIconClass]="collapseIconClass3"
           [collapseToMinSize]="collapseToMinSize3"
-          [headerStatusColor]="headerStatusColor3"
-          [headerStatusIconClass]="headerStatusIconClass3"
           [headerTemplate]="headerTemplate3"
           [heading]="heading3"
           [minSize]="minSize3"
@@ -148,8 +142,6 @@ class WrapperComponent {
   collapseDirection2: CollapseTo = 'start';
   collapseIconClass2 = 'element-command-arrow';
   collapseToMinSize2 = false;
-  headerStatusColor2?: string;
-  headerStatusIconClass2?: string;
   headerTemplate2?: TemplateRef<any>;
   heading2 = '';
   minSize2 = 0;
@@ -165,8 +157,6 @@ class WrapperComponent {
   collapseDirection3: CollapseTo = 'start';
   collapseIconClass3 = 'element-command-arrow';
   collapseToMinSize3 = false;
-  headerStatusColor3?: string;
-  headerStatusIconClass3?: string;
   headerTemplate3?: TemplateRef<any>;
   heading3 = '';
   minSize3 = 0;
