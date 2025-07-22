@@ -9,8 +9,6 @@
     @if (!!value && hasMultiSelections()) {
       @if (itemCountText()) {
         {{ itemCountText() | translate: { itemCount: value.length } }}
-      } @else {
-        {{ value!.length }} {{ items() | translate }}
       }
     } @else if (optionValue()[0]) {
       {{ optionValue()[0].label ?? optionValue()[0].value | translate }}
