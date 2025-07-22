@@ -82,13 +82,6 @@ export class SiWizardComponent {
   readonly nextText = input($localize`:@@SI_WIZARD.NEXT:Next`);
 
   /**
-   * @deprecated Use {@link hideNavigation} instead.
-   *
-   * @defaultValue true
-   */
-  readonly hasNavigation = input(true, { transform: booleanAttribute });
-
-  /**
    * Hide the navigation buttons previous/next.
    *
    * @defaultValue false
@@ -204,12 +197,6 @@ export class SiWizardComponent {
   /** Callback function triggered if the wizard has been canceled. */
   readonly wizardCancel = output();
 
-  /**
-   * Callback function triggered if the wizard has been canceled.
-   * @deprecated use {@link wizardCancel} instead
-   */
-  readonly cancel = this.wizardCancel;
-
   /** Get the current step wizard step index. */
   get index(): number {
     return this._index();
@@ -231,9 +218,6 @@ export class SiWizardComponent {
   protected readonly showCompletionPage = signal(false);
   /** The list of visible steps. */
   protected readonly activeSteps = computed(() => this.computeVisibleSteps());
-  protected readonly shouldHideNavigation = computed(() => {
-    return this.hideNavigation() || !this.hasNavigation();
-  });
 
   private readonly _index = linkedSignal(() => {
     const currentStep = this._currentStep();
