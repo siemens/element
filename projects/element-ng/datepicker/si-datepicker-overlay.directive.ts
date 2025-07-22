@@ -101,25 +101,6 @@ export class SiDatepickerOverlayDirective implements OnDestroy {
   }
 
   /**
-   * Toggle open/close overlay.
-   * @param focus - move focus to the datepicker.
-   * @param inputs - for datepicker.
-   * @returns create datepicker overlay instance or undefined
-   *
-   * @deprecated Use {@link showOverlay} or {@link closeOverlay} instead.
-   */
-  toggleOverlay(
-    focus: boolean,
-    inputs?: DatepickerInputPartial
-  ): ComponentRef<SiDatepickerOverlayComponent> | undefined {
-    if (!this.datepickerRef) {
-      return this.showDatepicker().setInputs(inputs).focus(focus).datepickerRef;
-    } else {
-      return this.closeOverlay();
-    }
-  }
-
-  /**
    * Show datepicker overlay.
    * @param focus - move focus to the datepicker.
    * @returns create datepicker overlay instance
