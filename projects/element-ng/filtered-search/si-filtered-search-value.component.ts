@@ -54,7 +54,6 @@ export class SiFilteredSearchValueComponent implements OnInit {
     input<(criterionName: string, typed: string | string[]) => Observable<OptionType[]>>();
   readonly searchDebounceTime = input.required<number>();
   readonly itemCountText = input.required<string>();
-  readonly items = input.required<string>();
   readonly disableSelectionByColonAndSemicolon = input.required<boolean>();
   readonly searchLabel = input.required<string>();
   readonly invalidCriterion = input.required<boolean>();
