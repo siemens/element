@@ -11,7 +11,7 @@ export class SiTypeaheadItemHarness extends ComponentHarness {
   static hostSelector = 'li';
 
   protected readonly input = this.locatorForOptional('input');
-  readonly icon = this.locatorForOptional('si-icon-next div');
+  readonly icon = this.locatorForOptional('si-icon div');
 
   static with(options: SiTypeaheadHarnessFilters = {}): HarnessPredicate<SiTypeaheadItemHarness> {
     return new HarnessPredicate(SiTypeaheadItemHarness, options)

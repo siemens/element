@@ -11,7 +11,7 @@
     } @else {
       <a class="" [siLink]="link()"
         >{{ link().title | translate
-        }}<si-icon-next class="link-icon link-start flip-rtl" [icon]="icons.elementRight2" />
+        }}<si-icon class="link-icon link-start flip-rtl" [icon]="icons.elementRight2" />
       </a>
     }
     @if (valueObject.description) {
@@ -28,7 +28,7 @@
         [siLink]="valueObject.action"
       >
         @if (valueObject.actionIcon) {
-          <si-icon-next class="icon" [icon]="valueObject.actionIcon" />
+          <si-icon class="icon" [icon]="valueObject.actionIcon" />
         }
       </button>
     } @else {
@@ -38,7 +38,7 @@
         [attr.aria-label]="valueObject.action.title | translate"
       >
         @if (valueObject.actionIcon) {
-          <si-icon-next class="icon" [icon]="valueObject.actionIcon" />
+          <si-icon class="icon" [icon]="valueObject.actionIcon" />
         }
       </a>
     }

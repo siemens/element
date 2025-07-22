@@ -11,18 +11,13 @@ import {
   input,
   output
 } from '@angular/core';
-import {
-  addIcons,
-  elementLeft2,
-  elementRight2,
-  SiIconNextComponent
-} from '@siemens/element-ng/icon';
+import { addIcons, elementLeft2, elementRight2, SiIconComponent } from '@siemens/element-ng/icon';
 
 export type Direction = 'left' | 'right';
 
 @Component({
   selector: 'si-calendar-direction-button',
-  imports: [NgClass, SiIconNextComponent],
+  imports: [NgClass, SiIconComponent],
   template: `<button
     role="button"
     type="button"
@@ -32,7 +27,7 @@ export type Direction = 'left' | 'right';
     [attr.aria-label]="ariaLabel()"
     (click)="onClick()"
   >
-    <si-icon-next class="icon flip-rtl" [icon]="icon()" />
+    <si-icon class="icon flip-rtl" [icon]="icon()" />
   </button>`,
   changeDetection: ChangeDetectionStrategy.OnPush
 })

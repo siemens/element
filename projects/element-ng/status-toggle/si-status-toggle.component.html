@@ -33,12 +33,12 @@
       (keydown.enter)="selectItem($index)"
     >
       <span class="icon icon-stack">
-        <si-icon-next
+        <si-icon
           [ngClass]="$index === selIndexValue ? (item.activeIconClass ?? 'active') : ''"
           [icon]="$index === selIndexValue ? (item.activeIcon ?? item.icon) : item.icon"
         />
         @if ($index === selIndexValue && item.activeIconStacked) {
-          <si-icon-next
+          <si-icon
             [ngClass]="item.activeIconStackedClass ?? item.activeIconClass + '-contrast'"
             [icon]="item.activeIconStacked"
           />

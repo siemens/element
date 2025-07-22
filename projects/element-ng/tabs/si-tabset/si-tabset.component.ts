@@ -27,7 +27,7 @@ import {
   elementCancel,
   elementLeft3,
   elementRight3,
-  SiIconNextComponent
+  SiIconComponent
 } from '@siemens/element-ng/icon';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
@@ -55,7 +55,7 @@ const SCROLL_INCREMENT = 55;
 
 @Component({
   selector: 'si-tabset',
-  imports: [NgClass, SiIconNextComponent, SiResizeObserverDirective, SiTranslatePipe],
+  imports: [NgClass, SiIconComponent, SiResizeObserverDirective, SiTranslatePipe],
   templateUrl: './si-tabset.component.html',
   styleUrl: './si-tabset.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

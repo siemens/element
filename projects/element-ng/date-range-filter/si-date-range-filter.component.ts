@@ -32,7 +32,7 @@ import {
   SiDatepickerComponent,
   SiDatepickerDirective
 } from '@siemens/element-ng/datepicker';
-import { addIcons, elementDown2, SiIconNextComponent } from '@siemens/element-ng/icon';
+import { addIcons, elementDown2, SiIconComponent } from '@siemens/element-ng/icon';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
@@ -67,7 +67,7 @@ export class PresetMatchFilterPipe implements PipeTransform {
     SiCalendarButtonComponent,
     SiDatepickerComponent,
     SiDatepickerDirective,
-    SiIconNextComponent,
+    SiIconComponent,
     SiRelativeDateComponent,
     SiSearchBarComponent,
     SiTranslatePipe

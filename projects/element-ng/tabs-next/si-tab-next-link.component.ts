@@ -5,7 +5,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { startWith } from 'rxjs/operators';
 
@@ -16,7 +16,7 @@ import { SiTabNextBaseDirective } from './si-tab-next-base.directive';
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'a[si-tab-next][routerLink]',
-  imports: [SiIconNextComponent, SiTranslatePipe, SiTabBadgeComponent],
+  imports: [SiIconComponent, SiTranslatePipe, SiTabBadgeComponent],
   templateUrl: './si-tab-next.component.html',
   styleUrl: './si-tab-next.component.scss',
   providers: [{ provide: SiTabNextBaseDirective, useExisting: SiTabNextLinkComponent }],

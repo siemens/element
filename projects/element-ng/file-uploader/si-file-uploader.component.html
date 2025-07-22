@@ -25,7 +25,7 @@
       [ngClass]="autoUpload() ? 'mb-8' : 'mb-4'"
       [class.fade-out]="file.fadeOut"
     >
-      <si-icon-next class="icon align-self-center ms-6 me-4" [icon]="icons.elementDocument" />
+      <si-icon class="icon align-self-center ms-6 me-4" [icon]="icons.elementDocument" />
       <div class="flex-fill overflow-hidden">
         <div class="file-info">
           <div class="file-name text-truncate si-title-2">{{ file.fileName }}</div>
@@ -68,7 +68,7 @@
             [attr.aria-label]="uploadButtonText() | translate"
             (click)="retryUpload(file)"
           >
-            <si-icon-next [icon]="icons.elementRedo" />
+            <si-icon [icon]="icons.elementRedo" />
           </button>
         }
         @if (file.status === 'added' || file.status === 'error' || file.status === 'invalid') {
@@ -79,7 +79,7 @@
             [attr.aria-label]="removeButtonText() | translate"
             (click)="removeFile($index)"
           >
-            <si-icon-next [icon]="icons.elementDelete" />
+            <si-icon [icon]="icons.elementDelete" />
           </button>
         }
         @if (file.status === 'uploading' || file.status === 'queued') {
@@ -90,7 +90,7 @@
             [attr.aria-label]="cancelButtonText() | translate"
             (click)="cancelUpload(file)"
           >
-            <si-icon-next [icon]="icons.elementCancel" />
+            <si-icon [icon]="icons.elementCancel" />
           </button>
         }
         @if (file.status === 'success') {

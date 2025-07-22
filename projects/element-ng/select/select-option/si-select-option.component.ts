@@ -4,7 +4,7 @@
  */
 import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input, TemplateRef } from '@angular/core';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiSelectOptionTemplateDirective } from '../si-select-option-template.directive';
@@ -15,7 +15,7 @@ import { SelectOption } from '../si-select.types';
   imports: [
     NgClass,
     NgTemplateOutlet,
-    SiIconNextComponent,
+    SiIconComponent,
     SiTranslatePipe,
     SiSelectOptionTemplateDirective
   ],

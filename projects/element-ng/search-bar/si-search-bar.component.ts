@@ -21,18 +21,13 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BackgroundColorVariant } from '@siemens/element-ng/common';
-import {
-  elementCancel,
-  elementSearch,
-  addIcons,
-  SiIconNextComponent
-} from '@siemens/element-ng/icon';
+import { elementCancel, elementSearch, addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'si-search-bar',
-  imports: [SiIconNextComponent],
+  imports: [SiIconComponent],
   templateUrl: './si-search-bar.component.html',
   styleUrl: './si-search-bar.component.scss',
   providers: [

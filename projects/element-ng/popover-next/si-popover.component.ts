@@ -19,13 +19,13 @@ import {
   DOCUMENT
 } from '@angular/core';
 import { calculateOverlayArrowPosition, OverlayArrowPosition } from '@siemens/element-ng/common';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiIconComponent } from '@siemens/element-ng/icon';
 
 import { SiPopoverNextDirective } from './si-popover-next.directive';
 
 @Component({
   selector: 'si-popover',
-  imports: [NgClass, NgTemplateOutlet, SiIconNextComponent],
+  imports: [NgClass, NgTemplateOutlet, SiIconComponent],
   templateUrl: './si-popover.component.html',
   host: {
     '[id]': 'this.popoverDirective().popoverId'

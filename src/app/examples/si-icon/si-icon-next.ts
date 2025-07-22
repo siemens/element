@@ -11,12 +11,12 @@ import {
   elementCancel,
   elementUser,
   SiIconModule,
-  SiIconNextComponent
+  SiIconComponent
 } from '@siemens/element-ng/icon';
 
 @Component({
   selector: 'app-sample',
-  imports: [SiIconModule, SiIconNextComponent],
+  imports: [SiIconModule, SiIconComponent],
   templateUrl: './si-icon-next.html',
   host: { class: 'p-5' }
 })

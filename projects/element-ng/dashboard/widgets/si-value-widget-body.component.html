@@ -9,7 +9,7 @@
         @if (statusValue) {
           <si-status-icon class="icon" [status]="statusValue" />
         } @else if (iconValue) {
-          <si-icon-next class="icon" [icon]="iconValue" />
+          <si-icon class="icon" [icon]="iconValue" />
         }
         <span>{{ description() | translate }}</span>
       </div>

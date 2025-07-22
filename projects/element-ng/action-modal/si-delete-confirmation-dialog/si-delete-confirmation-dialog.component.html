@@ -1,7 +1,7 @@
 @let loading = loading$ | async;
 <div class="modal-header">
   @if (icon()) {
-    <si-icon-next class="icon" [icon]="icon()" />
+    <si-icon class="icon" [icon]="icon()" />
   }
   <span class="modal-title" [id]="titleId()">{{ heading() | translate: translationParams() }}</span>
   <button

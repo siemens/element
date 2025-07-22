@@ -13,7 +13,7 @@
             [attr.aria-label]="action.tooltip"
             (click)="action.click($event)"
           >
-            <si-icon-next [icon]="action.iconClass" />
+            <si-icon [icon]="action.iconClass" />
           </button>
         }
       </div>
@@ -26,7 +26,7 @@
           [attr.aria-label]="collapseLabel | translate"
           (click)="toggleCollapse()"
         >
-          <si-icon-next class="collapse-icon" [icon]="collapseIconClass" />
+          <si-icon class="collapse-icon" [icon]="collapseIconClass" />
         </button>
       </div>
     }

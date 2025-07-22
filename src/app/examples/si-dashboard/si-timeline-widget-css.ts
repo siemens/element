@@ -5,14 +5,14 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
-import { SiIconNextComponent, SiStatusIconComponent } from '@siemens/element-ng/icon';
+import { SiIconComponent, SiStatusIconComponent } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  imports: [SiCardComponent, SiIconNextComponent, SiStatusIconComponent, SiLinkDirective],
+  imports: [SiCardComponent, SiIconComponent, SiStatusIconComponent, SiLinkDirective],
   templateUrl: './si-timeline-widget-css.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }

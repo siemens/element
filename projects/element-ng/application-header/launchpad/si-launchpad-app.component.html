@@ -1,19 +1,19 @@
 @if (iconUrl()) {
   <img alt="" width="64" height="64" class="app-icon" [src]="iconUrl()" />
 } @else if (iconClass()) {
-  <si-icon-next class="app-icon" [icon]="iconClass()!" />
+  <si-icon class="app-icon" [icon]="iconClass()!" />
 }
 <div class="si-title-2 text-truncate mw-100">
   <ng-content select="[app-name]" />
   @if (external()) {
-    <si-icon-next class="icon mt-n2" [icon]="icons.elementExport" />
+    <si-icon class="icon mt-n2" [icon]="icons.elementExport" />
   }
 </div>
 <div class="si-body-2 text-truncate mw-100">
   <ng-content select="[app-systemName]" />
 </div>
 @if (enableFavoriteToggle()) {
-  <si-icon-next
+  <si-icon
     class="favorite-icon"
     [class.is-favorite]="favorite()"
     [icon]="favorite() ? icons.elementFavoritesFilled : icons.elementFavorites"

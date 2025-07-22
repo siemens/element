@@ -14,7 +14,7 @@ import {
   TemplateRef
 } from '@angular/core';
 import { SiAutoCollapsableListModule } from '@siemens/element-ng/auto-collapsable-list';
-import { addIcons, elementDown2, SiIconNextComponent } from '@siemens/element-ng/icon';
+import { addIcons, elementDown2, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import {
@@ -27,12 +27,7 @@ import { SelectOption } from '../si-select.types';
 
 @Component({
   selector: 'si-select-input',
-  imports: [
-    SiAutoCollapsableListModule,
-    SiIconNextComponent,
-    SiSelectOptionComponent,
-    SiTranslatePipe
-  ],
+  imports: [SiAutoCollapsableListModule, SiIconComponent, SiSelectOptionComponent, SiTranslatePipe],
   templateUrl: './si-select-input.component.html',
   styleUrl: './si-select-input.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

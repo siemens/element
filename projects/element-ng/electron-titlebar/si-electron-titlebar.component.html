@@ -13,7 +13,7 @@
       [disabled]="!canGoBack()"
       (click)="back.emit()"
     >
-      <si-icon-next class="flip-rtl" [icon]="icons.elementLeft4" />
+      <si-icon class="flip-rtl" [icon]="icons.elementLeft4" />
     </button>
     <button
       type="button"
@@ -23,7 +23,7 @@
       [disabled]="!canGoForward()"
       (click)="forward.emit()"
     >
-      <si-icon-next class="flip-rtl" [icon]="icons.elementRight4" />
+      <si-icon class="flip-rtl" [icon]="icons.elementRight4" />
     </button>
     @if (menuItems().length > 0) {
       <button
@@ -33,7 +33,7 @@
         [attr.aria-label]="ariaLabelMenu() | translate"
         [cdkMenuTriggerFor]="menu"
       >
-        <si-icon-next [icon]="icons.elementOptionsVertical" />
+        <si-icon [icon]="icons.elementOptionsVertical" />
       </button>
     }
     <div class="electron-title-bar-draggable flex-grow-1 w-100 h-100"></div>

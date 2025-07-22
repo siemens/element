@@ -9,14 +9,14 @@ import {
   input,
   TemplateRef
 } from '@angular/core';
-import { elementOk, addIcons, SiIconNextComponent } from '@siemens/element-ng/icon';
+import { elementOk, addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 
 import { SiSelectOptionComponent } from '../select-option/si-select-option.component';
 import { SelectOption } from '../si-select.types';
 
 @Component({
   selector: 'si-select-option-row',
-  imports: [SiIconNextComponent, SiSelectOptionComponent],
+  imports: [SiIconComponent, SiSelectOptionComponent],
   templateUrl: './si-select-option-row.component.html',
   styleUrl: './si-select-option-row.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -3,17 +3,12 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, computed, input, model } from '@angular/core';
-import {
-  addIcons,
-  elementLeft3,
-  elementRight3,
-  SiIconNextComponent
-} from '@siemens/element-ng/icon';
+import { addIcons, elementLeft3, elementRight3, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-pagination',
-  imports: [SiIconNextComponent, SiTranslatePipe],
+  imports: [SiIconComponent, SiTranslatePipe],
   templateUrl: './si-pagination.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

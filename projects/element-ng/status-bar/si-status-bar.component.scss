@@ -77,12 +77,12 @@ $blink-transition-duration: variables.$element-default-transition-duration;
   &.expanded {
     box-shadow: 0 8px 8px var(--element-box-shadow-color-2);
 
-    si-icon-next {
+    si-icon {
       transform: rotate(180deg);
     }
   }
 
-  si-icon-next {
+  si-icon {
     margin-block-start: -4px;
     transition: transform variables.element-transition-duration(0.4s);
   }

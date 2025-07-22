@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, model, OnDestroy } from '@angular/core';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiTabBadgeComponent } from './si-tab-badge.component';
@@ -12,7 +12,7 @@ import { SiTabNextBaseDirective } from './si-tab-next-base.directive';
 /** @experimental */
 @Component({
   selector: 'si-tab-next',
-  imports: [SiIconNextComponent, SiTranslatePipe, SiTabBadgeComponent],
+  imports: [SiIconComponent, SiTranslatePipe, SiTabBadgeComponent],
   templateUrl: './si-tab-next.component.html',
   styleUrl: './si-tab-next.component.scss',
   providers: [{ provide: SiTabNextBaseDirective, useExisting: SiTabNextComponent }],

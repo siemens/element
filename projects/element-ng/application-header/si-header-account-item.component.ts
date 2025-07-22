@@ -4,7 +4,7 @@
  */
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { SiAvatarComponent } from '@siemens/element-ng/avatar';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiIconComponent } from '@siemens/element-ng/icon';
 
 import { SiHeaderActionIconItemBase } from './si-header-action-item-icon-base.directive';
 
@@ -12,7 +12,7 @@ import { SiHeaderActionIconItemBase } from './si-header-action-item-icon-base.di
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'button[si-header-account-item]',
-  imports: [SiAvatarComponent, SiIconNextComponent],
+  imports: [SiAvatarComponent, SiIconComponent],
   templateUrl: './si-header-account-item.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component } from '@angular/core';
-import { addIcons, elementHelp, SiIconNextComponent } from '@siemens/element-ng/icon';
+import { addIcons, elementHelp, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiPopoverNextDirective } from '@siemens/element-ng/popover-next';
 
 /**
@@ -25,10 +25,10 @@ import { SiPopoverNextDirective } from '@siemens/element-ng/popover-next';
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'button[si-help-button]',
-  imports: [SiIconNextComponent],
+  imports: [SiIconComponent],
   template: `
     <div class="visually-hidden"><ng-content /></div>
-    <si-icon-next [icon]="icons.elementHelp" />
+    <si-icon [icon]="icons.elementHelp" />
   `,
   styleUrl: './si-help-button.component.scss',
   hostDirectives: [

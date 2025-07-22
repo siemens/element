@@ -46,7 +46,7 @@ export class SiMenuHarness extends ComponentHarness {
 export class SiMenuItemHarness extends ComponentHarness {
   static hostSelector = 'si-menu-item-radio, si-menu-item-checkbox, si-menu-item, [si-menu-item]';
   private readonly text = this.locatorForOptional('span.item-title');
-  private readonly icon = this.locatorForOptional('si-icon-next div');
+  private readonly icon = this.locatorForOptional('si-icon div');
   private readonly badge = this.locatorForOptional('span.badge');
   private readonly children = this.locatorForOptional('.item-end .submenu');
 

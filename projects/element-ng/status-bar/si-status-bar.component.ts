@@ -27,7 +27,7 @@ import {
   elementDown2,
   elementSoundMute,
   elementSoundOn,
-  SiIconNextComponent
+  SiIconComponent
 } from '@siemens/element-ng/icon';
 import {
   ResizeObserverService,
@@ -66,7 +66,7 @@ let idCounter = 1;
   imports: [
     NgClass,
     NgTemplateOutlet,
-    SiIconNextComponent,
+    SiIconComponent,
     SiStatusBarItemComponent,
     SiResizeObserverDirective,
     SiTranslatePipe

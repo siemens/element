@@ -65,7 +65,7 @@
       [attr.aria-label]="cancelEditText() | translate"
       (click)="imageCropperCanceled()"
     >
-      <si-icon-next [icon]="icons.elementCancel" />
+      <si-icon [icon]="icons.elementCancel" />
     </button>
   </div>
   <!-- Content -->
@@ -102,8 +102,8 @@
 <ng-template #errorMessageTemplate>
   <div class="d-flex align-items-center">
     <span class="icon-small icon-stack d-inline-block my-n2 me-2">
-      <si-icon-next class="status-danger" [icon]="icons.elementCircleFilled" />
-      <si-icon-next class="status-danger-contrast" [icon]="icons.elementStateExclamationMark" />
+      <si-icon class="status-danger" [icon]="icons.elementCircleFilled" />
+      <si-icon class="status-danger-contrast" [icon]="icons.elementStateExclamationMark" />
     </span>
     <span class="text-danger">{{
       uploadErrorMessage()

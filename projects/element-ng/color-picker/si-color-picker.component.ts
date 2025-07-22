@@ -17,7 +17,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { isRTL } from '@siemens/element-ng/common';
-import { addIcons, elementOk, SiIconNextComponent } from '@siemens/element-ng/icon';
+import { addIcons, elementOk, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 /**
@@ -44,7 +44,7 @@ const defaultDataColors: string[] = [
 ];
 @Component({
   selector: 'si-color-picker',
-  imports: [SiIconNextComponent, SiTranslatePipe, CdkConnectedOverlay, CdkOverlayOrigin],
+  imports: [SiIconComponent, SiTranslatePipe, CdkConnectedOverlay, CdkOverlayOrigin],
   templateUrl: './si-color-picker.component.html',
   styleUrl: './si-color-picker.component.scss',
   providers: [

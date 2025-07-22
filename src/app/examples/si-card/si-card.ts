@@ -5,13 +5,13 @@
 import { Component, inject } from '@angular/core';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiIconComponent } from '@siemens/element-ng/icon';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  imports: [SiCardComponent, SiIconNextComponent],
+  imports: [SiCardComponent, SiIconComponent],
   templateUrl: './si-card.html',
   styles: `
     .card-size {

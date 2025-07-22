@@ -16,7 +16,7 @@ import {
   viewChild
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { addIcons, elementCancel, SiIconNextComponent } from '@siemens/element-ng/icon';
+import { addIcons, elementCancel, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTypeaheadDirective } from '@siemens/element-ng/typeahead';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { Observable } from 'rxjs';
@@ -35,7 +35,7 @@ import { SiFilteredSearchTypeaheadComponent } from './values/typeahead/si-filter
     SiTranslatePipe,
     SiFilteredSearchDateValueComponent,
     SiFilteredSearchTypeaheadComponent,
-    SiIconNextComponent
+    SiIconComponent
   ],
   templateUrl: './si-filtered-search-value.component.html',
   styleUrl: './si-filtered-search-value.component.scss',
