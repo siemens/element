@@ -3,7 +3,6 @@
   [expandFirstPanel]="props.expandFirstPanel ?? accordion.expandFirstPanel()"
   [fullHeight]="props.fullHeight ?? accordion.fullHeight()"
   [hcollapsed]="props.hcollapsed ?? accordion.collapsed()"
-  [colorVariant]="props.colorVariant"
 >
   @for (f of field.fieldGroup; track $index) {
     <si-collapsible-panel
