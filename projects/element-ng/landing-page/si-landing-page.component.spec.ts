@@ -4,6 +4,7 @@
  */
 import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideCopyrightDetails } from '@siemens/element-ng/copyright-notice';
 
 import { SiLandingPageComponent as TestComponent } from '.';
 
@@ -13,7 +14,14 @@ describe('SiLandingPageComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [TestComponent]
+      imports: [TestComponent],
+      providers: [
+        provideCopyrightDetails({
+          company: 'Examples.org',
+          startYear: 2016,
+          lastUpdateYear: 2021
+        })
+      ]
     })
   );
 

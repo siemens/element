@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { CopyrightDetails, SiCopyrightNoticeComponent } from '@siemens/element-ng/copyright-notice';
+import { SiCopyrightNoticeComponent } from '@siemens/element-ng/copyright-notice';
 import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
 import {
   IsoLanguageValue,
@@ -95,9 +95,4 @@ export class SiLandingPageComponent {
    * Version of the application
    */
   readonly version = input<string>();
-
-  /**
-   * Copyright information to be displayed. Alternatively, you can use the {@link SI_COPYRIGHT_DETAILS} global inject.
-   */
-  readonly copyrightDetails = input<CopyrightDetails>();
 }

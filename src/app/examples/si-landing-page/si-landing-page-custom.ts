@@ -5,7 +5,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { CopyrightDetails } from '@siemens/element-ng/copyright-notice';
+import { provideCopyrightDetails } from '@siemens/element-ng/copyright-notice';
 import { AlertConfig, SiLandingPageComponent } from '@siemens/element-ng/landing-page';
 import { SiPasswordToggleModule } from '@siemens/element-ng/password-toggle';
 import { SiSystemBannerComponent } from '@siemens/element-ng/system-banner';
@@ -20,6 +20,12 @@ import { SiSystemBannerComponent } from '@siemens/element-ng/system-banner';
     SiSystemBannerComponent
   ],
   templateUrl: './si-landing-page-custom.html',
+  providers: [
+    provideCopyrightDetails({
+      startYear: 2023,
+      company: 'Example Company'
+    })
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
@@ -31,10 +37,5 @@ export class SampleComponent {
   loginAlert: AlertConfig = {
     severity: 'danger',
     message: 'Sample login error message'
-  };
-
-  copyrightDetails: CopyrightDetails = {
-    startYear: 2023,
-    company: 'Example Company'
   };
 }
