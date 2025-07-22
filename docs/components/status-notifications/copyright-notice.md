@@ -9,25 +9,27 @@ Use the `si-copyright-notice` component to display an application's copyright in
 
 ### Usage
 
-It is recommended to provide the `SI_COPYRIGHT_DETAILS` injection token on a global level to
-make sure the copyright information are in sync across the whole app. Depending on your use case, 
-you can also pass the copyright details via input property as shown in the live example below.
+The copyright notice must only be defined once in the `app.config.ts` or in the `app.module.ts`.
+Local overrides as in previous versions are no longer supported.
 
 ```ts
-import { SiCopyrightNoticeComponent } from '@siemens/element-ng/copyright-notice';
+import { SiCopyrightNoticeComponent, provideCopyrightDetails } from '@siemens/element-ng/copyright-notice';
+
+const appConfig: ApplicationConfig = {
+  providers: [
+    provideCopyrightDetails({ 
+      company: 'Your Company',  // Defaults to `Sample Company`
+      startYear: 2021,
+      lastUpdateYear: 2025
+    })
+  ]
+};
 
 @Component({
   imports: [SiCopyrightNoticeComponent, ...],
-  providers: [
-    {
-      provide: SI_COPYRIGHT_DETAILS, 
-      useValue: {
-          company: 'Your Company',  // Defaults to `Sample Company`
-          startYear: 2021,
-          lastUpdateYear: 2025
-      }
-    }
-  ]
+  template: `
+    <si-copyright-notice></si-copyright-notice>
+  `
 })
 ```
 

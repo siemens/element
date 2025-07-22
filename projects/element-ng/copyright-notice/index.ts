@@ -4,4 +4,5 @@
  */
 export * from './si-copyright-notice.component';
 export * from './si-copyright-notice.module';
-export * from './si-copyright-notice';
+export { provideCopyrightDetails } from './si-copyright-notice';
+export type { CopyrightDetails } from './si-copyright-notice';
