@@ -60,21 +60,6 @@ export class SiSplitPartComponent implements OnChanges {
    */
   @Input({ transform: booleanAttribute }) collapseToMinSize = false;
 
-  /**
-   * Sets the status color on the split part header, visible as a bottom border and,
-   * if a headerStatusIcon is defined, as the icon´s background color.
-   *
-   * @deprecated Legacy input with no functionality. Will be removed in future major release.
-   */
-  @Input() headerStatusColor?: string;
-
-  /**
-   * Sets the icon class that is used as status icon in the split part header.
-   *
-   * @deprecated Legacy input with no functionality. Will be removed in future major release.
-   */
-  @Input() headerStatusIconClass?: string;
-
   @Input() headerTemplate?: TemplateRef<any>;
 
   /**
