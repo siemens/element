@@ -6,42 +6,13 @@
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 import { Observable } from 'rxjs';
 
-/** @deprecated Will be removed in a future release. Use the string values directly. */
+export type AlertDialogResult = 'confirm';
 
-export const AlertDialogResult = {
-  Confirm: 'confirm'
-} as const;
+export type EditDiscardDialogResult = 'save' | 'discard' | 'cancel';
 
-export type AlertDialogResult = (typeof AlertDialogResult)[keyof typeof AlertDialogResult];
+export type ConfirmationDialogResult = 'confirm' | 'decline';
 
-/** @deprecated Will be removed in a future release. Use the string values directly. */
-export const EditDiscardDialogResult = {
-  Save: 'save',
-  Discard: 'discard',
-  Cancel: 'cancel'
-} as const;
-
-export type EditDiscardDialogResult =
-  (typeof EditDiscardDialogResult)[keyof typeof EditDiscardDialogResult];
-
-/** @deprecated Will be removed in a future release. Use the string values directly. */
-export const ConfirmationDialogResult = {
-  Confirm: 'confirm',
-  Decline: 'decline'
-} as const;
-
-export type ConfirmationDialogResult =
-  (typeof ConfirmationDialogResult)[keyof typeof ConfirmationDialogResult];
-
-/** @deprecated Will be removed in a future release. Use the string values directly. */
-export const DeleteConfirmationDialogResult = {
-  Delete: 'delete',
-  Cancel: 'cancel'
-} as const;
-
-export type DeleteConfirmationDialogResult =
-  (typeof DeleteConfirmationDialogResult)[keyof typeof DeleteConfirmationDialogResult];
-
+export type DeleteConfirmationDialogResult = 'delete' | 'cancel';
 /**
  * Base type for all action dialogs
  * @typeParam TResult - Type of the dialog result.
