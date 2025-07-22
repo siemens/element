@@ -31,7 +31,7 @@ import {
   elementDocument,
   elementRedo,
   SiIconComponent,
-  SiIconNextComponent
+  SiIconComponent
 } from '@siemens/element-ng/icon';
 import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
 import { SiProgressbarComponent } from '@siemens/element-ng/progressbar';
@@ -92,7 +92,7 @@ interface ExtUploadFile extends UploadFile {
     NgClass,
     SiFileDropzoneComponent,
     SiIconComponent,
-    SiIconNextComponent,
+    SiIconComponent,
     SiInlineNotificationComponent,
     SiProgressbarComponent,
     SiTranslatePipe

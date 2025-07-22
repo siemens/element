@@ -4,7 +4,7 @@
  */
 import { Component, input } from '@angular/core';
 import { type StatusType } from '@siemens/element-ng/common';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiIconComponent } from '@siemens/element-ng/icon';
 
 export type BadgeType =
   | StatusType
@@ -19,7 +19,7 @@ export type BadgeType =
 
 @Component({
   selector: 'si-badge',
-  imports: [SiIconNextComponent],
+  imports: [SiIconComponent],
   template: `
     @let ico = icon();
     @if (ico) {

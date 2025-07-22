@@ -10,7 +10,7 @@ import {
   elementOutOfService,
   elementStateExclamationMark,
   elementStateTick,
-  SiIconNextComponent
+  SiIconComponent
 } from '@siemens/element-ng/icon';
 import { SiLoadingSpinnerComponent } from '@siemens/element-ng/loading-spinner';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
@@ -19,7 +19,7 @@ import { ResultDetailStep } from './si-result-details-list.datamodel';
 
 @Component({
   selector: 'si-result-details-list',
-  imports: [SiLoadingSpinnerComponent, SiIconNextComponent, SiTranslatePipe],
+  imports: [SiLoadingSpinnerComponent, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-result-details-list.component.html',
   styleUrl: './si-result-details-list.component.scss'
 })

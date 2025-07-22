@@ -15,7 +15,7 @@ import {
   output
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { addIcons, elementPlus, SiIconNextComponent } from '@siemens/element-ng/icon';
+import { addIcons, elementPlus, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
 import {
   SelectOption,
@@ -46,7 +46,7 @@ export interface ThresholdStep {
     FormsModule,
     NgClass,
     NgTemplateOutlet,
-    SiIconNextComponent,
+    SiIconComponent,
     SiNumberInputComponent,
     SiSelectComponent,
     SiSelectSingleValueDirective,

@@ -25,7 +25,7 @@ import {
   addIcons,
   elementDoubleLeft,
   elementDoubleRight,
-  SiIconNextComponent
+  SiIconComponent
 } from '@siemens/element-ng/icon';
 import { SiLinkDirective } from '@siemens/element-ng/link';
 import { MenuItem } from '@siemens/element-ng/menu';
@@ -46,7 +46,7 @@ export interface StatusItem extends MenuItemLegacy {
   selector: 'si-side-panel-content',
   imports: [
     SiContentActionBarComponent,
-    SiIconNextComponent,
+    SiIconComponent,
     SiLinkDirective,
     SiSearchBarComponent,
     SiTranslatePipe
@@ -62,81 +62,69 @@ export interface StatusItem extends MenuItemLegacy {
 })
 export class SiSidePanelContentComponent implements OnInit {
   /**
-   * @defaultValue false
-   */
-  readonly collapsible = input(false, { transform: booleanAttribute });
+    /**
+   * @defaultValue tran
+   */nly collapsible = input(false, { transform: booleanAttribute });
 
   /**
-   * Header of side panel
-   *
-   * @defaultValue ''
-   */
-  readonly heading = input<TranslatableString>('');
+    /**
+   * @defaultValue /*
+   */nly heading = input<TranslatableString>('');
 
   /**
-   * Input list of primary action items
-   *
-   * @defaultValue []
-   */
-  readonly primaryActions = input<(MenuItemLegacy | ContentActionBarMainItem)[]>([]);
+    /**
+   * @defaultValue /*
+   */nly primaryActions = input<(MenuItemLegacy | ContentActionBarMainItem)[]>([]);
 
   /**
-   * Input list of secondary action items.
-   *
-   * @defaultValue []
-   */
-  readonly secondaryActions = input<(MenuItemLegacy | MenuItem)[]>([]);
+    /**
+   * @defaultValue /*
+   */nly secondaryActions = input<(MenuItemLegacy | MenuItem)[]>([]);
 
   /**
-   * Status icons/actions
-   *
-   * @defaultValue []
-   */
-  readonly statusActions = input<StatusItem[]>([]);
+    /**
+   * @defaultValue /*
+   */nly statusActions = input<StatusItem[]>([]);
 
   /**
-   * Toggles search bar
-   *
-   * @defaultValue false
-   */
-  readonly searchable = input(false, { transform: booleanAttribute });
+    /**
+   * @defaultValue tran
+   */nly searchable = input(false, { transform: booleanAttribute });
 
   /**
-   * Placeholder text for search
-   *
+    /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_SIDE_PANEL.SEARCH_PLACEHOLDER:Search...`
+   * e`:@@SI_SIDE_PANEL.SEARCH_PLACEHOLDER:Search...`);
+   *
+   *   /*
    * ```
-   */
-  readonly searchPlaceholder = input($localize`:@@SI_SIDE_PANEL.SEARCH_PLACEHOLDER:Search...`);
+   */nly searchPlaceholder = input($localize`:@@SI_SIDE_PANEL.SEARCH_PLACEHOLDER:Search...`);
 
   /**
-   * Aria label for close button. Needed for a11y
-   *
+    /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_SIDE_PANEL.CLOSE:Close`
+   * e`:@@SI_SIDE_PANEL.CLOSE:Close`);
+   *
+   *   /*
    * ```
-   */
-  readonly closeButtonLabel = input($localize`:@@SI_SIDE_PANEL.CLOSE:Close`);
+   */nly closeButtonLabel = input($localize`:@@SI_SIDE_PANEL.CLOSE:Close`);
 
   /**
-   * Toggle icon aria-label, required for a11y
-   *
+    /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_SIDE_PANEL.TOGGLE:Toggle`
+   * e`:@@SI_SIDE_PANEL.TOGGLE:Toggle`);
+   *
+   *   /*
    * ```
-   */
-  readonly toggleItemLabel = input($localize`:@@SI_SIDE_PANEL.TOGGLE:Toggle`);
+   */nly toggleItemLabel = input($localize`:@@SI_SIDE_PANEL.TOGGLE:Toggle`);
 
   /**
-   * Show a badge on the mobile drawer indicating a new alert or notification
-   *
-   * @defaultValue false
-   */
-  readonly showMobileDrawerBadge = input(false, { transform: booleanAttribute });
+    /**
+   * @defaultValue tran
+   */nly showMobileDrawerBadge = input(false, { transform: booleanAttribute });
 
   /**
    * Output for search bar input

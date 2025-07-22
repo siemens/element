@@ -27,7 +27,7 @@ import {
   addIcons,
   elementCancel,
   elementSearch,
-  SiIconNextComponent
+  SiIconComponent
 } from '@siemens/element-ng/icon';
 import { SiTypeaheadDirective, TypeaheadOption } from '@siemens/element-ng/typeahead';
 import {
@@ -58,7 +58,7 @@ import {
   selector: 'si-filtered-search',
   imports: [
     FormsModule,
-    SiIconNextComponent,
+    SiIconComponent,
     SiTypeaheadDirective,
     SiTranslatePipe,
     SiFilteredSearchValueComponent
@@ -80,13 +80,9 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges, OnDestroy {
   readonly doSearch = output<SearchCriteria>();
 
   /**
-   * If this is set to `true`, the search triggers for each input (implicit search).
-   * By default, the search is triggered when the user submits by pressing the
-   * search button or by pressing enter.
-   *
-   * @defaultValue false
-   */
-  readonly doSearchOnInputChange = input(false, {
+    /**
+   * @defaultValue
+   */nly doSearchOnInputChange = input(false, {
     transform: booleanAttribute
   });
   /**
@@ -107,79 +103,54 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges, OnDestroy {
   readonly lazyValueProvider =
     input<(criterionName: string, typed: string | string[]) => Observable<OptionType[]>>();
   /**
-   * Disable any interactivity.
-   *
-   * @defaultValue false
-   */
-  readonly disabled = input(false, { transform: booleanAttribute });
+    /**
+   * @defaultValue tran
+   */nly disabled = input(false, { transform: booleanAttribute });
   /**
-   * Do not allow changes. Search can still be triggered.
-   *
-   * @deprecated Use {@link disabled} instead.
-   *
-   * @defaultValue false
-   */
-  readonly readonly = input(false, { transform: booleanAttribute });
+    /**
+   * @defaultValue tran
+   */nly readonly = input(false, { transform: booleanAttribute });
   /**
-   * Limit criteria to the predefined ones.
-   *
-   * @defaultValue false
-   */
-  readonly strictCriterion = input(false, { transform: booleanAttribute });
+    /**
+   * @defaultValue tran
+   */nly strictCriterion = input(false, { transform: booleanAttribute });
 
   /**
-   * Limit criterion options to the predefined ones. `[strictValue]`
-   * enforces `[strictCriterion]` to true automatically.
-   *
-   * @defaultValue false
-   */
-  readonly strictValue = input(false, { transform: booleanAttribute });
+    /**
+   * @defaultValue tran
+   */nly strictValue = input(false, { transform: booleanAttribute });
 
   /**
-   * Limit criterion options to the predefined ones and prevent typing. `[onlySelectValue]`
-   * enforces `[strictValue]` and `[strictCriterion]` to true automatically.
-   *
-   * @defaultValue false
-   */
-  readonly onlySelectValue = input(false, { transform: booleanAttribute });
+    /**
+   * @defaultValue tran
+   */nly onlySelectValue = input(false, { transform: booleanAttribute });
 
   /**
-   * Custom debounce time for lazy loading of criteria data.
-   *
-   * @defaultValue 500
-   */
-  readonly lazyLoadingDebounceTime = input(500);
+    /**
+   * @defaultValue /*
+   */nly lazyLoadingDebounceTime = input(500);
 
   /**
-   * Custom debounce time (in mills) to delay the search emission.
-   * (Default is 0 as in most cases a users manually triggers a search.
-   * Recommended to increase a bit when using doSearchOnInputChange=true)
-   *
-   * @defaultValue 0
-   */
-  readonly searchDebounceTime = input(0);
+    /**
+   * @defaultValue *
+   */nly searchDebounceTime = input(0);
   /**
-   * The placeholder for input field.
-   *
-   * @defaultValue ''
-   */
-  readonly placeholder = input('');
+    /**
+   * @defaultValue **
+   */nly placeholder = input('');
   /**
-   * @deprecated This property is unused and will be removed without a replacement.
-   *
-   * @defaultValue false
-   */
-  readonly showIcon = input(false, { transform: booleanAttribute });
+    /**
+   * @defaultValue tran
+   */nly showIcon = input(false, { transform: booleanAttribute });
   /**
-   * @deprecated This property is unused and will be removed without a replacement.
-   * To provide translation for the new search button, use the {@link submitButtonLabel} input.
-   *
+    /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILTERED_SEARCH.SUBMIT:Apply search criteria`
+   * e`:@@SI_FILTERED_SEARCH.SUBMIT:Apply search criteria`);
+   *
+   *   /*
    * ```
-   */
-  readonly submitText = input($localize`:@@SI_FILTERED_SEARCH.SUBMIT:Apply search criteria`);
+   */nly submitText = input($localize`:@@SI_FILTERED_SEARCH.SUBMIT:Apply search criteria`);
 
   /**
    *  @deprecated Setting this property will make it harder for user to submit a search.
@@ -188,136 +159,111 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges, OnDestroy {
   readonly selectedCriteriaIndex = input<number>();
 
   /**
-   * Defines the number of criteria, criteria values and operators visible at once.
-   *
-   * @defaultValue 10
-   */
-  readonly optionsInScrollableView = input(10);
+    /**
+   * @defaultValue /*
+   */nly optionsInScrollableView = input(10);
 
   /**
-   * The current selected search criteria and entered search text.
-   *
+    /**
    * @defaultValue
    * ```
-   * { criteria: [], value: '' }
+   * ia: [], value: '' });
+   *
+   *   /*
    * ```
-   */
-  readonly searchCriteria = model<SearchCriteria>({ criteria: [], value: '' });
+   */nly searchCriteria = model<SearchCriteria>({ criteria: [], value: '' });
 
   /**
-   * Predefine criteria options.
-   *
-   * @defaultValue []
-   */
-  readonly criteria = input<Criterion[] | CriterionDefinition[]>([]);
+    /**
+   * @defaultValue **
+   */nly criteria = input<Criterion[] | CriterionDefinition[]>([]);
   /**
-   * Opt-in to search for each criterion only once.
-   *
-   * @defaultValue false
-   */
-  readonly exclusiveCriteria = input(false, {
+    /**
+   * @defaultValue
+   */nly exclusiveCriteria = input(false, {
     transform: booleanAttribute
   });
   /**
-   * Limit the number of possible criteria. The default is undefined so that any number of criteria can be used.
-   * For example, setting the value to 1 let you only select one criterion that you need to remove before being
-   * able to set another one.
+    /**
+   * @defaultValue d);
    *
-   * @defaultValue undefined
-   */
-  readonly maxCriteria = input<number | undefined>(undefined);
+   * /*
+   */nly maxCriteria = input<number | undefined>(undefined);
 
   /**
-   * Defines the maximum options within one criterion. The default is 20 and 0 means unlimited.
-   *
-   * @defaultValue 20
-   */
-  readonly maxCriteriaOptions = input(20);
+    /**
+   * @defaultValue **
+   */nly maxCriteriaOptions = input(20);
   /**
-   * Search input aria label, Needed by a11y
-   *
+    /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILTERED_SEARCH.SEARCH:Search`
+   * e`:@@SI_FILTERED_SEARCH.SEARCH:Search`);
+   *   /**
    * ```
-   */
-  readonly searchLabel = input($localize`:@@SI_FILTERED_SEARCH.SEARCH:Search`);
+   */nly searchLabel = input($localize`:@@SI_FILTERED_SEARCH.SEARCH:Search`);
   /**
-   * Clear button aria label. Needed for a11y
-   *
+    /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILTERED_SEARCH.CLEAR:Clear`
+   * e`:@@SI_FILTERED_SEARCH.CLEAR:Clear`);
+   *
+   *   /*
    * ```
-   */
-  readonly clearButtonLabel = input($localize`:@@SI_FILTERED_SEARCH.CLEAR:Clear`);
+   */nly clearButtonLabel = input($localize`:@@SI_FILTERED_SEARCH.CLEAR:Clear`);
 
   /**
-   * The accessible label of the search button.
-   *
+    /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILTERED_SEARCH.SUBMIT_BUTTON:Submit search`
+   * e`:@@SI_FILTERED_SEARCH.SUBMIT_BUTTON:Submit search`);
+   *
+   *   /*
    * ```
-   */
-  readonly submitButtonLabel = input($localize`:@@SI_FILTERED_SEARCH.SUBMIT_BUTTON:Submit search`);
+   */nly submitButtonLabel = input($localize`:@@SI_FILTERED_SEARCH.SUBMIT_BUTTON:Submit search`);
 
   /**
-   * Items count text appended to the count in case of multi-selection of values.
-   * Translation key, `{{itemCount}}` in the translation will be replaced with the actual value.
-   *
-   * @defaultValue ''
-   */
-  readonly itemCountText = input<TranslatableString>('');
+    /**
+   * @defaultValue **
+   */nly itemCountText = input<TranslatableString>('');
   /**
-   * Color variant to determine component background
-   *
-   * @defaultValue 'base-1'
-   */
-  readonly colorVariant = input<BackgroundColorVariant>('base-1');
+    /**
+   * @defaultValue );
+   *  /**
+   */nly colorVariant = input<BackgroundColorVariant>('base-1');
   /**
-   * Text or translate key for multi selection pills text.
-   *
-   * @deprecated Use the new input {@link itemCountText} instead.
-   *
+    /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILTERED_SEARCH.ITEMS:items`
+   * e`:@@SI_FILTERED_SEARCH.ITEMS:items`);
+   *   /**
    * ```
-   */
-  readonly items = input($localize`:@@SI_FILTERED_SEARCH.ITEMS:items`);
+   */nly items = input($localize`:@@SI_FILTERED_SEARCH.ITEMS:items`);
   /**
-   * Disables the free text search to only use the criterion for filtering.
-   *
-   * @defaultValue false
-   */
-  readonly disableFreeTextSearch = input(false, { transform: booleanAttribute });
+    /**
+   * @defaultValue tran
+   */nly disableFreeTextSearch = input(false, { transform: booleanAttribute });
   /**
-   * Limit on the number of criteria/criteria value to be displayed by the typeahead
-   *
-   * @defaultValue 20
-   */
-  readonly typeaheadOptionsLimit = input(20);
+    /**
+   * @defaultValue **
+   */nly typeaheadOptionsLimit = input(20);
   /**
-   * @deprecated This property is unused and will be removed without a replacement.
-   *
+    /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILTERED_SEARCH.NO_MATCHING_CRITERIA:No matching criteria`
+   * e`:@@SI_FILTERED_SEARCH.NO_MATCHING_CRITERIA:No matching criteria`
+   *   );
+   *
+   *
    * ```
-   */
-  readonly noMatchingCriteriaText = input(
+   */nly noMatchingCriteriaText = input(
     $localize`:@@SI_FILTERED_SEARCH.NO_MATCHING_CRITERIA:No matching criteria`
   );
 
   /**
-   * By default, the Filtered Search will treat `:` as a special character
-   * to submit the current input in the freetext and immediately create a criterion.
-   * Use this input to disable this behavior.
-   *
-   * @defaultValue false
-   */
-  readonly disableSelectionByColonAndSemicolon = input(false, { transform: booleanAttribute });
+    /**
+   * @defaultValue tran
+   */nly disableSelectionByColonAndSemicolon = input(false, { transform: booleanAttribute });
   /**
    * The interceptor is called when the list of criteria is shown as soon as the user starts typing in the input field.
    * The interceptor's {@link DisplayedCriteriaEventArgs.allow} method can be used to filter the list of displayed criteria.

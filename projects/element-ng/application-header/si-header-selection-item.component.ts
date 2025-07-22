@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, input } from '@angular/core';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiIconComponent } from '@siemens/element-ng/icon';
 
 import { SiHeaderActionItemBase } from './si-header-action-item.base';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'button[si-header-selection-item]',
-  imports: [SiIconNextComponent],
+  imports: [SiIconComponent],
   templateUrl: './si-header-selection-item.component.html',
   host: {
     class: 'header-item header-selection-item focus-inside dropdown-toggle',

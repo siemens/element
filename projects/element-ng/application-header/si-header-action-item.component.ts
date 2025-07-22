@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiIconComponent } from '@siemens/element-ng/icon';
 
 import { SiHeaderActionIconItemBase } from './si-header-action-item-icon-base.directive';
 
@@ -11,7 +11,7 @@ import { SiHeaderActionIconItemBase } from './si-header-action-item-icon-base.di
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'button[si-header-action-item], a[si-header-action-item]',
-  imports: [SiIconNextComponent],
+  imports: [SiIconComponent],
   templateUrl: './si-header-action-item.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {

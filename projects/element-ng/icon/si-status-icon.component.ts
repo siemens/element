@@ -8,11 +8,11 @@ import { EntityStatusType } from '@siemens/element-ng/common';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { STATUS_ICON_CONFIG } from './icon-status';
-import { SiIconNextComponent } from './si-icon-next.component';
+import { SiIconComponent } from './si-icon.component';
 
 @Component({
   selector: 'si-status-icon',
-  imports: [NgClass, SiIconNextComponent, SiTranslatePipe],
+  imports: [NgClass, SiIconComponent, SiTranslatePipe],
   template: `
     @let iconValue = statusIcon();
     @if (iconValue) {

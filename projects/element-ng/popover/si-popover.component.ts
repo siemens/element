@@ -6,11 +6,11 @@ import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { Component, ElementRef, inject, input, OnInit, signal, TemplateRef } from '@angular/core';
 import { calculateOverlayArrowPosition, OverlayArrowPosition } from '@siemens/element-ng/common';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiIconComponent } from '@siemens/element-ng/icon';
 
 @Component({
   selector: 'si-popover',
-  imports: [NgClass, NgTemplateOutlet, SiIconNextComponent],
+  imports: [NgClass, NgTemplateOutlet, SiIconComponent],
   templateUrl: './si-popover.component.html'
 })
 export class PopoverComponent implements OnInit {

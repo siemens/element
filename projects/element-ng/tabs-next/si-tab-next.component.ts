@@ -4,7 +4,7 @@
  */
 import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, model, OnDestroy } from '@angular/core';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiTabNextBaseDirective } from './si-tab-next-base.directive';
@@ -12,7 +12,7 @@ import { SiTabNextBaseDirective } from './si-tab-next-base.directive';
 /** @experimental */
 @Component({
   selector: 'si-tab-next',
-  imports: [NgClass, SiIconNextComponent, SiTranslatePipe],
+  imports: [NgClass, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-tab-next.component.html',
   styleUrl: './si-tab-next.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,11 +25,10 @@ import { SiTabNextBaseDirective } from './si-tab-next-base.directive';
 })
 export class SiTabNextComponent extends SiTabNextBaseDirective implements OnDestroy {
   /**
-   * Whether the tab is active or not.
-   * If set to `true`, the tab will be selected and its content will be displayed.
-   * @defaultValue false
-   * */
-  override readonly active = model(false);
+    /**
+   * @defaultValue
+   * /*
+   */ide readonly active = model(false);
 
   /** @internal */
   override selectTab(retainFocus?: boolean): void {
