@@ -51,7 +51,7 @@
     "live-preview:build": "ng build live-preview && cpy LICENSE.md \"./dist/@siemens/live-preview/\"",
     "prepare": "husky; exit 0",
     "prepare-brand": "cpy --flat node_modules/@simpl/brand/src/favicon/sie-favicon_internet_64px.png docs/_src --rename=favicon.png && cpy --flat node_modules/@simpl/brand/src/favicon/sie-favicon_internet_64px.png src --rename=favicon.png",
-    "postversion": "node ./postversion.js && npm run format",
+    "postversion": "npm run format",
     "charts:test": "ng test charts-ng",
     "charts:build": "ng build charts-ng && cpy \"{LICENSE.md,projects/charts-ng/README.md}\" \"./dist/@siemens/charts-ng/\"",
     "native-charts:test": "ng test native-charts-ng",

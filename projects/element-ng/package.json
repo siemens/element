@@ -16,6 +16,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "scripts": {
+    "postversion": "node ../../postversion.js"
+  },
   "type": "module",
   "peerDependencies": {
     "@angular/animations": "19 - 20",
