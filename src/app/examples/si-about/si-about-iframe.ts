@@ -4,11 +4,19 @@
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SiAboutComponent } from '@siemens/element-ng/about';
+import { provideCopyrightDetails } from '@siemens/element-ng/copyright-notice';
 
 @Component({
   selector: 'app-sample',
   imports: [SiAboutComponent],
   templateUrl: './si-about-iframe.html',
+  providers: [
+    provideCopyrightDetails({
+      company: 'Sample Company',
+      startYear: 2016,
+      lastUpdateYear: 2021
+    })
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {}

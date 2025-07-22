@@ -15,7 +15,7 @@ import {
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
-import { CopyrightDetails, SiCopyrightNoticeComponent } from '@siemens/element-ng/copyright-notice';
+import { SiCopyrightNoticeComponent } from '@siemens/element-ng/copyright-notice';
 import { addIcons, elementDocument, SiIconNextComponent } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
@@ -90,10 +90,6 @@ export class SiAboutComponent implements OnInit {
    * @defaultValue []
    */
   readonly links = input<Link[]>([]);
-  /**
-   * Copyright information to be displayed. Alternatively, you can use the {@link SI_COPYRIGHT_DETAILS} global inject.
-   */
-  readonly copyrightDetails = input<CopyrightDetails>();
 
   protected readonly sanitizedUrl = computed(() => {
     const licenseInfo = this.licenseInfo();
