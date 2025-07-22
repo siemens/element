@@ -4,8 +4,8 @@ import { commitTypes, releaseRules } from './tools/semantic-release/config.js';
 export default {
   branches: [
     {
-      name: 'maintenance/+([0-9])?(.{+([0-9]),x}).x',
-      channel: "${name.replace(/^maintenance\\\\//g, '')}"
+      name: 'release/+([0-9])?(.{+([0-9]),x}).x',
+      channel: "${name.replace(/^release\\\\//g, '')}"
     },
     'main',
     {
