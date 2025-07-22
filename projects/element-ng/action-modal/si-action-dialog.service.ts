@@ -10,14 +10,7 @@ import {
 } from '@siemens/element-ng/modal';
 import { Observable, Subscriber, Subscription, switchMap, take } from 'rxjs';
 
-import {
-  ActionDialog,
-  ActionDialogReturnType,
-  AlertDialogResult,
-  ConfirmationDialogResult,
-  DeleteConfirmationDialogResult,
-  EditDiscardDialogResult
-} from './si-action-dialog.types';
+import { ActionDialog, ActionDialogReturnType } from './si-action-dialog.types';
 import { SiAlertDialogComponent } from './si-alert-dialog/si-alert-dialog.component';
 import { SiConfirmationDialogComponent } from './si-confirmation-dialog/si-confirmation-dialog.component';
 import { SiDeleteConfirmationDialogComponent } from './si-delete-confirmation-dialog/si-delete-confirmation-dialog.component';
@@ -45,120 +38,6 @@ const ACTION_DIALOG_DEFAULT_CLOSE_VALUE: Record<ActionDialog['type'], string> = 
 @Injectable({ providedIn: 'root' })
 export class SiActionDialogService {
   private modalService = inject(SiModalService);
-
-  /**
-   * Show an alert dialog.
-   * @deprecated use `showActionDialog({ type: 'alert', ... })` instead
-   */
-  showAlertDialog(
-    message: string,
-    heading?: string,
-    confirmBtnName?: string,
-    translationParams?: { [key: string]: any },
-    icon?: string,
-    diOptions?: ModalDependencyInjectionOptions
-  ): Observable<AlertDialogResult> {
-    return this.showActionDialog(
-      {
-        type: 'alert',
-        icon,
-        message,
-        heading,
-        confirmBtnName,
-        translationParams
-      },
-      diOptions
-    );
-  }
-
-  /**
-   * Show a confirmation dialog.
-   * @deprecated use `showActionDialog({ type: 'confirmation', ... })` instead
-   */
-  showConfirmationDialog(
-    message: string,
-    heading?: string,
-    confirmBtnName?: string,
-    declineBtnName?: string,
-    translationParams?: { [key: string]: any },
-    icon?: string,
-    diOptions?: ModalDependencyInjectionOptions
-  ): Observable<ConfirmationDialogResult> {
-    return this.showActionDialog(
-      {
-        type: 'confirmation',
-        icon,
-        message,
-        heading,
-        confirmBtnName,
-        declineBtnName,
-        translationParams
-      },
-      diOptions
-    );
-  }
-
-  /**
-   * Show an edit dialog with the option to discard.
-   * @deprecated use `showActionDialog({ type: 'edit-discard', ... })` instead
-   */
-  showEditDiscardDialog(
-    disableSave?: boolean,
-    message?: string,
-    heading?: string,
-    saveBtnName?: string,
-    discardBtnName?: string,
-    cancelBtnName?: string,
-    disableSaveMessage?: string,
-    disableSaveDiscardBtnName?: string,
-    translationParams?: { [key: string]: any },
-    icon?: string,
-    diOptions?: ModalDependencyInjectionOptions
-  ): Observable<EditDiscardDialogResult> {
-    return this.showActionDialog(
-      {
-        type: 'edit-discard',
-        message,
-        heading,
-        icon,
-        disableSave,
-        saveBtnName,
-        cancelBtnName,
-        discardBtnName,
-        disableSaveMessage,
-        disableSaveDiscardBtnName,
-        translationParams
-      },
-      diOptions
-    );
-  }
-
-  /**
-   * Show a dialog confirming a deletion.
-   * @deprecated use `showActionDialog({ type: 'delete-confirm', ... })` instead
-   */
-  showDeleteConfirmationDialog(
-    message?: string,
-    heading?: string,
-    deleteBtnName?: string,
-    cancelBtnName?: string,
-    translationParams?: { [key: string]: any },
-    icon?: string,
-    diOptions?: ModalDependencyInjectionOptions
-  ): Observable<DeleteConfirmationDialogResult> {
-    return this.showActionDialog(
-      {
-        type: 'delete-confirm',
-        icon,
-        message,
-        heading,
-        deleteBtnName,
-        cancelBtnName,
-        translationParams
-      },
-      diOptions
-    );
-  }
 
   /**
    * Shows an action dialog
