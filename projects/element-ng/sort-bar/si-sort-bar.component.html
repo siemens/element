@@ -10,7 +10,7 @@
     >
       <span>{{ item.name | translate }}</span>
       @if (item.key === activeSortCriteria) {
-        <si-icon-next
+        <si-icon
           class="icon"
           [icon]="sortIsDescending ? icons.elementSortDown : icons.elementSortUp"
         />

@@ -41,7 +41,7 @@
   }
 } @else {
   <div class="text-center">
-    <si-icon-next class="completion-icon-size text-success" [icon]="icons.elementChecked" />
+    <si-icon class="completion-icon-size text-success" [icon]="icons.elementChecked" />
     <p class="si-title-1"> {{ completionText() | translate }}</p>
   </div>
 }
@@ -82,7 +82,7 @@
               </div>
             </div>
           } @else {
-            <si-icon-next
+            <si-icon
               class="icon step-icon"
               [class.status-warning]="item.step.failed()"
               [icon]="getState(item.step!, item.index)"
@@ -124,7 +124,7 @@
           class="btn btn-sm btn-circle btn-secondary mt-2 mb-4"
           [attr.aria-label]="cancelText() | translate"
         >
-          <si-icon-next [icon]="icons.elementCancel" />
+          <si-icon [icon]="icons.elementCancel" />
         </button>
         <div class="si-title-2 text-primary">{{ cancelText() | translate }}</div>
       </div>
@@ -194,7 +194,7 @@
           class="btn btn-secondary btn-circle mb-2"
           [attr.aria-label]="backText() | translate"
         >
-          <si-icon-next class="flip-rtl" [icon]="icons.elementLeft4" />
+          <si-icon class="flip-rtl" [icon]="icons.elementLeft4" />
         </button>
         <div class="si-title-2 text-primary">{{ backText() | translate }}</div>
       </div>
@@ -212,7 +212,7 @@
           [disabled]="!currentStep?.isValid()"
           [attr.aria-label]="nextText() | translate"
         >
-          <si-icon-next class="flip-rtl" [icon]="icons.elementRight4" />
+          <si-icon class="flip-rtl" [icon]="icons.elementRight4" />
         </button>
         <div
           class="si-title-2 text-primary"

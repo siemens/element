@@ -1,6 +1,6 @@
 <div class="position-relative" [class.disabled]="disabled()" [class.focus]="inFocus">
   @if (showIcon()) {
-    <si-icon-next class="search-bar-icon icon text-secondary" [icon]="icons.elementSearch" />
+    <si-icon class="search-bar-icon icon text-secondary" [icon]="icons.elementSearch" />
   }
   <input
     #inputRef
@@ -27,7 +27,7 @@
       (click)="resetForm()"
       (focusin)="onCancelFocus($event)"
     >
-      <si-icon-next [icon]="icons.elementCancel" />
+      <si-icon [icon]="icons.elementCancel" />
     </button>
   }
 </div>

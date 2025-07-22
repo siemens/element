@@ -20,7 +20,7 @@ import {
   addIcons,
   elementBreadcrumbRoot,
   elementRight2,
-  SiIconNextComponent
+  SiIconComponent
 } from '@siemens/element-ng/icon';
 import { SiLinkDirective } from '@siemens/element-ng/link';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
@@ -64,7 +64,7 @@ let controlIdCounter = 1;
   selector: 'si-breadcrumb',
   imports: [
     NgTemplateOutlet,
-    SiIconNextComponent,
+    SiIconComponent,
     SiLinkDirective,
     SiResizeObserverDirective,
     SiTranslatePipe,

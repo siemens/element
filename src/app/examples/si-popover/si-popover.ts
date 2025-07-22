@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, inject } from '@angular/core';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiPopoverDirective } from '@siemens/element-ng/popover';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  imports: [SiPopoverDirective, SiIconNextComponent],
+  imports: [SiPopoverDirective, SiIconComponent],
   templateUrl: './si-popover.html'
 })
 export class SampleComponent {

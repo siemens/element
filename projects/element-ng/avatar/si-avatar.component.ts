@@ -14,7 +14,7 @@ import {
   SimpleChanges
 } from '@angular/core';
 import { EntityStatusType } from '@siemens/element-ng/common';
-import { SiIconNextComponent, STATUS_ICON_CONFIG } from '@siemens/element-ng/icon';
+import { SiIconComponent, STATUS_ICON_CONFIG } from '@siemens/element-ng/icon';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiAvatarBackgroundColorDirective } from './si-avatar-background-color.directive';
@@ -23,7 +23,7 @@ export type AvatarSize = 'tiny' | 'xsmall' | 'small' | 'regular' | 'large' | 'xl
 
 @Component({
   selector: 'si-avatar',
-  imports: [NgClass, SiIconNextComponent],
+  imports: [NgClass, SiIconComponent],
   templateUrl: './si-avatar.component.html',
   styleUrl: './si-avatar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

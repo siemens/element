@@ -12,9 +12,9 @@
   @let actualIcon = statusIcon();
   @if (actualIcon.icon) {
     <span class="icon icon-stack my-n2 ms-n2">
-      <si-icon-next [ngClass]="actualIcon.color" [icon]="actualIcon.icon" />
+      <si-icon [ngClass]="actualIcon.color" [icon]="actualIcon.icon" />
       @if (actualIcon.stacked) {
-        <si-icon-next [ngClass]="actualIcon.stackedColor" [icon]="actualIcon.stacked" />
+        <si-icon [ngClass]="actualIcon.stackedColor" [icon]="actualIcon.stacked" />
       }
     </span>
   }

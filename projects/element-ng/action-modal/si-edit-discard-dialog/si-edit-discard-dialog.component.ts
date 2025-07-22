@@ -4,7 +4,7 @@
  */
 import { AsyncPipe } from '@angular/common';
 import { booleanAttribute, ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLoadingButtonComponent } from '@siemens/element-ng/loading-spinner';
 import { ModalRef } from '@siemens/element-ng/modal';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -14,7 +14,7 @@ import { EditDiscardDialogResult } from '../si-action-dialog.types';
 
 @Component({
   selector: 'si-edit-discard-dialog',
-  imports: [AsyncPipe, SiIconNextComponent, SiTranslatePipe, SiLoadingButtonComponent],
+  imports: [AsyncPipe, SiIconComponent, SiTranslatePipe, SiLoadingButtonComponent],
   templateUrl: './si-edit-discard-dialog.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

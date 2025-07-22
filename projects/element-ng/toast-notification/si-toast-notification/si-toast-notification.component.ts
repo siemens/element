@@ -17,7 +17,7 @@ import {
 import {
   addIcons,
   elementCancel,
-  SiIconNextComponent,
+  SiIconComponent,
   SiStatusIconComponent,
   STATUS_ICON_CONFIG
 } from '@siemens/element-ng/icon';
@@ -28,7 +28,7 @@ import { SiToast } from '../si-toast.model';
 
 @Component({
   selector: 'si-toast-notification',
-  imports: [NgClass, SiLinkModule, SiIconNextComponent, SiStatusIconComponent, SiTranslatePipe],
+  imports: [NgClass, SiLinkModule, SiIconComponent, SiStatusIconComponent, SiTranslatePipe],
   templateUrl: './si-toast-notification.component.html',
   styleUrl: './si-toast-notification.component.scss'
 })

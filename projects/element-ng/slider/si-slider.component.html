@@ -13,7 +13,7 @@
     (keyup.enter)="autoUpdateStop()"
     (mouseleave)="autoUpdateStop()"
   >
-    <si-icon-next [icon]="icons.elementMinus" />
+    <si-icon [icon]="icons.elementMinus" />
   </button>
 
   <div class="slider-wrapper">
@@ -47,7 +47,7 @@
           >
             @let iconValue = thumbIcon();
             @if (iconValue) {
-              <si-icon-next [icon]="iconValue" />
+              <si-icon [icon]="iconValue" />
             } @else {
               <div class="hover-circle"></div>
             }
@@ -71,7 +71,7 @@
     (keyup.enter)="autoUpdateStop()"
     (mouseleave)="autoUpdateStop()"
   >
-    <si-icon-next [icon]="icons.elementPlus" />
+    <si-icon [icon]="icons.elementPlus" />
   </button>
 </div>
 

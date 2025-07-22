@@ -5,11 +5,11 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiFormItemComponent } from '@siemens/element-ng/form';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiIconComponent } from '@siemens/element-ng/icon';
 
 @Component({
   selector: 'app-sample',
-  imports: [FormsModule, SiFormItemComponent, SiIconNextComponent],
+  imports: [FormsModule, SiFormItemComponent, SiIconComponent],
   templateUrl: './bootstrap.html',
   host: { class: 'p-5' }
 })

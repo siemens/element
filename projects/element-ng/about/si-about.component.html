@@ -16,7 +16,7 @@
               [alt]="appName() + '\'s Logo'"
             />
           } @else if (appIcon) {
-            <si-icon-next class="app-icon" [icon]="appIcon" />
+            <si-icon class="app-icon" [icon]="appIcon" />
           }
           <h3>{{ appName() }}</h3>
           @for (item of subheading(); track $index) {

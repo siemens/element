@@ -20,8 +20,8 @@
   @let iconConfig = statusIcon();
   @if (iconConfig) {
     <span class="status-icon icon-stack indicator">
-      <si-icon-next class="status-icon" [ngClass]="iconConfig.color" [icon]="iconConfig.icon" />
-      <si-icon-next
+      <si-icon class="status-icon" [ngClass]="iconConfig.color" [icon]="iconConfig.icon" />
+      <si-icon
         class="status-icon"
         [ngClass]="iconConfig.stackedColor"
         [icon]="iconConfig.stacked"
@@ -30,12 +30,12 @@
   }
   @let eventIconValue = eventIcon();
   @if (eventOut()) {
-    <si-icon-next class="icon text-body event-out flip-rtl" [icon]="icons.elementRight4" />
+    <si-icon class="icon text-body event-out flip-rtl" [icon]="icons.elementRight4" />
   } @else if (eventIconValue) {
-    <si-icon-next class="icon text-body event-out" [icon]="eventIconValue" />
+    <si-icon class="icon text-body event-out" [icon]="eventIconValue" />
   }
   @let iconValue = icon();
   @if (iconValue) {
-    <si-icon-next class="icon position-relative text-body" [icon]="iconValue" />
+    <si-icon class="icon position-relative text-body" [icon]="iconValue" />
   }
 </div>

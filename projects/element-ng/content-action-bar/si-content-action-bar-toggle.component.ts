@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiIconComponent } from '@siemens/element-ng/icon';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: '[si-content-action-bar-toggle]',
-  imports: [SiIconNextComponent],
+  imports: [SiIconComponent],
   templateUrl: './si-content-action-bar-toggle.component.html',
   styleUrl: '../menu/si-menu-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

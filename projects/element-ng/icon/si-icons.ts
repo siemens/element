@@ -38,7 +38,7 @@ const registeredIcons = new Map<string, RegisteredIcon>();
  * import { elementIcon } from '@simpl/element-icons/ionic';
  * import { addIcons } from '@siemens/element-ng/icon'
  *
- * @Component({`<si-icon-next [icon]="icons.elementIcon"`})
+ * @Component({`<si-icon [icon]="icons.elementIcon"`})
  * class MyComponent {
  *   icons = addIcons({ elementIcon })
  * }

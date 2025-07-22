@@ -1,12 +1,12 @@
 @let icon = this.icon();
 @if (icon) {
-  <si-icon-next class="tab-icon" [icon]="icon" [attr.title]="heading() | translate" />
+  <si-icon class="tab-icon" [icon]="icon" [attr.title]="heading() | translate" />
 } @else {
   <span class="text-truncate">{{ heading() | translate }}</span>
 }
 <si-tab-badge [badgeColor]="badgeColor()" [badgeContent]="badgeContent()" />
 @if (closable() && !disabledTab()) {
-  <si-icon-next
+  <si-icon
     class="ms-2 btn btn-circle btn-xs btn-ghost close"
     [icon]="icons.elementCancel"
     (click)="closeTab($event)"

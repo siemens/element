@@ -16,7 +16,7 @@ import {
   elementExport,
   elementFavorites,
   elementFavoritesFilled,
-  SiIconNextComponent
+  SiIconComponent
 } from '@siemens/element-ng/icon';
 
 import { SiApplicationHeaderComponent } from '../si-application-header.component';
@@ -24,7 +24,7 @@ import { SiApplicationHeaderComponent } from '../si-application-header.component
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'a[si-launchpad-app]',
-  imports: [SiIconNextComponent],
+  imports: [SiIconComponent],
   templateUrl: './si-launchpad-app.component.html',
   styleUrl: './si-launchpad-app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

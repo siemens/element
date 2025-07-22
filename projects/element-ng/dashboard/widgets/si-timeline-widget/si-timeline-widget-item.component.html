@@ -3,9 +3,9 @@
   <div class="d-flex flex-row gap-4" [class.pe-4]="!valueObject.action">
     <div class="d-flex flex-column align-items-center gap-1 pt-4">
       <span class="icon icon-stack">
-        <si-icon-next [class]="valueObject.iconColor" [icon]="valueObject.icon" />
+        <si-icon [class]="valueObject.iconColor" [icon]="valueObject.icon" />
         @if (valueObject.stackedIcon) {
-          <si-icon-next [class]="valueObject.stackedIconColor" [icon]="valueObject.stackedIcon" />
+          <si-icon [class]="valueObject.stackedIconColor" [icon]="valueObject.stackedIcon" />
         }
       </span>
       @if (valueObject.iconAlt) {

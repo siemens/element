@@ -15,7 +15,7 @@ import {
   viewChild
 } from '@angular/core';
 import { SiAutocompleteDirective, SiAutocompleteModule } from '@siemens/element-ng/autocomplete';
-import { addIcons, elementSearch, SiIconNextComponent } from '@siemens/element-ng/icon';
+import { addIcons, elementSearch, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLoadingSpinnerComponent } from '@siemens/element-ng/loading-spinner';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
@@ -29,7 +29,7 @@ import { SiSelectListBase } from './si-select-list.base';
   imports: [
     NgTemplateOutlet,
     SiAutocompleteDirective,
-    SiIconNextComponent,
+    SiIconComponent,
     SiSelectGroupTemplateDirective,
     SiSelectOptionRowComponent,
     SiSelectOptionRowTemplateDirective,

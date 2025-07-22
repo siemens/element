@@ -104,7 +104,7 @@ describe('SiTimelineWidgetItemComponent', () => {
       icon: 'element-plant'
     };
     fixture.detectChanges();
-    expect(element.querySelector('si-icon-next div')?.classList).toContain('element-plant');
+    expect(element.querySelector('si-icon div')?.classList).toContain('element-plant');
   });
 
   it('should display the item icon color', () => {
@@ -115,7 +115,7 @@ describe('SiTimelineWidgetItemComponent', () => {
       iconColor: 'status-danger'
     };
     fixture.detectChanges();
-    expect(element.querySelector('si-icon-next')?.classList).toContain('status-danger');
+    expect(element.querySelector('si-icon')?.classList).toContain('status-danger');
   });
 
   it('should display the item icon stacked icon', () => {
