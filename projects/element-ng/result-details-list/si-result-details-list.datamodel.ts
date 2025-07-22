@@ -34,19 +34,11 @@ export interface ResultDetailStep {
 }
 
 /**
- * @deprecated This will be removed in a future release. Use the string values directly.
- */
-// eslint-disable-next-line @typescript-eslint/naming-convention
-export const ResultDetailStepState = {
-  Passed: 'passed',
-  Failed: 'failed',
-  Running: 'running',
-  NotSupported: 'not-supported',
-  NotStarted: 'not-started'
-} as const;
-
-/**
  * This type defines the state that a detailed result step can have.
  */
 export type ResultDetailStepState =
-  (typeof ResultDetailStepState)[keyof typeof ResultDetailStepState];
+  | 'passed'
+  | 'failed'
+  | 'running'
+  | 'not-supported'
+  | 'not-started';
