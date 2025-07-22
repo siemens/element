@@ -138,11 +138,6 @@ export class SiDatepickerOverlayDirective implements OnDestroy {
     return this;
   }
 
-  /** @deprecated Property provides internal information that should not be used. */
-  isFocused(): boolean {
-    return this.datepickerRef?.instance.isFocused ?? false;
-  }
-
   /**
    * Indicate the datepicker is visible.
    * @returns is visible.
