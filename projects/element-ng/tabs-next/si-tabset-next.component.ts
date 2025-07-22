@@ -56,13 +56,13 @@ export interface SiTabNextDeselectionEvent {
   ],
   templateUrl: './si-tabset-next.component.html',
   styleUrl: './si-tabset-next.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: SI_TABSET_NEXT,
       useExisting: SiTabsetNextComponent
     }
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiTabsetNextComponent implements AfterViewInit {
   /**

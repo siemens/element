@@ -27,11 +27,11 @@ import { SiApplicationHeaderComponent } from './si-application-header.component'
   imports: [SiTranslatePipe, A11yModule, SiIconNextComponent],
   templateUrl: './si-header-collapsible-actions.component.html',
   styles: '.badge-dot::after { inset-inline-end: 4px; }',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { class: 'd-contents' },
   providers: [
     { provide: SI_HEADER_DROPDOWN_OPTIONS, useValue: { disableRootFocusTrapForInlineMode: true } }
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'd-contents' }
 })
 export class SiHeaderCollapsibleActionsComponent implements OnDestroy {
   private static idCounter = 0;

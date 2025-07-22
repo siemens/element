@@ -24,14 +24,14 @@ import { SI_HEADER_DROPDOWN_OPTIONS } from './si-header.model';
   selector: 'si-header-dropdown',
   imports: [A11yModule],
   templateUrl: './si-header-dropdown.component.html',
+  styles: ':host.sub-menu {min-inline-size: 200px}',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'dropdown-menu position-static',
     role: 'group',
     '[id]': 'trigger.ariaControls',
     '[attr.aria-labelledby]': 'trigger.id'
-  },
-  styles: ':host.sub-menu {min-inline-size: 200px}',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  }
 })
 export class SiHeaderDropdownComponent {
   protected trigger = inject(SiHeaderDropdownTriggerDirective);

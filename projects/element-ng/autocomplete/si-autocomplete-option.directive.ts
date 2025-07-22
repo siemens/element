@@ -17,12 +17,12 @@ import { AUTOCOMPLETE_LISTBOX } from './si-autocomplete.model';
 
 @Directive({
   selector: '[siAutocompleteOption]',
-  exportAs: 'siAutocompleteOption',
   host: {
     role: 'option',
     '[id]': 'id()',
     '[attr.aria-disabled]': 'disabledInput()'
-  }
+  },
+  exportAs: 'siAutocompleteOption'
 })
 export class SiAutocompleteOptionDirective<T = unknown> implements Highlightable {
   private static idCounter = 0;

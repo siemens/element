@@ -20,10 +20,10 @@ import { SiTooltipService, TooltipRef } from './si-tooltip.service';
 
 @Directive({
   selector: '[siTooltip]',
+  providers: [SiTooltipService],
   host: {
     '[attr.aria-describedby]': 'describedBy'
-  },
-  providers: [SiTooltipService]
+  }
 })
 export class SiTooltipDirective implements OnDestroy {
   private static idCounter = 0;

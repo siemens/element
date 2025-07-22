@@ -40,10 +40,10 @@ class SiHeaderAnchorComponent {
  */
 @Directive({
   selector: '[siHeaderDropdownTriggerFor]',
-  exportAs: 'siHeaderDropdownTrigger',
   host: {
     class: 'dropdown-toggle'
-  }
+  },
+  exportAs: 'siHeaderDropdownTrigger'
 })
 export class SiHeaderDropdownTriggerDirective implements OnChanges, OnInit, OnDestroy {
   private static idCounter = 0;

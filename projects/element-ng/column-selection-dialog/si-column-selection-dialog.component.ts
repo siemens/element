@@ -56,8 +56,8 @@ const dragConfig = {
   ],
   templateUrl: './si-column-selection-dialog.component.html',
   styleUrl: './si-column-selection-dialog.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: CDK_DRAG_CONFIG, useValue: dragConfig }]
+  providers: [{ provide: CDK_DRAG_CONFIG, useValue: dragConfig }],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiColumnSelectionDialogComponent implements OnInit {
   readonly titleId = input<string>();

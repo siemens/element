@@ -9,11 +9,11 @@ import { SiAutocompleteOptionDirective } from './si-autocomplete-option.directiv
 
 @Directive({
   selector: 'input[siAutocomplete]',
-  exportAs: 'siAutocomplete',
   host: {
     role: 'combobox',
     'aria-autocomplete': 'list'
-  }
+  },
+  exportAs: 'siAutocomplete'
 })
 export class SiAutocompleteDirective<T> {
   /** @internal */

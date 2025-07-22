@@ -28,8 +28,8 @@ const PANEL_MIN_HEIGHT = 100;
 @Component({
   selector: 'si-accordion',
   template: '<div><ng-content /></div>',
-  providers: [SiAccordionService],
   styleUrl: './si-accordion.component.scss',
+  providers: [SiAccordionService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.full-height]': 'fullHeight()',

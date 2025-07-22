@@ -34,6 +34,12 @@ let controlIdCounter = 1;
   templateUrl: './si-collapsible-panel.component.html',
   styleUrl: './si-collapsible-panel.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[class]': 'colorVariant()',
+    '[class.opened]': 'opened()',
+    '[class.hcollapsed]': 'hcollapsed()',
+    '[class.full-height]': 'fullHeight()'
+  },
   animations: [
     trigger('showHide', [
       transition('*=>hide', [
@@ -53,13 +59,7 @@ let controlIdCounter = 1;
         )
       ])
     ])
-  ],
-  host: {
-    '[class]': 'colorVariant()',
-    '[class.opened]': 'opened()',
-    '[class.hcollapsed]': 'hcollapsed()',
-    '[class.full-height]': 'fullHeight()'
-  }
+  ]
 })
 export class SiCollapsiblePanelComponent {
   /**

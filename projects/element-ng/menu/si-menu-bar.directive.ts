@@ -8,11 +8,11 @@ import { Directive, HostBinding, inject, input } from '@angular/core';
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'si-menu-bar',
-  hostDirectives: [CdkMenuBar, CdkTargetMenuAim],
   host: {
     class: 'd-inline-flex',
     style: 'gap: 1px'
-  }
+  },
+  hostDirectives: [CdkMenuBar, CdkTargetMenuAim]
 })
 export class SiMenuBarDirective {
   private menuBar = inject(CdkMenuBar, { self: true });

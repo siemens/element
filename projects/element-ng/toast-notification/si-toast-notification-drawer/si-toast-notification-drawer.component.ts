@@ -22,6 +22,9 @@ import { SiToast } from '../si-toast.model';
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    'aria-live': 'polite'
+  },
   animations: [
     trigger('toastTrigger', [
       transition(':enter', [
@@ -36,10 +39,7 @@ import { SiToast } from '../si-toast.model';
         animate('300ms', style({ 'opacity': 0, 'inset-inline-end': '-100%' }))
       ])
     ])
-  ],
-  host: {
-    'aria-live': 'polite'
-  }
+  ]
 })
 export class SiToastNotificationDrawerComponent {
   readonly toasts = input<Observable<SiToast[]>>();

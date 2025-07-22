@@ -27,12 +27,12 @@ import { SiApplicationHeaderComponent } from '../si-application-header.component
   imports: [SiIconNextComponent],
   templateUrl: './si-launchpad-app.component.html',
   styleUrl: './si-launchpad-app.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'focus-inside',
     '[class.active]': 'active()',
     '[class.action]': 'action()'
-  },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  }
 })
 export class SiLaunchpadAppComponent {
   /** @defaultValue false */

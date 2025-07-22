@@ -88,8 +88,8 @@ export const ROUTES: Route[] = [
     SiBreadcrumbRouterComponent
   ],
   templateUrl: './si-navbar-vertical-routing.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [provideExampleRoutes(ROUTES)]
+  providers: [provideExampleRoutes(ROUTES)],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   menuItems: NavbarVerticalItem[] = [

@@ -91,8 +91,8 @@ export const noEconomy: ValidatorFn = control => {
     ReactiveFormsModule
   ],
   templateUrl: './si-form.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [JsonPipe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

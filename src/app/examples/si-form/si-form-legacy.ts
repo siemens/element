@@ -93,8 +93,8 @@ export const noEconomy: ValidatorFn = control => {
     JsonPipe
   ],
   templateUrl: './si-form-legacy.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [JsonPipe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

@@ -39,8 +39,8 @@ const FIX_SCROLL_PADDING_RESIZE_OBSERVER_THROTTLE = 10;
   imports: [PortalModule, SiTranslateModule],
   templateUrl: './si-dashboard.component.html',
   styleUrl: './si-dashboard.component.scss',
-  host: { class: 'si-layout-fixed-height' },
-  providers: [SiDashboardService]
+  providers: [SiDashboardService],
+  host: { class: 'si-layout-fixed-height' }
 })
 export class SiDashboardComponent implements OnChanges, OnDestroy, AfterViewInit {
   /**

@@ -44,14 +44,14 @@ import { SelectGroup, SelectItem, SelectOption } from './si-select.types';
   ],
   templateUrl: './si-select.component.html',
   styleUrl: './si-select.component.scss',
+  providers: [{ provide: SI_FORM_ITEM_CONTROL, useExisting: SiSelectComponent }],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'dropdown',
     '[class.readonly]': 'readonly()',
     '[class.open]': 'isOpen()',
     '[class.si-select-has-filter]': 'hasFilter()'
-  },
-  providers: [{ provide: SI_FORM_ITEM_CONTROL, useExisting: SiSelectComponent }]
+  }
 })
 export class SiSelectComponent<T> implements OnChanges, AfterContentInit, SiFormItemControl {
   private static idCounter = 0;

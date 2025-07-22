@@ -416,10 +416,10 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
     }
 
     @NgModule({
-      declarations: meta.declarations,
       imports: meta.imports,
-      exports: meta.exports,
+      declarations: meta.declarations,
       providers: meta.providers,
+      exports: meta.exports,
       jit: true
     })
     class RuntimeComponentModule {}

@@ -39,8 +39,8 @@ import { map, skip, takeUntil } from 'rxjs/operators';
   imports: [SiTranslatePipe, NgClass, A11yModule, NgTemplateOutlet, SiIconNextComponent],
   templateUrl: './si-application-header.component.html',
   styleUrl: './si-application-header.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{ provide: SI_HEADER_WITH_DROPDOWNS, useExisting: SiApplicationHeaderComponent }]
+  providers: [{ provide: SI_HEADER_WITH_DROPDOWNS, useExisting: SiApplicationHeaderComponent }],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDestroy {
   private static idCounter = 0;

@@ -30,7 +30,6 @@ export const BOOTSTRAP_BREAKPOINTS: Breakpoints = {
  */
 @Directive({
   selector: '[siResponsiveContainer]',
-  exportAs: 'siResponsiveContainer',
   host: {
     '[class.si-container-xs]': 'xs()',
     '[class.si-container-sm]': 'sm()',
@@ -38,7 +37,8 @@ export const BOOTSTRAP_BREAKPOINTS: Breakpoints = {
     '[class.si-container-lg]': 'lg()',
     '[class.si-container-xl]': 'xl()',
     '[class.si-container-xxl]': 'xxl()'
-  }
+  },
+  exportAs: 'siResponsiveContainer'
 })
 export class SiResponsiveContainerDirective implements OnInit, OnDestroy {
   /** @defaultValue false */

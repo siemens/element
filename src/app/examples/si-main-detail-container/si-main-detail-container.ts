@@ -31,10 +31,10 @@ import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.s
   ],
   templateUrl: './si-main-detail-container.html',
   styleUrl: './si-main-detail-container.scss',
+  providers: [DataService],
   host: {
     class: 'si-layout-fixed-height'
-  },
-  providers: [DataService]
+  }
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

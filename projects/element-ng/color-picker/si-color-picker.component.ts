@@ -46,14 +46,14 @@ const defaultDataColors: string[] = [
   imports: [SiIconNextComponent, SiTranslatePipe, CdkConnectedOverlay, CdkOverlayOrigin],
   templateUrl: './si-color-picker.component.html',
   styleUrl: './si-color-picker.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: SiColorPickerComponent,
       multi: true
     }
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiColorPickerComponent implements ControlValueAccessor {
   // eslint-disable-next-line defaultValue/tsdoc-defaultValue-annotation

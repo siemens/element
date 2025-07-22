@@ -33,14 +33,14 @@ export const SI_LINK_DEFAULT_NAVIGATION_EXTRA = new InjectionToken<NavigationExt
 
 @Directive({
   selector: '[siLink]',
-  exportAs: 'siLink',
   host: {
     '[attr.href]': 'href()',
     '[attr.target]': 'target()',
     '[attr.title]': 'title()',
     '[attr.aria-current]': 'isAriaCurrent()',
     '[class]': 'active() ? activeClass() : null'
-  }
+  },
+  exportAs: 'siLink'
 })
 export class SiLinkDirective implements DoCheck, OnChanges, OnDestroy {
   readonly siLink = input<Link>();

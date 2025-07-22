@@ -36,7 +36,6 @@ import { DatepickerInputConfig, getDatepickerFormat } from './si-datepicker.mode
  */
 @Directive({
   selector: '[siDateInput]',
-  exportAs: 'siDateInput',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -60,7 +59,8 @@ import { DatepickerInputConfig, getDatepickerFormat } from './si-datepicker.mode
     '[class.readonly]': 'readonly()',
     '[attr.aria-describedby]': 'errormessageId()',
     '[value]': 'dateString()'
-  }
+  },
+  exportAs: 'siDateInput'
 })
 export class SiDateInputDirective
   implements ControlValueAccessor, OnChanges, Validator, SiFormItemControl

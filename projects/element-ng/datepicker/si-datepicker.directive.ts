@@ -23,7 +23,6 @@ import { getDatepickerFormat } from './si-datepicker.model';
 
 @Directive({
   selector: '[siDatepicker]',
-  exportAs: 'siDatepicker',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -45,7 +44,8 @@ import { getDatepickerFormat } from './si-datepicker.model';
       directive: SiDatepickerOverlayDirective,
       outputs: ['siDatepickerClose']
     }
-  ]
+  ],
+  exportAs: 'siDatepicker'
 })
 export class SiDatepickerDirective extends SiDateInputDirective implements AfterViewInit {
   /**

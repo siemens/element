@@ -20,6 +20,8 @@ import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
       <si-navbar-vertical-divider />
     }
   `,
+  styleUrl: './si-navbar-vertical-header.component.scss',
+  host: { '[@headerCollapse]': 'navbar.collapsed()' },
   animations: [
     trigger('headerCollapse', [
       // Prevents initial animation. See: https://stackoverflow.com/a/50791299
@@ -43,9 +45,7 @@ import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
         ])
       ])
     ])
-  ],
-  styleUrl: './si-navbar-vertical-header.component.scss',
-  host: { '[@headerCollapse]': 'navbar.collapsed()' }
+  ]
 })
 export class SiNavbarVerticalHeaderComponent {
   protected navbar = inject(SI_NAVBAR_VERTICAL);

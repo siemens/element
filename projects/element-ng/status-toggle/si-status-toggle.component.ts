@@ -31,7 +31,6 @@ import { StatusToggleItem } from './status-toggle.model';
   imports: [NgClass, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-status-toggle.component.html',
   styleUrl: './si-status-toggle.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -39,7 +38,8 @@ import { StatusToggleItem } from './status-toggle.model';
       useExisting: forwardRef(() => SiStatusToggleComponent),
       multi: true
     }
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiStatusToggleComponent implements ControlValueAccessor, OnInit, OnDestroy, OnChanges {
   /** List of status items. */

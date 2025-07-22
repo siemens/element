@@ -24,11 +24,11 @@ import { PopoverComponent } from './si-popover.component';
 
 @Directive({
   selector: '[siPopoverNext]',
-  exportAs: 'si-popover-next',
   host: {
     '[attr.aria-expanded]': 'isOpen()',
     '[attr.aria-controls]': 'popoverId'
-  }
+  },
+  exportAs: 'si-popover-next'
 })
 export class SiPopoverNextDirective implements OnDestroy {
   private static idCounter = 0;

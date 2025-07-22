@@ -86,13 +86,13 @@ export class SiNavbarVerticalItemGuardDirective {
   ],
   templateUrl: './si-navbar-vertical.component.html',
   styleUrl: './si-navbar-vertical.component.scss',
+  providers: [{ provide: SI_NAVBAR_VERTICAL, useExisting: SiNavbarVerticalComponent }],
   host: {
     class: 'si-layout-inner',
     '[class.nav-collapsed]': 'collapsed()',
     '[class.nav-text-only]': 'textOnly()',
     '[class.visible]': 'visible()'
   },
-  providers: [{ provide: SI_NAVBAR_VERTICAL, useExisting: SiNavbarVerticalComponent }],
   animations: [
     trigger('collapse', [
       state('expanded', style({ 'inline-size': '240px' })),

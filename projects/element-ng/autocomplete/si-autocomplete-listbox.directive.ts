@@ -25,12 +25,12 @@ import { AUTOCOMPLETE_LISTBOX } from './si-autocomplete.model';
 
 @Directive({
   selector: '[siAutocompleteListboxFor]',
-  exportAs: 'siAutocompleteListbox',
   providers: [{ provide: AUTOCOMPLETE_LISTBOX, useExisting: SiAutocompleteListboxDirective }],
   host: {
     role: 'listbox',
     '[id]': 'id()'
-  }
+  },
+  exportAs: 'siAutocompleteListbox'
 })
 export class SiAutocompleteListboxDirective<T> implements OnInit, OnChanges, AfterContentInit {
   private static idCounter = 0;

@@ -38,11 +38,11 @@ import { SiTypeaheadSorting } from './si-typeahead.sorting';
 
 @Directive({
   selector: '[siTypeahead]',
-  exportAs: 'si-typeahead',
-  hostDirectives: [SiAutocompleteDirective],
   host: {
     class: 'si-typeahead'
-  }
+  },
+  hostDirectives: [SiAutocompleteDirective],
+  exportAs: 'si-typeahead'
 })
 export class SiTypeaheadDirective implements OnChanges, OnDestroy {
   protected static readonly overlayPositions: ConnectionPositionPair[] = [

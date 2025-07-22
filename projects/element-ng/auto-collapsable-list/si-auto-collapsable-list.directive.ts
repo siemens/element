@@ -27,11 +27,11 @@ import { SiAutoCollapsableListOverflowItemDirective } from './si-auto-collapsabl
 
 @Directive({
   selector: '[siAutoCollapsableList]',
-  exportAs: 'siAutoCollapsableList',
   host: {
     style: 'position: relative',
     '[style.overflow]': 'siAutoCollapsableList() ? "hidden" : ""'
-  }
+  },
+  exportAs: 'siAutoCollapsableList'
 })
 export class SiAutoCollapsableListDirective implements AfterViewInit, OnChanges, OnDestroy {
   /**

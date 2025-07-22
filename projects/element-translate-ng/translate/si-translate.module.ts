@@ -19,7 +19,6 @@ import { SiTranslateService } from './si-translate.service';
  */
 @NgModule({
   imports: [SiTranslatePipe],
-  exports: [SiTranslatePipe],
   providers: [
     /* This is needed for ngx-translate when using the isolated mode for lazy child routes.
      * In that case, a new TranslateService is created by ngx-translate which also needs to be used
@@ -31,6 +30,7 @@ import { SiTranslateService } from './si-translate.service';
       provide: SiTranslateService,
       useFactory: () => injectSiTranslateService()
     }
-  ]
+  ],
+  exports: [SiTranslatePipe]
 })
 export class SiTranslateModule {}

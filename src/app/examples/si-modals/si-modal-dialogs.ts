@@ -17,8 +17,8 @@ import { cloneColumnData, headerData } from './column-dialog.data';
 @Component({
   selector: 'app-sample',
   templateUrl: './si-modal-dialogs.html',
-  host: { class: 'p-5' },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'p-5' }
 })
 export class SampleComponent implements OnInit, OnDestroy {
   private subscription?: Subscription;
