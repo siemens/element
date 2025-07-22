@@ -69,6 +69,7 @@
     "dashboards-demo:build:mfe": "ng build dashboards-demo-mfe --configuration production --output-hashing none"
   },
   "workspaces": [
+    "projects/element-ng",
     "projects/element-translate-cli",
     "projects/element-translate-ng",
     "projects/element-theme",
