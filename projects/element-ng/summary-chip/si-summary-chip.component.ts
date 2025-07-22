@@ -13,12 +13,12 @@ import {
   model
 } from '@angular/core';
 import { ExtendedStatusType } from '@siemens/element-ng/common';
-import { SiIconNextComponent, STATUS_ICON_CONFIG } from '@siemens/element-ng/icon';
+import { SiIconComponent, STATUS_ICON_CONFIG } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-summary-chip',
-  imports: [NgClass, SiIconNextComponent, SiTranslatePipe],
+  imports: [NgClass, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-summary-chip.component.html',
   styleUrl: './si-summary-chip.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

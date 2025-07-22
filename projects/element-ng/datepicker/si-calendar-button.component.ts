@@ -19,7 +19,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgControl } from '@angular/forms';
-import { addIcons, elementCalendar, SiIconNextComponent } from '@siemens/element-ng/icon';
+import { addIcons, elementCalendar, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { SiDatepickerOverlayDirective } from './si-datepicker-overlay.directive';
@@ -42,7 +42,7 @@ import { SiDatepickerDirective } from './si-datepicker.directive';
  */
 @Component({
   selector: 'si-calendar-button',
-  imports: [SiIconNextComponent, SiTranslatePipe],
+  imports: [SiIconComponent, SiTranslatePipe],
   template: `<ng-content />
     <button
       #calendarButton
@@ -53,7 +53,7 @@ import { SiDatepickerDirective } from './si-datepicker.directive';
       [disabled]="disabled()"
       (click)="show()"
     >
-      <si-icon-next [icon]="icons.elementCalendar" />
+      <si-icon [icon]="icons.elementCalendar" />
     </button>`,
   styles: ':host {--si-action-icon-offset: 24px;}',
   changeDetection: ChangeDetectionStrategy.OnPush,

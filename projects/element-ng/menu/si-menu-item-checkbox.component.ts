@@ -5,13 +5,13 @@
 import { CDK_MENU, CdkMenuItemCheckbox, CdkMenuTrigger } from '@angular/cdk/menu';
 import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { addIcons, elementOk, SiIconNextComponent } from '@siemens/element-ng/icon';
+import { addIcons, elementOk, SiIconComponent } from '@siemens/element-ng/icon';
 
 import { SiMenuItemBase } from './si-menu-item-base.directive';
 
 @Component({
   selector: 'si-menu-item-checkbox, button[si-menu-item-checkbox]',
-  imports: [NgClass, SiIconNextComponent],
+  imports: [NgClass, SiIconComponent],
   templateUrl: './si-menu-item-checkbox.component.html',
   styleUrl: './si-menu-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

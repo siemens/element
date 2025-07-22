@@ -6,7 +6,7 @@
     </div>
   }
   @if (match.iconClass) {
-    <si-icon-next class="icon me-2" [icon]="match.iconClass" />
+    <si-icon class="icon me-2" [icon]="match.iconClass" />
   }
   @for (segment of match.result; track $index) {
     <span [class.typeahead-match-segment-matching]="segment.isMatching">{{ segment.text }}</span>

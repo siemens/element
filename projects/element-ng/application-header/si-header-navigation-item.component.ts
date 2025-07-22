@@ -7,19 +7,19 @@ import {
   SI_HEADER_DROPDOWN_OPTIONS,
   SiHeaderDropdownTriggerDirective
 } from '@siemens/element-ng/header-dropdown';
-import { addIcons, elementDown2, SiIconNextComponent } from '@siemens/element-ng/icon';
+import { addIcons, elementDown2, SiIconComponent } from '@siemens/element-ng/icon';
 
 /** Adds a navigation item to the header. Should be located inside `.header-navigation`. */
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'button[si-header-navigation-item], a[si-header-navigation-item]',
-  imports: [SiIconNextComponent],
+  imports: [SiIconComponent],
   template: `
     <div class="item-title">
       <ng-content />
     </div>
     @if (dropdownTrigger) {
-      <si-icon-next class="dropdown-caret" [icon]="icons.elementDown2" />
+      <si-icon class="dropdown-caret" [icon]="icons.elementDown2" />
     }
   `,
   providers: [

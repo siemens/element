@@ -20,14 +20,14 @@ import {
   elementLock,
   elementMenu,
   elementShow,
-  SiIconNextComponent
+  SiIconComponent
 } from '@siemens/element-ng/icon';
 
 import { Column } from '../si-column-selection-dialog.types';
 
 @Component({
   selector: 'si-column-selection-editor',
-  imports: [CdkDragHandle, SiIconNextComponent],
+  imports: [CdkDragHandle, SiIconComponent],
   templateUrl: './si-column-selection-editor.component.html',
   styles: `
     .form-control {

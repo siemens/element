@@ -26,7 +26,7 @@ import {
   addIcons,
   elementMenu,
   elementThumbnails,
-  SiIconNextComponent
+  SiIconComponent
 } from '@siemens/element-ng/icon';
 import { BOOTSTRAP_BREAKPOINTS, Breakpoints } from '@siemens/element-ng/resize-observer';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
@@ -36,7 +36,7 @@ import { map, skip, takeUntil } from 'rxjs/operators';
 /** Root component for the application header. */
 @Component({
   selector: 'si-application-header',
-  imports: [SiTranslatePipe, NgClass, A11yModule, NgTemplateOutlet, SiIconNextComponent],
+  imports: [SiTranslatePipe, NgClass, A11yModule, NgTemplateOutlet, SiIconComponent],
   templateUrl: './si-application-header.component.html',
   styleUrl: './si-application-header.component.scss',
   providers: [{ provide: SI_HEADER_WITH_DROPDOWNS, useExisting: SiApplicationHeaderComponent }],

@@ -16,11 +16,7 @@
 >
   @let headerIcon = icon();
   @if (headerIcon) {
-    <si-icon-next
-      class="icon ms-n2 me-2"
-      [icon]="headerIcon"
-      [class.collapsed-icon]="isHCollapsible"
-    />
+    <si-icon class="icon ms-n2 me-2" [icon]="headerIcon" [class.collapsed-icon]="isHCollapsible" />
   }
   @if (icon() && badge() !== undefined && badge() !== '') {
     <span class="badge-text">
@@ -38,7 +34,7 @@
     </span>
   }
   <span class="ms-auto overflow-hidden">
-    <si-icon-next class="icon dropdown-caret" [icon]="icons.elementDown2" />
+    <si-icon class="icon dropdown-caret" [icon]="icons.elementDown2" />
   </span>
 </div>
 <div

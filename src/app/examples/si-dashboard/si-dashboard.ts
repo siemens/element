@@ -19,7 +19,7 @@ import {
   SiDashboardComponent,
   SiValueWidgetComponent
 } from '@siemens/element-ng/dashboard';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiIconComponent } from '@siemens/element-ng/icon';
 import { Link } from '@siemens/element-ng/link';
 import { NavbarVerticalItem } from '@siemens/element-ng/navbar-vertical';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
@@ -39,7 +39,7 @@ themeSupport.setDefault(themeElement);
     SiDashboardCardComponent,
     SiDashboardComponent,
     SiValueWidgetComponent,
-    SiIconNextComponent,
+    SiIconComponent,
     SiResizeObserverDirective
   ],
   templateUrl: './si-dashboard.html',

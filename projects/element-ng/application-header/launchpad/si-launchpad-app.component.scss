@@ -38,7 +38,7 @@
   margin-block-end: map.get(variables.$spacers, 4);
   border-radius: variables.$element-radius-2;
 
-  &:is(si-icon-next) {
+  &:is(si-icon) {
     background: variables.$element-launchpad-app-background;
     font-size: 40px;
     padding: map.get(variables.$spacers, 2);

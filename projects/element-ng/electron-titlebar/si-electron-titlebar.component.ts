@@ -10,14 +10,14 @@ import {
   elementLeft4,
   elementOptionsVertical,
   elementRight4,
-  SiIconNextComponent
+  SiIconComponent
 } from '@siemens/element-ng/icon';
 import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-electron-titlebar',
-  imports: [CdkMenuTrigger, SiMenuFactoryComponent, SiIconNextComponent, SiTranslatePipe],
+  imports: [CdkMenuTrigger, SiMenuFactoryComponent, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-electron-titlebar.component.html',
   styleUrl: './si-electron-titlebar.component.scss'
 })

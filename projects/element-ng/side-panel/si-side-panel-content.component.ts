@@ -25,7 +25,7 @@ import {
   addIcons,
   elementDoubleLeft,
   elementDoubleRight,
-  SiIconNextComponent
+  SiIconComponent
 } from '@siemens/element-ng/icon';
 import { SiLinkDirective } from '@siemens/element-ng/link';
 import { MenuItem } from '@siemens/element-ng/menu';
@@ -46,7 +46,7 @@ export interface StatusItem extends MenuItemLegacy {
   selector: 'si-side-panel-content',
   imports: [
     SiContentActionBarComponent,
-    SiIconNextComponent,
+    SiIconComponent,
     SiLinkDirective,
     SiSearchBarComponent,
     SiTranslatePipe

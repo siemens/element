@@ -8,7 +8,7 @@ import {
   addIcons,
   elementSortDown,
   elementSortUp,
-  SiIconNextComponent
+  SiIconComponent
 } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
@@ -19,7 +19,7 @@ export interface SortCriteria {
 
 @Component({
   selector: 'si-sort-bar',
-  imports: [SiIconNextComponent, SiTranslatePipe],
+  imports: [SiIconComponent, SiTranslatePipe],
   templateUrl: './si-sort-bar.component.html',
   styleUrl: './si-sort-bar.component.scss'
 })

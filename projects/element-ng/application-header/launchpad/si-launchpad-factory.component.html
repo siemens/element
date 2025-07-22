@@ -81,7 +81,7 @@
           (click)="showAllApps = !showAllApps"
         >
           <b>{{ (showAllApps ? showLessAppsText() : showMoreAppsText()) | translate }}</b>
-          <si-icon-next class="dropdown-caret icon" [icon]="icons.elementDown2" />
+          <si-icon class="dropdown-caret icon" [icon]="icons.elementDown2" />
         </button>
       }
     }
@@ -92,6 +92,6 @@
     [attr.aria-label]="closeText() | translate"
     (click)="closeLaunchpad()"
   >
-    <si-icon-next [icon]="icons.elementCancel" />
+    <si-icon [icon]="icons.elementCancel" />
   </button>
 </div>

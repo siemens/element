@@ -73,7 +73,7 @@ describe('SiStatusBarComponent', () => {
     component.muteButton = true;
     fixture.detectChanges();
 
-    const mute = element.querySelector('.mute-button > si-icon-next div') as HTMLElement;
+    const mute = element.querySelector('.mute-button > si-icon div') as HTMLElement;
     expect(mute).toBeTruthy();
     expect(mute.classList.contains('element-sound-on')).toBeTrue();
 

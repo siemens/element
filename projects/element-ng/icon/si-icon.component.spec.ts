@@ -2,80 +2,183 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ComponentRef } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { SiThemeService } from '@siemens/element-ng/theme';
 
-import { SiIconComponent as TestComponent } from './si-icon.component';
+import { provideIconConfig, SiIconComponent } from './si-icon.component';
+import { addIcons, IconService } from './si-icons';
 
-describe('SiIconComponent', () => {
-  let component: ComponentRef<TestComponent>;
-  let fixture: ComponentFixture<TestComponent>;
+// It seems like the debug element is not able to query the SVGs.
+// So we have to use document directly.
+// I don't know why.
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [TestComponent]
-    }).compileComponents();
+describe('SiSvgIconComponent', () => {
+  describe('with one instance', () => {
+    let component: TestHostComponent;
+    let fixture: ComponentFixture<TestHostComponent>;
+
+    @Component({
+      imports: [SiIconComponent],
+      template: ` <si-icon [icon]="icon()" />`
+    })
+    class TestHostComponent {
+      readonly icon = signal<string>('element-user');
+      readonly icons = addIcons({
+        elementSvg:
+          'data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' id="svg"></svg>',
+        element2Svg:
+          'data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' id="svg-2"></svg>'
+      });
+    }
+
+    describe('with enabled svg icons', () => {
+      beforeEach(async () => {
+        TestBed.configureTestingModule({
+          providers: [provideIconConfig({ disableSvgIcons: false })]
+        });
+        fixture = TestBed.createComponent(TestHostComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+      });
+
+      it('should fallback to icon-font', () => {
+        expect(fixture.debugElement.query(By.css('.element-user'))).toBeTruthy();
+      });
+
+      describe('with icon from registry', () => {
+        beforeEach(() => {
+          component.icon.set('element-2-svg');
+          fixture.detectChanges();
+        });
+
+        it('should load icon', () => {
+          expect(document.getElementById('svg-2')).toBeTruthy();
+        });
+
+        it('should load icon override from theme', () => {
+          const themeService = TestBed.inject(SiThemeService);
+          themeService.applyTheme({
+            name: 'oem',
+            schemes: {},
+            icons: {
+              element2Svg:
+                'data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' id="svg-oem"></svg>'
+            }
+          });
+          fixture.detectChanges();
+          expect(document.getElementById('svg-oem')).toBeTruthy();
+        });
+      });
+
+      describe('with icon from import', () => {
+        beforeEach(() => {
+          component.icon.set(component.icons.elementSvg);
+          fixture.detectChanges();
+        });
+
+        it('should load icon', () => {
+          expect(document.getElementById('svg')).toBeTruthy();
+        });
+
+        it('should load icon override from theme', () => {
+          const themeService = TestBed.inject(SiThemeService);
+          themeService.applyTheme({
+            name: 'oem',
+            schemes: {},
+            icons: {
+              elementSvg:
+                'data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' id="svg-oem"></svg>'
+            }
+          });
+          fixture.detectChanges();
+          expect(document.getElementById('svg-oem')).toBeTruthy();
+        });
+      });
+    });
+
+    describe('with disabled svg icons', () => {
+      beforeEach(async () => {
+        fixture = TestBed.createComponent(TestHostComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+      });
+
+      it('should always use the icon-font', () => {
+        component.icon.set('element-svg');
+        fixture.detectChanges();
+        expect(document.getElementById('svg')).toBeFalsy();
+        expect(fixture.debugElement.query(By.css('.element-svg'))).toBeTruthy();
+      });
+    });
   });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(TestComponent);
-    component = fixture.componentRef;
-  });
+  describe('with multiple instances', () => {
+    @Component({
+      selector: 'si-icon-1-test',
+      imports: [SiIconComponent],
+      template: `<si-icon [icon]="icons.elementSvg" />`
+    })
+    class IconTest1Component {
+      readonly icons = addIcons({
+        elementSvg:
+          'data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' id="svg"></svg>'
+      });
+    }
+    @Component({
+      selector: 'si-icon-2-test',
+      imports: [SiIconComponent],
+      template: `<si-icon [icon]="icons.elementSvg" />`
+    })
+    class IconTest2Component {
+      icons = addIcons({
+        elementSvg:
+          'data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' id="svg-different"></svg>'
+      });
+    }
 
-  it('should set icon class', () => {
-    component.setInput('icon', 'element-person');
-    fixture.detectChanges();
-    const icon = fixture.nativeElement.querySelector('.element-person');
-    const aria = fixture.nativeElement.querySelector('span').getAttribute('aria-label');
-    expect(icon.classList).toContain('element-person');
-    expect(aria).toBe('person');
-  });
+    @Component({
+      imports: [IconTest1Component, IconTest2Component],
+      template: `@if (show1()) {
+          <si-icon-1-test />
+        }
+        @if (show2()) {
+          <si-icon-2-test />
+        }`
+    })
+    class TestHostComponent {
+      readonly show1 = signal(false);
+      readonly show2 = signal(false);
+    }
 
-  it('should set color class', () => {
-    component.setInput('icon', 'element-alarm');
-    component.setInput('color', 'element-text-active');
-    fixture.detectChanges();
-    const icon = fixture.nativeElement.querySelector('.element-alarm');
-    expect(icon.classList).toContain('element-text-active');
-  });
+    let fixture: ComponentFixture<TestHostComponent>;
+    let component: TestHostComponent;
+    let iconService: IconService;
+    beforeEach(() => {
+      fixture = TestBed.createComponent(TestHostComponent);
+      component = fixture.componentInstance;
+      iconService = TestBed.inject(IconService);
+    });
 
-  it('should set alt text', () => {
-    component.setInput('alt', 'alternative text');
-    fixture.detectChanges();
-    const aria = fixture.nativeElement.querySelector('span').getAttribute('aria-label');
-    expect(aria).toContain('alternative text');
-  });
+    it('should not override an existing icon', () => {
+      component.show2.set(true);
+      fixture.detectChanges();
+      component.show1.set(true);
+      fixture.detectChanges();
+      expect(iconService.getIcon('elementSvg') + '').toContain('svg-different');
+    });
 
-  it('should set size', () => {
-    component.setInput('icon', 'element-alarm');
-    component.setInput('size', 'display-1');
-    fixture.detectChanges();
-    const icon = fixture.nativeElement.querySelector('.display-1');
-    expect(icon.classList).toContain('display-1');
-  });
-
-  it('should set stackedIcon and stackedColor', () => {
-    component.setInput('stackedIcon', 'element-alarm-tick');
-    component.setInput('stackedColor', 'text-secondary');
-    fixture.detectChanges();
-    const stackIcon = fixture.nativeElement.querySelector('i:first-child');
-    expect(stackIcon.classList).toContain('element-alarm-tick');
-    expect(stackIcon.classList).toContain('text-secondary');
-  });
-
-  it('should create composite icon', () => {
-    component.setInput('icon', 'element-alarm-background-filled');
-    component.setInput('color', 'status-danger');
-    component.setInput('stackedIcon', 'element-alarm-tick');
-    component.setInput('stackedColor', 'text-secondary');
-    fixture.detectChanges();
-    const icon = fixture.nativeElement.querySelector('span');
-    expect(icon.classList).toContain('element-alarm-background-filled');
-    expect(icon.classList).toContain('status-danger');
-    const stackIcon = fixture.nativeElement.querySelector('i');
-    expect(stackIcon.classList).toContain('element-alarm-tick');
-    expect(stackIcon.classList).toContain('text-secondary');
-    const wrapper = fixture.nativeElement.querySelector('span');
-    expect(wrapper.getAttribute('aria-label')).toContain('alarm background filled');
+    it('should delete unused icons', () => {
+      component.show1.set(true);
+      component.show2.set(true);
+      fixture.detectChanges();
+      component.show1.set(false);
+      fixture.detectChanges();
+      expect(iconService.getIcon('elementSvg')).toBeTruthy();
+      component.show2.set(false);
+      fixture.detectChanges();
+      expect(iconService.getIcon('elementSvg')).toBeFalsy();
+    });
   });
 });

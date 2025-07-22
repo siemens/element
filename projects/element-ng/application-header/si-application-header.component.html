@@ -15,7 +15,7 @@
       [attr.aria-controls]="id + '-launchpad'"
       (click)="toggleLaunchpad()"
     >
-      <si-icon-next [icon]="icons.elementThumbnails" />
+      <si-icon [icon]="icons.elementThumbnails" />
     </button>
   }
   @if (hasNavigation()) {
@@ -29,7 +29,7 @@
       [attr.aria-controls]="id + '-navigation-wrapper'"
       (click)="toggleMobileNavigationExpanded()"
     >
-      <si-icon-next [icon]="icons.elementMenu" />
+      <si-icon [icon]="icons.elementMenu" />
     </button>
   }
   <ng-content select="si-header-brand, element-header-brand">

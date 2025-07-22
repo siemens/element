@@ -165,7 +165,7 @@ describe('SiBreadcrumbComponent', () => {
 
     const rootClasses = element
       .querySelector('.breadcrumb')!
-      .querySelector('.breadcrumb li:first-child si-icon-next div')!.classList;
+      .querySelector('.breadcrumb li:first-child si-icon div')!.classList;
     expect(rootClasses.contains('element-breadcrumb-root')).toBeTruthy();
   });
 

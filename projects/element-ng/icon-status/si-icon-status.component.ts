@@ -4,11 +4,11 @@
  */
 import { NgClass } from '@angular/common';
 import { booleanAttribute, Component, computed, input, numberAttribute } from '@angular/core';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiIconComponent } from '@siemens/element-ng/icon';
 
 @Component({
   selector: 'si-icon-status',
-  imports: [NgClass, SiIconNextComponent],
+  imports: [NgClass, SiIconComponent],
   templateUrl: './si-icon-status.component.html',
   styleUrl: './si-icon-status.component.scss'
 })

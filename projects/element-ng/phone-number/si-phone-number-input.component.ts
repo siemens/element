@@ -29,7 +29,7 @@ import {
   Validator
 } from '@angular/forms';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
-import { addIcons, elementDown2, SiIconNextComponent } from '@siemens/element-ng/icon';
+import { addIcons, elementDown2, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiSelectListHasFilterComponent } from '@siemens/element-ng/select';
 import {
   injectSiTranslateService,
@@ -47,7 +47,7 @@ import { CountryInfo, PhoneDetails } from './si-phone-number-input.models';
     CdkOverlayOrigin,
     CdkConnectedOverlay,
     NgClass,
-    SiIconNextComponent,
+    SiIconComponent,
     SiPhoneNumberInputSelectDirective,
     SiSelectListHasFilterComponent,
     SiTranslatePipe

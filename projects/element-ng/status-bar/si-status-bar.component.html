@@ -98,7 +98,7 @@
         (keydown.enter)="toggleExpand()"
         (click)="toggleExpand()"
       >
-        <si-icon-next class="icon" [icon]="icons.elementDown2" />
+        <si-icon class="icon" [icon]="icons.elementDown2" />
       </a>
     </div>
   }
@@ -111,9 +111,6 @@
     [attr.aria-label]="muteButtonText() | translate"
     (click)="muteToggle.emit()"
   >
-    <si-icon-next
-      class="icon"
-      [icon]="muteButton() ? icons.elementSoundOn : icons.elementSoundMute"
-    />
+    <si-icon class="icon" [icon]="muteButton() ? icons.elementSoundOn : icons.elementSoundMute" />
   </button>
 </ng-template>

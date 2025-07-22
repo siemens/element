@@ -24,11 +24,8 @@
   }
   @if (icon) {
     <span class="indicator icon me-4 icon-stack">
-      <si-icon-next [ngClass]="value() ? icon.color : 'indicator-disabled'" [icon]="icon.icon" />
-      <si-icon-next
-        [ngClass]="value() ? icon.stackedColor : 'text-inverse'"
-        [icon]="icon.stacked"
-      />
+      <si-icon [ngClass]="value() ? icon.color : 'indicator-disabled'" [icon]="icon.icon" />
+      <si-icon [ngClass]="value() ? icon.stackedColor : 'text-inverse'" [icon]="icon.stacked" />
     </span>
   }
   <div class="overflow-hidden">

@@ -51,7 +51,7 @@ export class SiTabsetNextHarness extends ComponentHarness {
   }
 
   async getCloseButtonForTabAt(index: number): Promise<TestElement> {
-    const closeButton = this.locatorForAll(`si-icon-next.close`);
+    const closeButton = this.locatorForAll(`si-icon.close`);
     return (await closeButton())[index];
   }
 

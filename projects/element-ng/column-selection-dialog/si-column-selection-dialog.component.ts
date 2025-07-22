@@ -24,7 +24,7 @@ import {
   viewChild,
   viewChildren
 } from '@angular/core';
-import { addIcons, elementCancel, SiIconNextComponent } from '@siemens/element-ng/icon';
+import { addIcons, elementCancel, SiIconComponent } from '@siemens/element-ng/icon';
 import { ModalRef } from '@siemens/element-ng/modal';
 import {
   injectSiTranslateService,
@@ -51,7 +51,7 @@ const dragConfig = {
     CdkListbox,
     CdkOption,
     CdkScrollableModule,
-    SiIconNextComponent,
+    SiIconComponent,
     SiTranslatePipe,
     SiColumnSelectionEditorComponent
   ],

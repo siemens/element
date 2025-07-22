@@ -6,17 +6,13 @@
 <ng-template #defaultOptionTemplate let-item siSelectOptionTemplate>
   @if (item.icon) {
     <i class="icon-stack">
-      <si-icon-next
+      <si-icon
         class="icon me-2"
         [icon]="item.icon"
         [ngClass]="[(!item.disabled && item.iconColor) || '']"
       />
       @if (item.stackedIcon) {
-        <si-icon-next
-          class="icon me-2"
-          [icon]="item.stackedIcon"
-          [ngClass]="item.stackedIconColor"
-        />
+        <si-icon class="icon me-2" [icon]="item.stackedIcon" [ngClass]="item.stackedIconColor" />
       }
     </i>
   }

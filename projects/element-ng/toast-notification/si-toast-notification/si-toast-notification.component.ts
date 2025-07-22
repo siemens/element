@@ -7,7 +7,7 @@ import { Component, computed, HostListener, inject, input, output, signal } from
 import {
   addIcons,
   elementCancel,
-  SiIconNextComponent,
+  SiIconComponent,
   SiStatusIconComponent,
   STATUS_ICON_CONFIG
 } from '@siemens/element-ng/icon';
@@ -18,7 +18,7 @@ import { SI_TOAST_AUTO_HIDE_DELAY, SiToast } from '../si-toast.model';
 
 @Component({
   selector: 'si-toast-notification',
-  imports: [NgClass, SiLinkModule, SiIconNextComponent, SiStatusIconComponent, SiTranslatePipe],
+  imports: [NgClass, SiLinkModule, SiIconComponent, SiStatusIconComponent, SiTranslatePipe],
   templateUrl: './si-toast-notification.component.html',
   styleUrl: './si-toast-notification.component.scss'
 })
