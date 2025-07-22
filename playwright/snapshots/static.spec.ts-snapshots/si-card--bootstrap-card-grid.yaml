@@ -13,7 +13,6 @@
 - text: Card 1
 - button "Toggle"
 - text: Card 2
-- heading "Card title" [level=5]
 - paragraph: This card has supporting text below as a natural lead-in to additional content.
 - paragraph: Last updated 3 mins ago
 - text: Card 3 This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.
