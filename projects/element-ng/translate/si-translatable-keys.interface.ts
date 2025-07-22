@@ -44,6 +44,7 @@ export interface SiTranslatableKeys {
   'SI_DATE_RANGE_FILTER.DATE'?: string;
   'SI_DATE_RANGE_FILTER.DATE_PLACEHOLDER'?: string;
   'SI_DATE_RANGE_FILTER.DAYS'?: string;
+  'SI_DATE_RANGE_FILTER.END_DATE_PREVIEW'?: string;
   'SI_DATE_RANGE_FILTER.FROM'?: string;
   'SI_DATE_RANGE_FILTER.HOURS'?: string;
   'SI_DATE_RANGE_FILTER.MINUTES'?: string;

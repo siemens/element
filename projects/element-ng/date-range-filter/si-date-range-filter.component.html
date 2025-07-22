@@ -87,8 +87,12 @@
     {{ previewLabel() | translate }}:
     <span class="preview">
       @if (calculatedRange().valid) {
+        @let endDatePreview =
+          selectionPending()
+            ? (endDatePreviewLabel() | translate)
+            : (calculatedRange().end | date: pipeFormat());
         {{ calculatedRange().start | date: pipeFormat() }} -
-        {{ calculatedRange().end | date: pipeFormat() }}
+        {{ endDatePreview }}
       } @else {
         ?
       }
