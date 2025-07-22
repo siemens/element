@@ -19,7 +19,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgControl } from '@angular/forms';
-import { addIcons, elementCalendar, SiIconNextComponent } from '@siemens/element-ng/icon';
+import { addIcons, elementCalendar, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiDatepickerOverlayDirective } from './si-datepicker-overlay.directive';
@@ -42,7 +42,7 @@ import { SiDatepickerDirective } from './si-datepicker.directive';
  */
 @Component({
   selector: 'si-calendar-button',
-  imports: [SiIconNextComponent, SiTranslatePipe],
+  imports: [SiIconComponent, SiTranslatePipe],
   template: `<ng-content />
     <button
       #calendarButton
@@ -65,14 +65,14 @@ import { SiDatepickerDirective } from './si-datepicker.directive';
 })
 export class SiCalendarButtonComponent implements OnInit, AfterContentInit, DoCheck {
   /**
-   * Aria label for the calendar toggle button.
-   *
+    /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATEPICKER.CALENDAR_TOGGLE_BUTTON:Open calendar`
+   * e`:@@SI_DATEPICKER.CALENDAR_TOGGLE_BUTTON:Open calendar`);
+   *
+   *   pr
    * ```
-   */
-  readonly ariaLabel = input($localize`:@@SI_DATEPICKER.CALENDAR_TOGGLE_BUTTON:Open calendar`);
+   */nly ariaLabel = input($localize`:@@SI_DATEPICKER.CALENDAR_TOGGLE_BUTTON:Open calendar`);
 
   protected readonly button = viewChild.required<ElementRef<HTMLButtonElement>>('calendarButton');
   /** Datepicker input directive instance used to watch for state changes and required to open the calendar. */

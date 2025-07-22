@@ -13,12 +13,7 @@ import {
   input,
   output
 } from '@angular/core';
-import {
-  addIcons,
-  elementCancel,
-  elementDown2,
-  SiIconNextComponent
-} from '@siemens/element-ng/icon';
+import { addIcons, elementCancel, elementDown2, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLinkModule } from '@siemens/element-ng/link';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
@@ -39,7 +34,7 @@ export interface FavoriteChangeEvent {
     SiLinkModule,
     SiTranslatePipe,
     SiLaunchpadAppComponent,
-    SiIconNextComponent
+    SiIconComponent
   ],
   templateUrl: './si-launchpad-factory.component.html',
   styleUrl: './si-launchpad-factory.component.scss',

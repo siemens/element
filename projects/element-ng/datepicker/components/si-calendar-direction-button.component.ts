@@ -15,14 +15,14 @@ import {
   addIcons,
   elementLeft2,
   elementRight2,
-  SiIconNextComponent
+  SiIconComponent
 } from '@siemens/element-ng/icon';
 
 export type Direction = 'left' | 'right';
 
 @Component({
   selector: 'si-calendar-direction-button',
-  imports: [NgClass, SiIconNextComponent],
+  imports: [NgClass, SiIconComponent],
   template: `<button
     role="button"
     type="button"
@@ -38,8 +38,9 @@ export type Direction = 'left' | 'right';
 })
 export class SiCalendarDirectionButtonComponent {
   readonly ariaLabel = input.required<string>();
-  /** @defaultValue false */
-  readonly disabled = input(false, { transform: booleanAttribute });
+  /** @d  /**
+   * @defaultValue tran
+   */nly disabled = input(false, { transform: booleanAttribute });
   readonly direction = input<Direction>();
 
   /**

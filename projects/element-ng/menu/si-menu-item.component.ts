@@ -5,13 +5,13 @@
 import { CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { addIcons, elementRight2, SiIconNextComponent } from '@siemens/element-ng/icon';
+import { addIcons, elementRight2, SiIconComponent } from '@siemens/element-ng/icon';
 
 import { SiMenuItemBase } from './si-menu-item-base.directive';
 
 @Component({
   selector: 'si-menu-item, a[si-menu-item], button[si-menu-item]',
-  imports: [NgClass, SiIconNextComponent],
+  imports: [NgClass, SiIconComponent],
   templateUrl: './si-menu-item.component.html',
   styleUrl: './si-menu-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

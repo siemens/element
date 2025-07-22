@@ -9,7 +9,7 @@ import { AccentLineType } from '@siemens/element-ng/common';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import {
   addIcons,
-  SiIconNextComponent,
+  SiIconComponent,
   elementRight2,
   elementSortDown,
   elementSortUp
@@ -30,7 +30,7 @@ import { SiListWidgetItem } from './si-list-widget-item.component';
   imports: [
     NgClass,
     SiCardComponent,
-    SiIconNextComponent,
+    SiIconComponent,
     SiLinkDirective,
     SiListWidgetBodyComponent,
     SiTranslateModule

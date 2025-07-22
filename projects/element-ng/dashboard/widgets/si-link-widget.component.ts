@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { booleanAttribute, Component, computed, input } from '@angular/core';
-import { addIcons, SiIconNextComponent, elementRight2 } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent, elementRight2 } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
 import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
@@ -14,7 +14,7 @@ import { SiWidgetBaseComponent } from './si-widget-base.component';
  */
 @Component({
   selector: 'si-link-widget',
-  imports: [SiIconNextComponent, SiLinkDirective, SiTranslateModule],
+  imports: [SiIconComponent, SiLinkDirective, SiTranslateModule],
   templateUrl: './si-link-widget.component.html',
   host: { class: 'si-link-widget' }
 })
