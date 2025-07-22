@@ -56,12 +56,6 @@ export class SiDatepickerDirective extends SiDateInputDirective implements After
    * @defaultValue false
    */
   readonly autoClose = input(false, { transform: booleanAttribute });
-  /**
-   * @deprecated Property has no effect and will be removed without replacement.
-   *
-   * @defaultValue inject(ElementRef)
-   */
-  readonly triggeringInput = input(inject(ElementRef));
 
   /**
    * During focus on close the datepicker will not show since we recover the focus on element.

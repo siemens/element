@@ -172,12 +172,6 @@ export class SiDateRangeComponent
    */
   readonly endTimeLabel = input<TranslatableString>($localize`:@@SI_DATEPICKER.END_TIME_LABEL:to`);
   /**
-   * @deprecated Property has no effect and will be removed without a replacement.
-   *
-   * @defaultValue 200
-   */
-  readonly debounceTime = input(200);
-  /**
    * Automatically close overlay on date selection.
    *
    * @defaultValue false

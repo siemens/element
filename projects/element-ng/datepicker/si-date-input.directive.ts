@@ -86,12 +86,6 @@ export class SiDateInputDirective
   readonly siDatepickerConfig = model<DatepickerInputConfig | undefined>({});
 
   /**
-   * @deprecated Property has no effect and will be removed without a replacement.
-   *
-   * @defaultValue 200
-   */
-  readonly dateInputDebounceTime = input(200);
-  /**
    * Emits an event to notify about disabling the time from the datepicker.
    * When time is disable, we construct a pure date object in UTC 00:00:00 time.
    */
