@@ -52,6 +52,7 @@ import { SiFilteredSearchHarness } from './testing/si-filtered-search.harness';
     [onlySelectValue]="onlySelectValue"
     [disableSelectionByColonAndSemicolon]="disableSelectionByColonAndSemicolon"
     [criteria]="criteria()"
+    [itemCountText]="itemCountText"
     [(searchCriteria)]="searchCriteria"
     (doSearch)="doSearch($event)"
     (searchCriteriaChange)="searchCriteriaChange($event)"
@@ -83,6 +84,7 @@ class TestHostComponent {
   doSearchOnInputChange = false;
   onlySelectValue = false;
   disableSelectionByColonAndSemicolon = false;
+  itemCountText = '{{itemCount}} items';
   cdRef = inject(ChangeDetectorRef);
 
   doSearch(event: SearchCriteria): void {}
@@ -2099,6 +2101,12 @@ describe('SiFilteredSearchComponent', () => {
   });
 });
 
+const replacePlaceholders = (str: string, params: Record<string, unknown>): string => {
+  return str.replace(/{{\s*([^}]+)\s*}}/g, (match, p1) => {
+    return params[p1] !== undefined ? String(params[p1]) : match;
+  });
+};
+
 describe('SiFilteredSearchComponent - With translation', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let component: TestHostComponent;
@@ -2112,7 +2120,12 @@ describe('SiFilteredSearchComponent - With translation', () => {
         provideMockTranslateServiceBuilder(
           () =>
             ({
-              translate: (key: string, params: Record<string, any>) => `translated(${key})`,
+              translate: (key: string, params: Record<string, any>) => {
+                if (params && Object.keys(params).length > 0) {
+                  return `${replacePlaceholders(key, params)} translated`;
+                }
+                return `translated(${key})`;
+              },
               translateAsync: (keys: string | string[], params: Record<string, any>) => {
                 const myRecord: {
                   [key: string]: string;
@@ -2255,7 +2268,7 @@ describe('SiFilteredSearchComponent - With translation', () => {
     const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
     const criteria = await filteredSearch.getCriteria();
     const values = await parallel(() => criteria.map(async v => await (await v.value())?.text()));
-    expect(values).toEqual(['2 translated(SI_FILTERED_SEARCH.ITEMS)']);
+    expect(values).toEqual(['2 items translated']);
   });
 
   it('should not fail on invalid dates', async () => {
