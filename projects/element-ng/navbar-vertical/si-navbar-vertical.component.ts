@@ -23,7 +23,6 @@ import {
   inject,
   input,
   model,
-  numberAttribute,
   OnChanges,
   OnDestroy,
   OnInit,
@@ -203,13 +202,6 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit, OnDestroy {
   readonly visible = input(true, { transform: booleanAttribute });
 
   /**
-   * @deprecated dropped without replacement.
-   *
-   * @defaultValue undefined
-   */
-  readonly autoCollapseDelay = input<number, unknown>(undefined, { transform: numberAttribute });
-
-  /**
    * Text for the navbar expand button. Required for a11y
    *
    * @defaultValue
@@ -339,14 +331,6 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit, OnDestroy {
     this.collapsed.set(false);
     if (!this.smallScreen()) {
       this.preferCollapse = this.collapsed();
-      const autoCollapseDelay = this.autoCollapseDelay();
-      if (autoCollapseDelay) {
-        setTimeout(() => {
-          if (!this.collapsed()) {
-            this.toggleCollapse();
-          }
-        }, autoCollapseDelay);
-      }
     }
     this.saveUIState();
   }
