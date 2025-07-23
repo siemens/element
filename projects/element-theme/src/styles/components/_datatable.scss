@@ -177,6 +177,38 @@ $datatable-ghost-cell-strip-radius: 0 !default;
         }
       }
     }
+
+    :is(.datatable-row-left, .datatable-row-right) {
+      &::after {
+        content: '';
+        position: absolute;
+        inset-block-start: 0;
+        block-size: calc(100% + 1px); //1px for the border
+        inline-size: 8px;
+      }
+    }
+
+    :is(.datatable-row-left) {
+      &::after {
+        inset-inline-end: -8px;
+        background: linear-gradient(
+          to right,
+          var(--element-box-shadow-color-2),
+          transparent 100%
+        );
+      }
+    }
+
+    :is(.datatable-row-right) {
+      &::after {
+        inset-inline-start: -8px;
+        background: linear-gradient(
+          to left,
+          var(--element-box-shadow-color-2),
+          transparent 100%
+        );
+      }
+    }
   }
 
   // Header Styles
@@ -184,7 +216,6 @@ $datatable-ghost-cell-strip-radius: 0 !default;
     padding: 0;
     display: flex;
     align-items: center;
-    border-block-end: 4px solid $datatable-header-border-color;
     background-color: $datatable-header-background-color;
     color: $datatable-header-color;
     block-size: $datatable-header-height;
@@ -209,12 +240,21 @@ $datatable-ghost-cell-strip-radius: 0 !default;
       }
     }
 
+    .datatable-header-inner {
+      block-size: 100%;
+      border-block-end: 4px solid $datatable-header-border-color;
+    }
+
     :is(.datatable-row-left, .datatable-row-right) {
       background-color: variables.$table-bg;
       display: flex;
 
       .datatable-header-cell {
         flex-shrink: 0;
+      }
+
+      &::after {
+        block-size: calc(100% + 4px); // 4px for header border
       }
     }
 
