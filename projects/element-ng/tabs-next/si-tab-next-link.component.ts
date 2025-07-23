@@ -18,6 +18,7 @@ import { SiTabNextBaseDirective } from './si-tab-next-base.directive';
   imports: [NgClass, SiIconNextComponent, SiTranslatePipe],
   templateUrl: './si-tab-next.component.html',
   styleUrl: './si-tab-next.component.scss',
+  providers: [{ provide: SiTabNextBaseDirective, useExisting: SiTabNextLinkComponent }],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.active]': 'routerLinkActive.isActive',

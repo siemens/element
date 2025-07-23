@@ -22,8 +22,8 @@ import { SiMenuDirective, SiMenuItemComponent } from '@siemens/element-ng/menu';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
+import { SiTabNextBaseDirective } from './si-tab-next-base.directive';
 import { SiTabNextLinkComponent } from './si-tab-next-link.component';
-import { SiTabNextComponent } from './si-tab-next.component';
 import { SI_TABSET_NEXT } from './si-tabs-tokens';
 
 /** @experimental */
@@ -31,7 +31,7 @@ export interface SiTabNextDeselectionEvent {
   /**
    * The target tab
    */
-  target: SiTabNextComponent | SiTabNextLinkComponent;
+  target: SiTabNextBaseDirective;
   /**
    * The index of target tab
    */
@@ -78,19 +78,10 @@ export class SiTabsetNextComponent implements AfterViewInit {
   readonly activeTabIndex = computed(() => this.activeTab()?.index() ?? -1);
 
   /** @internal */
-  focusKeyManager?: FocusKeyManager<SiTabNextComponent | SiTabNextLinkComponent>;
-
-  private readonly tabPanelsLinks = contentChildren(SiTabNextLinkComponent);
-  private readonly tabPanelsComponents = contentChildren(SiTabNextComponent);
+  focusKeyManager?: FocusKeyManager<SiTabNextBaseDirective>;
 
   /** @internal */
-  readonly tabPanels = computed(() => {
-    const allTabs: (SiTabNextLinkComponent | SiTabNextComponent)[] = [
-      ...this.tabPanelsLinks(),
-      ...this.tabPanelsComponents()
-    ];
-    return allTabs;
-  });
+  readonly tabPanels = contentChildren(SiTabNextBaseDirective);
 
   protected readonly menu = viewChild('menu', { read: CdkMenu });
   protected readonly showMenuButton = signal(false);
