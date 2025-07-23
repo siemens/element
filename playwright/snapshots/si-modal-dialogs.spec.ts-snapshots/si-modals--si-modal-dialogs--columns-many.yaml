@@ -25,8 +25,8 @@
     - option "Row 2 - not draggable"
     - option "Row 3 - not draggable" [disabled] [selected]
     - option "Row 4 - not draggable" [disabled]
-    - option "Row 6" [disabled] [selected]
     - option "Row 5" [selected]
+    - option "Row 6" [disabled] [selected]
     - option "Row 7" [selected]
     - option "Row 8 M" [selected]
     - option "Row 9" [selected]
