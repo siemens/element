@@ -45,7 +45,7 @@
 </div>
 
 <ng-template #tabsMenu>
-  <si-menu #menu>
+  <si-menu>
     @for (tab of tabPanels(); track tab) {
       @let badgeColor = tab.badgeColor();
       @let badgeIsNumber = tab.badgeIsNumber();

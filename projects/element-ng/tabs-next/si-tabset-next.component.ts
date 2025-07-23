@@ -83,7 +83,7 @@ export class SiTabsetNextComponent implements AfterViewInit {
   /** @internal */
   readonly tabPanels = contentChildren(SiTabNextBaseDirective);
 
-  protected readonly menu = viewChild('menu', { read: CdkMenu });
+  protected readonly menu = viewChild(CdkMenu);
   protected readonly showMenuButton = signal(false);
 
   private injector = inject(INJECTOR);
