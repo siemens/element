@@ -29,10 +29,8 @@ import { SI_TABSET_NEXT } from './si-tabs-tokens';
     '[class.disabled]': 'disabledTab()',
     '[attr.id]': "'tab-' + tabId",
     '[attr.aria-disabled]': 'disabledTab()',
-    '[attr.tabindex]': 'tabset.focusKeyManager?.activeItem === this && !disabledTab() ? 0 : -1',
+    '[attr.tabindex]': 'tabset.focusKeyManager.activeItem === this && !disabledTab() ? 0 : -1',
     '[attr.aria-controls]': "'content-' + tabId",
-    '(keydown.arrowLeft)': 'tabset.focusPrevious($event)',
-    '(keydown.arrowRight)': 'tabset.focusNext($event)',
     '(keydown.delete)': 'closeTab($event)'
   }
 })
@@ -104,11 +102,11 @@ export abstract class SiTabNextBaseDirective implements OnDestroy, FocusableOpti
     if (this.indexBeforeClose >= 0) {
       const indexToFocus = this.tabset.getNextIndexToFocus(this.indexBeforeClose);
       if (this.active()) {
-        this.tabset.focusKeyManager?.updateActiveItem(indexToFocus);
+        this.tabset.focusKeyManager.updateActiveItem(indexToFocus);
         this.tabset.tabPanels()[indexToFocus].tabButton.nativeElement.focus();
       } else {
         const selectedItemIndex = this.tabset.activeTabIndex() ?? 0;
-        this.tabset.focusKeyManager?.updateActiveItem(selectedItemIndex);
+        this.tabset.focusKeyManager.updateActiveItem(selectedItemIndex);
         this.tabset.tabPanels()[selectedItemIndex].focus();
       }
       // if this tab was the active one we need to select next tab as active
@@ -145,7 +143,7 @@ export abstract class SiTabNextBaseDirective implements OnDestroy, FocusableOpti
   }
 
   selectTab(retainFocus?: boolean): void {
-    this.tabset.focusKeyManager?.updateActiveItem(this.index());
+    this.tabset.focusKeyManager.updateActiveItem(this.index());
     if (retainFocus) {
       // We need the timeout to wait for cdkMenu to restore the focus before we move it again.
       setTimeout(() => this.focus());

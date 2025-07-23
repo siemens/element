@@ -8,6 +8,7 @@
       (siResizeObserver)="
         resizeContainer(tabScrollContainer.clientWidth, tabScrollContainer.scrollWidth)
       "
+      (keydown)="keydown($event)"
     >
       <ng-content />
     </div>

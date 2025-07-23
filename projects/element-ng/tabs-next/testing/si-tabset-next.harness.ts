@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { LEFT_ARROW, RIGHT_ARROW } from '@angular/cdk/keycodes';
 import { ComponentHarness, TestElement, TestKey } from '@angular/cdk/testing';
 
 export class SiTabsetNextHarness extends ComponentHarness {
@@ -66,6 +67,18 @@ export class SiTabsetNextHarness extends ComponentHarness {
 
   async getMenuItems(): Promise<TestElement[]> {
     return await this.menuItems();
+  }
+
+  async pressArrowRight(): Promise<void> {
+    return this.tabScrollWrapper().then(wrapper =>
+      wrapper.dispatchEvent('keydown', { keyCode: RIGHT_ARROW })
+    );
+  }
+
+  async pressArrowLeft(): Promise<void> {
+    return this.tabScrollWrapper().then(wrapper =>
+      wrapper.dispatchEvent('keydown', { keyCode: LEFT_ARROW })
+    );
   }
 
   async getMenuItemAt(index: number): Promise<TestElement> {

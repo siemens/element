@@ -248,16 +248,12 @@ describe('SiTabsetNext', () => {
     testComponent.tabs = ['1', '2', { heading: '3', closable: true }, '4'];
     fixture.detectChanges();
     const closeSpy = spyOn(testComponent, 'closeTriggered').and.callThrough();
-    (await tabsetHarness.getTabItemButtonAt(3)).click();
-
-    (await tabsetHarness.getCloseButtonForTabAt(0)).click();
-    fixture.detectChanges();
+    await (await tabsetHarness.getTabItemButtonAt(3)).click();
+    await (await tabsetHarness.getCloseButtonForTabAt(0)).click();
     expect(closeSpy).toHaveBeenCalledWith(jasmine.objectContaining({ heading: '3' }));
     expect(await (await tabsetHarness.getTabItemButtonAt(2)).getAttribute('tabindex')).toBe('0');
     await (await tabsetHarness.getTabItemButtonAt(2)).focus();
-    await (
-      await tabsetHarness.getTabItemButtonAt(2)
-    ).dispatchEvent('keydown', { code: 'ArrowLeft', key: 'ArrowLeft' });
+    await tabsetHarness.pressArrowLeft();
     expect(await (await tabsetHarness.getTabItemButtonAt(1)).isFocused()).toBe(true);
   });
 

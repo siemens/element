@@ -18,6 +18,7 @@ import {
   viewChild
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { isRTL } from '@siemens/element-ng/common';
 import { SiMenuDirective, SiMenuItemComponent } from '@siemens/element-ng/menu';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
 
@@ -77,22 +78,22 @@ export class SiTabsetNextComponent implements AfterViewInit {
   /** @internal */
   readonly activeTabIndex = computed(() => this.activeTab()?.index() ?? -1);
 
-  /** @internal */
-  focusKeyManager?: FocusKeyManager<SiTabNextBaseDirective>;
+  readonly tabPanels = contentChildren(SiTabNextBaseDirective);
 
   /** @internal */
-  readonly tabPanels = contentChildren(SiTabNextBaseDirective);
+  focusKeyManager = new FocusKeyManager(this.tabPanels, inject(INJECTOR))
+    .withHorizontalOrientation(isRTL() ? 'rtl' : 'ltr')
+    .withWrap(true);
+
+  /** @internal */
 
   protected readonly menu = viewChild(CdkMenu);
   protected readonly showMenuButton = signal(false);
 
-  private injector = inject(INJECTOR);
-
   ngAfterViewInit(): void {
-    this.focusKeyManager = new FocusKeyManager(this.tabPanels, this.injector);
     // To avoid ExpressionChangedAfterItHasBeenCheckedError
     setTimeout(() => {
-      this.focusKeyManager?.updateActiveItem(this.tabPanels().findIndex(tab => !tab.disabledTab()));
+      this.focusKeyManager.updateActiveItem(this.tabPanels().findIndex(tab => !tab.disabledTab()));
     });
   }
 
@@ -118,18 +119,6 @@ export class SiTabsetNextComponent implements AfterViewInit {
   }
 
   /** @internal */
-  focusPrevious(e: Event): void {
-    e.preventDefault();
-    this.focusKeyManager?.setPreviousItemActive();
-  }
-
-  /** @internal */
-  focusNext(e: Event): void {
-    e.preventDefault();
-    this.focusKeyManager?.setNextItemActive();
-  }
-
-  /** @internal */
   getNextIndexToFocus(currentIndex: number): number {
     for (let i = 0; i < this.tabPanels().length; i++) {
       // Get the actual index using modulo to wrap around
@@ -145,5 +134,9 @@ export class SiTabsetNextComponent implements AfterViewInit {
   protected resizeContainer(width: number, scrollWidth: number): void {
     // 48px is the width of the menu button.
     this.showMenuButton.set(scrollWidth > width + (this.showMenuButton() ? 48 : 0));
+  }
+
+  protected keydown(event: KeyboardEvent): void {
+    this.focusKeyManager.onKeydown(event);
   }
 }
