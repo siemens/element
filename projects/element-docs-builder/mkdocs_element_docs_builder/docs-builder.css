@@ -181,3 +181,41 @@
 .type-table *:target {
   scroll-margin-top: 5rem;
 }
+
+.collapsible-body {
+  /* Hidden by default */
+  visibility: hidden;
+  block-size: 0;
+  position: relative;
+  overflow: hidden;
+  display: block;
+}
+
+.collapsible-container {
+  cursor: pointer;
+}
+
+.collapsible-container .collapsible-body {
+  cursor: auto;
+}
+
+.collapsible-container .toggle-icon {
+  display: inline-block;
+  margin: 0 0.25em 0 0.5em;
+  transition: transform 0.2s;
+  font-size: 0.9em;
+  color: var(--md-typeset-a-color);
+  user-select: none;
+}
+
+.collapsible-container[data-collapsed='false'] .toggle-icon {
+  transform: rotate(90deg);
+}
+
+.collapsible-container[data-collapsed='false'] .collapsible-body {
+  /* Show table body when expanded */
+  display: table-row-group;
+  visibility: visible;
+  block-size: auto;
+  position: static;
+}
