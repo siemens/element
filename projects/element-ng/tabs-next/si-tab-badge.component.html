@@ -1,0 +1,10 @@
+@let badgeContent = this.badgeContent();
+@if (badgeContent === true) {
+  <span class="badge-dot"></span>
+} @else if (badgeContent && badgeColor()) {
+  <span class="badge" [ngClass]="'bg-' + badgeColor()">
+    {{ badgeContent ?? '' | translate }}
+  </span>
+} @else if (badgeContent && !badgeColor()) {
+  <span class="badge-text"> {{ badgeContent ?? '' | translate }}</span>
+}

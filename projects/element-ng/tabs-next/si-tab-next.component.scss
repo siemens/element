@@ -4,17 +4,6 @@
   flex-shrink: 0;
   transform: translateX(0);
   color: variables.$element-text-primary;
-
-  span.badge-dot {
-    inset-block-end: 100%;
-    inset-inline-start: 12px;
-    margin-inline-end: 12px;
-  }
-
-  span.badge-text {
-    inset-block-end: calc(100% - 7px);
-    inset-inline-start: 2px;
-  }
 }
 
 .tab-icon {

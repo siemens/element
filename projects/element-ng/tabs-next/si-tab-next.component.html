@@ -4,17 +4,7 @@
 } @else {
   <span class="text-truncate">{{ heading() | translate }}</span>
 }
-@if (badgeContent() === true) {
-  <span class="badge-dot"></span>
-} @else if (badgeContent() && badgeColor()) {
-  <span class="badge" [ngClass]="'bg-' + badgeColor()">
-    <!-- eslint-disable-next-line @angular-eslint/template/no-any -->
-    {{ $any(badgeContent() ?? '') | translate }}
-  </span>
-} @else if (badgeContent() && !badgeColor()) {
-  <!-- eslint-disable-next-line @angular-eslint/template/no-any -->
-  <span class="badge-text"> {{ $any(badgeContent() ?? '') | translate }}</span>
-}
+<si-tab-badge [badgeColor]="badgeColor()" [badgeContent]="badgeContent()" />
 @if (closable() && !disabledTab()) {
   <si-icon-next
     class="ms-4 me-n4 btn btn-circle btn-xs btn-ghost close"
