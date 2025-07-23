@@ -41,8 +41,8 @@ navigation, tables…).
 Type             | Size (rem) | Line Height (rem) | Family       | Style
 -----------------|------------|-------------------|--------------|------
 Data Callout     | 3          | 3.125             | Siemens Sans | Roman
-H1 Heading       | 1.85       | 2                 | Siemens Sans | Roman
-H1 Heading Black | 1.85       | 2                 | Siemens Sans | **Black**
+H1 Heading       | 1.875      | 2                 | Siemens Sans | Roman
+H1 Heading Black | 1.875      | 2                 | Siemens Sans | **Black**
 H2 Subheading    | 1.25       | 1.5               | Siemens Sans | Roman
 H3 Subheading    | 1.125      | 1.25              | Siemens Sans | **Bold**
 Title 1          | 1          | 1.125             | Siemens Sans | **Bold**
