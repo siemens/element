@@ -43,8 +43,6 @@ export class SampleComponent {
     },
     {
       heading: 'Pantry',
-      icon: 'element-break',
-      iconAltText: 'Kitchen',
       badgeColor: 'danger',
       badgeContent: '1'
     },

@@ -26,6 +26,7 @@
           type="button"
           role="tab"
           class="nav-link focus-inside px-5"
+          [class.pe-3]="tab.closable"
           [attr.aria-controls]="tab.id"
           [id]="tab.tabId"
           [style.max-width.px]="tabButtonMaxWidth"
@@ -60,7 +61,7 @@
           }
           @if (tab.closable && !tab.disabled) {
             <si-icon-next
-              class="ms-4 me-n4 btn btn-circle btn-xs btn-ghost close"
+              class="ms-2 btn btn-circle btn-xs btn-ghost close"
               [icon]="icons.elementCancel"
               (click)="closeTab($event, tab)"
             />

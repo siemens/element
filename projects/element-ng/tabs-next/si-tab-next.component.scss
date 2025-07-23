@@ -4,6 +4,10 @@
   flex-shrink: 0;
   transform: translateX(0);
   color: variables.$element-text-primary;
+
+  &.icon-only {
+    min-inline-size: auto;
+  }
 }
 
 .tab-icon {

@@ -27,6 +27,8 @@ import { SI_TABSET_NEXT } from './si-tabs-tokens';
     class: 'nav-link focus-inside px-5 si-title-1',
     role: 'tab',
     '[class.disabled]': 'disabledTab()',
+    '[class.icon-only]': '!!icon()',
+    '[class.pe-3]': 'closable()',
     '[attr.id]': "'tab-' + tabId",
     '[attr.aria-disabled]': 'disabledTab()',
     '[attr.tabindex]': 'tabset.focusKeyManager.activeItem === this && !disabledTab() ? 0 : -1',
