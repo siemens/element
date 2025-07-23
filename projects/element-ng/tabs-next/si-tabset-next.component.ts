@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { FocusKeyManager } from '@angular/cdk/a11y';
-import { CdkMenu, CdkMenuTrigger } from '@angular/cdk/menu';
+import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
@@ -14,8 +14,7 @@ import {
   inject,
   INJECTOR,
   output,
-  signal,
-  viewChild
+  signal
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { isRTL } from '@siemens/element-ng/common';
@@ -87,30 +86,12 @@ export class SiTabsetNextComponent implements AfterViewInit {
 
   /** @internal */
 
-  protected readonly menu = viewChild(CdkMenu);
   protected readonly showMenuButton = signal(false);
 
   ngAfterViewInit(): void {
     // To avoid ExpressionChangedAfterItHasBeenCheckedError
     setTimeout(() => {
       this.focusKeyManager.updateActiveItem(this.tabPanels().findIndex(tab => !tab.disabledTab()));
-    });
-  }
-
-  protected menuOpened(): void {
-    // wait for menu items to be rendered
-    setTimeout(() => {
-      const nextMenuItemToFocus = this.getNextIndexToFocus(this.activeTabIndex() + 1);
-      const menuItems = this.menu()?.items.toArray() ?? [];
-      if (nextMenuItemToFocus >= 0 && nextMenuItemToFocus < menuItems.length) {
-        menuItems[nextMenuItemToFocus].focus();
-        // bug in cdk as setting focus on menu item does not update focus manager active item
-        // eslint-disable-next-line @typescript-eslint/dot-notation
-        const focusManager = this.menu()?.['keyManager'];
-        focusManager?.updateActiveItem(nextMenuItemToFocus);
-      } else {
-        menuItems[0].focus();
-      }
     });
   }
 
