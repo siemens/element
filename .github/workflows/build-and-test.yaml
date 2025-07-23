@@ -128,8 +128,7 @@ jobs:
           retention-days: 1
 
   e2e-merge-reports:
-    # Merge reports after playwright-tests, only if some shards have failed
-    if: ${{ !cancelled() && !success() }}
+    if: ${{ !cancelled() }}
     container: mcr.microsoft.com/playwright:v1.54.1-noble
     needs: [e2e]
     runs-on: ubuntu-latest
@@ -197,6 +196,39 @@ jobs:
         with:
           name: pages
           path: dist/design
-# TODO: add release job
-# TODO: build PR previews
-# TODO: e2e test
+
+  preview:
+    if: ${{ !cancelled() && github.event_name == 'pull_request' }} # This must be skipped for releases and documentation builds
+    runs-on: ubuntu-24.04
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
+    env:
+      BUCKET_NAME: simpl-element-preview
+    needs:
+      - e2e-merge-reports
+      - documentation
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: pages
+          path: pages
+      - uses: actions/download-artifact@v4
+        with:
+          name: html-report--attempt-${{ github.run_attempt }}
+          path: playwright-report
+      - uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502
+        with:
+          role-to-assume: arn:aws:iam::974483672234:role/simpl-element-preview
+          role-session-name: element-preview
+          aws-region: eu-west-1
+      - run: |
+          aws s3 cp --quiet --no-progress --recursive ./pages s3://${{ env.BUCKET_NAME }}/pr-${{ github.event.pull_request.number }}/pages
+          aws s3 cp --quiet --no-progress --recursive ./playwright-report s3://${{ env.BUCKET_NAME }}/pr-${{ github.event.pull_request.number }}/playwright-report
+      - uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: |
+            [Documentation](https://simpl-element-preview.s3-eu-west-1.amazonaws.com/pr-${{ github.event.pull_request.number }}/pages/index.html).
+            [Examples](https://simpl-element-preview.s3-eu-west-1.amazonaws.com/pr-${{ github.event.pull_request.number }}/pages/element-examples/index.html).
+            [Playwrigth report](https://simpl-element-preview.s3-eu-west-1.amazonaws.com/pr-${{ github.event.pull_request.number }}/playwright-report/index.html).
