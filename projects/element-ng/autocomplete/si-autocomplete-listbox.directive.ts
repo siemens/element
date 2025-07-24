@@ -4,20 +4,17 @@
  */
 import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
 import {
-  AfterContentInit,
   ChangeDetectorRef,
-  ContentChildren,
   DestroyRef,
   Directive,
   inject,
   input,
-  OnChanges,
   OnInit,
   output,
-  QueryList,
-  SimpleChanges
+  contentChildren,
+  INJECTOR,
+  effect
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { SiAutocompleteOptionDirective } from './si-autocomplete-option.directive';
 import { SiAutocompleteDirective } from './si-autocomplete.directive';
@@ -32,11 +29,10 @@ import { AUTOCOMPLETE_LISTBOX } from './si-autocomplete.model';
   },
   exportAs: 'siAutocompleteListbox'
 })
-export class SiAutocompleteListboxDirective<T> implements OnInit, OnChanges, AfterContentInit {
+export class SiAutocompleteListboxDirective<T> implements OnInit {
   private static idCounter = 0;
 
-  @ContentChildren(SiAutocompleteOptionDirective, { descendants: true })
-  private options!: QueryList<SiAutocompleteOptionDirective<T>>;
+  private readonly options = contentChildren(SiAutocompleteOptionDirective, { descendants: true });
 
   /**
    * @defaultValue
@@ -55,17 +51,26 @@ export class SiAutocompleteListboxDirective<T> implements OnInit, OnChanges, Aft
 
   readonly siAutocompleteOptionSubmitted = output<T | undefined>();
 
-  private keyManager?: ActiveDescendantKeyManager<SiAutocompleteOptionDirective<T>>;
+  private injector = inject(INJECTOR);
+  private keyManager = new ActiveDescendantKeyManager(this.options, this.injector)
+    .withWrap(true)
+    .withVerticalOrientation(true);
 
   private changeDetectorRef = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.siAutocompleteDefaultIndex) {
-      if (!this.keyManager?.activeItem) {
+  constructor() {
+    effect(() => {
+      if (this.siAutocompleteDefaultIndex() >= 0 && !this.keyManager.activeItem) {
         this.setActiveItem();
       }
-    }
+    });
+
+    effect(() => {
+      if (this.options()) {
+        this.setActiveItem();
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -79,21 +84,9 @@ export class SiAutocompleteListboxDirective<T> implements OnInit, OnChanges, Aft
     });
   }
 
-  ngAfterContentInit(): void {
-    this.keyManager = new ActiveDescendantKeyManager(this.options)
-      .withWrap(true)
-      .withVerticalOrientation(true);
-
-    this.options.changes
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => this.setActiveItem());
-
-    this.setActiveItem();
-  }
-
   private setActiveItem(): void {
     queueMicrotask(() => {
-      this.keyManager!.setActiveItem(this.siAutocompleteDefaultIndex());
+      this.keyManager.setActiveItem(this.siAutocompleteDefaultIndex());
       this.changeDetectorRef.markForCheck();
     });
   }
@@ -115,6 +108,11 @@ export class SiAutocompleteListboxDirective<T> implements OnInit, OnChanges, Aft
   }
 
   get active(): SiAutocompleteOptionDirective<T> | null {
-    return this.keyManager?.activeItem ?? null;
+    // NOTE: We must not return `this.keyManager.activeItem` here, because its not updating
+    // activeItem reference when options change.
+    if (this.keyManager.activeItemIndex === null) {
+      return null;
+    }
+    return this.options().at(this.keyManager.activeItemIndex) ?? null;
   }
 }
