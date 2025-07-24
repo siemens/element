@@ -387,13 +387,15 @@ export class SiDateRangeFilterComponent implements OnChanges {
     const rangeVal = this.range();
     this.point1Now = rangeVal.point1 === 'now';
     this.point1date = rangeVal.point1 === 'now' ? this.getDateNow() : rangeVal.point1;
-    this.point2Mode = rangeVal.point2 instanceof Date ? 'date' : 'duration';
-    this.point2date = rangeVal.point2 instanceof Date ? rangeVal.point2 : this.getDateNow();
-    this.point2range = rangeVal.range ?? 'before';
-    this.point2offset =
-      rangeVal.point2 instanceof Date
-        ? Math.round(this.point1date.getTime() - rangeVal.point2.getTime())
-        : rangeVal.point2;
+    if (rangeVal.point2) {
+      this.point2Mode = rangeVal.point2 instanceof Date ? 'date' : 'duration';
+      this.point2date = rangeVal.point2 instanceof Date ? rangeVal.point2 : this.getDateNow();
+      this.point2range = rangeVal.range ?? 'before';
+      this.point2offset =
+        rangeVal.point2 instanceof Date
+          ? Math.round(this.point1date.getTime() - rangeVal.point2.getTime())
+          : rangeVal.point2;
+    }
     if ((this.point1Now && this.basicMode() !== 'input') || this.point2Mode !== 'date') {
       this.advancedMode = true;
     } else {
@@ -456,9 +458,15 @@ export class SiDateRangeFilterComponent implements OnChanges {
   }
 
   protected updateFromDateRange(): void {
-    this.point1date = this.range().point1 = this.dateRange.start ?? this.getDateNow();
-    this.point2date = this.range().point2 = this.dateRange.end ?? this.getDateNow();
-    this.range.update(oldRange => ({ ...oldRange, range: undefined }));
+    const startDate = this.dateRange.start ?? this.getDateNow();
+    const endDate = this.dateRange.end ?? this.getDateNow();
+    this.point1date = startDate;
+    this.point2date = startDate;
+    this.range.set({
+      point1: startDate,
+      point2: endDate,
+      range: undefined
+    });
     this.point2Mode = 'date';
     this.point2offset = 0;
   }
@@ -479,8 +487,10 @@ export class SiDateRangeFilterComponent implements OnChanges {
     if (this.point2Mode === 'date') {
       if (!(this.range().point2 instanceof Date)) {
         const calculatedRange = this.resolve(this.range());
-        this.point2date =
-          this.point1date < calculatedRange.end ? calculatedRange.start : calculatedRange.end;
+        if (calculatedRange.valid) {
+          this.point2date =
+            this.point1date < calculatedRange.end ? calculatedRange.start : calculatedRange.end;
+        }
       }
       this.range.update(oldRange => ({
         ...oldRange,
