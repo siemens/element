@@ -99,25 +99,8 @@ export abstract class SiTabNextBaseDirective implements OnDestroy, FocusableOpti
   );
 
   ngOnDestroy(): void {
-    // adjust the focus index and selected tab index if component is destroyed
-    // as a side effect to close tab event
     if (this.indexBeforeClose >= 0) {
-      const indexToFocus = this.tabset.getNextIndexToFocus(this.indexBeforeClose);
-      if (this.active()) {
-        this.tabset.focusKeyManager.updateActiveItem(indexToFocus);
-        this.tabset.tabPanels()[indexToFocus].tabButton.nativeElement.focus();
-      } else {
-        const selectedItemIndex = this.tabset.activeTabIndex() ?? 0;
-        this.tabset.focusKeyManager.updateActiveItem(selectedItemIndex);
-        this.tabset.tabPanels()[selectedItemIndex].focus();
-      }
-      // if this tab was the active one we need to select next tab as active
-      if (this.active()) {
-        const targetActiveTab = this.tabset.tabPanels()[indexToFocus];
-        if (targetActiveTab) {
-          targetActiveTab.active.set(true);
-        }
-      }
+      this.tabset.removedTabByUser(this.indexBeforeClose, this.active());
     }
   }
 

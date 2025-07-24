@@ -100,16 +100,26 @@ export class SiTabsetNextComponent implements AfterViewInit {
   }
 
   /** @internal */
-  getNextIndexToFocus(currentIndex: number): number {
+  removedTabByUser(index: number, active: boolean): void {
+    // The tab was already removed from the tabPanels list when this function is called.
+    // We need to:
+    // - focus another tab if the closed one was focused
+    // - activate another tab if the closed one was active
+    // If the closed tab was not focussed, there is no need to restore the focus as it could only be closed by mouse.
     for (let i = 0; i < this.tabPanels().length; i++) {
       // Get the actual index using modulo to wrap around
-      const checkIndex = (currentIndex + i) % this.tabPanels().length;
-
-      if (!this.tabPanels()[checkIndex].disabledTab()) {
-        return this.tabPanels()[checkIndex].index();
+      const checkIndex = (index + i) % this.tabPanels().length;
+      const checkTab = this.tabPanels()[checkIndex];
+      if (!checkTab.disabledTab()) {
+        if (this.focusKeyManager.activeItemIndex === index) {
+          this.focusKeyManager.setActiveItem(checkIndex);
+        }
+        if (active) {
+          checkTab.active.set(true);
+        }
+        return;
       }
     }
-    return -1;
   }
 
   protected resizeContainer(width: number, scrollWidth: number): void {
