@@ -35,7 +35,7 @@
     "react-dom": "18 || 19",
     "vue": "3",
     "vue3-sfc-loader": "0.9.5",
-    "@babel/standalone": "7.28.1"
+    "@babel/standalone": "7.28.2"
   },
   "peerDependenciesMeta": {
     "react": {
