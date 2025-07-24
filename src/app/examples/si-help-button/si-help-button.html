@@ -1,0 +1,11 @@
+<button class="btn btn-secondary" type="button" (click)="solve()">Complicated thing</button>
+<si-help-button
+  helpTitle="How to solve the complicated thing"
+  ariaHelpLabel="How to solve the complicated thing"
+  helpContent="Just press the button and it will be solved."
+  [disabled]="disabledHelp.value"
+/>
+
+<si-form-item label="Disable help button" class="mt-5">
+  <input type="checkbox" class="form-check-input" [formControl]="disabledHelp" />
+</si-form-item>
