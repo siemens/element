@@ -16,17 +16,28 @@ $form-check-padding-x: map.get(spacers.$spacers, 2);
 
 $form-check-label-start: $form-check-size + map.get(spacers.$spacers, 4);
 
+%form-check-spacing {
+  > .form-check-input,
+  > .form-item-content > .form-check-input,
+  label > .form-check-input {
+    margin-inline-start: -1 * map.get(spacers.$spacers, 8);
+  }
+
+  > .invalid-feedback {
+    margin-inline-start: 0;
+  }
+}
+
 .form-check {
   padding-block: map.get(spacers.$spacers, 1);
-
-  :is(.valid-feedback, .invalid-feedback) {
-    margin-inline-start: $form-check-label-start;
-  }
+  padding-inline-start: map.get(spacers.$spacers, 8);
+  @extend %form-check-spacing;
 }
 
 .form-check-inline {
   display: inline-block;
   margin-inline-end: variables.$form-check-inline-margin-end;
+  @extend %form-check-spacing;
 }
 
 %form-check-base {
@@ -162,7 +173,7 @@ $form-check-label-start: $form-check-size + map.get(spacers.$spacers, 4);
 %form-check-label {
   display: inline-block;
   position: relative;
-  padding-inline: map.get(spacers.$spacers, 4) $form-check-padding-x;
+  padding-inline-end: $form-check-padding-x;
   color: semantic-tokens.$element-text-primary;
 }
 

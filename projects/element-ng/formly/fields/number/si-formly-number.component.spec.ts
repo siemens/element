@@ -81,7 +81,7 @@ describe('formly number type', () => {
     expect(inputField.nativeNode.getAttribute('min')).toEqual('500');
     expect(inputField.nativeNode.getAttribute('max')).toEqual('30000');
 
-    const labelEl = fixture.nativeElement.querySelector('label');
+    const labelEl = fixture.nativeElement.querySelector('.form-label');
     expect(labelEl.innerText).toBe('Cost of Something');
 
     inputField.nativeElement.value = 2000;

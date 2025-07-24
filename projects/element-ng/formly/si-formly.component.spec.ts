@@ -101,7 +101,7 @@ describe('ElementFormComponent', () => {
     wrapperComponent.schema = schema;
     runOnPushChangeDetection(fixture);
     expect(element.querySelector('b')!.textContent).toContain('title');
-    expect(element.querySelector('label')!.textContent).toContain('field1');
+    expect(element.querySelector('.form-label')!.textContent).toContain('field1');
     expect(element.querySelector('input[type=text]')).toBeTruthy();
   });
 
@@ -144,10 +144,9 @@ describe('ElementFormComponent', () => {
     wrapperComponent.labelWidth = 500;
     runOnPushChangeDetection(fixture);
     expect(element.querySelector('b')!.textContent).toContain('title');
-    expect(element.querySelector('label')!.textContent).toContain('field1');
-    expect(
-      getComputedStyle(element.querySelector('label')!).getPropertyValue('--si-form-label-width')
-    ).toBe('500px');
+    const labelEl = element.querySelector('.form-label');
+    expect(labelEl!.textContent).toContain('field1');
+    expect(getComputedStyle(labelEl!).getPropertyValue('--si-form-label-width')).toBe('500px');
   });
 
   it('should apply a field config', () => {
@@ -199,10 +198,9 @@ describe('ElementFormComponent', () => {
     runOnPushChangeDetection(fixture);
 
     expect(element.querySelector('b')!.textContent).toContain('title');
-    expect(element.querySelector('label')!.textContent).toContain('field1');
-    expect(
-      getComputedStyle(element.querySelector('label')!).getPropertyValue('--si-form-label-width')
-    ).toBe('500px');
+    const labelEl = element.querySelector('.form-label');
+    expect(labelEl!.textContent).toContain('field1');
+    expect(getComputedStyle(labelEl!).getPropertyValue('--si-form-label-width')).toBe('500px');
     expect(element.querySelector('input[type=text]')).toBeTruthy();
   });
 
@@ -231,7 +229,9 @@ describe('ElementFormComponent', () => {
     runOnPushChangeDetection(fixture);
     expect(element.querySelector('si-formly-array')).toBeTruthy();
     expect(
-      getComputedStyle(element.querySelector('label')!).getPropertyValue('--si-form-label-width')
+      getComputedStyle(element.querySelector('.form-label')!).getPropertyValue(
+        '--si-form-label-width'
+      )
     ).toBe('500px');
   });
 });

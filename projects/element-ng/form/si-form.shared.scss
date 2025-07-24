@@ -4,32 +4,21 @@
 @use '@siemens/element-theme/src/styles/all-variables';
 
 :host.si-form-input {
+  display: block;
   margin-block-end: map.get(all-variables.$spacers, 5);
-  display: flex;
-  flex-direction: column;
+
+  &.si-form-input-set {
+    display: flex;
+    flex-direction: column;
+  }
 
   .form-item-content {
-    flex: 1 1 0;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap; // this is to ensure validation feedback gets placed underneath
-    position: relative; // this is to ensure validation tooltips are positioned correctly
+    display: block;
   }
 }
 
 .form-label:empty {
   display: none;
-}
-
-// maintain compatibility with the old style of si-form-item which allows wrapping multiple checkbox
-:host(.form-check) {
-  :host-context(si-form-fieldset) &:not(.form-check-inline) {
-    display: block;
-  }
-
-  &:has(.form-check) {
-    padding-block: 0;
-  }
 }
 
 /// ACCOUNT FOR MEASURED CONTAINERS
@@ -38,7 +27,20 @@
 :host-context(.si-container-lg),
 :host-context(.si-container-xl),
 :host-context(.si-container-xxl) {
-  flex-direction: row;
+  .si-form-input {
+    display: flex;
+  }
+
+  :host.si-form-input-set {
+    flex-direction: row;
+  }
+
+  :host.si-form-input-set,
+  .form-item-content:not(.sub) {
+    display: grid;
+    grid-template-columns: var(--si-form-label-width, 1fr) 5fr;
+    grid-auto-flow: row;
+  }
 
   .form-label {
     padding-block: all-variables.add(
@@ -46,7 +48,6 @@
       all-variables.$input-border-width
     );
     padding-inline: map.get(all-variables.$spacers, 6);
-    inline-size: var(--si-form-label-width, math.percentage(math.div(2, 12)));
     line-height: all-variables.$input-line-height;
 
     &:empty {
