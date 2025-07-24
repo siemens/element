@@ -1,0 +1,28 @@
+@use '@siemens/element-theme/src/styles/variables';
+@use 'sass:map';
+@use 'sass:math';
+
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+  font-size: 1rem;
+  border-radius: 100%;
+  color: variables.$element-ui-2;
+  border: 0;
+  background: transparent;
+  padding: 0;
+
+  si-icon-next {
+    // We have to scale up the icon, so that the actual content takes the full size.
+    // It is initially 12px, but we want it to be 16px. (Those are just sample values, but the actual relation always stays the same, whatever actual value we use.)
+    transform: scale(math.div(16, 12));
+  }
+
+  &:disabled {
+    opacity: variables.$element-action-disabled-opacity;
+  }
+
+  &:hover {
+    color: variables.$element-ui-1;
+  }
+}
