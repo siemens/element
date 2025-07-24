@@ -251,9 +251,9 @@ in your stylesheet:
 
 ### Client-side paging, sorting and selection options
 
-- Use `class="table-element elevation-1"` on `<ngx-datatable>`.
-- Set custom footer height to 0.
-- Place the [pagination](../layout-navigation/pagination.md) component below the table and map inputs and outputs.
+- Use `class="table-element"` on `<ngx-datatable>`.
+- Use the [pagination](../layout-navigation/pagination.md) component as custom
+footer template with `ngx-datatable-footer` and map inputs and outputs.
 
 <si-docs-component example="datatable/datatable" height="750"></si-docs-component>
 
