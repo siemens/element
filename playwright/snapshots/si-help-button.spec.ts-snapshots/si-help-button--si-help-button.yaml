@@ -1,0 +1,6 @@
+- text: Repo Storage
+- button "How to calculate repo storage" [expanded]
+- text: /\d+\.\d+ MB/
+- checkbox "Disable help button"
+- text: Disable help button
+- dialog "Repo Storage calculation": Repo Storage calculation The Repo Storage is the overall size of the repository plus all LFS objects and pipelines artifacts.
