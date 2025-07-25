@@ -2,13 +2,14 @@
 @if (!showLoadingIndicator() && valueObject) {
   <div class="d-flex flex-row gap-4" [class.pe-4]="!valueObject.action">
     <div class="d-flex flex-column align-items-center gap-1 pt-4">
-      <si-icon
-        [icon]="valueObject.icon"
-        [color]="valueObject.iconColor"
-        [stackedIcon]="valueObject.stackedIcon"
-        [stackedColor]="valueObject.stackedIconColor"
-        [alt]="valueObject.iconAlt"
-      />
+      @if (valueObject.stackedIcon) {
+        <span class="icon icon-stack">
+          <si-icon-next [class]="valueObject.iconColor" [icon]="valueObject.icon" />
+          <si-icon-next [class]="valueObject.stackedIconColor" [icon]="valueObject.stackedIcon" />
+        </span>
+      } @else {
+        <si-icon-next [class]="valueObject.iconColor" [icon]="valueObject.icon" />
+      }
       <div class="si-timeline-widget-item-lower-line"></div>
     </div>
     <div class="d-flex flex-column gap-1 py-4 flex-grow-1">
