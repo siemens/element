@@ -7,7 +7,7 @@ import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { NgClass } from '@angular/common';
 import { Component, inject, input, OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, RouterLink } from '@angular/router';
-import { SiIconComponent } from '@siemens/element-ng/icon';
+import { SiIconNextComponent } from '@siemens/element-ng/icon';
 import { MenuItem, SiMenuModule } from '@siemens/element-ng/menu';
 import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
 
@@ -113,7 +113,7 @@ export interface SiTimelineWidgetItem {
 @Component({
   selector: 'si-timeline-widget-item',
   imports: [
-    SiIconComponent,
+    SiIconNextComponent,
     SiTranslateModule,
     NgClass,
     A11yModule,
