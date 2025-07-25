@@ -35,7 +35,7 @@ class SiTabRouteComponent {}
         <si-tabset-next>
           @for (tab of tabsObject(); track tab) {
             <si-tab-next
-              [active]="$first"
+              [active]="tab.active ?? false"
               [heading]="tab.heading"
               [closable]="!!tab.closable"
               [style.max-width.px]="tabButtonMaxWidth()"
@@ -50,9 +50,16 @@ class SiTabRouteComponent {}
 class TestComponent {
   readonly tabButtonMaxWidth = signal<number | undefined>(undefined);
   readonly wrapperWidth = signal(200);
-  protected readonly tabsObject = signal<{ heading: string; closable?: boolean }[]>([]);
+  protected readonly tabsObject = signal<
+    { heading: string; closable?: boolean; active?: boolean }[]
+  >([]);
 
-  set tabs(value: ({ heading: string; closable?: true; routerLinkUrl?: string } | string)[]) {
+  set tabs(
+    value: (
+      | { heading: string; closable?: true; routerLinkUrl?: string; active?: boolean }
+      | string
+    )[]
+  ) {
     this.tabsObject.set(
       value.map(tab => {
         if (typeof tab === 'string') {
@@ -147,7 +154,7 @@ describe('SiTabsetNext', () => {
     const tabs = await tabsetHarness.getTabItemsLength();
     expect(tabs).toEqual(0);
 
-    testComponent.tabs = ['test'];
+    testComponent.tabs = [{ heading: 'test', active: true }];
     fixture.detectChanges();
 
     const updatedTabs = await tabsetHarness.getTabItemsLength();
@@ -158,7 +165,7 @@ describe('SiTabsetNext', () => {
   });
 
   it('should be possible to add a few tabs to the tabComponent', async () => {
-    testComponent.tabs = ['1', '2', '3'];
+    testComponent.tabs = [{ heading: '1', active: true }, '2', '3'];
     fixture.detectChanges();
     expect(await tabsetHarness.isTabItemActive(0)).toBeTrue();
     expect(await tabsetHarness.isTabItemActive(1)).toBeFalse();
@@ -186,7 +193,7 @@ describe('SiTabsetNext', () => {
   });
 
   it('should handle focus correctly', fakeAsync(async () => {
-    testComponent.tabs = ['1', '2', '3'];
+    testComponent.tabs = [{ heading: '1', active: true }, '2', '3'];
     testComponent.wrapperWidth.set(300);
     detectSizeChange();
     tick(10);
@@ -294,6 +301,13 @@ describe('SiTabsetNext', () => {
 
     expect(await tabsetHarness.getOptionsMenuButton()).toBe(null);
     expect(await tabsetHarness.isTabVisible(1)).toBe(true);
+  });
+
+  it('should mark active tab as focussable after delayed adding', async () => {
+    testComponent.tabs = [];
+    fixture.detectChanges();
+    testComponent.tabs = ['1', { heading: '2', active: true }, '3'];
+    expect(await tabsetHarness.isTabFocussable(1)).toBeTrue();
   });
 });
 

@@ -131,4 +131,10 @@ export class SiTabsetNextHarness extends ComponentHarness {
       Math.round(rectRight) <= Math.round(containerRectRight)
     );
   }
+
+  async isTabFocussable(index: number): Promise<boolean> {
+    const tabButton = await this.getTabItemButtonAt(index);
+    const tabIndex = await tabButton.getAttribute('tabindex');
+    return tabIndex === '0' || tabIndex === null;
+  }
 }

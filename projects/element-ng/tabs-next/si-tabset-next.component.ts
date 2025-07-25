@@ -6,7 +6,6 @@ import { FocusKeyManager } from '@angular/cdk/a11y';
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -64,7 +63,7 @@ export interface SiTabNextDeselectionEvent {
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SiTabsetNextComponent implements AfterViewInit {
+export class SiTabsetNextComponent {
   /**
    * Event emitter to notify when a tab became inactive.
    */
@@ -87,13 +86,6 @@ export class SiTabsetNextComponent implements AfterViewInit {
   /** @internal */
 
   protected readonly showMenuButton = signal(false);
-
-  ngAfterViewInit(): void {
-    // To avoid ExpressionChangedAfterItHasBeenCheckedError
-    setTimeout(() => {
-      this.focusKeyManager.updateActiveItem(this.tabPanels().findIndex(tab => !tab.disabledTab()));
-    });
-  }
 
   protected tabIsLink(tab: unknown): tab is SiTabNextLinkComponent {
     return tab instanceof SiTabNextLinkComponent;

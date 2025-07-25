@@ -7,12 +7,14 @@ import {
   booleanAttribute,
   computed,
   Directive,
+  effect,
   ElementRef,
   inject,
   input,
   OnDestroy,
   output,
   TemplateRef,
+  untracked,
   viewChild,
   WritableSignal
 } from '@angular/core';
@@ -97,6 +99,20 @@ export abstract class SiTabNextBaseDirective implements OnDestroy, FocusableOpti
   readonly index = computed(() =>
     this.tabset.tabPanels().findIndex(tab => tab.tabId === this.tabId)
   );
+
+  constructor() {
+    // Update the focusKeyManager if a tab is added that is active or if the tab is set active by the app.
+    // This effect should not run, if active was already applied to the focusKeyManager.
+    effect(() => {
+      const active = this.active(); // We only want to subscribe to the active signal.
+      untracked(() => {
+        // !!! focusKeyManger.activeItem has signal reads internally. Do not move this outside of untracked.
+        if (active && this.tabset.focusKeyManager.activeItem !== this) {
+          this.tabset.focusKeyManager.updateActiveItem(this.index());
+        }
+      });
+    });
+  }
 
   ngOnDestroy(): void {
     if (this.indexBeforeClose >= 0) {
