@@ -4,11 +4,12 @@
  */
 import { NgModule } from '@angular/core';
 
+import { SiMicroDonutComponent } from './components/si-micro-donut/si-micro-donut.component';
 import { SiNChartGaugeComponent } from './components/si-nchart-gauge/si-nchart-gauge.component';
 
 @NgModule({
-  imports: [SiNChartGaugeComponent],
-  exports: [SiNChartGaugeComponent]
+  imports: [SiNChartGaugeComponent, SiMicroDonutComponent],
+  exports: [SiNChartGaugeComponent, SiMicroDonutComponent]
 })
 export class SiNativeChartsNgModule {}
 
