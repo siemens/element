@@ -1,8 +1,14 @@
-<si-form-item [label]="label" [labelWidth]="labelWidth" [required]="props.required">
-  <div class="w-100" siFormlyFormFieldProvider [field]="field">
+@if (field.type === 'button') {
+  <div class="w-100 mb-5" siFormlyFormFieldProvider [field]="field">
     <ng-template #fieldComponent />
-    <div class="invalid-feedback" [class.d-block]="showError">
-      <formly-validation-message [field]="field" />
-    </div>
   </div>
-</si-form-item>
+} @else {
+  <si-form-item [label]="label" [labelWidth]="labelWidth" [required]="props.required">
+    <div class="w-100" siFormlyFormFieldProvider [field]="field">
+      <ng-template #fieldComponent />
+      <div class="invalid-feedback" [class.d-block]="showError">
+        <formly-validation-message [field]="field" />
+      </div>
+    </div>
+  </si-form-item>
+}
