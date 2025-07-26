@@ -1,0 +1,19 @@
+@use '@siemens/element-theme/src/styles/variables';
+@use 'sass:map';
+
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+  font-size: 1rem;
+  line-height: 1;
+  color: variables.$element-ui-2;
+  border-radius: 1rem;
+
+  &.disabled {
+    opacity: variables.$element-action-disabled-opacity;
+  }
+
+  &:hover {
+    color: variables.$element-ui-1;
+  }
+}

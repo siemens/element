@@ -1,0 +1,3 @@
+- button "Complicated thing"
+- button "How to solve the complicated thing" [expanded]
+- dialog "How to solve the complicated thing": How to solve the complicated thing Just press the button and it will be solved.
