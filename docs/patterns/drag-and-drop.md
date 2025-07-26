@@ -161,3 +161,8 @@ fit. For example:
   <si-docs-tab example="si-tree-view-drag-drop-reorder" heading="Reordering"></si-docs-tab>
   <si-docs-tab example="si-tree-view-drag-drop-assign" heading="Assignment"></si-docs-tab>
 </si-docs-component>
+
+### Datatable with reorderable rows
+
+<si-docs-component example="datatable/datatable-row-dragging" height="600">
+</si-docs-component>

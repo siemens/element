@@ -1,0 +1,73 @@
+<div class="p-5 d-flex flex-column">
+  <ngx-datatable
+    #table
+    cdkDropList
+    class="table-element"
+    siDatatableInteraction
+    columnMode="force"
+    [rows]="taskData"
+    (cdkDropListDropped)="drop($event)"
+  >
+    <ngx-datatable-column maxWidth="50" sortable="false">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <div cdkDragHandle class="d-flex align-items-center">
+          <si-icon-next class="icon" [icon]="icons.elementMenu" />
+        </div>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Task" minWidth="200" sortable="false">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <div>
+          <span>{{ row.task }}</span>
+        </div>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Assignee" minWidth="100" sortable="false">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <div>
+          <span>{{ row.assignee }}</span>
+        </div>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Status" minWidth="100" sortable="false">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <div>
+          <span>{{ row.status }}</span>
+        </div>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Due Date" maxWidth="100" minWidth="100" sortable="false">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <div>
+          <span>{{ row.deadline | date }}</span>
+        </div>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Department" minWidth="150" sortable="false">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <div>
+          <span>{{ row.department }}</span>
+        </div>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Priority" maxWidth="150" minWidth="100" sortable="false">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <div>
+          <span>{{ row.priority }}</span>
+        </div>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ng-template let-row="row" rowDef>
+      <!-- eslint-disable @angular-eslint/template/no-any -->
+      <datatable-row-def
+        cdkDrag
+        cdkDragPreviewContainer="parent"
+        [cdkDragDisabled]="$any(row).status === 'Completed'"
+      />
+      <!-- eslint-enable @angular-eslint/template/no-any -->
+    </ng-template>
+  </ngx-datatable>
+</div>

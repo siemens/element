@@ -26,6 +26,7 @@ size.
 Headings, subheadings, and body text each serve distinct functions and should be chosen accordingly.
 - Combine font weight, size, and color to establish hierarchy, utilizing lighter colors
   or smaller font sizes to de-emphasize secondary content.
+- Avoid style changes like bold and italics in the middle of a paragraph.
 
 ## Design ---
 
