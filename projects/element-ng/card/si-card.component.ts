@@ -30,6 +30,10 @@ export class SiCardComponent {
    */
   readonly heading = input<TranslatableString>();
   /**
+   * Card secondary header text.
+   */
+  readonly subHeading = input<TranslatableString>();
+  /**
    * Input list of primary action items. Supports up to **4** actions and omits additional ones.
    *
    * @defaultValue []
