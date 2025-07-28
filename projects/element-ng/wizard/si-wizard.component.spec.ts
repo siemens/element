@@ -16,7 +16,7 @@ import { SiWizardStepComponent, SiWizardComponent as TestComponent } from './ind
     <si-wizard
       #wizard
       [hasCancel]="hasCancel"
-      [hasNavigation]="hasNavigation"
+      [hideNavigation]="!hasNavigation"
       [inlineNavigation]="inlineNavigation"
       [verticalLayout]="verticalLayout()"
       [showVerticalDivider]="showVerticalDivider()"

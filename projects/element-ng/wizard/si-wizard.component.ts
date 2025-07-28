@@ -8,7 +8,6 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
-  computed,
   ContentChildren,
   ElementRef,
   input,
@@ -87,13 +86,6 @@ export class SiWizardComponent implements AfterContentInit, OnDestroy {
    * ```
    */
   readonly nextText = input($localize`:@@SI_WIZARD.NEXT:Next`);
-
-  /**
-   * @deprecated Use {@link hideNavigation} instead.
-   *
-   * @defaultValue true
-   */
-  readonly hasNavigation = input(true, { transform: booleanAttribute });
 
   /**
    * Hide the navigation buttons previous/next.
@@ -211,12 +203,6 @@ export class SiWizardComponent implements AfterContentInit, OnDestroy {
   /** Callback function triggered if the wizard has been canceled. */
   readonly wizardCancel = output();
 
-  /**
-   * Callback function triggered if the wizard has been canceled.
-   * @deprecated use {@link wizardCancel} instead
-   */
-  readonly cancel = this.wizardCancel;
-
   /** Get the current step wizard step index. */
   get index(): number {
     return this._index();
@@ -237,9 +223,6 @@ export class SiWizardComponent implements AfterContentInit, OnDestroy {
   protected readonly showCompletionPage = signal(false);
   /** The list of visible steps. */
   protected readonly activeSteps = signal<StepItem[]>([]);
-  protected readonly shouldHideNavigation = computed(() => {
-    return this.hideNavigation() || !this.hasNavigation();
-  });
 
   private readonly _index = signal(0);
   private readonly _currentStep = signal<SiWizardStepComponent | undefined>(undefined);
