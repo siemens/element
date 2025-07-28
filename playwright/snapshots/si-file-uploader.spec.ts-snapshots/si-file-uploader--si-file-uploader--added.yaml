@@ -7,7 +7,7 @@
 - text: /simpl-logo\.svg [\d,.]+[bkmBKM]+ 0 %/
 - progressbar "Uploading"
 - button "Remove"
-- text: /test-file-for-vrt\.txt [\d,.]+[bkmBKM]+ Incorrect file type selected/
+- text: /test-file-for-vrt\.txt [\d,.]+[bkmBKM]+ Warning Incorrect file type selected/
 - button "Remove"
 - button "Clear"
 - button "Upload"
