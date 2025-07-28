@@ -138,7 +138,7 @@ class ElementDocsExtension(Extension):
 
   def extendMarkdown(self, md):
     """Add Tabbed to Markdown instance."""
-    md.preprocessors.register(ElementExamplePreProcessor(self.config.get('examples_base')[0], md), 'element_example', 10)
+    # md.preprocessors.register(ElementExamplePreProcessor(self.config.get('examples_base')[0], md), 'element_example', 10)
     md.treeprocessors.register(ElementTabTreeProcessor(md), 'element_tabs', 10)
 
 
