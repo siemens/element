@@ -32,17 +32,18 @@
       [style.width.%]="100 / $count"
       (keydown.enter)="selectItem($index)"
     >
-      <si-icon
-        alt=""
-        [icon]="$index === selIndexValue ? (item.activeIcon ?? item.icon) : item.icon"
-        [stackedIcon]="$index === selIndexValue ? item.activeIconStacked : ''"
-        [stackedColor]="
-          $index === selIndexValue
-            ? (item.activeIconStackedClass ?? item.activeIconClass + '-contrast')
-            : ''
-        "
-        [ngClass]="$index === selIndexValue ? (item.activeIconClass ?? 'active') : ''"
-      />
+      <span class="icon icon-stack">
+        <si-icon-next
+          [ngClass]="$index === selIndexValue ? (item.activeIconClass ?? 'active') : ''"
+          [icon]="$index === selIndexValue ? (item.activeIcon ?? item.icon) : item.icon"
+        />
+        @if ($index === selIndexValue && item.activeIconStacked) {
+          <si-icon-next
+            [ngClass]="item.activeIconStackedClass ?? item.activeIconClass + '-contrast'"
+            [icon]="item.activeIconStacked"
+          />
+        }
+      </span>
       <span
         class="text-truncate"
         [ngClass]="$index === selIndexValue ? (item.activeTextClass ?? 'active') : ''"
