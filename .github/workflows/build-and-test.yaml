@@ -188,10 +188,15 @@ jobs:
           VIRTUAL_ENV: '/opt/uv/.venv'
           EXAMPLES_BASE: /element-examples
         if: ${{ github.ref == 'refs/heads/main' }}
-      - run: npm run docs:build:api
+      - run: |
+          npm run docs:build:api -- --no-directory-urls
+          sed -i "s@https://element.siemens.io/element-examples/#/overview@./element-examples/index.html#/overview@g" dist/design/index.html
+          sed -i "s@https://element.siemens.io/element-examples/#/overview@./dashboards-demo/index.html#/dashboard@g" dist/design/index.html
+          sed -i "s@https://element.siemens.io/dashboards-demo/@../../dashboards-demo/index.html#/dashboard@g" dist/design/components/dashboards/flexible-dashboards.html
         env:
           VIRTUAL_ENV: '/opt/uv/.venv'
           EXAMPLES_BASE: /element-examples
+          DOCS_COMPOSER_OPTIONS: '{ "demoRelLevel": -2 }'
         if: ${{ github.ref != 'refs/heads/main' }}
       - run: mv dist/element-examples/ dist/design/
       - run: mv dist/dashboards-demo/ dist/design/
