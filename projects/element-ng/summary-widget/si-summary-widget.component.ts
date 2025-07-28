@@ -11,12 +11,12 @@ import {
   model
 } from '@angular/core';
 import { ExtendedStatusType, STATUS_ICON } from '@siemens/element-ng/common';
-import { SiIconComponent } from '@siemens/element-ng/icon';
+import { SiIconNextComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-summary-widget',
-  imports: [SiIconComponent, SiTranslatePipe],
+  imports: [SiIconNextComponent, SiTranslatePipe],
   templateUrl: './si-summary-widget.component.html',
   styleUrl: './si-summary-widget.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

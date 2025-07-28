@@ -12,14 +12,12 @@
 >
   @let actualIcon = statusIcon();
   @if (actualIcon.icon) {
-    <si-icon
-      size="icon"
-      alt=""
-      [icon]="actualIcon.icon"
-      [color]="actualIcon.color"
-      [stackedIcon]="actualIcon.stacked"
-      [stackedColor]="actualIcon.stackedColor"
-    />
+    <span class="icon icon-stack">
+      <si-icon-next [class]="actualIcon.color" [icon]="actualIcon.icon" />
+      @if (actualIcon.stacked) {
+        <si-icon-next [class]="actualIcon.stackedColor" [icon]="actualIcon.stacked" />
+      }
+    </span>
   }
   <div class="d-flex flex-column py-2" [class.ps-2]="!actualIcon.icon">
     <div class="si-title-2">{{ value() | translate }}</div>
