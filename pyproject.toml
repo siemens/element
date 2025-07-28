@@ -7,7 +7,7 @@ license = "MIT"
 requires-python = "~=3.11"
 readme = "README.md"
 dependencies = [
-    "mkdocs-code-siemens-code-docs-theme>=7.6.0,<8",
+    "mkdocs-code-siemens-code-docs-theme>=7.7.0,<8",
     "mkdocs-minify-html-plugin==0.3.1",
     "mkdocs-element-docs-builder",
 ]
