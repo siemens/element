@@ -16,10 +16,8 @@ export class SiTabsetNextHarness extends ComponentHarness {
   );
   private tabScrollList = this.locatorFor('div.tab-container-buttonbar-list');
   private tabContent = this.locatorFor('div.tab-content:not([hidden])');
-  private activeMenuItem = this.documentRootLocatorFactory().locatorFor(
-    'a[role="menuitem"].active'
-  );
-  private menuItems = this.documentRootLocatorFactory().locatorForAll('a[role="menuitem"]');
+  private activeMenuItem = this.documentRootLocatorFactory().locatorFor('[role="menuitem"].active');
+  private menuItems = this.documentRootLocatorFactory().locatorForAll('[role="menuitem"]');
   private tabScrollWrapper = this.locatorFor('[role="tablist"]');
 
   async getTabItemsLength(): Promise<number> {

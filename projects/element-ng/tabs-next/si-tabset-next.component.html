@@ -47,16 +47,27 @@
 <ng-template #tabsMenu>
   <si-menu>
     @for (tab of tabPanels(); track tab) {
-      <a
-        si-menu-item
-        [disabled]="tab.disabledTab()"
-        [icon]="tab.icon()"
-        [routerLink]="tabIsLink(tab) ? tab.routerLink?.urlTree : undefined"
-        (keydown.enter)="tab.selectTab(true)"
-        (triggered)="tab.selectTab(true)"
-      >
-        <ng-container [ngTemplateOutlet]="badgeTemplate" [ngTemplateOutletContext]="{ tab }" />
-      </a>
+      @if (tabIsLink(tab)) {
+        <a
+          si-menu-item
+          [disabled]="tab.disabledTab()"
+          [icon]="tab.icon()"
+          [routerLink]="tab.routerLink?.urlTree"
+          (triggered)="tab.selectTab(true)"
+        >
+          <ng-container [ngTemplateOutlet]="badgeTemplate" [ngTemplateOutletContext]="{ tab }" />
+        </a>
+      } @else {
+        <button
+          type="button"
+          si-menu-item
+          [disabled]="tab.disabledTab()"
+          [icon]="tab.icon()"
+          (triggered)="tab.selectTab(true)"
+        >
+          <ng-container [ngTemplateOutlet]="badgeTemplate" [ngTemplateOutletContext]="{ tab }" />
+        </button>
+      }
     }
   </si-menu>
 </ng-template>
