@@ -129,16 +129,13 @@ jobs:
 
   e2e-merge-reports:
     if: ${{ !cancelled() }}
-    container: mcr.microsoft.com/playwright:v1.54.1-noble
     needs: [e2e]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          cache: 'npm'
           node-version: lts/jod
-      - run: npm ci --prefer-offline --no-audit --include=optional
       - uses: actions/download-artifact@v4
         with:
           path: all-blob-reports
