@@ -31,6 +31,7 @@
   line-height: typography.$si-line-height-caption-1;
   margin-block: map.get(spacers.$spacers, 1);
   margin-inline: map.get(spacers.$spacers, 1);
+  //margin-inline-end: map.get(spacers.$spacers, 1);
 }
 
 @mixin form-validation-state-enh($state, $color, $icon, $text-color) {

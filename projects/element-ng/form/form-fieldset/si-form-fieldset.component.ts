@@ -24,7 +24,7 @@ import { SiFormItemComponent } from '../si-form-item/si-form-item.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     role: 'group',
-    class: 'si-form-input',
+    class: 'si-form-input si-form-input-set',
     '[style.--si-form-label-width]': 'labelWidth()'
   }
 })
