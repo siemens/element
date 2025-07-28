@@ -108,7 +108,7 @@ export class SiFilterBarComponent {
       filters.slice(
         0,
         this.collapsableListDirective()
-          .items.toArray()
+          .items()
           .findIndex(item => !item.isVisible())
       )
     );

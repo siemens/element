@@ -7,16 +7,17 @@ import {
   booleanAttribute,
   ChangeDetectorRef,
   contentChild,
-  ContentChildren,
+  contentChildren,
   Directive,
   ElementRef,
   inject,
+  INJECTOR,
   input,
   OnChanges,
   OnDestroy,
-  QueryList,
   SimpleChanges
 } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 import { ResizeObserverService } from '@siemens/element-ng/resize-observer';
 import { BehaviorSubject, combineLatest, of, Subscription } from 'rxjs';
 import { auditTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
@@ -37,13 +38,13 @@ export class SiAutoCollapsableListDirective implements AfterViewInit, OnChanges,
   /**
    * The items which are displayed in the siAutoCollapsableList.
    */
-  @ContentChildren(SiAutoCollapsableListItemDirective)
-  items!: QueryList<SiAutoCollapsableListItemDirective>;
+  readonly items = contentChildren(SiAutoCollapsableListItemDirective);
 
   private readonly overflowItem = contentChild(SiAutoCollapsableListOverflowItemDirective);
 
-  @ContentChildren(SiAutoCollapsableListAdditionalContentDirective)
-  private additionalContent!: QueryList<SiAutoCollapsableListAdditionalContentDirective>;
+  private readonly additionalContent = contentChildren(
+    SiAutoCollapsableListAdditionalContentDirective
+  );
 
   /** @defaultValue true */
   readonly siAutoCollapsableList = input(true, { transform: booleanAttribute });
@@ -76,6 +77,7 @@ export class SiAutoCollapsableListDirective implements AfterViewInit, OnChanges,
    * Used if not set by user.
    */
   private computedGap = 0;
+  private injector = inject(INJECTOR);
 
   ngAfterViewInit(): void {
     if (this.siAutoCollapsableList()) {
@@ -91,7 +93,7 @@ export class SiAutoCollapsableListDirective implements AfterViewInit, OnChanges,
       const siAutoCollapsableList = this.siAutoCollapsableList();
       if (!siAutoCollapsableList && this.resizeSubscription) {
         this.reset();
-      } else if (siAutoCollapsableList && !this.resizeSubscription && this.items) {
+      } else if (siAutoCollapsableList && !this.resizeSubscription && this.items()) {
         this.setupResizeListener();
       }
     }
@@ -121,9 +123,9 @@ export class SiAutoCollapsableListDirective implements AfterViewInit, OnChanges,
       })
     );
 
-    const itemSizes$ = this.items.changes.pipe(
-      startWith(this.items),
-      switchMap((items: QueryList<SiAutoCollapsableListItemDirective>) =>
+    const itemSizes$ = toObservable(this.items, { injector: this.injector }).pipe(
+      startWith(this.items()),
+      switchMap(items =>
         !items.length
           ? of([])
           : combineLatest(
@@ -138,11 +140,11 @@ export class SiAutoCollapsableListDirective implements AfterViewInit, OnChanges,
             )
       )
     );
-    const additionalContentSizes$ = this.additionalContent.changes.pipe(
-      startWith(this.additionalContent),
-      switchMap((additionalContent: QueryList<SiAutoCollapsableListAdditionalContentDirective>) =>
-        combineLatest(additionalContent.map(item => item.size$))
-      ),
+    const additionalContentSizes$ = toObservable(this.additionalContent, {
+      injector: this.injector
+    }).pipe(
+      startWith(this.additionalContent()),
+      switchMap(additionalContent => combineLatest(additionalContent.map(item => item.size$))),
       startWith([])
     );
 
@@ -193,7 +195,7 @@ export class SiAutoCollapsableListDirective implements AfterViewInit, OnChanges,
 
     const overflowItem = this.overflowItem();
     if (overflowItem) {
-      overflowItem.hiddenItemCount = this.items.filter(item => !item.canBeVisible()).length;
+      overflowItem.hiddenItemCount = this.items().filter(item => !item.canBeVisible()).length;
       overflowItem.canBeVisible.set(overflowItem.hiddenItemCount !== 0);
     }
     this.changeDetectorRef.markForCheck();
@@ -202,13 +204,12 @@ export class SiAutoCollapsableListDirective implements AfterViewInit, OnChanges,
   private reset(): void {
     this.resizeSubscription?.unsubscribe();
     this.resizeSubscription = undefined;
-    this.disableInitSubscription = this.items.changes.subscribe(
-      (items: QueryList<SiAutoCollapsableListItemDirective>) =>
+    this.disableInitSubscription = toObservable(this.items, { injector: this.injector }).subscribe(
+      items =>
         queueMicrotask(() => {
           items.forEach(item => item.canBeVisible.set(true));
         })
     );
-    this.items.notifyOnChanges();
 
     const overflowItem = this.overflowItem();
     if (overflowItem) {

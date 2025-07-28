@@ -40,10 +40,9 @@ export class SiAutoCollapsableListItemDirective
    */
   readonly isVisible = computed(() => this.canBeVisible() && !this.forceHide());
 
-  override ngAfterViewInit(): void {
+  ngAfterViewInit(): void {
     if (getComputedStyle(this.elementRef.nativeElement).display === 'inline') {
       console.error('siAutoCollapsibleListItem does not work on items with display="inline"');
     }
-    super.ngAfterViewInit();
   }
 }
