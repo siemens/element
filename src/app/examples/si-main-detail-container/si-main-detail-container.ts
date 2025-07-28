@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, viewChild } from '@angular/core';
 import {
   ContentActionBarMainItem,
   SiContentActionBarComponent
@@ -14,7 +14,7 @@ import { SiMainDetailContainerComponent } from '@siemens/element-ng/main-detail-
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarModule } from '@siemens/element-ng/search-bar';
 import { LOG_EVENT } from '@siemens/live-preview';
-import { NgxDatatableModule } from '@siemens/ngx-datatable';
+import { DatatableComponent, NgxDatatableModule } from '@siemens/ngx-datatable';
 
 import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.service';
 
@@ -80,7 +80,7 @@ export class SampleComponent {
   selectedEntity: CorporateEmployee | undefined;
   selectedEntities: CorporateEmployee[] = [];
   tableConfig = SI_DATATABLE_CONFIG;
-  totalElements!: number;
+  totalElements = 0;
   searchTerm?: string;
 
   /**
@@ -94,6 +94,7 @@ export class SampleComponent {
       disabled: false
     }
   ];
+  private readonly table = viewChild.required(DatatableComponent);
 
   datatableOnSelect(items: CorporateEmployee[]): void {
     this.selectedEntities = [...items];
@@ -164,5 +165,6 @@ export class SampleComponent {
 
   onSplitChange(containerWidth: number | string): void {
     this.logEvent(`Main width is ${containerWidth}%.`);
+    this.table().recalculate();
   }
 }
