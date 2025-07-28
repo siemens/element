@@ -92,7 +92,7 @@ export class SiTabsetNextComponent {
   }
 
   /** @internal */
-  removedTabByUser(index: number, active: boolean): void {
+  removedTabByUser(index: number, active?: boolean): void {
     // The tab was already removed from the tabPanels list when this function is called.
     // We need to:
     // - focus another tab if the closed one was focused
@@ -107,7 +107,7 @@ export class SiTabsetNextComponent {
           this.focusKeyManager.setActiveItem(checkIndex);
         }
         if (active) {
-          checkTab.active.set(true);
+          checkTab.selectTab(true);
         }
         return;
       }

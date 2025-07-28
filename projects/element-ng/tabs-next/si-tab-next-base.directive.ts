@@ -13,10 +13,10 @@ import {
   input,
   OnDestroy,
   output,
+  Signal,
   TemplateRef,
   untracked,
-  viewChild,
-  WritableSignal
+  viewChild
 } from '@angular/core';
 import { addIcons, elementCancel } from '@siemens/element-ng/icon';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -31,7 +31,9 @@ import { SI_TABSET_NEXT } from './si-tabs-tokens';
     '[class.disabled]': 'disabledTab()',
     '[class.icon-only]': '!!icon()',
     '[class.pe-3]': 'closable()',
+    '[class.active]': 'active()',
     '[attr.id]': "'tab-' + tabId",
+    '[attr.aria-selected]': 'active()',
     '[attr.aria-disabled]': 'disabledTab()',
     '[attr.tabindex]': 'tabset.focusKeyManager.activeItem === this && !disabledTab() ? 0 : -1',
     '[attr.aria-controls]': "'content-' + tabId",
@@ -39,7 +41,7 @@ import { SI_TABSET_NEXT } from './si-tabs-tokens';
   }
 })
 export abstract class SiTabNextBaseDirective implements OnDestroy, FocusableOption {
-  abstract readonly active: WritableSignal<boolean>;
+  abstract readonly active: Signal<boolean | undefined>;
   /** Title of the tab item. */
   readonly heading = input.required<TranslatableString>();
   /**
@@ -143,11 +145,18 @@ export abstract class SiTabNextBaseDirective implements OnDestroy, FocusableOpti
     return this.disabledTab();
   }
 
+  /**
+   * Programmatically selects the current tab.
+   */
   selectTab(retainFocus?: boolean): void {
     this.tabset.focusKeyManager.updateActiveItem(this.index());
     if (retainFocus) {
       // We need the timeout to wait for cdkMenu to restore the focus before we move it again.
       setTimeout(() => this.focus());
     }
+  }
+
+  deSelectTab(): void {
+    // Empty be default, can be overridden in derived classes.
   }
 }

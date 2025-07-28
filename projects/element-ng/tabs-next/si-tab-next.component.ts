@@ -18,10 +18,8 @@ import { SiTabNextBaseDirective } from './si-tab-next-base.directive';
   providers: [{ provide: SiTabNextBaseDirective, useExisting: SiTabNextComponent }],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[class.active]': 'active()',
-    '[attr.aria-selected]': 'active()',
-    '(click)': 'selectTab()',
-    '(keydown.enter)': 'selectTab()'
+    '(click)': 'selectTabByUser()',
+    '(keydown.enter)': 'selectTabByUser()'
   }
 })
 export class SiTabNextComponent extends SiTabNextBaseDirective implements OnDestroy {
@@ -32,31 +30,41 @@ export class SiTabNextComponent extends SiTabNextBaseDirective implements OnDest
    * */
   override readonly active = model(false);
 
-  /** @internal */
-  override selectTab(retainFocus?: boolean): void {
+  protected selectTabByUser(): void {
     const tabs = this.tabset.tabPanels();
     const newTabIndex = this.index();
     const currentTabIndex = this.tabset.activeTabIndex();
     let continueWithSelection = newTabIndex !== currentTabIndex;
+    const currentTab = tabs[currentTabIndex];
 
-    if (continueWithSelection && currentTabIndex !== -1) {
-      const currentTab = tabs[currentTabIndex];
+    if (continueWithSelection && currentTab) {
       const deselectEvent = {
         target: currentTab,
         tabIndex: currentTabIndex,
         cancel: () => {
           continueWithSelection = false;
-          currentTab.active.set(true);
         }
       };
-
-      currentTab.active.set(false);
       this.tabset.deselect.emit(deselectEvent);
     }
 
     if (continueWithSelection) {
-      this.active.set(true);
-      super.selectTab(retainFocus);
+      this.selectTab();
     }
+  }
+
+  /** @internal */
+  override selectTab(retainFocus?: boolean): void {
+    const tabs = this.tabset.tabPanels();
+    const currentTabIndex = this.tabset.activeTabIndex();
+    const currentTab = tabs[currentTabIndex];
+
+    currentTab?.deSelectTab();
+    this.active.set(true);
+    super.selectTab(retainFocus);
+  }
+
+  override deSelectTab(): void {
+    this.active.set(false);
   }
 }
