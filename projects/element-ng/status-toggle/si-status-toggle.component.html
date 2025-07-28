@@ -28,7 +28,7 @@
       [attr.tabindex]="isDisabled() || item.disabled ? '' : '0'"
       [attr.aria-disabled]="isDisabled() || item.disabled"
       [class.active]="$index === selIndexValue"
-      [class.disabled]="item.disabled"
+      [class.disabled]="item.disabled || isDisabled()"
       [style.width.%]="100 / $count"
       (keydown.enter)="selectItem($index)"
     >

@@ -23,8 +23,6 @@
   user-select: none;
 
   &.disabled {
-    cursor: not-allowed;
-
     .toggle-draggable {
       display: none;
     }
@@ -50,7 +48,7 @@
   }
 
   &.disabled {
-    cursor: not-allowed;
+    cursor: default;
     color: variables.$element-text-disabled !important; // stylelint-disable-line declaration-no-important
   }
 
