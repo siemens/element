@@ -15,7 +15,7 @@
   "bugs": "https://github.com/siemens/element/issues/new",
   "type": "module",
   "dependencies": {
-    "ngx-translate-multi-http-loader": "19.0.3"
+    "ngx-translate-multi-http-loader": "20.0.0"
   },
   "devDependencies": {
     "ngx-build-plus": "20.0.0"
