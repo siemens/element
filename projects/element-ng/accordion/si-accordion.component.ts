@@ -42,7 +42,7 @@ export class SiAccordionComponent implements AfterContentInit, OnChanges {
   /** @defaultValue false */
   readonly fullHeight = input(false, { transform: booleanAttribute });
   /** @defaultValue false */
-  readonly hcollapsed = input(false);
+  readonly hcollapsed = input(false, { transform: booleanAttribute });
   /**
    * Color to use for component background
    * @deprecated This has no effect anymore. Will be removed in v48
