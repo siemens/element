@@ -63,7 +63,7 @@
   } @else {
     <si-datepicker
       [config]="dateRangeConfig()"
-      [focusedDate]="dateRange.end ?? dateRange.start"
+      [focusedDate]="focusedDate()"
       [(dateRange)]="dateRange"
       (dateRangeChange)="updateFromDateRange()"
     />
