@@ -557,7 +557,7 @@ $utilities: (
     )
   ),
   'rounded-end': (
-    property: border-end-start-radius border-end-end-radius,
+    property: border-start-end-radius border-end-end-radius,
     class: rounded-end,
     values: (
       null: variables.$border-radius
