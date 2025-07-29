@@ -7,6 +7,7 @@ import {
   Component,
   computed,
   inject,
+  INJECTOR,
   input,
   model,
   OnChanges,
@@ -14,6 +15,7 @@ import {
   OnInit,
   output,
   OutputRefSubscription,
+  runInInjectionContext,
   signal,
   SimpleChanges,
   Type,
@@ -210,6 +212,7 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
   private dashboardId$ = new Subject<string | undefined>();
   private outputRefSubscription: OutputRefSubscription[] = [];
   private readonly toolbar = viewChild.required<SiDashboardToolbarComponent>('toolbar');
+  private injector = inject(INJECTOR);
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.dashboardId) {
@@ -277,13 +280,18 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
     const catalogRef = this.catalogHost().createComponent<SiWidgetCatalogComponent>(componentType);
     catalogRef.setInput('searchPlaceholder', this.searchPlaceholder());
     catalogRef.instance.widgetCatalog = this.widgetCatalog();
-
+    const siResolveLocalize = Zone.current.get('siResolveLocalize');
     const subscription = catalogRef.instance.closed.subscribe(widgetConfig => {
       subscription.unsubscribe();
       this.viewState.set('dashboard');
       this.catalogHost().clear();
       if (widgetConfig) {
-        this.grid().addWidgetInstance(widgetConfig);
+        // In case of web component $localize fails to resolve TranslateService
+        // so we fallback siResolveLocalize to host application's Zone
+        runInInjectionContext(this.injector, () => {
+          this.resolveLocalize(siResolveLocalize);
+          this.grid().addWidgetInstance(widgetConfig);
+        });
       }
     });
   }
@@ -341,12 +349,16 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
       this.catalogHost().createComponent<SiWidgetInstanceEditorDialogComponent>(componentType);
     catalogRef.setInput('widgetConfig', widgetConfig);
     catalogRef.setInput('widget', widget);
+    const siResolveLocalize = Zone.current.get('siResolveLocalize');
     const subscription = catalogRef.instance.closed.subscribe(editedWidgetConfig => {
       subscription.unsubscribe();
       this.viewState.set('dashboard');
       this.catalogHost().clear();
       if (editedWidgetConfig) {
-        this.grid().updateWidgetInstance(editedWidgetConfig);
+        runInInjectionContext(this.injector, () => {
+          this.resolveLocalize(siResolveLocalize);
+          this.grid().updateWidgetInstance(editedWidgetConfig);
+        });
       }
     });
   }
@@ -369,5 +381,17 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
 
   private getWidget(id: string): Widget | undefined {
     return this.widgetCatalog().find(widget => widget.id === id);
+  }
+
+  private resolveLocalize(siResolveLocalize: any): void {
+    // In case of web component $localize fails to resolve TranslateService
+    // so we fallback siResolveLocalize to host application's Zone
+    try {
+      if (Zone.current.get('siResolveLocalize')()) {
+        siResolveLocalize = Zone.current.get('siResolveLocalize');
+      }
+    } catch {
+      (Zone.current as any)._properties.siResolveLocalize = siResolveLocalize;
+    }
   }
 }
