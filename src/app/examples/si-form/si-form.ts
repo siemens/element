@@ -17,6 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import {
   DateRange,
+  SiCalendarButtonComponent,
   SiDatepickerDirective,
   SiDateRangeComponent,
   SiTimepickerComponent
@@ -78,6 +79,7 @@ export const noEconomy: ValidatorFn = control => {
 @Component({
   selector: 'app-sample',
   imports: [
+    SiCalendarButtonComponent,
     SiCardComponent,
     SiFormModule,
     TranslateModule,

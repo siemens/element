@@ -74,16 +74,18 @@
                   />
                 </si-form-item>
                 <si-form-item label="FORM.BIRTHDAY" [disableErrorPrinting]="false">
-                  <input
-                    type="text"
-                    id="birthday"
-                    class="w-100 form-control"
-                    autocomplete="off"
-                    formControlName="birthday"
-                    siDatepicker
-                    required
-                    [readonly]="readonly"
-                  />
+                  <si-calendar-button class="w-100">
+                    <input
+                      type="text"
+                      id="birthday"
+                      class="w-100 form-control"
+                      autocomplete="off"
+                      formControlName="birthday"
+                      siDatepicker
+                      required
+                      [readonly]="readonly"
+                    />
+                  </si-calendar-button>
                 </si-form-item>
                 <si-form-item label="FORM.TRAVEL_DATE" [disableErrorPrinting]="false">
                   <si-date-range
