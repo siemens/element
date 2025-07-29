@@ -8,6 +8,9 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate-type
 import { globalScope } from './global.scope';
 import { SiTranslatableService } from './si-translatable.service';
 
+const siResolveLocalize = (key: string, value: string): TranslatableString =>
+  inject(SiTranslatableService).resolveText(key, value);
+
 // an alternative implementation for $localize meant to be used for translation frameworks other than @angular/localize
 const $localize = (strings: TemplateStringsArray, ...expressions: string[]): TranslatableString => {
   if (strings.length !== 1) {
@@ -19,14 +22,17 @@ const $localize = (strings: TemplateStringsArray, ...expressions: string[]): Tra
   const firstPart = strings[0];
   const [, key, value] = /:.*?@@(.*?):(.*)/.exec(firstPart)!;
 
-  return Zone.current.get('siResolveLocalize')(key, value);
+  if ('Zone' in globalScope) {
+    return Zone.current.get('siResolveLocalize')(key, value);
+  } else {
+    return siResolveLocalize(key, value);
+  }
 };
 
-const siResolveLocalize = (key: string, value: string): TranslatableString =>
-  inject(SiTranslatableService).resolveText(key, value);
-
 // Always register in the current zone. This is needed in MFE setups, where $localize is already patched.
-(Zone.current as any)._properties.siResolveLocalize = siResolveLocalize;
+if ('Zone' in globalScope) {
+  (Zone.current as any)._properties.siResolveLocalize = siResolveLocalize;
+}
 
 // Patch $localize in the global scope if it was not already patched by ourselves or Angular.
 // The default $localize function by Angular just throws an error.
