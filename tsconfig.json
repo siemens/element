@@ -36,7 +36,7 @@
       "@siemens/dashboards-ng/*": ["projects/dashboards-ng/*"]
     }
   },
-  "exclude": ["dist/**", "testing/**/*.ts"],
+  "exclude": ["dist/**"],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
