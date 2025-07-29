@@ -1,4 +1,4 @@
-@if (!fieldControl()?.isFormCheck || (isLegacyMode() && label())) {
+@if (!fieldControl()?.isFormCheck) {
   @if (label()) {
     @let labeledBy = formItemLabelledBy;
     @if (labeledBy) {
