@@ -4,16 +4,12 @@
 @use '@siemens/element-theme/src/styles/all-variables';
 
 :host.si-form-input {
-  margin-block-end: map.get(all-variables.$spacers, 5);
   display: flex;
   flex-direction: column;
+  margin-block-end: map.get(all-variables.$spacers, 5);
 
   .form-item-content {
-    flex: 1 1 0;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap; // this is to ensure validation feedback gets placed underneath
-    position: relative; // this is to ensure validation tooltips are positioned correctly
+    flex-grow: 1;
   }
 }
 
@@ -23,7 +19,7 @@
 
 // maintain compatibility with the old style of si-form-item which allows wrapping multiple checkbox
 :host(.form-check) {
-  :host-context(si-form-fieldset) &:not(.form-check-inline) {
+  &:not(.form-check-inline) {
     display: block;
   }
 
@@ -38,9 +34,14 @@
 :host-context(.si-container-lg),
 :host-context(.si-container-xl),
 :host-context(.si-container-xxl) {
-  flex-direction: row;
+  :host.si-form-input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
 
   .form-label {
+    align-self: start;
     padding-block: all-variables.add(
       all-variables.$input-padding-y,
       all-variables.$input-border-width

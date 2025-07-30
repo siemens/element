@@ -1,71 +1,56 @@
-@if (!fieldControl()?.isFormCheck) {
+<!--Block the space if no form-field is provided. Otherwise it looks weird in the formly field inline representation.-->
+@if (fieldControl()?.isFormCheck && !fieldset) {
+  <div class="form-label"></div>
+}
+@if (fieldControl()?.isFormCheck) {
+  <div class="form-item-content">
+    <ng-container [ngTemplateOutlet]="content" />
+    <ng-container [ngTemplateOutlet]="labelTemplate" />
+    <ng-container [ngTemplateOutlet]="feedbackTemplate" />
+  </div>
+} @else {
+  <ng-container [ngTemplateOutlet]="labelTemplate" />
+  <div class="form-item-content">
+    <ng-container [ngTemplateOutlet]="content" />
+    <ng-container [ngTemplateOutlet]="feedbackTemplate" />
+  </div>
+}
+
+<ng-template #labelTemplate>
   @if (label()) {
     @let labeledBy = formItemLabelledBy;
     @if (labeledBy) {
       <span
-        class="text-break form-label"
+        class="text-break"
         [id]="labeledBy"
+        [class.form-label]="!fieldControl()?.isFormCheck"
+        [class.form-check-label]="fieldControl()?.isFormCheck"
         [class.required]="required() && !this.fieldset?.hasOnlyRadios()"
-        >{{ label() | translate }}</span
+        >{{ label()! | translate }}</span
       >
     } @else {
-      <label class="text-break form-label" [for]="formItemId" [class.required]="required()">{{
-        label() | translate
-      }}</label>
+      <label
+        class="text-break"
+        [for]="formItemId"
+        [class.form-label]="!fieldControl()?.isFormCheck"
+        [class.form-check-label]="fieldControl()?.isFormCheck"
+        [class.required]="required() && !this.fieldset?.hasOnlyRadios()"
+        >{{ label()! | translate }}</label
+      >
     }
   }
-  <div class="form-item-content">
-    <ng-container [ngTemplateOutlet]="content" />
-    @if (printErrors() && !fieldset?.hasOnlyRadios()) {
-      <div class="invalid-feedback" [attr.id]="formItemErrormessageId">
-        @for (error of errors(); track error.key) {
-          <div>
-            {{ error.message | translate: error.params }}
-          </div>
-        }
-      </div>
-    }
-  </div>
-} @else {
-  <!--Block the space if no form-field is provided. Otherwise it looks weird.-->
-  @if (!fieldset) {
-    <div class="form-label"></div>
-  }
-  <div class="form-item-content">
-    <ng-container [ngTemplateOutlet]="checkbox" />
-    @if (label()) {
-      @let labeledBy = formItemLabelledBy;
-      @if (labeledBy) {
-        <span
-          class="text-break form-check-label"
-          [id]="labeledBy"
-          [class.required]="required() && !this.fieldset?.hasOnlyRadios()"
-          >{{ label()! | translate }}</span
-        >
-      } @else {
-        <label
-          class="text-break form-check-label"
-          [for]="formItemId"
-          [class.required]="required() && !this.fieldset?.hasOnlyRadios()"
-          >{{ label()! | translate }}</label
-        >
+</ng-template>
+<ng-template #feedbackTemplate>
+  @if (printErrors() && !fieldset?.hasOnlyRadios()) {
+    <div class="invalid-feedback" [attr.id]="formItemErrormessageId">
+      @for (error of errors(); track error.key) {
+        <div>
+          {{ error.message | translate: error.params }}
+        </div>
       }
-    }
-    <ng-container [ngTemplateOutlet]="content" />
-    @if (printErrors() && !fieldset?.hasOnlyRadios()) {
-      <div class="invalid-feedback" [attr.id]="formItemErrormessageId">
-        @for (error of errors(); track error.key) {
-          <div>
-            {{ error.message | translate: error.params }}
-          </div>
-        }
-      </div>
-    }
-  </div>
-}
-
-<ng-template #checkbox>
-  <ng-content select="input[type='checkbox'], input[type='radio']" />
+    </div>
+  }
+  <ng-content select=".warning-feedback, .info-feedback, .invalid-feedback" />
 </ng-template>
 <ng-template #content>
   <ng-content />
