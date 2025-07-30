@@ -125,7 +125,7 @@
     "@siemens/stylelint-config-scss": "2.3.1",
     "@types/google-libphonenumber": "^7.4.23",
     "@types/jasmine": "5.1.8",
-    "@types/node": "~22.16.0",
+    "@types/node": "~22.17.0",
     "angular-eslint": "20.1.1",
     "axe-html-reporter": "2.2.11",
     "concat": "1.0.3",
