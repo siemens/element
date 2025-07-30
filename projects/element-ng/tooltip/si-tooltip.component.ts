@@ -30,6 +30,7 @@ export class TooltipComponent {
   protected readonly arrowPos = signal<OverlayArrowPosition | undefined>(undefined);
   /** @internal */
   readonly id = input('');
+  readonly tooltipContext = input();
 
   private elementRef = inject(ElementRef);
 
