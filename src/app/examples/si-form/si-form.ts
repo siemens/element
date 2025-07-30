@@ -171,9 +171,14 @@ export class SampleComponent {
     [arrivalDepartureTimeValidator]
   );
 
-  disabledForm = false;
-
+  disabledFormControl = new FormControl(false, { nonNullable: true });
+  readonlyControl = new FormControl(false, { nonNullable: true });
   readonly = false;
+
+  constructor() {
+    this.disabledFormControl.valueChanges.subscribe(v => this.toggleDisable(v));
+    this.readonlyControl.valueChanges.subscribe(v => this.toggleReadonly(v));
+  }
 
   save(): void {
     if (this.form.invalid) {
@@ -188,18 +193,17 @@ export class SampleComponent {
     this.form.reset(this.entity);
   }
 
-  toggleDisable(): void {
-    this.disabledForm = !this.disabledForm;
-    if (this.disabledForm) {
+  toggleDisable(disabled: boolean): void {
+    if (disabled) {
       this.form.disable();
     } else {
       this.form.enable();
     }
   }
 
-  toggleReadonly(): void {
-    this.readonly = !this.readonly;
-    if (this.readonly) {
+  toggleReadonly(readonly: boolean): void {
+    this.readonly = readonly;
+    if (readonly) {
       this.form.controls.role.disable();
       this.form.controls.privacyDeclined.disable();
       this.form.controls.termsAccepted.disable();
