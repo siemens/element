@@ -43,7 +43,7 @@ export class SiPopoverNextDirective implements OnDestroy {
    *
    * @defaultValue 'auto'
    */
-  readonly placement = input<keyof typeof positions>('auto');
+  readonly placement = input<keyof typeof positions>('auto', { alias: 'siPopoverNextPlacement' });
 
   readonly placementInternal = computed(() => {
     if (
@@ -60,30 +60,36 @@ export class SiPopoverNextDirective implements OnDestroy {
 
   /**
    * The title to be displayed on top for the popover
+   *
+   * @defaultValue undefined
    */
-  readonly popoverTitle = input<string>();
+  readonly title = input<string>(undefined, { alias: 'siPopoverNextTitle' });
 
   /**
    * The class that will be applied to container of the popover
    *
    * @defaultValue ''
    */
-  readonly containerClass = input('');
+  readonly containerClass = input('', { alias: 'siPopoverNextContainerClass' });
 
   /**
    * The icon to be displayed besides popover title
+   *
+   * @defaultValue undefined
    */
-  readonly icon = input<string>();
+  readonly icon = input<string>(undefined, { alias: 'siPopoverNextIcon' });
 
   /**
    * The context for the attached template
+   *
+   * @defaultValue undefined
    */
-  readonly popoverContext = input<unknown>();
+  readonly context = input<unknown>(undefined, { alias: 'siPopoverNextContext' });
 
   /**
    * Emits an event when the popover is shown/hidden
    */
-  readonly visibilityChange = output<void>();
+  readonly visibilityChange = output<void>({ alias: 'siPopoverNextVisibilityChange' });
 
   readonly popoverCounter = SiPopoverNextDirective.idCounter++;
   readonly popoverId = `__popover_${this.popoverCounter}`;
