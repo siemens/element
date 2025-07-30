@@ -1,6 +1,6 @@
 <!-- Template to be used for every match, can be replaced using an input. -->
 <ng-template #defaultItemTemplate let-match="match" siTypeaheadTemplate>
-  @if (multiselect) {
+  @if (multiselect()) {
     <div class="d-flex pe-4" aria-hidden="true">
       <span class="form-check-input si-form-checkbox" [class.checked]="match.itemSelected"></span>
     </div>
@@ -30,7 +30,7 @@
       class="dropdown-item me-4"
       [siAutocompleteOption]="match"
       [attr.aria-label]="match.text"
-      [attr.aria-selected]="multiselect ? match.itemSelected : null"
+      [attr.aria-selected]="multiselect() ? match.itemSelected : null"
       (click)="$event.stopPropagation()"
       (mousedown)="$event.preventDefault()"
     >
