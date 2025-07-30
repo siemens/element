@@ -1,42 +1,21 @@
 - list:
   - listitem:
-    - img "triangle filled"
     - text: /Today \d+:\d+ Title Description/
     - button "Action"
-  - listitem:
-    - img /square \d+ filled/
-    - text: /Today \d+:\d+ Title Description/
-  - listitem:
-    - img "square filled"
-    - text: /Today \d+:\d+ Title Description/
-  - listitem:
-    - img "circle filled"
-    - text: /Today \d+:\d+ Title Description/
+  - listitem: /Today \d+:\d+ Title Description/
+  - listitem: /Today \d+:\d+ Title Description/
+  - listitem: /Today \d+:\d+ Title Description/
 - list:
   - listitem:
-    - img "circle filled"
     - text: /Today \d+:\d+ Title Description/
     - button " Copy"
-  - listitem:
-    - img "triangle filled"
-    - text: /Today \d+:\d+ Title Description/
-  - listitem:
-    - img "octagon filled"
-    - text: /Today \d+:\d+ Title Description/
-  - listitem:
-    - img /square \d+ filled/
-    - text: /Today \d+:\d+ Title Description/
+  - listitem: /Today \d+:\d+ Title Description/
+  - listitem: /Today \d+:\d+ Title Description/
+  - listitem: /Today \d+:\d+ Title Description/
 - list:
   - listitem:
-    - img "circle filled"
     - text: /Today \d+:\d+ Title/
     - button " Copy"
-  - listitem:
-    - img "triangle filled"
-    - text: /Today \d+:\d+ Title/
-  - listitem:
-    - img "octagon filled"
-    - text: /Today \d+:\d+ Title/
-  - listitem:
-    - img /square \d+ filled/
-    - text: /Today \d+:\d+ Title/
+  - listitem: /Today \d+:\d+ Title/
+  - listitem: /Today \d+:\d+ Title/
+  - listitem: /Today \d+:\d+ Title/
