@@ -6,7 +6,6 @@ import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterContentChecked,
   AfterContentInit,
-  AfterViewInit,
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
@@ -61,7 +60,7 @@ export interface SiFormError {
   }
 })
 export class SiFormItemComponent
-  implements AfterContentInit, AfterViewInit, AfterContentChecked, OnChanges, OnInit, OnDestroy
+  implements AfterContentInit, AfterContentChecked, OnChanges, OnInit, OnDestroy
 {
   /** @deprecated property has longer an effect. SiFormItem detects IDs automatically  */
   @Input() inputId?: string;
@@ -122,9 +121,6 @@ export class SiFormItemComponent
   /** @internal */
   readonly errors = signal<SiFormError[]>([]);
 
-  /** @deprecated Remove with v48 */
-  protected readonly isLegacyMode = signal(false);
-
   protected fieldset = inject(SiFormFieldsetComponent, { optional: true });
   protected container = inject(SiFormContainerComponent, { optional: true });
 
@@ -151,7 +147,6 @@ export class SiFormItemComponent
     () => this.fieldControlQuery() ?? this.fieldControlNative()
   );
 
-  private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private validationErrorService = inject(SiFormValidationErrorService);
   private requiredTestControl = new FormControl('');
   private validator?: ValidatorFn | null;
@@ -196,10 +191,6 @@ export class SiFormItemComponent
   ngAfterContentChecked(): void {
     this.updateRequiredState();
     this.updateValidationMessages();
-  }
-
-  ngAfterViewInit(): void {
-    this.isLegacyMode.set(!!this.elementRef.nativeElement.querySelector('.form-check'));
   }
 
   ngOnDestroy(): void {

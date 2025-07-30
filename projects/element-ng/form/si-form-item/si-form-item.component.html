@@ -1,4 +1,4 @@
-@if (!fieldControl()?.isFormCheck || (isLegacyMode() && label())) {
+@if (!fieldControl()?.isFormCheck) {
   @if (label()) {
     @let labeledBy = formItemLabelledBy;
     @if (labeledBy) {
@@ -34,10 +34,11 @@
   <div class="form-item-content">
     <ng-container [ngTemplateOutlet]="checkbox" />
     @if (label()) {
-      @if (fieldControl()?.labelledby) {
+      @let labeledBy = formItemLabelledBy;
+      @if (labeledBy) {
         <span
           class="text-break form-check-label"
-          [id]="fieldControl()!.labelledby"
+          [id]="labeledBy"
           [class.required]="required() && !this.fieldset?.hasOnlyRadios()"
           >{{ label()! | translate }}</span
         >

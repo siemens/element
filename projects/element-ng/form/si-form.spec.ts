@@ -285,23 +285,16 @@ describe('SiForm', () => {
     });
   });
 
-  describe('with checkbox in legacy and normal mode', () => {
+  describe('with checkbox', () => {
     @Component({
       imports: [SiFormItemComponent, ReactiveFormsModule],
       template: `
-        <si-form-item label="Legacy">
-          <div class="form-check">
-            <input type="checkbox" id="legacy" class="form-check-input" [formControl]="legacy" />
-            <label for="legacy">Legacy cb label</label>
-          </div>
-        </si-form-item>
         <si-form-item label="Normal">
           <input type="checkbox" class="form-check-input" [formControl]="normal" />
         </si-form-item>
       `
     })
     class TestHostComponent {
-      legacy = new FormControl(true);
       normal = new FormControl(true);
     }
 
@@ -316,12 +309,6 @@ describe('SiForm', () => {
     it('should render normal checkbox', async () => {
       const harness = await loader.getHarness(SiFormItemHarness.with({ label: 'Normal' }));
       expect(await harness.getFormCheckLabel()).toBe('Normal');
-      expect(await harness.getCheckValue()).toBe('on');
-    });
-
-    it('should render legacy checkbox', async () => {
-      const harness = await loader.getHarness(SiFormItemHarness.with({ label: 'Legacy' }));
-      expect(await harness.getLabel()).toBe('Legacy');
       expect(await harness.getCheckValue()).toBe('on');
     });
   });
