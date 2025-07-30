@@ -34,7 +34,7 @@ import {
   SiHeaderDropdownItemComponent,
   SiHeaderDropdownTriggerDirective
 } from '@siemens/element-ng/header-dropdown';
-import { SiIconComponent } from '@siemens/element-ng/icon';
+import { SiIconNextComponent } from '@siemens/element-ng/icon';
 import { Link } from '@siemens/element-ng/link';
 import { NavbarVerticalItem, SiNavbarVerticalComponent } from '@siemens/element-ng/navbar-vertical';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
@@ -53,7 +53,7 @@ themeSupport.setDefault(themeElement);
     SiChartProgressBarComponent,
     SiDashboardCardComponent,
     SiDashboardComponent,
-    SiIconComponent,
+    SiIconNextComponent,
     SiHeaderActionsDirective,
     SiHeaderBrandDirective,
     SiNavbarVerticalComponent,
