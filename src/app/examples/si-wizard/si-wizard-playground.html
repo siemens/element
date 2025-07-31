@@ -65,83 +65,110 @@
             </div>
           </div>
           <div class="row align-items-end">
-            <si-form-item class="col-sm-3" label="Card wizard">
-              <input type="checkbox" class="form-check-input" formControlName="cardWizard" />
-            </si-form-item>
-            <si-form-item class="col-sm-3" label="Vertical layout">
-              <input
-                #layout
-                type="checkbox"
-                class="form-check-input"
-                formControlName="verticalLayout"
-              />
-            </si-form-item>
+            <div class="col-sm-3">
+              <si-form-item label="Card wizard">
+                <input type="checkbox" class="form-check-input" formControlName="cardWizard" />
+              </si-form-item>
+            </div>
+            <div class="col-sm-3">
+              <si-form-item label="Vertical layout">
+                <input
+                  #layout
+                  type="checkbox"
+                  class="form-check-input"
+                  formControlName="verticalLayout"
+                />
+              </si-form-item>
+            </div>
             @if (!layout.checked) {
-              <si-form-item class="col-sm-3" label="Inline navigation">
-                <input
-                  type="checkbox"
-                  class="form-check-input"
-                  formControlName="inlineNavigation"
-                />
-              </si-form-item>
+              <div class="col-sm-3">
+                <si-form-item label="Inline navigation">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    formControlName="inlineNavigation"
+                  />
+                </si-form-item>
+              </div>
             } @else {
-              <si-form-item class="col-sm-3" label="Show vertical divider">
+              <div class="col-sm-3">
+                <si-form-item label="Show vertical divider">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    formControlName="showVerticalDivider"
+                  />
+                </si-form-item>
+              </div>
+            }
+            <div class="col-sm-3">
+              <si-form-item label="Show cancel button">
+                <input type="checkbox" class="form-check-input" formControlName="hasCancel" />
+              </si-form-item>
+            </div>
+            <div class="col-sm-3">
+              <si-form-item label="Show previous/next buttons">
+                <input type="checkbox" class="form-check-input" formControlName="hasNavigation" />
+              </si-form-item>
+            </div>
+            <div class="col-sm-3">
+              <si-form-item label="Enable completion page">
                 <input
                   type="checkbox"
                   class="form-check-input"
-                  formControlName="showVerticalDivider"
+                  formControlName="enableCompletionPage"
                 />
               </si-form-item>
-            }
-            <si-form-item class="col-sm-3" label="Show cancel button">
-              <input type="checkbox" class="form-check-input" formControlName="hasCancel" />
-            </si-form-item>
-            <si-form-item class="col-sm-3" label="Show previous/next buttons">
-              <input type="checkbox" class="form-check-input" formControlName="hasNavigation" />
-            </si-form-item>
-            <si-form-item class="col-sm-3" label="Enable completion page">
-              <input
-                type="checkbox"
-                class="form-check-input"
-                formControlName="enableCompletionPage"
-              />
-            </si-form-item>
-            <si-form-item class="col-sm-3" label="Valid step">
-              <input type="checkbox" class="form-check-input" formControlName="validStep" />
-            </si-form-item>
-            <si-form-item class="col-sm-3" label="Number representation">
-              <input type="checkbox" class="form-check-input" formControlName="showStepNumbers" />
-            </si-form-item>
+            </div>
+            <div class="col-sm-3">
+              <si-form-item label="Valid step">
+                <input type="checkbox" class="form-check-input" formControlName="validStep" />
+              </si-form-item>
+            </div>
+
+            <div class="col-sm-3">
+              <si-form-item label="Number representation">
+                <input type="checkbox" class="form-check-input" formControlName="showStepNumbers" />
+              </si-form-item>
+            </div>
           </div>
           <div class="row align-items-end">
-            <si-form-item class="col-sm-3" label="Completion page visible time (ms)">
-              <si-number-input
-                class="align-self-center form-control mb-6"
-                formControlName="completionPageVisibleTime"
-                [min]="0"
-              />
-            </si-form-item>
-            <si-form-item class="col-sm-3" label="Number of steps">
-              <si-number-input
-                class="align-self-center form-control mb-6"
-                formControlName="stepCount"
-                [min]="3"
-              />
-            </si-form-item>
-            <si-form-item class="col-sm-3" label="Vertical layout step container min-size (px)">
-              <si-number-input
-                class="align-self-center form-control mb-6"
-                formControlName="verticalLayoutMinSize"
-                [min]="0"
-              />
-            </si-form-item>
-            <si-form-item class="col-sm-3" label="Vertical layout step container max-size (px)">
-              <si-number-input
-                class="align-self-center form-control mb-6"
-                formControlName="verticalLayoutMaxSize"
-                [min]="0"
-              />
-            </si-form-item>
+            <div class="col-sm-3">
+              <si-form-item label="Completion page visible time (ms)">
+                <si-number-input
+                  class="align-self-center form-control mb-6"
+                  formControlName="completionPageVisibleTime"
+                  [min]="0"
+                />
+              </si-form-item>
+            </div>
+            <div class="col-sm-3">
+              <si-form-item label="Number of steps">
+                <si-number-input
+                  class="align-self-center form-control mb-6"
+                  formControlName="stepCount"
+                  [min]="3"
+                />
+              </si-form-item>
+            </div>
+            <div class="col-sm-3">
+              <si-form-item label="Vertical layout step container min-size (px)">
+                <si-number-input
+                  class="align-self-center form-control mb-6"
+                  formControlName="verticalLayoutMinSize"
+                  [min]="0"
+                />
+              </si-form-item>
+            </div>
+            <div class="col-sm-3">
+              <si-form-item label="Vertical layout step container max-size (px)">
+                <si-number-input
+                  class="align-self-center form-control mb-6"
+                  formControlName="verticalLayoutMaxSize"
+                  [min]="0"
+                />
+              </si-form-item>
+            </div>
           </div>
         </form>
       </div>

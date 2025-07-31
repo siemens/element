@@ -84,75 +84,96 @@
     <div class="card-body">
       <form [formGroup]="configForm">
         <div class="row">
-          <si-form-item class="col-sm-3" label="Readonly">
-            <input type="checkbox" class="form-check-input" formControlName="readonly" />
-          </si-form-item>
-          <si-form-item class="col-sm-3" label="Disabled">
-            <input type="checkbox" class="form-check-input" formControlName="disabled" />
-          </si-form-item>
-          <si-form-item class="col-sm-3" label="Search on input">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              formControlName="doSearchOnInputChange"
-            />
-          </si-form-item>
-          <si-form-item class="col-sm-3" label="Disable free text search">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              formControlName="disableFreeTextSearch"
-            />
-          </si-form-item>
-          <si-form-item class="col-sm-3" label="Only predefined criteria">
-            <input type="checkbox" class="form-check-input" formControlName="strictCriterion" />
-          </si-form-item>
-          <si-form-item class="col-sm-3" label="Only predefined criterion options">
-            <input type="checkbox" class="form-check-input" formControlName="strictValue" />
-          </si-form-item>
-          <si-form-item
-            class="col-sm-3"
-            label="Only predefined criterion options and prevent typing"
-          >
-            <input type="checkbox" class="form-check-input" formControlName="onlySelectValue" />
-          </si-form-item>
-          <si-form-item class="col-sm-3" label="Exclusive criteria">
-            <input type="checkbox" class="form-check-input" formControlName="exclusiveCriteria" />
-          </si-form-item>
+          <div class="col-sm-3">
+            <si-form-item label="Readonly">
+              <input type="checkbox" class="form-check-input" formControlName="readonly" />
+            </si-form-item>
+          </div>
+          <div class="col-sm-3">
+            <si-form-item label="Disabled">
+              <input type="checkbox" class="form-check-input" formControlName="disabled" />
+            </si-form-item>
+          </div>
+          <div class="col-sm-3">
+            <si-form-item label="Search on input">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                formControlName="doSearchOnInputChange"
+              />
+            </si-form-item>
+          </div>
+          <div class="col-sm-3">
+            <si-form-item label="Disable free text search">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                formControlName="disableFreeTextSearch"
+              />
+            </si-form-item>
+          </div>
+          <div class="col-sm-3">
+            <si-form-item label="Only predefined criteria">
+              <input type="checkbox" class="form-check-input" formControlName="strictCriterion" />
+            </si-form-item>
+          </div>
+          <div class="col-sm-3">
+            <si-form-item label="Only predefined criterion options">
+              <input type="checkbox" class="form-check-input" formControlName="strictValue" />
+            </si-form-item>
+          </div>
+          <div class="col-sm-3">
+            <si-form-item label="Only predefined criterion options and prevent typing">
+              <input type="checkbox" class="form-check-input" formControlName="onlySelectValue" />
+            </si-form-item>
+          </div>
+          <div class="col-sm-3">
+            <si-form-item label="Exclusive criteria">
+              <input type="checkbox" class="form-check-input" formControlName="exclusiveCriteria" />
+            </si-form-item>
+          </div>
         </div>
         <div class="row align-items-end">
-          <si-form-item class="col-sm-3" label="Search debounce time">
-            <si-number-input
-              class="form-control"
-              formControlName="searchDebounceTime"
-              [min]="0"
-              [showButtons]="true"
-            />
-          </si-form-item>
-          <si-form-item class="col-sm-3" label="Number of visible options">
-            <si-number-input
-              class="form-control"
-              formControlName="optionsInScrollableView"
-              [min]="0"
-              [showButtons]="true"
-            />
-          </si-form-item>
-          <si-form-item class="col-sm-3" label="Max criteria">
-            <si-number-input
-              class="form-control"
-              formControlName="maxCriteria"
-              [min]="0"
-              [showButtons]="true"
-            />
-          </si-form-item>
-          <si-form-item class="col-sm-3" label="Max options (0 means unlimited)">
-            <si-number-input
-              class="form-control"
-              formControlName="maxCriteriaOptions"
-              [min]="0"
-              [showButtons]="true"
-            />
-          </si-form-item>
+          <div class="col-sm-3">
+            <si-form-item label="Search debounce time">
+              <si-number-input
+                class="form-control"
+                formControlName="searchDebounceTime"
+                [min]="0"
+                [showButtons]="true"
+              />
+            </si-form-item>
+          </div>
+          <div class="col-sm-3">
+            <si-form-item label="Number of visible options">
+              <si-number-input
+                class="form-control"
+                formControlName="optionsInScrollableView"
+                [min]="0"
+                [showButtons]="true"
+              />
+            </si-form-item>
+          </div>
+          <div class="col-sm-3">
+            <si-form-item label="Max criteria">
+              <si-number-input
+                class="form-control"
+                formControlName="maxCriteria"
+                [min]="0"
+                [showButtons]="true"
+              />
+            </si-form-item>
+          </div>
+          <div class="col-sm-3">
+            <si-form-item label="Max options (0 means unlimited)">
+              <si-number-input
+                class="form-control"
+                formControlName="maxCriteriaOptions"
+                [min]="0"
+                [showButtons]="true"
+              />
+            </si-form-item>
+          </div>
           <si-form-item label="Search criteria input">
             <textarea
               type="text"
