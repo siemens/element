@@ -1,8 +1,6 @@
-<div class="pt-1 pb-0">
-  <div class="form-label" [class.required]="isRequired()" [id]="labelId">{{
-    label() | translate
-  }}</div>
-</div>
+<div class="form-label" [class.required]="isRequired()" [id]="labelId">{{
+  label() | translate
+}}</div>
 <div>
   <ng-content />
   @if (hasOnlyRadios()) {
