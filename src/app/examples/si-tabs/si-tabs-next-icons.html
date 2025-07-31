@@ -1,4 +1,4 @@
-<si-tabset-next (deselect)="deselection($event)">
+<si-tabset-next>
   @for (tab of tabs; track tab) {
     <si-tab-next
       [active]="tab.active ?? false"

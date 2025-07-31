@@ -31,24 +31,7 @@ export class SiTabNextComponent extends SiTabNextBaseDirective implements OnDest
   override readonly active = model(false);
 
   protected selectTabByUser(): void {
-    const tabs = this.tabset.tabPanels();
-    const newTabIndex = this.index();
-    const currentTabIndex = this.tabset.activeTabIndex();
-    let continueWithSelection = newTabIndex !== currentTabIndex;
-    const currentTab = tabs[currentTabIndex];
-
-    if (continueWithSelection && currentTab) {
-      const deselectEvent = {
-        target: currentTab,
-        tabIndex: currentTabIndex,
-        cancel: () => {
-          continueWithSelection = false;
-        }
-      };
-      this.tabset.deselect.emit(deselectEvent);
-    }
-
-    if (continueWithSelection) {
+    if (!this.active()) {
       this.selectTab();
     }
   }
