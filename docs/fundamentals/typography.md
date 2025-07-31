@@ -41,20 +41,20 @@ navigation, tables…).
 
 Type             | Size (rem) | Line Height (rem) | Family       | Style
 -----------------|------------|-------------------|--------------|------
-Data Callout     | 3          | 3.125             | Siemens Sans | Roman
-H1 Heading       | 1.85       | 2                 | Siemens Sans | Roman
-H1 Heading Black | 1.85       | 2                 | Siemens Sans | **Black**
-H2 Subheading    | 1.25       | 1.5               | Siemens Sans | Roman
-H3 Subheading    | 1.125      | 1.25              | Siemens Sans | **Bold**
-Title 1          | 1          | 1.125             | Siemens Sans | **Bold**
-Body 1           | 1          | 1.125             | Siemens Sans | Roman
-Title 2          | 0.875      | 1                 | Siemens Sans | **Bold**
-Body 2           | 0.875      | 1                 | Siemens Sans | Roman
-Caption          | 0.75       | 1                 | Siemens Sans | Roman
-Display 1        | 3.5        | 4.5               | Siemens Sans | Roman
-Display 2        | 3          | 4                 | Siemens Sans | Roman
-Display 3        | 2.5        | 3.25              | Siemens Sans | **Black**
-Display 4        | 2.5        | 3.25              | Siemens Sans | Roman
+Data Callout     | 3          | 3.125             | SiemensSans Pro | Roman
+H1 Heading       | 1.85       | 2                 | SiemensSans Pro | Roman
+H1 Heading Bold | 1.85       | 2                 | SiemensSans Pro | **Bold**
+H2 Subheading    | 1.25       | 1.5               | SiemensSans Pro | Roman
+H3 Subheading    | 1.125      | 1.25              | SiemensSans Pro | **SBold**
+Title 1          | 1          | 1.125             | SiemensSans Pro | **SBold**
+Body 1           | 1          | 1.125             | SiemensSans Pro | Roman
+Title 2          | 0.875      | 1                 | SiemensSans Pro | **SBold**
+Body 2           | 0.875      | 1                 | SiemensSans Pro | Roman
+Caption          | 0.75       | 1                 | SiemensSans Pro | Roman
+Display 1        | 3.5        | 4.5               | SiemensSans Pro | Roman
+Display 2        | 3          | 4                 | SiemensSans Pro | Roman
+Display 3        | 2.5        | 3.25              | SiemensSans Pro | **Bold**
+Display 4        | 2.5        | 3.25              | SiemensSans Pro | Roman
 
 All font sizes are defined in **rem** (the root em size) based on the root
 element size. The Element Design System defines **1 rem as 16 px** while

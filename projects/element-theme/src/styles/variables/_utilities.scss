@@ -479,8 +479,8 @@ $utilities: (
       light: variables.$font-weight-light,
       lighter: variables.$font-weight-lighter,
       normal: variables.$font-weight-normal,
-      bold: variables.$font-weight-bold,
-      bolder: variables.$font-weight-bolder
+      sbold: variables.$font-weight-sbold,
+      bold: variables.$font-weight-bold
     )
   ),
   'line-height': (
