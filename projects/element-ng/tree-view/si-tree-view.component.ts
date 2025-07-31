@@ -34,7 +34,7 @@ import {
   INJECTOR,
   viewChild
 } from '@angular/core';
-import { buildTrackByIdentity, MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
+import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { ElementDimensions, ResizeObserverService } from '@siemens/element-ng/resize-observer';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -177,18 +177,6 @@ export class SiTreeViewComponent
    * Customize icons for treeview.
    */
   readonly icons = input<TreeViewIconSet>();
-
-  /**
-   * Track-by function for tree items. By default, items are tracked by their identity.
-   *
-   * @deprecated has no effect and will be removed
-   *
-   * @defaultValue
-   * ```
-   * buildTrackByIdentity<TreeItem>()
-   * ```
-   */
-  readonly trackByFunction = input(buildTrackByIdentity<TreeItem>());
 
   /**
    * Number of rows per page. Used for the virtualization of rows (number of
