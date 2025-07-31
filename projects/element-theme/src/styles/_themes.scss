@@ -28,7 +28,7 @@ $_themes: () !default;
 
     :root#{$theme-name}#{$mode} {
       @each $token, $val in $vars {
-        --element-#{$token}: #{$val};
+        --#{$token}: #{$val};
       }
     }
   }
