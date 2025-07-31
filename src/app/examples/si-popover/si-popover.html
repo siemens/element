@@ -86,14 +86,14 @@
 
 <ng-template #popoverTemplate>
   <div class="text-center">
-    <si-icon icon="element-microwave-on" size="display-4" />
+    <si-icon-next class="display-4" icon="element-microwave-on" />
   </div>
   Hello, I'm a microwave.
 </ng-template>
 
 <ng-template #popoverTemplateWithContext let-data>
   <div class="text-center">
-    <si-icon size="display-4" [icon]="data.icon" />
+    <si-icon-next class="display-4" [icon]="data.icon" />
   </div>
   Hello, I'm a microwave.<br />
   And I'm {{ data.state }} with {{ data.power }} for {{ data.duration }}.

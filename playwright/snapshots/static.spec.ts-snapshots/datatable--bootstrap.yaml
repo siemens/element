@@ -1,10 +1,9 @@
 - table:
   - rowgroup:
-    - row "all selected expand all Type Data point Quality Mode Event Value":
+    - row "all selected Type Data point Quality Mode Event Value":
       - columnheader "all selected":
         - checkbox "all selected"
-      - columnheader "expand all":
-        - img "expand all"
+      - columnheader
       - columnheader "Type"
       - columnheader "Data point"
       - columnheader "Quality"
@@ -12,65 +11,53 @@
       - columnheader "Event"
       - columnheader "Value"
   - rowgroup:
-    - row /selected open dropdown config value Cooling coil device mode B1'Flr_1'RSegm1'HVAC transient maintenance filled alarm \d+%/:
+    - row /selected open dropdown Cooling coil device mode B1'Flr_1'RSegm1'HVAC \d+%/:
       - cell "selected":
         - checkbox "selected"
       - cell "open dropdown":
         - button "open dropdown"
-      - cell "config value":
-        - img "config value"
+      - cell
       - cell "Cooling coil device mode B1'Flr_1'RSegm1'HVAC"
-      - cell "transient":
-        - img "transient"
-      - cell "maintenance filled":
-        - img "maintenance filled"
-      - cell "alarm":
-        - img "alarm"
+      - cell
+      - cell
+      - cell
       - cell /\d+%/:
         - textbox "value" [disabled]
-    - row "selected open dropdown physical input Cooling coil cooling request manual filled Control Mode":
+    - row "selected open dropdown Cooling coil cooling request Control Mode":
       - cell "selected":
         - checkbox "selected"
       - cell "open dropdown":
         - button "open dropdown"
-      - cell "physical input":
-        - img "physical input"
+      - cell
       - cell "Cooling coil cooling request"
       - cell
-      - cell "manual filled":
-        - img "manual filled"
+      - cell
       - cell
       - cell "Control Mode":
         - combobox "value" [disabled]:
           - option "Control Mode" [selected]
-    - row /selected open dropdown physical input Cooling coil dehumidification request manual filled alarm filled \d+%/:
+    - row /selected open dropdown Cooling coil dehumidification request \d+%/:
       - cell "selected":
         - checkbox "selected"
       - cell "open dropdown":
         - button "open dropdown"
-      - cell "physical input":
-        - img "physical input"
+      - cell
       - cell "Cooling coil dehumidification request"
       - cell
-      - cell "manual filled":
-        - img "manual filled"
-      - cell "alarm filled":
-        - img "alarm filled"
+      - cell
+      - cell
       - cell /\d+%/:
         - textbox "value" [disabled]
-    - row /selected open dropdown calculated value Cooling coil available for cooling cancel filled alarm background filled \d+%/:
+    - row /selected open dropdown Cooling coil available for cooling \d+%/:
       - cell "selected":
         - checkbox "selected"
       - cell "open dropdown":
         - button "open dropdown"
-      - cell "calculated value":
-        - img "calculated value"
-      - cell "Cooling coil available for cooling"
-      - cell "cancel filled":
-        - img "cancel filled"
       - cell
-      - cell "alarm background filled":
-        - img "alarm background filled"
+      - cell "Cooling coil available for cooling"
+      - cell
+      - cell
+      - cell
       - cell /\d+%/:
         - textbox "value" [disabled]
 - text: Settings Condensed rows

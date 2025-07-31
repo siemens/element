@@ -36,9 +36,9 @@
   <si-circle-status icon="element-plant" [status]="row.status" />
 </ng-template>
 <ng-template #otherStatusCellTempl let-value="value" let-row="row" ngx-datatable-cell-template>
-  <si-icon icon="element-cancel-filled" color="status-danger" />
-  <si-icon icon="element-manual-filled" color="status-warning" />
-  <si-icon icon="element-alarm-filled" color="status-danger" />
+  <si-icon-next class="icon status-danger" icon="element-cancel-filled" />
+  <si-icon-next class="icon status-warning" icon="element-manual-filled" />
+  <si-icon-next class="icon status-danger" icon="element-alarm-filled" />
 </ng-template>
 
 <ng-template #contextCellTempl let-value="value" let-row="row" ngx-datatable-cell-template>

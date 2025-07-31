@@ -1,6 +1,5 @@
 - textbox "Search"
-- button "Options":
-  - img "options vertical"
+- button "Options"
 - text: "/Date : \\d+-\\d+-\\d+/"
 - button "Remove"
 - text: + 1 filters

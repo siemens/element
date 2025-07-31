@@ -121,7 +121,7 @@ component.
     <span class="si-value-widget-value">Value</span>
     <span class="si-value-widget-unit">Unit</span>
     <div class="si-value-widget-description text-warning">
-      <si-icon icon="element-checked" />
+      <si-icon-next class="icon" icon="element-checked" />
       <span>Description</span>
     </div>
   </div>

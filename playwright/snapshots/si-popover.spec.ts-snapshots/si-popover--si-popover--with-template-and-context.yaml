@@ -5,5 +5,4 @@
 - button "Popover on bottom"
 - button "Popover with template"
 - button "Popover with template and context"
-- img "microwave on"
 - text: /Hello, I'm a microwave\. And I'm powered on with \d+ W for 5 minutes\./
