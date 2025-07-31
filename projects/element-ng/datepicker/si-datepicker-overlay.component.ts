@@ -9,7 +9,6 @@ import {
   FocusMonitor
 } from '@angular/cdk/a11y';
 import {
-  AfterViewInit,
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
@@ -94,7 +93,7 @@ import { DatepickerConfig, DateRange } from './si-datepicker.model';
     '[class.show]': 'completeAnimation()'
   }
 })
-export class SiDatepickerOverlayComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
+export class SiDatepickerOverlayComponent implements OnChanges, OnInit, OnDestroy {
   protected readonly minMonth = signal<Date | undefined>(undefined);
   protected readonly maxMonth = signal<Date | undefined>(undefined);
 
@@ -134,12 +133,7 @@ export class SiDatepickerOverlayComponent implements OnChanges, OnInit, AfterVie
    * When time is disable, we construct a pure date object in UTC 00:00:00 time.
    */
   readonly disabledTimeChange = output<boolean>();
-  /**
-   * @deprecated Property provides internal information that should not be used.
-   *
-   * @defaultValue false
-   */
-  isFocused = false;
+
   private readonly document = inject(DOCUMENT);
   private readonly elementRef = inject(ElementRef);
   private readonly focusMonitor = inject(FocusMonitor);
@@ -200,13 +194,6 @@ export class SiDatepickerOverlayComponent implements OnChanges, OnInit, AfterVie
     if (this.isMobile()) {
       setTimeout(() => this.completeAnimation.set(true), 150);
     }
-  }
-
-  ngAfterViewInit(): void {
-    // Monitor focus events
-    this.focusMonitor
-      .monitor(this.elementRef, true)
-      .subscribe(origin => (this.isFocused = origin !== undefined));
   }
 
   ngOnDestroy(): void {
