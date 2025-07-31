@@ -1,0 +1,12 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+.chart {
+  .background,
+  .data {
+    fill: none;
+  }
+
+  .background {
+    stroke: variables.$element-ui-4;
+  }
+}
