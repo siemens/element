@@ -1,7 +1,7 @@
 @charset "UTF-8";
 @use 'sass:map';
 
-$siemens-font-path: '@simpl/brand/src/fonts' !default;
+$siemens-font-path: '@simpl/brand/assets/fonts' !default;
 $icon-font-path: '@simpl/element-icons/dist/fonts' !default;
 
 @use '@siemens/element-ng/element-ng';
@@ -17,11 +17,13 @@ $icon-font-path: '@simpl/element-icons/dist/fonts' !default;
   $flag-icons-use-square: false
 );
 
-@use '@simpl/brand/src/fonts/styles/siemens-sans' with (
+@use '@simpl/brand/assets/fonts/styles/siemens-sans' with (
   $siemens-font-path: $siemens-font-path
 );
 
-@use '@simpl/brand/src/themes/element-theme-siemens-brand';
+@use '@simpl/brand/dist/element-theme-siemens-brand-light' as brand-light;
+@use '@simpl/brand/dist/element-theme-siemens-brand-dark' as brand-dark;
+
 @use '@siemens/element-theme/src/theme' with (
   $element-theme-default: 'siemens-brand',
   $element-themes: (
@@ -37,12 +39,8 @@ $icon-font-path: '@simpl/element-icons/dist/fonts' !default;
 @use '@siemens/element-theme/src/styles/themes';
 // OpenLayers styling
 @use 'ol/ol.css';
-@include themes.make-theme(element-theme-siemens-brand.$theme-siemens-brand-light, 'siemens-brand');
-@include themes.make-theme(
-  element-theme-siemens-brand.$theme-siemens-brand-dark,
-  'siemens-brand',
-  true
-);
+@include themes.make-theme(brand-light.$tokens, 'siemens-brand');
+@include themes.make-theme(brand-dark.$tokens, 'siemens-brand', true);
 
 app-sample {
   block-size: 100%;
