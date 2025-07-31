@@ -35,27 +35,31 @@
     <div class="card-header">Settings</div>
     <div class="card-body">
       <div class="row">
-        <si-form-item class="col-4" label="Selection type">
-          <select
-            class="form-control"
-            id="selection-type"
-            [(ngModel)]="selectionType"
-            (ngModelChange)="selectionTypeChanged(enforceCheckboxes)"
-          >
-            <option [ngValue]="undefined">undefined</option>
-            @for (selType of selectionTypes; track $index) {
-              <option [ngValue]="selType">{{ selType }}</option>
-            }
-          </select>
-        </si-form-item>
-        <si-form-item class="col-6" label="Enforce checkboxes">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            [(ngModel)]="enforceCheckboxes"
-            (ngModelChange)="selectionTypeChanged(!enforceCheckboxes)"
-          />
-        </si-form-item>
+        <div class="col-4">
+          <si-form-item label="Selection type">
+            <select
+              class="form-control"
+              id="selection-type"
+              [(ngModel)]="selectionType"
+              (ngModelChange)="selectionTypeChanged(enforceCheckboxes)"
+            >
+              <option [ngValue]="undefined">undefined</option>
+              @for (selType of selectionTypes; track $index) {
+                <option [ngValue]="selType">{{ selType }}</option>
+              }
+            </select>
+          </si-form-item>
+        </div>
+        <div class="col-6">
+          <si-form-item label="Enforce checkboxes">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              [(ngModel)]="enforceCheckboxes"
+              (ngModelChange)="selectionTypeChanged(!enforceCheckboxes)"
+            />
+          </si-form-item>
+        </div>
       </div>
     </div>
   </div>
