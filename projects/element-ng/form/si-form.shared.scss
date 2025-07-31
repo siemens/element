@@ -55,7 +55,7 @@
   }
 
   :host-context(si-form-fieldset) .form-label {
-    padding-block: 0;
+    padding-block: map.get(all-variables.$spacers, 1) 0;
   }
 
   :host(.form-check) {
