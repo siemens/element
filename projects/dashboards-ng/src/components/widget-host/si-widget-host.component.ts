@@ -15,6 +15,7 @@ import {
   OnDestroy,
   OnInit,
   output,
+  runInInjectionContext,
   SimpleChanges,
   TemplateRef,
   viewChild,
@@ -131,6 +132,8 @@ export class SiWidgetHostComponent implements OnInit, OnDestroy, OnChanges {
     return widgetConfig.accentLine ? 'accent-' + widgetConfig.accentLine : '';
   }
 
+  private siResolveLocalize = Zone.current.get('siResolveLocalize');
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.widgetConfig) {
       if (this.widgetRef) {
@@ -196,47 +199,62 @@ export class SiWidgetHostComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   setupEditable(editable: boolean, widgetConfig?: WidgetConfigEvent): void {
-    widgetConfig ??= {
-      primaryActions: this.widgetInstance?.primaryActions,
-      secondaryActions: this.widgetInstance?.secondaryActions,
-      primaryEditActions: this.widgetInstance?.primaryEditActions,
-      secondaryEditActions: this.widgetInstance?.secondaryEditActions
-    };
-    if (editable) {
-      this.editablePrimaryActions = [];
-      if (this.isEditable()) {
-        this.editablePrimaryActions.push(this.editAction);
-      }
-      if (!this.widgetConfig().isNotRemovable) {
-        this.editablePrimaryActions.push(this.removeAction);
-      }
-      if (widgetConfig.primaryEditActions) {
-        this.primaryActions = [...widgetConfig.primaryEditActions, ...this.editablePrimaryActions];
-      } else {
-        this.primaryActions = this.editablePrimaryActions;
-      }
-      if (widgetConfig.secondaryEditActions) {
-        this.secondaryActions = [
-          ...widgetConfig.secondaryEditActions,
-          ...this.editableSecondaryActions
-        ];
-      } else {
-        this.secondaryActions = this.editableSecondaryActions;
-      }
-      this.actionBarViewType = 'expanded';
-    } else {
-      this.actionBarViewType = this.widgetConfig().actionBarViewType ?? 'expanded';
-      this.primaryActions = widgetConfig.primaryActions ?? [];
-      this.secondaryActions = widgetConfig.secondaryActions ?? [];
-    }
+    runInInjectionContext(this.injector, () => {
+      // In case of web component $localize fails to resolve TranslateService
+      // so we fallback siResolveLocalize to host application's Zone
+      try {
+        if (Zone.current.get('siResolveLocalize')()) {
+          this.siResolveLocalize = Zone.current.get('siResolveLocalize');
+        }
+      } catch {
+        (Zone.current as any)._properties.siResolveLocalize = this.siResolveLocalize;
+      } finally {
+        widgetConfig ??= {
+          primaryActions: this.widgetInstance?.primaryActions,
+          secondaryActions: this.widgetInstance?.secondaryActions,
+          primaryEditActions: this.widgetInstance?.primaryEditActions,
+          secondaryEditActions: this.widgetInstance?.secondaryEditActions
+        };
+        if (editable) {
+          this.editablePrimaryActions = [];
+          if (this.isEditable()) {
+            this.editablePrimaryActions.push(this.editAction);
+          }
+          if (!this.widgetConfig().isNotRemovable) {
+            this.editablePrimaryActions.push(this.removeAction);
+          }
+          if (widgetConfig.primaryEditActions) {
+            this.primaryActions = [
+              ...widgetConfig.primaryEditActions,
+              ...this.editablePrimaryActions
+            ];
+          } else {
+            this.primaryActions = this.editablePrimaryActions;
+          }
+          if (widgetConfig.secondaryEditActions) {
+            this.secondaryActions = [
+              ...widgetConfig.secondaryEditActions,
+              ...this.editableSecondaryActions
+            ];
+          } else {
+            this.secondaryActions = this.editableSecondaryActions;
+          }
+          this.actionBarViewType = 'expanded';
+        } else {
+          this.actionBarViewType = this.widgetConfig().actionBarViewType ?? 'expanded';
+          this.primaryActions = widgetConfig.primaryActions ?? [];
+          this.secondaryActions = widgetConfig.secondaryActions ?? [];
+        }
 
-    if (this.widgetInstance?.editable !== undefined) {
-      if (isSignal(this.widgetInstance.editable)) {
-        this.widgetRef?.setInput('editable', editable);
-      } else {
-        this.widgetInstance.editable = editable;
+        if (this.widgetInstance?.editable !== undefined) {
+          if (isSignal(this.widgetInstance.editable)) {
+            this.widgetRef?.setInput('editable', editable);
+          } else {
+            this.widgetInstance.editable = editable;
+          }
+        }
       }
-    }
+    });
   }
 
   private doRemove(): void {
