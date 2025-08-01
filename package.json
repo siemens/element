@@ -50,7 +50,7 @@
     "docs:serve:generate": "cross-env DOCS_COMPOSER=true DOCS_COMPOSER_GENERATE=true DOCS_COMPOSER_OPTIONS='{ \"outputDir\": \"docs-out\" }' uv run --active mkdocs serve",
     "live-preview:build": "ng build live-preview && cpy LICENSE.md \"./dist/@siemens/live-preview/\"",
     "prepare": "husky; exit 0",
-    "prepare-brand": "cpy --flat node_modules/@simpl/brand/src/favicon/sie-favicon_internet_64px.png docs/_src --rename=favicon.png && cpy --flat node_modules/@simpl/brand/src/favicon/sie-favicon_internet_64px.png src --rename=favicon.png",
+    "prepare-brand": "cpy --flat node_modules/@simpl/brand/assets/favicon/sie-favicon_internet_64px.png docs/_src --rename=favicon.png && cpy --flat node_modules/@simpl/brand/assets/favicon/sie-favicon_internet_64px.png src --rename=favicon.png && cpy --flat node_modules/@simpl/brand/assets/favicon/sie-favicon_internet_64px.png projects/dashboards-demo/src --rename=favicon.png && cpy --flat node_modules/@simpl/brand/assets/favicon/sie-favicon_internet_64px.png projects/dashboards-demo/mfe/src --rename=favicon.png",
     "postversion": "npm run format",
     "charts:test": "ng test charts-ng",
     "charts:build": "ng build charts-ng && cpy \"{LICENSE.md,projects/charts-ng/README.md}\" \"./dist/@siemens/charts-ng/\"",
