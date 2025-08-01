@@ -27,6 +27,7 @@ import {
   DatepickerConfig,
   DatepickerInputConfig,
   DateRange,
+  isValid,
   SiCalendarButtonComponent,
   SiDatepickerComponent,
   SiDatepickerDirective
@@ -337,6 +338,10 @@ export class SiDateRangeFilterComponent implements OnChanges {
     return (this.presetList() ?? []).filter(timeFilter);
   });
 
+  protected readonly focusedDate = computed(() => {
+    const date = this.dateRange.end ?? this.dateRange.start;
+    return isValid(date) ? date : undefined;
+  });
   protected readonly presetFilter = signal('');
   protected readonly presetOpen = signal(false);
   protected readonly inputMode = computed(
