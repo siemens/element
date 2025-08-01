@@ -12,7 +12,8 @@ import {
   input,
   model,
   signal,
-  viewChild
+  viewChild,
+  viewChildren
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { isRTL } from '@siemens/element-ng/common';
@@ -99,7 +100,10 @@ export class SiColorPickerComponent implements ControlValueAccessor {
 
   private readonly colorInputRef =
     viewChild.required<ElementRef<HTMLInputElement>>('colorInputBox');
-  private readonly colorPaletteRef = viewChild<ElementRef<HTMLDivElement>>('colorPaletteRef');
+  private readonly swatchInputs = viewChildren<ElementRef<HTMLInputElement>>('swatchInput');
+  private readonly selectedSwatchInput = computed(() =>
+    this.swatchInputs().find(swatchInput => swatchInput.nativeElement.checked)
+  );
   private readonly disabledNgControl = signal(false);
   private readonly numberOfColumns = 4;
   protected readonly disabled = computed(() => this.disabledInput() || this.disabledNgControl());
@@ -137,10 +141,10 @@ export class SiColorPickerComponent implements ControlValueAccessor {
   }
 
   private focusLabel(index: number): void {
-    const labels = this.colorPaletteRef()!.nativeElement.querySelectorAll('input');
+    const labels = this.swatchInputs();
     const totalSwatches = labels.length;
     const normalizedIndex = (index + totalSwatches) % totalSwatches;
-    labels[normalizedIndex].focus();
+    labels[normalizedIndex].nativeElement.focus();
   }
 
   protected openOverlay(): void {
@@ -157,9 +161,7 @@ export class SiColorPickerComponent implements ControlValueAccessor {
 
   private focusSelectedColor(): void {
     setTimeout(() => {
-      this.colorPaletteRef()
-        ?.nativeElement.querySelector<HTMLInputElement>('input:checked')
-        ?.focus();
+      this.selectedSwatchInput()?.nativeElement.focus();
     });
   }
 
