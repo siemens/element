@@ -7,6 +7,11 @@
 
 // stylelint-disable declaration-no-important
 
+%badge-text-emphasis {
+  font-size: typography.$si-font-size-title-2;
+  font-weight: typography.$si-font-weight-title-2;
+}
+
 .badge {
   display: inline-block;
   color: semantic-tokens.$element-text-primary;
@@ -17,8 +22,8 @@
   block-size: map.get(spacers.$spacers, 8);
   line-height: map.get(spacers.$spacers, 8);
   flex-shrink: 0;
-  font-size: typography.$si-font-size-title-2;
-  font-weight: typography.$si-font-weight-title-2;
+  font-size: typography.$si-font-size-body-2;
+  font-weight: typography.$si-font-weight-body-2;
   max-inline-size: 196px;
   min-inline-size: map.get(spacers.$spacers, 8);
   text-overflow: ellipsis;
@@ -86,31 +91,37 @@
   &.bg-info-emphasis {
     background: semantic-tokens.$element-status-information;
     color: semantic-tokens.$element-status-information-contrast;
+    @extend %badge-text-emphasis;
   }
 
   &.bg-success-emphasis {
     background: semantic-tokens.$element-status-success;
     color: semantic-tokens.$element-status-success-contrast;
+    @extend %badge-text-emphasis;
   }
 
   &.bg-warning-emphasis {
     background: semantic-tokens.$element-status-warning;
     color: semantic-tokens.$element-status-warning-contrast;
+    @extend %badge-text-emphasis;
   }
 
   &.bg-danger-emphasis {
     background: semantic-tokens.$element-status-danger;
     color: semantic-tokens.$element-status-danger-contrast;
+    @extend %badge-text-emphasis;
   }
 
   &.bg-critical-emphasis {
     background: semantic-tokens.$element-status-critical;
     color: semantic-tokens.$element-status-critical-contrast;
+    @extend %badge-text-emphasis;
   }
 
   &.bg-caution-emphasis {
     background: semantic-tokens.$element-status-caution;
     color: semantic-tokens.$element-status-caution-contrast;
+    @extend %badge-text-emphasis;
   }
 
   .icon {
