@@ -476,9 +476,11 @@ $utilities: (
     property: font-weight,
     class: fw,
     values: (
-      light: variables.$font-weight-light,
       lighter: variables.$font-weight-lighter,
+      light: variables.$font-weight-light,
       normal: variables.$font-weight-normal,
+      medium: variables.$font-weight-medium,
+      semibold: variables.$font-weight-semibold,
       bold: variables.$font-weight-bold,
       bolder: variables.$font-weight-bolder
     )

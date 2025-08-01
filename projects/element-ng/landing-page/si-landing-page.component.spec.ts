@@ -27,7 +27,7 @@ describe('SiLandingPageComponent', () => {
     component.setInput('subtitle', 'my subtitle');
     fixture.detectChanges();
 
-    const heading = fixture.nativeElement.querySelector('.landing-page-main .si-h1-black');
+    const heading = fixture.nativeElement.querySelector('.landing-page-main .si-h1-bold');
     expect(heading.textContent).toEqual('my heading');
   });
 
