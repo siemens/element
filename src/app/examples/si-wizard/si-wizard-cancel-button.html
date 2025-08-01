@@ -1,4 +1,4 @@
-<si-wizard [inlineNavigation]="false" [hasCancel]="true" (wizardCancel)="logEvent('Canceled!')">
+<si-wizard [hasCancel]="true" (wizardCancel)="logEvent('Canceled!')">
   <si-wizard-step heading="Step 1" (next)="logEvent('Step 1 finished!')">
     <h1 class="text-center">Step 1</h1>
   </si-wizard-step>
