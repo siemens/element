@@ -455,7 +455,7 @@ export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDes
   ngOnInit(): void {
     const canvas = document.createElement('canvas') as HTMLCanvasElement;
     this.measureCanvas = canvas.getContext('2d') as CanvasRenderingContext2D;
-    this.measureCanvas.font = '12px "Siemens Sans"';
+    this.measureCanvas.font = '12px "SiemensSans Pro"';
     const externalXAxisFormatter = this.externalXAxisFormatter();
     if (this.externalZoomSlider() && externalXAxisFormatter) {
       const consumerFormatter = externalXAxisFormatter;

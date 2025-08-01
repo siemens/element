@@ -170,6 +170,8 @@ $font-size-sm: typography.$si-font-size-caption-1 !default;
 $font-weight-lighter: typography.$si-font-weight-lighter;
 $font-weight-light: typography.$si-font-weight-light;
 $font-weight-normal: typography.$si-font-weight-normal;
+$font-weight-medium: typography.$si-font-weight-medium;
+$font-weight-semibold: typography.$si-font-weight-semibold;
 $font-weight-bold: typography.$si-font-weight-bold;
 $font-weight-bolder: typography.$si-font-weight-bolder;
 
@@ -198,7 +200,7 @@ $font-sizes: (
 $headings-margin-bottom: spacers.$spacer * 0.5 !default;
 $headings-font-family: null !default;
 $headings-font-style: null !default;
-$headings-font-weight: typography.$si-font-weight-bold !default;
+$headings-font-weight: typography.$si-font-weight-semibold !default;
 $headings-line-height: 1.2 !default;
 $headings-color: semantic-tokens.$element-text-primary !default;
 

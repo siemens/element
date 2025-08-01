@@ -108,12 +108,12 @@ h1,
     typography.$si-font-weight-h1
   );
 }
-
-.si-h1-black {
+.si-h1-black, // Kept for backward compatibility and will be removed in future versions
+.si-h1-bold {
   @include typography.si-font(
-    typography.$si-font-size-h1-black,
-    typography.$si-line-height-h1-black,
-    typography.$si-font-weight-h1-black
+    typography.$si-font-size-h1-bold,
+    typography.$si-line-height-h1-bold,
+    typography.$si-font-weight-h1-bold
   );
 }
 

@@ -343,7 +343,7 @@ export class SiChartGaugeComponent extends SiChartComponent implements OnChanges
           value: {
             fontSize: resp.valueFontSize,
             lineHeight: resp.valueFontSize,
-            fontWeight: 'bolder'
+            fontWeight: 600
           },
           unit: {
             fontSize: resp.unitFontSize,

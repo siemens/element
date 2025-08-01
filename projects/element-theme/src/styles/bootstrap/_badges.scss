@@ -147,7 +147,7 @@
   padding-block: 0;
   padding-inline: map.get(spacers.$spacers, 2);
   font-family: variables.$font-family-sans-serif;
-  font-weight: typography.$si-font-weight-bold;
+  font-weight: typography.$si-font-weight-semibold;
 }
 
 .icon + .badge-text {
