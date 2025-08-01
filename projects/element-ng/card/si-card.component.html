@@ -12,9 +12,16 @@
   @if (heading() || displayContentActionBar()) {
     <div class="card-header d-flex justify-content-between">
       <ng-content #cardHeaderIcon select="[headerIcon]" />
-      @if (heading()) {
-        <div class="text-truncate">{{ heading() | translate }}</div>
-      }
+      <div>
+        @if (heading()) {
+          <div class="text-truncate si-title-2">{{ heading() | translate }}</div>
+        }
+        @if (subHeading()) {
+          <div class="text-truncate si-body-2 text-secondary pt-2">{{
+            subHeading() | translate
+          }}</div>
+        }
+      </div>
 
       <div class="cab d-flex ms-6 my-n4 me-n5">
         @if (displayContentActionBar()) {
