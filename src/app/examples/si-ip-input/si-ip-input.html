@@ -35,9 +35,11 @@
   <div class="card-body">
     <form [formGroup]="configForm">
       <div class="row">
-        <si-form-item class="col-sm-3" label="Enable CIDR notation e.g. 198.51.100.0/22">
-          <input type="checkbox" class="form-check-input" formControlName="cidr" />
-        </si-form-item>
+        <div class="col-sm-3">
+          <si-form-item label="Enable CIDR notation e.g. 198.51.100.0/22">
+            <input type="checkbox" class="form-check-input" formControlName="cidr" />
+          </si-form-item>
+        </div>
       </div>
     </form>
   </div>

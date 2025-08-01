@@ -41,24 +41,42 @@
 <div class="e2e-ignore card mt-6">
   <div class="card-body">
     <form class="row">
-      <si-form-item class="col-sm-3" label="Input mode">
-        <input type="checkbox" class="form-check-input" name="inputMode" [(ngModel)]="inputMode" />
-      </si-form-item>
-      <si-form-item class="col-sm-3" label="With time">
-        <input
-          type="checkbox"
-          class="form-check-input"
-          name="time"
-          [(ngModel)]="enableTimeSelection"
-          (ngModelChange)="updateResolved()"
-        />
-      </si-form-item>
-      <si-form-item class="col-sm-3" label="Show presets">
-        <input type="checkbox" class="form-check-input" name="presets" [(ngModel)]="showPresets" />
-      </si-form-item>
-      <si-form-item class="col-sm-3" label="Show apply button">
-        <input type="checkbox" class="form-check-input" name="apply" [(ngModel)]="showApply" />
-      </si-form-item>
+      <div class="col-sm-3">
+        <si-form-item label="Input mode">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="inputMode"
+            [(ngModel)]="inputMode"
+          />
+        </si-form-item>
+      </div>
+      <div class="col-sm-3">
+        <si-form-item label="With time">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="time"
+            [(ngModel)]="enableTimeSelection"
+            (ngModelChange)="updateResolved()"
+          />
+        </si-form-item>
+      </div>
+      <div class="col-sm-3">
+        <si-form-item label="Show presets">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="presets"
+            [(ngModel)]="showPresets"
+          />
+        </si-form-item>
+      </div>
+      <div class="col-sm-3">
+        <si-form-item label="Show apply button">
+          <input type="checkbox" class="form-check-input" name="apply" [(ngModel)]="showApply" />
+        </si-form-item>
+      </div>
     </form>
     object (JSON.stringify()): {{ range | json }}
     <br />
