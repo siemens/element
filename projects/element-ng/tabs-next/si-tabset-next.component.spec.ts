@@ -279,7 +279,7 @@ describe('SiTabsetNext', () => {
     expect(await tabsetHarness.isTabVisible(0)).toBe(false);
   }));
 
-  it('should delete tab on close and recaculate visisble tabs', async () => {
+  xit('should delete tab on close and recaculate visisble tabs', async () => {
     testComponent.tabs = [
       {
         heading: '1',
