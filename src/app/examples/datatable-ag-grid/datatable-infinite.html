@@ -1,0 +1,14 @@
+<ag-grid-angular
+  class="ag-grid-element"
+  [theme]="theme"
+  [rowData]="rowData"
+  [columnDefs]="colDefs"
+  [defaultColDef]="defaultColDef"
+  [gridOptions]="gridOptions"
+  [loading]="loading"
+  [rowSelection]="{
+    mode: 'multiRow'
+  }"
+  (cellValueChanged)="onCellValueChanged($event)"
+  (gridReady)="onGridReady($event)"
+/>
