@@ -3,3 +3,4 @@
  * SPDX-License-Identifier: MIT
  */
 export * from './si-nchart-gauge/si-nchart-gauge.component';
+export * from './si-micro-progress/si-micro-progress.component';

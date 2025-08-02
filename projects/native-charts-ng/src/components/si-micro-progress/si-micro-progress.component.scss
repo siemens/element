@@ -1,0 +1,5 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+.bar-background {
+  background-color: variables.$element-ui-4;
+}
