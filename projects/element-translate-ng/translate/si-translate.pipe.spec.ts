@@ -10,7 +10,7 @@ import {
   Injectable
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { injectSiTranslateService } from '@siemens/element-translate-ng/translate';
+import { injectSiTranslateService, t } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -24,7 +24,7 @@ import { provideMockTranslateServiceBuilder } from './testing/si-translate.mock-
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestComponent {
-  toTranslateKey = $localize`:@@KEY:Test {{value}}`;
+  toTranslateKey = t(() => $localize`:@@KEY:Test {{value}}`);
   params = { value: 'string' } as any;
   cdRef = inject(ChangeDetectorRef);
 }
