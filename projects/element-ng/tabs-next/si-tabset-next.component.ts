@@ -48,10 +48,9 @@ import { SI_TABSET_NEXT } from './si-tabs-tokens';
 })
 export class SiTabsetNextComponent {
   /** @internal */
-  readonly activeTab = computed(() => {
-    return this.tabPanels().find(tab => tab.active());
-  });
+  readonly activeTab = computed(() => this.tabPanels().find(tab => tab.active()));
 
+  /** @internal */
   readonly tabPanels = contentChildren(SiTabNextBaseDirective);
 
   /** @internal */
@@ -60,7 +59,6 @@ export class SiTabsetNextComponent {
     .withWrap(true);
 
   /** @internal */
-
   protected readonly showMenuButton = signal(false);
 
   protected tabIsLink(tab: unknown): tab is SiTabNextLinkComponent {

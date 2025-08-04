@@ -36,7 +36,7 @@ export class SiTabNextLinkComponent extends SiTabNextBaseDirective {
   override readonly active = toSignal(
     this.routerLinkActive.isActiveChange.pipe(startWith(this.routerLinkActive.isActive))
   );
-
+  /** {@inheritDoc} */
   override selectTab(retainFocus?: boolean): void {
     if (this.routerLink.urlTree) {
       this.router.navigateByUrl(this.routerLink.urlTree, {

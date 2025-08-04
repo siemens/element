@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { FocusableOption, FocusOrigin } from '@angular/cdk/a11y';
+import { FocusableOption } from '@angular/cdk/a11y';
 import {
   booleanAttribute,
   computed,
@@ -82,12 +82,8 @@ export abstract class SiTabNextBaseDirective implements OnDestroy, FocusableOpti
   /** Event emitter to notify when a tab is closed. */
   readonly closeTriggered = output();
 
+  protected readonly tabButton = inject<ElementRef<HTMLElement>>(ElementRef);
   /** @internal */
-  readonly badgeIsNumber = computed(() => {
-    return typeof this.badgeContent() !== 'boolean';
-  });
-
-  readonly tabButton = inject<ElementRef<HTMLElement>>(ElementRef);
   readonly tabContent = viewChild('tabContent', { read: TemplateRef });
 
   private static tabCounter = 0;
@@ -97,10 +93,7 @@ export abstract class SiTabNextBaseDirective implements OnDestroy, FocusableOpti
   tabId = `${SiTabNextBaseDirective.tabCounter++}`;
   protected readonly icons = addIcons({ elementCancel });
   protected tabset = inject(SI_TABSET_NEXT);
-  /** @internal */
-  readonly index = computed(() =>
-    this.tabset.tabPanels().findIndex(tab => tab.tabId === this.tabId)
-  );
+  private readonly index = computed(() => this.tabset.tabPanels().indexOf(this));
 
   constructor() {
     // Update the focusKeyManager if a tab is added that is active or if the tab is set active by the app.
@@ -131,7 +124,8 @@ export abstract class SiTabNextBaseDirective implements OnDestroy, FocusableOpti
     }
   }
 
-  focus(origin?: FocusOrigin): void {
+  /** @internal */
+  focus(): void {
     this.tabButton.nativeElement.focus({ preventScroll: true });
     // The element is not fully scrolled into view when focused. So we prevent and scroll it manually.
     this.tabButton.nativeElement.scrollIntoView({
@@ -141,6 +135,7 @@ export abstract class SiTabNextBaseDirective implements OnDestroy, FocusableOpti
     });
   }
 
+  /** @internal */
   get disabled(): boolean {
     return this.disabledTab();
   }
@@ -156,6 +151,7 @@ export abstract class SiTabNextBaseDirective implements OnDestroy, FocusableOpti
     }
   }
 
+  /** @internal */
   deSelectTab(): void {
     // Empty be default, can be overridden in derived classes.
   }
