@@ -12,7 +12,6 @@ import {
   contentChildren,
   inject,
   INJECTOR,
-  output,
   signal
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
@@ -24,22 +23,6 @@ import { SiTabBadgeComponent } from './si-tab-badge.component';
 import { SiTabNextBaseDirective } from './si-tab-next-base.directive';
 import { SiTabNextLinkComponent } from './si-tab-next-link.component';
 import { SI_TABSET_NEXT } from './si-tabs-tokens';
-
-/** @experimental */
-export interface SiTabNextDeselectionEvent {
-  /**
-   * The target tab
-   */
-  target: SiTabNextBaseDirective;
-  /**
-   * The index of target tab
-   */
-  tabIndex: number;
-  /**
-   * To be called to prevent switching the tab
-   */
-  cancel: () => void;
-}
 
 /** @experimental */
 @Component({
@@ -64,11 +47,6 @@ export interface SiTabNextDeselectionEvent {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiTabsetNextComponent {
-  /**
-   * Event emitter to notify when a tab became inactive.
-   */
-  readonly deselect = output<SiTabNextDeselectionEvent>();
-
   /** @internal */
   readonly activeTab = computed(() => {
     return this.tabPanels().find(tab => tab.active());
