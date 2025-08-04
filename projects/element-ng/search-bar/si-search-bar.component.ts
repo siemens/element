@@ -117,7 +117,7 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
 
   /** @internal */
   writeValue(value: string): void {
-    this.setSearch(value);
+    this.writeSearchValue(value ?? '');
   }
 
   /** @internal */
@@ -137,7 +137,7 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.value) {
-      this.setSearch(changes.value.currentValue);
+      this.writeSearchValue(changes.value.currentValue);
     }
   }
 
@@ -152,13 +152,12 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
   }
 
   private setSearch(value?: string): void {
+    value ??= '';
     if (value !== this.searchValue()) {
-      // FIXME: in v48, move outside the `if` so we don't emit when `value === undefined`
-      const searchVal = value ?? '';
-      this.searchValue.set(searchVal);
-      this.inputRef().nativeElement.value = searchVal;
-      this.onChange(searchVal);
-      this.searchChange.emit(searchVal);
+      this.searchValue.set(value);
+      this.inputRef().nativeElement.value = value;
+      this.onChange(value);
+      this.searchChange.emit(value);
     }
   }
 
@@ -201,5 +200,10 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
 
   protected resetForm(): void {
     this.setSearch('');
+  }
+
+  protected writeSearchValue(value: string): void {
+    this.searchValue.set(value);
+    this.inputRef().nativeElement.value = value;
   }
 }
