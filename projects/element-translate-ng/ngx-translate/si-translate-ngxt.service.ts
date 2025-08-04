@@ -71,7 +71,7 @@ export class SiTranslateNgxTService extends SiTranslateService {
     if (Array.isArray(keys) && !keys.length) {
       return of({} as TranslationResult<T>);
     }
-    return this.ngxTranslateService.stream(keys, params);
+    return this.ngxTranslateService.stream(this.extractDefaultTranslations(keys), params);
   }
 
   override translateAsync<T extends string | string[]>(
@@ -81,7 +81,7 @@ export class SiTranslateNgxTService extends SiTranslateService {
     if (Array.isArray(keys) && !keys.length) {
       return of({} as TranslationResult<T>);
     }
-    return this.ngxTranslateService.stream(keys, params);
+    return this.ngxTranslateService.stream(this.extractDefaultTranslations(keys), params);
   }
 
   override translateSync<T extends string | string[]>(
@@ -91,11 +91,30 @@ export class SiTranslateNgxTService extends SiTranslateService {
     if (Array.isArray(keys) && !keys.length) {
       return {} as TranslationResult<T>;
     }
-    return this.ngxTranslateService.instant(keys, params);
+    return this.ngxTranslateService.instant(this.extractDefaultTranslations(keys), params);
   }
 
   override setTranslation(key: string, value: string): void {
     this.defaultTranslations[key] = value;
+  }
+
+  private extractDefaultTranslations(value: string | string[]): string | string[] {
+    const parsed = this.parseTranslatableString(value);
+    if (Array.isArray(parsed)) {
+      return parsed.map(item => {
+        if (typeof item !== 'string') {
+          this.setTranslation(item.key, item.value);
+          return item.key;
+        }
+        return item;
+      });
+    } else {
+      if (typeof parsed !== 'string') {
+        this.setTranslation(parsed.key, parsed.value);
+        return parsed.key;
+      }
+      return parsed;
+    }
   }
 
   private handleMissingTranslation(params: MissingTranslationHandlerParams): string {

@@ -119,6 +119,30 @@ export abstract class SiTranslateService {
   ): TranslationResult<T>;
 
   /**
+   * Parses a TranslatableString.
+   *
+   * @returns - An object if the string was a translatable string, otherwise the original string.
+   */
+  protected parseTranslatableString(value: string): { key: string; value: string } | string;
+  protected parseTranslatableString(value: string[]): ({ key: string; value: string } | string)[];
+  protected parseTranslatableString(
+    value: string | string[]
+  ): ({ key: string; value: string } | string)[] | ({ key: string; value: string } | string);
+  protected parseTranslatableString(
+    value: string | string[]
+  ): ({ key: string; value: string } | string)[] | ({ key: string; value: string } | string) {
+    if (Array.isArray(value)) {
+      return value.map(v => this.parseTranslatableString(v));
+    } else {
+      const parsed = /:.*?@@(.*?):(.*)/.exec(value);
+      if (parsed) {
+        return { key: parsed[1], value: parsed[2] };
+      }
+      return value;
+    }
+  }
+
+  /**
    * If supported by the underlying translation library, this method can be used to add a translation for a specific key.
    * It is intended to be used for adding the english default value.
    * It will be called whenever a key within element is resolved.

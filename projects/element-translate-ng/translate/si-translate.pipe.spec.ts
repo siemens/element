@@ -10,12 +10,15 @@ import {
   Injectable
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { injectSiTranslateService } from '@siemens/element-translate-ng/translate';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import {
+  injectSiTranslateService,
+  SiNoTranslateService
+} from '@siemens/element-translate-ng/translate';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { SiTranslatePipe } from './si-translate.pipe';
-import { SiTranslateService, TranslationResult } from './si-translate.service';
+import { TranslationResult } from './si-translate.service';
 import { provideMockTranslateServiceBuilder } from './testing/si-translate.mock-service-builder.factory';
 
 @Component({
@@ -30,34 +33,21 @@ class TestComponent {
 }
 
 @Injectable({ providedIn: 'root' })
-class SiAsyncTranslateService extends SiTranslateService {
+class SiAsyncTranslateService extends SiNoTranslateService {
   translationPrefixer = new BehaviorSubject<TranslationResult<string>>('translated');
-
-  override get currentLanguage(): string {
-    return 'en';
-  }
-
-  override get availableLanguages(): string[] {
-    return ['en'];
-  }
-
-  override setCurrentLanguage(lang: string): Observable<void> {
-    return of();
-  }
-
-  override getDefaultLanguage(): string {
-    return 'en';
-  }
-
-  override setDefaultLanguage(lang: string): void {}
 
   override translate<T extends string | string[]>(
     keys: T,
     params?: Record<string, unknown>
   ): Observable<TranslationResult<T>> {
     // "as any" due to Typescript not being able to handle type guards in combination with generics
+    const parsedKeys = this.parseTranslatableString(keys);
+    let actualKeys = parsedKeys;
+    if (!Array.isArray(parsedKeys) && typeof parsedKeys === 'object') {
+      actualKeys = parsedKeys.key;
+    }
     return this.translationPrefixer.pipe(
-      map(prefix => `${prefix}=>${keys}-${JSON.stringify(params)}`)
+      map(prefix => `${prefix}=>${actualKeys}-${JSON.stringify(params)}`)
     ) as any;
   }
 
@@ -131,18 +121,26 @@ describe('SiTranslatePipe', () => {
     let component: TestComponent;
     let nativeElement: HTMLElement;
 
+    @Injectable({ providedIn: 'root' })
+    class SiSyncTranslateService extends SiNoTranslateService {
+      override translate<T extends string | string[]>(
+        keys: T,
+        params?: Record<string, unknown>
+      ): TranslationResult<T> {
+        // "as any" due to Typescript not being able to handle type guards in combination with generics
+        const parsedKeys = this.parseTranslatableString(keys);
+        let actualKeys = parsedKeys;
+        if (!Array.isArray(parsedKeys) && typeof parsedKeys === 'object') {
+          actualKeys = parsedKeys.key;
+        }
+        return `translated=>${actualKeys}-${JSON.stringify(params)}` as any;
+      }
+    }
+
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [TestComponent],
-        providers: [
-          provideMockTranslateServiceBuilder(
-            () =>
-              ({
-                translate: (key: string, params: Record<string, any>) =>
-                  `translated=>${key}-${JSON.stringify(params)}`
-              }) as SiTranslateService
-          )
-        ]
+        providers: [provideMockTranslateServiceBuilder(() => inject(SiSyncTranslateService))]
       }).compileComponents();
     });
 

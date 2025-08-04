@@ -26,11 +26,8 @@ describe('siLocalize', () => {
   });
 
   it('should resolve $localize calls', () => {
-    TestBed.inject(TestService); // we don't need a reference to this
-    const translatableMock = TestBed.inject(
-      SiTranslatableService
-    ) as jasmine.SpyObj<SiTranslatableService>;
-    expect(translatableMock.resolveText).toHaveBeenCalledWith('without', 'without-default');
-    expect(translatableMock.resolveText).toHaveBeenCalledWith('with', 'with-default');
+    const service = TestBed.inject(TestService);
+    expect(service.withDescription).toEqual(':with-desc@@with:with-default');
+    expect(service.withoutDescription).toEqual(':@@without:without-default');
   });
 });

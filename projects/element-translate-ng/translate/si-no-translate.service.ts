@@ -52,9 +52,18 @@ export class SiNoTranslateService extends SiTranslateService {
   override translate<T extends string | string[]>(
     keys: T,
     _params?: Record<string, unknown>
+  ): TranslationResult<T> | Observable<TranslationResult<T>> {
+    return this.translateSync(keys, _params);
+  }
+
+  override translateSync<T extends string | string[]>(
+    keys: T,
+    _params?: Record<string, unknown>
   ): TranslationResult<T> {
     const translateKey = (key: string): string => {
-      return _params ? replacePlaceholders(key, _params) : key;
+      const parsed = this.parseTranslatableString(key);
+      const value = typeof parsed === 'string' ? parsed : parsed.value;
+      return _params ? replacePlaceholders(value, _params) : value;
     };
 
     if (typeof keys === 'string') {
@@ -65,17 +74,10 @@ export class SiNoTranslateService extends SiTranslateService {
     }
   }
 
-  override translateSync<T extends string | string[]>(
-    keys: T,
-    params?: Record<string, unknown>
-  ): TranslationResult<T> {
-    return this.translate(keys, params);
-  }
-
   override translateAsync<T extends string | string[]>(
     keys: T,
     params?: Record<string, unknown>
   ): Observable<TranslationResult<T>> {
-    return of(this.translate(keys, params));
+    return of(this.translateSync(keys, params));
   }
 }
