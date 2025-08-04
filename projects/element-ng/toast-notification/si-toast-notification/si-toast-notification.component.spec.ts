@@ -8,7 +8,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { STATUS_ICON } from '@siemens/element-ng/common';
 import { Subject } from 'rxjs';
 
-import { SiToast } from '../si-toast.model';
+import { SI_TOAST_AUTO_HIDE_DELAY, SiToast } from '../si-toast.model';
 import { SiToastNotificationComponent } from './si-toast-notification.component';
 
 @Component({
@@ -62,5 +62,27 @@ describe('SiToastNotificationComponent', () => {
     element.querySelector<HTMLElement>(`[aria-label="Close"]`)?.click();
 
     expect(closeSpy).toHaveBeenCalled();
+  });
+
+  it('should pause/resume the animation on mouse events', () => {
+    const timerBar = element.querySelector<HTMLElement>('.si-toast-timer-bar');
+    spyOn(component.siToastComponent().paused, 'emit');
+    spyOn(component.siToastComponent().resumed, 'emit');
+
+    expect(timerBar?.style.getPropertyValue('--toast-timer-duration')).toBe(
+      SI_TOAST_AUTO_HIDE_DELAY / 1000 + 's'
+    );
+    element.querySelector('si-toast-notification')?.dispatchEvent(new MouseEvent('mouseenter'));
+    fixture.detectChanges();
+
+    expect(component.siToastComponent().paused.emit).toHaveBeenCalledTimes(1);
+
+    expect(timerBar?.style.getPropertyValue('--play-state')).toBe('paused');
+
+    element.querySelector('si-toast-notification')?.dispatchEvent(new MouseEvent('mouseleave'));
+    fixture.detectChanges();
+
+    expect(component.siToastComponent().resumed.emit).toHaveBeenCalledTimes(1);
+    expect(timerBar?.style.getPropertyValue('--play-state')).toBe('running');
   });
 });

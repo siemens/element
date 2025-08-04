@@ -4,7 +4,7 @@
  */
 import { animate, style, transition, trigger } from '@angular/animations';
 import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { areAnimationsDisabled } from '@siemens/element-ng/common';
 import { Observable } from 'rxjs';
 
@@ -43,6 +43,8 @@ import { SiToast } from '../si-toast.model';
 })
 export class SiToastNotificationDrawerComponent {
   readonly toasts = input<Observable<SiToast[]>>();
+  readonly paused = output<SiToast>();
+  readonly resumed = output<SiToast>();
 
   protected animationsDisabled = areAnimationsDisabled();
 }

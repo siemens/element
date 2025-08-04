@@ -2,17 +2,17 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { animate, AnimationBuilder, style } from '@angular/animations';
 import { NgClass } from '@angular/common';
 import {
   Component,
   computed,
-  ElementRef,
+  HostListener,
   inject,
   input,
   OnChanges,
-  SimpleChanges,
-  viewChild
+  output,
+  signal,
+  SimpleChanges
 } from '@angular/core';
 import {
   addIcons,
@@ -24,7 +24,7 @@ import {
 import { SiLinkModule } from '@siemens/element-ng/link';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
-import { SiToast } from '../si-toast.model';
+import { SI_TOAST_AUTO_HIDE_DELAY, SiToast } from '../si-toast.model';
 
 @Component({
   selector: 'si-toast-notification',
@@ -47,23 +47,32 @@ export class SiToastNotificationComponent implements OnChanges {
     }
   });
   protected readonly statusColor = computed(() => this.statusIcons[this.status()].color);
+  protected readonly toastTimeoutInSeconds = computed(() => {
+    const toast = this.toast();
+    return toast.timeout ? toast.timeout / 1000 : SI_TOAST_AUTO_HIDE_DELAY / 1000;
+  });
+  protected readonly animationMode = signal('running');
+  readonly paused = output<void>();
+  readonly resumed = output<void>();
 
-  private readonly autoCloseBar = viewChild.required<ElementRef<HTMLDivElement>>('autoCloseBar');
+  @HostListener('mouseenter')
+  protected onMouseEnter(): void {
+    if (!this.toast().disableAutoClose) {
+      this.animationMode.set('paused');
+      this.paused.emit();
+    }
+  }
 
-  private animationBuilder = inject(AnimationBuilder);
+  @HostListener('mouseleave')
+  protected onMouseLeave(): void {
+    if (!this.toast().disableAutoClose) {
+      this.animationMode.set('running');
+      this.resumed.emit();
+    }
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes?.toast.currentValue) {
-      const toast = this.toast();
-
-      if (!toast.disableAutoClose && toast.timeout) {
-        const animation = this.animationBuilder.build([
-          style({ width: '100%' }),
-          animate(toast.timeout, style({ width: '0%' }))
-        ]);
-        animation.create(this.autoCloseBar().nativeElement).play();
-      }
-
       this.closeAriaLabel = this.toast().closeAriaLabel ?? this.closeAriaLabel;
     }
   }
