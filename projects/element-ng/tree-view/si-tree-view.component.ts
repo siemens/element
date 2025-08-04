@@ -88,7 +88,7 @@ const rootDefaults: TreeItem = {
 /**
  * Implements a tree view with the following main capabilities:
  * Showing multiple trees. The data of the trees is set via the input property 'items'.
- * Showing the trees in a flat mode with navigation/bread/crumb on top.
+ * Showing the trees in a flat mode with navigation/breadcrumb on top.
  * A tree/list item is composed of a 'folder' icon, any item icon, the label, two additional datafields and a context menu button.
  * Children of parent nodes are lazy loaded upon request (in case they are not yet available in model.)
  * Context menu support via context menu item: the context menu items can be set via input properties.
@@ -97,7 +97,7 @@ const rootDefaults: TreeItem = {
  * Virtualization support: Input properties allow to set the page size and the number of pages to be virtualized.
  * Current limitation is roughly half a million of nodes. This is due to some 'strange' behavior with flex containers.
  * Set the input properties 'pageSize' and 'pagesVirtualized' to a reasonable amount of virtualized items.
- * The number of virtualized items is the product of the pageSize and the pagesVirtualized (no of pages virtualized).
+ * The number of virtualized items is the product of the pageSize and the pagesVirtualized (number of pages virtualized).
  * Choose a value in the area of 50 virtualized items, dependent on the screen size. Check at runtime if appropriate!
  * Grouped List support: The component does also support grouped lists.
  * See the test client implementation of this package for all functionality.
@@ -476,7 +476,7 @@ export class SiTreeViewComponent
     read: TemplateRef
   });
 
-  private readonly nextItmes = contentChildren(SiTreeViewItemComponent, { descendants: true });
+  private readonly nextItems = contentChildren(SiTreeViewItemComponent, { descendants: true });
 
   private keyManager!: FocusKeyManager<SiTreeViewItemComponent>;
 
@@ -744,7 +744,7 @@ export class SiTreeViewComponent
   }
 
   private getChildren(): Signal<readonly SiTreeViewItemComponent[]> {
-    return !this.treeItemContentTemplate() ? this.children : this.nextItmes;
+    return !this.treeItemContentTemplate() ? this.children : this.nextItems;
   }
 
   private focusItem(item: TreeItem): void {
