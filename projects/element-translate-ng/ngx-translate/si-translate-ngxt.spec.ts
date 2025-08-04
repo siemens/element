@@ -2,10 +2,10 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { DOCUMENT } from '@angular/common';
-import { Component, Injectable } from '@angular/core';
-import { fakeAsync, flush, TestBed } from '@angular/core/testing';
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { Component, DOCUMENT, Injectable } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { RouterModule, RouterOutlet } from '@angular/router';
+import { RouterTestingHarness } from '@angular/router/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { SiTranslateNgxTService } from '@siemens/element-translate-ng/ngx-translate/si-translate-ngxt.service';
 import { injectSiTranslateService, SiTranslatePipe } from '@siemens/element-translate-ng/translate';
@@ -67,11 +67,9 @@ describe('SiTranslateNgxT', () => {
       });
     });
 
-    it('should use correct translation service', fakeAsync(() => {
+    it('should use correct translation service', async () => {
       const fixture = TestBed.createComponent(HostComponent);
-      const router = TestBed.inject(Router);
-      router.initialNavigation();
-      flush();
+      await RouterTestingHarness.create('/');
       fixture.detectChanges();
       expect((fixture.nativeElement as HTMLElement).innerText).toBe('VALUE-MODIFIED');
       expect(TestBed.inject(RootTestService).siTranslateService.translateSync('KEY-1')).toBe(
@@ -80,7 +78,7 @@ describe('SiTranslateNgxT', () => {
       expect(
         TestBed.inject(RootTestService).siTranslateService.translateSync(['KEY-1', 'KEY-2'])
       ).toEqual({ 'KEY-1': 'VALUE-1', 'KEY-2': 'VALUE-2' });
-    }));
+    });
   });
 
   describe('with single translation service', () => {

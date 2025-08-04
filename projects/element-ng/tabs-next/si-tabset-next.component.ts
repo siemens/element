@@ -3,156 +3,99 @@
  * SPDX-License-Identifier: MIT
  */
 import { FocusKeyManager } from '@angular/cdk/a11y';
-import { CdkMenu, CdkMenuTrigger } from '@angular/cdk/menu';
+import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   computed,
   contentChildren,
   inject,
   INJECTOR,
-  output,
-  signal,
-  viewChild
+  signal
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { isRTL } from '@siemens/element-ng/common';
 import { SiMenuDirective, SiMenuItemComponent } from '@siemens/element-ng/menu';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
+import { SiTabBadgeComponent } from './si-tab-badge.component';
+import { SiTabNextBaseDirective } from './si-tab-next-base.directive';
 import { SiTabNextLinkComponent } from './si-tab-next-link.component';
-import { SiTabNextComponent } from './si-tab-next.component';
 import { SI_TABSET_NEXT } from './si-tabs-tokens';
-
-/** @experimental */
-export interface SiTabNextDeselectionEvent {
-  /**
-   * The target tab
-   */
-  target: SiTabNextComponent | SiTabNextLinkComponent;
-  /**
-   * The index of target tab
-   */
-  tabIndex: number;
-  /**
-   * To be called to prevent switching the tab
-   */
-  cancel: () => void;
-}
 
 /** @experimental */
 @Component({
   selector: 'si-tabset-next',
   imports: [
-    SiTranslatePipe,
     SiMenuDirective,
     SiMenuItemComponent,
     CdkMenuTrigger,
     NgTemplateOutlet,
     SiResizeObserverModule,
-    RouterLink
+    RouterLink,
+    SiTabBadgeComponent
   ],
   templateUrl: './si-tabset-next.component.html',
   styleUrl: './si-tabset-next.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: SI_TABSET_NEXT,
       useExisting: SiTabsetNextComponent
     }
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SiTabsetNextComponent implements AfterViewInit {
-  /**
-   * Event emitter to notify when a tab became inactive.
-   */
-  readonly deselect = output<SiTabNextDeselectionEvent>();
-
+export class SiTabsetNextComponent {
   /** @internal */
   readonly activeTab = computed(() => {
     return this.tabPanels().find(tab => tab.active());
   });
-  /** @internal */
-  readonly activeTabIndex = computed(() => this.activeTab()?.index() ?? -1);
+
+  readonly tabPanels = contentChildren(SiTabNextBaseDirective);
 
   /** @internal */
-  focusKeyManager?: FocusKeyManager<SiTabNextComponent | SiTabNextLinkComponent>;
-
-  private readonly tabPanelsLinks = contentChildren(SiTabNextLinkComponent);
-  private readonly tabPanelsComponents = contentChildren(SiTabNextComponent);
+  focusKeyManager = new FocusKeyManager(this.tabPanels, inject(INJECTOR))
+    .withHorizontalOrientation(isRTL() ? 'rtl' : 'ltr')
+    .withWrap(true);
 
   /** @internal */
-  readonly tabPanels = computed(() => {
-    const allTabs: (SiTabNextLinkComponent | SiTabNextComponent)[] = [
-      ...this.tabPanelsLinks(),
-      ...this.tabPanelsComponents()
-    ];
-    return allTabs;
-  });
 
-  protected readonly menu = viewChild('menu', { read: CdkMenu });
   protected readonly showMenuButton = signal(false);
-
-  private injector = inject(INJECTOR);
-
-  ngAfterViewInit(): void {
-    this.focusKeyManager = new FocusKeyManager(this.tabPanels, this.injector);
-    // To avoid ExpressionChangedAfterItHasBeenCheckedError
-    setTimeout(() => {
-      this.focusKeyManager?.updateActiveItem(this.tabPanels().findIndex(tab => !tab.disabledTab()));
-    });
-  }
-
-  protected menuOpened(): void {
-    // wait for menu items to be rendered
-    setTimeout(() => {
-      const nextMenuItemToFocus = this.getNextIndexToFocus(this.activeTabIndex() + 1);
-      const menuItems = this.menu()?.items.toArray() ?? [];
-      if (nextMenuItemToFocus >= 0 && nextMenuItemToFocus < menuItems.length) {
-        menuItems[nextMenuItemToFocus].focus();
-        // bug in cdk as setting focus on menu item does not update focus manager active item
-        // eslint-disable-next-line @typescript-eslint/dot-notation
-        const focusManager = this.menu()?.['keyManager'];
-        focusManager?.updateActiveItem(nextMenuItemToFocus);
-      } else {
-        menuItems[0].focus();
-      }
-    });
-  }
 
   protected tabIsLink(tab: unknown): tab is SiTabNextLinkComponent {
     return tab instanceof SiTabNextLinkComponent;
   }
 
   /** @internal */
-  focusPrevious(e: Event): void {
-    e.preventDefault();
-    this.focusKeyManager?.setPreviousItemActive();
-  }
-
-  /** @internal */
-  focusNext(e: Event): void {
-    e.preventDefault();
-    this.focusKeyManager?.setNextItemActive();
-  }
-
-  /** @internal */
-  getNextIndexToFocus(currentIndex: number): number {
+  removedTabByUser(index: number, active?: boolean): void {
+    // The tab was already removed from the tabPanels list when this function is called.
+    // We need to:
+    // - focus another tab if the closed one was focused
+    // - activate another tab if the closed one was active
+    // If the closed tab was not focussed, there is no need to restore the focus as it could only be closed by mouse.
     for (let i = 0; i < this.tabPanels().length; i++) {
       // Get the actual index using modulo to wrap around
-      const checkIndex = (currentIndex + i) % this.tabPanels().length;
-
-      if (!this.tabPanels()[checkIndex].disabledTab()) {
-        return this.tabPanels()[checkIndex].index();
+      const checkIndex = (index + i) % this.tabPanels().length;
+      const checkTab = this.tabPanels()[checkIndex];
+      if (!checkTab.disabledTab()) {
+        if (this.focusKeyManager.activeItemIndex === index) {
+          this.focusKeyManager.setActiveItem(checkIndex);
+        }
+        if (active) {
+          checkTab.selectTab(true);
+        }
+        return;
       }
     }
-    return -1;
   }
 
   protected resizeContainer(width: number, scrollWidth: number): void {
     // 48px is the width of the menu button.
     this.showMenuButton.set(scrollWidth > width + (this.showMenuButton() ? 48 : 0));
+  }
+
+  protected keydown(event: KeyboardEvent): void {
+    this.focusKeyManager.onKeydown(event);
   }
 }

@@ -6,24 +6,13 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { SiFormFieldsetComponent } from './form-fieldset/si-form-fieldset.component';
 import { SiFormContainerComponent } from './si-form-container/si-form-container.component';
-import { SiFormItemControlInputDirective } from './si-form-item-control-input.directive';
 import { SiFormItemComponent } from './si-form-item/si-form-item.component';
 import { SiFormValidationErrorMapper } from './si-form-validation-error.model';
 import { provideFormValidationErrorMapper } from './si-form-validation-error.provider';
 
 @NgModule({
-  imports: [
-    SiFormContainerComponent,
-    SiFormFieldsetComponent,
-    SiFormItemComponent,
-    SiFormItemControlInputDirective
-  ],
-  exports: [
-    SiFormContainerComponent,
-    SiFormFieldsetComponent,
-    SiFormItemComponent,
-    SiFormItemControlInputDirective
-  ]
+  imports: [SiFormContainerComponent, SiFormFieldsetComponent, SiFormItemComponent],
+  exports: [SiFormContainerComponent, SiFormFieldsetComponent, SiFormItemComponent]
 })
 export class SiFormModule {
   /**

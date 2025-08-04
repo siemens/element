@@ -6,7 +6,6 @@ import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterContentChecked,
   AfterContentInit,
-  AfterViewInit,
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
@@ -15,7 +14,6 @@ import {
   ElementRef,
   inject,
   input,
-  Input,
   isSignal,
   OnChanges,
   OnDestroy,
@@ -61,11 +59,8 @@ export interface SiFormError {
   }
 })
 export class SiFormItemComponent
-  implements AfterContentInit, AfterViewInit, AfterContentChecked, OnChanges, OnInit, OnDestroy
+  implements AfterContentInit, AfterContentChecked, OnChanges, OnInit, OnDestroy
 {
-  /** @deprecated property has longer an effect. SiFormItem detects IDs automatically  */
-  @Input() inputId?: string;
-
   /**
    * The label to be displayed in the form item.
    * It will be translated if a translation key is available.
@@ -82,13 +77,6 @@ export class SiFormItemComponent
    * @example labelWidth="100px"
    */
   readonly labelWidth = input<string | number>();
-
-  /**
-   * @deprecated This input has no effect and can be removed.
-   *
-   * @defaultValue false
-   */
-  @Input({ transform: booleanAttribute }) readonly = false;
 
   /**
    * Disables the automatic error printing. Error printing will be enabled by default in v46.
@@ -122,9 +110,6 @@ export class SiFormItemComponent
   /** @internal */
   readonly errors = signal<SiFormError[]>([]);
 
-  /** @deprecated Remove with v48 */
-  protected readonly isLegacyMode = signal(false);
-
   protected fieldset = inject(SiFormFieldsetComponent, { optional: true });
   protected container = inject(SiFormContainerComponent, { optional: true });
 
@@ -151,7 +136,6 @@ export class SiFormItemComponent
     () => this.fieldControlQuery() ?? this.fieldControlNative()
   );
 
-  private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private validationErrorService = inject(SiFormValidationErrorService);
   private requiredTestControl = new FormControl('');
   private validator?: ValidatorFn | null;
@@ -196,10 +180,6 @@ export class SiFormItemComponent
   ngAfterContentChecked(): void {
     this.updateRequiredState();
     this.updateValidationMessages();
-  }
-
-  ngAfterViewInit(): void {
-    this.isLegacyMode.set(!!this.elementRef.nativeElement.querySelector('.form-check'));
   }
 
   ngOnDestroy(): void {

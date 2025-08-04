@@ -13,7 +13,10 @@
     @if (tooltipText()) {
       <div class="si-body-2">{{ tooltipText() | translate }}</div>
     } @else if (tooltipTemplate()) {
-      <ng-template [ngTemplateOutlet]="tooltipTemplate()" />
+      <ng-template
+        [ngTemplateOutlet]="tooltipTemplate()"
+        [ngTemplateOutletContext]="tooltipContext()"
+      />
     } @else if (tooltipComponent()) {
       <ng-container [ngComponentOutlet]="tooltipComponent()" />
     }

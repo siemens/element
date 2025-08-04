@@ -471,7 +471,7 @@ export class SiTreeViewVirtualizationService {
     // This allows for an optimized and proper calculation of the pageBase.
     // pageBase stores the index of the first page which is virtualized.
 
-    // totalDeltaScrollVirt corresponds to the total virtualized items height above the visible are!
+    // totalDeltaScrollVirt corresponds to the total virtualized items height above the visible area
     const totalDeltaScrollVirt: number = scrollTop - this.heightBefore;
     let updateVirtList = false;
     const pageHeight: number = this.pageSize * (this.siTreeViewItemHeightService.itemHeight ?? 0);
@@ -515,10 +515,10 @@ export class SiTreeViewVirtualizationService {
   private handleScrollGrouped(scrollTop: number, itemsAll: TreeItem[]): void {
     // Notes:
     // This method is used in case the tree list is grouped => the group items have a different height than the other items.
-    // This allows for an optimized and avaeraged calculation of the new pageBase.
+    // This allows for an optimized and averaged calculation of the new pageBase.
     // pageBase stores the index of the first page which is virtualized.
 
-    // totalDeltaScrollVirt corresponds to the total virtualized items height above the visible are!
+    // totalDeltaScrollVirt corresponds to the total virtualized items height above the visible area
     const totalDeltaScrollVirt: number = scrollTop - this.heightBefore;
     const pageHeightFirst3: number =
       this.calculateVirtPageHeight(0) +

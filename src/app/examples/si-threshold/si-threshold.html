@@ -25,44 +25,68 @@
   <div class="card-body">
     <div class="mb-6"> Validation: {{ valid }} </div>
     <div class="row align-items-end">
-      <si-form-item class="col-sm-3" label="Can add/remove steps">
-        <input type="checkbox" class="form-check-input" [(ngModel)]="canAddRemove" />
-      </si-form-item>
-      <si-form-item class="col-sm-3" label="Horizontal layout">
-        <input type="checkbox" class="form-check-input" [(ngModel)]="horizontalLayout" />
-      </si-form-item>
-      <si-form-item class="col-sm-3" label="Readonly">
-        <input type="checkbox" class="form-check-input" [(ngModel)]="readonly" />
-      </si-form-item>
-      <si-form-item class="col-sm-3" label="Readonly conditions">
-        <input type="checkbox" class="form-check-input" [(ngModel)]="readonlyConditions" />
-      </si-form-item>
-      <si-form-item class="col-sm-3" label="-/+ buttons">
-        <input type="checkbox" class="form-check-input" [(ngModel)]="showDecIncButtons" />
-      </si-form-item>
-      <si-form-item class="col-sm-3" label="Validate">
-        <input type="checkbox" class="form-check-input" [(ngModel)]="validation" />
-      </si-form-item>
-      <si-form-item class="col-sm-3" label="Can wrap">
-        <input type="checkbox" class="form-check-input" [(ngModel)]="wrap" />
-      </si-form-item>
+      <div class="col-sm-3">
+        <si-form-item label="Can add/remove steps">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="canAddRemove" />
+        </si-form-item>
+      </div>
+      <div class="col-sm-3">
+        <si-form-item label="Horizontal layout">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="horizontalLayout" />
+        </si-form-item>
+      </div>
+      <div class="col-sm-3">
+        <si-form-item label="Readonly">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="readonly" />
+        </si-form-item>
+      </div>
+      <div class="col-sm-3">
+        <si-form-item label="Readonly conditions">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="readonlyConditions" />
+        </si-form-item>
+      </div>
+      <div class="col-sm-3">
+        <si-form-item label="-/+ buttons">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="showDecIncButtons" />
+        </si-form-item>
+      </div>
+      <div class="col-sm-3">
+        <si-form-item label="Validate">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="validation" />
+        </si-form-item>
+      </div>
+      <div class="col-sm-3">
+        <si-form-item label="Can wrap">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="wrap" />
+        </si-form-item>
+      </div>
     </div>
     <div class="row">
-      <si-form-item class="col-sm-3" label="Max. steps">
-        <si-number-input class="form-control" [min]="0" [(ngModel)]="maxSteps" />
-      </si-form-item>
-      <si-form-item class="col-sm-3" label="Min. value">
-        <si-number-input class="form-control" [(ngModel)]="minValue" />
-      </si-form-item>
-      <si-form-item class="col-sm-3" label="Max. value">
-        <si-number-input class="form-control" [(ngModel)]="maxValue" />
-      </si-form-item>
-      <si-form-item class="col-sm-3" label="Step size">
-        <si-number-input class="form-control" [(ngModel)]="stepSize" />
-      </si-form-item>
-      <si-form-item class="col-sm-3" label="Unit">
-        <input class="form-control" [(ngModel)]="unit" />
-      </si-form-item>
+      <div class="col-sm-3">
+        <si-form-item label="Max. steps">
+          <si-number-input class="form-control" [min]="0" [(ngModel)]="maxSteps" />
+        </si-form-item>
+      </div>
+      <div class="col-sm-3">
+        <si-form-item label="Min. value">
+          <si-number-input class="form-control" [(ngModel)]="minValue" />
+        </si-form-item>
+      </div>
+      <div class="col-sm-3">
+        <si-form-item label="Max. value">
+          <si-number-input class="form-control" [(ngModel)]="maxValue" />
+        </si-form-item>
+      </div>
+      <div class="col-sm-3">
+        <si-form-item label="Step size">
+          <si-number-input class="form-control" [(ngModel)]="stepSize" />
+        </si-form-item>
+      </div>
+      <div class="col-sm-3">
+        <si-form-item label="Unit">
+          <input class="form-control" [(ngModel)]="unit" />
+        </si-form-item>
+      </div>
     </div>
   </div>
 </div>

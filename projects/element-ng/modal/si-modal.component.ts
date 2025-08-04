@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { A11yModule } from '@angular/cdk/a11y';
-import { DOCUMENT, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -14,7 +14,8 @@ import {
   OnDestroy,
   OnInit,
   signal,
-  viewChild
+  viewChild,
+  DOCUMENT
 } from '@angular/core';
 
 import { ModalRef } from './modalref';
@@ -127,7 +128,7 @@ export class SiModalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   @HostListener('window:keydown.esc', ['$event'])
-  protected onEsc(event: KeyboardEvent): void {
+  protected onEsc(event: Event): void {
     if (this.modalRef?.data.keyboard && this.modalRef?.isCurrent()) {
       event.preventDefault();
       this.modalRef.messageOrHide(this.modalRef.closeValue);

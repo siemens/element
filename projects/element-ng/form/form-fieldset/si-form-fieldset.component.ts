@@ -21,12 +21,12 @@ import { SiFormItemComponent } from '../si-form-item/si-form-item.component';
   imports: [SiTranslatePipe],
   templateUrl: './si-form-fieldset.component.html',
   styleUrl: '../si-form.shared.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     role: 'group',
     class: 'si-form-input',
     '[style.--si-form-label-width]': 'labelWidth()'
-  },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  }
 })
 export class SiFormFieldsetComponent implements DoCheck {
   private static labelIdCounter = 0;

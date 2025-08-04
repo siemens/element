@@ -473,9 +473,9 @@ which automates all release tasks.
 
 - to create a new release push changes to the `main` branch
 - to create a pre-release push changes to the `next` branch
-- to create a maintenance release push changes to a branch following this
-  pattern: `maintenance/N.N.x` / `maintenance/N.x.x` / `maintenance/N.x` branch
-  where `N` is any existing version
+- to create a back-merge release push changes to a branch following this
+  pattern: `release/N.N.x` / `release/N.x.x` / `release/N.x` branch where `N` is
+  any existing version
 
 ## Attribution
 

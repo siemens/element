@@ -10,6 +10,7 @@
   [hideBackButton]="false"
   [(detailsActive)]="detailsActive"
   (hasLargeSizeChange)="isLarge = $event"
+  (mainContainerWidthChange)="table.recalculate()"
 >
   >
   <si-search-bar

@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { EventEmitter, inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { EventEmitter, inject, Injectable, PLATFORM_ID, signal, DOCUMENT } from '@angular/core';
 import { DomSanitizer, Meta, SafeHtml } from '@angular/platform-browser';
 import { Observable, of, ReplaySubject, throwError } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';

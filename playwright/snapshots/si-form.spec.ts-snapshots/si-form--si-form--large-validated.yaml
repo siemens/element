@@ -14,6 +14,7 @@
   - textbox "Enter phone number"
 - text: Invalid phone number Day of birth*
 - textbox "Day of birth*"
+- button "Open calendar"
 - text: A value is required. Travel Date*
 - group "Travel Date*":
   - textbox "Start date"
@@ -45,11 +46,13 @@
   - text: I confirm that I do not care about my privacy.* A value is required.
 - button "Cancel"
 - button "Save"
-- text: Debugging Actions
-- checkbox "Disable form"
-- text: Disable form
-- checkbox "Readonly form"
-- text: Readonly form Validation Status INVALID Validation Details
+- text: Debugging
+- group "Actions":
+  - checkbox "Disable form"
+  - text: Disable form
+  - checkbox "Readonly form"
+  - text: Readonly form
+- text: Validation Status INVALID Validation Details
 - list:
   - listitem: "Control: name, error: minlength, minlength"
   - listitem: "Control: name, error: pattern, pattern"

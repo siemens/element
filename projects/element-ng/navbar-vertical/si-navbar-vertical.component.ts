@@ -23,7 +23,6 @@ import {
   inject,
   input,
   model,
-  numberAttribute,
   OnChanges,
   OnDestroy,
   OnInit,
@@ -86,13 +85,13 @@ export class SiNavbarVerticalItemGuardDirective {
   ],
   templateUrl: './si-navbar-vertical.component.html',
   styleUrl: './si-navbar-vertical.component.scss',
+  providers: [{ provide: SI_NAVBAR_VERTICAL, useExisting: SiNavbarVerticalComponent }],
   host: {
     class: 'si-layout-inner',
     '[class.nav-collapsed]': 'collapsed()',
     '[class.nav-text-only]': 'textOnly()',
     '[class.visible]': 'visible()'
   },
-  providers: [{ provide: SI_NAVBAR_VERTICAL, useExisting: SiNavbarVerticalComponent }],
   animations: [
     trigger('collapse', [
       state('expanded', style({ 'inline-size': '240px' })),
@@ -201,13 +200,6 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit, OnDestroy {
    * @defaultValue true
    */
   readonly visible = input(true, { transform: booleanAttribute });
-
-  /**
-   * @deprecated dropped without replacement.
-   *
-   * @defaultValue undefined
-   */
-  readonly autoCollapseDelay = input<number, unknown>(undefined, { transform: numberAttribute });
 
   /**
    * Text for the navbar expand button. Required for a11y
@@ -339,14 +331,6 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit, OnDestroy {
     this.collapsed.set(false);
     if (!this.smallScreen()) {
       this.preferCollapse = this.collapsed();
-      const autoCollapseDelay = this.autoCollapseDelay();
-      if (autoCollapseDelay) {
-        setTimeout(() => {
-          if (!this.collapsed()) {
-            this.toggleCollapse();
-          }
-        }, autoCollapseDelay);
-      }
     }
     this.saveUIState();
   }

@@ -97,103 +97,6 @@
             }
           }
         },
-        "build-webpack": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/element-examples",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": ["zone.js"],
-            "tsConfig": "src/tsconfig.app.json",
-            "aot": false,
-            "assets": [
-              "src/favicon.png",
-              "src/app/examples",
-              {
-                "glob": "*",
-                "input": "projects/element-ng/assets/images",
-                "output": "assets/images"
-              },
-              {
-                "glob": "**/*",
-                "input": "src/assets/",
-                "ignore": ["**/i18n/*.json", "**/i18n/"],
-                "output": "/assets/"
-              },
-              {
-                "glob": "**/*",
-                "input": "./projects/maps-ng/assets",
-                "output": "/assets/"
-              }
-            ],
-            "stylePreprocessorOptions": {
-              "includePaths": ["node_modules/"]
-            },
-            "styles": ["src/styles-webpack.scss"],
-            "scripts": [],
-            "allowedCommonJsDependencies": [
-              "zrender",
-              "echarts",
-              "google-libphonenumber",
-              "@babel/standalone",
-              "pbf",
-              "rbush",
-              "react-dom/client",
-              "vue3-sfc-loader"
-            ],
-            "vendorChunk": true,
-            "extractLicenses": false,
-            "buildOptimizer": false,
-            "sourceMap": true,
-            "optimization": false,
-            "namedChunks": true
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
-              "tsConfig": "src/tsconfig.app.prod.json",
-              "crossOrigin": "use-credentials",
-              "optimization": true,
-              "outputHashing": "all",
-              "namedChunks": false,
-              "vendorChunk": false,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "4mb",
-                  "maximumError": "6mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
-            },
-            "aot": {
-              "aot": true,
-              "sourceMap": false,
-              "tsConfig": "src/tsconfig.app.prod.json",
-              "outputPath": "dist/element-examples-aot"
-            }
-          }
-        },
-        "serve-webpack": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "buildTarget": "element-examples:build-webpack"
-          },
-          "configurations": {
-            "production": {
-              "buildTarget": "element-examples:build-webpack:production"
-            }
-          }
-        },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
@@ -210,16 +113,15 @@
       "prefix": "si",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular/build:ng-packagr",
           "options": {
             "tsConfig": "projects/element-ng/tsconfig.lib.json",
             "project": "projects/element-ng/ng-package.json"
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular/build:karma",
           "options": {
-            "builderMode": "application",
             "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/element-ng/tsconfig.spec.json",
             "karmaConfig": "projects/element-ng/karma.conf.cjs",
@@ -249,14 +151,14 @@
       "prefix": "si",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular/build:ng-packagr",
           "options": {
             "tsConfig": "projects/element-translate-ng/tsconfig.lib.json",
             "project": "projects/element-translate-ng/ng-package.json"
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular/build:karma",
           "options": {
             "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/element-translate-ng/tsconfig.spec.json",
@@ -289,7 +191,7 @@
       "prefix": "si",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular/build:ng-packagr",
           "options": {
             "tsConfig": "projects/live-preview/tsconfig.lib.json",
             "project": "projects/live-preview/ng-package.json"
@@ -314,16 +216,15 @@
       "prefix": "si",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular/build:ng-packagr",
           "options": {
             "tsConfig": "projects/charts-ng/tsconfig.lib.json",
             "project": "projects/charts-ng/ng-package.json"
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular/build:karma",
           "options": {
-            "builderMode": "application",
             "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/charts-ng/tsconfig.spec.json",
             "karmaConfig": "projects/charts-ng/karma.conf.cjs",
@@ -346,16 +247,15 @@
       "prefix": "si",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular/build:ng-packagr",
           "options": {
             "tsConfig": "projects/native-charts-ng/tsconfig.lib.json",
             "project": "projects/native-charts-ng/ng-package.json"
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular/build:karma",
           "options": {
-            "builderMode": "application",
             "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/native-charts-ng/tsconfig.spec.json",
             "karmaConfig": "projects/native-charts-ng/karma.conf.cjs",
@@ -381,7 +281,7 @@
       "prefix": "si",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular/build:ng-packagr",
           "options": {
             "tsConfig": "projects/dashboards-ng/tsconfig.lib.json",
             "project": "projects/dashboards-ng/ng-package.json"
@@ -722,7 +622,29 @@
   "newProjectRoot": "projects",
   "schematics": {
     "@schematics/angular:component": {
-      "style": "scss"
+      "style": "scss",
+      "type": "component"
+    },
+    "@schematics/angular:directive": {
+      "type": "directive"
+    },
+    "@schematics/angular:service": {
+      "type": "service"
+    },
+    "@schematics/angular:guard": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:interceptor": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:module": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:pipe": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:resolver": {
+      "typeSeparator": "."
     }
   },
   "cli": {

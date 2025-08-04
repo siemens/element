@@ -8,10 +8,10 @@ import { SiSelectComponent } from './si-select.component';
 
 @Directive({
   selector: '[siSelectAction]',
-  exportAs: 'si-select-action',
   host: {
     class: 'mx-5 my-4'
-  }
+  },
+  exportAs: 'si-select-action'
 })
 export class SiSelectActionDirective {
   private readonly select = inject(SiSelectComponent);

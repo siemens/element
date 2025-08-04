@@ -12,13 +12,13 @@ import { SiListDetailsComponent } from '../si-list-details.component';
   imports: [],
   templateUrl: './si-details-pane.component.html',
   styleUrl: './si-details-pane.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.expanded]': 'parent.hasLargeSize()',
     '[class.details-active]': 'parent.detailsActive() && !parent.hasLargeSize()',
     '[attr.inert]': '!parent.hasLargeSize() && !parent.detailsActive() ? "" : null',
     '[style.max-inline-size]': 'parent.maxDetailsSize()'
-  },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  }
 })
 export class SiDetailsPaneComponent {
   protected parent = inject(SiListDetailsComponent);

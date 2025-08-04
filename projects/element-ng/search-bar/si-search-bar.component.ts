@@ -35,7 +35,6 @@ import { debounceTime } from 'rxjs/operators';
   imports: [SiIconNextComponent],
   templateUrl: './si-search-bar.component.html',
   styleUrl: './si-search-bar.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -43,6 +42,7 @@ import { debounceTime } from 'rxjs/operators';
       multi: true
     }
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.readonly]': 'readonly()'
   }

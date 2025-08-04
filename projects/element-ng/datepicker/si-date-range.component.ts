@@ -58,13 +58,6 @@ import { DatepickerInputConfig, DateRange } from './si-datepicker.model';
   imports: [FormsModule, SiDateInputDirective, SiIconNextComponent, SiTranslatePipe, A11yModule],
   templateUrl: './si-date-range.component.html',
   styleUrl: './si-date-range.component.scss',
-  host: {
-    class: 'form-control d-flex align-items-center pe-2',
-    role: 'group',
-    '[class.disabled]': 'disabled()',
-    '[class.readonly]': 'readonly()',
-    '[attr.aria-labelledby]': 'labelledby'
-  },
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -81,6 +74,13 @@ import { DatepickerInputConfig, DateRange } from './si-datepicker.model';
       useExisting: SiDateRangeComponent
     }
   ],
+  host: {
+    class: 'form-control d-flex align-items-center pe-2',
+    role: 'group',
+    '[class.disabled]': 'disabled()',
+    '[class.readonly]': 'readonly()',
+    '[attr.aria-labelledby]': 'labelledby'
+  },
   hostDirectives: [
     {
       directive: SiDatepickerOverlayDirective,
@@ -171,12 +171,6 @@ export class SiDateRangeComponent
    * ```
    */
   readonly endTimeLabel = input<TranslatableString>($localize`:@@SI_DATEPICKER.END_TIME_LABEL:to`);
-  /**
-   * @deprecated Property has no effect and will be removed without a replacement.
-   *
-   * @defaultValue 200
-   */
-  readonly debounceTime = input(200);
   /**
    * Automatically close overlay on date selection.
    *

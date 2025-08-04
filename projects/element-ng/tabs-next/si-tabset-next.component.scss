@@ -44,14 +44,6 @@
   }
 }
 
-a[si-menu-item] {
-  .badge-dot {
-    inset-block-end: 4px;
-    min-inline-size: 12px;
-    margin-inline-start: map.get(variables.$spacers, 2);
-  }
-}
-
 .tab-content {
   inline-size: 100%;
   block-size: calc(100% - 40px);

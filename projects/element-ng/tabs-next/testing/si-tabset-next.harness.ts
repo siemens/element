@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { LEFT_ARROW, RIGHT_ARROW } from '@angular/cdk/keycodes';
 import { ComponentHarness, TestElement, TestKey } from '@angular/cdk/testing';
 
 export class SiTabsetNextHarness extends ComponentHarness {
@@ -15,10 +16,8 @@ export class SiTabsetNextHarness extends ComponentHarness {
   );
   private tabScrollList = this.locatorFor('div.tab-container-buttonbar-list');
   private tabContent = this.locatorFor('div.tab-content:not([hidden])');
-  private activeMenuItem = this.documentRootLocatorFactory().locatorFor(
-    'a[role="menuitem"].active'
-  );
-  private menuItems = this.documentRootLocatorFactory().locatorForAll('a[role="menuitem"]');
+  private activeMenuItem = this.documentRootLocatorFactory().locatorFor('[role="menuitem"].active');
+  private menuItems = this.documentRootLocatorFactory().locatorForAll('[role="menuitem"]');
   private tabScrollWrapper = this.locatorFor('[role="tablist"]');
 
   async getTabItemsLength(): Promise<number> {
@@ -66,6 +65,18 @@ export class SiTabsetNextHarness extends ComponentHarness {
 
   async getMenuItems(): Promise<TestElement[]> {
     return await this.menuItems();
+  }
+
+  async pressArrowRight(): Promise<void> {
+    return this.tabScrollWrapper().then(wrapper =>
+      wrapper.dispatchEvent('keydown', { keyCode: RIGHT_ARROW })
+    );
+  }
+
+  async pressArrowLeft(): Promise<void> {
+    return this.tabScrollWrapper().then(wrapper =>
+      wrapper.dispatchEvent('keydown', { keyCode: LEFT_ARROW })
+    );
   }
 
   async getMenuItemAt(index: number): Promise<TestElement> {
@@ -117,5 +128,11 @@ export class SiTabsetNextHarness extends ComponentHarness {
       Math.round(rect.left) >= Math.round(containerRect.left) &&
       Math.round(rectRight) <= Math.round(containerRectRight)
     );
+  }
+
+  async isTabFocussable(index: number): Promise<boolean> {
+    const tabButton = await this.getTabItemButtonAt(index);
+    const tabIndex = await tabButton.getAttribute('tabindex');
+    return tabIndex === '0' || tabIndex === null;
   }
 }

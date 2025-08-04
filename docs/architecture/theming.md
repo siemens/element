@@ -71,15 +71,6 @@ You need to provide your implementation in the main app module:
 
 <si-docs-api injectable="SiThemeService"></si-docs-api>
 
-## Theme editor
-
-For testing and creating custom themes we provide a theme editor.
-
-> **Note:** Do not use the theme editor in your products yet, as we still expect
-> many changes.
-
-<si-docs-component example="si-theme/si-theme" height="650"></si-docs-component>
-
 ## Build time custom theme
 
 It's also possible to use custom themes at build time. This option is mostly for OEM theming. To
@@ -143,7 +134,5 @@ Then, use `themes.make-theme()` like this:
 !!! warning "Important info"
     The required keys in the map might change in future versions of Element, so forward compatibility is not guaranteed.
     Topic like usability and accessibility and not guaranteed that way so please always involve UX when using this feature.
-
-<si-docs-api component="SiThemeEditorComponent"></si-docs-api>
 
 <si-docs-types></si-docs-types>

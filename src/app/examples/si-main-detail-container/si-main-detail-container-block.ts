@@ -77,7 +77,7 @@ export class SampleComponent {
   selectedEntity: CorporateEmployee | undefined;
   selectedEntities: CorporateEmployee[] = [];
   tableConfig = SI_DATATABLE_CONFIG;
-  totalElements!: number;
+  totalElements = 0;
   searchTerm?: string;
 
   /**

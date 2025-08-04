@@ -20,10 +20,10 @@ import { SiTooltipService, TooltipRef } from './si-tooltip.service';
 
 @Directive({
   selector: '[siTooltip]',
+  providers: [SiTooltipService],
   host: {
     '[attr.aria-describedby]': 'describedBy'
-  },
-  providers: [SiTooltipService]
+  }
 })
 export class SiTooltipDirective implements OnDestroy {
   private static idCounter = 0;
@@ -54,6 +54,11 @@ export class SiTooltipDirective implements OnDestroy {
    */
   readonly isDisabled = input(false, { transform: booleanAttribute });
 
+  /**
+   * The context for the attached template
+   */
+  readonly tooltipContext = input();
+
   protected describedBy = `__tooltip_${SiTooltipDirective.idCounter++}`;
 
   private tooltipRef?: TooltipRef;
@@ -77,7 +82,7 @@ export class SiTooltipDirective implements OnDestroy {
       element: this.elementRef,
       placement: this.placement()
     });
-    this.tooltipRef.show(this.siTooltip());
+    this.tooltipRef.show(this.siTooltip(), this.tooltipContext());
   }
 
   @HostListener('focus')

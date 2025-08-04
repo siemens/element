@@ -3,6 +3,7 @@
 @use 'sass:map';
 
 $si-switch-size: 20px !default;
+$si-switch-inline-size: calc(2 * #{$si-switch-size});
 $si-switch-background-off-color: variables.$element-ui-4 !default;
 $si-switch-background-on-color: variables.$element-ui-0 !default;
 $si-switch-background-disabled-color: variables.$element-ui-3 !default;
@@ -18,13 +19,9 @@ $si-switch-knob-size: calc(#{$si-switch-size} - 2 * #{$si-switch-slider-margin})
 
   .form-check-input {
     cursor: pointer;
-    position: relative;
     inset: 0;
-    margin-inline: 0 map.get(variables.$spacers, 3);
     margin-block: - map.get(variables.$spacers, 1);
-    inline-size: calc(
-      2 * #{$si-switch-size}
-    ) !important; // stylelint-disable-line declaration-no-important
+    inline-size: $si-switch-inline-size !important; // stylelint-disable-line declaration-no-important
     block-size: #{$si-switch-size} !important; // stylelint-disable-line declaration-no-important
     background-color: $si-switch-background-off-color;
     transition: $si-switch-transition-length;

@@ -5,11 +5,10 @@
 import {
   Component,
   ElementRef,
-  EventEmitter,
   HostBinding,
   Input,
   OnChanges,
-  Output,
+  output,
   SimpleChanges,
   viewChild
 } from '@angular/core';
@@ -28,7 +27,7 @@ export class SiLivePreviewWebComponent implements OnChanges {
   @Input() webcomponentTemplateCode = '';
   @Input() exampleUrl!: string;
   @Input() config!: SiLivePreviewConfig;
-  @Output() readonly inProgress = new EventEmitter<boolean>();
+  readonly inProgress = output<boolean>();
 
   @HostBinding('class.live-preview-done') renderingDone = false;
 
@@ -64,7 +63,7 @@ export class SiLivePreviewWebComponent implements OnChanges {
       this.reactRoot = this.getDefault(reactDom).createRoot(this.root().nativeElement);
       const moduleInput = code;
       import('@babel/standalone').then(babel => {
-        const output: any = this.getDefault(babel).transform(moduleInput, {
+        const moduleOutput: any = this.getDefault(babel).transform(moduleInput, {
           presets: [
             // `modules: false` creates a module that can be imported
             ['env', { modules: false }],
@@ -76,7 +75,7 @@ export class SiLivePreviewWebComponent implements OnChanges {
 
         import('react').then(react => {
           window.React = this.getDefault(react);
-          const dataUrl = 'data:text/javascript;base64,' + btoa(output);
+          const dataUrl = 'data:text/javascript;base64,' + btoa(moduleOutput);
 
           import(/* webpackIgnore: true  */ /* @vite-ignore */ dataUrl).then(module => {
             this.reactRoot.render(this.getDefault(react).createElement(module.default));

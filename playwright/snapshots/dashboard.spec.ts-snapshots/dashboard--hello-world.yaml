@@ -75,18 +75,10 @@
   - menubar:
     - menuitem "Remove"
   - list:
-    - listitem:
-      - img "triangle filled"
-      - text: /Today \d+:\d+ Title Description/
-    - listitem:
-      - img /square \d+ filled/
-      - text: /Today \d+:\d+ Title Description/
-    - listitem:
-      - img "square filled"
-      - text: /Today \d+:\d+ Title Description/
-    - listitem:
-      - img "circle filled"
-      - text: /Today \d+:\d+ Title Description/
+    - listitem: /Today \d+:\d+ Title Description/
+    - listitem: /Today \d+:\d+ Title Description/
+    - listitem: /Today \d+:\d+ Title Description/
+    - listitem: /Today \d+:\d+ Title Description/
   - link "Go to...":
     - /url: https://github.com/siemens/element/issues
   - img

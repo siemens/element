@@ -2,8 +2,7 @@
   - tab "Conference room" [selected]
   - tab "Lobby Hall":
     - img "Hall"
-  - tab "Pantry Kitchen 1":
-    - img "Kitchen"
+  - tab "Pantry 1"
   - tab "Washroom 2"
   - tab "Deselectable"
 - tabpanel "Conference room":

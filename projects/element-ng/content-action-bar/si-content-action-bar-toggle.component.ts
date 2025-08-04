@@ -11,8 +11,8 @@ import { SiIconNextComponent } from '@siemens/element-ng/icon';
   imports: [SiIconNextComponent],
   templateUrl: './si-content-action-bar-toggle.component.html',
   styleUrl: '../menu/si-menu-item.component.scss',
-  host: { class: 'dropdown-item flex-grow-0 focus-inside' },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { class: 'dropdown-item flex-grow-0 focus-inside' }
 })
 export class SiContentActionBarToggleComponent {
   readonly icon = input.required<string>();

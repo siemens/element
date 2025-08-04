@@ -35,8 +35,7 @@ import { DatepickerInputConfig, getDatepickerFormat } from './si-datepicker.mode
  * Base directive for date input fields.
  */
 @Directive({
-  selector: '[siDateInput]',
-  exportAs: 'siDateInput',
+  selector: 'input[siDateInput]',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -60,7 +59,8 @@ import { DatepickerInputConfig, getDatepickerFormat } from './si-datepicker.mode
     '[class.readonly]': 'readonly()',
     '[attr.aria-describedby]': 'errormessageId()',
     '[value]': 'dateString()'
-  }
+  },
+  exportAs: 'siDateInput'
 })
 export class SiDateInputDirective
   implements ControlValueAccessor, OnChanges, Validator, SiFormItemControl
@@ -85,12 +85,6 @@ export class SiDateInputDirective
    */
   readonly siDatepickerConfig = model<DatepickerInputConfig | undefined>({});
 
-  /**
-   * @deprecated Property has no effect and will be removed without a replacement.
-   *
-   * @defaultValue 200
-   */
-  readonly dateInputDebounceTime = input(200);
   /**
    * Emits an event to notify about disabling the time from the datepicker.
    * When time is disable, we construct a pure date object in UTC 00:00:00 time.
@@ -224,8 +218,9 @@ export class SiDateInputDirective
    * Handles `input` events on the input element.
    * @param value - current input value.
    */
-  @HostListener('input', ['$event.target.value'])
-  protected onInput(value: string): void {
+  @HostListener('input', ['$event'])
+  protected onInput(event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
     const parsedDate = parseDate(value, this.getFormat(), this.locale);
 
     // Is same date

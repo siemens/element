@@ -1,0 +1,76 @@
+name: Bug report
+description: Report a bug for Siemens Element
+labels: ['triage']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+
+  - type: checkboxes
+    attributes:
+      label: Prerequisites
+      description: Make sure to not violate these rules
+      options:
+        - label: I have read the [Contributing Guidelines](https://github.com/siemens/element/blob/main/CONTRIBUTING.md).
+          required: true
+        - label: I have not leaked any internal/restricted information like screenshots, videos, code snippets, links etc.
+          required: true
+
+  - type: input
+    id: affected-component
+    attributes:
+      label: Affected component
+      description: The component in which the the bug occurs.
+      placeholder: <si-component-name>
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: Summarize the bug encountered concisely
+    validations:
+      required: true
+
+  - type: textarea
+    id: version
+    attributes:
+      label: Version
+      description: List the exact versions of all relevant packages.
+      placeholder: '@siemens/element-ng: X.X.X'
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Describe the steps how the issue can be reproduced.
+    validations:
+      required: true
+
+  - type: input
+    id: code-reproduction
+    attributes:
+      label: Code reproduction example
+      description: |
+        If possible, please create an example project that exhibits the problematic behavior and link to it here in the bug report.
+
+        For simple cases, you can also **post a link to your example** using the Design System component preview editor. You get the link by **clicking the link icon in the component preview editor**.
+      placeholder: https://element.siemens.io/element-examples/...
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-behavior
+    attributes:
+      label: What is the current bug behavior
+      description: What actually happens.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: What is the expected correct behavior
+      description: What should actually happen.
+    validations:
+      required: true

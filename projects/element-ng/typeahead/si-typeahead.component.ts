@@ -11,8 +11,6 @@ import {
   ElementRef,
   HostListener,
   inject,
-  OnDestroy,
-  OnInit,
   viewChild
 } from '@angular/core';
 import {
@@ -22,7 +20,6 @@ import {
 } from '@siemens/element-ng/autocomplete';
 import { SiIconNextComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
-import { Subscription } from 'rxjs';
 
 import { SiTypeaheadDirective } from './si-typeahead.directive';
 import { TypeaheadMatch } from './si-typeahead.model';
@@ -41,7 +38,7 @@ import { TypeaheadMatch } from './si-typeahead.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'w-100' }
 })
-export class SiTypeaheadComponent implements OnDestroy, OnInit, AfterViewInit {
+export class SiTypeaheadComponent implements AfterViewInit {
   protected parent = inject(SiTypeaheadDirective);
   protected readonly matches = computed(() =>
     this.parent.typeaheadOptionsLimit()
@@ -49,11 +46,7 @@ export class SiTypeaheadComponent implements OnDestroy, OnInit, AfterViewInit {
       : this.parent.foundMatches()
   );
 
-  protected multiselect = false;
-  // Store the number of rendered matches to know if the height needs to be recalculated.
-  private renderedMatchesLength = 0;
-
-  private subscription!: Subscription;
+  protected readonly multiselect = computed(() => this.parent.typeaheadMultiSelect());
 
   private readonly typeaheadElement = viewChild.required('typeahead', {
     read: ElementRef
@@ -61,19 +54,8 @@ export class SiTypeaheadComponent implements OnDestroy, OnInit, AfterViewInit {
 
   protected autocompleteDirective = inject(SiAutocompleteDirective);
 
-  ngOnInit(): void {
-    this.multiselect = !!this.parent.typeaheadMultiSelect();
-  }
-
   ngAfterViewInit(): void {
     this.setHeight(this.typeaheadElement());
-    this.renderedMatchesLength = this.matches().length;
-  }
-
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
   }
 
   @HostListener('mousedown', ['$event'])
@@ -85,8 +67,8 @@ export class SiTypeaheadComponent implements OnDestroy, OnInit, AfterViewInit {
    * Set the height of the element passed to it (typeahead) if there are items displayed,
    * the number of displayed items changed and it is scrollable.
    */
-  protected setHeight(element: ElementRef): void {
-    if (this.matches().length !== 0 && this.matches().length !== this.renderedMatchesLength) {
+  private setHeight(element: ElementRef): void {
+    if (this.matches().length) {
       if (
         this.parent.typeaheadScrollable() &&
         this.parent.typeaheadOptionsInScrollableView() < this.matches().length

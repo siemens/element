@@ -18,7 +18,6 @@ import { AddrInputEvent, SiIpInputDirective } from './si-ip-input.directive';
 
 @Directive({
   selector: 'input[siIpV4]',
-  exportAs: 'siIpV4',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -30,7 +29,8 @@ import { AddrInputEvent, SiIpInputDirective } from './si-ip-input.directive';
       useExisting: SiIp4InputDirective,
       multi: true
     }
-  ]
+  ],
+  exportAs: 'siIpV4'
 })
 export class SiIp4InputDirective
   extends SiIpInputDirective

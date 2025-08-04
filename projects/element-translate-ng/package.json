@@ -1,7 +1,7 @@
 {
   "name": "@siemens/element-translate-ng",
   "description": "Element translation abstraction layer.",
-  "version": "47.7.0",
+  "version": "47.8.0",
   "license": "MIT",
   "type": "module",
   "repository": {
@@ -17,9 +17,12 @@
   "publishConfig": {
     "access": "public"
   },
+  "scripts": {
+    "postversion": "node ../../postversion.js"
+  },
   "peerDependencies": {
-    "@angular/common": "19 - 20",
-    "@angular/core": "19 - 20",
+    "@angular/common": "20",
+    "@angular/core": "20",
     "@ngx-translate/core": "15 - 16"
   },
   "peerDependenciesMeta": {

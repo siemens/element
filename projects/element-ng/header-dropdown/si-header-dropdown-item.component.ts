@@ -16,10 +16,10 @@ import { SI_HEADER_WITH_DROPDOWNS } from './si-header.model';
   imports: [NgClass],
   templateUrl: './si-header-dropdown-item.component.html',
   styleUrl: './si-header-dropdown-item.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'dropdown-item focus-inside'
-  },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  }
 })
 export class SiHeaderDropdownItemComponent {
   /** Optional icon that will be rendered before the label. */

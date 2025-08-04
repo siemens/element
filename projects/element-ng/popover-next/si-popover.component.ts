@@ -4,7 +4,7 @@
  */
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
-import { DOCUMENT, NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -15,7 +15,8 @@ import {
   OnInit,
   signal,
   TemplateRef,
-  viewChild
+  viewChild,
+  DOCUMENT
 } from '@angular/core';
 import { calculateOverlayArrowPosition, OverlayArrowPosition } from '@siemens/element-ng/common';
 import { SiIconNextComponent } from '@siemens/element-ng/icon';
@@ -34,12 +35,14 @@ export class PopoverComponent implements OnInit, OnDestroy {
   readonly popoverDirective = input.required<SiPopoverNextDirective>();
   readonly popoverWrapper = viewChild.required<ElementRef>('popoverWrapper');
 
+  /** @internal */
+  labelledBy: string | undefined;
+  /** @internal */
+  describedBy: string | undefined;
   protected readonly positionClass = signal('');
   protected readonly arrowPos = signal<OverlayArrowPosition | undefined>(undefined);
   protected popoverTemplate: TemplateRef<any> | null = null;
   protected injector = inject(Injector);
-  protected labelledBy: string | undefined;
-  protected describedBy: string | undefined;
 
   private elementRef = inject(ElementRef);
   private focusTrapFactory = inject(ConfigurableFocusTrapFactory);

@@ -14,11 +14,11 @@ import { SiHeaderActionIconItemBase } from './si-header-action-item-icon-base.di
   selector: 'button[si-header-account-item]',
   imports: [SiAvatarComponent, SiIconNextComponent],
   templateUrl: './si-header-account-item.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'header-item focus-inside p-4',
     '[class.dropdown-toggle]': '!!dropdownTrigger'
-  },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  }
 })
 export class SiHeaderAccountItemComponent extends SiHeaderActionIconItemBase {
   /** Name of the account. */

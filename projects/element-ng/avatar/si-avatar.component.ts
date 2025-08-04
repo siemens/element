@@ -27,15 +27,15 @@ export type AvatarSize = 'tiny' | 'xsmall' | 'small' | 'regular' | 'large' | 'xl
   templateUrl: './si-avatar.component.html',
   styleUrl: './si-avatar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[class]': 'size()'
+  },
   hostDirectives: [
     {
       directive: SiAvatarBackgroundColorDirective,
       inputs: ['color', 'autoColor']
     }
-  ],
-  host: {
-    '[class]': 'size()'
-  }
+  ]
 })
 export class SiAvatarComponent implements OnChanges {
   private readonly statusIcons = inject(STATUS_ICON_CONFIG);

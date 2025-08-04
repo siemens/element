@@ -15,8 +15,8 @@ import {
 
 @NgModule({
   imports: [SiExampleViewerComponent, SiExampleOverviewComponent],
-  exports: [SiExampleOverviewComponent, SiExampleViewerComponent],
-  providers: [{ provide: REMOVE_STYLES_ON_COMPONENT_DESTROY, useValue: true }]
+  providers: [{ provide: REMOVE_STYLES_ON_COMPONENT_DESTROY, useValue: true }],
+  exports: [SiExampleOverviewComponent, SiExampleViewerComponent]
 })
 export class SiLivePreviewModule {
   static forRoot(

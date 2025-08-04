@@ -48,7 +48,6 @@ interface TimeComponents {
   imports: [NgTemplateOutlet, FormsModule, SiTranslatePipe, A11yModule],
   templateUrl: './si-timepicker.component.html',
   styleUrl: './si-timepicker.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -60,6 +59,7 @@ interface TimeComponents {
       useExisting: SiTimepickerComponent
     }
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     role: 'group',
     class: 'form-custom-control',

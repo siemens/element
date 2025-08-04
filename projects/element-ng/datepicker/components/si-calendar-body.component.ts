@@ -142,10 +142,10 @@ class RangeSelectionStrategy extends SelectionStrategy {
   selector: '[si-calendar-body]',
   imports: [NgClass, A11yModule, SiCalendarDateCellDirective],
   templateUrl: './si-calendar-body.component.html',
-  exportAs: 'siCalendarBody',
   host: {
     class: 'si-calendar-body'
-  }
+  },
+  exportAs: 'siCalendarBody'
 })
 export class SiCalendarBodyComponent {
   /** The active date, the cell which will receive the focus. */

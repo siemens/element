@@ -2,14 +2,14 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { DOCUMENT } from '@angular/common';
 import {
   ApplicationRef,
   ComponentRef,
   createComponent,
   EnvironmentInjector,
   inject,
-  Injectable
+  Injectable,
+  DOCUMENT
 } from '@angular/core';
 
 import { SiSkipLinkTargetDirective } from './si-skip-link-target.directive';

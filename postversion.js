@@ -1,18 +1,23 @@
 import { glob } from 'node:fs/promises';
 import { readFile, writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
 
 async function updatePeerDependencies() {
+  const rootDir = new URL('.', import.meta.url).pathname;
+
   const versions = new Map();
-  for await (const file of glob(['package.json', 'projects/**/package.json'])) {
+  for await (const file of glob([
+    join(rootDir, 'package.json'),
+    join(rootDir, 'projects/**/package.json')
+  ])) {
     const content = JSON.parse(await readFile(file, { encoding: 'utf8' }));
     versions.set(content.name, content.version);
-    console.log(file);
   }
 
   for await (const file of glob([
-    'package.json',
-    'projects/**/package.json',
-    'dist/**/package.json'
+    join(rootDir, 'package.json'),
+    join(rootDir, 'projects/**/package.json'),
+    join(rootDir, 'dist/**/package.json')
   ])) {
     let updated = false;
     const content = JSON.parse(await readFile(file, { encoding: 'utf8' }));

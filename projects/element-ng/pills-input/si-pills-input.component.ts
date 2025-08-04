@@ -31,7 +31,6 @@ import {
   imports: [SiInputPillComponent, SiTranslatePipe],
   templateUrl: './si-pills-input.component.html',
   styleUrl: './si-pills-input.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -43,6 +42,7 @@ import {
       useExisting: SiPillsInputComponent
     }
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'form-control',
     role: 'listbox',

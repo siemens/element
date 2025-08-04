@@ -1,0 +1,14 @@
+<div class="p-4">
+  <h3>Theme Switcher</h3>
+
+  <select
+    class="form-control w-25"
+    aria-label="Theme Switcher"
+    [(ngModel)]="theme"
+    (ngModelChange)="applyThemeType()"
+  >
+    <option value="auto">Auto</option>
+    <option value="light">Light</option>
+    <option value="dark">Dark</option>
+  </select>
+</div>

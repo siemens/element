@@ -36,6 +36,11 @@ import { BehaviorSubject, Subject, Subscription } from 'rxjs';
   templateUrl: './si-list-details.component.html',
   styleUrl: './si-list-details.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: 'si-layout-inner list-details-layout d-flex flex-column',
+    '[class.expanded]': 'hasLargeSize()',
+    '[style.opacity]': 'opacity()'
+  },
   animations: [
     trigger('detailsExpanded', [
       state(
@@ -52,12 +57,7 @@ import { BehaviorSubject, Subject, Subscription } from 'rxjs';
       ),
       transition('collapsed <=> expanded', [animate('0.5s ease-in-out')])
     ])
-  ],
-  host: {
-    class: 'si-layout-inner list-details-layout d-flex flex-column',
-    '[class.expanded]': 'hasLargeSize()',
-    '[style.opacity]': 'opacity()'
-  }
+  ]
 })
 export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
   private resizeSubs?: Subscription;

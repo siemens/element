@@ -50,7 +50,6 @@ import { CountryInfo, PhoneDetails } from './si-phone-number-input.models';
   ],
   templateUrl: './si-phone-number-input.component.html',
   styleUrl: './si-phone-number-input.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALIDATORS,
@@ -67,6 +66,7 @@ import { CountryInfo, PhoneDetails } from './si-phone-number-input.models';
       useExisting: SiPhoneNumberInputComponent
     }
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     'role': 'group',
     '[attr.aria-labelledby]': 'labelledby()',

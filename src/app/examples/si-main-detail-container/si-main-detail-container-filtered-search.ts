@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { JsonPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, viewChild } from '@angular/core';
 import {
   ContentActionBarMainItem,
   SiContentActionBarComponent
@@ -21,7 +21,7 @@ import {
 import { SiMainDetailContainerComponent } from '@siemens/element-ng/main-detail-container';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { LOG_EVENT } from '@siemens/live-preview';
-import { NgxDatatableModule } from '@siemens/ngx-datatable';
+import { DatatableComponent, NgxDatatableModule } from '@siemens/ngx-datatable';
 
 import { CorporateEmployee } from '../datatable/data.service';
 
@@ -67,6 +67,7 @@ export class SampleComponent {
   selectedEntity: CorporateEmployee | undefined;
   selectedEntities: CorporateEmployee[] = [];
   tableConfig = SI_DATATABLE_CONFIG;
+  private readonly table = viewChild.required(DatatableComponent);
 
   constructor() {
     for (let i = 1; i <= 250; i++) {
@@ -90,6 +91,7 @@ export class SampleComponent {
 
   onSplitChange(containerWidth: number | string): void {
     this.logEvent(`Main width is ${containerWidth}%.`);
+    this.table().recalculate();
   }
 
   updateFilter(searchCriteria?: SearchCriteria): void {

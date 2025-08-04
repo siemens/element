@@ -39,8 +39,8 @@ describe('SiSummaryWidgetComponent', () => {
     componentRef.setInput('color', 'status-warning');
     fixture.detectChanges();
 
-    expect(element.querySelector('si-icon span')).toHaveClass('element-manual-filled');
-    expect(element.querySelector('si-icon span')).toHaveClass('status-warning');
+    expect(element.querySelector('si-icon-next div')).toHaveClass('element-manual-filled');
+    expect(element.querySelector('si-icon-next')).toHaveClass('status-warning');
   });
 
   it('should display selected state', () => {

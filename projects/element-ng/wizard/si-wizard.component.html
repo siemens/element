@@ -53,7 +53,7 @@
     [class.vertical]="verticalLayout()"
     [class.mx-4]="inlineNavigation()"
     [class.mt-4]="!verticalLayout() && inlineNavigation()"
-    (siResizeObserver)="calculateNumberOfVisibleSteps()"
+    (siResizeObserver)="updateVisibleSteps()"
   >
     @for (item of activeSteps(); track item.index) {
       <div class="step">
@@ -162,7 +162,7 @@
           class="btn btn-primary"
           [attr.aria-label]="nextText() | translate"
           [disabled]="!currentStep?.isValid()"
-          [class.d-none]="index === steps.length - 1"
+          [class.d-none]="index === steps().length - 1"
           [class.end]="index === 0"
           (click)="next(1)"
         >
@@ -171,7 +171,7 @@
       }
 
       @if (!hideSave()) {
-        @if (index === steps.length - 1) {
+        @if (index === steps().length - 1) {
           <button
             type="button"
             class="btn btn-primary save"
@@ -205,7 +205,7 @@
 <ng-template #nextBtnHorizontal>
   <div class="wizard-btn-container" [class.wizard-text-deactivate]="!currentStep?.isValid()">
     @if (!shouldHideNavigation()) {
-      <div class="next" [class.invisible]="index === steps.length - 1" (click)="next(1)">
+      <div class="next" [class.invisible]="index === steps().length - 1" (click)="next(1)">
         <button
           type="button"
           class="btn btn-primary btn-circle mb-2"
@@ -228,7 +228,7 @@
 <ng-template #saveBtn>
   @if (!hideSave()) {
     <div [class.center-save]="!verticalLayout() && inlineNavigation()">
-      @if (index === steps.length - 1) {
+      @if (index === steps().length - 1) {
         <button
           type="button"
           class="btn btn-primary save"

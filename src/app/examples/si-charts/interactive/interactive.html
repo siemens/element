@@ -67,55 +67,63 @@
       <div class="card-header">Options</div>
       <div class="card-body">
         <div class="mb-5 row">
-          <div class="form-check form-switch">
-            <input
-              class="form-check-input col-sm-2"
-              type="checkbox"
-              id="axisPointer"
-              role="switch"
-              [checked]="axisPointer"
-              (change)="toggleAxisPointer()"
-            />
-            <label class="form-check-label col-sm-8" for="axisPointer">Axis Pointer</label>
+          <div class="col">
+            <div class="form-check form-switch">
+              <input
+                class="form-check-input col-sm-2"
+                type="checkbox"
+                id="axisPointer"
+                role="switch"
+                [checked]="axisPointer"
+                (change)="toggleAxisPointer()"
+              />
+              <label class="form-check-label col-sm-8" for="axisPointer">Axis Pointer</label>
+            </div>
           </div>
         </div>
         <div class="mb-5 row">
-          <div class="form-check form-switch">
-            <input
-              class="form-check-input col-sm-2"
-              type="checkbox"
-              id="liveUpdate"
-              role="switch"
-              [checked]="liveUpdate"
-              (change)="toggleLiveUpdate()"
-            />
-            <label class="form-check-label col-sm-8" for="liveUpdate">Live Update</label>
+          <div class="col">
+            <div class="form-check form-switch">
+              <input
+                class="form-check-input col-sm-2"
+                type="checkbox"
+                id="liveUpdate"
+                role="switch"
+                [checked]="liveUpdate"
+                (change)="toggleLiveUpdate()"
+              />
+              <label class="form-check-label col-sm-8" for="liveUpdate">Live Update</label>
+            </div>
           </div>
         </div>
         <div class="mb-5 row">
-          <div class="form-check form-switch">
-            <input
-              class="form-check-input col-sm-2"
-              type="checkbox"
-              id="visible"
-              role="switch"
-              [checked]="visible"
-              (change)="toggleVisible()"
-            />
-            <label class="form-check-label col-sm-8" for="visible">Visible</label>
+          <div class="col">
+            <div class="form-check form-switch">
+              <input
+                class="form-check-input col-sm-2"
+                type="checkbox"
+                id="visible"
+                role="switch"
+                [checked]="visible"
+                (change)="toggleVisible()"
+              />
+              <label class="form-check-label col-sm-8" for="visible">Visible</label>
+            </div>
           </div>
         </div>
         <div class="mb-5 row">
-          <div class="form-check form-switch">
-            <input
-              class="form-check-input col-sm-2"
-              type="checkbox"
-              id="zoomMode"
-              role="switch"
-              [checked]="zoomMode"
-              (change)="toggleZoomMode()"
-            />
-            <label class="form-check-label col-sm-8" for="zoomMode">Zoom Mode</label>
+          <div class="col">
+            <div class="form-check form-switch">
+              <input
+                class="form-check-input col-sm-2"
+                type="checkbox"
+                id="zoomMode"
+                role="switch"
+                [checked]="zoomMode"
+                (change)="toggleZoomMode()"
+              />
+              <label class="form-check-label col-sm-8" for="zoomMode">Zoom Mode</label>
+            </div>
           </div>
         </div>
       </div>

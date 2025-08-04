@@ -38,11 +38,11 @@ import { SiTypeaheadSorting } from './si-typeahead.sorting';
 
 @Directive({
   selector: '[siTypeahead]',
-  exportAs: 'si-typeahead',
-  hostDirectives: [SiAutocompleteDirective],
   host: {
     class: 'si-typeahead'
-  }
+  },
+  hostDirectives: [SiAutocompleteDirective],
+  exportAs: 'si-typeahead'
 })
 export class SiTypeaheadDirective implements OnChanges, OnDestroy {
   protected static readonly overlayPositions: ConnectionPositionPair[] = [
@@ -229,17 +229,12 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
    */
   readonly typeaheadOnSelect = output<TypeaheadMatch>();
 
-  /** @deprecated Never emits. Use {@link typeaheadOpenChange} instead. */
-  readonly typeaheadOnMultiselectClose = output<void>();
   /**
    * Emits an Event when a typeahead full match exists. A full match occurs when the entered text
    * is equal to one of the typeahead options.
    * The event is a {@link TypeaheadMatch}
    */
   readonly typeaheadOnFullMatch = output<TypeaheadMatch>();
-
-  /** @deprecated Use {@link typeaheadOpenChange} instead. */
-  readonly typeaheadClosed = output<void>();
 
   /** Emits whenever the typeahead overlay is opened or closed. */
   readonly typeaheadOpenChange = output<boolean>();
@@ -344,7 +339,7 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
   }
 
   @HostListener('keydown.space', ['$event'])
-  protected onKeydownSpace(event: KeyboardEvent): void {
+  protected onKeydownSpace(event: Event): void {
     if (this.typeaheadMultiSelect()) {
       // Avoid space character to be inserted into the input field
       event.preventDefault();
@@ -655,7 +650,6 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
   private removeComponent(): void {
     if (this.overlayRef?.hasAttached()) {
       this.overlayRef?.detach();
-      this.typeaheadClosed.emit();
       this.typeaheadOpenChange.emit(false);
     }
 

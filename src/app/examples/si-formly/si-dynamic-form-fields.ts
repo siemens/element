@@ -444,7 +444,7 @@ export class SampleComponent {
     {
       key: 'btn_func',
       type: 'button',
-      wrappers: ['form-field'],
+      className: 'd-block mb-4',
       props: {
         hideLabel: true, // Hide wrapper label
         label: 'Button function handler',
@@ -459,7 +459,7 @@ export class SampleComponent {
     {
       key: 'btn_exp',
       type: 'button',
-      wrappers: ['form-field'],
+      className: 'd-block mb-4',
       props: {
         hideLabel: true, // Hide wrapper label
         label: 'Button expression handler',
@@ -470,7 +470,7 @@ export class SampleComponent {
     {
       key: 'btn_prim',
       type: 'button',
-      wrappers: ['form-field'],
+      className: 'd-block mb-4',
       props: {
         hideLabel: true, // Hide wrapper label
         label: 'Primary',
@@ -482,7 +482,7 @@ export class SampleComponent {
     {
       key: 'btn_sec',
       type: 'button',
-      wrappers: ['form-field'],
+      className: 'd-block mb-4',
       props: {
         hideLabel: true, // Hide wrapper label
         label: 'Secondary (Default)',
@@ -494,7 +494,7 @@ export class SampleComponent {
     {
       key: 'btn_tert',
       type: 'button',
-      wrappers: ['form-field'],
+      className: 'd-block mb-4',
       props: {
         hideLabel: true, // Hide wrapper label
         label: 'Tertiary',
@@ -506,7 +506,7 @@ export class SampleComponent {
     {
       key: 'btn_warn',
       type: 'button',
-      wrappers: ['form-field'],
+      className: 'd-block mb-4',
       props: {
         hideLabel: true, // Hide wrapper label
         label: 'Warning',
@@ -518,7 +518,7 @@ export class SampleComponent {
     {
       key: 'btn_danger',
       type: 'button',
-      wrappers: ['form-field'],
+      className: 'd-block mb-4',
       props: {
         hideLabel: true, // Hide wrapper label
         label: 'Danger',

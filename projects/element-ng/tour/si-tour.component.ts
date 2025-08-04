@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { A11yModule, CdkTrapFocus } from '@angular/cdk/a11y';
-import { DOCUMENT, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -12,7 +12,8 @@ import {
   inject,
   OnDestroy,
   signal,
-  viewChild
+  viewChild,
+  DOCUMENT
 } from '@angular/core';
 import {
   calculateOverlayArrowPosition,
@@ -32,7 +33,7 @@ import { PositionChange, SI_TOUR_TOKEN, TourAction, TourStepInternal } from './s
   styleUrl: './si-tour.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[attr.data-step-id]': 'step()?.step.id'
+    '[attr.data-step-id]': 'step()?.step?.id'
   }
 })
 export class SiTourComponent implements OnDestroy {

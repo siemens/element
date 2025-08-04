@@ -8,13 +8,13 @@ import { SiAutoCollapsableListMeasurable } from './si-auto-collapsable-list-meas
 
 @Directive({
   selector: '[siAutoCollapsableListItem]',
-  exportAs: 'siAutoCollapsableListItem',
   host: {
     '[style.visibility]': 'isVisible() ? "visible" : "hidden"',
     '[style.position]': 'isVisible() ? "" : "absolute"',
     // Ensure hidden items are behind the visible ones. Otherwise, the visible ones are not clickable
     '[style.z-index]': 'isVisible() ? "" : "-1"'
-  }
+  },
+  exportAs: 'siAutoCollapsableListItem'
 })
 export class SiAutoCollapsableListItemDirective
   extends SiAutoCollapsableListMeasurable
@@ -40,10 +40,9 @@ export class SiAutoCollapsableListItemDirective
    */
   readonly isVisible = computed(() => this.canBeVisible() && !this.forceHide());
 
-  override ngAfterViewInit(): void {
+  ngAfterViewInit(): void {
     if (getComputedStyle(this.elementRef.nativeElement).display === 'inline') {
       console.error('siAutoCollapsibleListItem does not work on items with display="inline"');
     }
-    super.ngAfterViewInit();
   }
 }

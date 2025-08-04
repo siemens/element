@@ -104,19 +104,7 @@ describe('SiTimelineWidgetItemComponent', () => {
       icon: 'element-plant'
     };
     fixture.detectChanges();
-    expect(element.querySelector('span')?.classList).toContain('element-plant');
-  });
-
-  it('should have the altIcon text for the icon', () => {
-    component.item = {
-      timeStamp: 'Today 23:59',
-      title: 'Title',
-      icon: 'element-plant',
-      iconAlt: 'alternative text'
-    };
-    fixture.detectChanges();
-    const aria = fixture.nativeElement.querySelector('span').getAttribute('aria-label');
-    expect(aria).toContain('alternative text');
+    expect(element.querySelector('si-icon-next div')?.classList).toContain('element-plant');
   });
 
   it('should display the item icon color', () => {
@@ -127,7 +115,7 @@ describe('SiTimelineWidgetItemComponent', () => {
       iconColor: 'status-danger'
     };
     fixture.detectChanges();
-    expect(element.querySelector('span')?.classList).toContain('status-danger');
+    expect(element.querySelector('si-icon-next')?.classList).toContain('status-danger');
   });
 
   it('should display the item icon stacked icon', () => {

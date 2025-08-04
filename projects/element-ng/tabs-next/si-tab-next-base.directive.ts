@@ -7,14 +7,16 @@ import {
   booleanAttribute,
   computed,
   Directive,
+  effect,
   ElementRef,
   inject,
   input,
   OnDestroy,
   output,
+  Signal,
   TemplateRef,
-  viewChild,
-  WritableSignal
+  untracked,
+  viewChild
 } from '@angular/core';
 import { addIcons, elementCancel } from '@siemens/element-ng/icon';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -27,17 +29,19 @@ import { SI_TABSET_NEXT } from './si-tabs-tokens';
     class: 'nav-link focus-inside px-5 si-title-1',
     role: 'tab',
     '[class.disabled]': 'disabledTab()',
+    '[class.icon-only]': '!!icon()',
+    '[class.pe-3]': 'closable()',
+    '[class.active]': 'active()',
     '[attr.id]': "'tab-' + tabId",
+    '[attr.aria-selected]': 'active()',
     '[attr.aria-disabled]': 'disabledTab()',
-    '[attr.tabindex]': 'tabset.focusKeyManager?.activeItem === this && !disabledTab() ? 0 : -1',
+    '[attr.tabindex]': 'tabset.focusKeyManager.activeItem === this && !disabledTab() ? 0 : -1',
     '[attr.aria-controls]': "'content-' + tabId",
-    '(keydown.arrowLeft)': 'tabset.focusPrevious($event)',
-    '(keydown.arrowRight)': 'tabset.focusNext($event)',
     '(keydown.delete)': 'closeTab($event)'
   }
 })
 export abstract class SiTabNextBaseDirective implements OnDestroy, FocusableOption {
-  abstract readonly active: WritableSignal<boolean>;
+  abstract readonly active: Signal<boolean | undefined>;
   /** Title of the tab item. */
   readonly heading = input.required<TranslatableString>();
   /**
@@ -98,26 +102,23 @@ export abstract class SiTabNextBaseDirective implements OnDestroy, FocusableOpti
     this.tabset.tabPanels().findIndex(tab => tab.tabId === this.tabId)
   );
 
-  ngOnDestroy(): void {
-    // adjust the focus index and selected tab index if component is destroyed
-    // as a side effect to close tab event
-    if (this.indexBeforeClose >= 0) {
-      const indexToFocus = this.tabset.getNextIndexToFocus(this.indexBeforeClose);
-      if (this.active()) {
-        this.tabset.focusKeyManager?.updateActiveItem(indexToFocus);
-        this.tabset.tabPanels()[indexToFocus].tabButton.nativeElement.focus();
-      } else {
-        const selectedItemIndex = this.tabset.activeTabIndex() ?? 0;
-        this.tabset.focusKeyManager?.updateActiveItem(selectedItemIndex);
-        this.tabset.tabPanels()[selectedItemIndex].focus();
-      }
-      // if this tab was the active one we need to select next tab as active
-      if (this.active()) {
-        const targetActiveTab = this.tabset.tabPanels()[indexToFocus];
-        if (targetActiveTab) {
-          targetActiveTab.active.set(true);
+  constructor() {
+    // Update the focusKeyManager if a tab is added that is active or if the tab is set active by the app.
+    // This effect should not run, if active was already applied to the focusKeyManager.
+    effect(() => {
+      const active = this.active(); // We only want to subscribe to the active signal.
+      untracked(() => {
+        // !!! focusKeyManger.activeItem has signal reads internally. Do not move this outside of untracked.
+        if (active && this.tabset.focusKeyManager.activeItem !== this) {
+          this.tabset.focusKeyManager.updateActiveItem(this.index());
         }
-      }
+      });
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.indexBeforeClose >= 0) {
+      this.tabset.removedTabByUser(this.indexBeforeClose, this.active());
     }
   }
 
@@ -144,11 +145,18 @@ export abstract class SiTabNextBaseDirective implements OnDestroy, FocusableOpti
     return this.disabledTab();
   }
 
+  /**
+   * Programmatically selects the current tab.
+   */
   selectTab(retainFocus?: boolean): void {
-    this.tabset.focusKeyManager?.updateActiveItem(this.index());
+    this.tabset.focusKeyManager.updateActiveItem(this.index());
     if (retainFocus) {
       // We need the timeout to wait for cdkMenu to restore the focus before we move it again.
       setTimeout(() => this.focus());
     }
+  }
+
+  deSelectTab(): void {
+    // Empty be default, can be overridden in derived classes.
   }
 }

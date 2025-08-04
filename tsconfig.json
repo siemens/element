@@ -4,16 +4,18 @@
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
+    "esModuleInterop": true,
     "declaration": false,
     "experimentalDecorators": true,
-    "module": "es2022",
-    "moduleResolution": "Bundler",
+    "module": "preserve",
+    "moduleResolution": "bundler",
     "importHelpers": true,
     "noUnusedLocals": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "target": "es2022",
+    "skipLibCheck": true,
     "strict": true,
     "allowUmdGlobalAccess": true,
     "lib": ["es2022", "dom"],
@@ -38,6 +40,7 @@
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
+    "typeCheckHostBindings": true,
     "strictTemplates": true,
     "strictNullChecks": true
   }

@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Overlay, OverlayContainer } from '@angular/cdk/overlay';
-import { DOCUMENT } from '@angular/common';
-import { Directive, ElementRef, inject } from '@angular/core';
+import { Directive, ElementRef, inject, DOCUMENT } from '@angular/core';
 
 /**
  * This directive is intended to be used in applications that do NOT load element styles in the root HTML element.

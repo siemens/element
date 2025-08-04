@@ -32,7 +32,7 @@ class TooltipRef {
     private injector?: Injector
   ) {}
 
-  show(content: TranslatableString | TemplateRef<any> | Type<any>): void {
+  show(content: TranslatableString | TemplateRef<any> | Type<any>, tooltipContext?: unknown): void {
     if (this.overlayRef.hasAttached()) {
       return;
     }
@@ -42,6 +42,7 @@ class TooltipRef {
 
     tooltipRef.setInput('tooltip', content);
     tooltipRef.setInput('id', this.describedBy);
+    tooltipRef.setInput('tooltipContext', tooltipContext);
 
     const positionStrategy = getPositionStrategy(this.overlayRef);
     positionStrategy?.positionChanges.subscribe(change =>

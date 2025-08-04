@@ -71,10 +71,10 @@ interface TabModel {
     CdkMenuTrigger
   ],
   templateUrl: './si-list-details.html',
+  providers: [DataService],
   host: {
     class: 'si-layout-fixed-height'
-  },
-  providers: [DataService]
+  }
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

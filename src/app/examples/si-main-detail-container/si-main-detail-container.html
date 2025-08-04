@@ -19,7 +19,7 @@
     placeholder="Search"
     (searchChange)="searchTermChanged($event)"
   />
-  <si-content-action-bar slot="mainActions" [primaryActions]="mainActions" />
+  <si-content-action-bar slot="mainActions" viewType="collapsible" [primaryActions]="mainActions" />
 
   <ngx-datatable
     #table
@@ -55,7 +55,11 @@
 
   <!-- Detail (content slots: detailActions | details) -->
   <!-- detailActions -->
-  <si-content-action-bar slot="detailActions" [primaryActions]="detailActions" />
+  <si-content-action-bar
+    slot="detailActions"
+    viewType="collapsible"
+    [primaryActions]="detailActions"
+  />
   <!-- details -->
   <div slot="details" class="card">
     <div class="card-body overflow-auto pt-4">

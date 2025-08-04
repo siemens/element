@@ -9,8 +9,8 @@ import { SiAutocompleteOptionDirective } from './si-autocomplete-option.directiv
 import { SiAutocompleteDirective } from './si-autocomplete.directive';
 
 @NgModule({
-  declarations: [],
   imports: [SiAutocompleteDirective, SiAutocompleteListboxDirective, SiAutocompleteOptionDirective],
+  declarations: [],
   exports: [SiAutocompleteDirective, SiAutocompleteListboxDirective, SiAutocompleteOptionDirective]
 })
 export class SiAutocompleteModule {}

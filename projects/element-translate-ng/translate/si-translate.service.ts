@@ -2,8 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { DOCUMENT } from '@angular/common';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, DOCUMENT } from '@angular/core';
 import { NEVER, Observable } from 'rxjs';
 
 export type TranslationResult<T> = T extends string ? string : Record<string, string>;

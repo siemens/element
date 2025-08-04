@@ -117,7 +117,6 @@ const dynamicUiConfig = (): ConfigOption => {
 };
 
 @NgModule({
-  declarations: [SiFormlyComponent],
   imports: [
     CommonModule,
     FormlyBootstrapModule,
@@ -142,14 +141,15 @@ const dynamicUiConfig = (): ConfigOption => {
     SiFormlyWrapperComponent,
     SiFormModule
   ],
-  exports: [SiFormlyComponent],
+  declarations: [SiFormlyComponent],
   providers: [
     {
       provide: FORMLY_CONFIG,
       multi: true,
       useFactory: dynamicUiConfig
     }
-  ]
+  ],
+  exports: [SiFormlyComponent]
 })
 export class SiFormlyModule {
   private config = inject(FormlyConfig);

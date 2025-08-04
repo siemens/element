@@ -89,10 +89,14 @@ describe('SiTooltipDirective', () => {
 
     @Component({
       imports: [SiTooltipModule],
-      template: ` <button type="button" [siTooltip]="template">Test</button>
-        <ng-template #template let-tooltip>Template content</ng-template>`
+      template: ` <button type="button" [siTooltip]="template" [tooltipContext]="tooltipContext"
+          >Test</button
+        >
+        <ng-template #template let-tooltip="tooltip">Template content {{ tooltip }}</ng-template>`
     })
-    class TestHostComponent {}
+    class TestHostComponent {
+      tooltipContext = {};
+    }
 
     beforeEach(waitForAsync(() => {
       TestBed.configureTestingModule({
@@ -111,6 +115,17 @@ describe('SiTooltipDirective', () => {
       button.dispatchEvent(new Event('focus'));
       await fixture.whenStable();
       expect(document.querySelector('.tooltip')?.innerHTML).toContain('Template content');
+      button.dispatchEvent(new Event('focusout'));
+      await fixture.whenStable();
+      expect(document.querySelector('.tooltip')).toBeFalsy();
+    });
+
+    it('should render the template with context', async () => {
+      fixture.componentInstance.tooltipContext = { tooltip: 'test' };
+      fixture.detectChanges();
+      button.dispatchEvent(new Event('focus'));
+      await fixture.whenStable();
+      expect(document.querySelector('.tooltip')?.innerHTML).toContain('Template content test');
       button.dispatchEvent(new Event('focusout'));
       await fixture.whenStable();
       expect(document.querySelector('.tooltip')).toBeFalsy();

@@ -30,7 +30,6 @@ import { Subscription, timer } from 'rxjs';
   imports: [SiIconNextComponent, SiTranslatePipe],
   templateUrl: './si-slider.component.html',
   styleUrl: './si-slider.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -42,6 +41,7 @@ import { Subscription, timer } from 'rxjs';
       useExisting: SiSliderComponent
     }
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     role: 'group',
     '[class.disabled]': 'disabled()',

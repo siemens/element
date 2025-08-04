@@ -13,13 +13,13 @@
     [style.left.px]="arrowPos()?.left"
     [style.right.px]="arrowPos()?.right"
   ></div>
-  @if (popover.popoverTitle()) {
+  @if (popover.title()) {
     <div class="popover-header">
       @let iconValue = popover.icon();
       @if (iconValue) {
         <si-icon-next class="icon me-1" [icon]="iconValue" />
       }
-      <span class="si-title-2" [id]="labelledBy">{{ popover.popoverTitle() }}</span>
+      <span class="si-title-2" [id]="labelledBy">{{ popover.title() }}</span>
     </div>
   }
   <div class="popover-body">
@@ -28,7 +28,7 @@
     } @else {
       <ng-template
         [ngTemplateOutlet]="popoverTemplate"
-        [ngTemplateOutletContext]="popover.popoverContext()"
+        [ngTemplateOutletContext]="popover.context()"
         [ngTemplateOutletInjector]="injector"
       />
     }

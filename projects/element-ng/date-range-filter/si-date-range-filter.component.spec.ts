@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { MediaMatcher } from '@angular/cdk/layout';
 import { formatDate } from '@angular/common';
 import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
@@ -88,7 +89,28 @@ describe('SiDateRangeFilterComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [TestHostComponent]
+      imports: [TestHostComponent],
+      providers: [
+        {
+          provide: MediaMatcher,
+          useValue: {
+            /** Enforce desktop layout width 768px  */
+            matchMedia: (
+              query: string
+            ): {
+              matches: boolean;
+              addListener: (h: any) => void;
+              removeListener: (h: any) => void;
+            } => {
+              return {
+                matches: false,
+                addListener: (h: any) => {},
+                removeListener: (h: any) => {}
+              };
+            }
+          }
+        }
+      ]
     })
   );
 

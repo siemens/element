@@ -1,3 +1,23 @@
+# [47.8.0](https://github.com/siemens/element/compare/v47.7.0...v47.8.0) (2025-07-22)
+
+
+### Features
+
+* **dashboard:** add dashboard ([c4288e4](https://github.com/siemens/element/commit/c4288e412f34682d988a00c087a37a15a89a0a85))
+* **dashboards-ng:** add dashboards-ng components ([8c5398c](https://github.com/siemens/element/commit/8c5398c2ec4435d959c57bd3c0489eaa9e1801c8))
+* **patterns:** add drag drop patterns ([3ebd6be](https://github.com/siemens/element/commit/3ebd6be46c4e25c72e3ab437d7173253997c832a))
+* **themes:** add experimental new tokens for AI patterns ([4719ee2](https://github.com/siemens/element/commit/4719ee27084dcd49f56f1e686c41a3ab5f3e7db1))
+
+
+### Bug Fixes
+
+* **charts:** empty series name in tooltip ([ad1be3d](https://github.com/siemens/element/commit/ad1be3d34e2ab17303e6004f657210df37a9ec06))
+* **datatable:** align group header to match row styles ([00af856](https://github.com/siemens/element/commit/00af8561d2a7968b2663ef1058d906e75a7824b3))
+* **photo-upload:** remove padding from the sides when a rounded mask is applied ([6ad9894](https://github.com/siemens/element/commit/6ad9894d457a4a54a7dede1293d792fabd018bcb))
+* **select:** match selected item icon size with figma specs ([087bfcb](https://github.com/siemens/element/commit/087bfcbc50d9f6412a06fd4d5fb7e60406acb351))
+* **theme:** add missing `base-4` to utility CSS classes ([2407b1c](https://github.com/siemens/element/commit/2407b1c596e4378a2b5405efc6f178fe3a948781))
+* **wizard:** update disabled styles to match with figma ([7de558e](https://github.com/siemens/element/commit/7de558e357545c7d67a486ac8af7c6e38ec6727e))
+
 # [47.7.0](https://github.com/siemens/element/compare/v47.6.0...v47.7.0) (2025-07-14)
 
 

@@ -20,13 +20,13 @@ import { SiListDetailsComponent } from '../si-list-details.component';
 /** @experimental */
 @Component({
   selector: 'si-details-pane-header',
-  host: {
-    class: 'nav nav-tabs' // To allow nav-link styling.
-  },
   imports: [SiTranslatePipe],
   templateUrl: './si-details-pane-header.component.html',
   styleUrl: './si-details-pane-header.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: 'nav nav-tabs' // To allow nav-link styling.
+  }
 })
 export class SiDetailsPaneHeaderComponent {
   private parent = inject(SiListDetailsComponent);

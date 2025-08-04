@@ -19,13 +19,13 @@ import { SelectOption } from '../si-select.types';
   imports: [SiIconNextComponent, SiSelectOptionComponent],
   templateUrl: './si-select-option-row.component.html',
   styleUrl: './si-select-option-row.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'dropdown-item focus-none pe-4 gap-4',
     '[class.disabled]': '!!this.option().disabled',
     '[attr.aria-selected]': 'selected()',
     '[attr.data-id]': 'this.option().value'
-  },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  }
 })
 export class SiSelectOptionRowComponent {
   readonly option = input.required<SelectOption<unknown>>();

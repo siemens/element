@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkPortalOutlet, DomPortal, PortalModule } from '@angular/cdk/portal';
-import { DOCUMENT, ViewportScroller } from '@angular/common';
+import { ViewportScroller } from '@angular/common';
 import {
   AfterViewInit,
   booleanAttribute,
@@ -17,7 +17,8 @@ import {
   OnDestroy,
   signal,
   SimpleChanges,
-  viewChild
+  viewChild,
+  DOCUMENT
 } from '@angular/core';
 import { ScrollbarHelper } from '@siemens/element-ng/common';
 import {
@@ -39,8 +40,8 @@ const FIX_SCROLL_PADDING_RESIZE_OBSERVER_THROTTLE = 10;
   imports: [PortalModule, SiTranslateModule],
   templateUrl: './si-dashboard.component.html',
   styleUrl: './si-dashboard.component.scss',
-  host: { class: 'si-layout-fixed-height' },
-  providers: [SiDashboardService]
+  providers: [SiDashboardService],
+  host: { class: 'si-layout-fixed-height' }
 })
 export class SiDashboardComponent implements OnChanges, OnDestroy, AfterViewInit {
   /**

@@ -57,7 +57,6 @@ export class UnitCoverageComponent {}
   selector: 'app-sample',
   imports: [SiTabsetNextComponent, SiTabNextLinkComponent, RouterOutlet, RouterLink],
   templateUrl: './si-tabs-next-routing.html',
-  host: { class: 'p-5' },
   providers: [
     provideExampleRoutes([
       {
@@ -80,7 +79,8 @@ export class UnitCoverageComponent {}
         ]
       }
     ])
-  ]
+  ],
+  host: { class: 'p-5' }
 })
 export class SampleComponent implements AfterViewInit {
   protected tabLink1 = ['tab-1'];

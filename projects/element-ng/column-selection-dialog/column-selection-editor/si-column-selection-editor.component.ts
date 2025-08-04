@@ -59,7 +59,8 @@ export class SiColumnSelectionEditorComponent {
     elementShow
   });
 
-  @HostListener('keydown.enter', ['$event']) protected tryEdit(event: KeyboardEvent): void {
+  @HostListener('keydown.enter', ['$event'])
+  protected tryEdit(event: Event): void {
     if (this.column().editable) {
       event.stopPropagation();
       this.startEdit();

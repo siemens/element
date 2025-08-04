@@ -56,7 +56,8 @@ export class SiMonthSelectionComponent extends SiInitialFocusComponent implement
   /** Emits when the user requests a different to show a different view. */
   readonly viewChange = output<'year'>();
   /** Listen Escape event to switch view back */
-  @HostListener('keydown.Escape', ['$event']) triggerEsc(event: KeyboardEvent): void {
+  @HostListener('keydown.Escape', ['$event'])
+  triggerEsc(event: Event): void {
     this.selectedValueChange.emit(null);
     event.preventDefault();
     event.stopPropagation(); // Prevents the overlay from closing.

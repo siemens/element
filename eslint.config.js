@@ -41,11 +41,13 @@ export const tsConfig = typescriptEslint.config({
         style: 'kebab-case'
       }
     ],
+    '@angular-eslint/no-experimental': ['off'],
     '@angular-eslint/prefer-signals': [
       'error',
       { preferInputSignals: false, preferQuerySignals: false }
     ],
-    '@angular-eslint/prefer-output-emitter-ref': ['off'],
+    '@angular-eslint/no-experimental': ['off'],
+    '@angular-eslint/no-developer-preview': ['off'],
     'no-console': [
       'error',
       {

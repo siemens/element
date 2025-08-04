@@ -6,8 +6,8 @@
     type="button"
     class="btn btn-secondary"
     siPopoverNext="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
-    popoverTitle="Popover on top"
-    placement="top"
+    siPopoverNextTitle="Popover on top"
+    siPopoverNextPlacement="top"
     (shown)="logEvent('Popover visible')"
     (hidden)="logEvent('Popover hidden')"
   >
@@ -18,8 +18,8 @@
     type="button"
     class="btn btn-secondary"
     siPopoverNext="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
-    popoverTitle="Popover on end"
-    placement="end"
+    siPopoverNextTitle="Popover on end"
+    siPopoverNextPlacement="end"
   >
     Popover on end
   </button>
@@ -28,9 +28,9 @@
     type="button"
     class="btn btn-secondary"
     siPopoverNext="Vivamus sagittis."
-    popoverTitle="Popover auto"
-    placement="auto"
-    icon="element-info"
+    siPopoverNextTitle="Popover auto"
+    siPopoverNextPlacement="auto"
+    siPopoverNextIcon="element-info"
   >
     Popover auto
   </button>
@@ -39,8 +39,8 @@
     type="button"
     class="btn btn-secondary"
     siPopoverNext="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
-    popoverTitle="Popover on start"
-    placement="start"
+    siPopoverNextTitle="Popover on start"
+    siPopoverNextPlacement="start"
   >
     Popover on start
   </button>
@@ -49,8 +49,8 @@
     type="button"
     class="btn btn-secondary"
     siPopoverNext="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
-    popoverTitle="Popover on bottom"
-    placement="bottom"
+    siPopoverNextTitle="Popover on bottom"
+    siPopoverNextPlacement="bottom"
   >
     Popover on bottom
   </button>
@@ -58,7 +58,7 @@
   <button
     type="button"
     class="btn btn-secondary"
-    placement="bottom"
+    siPopoverNextPlacement="bottom"
     [siPopoverNext]="popoverTemplate"
   >
     Popover with template
@@ -67,9 +67,9 @@
   <button
     type="button"
     class="btn btn-secondary"
-    placement="top"
+    siPopoverNextPlacement="top"
     [siPopoverNext]="popoverTemplateWithContext"
-    [popoverContext]="myContext"
+    [siPopoverNextContext]="myContext"
   >
     Popover with template and context
   </button>

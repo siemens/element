@@ -62,9 +62,5 @@ test.describe('si-tabs-next', () => {
   test(example + ' icons', async ({ page, si }) => {
     await si.visitExample(iconsExample);
     await si.runVisualAndA11yTests('tabs-icons');
-
-    page.setViewportSize({ width: 375, height: 812 });
-    await si.runVisualAndA11yTests('tabs-icons-mobile');
-    await expect(page.locator('[aria-haspopup="menu"]')).toBeVisible();
   });
 });

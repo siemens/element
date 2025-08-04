@@ -61,8 +61,6 @@ export class SiLivePreviewWrapperComponent {
   private webcomponentService = inject(SiLivePreviewWebComponentService, { optional: true });
 
   constructor() {
-    this.sendMessage('ready');
-
     this.themeApi
       ?.getApplicationThemeObservable()
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -81,6 +79,9 @@ export class SiLivePreviewWrapperComponent {
       });
     this.initialUrl = window.location.toString();
     this.isMobile = this.internalConfig.isMobile;
+
+    // send ready message only when locale/theme are communicated to avoid loops
+    this.sendMessage('ready');
 
     this.ngZone.runOutsideAngular(() =>
       fromEvent<MessageEvent>(window, 'message')

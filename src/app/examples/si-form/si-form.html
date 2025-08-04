@@ -74,16 +74,18 @@
                   />
                 </si-form-item>
                 <si-form-item label="FORM.BIRTHDAY" [disableErrorPrinting]="false">
-                  <input
-                    type="text"
-                    id="birthday"
-                    class="w-100 form-control"
-                    autocomplete="off"
-                    formControlName="birthday"
-                    siDatepicker
-                    required
-                    [readonly]="readonly"
-                  />
+                  <si-calendar-button class="w-100">
+                    <input
+                      type="text"
+                      id="birthday"
+                      class="w-100 form-control"
+                      autocomplete="off"
+                      formControlName="birthday"
+                      siDatepicker
+                      required
+                      [readonly]="readonly"
+                    />
+                  </si-calendar-button>
                 </si-form-item>
                 <si-form-item label="FORM.TRAVEL_DATE" [disableErrorPrinting]="false">
                   <si-date-range
@@ -165,16 +167,18 @@
         <form class="card-body" body>
           <si-form-container>
             <div si-form-container-content>
-              <si-form-item label="Actions">
-                <label class="ms-4 mb-3 form-switch">
-                  <input class="form-check-input" type="checkbox" (change)="toggleDisable()" />
-                  <span class="form-check-label">Disable form</span>
-                </label>
-                <label class="ms-4 mb-3 form-switch">
-                  <input class="form-check-input" type="checkbox" (change)="toggleReadonly()" />
-                  <span class="form-check-label">Readonly form</span>
-                </label>
-              </si-form-item>
+              <si-form-fieldset label="Actions" inline>
+                <si-form-item class="form-switch mb-2" label="Disable form">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [formControl]="disabledFormControl"
+                  />
+                </si-form-item>
+                <si-form-item class="form-switch mb-2" label="Readonly form">
+                  <input class="form-check-input" type="checkbox" [formControl]="readonlyControl" />
+                </si-form-item>
+              </si-form-fieldset>
 
               @if (formContainer) {
                 <si-form-item label="Validation Status">{{ form.status }}</si-form-item>

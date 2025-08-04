@@ -23,7 +23,6 @@ import { getDatepickerFormat } from './si-datepicker.model';
 
 @Directive({
   selector: '[siDatepicker]',
-  exportAs: 'siDatepicker',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -45,7 +44,8 @@ import { getDatepickerFormat } from './si-datepicker.model';
       directive: SiDatepickerOverlayDirective,
       outputs: ['siDatepickerClose']
     }
-  ]
+  ],
+  exportAs: 'siDatepicker'
 })
 export class SiDatepickerDirective extends SiDateInputDirective implements AfterViewInit {
   /**
@@ -56,12 +56,6 @@ export class SiDatepickerDirective extends SiDateInputDirective implements After
    * @defaultValue false
    */
   readonly autoClose = input(false, { transform: booleanAttribute });
-  /**
-   * @deprecated Property has no effect and will be removed without replacement.
-   *
-   * @defaultValue inject(ElementRef)
-   */
-  readonly triggeringInput = input(inject(ElementRef));
 
   /**
    * During focus on close the datepicker will not show since we recover the focus on element.
@@ -84,7 +78,7 @@ export class SiDatepickerDirective extends SiDateInputDirective implements After
   /**
    * On click shall show datepicker.
    */
-  @HostListener('click', ['$event'])
+  @HostListener('click')
   protected onClick(): void {
     if (!this.externalTrigger) {
       this.show();

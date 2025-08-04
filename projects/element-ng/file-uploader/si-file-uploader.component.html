@@ -37,18 +37,9 @@
             [class.text-warning]="file.status === 'invalid'"
             [class.text-danger]="file.status === 'error'"
           >
-            <si-icon
-              class="d-inline-block my-n2 me-2"
-              size="icon-small"
-              stackedIcon="element-state-exclamation-mark smooth-auto"
-              alt=""
-              [icon]="
-                file.status === 'invalid' ? 'element-triangle-filled' : 'element-circle-filled'
-              "
-              [color]="file.status === 'invalid' ? 'status-warning' : 'status-danger'"
-              [stackedColor]="
-                file.status === 'invalid' ? 'status-warning-contrast' : 'status-danger-contrast'
-              "
+            <si-status-icon
+              class="icon-small my-n2 me-2"
+              [status]="file.status === 'invalid' ? 'warning' : 'danger'"
             />
             {{ file.errorText | translate }}
             @if (file.httpErrorText) {
@@ -103,14 +94,7 @@
           </button>
         }
         @if (file.status === 'success') {
-          <si-icon
-            class="mx-2"
-            icon="element-circle-filled"
-            color="status-success"
-            stackedIcon="element-state-tick smooth-auto"
-            stackedColor="status-success-contrast"
-            [alt]="successTextTitle()"
-          />
+          <si-status-icon class="icon mx-2" status="success" />
         }
       </div>
     </div>

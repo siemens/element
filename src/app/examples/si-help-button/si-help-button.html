@@ -1,0 +1,23 @@
+<div class="d-flex gap-2 pt-1 pb-3">
+  <span class="text-secondary si-body-2">Repo Storage</span>
+  <button
+    si-help-button
+    type="button"
+    siHelpTitle="Repo Storage calculation"
+    [siHelpContent]="storageHelp"
+    [disabled]="disabledHelp.value"
+  >
+    <!-- This text is only visible to screen reader. Provide a meaningful text, not only "help" -->
+    How to calculate repo storage
+  </button>
+</div>
+<span class="pt-1 si-title-2">9.99 MB</span>
+
+<ng-template #storageHelp>
+  The Repo Storage is the overall size of the repository plus all LFS objects and pipelines
+  artifacts.
+</ng-template>
+
+<si-form-item label="Disable help button" class="mt-5">
+  <input type="checkbox" class="form-check-input" [formControl]="disabledHelp" />
+</si-form-item>

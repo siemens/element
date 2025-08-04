@@ -81,9 +81,7 @@ $nav-tabs-min-width: 100px;
     cursor: pointer;
 
     .badge {
-      margin-inline-start: map.get(spacers.$spacers, 1);
-      margin-block-start: -7px;
-      flex-shrink: 0;
+      margin-inline-end: 0;
     }
 
     &.active {

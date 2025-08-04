@@ -173,7 +173,6 @@ describe('SiStatusBarComponent', () => {
 
       const items = container.querySelectorAll('si-status-bar-item');
       expect(items[3].querySelector<HTMLElement>('.item-value')!.innerText).toContain('2+');
-      expect(items[3].getAttribute('ng-reflect-status')).toBe('warning');
     }));
 
     it('allows expanding in responsive mode', fakeAsync(() => {

@@ -34,6 +34,12 @@ let controlIdCounter = 1;
   templateUrl: './si-collapsible-panel.component.html',
   styleUrl: './si-collapsible-panel.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[class]': 'colorVariant()',
+    '[class.opened]': 'opened()',
+    '[class.hcollapsed]': 'hcollapsed()',
+    '[class.full-height]': 'fullHeight()'
+  },
   animations: [
     trigger('showHide', [
       transition('*=>hide', [
@@ -53,13 +59,7 @@ let controlIdCounter = 1;
         )
       ])
     ])
-  ],
-  host: {
-    '[class]': 'colorVariant()',
-    '[class.opened]': 'opened()',
-    '[class.hcollapsed]': 'hcollapsed()',
-    '[class.full-height]': 'fullHeight()'
-  }
+  ]
 })
 export class SiCollapsiblePanelComponent {
   /**
@@ -118,14 +118,6 @@ export class SiCollapsiblePanelComponent {
    */
   readonly panelToggle = output<boolean>();
 
-  /**
-   * An event emitted when the user triggered expand/collapse.
-   * The event is emitted before the animation happens.
-   * @deprecated use {@link panelToggle} instead
-   */
-  // eslint-disable-next-line @angular-eslint/no-output-native
-  readonly toggle = output<boolean>();
-
   protected readonly hcollapsed = computed(
     () => this.accordionHCollapseService?.hcollapsed() ?? false
   );
@@ -153,8 +145,6 @@ export class SiCollapsiblePanelComponent {
         filter(item => item !== this)
       )
       .subscribe(() => this.openClose(false));
-
-    this.panelToggle.subscribe(open => this.toggle.emit(open));
   }
 
   protected get showHide(): string {

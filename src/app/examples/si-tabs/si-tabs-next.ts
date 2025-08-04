@@ -4,11 +4,7 @@
  */
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {
-  SiTabNextComponent,
-  SiTabNextDeselectionEvent,
-  SiTabsetNextComponent
-} from '@siemens/element-ng/tabs-next';
+import { SiTabNextComponent, SiTabsetNextComponent } from '@siemens/element-ng/tabs-next';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 interface TabModel {
@@ -55,12 +51,6 @@ export class SampleComponent {
       badgeContent: '2'
     }
   ];
-
-  deselection(e: SiTabNextDeselectionEvent): void {
-    if (e.target.heading() === 'Deselectable' && !this.deselectable) {
-      e.cancel();
-    }
-  }
 
   closeTab(tab: TabModel): void {
     this.tabs.splice(
