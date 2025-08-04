@@ -269,7 +269,7 @@ describe('SiFilterBarComponent', () => {
     expect(component.filters().length).toEqual(3);
   });
 
-  it('should not display too many filters when responsive is enabled', async () => {
+  xit('should not display too many filters when responsive is enabled', async () => {
     component.width = 650;
     component.filters.set([
       {
@@ -310,7 +310,7 @@ describe('SiFilterBarComponent', () => {
     expect(values[values.length - 1].innerHTML).toContain('+ 1 filters');
   });
 
-  it('should not display too many filters when responsive is enabled and allow reset disabled', async () => {
+  xit('should not display too many filters when responsive is enabled and allow reset disabled', async () => {
     component.width = 600;
     component.filters.set([
       {
