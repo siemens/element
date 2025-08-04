@@ -40,7 +40,7 @@ $theme-element-light: (
   base-caution: base.$color-yellow-100,
   base-warning: base.$color-orange-100,
   base-danger: base.$color-red-100,
-  base-critical: base.$color-red-100,
+  base-critical: data.$color-data-orchid-100,
   base-translucent-1: rgba(base.$color-black, 0.3),
   base-translucent-2: rgba(base.$color-deep-blue-900, 0.88),
   // EXPERIMENTAL: Do not use
@@ -74,7 +74,7 @@ $theme-element-light: (
   text-caution: base.$color-yellow-900,
   text-warning: base.$color-orange-900,
   text-danger: base.$color-red-700,
-  text-critical: base.$color-red-700,
+  text-critical: data.$color-data-orchid-700,
 
   status-information: base.$color-blue-500,
   status-information-contrast: base.$color-white,
@@ -86,7 +86,7 @@ $theme-element-light: (
   status-warning-contrast: base.$color-white,
   status-danger: base.$color-red-500,
   status-danger-contrast: base.$color-white,
-  status-critical: base.$color-red-900,
+  status-critical: data.$color-data-orchid-500,
   status-critical-contrast: base.$color-white,
 
   focus-default: base.$color-focus,
@@ -228,7 +228,7 @@ $theme-element-dark: (
   base-caution: base.$color-yellow-900,
   base-warning: base.$color-orange-900,
   base-danger: base.$color-red-900,
-  base-critical: base.$color-red-900,
+  base-critical: data.$color-data-orchid-700,
   base-translucent-1: rgba(base.$color-black, 0.7),
   base-translucent-2: rgba(base.$color-white, 0.88),
   // EXPERIMENTAL: Do not use
@@ -262,7 +262,7 @@ $theme-element-dark: (
   text-caution: base.$color-yellow-100,
   text-warning: base.$color-orange-100,
   text-danger: base.$color-red-100,
-  text-critical: base.$color-red-100,
+  text-critical: data.$color-data-orchid-100,
 
   status-information: base.$color-blue-500,
   status-information-contrast: base.$color-white,
@@ -274,7 +274,7 @@ $theme-element-dark: (
   status-warning-contrast: base.$color-deep-blue-900,
   status-danger: base.$color-red-500,
   status-danger-contrast: base.$color-white,
-  status-critical: base.$color-red-700,
+  status-critical: data.$color-data-orchid-500,
   status-critical-contrast: base.$color-white,
 
   focus-default: base.$color-focus,
