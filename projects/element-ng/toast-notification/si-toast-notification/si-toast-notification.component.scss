@@ -63,7 +63,19 @@ $toast-timer-height: 2px;
   background: currentColor;
 }
 
+@keyframes si-toast-auto-close-animation {
+  from {
+    inline-size: 100%;
+  }
+
+  to {
+    inline-size: 0;
+  }
+}
+
 .si-toast-timer-bar {
+  animation: si-toast-auto-close-animation var(--toast-timer-duration, 4s) linear forwards;
+  animation-play-state: var(--play-state, running);
   @extend %si-toast-bottom-bar;
   background-color: all-variables.$element-ui-0;
 }

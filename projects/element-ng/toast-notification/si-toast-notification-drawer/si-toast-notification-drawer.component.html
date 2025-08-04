@@ -4,5 +4,7 @@
     class="position-relative"
     [toast]="toast"
     [@.disabled]="animationsDisabled"
+    (paused)="paused.emit(toast)"
+    (resumed)="resumed.emit(toast)"
   />
 }

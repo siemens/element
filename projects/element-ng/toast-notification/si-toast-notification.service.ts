@@ -31,6 +31,11 @@ export class SiToastNotificationService implements OnDestroy {
 
   private injector = inject(Injector);
   private overlay = inject(Overlay);
+  private toastTimeoutMap = new Map<SiToast, any>();
+  private toastTimerDefaults = new Map<
+    SiToast,
+    { pendingTimeout: number; initializeTime: number }
+  >();
 
   constructor() {
     const isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
@@ -41,7 +46,14 @@ export class SiToastNotificationService implements OnDestroy {
       }
       this.activeToastsSubject.next(this.activeToasts);
       if (!toast.disableAutoClose && toast.timeout) {
-        setTimeout(() => this.hideToastNotification(toast), toast.timeout);
+        this.toastTimerDefaults.set(toast, {
+          pendingTimeout: toast.timeout,
+          initializeTime: Date.now()
+        });
+        this.toastTimeoutMap.set(
+          toast,
+          setTimeout(() => this.hideToastNotification(toast), toast.timeout)
+        );
       }
     });
 
@@ -113,7 +125,31 @@ export class SiToastNotificationService implements OnDestroy {
     hiddenToasts.forEach(item => {
       item.hidden?.next();
       item.hidden?.complete();
+      this.toastTimerDefaults.delete(item);
+      this.toastTimeoutMap.delete(item);
     });
+  }
+
+  private pauseToastNotification(toast: SiToast): void {
+    if (!toast.disableAutoClose) {
+      clearTimeout(this.toastTimeoutMap.get(toast));
+
+      const initialTimeout = this.toastTimerDefaults.get(toast)?.initializeTime;
+      const elapsedTime = initialTimeout ? Date.now() - initialTimeout : 0;
+      this.toastTimerDefaults.get(toast)!.pendingTimeout -= elapsedTime;
+    }
+  }
+
+  private resumeToastNotification(toast: SiToast): void {
+    if (!toast.disableAutoClose) {
+      this.toastTimerDefaults.get(toast)!.initializeTime = Date.now();
+      this.toastTimeoutMap.set(
+        toast,
+        setTimeout(() => {
+          this.hideToastNotification(this.activeToasts.find(t => t === toast));
+        }, this.toastTimerDefaults.get(toast)!.pendingTimeout)
+      );
+    }
   }
 
   private addToastDrawer(): void {
@@ -127,6 +163,12 @@ export class SiToastNotificationService implements OnDestroy {
     );
     this.componentRef = this.overlayRef.attach(portal);
     this.componentRef.setInput('toasts', this.activeToastsSubject);
+    this.componentRef.instance.paused.subscribe(toast => {
+      this.pauseToastNotification(toast);
+    });
+    this.componentRef.instance.resumed.subscribe(toast => {
+      this.resumeToastNotification(toast);
+    });
   }
 
   // TODO remove once translation must be defined at application start
