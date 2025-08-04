@@ -51,8 +51,6 @@ export class SiTabsetNextComponent {
   readonly activeTab = computed(() => {
     return this.tabPanels().find(tab => tab.active());
   });
-  /** @internal */
-  readonly activeTabIndex = computed(() => this.activeTab()?.index() ?? -1);
 
   readonly tabPanels = contentChildren(SiTabNextBaseDirective);
 

@@ -38,11 +38,7 @@ export class SiTabNextComponent extends SiTabNextBaseDirective implements OnDest
 
   /** @internal */
   override selectTab(retainFocus?: boolean): void {
-    const tabs = this.tabset.tabPanels();
-    const currentTabIndex = this.tabset.activeTabIndex();
-    const currentTab = tabs[currentTabIndex];
-
-    currentTab?.deSelectTab();
+    this.tabset.activeTab()?.deSelectTab();
     this.active.set(true);
     super.selectTab(retainFocus);
   }
