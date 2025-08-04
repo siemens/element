@@ -16,7 +16,7 @@ const browsers =
     : headless
       ? isFirefox
         ? ['FirefoxHeadless']
-        : ['ChromeHeadless']
+        : ['ChromeHeadlessBigger']
       : isFirefox
         ? ['Firefox']
         : ['Chrome'];
@@ -67,6 +67,12 @@ module.exports.buildConfig = (config, { name, testSuite }) => ({
   colors: true,
   logLevel: config.LOG_INFO,
   autoWatch: !isCI,
+  customLaunchers: {
+    ChromeHeadlessBigger: {
+      base: 'ChromeHeadless',
+      flags: ['--window-size=1024,768']
+    }
+  },
   browsers,
   singleRun: isCI,
   browserNoActivityTimeout: 100000
