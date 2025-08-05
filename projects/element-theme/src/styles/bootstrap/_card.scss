@@ -88,10 +88,11 @@
   margin-block-end: 0; // Removes the default margin-bottom of <hN>
   color: variables.$card-cap-color;
   background-color: variables.$card-cap-bg;
+  line-height: typography.$si-font-size-title-2;
 
-  &,
   .icon {
-    line-height: typography.$si-font-size-title-2;
+    // The icon would be 8px too high without this.
+    margin-block: - map.get(spacers.$spacers, 2);
   }
 
   + .card-body {
