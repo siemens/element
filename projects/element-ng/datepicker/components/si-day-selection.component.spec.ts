@@ -17,7 +17,7 @@ import {
   daysInMonth
 } from '../date-time-helper';
 import { SiDaySelectionComponent as TestComponent } from './si-day-selection.component';
-import { CalenderTestHelper, generateKeyEvent } from './test-helper.spec';
+import { CalendarTestHelper, generateKeyEvent } from './test-helper.spec';
 
 @Component({
   imports: [TestComponent],
@@ -117,7 +117,7 @@ class RangeSelectComponent {
 describe('SiDaySelectionComponent', () => {
   let element: HTMLElement;
   let fixture: ComponentFixture<any>;
-  let helper: CalenderTestHelper;
+  let helper: CalendarTestHelper;
 
   const selectDate = (date: number): void => {
     helper.clickEnabledCell(date.toString());
@@ -139,7 +139,7 @@ describe('SiDaySelectionComponent', () => {
       fixture = TestBed.createComponent(SingleSelectComponent);
       wrapperComponent = fixture.componentInstance;
       element = fixture.nativeElement;
-      helper = new CalenderTestHelper(element);
+      helper = new CalendarTestHelper(element);
       fixture.detectChanges();
     });
 
@@ -552,7 +552,7 @@ describe('SiDaySelectionComponent', () => {
       fixture = TestBed.createComponent(RangeSelectComponent);
       rangeWrapperComponent = fixture.componentInstance;
       element = fixture.nativeElement;
-      helper = new CalenderTestHelper(element);
+      helper = new CalendarTestHelper(element);
       fixture.detectChanges();
     });
 

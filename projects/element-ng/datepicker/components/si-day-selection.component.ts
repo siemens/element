@@ -71,7 +71,7 @@ export class SiDaySelectionComponent extends SiInitialFocusComponent {
   /** Today button text */
   readonly todayLabel = input<string>();
   /** Aria label for calendar week column */
-  readonly calenderWeekLabel = input<string>();
+  readonly calendarWeekLabel = input<string>();
   /** Emits when the active focused date changed to another month / year, typically during keyboard navigation */
   readonly activeMonthChange = output<Date>();
   /** Emits when the user requests a different to show a different view */

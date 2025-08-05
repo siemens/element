@@ -9,7 +9,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { getLocaleMonthNames } from '../date-time-helper';
 import { SiDatepickerModule } from '../si-datepicker.module';
 import { SiMonthSelectionComponent as TestComponent } from './si-month-selection.component';
-import { CalenderTestHelper, generateKeyEvent } from './test-helper.spec';
+import { CalendarTestHelper, generateKeyEvent } from './test-helper.spec';
 
 @Component({
   imports: [SiDatepickerModule, A11yModule, TestComponent],
@@ -57,13 +57,13 @@ describe('SiMonthSelectionComponent', () => {
   let element: HTMLElement;
   let fixture: ComponentFixture<WrapperComponent>;
   let wrapperComponent: WrapperComponent;
-  let helper: CalenderTestHelper;
+  let helper: CalendarTestHelper;
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WrapperComponent);
     wrapperComponent = fixture.componentInstance;
     element = fixture.nativeElement;
-    helper = new CalenderTestHelper(element);
+    helper = new CalendarTestHelper(element);
     fixture.detectChanges();
   });
 

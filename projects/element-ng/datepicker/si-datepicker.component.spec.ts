@@ -9,7 +9,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiDatepickerComponent, SiDatepickerModule } from '.';
 import { runOnPushChangeDetection } from '../test-helpers';
-import { CalenderTestHelper, generateKeyEvent } from './components/test-helper.spec';
+import { CalendarTestHelper, generateKeyEvent } from './components/test-helper.spec';
 import { today } from './date-time-helper';
 import { DatepickerConfig, DateRange } from './si-datepicker.model';
 import { SiCalendarCellHarness } from './testing/si-calendar-cell.harness';
@@ -40,7 +40,7 @@ describe('SiDatepickerComponent', () => {
   let component: TestHostComponent;
   let datePicker: SiDatepickerComponent;
   let element: HTMLElement;
-  let helper: CalenderTestHelper;
+  let helper: CalendarTestHelper;
   let loader: HarnessLoader;
   let picker: SiDatepickerComponentHarness;
 
@@ -59,7 +59,7 @@ describe('SiDatepickerComponent', () => {
     component.date.set(new Date());
     datePicker = component.datePicker();
     element = fixture.nativeElement;
-    helper = new CalenderTestHelper(element);
+    helper = new CalendarTestHelper(element);
     loader = TestbedHarnessEnvironment.loader(fixture);
     picker = await loader.getHarness(SiDatepickerComponentHarness);
   });

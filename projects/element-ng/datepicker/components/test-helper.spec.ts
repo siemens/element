@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-export class CalenderTestHelper {
+export class CalendarTestHelper {
   constructor(private element: HTMLElement) {}
 
   queryAsArray(query: string): HTMLElement[] {

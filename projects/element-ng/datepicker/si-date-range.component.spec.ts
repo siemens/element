@@ -15,7 +15,7 @@ import {
   SiDateRangeComponent,
   SiDateRangeComponent as TestComponent
 } from '.';
-import { backdropClick, CalenderTestHelper, enterValue } from './components/test-helper.spec';
+import { backdropClick, CalendarTestHelper, enterValue } from './components/test-helper.spec';
 import { addDays } from './date-time-helper';
 import { SiDateRangeComponentHarness } from './testing/si-date-range.harness';
 import { SiDatepickerComponentHarness } from './testing/si-datepicker.harness';
@@ -103,7 +103,7 @@ describe('SiDateRangeComponent', () => {
     });
 
     it('should close after range selection via click', async () => {
-      const helper = new CalenderTestHelper(document.querySelector('si-datepicker-overlay')!);
+      const helper = new CalendarTestHelper(document.querySelector('si-datepicker-overlay')!);
       helper.getEnabledCellWithText('1')!.click();
       helper.getEnabledCellWithText('3')!.click();
       await fixture.whenStable();
@@ -124,7 +124,7 @@ describe('SiDateRangeComponent', () => {
     // In case the small screen media query match we need to wait for the dialog animation
     await fixture.whenStable();
 
-    const helper = new CalenderTestHelper(document.querySelector('si-datepicker-overlay')!);
+    const helper = new CalendarTestHelper(document.querySelector('si-datepicker-overlay')!);
     helper.getOpenMonthViewLink().click();
     helper.getEnabledCellWithText('December')!.dispatchEvent(new Event('mouseover'));
 
@@ -149,7 +149,7 @@ describe('SiDateRangeComponent', () => {
     // In case the small screen media query match we need to wait for the dialog animation
     await fixture.whenStable();
 
-    const helper = new CalenderTestHelper(
+    const helper = new CalendarTestHelper(
       document.querySelectorAll<HTMLElement>('si-datepicker')[1]
     );
     helper.getEnabledCellWithText('December')!.dispatchEvent(new Event('mouseover'));
@@ -176,8 +176,8 @@ describe('SiDateRangeComponent', () => {
     openCalendarButton().click();
 
     const calendars = document.querySelectorAll<HTMLElement>('si-datepicker');
-    const firstCalendar = new CalenderTestHelper(calendars[0]);
-    const secondCalendar = new CalenderTestHelper(calendars[1]);
+    const firstCalendar = new CalendarTestHelper(calendars[0]);
+    const secondCalendar = new CalendarTestHelper(calendars[1]);
     secondCalendar.getPreviousButton()!.click();
     expect(firstCalendar.getOpenYearViewLink().textContent).toContain('2022');
   });
@@ -258,7 +258,7 @@ describe('SiDateRangeComponent within form', () => {
     });
 
     openCalendarButton().click();
-    const helper = new CalenderTestHelper(document.querySelector('si-datepicker-overlay')!);
+    const helper = new CalendarTestHelper(document.querySelector('si-datepicker-overlay')!);
     helper.clickEnabledCell('1');
     await fixture.whenStable();
 

@@ -8,7 +8,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiDatepickerModule } from '../si-datepicker.module';
 import { SiYearSelectionComponent as TestComponent } from './si-year-selection.component';
-import { CalenderTestHelper, generateKeyEvent } from './test-helper.spec';
+import { CalendarTestHelper, generateKeyEvent } from './test-helper.spec';
 
 @Component({
   imports: [SiDatepickerModule, A11yModule, TestComponent],
@@ -45,13 +45,13 @@ describe('SiYearSelectionComponent', () => {
   let element: HTMLElement;
   let fixture: ComponentFixture<WrapperComponent>;
   let wrapperComponent: WrapperComponent;
-  let helper: CalenderTestHelper;
+  let helper: CalendarTestHelper;
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WrapperComponent);
     wrapperComponent = fixture.componentInstance;
     element = fixture.nativeElement;
-    helper = new CalenderTestHelper(element);
+    helper = new CalendarTestHelper(element);
     fixture.detectChanges();
   });
 

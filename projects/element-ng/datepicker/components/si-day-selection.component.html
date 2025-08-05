@@ -35,7 +35,7 @@
     <tr>
       @if (!hideWeekNumbers()) {
         <th scope="col" class="week-num">
-          <span class="visually-hidden">{{ calenderWeekLabel() | translate }}</span>
+          <span class="visually-hidden">{{ calendarWeekLabel() | translate }}</span>
         </th>
       }
       @for (day of days(); track $index) {

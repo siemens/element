@@ -8,7 +8,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, signal, viewChild } fro
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, NgControl } from '@angular/forms';
 
-import { backdropClick, CalenderTestHelper, generateKeyEvent } from './components/test-helper.spec';
+import { backdropClick, CalendarTestHelper, generateKeyEvent } from './components/test-helper.spec';
 import { SiDatepickerOverlayDirective } from './si-datepicker-overlay.directive';
 import { SiDatepickerDirective } from './si-datepicker.directive';
 import { DatepickerInputConfig } from './si-datepicker.model';
@@ -134,7 +134,7 @@ describe('SiDatepickerDirective', () => {
     });
 
     it('should handle date change', async () => {
-      const helper = new CalenderTestHelper(
+      const helper = new CalendarTestHelper(
         document.querySelector('si-day-selection') as HTMLElement
       );
       helper.getEnabledCells().at(0)?.dispatchEvent(new Event('click'));
@@ -202,7 +202,7 @@ describe('SiDatepickerDirective', () => {
         'emit'
       ).and.callThrough();
 
-      const helper = new CalenderTestHelper(
+      const helper = new CalendarTestHelper(
         document.querySelector('si-datepicker-overlay') as HTMLElement
       );
       const considerTime = helper.getConsiderTimeSwitch();
