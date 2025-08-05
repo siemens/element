@@ -215,7 +215,7 @@ jobs:
         with:
           name: html-report--attempt-${{ github.run_attempt }}
           path: playwright-report
-      - uses: aws-actions/configure-aws-credentials@a021b9699343ede242bb1ce239a4b9180ba9dd3d
+      - uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a
         with:
           role-to-assume: arn:aws:iam::974483672234:role/simpl-element-preview
           role-session-name: element-preview
