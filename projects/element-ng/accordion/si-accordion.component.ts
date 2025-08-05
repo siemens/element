@@ -16,7 +16,6 @@ import {
   OnChanges
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { BackgroundColorVariant } from '@siemens/element-ng/common';
 import { ResizeObserverService } from '@siemens/element-ng/resize-observer';
 
 import { SiAccordionHCollapseService } from './si-accordion-hcollapse.service';
@@ -43,11 +42,6 @@ export class SiAccordionComponent implements AfterContentInit, OnChanges {
   readonly fullHeight = input(false, { transform: booleanAttribute });
   /** @defaultValue false */
   readonly hcollapsed = input(false);
-  /**
-   * Color to use for component background
-   * @deprecated This has no effect anymore. Will be removed in v48
-   **/
-  readonly colorVariant = input<BackgroundColorVariant>();
   /**
    * Indicate whether the accordion is collapsed.
    * @internal

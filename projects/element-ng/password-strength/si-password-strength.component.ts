@@ -5,9 +5,9 @@
 import {
   AfterViewInit,
   Component,
+  contentChild,
   contentChildren,
   ElementRef,
-  inject,
   input,
   signal
 } from '@angular/core';
@@ -41,7 +41,10 @@ export class SiPasswordStrengthComponent implements AfterViewInit {
   readonly showVisibilityIcon = input(true);
 
   private readonly passwordStrengthDirective = contentChildren(SiPasswordStrengthDirective);
-  private elRef = inject(ElementRef);
+  private readonly passwordInput = contentChild.required<
+    SiPasswordStrengthDirective,
+    ElementRef<HTMLInputElement>
+  >(SiPasswordStrengthDirective, { read: ElementRef<HTMLInputElement> });
 
   protected readonly bad = signal(false);
   protected readonly weak = signal(false);
@@ -50,10 +53,7 @@ export class SiPasswordStrengthComponent implements AfterViewInit {
   protected readonly strong = signal(false);
 
   protected toggle(type: string): void {
-    const inputEl = this.elRef.nativeElement.querySelector('input');
-    if (inputEl) {
-      inputEl.type = type;
-    }
+    this.passwordInput().nativeElement.type = type;
   }
 
   ngAfterViewInit(): void {

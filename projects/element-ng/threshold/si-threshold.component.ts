@@ -7,12 +7,11 @@ import {
   booleanAttribute,
   Component,
   computed,
-  ElementRef,
-  inject,
   input,
   model,
   OnChanges,
-  output
+  output,
+  viewChildren
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { addIcons, elementPlus, SiIconNextComponent } from '@siemens/element-ng/icon';
@@ -201,7 +200,8 @@ export class SiThresholdComponent implements OnChanges {
   get valid(): boolean {
     return this._valid;
   }
-  private element = inject(ElementRef);
+
+  private readonly numberInputs = viewChildren(SiNumberInputComponent);
 
   ngOnChanges(): void {
     this.validate();
@@ -220,9 +220,7 @@ export class SiThresholdComponent implements OnChanges {
     updated.splice(index + 1, 0, newStep);
     this.thresholdSteps.set(updated);
     this.validate();
-    setTimeout(() =>
-      this.element.nativeElement.querySelectorAll('input.form-control')[index]?.focus()
-    );
+    setTimeout(() => this.numberInputs()[index].inputElement().nativeElement.focus());
   }
 
   protected stepChange(): void {

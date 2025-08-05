@@ -51,7 +51,6 @@ export class SiFilteredSearchTypeaheadComponent
     input<(criterionName: string, typed: string | string[]) => Observable<OptionType[]>>();
   readonly searchDebounceTime = input.required<number>();
   readonly itemCountText = input.required<string>();
-  readonly items = input.required<string>();
   readonly onlySelectValue = input.required<boolean>();
   readonly maxCriteriaOptions = input.required<number>();
   readonly optionsInScrollableView = input.required<number>();

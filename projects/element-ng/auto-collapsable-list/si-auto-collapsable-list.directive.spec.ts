@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, viewChildren } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ResizeObserverService } from '@siemens/element-ng/resize-observer';
 
 import { SiAutoCollapsableListItemDirective } from './si-auto-collapsable-list-item.directive';
 import { SiAutoCollapsableListModule } from './si-auto-collapsable-list.module';
@@ -70,15 +71,17 @@ describe('SiAutoCollapsableListDirective', () => {
   let fixture: ComponentFixture<TestComponent>;
   let component: TestComponent;
   let hostElement: HTMLElement;
-  // A timeout that works with `await`. We have to use `waitForAsync()``
-  // in the tests below because `tick()` doesn't work because `ResizeObserver`
-  // operates outside of the zone
-  const timeout = async (ms?: number): Promise<void> =>
-    new Promise(resolve => setTimeout(resolve, ms));
   const readVisibilityStates = (): string[] =>
     Array.from(hostElement.querySelectorAll<HTMLElement>('[siAutoCollapsableListItem]')).map(
       element => element.style.visibility
     );
+
+  const detectSizeChange = (): void => {
+    fixture.detectChanges();
+    tick();
+    TestBed.inject(ResizeObserverService)._checkAll();
+    fixture.detectChanges();
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -105,24 +108,19 @@ describe('SiAutoCollapsableListDirective', () => {
     component.items().forEach(item => expect(item.canBeVisible()).toBe(true));
   }));
 
-  it('should collapse and expand items on container size changes', waitForAsync(async () => {
+  it('should collapse and expand items on container size changes', fakeAsync(() => {
     fixture.detectChanges();
     // Skip test when browser is not focussed to prevent failures.
     if (document.hasFocus()) {
-      await timeout(0);
-      fixture.detectChanges();
+      detectSizeChange();
       component.width = 300;
-      fixture.detectChanges();
-      await timeout(200);
-      fixture.detectChanges();
+      detectSizeChange();
       expect(readVisibilityStates()).toEqual(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
       expect(
         hostElement.querySelector<HTMLElement>('[siAutoCollapsableListOverflowItem]')!.innerText
       ).toBe('Overflown Items: 3');
       component.width = 600;
-      fixture.detectChanges();
-      await timeout(1000); // Don't know why, but ResizeObserver firing is very unreliable --> wait very long for it
-      fixture.detectChanges();
+      detectSizeChange();
       expect(readVisibilityStates()).toEqual([
         'visible',
         'visible',
@@ -137,32 +135,26 @@ describe('SiAutoCollapsableListDirective', () => {
     }
   }));
 
-  it('should respect additional content', waitForAsync(async () => {
+  it('should respect additional content', fakeAsync(() => {
     fixture.detectChanges();
     // Skip test when browser is not focussed to prevent failures.
     if (document.hasFocus()) {
-      await timeout();
-      fixture.detectChanges();
+      detectSizeChange();
       component.width = 300;
       component.showAdditionalContent = true;
-      fixture.detectChanges();
-      await timeout(200);
-      fixture.detectChanges();
+      detectSizeChange();
       expect(readVisibilityStates()).toEqual(['visible', 'hidden', 'hidden', 'hidden', 'hidden']);
     }
   }));
 
-  it('should react to item changes', waitForAsync(async () => {
+  it('should react to item changes', fakeAsync(() => {
     fixture.detectChanges();
     // Skip test when browser is not focussed to prevent failures.
     if (document.hasFocus()) {
-      await timeout();
-      fixture.detectChanges();
+      detectSizeChange();
       component.moreItems.push(100, 100);
       component.width = 700;
-      fixture.detectChanges();
-      await timeout(200);
-      fixture.detectChanges();
+      detectSizeChange();
       expect(readVisibilityStates()).toEqual([
         'visible',
         'visible',
@@ -173,9 +165,7 @@ describe('SiAutoCollapsableListDirective', () => {
         'visible'
       ]);
       component.moreItems[0] = 0;
-      fixture.detectChanges();
-      await timeout(200);
-      fixture.detectChanges();
+      detectSizeChange();
       expect(readVisibilityStates()).toEqual([
         'visible',
         'visible',
@@ -188,54 +178,40 @@ describe('SiAutoCollapsableListDirective', () => {
     }
   }));
 
-  it('should react to disabled changes', waitForAsync(async () => {
+  it('should react to disabled changes', fakeAsync(() => {
     component.width = 300;
-    fixture.detectChanges();
-    await timeout(200);
-    fixture.detectChanges();
+    detectSizeChange();
     expect(readVisibilityStates()).toEqual(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
     component.disabled = true;
-    fixture.detectChanges();
-    await fixture.whenStable();
-    fixture.detectChanges();
+    detectSizeChange();
     expect(readVisibilityStates()).toEqual(['visible', 'visible', 'visible', 'visible', 'visible']);
     component.disabled = false;
-    fixture.detectChanges();
-    await timeout(200);
-    fixture.detectChanges();
+    detectSizeChange();
     expect(readVisibilityStates()).toEqual(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
   }));
 
-  it('should react to list reset', waitForAsync(async () => {
+  it('should react to list reset', fakeAsync(() => {
     component.width = 300;
-    fixture.detectChanges();
-    await timeout(200);
-    fixture.detectChanges();
+    detectSizeChange();
     expect(readVisibilityStates()).toEqual(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
     expect(
       hostElement.querySelector<HTMLElement>('[siAutoCollapsableListOverflowItem]')!.innerText
     ).toBe('Overflown Items: 3');
 
     component.renderItems = false;
-    fixture.detectChanges();
-    await timeout(200);
-    fixture.detectChanges();
+    detectSizeChange();
     expect(readVisibilityStates()).toEqual([]);
     expect(
       hostElement.querySelector<HTMLElement>('[siAutoCollapsableListOverflowItem]')!.innerText
     ).toBe('');
   }));
 
-  it('should show new items if disabled', waitForAsync(async () => {
+  it('should show new items if disabled', fakeAsync(() => {
     component.disabled = true;
-    fixture.detectChanges();
-    await timeout(0);
-    fixture.detectChanges();
+    detectSizeChange();
     expect(readVisibilityStates()).toEqual(['visible', 'visible', 'visible', 'visible', 'visible']);
     component.moreItems = [800];
-    fixture.detectChanges();
-    await timeout(0);
-    fixture.detectChanges();
+    detectSizeChange();
     expect(readVisibilityStates()).toEqual([
       'visible',
       'visible',
@@ -246,29 +222,21 @@ describe('SiAutoCollapsableListDirective', () => {
     ]);
   }));
 
-  it('should hide forced hide item', waitForAsync(async () => {
+  it('should hide forced hide item', fakeAsync(() => {
     component.forceHideSecondItem = true;
-    fixture.detectChanges();
-    await timeout(200);
-    fixture.detectChanges();
+    detectSizeChange();
     expect(readVisibilityStates()).toEqual(['visible', 'hidden', 'visible', 'visible', 'visible']);
     component.width = 300;
-    fixture.detectChanges();
-    await timeout(200);
-    fixture.detectChanges();
+    detectSizeChange();
     expect(readVisibilityStates()).toEqual(['visible', 'hidden', 'hidden', 'hidden', 'hidden']);
   }));
 
-  it('should use host width', waitForAsync(async () => {
+  it('should use host width', fakeAsync(() => {
     component.width = 300;
-    fixture.detectChanges();
-    await timeout(200);
-    fixture.detectChanges();
+    detectSizeChange();
     expect(readVisibilityStates()).toEqual(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
     component.useContainerElement = true;
-    fixture.detectChanges();
-    await timeout(200);
-    fixture.detectChanges();
+    detectSizeChange();
     expect(readVisibilityStates()).toEqual(['visible', 'visible', 'visible', 'visible', 'visible']);
   }));
 });

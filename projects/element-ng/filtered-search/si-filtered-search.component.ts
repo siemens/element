@@ -164,28 +164,6 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges, OnDestroy {
    * @defaultValue ''
    */
   readonly placeholder = input('');
-  /**
-   * @deprecated This property is unused and will be removed without a replacement.
-   *
-   * @defaultValue false
-   */
-  readonly showIcon = input(false, { transform: booleanAttribute });
-  /**
-   * @deprecated This property is unused and will be removed without a replacement.
-   * To provide translation for the new search button, use the {@link submitButtonLabel} input.
-   *
-   * @defaultValue
-   * ```
-   * $localize`:@@SI_FILTERED_SEARCH.SUBMIT:Apply search criteria`
-   * ```
-   */
-  readonly submitText = input($localize`:@@SI_FILTERED_SEARCH.SUBMIT:Apply search criteria`);
-
-  /**
-   *  @deprecated Setting this property will make it harder for user to submit a search.
-   *  Instead of using this property to preselect to most relevant option, sort the options by relevance.
-   */
-  readonly selectedCriteriaIndex = input<number>();
 
   /**
    * Defines the number of criteria, criteria values and operators visible at once.
@@ -276,17 +254,6 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges, OnDestroy {
    */
   readonly colorVariant = input<BackgroundColorVariant>('base-1');
   /**
-   * Text or translate key for multi selection pills text.
-   *
-   * @deprecated Use the new input {@link itemCountText} instead.
-   *
-   * @defaultValue
-   * ```
-   * $localize`:@@SI_FILTERED_SEARCH.ITEMS:items`
-   * ```
-   */
-  readonly items = input($localize`:@@SI_FILTERED_SEARCH.ITEMS:items`);
-  /**
    * Disables the free text search to only use the criterion for filtering.
    *
    * @defaultValue false
@@ -298,18 +265,6 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges, OnDestroy {
    * @defaultValue 20
    */
   readonly typeaheadOptionsLimit = input(20);
-  /**
-   * @deprecated This property is unused and will be removed without a replacement.
-   *
-   * @defaultValue
-   * ```
-   * $localize`:@@SI_FILTERED_SEARCH.NO_MATCHING_CRITERIA:No matching criteria`
-   * ```
-   */
-  readonly noMatchingCriteriaText = input(
-    $localize`:@@SI_FILTERED_SEARCH.NO_MATCHING_CRITERIA:No matching criteria`
-  );
-
   /**
    * By default, the Filtered Search will treat `:` as a special character
    * to submit the current input in the freetext and immediately create a criterion.

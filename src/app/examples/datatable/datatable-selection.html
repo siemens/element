@@ -47,14 +47,16 @@
       <si-card class="mt-4" heading="Selection type">
         <div class="card-body" body>
           <div class="row">
-            <si-form-item class="col-6" label="Selection type">
-              <select class="form-control" id="selection-type" [(ngModel)]="selectionType">
-                <option [ngValue]="undefined">Choose selection type</option>
-                @for (selType of selectionTypes; track $index) {
-                  <option [ngValue]="selType">{{ selType }}</option>
-                }
-              </select>
-            </si-form-item>
+            <div class="col-6">
+              <si-form-item label="Selection type">
+                <select class="form-control" id="selection-type" [(ngModel)]="selectionType">
+                  <option [ngValue]="undefined">Choose selection type</option>
+                  @for (selType of selectionTypes; track $index) {
+                    <option [ngValue]="selType">{{ selType }}</option>
+                  }
+                </select>
+              </si-form-item>
+            </div>
           </div>
         </div>
       </si-card>

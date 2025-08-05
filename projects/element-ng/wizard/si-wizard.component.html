@@ -145,7 +145,7 @@
           {{ cancelText() | translate }}
         </button>
       }
-      @if (!shouldHideNavigation()) {
+      @if (!hideNavigation()) {
         <button
           type="button"
           class="btn btn-secondary"
@@ -187,7 +187,7 @@
 
 <ng-template #backBtnHorizontal>
   <div class="wizard-btn-container">
-    @if (!shouldHideNavigation()) {
+    @if (!hideNavigation()) {
       <div class="back" [class.invisible]="index === 0" (click)="back(1)">
         <button
           type="button"
@@ -204,7 +204,7 @@
 
 <ng-template #nextBtnHorizontal>
   <div class="wizard-btn-container" [class.wizard-text-deactivate]="!currentStep?.isValid()">
-    @if (!shouldHideNavigation()) {
+    @if (!hideNavigation()) {
       <div class="next" [class.invisible]="index === steps().length - 1" (click)="next(1)">
         <button
           type="button"

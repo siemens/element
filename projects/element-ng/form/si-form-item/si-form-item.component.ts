@@ -14,7 +14,6 @@ import {
   ElementRef,
   inject,
   input,
-  Input,
   isSignal,
   OnChanges,
   OnDestroy,
@@ -62,9 +61,6 @@ export interface SiFormError {
 export class SiFormItemComponent
   implements AfterContentInit, AfterContentChecked, OnChanges, OnInit, OnDestroy
 {
-  /** @deprecated property has longer an effect. SiFormItem detects IDs automatically  */
-  @Input() inputId?: string;
-
   /**
    * The label to be displayed in the form item.
    * It will be translated if a translation key is available.
@@ -81,13 +77,6 @@ export class SiFormItemComponent
    * @example labelWidth="100px"
    */
   readonly labelWidth = input<string | number>();
-
-  /**
-   * @deprecated This input has no effect and can be removed.
-   *
-   * @defaultValue false
-   */
-  @Input({ transform: booleanAttribute }) readonly = false;
 
   /**
    * Disables the automatic error printing. Error printing will be enabled by default in v46.

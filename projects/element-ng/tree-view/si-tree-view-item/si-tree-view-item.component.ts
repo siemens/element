@@ -509,7 +509,7 @@ export class SiTreeViewItemComponent
   }
 
   /**
-   * Focusses the tree item.
+   * Focuses the tree item.
    */
   focus(): void {
     this.element.nativeElement.focus();
