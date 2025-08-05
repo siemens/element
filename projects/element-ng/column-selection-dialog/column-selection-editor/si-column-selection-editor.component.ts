@@ -72,19 +72,19 @@ export class SiColumnSelectionEditorComponent {
     this.titleChange.emit();
   }
 
-  startEdit(): void {
+  protected startEdit(): void {
     if (this.column().editable) {
       this.editing = true;
       setTimeout(() => this.title().nativeElement.focus());
     }
   }
 
-  stopEdit(): void {
+  protected stopEdit(): void {
     this.editing = false;
     this.elementRef.nativeElement.focus();
   }
 
-  toggleVisibility(): void {
+  protected toggleVisibility(): void {
     this.cdkOption.toggle();
     // manually toggling does not emit an event, so we have to fire one
     this.visibilityChange.emit();
