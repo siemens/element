@@ -14,7 +14,7 @@ color variants if necessary.
 
 For a cohesive typography experience, Element's type scale uses the Siemens
 Sans typeface.
-Hierarchy is communicated through differences in font weight (Roman/Regular and Bold) and
+Hierarchy is communicated through differences in font weight (Roman and Bold) and
 size.
 
 <si-docs-component example="typography/typography" editor="false" height="380"></si-docs-component>
@@ -26,52 +26,93 @@ size.
 Headings, subheadings, and body text each serve distinct functions and should be chosen accordingly.
 - Combine font weight, size, and color to establish hierarchy, utilizing lighter colors
   or smaller font sizes to de-emphasize secondary content.
-- Avoid style changes like bold and italics in the middle of a paragraph.
+- Avoid style changes like bold and italic in the middle of a paragraph.
 
 ## Design ---
 
-Element defines 9 different type styles. It follows the
-HTML semantic, while omitting the `H4`, `H5` and `H6` heading to reduce visual
-complexity of titles within an application.
+Element’s typography is divided into body, headings and display styles.
 
-### Type scale
+### Body
 
-Line heights are computed using `font-size + 1/8rem` (used in buttons,
-navigation, tables…).
+Body text is used for the main content, often following a heading or as part of UI components.
 
-Type             | Size (rem) | Line Height (rem) | Family       | Style
------------------|------------|-------------------|--------------|------
-Data Callout     | 3          | 3.125             | Siemens Sans | Roman
-H1 Heading       | 1.85       | 2                 | Siemens Sans | Roman
-H1 Heading Black | 1.85       | 2                 | Siemens Sans | **Black**
-H2 Subheading    | 1.25       | 1.5               | Siemens Sans | Roman
-H3 Subheading    | 1.125      | 1.25              | Siemens Sans | **Bold**
-Title 1          | 1          | 1.125             | Siemens Sans | **Bold**
-Body 1           | 1          | 1.125             | Siemens Sans | Roman
-Title 2          | 0.875      | 1                 | Siemens Sans | **Bold**
-Body 2           | 0.875      | 1                 | Siemens Sans | Roman
-Caption          | 0.75       | 1                 | Siemens Sans | Roman
-Display 1        | 3.5        | 4.5               | Siemens Sans | Roman
-Display 2        | 3          | 4                 | Siemens Sans | Roman
-Display 3        | 2.5        | 3.25              | Siemens Sans | **Black**
-Display 4        | 2.5        | 3.25              | Siemens Sans | Roman
+- Use `body` as the default style for most components and text blocks.
+- Use `body-lg` for larger and more prominent text.
+- Use `caption` for small, supportive text like annotations or metadata.
 
-All font sizes are defined in **rem** (the root em size) based on the root
-element size. The Element Design System defines **1 rem as 16 px** while
-also applying this fixed conversion ratio within the implementation.
+![Body fonts usage](images/typography-body-usage.png)
 
-### Applying the type scale
+| Style      | Font size | Line height | Font weight  |
+|------------|-----------|-------------|--------------|
+| `body-lg`  | 16 px     | 20 px       | 400 / Roman  |
+| `body`     | 14 px     | 16 px       | 400 / Roman  |
+| `caption`  | 12 px     | 16 px       | 400 / Roman  |
 
-- Choose **Heading 1** or **Heading 2** as the main title based on spacing
-  requirements. If using Heading 1, follow it with Heading 2 for major
-  section titles.
-- **H3 subheading** serves as a secondary heading.
-- **Title 1** and **Title 2** are used for cards or less important section titles.
-- Use body styles within components and text blocks, with **Body 2** as the default.
-- Use **Caption** for small, supplementary text providing additional context.
-- Use **Display** styles in widgets, key visual elements, hero sections or any area where more prominence is required.
+All body styles are also available in **bold** and *italic*.
+Bold is used to add emphasis or draw attention to key information, and is also applied in specific
+UI elements, such as button labels, or highlighted values in tables and lists.
 
-![Typography styles](images/typography-styles.png)
+Italic is used sparingly, for cases like technical terms.
+
+### Headings
+
+Headings communicate the structure and visual hierarchy of content on the page.
+They are defined semantically from `h1` to `h6`.
+
+- Use `h1` as the visual style for the largest headings.
+- Use `h2` as main page headings.
+- Use `h3` as section headings.
+- Use `h4` as secondary section titles.
+- `h5/h6` share the same visual style, used for smaller content blocks like cards or tertiary titles.
+
+| Style     | Font size | Line height | Font weight     |
+|-----------|-----------|-------------|-----------------|
+| `h1-bold` | 30 px     | 36 px       | 700 / Bold      |
+| `h1`      | 30 px     | 36 px       | 400 / Roman     |
+| `h2`      | 20 px     | 24 px       | 600 / Semi Bold |
+| `h3`      | 18 px     | 24 px       | 600 / Semi Bold |
+| `h4`      | 16 px     | 20 px       | 600 / Semi Bold |
+| `h4-bold` | 16 px     | 20 px       | 700 / Bold      |
+| `h5`      | 14 px     | 16 px       | 600 / Semi Bold |
+| `h5-bold` | 14 px     | 16 px       | 700 / Bold      |
+
+In order to adhere to [accessibility best practices](https://www.w3.org/WAI/tutorials/page-structure/headings/),
+each page should be structured according to the semantic hierarchy `h1`, `h2`, ... `h6`, starting from
+`h1` and maintaining a logical order without skipping levels.
+
+Web browsers, plug-ins, and assistive technologies rely on this structure to provide in-page navigation.
+When visual requirements do not align with the semantic hierarchy, the appropriate HTML elements
+(`h1`, `h2`, ... `h6`) should still be used, with the desired visual style applied through CSS classes.
+
+When the visual style of `h1` is too prominent for typical in-page headings,
+such as the [page header](https://github.com/siemens/element/fundamentals/layouts/header.md),
+the `h2` style is used instead for visual balance.
+
+In this pattern, the `h1` tag is assigned to the application name in the [application header](https://github.com/siemens/element/components/layout-navigation/application-header.md).
+This preserves both visual hierarchy and correct semantic structure for assistive technologies.
+
+![Headings accessibility semantics](images/typography-accesibility.png)
+
+#### Links
+
+- [WCAG SC 2.4.10](https://www.w3.org/WAI/WCAG22/Understanding/section-headings.html)
+- [WCAG technique G141](https://www.w3.org/WAI/WCAG22/Techniques/general/G141)
+- [WCAG technique G69](https://www.w3.org/WAI/WCAG22/Techniques/html/H69)
+- [WCAG tutorial page structure](https://www.w3.org/WAI/tutorials/page-structure/)
+
+### Display
+
+Display styles are used for high-impact content, such as hero sections, widgets, or dashboards.
+They should be used sparingly to maintain clarity.
+
+![Display fonts usage](images/typography-display-usage.png)
+
+| Style         | Font size | Line height | Font weight     |
+|---------------|-----------|-------------|-----------------|
+| `display-xl`  | 56 px     | 72 px       | 400 / Roman     |
+| `display-lg`  | 48 px     | 64 px       | 400 / Roman     |
+| `display-bold`| 40 px     | 52 px       | 700 / Bold      |
+| `display`     | 40 px     | 52 px       | 400 / Roman     |
 
 ### Using the bounding box
 
