@@ -35,7 +35,7 @@ class TestHostComponent {
   }
 }
 
-fdescribe('SiFilterBarComponent', () => {
+describe('SiFilterBarComponent', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let component: TestHostComponent;
   let element: HTMLElement;
