@@ -29,9 +29,10 @@
       "@siemens/live-preview/*": ["projects/live-preview/*"],
       "@siemens/charts-ng": ["projects/charts-ng/src/public-api.ts", "projects/charts-ng"],
       "@siemens/native-charts-ng": [
-        "projects/native-charts-ng/src/public-api.ts",
+        "projects/native-charts-ng/public-api.ts",
         "projects/native-charts-ng"
       ],
+      "@siemens/native-charts-ng/*": ["projects/native-charts-ng/*/index.ts"],
       "@siemens/dashboards-ng": ["projects/dashboards-ng/src/public-api.ts"],
       "@siemens/dashboards-ng/*": ["projects/dashboards-ng/*"]
     }

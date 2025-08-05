@@ -14,14 +14,13 @@ import {
   OnInit,
   SimpleChanges
 } from '@angular/core';
-
 import {
   Coordinate,
   makeArc,
   makeLine,
   polarToCartesian,
   valueToRelativeAngle
-} from '../../utils/svg-math';
+} from '@siemens/native-charts-ng/utils';
 
 /**
  * One series of the gauge chart.

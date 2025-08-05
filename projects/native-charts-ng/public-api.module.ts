@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { NgModule } from '@angular/core';
-
-import { SiNChartGaugeComponent } from './components/si-nchart-gauge/si-nchart-gauge.component';
+import { SiNChartGaugeComponent } from '@siemens/native-charts-ng/gauge';
 
 @NgModule({
   imports: [SiNChartGaugeComponent],

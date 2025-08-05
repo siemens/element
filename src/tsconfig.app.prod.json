@@ -11,6 +11,7 @@
       "@siemens/live-preview/*": ["dist/@siemens/live-preview/*"],
       "@siemens/charts-ng": ["dist/@siemens/charts-ng"],
       "@siemens/native-charts-ng": ["dist/@siemens/native-charts-ng"],
+      "@siemens/native-charts-ng/*": ["dist/@siemens/native-charts-ng/*"],
       "@siemens/dashboards-ng": ["dist/@siemens/dashboards-ng"],
       "@siemens/dashboards-ng/*": ["dist/@siemens/dashboards-ng/*"]
     },
