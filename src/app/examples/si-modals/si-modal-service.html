@@ -1,25 +1,29 @@
-<button type="button" class="btn btn-secondary me-5" (click)="openModal(template)"
-  >Create template modal</button
->
-<button type="button" class="btn btn-secondary me-5" (click)="openModal(template, 'modal-lg')"
-  >Create large modal</button
->
-<button
-  type="button"
-  class="btn btn-secondary me-5"
-  (click)="openModal(template, 'modal-dialog-centered')"
-  >Create centered modal</button
->
-<button type="button" class="btn btn-secondary me-5" (click)="openModal(iconTemplate)"
-  >Create modal with icon</button
->
-<button
-  type="button"
-  class="btn btn-secondary me-5"
-  (click)="openParentModal(nestedTemplate, 'modal-dialog-centered')"
-  >Create nested modal</button
->
-
+<div class="d-flex flex-wrap gap-5">
+  <button type="button" class="btn btn-secondary" (click)="openModal(template)"
+    >Create template modal</button
+  >
+  <button type="button" class="btn btn-secondary" (click)="openModal(template, 'modal-lg')"
+    >Create large modal</button
+  >
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="openModal(template, 'modal-dialog-centered')"
+    >Create centered modal</button
+  >
+  <button type="button" class="btn btn-secondary" (click)="openModal(iconTemplate)"
+    >Create modal with icon</button
+  >
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="openParentModal(nestedTemplate, 'modal-dialog-centered')"
+    >Create nested modal</button
+  >
+  <button type="button" class="btn btn-secondary" (click)="openModalWithComponent()"
+    >Create modal with custom component</button
+  >
+</div>
 <ng-template #template let-modalRef="modalRef">
   <div class="modal-header">
     <h4 class="modal-title" id="sample-modal-title">Modal</h4>

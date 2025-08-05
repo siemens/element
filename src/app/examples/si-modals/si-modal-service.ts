@@ -2,10 +2,12 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, OnDestroy, TemplateRef } from '@angular/core';
+import { Component, inject, Injector, OnDestroy, TemplateRef } from '@angular/core';
 import { SiStatusIconComponent } from '@siemens/element-ng/icon';
 import { ModalRef, SiModalService } from '@siemens/element-ng/modal';
 import { LOG_EVENT } from '@siemens/live-preview';
+
+import { AppTableComponent } from './app-table.component';
 
 @Component({
   selector: 'app-sample',
@@ -19,6 +21,7 @@ export class SampleComponent implements OnDestroy {
 
   private logEvent = inject(LOG_EVENT);
   private modalService = inject(SiModalService);
+  private injector = inject(Injector);
 
   ngOnDestroy(): void {
     this.ref?.detach();
@@ -58,5 +61,15 @@ export class SampleComponent implements OnDestroy {
     this.parentRef.hidden.subscribe(closeValue =>
       this.logEvent('Parent modal closed with value', closeValue)
     );
+  }
+
+  openModalWithComponent(): void {
+    this.modalService.show(AppTableComponent, {
+      ignoreBackdropClick: false,
+      keyboard: true,
+      animated: true,
+      ariaLabelledBy: 'sample-modal-title',
+      injector: this.injector
+    });
   }
 }
