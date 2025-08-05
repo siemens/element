@@ -4,11 +4,10 @@
  */
 import { NgTemplateOutlet } from '@angular/common';
 import { booleanAttribute, Component, computed, inject, input } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { Breakpoints, SiResponsiveContainerDirective } from '@siemens/element-ng/resize-observer';
 
 import { SiFormValidationErrorMapper } from '../si-form-validation-error.model';
-import { SiFormValidationErrorService } from '../si-form-validation-error.service';
 
 export interface SiFormValidationError {
   controlName?: string;
@@ -100,7 +99,6 @@ export class SiFormContainerComponent<TControl extends { [K in keyof TControl]: 
     optional: true,
     skipSelf: true
   });
-  private errorResolver = inject(SiFormValidationErrorService);
 
   /** @internal */
   readonly formErrorMapper = computed(() => {
@@ -148,83 +146,11 @@ export class SiFormContainerComponent<TControl extends { [K in keyof TControl]: 
     return this.userInteractedWithForm && this.form()!.status === 'INVALID';
   }
 
-  /**
-   * Returns the validation errors of the form's control when the control name is provided. Otherwise,
-   * returns all validation errors of the form. Returns an empty arry when no form is available or if
-   * the name does not match to a control.
-   * @param controlName - An optional name of a control that is part of the form.
-   *
-   * @deprecated The {@link SiFormItemComponent} is able to display validation errors automatically when `siFormInput` directive is used.
-   */
-  getValidationErrors(controlName?: string): SiFormValidationError[] {
-    const form = this.form();
-    if (!form) {
-      return [];
-    } else if (!controlName) {
-      return this.getFormValidationErrorsPrivate(form);
-    } else {
-      const control = form.get(controlName);
-      if (control) {
-        return this.getFormValidationErrorsPrivate(control, controlName);
-      } else {
-        return [];
-      }
-    }
-  }
-
   protected getControlNameTranslateKey(controlName: string): string | undefined {
     const controlNameTranslateKeyMap = this.controlNameTranslateKeyMap();
     if (!controlNameTranslateKeyMap) {
       return undefined;
     }
     return controlNameTranslateKeyMap.get(controlName) ?? controlName;
-  }
-
-  private getFormValidationErrorsPrivate(
-    control: AbstractControl,
-    controlName?: string
-  ): SiFormValidationError[] {
-    let errors: SiFormValidationError[] = [];
-
-    // a form must either consist of
-    // a) a formgroup (with nested form controls or groups) or
-    // b) a single form control
-    if (control instanceof FormGroup) {
-      const formGroupErrors = this.getFormGroupErrors(control);
-      errors = errors.concat(formGroupErrors);
-      if (control.controls) {
-        Object.keys(control.controls).forEach(key => {
-          const formGroupControl = control.controls[key];
-          const formGroupControlErrors = this.getFormValidationErrorsPrivate(formGroupControl, key);
-          errors = errors.concat(formGroupControlErrors);
-        });
-      }
-    } else if (control instanceof FormControl) {
-      errors.push(
-        ...this.errorResolver
-          .resolveErrors(controlName, control.errors, undefined, this.formErrorMapper())
-          .map(error => ({
-            controlName,
-            errorCode: error.key,
-            errorParams: error.params,
-            errorCodeTranslationKey: error.message,
-            controlNameTranslationKey: controlName
-              ? this.getControlNameTranslateKey(controlName)
-              : undefined
-          }))
-      );
-    }
-
-    return errors;
-  }
-
-  private getFormGroupErrors(formGroup: FormGroup): SiFormValidationError[] {
-    return this.errorResolver
-      .resolveErrors(null, formGroup.errors, undefined, this.formErrorMapper())
-      .map(error => ({
-        errorCode: error.key,
-        errorParams: error.params,
-        errorCodeTranslationKey: error.message
-      }));
   }
 }

@@ -22,7 +22,11 @@ import {
   SiDateRangeComponent,
   SiTimepickerComponent
 } from '@siemens/element-ng/datepicker';
-import { SiFormContainerComponent, SiFormModule } from '@siemens/element-ng/form';
+import {
+  SiFormContainerComponent,
+  SiFormModule,
+  SiFormValidationError
+} from '@siemens/element-ng/form';
 import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
 import { PhoneDetails, SiPhoneNumberInputComponent } from '@siemens/element-ng/phone-number';
 import { SelectOption, SiSelectModule } from '@siemens/element-ng/select';
@@ -212,5 +216,50 @@ export class SampleComponent {
       this.form.controls.privacyDeclined.enable();
       this.form.controls.termsAccepted.enable();
     }
+  }
+
+  getFormErrors(formControl?: AbstractControl): SiFormValidationError[] {
+    const control = formControl ?? this.form;
+    if (!control) {
+      return [];
+    }
+    const errors: SiFormValidationError[] = [];
+
+    // Get errors from the current control
+    if (control.errors) {
+      Object.keys(control.errors).forEach(errorCode => {
+        errors.push({
+          controlName: this.getControlName(control),
+          errorCode,
+          errorParams: control.errors![errorCode]
+        });
+      });
+    }
+
+    // Recursively get errors from child controls
+    if (control instanceof FormGroup) {
+      Object.keys(control.controls).forEach(controlName => {
+        const childControl = control.get(controlName);
+        if (childControl) {
+          const childErrors = this.getFormErrors(childControl);
+          errors.push(...childErrors);
+        }
+      });
+    }
+
+    return errors;
+  }
+
+  private getControlName(control: AbstractControl): string | undefined {
+    if (control === this.form) {
+      return undefined;
+    }
+
+    const formGroup = control.parent as FormGroup;
+    if (!formGroup) {
+      return undefined;
+    }
+
+    return Object.keys(formGroup.controls).find(name => formGroup.get(name) === control);
   }
 }

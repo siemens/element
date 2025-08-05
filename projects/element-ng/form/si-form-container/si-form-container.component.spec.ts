@@ -10,20 +10,13 @@ import {
   viewChild
 } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  ValidatorFn,
-  Validators
-} from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   SiFormContainerComponent,
   SiFormModule,
   SiFormValidationErrorMapper
 } from '@siemens/element-ng/form';
 import { SiResponsiveContainerDirective } from '@siemens/element-ng/resize-observer';
-import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 
 // A timeout that works with `await`. We have to use `waitForAsync()``
 // in the tests below because `tick()` doesn't work because `ResizeObserver`
@@ -101,82 +94,6 @@ describe('SiFormContainerComponent', () => {
       expect(component).toBeDefined();
     });
 
-    describe('getValidationErrors()', () => {
-      it('should return an empty array without a form set', () => {
-        expect(formContainer.getValidationErrors().length).toBe(2);
-        component.form = undefined;
-        component.cdRef.markForCheck();
-        fixture.detectChanges();
-        expect(formContainer.getValidationErrors()).toBeDefined();
-        expect(formContainer.getValidationErrors().length).toBe(0);
-      });
-
-      it('should return errors for an invalid form', () => {
-        component.form!.controls.email.disable();
-        expect(formContainer.getValidationErrors()).toBeDefined();
-        expect(formContainer.getValidationErrors()).toEqual([
-          {
-            errorCodeTranslationKey: 'custom-length-message',
-            errorCode: 'minlength',
-            controlName: 'name',
-            controlNameTranslationKey: 'name',
-            errorParams: { requiredLength: 3, actualLength: 2 }
-          }
-        ]);
-      });
-
-      it('should resolve with a custom error mapper', () => {
-        component.customErrorMapper = {
-          minlength: ({ requiredLength, actualLength }) => `${requiredLength}-${actualLength}`
-        };
-        runOnPushChangeDetection(fixture);
-        expect(formContainer.getValidationErrors()).toBeDefined();
-        expect(formContainer.getValidationErrors()).toEqual([
-          {
-            errorCodeTranslationKey: '3-2',
-            errorCode: 'minlength',
-            controlName: 'name',
-            controlNameTranslationKey: 'name',
-            errorParams: { requiredLength: 3, actualLength: 2 }
-          },
-          {
-            controlName: 'email',
-            controlNameTranslationKey: 'email',
-            errorCode: 'email',
-            errorCodeTranslationKey: 'The email is not valid.',
-            errorParams: true
-          }
-        ]);
-      });
-
-      it('should return an empty array for a valid form', () => {
-        component.form!.controls.email.disable();
-        component.form!.patchValue({ name: 'Peter' });
-        expect(formContainer.getValidationErrors()).toBeDefined();
-        expect(formContainer.getValidationErrors().length).toBe(0);
-      });
-
-      it('should return the validation errors of a invalid control', () => {
-        expect(formContainer.getValidationErrors('name')).toBeDefined();
-        expect(formContainer.getValidationErrors('name').length).toBe(1);
-        expect(formContainer.getValidationErrors('name')[0].errorCode).toBe('minlength');
-        expect(formContainer.getValidationErrors().length).toBe(2);
-      });
-
-      it('should return an empty array when invoking with a control name that does not exist', () => {
-        expect(formContainer.getValidationErrors('nameX')).toBeDefined();
-        expect(formContainer.getValidationErrors('nameX').length).toBe(0);
-        expect(formContainer.getValidationErrors().length).toBe(2);
-      });
-
-      it('should include validator errors that belong to the form and not to a control', () => {
-        const myValidatorFn: ValidatorFn = () => ({ myError: true });
-        component.form!.addValidators(myValidatorFn);
-        component.form!.updateValueAndValidity();
-        expect(formContainer.getValidationErrors().length).toBe(3);
-      });
-    });
-
     describe('userInteractedWithForm', () => {
       it('shall return false with no form', () => {
         component.form = undefined;
@@ -242,44 +159,6 @@ describe('SiFormContainerComponent', () => {
         component.form!.controls.name.markAsTouched();
         expect(formContainer.invalidFormContainerMessage).toBeTrue();
       });
-    });
-  });
-
-  describe('with no custom error messages', () => {
-    let component: TestHostComponent;
-    let fixture: ComponentFixture<TestHostComponent>;
-    let formContainer: SiFormContainerComponent<TestForm>;
-
-    beforeEach(waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [ReactiveFormsModule, SiFormModule, TestHostComponent]
-      }).compileComponents();
-    }));
-
-    beforeEach(() => {
-      fixture = TestBed.createComponent(TestHostComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-      formContainer = component.formContainer();
-    });
-
-    it('should return the default error messages', () => {
-      expect(formContainer.getValidationErrors()).toEqual([
-        {
-          errorCodeTranslationKey: 'The minimum number of characters is not met.',
-          errorCode: 'minlength',
-          controlName: 'name',
-          controlNameTranslationKey: 'name',
-          errorParams: { requiredLength: 3, actualLength: 2 }
-        },
-        {
-          controlName: 'email',
-          controlNameTranslationKey: 'email',
-          errorCode: 'email',
-          errorCodeTranslationKey: 'The email is not valid.',
-          errorParams: true
-        }
-      ]);
     });
   });
 

@@ -184,7 +184,7 @@
                 <si-form-item label="Validation Status">{{ form.status }}</si-form-item>
                 <si-form-item label="Validation Details">
                   <ul>
-                    @for (error of formContainer.getValidationErrors(); track $index) {
+                    @for (error of getFormErrors(); track $index) {
                       <li>
                         @if (error.controlName) {
                           <span>Control: {{ error.controlName }}, </span>
