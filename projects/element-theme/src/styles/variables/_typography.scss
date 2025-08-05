@@ -5,7 +5,11 @@
 }
 
 @function pxToRem($value) {
-  @return $value;
+  @return $value; // ($value / 16px * 1rem);
+}
+
+@function pxToEm($base, $value) {
+  @return ($value / $base);
 }
 
 $si-font-family: 'Siemens Sans', sans-serif;
@@ -19,7 +23,7 @@ $si-font-weight-bolder: bolder !default;
 $si-font-weight-black: 900 !default;
 
 $si-font-size-h1: pxToRem(30px);
-$si-line-height-h1: 1.2;
+$si-line-height-h1: pxToEm($si-font-size-h1, 36px);
 $si-font-weight-h1: $si-font-weight-normal;
 
 $si-font-size-h1-black: $si-font-size-h1;
@@ -27,53 +31,53 @@ $si-line-height-h1-black: $si-line-height-h1;
 $si-font-weight-h1-black: $si-font-weight-bold;
 
 $si-font-size-h2: pxToRem(20px);
-$si-line-height-h2: 1.21;
+$si-line-height-h2: pxToEm($si-font-size-h2, 24px);
 $si-font-weight-h2: $si-font-weight-semibold;
 
 $si-font-size-h3: pxToRem(18px);
-$si-line-height-h3: 1.34;
+$si-line-height-h3: pxToEm($si-font-size-h3, 24px);
 $si-font-weight-h3: $si-font-weight-semibold;
 
 $si-font-size-title-1-bold: pxToRem(16px);
-$si-line-height-title-1-bold: 1.12;
+$si-line-height-title-1-bold: pxToEm($si-font-size-title-1-bold, 20px);
 $si-font-weight-title-1-bold: $si-font-weight-bold;
 
 $si-font-size-title-1: pxToRem(16px);
-$si-line-height-title-1: 1.22;
+$si-line-height-title-1: pxToEm($si-font-size-title-1, 20px);
 $si-font-weight-title-1: $si-font-weight-semibold;
 
 $si-font-size-body-1: pxToRem(16px);
-$si-line-height-body-1: 1.22;
+$si-line-height-body-1: pxToEm($si-font-size-body-1, 20px);
 $si-font-weight-body-1: $si-font-weight-normal;
 
 $si-font-size-title-2-bold: pxToRem(14px);
-$si-line-height-title-2-bold: 1.12;
+$si-line-height-title-2-bold: pxToEm($si-font-size-title-2-bold, 16px);
 $si-font-weight-title-2-bold: $si-font-weight-bold;
 
 $si-font-size-title-2: pxToRem(14px);
-$si-line-height-title-2: 1.12;
+$si-line-height-title-2: pxToEm($si-font-size-title-2, 16px);
 $si-font-weight-title-2: $si-font-weight-semibold;
 
 $si-font-size-body-2: pxToRem(14px);
-$si-line-height-body-2: 1.12;
+$si-line-height-body-2: pxToEm($si-font-size-body-2, 16px);
 $si-font-weight-body-2: $si-font-weight-normal;
 
 $si-font-size-caption-1: pxToRem(12px);
-$si-line-height-caption-1: 1.12;
+$si-line-height-caption-1: pxToEm($si-font-size-caption-1, 16px);
 $si-font-weight-caption-1: $si-font-weight-normal;
 
 $si-font-size-display-1: pxToRem(56px);
-$si-line-height-display-1: 1.28;
+$si-line-height-display-1: pxToEm($si-font-size-display-1, 72px);
 $si-font-weight-display-1: $si-font-weight-normal;
 
 $si-font-size-display-2: pxToRem(48px);
-$si-line-height-display-2: 1.33;
+$si-line-height-display-2: pxToEm($si-font-size-display-2, 64px);
 $si-font-weight-display-2: $si-font-weight-normal;
 
 $si-font-size-display-3: pxToRem(40px);
-$si-line-height-display-3: 1.3;
+$si-line-height-display-3: pxToEm($si-font-size-display-3, 52px);
 $si-font-weight-display-3: $si-font-weight-bold;
 
 $si-font-size-display-4: pxToRem(40px);
-$si-line-height-display-4: 1.3;
+$si-line-height-display-4: pxToEm($si-font-size-display-4, 52px);
 $si-font-weight-display-4: $si-font-weight-normal;
