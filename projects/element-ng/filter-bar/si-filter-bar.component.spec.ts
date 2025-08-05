@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ResizeObserverService } from '@siemens/element-ng/resize-observer';
 
 import { Filter, SiFilterBarComponent } from './index';
 
@@ -34,15 +35,20 @@ class TestHostComponent {
   }
 }
 
-describe('SiFilterBarComponent', () => {
+fdescribe('SiFilterBarComponent', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let component: TestHostComponent;
   let element: HTMLElement;
-  const timeout = async (ms?: number): Promise<void> =>
-    new Promise(resolve => setTimeout(resolve, ms));
 
   const removeButtons = (): HTMLElement[] =>
     Array.from(element.querySelectorAll<HTMLElement>('[aria-label="Remove"]'));
+
+  const detectSizeChange = (): void => {
+    fixture.detectChanges();
+    tick();
+    TestBed.inject(ResizeObserverService)._checkAll();
+    fixture.detectChanges();
+  };
 
   beforeEach(() =>
     TestBed.configureTestingModule({
@@ -224,9 +230,11 @@ describe('SiFilterBarComponent', () => {
     ]);
   });
 
-  it('should emit a change event when modified from filter group while using responsive', async () => {
+  it('should emit a change event when modified from filter group while using responsive', fakeAsync(() => {
     spyOn(component, 'filtersChange').and.callThrough();
+    detectSizeChange();
     component.width = 650;
+    detectSizeChange();
     component.filters.set([
       {
         filterName: 'city',
@@ -259,18 +267,18 @@ describe('SiFilterBarComponent', () => {
         status: 'info'
       }
     ]);
-    fixture.detectChanges();
-    await timeout(200);
-    fixture.detectChanges();
+    detectSizeChange();
     expect(component.filters().length).toEqual(5);
     removeButtons().at(-1)!.click();
 
     expect(component.filtersChange).toHaveBeenCalled();
     expect(component.filters().length).toEqual(3);
-  });
+  }));
 
-  it('should not display too many filters when responsive is enabled', async () => {
+  it('should not display too many filters when responsive is enabled', fakeAsync(() => {
+    detectSizeChange();
     component.width = 650;
+    detectSizeChange();
     component.filters.set([
       {
         filterName: 'city',
@@ -303,15 +311,15 @@ describe('SiFilterBarComponent', () => {
         status: 'info'
       }
     ]);
-    fixture.detectChanges();
-    await timeout(200);
-    fixture.detectChanges();
+    detectSizeChange();
     const values = element.querySelectorAll<HTMLElement>('si-filter-pill .value');
     expect(values[values.length - 1].innerHTML).toContain('+ 1 filters');
-  });
+  }));
 
-  it('should not display too many filters when responsive is enabled and allow reset disabled', async () => {
+  it('should not display too many filters when responsive is enabled and allow reset disabled', fakeAsync(() => {
+    detectSizeChange();
     component.width = 600;
+    detectSizeChange();
     component.filters.set([
       {
         filterName: 'city',
@@ -345,10 +353,8 @@ describe('SiFilterBarComponent', () => {
       }
     ]);
     component.allowReset = false;
-    fixture.detectChanges();
-    await timeout(200);
-    fixture.detectChanges();
+    detectSizeChange();
     const values = element.querySelectorAll<HTMLElement>('si-filter-pill .value');
     expect(values[values.length - 1].innerHTML).toBe('+ 2 filters');
-  });
+  }));
 });
