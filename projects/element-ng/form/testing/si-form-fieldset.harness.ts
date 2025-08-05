@@ -8,10 +8,8 @@ import {
   HarnessPredicate,
   parallel
 } from '@angular/cdk/testing';
-import {
-  SiFormItemFilter,
-  SiFormItemHarness
-} from '@siemens/element-ng/form/testing/si-form-item.harness';
+
+import { SiFormItemFilter, SiFormItemHarness } from './si-form-item.harness';
 
 export class SiFormFieldsetHarness extends ComponentHarness {
   static readonly hostSelector = 'si-form-fieldset';
