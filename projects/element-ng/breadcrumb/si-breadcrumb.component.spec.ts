@@ -33,11 +33,6 @@ const TEST_ITEMS = [
   { title: 'Level 9', link: '.' }
 ];
 
-/**
- * Defines the width of the root icon in pixels.
- */
-const ROOT_ICON_WIDTH = 24;
-
 @Component({
   imports: [TestComponent, SiTranslateNgxTModule],
   template: `<si-breadcrumb [items]="items" [showRootAsText]="showRootAsText" /> `,
@@ -196,9 +191,6 @@ describe('SiBreadcrumbComponent', () => {
   });
 
   it('should dynamically resize', fakeAsync(() => {
-    let maxWidth = 0;
-    let currentWidth = 0;
-
     const testSizes = [500, 1000, 620, 380, 330, 150];
 
     wrapperComponent.items = TEST_ITEMS;
@@ -217,8 +209,8 @@ describe('SiBreadcrumbComponent', () => {
       const breadcrumb = element.querySelector('.breadcrumb')!;
       const computedStyle = getComputedStyle(breadcrumb);
 
-      currentWidth = ROOT_ICON_WIDTH;
-      maxWidth =
+      let currentWidth = 0;
+      const maxWidth =
         breadcrumb!.clientWidth -
         (parseFloat(computedStyle.getPropertyValue('padding-left')) +
           parseFloat(computedStyle.getPropertyValue('padding-right')));
@@ -337,7 +329,7 @@ describe('SiBreadcrumbComponent', () => {
   });
 
   it('should shorten long items and add a dropdown', () => {
-    wrapperElement.style.width = '500px';
+    wrapperElement.style.width = '740px';
 
     wrapperComponent.items = TEST_ITEMS;
 
