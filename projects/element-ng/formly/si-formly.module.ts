@@ -55,12 +55,7 @@ const dynamicUiConfig = (): ConfigOption => {
         }
       },
       {
-        name: 'checkbox',
-        defaultOptions: {
-          props: {
-            formCheck: 'form-check'
-          }
-        }
+        name: 'checkbox'
       },
       { name: 'boolean', extends: 'checkbox' },
       { name: 'multicheckbox', component: FormlyFieldMultiCheckbox, wrappers: ['form-fieldset'] },
