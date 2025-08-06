@@ -128,7 +128,10 @@
             "stylePreprocessorOptions": {
               "includePaths": ["node_modules/"]
             },
-            "styles": ["projects/element-theme/src/theme.scss"],
+            "styles": [
+              "projects/element-theme/src/theme.scss",
+              "projects/element-ng/test-styles.scss"
+            ],
             "codeCoverageExclude": [
               "projects/element-ng/**/*.module.ts",
               "projects/element-ng/**/testing/**/*.ts"

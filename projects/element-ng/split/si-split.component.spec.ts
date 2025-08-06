@@ -533,9 +533,9 @@ describe('SiSplitComponent', () => {
         partElement1.querySelector<HTMLElement>('.si-split-part-collapse-button button')!.click();
         fixture.detectChanges();
 
-        expect(wrapperComponent.measureSize1()).toBeCloseTo(20, 0);
-        expect(wrapperComponent.measureSize2()).toBeCloseTo(256, 0);
-        expect(wrapperComponent.measureSize3()).toBeCloseTo(256, 0);
+        expect(wrapperComponent.measureSize1()).toBeCloseTo(40, 0);
+        expect(wrapperComponent.measureSize2()).toBeCloseTo(246, 0);
+        expect(wrapperComponent.measureSize3()).toBeCloseTo(246, 0);
       });
 
       it('should collapse part to min size on click if set', async () => {
@@ -703,9 +703,9 @@ describe('SiSplitComponent', () => {
         partElement2.querySelector<HTMLElement>('.si-split-part-collapse-button button')!.click();
         fixture.detectChanges();
 
-        expect(wrapperComponent.measureSize1()).toBeCloseTo(524, 0);
-        expect(wrapperComponent.measureSize2()).toBeCloseTo(20, 0);
-        expect(wrapperComponent.measureSize3()).toBeCloseTo(20, 0);
+        expect(wrapperComponent.measureSize1()).toBeCloseTo(484, 0);
+        expect(wrapperComponent.measureSize2()).toBeCloseTo(40, 0);
+        expect(wrapperComponent.measureSize3()).toBeCloseTo(40, 0);
       });
 
       it('should only collapse split part if collapseOthers2 is false', async () => {
@@ -726,9 +726,9 @@ describe('SiSplitComponent', () => {
         partElement2.querySelector<HTMLElement>('.si-split-part-collapse-button button')!.click();
         fixture.detectChanges();
 
-        expect(wrapperComponent.measureSize1()).toBeCloseTo(256);
-        expect(wrapperComponent.measureSize2()).toBeCloseTo(20);
-        expect(wrapperComponent.measureSize3()).toBeCloseTo(256);
+        expect(wrapperComponent.measureSize1()).toBeCloseTo(246);
+        expect(wrapperComponent.measureSize2()).toBeCloseTo(40);
+        expect(wrapperComponent.measureSize3()).toBeCloseTo(246);
       });
     });
 
@@ -880,9 +880,9 @@ describe('SiSplitComponent', () => {
         wrapperComponent.orientation = 'horizontal';
         await runOnPushChangeDetection(fixture);
 
-        expect(wrapperComponent.measureSize1()).toBeCloseTo(283, 0);
-        expect(wrapperComponent.measureSize2()).toBeCloseTo(213, 0);
-        expect(wrapperComponent.measureSize3()).toBeCloseTo(20, 0);
+        expect(wrapperComponent.measureSize1()).toBeCloseTo(272, 0);
+        expect(wrapperComponent.measureSize2()).toBeCloseTo(204, 0);
+        expect(wrapperComponent.measureSize3()).toBeCloseTo(40, 0);
       });
     });
   });
