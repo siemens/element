@@ -307,7 +307,6 @@ export class SiChartGaugeComponent extends SiChartComponent implements OnChanges
       splitNumber,
       progress: {
         show: true,
-        itemStyle: { color: 'auto' },
         width: resp.progressWidth
       },
       emphasis: {

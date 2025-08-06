@@ -435,6 +435,11 @@ export const themeElement = {
           fontFamily,
           color: elementTextPrimary
         },
+        progress: {
+          itemStyle: {
+            color: elementUi0Hover
+          }
+        },
         axisTick: {
           lineStyle: {
             color: axisLineColor
