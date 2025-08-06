@@ -291,6 +291,17 @@ export class SiDateRangeFilterComponent implements OnChanges {
    * ```
    */
   readonly applyLabel = input($localize`:@@SI_DATE_RANGE_FILTER.APPLY:Apply`);
+  /**
+   * label for the "end date" in preview
+   *
+   * @defaultValue
+   * ```
+   * $localize`:@@SI_DATE_RANGE_FILTER.END_DATE_PREVIEW:End date`
+   * ```
+   */
+  readonly endDatePreviewLabel = input(
+    $localize`:@@SI_DATE_RANGE_FILTER.END_DATE_PREVIEW:End date`
+  );
 
   /** Event fired when the apply button has been clicked */
   readonly applyClicked = output<void>();
@@ -317,6 +328,7 @@ export class SiDateRangeFilterComponent implements OnChanges {
       ? (this.datepickerConfig()?.dateTimeFormat ?? 'short')
       : (this.datepickerConfig()?.dateFormat ?? 'shortDate')
   );
+  protected readonly selectionPending = signal(false);
 
   protected readonly datepickerConfigInternal = computed<DatepickerConfig>(() => ({
     ...(this.datepickerConfig() ?? {}),
@@ -458,6 +470,8 @@ export class SiDateRangeFilterComponent implements OnChanges {
   protected updateFromDateRange(): void {
     this.point1date = this.range().point1 = this.dateRange.start ?? this.getDateNow();
     this.point2date = this.range().point2 = this.dateRange.end ?? this.getDateNow();
+    const setSelectionState = this.dateRange.end ? false : true;
+    this.selectionPending.set(setSelectionState);
     this.range.update(oldRange => ({ ...oldRange, range: undefined }));
     this.point2Mode = 'date';
     this.point2offset = 0;
