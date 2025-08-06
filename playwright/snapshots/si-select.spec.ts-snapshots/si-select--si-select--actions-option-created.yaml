@@ -19,17 +19,7 @@
 - text: With filter
 - combobox "Select with actions" [expanded]
 - listbox "Select with actions":
-  - option "Value 1" [selected]
-  - option "Value 2"
-  - option "Value 3" [selected]
-  - option "Value 4"
-  - option "Value 5"
-  - option "Value 6"
-  - option "Value 7"
-  - option "Value 8"
-  - option "Value 9"
-  - option /Value \d+/
-  - option /Value \d+/
   - option "New option"
 - button "clear": Clear selection
+- button "create": Create "New optio" item
 - button "close": Close
