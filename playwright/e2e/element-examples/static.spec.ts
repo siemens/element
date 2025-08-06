@@ -69,6 +69,7 @@ test('si-layouts/content-full-layout-fixed-height', ({ si }) => si.static());
 test('si-layouts/content-tile-layout-full-scroll', ({ si }) => si.static());
 test('si-loading-spinner/si-loading-spinner', ({ si }) => si.static({ maxDiffPixels: 31 }));
 test('si-navbar-vertical/si-navbar-vertical-text', ({ si }) => si.static());
+test('si-ncharts/si-micro-charts', ({ si }) => si.static());
 test('si-pagination/si-pagination', ({ si }) => si.static());
 test('si-phone-number-input/si-phone-number-input', ({ si }) => si.static());
 test('si-progressbar/si-progressbar-dynamic', ({ si }) => si.static());

@@ -1,5 +1,13 @@
-<div class="card">
-  <div class="card-body">
-    <si-micro-donut [series]="series" />
+<div class="d-flex flex-column gap-4">
+  <div class="card">
+    <div class="card-header">Micro charts</div>
+    <div class="card-body d-flex flex-row gap-8">
+      <si-micro-donut [series]="donutSeries" />
+      <si-micro-bar [series]="barSeries" />
+      <si-micro-line [series]="lineSeries" />
+      <si-micro-progress [series]="progressSeries" />
+      <si-icon-next class="icon status-success" icon="element-up-1-filled" />
+      <si-icon-next class="icon status-danger" icon="element-down-1-filled" />
+    </div>
   </div>
 </div>
