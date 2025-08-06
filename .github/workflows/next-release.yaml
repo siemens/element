@@ -1,0 +1,60 @@
+name: Next Release
+on:
+  workflow_dispatch:
+
+# This must only be called from the next branch.
+# While one may think that calling from main should work, it does not.
+# The reason is only known to gh actions.
+# It seems like git objects are not fetched when calling from main, leading to semantic release not being able to resolve branch names.
+
+jobs:
+  # This ensures that the next branch is update to date with main.
+  update-next:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: next # IMPORTANT! We ignore the actual branch. Enforcing the next branch for next releases.
+          fetch-depth: 0 # semantic-release needs this
+          token: ${{ secrets.ELEMENT_BOT_GITHUB_TOKEN }} # Otherwise, branch protection rules are not bypassed.
+      - name: update next branch
+        run: |
+          git merge origin/main --ff-only --quiet
+          git push origin next
+
+  build-and-test:
+    needs:
+      - update-next
+    uses: ./.github/workflows/build-and-test.yaml
+    secrets:
+      SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
+      SIEMENS_NPM_USER: ${{ secrets.SIEMENS_NPM_USER }}
+
+  publish:
+    runs-on: ubuntu-24.04
+    needs:
+      - build-and-test
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: next # IMPORTANT! We ignore the actual branch. Enforcing the next branch for next releases.
+          fetch-depth: 0 # semantic-release needs this
+          token: ${{ secrets.ELEMENT_BOT_GITHUB_TOKEN }} # Otherwise, branch protection rules are not bypassed.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/jod
+          cache: 'npm'
+      - uses: actions/download-artifact@v5
+        with:
+          name: dist
+          path: dist
+      - run: npm ci --prefer-offline --no-audit
+      - run: npx semantic-release
+        env:
+          SKIP_COMMIT: 'true' # Next releases should not have a commit
+          GIT_AUTHOR_NAME: 'Siemens Element Bot'
+          GIT_AUTHOR_EMAIL: 'simpl.si@siemens.com'
+          GIT_COMMITTER_NAME: 'Siemens Element Bot'
+          GIT_COMMITTER_EMAIL: 'simpl.si@siemens.com'
+          GITHUB_TOKEN: ${{ secrets.ELEMENT_BOT_GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
