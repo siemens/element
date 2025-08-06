@@ -67,12 +67,7 @@
 
 <ng-template #iconTemplate let-iconModalRef="modalRef" let-thing="someThing">
   <div class="modal-header">
-    <si-icon
-      icon="element-square-filled"
-      color="status-info"
-      stackedIcon="element-state-info"
-      stackedColor="status-info-contrast"
-    />
+    <si-status-icon class="icon" status="info" />
     <h4 class="modal-title" id="sample-modal-title">Modal</h4>
     <button
       type="button"

@@ -3,15 +3,10 @@
   copyText="An error occurred while generating the report."
   instructions="Contact your administrator to get more information. Help us to solve the issue by submitting error related information."
 >
-  <si-icon
-    icon="element-shield-filled"
-    class="si-info-image"
-    color="status-success"
-    stackedColor="status-success-contrast"
-    size="icon-size"
-    [stackedIcon]="face"
-  />
-
+  <span class="icon-size icon-stack si-info-image">
+    <si-icon-next class="status-success" icon="element-shield-filled" />
+    <si-icon-next class="status-success-contrast" [icon]="face" />
+  </span>
   <div class="si-info-actions">
     <a class="btn btn-secondary me-6 mb-6" href="/">Back to application link</a>
     <button

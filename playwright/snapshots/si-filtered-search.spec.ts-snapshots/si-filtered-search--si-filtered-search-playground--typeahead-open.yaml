@@ -1,5 +1,5 @@
 - text: Filtered Search Location
-- combobox "search" [expanded]
+- combobox "search"
 - button "clear"
 - combobox "search"
 - button "clear"

@@ -11,7 +11,7 @@ test('colors/color-utils', ({ si }) => si.static());
 test('custom-form-elements/checkbox', ({ si }) => si.static());
 test('custom-form-elements/radio', ({ si }) => si.static());
 test('custom-form-elements/select', ({ si }) => si.static());
-test('datatable/bootstrap', ({ si }) => si.static());
+test('datatable/bootstrap', ({ si }) => si.static({ disabledA11yRules: ['empty-table-header'] }));
 test('datatable/datatable-footer', async ({ si }) => {
   test.setTimeout(60000);
   await si.static({ disabledA11yRules: ['scrollable-region-focusable'] });

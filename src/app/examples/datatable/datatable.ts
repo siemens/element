@@ -9,7 +9,7 @@ import { SiCircleStatusComponent } from '@siemens/element-ng/circle-status';
 import { StatusType } from '@siemens/element-ng/common';
 import { SiDatatableInteractionDirective } from '@siemens/element-ng/datatable';
 import { SiFormItemComponent, SiFormValidationTooltipDirective } from '@siemens/element-ng/form';
-import { SiIconComponent } from '@siemens/element-ng/icon';
+import { SiIconNextComponent } from '@siemens/element-ng/icon';
 import { SiMenuFactoryComponent } from '@siemens/element-ng/menu';
 import { SiPaginationComponent } from '@siemens/element-ng/pagination';
 import { NgxDatatableModule, SelectionType, TableColumn } from '@siemens/ngx-datatable';
@@ -23,7 +23,7 @@ import { NgxDatatableModule, SelectionType, TableColumn } from '@siemens/ngx-dat
     SiPaginationComponent,
     SiCircleStatusComponent,
     SiFormItemComponent,
-    SiIconComponent,
+    SiIconNextComponent,
     SiMenuFactoryComponent,
     CdkMenuTrigger,
     SiFormValidationTooltipDirective

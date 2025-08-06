@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, inject, OnDestroy, TemplateRef } from '@angular/core';
-import { SiIconModule } from '@siemens/element-ng/icon';
+import { SiStatusIconComponent } from '@siemens/element-ng/icon';
 import { ModalRef, SiModalService } from '@siemens/element-ng/modal';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  imports: [SiIconModule],
+  imports: [SiStatusIconComponent],
   templateUrl: './si-modal-service.html',
   host: { class: 'p-5' }
 })

@@ -12,14 +12,14 @@ import {
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import { SiLinkWidgetComponent } from '@siemens/element-ng/dashboard';
-import { SiIconComponent } from '@siemens/element-ng/icon';
+import { SiIconNextComponent } from '@siemens/element-ng/icon';
 import { Link } from '@siemens/element-ng/link';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
-  imports: [SiCardComponent, SiIconComponent, SiLinkWidgetComponent],
+  imports: [SiCardComponent, SiIconNextComponent, SiLinkWidgetComponent],
   templateUrl: './si-link-widget.html',
   styles: `
     .card-size {

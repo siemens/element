@@ -11,32 +11,21 @@
   - menuitem "Expand"
 - list:
   - listitem:
-    - img "triangle filled"
-    - text: /Today \d+:\d+ Title Description/
+    - text: /Warning Today \d+:\d+ Title Description/
     - button "Action"
   - listitem:
-    - img /square \d+ filled/
-    - text: /Today \d+:\d+ Title Description/
+    - text: /Caution Today \d+:\d+ Title Description/
     - button "Action"
   - listitem:
-    - img "circle filled"
-    - text: /Today \d+:\d+ Title Description/
+    - text: /Danger Today \d+:\d+ Title Description/
     - button "Action"
 - button "Do something"
 - text: Heading
 - list:
-  - listitem:
-    - img "circle filled"
-    - text: Just now In Progress
-  - listitem:
-    - img "square filled"
-    - text: /\d+ minutes ago Info/
-  - listitem:
-    - img /square \d+ filled/
-    - text: 3 hours ago Caution
-  - listitem:
-    - img "circle filled"
-    - text: 4 hours ago Danger
+  - listitem: Progress Just now In Progress
+  - listitem: /Info \d+ minutes ago Info/
+  - listitem: Caution 3 hours ago Caution
+  - listitem: Danger 4 hours ago Danger
 - text: Heading
 - button "Toggle"
 - list:
@@ -51,21 +40,11 @@
 - menubar:
   - menuitem "Share"
 - list:
-  - listitem:
-    - img "square filled"
-    - text: 2 minutes ago Title Description
-  - listitem:
-    - img "triangle filled"
-    - text: /\d+ minutes ago Title Description/
-  - listitem:
-    - img "circle filled"
-    - text: /\d+ minutes ago Title Description/
+  - listitem: Info 2 minutes ago Title Description
+  - listitem: /Warning \d+ minutes ago Title Description/
+  - listitem: /Danger \d+ minutes ago Title Description/
 - button "Do something"
 - text: Heading
 - list:
-  - listitem:
-    - img "cloudy"
-    - text: /Today \d+:\d+ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua\. Ut enim ad minim veniam, quis/
-  - listitem:
-    - img "sun"
-    - text: /Today \d+:\d+ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua\. Ut enim ad minim veniam, quis/
+  - listitem: /Today \d+:\d+ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua\. Ut enim ad minim veniam, quis/
+  - listitem: /Today \d+:\d+ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua\. Ut enim ad minim veniam, quis/

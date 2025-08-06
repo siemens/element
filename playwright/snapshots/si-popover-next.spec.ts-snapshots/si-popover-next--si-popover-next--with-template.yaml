@@ -5,8 +5,7 @@
 - button "Popover on bottom"
 - button "Popover with template" [expanded]
 - button "Popover with template and context"
-- dialog "light desk filled Hello, I'm the popover title si-popover-next-title":
-  - img "light desk filled"
+- dialog "Hello, I'm the popover title si-popover-next-title":
   - strong: Hello, I'm the popover title
   - text: si-popover-next-title Vivamus sagittis lacus vel augue laoreet rutrum faucibus.
   - button "Action link "

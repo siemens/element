@@ -7,7 +7,7 @@ import { Component, OnDestroy, OnInit, TemplateRef, viewChild } from '@angular/c
 import { SiCircleStatusModule } from '@siemens/element-ng/circle-status';
 import { StatusType } from '@siemens/element-ng/common';
 import { SiDatatableModule } from '@siemens/element-ng/datatable';
-import { SiIconModule } from '@siemens/element-ng/icon';
+import { SiIconNextComponent } from '@siemens/element-ng/icon';
 import { SiMenuFactoryComponent } from '@siemens/element-ng/menu';
 import { SiPaginationComponent } from '@siemens/element-ng/pagination';
 import {
@@ -26,7 +26,7 @@ import { Subject } from 'rxjs';
     SiPaginationComponent,
     SiResizeObserverModule,
     SiCircleStatusModule,
-    SiIconModule,
+    SiIconNextComponent,
     SiMenuFactoryComponent,
     CdkMenuTrigger
   ],

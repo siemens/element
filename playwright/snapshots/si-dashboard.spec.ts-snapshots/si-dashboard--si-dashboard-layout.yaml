@@ -31,12 +31,8 @@
   - text: LOC added/removed this week
   - menubar:
     - menuitem "Expand"
-  - paragraph:
-    - text: /\d+/
-    - img "plus"
-  - paragraph:
-    - text: /\d+/
-    - img "minus"
+  - paragraph: /\d+/
+  - paragraph: /\d+/
   - text: Today's motivation level (without global filter)
   - menubar:
     - menuitem "Expand"
