@@ -18,11 +18,11 @@
     transform: scale(math.div(16, 12));
   }
 
-  &:disabled {
-    opacity: variables.$element-action-disabled-opacity;
-  }
-
   &:hover {
     color: variables.$element-ui-1;
+  }
+
+  &:disabled {
+    color: variables.$element-text-disabled;
   }
 }
