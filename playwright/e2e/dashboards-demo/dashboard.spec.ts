@@ -13,6 +13,7 @@ test.describe('dashboard', () => {
   test(example, async ({ page, si }) => {
     await si.visitExample(example, undefined);
     await expect(page.getByRole('heading', { name: 'Sample Dashboard' })).toBeVisible();
+    await collapseNavbar(page);
     await si.runVisualAndA11yTests('normal');
   });
 
@@ -32,6 +33,7 @@ test.describe('dashboard', () => {
 
   test(example + 'edit', async ({ page, si }) => {
     await si.visitExample(example, undefined);
+    await collapseNavbar(page);
     await openWidgetCatalog(page);
     await expect(page.getByText('Hello World')).toBeVisible();
     await si.runVisualAndA11yTests('edit');
@@ -39,6 +41,7 @@ test.describe('dashboard', () => {
 
   test(example + 'empty', async ({ page, si }) => {
     await si.visitExample(example, undefined);
+    await collapseNavbar(page);
     await openWidgetCatalog(page);
     const search = page.getByPlaceholder('Search widget');
     await expect(search).toBeVisible();
@@ -49,6 +52,7 @@ test.describe('dashboard', () => {
 
   test(example + 'helloWorld', async ({ page, si }) => {
     await si.visitExample(example, undefined);
+    await collapseNavbar(page);
     await openWidgetCatalog(page);
 
     const helloWorld = page.locator('button', {
@@ -83,6 +87,7 @@ test.describe('dashboard', () => {
 
   test(example + 'editor wizard', async ({ page, si }) => {
     await si.visitExample(example, undefined);
+    await collapseNavbar(page);
     await openWidgetCatalog(page);
 
     const contact = page.locator('button', {
@@ -143,6 +148,7 @@ test.describe('dashboard', () => {
 
   test(example + 'delete', async ({ page, si }) => {
     await si.visitExample(example, undefined);
+    await collapseNavbar(page);
     await expect(page.getByLabel('Edit')).toBeVisible();
     const editBtn = page.getByLabel('Edit');
     editBtn.click();
@@ -163,6 +169,7 @@ test.describe('dashboard', () => {
 
   test(customCatalog, async ({ page, si }) => {
     await si.visitExample(customCatalog, undefined);
+    await collapseNavbar(page);
     await expect(page.getByText('Your own dashboard')).toBeVisible();
     await si.runVisualAndA11yTests('custom-catalog');
   });
@@ -174,5 +181,16 @@ test.describe('dashboard', () => {
     await expect(page.getByText('Add widget')).toBeVisible();
     const addWidgetBtn = page.getByText('Add widget');
     addWidgetBtn.click();
+  };
+
+  const collapseNavbar = async (page: Page): Promise<void> => {
+    const navbarBtn = page.getByRole('button', {
+      expanded: true
+    });
+
+    const buttonCount = await navbarBtn.count();
+    if (buttonCount > 0) {
+      await navbarBtn.click();
+    }
   };
 });
