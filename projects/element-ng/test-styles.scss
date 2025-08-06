@@ -1,0 +1,16 @@
+/*
+ * For testing only.
+ * Since the icon library is not loaded at all during testing, DOM elements using icons can have
+ * unexpected dimensions: min-width and line-height are missing. Because of this, tests relying
+ * on dimension break. Provide the same layout as if the icon library is loaded.
+ */
+
+[class^='element-'],
+[class*=' element-'] {
+  display: inline-block;
+  line-height: 1;
+  vertical-align: middle;
+  // this ensures icons have the correct dimensions even before the icon is loaded and rendered
+  // and thus prevents a layout shift
+  min-inline-size: 1em;
+}
