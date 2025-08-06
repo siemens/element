@@ -2,12 +2,15 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
+type $localize = (strings: TemplateStringsArray, ...expressions: string[]) => string;
 
 declare global {
-  let $localize: (strings: TemplateStringsArray, ...expressions: string[]) => TranslatableString;
+  let $localize: $localize;
 
   interface Window {
-    $localize: (strings: TemplateStringsArray, ...expressions: string[]) => TranslatableString;
+    $localize: $localize;
   }
 }
+
+// This is needed to make TypeScript recognize this file as a module.
+export {};

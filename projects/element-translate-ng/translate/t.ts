@@ -35,7 +35,7 @@ const $localize = (strings: TemplateStringsArray, ...expressions: string[]): Tra
  * }
  * ```
  */
-export const t = (localizeWrapperFunction: () => TranslatableString): string => {
+export const t = (localizeWrapperFunction: () => string): TranslatableString => {
   let localizeString: string;
   if (injectSiTranslateService().prevent$LocalizeInit) {
     localizeString = localizeWrapperFunction();
