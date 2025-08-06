@@ -1,18 +1,20 @@
 import writerOpts from './tools/semantic-release/writer-opts.js';
 import { commitTypes, releaseRules } from './tools/semantic-release/config.js';
 
+const skipCommits = process.env.SKIP_COMMIT === 'true';
+
 export default {
   branches: [
     {
       name: 'release/+([0-9])?(.{+([0-9]),x}).x',
-      channel: "${name.replace(/^release\\\\//g, '')}"
+      channel: "${name.replace(/^release\\//g, '')}"
     },
-    'main',
     {
       name: 'next',
       channel: 'next',
       prerelease: true
-    }
+    },
+    'main'
   ],
   plugins: [
     [
@@ -38,7 +40,7 @@ export default {
         writerOpts
       }
     ],
-    '@semantic-release/changelog',
+    ...(skipCommits ? [] : ['@semantic-release/changelog']),
     // Packages to be pushed
     [
       '@semantic-release/npm',
@@ -139,13 +141,22 @@ export default {
         npmPublish: false
       }
     ],
-    [
-      '@semantic-release/git',
-      {
-        assets: ['CHANGELOG.md', 'package.json', 'package-lock.json', 'projects/*/package.json'],
-        message: 'chore(release): ${nextRelease.version}'
-      }
-    ],
+    ...(skipCommits
+      ? []
+      : [
+          [
+            '@semantic-release/git',
+            {
+              assets: [
+                'CHANGELOG.md',
+                'package.json',
+                'package-lock.json',
+                'projects/*/package.json'
+              ],
+              message: 'chore(release): ${nextRelease.version}'
+            }
+          ]
+        ]),
     '@semantic-release/github'
   ]
 };
