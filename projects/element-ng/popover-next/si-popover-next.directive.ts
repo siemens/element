@@ -91,9 +91,12 @@ export class SiPopoverNextDirective implements OnDestroy {
    */
   readonly visibilityChange = output<void>({ alias: 'siPopoverNextVisibilityChange' });
 
+  /** @internal */
   readonly popoverCounter = SiPopoverNextDirective.idCounter++;
+  /** @internal */
   readonly popoverId = `__popover_${this.popoverCounter}`;
 
+  /** @internal */
   protected readonly isOpen = signal<boolean>(false);
 
   private overlayref?: OverlayRef;
