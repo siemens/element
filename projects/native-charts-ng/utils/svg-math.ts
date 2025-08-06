@@ -68,6 +68,15 @@ export function makeLine(start: Coordinate, end: Coordinate): string {
 }
 
 /**
+ * Creates a SVG path representing a poly line
+ * @param points - Object array with x y coordinates
+ * @returns SVG path string for a polyline
+ */
+export function makePolyline(points: Coordinate[]): string {
+  return points.map((point, index) => `${index === 0 ? 'M' : 'L'} ${point.x} ${point.y}`).join(' ');
+}
+
+/**
  * Calculates the relative angle for a given value
  * @param minAngle - min/start angle in degrees
  * @param maxAngle - max/end angle in degrees

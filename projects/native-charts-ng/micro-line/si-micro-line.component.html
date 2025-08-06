@@ -1,0 +1,20 @@
+<svg
+  [attr.width]="width()"
+  [attr.height]="height()"
+  [attr.viewBox]="
+    -strokeWidth / 2 +
+    ' ' +
+    -strokeWidth / 2 +
+    ' ' +
+    (width() + strokeWidth) +
+    ' ' +
+    (height() + strokeWidth)
+  "
+>
+  <path
+    fill="none"
+    [attr.d]="path()"
+    [attr.stroke]="'var(--' + series().colorToken + ')'"
+    [attr.stroke-width]="strokeWidth"
+  />
+</svg>
