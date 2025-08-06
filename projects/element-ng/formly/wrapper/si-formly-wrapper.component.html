@@ -1,4 +1,9 @@
-<si-form-item [label]="label" [labelWidth]="labelWidth" [required]="props.required">
+<si-form-item
+  [class.ms-n8]="field.type === 'checkbox'"
+  [label]="label"
+  [labelWidth]="labelWidth"
+  [required]="props.required"
+>
   <div class="w-100" siFormlyFormFieldProvider [field]="field">
     <ng-template #fieldComponent />
     <div class="invalid-feedback" [class.d-block]="showError">
