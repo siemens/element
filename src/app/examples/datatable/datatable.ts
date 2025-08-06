@@ -5,14 +5,17 @@
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { Component, OnInit, TemplateRef, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiCircleStatusComponent } from '@siemens/element-ng/circle-status';
-import { StatusType } from '@siemens/element-ng/common';
-import { SiDatatableInteractionDirective } from '@siemens/element-ng/datatable';
-import { SiFormItemComponent, SiFormValidationTooltipDirective } from '@siemens/element-ng/form';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiMenuFactoryComponent } from '@siemens/element-ng/menu';
-import { SiPaginationComponent } from '@siemens/element-ng/pagination';
 import { NgxDatatableModule, SelectionType, TableColumn } from '@siemens/ngx-datatable';
+import { SiCircleStatusComponent } from '@spike-rabbit/element-ng/circle-status';
+import { StatusType } from '@spike-rabbit/element-ng/common';
+import { SiDatatableInteractionDirective } from '@spike-rabbit/element-ng/datatable';
+import {
+  SiFormItemComponent,
+  SiFormValidationTooltipDirective
+} from '@spike-rabbit/element-ng/form';
+import { SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
+import { SiMenuFactoryComponent } from '@spike-rabbit/element-ng/menu';
+import { SiPaginationComponent } from '@spike-rabbit/element-ng/pagination';
 
 @Component({
   selector: 'app-sample',

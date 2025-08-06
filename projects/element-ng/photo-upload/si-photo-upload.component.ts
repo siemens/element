@@ -20,16 +20,16 @@ import {
   viewChild
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { SiAvatarBackgroundColorDirective } from '@siemens/element-ng/avatar';
+import { SiAvatarBackgroundColorDirective } from '@spike-rabbit/element-ng/avatar';
 import {
   addIcons,
   elementCancel,
   elementCircleFilled,
   elementStateExclamationMark,
   SiIconNextComponent
-} from '@siemens/element-ng/icon';
-import { ModalRef, SiModalService } from '@siemens/element-ng/modal';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+} from '@spike-rabbit/element-ng/icon';
+import { ModalRef, SiModalService } from '@spike-rabbit/element-ng/modal';
+import { SiTranslatePipe, TranslatableString } from '@spike-rabbit/element-translate-ng/translate';
 import { CropperPosition, ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
 
 import { SiImageCropperStyleComponent } from './si-image-cropper-style.component';

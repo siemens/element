@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import type { IsActiveMatchOptions, NavigationExtras } from '@angular/router';
-import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { TranslatableString } from '@spike-rabbit/element-translate-ng/translate';
 
 /** Common properties shared among navbar item types. */
 export interface NavbarVerticalItemBase {

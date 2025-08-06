@@ -4,8 +4,8 @@
  */
 import { inject, InjectionToken } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
-import { BreadcrumbItem } from '@siemens/element-ng/breadcrumb';
-import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { BreadcrumbItem } from '@spike-rabbit/element-ng/breadcrumb';
+import { TranslatableString } from '@spike-rabbit/element-translate-ng/translate';
 import { Observable } from 'rxjs';
 
 import { SiBreadcrumbDefaultResolverService } from './si-breadcrumb-default-resolver.service';

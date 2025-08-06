@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { SiNavbarModule } from '@siemens/element-ng/navbar';
+import { SiNavbarModule } from '@spike-rabbit/element-ng/navbar';
 
 @Component({
   selector: 'app-sample',
-  imports: [SiNavbarModule], // eslint-disable-line @typescript-eslint/no-deprecated
+  imports: [SiNavbarModule],
   templateUrl: './si-navbar-launchpad.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

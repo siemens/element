@@ -15,7 +15,7 @@ import {
   SI_UI_STATE_SERVICE,
   SiUIStateService,
   UIStateStorage
-} from '@siemens/element-ng/common';
+} from '@spike-rabbit/element-ng/common';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

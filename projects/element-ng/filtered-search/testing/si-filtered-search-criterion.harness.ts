@@ -11,10 +11,10 @@ import {
   TestElement,
   TestKey
 } from '@angular/cdk/testing';
-import { SiDatepickerComponentHarness } from '@siemens/element-ng/datepicker/testing/si-datepicker.harness';
-import { SiTypeaheadHarnessFilters } from '@siemens/element-ng/typeahead/testing/si-typeahead-harness-filters';
-import { SiTypeaheadItemHarness } from '@siemens/element-ng/typeahead/testing/si-typeahead-item.harness';
-import { SiTypeaheadHarness } from '@siemens/element-ng/typeahead/testing/si-typeahead.harness';
+import { SiDatepickerComponentHarness } from '@spike-rabbit/element-ng/datepicker/testing/si-datepicker.harness';
+import { SiTypeaheadHarnessFilters } from '@spike-rabbit/element-ng/typeahead/testing/si-typeahead-harness-filters';
+import { SiTypeaheadItemHarness } from '@spike-rabbit/element-ng/typeahead/testing/si-typeahead-item.harness';
+import { SiTypeaheadHarness } from '@spike-rabbit/element-ng/typeahead/testing/si-typeahead.harness';
 
 /** A set of criteria that can be used to filter a list of criteria. */
 export interface SiFilteredSearchHarnessFilters extends BaseHarnessFilters {

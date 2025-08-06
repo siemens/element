@@ -4,9 +4,9 @@
  */
 import { ChangeDetectionStrategy, Component, ElementRef, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MenuItem } from '@siemens/element-ng/common';
-import { SiNavbarPrimaryComponent } from '@siemens/element-ng/navbar';
-import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
+import { MenuItem } from '@spike-rabbit/element-ng/common';
+import { SiNavbarPrimaryComponent } from '@spike-rabbit/element-ng/navbar';
+import { runOnPushChangeDetection } from '@spike-rabbit/element-ng/test-helpers';
 import { NEVER } from 'rxjs';
 
 import { SiNavbarItemComponent } from './si-navbar-item.component';

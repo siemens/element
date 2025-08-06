@@ -9,7 +9,7 @@ import {
   SiWidgetStorage,
   STORAGE_KEY,
   WidgetConfig
-} from '@siemens/dashboards-ng';
+} from '@spike-rabbit/dashboards-ng';
 import { BehaviorSubject, delay, Observable, of } from 'rxjs';
 
 import { FIXED_WIDGETS, WIDGETS } from './widgets/widget-configs.mocks';

@@ -107,7 +107,7 @@ the accordion behavior of having only one open panel is not desired, simply use
 Within a module
 
 ```ts
-import { SiAccordionModule, SiSidePanelModule } from '@siemens/element-ng/side-panel';
+import { SiAccordionModule, SiSidePanelModule } from '@spike-rabbit/element-ng/side-panel';
 
 @NgModule({
   imports: [SiAccordionModule, SiSidePanelModule, ...]
@@ -117,8 +117,8 @@ import { SiAccordionModule, SiSidePanelModule } from '@siemens/element-ng/side-p
 or as a standalone component
 
 ```ts
-import { SiSidePanelComponent, SiSidePanelContentComponent } from '@siemens/element-ng/side-panel';
-import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
+import { SiSidePanelComponent, SiSidePanelContentComponent } from '@spike-rabbit/element-ng/side-panel';
+import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@spike-rabbit/element-ng/accordion';
 
 @Component({
   imports: [

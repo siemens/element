@@ -4,10 +4,10 @@
  */
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiFormItemComponent } from '@siemens/element-ng/form';
-import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
-import { LOG_EVENT } from '@siemens/live-preview';
-import { GaugeSegment, GaugeSeries, SiNChartGaugeComponent } from '@siemens/native-charts-ng';
+import { SiFormItemComponent } from '@spike-rabbit/element-ng/form';
+import { SiNumberInputComponent } from '@spike-rabbit/element-ng/number-input';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
+import { GaugeSegment, GaugeSeries, SiNChartGaugeComponent } from '@spike-rabbit/native-charts-ng';
 
 @Component({
   selector: 'app-sample',

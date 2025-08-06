@@ -14,11 +14,14 @@ import {
   signal
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
-import { CopyrightDetails, SiCopyrightNoticeComponent } from '@siemens/element-ng/copyright-notice';
-import { addIcons, elementDocument, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { Link, SiLinkDirective } from '@siemens/element-ng/link';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiCollapsiblePanelComponent } from '@spike-rabbit/element-ng/accordion';
+import {
+  CopyrightDetails,
+  SiCopyrightNoticeComponent
+} from '@spike-rabbit/element-ng/copyright-notice';
+import { addIcons, elementDocument, SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
+import { Link, SiLinkDirective } from '@spike-rabbit/element-ng/link';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 import { ApiInfo, LicenseInfo } from './si-about-data.model';
 

@@ -76,7 +76,7 @@ Angular module.
 `Datepicker` can be imported using the module
 
 ```ts
-import { SiDatepickerModule } from '@siemens/element-ng/datepicker';
+import { SiDatepickerModule } from '@spike-rabbit/element-ng/datepicker';
 
 @NgModule({
   imports: [SiDatepickerModule, ...]
@@ -91,7 +91,7 @@ import {
   SiDatepickerComponent,
   SiDatepickerDirective,
   SiDateRangeComponent 
-} from '@siemens/element-ng/datepicker';
+} from '@spike-rabbit/element-ng/datepicker';
 
 @Component({
   imports: [

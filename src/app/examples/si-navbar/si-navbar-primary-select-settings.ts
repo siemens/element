@@ -2,14 +2,14 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-/* eslint-disable @typescript-eslint/no-deprecated */
+
 import { JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateService } from '@ngx-translate/core';
-import { MenuItem } from '@siemens/element-ng/common';
-import { SiNavbarModule } from '@siemens/element-ng/navbar';
-import { SiThemeService, ThemeType } from '@siemens/element-ng/theme';
+import { MenuItem } from '@spike-rabbit/element-ng/common';
+import { SiNavbarModule } from '@spike-rabbit/element-ng/navbar';
+import { SiThemeService, ThemeType } from '@spike-rabbit/element-ng/theme';
 
 @Component({
   selector: 'app-sample',

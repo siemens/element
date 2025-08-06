@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { SiFileDropzoneComponent, UploadFile } from '@siemens/element-ng/file-uploader';
+import { SiFileDropzoneComponent, UploadFile } from '@spike-rabbit/element-ng/file-uploader';
 
 @Component({
   selector: 'app-sample',

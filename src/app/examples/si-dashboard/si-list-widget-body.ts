@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
-import { SiListWidgetBodyComponent, SiListWidgetItem } from '@siemens/element-ng/dashboard';
-import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
-import { Link } from '@siemens/element-ng/link';
+import { SiListWidgetBodyComponent, SiListWidgetItem } from '@spike-rabbit/element-ng/dashboard';
+import { SiEmptyStateComponent } from '@spike-rabbit/element-ng/empty-state';
+import { Link } from '@spike-rabbit/element-ng/link';
 
 @Component({
   selector: 'app-sample',

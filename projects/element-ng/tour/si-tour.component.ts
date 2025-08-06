@@ -19,9 +19,9 @@ import {
   calculateOverlayArrowPosition,
   isRTL,
   OverlayArrowPosition
-} from '@siemens/element-ng/common';
-import { addIcons, elementCancel, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+} from '@spike-rabbit/element-ng/common';
+import { addIcons, elementCancel, SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 import { Subscription } from 'rxjs';
 
 import { PositionChange, SI_TOUR_TOKEN, TourAction, TourStepInternal } from './si-tour-token.model';

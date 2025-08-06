@@ -17,9 +17,9 @@ import {
   SiAutocompleteDirective,
   SiAutocompleteListboxDirective,
   SiAutocompleteOptionDirective
-} from '@siemens/element-ng/autocomplete';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+} from '@spike-rabbit/element-ng/autocomplete';
+import { SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 import { SiTypeaheadDirective } from './si-typeahead.directive';
 import { TypeaheadMatch } from './si-typeahead.model';

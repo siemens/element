@@ -4,7 +4,7 @@
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SiIconModule } from '@siemens/element-ng/icon';
+import { SiIconModule } from '@spike-rabbit/element-ng/icon';
 
 import { SiStatusBarItemComponent } from './si-status-bar-item.component';
 

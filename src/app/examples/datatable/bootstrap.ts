@@ -4,8 +4,8 @@
  */
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiFormItemComponent } from '@siemens/element-ng/form';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiFormItemComponent } from '@spike-rabbit/element-ng/form';
+import { SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
 
 @Component({
   selector: 'app-sample',

@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { PhoneDetails, SiPhoneNumberInputComponent } from '@siemens/element-ng/phone-number';
+import { PhoneDetails, SiPhoneNumberInputComponent } from '@spike-rabbit/element-ng/phone-number';
 
 @Component({
   selector: 'app-sample',

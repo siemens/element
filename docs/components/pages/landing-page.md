@@ -135,7 +135,7 @@ block where you can implement your login UI.
 ### Usage
 
 ```ts
-import { SiLandingPageComponent } from '@siemens/element-ng/landing-page';
+import { SiLandingPageComponent } from '@spike-rabbit/element-ng/landing-page';
 
 @Component({
   imports: [SiLandingPageComponent, ...]

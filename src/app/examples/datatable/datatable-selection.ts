@@ -4,10 +4,10 @@
  */
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiCardComponent } from '@siemens/element-ng/card';
-import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
-import { SiFormModule } from '@siemens/element-ng/form';
 import { NgxDatatableModule, SelectionType } from '@siemens/ngx-datatable';
+import { SiCardComponent } from '@spike-rabbit/element-ng/card';
+import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@spike-rabbit/element-ng/datatable';
+import { SiFormModule } from '@spike-rabbit/element-ng/form';
 
 @Component({
   selector: 'app-sample',

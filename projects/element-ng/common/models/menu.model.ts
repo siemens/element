@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Link } from '@siemens/element-ng/link';
+import { Link } from '@spike-rabbit/element-ng/link';
 
 /**
  * The MenuItem is used to configure clickable items in menus.
@@ -10,11 +10,11 @@ import { Link } from '@siemens/element-ng/link';
  *
  * @deprecated This interface should no longer be used.
  * Use a corresponding alternative based on your use case:
- * - for {@link SiMenuFactoryComponent} use {@link @siemens/element-ng/menu#MenuItem}
- * - for {@link SiContentActionBarComponent} use {@link @siemens/element-ng/menu#MenuItem} and {@link ContentActionBarMainItem}
+ * - for {@link SiMenuFactoryComponent} use {@link @spike-rabbit/element-ng/menu#MenuItem}
+ * - for {@link SiContentActionBarComponent} use {@link @spike-rabbit/element-ng/menu#MenuItem} and {@link ContentActionBarMainItem}
  * - for {@link SiNavbarVerticalComponent} use {@link NavbarVerticalItem}
- * - for {@link @siemens/dashboards-ng#SiFlexibleDashboardComponent}
- *   use {@link @siemens/dashboards-ng#DashboardToolbarItem}
+ * - for {@link @spike-rabbit/dashboards-ng#SiFlexibleDashboardComponent}
+ *   use {@link @spike-rabbit/dashboards-ng#DashboardToolbarItem}
  */
 export interface MenuItem extends Link {
   /**

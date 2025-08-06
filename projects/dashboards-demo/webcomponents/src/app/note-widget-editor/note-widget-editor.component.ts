@@ -4,7 +4,7 @@
  */
 import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { WidgetConfig, WidgetInstanceEditor } from '@siemens/dashboards-ng';
+import { WidgetConfig, WidgetInstanceEditor } from '@spike-rabbit/dashboards-ng';
 
 @Component({
   selector: 'app-note-widget-editor',

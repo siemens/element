@@ -11,7 +11,7 @@ To use the Siemens Dashboards in your project, add it to your dependencies
 by executing:
 
 ```sh
-npm install --save @siemens/dashboards-ng gridstack
+npm install --save @spike-rabbit/dashboards-ng gridstack
 ```
 
 ### Add libraries to your project
@@ -53,9 +53,9 @@ Import the library to your Angular `AppModule`, mostly residing in your
 ```ts
 // [...]
 // Import this library
-import { SiDashboardsNgModule } from '@siemens/dashboards-ng';
+import { SiDashboardsNgModule } from '@spike-rabbit/dashboards-ng';
 // Import needed peer dependency
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslateModule } from '@spike-rabbit/element-translate-ng/translate';
 
 @NgModule({
   declarations: [AppComponent],
@@ -127,7 +127,7 @@ The correct approach is to use the full page height as explained at
 The dashboards comes with a couple of components with i18n support.
 The library uses translation keys in the components and ships English
 and German (`en.json`, `de.json`) translations for demonstration. The
-files are located at the folder `node_modules/@siemens/dashboards-ng/assets/i18n/`
+files are located at the folder `node_modules/@spike-rabbit/dashboards-ng/assets/i18n/`
 and provides you all used keys. You should include the keys in your translation
 files and update the translations to your need.
 
@@ -138,7 +138,7 @@ file.
 ```json
 {
   "glob": "**/*",
-  "input": "node_modules/@siemens/dashboards-ng/assets/i18n",
+  "input": "node_modules/@spike-rabbit/dashboards-ng/assets/i18n",
   "output": "./assets/i18n/dashboard/"
 }
 ```

@@ -7,8 +7,11 @@ import { TestBed } from '@angular/core/testing';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { SiTranslateNgxTService } from '@siemens/element-translate-ng/ngx-translate/si-translate-ngxt.service';
-import { injectSiTranslateService, SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslateNgxTService } from '@spike-rabbit/element-translate-ng/ngx-translate/si-translate-ngxt.service';
+import {
+  injectSiTranslateService,
+  SiTranslatePipe
+} from '@spike-rabbit/element-translate-ng/translate';
 import { Observable, of, Subject } from 'rxjs';
 
 import { SiTranslateNgxTModule } from './si-translate-ngxt.module';

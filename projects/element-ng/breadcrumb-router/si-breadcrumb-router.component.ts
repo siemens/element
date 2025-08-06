@@ -4,7 +4,7 @@
  */
 import { Component, inject, input, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
-import { BreadcrumbItem, SiBreadcrumbComponent } from '@siemens/element-ng/breadcrumb';
+import { BreadcrumbItem, SiBreadcrumbComponent } from '@spike-rabbit/element-ng/breadcrumb';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 

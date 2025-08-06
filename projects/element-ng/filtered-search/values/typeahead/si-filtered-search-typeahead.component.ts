@@ -19,8 +19,11 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
-import { SiTypeaheadDirective, TypeaheadMatch } from '@siemens/element-ng/typeahead';
-import { injectSiTranslateService, SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTypeaheadDirective, TypeaheadMatch } from '@spike-rabbit/element-ng/typeahead';
+import {
+  injectSiTranslateService,
+  SiTranslatePipe
+} from '@spike-rabbit/element-translate-ng/translate';
 import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
 import { debounceTime, first, map, tap } from 'rxjs/operators';
 

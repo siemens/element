@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import type { NavigationExtras, RouterLink } from '@angular/router';
-import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
+import { TranslatableString } from '@spike-rabbit/element-translate-ng/translate-types';
 
 export interface MenuItemBase {
   /** ID that will be attached to the DOM node. */

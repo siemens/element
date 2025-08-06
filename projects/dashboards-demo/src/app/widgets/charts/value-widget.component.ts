@@ -12,9 +12,9 @@ import {
   ViewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
-import { SiValueWidgetBodyComponent } from '@siemens/element-ng/dashboard';
-import { Link, SiLinkDirective } from '@siemens/element-ng/link';
+import { WidgetConfig, WidgetInstance } from '@spike-rabbit/dashboards-ng';
+import { SiValueWidgetBodyComponent } from '@spike-rabbit/element-ng/dashboard';
+import { Link, SiLinkDirective } from '@spike-rabbit/element-ng/link';
 import { Observable } from 'rxjs';
 
 import { DataService } from '../../widgets/charts/data.service';

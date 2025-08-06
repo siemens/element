@@ -19,10 +19,15 @@ import {
   viewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { correctKeyRTL, isRTL, listenGlobal } from '@siemens/element-ng/common';
-import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
-import { addIcons, elementMinus, elementPlus, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { correctKeyRTL, isRTL, listenGlobal } from '@spike-rabbit/element-ng/common';
+import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@spike-rabbit/element-ng/form';
+import {
+  addIcons,
+  elementMinus,
+  elementPlus,
+  SiIconNextComponent
+} from '@spike-rabbit/element-ng/icon';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 import { Subscription, timer } from 'rxjs';
 
 @Component({

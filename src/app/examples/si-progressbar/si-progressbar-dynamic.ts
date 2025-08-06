@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component } from '@angular/core';
-import { SiProgressbarComponent } from '@siemens/element-ng/progressbar';
+import { SiProgressbarComponent } from '@spike-rabbit/element-ng/progressbar';
 
 @Component({
   selector: 'app-sample',

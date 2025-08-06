@@ -19,7 +19,7 @@ import {
   signal
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, NavigationExtras, Router, UrlTree } from '@angular/router';
-import { injectSiTranslateService } from '@siemens/element-translate-ng/translate';
+import { injectSiTranslateService } from '@spike-rabbit/element-translate-ng/translate';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 

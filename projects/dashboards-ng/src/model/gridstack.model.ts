@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
+import { BOOTSTRAP_BREAKPOINTS } from '@spike-rabbit/element-ng/resize-observer';
 import { GridStackOptions } from 'gridstack';
 
 /**

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
+import { TranslatableString } from '@spike-rabbit/element-translate-ng/translate-types';
 
 /** An item for si-status-toggle. */
 export interface StatusToggleItem {

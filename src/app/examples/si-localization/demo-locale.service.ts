@@ -4,7 +4,7 @@
  */
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { SiLocaleStore } from '@siemens/element-ng/localization';
+import { SiLocaleStore } from '@spike-rabbit/element-ng/localization';
 import { lastValueFrom, Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 

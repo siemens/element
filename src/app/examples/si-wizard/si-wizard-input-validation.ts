@@ -4,9 +4,9 @@
  */
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
-import { SiWizardComponent, SiWizardStepComponent } from '@siemens/element-ng/wizard';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { SiInlineNotificationComponent } from '@spike-rabbit/element-ng/inline-notification';
+import { SiWizardComponent, SiWizardStepComponent } from '@spike-rabbit/element-ng/wizard';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

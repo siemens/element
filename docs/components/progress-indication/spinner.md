@@ -25,7 +25,7 @@ Spinners can be used in many different locations, e.g. cards, lists, empty scree
 ### Usage
 
 ```ts
-import { SiLoadingSpinnerComponent } from '@siemens/element-ng/loading-spinner';
+import { SiLoadingSpinnerComponent } from '@spike-rabbit/element-ng/loading-spinner';
 
 @Component({
   imports: [SiLoadingSpinnerComponent, ...]

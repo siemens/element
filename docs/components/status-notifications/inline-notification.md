@@ -63,7 +63,7 @@ There are multiple options of what is the notification level: `information`,
 ### Usage
 
 ```ts
-import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
+import { SiInlineNotificationComponent } from '@spike-rabbit/element-ng/inline-notification';
 
 @Component({
   imports: [SiInlineNotificationComponent, ...]

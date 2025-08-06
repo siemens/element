@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, inject, viewChild } from '@angular/core';
-import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
-import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 import { DatatableComponent, NgxDatatableModule } from '@siemens/ngx-datatable';
+import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@spike-rabbit/element-ng/datatable';
+import { SiEmptyStateComponent } from '@spike-rabbit/element-ng/empty-state';
 
 import { CorporateEmployee, DataService, PageRequest } from './data.service';
 

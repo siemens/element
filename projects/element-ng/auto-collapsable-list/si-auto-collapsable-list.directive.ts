@@ -18,7 +18,7 @@ import {
   SimpleChanges
 } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { ResizeObserverService } from '@siemens/element-ng/resize-observer';
+import { ResizeObserverService } from '@spike-rabbit/element-ng/resize-observer';
 import { BehaviorSubject, combineLatest, of, Subscription } from 'rxjs';
 import { auditTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
 

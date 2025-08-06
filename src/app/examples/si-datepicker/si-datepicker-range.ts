@@ -4,7 +4,7 @@
  */
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { DateRange, SiDatepickerComponent } from '@siemens/element-ng/datepicker';
+import { DateRange, SiDatepickerComponent } from '@spike-rabbit/element-ng/datepicker';
 
 @Component({
   selector: 'app-sample',

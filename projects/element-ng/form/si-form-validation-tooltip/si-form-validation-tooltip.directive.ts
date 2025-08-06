@@ -14,7 +14,7 @@ import {
   signal
 } from '@angular/core';
 import { NgControl, ValidationErrors } from '@angular/forms';
-import { SiTooltipService, TooltipRef } from '@siemens/element-ng/tooltip';
+import { SiTooltipService, TooltipRef } from '@spike-rabbit/element-ng/tooltip';
 
 import { SiFormContainerComponent } from '../si-form-container/si-form-container.component';
 import { SiFormError } from '../si-form-item/si-form-item.component';

@@ -4,7 +4,7 @@
  */
 import { ChangeDetectionStrategy, ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ModalRef } from '@siemens/element-ng/modal';
+import { ModalRef } from '@spike-rabbit/element-ng/modal';
 
 import { SiColumnSelectionDialogComponent } from './si-column-selection-dialog.component';
 import { Column } from './si-column-selection-dialog.types';

@@ -8,11 +8,14 @@ import {
   SiApplicationHeaderComponent,
   SiHeaderBrandDirective,
   SiHeaderLogoDirective
-} from '@siemens/element-ng/application-header';
-import { SiBreadcrumbRouterComponent } from '@siemens/element-ng/breadcrumb-router';
-import { Link, SiLinkDirective } from '@siemens/element-ng/link';
-import { NavbarVerticalItem, SiNavbarVerticalComponent } from '@siemens/element-ng/navbar-vertical';
-import { provideExampleRoutes } from '@siemens/live-preview';
+} from '@spike-rabbit/element-ng/application-header';
+import { SiBreadcrumbRouterComponent } from '@spike-rabbit/element-ng/breadcrumb-router';
+import { Link, SiLinkDirective } from '@spike-rabbit/element-ng/link';
+import {
+  NavbarVerticalItem,
+  SiNavbarVerticalComponent
+} from '@spike-rabbit/element-ng/navbar-vertical';
+import { provideExampleRoutes } from '@spike-rabbit/live-preview';
 
 // Dummy components to be used in the router outlet for the example
 @Component({

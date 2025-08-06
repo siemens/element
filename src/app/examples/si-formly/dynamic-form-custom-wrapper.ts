@@ -4,7 +4,7 @@
  */
 import { Component } from '@angular/core';
 import { FieldWrapper } from '@ngx-formly/core';
-import { SiCardComponent } from '@siemens/element-ng/card';
+import { SiCardComponent } from '@spike-rabbit/element-ng/card';
 
 /*
 Sample component to test custom type registration in SiFormlyModule

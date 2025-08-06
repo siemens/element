@@ -21,7 +21,7 @@ import {
   SimpleChanges,
   TemplateRef
 } from '@angular/core';
-import { SiAutocompleteDirective } from '@siemens/element-ng/autocomplete';
+import { SiAutocompleteDirective } from '@spike-rabbit/element-ng/autocomplete';
 import { isObservable, Observable, of, ReplaySubject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 

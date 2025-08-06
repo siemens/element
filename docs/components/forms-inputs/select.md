@@ -107,7 +107,7 @@ Otherwise the [native select input with Bootstrap markup](select.md#code) is pre
 `si-select` can be imported using the module
 
 ```ts
-import { SiSelectModule } from '@siemens/element-ng/select';
+import { SiSelectModule } from '@spike-rabbit/element-ng/select';
 
 @NgModule({
   imports: [SiSelectModule, ...]
@@ -122,7 +122,7 @@ import {
   SiSelectSimpleOptionsDirective, // At least one option directive is required. Unused option types can be omitted.
   SiSelectSingleValueDirective, // At least one value directive is required. Unused value types can be omitted.
   SiSelectMultiValueDirective
-} from '@siemens/element-ng/select';
+} from '@spike-rabbit/element-ng/select';
 
 @Component({
   imports: [
@@ -234,7 +234,7 @@ export class MyOptionSource implements SelectOptionSource<MyValue> {
 Then use this source in your component:
 
 ```ts
-import { SiSelectComponent, SiSelectSingleValueDirective, SiSelectLazyOptionsDirective } from '@siemens/element-ng/select';
+import { SiSelectComponent, SiSelectSingleValueDirective, SiSelectLazyOptionsDirective } from '@spike-rabbit/element-ng/select';
 
 @Component({
   selector: 'app-sample',

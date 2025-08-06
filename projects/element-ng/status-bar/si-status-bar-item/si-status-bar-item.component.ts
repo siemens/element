@@ -12,9 +12,9 @@ import {
   input,
   viewChild
 } from '@angular/core';
-import { ExtendedStatusType } from '@siemens/element-ng/common';
-import { SiIconNextComponent, STATUS_ICON_CONFIG } from '@siemens/element-ng/icon';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { ExtendedStatusType } from '@spike-rabbit/element-ng/common';
+import { SiIconNextComponent, STATUS_ICON_CONFIG } from '@spike-rabbit/element-ng/icon';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 @Component({
   selector: 'si-status-bar-item',

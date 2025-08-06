@@ -4,10 +4,10 @@
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiFormItemComponent } from '@siemens/element-ng/form';
-import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
-import { SelectOption } from '@siemens/element-ng/select';
-import { SiThresholdComponent, ThresholdStep } from '@siemens/element-ng/threshold';
+import { SiFormItemComponent } from '@spike-rabbit/element-ng/form';
+import { SiNumberInputComponent } from '@spike-rabbit/element-ng/number-input';
+import { SelectOption } from '@spike-rabbit/element-ng/select';
+import { SiThresholdComponent, ThresholdStep } from '@spike-rabbit/element-ng/threshold';
 
 @Component({
   selector: 'app-sample',

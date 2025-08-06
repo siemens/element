@@ -4,9 +4,9 @@
  */
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { SimplChartsNgModule, themeElement, themeSupport } from '@siemens/charts-ng';
-import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SimplChartsNgModule, themeElement, themeSupport } from '@spike-rabbit/charts-ng';
+import { SiResizeObserverModule } from '@spike-rabbit/element-ng/resize-observer';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 import { CartesianComponent } from './cartesian/cartesian.component';
 import { CircleComponent } from './circle/circle.component';

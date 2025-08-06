@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component } from '@angular/core';
-import { SiCardComponent } from '@siemens/element-ng/card';
+import { SiCardComponent } from '@spike-rabbit/element-ng/card';
 
 @Component({
   selector: 'app-sample',

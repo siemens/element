@@ -32,10 +32,10 @@ import {
   elementRedo,
   SiIconNextComponent,
   SiStatusIconComponent
-} from '@siemens/element-ng/icon';
-import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
-import { SiProgressbarComponent } from '@siemens/element-ng/progressbar';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+} from '@spike-rabbit/element-ng/icon';
+import { SiInlineNotificationComponent } from '@spike-rabbit/element-ng/inline-notification';
+import { SiProgressbarComponent } from '@spike-rabbit/element-ng/progressbar';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 import { Observable, Subscription } from 'rxjs';
 import { retry } from 'rxjs/operators';
 

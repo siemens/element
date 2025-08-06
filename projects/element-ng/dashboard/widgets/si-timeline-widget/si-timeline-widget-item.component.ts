@@ -7,9 +7,12 @@ import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { NgClass } from '@angular/common';
 import { Component, inject, input, OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, RouterLink } from '@angular/router';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
-import { MenuItem, SiMenuModule } from '@siemens/element-ng/menu';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
+import { MenuItem, SiMenuModule } from '@spike-rabbit/element-ng/menu';
+import {
+  SiTranslateModule,
+  TranslatableString
+} from '@spike-rabbit/element-translate-ng/translate';
 
 import { SiWidgetBaseComponent } from '../si-widget-base.component';
 

@@ -70,7 +70,7 @@ Import the `SiPhotoUploadComponent` in your standalone component that shall prov
 
 ```ts
 import { Component } from '@angular/core';
-import { SiPhotoUploadComponent } from '@siemens/element-ng/photo-upload';
+import { SiPhotoUploadComponent } from '@spike-rabbit/element-ng/photo-upload';
 
 @Component({
   selector: 'app-sample',
@@ -92,7 +92,7 @@ The snippet below shows how to use the Angular component styles attribute to adj
 
 ```ts
 import { Component } from '@angular/core';
-import { SiPhotoUploadComponent } from '@siemens/element-ng/photo-upload';
+import { SiPhotoUploadComponent } from '@spike-rabbit/element-ng/photo-upload';
 
 @Component({
   selector: 'app-sample',

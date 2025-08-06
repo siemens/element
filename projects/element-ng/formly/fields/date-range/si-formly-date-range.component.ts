@@ -5,7 +5,7 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FieldType, FieldTypeConfig, FormlyModule } from '@ngx-formly/core';
-import { SiDateRangeComponent } from '@siemens/element-ng/datepicker';
+import { SiDateRangeComponent } from '@spike-rabbit/element-ng/datepicker';
 
 @Component({
   selector: 'si-formly-date-range',

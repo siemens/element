@@ -54,7 +54,7 @@ the data.
 ### Usage
 
 ```ts
-import { SiPhoneNumberInputComponent } from '@siemens/element-ng/phone-number';
+import { SiPhoneNumberInputComponent } from '@spike-rabbit/element-ng/phone-number';
 
 @Component({
   imports: [SiPhoneNumberInputComponent, ...]

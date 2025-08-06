@@ -7,8 +7,8 @@ import { ComponentHarness, HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MenuItem } from '@siemens/element-ng/common';
-import { SiLinkActionService } from '@siemens/element-ng/link';
+import { MenuItem } from '@spike-rabbit/element-ng/common';
+import { SiLinkActionService } from '@spike-rabbit/element-ng/link';
 
 import { SiMenuModule } from './si-menu.module';
 import { SiMenuItemHarness } from './testing/si-menu.harness';

@@ -10,7 +10,7 @@ import {
   Injectable
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { injectSiTranslateService, t } from '@siemens/element-translate-ng/translate';
+import { injectSiTranslateService, t } from '@spike-rabbit/element-translate-ng/translate';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 

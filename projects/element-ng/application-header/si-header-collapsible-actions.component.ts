@@ -13,9 +13,13 @@ import {
   signal,
   viewChild
 } from '@angular/core';
-import { SI_HEADER_DROPDOWN_OPTIONS } from '@siemens/element-ng/header-dropdown';
-import { addIcons, elementOptionsVertical, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SI_HEADER_DROPDOWN_OPTIONS } from '@spike-rabbit/element-ng/header-dropdown';
+import {
+  addIcons,
+  elementOptionsVertical,
+  SiIconNextComponent
+} from '@spike-rabbit/element-ng/icon';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 import { Subscription } from 'rxjs';
 import { skip, takeUntil } from 'rxjs/operators';
 

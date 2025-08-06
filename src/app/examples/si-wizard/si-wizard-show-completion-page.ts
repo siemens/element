@@ -5,8 +5,8 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SiWizardComponent, SiWizardStepComponent } from '@siemens/element-ng/wizard';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { SiWizardComponent, SiWizardStepComponent } from '@spike-rabbit/element-ng/wizard';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

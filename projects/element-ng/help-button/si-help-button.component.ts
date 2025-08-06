@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component } from '@angular/core';
-import { addIcons, elementHelp, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiPopoverNextDirective } from '@siemens/element-ng/popover-next';
+import { addIcons, elementHelp, SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
+import { SiPopoverNextDirective } from '@spike-rabbit/element-ng/popover-next';
 
 /**
  * This component creates a help button that shows contextual help in a popover.

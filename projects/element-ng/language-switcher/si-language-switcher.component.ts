@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, computed, input } from '@angular/core';
-import { injectSiTranslateService, SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import {
+  injectSiTranslateService,
+  SiTranslatePipe
+} from '@spike-rabbit/element-translate-ng/translate';
 
 import { IsoLanguageValue } from './iso-language-value';
 

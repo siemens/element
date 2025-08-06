@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
+import { SiTranslatePipe, TranslatableString } from '@spike-rabbit/element-translate-ng/translate';
 
 @Component({
   selector: 'si-empty-state',

@@ -5,8 +5,8 @@
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { SiThemeService } from '@siemens/element-ng/theme';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiThemeService } from '@spike-rabbit/element-ng/theme';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 import { AppComponent as TestComponent } from './app.component';
 

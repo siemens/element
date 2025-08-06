@@ -67,7 +67,7 @@ They open upon **user selection**.
 Use `siPopover` directive to display the popover.
 
 ```ts
-import { SiPopoverDirective } from '@siemens/element-ng/popover';
+import { SiPopoverDirective } from '@spike-rabbit/element-ng/popover';
 
 @Component({
   imports: [SiPopoverDirective, ...]
@@ -99,7 +99,7 @@ import {
   SiPopoverNextDirective,
   SiPopoverTitleDirective,
   SiPopoverDescriptionDirective
-} from '@siemens/element-ng/popover-next';
+} from '@spike-rabbit/element-ng/popover-next';
 
 @Component({
   imports: [SiPopoverNextDirective, SiPopoverTitleDirective, SiPopoverDescriptionDirective ...]

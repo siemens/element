@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { inject, InjectionToken } from '@angular/core';
-import { MenuItem } from '@siemens/element-ng/common';
+import { MenuItem } from '@spike-rabbit/element-ng/common';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 
 import { DashboardToolbarItem } from './si-dashboard-toolbar.model';

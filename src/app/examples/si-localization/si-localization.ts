@@ -6,9 +6,9 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { SiDatepickerDirective } from '@siemens/element-ng/datepicker';
-import { SiFormModule } from '@siemens/element-ng/form';
-import { SiLanguageSwitcherComponent } from '@siemens/element-ng/language-switcher';
+import { SiDatepickerDirective } from '@spike-rabbit/element-ng/datepicker';
+import { SiFormModule } from '@spike-rabbit/element-ng/form';
+import { SiLanguageSwitcherComponent } from '@spike-rabbit/element-ng/language-switcher';
 
 export const DATE_PATTERN = 'date-pattern';
 export const DATE_PATTERN_ENABLE = 'date-pattern.enable';

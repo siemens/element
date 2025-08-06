@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, EventEmitter, Input, OnInit } from '@angular/core';
-import { WidgetConfig, WidgetConfigEvent, WidgetInstance } from '@siemens/dashboards-ng';
-import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
-import { MenuItem } from '@siemens/element-ng/menu';
+import { WidgetConfig, WidgetConfigEvent, WidgetInstance } from '@spike-rabbit/dashboards-ng';
+import { ContentActionBarMainItem } from '@spike-rabbit/element-ng/content-action-bar';
+import { MenuItem } from '@spike-rabbit/element-ng/menu';
 
 @Component({
   selector: 'app-note-widget',

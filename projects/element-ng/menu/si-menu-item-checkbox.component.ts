@@ -5,7 +5,7 @@
 import { CDK_MENU, CdkMenuItemCheckbox, CdkMenuTrigger } from '@angular/cdk/menu';
 import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { addIcons, elementOk, SiIconNextComponent } from '@siemens/element-ng/icon';
+import { addIcons, elementOk, SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
 
 import { SiMenuItemBase } from './si-menu-item-base.directive';
 

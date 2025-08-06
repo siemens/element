@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { StatusType } from '@siemens/element-ng/common';
-import { Link } from '@siemens/element-ng/link';
+import { StatusType } from '@spike-rabbit/element-ng/common';
+import { Link } from '@spike-rabbit/element-ng/link';
 
 export interface AlertConfig {
   severity: StatusType;

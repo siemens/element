@@ -28,9 +28,14 @@ import {
   ValidatorFn,
   Validators
 } from '@angular/forms';
-import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
-import { addIcons, elementMinus, elementPlus, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@spike-rabbit/element-ng/form';
+import {
+  addIcons,
+  elementMinus,
+  elementPlus,
+  SiIconNextComponent
+} from '@spike-rabbit/element-ng/icon';
+import { SiTranslatePipe, TranslatableString } from '@spike-rabbit/element-translate-ng/translate';
 import { Subscription, timer } from 'rxjs';
 
 @Component({

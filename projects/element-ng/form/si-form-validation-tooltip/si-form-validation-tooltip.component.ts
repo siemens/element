@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, inject, InjectionToken, Signal } from '@angular/core';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 import { SiFormError } from '../si-form-item/si-form-item.component';
 

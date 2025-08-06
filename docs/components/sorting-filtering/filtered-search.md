@@ -123,7 +123,7 @@ to adjust the size of the component.
 ### Usage
 
 ```ts
-import { SiFilteredSearchComponent } from '@siemens/element-ng/filtered-search';
+import { SiFilteredSearchComponent } from '@spike-rabbit/element-ng/filtered-search';
 
 @Component({
   imports: [SiFilteredSearchComponent, ...]

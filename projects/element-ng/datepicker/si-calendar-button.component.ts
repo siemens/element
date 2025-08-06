@@ -19,8 +19,8 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgControl } from '@angular/forms';
-import { addIcons, elementCalendar, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { addIcons, elementCalendar, SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 import { SiDatepickerOverlayDirective } from './si-datepicker-overlay.directive';
 import { SiDatepickerDirective } from './si-datepicker.directive';

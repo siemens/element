@@ -11,7 +11,7 @@ which triggers every time user changes sort. It returns a list of current sorts.
 ### Usage
 
 ```ts
-import { SiSortBarComponent } from '@siemens/element-ng/sort-bar';
+import { SiSortBarComponent } from '@spike-rabbit/element-ng/sort-bar';
 
 @Component({
   imports: [SiSortBarComponent, ...]

@@ -5,8 +5,8 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { SiStatusToggleComponent, StatusToggleItem } from '@siemens/element-ng/status-toggle';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { SiStatusToggleComponent, StatusToggleItem } from '@spike-rabbit/element-ng/status-toggle';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

@@ -84,7 +84,7 @@ The module has its own entry point to reduce the overall bundle size.
 import {
   SiDashboardCardComponent,
   SiDashboardComponent
-} from '@siemens/element-ng/dashboard';
+} from '@spike-rabbit/element-ng/dashboard';
 
 @Component({
   :

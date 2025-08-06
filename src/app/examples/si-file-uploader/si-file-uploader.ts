@@ -5,10 +5,10 @@
 import { HttpHeaders } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { FileUploadConfig, SiFileUploaderComponent } from '@siemens/element-ng/file-uploader';
-import { SiFormItemComponent } from '@siemens/element-ng/form';
-import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { FileUploadConfig, SiFileUploaderComponent } from '@spike-rabbit/element-ng/file-uploader';
+import { SiFormItemComponent } from '@spike-rabbit/element-ng/form';
+import { SiNumberInputComponent } from '@spike-rabbit/element-ng/number-input';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 import { FileUploadInterceptor } from './file-upload-interceptor';
 

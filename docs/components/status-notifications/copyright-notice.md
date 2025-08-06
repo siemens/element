@@ -14,7 +14,7 @@ make sure the copyright information are in sync across the whole app. Depending 
 you can also pass the copyright details via input property as shown in the live example below.
 
 ```ts
-import { SiCopyrightNoticeComponent } from '@siemens/element-ng/copyright-notice';
+import { SiCopyrightNoticeComponent } from '@spike-rabbit/element-ng/copyright-notice';
 
 @Component({
   imports: [SiCopyrightNoticeComponent, ...],

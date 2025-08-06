@@ -14,13 +14,13 @@ import {
   SimpleChanges
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
+import { SiNumberInputComponent } from '@spike-rabbit/element-ng/number-input';
 import {
   SelectOption,
   SiSelectComponent,
   SiSelectSimpleOptionsDirective,
   SiSelectSingleValueDirective
-} from '@siemens/element-ng/select';
+} from '@spike-rabbit/element-ng/select';
 
 import { ONE_DAY, ONE_MINUTE } from './si-date-range-filter.types';
 

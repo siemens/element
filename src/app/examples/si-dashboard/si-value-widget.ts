@@ -9,11 +9,11 @@ import {
   inject,
   OnInit
 } from '@angular/core';
-import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
-import { SiValueWidgetComponent } from '@siemens/element-ng/dashboard';
-import { Link } from '@siemens/element-ng/link';
-import { MenuItem } from '@siemens/element-ng/menu';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { ContentActionBarMainItem } from '@spike-rabbit/element-ng/content-action-bar';
+import { SiValueWidgetComponent } from '@spike-rabbit/element-ng/dashboard';
+import { Link } from '@spike-rabbit/element-ng/link';
+import { MenuItem } from '@spike-rabbit/element-ng/menu';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

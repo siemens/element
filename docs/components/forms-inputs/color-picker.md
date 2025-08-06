@@ -71,7 +71,7 @@ Then just provide the name in the color palette:
 ### Usage
 
 ```ts
-import { SiColorPickerComponent } from '@siemens/element-ng/color-picker';
+import { SiColorPickerComponent } from '@spike-rabbit/element-ng/color-picker';
 
 @Component({
   imports: [SiColorPickerComponent, ...]

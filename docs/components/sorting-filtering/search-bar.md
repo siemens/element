@@ -52,7 +52,7 @@ Input `[showIcon]` defines if a search icon is displayed (false by default).
 ### Usage
 
 ```ts
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
+import { SiSearchBarComponent } from '@spike-rabbit/element-ng/search-bar';
 
 @Component({
   imports: [SiSearchBarComponent, ...]

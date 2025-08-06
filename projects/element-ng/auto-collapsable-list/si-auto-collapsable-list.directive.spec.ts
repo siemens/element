@@ -4,7 +4,7 @@
  */
 import { Component, viewChildren } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { ResizeObserverService } from '@siemens/element-ng/resize-observer';
+import { ResizeObserverService } from '@spike-rabbit/element-ng/resize-observer';
 
 import { SiAutoCollapsableListItemDirective } from './si-auto-collapsable-list-item.directive';
 import { SiAutoCollapsableListModule } from './si-auto-collapsable-list.module';

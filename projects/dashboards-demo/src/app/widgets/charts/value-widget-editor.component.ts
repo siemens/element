@@ -9,19 +9,19 @@ import {
   WidgetConfig,
   WidgetConfigStatus,
   WidgetInstanceEditor
-} from '@siemens/dashboards-ng';
-import { SiDashboardCardComponent } from '@siemens/element-ng/dashboard';
+} from '@spike-rabbit/dashboards-ng';
+import { SiDashboardCardComponent } from '@spike-rabbit/element-ng/dashboard';
 import {
   SiFormContainerComponent,
   SiFormFieldsetComponent,
   SiFormItemComponent
-} from '@siemens/element-ng/form';
+} from '@spike-rabbit/element-ng/form';
 import {
   SelectOption,
   SiSelectComponent,
   SiSelectSimpleOptionsDirective,
   SiSelectSingleValueDirective
-} from '@siemens/element-ng/select';
+} from '@spike-rabbit/element-ng/select';
 
 import { ValueWidgetComponent } from './value-widget.component';
 

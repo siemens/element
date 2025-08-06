@@ -4,8 +4,8 @@
  */
 import { Component } from '@angular/core';
 import { FieldWrapper } from '@ngx-formly/core';
-import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTooltipDirective } from '@spike-rabbit/element-ng/tooltip';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 @Component({
   selector: 'si-formly-icon-wrapper',

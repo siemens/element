@@ -5,11 +5,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
-import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
+import { runOnPushChangeDetection } from '@spike-rabbit/element-ng/test-helpers';
 import {
   provideMockTranslateServiceBuilder,
   SiTranslateService
-} from '@siemens/element-translate-ng/translate';
+} from '@spike-rabbit/element-translate-ng/translate';
 import { of } from 'rxjs';
 
 import { Link, LinkAction } from './link.model';

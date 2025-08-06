@@ -8,7 +8,7 @@ import { booleanAttribute, Component, Input } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
-import { MenuItem } from '@siemens/element-ng/menu';
+import { MenuItem } from '@spike-rabbit/element-ng/menu';
 
 import { SiContentActionBarComponent } from './si-content-action-bar.component';
 import { ContentActionBarMainItem, ViewType } from './si-content-action-bar.model';

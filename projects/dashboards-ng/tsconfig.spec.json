@@ -3,14 +3,14 @@
   "compilerOptions": {
     "types": ["jasmine", "../element-translate-ng/localize-types/index.ts", "node", "zone.js"],
     "paths": {
-      "@siemens/element-translate-ng": [
+      "@spike-rabbit/element-translate-ng": [
         "projects/element-translate-ng/public-api.ts",
         "projects/element-translate-ng/"
       ],
-      "@siemens/element-translate-ng/*": ["projects/element-translate-ng/*"],
-      "@siemens/element-ng": ["projects/element-ng/public-api.ts", "projects/element-ng"],
-      "@siemens/element-ng/*": ["projects/element-ng/*"],
-      "@siemens/dashboards-ng": [
+      "@spike-rabbit/element-translate-ng/*": ["projects/element-translate-ng/*"],
+      "@spike-rabbit/element-ng": ["projects/element-ng/public-api.ts", "projects/element-ng"],
+      "@spike-rabbit/element-ng/*": ["projects/element-ng/*"],
+      "@spike-rabbit/dashboards-ng": [
         "projects/dashboards-ng/src/public-api.ts",
         "projects/dashboards-ng/src"
       ]

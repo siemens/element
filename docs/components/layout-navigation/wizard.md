@@ -119,7 +119,7 @@ Outputs are available for the `save`, `next`, and `back` events.
 `si-wizard` can be imported using the module
 
 ```ts
-import { SiWizardModule } from '@siemens/element-ng/wizard';
+import { SiWizardModule } from '@spike-rabbit/element-ng/wizard';
 
 @NgModule({
   imports: [SiWizardModule, ...]
@@ -129,7 +129,7 @@ import { SiWizardModule } from '@siemens/element-ng/wizard';
 or as a standalone component:
 
 ```ts
-import { SiWizardComponent, SiWizardStepComponent } from '@siemens/element-ng/wizard';
+import { SiWizardComponent, SiWizardStepComponent } from '@spike-rabbit/element-ng/wizard';
 
 @Component({
   imports: [

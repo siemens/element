@@ -85,16 +85,16 @@ about including to your app.
 
 Direct [Link](https://element.siemens.io/dashboards-demo/#/dashboard) to dashboard demo.
 
-<si-docs-api component="SiFlexibleDashboardComponent" package="@siemens/dashboards-ng" hideImplicitlyPublic="true"></si-docs-api>
+<si-docs-api component="SiFlexibleDashboardComponent" package="@spike-rabbit/dashboards-ng" hideImplicitlyPublic="true"></si-docs-api>
 
-<si-docs-api component="SiGridComponent" package="@siemens/dashboards-ng"></si-docs-api>
+<si-docs-api component="SiGridComponent" package="@spike-rabbit/dashboards-ng"></si-docs-api>
 
 ### Persistence of dashboard configuration
 
-<si-docs-type name="SiWidgetStorage" package="@siemens/dashboards-ng"></si-docs-type>
+<si-docs-type name="SiWidgetStorage" package="@spike-rabbit/dashboards-ng"></si-docs-type>
 
-<si-docs-api component="SiWidgetCatalogComponent" package="@siemens/dashboards-ng"></si-docs-api>
+<si-docs-api component="SiWidgetCatalogComponent" package="@spike-rabbit/dashboards-ng"></si-docs-api>
 
-<si-docs-api component="SiWidgetInstanceEditorDialogComponent" package="@siemens/dashboards-ng"></si-docs-api>
+<si-docs-api component="SiWidgetInstanceEditorDialogComponent" package="@spike-rabbit/dashboards-ng"></si-docs-api>
 
 <si-docs-types></si-docs-types>

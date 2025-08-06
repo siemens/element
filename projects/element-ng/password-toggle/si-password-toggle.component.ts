@@ -3,8 +3,13 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, input, output, signal } from '@angular/core';
-import { addIcons, elementHide, elementShow, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import {
+  addIcons,
+  elementHide,
+  elementShow,
+  SiIconNextComponent
+} from '@spike-rabbit/element-ng/icon';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 @Component({
   selector: 'si-password-toggle',

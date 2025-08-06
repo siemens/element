@@ -3,15 +3,15 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, input, TemplateRef, ViewChild } from '@angular/core';
-import { WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
-import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
+import { WidgetConfig, WidgetInstance } from '@spike-rabbit/dashboards-ng';
+import { ContentActionBarMainItem } from '@spike-rabbit/element-ng/content-action-bar';
 import {
   SiListWidgetBodyComponent,
   SiListWidgetItem,
   SortOrder
-} from '@siemens/element-ng/dashboard';
-import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
-import { Link, SiLinkDirective } from '@siemens/element-ng/link';
+} from '@spike-rabbit/element-ng/dashboard';
+import { SiEmptyStateComponent } from '@spike-rabbit/element-ng/empty-state';
+import { Link, SiLinkDirective } from '@spike-rabbit/element-ng/link';
 
 @Component({
   selector: 'app-list-widget',

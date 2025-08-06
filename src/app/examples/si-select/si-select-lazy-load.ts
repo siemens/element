@@ -4,7 +4,7 @@
  */
 import { ChangeDetectionStrategy, Component, inject, Injectable } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiFormItemComponent } from '@siemens/element-ng/form';
+import { SiFormItemComponent } from '@spike-rabbit/element-ng/form';
 import {
   SelectItem,
   SelectOption,
@@ -12,8 +12,8 @@ import {
   SiSelectComponent,
   SiSelectLazyOptionsDirective,
   SiSelectMultiValueDirective
-} from '@siemens/element-ng/select';
-import { LOG_EVENT } from '@siemens/live-preview';
+} from '@spike-rabbit/element-ng/select';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

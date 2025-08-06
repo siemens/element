@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ModalRef } from '@siemens/element-ng/modal';
+import { ModalRef } from '@spike-rabbit/element-ng/modal';
 
 import { SiDeleteConfirmationDialogComponent } from './si-delete-confirmation-dialog.component';
 

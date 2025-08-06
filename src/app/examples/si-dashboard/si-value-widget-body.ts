@@ -9,9 +9,9 @@ import {
   inject,
   OnInit
 } from '@angular/core';
-import { SiCardComponent } from '@siemens/element-ng/card';
-import { SiValueWidgetBodyComponent } from '@siemens/element-ng/dashboard';
-import { Link, SiLinkDirective } from '@siemens/element-ng/link';
+import { SiCardComponent } from '@spike-rabbit/element-ng/card';
+import { SiValueWidgetBodyComponent } from '@spike-rabbit/element-ng/dashboard';
+import { Link, SiLinkDirective } from '@spike-rabbit/element-ng/link';
 
 @Component({
   selector: 'app-sample',

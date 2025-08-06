@@ -47,7 +47,7 @@ to indicate where the data point(s) falls over a particular range.
     - [echarts](https://www.npmjs.com/package/echarts)
 
 ```ts
-import { SiChartGaugeComponent } from '@siemens/charts-ng';
+import { SiChartGaugeComponent } from '@spike-rabbit/charts-ng';
 
 @Component({
   imports: [SiChartGaugeComponent, ...]
@@ -56,6 +56,6 @@ import { SiChartGaugeComponent } from '@siemens/charts-ng';
 
 <si-docs-component example="si-charts/si-chart-gauge" height="400"></si-docs-component>
 
-<si-docs-api component="SiChartGaugeComponent" package="@siemens/charts-ng" hideImplicitlyPublic="true"></si-docs-api>
+<si-docs-api component="SiChartGaugeComponent" package="@spike-rabbit/charts-ng" hideImplicitlyPublic="true"></si-docs-api>
 
 <si-docs-types></si-docs-types>

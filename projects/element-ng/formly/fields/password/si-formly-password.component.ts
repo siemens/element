@@ -8,7 +8,7 @@ import { FieldType, FieldTypeConfig, FormlyModule } from '@ngx-formly/core';
 import {
   SiPasswordStrengthComponent,
   SiPasswordStrengthDirective
-} from '@siemens/element-ng/password-strength';
+} from '@spike-rabbit/element-ng/password-strength';
 
 @Component({
   selector: 'si-formly-password',

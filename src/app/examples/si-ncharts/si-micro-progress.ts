@@ -6,7 +6,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
   MicroProgressSeries,
   SiMicroProgressComponent
-} from '@siemens/native-charts-ng/micro-progress';
+} from '@spike-rabbit/native-charts-ng/micro-progress';
 
 @Component({
   selector: 'app-sample',

@@ -5,7 +5,10 @@
 import { CdkPortal, PortalModule } from '@angular/cdk/portal';
 import { Component, inject, OnDestroy, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
+import {
+  SiAccordionComponent,
+  SiCollapsiblePanelComponent
+} from '@spike-rabbit/element-ng/accordion';
 import {
   App,
   SiApplicationHeaderComponent,
@@ -15,23 +18,26 @@ import {
   SiHeaderBrandDirective,
   SiHeaderLogoDirective,
   SiLaunchpadFactoryComponent
-} from '@siemens/element-ng/application-header';
-import { SiCardComponent } from '@siemens/element-ng/card';
-import { SiCircleStatusModule } from '@siemens/element-ng/circle-status';
-import { SiElectrontitlebarComponent } from '@siemens/element-ng/electron-titlebar';
+} from '@spike-rabbit/element-ng/application-header';
+import { SiCardComponent } from '@spike-rabbit/element-ng/card';
+import { SiCircleStatusModule } from '@spike-rabbit/element-ng/circle-status';
+import { SiElectrontitlebarComponent } from '@spike-rabbit/element-ng/electron-titlebar';
 import {
   SiHeaderDropdownComponent,
   SiHeaderDropdownTriggerDirective
-} from '@siemens/element-ng/header-dropdown';
-import { MenuItem } from '@siemens/element-ng/menu';
-import { NavbarVerticalItem, SiNavbarVerticalComponent } from '@siemens/element-ng/navbar-vertical';
+} from '@spike-rabbit/element-ng/header-dropdown';
+import { MenuItem } from '@spike-rabbit/element-ng/menu';
+import {
+  NavbarVerticalItem,
+  SiNavbarVerticalComponent
+} from '@spike-rabbit/element-ng/navbar-vertical';
 import {
   SiSidePanelComponent,
   SiSidePanelContentComponent,
   SiSidePanelService
-} from '@siemens/element-ng/side-panel';
-import { SiStatusBarModule, StatusBarItem } from '@siemens/element-ng/status-bar';
-import { LOG_EVENT } from '@siemens/live-preview';
+} from '@spike-rabbit/element-ng/side-panel';
+import { SiStatusBarModule, StatusBarItem } from '@spike-rabbit/element-ng/status-bar';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

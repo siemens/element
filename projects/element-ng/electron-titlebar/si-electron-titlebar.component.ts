@@ -4,16 +4,16 @@
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { booleanAttribute, Component, input, output } from '@angular/core';
-import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
+import { MenuItem as MenuItemLegacy } from '@spike-rabbit/element-ng/common';
 import {
   addIcons,
   elementLeft4,
   elementOptionsVertical,
   elementRight4,
   SiIconNextComponent
-} from '@siemens/element-ng/icon';
-import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+} from '@spike-rabbit/element-ng/icon';
+import { MenuItem, SiMenuFactoryComponent } from '@spike-rabbit/element-ng/menu';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 @Component({
   selector: 'si-electron-titlebar',

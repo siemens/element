@@ -11,7 +11,7 @@ import {
 import {
   SiFormItemFilter,
   SiFormItemHarness
-} from '@siemens/element-ng/form/testing/si-form-item.harness';
+} from '@spike-rabbit/element-ng/form/testing/si-form-item.harness';
 
 export class SiFormFieldsetHarness extends ComponentHarness {
   static readonly hostSelector = 'si-form-fieldset';

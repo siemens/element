@@ -62,7 +62,7 @@ The arrow can be placed along any edge to ensure optimal positioning.
 ### Usage
 
 ```ts
-import { SiTourService } from '@siemens/element-ng/tour';
+import { SiTourService } from '@spike-rabbit/element-ng/tour';
 
 @NgModule({
   imports: [SiTourService, ...]

@@ -64,7 +64,7 @@ with streamlined inputs. The component is a wrapper around the [card](../layout-
 and the `<si-timeline-widget-body>`.
 
 ```ts
-import { SiTimelineWidgetComponent } from '@siemens/element-ng/dashboard';
+import { SiTimelineWidgetComponent } from '@spike-rabbit/element-ng/dashboard';
 
 
 @Component({

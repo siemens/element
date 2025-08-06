@@ -11,7 +11,7 @@ import {
   InjectionToken,
   input
 } from '@angular/core';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 export const LOADING_SPINNER_BLOCKING = new InjectionToken<boolean>('isBlockingSpinner');
 export const LOADING_SPINNER_OVERLAY = new InjectionToken<boolean>('isSpinnerOverlay');

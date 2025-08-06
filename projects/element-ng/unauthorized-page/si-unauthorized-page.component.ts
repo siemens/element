@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
-import { Link, SiLinkDirective } from '@siemens/element-ng/link';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
+import { Link, SiLinkDirective } from '@spike-rabbit/element-ng/link';
+import { SiTranslatePipe, TranslatableString } from '@spike-rabbit/element-translate-ng/translate';
 
 /**
  * The component shall be use to indicate that an authenticated

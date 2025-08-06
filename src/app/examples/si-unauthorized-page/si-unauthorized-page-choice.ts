@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, inject } from '@angular/core';
-import { SiUnauthorizedPageModule } from '@siemens/element-ng/unauthorized-page';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { SiUnauthorizedPageModule } from '@spike-rabbit/element-ng/unauthorized-page';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

@@ -11,7 +11,7 @@ import {
   SiSelectModule,
   SiSelectMultiValueDirective,
   SiSelectSingleValueDirective
-} from '@siemens/element-ng/select';
+} from '@spike-rabbit/element-ng/select';
 
 import { SiFormlySelectComponent } from './si-formly-select.component';
 

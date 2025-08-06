@@ -4,7 +4,7 @@
  */
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { SiTranslateNgxTModule } from '@siemens/element-translate-ng/ngx-translate';
+import { SiTranslateNgxTModule } from '@spike-rabbit/element-translate-ng/ngx-translate';
 import { Observable, of } from 'rxjs';
 
 import { SiLocaleStore } from './si-locale-store';

@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { SiSplitComponent, SiSplitPartComponent } from '@siemens/element-ng/split';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { SiSplitComponent, SiSplitPartComponent } from '@spike-rabbit/element-ng/split';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

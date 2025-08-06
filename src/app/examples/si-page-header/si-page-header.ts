@@ -9,19 +9,22 @@ import {
   SiApplicationHeaderComponent,
   SiHeaderBrandDirective,
   SiHeaderLogoDirective
-} from '@siemens/element-ng/application-header';
-import { BreadcrumbItem, SiBreadcrumbComponent } from '@siemens/element-ng/breadcrumb';
-import { SiCardComponent } from '@siemens/element-ng/card';
+} from '@spike-rabbit/element-ng/application-header';
+import { BreadcrumbItem, SiBreadcrumbComponent } from '@spike-rabbit/element-ng/breadcrumb';
+import { SiCardComponent } from '@spike-rabbit/element-ng/card';
 import {
   ContentActionBarMainItem,
   SiContentActionBarComponent
-} from '@siemens/element-ng/content-action-bar';
-import { SiFormItemComponent } from '@siemens/element-ng/form';
-import { MenuItem } from '@siemens/element-ng/menu';
-import { SiNavbarVerticalComponent } from '@siemens/element-ng/navbar-vertical';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
-import { SiSidePanelComponent, SiSidePanelContentComponent } from '@siemens/element-ng/side-panel';
-import { SiStatusBarComponent, StatusBarItem } from '@siemens/element-ng/status-bar';
+} from '@spike-rabbit/element-ng/content-action-bar';
+import { SiFormItemComponent } from '@spike-rabbit/element-ng/form';
+import { MenuItem } from '@spike-rabbit/element-ng/menu';
+import { SiNavbarVerticalComponent } from '@spike-rabbit/element-ng/navbar-vertical';
+import { SiSearchBarComponent } from '@spike-rabbit/element-ng/search-bar';
+import {
+  SiSidePanelComponent,
+  SiSidePanelContentComponent
+} from '@spike-rabbit/element-ng/side-panel';
+import { SiStatusBarComponent, StatusBarItem } from '@spike-rabbit/element-ng/status-bar';
 
 @Component({
   selector: 'app-sample',

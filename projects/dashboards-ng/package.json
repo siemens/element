@@ -1,5 +1,5 @@
 {
-  "name": "@siemens/dashboards-ng",
+  "name": "@spike-rabbit/dashboards-ng",
   "description": "Element Dashboards library.",
   "version": "47.8.0",
   "license": "MIT",
@@ -21,7 +21,7 @@
     "@angular/common": "20",
     "@angular/core": "20",
     "@ngx-translate/core": "15 - 16",
-    "@siemens/element-ng": "47.8.0",
+    "@spike-rabbit/element-ng": "47.8.0",
     "@siemens/element-theme": "47.8.0",
     "gridstack": "^11.1.0"
   }

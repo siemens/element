@@ -12,8 +12,8 @@ import {
   OnInit
 } from '@angular/core';
 import { RouterLinkActive } from '@angular/router';
-import { MenuItem } from '@siemens/element-ng/common';
-import { SiLinkDirective } from '@siemens/element-ng/link';
+import { MenuItem } from '@spike-rabbit/element-ng/common';
+import { SiLinkDirective } from '@spike-rabbit/element-ng/link';
 
 import { SiNavbarVerticalGroupTriggerDirective } from './si-navbar-vertical-group-trigger.directive';
 import {

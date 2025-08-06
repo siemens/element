@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { DatepickerInputConfig } from '@siemens/element-ng/datepicker';
-import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { DatepickerInputConfig } from '@spike-rabbit/element-ng/datepicker';
+import { TranslatableString } from '@spike-rabbit/element-translate-ng/translate';
 
 export type ValidationType = 'string' | 'integer' | 'float' | 'date' | 'date-time';
 

@@ -21,10 +21,10 @@ import {
   TemplateRef,
   viewChild
 } from '@angular/core';
-import { correctKeyRTL, MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
-import { SiLoadingSpinnerComponent } from '@siemens/element-ng/loading-spinner';
-import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { correctKeyRTL, MenuItem as MenuItemLegacy } from '@spike-rabbit/element-ng/common';
+import { SiLoadingSpinnerComponent } from '@spike-rabbit/element-ng/loading-spinner';
+import { MenuItem, SiMenuFactoryComponent } from '@spike-rabbit/element-ng/menu';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 import { asyncScheduler, Subject, Subscription } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 

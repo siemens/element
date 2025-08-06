@@ -3,6 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-export * from '@siemens/native-charts-ng/gauge';
+export * from '@spike-rabbit/native-charts-ng/gauge';
 
 export * from './public-api.module';

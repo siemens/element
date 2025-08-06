@@ -4,12 +4,12 @@
  */
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { SiCircleStatusModule } from '@siemens/element-ng/circle-status';
-import { SiContentActionBarComponent } from '@siemens/element-ng/content-action-bar';
-import { SiDashboardModule } from '@siemens/element-ng/dashboard';
-import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
-import { SiSearchBarModule } from '@siemens/element-ng/search-bar';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiCircleStatusModule } from '@spike-rabbit/element-ng/circle-status';
+import { SiContentActionBarComponent } from '@spike-rabbit/element-ng/content-action-bar';
+import { SiDashboardModule } from '@spike-rabbit/element-ng/dashboard';
+import { SiEmptyStateComponent } from '@spike-rabbit/element-ng/empty-state';
+import { SiSearchBarModule } from '@spike-rabbit/element-ng/search-bar';
+import { SiTranslateModule } from '@spike-rabbit/element-translate-ng/translate';
 
 import { Widget } from '../src/model/widgets.model';
 

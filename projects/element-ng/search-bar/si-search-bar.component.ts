@@ -20,13 +20,13 @@ import {
   viewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { BackgroundColorVariant } from '@siemens/element-ng/common';
+import { BackgroundColorVariant } from '@spike-rabbit/element-ng/common';
 import {
   elementCancel,
   elementSearch,
   addIcons,
   SiIconNextComponent
-} from '@siemens/element-ng/icon';
+} from '@spike-rabbit/element-ng/icon';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 

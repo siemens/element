@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, OnInit, TemplateRef, viewChild } from '@angular/core';
-import { SiCircleStatusModule } from '@siemens/element-ng/circle-status';
-import { StatusType } from '@siemens/element-ng/common';
-import { SiDatatableModule } from '@siemens/element-ng/datatable';
-import { SiPaginationComponent } from '@siemens/element-ng/pagination';
 import { NgxDatatableModule, TableColumn } from '@siemens/ngx-datatable';
+import { SiCircleStatusModule } from '@spike-rabbit/element-ng/circle-status';
+import { StatusType } from '@spike-rabbit/element-ng/common';
+import { SiDatatableModule } from '@spike-rabbit/element-ng/datatable';
+import { SiPaginationComponent } from '@spike-rabbit/element-ng/pagination';
 
 @Component({
   selector: 'app-sample',

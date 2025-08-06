@@ -4,10 +4,10 @@
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { StatusType } from '@siemens/element-ng/common';
-import { Link } from '@siemens/element-ng/link';
-import { SiTranslateService } from '@siemens/element-ng/translate';
-import { provideMockTranslateServiceBuilder } from '@siemens/element-translate-ng/translate';
+import { StatusType } from '@spike-rabbit/element-ng/common';
+import { Link } from '@spike-rabbit/element-ng/link';
+import { SiTranslateService } from '@spike-rabbit/element-ng/translate';
+import { provideMockTranslateServiceBuilder } from '@spike-rabbit/element-translate-ng/translate';
 import { of } from 'rxjs';
 
 import { SiInlineNotificationComponent } from './index';

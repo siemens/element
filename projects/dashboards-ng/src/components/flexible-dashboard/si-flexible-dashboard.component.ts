@@ -20,8 +20,8 @@ import {
   viewChild,
   ViewContainerRef
 } from '@angular/core';
-import { MenuItem } from '@siemens/element-ng/common';
-import { SiDashboardComponent } from '@siemens/element-ng/dashboard';
+import { MenuItem } from '@spike-rabbit/element-ng/common';
+import { SiDashboardComponent } from '@spike-rabbit/element-ng/dashboard';
 import { BehaviorSubject, combineLatest, of, Subject, Subscription } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 

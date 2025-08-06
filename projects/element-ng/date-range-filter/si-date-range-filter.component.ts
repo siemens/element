@@ -31,11 +31,11 @@ import {
   SiCalendarButtonComponent,
   SiDatepickerComponent,
   SiDatepickerDirective
-} from '@siemens/element-ng/datepicker';
-import { addIcons, elementDown2, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+} from '@spike-rabbit/element-ng/datepicker';
+import { addIcons, elementDown2, SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
+import { BOOTSTRAP_BREAKPOINTS } from '@spike-rabbit/element-ng/resize-observer';
+import { SiSearchBarComponent } from '@spike-rabbit/element-ng/search-bar';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 import { SiDateRangeCalculationService } from './si-date-range-calculation.service';
 import {

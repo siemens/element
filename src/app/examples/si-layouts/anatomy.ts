@@ -4,7 +4,10 @@
  */
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
+import {
+  SiAccordionComponent,
+  SiCollapsiblePanelComponent
+} from '@spike-rabbit/element-ng/accordion';
 import {
   App,
   AppCategory,
@@ -16,23 +19,29 @@ import {
   SiHeaderCollapsibleActionsComponent,
   SiHeaderLogoDirective,
   SiLaunchpadFactoryComponent
-} from '@siemens/element-ng/application-header';
-import { BreadcrumbItem, SiBreadcrumbComponent } from '@siemens/element-ng/breadcrumb';
+} from '@spike-rabbit/element-ng/application-header';
+import { BreadcrumbItem, SiBreadcrumbComponent } from '@spike-rabbit/element-ng/breadcrumb';
 import {
   ContentActionBarMainItem,
   SiContentActionBarComponent
-} from '@siemens/element-ng/content-action-bar';
+} from '@spike-rabbit/element-ng/content-action-bar';
 import {
   SiHeaderDropdownComponent,
   SiHeaderDropdownItemComponent,
   SiHeaderDropdownTriggerDirective
-} from '@siemens/element-ng/header-dropdown';
-import { MenuItem } from '@siemens/element-ng/menu';
-import { NavbarVerticalItem, SiNavbarVerticalComponent } from '@siemens/element-ng/navbar-vertical';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
-import { SiSidePanelComponent, SiSidePanelContentComponent } from '@siemens/element-ng/side-panel';
-import { SiStatusBarComponent, StatusBarItem } from '@siemens/element-ng/status-bar';
-import { SiSystemBannerComponent } from '@siemens/element-ng/system-banner';
+} from '@spike-rabbit/element-ng/header-dropdown';
+import { MenuItem } from '@spike-rabbit/element-ng/menu';
+import {
+  NavbarVerticalItem,
+  SiNavbarVerticalComponent
+} from '@spike-rabbit/element-ng/navbar-vertical';
+import { SiSearchBarComponent } from '@spike-rabbit/element-ng/search-bar';
+import {
+  SiSidePanelComponent,
+  SiSidePanelContentComponent
+} from '@spike-rabbit/element-ng/side-panel';
+import { SiStatusBarComponent, StatusBarItem } from '@spike-rabbit/element-ng/status-bar';
+import { SiSystemBannerComponent } from '@spike-rabbit/element-ng/system-banner';
 
 @Component({
   selector: 'app-sample',

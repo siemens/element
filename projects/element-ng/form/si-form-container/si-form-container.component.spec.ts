@@ -15,8 +15,8 @@ import {
   SiFormContainerComponent,
   SiFormModule,
   SiFormValidationErrorMapper
-} from '@siemens/element-ng/form';
-import { SiResponsiveContainerDirective } from '@siemens/element-ng/resize-observer';
+} from '@spike-rabbit/element-ng/form';
+import { SiResponsiveContainerDirective } from '@spike-rabbit/element-ng/resize-observer';
 
 // A timeout that works with `await`. We have to use `waitForAsync()``
 // in the tests below because `tick()` doesn't work because `ResizeObserver`

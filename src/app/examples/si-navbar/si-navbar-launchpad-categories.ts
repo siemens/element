@@ -3,16 +3,15 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AppItem, AppItemCategory, SiNavbarModule } from '@siemens/element-ng/navbar';
+import { AppItem, AppItemCategory, SiNavbarModule } from '@spike-rabbit/element-ng/navbar';
 
 @Component({
   selector: 'app-sample',
-  imports: [SiNavbarModule], // eslint-disable-line @typescript-eslint/no-deprecated
+  imports: [SiNavbarModule],
   templateUrl: './si-navbar-launchpad-categories.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
-  // eslint-disable-next-line @typescript-eslint/no-deprecated
   appCategories: AppItemCategory[] = [
     {
       category: 'Phishing Apps',
@@ -48,7 +47,6 @@ export class SampleComponent {
     }
   ];
 
-  // eslint-disable-next-line @typescript-eslint/no-deprecated
   favoriteChanged([app, favorite]: [AppItem, boolean]): void {
     app.isFavorite = favorite;
     this.appCategories = [...this.appCategories];

@@ -13,8 +13,8 @@ import {
   TemplateRef,
   Type
 } from '@angular/core';
-import { getOverlay, getPositionStrategy, positions } from '@siemens/element-ng/common';
-import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { getOverlay, getPositionStrategy, positions } from '@spike-rabbit/element-ng/common';
+import { TranslatableString } from '@spike-rabbit/element-translate-ng/translate';
 
 import { TooltipComponent } from './si-tooltip.component';
 

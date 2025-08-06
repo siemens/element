@@ -5,7 +5,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
-import { SiCalendarButtonComponent, SiDatepickerDirective } from '@siemens/element-ng/datepicker';
+import {
+  SiCalendarButtonComponent,
+  SiDatepickerDirective
+} from '@spike-rabbit/element-ng/datepicker';
 
 @Component({
   selector: 'si-formly-datetime',

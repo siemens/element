@@ -14,7 +14,7 @@ import {
   waitForAsync
 } from '@angular/core/testing';
 import { provideRouter, RouterLink, RouterOutlet } from '@angular/router';
-import { ResizeObserverService } from '@siemens/element-ng/resize-observer';
+import { ResizeObserverService } from '@spike-rabbit/element-ng/resize-observer';
 
 import { SiTabNextLinkComponent } from './si-tab-next-link.component';
 import { SiTabNextComponent } from './si-tab-next.component';

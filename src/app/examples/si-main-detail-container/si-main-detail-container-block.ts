@@ -4,17 +4,17 @@
  */
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
+import { NgxDatatableModule } from '@siemens/ngx-datatable';
 import {
   ContentActionBarMainItem,
   SiContentActionBarComponent
-} from '@siemens/element-ng/content-action-bar';
-import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
-import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
-import { SiMainDetailContainerComponent } from '@siemens/element-ng/main-detail-container';
-import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
-import { SiSearchBarModule } from '@siemens/element-ng/search-bar';
-import { LOG_EVENT } from '@siemens/live-preview';
-import { NgxDatatableModule } from '@siemens/ngx-datatable';
+} from '@spike-rabbit/element-ng/content-action-bar';
+import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@spike-rabbit/element-ng/datatable';
+import { SiEmptyStateComponent } from '@spike-rabbit/element-ng/empty-state';
+import { SiMainDetailContainerComponent } from '@spike-rabbit/element-ng/main-detail-container';
+import { BOOTSTRAP_BREAKPOINTS } from '@spike-rabbit/element-ng/resize-observer';
+import { SiSearchBarModule } from '@spike-rabbit/element-ng/search-bar';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.service';
 

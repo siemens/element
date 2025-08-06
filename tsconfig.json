@@ -21,17 +21,17 @@
     "lib": ["es2022", "dom"],
     "isolatedModules": true,
     "paths": {
-      "@siemens/element-ng": ["projects/element-ng/public-api.ts"],
-      "@siemens/element-ng/*": ["projects/element-ng/*/index.ts"],
-      "@siemens/element-translate-ng": ["dist/@siemens/element-translate-ng"],
-      "@siemens/element-translate-ng/*": ["dist/@siemens/element-translate-ng/*"],
-      "@siemens/live-preview": ["projects/live-preview/public-api.ts"],
-      "@siemens/live-preview/*": ["projects/live-preview/*/index.ts"],
-      "@siemens/charts-ng": ["projects/charts-ng/src/public-api.ts"],
-      "@siemens/native-charts-ng": ["projects/native-charts-ng/public-api.ts"],
-      "@siemens/native-charts-ng/*": ["projects/native-charts-ng/*/index.ts"],
-      "@siemens/dashboards-ng": ["projects/dashboards-ng/src/public-api.ts"],
-      "@siemens/dashboards-ng/*": ["projects/dashboards-ng/*/index.ts"]
+      "@spike-rabbit/element-ng": ["projects/element-ng/public-api.ts"],
+      "@spike-rabbit/element-ng/*": ["projects/element-ng/*/index.ts"],
+      "@spike-rabbit/element-translate-ng": ["dist/@spike-rabbit/element-translate-ng"],
+      "@spike-rabbit/element-translate-ng/*": ["dist/@spike-rabbit/element-translate-ng/*"],
+      "@spike-rabbit/live-preview": ["projects/live-preview/public-api.ts"],
+      "@spike-rabbit/live-preview/*": ["projects/live-preview/*/index.ts"],
+      "@spike-rabbit/charts-ng": ["projects/charts-ng/src/public-api.ts"],
+      "@spike-rabbit/native-charts-ng": ["projects/native-charts-ng/public-api.ts"],
+      "@spike-rabbit/native-charts-ng/*": ["projects/native-charts-ng/*/index.ts"],
+      "@spike-rabbit/dashboards-ng": ["projects/dashboards-ng/src/public-api.ts"],
+      "@spike-rabbit/dashboards-ng/*": ["projects/dashboards-ng/*/index.ts"]
     }
   },
   "exclude": ["dist/**", "testing/**/*.ts"],

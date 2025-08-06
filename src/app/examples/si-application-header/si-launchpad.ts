@@ -10,7 +10,7 @@ import {
   SiHeaderBrandDirective,
   SiHeaderLogoDirective,
   SiLaunchpadFactoryComponent
-} from '@siemens/element-ng/application-header';
+} from '@spike-rabbit/element-ng/application-header';
 
 @Component({
   selector: 'app-sample',

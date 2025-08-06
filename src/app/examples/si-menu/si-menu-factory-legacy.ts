@@ -4,8 +4,8 @@
  */
 import { CdkContextMenuTrigger, CdkMenuTrigger } from '@angular/cdk/menu';
 import { Component } from '@angular/core';
-import { MenuItem } from '@siemens/element-ng/common';
-import { SiMenuModule } from '@siemens/element-ng/menu';
+import { MenuItem } from '@spike-rabbit/element-ng/common';
+import { SiMenuModule } from '@spike-rabbit/element-ng/menu';
 
 @Component({
   selector: 'app-sample',
@@ -13,7 +13,6 @@ import { SiMenuModule } from '@siemens/element-ng/menu';
   templateUrl: './si-menu-factory-legacy.html'
 })
 export class SampleComponent {
-  // eslint-disable-next-line @typescript-eslint/no-deprecated
   items: MenuItem[] = [
     { title: 'Actions', isHeading: true },
     {

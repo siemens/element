@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Directive, ElementRef, inject, input, OnDestroy, OnInit } from '@angular/core';
-import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { TranslatableString } from '@spike-rabbit/element-translate-ng/translate';
 
 import { SkipLinkService } from './skip-link.service';
 

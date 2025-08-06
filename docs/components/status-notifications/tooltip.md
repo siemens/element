@@ -92,7 +92,7 @@ For information that needs detailed explanation, use [popovers](../status-notifi
 Use `siTooltip` directive to display the tooltip.
 
 ```ts
-import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
+import { SiTooltipDirective } from '@spike-rabbit/element-ng/tooltip';
 
 @Component({
   imports: [SiTooltipDirective, ...]

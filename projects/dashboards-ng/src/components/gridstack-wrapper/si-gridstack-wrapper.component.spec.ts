@@ -6,7 +6,7 @@
 import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { SiActionDialogService } from '@siemens/element-ng/action-modal';
+import { SiActionDialogService } from '@spike-rabbit/element-ng/action-modal';
 import {
   TEST_WIDGET,
   TEST_WIDGET_CONFIG_0,

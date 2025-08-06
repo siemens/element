@@ -8,8 +8,8 @@ import {
   SiChartCartesianComponent,
   themeElement,
   themeSupport
-} from '@siemens/charts-ng';
-import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
+} from '@spike-rabbit/charts-ng';
+import { SiResizeObserverDirective } from '@spike-rabbit/element-ng/resize-observer';
 
 themeSupport.setDefault(themeElement);
 

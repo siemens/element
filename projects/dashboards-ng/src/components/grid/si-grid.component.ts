@@ -16,8 +16,11 @@ import {
   Type,
   viewChild
 } from '@angular/core';
-import { SiLoadingService, SiLoadingSpinnerDirective } from '@siemens/element-ng/loading-spinner';
-import { ModalOptions, SiModalService } from '@siemens/element-ng/modal';
+import {
+  SiLoadingService,
+  SiLoadingSpinnerDirective
+} from '@spike-rabbit/element-ng/loading-spinner';
+import { ModalOptions, SiModalService } from '@spike-rabbit/element-ng/modal';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 

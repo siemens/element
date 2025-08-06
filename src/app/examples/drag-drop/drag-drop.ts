@@ -11,7 +11,7 @@ import {
 import { CdkListbox, CdkOption } from '@angular/cdk/listbox';
 import { CdkContextMenuTrigger, CdkMenuModule } from '@angular/cdk/menu';
 import { Component, signal, viewChildren } from '@angular/core';
-import { SiMenuModule } from '@siemens/element-ng/menu';
+import { SiMenuModule } from '@spike-rabbit/element-ng/menu';
 
 @Component({
   selector: 'app-sample',

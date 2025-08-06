@@ -6,8 +6,8 @@ import { Component } from '@angular/core';
 import {
   ContentActionBarMainItem,
   SiContentActionBarComponent
-} from '@siemens/element-ng/content-action-bar';
-import { MenuItem } from '@siemens/element-ng/menu';
+} from '@spike-rabbit/element-ng/content-action-bar';
+import { MenuItem } from '@spike-rabbit/element-ng/menu';
 
 @Component({
   selector: 'app-sample',

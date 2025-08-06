@@ -9,7 +9,7 @@ import {
   input,
   numberAttribute
 } from '@angular/core';
-import { Coordinate, makeArc, valueToRelativeAngle } from '@siemens/native-charts-ng/utils';
+import { Coordinate, makeArc, valueToRelativeAngle } from '@spike-rabbit/native-charts-ng/utils';
 
 /**
  * One series of the micro donut chart.

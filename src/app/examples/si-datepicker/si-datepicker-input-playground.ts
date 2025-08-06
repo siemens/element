@@ -10,9 +10,9 @@ import {
   SiCalendarButtonComponent,
   SiDatepickerDirective,
   WeekStart
-} from '@siemens/element-ng/datepicker';
-import { SiFormItemComponent } from '@siemens/element-ng/form';
-import { LOG_EVENT } from '@siemens/live-preview';
+} from '@spike-rabbit/element-ng/datepicker';
+import { SiFormItemComponent } from '@spike-rabbit/element-ng/form';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 import { filter, map } from 'rxjs/operators';
 
 @Component({

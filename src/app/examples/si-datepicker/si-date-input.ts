@@ -8,8 +8,8 @@ import {
   DatepickerInputConfig,
   SiDateInputDirective,
   SiDatepickerComponent
-} from '@siemens/element-ng/datepicker';
-import { SiFormItemComponent } from '@siemens/element-ng/form';
+} from '@spike-rabbit/element-ng/datepicker';
+import { SiFormItemComponent } from '@spike-rabbit/element-ng/form';
 
 @Component({
   selector: 'app-sample',

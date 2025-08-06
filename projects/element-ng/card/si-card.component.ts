@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, computed, input } from '@angular/core';
-import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
+import { MenuItem as MenuItemLegacy } from '@spike-rabbit/element-ng/common';
 import {
   ContentActionBarMainItem,
   SiContentActionBarComponent,
   ViewType
-} from '@siemens/element-ng/content-action-bar';
-import { MenuItem } from '@siemens/element-ng/menu';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+} from '@spike-rabbit/element-ng/content-action-bar';
+import { MenuItem } from '@spike-rabbit/element-ng/menu';
+import { SiTranslatePipe, TranslatableString } from '@spike-rabbit/element-translate-ng/translate';
 
 @Component({
   selector: 'si-card',

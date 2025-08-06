@@ -8,7 +8,7 @@ import { FormRecord, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
-import { SiDatepickerModule } from '@siemens/element-ng/datepicker';
+import { SiDatepickerModule } from '@spike-rabbit/element-ng/datepicker';
 
 import { SiFormlyDateTimeComponent } from './si-formly-datetime.component';
 

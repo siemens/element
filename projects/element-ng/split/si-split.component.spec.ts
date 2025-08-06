@@ -11,8 +11,12 @@ import {
   viewChild
 } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { provideSiUiState, SI_UI_STATE_SERVICE, UIStateStorage } from '@siemens/element-ng/common';
-import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
+import {
+  provideSiUiState,
+  SI_UI_STATE_SERVICE,
+  UIStateStorage
+} from '@spike-rabbit/element-ng/common';
+import { runOnPushChangeDetection } from '@spike-rabbit/element-ng/test-helpers';
 
 import { Action, CollapseTo, PartState, Scale, SiSplitModule, SplitOrientation } from './index';
 import { SiSplitPartComponent } from './si-split-part.component';

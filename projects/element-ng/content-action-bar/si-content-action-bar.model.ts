@@ -8,7 +8,7 @@ import {
   MenuItemGroup,
   MenuItemLink,
   MenuItemRouterLink
-} from '@siemens/element-ng/menu';
+} from '@spike-rabbit/element-ng/menu';
 
 export type ViewType = 'collapsible' | 'expanded' | 'mobile';
 

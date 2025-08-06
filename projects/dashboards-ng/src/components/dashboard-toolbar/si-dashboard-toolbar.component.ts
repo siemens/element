@@ -5,12 +5,12 @@
 import { NgClass } from '@angular/common';
 import { Component, computed, inject, input, model, output, ViewChild } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { MenuItem } from '@siemens/element-ng/common';
-import { SiContentActionBarComponent } from '@siemens/element-ng/content-action-bar';
-import { SiLinkDirective } from '@siemens/element-ng/link';
-import { SiLoadingSpinnerComponent } from '@siemens/element-ng/loading-spinner';
-import { SiResponsiveContainerDirective } from '@siemens/element-ng/resize-observer';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { MenuItem } from '@spike-rabbit/element-ng/common';
+import { SiContentActionBarComponent } from '@spike-rabbit/element-ng/content-action-bar';
+import { SiLinkDirective } from '@spike-rabbit/element-ng/link';
+import { SiLoadingSpinnerComponent } from '@spike-rabbit/element-ng/loading-spinner';
+import { SiResponsiveContainerDirective } from '@spike-rabbit/element-ng/resize-observer';
+import { SiTranslateModule } from '@spike-rabbit/element-translate-ng/translate';
 
 import { DashboardToolbarItem } from '../../model/si-dashboard-toolbar.model';
 

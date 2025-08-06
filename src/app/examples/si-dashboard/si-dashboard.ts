@@ -12,18 +12,18 @@ import {
   SiChartProgressBarComponent,
   themeElement,
   themeSupport
-} from '@siemens/charts-ng';
-import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
+} from '@spike-rabbit/charts-ng';
+import { ContentActionBarMainItem } from '@spike-rabbit/element-ng/content-action-bar';
 import {
   SiDashboardCardComponent,
   SiDashboardComponent,
   SiValueWidgetComponent
-} from '@siemens/element-ng/dashboard';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
-import { Link } from '@siemens/element-ng/link';
-import { NavbarVerticalItem } from '@siemens/element-ng/navbar-vertical';
-import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
-import { LOG_EVENT } from '@siemens/live-preview';
+} from '@spike-rabbit/element-ng/dashboard';
+import { SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
+import { Link } from '@spike-rabbit/element-ng/link';
+import { NavbarVerticalItem } from '@spike-rabbit/element-ng/navbar-vertical';
+import { SiResizeObserverDirective } from '@spike-rabbit/element-ng/resize-observer';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 themeSupport.setDefault(themeElement);
 

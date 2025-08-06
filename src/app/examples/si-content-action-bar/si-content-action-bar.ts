@@ -6,9 +6,9 @@ import { Component, inject } from '@angular/core';
 import {
   ContentActionBarMainItem,
   SiContentActionBarComponent
-} from '@siemens/element-ng/content-action-bar';
-import { MenuItem, MenuItemCheckbox, MenuItemRadio } from '@siemens/element-ng/menu';
-import { LOG_EVENT } from '@siemens/live-preview';
+} from '@spike-rabbit/element-ng/content-action-bar';
+import { MenuItem, MenuItemCheckbox, MenuItemRadio } from '@spike-rabbit/element-ng/menu';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

@@ -4,9 +4,9 @@
  */
 import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
-import { Link, SiLinkDirective } from '@siemens/element-ng/link';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
+import { Link, SiLinkDirective } from '@spike-rabbit/element-ng/link';
+import { SiTranslatePipe, TranslatableString } from '@spike-rabbit/element-translate-ng/translate';
 
 /**
  * The component displays application info messages. A message uses an icon and a title, optionally a copy text,

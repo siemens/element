@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { Coordinate, makePolyline } from '@siemens/native-charts-ng/utils';
+import { Coordinate, makePolyline } from '@spike-rabbit/native-charts-ng/utils';
 
 export interface MicroLineSeries {
   /** Series values */

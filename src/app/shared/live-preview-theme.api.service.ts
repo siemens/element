@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { inject, Injectable } from '@angular/core';
-import { SiThemeService } from '@siemens/element-ng/theme';
-import { SiLivePreviewThemeApi, ThemeType } from '@siemens/live-preview';
+import { SiThemeService } from '@spike-rabbit/element-ng/theme';
+import { SiLivePreviewThemeApi, ThemeType } from '@spike-rabbit/live-preview';
 import { Observable } from 'rxjs';
 
 @Injectable()

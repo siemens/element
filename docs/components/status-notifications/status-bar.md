@@ -87,7 +87,7 @@ clicked.
 ### Usage
 
 ```ts
-import { SiStatusBarComponent } from '@siemens/element-ng/status-bar';
+import { SiStatusBarComponent } from '@spike-rabbit/element-ng/status-bar';
 
 @Component({
   imports: [SiStatusBarComponent, ...]

@@ -7,7 +7,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormRecord } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
-import { SiTranslateService } from '@siemens/element-ng/translate';
+import { SiTranslateService } from '@spike-rabbit/element-ng/translate';
 import { of } from 'rxjs';
 
 import { SiFormlyModule } from '../../si-formly.module';

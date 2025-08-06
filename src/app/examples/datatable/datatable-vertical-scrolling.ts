@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, OnInit, TemplateRef, viewChild } from '@angular/core';
-import { SiCircleStatusModule } from '@siemens/element-ng/circle-status';
-import { StatusType } from '@siemens/element-ng/common';
-import { SiDatatableModule } from '@siemens/element-ng/datatable';
-import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
-import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
-import { SiSliderComponent } from '@siemens/element-ng/slider';
 import { DatatableComponent, NgxDatatableModule, TableColumn } from '@siemens/ngx-datatable';
+import { SiCircleStatusModule } from '@spike-rabbit/element-ng/circle-status';
+import { StatusType } from '@spike-rabbit/element-ng/common';
+import { SiDatatableModule } from '@spike-rabbit/element-ng/datatable';
+import { SiEmptyStateComponent } from '@spike-rabbit/element-ng/empty-state';
+import { SiResizeObserverModule } from '@spike-rabbit/element-ng/resize-observer';
+import { SiSliderComponent } from '@spike-rabbit/element-ng/slider';
 
 @Component({
   selector: 'app-sample',

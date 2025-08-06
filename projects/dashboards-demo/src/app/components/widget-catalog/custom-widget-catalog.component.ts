@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, output } from '@angular/core';
-import { SiWidgetCatalogComponent, Widget, WidgetConfig } from '@siemens/dashboards-ng';
-import { SiCircleStatusComponent } from '@siemens/element-ng/circle-status';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiWidgetCatalogComponent, Widget, WidgetConfig } from '@spike-rabbit/dashboards-ng';
+import { SiCircleStatusComponent } from '@spike-rabbit/element-ng/circle-status';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 import { HELLO_DESCRIPTOR } from '../../widgets/hello-widget/widget-descriptors';
 

@@ -5,7 +5,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FieldType, FieldTypeConfig, FormlyModule } from '@ngx-formly/core';
-import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
+import { SiNumberInputComponent } from '@spike-rabbit/element-ng/number-input';
 
 @Component({
   selector: 'si-formly-number',

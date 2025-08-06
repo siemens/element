@@ -34,7 +34,7 @@ It requires two steps to enable it for a specific component.
 
     ```ts
     import { ApplicationConfig } from '@angular/core';
-    import { provideSiUiState } from '@siemens/element-ng/common';
+    import { provideSiUiState } from '@spike-rabbit/element-ng/common';
     
     const config: ApplicationConfig = {
       providers: [
@@ -57,7 +57,7 @@ If enabled, the UI state is stored by default in the `localstorage`.
 Applications can override this by implementing a custom store:
 
 ```ts
-import { UIStateStorage } from '@siemens/element-ng/common';
+import { UIStateStorage } from '@spike-rabbit/element-ng/common';
 
 @Injectable()
 class MyUIStateStorage implements UIStateStorage {
@@ -77,7 +77,7 @@ The custom storage needs to be configured on initialization of the `SiUIState`:
 
 ```ts
 import { ApplicationConfig } from '@angular/core';
-import { provideSiUiState } from '@siemens/element-ng/common';
+import { provideSiUiState } from '@spike-rabbit/element-ng/common';
     
 const config: ApplicationConfig = { 
   providers: [

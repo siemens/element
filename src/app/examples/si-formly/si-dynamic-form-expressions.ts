@@ -6,8 +6,8 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormRecord } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
-import { SiFormModule } from '@siemens/element-ng/form';
-import { SiFormlyModule } from '@siemens/element-ng/formly';
+import { SiFormModule } from '@spike-rabbit/element-ng/form';
+import { SiFormlyModule } from '@spike-rabbit/element-ng/formly';
 import { Subject } from 'rxjs';
 
 @Component({

@@ -71,7 +71,7 @@ While any icon can be assigned, ensure it adds meaningful context.
 ### Usage
 
 ```ts
-import { SiCircleStatusComponent } from '@siemens/element-ng/circle-status';
+import { SiCircleStatusComponent } from '@spike-rabbit/element-ng/circle-status';
 
 @Component({
   imports: [SiCircleStatusComponent, ...]

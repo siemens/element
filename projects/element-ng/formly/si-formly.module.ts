@@ -15,7 +15,7 @@ import {
   FormlyFormBuilder,
   FormlyModule
 } from '@ngx-formly/core';
-import { SiFormModule } from '@siemens/element-ng/form';
+import { SiFormModule } from '@spike-rabbit/element-ng/form';
 
 import { SiFormlyButtonComponent } from './fields/button/si-formly-button.component';
 import { SiFormlyDateRangeComponent } from './fields/date-range/si-formly-date-range.component';

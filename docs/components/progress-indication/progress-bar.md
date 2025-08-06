@@ -37,7 +37,7 @@ Besides the default size, there is also a small variant available.
 ### Usage
 
 ```ts
-import { SiProgressbarComponent } from '@siemens/element-ng/progressbar';
+import { SiProgressbarComponent } from '@spike-rabbit/element-ng/progressbar';
 
 @Component({
   imports: [SiProgressbarComponent, ...]

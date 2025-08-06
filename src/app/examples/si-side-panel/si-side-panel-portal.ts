@@ -5,19 +5,22 @@
 import { CdkPortal, PortalModule } from '@angular/cdk/portal';
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
+import {
+  SiAccordionComponent,
+  SiCollapsiblePanelComponent
+} from '@spike-rabbit/element-ng/accordion';
 import {
   SiApplicationHeaderComponent,
   SiHeaderBrandDirective,
   SiHeaderLogoDirective
-} from '@siemens/element-ng/application-header';
+} from '@spike-rabbit/element-ng/application-header';
 import {
   SidePanelMode,
   SidePanelSize,
   SiSidePanelComponent,
   SiSidePanelContentComponent,
   SiSidePanelService
-} from '@siemens/element-ng/side-panel';
+} from '@spike-rabbit/element-ng/side-panel';
 
 @Component({
   selector: 'app-sample',

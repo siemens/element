@@ -5,8 +5,8 @@
 import { JsonPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiFormItemComponent } from '@siemens/element-ng/form';
-import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
+import { SiFormItemComponent } from '@spike-rabbit/element-ng/form';
+import { SiNumberInputComponent } from '@spike-rabbit/element-ng/number-input';
 
 @Component({
   selector: 'app-sample',

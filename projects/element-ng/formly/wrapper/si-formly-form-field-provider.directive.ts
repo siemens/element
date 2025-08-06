@@ -4,7 +4,7 @@
  */
 import { Directive, OnChanges, computed, input } from '@angular/core';
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
+import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@spike-rabbit/element-ng/form';
 
 @Directive({
   selector: '[siFormlyFormFieldProvider]',

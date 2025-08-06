@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { CartesianChartSeries, ChartXAxis, ChartYAxis } from '@siemens/charts-ng';
+import { CartesianChartSeries, ChartXAxis, ChartYAxis } from '@spike-rabbit/charts-ng';
 
 export interface ChartData {
   addSeries?: boolean;

@@ -27,17 +27,17 @@ import {
   SiHeaderNavigationComponent,
   SiHeaderNavigationItemComponent,
   SiLaunchpadFactoryComponent
-} from '@siemens/element-ng/application-header';
-import { MenuItem } from '@siemens/element-ng/common';
+} from '@spike-rabbit/element-ng/application-header';
+import { MenuItem } from '@spike-rabbit/element-ng/common';
 import {
   HeaderWithDropdowns,
   SI_HEADER_WITH_DROPDOWNS,
   SiHeaderDropdownComponent,
   SiHeaderDropdownItemsFactoryComponent,
   SiHeaderDropdownTriggerDirective
-} from '@siemens/element-ng/header-dropdown';
-import { Link, SiLinkDirective } from '@siemens/element-ng/link';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+} from '@spike-rabbit/element-ng/header-dropdown';
+import { Link, SiLinkDirective } from '@spike-rabbit/element-ng/link';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 import { defer } from 'rxjs';
 
 import { AccountItem } from '../account.model';

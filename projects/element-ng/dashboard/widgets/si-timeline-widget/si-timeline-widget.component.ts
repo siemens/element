@@ -4,12 +4,15 @@
  */
 import { NgClass } from '@angular/common';
 import { Component, computed, input, OnChanges } from '@angular/core';
-import { SiCardComponent } from '@siemens/element-ng/card';
-import { AccentLineType, MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
-import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
-import { Link, SiLinkDirective } from '@siemens/element-ng/link';
-import { MenuItem } from '@siemens/element-ng/menu';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiCardComponent } from '@spike-rabbit/element-ng/card';
+import { AccentLineType, MenuItem as MenuItemLegacy } from '@spike-rabbit/element-ng/common';
+import { ContentActionBarMainItem } from '@spike-rabbit/element-ng/content-action-bar';
+import { Link, SiLinkDirective } from '@spike-rabbit/element-ng/link';
+import { MenuItem } from '@spike-rabbit/element-ng/menu';
+import {
+  SiTranslateModule,
+  TranslatableString
+} from '@spike-rabbit/element-translate-ng/translate';
 
 import { SiWidgetBaseComponent } from '../si-widget-base.component';
 import { SiTimelineWidgetBodyComponent } from './si-timeline-widget-body.component';

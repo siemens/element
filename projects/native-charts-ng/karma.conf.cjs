@@ -5,7 +5,7 @@ module.exports = function (config) {
   config.set(
     require('../../karma.shared.cjs').buildConfig(config, {
       name: 'native-charts-ng',
-      testSuite: '@siemens/native-charts-ng'
+      testSuite: '@spike-rabbit/native-charts-ng'
     })
   );
 };

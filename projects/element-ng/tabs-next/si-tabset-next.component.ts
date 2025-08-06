@@ -15,9 +15,9 @@ import {
   signal
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { isRTL } from '@siemens/element-ng/common';
-import { SiMenuDirective, SiMenuItemComponent } from '@siemens/element-ng/menu';
-import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
+import { isRTL } from '@spike-rabbit/element-ng/common';
+import { SiMenuDirective, SiMenuItemComponent } from '@spike-rabbit/element-ng/menu';
+import { SiResizeObserverModule } from '@spike-rabbit/element-ng/resize-observer';
 
 import { SiTabBadgeComponent } from './si-tab-badge.component';
 import { SiTabNextBaseDirective } from './si-tab-next-base.directive';

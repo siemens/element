@@ -5,8 +5,8 @@
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { addIcons, elementMenu, SiIconNextComponent } from '@siemens/element-ng/icon';
 import { DatatableRowDefDirective, NgxDatatableModule } from '@siemens/ngx-datatable';
+import { addIcons, elementMenu, SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
 
 @Component({
   selector: 'app-sample',

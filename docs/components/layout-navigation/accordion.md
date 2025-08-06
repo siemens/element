@@ -76,7 +76,7 @@ vertically. Avoid scrolling within individual sections.
 `si-accordion` can be imported using the module
 
 ```ts
-import { SiAccordionModule } from '@siemens/element-ng/accordion';
+import { SiAccordionModule } from '@spike-rabbit/element-ng/accordion';
 
 @NgModule({
   imports: [SiAccordionModule, ...]
@@ -86,7 +86,7 @@ import { SiAccordionModule } from '@siemens/element-ng/accordion';
 or as a standalone component
 
 ```ts
-import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
+import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@spike-rabbit/element-ng/accordion';
 
 @Component({
   imports: [

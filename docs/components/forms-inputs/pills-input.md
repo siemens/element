@@ -64,7 +64,7 @@ When space is limited, pills are stacked to ensure adaptability across various s
 ### Usage
 
 ```ts
-import { SiPillsInputComponent } from '@siemens/element-ng/pills-input';
+import { SiPillsInputComponent } from '@spike-rabbit/element-ng/pills-input';
 
 @Component({
   imports: [SiPillsInputComponent, ...]

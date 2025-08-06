@@ -6,8 +6,8 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   SI_HEADER_DROPDOWN_OPTIONS,
   SiHeaderDropdownTriggerDirective
-} from '@siemens/element-ng/header-dropdown';
-import { addIcons, elementDown2, SiIconNextComponent } from '@siemens/element-ng/icon';
+} from '@spike-rabbit/element-ng/header-dropdown';
+import { addIcons, elementDown2, SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
 
 /** Adds a navigation item to the header. Should be located inside `.header-navigation`. */
 @Component({

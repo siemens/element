@@ -4,9 +4,12 @@
  */
 import { Component, inject, OnDestroy, TemplateRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiDatepickerDirective, SiCalendarButtonComponent } from '@siemens/element-ng/datepicker';
-import { SiFormItemComponent } from '@siemens/element-ng/form';
-import { ModalRef, SiModalService } from '@siemens/element-ng/modal';
+import {
+  SiDatepickerDirective,
+  SiCalendarButtonComponent
+} from '@spike-rabbit/element-ng/datepicker';
+import { SiFormItemComponent } from '@spike-rabbit/element-ng/form';
+import { ModalRef, SiModalService } from '@spike-rabbit/element-ng/modal';
 
 @Component({
   selector: 'app-sample',

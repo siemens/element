@@ -3,9 +3,12 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { Link } from '@siemens/element-ng/link';
-import { SiToastNotificationService, ToastStateName } from '@siemens/element-ng/toast-notification';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { Link } from '@spike-rabbit/element-ng/link';
+import {
+  SiToastNotificationService,
+  ToastStateName
+} from '@spike-rabbit/element-ng/toast-notification';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

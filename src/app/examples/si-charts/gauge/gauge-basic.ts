@@ -4,8 +4,8 @@
  */
 import { Component, OnDestroy, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiChartGaugeComponent } from '@siemens/charts-ng';
-import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
+import { SiChartGaugeComponent } from '@spike-rabbit/charts-ng';
+import { SiResizeObserverDirective } from '@spike-rabbit/element-ng/resize-observer';
 import { interval, Subscription } from 'rxjs';
 
 @Component({

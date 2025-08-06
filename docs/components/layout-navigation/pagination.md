@@ -48,7 +48,7 @@ multi-page pagination component, or the simpler pager alternative.
 ### Usage
 
 ```ts
-import { SiPaginationComponent } from '@siemens/element-ng/pagination';
+import { SiPaginationComponent } from '@spike-rabbit/element-ng/pagination';
 
 @Component({
   imports: [SiPaginationComponent, ...]

@@ -131,8 +131,8 @@ Supported frameworks:
 <!-- markdownlint-disable MD013 -->
 | Framework           | Path                                 | Module                        | Provider factory                | Remarks                                                                                                        |
 |---------------------|--------------------------------------|-------------------------------|---------------------------------|----------------------------------------------------------------------------------------------------------------|
-| `ngx-translate`     | `@siemens/element-translate-ng/ngx-translate`    | `SiTranslateNgxTModule`       | `provideNgxTranslateForElement` |                                                                                                                |
-| `@angular/localize` | `@siemens/element-translate-ng/angular-localize` | `SiTranslateNgLocalizeModule` | `provideNgLocalizeForElement`   | The support is experimental. Please reach out to us via an issue, if you plan to use this in a productive app. |
+| `ngx-translate`     | `@spike-rabbit/element-translate-ng/ngx-translate`    | `SiTranslateNgxTModule`       | `provideNgxTranslateForElement` |                                                                                                                |
+| `@angular/localize` | `@spike-rabbit/element-translate-ng/angular-localize` | `SiTranslateNgLocalizeModule` | `provideNgLocalizeForElement`   | The support is experimental. Please reach out to us via an issue, if you plan to use this in a productive app. |
 <!-- markdownlint-enable MD013 -->
 
 Remember, this is only the activation of the respective layer for Element, you still need to import and configure
@@ -156,7 +156,7 @@ The overriding of text keys is available for every framework except `@angular/lo
 Overrides are declared like this:
 
 ```ts
-import { provideSiTranslatableOverrides } from '@siemens/element-ng/translate';
+import { provideSiTranslatableOverrides } from '@spike-rabbit/element-ng/translate';
 
 @NgModule({
   providers: [

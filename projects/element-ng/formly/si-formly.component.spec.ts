@@ -7,9 +7,9 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormGroup, FormRecord, ReactiveFormsModule } from '@angular/forms';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
-import { SiTranslateService } from '@siemens/element-ng/translate';
-import { provideMockTranslateServiceBuilder } from '@siemens/element-translate-ng/translate';
+import { runOnPushChangeDetection } from '@spike-rabbit/element-ng/test-helpers';
+import { SiTranslateService } from '@spike-rabbit/element-ng/translate';
+import { provideMockTranslateServiceBuilder } from '@spike-rabbit/element-translate-ng/translate';
 import { JSONSchema7 } from 'json-schema';
 import { of } from 'rxjs';
 

@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-/* eslint-disable @typescript-eslint/naming-convention */
-import { TranslatableString } from '@siemens/element-translate-ng/translate';
+
+import { TranslatableString } from '@spike-rabbit/element-translate-ng/translate';
 import { Observable } from 'rxjs';
 
 export type AlertDialogResult = 'confirm';

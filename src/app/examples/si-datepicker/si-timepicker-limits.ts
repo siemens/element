@@ -5,7 +5,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiTimepickerComponent } from '@siemens/element-ng/datepicker';
+import { SiTimepickerComponent } from '@spike-rabbit/element-ng/datepicker';
 
 @Component({
   selector: 'app-sample',

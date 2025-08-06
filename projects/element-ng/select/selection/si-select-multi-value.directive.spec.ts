@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { SiSelectModule } from '@siemens/element-ng/select';
+import { SiSelectModule } from '@spike-rabbit/element-ng/select';
 
 import { SiSelectHarness } from '../testing/si-select.harness';
 

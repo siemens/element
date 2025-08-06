@@ -4,24 +4,24 @@
  */
 import { JsonPipe } from '@angular/common';
 import { Component, inject, viewChild } from '@angular/core';
+import { DatatableComponent, NgxDatatableModule } from '@siemens/ngx-datatable';
 import {
   ContentActionBarMainItem,
   SiContentActionBarComponent
-} from '@siemens/element-ng/content-action-bar';
+} from '@spike-rabbit/element-ng/content-action-bar';
 import {
   SI_DATATABLE_CONFIG,
   SiDatatableInteractionDirective
-} from '@siemens/element-ng/datatable';
-import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
+} from '@spike-rabbit/element-ng/datatable';
+import { SiEmptyStateComponent } from '@spike-rabbit/element-ng/empty-state';
 import {
   DisplayedCriteriaEventArgs,
   SearchCriteria,
   SiFilteredSearchComponent
-} from '@siemens/element-ng/filtered-search';
-import { SiMainDetailContainerComponent } from '@siemens/element-ng/main-detail-container';
-import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
-import { LOG_EVENT } from '@siemens/live-preview';
-import { DatatableComponent, NgxDatatableModule } from '@siemens/ngx-datatable';
+} from '@spike-rabbit/element-ng/filtered-search';
+import { SiMainDetailContainerComponent } from '@spike-rabbit/element-ng/main-detail-container';
+import { BOOTSTRAP_BREAKPOINTS } from '@spike-rabbit/element-ng/resize-observer';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 import { CorporateEmployee } from '../datatable/data.service';
 

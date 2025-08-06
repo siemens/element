@@ -5,7 +5,7 @@
 import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { SiThemeService } from '@siemens/element-ng/theme';
+import { SiThemeService } from '@spike-rabbit/element-ng/theme';
 
 import { provideIconConfig, SiIconNextComponent } from './si-icon-next.component';
 import { addIcons, IconService } from './si-icons';

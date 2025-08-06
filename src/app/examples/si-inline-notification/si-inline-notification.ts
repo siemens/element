@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
+import { SiInlineNotificationComponent } from '@spike-rabbit/element-ng/inline-notification';
 
 @Component({
   selector: 'app-sample',

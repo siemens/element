@@ -1,19 +1,19 @@
 {
-  "files": "dist/@siemens/**/fesm2022/**/*.mjs",
+  "files": "dist/@spike-rabbit/**/fesm2022/**/*.mjs",
   "configs": [
     {
       "name": "siemens-element-ng",
       "locationPrefix": "projects/element-ng",
       "keysFile": "projects/element-ng/translate/si-translatable-keys.interface.ts",
       "keysInterfaceName": "SiTranslatableKeys",
-      "messagesFile": "dist/@siemens/element-ng/template-i18n.json"
+      "messagesFile": "dist/@spike-rabbit/element-ng/template-i18n.json"
     },
     {
       "name": "siemens-dashboards-ng",
       "locationPrefix": "projects/dashboards-ng",
       "keysFile": "projects/dashboards-ng/translate/si-translatable-keys.interface.ts",
       "keysInterfaceName": "SiTranslatableKeys",
-      "messagesFile": "dist/@siemens/dashboards-ng/template-i18n.json"
+      "messagesFile": "dist/@spike-rabbit/dashboards-ng/template-i18n.json"
     }
   ]
 }

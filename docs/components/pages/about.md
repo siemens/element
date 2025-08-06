@@ -27,7 +27,7 @@ parameter.
 ### Usage
 
 ```ts
-import { SiAboutComponent } from '@siemens/element-ng/about';
+import { SiAboutComponent } from '@spike-rabbit/element-ng/about';
 
 @Component({
   imports: [SiAboutComponent,...]

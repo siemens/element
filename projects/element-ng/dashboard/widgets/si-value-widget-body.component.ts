@@ -3,9 +3,12 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, input, OnInit } from '@angular/core';
-import { EntityStatusType } from '@siemens/element-ng/common';
-import { SiIconNextComponent, SiStatusIconComponent } from '@siemens/element-ng/icon';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { EntityStatusType } from '@spike-rabbit/element-ng/common';
+import { SiIconNextComponent, SiStatusIconComponent } from '@spike-rabbit/element-ng/icon';
+import {
+  SiTranslateModule,
+  TranslatableString
+} from '@spike-rabbit/element-translate-ng/translate';
 
 import { SiWidgetBaseComponent } from './si-widget-base.component';
 

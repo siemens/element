@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
+import { SiCollapsiblePanelComponent } from '@spike-rabbit/element-ng/accordion';
 
 @Component({
   selector: 'app-sample',

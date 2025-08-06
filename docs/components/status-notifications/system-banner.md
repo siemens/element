@@ -39,7 +39,7 @@ It supports various status types, including `information`, `success`, `caution`,
 ### Usage
 
 ```ts
-import { SiSystemBannerComponent } from '@siemens/element-ng/system-banner';
+import { SiSystemBannerComponent } from '@spike-rabbit/element-ng/system-banner';
 
 @Component({
   imports: [SiSystemBannerComponent, ...]

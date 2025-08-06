@@ -187,7 +187,7 @@ for more information!
 
 ```ts
 import { NgxDatatableModule } from '@siemens/ngx-datatable';
-import { SI_DATATABLE_CONFIG, SiDatatableModule, provideSiDatatableConfig } from '@siemens/element-ng/datatable';
+import { SI_DATATABLE_CONFIG, SiDatatableModule, provideSiDatatableConfig } from '@spike-rabbit/element-ng/datatable';
 
 // standalone apps
 export const APP_CONFIG: ApplicationConfig = {

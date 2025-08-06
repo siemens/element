@@ -70,7 +70,7 @@ accessible increment decrement buttons and can show a unit.
 ### Usage
 
 ```ts
-import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
+import { SiNumberInputComponent } from '@spike-rabbit/element-ng/number-input';
 
 @Component({
   imports: [SiNumberInputComponent, ...]

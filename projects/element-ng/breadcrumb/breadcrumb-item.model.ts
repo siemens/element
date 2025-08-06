@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Link } from '@siemens/element-ng/link';
+import { Link } from '@spike-rabbit/element-ng/link';
 
 /**
  * Item that should be displayed in a breadcrumb.

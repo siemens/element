@@ -6,7 +6,7 @@ import { inject, Injectable } from '@angular/core';
 import {
   SiTranslateService,
   SiTranslateServiceBuilder
-} from '@siemens/element-translate-ng/translate';
+} from '@spike-rabbit/element-translate-ng/translate';
 
 import { SiTranslateNgLocalizeService } from './si-translate-ng-localize.service';
 

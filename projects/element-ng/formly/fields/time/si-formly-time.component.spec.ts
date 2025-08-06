@@ -7,7 +7,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormRecord, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
-import { SiDatepickerModule, SiTimepickerComponent } from '@siemens/element-ng/datepicker';
+import { SiDatepickerModule, SiTimepickerComponent } from '@spike-rabbit/element-ng/datepicker';
 
 import { SiFormlyTimeComponent } from './si-formly-time.component';
 

@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SiSelectHarness } from '@siemens/element-ng/select/testing';
+import { SiSelectHarness } from '@spike-rabbit/element-ng/select/testing';
 
 import { SelectOption, SelectOptionLegacy, SiSelectComponent, SiSelectModule } from './index';
 import { SiSelectSelectionStrategy } from './selection/si-select-selection-strategy';

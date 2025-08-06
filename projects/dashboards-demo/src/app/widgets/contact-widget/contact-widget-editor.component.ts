@@ -19,9 +19,12 @@ import {
   WidgetConfigStatus,
   WidgetInstanceEditorWizard,
   WidgetInstanceEditorWizardState
-} from '@siemens/dashboards-ng';
-import { SiCalendarButtonComponent, SiDatepickerDirective } from '@siemens/element-ng/datepicker';
-import { SiFormItemComponent } from '@siemens/element-ng/form';
+} from '@spike-rabbit/dashboards-ng';
+import {
+  SiCalendarButtonComponent,
+  SiDatepickerDirective
+} from '@spike-rabbit/element-ng/datepicker';
+import { SiFormItemComponent } from '@spike-rabbit/element-ng/form';
 
 @Component({
   selector: 'app-contact-widget-editor',

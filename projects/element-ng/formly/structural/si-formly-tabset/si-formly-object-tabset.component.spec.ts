@@ -8,7 +8,7 @@ import { FormRecord, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
-import { SiTabComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
+import { SiTabComponent, SiTabsetComponent } from '@spike-rabbit/element-ng/tabs';
 
 import { SiFormlyObjectTabsetComponent } from './si-formly-object-tabset.component';
 

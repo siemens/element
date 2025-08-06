@@ -10,8 +10,8 @@ import {
   SiHeaderLogoDirective,
   SiHeaderNavigationComponent,
   SiHeaderNavigationItemComponent
-} from '@siemens/element-ng/application-header';
-import { SiSkipLinkTargetDirective } from '@siemens/element-ng/skip-links';
+} from '@spike-rabbit/element-ng/application-header';
+import { SiSkipLinkTargetDirective } from '@spike-rabbit/element-ng/skip-links';
 
 @Component({
   selector: 'app-sample',

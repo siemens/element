@@ -12,8 +12,8 @@ import {
   OnDestroy,
   TemplateRef
 } from '@angular/core';
-import { positions } from '@siemens/element-ng/common';
-import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { positions } from '@spike-rabbit/element-ng/common';
+import { TranslatableString } from '@spike-rabbit/element-translate-ng/translate';
 import { Subject } from 'rxjs';
 
 import { SiTooltipService, TooltipRef } from './si-tooltip.service';

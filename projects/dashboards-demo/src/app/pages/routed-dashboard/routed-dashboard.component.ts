@@ -4,8 +4,8 @@
  */
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SiFlexibleDashboardComponent, Widget } from '@siemens/dashboards-ng';
-import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
+import { SiFlexibleDashboardComponent, Widget } from '@spike-rabbit/dashboards-ng';
+import { SiEmptyStateComponent } from '@spike-rabbit/element-ng/empty-state';
 
 import { environment } from '../../../environments/environment';
 import { AppStateService } from '../../app-state.service';

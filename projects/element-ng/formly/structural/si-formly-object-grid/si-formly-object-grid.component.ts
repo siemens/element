@@ -4,7 +4,7 @@
  */
 import { Component, OnInit } from '@angular/core';
 import { FieldType, FormlyModule } from '@ngx-formly/core';
-import { SiFormContainerComponent } from '@siemens/element-ng/form';
+import { SiFormContainerComponent } from '@spike-rabbit/element-ng/form';
 
 import { GridColumnConfig, GridRow, ToGridRowConfig } from './si-formly-object-grid.model';
 

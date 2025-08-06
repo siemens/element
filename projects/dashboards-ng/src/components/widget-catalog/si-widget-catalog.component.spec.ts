@@ -5,7 +5,7 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ModalRef } from '@siemens/element-ng/modal';
+import { ModalRef } from '@spike-rabbit/element-ng/modal';
 
 import { TEST_WIDGET } from '../../../test/test-widget/test-widget';
 import { createTestingWidget, TestingModule } from '../../../test/testing.module';

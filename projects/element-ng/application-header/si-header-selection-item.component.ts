@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, input } from '@angular/core';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
 
 import { SiHeaderActionItemBase } from './si-header-action-item.base';
 

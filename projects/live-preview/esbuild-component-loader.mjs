@@ -4,27 +4,30 @@ import { globIterate } from 'glob';
 const livePreviewComponentLoader = {
   name: 'live-preview-component-loader',
   setup: build => {
-    build.onResolve({ filter: /(@siemens|@simpl)\/live-preview\/component-loader.*/ }, args => {
-      const [data] = args.path.split('!');
-      const url = new URL('fake:' + data);
-      const root = url.searchParams.get('root');
-      const examples = url.searchParams.get('examples');
-      const webcomponents = url.searchParams.get('webcomponents');
+    build.onResolve(
+      { filter: /(@siemens|@simpl|@spike-rabbit)\/live-preview\/component-loader.*/ },
+      args => {
+        const [data] = args.path.split('!');
+        const url = new URL('fake:' + data);
+        const root = url.searchParams.get('root');
+        const examples = url.searchParams.get('examples');
+        const webcomponents = url.searchParams.get('webcomponents');
 
-      if (!root) {
-        throw 'config error: need to pass "root" (path)';
+        if (!root) {
+          throw 'config error: need to pass "root" (path)';
+        }
+
+        return {
+          namespace: 'live-preview-component-loader',
+          path: args.path,
+          pluginData: { root, webcomponents, examples }
+        };
       }
-
-      return {
-        namespace: 'live-preview-component-loader',
-        path: args.path,
-        pluginData: { root, webcomponents, examples }
-      };
-    });
+    );
 
     build.onLoad(
       {
-        filter: /(@siemens|@simpl)\/live-preview\/component-loader.*/,
+        filter: /(@siemens|@simpl|@spike-rabbit)\/live-preview\/component-loader.*/,
         namespace: 'live-preview-component-loader'
       },
       async ({ pluginData: { root, webcomponents, examples } }) => {

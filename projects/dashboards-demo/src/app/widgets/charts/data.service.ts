@@ -8,7 +8,7 @@ import {
   ChartXAxis,
   ChartYAxis,
   CircleChartSeries
-} from '@siemens/charts-ng';
+} from '@spike-rabbit/charts-ng';
 import { BehaviorSubject, combineLatest, map, Observable, of, shareReplay } from 'rxjs';
 
 export interface CartesianChartData {

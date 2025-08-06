@@ -4,9 +4,9 @@
  */
 import { AsyncPipe } from '@angular/common';
 import { Component, inject, input, OnInit } from '@angular/core';
-import { SimplChartsNgModule } from '@siemens/charts-ng';
-import { WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
-import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
+import { SimplChartsNgModule } from '@spike-rabbit/charts-ng';
+import { WidgetConfig, WidgetInstance } from '@spike-rabbit/dashboards-ng';
+import { SiResizeObserverDirective } from '@spike-rabbit/element-ng/resize-observer';
 import { Observable } from 'rxjs';
 
 import { DataService } from '../../../widgets/charts/data.service';

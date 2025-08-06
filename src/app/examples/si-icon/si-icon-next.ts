@@ -12,7 +12,7 @@ import {
   elementUser,
   SiIconModule,
   SiIconNextComponent
-} from '@siemens/element-ng/icon';
+} from '@spike-rabbit/element-ng/icon';
 
 @Component({
   selector: 'app-sample',

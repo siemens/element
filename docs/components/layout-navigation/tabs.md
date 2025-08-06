@@ -84,7 +84,7 @@ behavior.
 `si-tabs` can be imported using the module
 
 ```ts
-import { SiTabsModule } from '@siemens/element-ng/tabs';
+import { SiTabsModule } from '@spike-rabbit/element-ng/tabs';
 
 @NgModule({
   imports: [SiTabsModule, ...]
@@ -94,7 +94,7 @@ import { SiTabsModule } from '@siemens/element-ng/tabs';
 or as a standalone component:
 
 ```ts
-import { SiTabComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
+import { SiTabComponent, SiTabsetComponent } from '@spike-rabbit/element-ng/tabs';
 
 @Component({
   imports: [
@@ -142,7 +142,7 @@ No need to apply `routerLinkActive`, this is done automatically.
 ```ts
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SiTabsetNextComponent, SiTabNextLinkComponent } from '@siemens/element-ng/tabs-next';
+import { SiTabsetNextComponent, SiTabNextLinkComponent } from '@spike-rabbit/element-ng/tabs-next';
 
 @Component({
   templateUrl: './my-component.html',
@@ -187,7 +187,7 @@ In this case, you can use the `si-tabset-next` component with `si-tab-next` comp
 ```ts
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SiTabsetNextComponent, SiTabNextComponent } from '@siemens/element-ng/tabs-next';
+import { SiTabsetNextComponent, SiTabNextComponent } from '@spike-rabbit/element-ng/tabs-next';
 
 @Component({
   templateUrl: './my-component.html',
@@ -220,7 +220,7 @@ A tab that can be closed must be explicitly marked as closable by setting the `c
 ```ts
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SiTabsetNextComponent, SiTabNextLinkComponent } from '@siemens/element-ng/tabs-next';
+import { SiTabsetNextComponent, SiTabNextLinkComponent } from '@spike-rabbit/element-ng/tabs-next';
 
 @Component({
   templateUrl: './my-component.html',

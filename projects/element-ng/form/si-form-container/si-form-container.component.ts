@@ -5,7 +5,10 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { booleanAttribute, Component, computed, inject, input } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { Breakpoints, SiResponsiveContainerDirective } from '@siemens/element-ng/resize-observer';
+import {
+  Breakpoints,
+  SiResponsiveContainerDirective
+} from '@spike-rabbit/element-ng/resize-observer';
 
 import { SiFormValidationErrorMapper } from '../si-form-validation-error.model';
 

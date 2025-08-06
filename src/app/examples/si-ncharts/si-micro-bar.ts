@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MicroBarSeries, SiMicroBarComponent } from '@siemens/native-charts-ng/micro-bar';
+import { MicroBarSeries, SiMicroBarComponent } from '@spike-rabbit/native-charts-ng/micro-bar';
 
 @Component({
   selector: 'app-sample',

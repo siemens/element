@@ -4,7 +4,7 @@
  */
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslateModule } from '@spike-rabbit/element-translate-ng/translate';
 
 import { SiDashboardToolbarComponent } from './si-dashboard-toolbar.component';
 

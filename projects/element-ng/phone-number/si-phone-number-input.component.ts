@@ -28,10 +28,13 @@ import {
   ValidationErrors,
   Validator
 } from '@angular/forms';
-import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
-import { addIcons, elementDown2, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiSelectListHasFilterComponent } from '@siemens/element-ng/select';
-import { injectSiTranslateService, SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@spike-rabbit/element-ng/form';
+import { addIcons, elementDown2, SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
+import { SiSelectListHasFilterComponent } from '@spike-rabbit/element-ng/select';
+import {
+  injectSiTranslateService,
+  SiTranslatePipe
+} from '@spike-rabbit/element-translate-ng/translate';
 import { PhoneNumber, PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
 
 import { SiPhoneNumberInputSelectDirective } from './si-phone-number-input-select.directive';

@@ -4,9 +4,12 @@
  */
 import { Location } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { runsInElectron, SiElectrontitlebarComponent } from '@siemens/element-ng/electron-titlebar';
-import { MenuItem } from '@siemens/element-ng/menu';
-import { LOG_EVENT } from '@siemens/live-preview';
+import {
+  runsInElectron,
+  SiElectrontitlebarComponent
+} from '@spike-rabbit/element-ng/electron-titlebar';
+import { MenuItem } from '@spike-rabbit/element-ng/menu';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

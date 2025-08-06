@@ -4,7 +4,7 @@
  */
 import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { booleanAttribute, Component, input, output } from '@angular/core';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 import { Filter } from './filter';
 

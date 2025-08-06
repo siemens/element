@@ -18,8 +18,11 @@ import {
   viewChild,
   DOCUMENT
 } from '@angular/core';
-import { calculateOverlayArrowPosition, OverlayArrowPosition } from '@siemens/element-ng/common';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
+import {
+  calculateOverlayArrowPosition,
+  OverlayArrowPosition
+} from '@spike-rabbit/element-ng/common';
+import { SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
 
 import { SiPopoverNextDirective } from './si-popover-next.directive';
 

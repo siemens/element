@@ -9,9 +9,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import {
   DeleteConfirmationDialogResult,
   SiActionDialogService
-} from '@siemens/element-ng/action-modal';
-import { MenuItem } from '@siemens/element-ng/common';
-import { MenuItemAction } from '@siemens/element-ng/menu';
+} from '@spike-rabbit/element-ng/action-modal';
+import { MenuItem } from '@spike-rabbit/element-ng/common';
+import { MenuItemAction } from '@spike-rabbit/element-ng/menu';
 import { Observable, Subject } from 'rxjs';
 
 import { TEST_WIDGET, TEST_WIDGET_CONFIG_0 } from '../../../test/test-widget/test-widget';

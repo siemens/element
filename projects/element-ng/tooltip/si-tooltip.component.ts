@@ -14,8 +14,11 @@ import {
   TemplateRef,
   Type
 } from '@angular/core';
-import { calculateOverlayArrowPosition, OverlayArrowPosition } from '@siemens/element-ng/common';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+import {
+  calculateOverlayArrowPosition,
+  OverlayArrowPosition
+} from '@spike-rabbit/element-ng/common';
+import { SiTranslatePipe, TranslatableString } from '@spike-rabbit/element-translate-ng/translate';
 
 @Component({
   selector: 'si-tooltip',

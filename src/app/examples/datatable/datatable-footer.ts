@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component } from '@angular/core';
-import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
-import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
 import { NgxDatatableModule } from '@siemens/ngx-datatable';
+import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@spike-rabbit/element-ng/datatable';
+import { SiResizeObserverModule } from '@spike-rabbit/element-ng/resize-observer';
 
 @Component({
   selector: 'app-sample',

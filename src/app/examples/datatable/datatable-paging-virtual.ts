@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, inject } from '@angular/core';
-import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
-import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
-import { LOG_EVENT } from '@siemens/live-preview';
 import { NgxDatatableModule, SelectEvent } from '@siemens/ngx-datatable';
+import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@spike-rabbit/element-ng/datatable';
+import { SiResizeObserverModule } from '@spike-rabbit/element-ng/resize-observer';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 import { CorporateEmployee, DataService, PageRequest } from './data.service';
 

@@ -2,9 +2,9 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { StatusType } from '@siemens/element-ng/common';
-import { Link } from '@siemens/element-ng/link';
-import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { StatusType } from '@spike-rabbit/element-ng/common';
+import { Link } from '@spike-rabbit/element-ng/link';
+import { TranslatableString } from '@spike-rabbit/element-translate-ng/translate';
 import { Subject } from 'rxjs';
 
 export interface SiToast {

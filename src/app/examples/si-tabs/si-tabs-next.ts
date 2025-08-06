@@ -4,8 +4,8 @@
  */
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiTabNextComponent, SiTabsetNextComponent } from '@siemens/element-ng/tabs-next';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { SiTabNextComponent, SiTabsetNextComponent } from '@spike-rabbit/element-ng/tabs-next';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 interface TabModel {
   heading: string;

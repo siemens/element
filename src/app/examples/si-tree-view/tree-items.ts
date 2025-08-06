@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import type { TreeItem } from '@siemens/element-ng/tree-view';
+import type { TreeItem } from '@spike-rabbit/element-ng/tree-view';
 
 export const treeItems: TreeItem[] = [
   {

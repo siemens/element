@@ -4,8 +4,8 @@
  */
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiSliderComponent } from '@siemens/element-ng/slider';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { SiSliderComponent } from '@spike-rabbit/element-ng/slider';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

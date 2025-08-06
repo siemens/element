@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Directive } from '@angular/core';
-import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
+import { MenuItem as MenuItemLegacy } from '@spike-rabbit/element-ng/common';
 
 import { MenuItem } from './si-menu-model';
 

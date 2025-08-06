@@ -5,7 +5,7 @@
 import { A11yModule } from '@angular/cdk/a11y';
 import { CdkConnectedOverlay, CdkOverlayOrigin } from '@angular/cdk/overlay';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

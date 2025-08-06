@@ -4,11 +4,11 @@
  */
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SiFormItemComponent } from '@siemens/element-ng/form';
-import { MenuItemAction } from '@siemens/element-ng/menu';
-import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
-import { SiTreeViewComponent, TreeItem } from '@siemens/element-ng/tree-view';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { SiFormItemComponent } from '@spike-rabbit/element-ng/form';
+import { MenuItemAction } from '@spike-rabbit/element-ng/menu';
+import { SiNumberInputComponent } from '@spike-rabbit/element-ng/number-input';
+import { SiTreeViewComponent, TreeItem } from '@spike-rabbit/element-ng/tree-view';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

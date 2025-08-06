@@ -5,8 +5,8 @@
 import { CdkTrapFocus } from '@angular/cdk/a11y';
 import { CdkConnectedOverlay, CdkOverlayOrigin } from '@angular/cdk/overlay';
 import { Component, inject, ViewEncapsulation } from '@angular/core';
-import { SiShadowRootDirective } from '@siemens/element-ng/shadow-root';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { SiShadowRootDirective } from '@spike-rabbit/element-ng/shadow-root';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

@@ -26,7 +26,7 @@ import {
   Validator,
   Validators
 } from '@angular/forms';
-import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
+import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@spike-rabbit/element-ng/form';
 
 import { compareDate, getMaxDate, getMinDate, isValid, parseDate } from './date-time-helper';
 import { DatepickerInputConfig, getDatepickerFormat } from './si-datepicker.model';

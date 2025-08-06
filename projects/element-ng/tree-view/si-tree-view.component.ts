@@ -34,10 +34,10 @@ import {
   INJECTOR,
   viewChild
 } from '@angular/core';
-import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
-import { MenuItem } from '@siemens/element-ng/menu';
-import { ElementDimensions, ResizeObserverService } from '@siemens/element-ng/resize-observer';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { MenuItem as MenuItemLegacy } from '@spike-rabbit/element-ng/common';
+import { MenuItem } from '@spike-rabbit/element-ng/menu';
+import { ElementDimensions, ResizeObserverService } from '@spike-rabbit/element-ng/resize-observer';
+import { SiTranslatePipe, TranslatableString } from '@spike-rabbit/element-translate-ng/translate';
 import { asyncScheduler, defer, fromEvent, merge, Observable, Subject, Subscription } from 'rxjs';
 import { map, withLatestFrom } from 'rxjs/operators';
 

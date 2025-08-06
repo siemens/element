@@ -4,8 +4,8 @@
  */
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiColorPickerComponent } from '@siemens/element-ng/color-picker';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { SiColorPickerComponent } from '@spike-rabbit/element-ng/color-picker';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

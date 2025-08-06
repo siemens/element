@@ -80,7 +80,7 @@ View type `expanded` is default.
 ### Usage
 
 ```ts
-import { SiContentActionBarComponent } from '@siemens/element-ng/content-action-bar';
+import { SiContentActionBarComponent } from '@spike-rabbit/element-ng/content-action-bar';
 
 @Component({
   imports: [SiContentActionBarComponent, ...]

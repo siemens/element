@@ -14,7 +14,7 @@ The electron-titlebar should not be used in not electron applications
 ### Usage
 
 ```ts
-import { SiElectrontitlebarComponent } from '@siemens/element-ng/electron-titlebar';
+import { SiElectrontitlebarComponent } from '@spike-rabbit/element-ng/electron-titlebar';
 
 @Component({
   imports: [SiElectrontitlebarComponent, ...]
@@ -40,13 +40,13 @@ But this should only happen if the applications runs in `electron`.
 For this we also defined a helper function:
 
 ```ts
-import { runsInElectron } from '@siemens/element-ng';
+import { runsInElectron } from '@spike-rabbit/element-ng';
 ```
 
 Apply the defined `in-electron` class as follows, in the top level component (usually `app.component.ts`):
 
 ```ts
-import { runsInElectron } from '@siemens/element-ng';
+import { runsInElectron } from '@spike-rabbit/element-ng';
 
 constructor() {
   if (runsInElectron()) {

@@ -10,9 +10,9 @@ import {
   input,
   model
 } from '@angular/core';
-import { ExtendedStatusType, STATUS_ICON } from '@siemens/element-ng/common';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { ExtendedStatusType, STATUS_ICON } from '@spike-rabbit/element-ng/common';
+import { SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
+import { SiTranslatePipe, TranslatableString } from '@spike-rabbit/element-translate-ng/translate';
 
 @Component({
   selector: 'si-summary-widget',

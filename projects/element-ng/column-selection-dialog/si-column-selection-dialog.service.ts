@@ -8,7 +8,7 @@ import {
   ModalDependencyInjectionOptions,
   ModalOptions,
   SiModalService
-} from '@siemens/element-ng/modal';
+} from '@spike-rabbit/element-ng/modal';
 import { Observable } from 'rxjs';
 
 import { SiColumnSelectionDialogComponent } from './si-column-selection-dialog.component';

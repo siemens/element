@@ -5,7 +5,7 @@
 import { CdkMenuItemRadio, CdkMenuTrigger } from '@angular/cdk/menu';
 import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { addIcons, elementRecordFilled, SiIconNextComponent } from '@siemens/element-ng/icon';
+import { addIcons, elementRecordFilled, SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
 
 import { SiMenuItemBase } from './si-menu-item-base.directive';
 

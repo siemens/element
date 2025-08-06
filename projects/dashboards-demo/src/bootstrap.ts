@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 import { bootstrapApplication } from '@angular/platform-browser';
-import { themeElement, themeSupport } from '@siemens/charts-ng';
+import { themeElement, themeSupport } from '@spike-rabbit/charts-ng';
 // FIXME: Check and update to native federation
-import { registerModuleFederatedWidgetLoader } from '@siemens/dashboards-ng/module-federation';
+import { registerModuleFederatedWidgetLoader } from '@spike-rabbit/dashboards-ng/module-federation';
 
 import { AppComponent } from './app/app.component';
 import { appConfig } from './app/app.config';

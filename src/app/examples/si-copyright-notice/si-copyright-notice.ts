@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CopyrightDetails, SiCopyrightNoticeComponent } from '@siemens/element-ng/copyright-notice';
+import {
+  CopyrightDetails,
+  SiCopyrightNoticeComponent
+} from '@spike-rabbit/element-ng/copyright-notice';
 
 @Component({
   selector: 'app-sample',

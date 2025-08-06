@@ -4,7 +4,7 @@
  */
 import { DatePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
+import { WidgetConfig, WidgetInstance } from '@spike-rabbit/dashboards-ng';
 @Component({
   selector: 'app-contact-widget',
   imports: [DatePipe],

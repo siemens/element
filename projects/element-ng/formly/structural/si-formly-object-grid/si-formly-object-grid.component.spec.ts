@@ -8,7 +8,7 @@ import { FormRecord, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
-import { SiFormModule } from '@siemens/element-ng/form';
+import { SiFormModule } from '@spike-rabbit/element-ng/form';
 
 import { SiFormlyObjectGridComponent } from './si-formly-object-grid.component';
 

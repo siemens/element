@@ -5,8 +5,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiLoadingButtonComponent } from '@siemens/element-ng/loading-spinner';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { SiLoadingButtonComponent } from '@spike-rabbit/element-ng/loading-spinner';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

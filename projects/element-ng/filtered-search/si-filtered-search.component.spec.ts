@@ -14,12 +14,12 @@ import {
 } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NoopAnimationsModule, provideNoopAnimations } from '@angular/platform-browser/animations';
-import { CriterionDefinition } from '@siemens/element-ng/filtered-search';
-import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
+import { CriterionDefinition } from '@spike-rabbit/element-ng/filtered-search';
+import { runOnPushChangeDetection } from '@spike-rabbit/element-ng/test-helpers';
 import {
   provideMockTranslateServiceBuilder,
   SiTranslateService
-} from '@siemens/element-translate-ng/translate';
+} from '@spike-rabbit/element-translate-ng/translate';
 import { BehaviorSubject, of } from 'rxjs';
 
 import {

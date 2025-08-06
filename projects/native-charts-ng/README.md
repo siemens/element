@@ -8,7 +8,7 @@ To use the Element native charts Angular components in your project, add them to
 by executing:
 
 ```sh
-npm install --save @siemens/native-charts-ng
+npm install --save @spike-rabbit/native-charts-ng
 ```
 
 ### Running unit tests

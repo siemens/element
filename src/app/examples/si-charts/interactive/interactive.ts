@@ -12,8 +12,8 @@ import {
   DataZoomEvent,
   DataZoomRange,
   SiChartCartesianComponent
-} from '@siemens/charts-ng';
-import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
+} from '@spike-rabbit/charts-ng';
+import { SiResizeObserverDirective } from '@spike-rabbit/element-ng/resize-observer';
 
 const ONE_HOUR = 1000 * 60 * 60;
 const SERIES_NAME = 'Series 1';

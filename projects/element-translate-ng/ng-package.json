@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../dist/@siemens/element-translate-ng",
+  "dest": "../../dist/@spike-rabbit/element-translate-ng",
   "assets": ["README.md", "bin/update-translatable-keys.js"],
   "lib": {
     "entryFile": "public-api.ts"

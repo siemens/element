@@ -5,7 +5,7 @@ module.exports = function (config) {
   config.set(
     require('../../karma.shared.cjs').buildConfig(config, {
       name: 'element-translate-ng',
-      testSuite: '@siemens/element-translate-ng'
+      testSuite: '@spike-rabbit/element-translate-ng'
     })
   );
 };

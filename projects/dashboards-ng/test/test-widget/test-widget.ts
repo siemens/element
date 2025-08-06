@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Widget, WidgetConfig } from '@siemens/dashboards-ng';
+import { Widget, WidgetConfig } from '@spike-rabbit/dashboards-ng';
 
 const loaderFunction = (name: string): Promise<any> => {
   if (name === 'TestWidgetComponent' || name === 'TestWidgetEditorComponent') {
@@ -14,7 +14,7 @@ const loaderFunction = (name: string): Promise<any> => {
 
 export const TEST_WIDGET: Widget = {
   name: 'Test Widget',
-  id: '@siemens/dashboards-ng/TestWidgetComponent',
+  id: '@spike-rabbit/dashboards-ng/TestWidgetComponent',
   iconClass: 'element-report',
   description: 'A dummy widget for testing.',
   componentFactory: {

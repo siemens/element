@@ -22,19 +22,19 @@ import {
   viewChildren
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BackgroundColorVariant, isRTL } from '@siemens/element-ng/common';
+import { BackgroundColorVariant, isRTL } from '@spike-rabbit/element-ng/common';
 import {
   addIcons,
   elementCancel,
   elementSearch,
   SiIconNextComponent
-} from '@siemens/element-ng/icon';
-import { SiTypeaheadDirective, TypeaheadOption } from '@siemens/element-ng/typeahead';
+} from '@spike-rabbit/element-ng/icon';
+import { SiTypeaheadDirective, TypeaheadOption } from '@spike-rabbit/element-ng/typeahead';
 import {
   injectSiTranslateService,
   SiTranslatePipe,
   TranslatableString
-} from '@siemens/element-translate-ng/translate';
+} from '@spike-rabbit/element-translate-ng/translate';
 import { BehaviorSubject, Observable, of, Subject, switchMap } from 'rxjs';
 import { debounceTime, map, takeUntil } from 'rxjs/operators';
 

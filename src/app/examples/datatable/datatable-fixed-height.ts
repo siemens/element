@@ -4,10 +4,10 @@
  */
 import { Component, inject, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiCardComponent } from '@siemens/element-ng/card';
-import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
-import { SiPaginationComponent } from '@siemens/element-ng/pagination';
 import { NgxDatatableModule } from '@siemens/ngx-datatable';
+import { SiCardComponent } from '@spike-rabbit/element-ng/card';
+import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@spike-rabbit/element-ng/datatable';
+import { SiPaginationComponent } from '@spike-rabbit/element-ng/pagination';
 import { Subscription } from 'rxjs';
 
 import { CorporateEmployee, DataService, Page, PageRequest } from './data.service';

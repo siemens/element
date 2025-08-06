@@ -4,7 +4,7 @@
  */
 import { DestroyRef, inject, Injectable } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { SiThemeService } from '@siemens/element-ng/theme';
+import { SiThemeService } from '@spike-rabbit/element-ng/theme';
 
 interface RegisteredIcon {
   content: SafeHtml | undefined;
@@ -36,7 +36,7 @@ const registeredIcons = new Map<string, RegisteredIcon>();
  * @example
  * ```ts
  * import { elementIcon } from '@simpl/element-icons/ionic';
- * import { addIcons } from '@siemens/element-ng/icon'
+ * import { addIcons } from '@spike-rabbit/element-ng/icon'
  *
  * @Component({`<si-icon-next [icon]="icons.elementIcon"`})
  * class MyComponent {

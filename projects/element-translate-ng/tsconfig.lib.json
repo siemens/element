@@ -6,7 +6,7 @@
     "inlineSources": true,
     "types": ["zone.js"],
     "paths": {
-      "@siemens/element-translate-ng/*": ["projects/element-translate-ng/*"]
+      "@spike-rabbit/element-translate-ng/*": ["projects/element-translate-ng/*"]
     }
   },
   "angularCompilerOptions": {

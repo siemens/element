@@ -2,12 +2,15 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-/* eslint-disable @typescript-eslint/no-deprecated */
+
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { MenuItem } from '@siemens/element-ng/common';
-import { SiNavbarModule } from '@siemens/element-ng/navbar';
-import { NavbarVerticalItem, SiNavbarVerticalModule } from '@siemens/element-ng/navbar-vertical';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { MenuItem } from '@spike-rabbit/element-ng/common';
+import { SiNavbarModule } from '@spike-rabbit/element-ng/navbar';
+import {
+  NavbarVerticalItem,
+  SiNavbarVerticalModule
+} from '@spike-rabbit/element-ng/navbar-vertical';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

@@ -17,14 +17,14 @@ import {
   SimpleChanges,
   viewChild
 } from '@angular/core';
-import { BlinkService, EntityStatusType, StatusIcon } from '@siemens/element-ng/common';
+import { BlinkService, EntityStatusType, StatusIcon } from '@spike-rabbit/element-ng/common';
 import {
   addIcons,
   elementRight4,
   SiIconNextComponent,
   STATUS_ICON_CONFIG
-} from '@siemens/element-ng/icon';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+} from '@spike-rabbit/element-ng/icon';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({

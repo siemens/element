@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Directive, ElementRef, inject } from '@angular/core';
-import { ResizeObserverService } from '@siemens/element-ng/resize-observer';
+import { ResizeObserverService } from '@spike-rabbit/element-ng/resize-observer';
 import { distinctUntilChanged, map, shareReplay } from 'rxjs/operators';
 
 @Directive()

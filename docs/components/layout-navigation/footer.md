@@ -58,7 +58,7 @@ The vertical padding of this component can be configured. Just set
 ### Usage
 
 ```ts
-import { SiFooterComponent } from '@siemens/element-ng/footer';
+import { SiFooterComponent } from '@spike-rabbit/element-ng/footer';
 
 @Component({
   imports: [SiFooterComponent, ...]

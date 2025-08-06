@@ -4,7 +4,7 @@
  */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
-import { SiIconModule } from '@siemens/element-ng/icon';
+import { SiIconModule } from '@spike-rabbit/element-ng/icon';
 
 import { SiUnauthorizedPageComponent as TestComponent } from '.';
 

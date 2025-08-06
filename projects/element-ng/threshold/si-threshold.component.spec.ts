@@ -7,8 +7,8 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { SelectOption, SelectOptionLegacy } from '@siemens/element-ng/select';
-import { SiSelectHarness } from '@siemens/element-ng/select/testing';
+import { SelectOption, SelectOptionLegacy } from '@spike-rabbit/element-ng/select';
+import { SiSelectHarness } from '@spike-rabbit/element-ng/select/testing';
 
 import { runOnPushChangeDetection } from '../test-helpers/change-detection.helper';
 import { SiThresholdComponent, ThresholdStep } from './index';

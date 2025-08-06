@@ -4,11 +4,11 @@
  */
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
-import { SiDashboardCardComponent } from '@siemens/element-ng/dashboard';
-import { SiFormItemComponent } from '@siemens/element-ng/form';
-import { MenuItem, MenuItemAction, MenuItemCheckbox } from '@siemens/element-ng/menu';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { ContentActionBarMainItem } from '@spike-rabbit/element-ng/content-action-bar';
+import { SiDashboardCardComponent } from '@spike-rabbit/element-ng/dashboard';
+import { SiFormItemComponent } from '@spike-rabbit/element-ng/form';
+import { MenuItem, MenuItemAction, MenuItemCheckbox } from '@spike-rabbit/element-ng/menu';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

@@ -4,7 +4,7 @@
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MenuItem } from '@siemens/element-ng/menu';
+import { MenuItem } from '@spike-rabbit/element-ng/menu';
 
 import { SiElectrontitlebarComponent } from './si-electron-titlebar.component';
 

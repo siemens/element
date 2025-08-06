@@ -4,7 +4,7 @@
  */
 import { Direction, Directionality } from '@angular/cdk/bidi';
 import { EventEmitter, Injectable, signal } from '@angular/core';
-import { isRTL } from '@siemens/element-ng/common';
+import { isRTL } from '@spike-rabbit/element-ng/common';
 
 /**
  * Provider for dynamic CDK directionality.
@@ -15,7 +15,7 @@ import { isRTL } from '@siemens/element-ng/common';
  *
  * ```ts
  * import { Directionality } from '@angular/cdk/bidi';
- * import { SiDirectionality } from '@siemens/element-ng/localization';
+ * import { SiDirectionality } from '@spike-rabbit/element-ng/localization';
  *
  * ...
  * export const APP_CONFIG: ApplicationConfig = {

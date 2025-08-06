@@ -13,7 +13,7 @@ import {
   input
 } from '@angular/core';
 import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { SI_FORM_ITEM_CONTROL } from '@siemens/element-ng/form';
+import { SI_FORM_ITEM_CONTROL } from '@spike-rabbit/element-ng/form';
 import { Subscription } from 'rxjs';
 
 import { SiDateInputDirective } from './si-date-input.directive';

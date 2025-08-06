@@ -11,7 +11,7 @@ import {
   SiTreeViewItemDirective,
   transferTreeItem,
   TreeItem
-} from '@siemens/element-ng/tree-view';
+} from '@spike-rabbit/element-ng/tree-view';
 
 import { treeItemsUnderMaintenance, treeItemsWithCompletedMaintenance } from './tree-items';
 

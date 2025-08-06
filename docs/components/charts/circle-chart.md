@@ -58,7 +58,7 @@ display the data.
     - [echarts](https://www.npmjs.com/package/echarts)
 
 ```ts
-import { SiChartCircleComponent } from '@siemens/charts-ng';
+import { SiChartCircleComponent } from '@spike-rabbit/charts-ng';
 
 @Component({
   imports: [SiChartCircleComponent, ...]
@@ -73,6 +73,6 @@ import { SiChartCircleComponent } from '@siemens/charts-ng';
 
 <si-docs-component example="si-charts/si-chart-circle-donut" height="400"></si-docs-component>
 
-<si-docs-api component="SiChartCircleComponent" package="@siemens/charts-ng" hideImplicitlyPublic="true"></si-docs-api>
+<si-docs-api component="SiChartCircleComponent" package="@spike-rabbit/charts-ng" hideImplicitlyPublic="true"></si-docs-api>
 
 <si-docs-types></si-docs-types>

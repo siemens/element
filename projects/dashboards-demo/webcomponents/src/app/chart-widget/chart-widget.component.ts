@@ -5,11 +5,11 @@
 
 import { AsyncPipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { SimplChartsNgModule } from '@siemens/charts-ng';
-import { WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
-import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
-import { MenuItem } from '@siemens/element-ng/menu';
-import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
+import { SimplChartsNgModule } from '@spike-rabbit/charts-ng';
+import { WidgetConfig, WidgetInstance } from '@spike-rabbit/dashboards-ng';
+import { ContentActionBarMainItem } from '@spike-rabbit/element-ng/content-action-bar';
+import { MenuItem } from '@spike-rabbit/element-ng/menu';
+import { SiResizeObserverModule } from '@spike-rabbit/element-ng/resize-observer';
 import { CartesianChartData } from 'projects/dashboards-demo/src/app/widgets/charts/data.service';
 import { Observable, of } from 'rxjs';
 

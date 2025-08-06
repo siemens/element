@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component } from '@angular/core';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
+import { SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
+import { SiTooltipDirective } from '@spike-rabbit/element-ng/tooltip';
 
 @Component({
   selector: 'app-sample',

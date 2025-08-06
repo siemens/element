@@ -12,9 +12,12 @@ import {
   SiHeaderActionsDirective,
   SiHeaderBrandDirective,
   SiHeaderLogoDirective
-} from '@siemens/element-ng/application-header';
-import { NavbarVerticalItem, SiNavbarVerticalComponent } from '@siemens/element-ng/navbar-vertical';
-import { SiThemeService, ThemeType } from '@siemens/element-ng/theme';
+} from '@spike-rabbit/element-ng/application-header';
+import {
+  NavbarVerticalItem,
+  SiNavbarVerticalComponent
+} from '@spike-rabbit/element-ng/navbar-vertical';
+import { SiThemeService, ThemeType } from '@spike-rabbit/element-ng/theme';
 
 @Component({
   selector: 'app-root',

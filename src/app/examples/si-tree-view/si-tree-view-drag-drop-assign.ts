@@ -9,8 +9,8 @@ import {
   SiTreeViewItemComponent,
   SiTreeViewItemDirective,
   TreeItem
-} from '@siemens/element-ng/tree-view';
-import { LOG_EVENT } from '@siemens/live-preview';
+} from '@spike-rabbit/element-ng/tree-view';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 import { treeItems } from './tree-items';
 

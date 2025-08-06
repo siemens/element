@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ComponentHarness } from '@angular/cdk/testing';
-import { SiTypeaheadInputHarness } from '@siemens/element-ng/typeahead/testing/si-typeahead-input.harness';
+import { SiTypeaheadInputHarness } from '@spike-rabbit/element-ng/typeahead/testing/si-typeahead-input.harness';
 
 import {
   SiFilteredSearchCriterionHarness,

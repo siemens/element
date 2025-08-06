@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import {
   SiTranslateService,
   SiTranslateServiceBuilder
-} from '@siemens/element-translate-ng/translate';
+} from '@spike-rabbit/element-translate-ng/translate';
 
 import { SiTranslateNgxTService } from './si-translate-ngxt.service';
 

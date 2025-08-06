@@ -15,8 +15,8 @@ import {
   SiSelectOptionTemplateDirective,
   SiSelectSimpleOptionsDirective,
   SiSelectSingleValueDirective
-} from '@siemens/element-ng/select';
-import { LOG_EVENT } from '@siemens/live-preview';
+} from '@spike-rabbit/element-ng/select';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

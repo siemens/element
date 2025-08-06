@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { MenuItem } from '@siemens/element-ng/common';
-import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { MenuItem } from '@spike-rabbit/element-ng/common';
+import { TranslatableString } from '@spike-rabbit/element-translate-ng/translate';
 
 /**
  * The AppItem is used to show apps in the launchpad.

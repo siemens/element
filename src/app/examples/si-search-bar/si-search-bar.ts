@@ -5,8 +5,8 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { SiSearchBarComponent } from '@spike-rabbit/element-ng/search-bar';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

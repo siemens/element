@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { ExtendedStatusType } from '@siemens/element-ng/common';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { ExtendedStatusType } from '@spike-rabbit/element-ng/common';
+import { SiTranslatePipe, TranslatableString } from '@spike-rabbit/element-translate-ng/translate';
 
 /**
  * The system banner component displays a message with specific status as background.

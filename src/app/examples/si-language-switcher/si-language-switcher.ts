@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { SiLanguageSwitcherComponent } from '@siemens/element-ng/language-switcher';
+import { SiLanguageSwitcherComponent } from '@spike-rabbit/element-ng/language-switcher';
 
 @Component({
   selector: 'app-sample',

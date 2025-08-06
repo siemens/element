@@ -34,7 +34,7 @@ The typeahead is used as a directive, so you can add it to any HTML input elemen
 ### Usage
 
 ```ts
-import { SiTypeaheadDirective } from '@siemens/element-ng/typeahead';
+import { SiTypeaheadDirective } from '@spike-rabbit/element-ng/typeahead';
 
 @Component({
   imports: [SiTypeaheadDirective, ...]

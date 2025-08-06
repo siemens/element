@@ -5,7 +5,7 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FieldType, FieldTypeConfig, FormlyModule } from '@ngx-formly/core';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 import { getFieldValue, getKeyPath } from '../../utils';
 

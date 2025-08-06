@@ -22,7 +22,7 @@ An empty state component consists of the following elements:
 ### Usage
 
 ```ts
-import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
+import { SiEmptyStateComponent } from '@spike-rabbit/element-ng/empty-state';
 
 @Component({
   imports: [SiEmptyStateComponent, ...]

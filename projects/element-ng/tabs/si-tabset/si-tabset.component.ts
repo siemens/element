@@ -21,16 +21,16 @@ import {
   viewChild,
   viewChildren
 } from '@angular/core';
-import { isRTL, WebComponentContentChildren } from '@siemens/element-ng/common';
+import { isRTL, WebComponentContentChildren } from '@spike-rabbit/element-ng/common';
 import {
   addIcons,
   elementCancel,
   elementLeft3,
   elementRight3,
   SiIconNextComponent
-} from '@siemens/element-ng/icon';
-import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+} from '@spike-rabbit/element-ng/icon';
+import { SiResizeObserverDirective } from '@spike-rabbit/element-ng/resize-observer';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 import { asyncScheduler, Subscription } from 'rxjs';
 import { first, observeOn } from 'rxjs/operators';
 

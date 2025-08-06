@@ -5,7 +5,7 @@
 import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { STATUS_ICON } from '@siemens/element-ng/common';
+import { STATUS_ICON } from '@spike-rabbit/element-ng/common';
 import { Subject } from 'rxjs';
 
 import { SiToast } from '../si-toast.model';

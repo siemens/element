@@ -4,7 +4,7 @@
  */
 import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { WidgetConfig, WidgetInstanceEditor } from '@siemens/dashboards-ng';
+import { WidgetConfig, WidgetInstanceEditor } from '@spike-rabbit/dashboards-ng';
 @Component({
   selector: 'si-test-widget-editor',
   imports: [ReactiveFormsModule, FormsModule],

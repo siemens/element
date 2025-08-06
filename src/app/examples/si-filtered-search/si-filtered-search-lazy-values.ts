@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { BackgroundColorVariant } from '@siemens/element-ng/common';
+import { BackgroundColorVariant } from '@spike-rabbit/element-ng/common';
 import {
   CriterionDefinition,
   OptionType,
   SiFilteredSearchComponent
-} from '@siemens/element-ng/filtered-search';
-import { LOG_EVENT } from '@siemens/live-preview';
+} from '@spike-rabbit/element-ng/filtered-search';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 import { Observable, Subject } from 'rxjs';
 
 import { SiFilterSettingsComponent } from '../si-filter-settings/si-filter-settings.component';

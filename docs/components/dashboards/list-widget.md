@@ -71,7 +71,7 @@ with streamlined inputs. The component is a wrapper around the [card](../layout-
 and the `<si-list-widget-body>`.
 
 ```ts
-import { SiListWidgetComponent } from '@siemens/element-ng/dashboard';
+import { SiListWidgetComponent } from '@spike-rabbit/element-ng/dashboard';
 
 @Component({
   :

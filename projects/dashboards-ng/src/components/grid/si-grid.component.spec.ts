@@ -5,8 +5,8 @@
 import { Component, OnInit, output, OutputEmitterRef, SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { SiActionDialogService } from '@siemens/element-ng/action-modal';
-import { SiLoadingSpinnerModule } from '@siemens/element-ng/loading-spinner';
+import { SiActionDialogService } from '@spike-rabbit/element-ng/action-modal';
+import { SiLoadingSpinnerModule } from '@spike-rabbit/element-ng/loading-spinner';
 import { TEST_WIDGET } from 'projects/dashboards-ng/test/test-widget/test-widget';
 
 import { TestingModule } from '../../../test/testing.module';

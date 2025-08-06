@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, inject } from '@angular/core';
-import { Config, SiFlexibleDashboardComponent, Widget } from '@siemens/dashboards-ng';
+import { Config, SiFlexibleDashboardComponent, Widget } from '@spike-rabbit/dashboards-ng';
 
 import { AppStateService } from '../../app-state.service';
 import { DashboardFiltersComponent } from '../../components/dashboard-filters/dashboard-filters.component';

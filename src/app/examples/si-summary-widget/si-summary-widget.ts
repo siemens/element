@@ -4,7 +4,7 @@
  */
 import { NgTemplateOutlet } from '@angular/common';
 import { Component } from '@angular/core';
-import { SiSummaryWidgetComponent } from '@siemens/element-ng/summary-widget';
+import { SiSummaryWidgetComponent } from '@spike-rabbit/element-ng/summary-widget';
 
 @Component({
   selector: 'app-sample',

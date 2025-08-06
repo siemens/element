@@ -68,7 +68,7 @@ export const tsConfig = typescriptEslint.config({
             message: 'Use the convert functions from @angular/core instead.'
           },
           {
-            name: '@siemens/element-ng',
+            name: '@spike-rabbit/element-ng',
             message: 'Use the secondary entrypoints instead.'
           }
         ]

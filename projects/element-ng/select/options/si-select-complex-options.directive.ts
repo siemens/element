@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { computed, Directive, input, OnChanges } from '@angular/core';
-import { buildTrackByIdentity } from '@siemens/element-ng/common';
+import { buildTrackByIdentity } from '@spike-rabbit/element-ng/common';
 
 import { SelectGroup, SelectOption } from '../si-select.types';
 import { SI_SELECT_OPTIONS_STRATEGY } from './si-select-options-strategy';

@@ -4,12 +4,12 @@
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SiFormItemComponent } from '@siemens/element-ng/form';
+import { SiFormItemComponent } from '@spike-rabbit/element-ng/form';
 import {
   SiPillsInputComponent,
   SiPillsInputCsvDirective,
   SiPillsInputEmailDirective
-} from '@siemens/element-ng/pills-input';
+} from '@spike-rabbit/element-ng/pills-input';
 
 @Component({
   selector: 'app-sample',

@@ -4,7 +4,7 @@
  */
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiThemeService, ThemeType } from '@siemens/element-ng/theme';
+import { SiThemeService, ThemeType } from '@spike-rabbit/element-ng/theme';
 
 @Component({
   selector: 'app-sample',

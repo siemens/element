@@ -5,7 +5,7 @@
 import { CdkListbox, CdkOption, ListboxValueChangeEvent } from '@angular/cdk/listbox';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, OnInit, viewChild } from '@angular/core';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 import { SiSelectOptionRowComponent } from '../select-option/si-select-option-row.component';
 import { SiSelectGroupTemplateDirective } from '../si-select-group-template.directive';

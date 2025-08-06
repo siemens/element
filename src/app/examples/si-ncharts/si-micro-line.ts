@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MicroLineSeries, SiMicroLineComponent } from '@siemens/native-charts-ng/micro-line';
+import { MicroLineSeries, SiMicroLineComponent } from '@spike-rabbit/native-charts-ng/micro-line';
 
 @Component({
   selector: 'app-sample',

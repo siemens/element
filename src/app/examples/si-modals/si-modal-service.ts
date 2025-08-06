@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, inject, OnDestroy, TemplateRef } from '@angular/core';
-import { SiStatusIconComponent } from '@siemens/element-ng/icon';
-import { ModalRef, SiModalService } from '@siemens/element-ng/modal';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { SiStatusIconComponent } from '@spike-rabbit/element-ng/icon';
+import { ModalRef, SiModalService } from '@spike-rabbit/element-ng/modal';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

@@ -4,8 +4,8 @@
  */
 import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
-import { EntityStatusType } from '@siemens/element-ng/common';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { EntityStatusType } from '@spike-rabbit/element-ng/common';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 import { STATUS_ICON_CONFIG } from './icon-status';
 import { SiIconNextComponent } from './si-icon-next.component';

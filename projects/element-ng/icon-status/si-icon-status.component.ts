@@ -4,7 +4,7 @@
  */
 import { NgClass } from '@angular/common';
 import { booleanAttribute, Component, computed, input, numberAttribute } from '@angular/core';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
 
 @Component({
   selector: 'si-icon-status',

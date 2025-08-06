@@ -14,8 +14,8 @@ import {
   model,
   output
 } from '@angular/core';
-import { isRTL } from '@siemens/element-ng/common';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { isRTL } from '@spike-rabbit/element-ng/common';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 import {
   addDaysInRange,

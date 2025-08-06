@@ -9,9 +9,12 @@ import {
   inject,
   OnInit
 } from '@angular/core';
-import { SiTimelineWidgetBodyComponent, SiTimelineWidgetItem } from '@siemens/element-ng/dashboard';
-import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
-import { LOG_EVENT } from '@siemens/live-preview';
+import {
+  SiTimelineWidgetBodyComponent,
+  SiTimelineWidgetItem
+} from '@spike-rabbit/element-ng/dashboard';
+import { SiEmptyStateComponent } from '@spike-rabbit/element-ng/empty-state';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

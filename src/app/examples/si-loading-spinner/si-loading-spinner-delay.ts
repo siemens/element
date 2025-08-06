@@ -4,8 +4,11 @@
  */
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { SiCardComponent } from '@siemens/element-ng/card';
-import { SiLoadingService, SiLoadingSpinnerDirective } from '@siemens/element-ng/loading-spinner';
+import { SiCardComponent } from '@spike-rabbit/element-ng/card';
+import {
+  SiLoadingService,
+  SiLoadingSpinnerDirective
+} from '@spike-rabbit/element-ng/loading-spinner';
 
 @Component({
   selector: 'app-sample',

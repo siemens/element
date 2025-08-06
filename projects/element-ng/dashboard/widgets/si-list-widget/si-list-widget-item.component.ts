@@ -4,9 +4,12 @@
  */
 import { NgClass } from '@angular/common';
 import { Component, computed } from '@angular/core';
-import { addIcons, SiIconNextComponent, elementRight2 } from '@siemens/element-ng/icon';
-import { Link, SiLinkDirective } from '@siemens/element-ng/link';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { addIcons, SiIconNextComponent, elementRight2 } from '@spike-rabbit/element-ng/icon';
+import { Link, SiLinkDirective } from '@spike-rabbit/element-ng/link';
+import {
+  SiTranslateModule,
+  TranslatableString
+} from '@spike-rabbit/element-translate-ng/translate';
 
 import { SiWidgetBaseComponent } from '../si-widget-base.component';
 

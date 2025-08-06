@@ -4,7 +4,7 @@
  */
 import { Component } from '@angular/core';
 import { FieldType, FormlyModule } from '@ngx-formly/core';
-import { SiTabComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
+import { SiTabComponent, SiTabsetComponent } from '@spike-rabbit/element-ng/tabs';
 
 @Component({
   selector: 'si-formly-object-tabset',

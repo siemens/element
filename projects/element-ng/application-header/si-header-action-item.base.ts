@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { Directive, HostListener, inject, OnInit } from '@angular/core';
-import { SiHeaderDropdownTriggerDirective } from '@siemens/element-ng/header-dropdown';
-import { addIcons, elementDown2 } from '@siemens/element-ng/icon';
+import { SiHeaderDropdownTriggerDirective } from '@spike-rabbit/element-ng/header-dropdown';
+import { addIcons, elementDown2 } from '@spike-rabbit/element-ng/icon';
 
 import { SiApplicationHeaderComponent } from './si-application-header.component';
 import { SiHeaderCollapsibleActionsComponent } from './si-header-collapsible-actions.component';

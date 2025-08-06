@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 import { EventEmitter, InputSignal, OutputEmitterRef, TemplateRef } from '@angular/core';
-import { AccentLineType, MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
-import { ContentActionBarMainItem, ViewType } from '@siemens/element-ng/content-action-bar';
-import { MenuItem } from '@siemens/element-ng/menu';
+import { AccentLineType, MenuItem as MenuItemLegacy } from '@spike-rabbit/element-ng/common';
+import { ContentActionBarMainItem, ViewType } from '@spike-rabbit/element-ng/content-action-bar';
+import { MenuItem } from '@spike-rabbit/element-ng/menu';
 import { Subject } from 'rxjs';
 
 /**

@@ -4,7 +4,7 @@
  */
 import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SiIconModule } from '@siemens/element-ng/icon';
+import { SiIconModule } from '@spike-rabbit/element-ng/icon';
 
 import { SiIconStatusComponent as TestComponent } from './si-icon-status.component';
 

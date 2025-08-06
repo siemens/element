@@ -5,7 +5,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { areAnimationsDisabled } from '@siemens/element-ng/common';
+import { areAnimationsDisabled } from '@spike-rabbit/element-ng/common';
 import { Observable } from 'rxjs';
 
 import { SiToastNotificationComponent } from '../si-toast-notification/si-toast-notification.component';

@@ -7,9 +7,9 @@ import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from '@angu
 import { By } from '@angular/platform-browser';
 import { Router, RouterModule, Routes } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { ResizeObserverService } from '@siemens/element-ng/resize-observer';
-import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
-import { SiTranslateNgxTModule } from '@siemens/element-translate-ng/ngx-translate';
+import { ResizeObserverService } from '@spike-rabbit/element-ng/resize-observer';
+import { runOnPushChangeDetection } from '@spike-rabbit/element-ng/test-helpers';
+import { SiTranslateNgxTModule } from '@spike-rabbit/element-translate-ng/ngx-translate';
 
 import { SiBreadcrumbComponent as TestComponent } from '.';
 import { BreadcrumbItem } from './breadcrumb-item.model';

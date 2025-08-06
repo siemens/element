@@ -18,9 +18,9 @@ import {
   viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { areAnimationsDisabled, BackgroundColorVariant } from '@siemens/element-ng/common';
-import { addIcons, elementDown2, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { areAnimationsDisabled, BackgroundColorVariant } from '@spike-rabbit/element-ng/common';
+import { addIcons, elementDown2, SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 import { filter } from 'rxjs';
 
 import { SiAccordionHCollapseService } from './si-accordion-hcollapse.service';

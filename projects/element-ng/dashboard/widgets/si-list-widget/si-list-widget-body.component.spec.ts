@@ -4,7 +4,7 @@
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
+import { runOnPushChangeDetection } from '@spike-rabbit/element-ng/test-helpers';
 
 import { SiListWidgetBodyComponent, SortOrder } from './si-list-widget-body.component';
 import { SiListWidgetItem } from './si-list-widget-item.component';

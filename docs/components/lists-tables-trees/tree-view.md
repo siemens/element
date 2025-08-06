@@ -123,7 +123,7 @@ In flat mode, a node also offers a third node representation format with (1)
 Within a module
 
 ```ts
-import { SiTreeViewModule } from '@siemens/element-ng/tree-view';
+import { SiTreeViewModule } from '@spike-rabbit/element-ng/tree-view';
 
 @NgModule({
   imports: [SiTreeViewModule, ...]
@@ -138,7 +138,7 @@ import {
   SiTreeViewItemComponent,
   SiTreeViewItemDirective,
   SiTreeViewItemTemplateDirective
-} from '@siemens/element-ng/tree-view';
+} from '@spike-rabbit/element-ng/tree-view';
 
 @Component({
   imports: [

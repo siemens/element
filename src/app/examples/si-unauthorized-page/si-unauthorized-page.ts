@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { SiUnauthorizedPageModule } from '@siemens/element-ng/unauthorized-page';
+import { SiUnauthorizedPageModule } from '@spike-rabbit/element-ng/unauthorized-page';
 
 @Component({
   selector: 'app-sample',

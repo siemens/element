@@ -6,8 +6,11 @@ import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { isPlatformBrowser } from '@angular/common';
 import { ComponentRef, inject, Injectable, Injector, OnDestroy, PLATFORM_ID } from '@angular/core';
-import { Link } from '@siemens/element-ng/link';
-import { SiNoTranslateService, SiTranslateService } from '@siemens/element-translate-ng/translate';
+import { Link } from '@spike-rabbit/element-ng/link';
+import {
+  SiNoTranslateService,
+  SiTranslateService
+} from '@spike-rabbit/element-translate-ng/translate';
 import { ReplaySubject, Subject } from 'rxjs';
 
 import { SiToastNotificationDrawerComponent } from './si-toast-notification-drawer/si-toast-notification-drawer.component';

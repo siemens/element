@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
-import { MenuItem } from '@siemens/element-ng/menu';
+import { MenuItem as MenuItemLegacy } from '@spike-rabbit/element-ng/common';
+import { MenuItem } from '@spike-rabbit/element-ng/menu';
 import { Observable } from 'rxjs';
 
 import type { SiTreeViewComponent } from './si-tree-view.component';

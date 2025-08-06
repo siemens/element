@@ -8,7 +8,7 @@ import {
   getBrowserCultureLanguage,
   getBrowserLanguage,
   injectSiTranslateService
-} from '@siemens/element-translate-ng/translate';
+} from '@spike-rabbit/element-translate-ng/translate';
 import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { first } from 'rxjs/operators';
 

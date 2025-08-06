@@ -8,11 +8,11 @@ import { FormRecord, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
-import { SiTranslateService } from '@siemens/element-ng/translate';
+import { SiTranslateService } from '@spike-rabbit/element-ng/translate';
 import {
   injectSiTranslateService,
   provideMockTranslateServiceBuilder
-} from '@siemens/element-translate-ng/translate';
+} from '@spike-rabbit/element-translate-ng/translate';
 
 import { SiFormlyButtonComponent } from './si-formly-button.component';
 

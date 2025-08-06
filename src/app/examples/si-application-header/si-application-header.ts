@@ -15,12 +15,12 @@ import {
   SiHeaderNavigationComponent,
   SiHeaderNavigationItemComponent,
   SiHeaderSelectionItemComponent
-} from '@siemens/element-ng/application-header';
+} from '@spike-rabbit/element-ng/application-header';
 import {
   SiHeaderDropdownComponent,
   SiHeaderDropdownItemComponent,
   SiHeaderDropdownTriggerDirective
-} from '@siemens/element-ng/header-dropdown';
+} from '@spike-rabbit/element-ng/header-dropdown';
 
 @Component({
   selector: 'app-sample',

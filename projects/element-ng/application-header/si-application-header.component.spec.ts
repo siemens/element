@@ -11,8 +11,8 @@ import {
   SiHeaderDropdownComponent,
   SiHeaderDropdownItemComponent,
   SiHeaderDropdownTriggerDirective
-} from '@siemens/element-ng/header-dropdown';
-import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
+} from '@spike-rabbit/element-ng/header-dropdown';
+import { runOnPushChangeDetection } from '@spike-rabbit/element-ng/test-helpers';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { SiLaunchpadFactoryComponent } from './launchpad/si-launchpad-factory.component';

@@ -16,9 +16,9 @@ import {
   viewChild
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { addIcons, elementCancel, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTypeaheadDirective } from '@siemens/element-ng/typeahead';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { addIcons, elementCancel, SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
+import { SiTypeaheadDirective } from '@spike-rabbit/element-ng/typeahead';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 import { Observable } from 'rxjs';
 
 import { CriterionDefinition, CriterionValue, OptionType } from './si-filtered-search.model';

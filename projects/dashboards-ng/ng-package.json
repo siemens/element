@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../dist/@siemens/dashboards-ng",
+  "dest": "../../dist/@spike-rabbit/dashboards-ng",
   "assets": ["assets"],
   "lib": {
     "entryFile": "src/public-api.ts",

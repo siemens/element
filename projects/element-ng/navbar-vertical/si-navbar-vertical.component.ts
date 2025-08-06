@@ -33,11 +33,11 @@ import {
   viewChildren
 } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
-import { MenuItem, SI_UI_STATE_SERVICE } from '@siemens/element-ng/common';
-import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
-import { SiSkipLinkTargetDirective } from '@siemens/element-ng/skip-links';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { MenuItem, SI_UI_STATE_SERVICE } from '@spike-rabbit/element-ng/common';
+import { BOOTSTRAP_BREAKPOINTS } from '@spike-rabbit/element-ng/resize-observer';
+import { SiSearchBarComponent } from '@spike-rabbit/element-ng/search-bar';
+import { SiSkipLinkTargetDirective } from '@spike-rabbit/element-ng/skip-links';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

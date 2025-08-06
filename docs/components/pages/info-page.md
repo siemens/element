@@ -36,7 +36,7 @@ An info page consists of the following elements:
 
 ```ts
 import { RouterModule } from '@angular/router';
-import { SiInfoPageComponent } from '@siemens/element-ng/info-page';
+import { SiInfoPageComponent } from '@spike-rabbit/element-ng/info-page';
 
 @Component({
   imports: [SiInfoPageComponent, ..],

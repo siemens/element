@@ -7,7 +7,7 @@ import {
   SiTreeViewComponent,
   SiTreeViewItemTemplateDirective,
   TreeItem
-} from '@siemens/element-ng/tree-view';
+} from '@spike-rabbit/element-ng/tree-view';
 
 @Component({
   selector: 'app-sample',

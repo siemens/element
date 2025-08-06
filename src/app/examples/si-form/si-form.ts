@@ -14,22 +14,22 @@ import {
   Validators
 } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { SiCardComponent } from '@siemens/element-ng/card';
+import { SiCardComponent } from '@spike-rabbit/element-ng/card';
 import {
   DateRange,
   SiCalendarButtonComponent,
   SiDatepickerDirective,
   SiDateRangeComponent,
   SiTimepickerComponent
-} from '@siemens/element-ng/datepicker';
+} from '@spike-rabbit/element-ng/datepicker';
 import {
   SiFormContainerComponent,
   SiFormModule,
   SiFormValidationError
-} from '@siemens/element-ng/form';
-import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
-import { PhoneDetails, SiPhoneNumberInputComponent } from '@siemens/element-ng/phone-number';
-import { SelectOption, SiSelectModule } from '@siemens/element-ng/select';
+} from '@spike-rabbit/element-ng/form';
+import { SiNumberInputComponent } from '@spike-rabbit/element-ng/number-input';
+import { PhoneDetails, SiPhoneNumberInputComponent } from '@spike-rabbit/element-ng/phone-number';
+import { SelectOption, SiSelectModule } from '@spike-rabbit/element-ng/select';
 
 export type Role = 'ENGINEER' | 'INSTALLER';
 

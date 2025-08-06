@@ -4,9 +4,9 @@
  */
 import { booleanAttribute, Component, computed, input, model, OnChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Link } from '@siemens/element-ng/link';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { Link } from '@spike-rabbit/element-ng/link';
+import { SiSearchBarComponent } from '@spike-rabbit/element-ng/search-bar';
+import { SiTranslateModule } from '@spike-rabbit/element-translate-ng/translate';
 
 import { SiWidgetBaseComponent } from '../si-widget-base.component';
 import { SiListWidgetItem, SiListWidgetItemComponent } from './si-list-widget-item.component';

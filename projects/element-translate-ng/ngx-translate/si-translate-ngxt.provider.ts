@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { EnvironmentProviders, Provider } from '@angular/core';
-import { SiTranslateServiceBuilder } from '@siemens/element-translate-ng/translate';
+import { SiTranslateServiceBuilder } from '@spike-rabbit/element-translate-ng/translate';
 
 import { SiTranslateNgxTServiceBuilder } from './si-translate-ngxt.service-builder';
 

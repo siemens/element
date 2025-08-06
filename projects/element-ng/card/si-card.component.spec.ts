@@ -6,9 +6,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { ContentActionBarMainItem, ViewType } from '@siemens/element-ng/content-action-bar';
-import { MenuItem } from '@siemens/element-ng/menu';
-import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
+import { ContentActionBarMainItem, ViewType } from '@spike-rabbit/element-ng/content-action-bar';
+import { MenuItem } from '@spike-rabbit/element-ng/menu';
+import { runOnPushChangeDetection } from '@spike-rabbit/element-ng/test-helpers';
 
 import { SiCardComponent } from './index';
 

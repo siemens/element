@@ -4,9 +4,9 @@
  */
 import { Component, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { SiFormItemComponent } from '@siemens/element-ng/form';
-import { SiHelpButtonComponent } from '@siemens/element-ng/help-button';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { SiFormItemComponent } from '@spike-rabbit/element-ng/form';
+import { SiHelpButtonComponent } from '@spike-rabbit/element-ng/help-button';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

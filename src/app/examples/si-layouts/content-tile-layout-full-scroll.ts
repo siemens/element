@@ -10,14 +10,14 @@ import {
   SiHeaderActionsDirective,
   SiHeaderBrandDirective,
   SiHeaderLogoDirective
-} from '@siemens/element-ng/application-header';
-import { SiCardComponent } from '@siemens/element-ng/card';
+} from '@spike-rabbit/element-ng/application-header';
+import { SiCardComponent } from '@spike-rabbit/element-ng/card';
 import {
   SiHeaderDropdownComponent,
   SiHeaderDropdownTriggerDirective
-} from '@siemens/element-ng/header-dropdown';
-import { NavbarVerticalItem } from '@siemens/element-ng/navbar-vertical';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
+} from '@spike-rabbit/element-ng/header-dropdown';
+import { NavbarVerticalItem } from '@spike-rabbit/element-ng/navbar-vertical';
+import { SiSearchBarComponent } from '@spike-rabbit/element-ng/search-bar';
 
 @Component({
   selector: 'app-sample',

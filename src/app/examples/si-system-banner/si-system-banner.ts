@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component } from '@angular/core';
-import { SiSystemBannerComponent } from '@siemens/element-ng/system-banner';
+import { SiSystemBannerComponent } from '@spike-rabbit/element-ng/system-banner';
 
 @Component({
   selector: 'app-sample',

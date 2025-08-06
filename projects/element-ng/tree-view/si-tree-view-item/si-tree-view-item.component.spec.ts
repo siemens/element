@@ -13,7 +13,7 @@ import {
   tick
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
+import { runOnPushChangeDetection } from '@spike-rabbit/element-ng/test-helpers';
 import {
   removeItemFromTree,
   reorderTreeItem,
@@ -21,7 +21,7 @@ import {
   SiTreeViewModule,
   transferTreeItem,
   TreeItem
-} from '@siemens/element-ng/tree-view';
+} from '@spike-rabbit/element-ng/tree-view';
 
 @Component({
   imports: [SiTreeViewModule, DragDropModule],

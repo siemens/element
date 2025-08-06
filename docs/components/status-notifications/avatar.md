@@ -69,7 +69,7 @@ Avatars with a status work best with the following sizes `Regular` (40px) or `Sm
 ### Usage
 
 ```ts
-import { SiAvatarComponent } from '@siemens/element-ng/avatar';
+import { SiAvatarComponent } from '@spike-rabbit/element-ng/avatar';
 
 @Component({
   imports: [SiAvatarComponent, ...]

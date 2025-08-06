@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { InjectionToken } from '@angular/core';
-import { EntityStatusType, StatusIcon } from '@siemens/element-ng/common';
+import { EntityStatusType, StatusIcon } from '@spike-rabbit/element-ng/common';
 
 import {
   elementCircleFilled,

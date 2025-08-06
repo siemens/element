@@ -8,7 +8,7 @@ import { FormRecord } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { SiFormlyModule } from '@siemens/element-ng/formly';
+import { SiFormlyModule } from '@spike-rabbit/element-ng/formly';
 
 @Component({
   selector: 'si-formly-test',

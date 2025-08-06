@@ -4,7 +4,11 @@
  */
 import { loadRemoteModule } from '@angular-architects/module-federation';
 import { ComponentRef, EnvironmentInjector, Injector, ViewContainerRef } from '@angular/core';
-import { FederatedModule, SetupComponentFn, widgetFactoryRegistry } from '@siemens/dashboards-ng';
+import {
+  FederatedModule,
+  SetupComponentFn,
+  widgetFactoryRegistry
+} from '@spike-rabbit/dashboards-ng';
 import { Observable, Subject } from 'rxjs';
 
 const setupRemoteComponent = <T>(

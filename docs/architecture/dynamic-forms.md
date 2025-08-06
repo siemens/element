@@ -13,7 +13,7 @@ which allows to generate forms from JSON data.
     - [@ngx-formly/bootstrap](https://www.npmjs.com/package/@ngx-formly/bootstrap)
 
 ```ts
-import { SiFormlyModule } from '@siemens/element-ng/formly';
+import { SiFormlyModule } from '@spike-rabbit/element-ng/formly';
 
 @NgModule({
   imports: [SiFormlyModule, ...]
@@ -31,7 +31,7 @@ Include `SiFormlyModule` in your app configuration to register your custom types
 
 ```ts
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { SiFormlyModule } from '@siemens/element-ng/formly';
+import { SiFormlyModule } from '@spike-rabbit/element-ng/formly';
 
 const config: ApplicationConfig = {
   providers: [

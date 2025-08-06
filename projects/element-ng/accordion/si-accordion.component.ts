@@ -16,7 +16,7 @@ import {
   OnChanges
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ResizeObserverService } from '@siemens/element-ng/resize-observer';
+import { ResizeObserverService } from '@spike-rabbit/element-ng/resize-observer';
 
 import { SiAccordionHCollapseService } from './si-accordion-hcollapse.service';
 import { SiAccordionService } from './si-accordion.service';

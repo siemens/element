@@ -4,8 +4,8 @@
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormRecord } from '@angular/forms';
-import { SiFormModule } from '@siemens/element-ng/form';
-import { SiFormlyModule } from '@siemens/element-ng/formly';
+import { SiFormModule } from '@spike-rabbit/element-ng/form';
+import { SiFormlyModule } from '@spike-rabbit/element-ng/formly';
 import { JSONSchema7 } from 'json-schema';
 
 export interface Person {

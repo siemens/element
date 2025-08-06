@@ -7,7 +7,7 @@ import {
   createModalConfig,
   ModalDependencyInjectionOptions,
   SiModalService
-} from '@siemens/element-ng/modal';
+} from '@spike-rabbit/element-ng/modal';
 import { Observable, Subscriber, Subscription, switchMap, take } from 'rxjs';
 
 import { ActionDialog, ActionDialogReturnType } from './si-action-dialog.types';

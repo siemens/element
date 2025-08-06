@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, input } from '@angular/core';
-import { Link, SiLinkDirective } from '@siemens/element-ng/link';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { Link, SiLinkDirective } from '@spike-rabbit/element-ng/link';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 @Component({
   selector: 'si-footer',

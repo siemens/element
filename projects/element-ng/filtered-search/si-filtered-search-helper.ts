@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { formatDate } from '@angular/common';
-import { isValid } from '@siemens/element-ng/datepicker';
+import { isValid } from '@spike-rabbit/element-ng/datepicker';
 
 import { CriterionDefinition, OptionCriterion, OptionType } from './si-filtered-search.model';
 

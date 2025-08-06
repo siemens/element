@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, Input } from '@angular/core';
-import { WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
-import { MenuItem } from '@siemens/element-ng/common';
+import { WidgetConfig, WidgetInstance } from '@spike-rabbit/dashboards-ng';
+import { MenuItem } from '@spike-rabbit/element-ng/common';
 
 @Component({
   selector: 'si-test-widget',

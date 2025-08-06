@@ -16,7 +16,7 @@ import {
   elementLeft2,
   elementRight2,
   SiIconNextComponent
-} from '@siemens/element-ng/icon';
+} from '@spike-rabbit/element-ng/icon';
 
 export type Direction = 'left' | 'right';
 

@@ -21,7 +21,7 @@ import {
   elementMenu,
   elementShow,
   SiIconNextComponent
-} from '@siemens/element-ng/icon';
+} from '@spike-rabbit/element-ng/icon';
 
 import { Column } from '../si-column-selection-dialog.types';
 

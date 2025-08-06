@@ -14,5 +14,5 @@ export * from './model/widgets.model';
 export * from './model/si-dashboard-toolbar.model';
 export * from './widget-loader';
 
-export * from '@siemens/dashboards-ng/translate';
+export * from '@spike-rabbit/dashboards-ng/translate';
 export * from './public-api.module';

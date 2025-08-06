@@ -4,7 +4,7 @@
  */
 import { ChangeDetectionStrategy, Component, ElementRef, inject } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
-import { ResizeObserverService } from '@siemens/element-ng/resize-observer';
+import { ResizeObserverService } from '@spike-rabbit/element-ng/resize-observer';
 
 import { SiStatusBarComponent, StatusBarItem } from './index';
 

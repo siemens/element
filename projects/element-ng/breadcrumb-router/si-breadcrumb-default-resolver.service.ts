@@ -4,7 +4,7 @@
  */
 import { inject, Injectable, LOCALE_ID } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
-import { BreadcrumbItem } from '@siemens/element-ng/breadcrumb';
+import { BreadcrumbItem } from '@spike-rabbit/element-ng/breadcrumb';
 import { Observable } from 'rxjs';
 
 import { BreadcrumbRouterLink, SiBreadcrumbResolverService } from './si-breadcrumb-router.model';

@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { Filter, SiFilterBarComponent } from '@siemens/element-ng/filter-bar';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { Filter, SiFilterBarComponent } from '@spike-rabbit/element-ng/filter-bar';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

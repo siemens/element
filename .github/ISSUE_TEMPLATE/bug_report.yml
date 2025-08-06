@@ -37,7 +37,7 @@ body:
     attributes:
       label: Version
       description: List the exact versions of all relevant packages.
-      placeholder: '@siemens/element-ng: X.X.X'
+      placeholder: '@spike-rabbit/element-ng: X.X.X'
 
   - type: textarea
     id: steps-to-reproduce

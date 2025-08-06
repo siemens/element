@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { injectSiTranslateService } from '@siemens/element-translate-ng/translate';
+import { injectSiTranslateService } from '@spike-rabbit/element-translate-ng/translate';
 
 export class SiFormlyTranslateExtension {
   private translate = injectSiTranslateService();

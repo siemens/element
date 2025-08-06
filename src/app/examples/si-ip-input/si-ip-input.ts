@@ -4,9 +4,9 @@
  */
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SiFormItemComponent } from '@siemens/element-ng/form';
-import { SiIp4InputDirective, SiIp6InputDirective } from '@siemens/element-ng/ip-input';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { SiFormItemComponent } from '@spike-rabbit/element-ng/form';
+import { SiIp4InputDirective, SiIp6InputDirective } from '@spike-rabbit/element-ng/ip-input';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

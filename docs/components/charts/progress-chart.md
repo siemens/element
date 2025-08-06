@@ -59,7 +59,7 @@ The chart can be configured to be a **360° circle** or an **arc**.
     - [echarts](https://www.npmjs.com/package/echarts)
 
 ```ts
-import { SiChartProgressComponent } from '@siemens/charts-ng';
+import { SiChartProgressComponent } from '@spike-rabbit/charts-ng';
 
 @Component({
   imports: [SiChartProgressComponent, ...]
@@ -74,7 +74,7 @@ instead of bars. Every arc is used to visualize the progression of an item.
 
 <si-docs-component example="si-charts/si-chart-progress" height="400"></si-docs-component>
 
-<si-docs-api component="SiChartProgressComponent" package="@siemens/charts-ng" hideImplicitlyPublic="true"></si-docs-api>
+<si-docs-api component="SiChartProgressComponent" package="@spike-rabbit/charts-ng" hideImplicitlyPublic="true"></si-docs-api>
 
 ### Progress bar chart
 
@@ -82,6 +82,6 @@ A more traditional progress chart using horizontal bars.
 
 <si-docs-component example="si-charts/si-chart-progress-bar" height="400"></si-docs-component>
 
-<si-docs-api component="SiChartProgressBarComponent" package="@siemens/charts-ng" hideImplicitlyPublic="true"></si-docs-api>
+<si-docs-api component="SiChartProgressBarComponent" package="@spike-rabbit/charts-ng" hideImplicitlyPublic="true"></si-docs-api>
 
 <si-docs-types></si-docs-types>

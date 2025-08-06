@@ -5,7 +5,7 @@
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { inject, TestBed } from '@angular/core/testing';
 import { UrlSegment } from '@angular/router';
-import { BreadcrumbItem } from '@siemens/element-ng/breadcrumb';
+import { BreadcrumbItem } from '@spike-rabbit/element-ng/breadcrumb';
 
 import { SiBreadcrumbDefaultResolverService } from './si-breadcrumb-default-resolver.service';
 

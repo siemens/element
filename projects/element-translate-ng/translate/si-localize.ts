@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { inject } from '@angular/core';
-import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
+import { TranslatableString } from '@spike-rabbit/element-translate-ng/translate-types';
 
 import { globalScope } from './global.scope';
 import { SiTranslatableService } from './si-translatable.service';
@@ -12,7 +12,7 @@ import { SiTranslatableService } from './si-translatable.service';
 const $localize = (strings: TemplateStringsArray, ...expressions: string[]): TranslatableString => {
   if (strings.length !== 1) {
     throw new Error(
-      '$localize calls using @siemens/element-translate-ng do not support parameter interpolation'
+      '$localize calls using @spike-rabbit/element-translate-ng do not support parameter interpolation'
     );
   }
 

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { inject, Injectable } from '@angular/core';
-import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
+import { TranslatableString } from '@spike-rabbit/element-translate-ng/translate-types';
 
 import { SiNoTranslateService } from './si-no-translate.service';
 import { SI_TRANSLATABLE_VALUES } from './si-translatable.model';

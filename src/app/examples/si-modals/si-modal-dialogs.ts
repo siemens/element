@@ -4,12 +4,12 @@
  */
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { ActionDialog, SiActionDialogService } from '@siemens/element-ng/action-modal';
+import { ActionDialog, SiActionDialogService } from '@spike-rabbit/element-ng/action-modal';
 import {
   ColumnSelectionDialogResult,
   SiColumnSelectionDialogService
-} from '@siemens/element-ng/column-selection-dialog';
-import { LOG_EVENT } from '@siemens/live-preview';
+} from '@spike-rabbit/element-ng/column-selection-dialog';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 import { delay, Observable, of, Subscription } from 'rxjs';
 
 import { cloneColumnData, headerData } from './column-dialog.data';

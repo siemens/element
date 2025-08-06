@@ -13,7 +13,7 @@ import {
   Renderer2,
   signal
 } from '@angular/core';
-import { SI_FORM_ITEM_CONTROL } from '@siemens/element-ng/form';
+import { SI_FORM_ITEM_CONTROL } from '@spike-rabbit/element-ng/form';
 
 const eventMap = new Map<string, 'insert' | 'delete' | 'paste'>([
   ['insertText', 'insert'],

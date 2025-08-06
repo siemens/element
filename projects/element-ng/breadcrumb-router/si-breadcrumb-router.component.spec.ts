@@ -6,7 +6,7 @@ import { Component, ElementRef, viewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from '@angular/core/testing';
 import { Router, RouterModule, RouterOutlet, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { BreadcrumbItem } from '@siemens/element-ng/breadcrumb';
+import { BreadcrumbItem } from '@spike-rabbit/element-ng/breadcrumb';
 
 import {
   SI_BREADCRUMB_RESOLVER_SERVICE,

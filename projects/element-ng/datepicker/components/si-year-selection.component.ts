@@ -14,7 +14,7 @@ import {
   signal,
   SimpleChanges
 } from '@angular/core';
-import { isRTL } from '@siemens/element-ng/common';
+import { isRTL } from '@spike-rabbit/element-ng/common';
 
 import {
   addYearsInRange,

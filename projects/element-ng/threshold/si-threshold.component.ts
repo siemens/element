@@ -14,16 +14,16 @@ import {
   viewChildren
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { addIcons, elementPlus, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
+import { addIcons, elementPlus, SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
+import { SiNumberInputComponent } from '@spike-rabbit/element-ng/number-input';
 import {
   SelectOption,
   SelectOptionLegacy,
   SiSelectComponent,
   SiSelectSimpleOptionsDirective,
   SiSelectSingleValueDirective
-} from '@siemens/element-ng/select';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+} from '@spike-rabbit/element-ng/select';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 import { SiReadonlyThresholdOptionComponent } from './si-readonly-threshold-option.component';
 

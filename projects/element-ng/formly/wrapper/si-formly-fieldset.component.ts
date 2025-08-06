@@ -4,7 +4,7 @@
  */
 import { Component } from '@angular/core';
 import { FieldWrapper, FormlyModule } from '@ngx-formly/core';
-import { SiFormFieldsetComponent } from '@siemens/element-ng/form';
+import { SiFormFieldsetComponent } from '@spike-rabbit/element-ng/form';
 
 @Component({
   selector: 'si-formly-fieldset',

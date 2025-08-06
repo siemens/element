@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, inject } from '@angular/core';
-import { SiFlexibleDashboardComponent, Widget } from '@siemens/dashboards-ng';
-import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
+import { SiFlexibleDashboardComponent, Widget } from '@spike-rabbit/dashboards-ng';
+import { SiEmptyStateComponent } from '@spike-rabbit/element-ng/empty-state';
 
 import { AppStateService } from '../../app-state.service';
 import { CustomWidgetCatalogComponent } from '../../components/widget-catalog/custom-widget-catalog.component';

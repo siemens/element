@@ -6,7 +6,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
   ResultDetailStep,
   SiResultDetailsListComponent
-} from '@siemens/element-ng/result-details-list';
+} from '@spike-rabbit/element-ng/result-details-list';
 
 @Component({
   selector: 'app-sample',

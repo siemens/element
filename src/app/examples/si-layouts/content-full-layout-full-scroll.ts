@@ -4,26 +4,29 @@
  */
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { NgxDatatableModule } from '@siemens/ngx-datatable';
 import {
   SiApplicationHeaderComponent,
   SiHeaderAccountItemComponent,
   SiHeaderActionsDirective,
   SiHeaderBrandDirective,
   SiHeaderLogoDirective
-} from '@siemens/element-ng/application-header';
+} from '@spike-rabbit/element-ng/application-header';
 import {
   SI_DATATABLE_CONFIG,
   SiDatatableInteractionDirective
-} from '@siemens/element-ng/datatable';
+} from '@spike-rabbit/element-ng/datatable';
 import {
   SiHeaderDropdownComponent,
   SiHeaderDropdownTriggerDirective
-} from '@siemens/element-ng/header-dropdown';
-import { NavbarVerticalItem } from '@siemens/element-ng/navbar-vertical';
-import { SiPaginationComponent } from '@siemens/element-ng/pagination';
-import { ElementDimensions, SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
-import { NgxDatatableModule } from '@siemens/ngx-datatable';
+} from '@spike-rabbit/element-ng/header-dropdown';
+import { NavbarVerticalItem } from '@spike-rabbit/element-ng/navbar-vertical';
+import { SiPaginationComponent } from '@spike-rabbit/element-ng/pagination';
+import {
+  ElementDimensions,
+  SiResizeObserverDirective
+} from '@spike-rabbit/element-ng/resize-observer';
+import { SiSearchBarComponent } from '@spike-rabbit/element-ng/search-bar';
 
 import { CorporateEmployee, DataService, Page, PageRequest } from '../datatable/data.service';
 

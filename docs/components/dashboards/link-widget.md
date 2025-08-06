@@ -37,7 +37,7 @@ To simplify the usage and reduce the code, Element offers a Angular component as
 with streamlined inputs. The component should be used together with the [card](../layout-navigation/cards.md).
 
 ```ts
-import { SiLinkWidgetComponent } from '@siemens/element-ng/dashboard';
+import { SiLinkWidgetComponent } from '@spike-rabbit/element-ng/dashboard';
 
 @Component({
   :

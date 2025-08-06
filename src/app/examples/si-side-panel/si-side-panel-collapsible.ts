@@ -5,17 +5,20 @@
 import { CdkPortal, PortalModule } from '@angular/cdk/portal';
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
+import {
+  SiAccordionComponent,
+  SiCollapsiblePanelComponent
+} from '@spike-rabbit/element-ng/accordion';
 import {
   SiApplicationHeaderComponent,
   SiHeaderActionItemComponent,
   SiHeaderActionsDirective,
   SiHeaderBrandDirective,
   SiHeaderLogoDirective
-} from '@siemens/element-ng/application-header';
-import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
-import { MenuItem } from '@siemens/element-ng/menu';
-import { ElementDimensions } from '@siemens/element-ng/resize-observer';
+} from '@spike-rabbit/element-ng/application-header';
+import { ContentActionBarMainItem } from '@spike-rabbit/element-ng/content-action-bar';
+import { MenuItem } from '@spike-rabbit/element-ng/menu';
+import { ElementDimensions } from '@spike-rabbit/element-ng/resize-observer';
 import {
   SidePanelMode,
   SidePanelSize,
@@ -23,8 +26,8 @@ import {
   SiSidePanelContentComponent,
   SiSidePanelService,
   StatusItem
-} from '@siemens/element-ng/side-panel';
-import { LOG_EVENT } from '@siemens/live-preview';
+} from '@spike-rabbit/element-ng/side-panel';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

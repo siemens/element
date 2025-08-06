@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ExtendedStatusType } from '@siemens/element-ng/common';
+import { ExtendedStatusType } from '@spike-rabbit/element-ng/common';
 
 export interface StatusBarItem {
   /**

@@ -4,18 +4,18 @@
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { Component, OnDestroy, OnInit, TemplateRef, viewChild } from '@angular/core';
-import { SiCircleStatusModule } from '@siemens/element-ng/circle-status';
-import { StatusType } from '@siemens/element-ng/common';
-import { SiDatatableModule } from '@siemens/element-ng/datatable';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiMenuFactoryComponent } from '@siemens/element-ng/menu';
-import { SiPaginationComponent } from '@siemens/element-ng/pagination';
+import { NgxDatatableModule, TableColumn } from '@siemens/ngx-datatable';
+import { SiCircleStatusModule } from '@spike-rabbit/element-ng/circle-status';
+import { StatusType } from '@spike-rabbit/element-ng/common';
+import { SiDatatableModule } from '@spike-rabbit/element-ng/datatable';
+import { SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
+import { SiMenuFactoryComponent } from '@spike-rabbit/element-ng/menu';
+import { SiPaginationComponent } from '@spike-rabbit/element-ng/pagination';
 import {
   BOOTSTRAP_BREAKPOINTS,
   ElementDimensions,
   SiResizeObserverModule
-} from '@siemens/element-ng/resize-observer';
-import { NgxDatatableModule, TableColumn } from '@siemens/ngx-datatable';
+} from '@spike-rabbit/element-ng/resize-observer';
 import { Subject } from 'rxjs';
 
 @Component({

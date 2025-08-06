@@ -9,8 +9,8 @@ import {
   elementSortDown,
   elementSortUp,
   SiIconNextComponent
-} from '@siemens/element-ng/icon';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+} from '@spike-rabbit/element-ng/icon';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 export interface SortCriteria {
   name: string;

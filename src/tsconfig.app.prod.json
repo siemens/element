@@ -3,17 +3,17 @@
   "compilerOptions": {
     "outDir": "./out-tsc/app",
     "paths": {
-      "@siemens/element-ng": ["dist/@siemens/element-ng"],
-      "@siemens/element-ng/*": ["dist/@siemens/element-ng/*"],
-      "@siemens/element-translate-ng": ["dist/@siemens/element-translate-ng"],
-      "@siemens/element-translate-ng/*": ["dist/@siemens/element-translate-ng/*"],
-      "@siemens/live-preview": ["dist/@siemens/live-preview"],
-      "@siemens/live-preview/*": ["dist/@siemens/live-preview/*"],
-      "@siemens/charts-ng": ["dist/@siemens/charts-ng"],
-      "@siemens/native-charts-ng": ["dist/@siemens/native-charts-ng"],
-      "@siemens/native-charts-ng/*": ["dist/@siemens/native-charts-ng/*"],
-      "@siemens/dashboards-ng": ["dist/@siemens/dashboards-ng"],
-      "@siemens/dashboards-ng/*": ["dist/@siemens/dashboards-ng/*"]
+      "@spike-rabbit/element-ng": ["dist/@spike-rabbit/element-ng"],
+      "@spike-rabbit/element-ng/*": ["dist/@spike-rabbit/element-ng/*"],
+      "@spike-rabbit/element-translate-ng": ["dist/@spike-rabbit/element-translate-ng"],
+      "@spike-rabbit/element-translate-ng/*": ["dist/@spike-rabbit/element-translate-ng/*"],
+      "@spike-rabbit/live-preview": ["dist/@spike-rabbit/live-preview"],
+      "@spike-rabbit/live-preview/*": ["dist/@spike-rabbit/live-preview/*"],
+      "@spike-rabbit/charts-ng": ["dist/@spike-rabbit/charts-ng"],
+      "@spike-rabbit/native-charts-ng": ["dist/@spike-rabbit/native-charts-ng"],
+      "@spike-rabbit/native-charts-ng/*": ["dist/@spike-rabbit/native-charts-ng/*"],
+      "@spike-rabbit/dashboards-ng": ["dist/@spike-rabbit/dashboards-ng"],
+      "@spike-rabbit/dashboards-ng/*": ["dist/@spike-rabbit/dashboards-ng/*"]
     },
     "useDefineForClassFields": true
   },

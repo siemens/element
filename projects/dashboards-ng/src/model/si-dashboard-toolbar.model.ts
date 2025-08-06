@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import type { NavigationExtras } from '@angular/router';
-import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { TranslatableString } from '@spike-rabbit/element-translate-ng/translate';
 
 import { SiGridComponent } from '../components/grid/si-grid.component';
 

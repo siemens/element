@@ -4,8 +4,8 @@
  */
 import { NgClass } from '@angular/common';
 import { Component, inject, OnDestroy } from '@angular/core';
-import { addIcons, elementThumbnails, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { addIcons, elementThumbnails, SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 import { SiApplicationHeaderComponent } from './si-application-header.component';
 

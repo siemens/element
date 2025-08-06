@@ -20,8 +20,8 @@ import {
   TemplateRef,
   viewChild
 } from '@angular/core';
-import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
-import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@spike-rabbit/element-ng/form';
+import { TranslatableString } from '@spike-rabbit/element-translate-ng/translate';
 
 import { SiSelectComplexOptionsDirective } from './options/si-select-complex-options.directive';
 import { SI_SELECT_OPTIONS_STRATEGY } from './options/si-select-options-strategy';

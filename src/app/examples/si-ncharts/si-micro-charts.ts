@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MicroDonutSeries, SiMicroDonutComponent } from '@siemens/native-charts-ng/micro-donut';
+import {
+  MicroDonutSeries,
+  SiMicroDonutComponent
+} from '@spike-rabbit/native-charts-ng/micro-donut';
 
 @Component({
   selector: 'app-sample',

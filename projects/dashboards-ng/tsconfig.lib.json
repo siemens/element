@@ -7,10 +7,10 @@
     "types": ["../element-translate-ng/localize-types/index.ts", "zone.js"],
     "lib": ["dom", "es2018"],
     "paths": {
-      "@siemens/element-translate-ng": ["dist/@siemens/element-translate-ng"],
-      "@siemens/element-translate-ng/*": ["dist/@siemens/element-translate-ng/*"],
-      "@siemens/element-ng": ["dist/@siemens/element-ng"],
-      "@siemens/element-ng/*": ["dist/@siemens/element-ng/*"]
+      "@spike-rabbit/element-translate-ng": ["dist/@spike-rabbit/element-translate-ng"],
+      "@spike-rabbit/element-translate-ng/*": ["dist/@spike-rabbit/element-translate-ng/*"],
+      "@spike-rabbit/element-ng": ["dist/@spike-rabbit/element-ng"],
+      "@spike-rabbit/element-ng/*": ["dist/@spike-rabbit/element-ng/*"]
     }
   },
   "angularCompilerOptions": {

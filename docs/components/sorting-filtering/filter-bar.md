@@ -69,7 +69,7 @@ from a filter. A two-way data-binding is also possible, e.g.
 ### Usage
 
 ```ts
-import { SiFilterBarComponent } from '@siemens/element-ng/filter-bar';
+import { SiFilterBarComponent } from '@spike-rabbit/element-ng/filter-bar';
 
 @Component({
   imports: [SiFilterBarComponent, ...]

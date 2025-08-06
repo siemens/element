@@ -4,10 +4,10 @@
  */
 import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiLoadingButtonComponent } from '@siemens/element-ng/loading-spinner';
-import { ModalRef } from '@siemens/element-ng/modal';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
+import { SiLoadingButtonComponent } from '@spike-rabbit/element-ng/loading-spinner';
+import { ModalRef } from '@spike-rabbit/element-ng/modal';
+import { SiTranslatePipe, TranslatableString } from '@spike-rabbit/element-translate-ng/translate';
 import { take } from 'rxjs';
 
 import { ConfirmationDialogResult } from '../si-action-dialog.types';

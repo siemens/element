@@ -5,8 +5,8 @@
 import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { Link } from '@siemens/element-ng/link';
-import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
+import { Link } from '@spike-rabbit/element-ng/link';
+import { runOnPushChangeDetection } from '@spike-rabbit/element-ng/test-helpers';
 
 import { SiFooterComponent } from './index';
 

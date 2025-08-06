@@ -4,10 +4,13 @@
  */
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { SearchCriteria, SiFilteredSearchComponent } from '@siemens/element-ng/filtered-search';
-import { SiFormItemComponent } from '@siemens/element-ng/form';
-import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
-import { LOG_EVENT } from '@siemens/live-preview';
+import {
+  SearchCriteria,
+  SiFilteredSearchComponent
+} from '@spike-rabbit/element-ng/filtered-search';
+import { SiFormItemComponent } from '@spike-rabbit/element-ng/form';
+import { SiNumberInputComponent } from '@spike-rabbit/element-ng/number-input';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

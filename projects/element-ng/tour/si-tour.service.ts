@@ -11,8 +11,8 @@ import {
 } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { ElementRef, inject, Injectable, Injector, signal, DOCUMENT } from '@angular/core';
-import { makeOverlay, makePositionStrategy } from '@siemens/element-ng/common';
-import { ResizeObserverService } from '@siemens/element-ng/resize-observer';
+import { makeOverlay, makePositionStrategy } from '@spike-rabbit/element-ng/common';
+import { ResizeObserverService } from '@spike-rabbit/element-ng/resize-observer';
 import { map, merge, Subject, Subscription, tap, throttleTime } from 'rxjs';
 
 import { SiTourHighlightComponent } from './si-tour-highlight.component';

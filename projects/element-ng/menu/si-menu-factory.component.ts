@@ -6,9 +6,9 @@ import { CdkMenuGroup, CdkMenuTrigger } from '@angular/cdk/menu';
 import { NgTemplateOutlet } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
-import { SiLinkActionService, SiLinkModule } from '@siemens/element-ng/link';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { MenuItem as MenuItemLegacy } from '@spike-rabbit/element-ng/common';
+import { SiLinkActionService, SiLinkModule } from '@spike-rabbit/element-ng/link';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 import { SiMenuActionService } from './si-menu-action.service';
 import { SiMenuDividerDirective } from './si-menu-divider.directive';

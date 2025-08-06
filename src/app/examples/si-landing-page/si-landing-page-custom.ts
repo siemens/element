@@ -5,10 +5,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { CopyrightDetails } from '@siemens/element-ng/copyright-notice';
-import { AlertConfig, SiLandingPageComponent } from '@siemens/element-ng/landing-page';
-import { SiPasswordToggleModule } from '@siemens/element-ng/password-toggle';
-import { SiSystemBannerComponent } from '@siemens/element-ng/system-banner';
+import { CopyrightDetails } from '@spike-rabbit/element-ng/copyright-notice';
+import { AlertConfig, SiLandingPageComponent } from '@spike-rabbit/element-ng/landing-page';
+import { SiPasswordToggleModule } from '@spike-rabbit/element-ng/password-toggle';
+import { SiSystemBannerComponent } from '@spike-rabbit/element-ng/system-banner';
 
 @Component({
   selector: 'app-sample',

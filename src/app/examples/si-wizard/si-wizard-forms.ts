@@ -4,17 +4,17 @@
  */
 import { Component, DestroyRef, inject, OnInit, TemplateRef, viewChild } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { SiFormFieldsetComponent, SiFormItemComponent } from '@siemens/element-ng/form';
-import { ModalRef, SiModalService } from '@siemens/element-ng/modal';
-import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
+import { SiFormFieldsetComponent, SiFormItemComponent } from '@spike-rabbit/element-ng/form';
+import { ModalRef, SiModalService } from '@spike-rabbit/element-ng/modal';
+import { SiNumberInputComponent } from '@spike-rabbit/element-ng/number-input';
 import {
   SelectOption,
   SiSelectComponent,
   SiSelectMultiValueDirective,
   SiSelectSimpleOptionsDirective
-} from '@siemens/element-ng/select';
-import { SiWizardComponent, SiWizardStepComponent } from '@siemens/element-ng/wizard';
-import { LOG_EVENT } from '@siemens/live-preview';
+} from '@spike-rabbit/element-ng/select';
+import { SiWizardComponent, SiWizardStepComponent } from '@spike-rabbit/element-ng/wizard';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

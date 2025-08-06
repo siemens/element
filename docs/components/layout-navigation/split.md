@@ -87,7 +87,7 @@ pattern's responsive behavior as an example.
 ```ts
 import { RouterModule } from '@angular/router';
 
-import { SiSplitModule } from '@siemens/element-ng/split';
+import { SiSplitModule } from '@spike-rabbit/element-ng/split';
 
 @NgModule({
   imports: [SiSplitModule, RouterModule, ...]
@@ -97,7 +97,7 @@ import { SiSplitModule } from '@siemens/element-ng/split';
 or as a standalone component:
 
 ```ts
-import { SiSplitComponent, SiSplitPartComponent } from '@siemens/element-ng/split';
+import { SiSplitComponent, SiSplitPartComponent } from '@spike-rabbit/element-ng/split';
 
 @Component({
   imports: [

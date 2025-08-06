@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { inject, Injectable } from '@angular/core';
-import { SiActionDialogService } from '@siemens/element-ng/action-modal';
+import { SiActionDialogService } from '@spike-rabbit/element-ng/action-modal';
 import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })

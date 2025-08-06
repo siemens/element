@@ -9,7 +9,7 @@ import {
   MenuItem,
   MenuItemRadio,
   SiMenuFactoryComponent
-} from '@siemens/element-ng/menu';
+} from '@spike-rabbit/element-ng/menu';
 
 @Component({
   selector: 'app-sample',

@@ -19,7 +19,7 @@ This page can be used when user is authenticated but does not have required acce
 
 ```ts
 import { RouterModule } from '@angular/router';
-import { SiUnauthorizedPageModule } from '@siemens/element-ng';
+import { SiUnauthorizedPageModule } from '@spike-rabbit/element-ng';
 
 @NgModule({
   imports: [SiUnauthorizedPageModule, RouterModule, ..],

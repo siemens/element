@@ -19,8 +19,8 @@ import {
   viewChild,
   ViewContainerRef
 } from '@angular/core';
-import { SiActionDialogService } from '@siemens/element-ng/action-modal';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiActionDialogService } from '@spike-rabbit/element-ng/action-modal';
+import { SiTranslateModule } from '@spike-rabbit/element-translate-ng/translate';
 import { Subscription } from 'rxjs';
 
 import {

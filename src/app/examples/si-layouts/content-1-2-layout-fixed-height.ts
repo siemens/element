@@ -4,27 +4,27 @@
  */
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SiChartCircleComponent, themeElement, themeSupport } from '@siemens/charts-ng';
+import { NgxDatatableModule, SelectEvent } from '@siemens/ngx-datatable';
+import { SiChartCircleComponent, themeElement, themeSupport } from '@spike-rabbit/charts-ng';
 import {
   SiApplicationHeaderComponent,
   SiHeaderAccountItemComponent,
   SiHeaderActionsDirective,
   SiHeaderBrandDirective,
   SiHeaderLogoDirective
-} from '@siemens/element-ng/application-header';
+} from '@spike-rabbit/element-ng/application-header';
 import {
   SI_DATATABLE_CONFIG,
   SiDatatableInteractionDirective
-} from '@siemens/element-ng/datatable';
+} from '@spike-rabbit/element-ng/datatable';
 import {
   SiHeaderDropdownComponent,
   SiHeaderDropdownTriggerDirective
-} from '@siemens/element-ng/header-dropdown';
-import { NavbarVerticalItem } from '@siemens/element-ng/navbar-vertical';
-import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
-import { LOG_EVENT } from '@siemens/live-preview';
-import { NgxDatatableModule, SelectEvent } from '@siemens/ngx-datatable';
+} from '@spike-rabbit/element-ng/header-dropdown';
+import { NavbarVerticalItem } from '@spike-rabbit/element-ng/navbar-vertical';
+import { SiResizeObserverDirective } from '@spike-rabbit/element-ng/resize-observer';
+import { SiSearchBarComponent } from '@spike-rabbit/element-ng/search-bar';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.service';
 

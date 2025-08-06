@@ -4,11 +4,11 @@
 $siemens-font-path: '@simpl/brand/src/fonts' !default;
 $icon-font-path: '@simpl/element-icons/dist/fonts' !default;
 
-@use '@siemens/element-ng/element-ng';
+@use '@spike-rabbit/element-ng/element-ng';
 @use '@siemens/element-theme/src/styles/variables/spacers';
 @use '@siemens/element-theme/src/styles/variables/semantic-tokens';
 @use '@siemens/element-theme/src/styles/variables/utilities';
-@use '@siemens/live-preview/styles/live-preview';
+@use '@spike-rabbit/live-preview/styles/live-preview';
 
 // Seems like an esbuild problem what we need to solve here.
 // Without this flag-icon would emit two icons with the same name although they are located in different directories.

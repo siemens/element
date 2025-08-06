@@ -30,7 +30,7 @@ Use this component when you want to give the user more details about the signal 
 ### Usage
 
 ```ts
-import { SiConnectionStrengthComponent } from '@siemens/element-ng/connection-strength';
+import { SiConnectionStrengthComponent } from '@spike-rabbit/element-ng/connection-strength';
 
 @Component({
   imports: [SiConnectionStrengthComponent, ...]

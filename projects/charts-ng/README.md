@@ -8,7 +8,7 @@ To use the Element Charts Angular components in your project, add them to your d
 by executing:
 
 ```sh
-npm install --save @siemens/charts-ng
+npm install --save @spike-rabbit/charts-ng
 ```
 
 You also have to install the peer dependencies of Element Charts.
@@ -24,7 +24,7 @@ Import the library to your Angular `AppModule`, mostly residing in your
 // [...]
 
 // Import this library
-import { SiChartsNgModule } from '@siemens/charts-ng';
+import { SiChartsNgModule } from '@spike-rabbit/charts-ng';
 
 @NgModule({
   declarations: [AppComponent],

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Widget } from '@siemens/dashboards-ng';
+import { Widget } from '@spike-rabbit/dashboards-ng';
 
 const loaderFunction = (name: string): Promise<any> => {
   if (

@@ -104,7 +104,7 @@ default styles of ECharts itself.
 The desired default theme can be loaded anywhere in your project like this:
 
 ```typescript
-import { themeSupport } from '@siemens/charts-ng';
+import { themeSupport } from '@spike-rabbit/charts-ng';
 import { themeNameA } from 'your/theme-a';
 import { themeNameB } from 'your/theme-b';
 

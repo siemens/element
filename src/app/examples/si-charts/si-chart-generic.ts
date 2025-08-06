@@ -3,8 +3,13 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component } from '@angular/core';
-import { EChartOption, SiChartComponent, themeElement, themeSupport } from '@siemens/charts-ng';
-import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
+import {
+  EChartOption,
+  SiChartComponent,
+  themeElement,
+  themeSupport
+} from '@spike-rabbit/charts-ng';
+import { SiResizeObserverDirective } from '@spike-rabbit/element-ng/resize-observer';
 
 themeSupport.setDefault(themeElement);
 

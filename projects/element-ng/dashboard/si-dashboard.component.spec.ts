@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ElementDimensions, ResizeObserverService } from '@siemens/element-ng/resize-observer';
+import { ElementDimensions, ResizeObserverService } from '@spike-rabbit/element-ng/resize-observer';
 import { Subject } from 'rxjs';
 
 import { SiDashboardCardComponent, SiDashboardComponent } from './index';

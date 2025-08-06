@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { EntityStatusType, MenuItem } from '@siemens/element-ng/common';
-import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { EntityStatusType, MenuItem } from '@spike-rabbit/element-ng/common';
+import { TranslatableString } from '@spike-rabbit/element-translate-ng/translate';
 
 /** @deprecated Use the new `si-application-header` instead. */
 export interface AccountItem extends MenuItem {

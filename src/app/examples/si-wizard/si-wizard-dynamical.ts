@@ -4,9 +4,9 @@
  */
 import { AsyncPipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
-import { SiWizardComponent, SiWizardStepComponent } from '@siemens/element-ng/wizard';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { SiEmptyStateComponent } from '@spike-rabbit/element-ng/empty-state';
+import { SiWizardComponent, SiWizardStepComponent } from '@spike-rabbit/element-ng/wizard';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 import { BehaviorSubject } from 'rxjs';
 
 interface StepInfo {

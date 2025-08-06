@@ -4,7 +4,7 @@
  */
 import { Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { EntityStatusType } from '@siemens/element-ng/common';
+import { EntityStatusType } from '@spike-rabbit/element-ng/common';
 
 import { SiAvatarComponent } from './index';
 

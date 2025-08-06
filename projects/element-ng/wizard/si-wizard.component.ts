@@ -17,7 +17,7 @@ import {
   untracked,
   viewChild
 } from '@angular/core';
-import { WebComponentContentChildren } from '@siemens/element-ng/common';
+import { WebComponentContentChildren } from '@spike-rabbit/element-ng/common';
 import {
   addIcons,
   elementCancel,
@@ -29,9 +29,9 @@ import {
   elementRight4,
   elementWarningFilled,
   SiIconNextComponent
-} from '@siemens/element-ng/icon';
-import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+} from '@spike-rabbit/element-ng/icon';
+import { SiResizeObserverDirective } from '@spike-rabbit/element-ng/resize-observer';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 import { SiWizardStepComponent } from './si-wizard-step.component';
 

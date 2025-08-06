@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component } from '@angular/core';
-import { SiIconStatusComponent } from '@siemens/element-ng/icon-status';
+import { SiIconStatusComponent } from '@spike-rabbit/element-ng/icon-status';
 
 @Component({
   selector: 'app-sample',

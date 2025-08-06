@@ -9,13 +9,13 @@ import {
   inject,
   OnInit
 } from '@angular/core';
-import { SiCardComponent } from '@siemens/element-ng/card';
-import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
-import { SiLinkWidgetComponent } from '@siemens/element-ng/dashboard';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
-import { Link } from '@siemens/element-ng/link';
-import { MenuItem } from '@siemens/element-ng/menu';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { SiCardComponent } from '@spike-rabbit/element-ng/card';
+import { ContentActionBarMainItem } from '@spike-rabbit/element-ng/content-action-bar';
+import { SiLinkWidgetComponent } from '@spike-rabbit/element-ng/dashboard';
+import { SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
+import { Link } from '@spike-rabbit/element-ng/link';
+import { MenuItem } from '@spike-rabbit/element-ng/menu';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

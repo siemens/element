@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { SiCardComponent } from '@siemens/element-ng/card';
-import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
-import { SiIconNextComponent, SiStatusIconComponent } from '@siemens/element-ng/icon';
-import { Link, SiLinkDirective } from '@siemens/element-ng/link';
-import { MenuItem } from '@siemens/element-ng/menu';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { SiCardComponent } from '@spike-rabbit/element-ng/card';
+import { ContentActionBarMainItem } from '@spike-rabbit/element-ng/content-action-bar';
+import { SiIconNextComponent, SiStatusIconComponent } from '@spike-rabbit/element-ng/icon';
+import { Link, SiLinkDirective } from '@spike-rabbit/element-ng/link';
+import { MenuItem } from '@spike-rabbit/element-ng/menu';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

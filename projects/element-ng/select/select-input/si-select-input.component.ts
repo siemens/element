@@ -13,9 +13,9 @@ import {
   output,
   TemplateRef
 } from '@angular/core';
-import { SiAutoCollapsableListModule } from '@siemens/element-ng/auto-collapsable-list';
-import { addIcons, elementDown2, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiAutoCollapsableListModule } from '@spike-rabbit/element-ng/auto-collapsable-list';
+import { addIcons, elementDown2, SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
+import { SiTranslatePipe, TranslatableString } from '@spike-rabbit/element-translate-ng/translate';
 
 import {
   SI_SELECT_OPTIONS_STRATEGY,

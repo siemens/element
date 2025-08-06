@@ -8,9 +8,12 @@ import {
   SiApplicationHeaderComponent,
   SiHeaderBrandDirective,
   SiHeaderLogoDirective
-} from '@siemens/element-ng/application-header';
-import { NavbarVerticalItem, SiNavbarVerticalComponent } from '@siemens/element-ng/navbar-vertical';
-import { LOG_EVENT } from '@siemens/live-preview';
+} from '@spike-rabbit/element-ng/application-header';
+import {
+  NavbarVerticalItem,
+  SiNavbarVerticalComponent
+} from '@spike-rabbit/element-ng/navbar-vertical';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

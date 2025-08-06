@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Column } from '@siemens/element-ng/column-selection-dialog';
+import { Column } from '@spike-rabbit/element-ng/column-selection-dialog';
 
 export const headerData: Column[] = [
   {

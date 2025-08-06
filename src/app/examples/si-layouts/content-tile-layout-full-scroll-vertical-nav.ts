@@ -5,7 +5,10 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
+import {
+  SiAccordionComponent,
+  SiCollapsiblePanelComponent
+} from '@spike-rabbit/element-ng/accordion';
 import {
   SiApplicationHeaderComponent,
   SiHeaderAccountItemComponent,
@@ -13,22 +16,25 @@ import {
   SiHeaderBrandDirective,
   SiHeaderLogoDirective,
   SiLaunchpadFactoryComponent
-} from '@siemens/element-ng/application-header';
-import { SiCardComponent } from '@siemens/element-ng/card';
+} from '@spike-rabbit/element-ng/application-header';
+import { SiCardComponent } from '@spike-rabbit/element-ng/card';
 import {
   SiHeaderDropdownComponent,
   SiHeaderDropdownTriggerDirective
-} from '@siemens/element-ng/header-dropdown';
-import { NavbarVerticalItem, SiNavbarVerticalComponent } from '@siemens/element-ng/navbar-vertical';
+} from '@spike-rabbit/element-ng/header-dropdown';
+import {
+  NavbarVerticalItem,
+  SiNavbarVerticalComponent
+} from '@spike-rabbit/element-ng/navbar-vertical';
 import {
   SidePanelMode,
   SidePanelSize,
   SiSidePanelComponent,
   SiSidePanelContentComponent
-} from '@siemens/element-ng/side-panel';
-import { SiStatusBarComponent, StatusBarItem } from '@siemens/element-ng/status-bar';
-import { SiSystemBannerComponent } from '@siemens/element-ng/system-banner';
-import { LOG_EVENT } from '@siemens/live-preview';
+} from '@spike-rabbit/element-ng/side-panel';
+import { SiStatusBarComponent, StatusBarItem } from '@spike-rabbit/element-ng/status-bar';
+import { SiSystemBannerComponent } from '@spike-rabbit/element-ng/system-banner';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 import { delay, of } from 'rxjs';
 
 @Component({

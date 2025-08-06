@@ -17,7 +17,7 @@ import {
   elementFavorites,
   elementFavoritesFilled,
   SiIconNextComponent
-} from '@siemens/element-ng/icon';
+} from '@spike-rabbit/element-ng/icon';
 
 import { SiApplicationHeaderComponent } from '../si-application-header.component';
 

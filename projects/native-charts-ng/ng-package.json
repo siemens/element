@@ -1,6 +1,6 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../dist/@siemens/native-charts-ng",
+  "dest": "../../dist/@spike-rabbit/native-charts-ng",
   "lib": {
     "entryFile": "public-api.ts"
   }

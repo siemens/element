@@ -12,7 +12,7 @@ import {
   input,
   signal
 } from '@angular/core';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 import { SiFormItemComponent } from '../si-form-item/si-form-item.component';
 

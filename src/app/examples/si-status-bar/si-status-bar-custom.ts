@@ -4,10 +4,10 @@
  */
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { SiCircleStatusModule } from '@siemens/element-ng/circle-status';
-import { BlinkService } from '@siemens/element-ng/common';
-import { SiStatusBarComponent, StatusBarItem } from '@siemens/element-ng/status-bar';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { SiCircleStatusModule } from '@spike-rabbit/element-ng/circle-status';
+import { BlinkService } from '@spike-rabbit/element-ng/common';
+import { SiStatusBarComponent, StatusBarItem } from '@spike-rabbit/element-ng/status-bar';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 import { Subscription, timer } from 'rxjs';
 
 @Component({

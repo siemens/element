@@ -7,8 +7,8 @@ import {
   SiSplitComponent,
   SiSplitPartComponent,
   SplitOrientation
-} from '@siemens/element-ng/split';
-import { LOG_EVENT } from '@siemens/live-preview';
+} from '@spike-rabbit/element-ng/split';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { WidgetConfig } from '@siemens/dashboards-ng';
+import { WidgetConfig } from '@spike-rabbit/dashboards-ng';
 
 export const WIDGET: WidgetConfig[] = [
   {

@@ -6,7 +6,7 @@ import { Directive } from '@angular/core';
 import {
   SiSelectComplexOptionsDirective,
   SiSelectSingleValueDirective
-} from '@siemens/element-ng/select';
+} from '@spike-rabbit/element-ng/select';
 
 /**
  * This directive provides the si-select options and value strategy for the phone number input.

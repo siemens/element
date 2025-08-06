@@ -5,7 +5,10 @@
 import { Component, input, viewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ResizeObserverService, SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
+import {
+  ResizeObserverService,
+  SiResizeObserverModule
+} from '@spike-rabbit/element-ng/resize-observer';
 
 import { runOnPushChangeDetection } from '../test-helpers/change-detection.helper';
 import { SiWizardStepComponent, SiWizardComponent as TestComponent } from './index';

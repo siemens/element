@@ -4,9 +4,9 @@
  */
 import { NgClass } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SelectOption, SelectOptionLegacy } from '@siemens/element-ng/select';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
+import { SelectOption, SelectOptionLegacy } from '@spike-rabbit/element-ng/select';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 @Component({
   selector: 'si-readonly-threshold-option',

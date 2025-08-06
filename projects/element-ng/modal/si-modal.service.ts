@@ -17,8 +17,11 @@ import {
   TemplateRef,
   Type
 } from '@angular/core';
-import { isRTL } from '@siemens/element-ng/common';
-import { SiNoTranslateService, SiTranslateService } from '@siemens/element-translate-ng/translate';
+import { isRTL } from '@spike-rabbit/element-ng/common';
+import {
+  SiNoTranslateService,
+  SiTranslateService
+} from '@spike-rabbit/element-translate-ng/translate';
 
 import { ModalRef } from './modalref';
 import { SiModalComponent } from './si-modal.component';

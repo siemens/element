@@ -4,7 +4,7 @@
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CopyrightDetails, SI_COPYRIGHT_DETAILS } from '@siemens/element-ng/copyright-notice';
+import { CopyrightDetails, SI_COPYRIGHT_DETAILS } from '@spike-rabbit/element-ng/copyright-notice';
 
 import { SiCopyrightNoticeComponent } from './si-copyright-notice.component';
 

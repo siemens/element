@@ -13,10 +13,10 @@ import {
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { SiLoadingSpinnerModule } from '@siemens/element-ng/loading-spinner';
-import { MenuItem } from '@siemens/element-ng/menu';
-import { ResizeObserverService } from '@siemens/element-ng/resize-observer';
-import { MenuItemsProvider, SiTreeViewModule } from '@siemens/element-ng/tree-view';
+import { SiLoadingSpinnerModule } from '@spike-rabbit/element-ng/loading-spinner';
+import { MenuItem } from '@spike-rabbit/element-ng/menu';
+import { ResizeObserverService } from '@spike-rabbit/element-ng/resize-observer';
+import { MenuItemsProvider, SiTreeViewModule } from '@spike-rabbit/element-ng/tree-view';
 import { BehaviorSubject } from 'rxjs';
 
 import { runOnPushChangeDetection } from '../test-helpers';

@@ -5,7 +5,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslateModule } from '@spike-rabbit/element-translate-ng/translate';
 
 import { TestWidgetEditorComponent } from './test-widget-editor.component';
 import { TestWidgetComponent } from './test-widget.component';

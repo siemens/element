@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, input } from '@angular/core';
-import { WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
-import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
+import { WidgetConfig, WidgetInstance } from '@spike-rabbit/dashboards-ng';
+import { ContentActionBarMainItem } from '@spike-rabbit/element-ng/content-action-bar';
 
 @Component({
   selector: 'app-hello-widget',

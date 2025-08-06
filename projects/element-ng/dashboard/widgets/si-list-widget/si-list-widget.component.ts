@@ -4,18 +4,21 @@
  */
 import { NgClass } from '@angular/common';
 import { booleanAttribute, Component, computed, input, model, OnChanges } from '@angular/core';
-import { SiCardComponent } from '@siemens/element-ng/card';
-import { AccentLineType } from '@siemens/element-ng/common';
-import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
+import { SiCardComponent } from '@spike-rabbit/element-ng/card';
+import { AccentLineType } from '@spike-rabbit/element-ng/common';
+import { ContentActionBarMainItem } from '@spike-rabbit/element-ng/content-action-bar';
 import {
   addIcons,
   SiIconNextComponent,
   elementRight2,
   elementSortDown,
   elementSortUp
-} from '@siemens/element-ng/icon';
-import { Link, SiLinkDirective } from '@siemens/element-ng/link';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+} from '@spike-rabbit/element-ng/icon';
+import { Link, SiLinkDirective } from '@spike-rabbit/element-ng/link';
+import {
+  SiTranslateModule,
+  TranslatableString
+} from '@spike-rabbit/element-translate-ng/translate';
 
 import { SiWidgetBaseComponent } from '../si-widget-base.component';
 import { SiListWidgetBodyComponent, SortOrder } from './si-list-widget-body.component';

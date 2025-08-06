@@ -13,13 +13,13 @@ import {
   output,
   signal
 } from '@angular/core';
-import { SiCardComponent } from '@siemens/element-ng/card';
-import { MenuItem } from '@siemens/element-ng/common';
+import { SiCardComponent } from '@spike-rabbit/element-ng/card';
+import { MenuItem } from '@spike-rabbit/element-ng/common';
 import {
   ContentActionBarMainItem,
   SiContentActionBarComponent
-} from '@siemens/element-ng/content-action-bar';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+} from '@spike-rabbit/element-ng/content-action-bar';
+import { SiTranslateModule } from '@spike-rabbit/element-translate-ng/translate';
 
 import { SiDashboardService } from './si-dashboard.service';
 

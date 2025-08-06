@@ -82,7 +82,7 @@ feedback.
 ### Usage
 
 ```ts
-import { SiThresholdComponent } from '@siemens/element-ng/threshold';
+import { SiThresholdComponent } from '@spike-rabbit/element-ng/threshold';
 
 @Component({
   imports: [SiThresholdComponent, ...]

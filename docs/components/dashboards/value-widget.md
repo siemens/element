@@ -93,7 +93,7 @@ To simplify the usage and reduce the code, Element offers a Angular component as
 with streamlined inputs.
 
 ```ts
-import { SiValueWidgetComponent } from '@siemens/element-ng/dashboard';
+import { SiValueWidgetComponent } from '@spike-rabbit/element-ng/dashboard';
 
 @Component({
   :

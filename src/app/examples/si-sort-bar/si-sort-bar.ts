@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { SiSortBarComponent } from '@siemens/element-ng/sort-bar';
-import { LOG_EVENT } from '@siemens/live-preview';
+import { SiSortBarComponent } from '@spike-rabbit/element-ng/sort-bar';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 @Component({
   selector: 'app-sample',

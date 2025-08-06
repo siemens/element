@@ -3,9 +3,12 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, input, TemplateRef, ViewChild } from '@angular/core';
-import { WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
-import { SiTimelineWidgetBodyComponent, SiTimelineWidgetItem } from '@siemens/element-ng/dashboard';
-import { Link, SiLinkDirective } from '@siemens/element-ng/link';
+import { WidgetConfig, WidgetInstance } from '@spike-rabbit/dashboards-ng';
+import {
+  SiTimelineWidgetBodyComponent,
+  SiTimelineWidgetItem
+} from '@spike-rabbit/element-ng/dashboard';
+import { Link, SiLinkDirective } from '@spike-rabbit/element-ng/link';
 
 @Component({
   selector: 'app-timeline-widget',

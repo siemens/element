@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component } from '@angular/core';
-import { SiBreadcrumbModule } from '@siemens/element-ng/breadcrumb';
+import { SiBreadcrumbModule } from '@spike-rabbit/element-ng/breadcrumb';
 
 @Component({
   selector: 'app-sample',

@@ -52,7 +52,7 @@ The thumb can optionally contain an icon.
 ### Usage
 
 ```ts
-import { SiSliderComponent } from '@siemens/element-ng/slider';
+import { SiSliderComponent } from '@spike-rabbit/element-ng/slider';
 
 @Component({
   imports: [SiSliderComponent, ...]

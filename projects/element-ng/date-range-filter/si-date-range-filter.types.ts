@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { TranslatableString } from '@spike-rabbit/element-translate-ng/translate';
 
 /**
  * Simple DateRangeFilter preset based on offset from now

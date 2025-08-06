@@ -19,11 +19,11 @@ import {
   viewChild,
   ViewContainerRef
 } from '@angular/core';
-import { SiActionDialogService } from '@siemens/element-ng/action-modal';
-import { SiCircleStatusComponent } from '@siemens/element-ng/circle-status';
-import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
-import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiActionDialogService } from '@spike-rabbit/element-ng/action-modal';
+import { SiCircleStatusComponent } from '@spike-rabbit/element-ng/circle-status';
+import { SiEmptyStateComponent } from '@spike-rabbit/element-ng/empty-state';
+import { SiSearchBarComponent } from '@spike-rabbit/element-ng/search-bar';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 import { Subscription } from 'rxjs';
 
 import {

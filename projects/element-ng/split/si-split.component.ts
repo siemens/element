@@ -27,7 +27,7 @@ import {
   isRTL,
   SI_UI_STATE_SERVICE,
   WebComponentContentChildren
-} from '@siemens/element-ng/common';
+} from '@spike-rabbit/element-ng/common';
 import { asapScheduler, fromEvent, merge } from 'rxjs';
 import { observeOn, takeUntil } from 'rxjs/operators';
 

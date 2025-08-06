@@ -43,37 +43,37 @@ export default {
     [
       '@semantic-release/npm',
       {
-        pkgRoot: 'dist/@siemens/element-ng'
+        pkgRoot: 'dist/@spike-rabbit/element-ng'
       }
     ],
     [
       '@semantic-release/npm',
       {
-        pkgRoot: 'dist/@siemens/element-translate-ng'
+        pkgRoot: 'dist/@spike-rabbit/element-translate-ng'
       }
     ],
     [
       '@semantic-release/npm',
       {
-        pkgRoot: 'dist/@siemens/live-preview'
+        pkgRoot: 'dist/@spike-rabbit/live-preview'
       }
     ],
     [
       '@semantic-release/npm',
       {
-        pkgRoot: 'dist/@siemens/charts-ng'
+        pkgRoot: 'dist/@spike-rabbit/charts-ng'
       }
     ],
     [
       '@semantic-release/npm',
       {
-        pkgRoot: 'dist/@siemens/native-charts-ng'
+        pkgRoot: 'dist/@spike-rabbit/native-charts-ng'
       }
     ],
     [
       '@semantic-release/npm',
       {
-        pkgRoot: 'dist/@siemens/dashboards-ng'
+        pkgRoot: 'dist/@spike-rabbit/dashboards-ng'
       }
     ],
     [

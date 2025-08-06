@@ -12,7 +12,7 @@ compliance and improved keyboard navigation.
 ### Usage
 
 ```ts
-import { SiTabNextComponent, SiTabsetNextComponent } from '@siemens/element-ng/tabs-next';
+import { SiTabNextComponent, SiTabsetNextComponent } from '@spike-rabbit/element-ng/tabs-next';
 
 @Component({
   imports: [

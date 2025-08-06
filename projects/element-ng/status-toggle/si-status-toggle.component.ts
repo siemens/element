@@ -20,9 +20,9 @@ import {
   viewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { isRTL, listenGlobal } from '@siemens/element-ng/common';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { isRTL, listenGlobal } from '@spike-rabbit/element-ng/common';
+import { SiIconNextComponent } from '@spike-rabbit/element-ng/icon';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 import { StatusToggleItem } from './status-toggle.model';
 

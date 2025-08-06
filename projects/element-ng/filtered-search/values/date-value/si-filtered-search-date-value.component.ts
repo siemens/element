@@ -20,8 +20,8 @@ import {
   isValid,
   SiDatepickerDirective,
   SiDatepickerOverlayDirective
-} from '@siemens/element-ng/datepicker';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+} from '@spike-rabbit/element-ng/datepicker';
+import { SiTranslatePipe } from '@spike-rabbit/element-translate-ng/translate';
 
 import { getISODateString } from '../../si-filtered-search-helper';
 import { SiFilteredSearchValueBase } from '../si-filtered-search-value.base';

@@ -14,7 +14,7 @@ for details how it works and how to use it.
 Install the library as follows:
 
 ```sh
-npm install --save @siemens/element-translate-ng
+npm install --save @spike-rabbit/element-translate-ng
 ```
 
 An important part of the library is the extraction of translatable keys as a TypeScript interface
@@ -39,7 +39,7 @@ The config file looks like this
       "locationPrefix": "projects/element-ng",
       "keysFile": "projects/element-ng/translate/si-translatable-keys.interface.ts",
       "keysInterfaceName": "SiTranslatableKeys",
-      "messagesFile": "dist/@siemens/element-ng/template-i18n.json"
+      "messagesFile": "dist/@spike-rabbit/element-ng/template-i18n.json"
     }
   ]
 }

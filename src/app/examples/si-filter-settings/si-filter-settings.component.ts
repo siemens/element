@@ -4,8 +4,8 @@
  */
 import { booleanAttribute, Component, Input, output, OutputEmitterRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiCardComponent } from '@siemens/element-ng/card';
-import { BackgroundColorVariant } from '@siemens/element-ng/common';
+import { SiCardComponent } from '@spike-rabbit/element-ng/card';
+import { BackgroundColorVariant } from '@spike-rabbit/element-ng/common';
 @Component({
   selector: 'app-filter-settings',
   imports: [SiCardComponent, FormsModule],

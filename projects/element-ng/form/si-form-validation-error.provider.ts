@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Provider } from '@angular/core';
-import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { TranslatableString } from '@spike-rabbit/element-translate-ng/translate';
 
 import { SiFormValidationErrorMapper } from './si-form-validation-error.model';
 import { buildDefaults, SiFormValidationErrorService } from './si-form-validation-error.service';

@@ -77,7 +77,7 @@ will be used as a `routerLink`.
 ### Usage
 
 ```ts
-import { SiBreadcrumbRouterComponent } from '@siemens/element-ng/breadcrumb';
+import { SiBreadcrumbRouterComponent } from '@spike-rabbit/element-ng/breadcrumb';
 
 @Component({
   imports: [SiBreadcrumbRouterComponent,...]
@@ -98,7 +98,7 @@ and provides the `BreadcrumbItem` objects. Using the injector token
 implementation.
 
 ```ts
-import { SI_BREADCRUMB_RESOLVER_SERVICE, SiBreadcrumbRouterComponent } from '@siemens/element-ng/breadcrumb-router';
+import { SI_BREADCRUMB_RESOLVER_SERVICE, SiBreadcrumbRouterComponent } from '@spike-rabbit/element-ng/breadcrumb-router';
 
 ...
 
@@ -195,8 +195,8 @@ There are scenarios where the default resolver is not sufficient. In those cases
 ```ts
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot } from '@angular/router';
-import { BreadcrumbItem } from '@siemens/element-ng/breadcrumb';
-import { SiBreadcrumbDefaultResolverService } from '@siemens/element-ng/breadcrumb-router';
+import { BreadcrumbItem } from '@spike-rabbit/element-ng/breadcrumb';
+import { SiBreadcrumbDefaultResolverService } from '@spike-rabbit/element-ng/breadcrumb-router';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -217,7 +217,7 @@ The resolver uses the following type:
 Afterwards you need to provide the custom resolver, instead of the default resolver, in your `app.module.ts`:
 
 ```ts
-import { SI_BREADCRUMB_RESOLVER_SERVICE, SiBreadcrumbRouterComponent } from '@siemens/element-ng/breadcrumb-router';
+import { SI_BREADCRUMB_RESOLVER_SERVICE, SiBreadcrumbRouterComponent } from '@spike-rabbit/element-ng/breadcrumb-router';
 
 ...
 

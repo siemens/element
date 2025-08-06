@@ -4,7 +4,7 @@
  */
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiCircleStatusComponent } from '@siemens/element-ng/circle-status';
+import { SiCircleStatusComponent } from '@spike-rabbit/element-ng/circle-status';
 
 @Component({
   selector: 'app-sample',

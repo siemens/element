@@ -5,7 +5,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { SiTranslateNgxTModule } from '@siemens/element-translate-ng/ngx-translate';
+import { SiTranslateNgxTModule } from '@spike-rabbit/element-translate-ng/ngx-translate';
 
 import { IsoLanguageValue, SiLanguageSwitcherComponent } from './index';
 

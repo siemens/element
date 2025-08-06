@@ -19,9 +19,9 @@ import {
   ResolvedDateRange,
   SiDateRangeCalculationService,
   SiDateRangeFilterComponent
-} from '@siemens/element-ng/date-range-filter';
-import { SiFormItemComponent } from '@siemens/element-ng/form';
-import { LOG_EVENT } from '@siemens/live-preview';
+} from '@spike-rabbit/element-ng/date-range-filter';
+import { SiFormItemComponent } from '@spike-rabbit/element-ng/form';
+import { LOG_EVENT } from '@spike-rabbit/live-preview';
 
 const ONE_DAY = 60 * 60 * 24 * 1000;
 

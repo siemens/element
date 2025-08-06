@@ -5,7 +5,7 @@ module.exports = function (config) {
   config.set(
     require('../../karma.shared.cjs').buildConfig(config, {
       name: 'dashboards-ng',
-      testSuite: '@siemens/dashboards-ng'
+      testSuite: '@spike-rabbit/dashboards-ng'
     })
   );
 };

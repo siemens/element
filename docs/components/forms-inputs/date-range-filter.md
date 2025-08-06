@@ -69,7 +69,7 @@ In addition, the component offers a configurable list of named preset range defi
 ### Usage
 
 ```ts
-import { SiDateRangeFilterComponent } from '@siemens/element-ng/date-range-filter';
+import { SiDateRangeFilterComponent } from '@spike-rabbit/element-ng/date-range-filter';
 
 @Component({
   imports: [SiDateRangeFilterComponent, ...]

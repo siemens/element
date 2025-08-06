@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MenuItem } from '@siemens/element-ng/menu';
-import { SiTreeViewComponent, TreeItem } from '@siemens/element-ng/tree-view';
+import { MenuItem } from '@spike-rabbit/element-ng/menu';
+import { SiTreeViewComponent, TreeItem } from '@spike-rabbit/element-ng/tree-view';
 
 @Component({
   selector: 'app-sample',

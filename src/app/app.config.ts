@@ -18,22 +18,22 @@ import {
 } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { provideSiDatatableConfig } from '@siemens/element-ng/datatable';
-import { SiFormlyModule } from '@siemens/element-ng/formly';
-import { provideIconConfig } from '@siemens/element-ng/icon';
+import { provideSiDatatableConfig } from '@spike-rabbit/element-ng/datatable';
+import { SiFormlyModule } from '@spike-rabbit/element-ng/formly';
+import { provideIconConfig } from '@spike-rabbit/element-ng/icon';
 import {
   SI_LOCALE_CONFIG,
   SiLocaleConfig,
   SiLocaleId,
   SiLocaleService
-} from '@siemens/element-ng/localization';
-import { provideNgxTranslateForElement } from '@siemens/element-translate-ng/ngx-translate';
+} from '@spike-rabbit/element-ng/localization';
+import { provideNgxTranslateForElement } from '@spike-rabbit/element-translate-ng/ngx-translate';
 import {
   SiLivePreviewLocaleApi,
   SiLivePreviewThemeApi,
   SiLivePreviewModule,
   SiLivePreviewRoutingModule
-} from '@siemens/live-preview';
+} from '@spike-rabbit/live-preview';
 import { lastValueFrom, Observable, take } from 'rxjs';
 
 import { FileUploadInterceptor } from './examples/si-file-uploader/file-upload-interceptor';
@@ -43,7 +43,7 @@ import { WebpackTranslateLoader } from './webpack-translate-loader';
 
 const componentLoader =
   // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
-  require('@siemens/live-preview/component-loader?root=src&examples=app/examples/**/*.ts&webcomponents=true!./app.config').default;
+  require('@spike-rabbit/live-preview/component-loader?root=src&examples=app/examples/**/*.ts&webcomponents=true!./app.config').default;
 
 // On locale change, we dynamically reload the locale definition
 // for angular. With this configuration, we only load the current

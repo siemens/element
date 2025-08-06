@@ -7,8 +7,8 @@ import { provideLocationMocks } from '@angular/common/testing';
 import { ChangeDetectionStrategy, Component, HostBinding, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { SiApplicationHeaderHarness } from '@siemens/element-ng/application-header/testing/si-application-header.harness';
-import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
+import { SiApplicationHeaderHarness } from '@spike-rabbit/element-ng/application-header/testing/si-application-header.harness';
+import { runOnPushChangeDetection } from '@spike-rabbit/element-ng/test-helpers';
 
 import { SiNavbarPrimaryComponent, SiNavbarPrimaryComponent as TestComponent } from '.';
 import { AppItem, AppItemCategory } from './si-navbar-primary.model';

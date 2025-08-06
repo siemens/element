@@ -53,7 +53,7 @@ an input. The possible states are defined in the enum
 ### Usage
 
 ```ts
-import { SiResultDetailsListComponent } from '@siemens/element-ng/result-details-list';
+import { SiResultDetailsListComponent } from '@spike-rabbit/element-ng/result-details-list';
 
 @Component({
   imports: [
