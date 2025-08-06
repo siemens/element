@@ -3,7 +3,11 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, computed, input } from '@angular/core';
-import { injectSiTranslateService, SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import {
+  injectSiTranslateService,
+  SiTranslatePipe,
+  t
+} from '@siemens/element-translate-ng/translate';
 
 import { IsoLanguageValue } from './iso-language-value';
 
@@ -26,11 +30,11 @@ export class SiLanguageSwitcherComponent {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_LANGUAGE_SWITCHER.LABEL:Language switcher`
+   * t(() => $localize`:@@SI_LANGUAGE_SWITCHER.LABEL:Language switcher`)
    * ```
    */
   readonly languageSwitcherLabel = input(
-    $localize`:@@SI_LANGUAGE_SWITCHER.LABEL:Language switcher`
+    t(() => $localize`:@@SI_LANGUAGE_SWITCHER.LABEL:Language switcher`)
   );
 
   /**

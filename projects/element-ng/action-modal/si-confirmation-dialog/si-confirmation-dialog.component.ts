@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core
 import { SiIconNextComponent } from '@siemens/element-ng/icon';
 import { SiLoadingButtonComponent } from '@siemens/element-ng/loading-spinner';
 import { ModalRef } from '@siemens/element-ng/modal';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { take } from 'rxjs';
 
 import { ConfirmationDialogResult } from '../si-action-dialog.types';
@@ -27,17 +27,17 @@ export class SiConfirmationDialogComponent {
   /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_CONFIRMATION_DIALOG.YES:Yes`
+   * t(() => $localize`:@@SI_CONFIRMATION_DIALOG.YES:Yes`)
    * ```
    */
-  readonly confirmBtnName = input($localize`:@@SI_CONFIRMATION_DIALOG.YES:Yes`);
+  readonly confirmBtnName = input(t(() => $localize`:@@SI_CONFIRMATION_DIALOG.YES:Yes`));
   /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_CONFIRMATION_DIALOG.NO:No`
+   * t(() => $localize`:@@SI_CONFIRMATION_DIALOG.NO:No`)
    * ```
    */
-  readonly declineBtnName = input($localize`:@@SI_CONFIRMATION_DIALOG.NO:No`);
+  readonly declineBtnName = input(t(() => $localize`:@@SI_CONFIRMATION_DIALOG.NO:No`));
   /**
    * @defaultValue
    * ```

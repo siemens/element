@@ -10,7 +10,7 @@ import { SiContentActionBarComponent } from '@siemens/element-ng/content-action-
 import { SiLinkDirective } from '@siemens/element-ng/link';
 import { SiLoadingSpinnerComponent } from '@siemens/element-ng/loading-spinner';
 import { SiResponsiveContainerDirective } from '@siemens/element-ng/resize-observer';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslateModule, t } from '@siemens/element-translate-ng/translate';
 
 import { DashboardToolbarItem } from '../../model/si-dashboard-toolbar.model';
 
@@ -98,9 +98,9 @@ export class SiDashboardToolbarComponent {
   // eslint-disable-next-line @angular-eslint/no-output-native
   readonly cancel = output<void>();
 
-  protected labelEdit = $localize`:@@DASHBOARD.EDIT:Edit`;
-  protected labelCancel = $localize`:@@DASHBOARD.CANCEL:Cancel`;
-  protected labelSave = $localize`:@@DASHBOARD.SAVE:Save`;
+  protected labelEdit = t(() => $localize`:@@DASHBOARD.EDIT:Edit`);
+  protected labelCancel = t(() => $localize`:@@DASHBOARD.CANCEL:Cancel`);
+  protected labelSave = t(() => $localize`:@@DASHBOARD.SAVE:Save`);
 
   protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });
 

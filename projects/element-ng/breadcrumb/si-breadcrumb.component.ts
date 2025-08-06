@@ -24,7 +24,11 @@ import {
 } from '@siemens/element-ng/icon';
 import { SiLinkDirective } from '@siemens/element-ng/link';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
-import { injectSiTranslateService, SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import {
+  injectSiTranslateService,
+  SiTranslatePipe,
+  t
+} from '@siemens/element-translate-ng/translate';
 import { merge, of, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
@@ -83,10 +87,10 @@ export class SiBreadcrumbComponent implements OnChanges, OnDestroy {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_BREADCRUMB:Breadcrumbs`
+   * t(() => $localize`:@@SI_BREADCRUMB:Breadcrumbs`)
    * ```
    */
-  readonly ariaLabel = input($localize`:@@SI_BREADCRUMB:Breadcrumbs`);
+  readonly ariaLabel = input(t(() => $localize`:@@SI_BREADCRUMB:Breadcrumbs`));
 
   private translationSubscription?: Subscription;
   private itemsProcessed = false;

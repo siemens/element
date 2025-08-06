@@ -22,6 +22,7 @@ import {
   TemplateRef
 } from '@angular/core';
 import { SiAutocompleteDirective } from '@siemens/element-ng/autocomplete';
+import { t } from '@siemens/element-translate-ng/translate';
 import { isObservable, Observable, of, ReplaySubject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -206,11 +207,11 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_TYPEAHEAD.AUTOCOMPLETE_LIST_LABEL:Suggestions`
+   * t(() => $localize`:@@SI_TYPEAHEAD.AUTOCOMPLETE_LIST_LABEL:Suggestions`)
    * ```
    */
   readonly typeaheadAutocompleteListLabel = input(
-    $localize`:@@SI_TYPEAHEAD.AUTOCOMPLETE_LIST_LABEL:Suggestions`
+    t(() => $localize`:@@SI_TYPEAHEAD.AUTOCOMPLETE_LIST_LABEL:Suggestions`)
   );
 
   /**

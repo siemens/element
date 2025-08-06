@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core
 import { SiIconNextComponent } from '@siemens/element-ng/icon';
 import { SiLoadingButtonComponent } from '@siemens/element-ng/loading-spinner';
 import { ModalRef } from '@siemens/element-ng/modal';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { take } from 'rxjs';
 
 import { DeleteConfirmationDialogResult } from '../si-action-dialog.types';
@@ -25,26 +25,33 @@ export class SiDeleteConfirmationDialogComponent {
   /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_DELETE_CONFIRMATION_DIALOG.MESSAGE:Do you really want to delete the selected elements?`
+   * t(() => $localize`:@@SI_DELETE_CONFIRMATION_DIALOG.MESSAGE:Do you really want to delete the selected elements?`)
    * ```
    */
   readonly message = input(
-    $localize`:@@SI_DELETE_CONFIRMATION_DIALOG.MESSAGE:Do you really want to delete the selected elements?`
+    t(
+      () =>
+        $localize`:@@SI_DELETE_CONFIRMATION_DIALOG.MESSAGE:Do you really want to delete the selected elements?`
+    )
   );
   /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_DELETE_CONFIRMATION_DIALOG.DELETE_BTN:Delete`
+   * t(() => $localize`:@@SI_DELETE_CONFIRMATION_DIALOG.DELETE_BTN:Delete`)
    * ```
    */
-  readonly deleteBtnName = input($localize`:@@SI_DELETE_CONFIRMATION_DIALOG.DELETE_BTN:Delete`);
+  readonly deleteBtnName = input(
+    t(() => $localize`:@@SI_DELETE_CONFIRMATION_DIALOG.DELETE_BTN:Delete`)
+  );
   /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_DELETE_CONFIRMATION_DIALOG.CANCEL_BTN:Cancel`
+   * t(() => $localize`:@@SI_DELETE_CONFIRMATION_DIALOG.CANCEL_BTN:Cancel`)
    * ```
    */
-  readonly cancelBtnName = input($localize`:@@SI_DELETE_CONFIRMATION_DIALOG.CANCEL_BTN:Cancel`);
+  readonly cancelBtnName = input(
+    t(() => $localize`:@@SI_DELETE_CONFIRMATION_DIALOG.CANCEL_BTN:Cancel`)
+  );
   /**
    * @defaultValue
    * ```

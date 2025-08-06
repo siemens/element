@@ -29,7 +29,7 @@ import {
   SiIconNextComponent
 } from '@siemens/element-ng/icon';
 import { ModalRef, SiModalService } from '@siemens/element-ng/modal';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { CropperPosition, ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
 
 import { SiImageCropperStyleComponent } from './si-image-cropper-style.component';
@@ -101,11 +101,14 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_PHOTO_UPLOAD.ERROR_FILE_TYPE:The image file is not valid. Please upload a PNG or JP(E)G.`
+   * t(() => $localize`:@@SI_PHOTO_UPLOAD.ERROR_FILE_TYPE:The image file is not valid. Please upload a PNG or JP(E)G.`)
    * ```
    */
   readonly uploadErrorWrongType = input(
-    $localize`:@@SI_PHOTO_UPLOAD.ERROR_FILE_TYPE:The image file is not valid. Please upload a PNG or JP(E)G.`
+    t(
+      () =>
+        $localize`:@@SI_PHOTO_UPLOAD.ERROR_FILE_TYPE:The image file is not valid. Please upload a PNG or JP(E)G.`
+    )
   );
 
   /**
@@ -114,11 +117,14 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_PHOTO_UPLOAD.ERROR_FILE_SIZE_EXCEEDED:The actual file size {{mb}} MB exceeds the {{maxSizeMb}} MB limit.`
+   * t(() => $localize`:@@SI_PHOTO_UPLOAD.ERROR_FILE_SIZE_EXCEEDED:The actual file size {{mb}} MB exceeds the {{maxSizeMb}} MB limit.`)
    * ```
    */
   readonly uploadErrorTooBig = input(
-    $localize`:@@SI_PHOTO_UPLOAD.ERROR_FILE_SIZE_EXCEEDED:The actual file size {{mb}} MB exceeds the {{maxSizeMb}} MB limit.`
+    t(
+      () =>
+        $localize`:@@SI_PHOTO_UPLOAD.ERROR_FILE_SIZE_EXCEEDED:The actual file size {{mb}} MB exceeds the {{maxSizeMb}} MB limit.`
+    )
   );
 
   /**
@@ -141,21 +147,21 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_PHOTO_UPLOAD.CHANGE_PHOTO:Change`
+   * t(() => $localize`:@@SI_PHOTO_UPLOAD.CHANGE_PHOTO:Change`)
    * ```
    */
-  readonly changePhotoText = input($localize`:@@SI_PHOTO_UPLOAD.CHANGE_PHOTO:Change`);
+  readonly changePhotoText = input(t(() => $localize`:@@SI_PHOTO_UPLOAD.CHANGE_PHOTO:Change`));
 
   /**
    * Cropper frame aria label.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_PHOTO_UPLOAD.CROPPER_FRAME_LABEL:Crop photo`
+   * t(() => $localize`:@@SI_PHOTO_UPLOAD.CROPPER_FRAME_LABEL:Crop photo`)
    * ```
    */
   readonly cropperFrameAriaLabel = input(
-    $localize`:@@SI_PHOTO_UPLOAD.CROPPER_FRAME_LABEL:Crop photo`
+    t(() => $localize`:@@SI_PHOTO_UPLOAD.CROPPER_FRAME_LABEL:Crop photo`)
   );
 
   /**
@@ -163,50 +169,52 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_PHOTO_UPLOAD.UPLOAD_PHOTO:Upload photo`
+   * t(() => $localize`:@@SI_PHOTO_UPLOAD.UPLOAD_PHOTO:Upload photo`)
    * ```
    */
-  readonly uploadPhotoText = input($localize`:@@SI_PHOTO_UPLOAD.UPLOAD_PHOTO:Upload photo`);
+  readonly uploadPhotoText = input(
+    t(() => $localize`:@@SI_PHOTO_UPLOAD.UPLOAD_PHOTO:Upload photo`)
+  );
 
   /**
    * Text for the button removing the photo.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_PHOTO_UPLOAD.REMOVE:Remove`
+   * t(() => $localize`:@@SI_PHOTO_UPLOAD.REMOVE:Remove`)
    * ```
    */
-  readonly removePhotoText = input($localize`:@@SI_PHOTO_UPLOAD.REMOVE:Remove`);
+  readonly removePhotoText = input(t(() => $localize`:@@SI_PHOTO_UPLOAD.REMOVE:Remove`));
 
   /**
    * Text for the button cancelling the editing process.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_PHOTO_UPLOAD.CANCEL:Cancel`
+   * t(() => $localize`:@@SI_PHOTO_UPLOAD.CANCEL:Cancel`)
    * ```
    */
-  readonly cancelEditText = input($localize`:@@SI_PHOTO_UPLOAD.CANCEL:Cancel`);
+  readonly cancelEditText = input(t(() => $localize`:@@SI_PHOTO_UPLOAD.CANCEL:Cancel`));
 
   /**
    * Text for the button applying the edited photo.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_PHOTO_UPLOAD.APPLY_PHOTO:Apply`
+   * t(() => $localize`:@@SI_PHOTO_UPLOAD.APPLY_PHOTO:Apply`)
    * ```
    */
-  readonly applyEditText = input($localize`:@@SI_PHOTO_UPLOAD.APPLY_PHOTO:Apply`);
+  readonly applyEditText = input(t(() => $localize`:@@SI_PHOTO_UPLOAD.APPLY_PHOTO:Apply`));
 
   /**
    * Text displayed as header of the editing modal.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_PHOTO_UPLOAD.MODAL_TITLE:Avatar photo`
+   * t(() => $localize`:@@SI_PHOTO_UPLOAD.MODAL_TITLE:Avatar photo`)
    * ```
    */
-  readonly modalHeader = input($localize`:@@SI_PHOTO_UPLOAD.MODAL_TITLE:Avatar photo`);
+  readonly modalHeader = input(t(() => $localize`:@@SI_PHOTO_UPLOAD.MODAL_TITLE:Avatar photo`));
 
   /**
    * Text displayed as description of the editing modal.

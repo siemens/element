@@ -8,7 +8,11 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { SiTranslateNgxTService } from '@siemens/element-translate-ng/ngx-translate/si-translate-ngxt.service';
-import { injectSiTranslateService, SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import {
+  injectSiTranslateService,
+  SiTranslatePipe,
+  t
+} from '@siemens/element-translate-ng/translate';
 import { Observable, of, Subject } from 'rxjs';
 
 import { SiTranslateNgxTModule } from './si-translate-ngxt.module';
@@ -29,8 +33,8 @@ class HostComponent {}
   template: `{{ missingKey | translate }}-{{ existingKey | translate }}`
 })
 class TestWithDefaultHostComponent {
-  missingKey = $localize`:@@KEY-MISSING:VALUE-MISSING-FALLBACK`;
-  existingKey = $localize`:@@KEY-EXISTING:VALUE-EXISTING-FALLBACK`;
+  missingKey = t(() => $localize`:@@KEY-MISSING:VALUE-MISSING-FALLBACK`);
+  existingKey = t(() => $localize`:@@KEY-EXISTING:VALUE-EXISTING-FALLBACK`);
 }
 
 describe('SiTranslateNgxT', () => {

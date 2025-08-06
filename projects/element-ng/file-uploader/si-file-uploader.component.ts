@@ -35,7 +35,7 @@ import {
 } from '@siemens/element-ng/icon';
 import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
 import { SiProgressbarComponent } from '@siemens/element-ng/progressbar';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 import { Observable, Subscription } from 'rxjs';
 import { retry } from 'rxjs/operators';
 
@@ -106,115 +106,121 @@ export class SiFileUploaderComponent implements OnChanges {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILE_UPLOADER.FILE_SELECT:click to upload`
+   * t(() => $localize`:@@SI_FILE_UPLOADER.FILE_SELECT:click to upload`)
    * ```
    */
-  readonly uploadTextFileSelect = input($localize`:@@SI_FILE_UPLOADER.FILE_SELECT:click to upload`);
+  readonly uploadTextFileSelect = input(
+    t(() => $localize`:@@SI_FILE_UPLOADER.FILE_SELECT:click to upload`)
+  );
   /**
    * Text instructing a user to drop the files inside the dropzone.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or`
+   * t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or`)
    * ```
    */
-  readonly uploadDropText = input($localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or`);
+  readonly uploadDropText = input(t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or`));
   /**
    * Text to describe the maximum file size.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Maximum upload size`
+   * t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Maximum upload size`)
    * ```
    */
-  readonly maxFileSizeText = input($localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Maximum upload size`);
+  readonly maxFileSizeText = input(
+    t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Maximum upload size`)
+  );
   /**
    * Error message shown when the maximum number of files are reached.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILE_UPLOADER.MAX_FILE_REACHED:Maximum number of files reached`
+   * t(() => $localize`:@@SI_FILE_UPLOADER.MAX_FILE_REACHED:Maximum number of files reached`)
    * ```
    */
   readonly maxFilesReachedText = input(
-    $localize`:@@SI_FILE_UPLOADER.MAX_FILE_REACHED:Maximum number of files reached`
+    t(() => $localize`:@@SI_FILE_UPLOADER.MAX_FILE_REACHED:Maximum number of files reached`)
   );
   /**
    * Text for the accepted file types.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Accepted file types`
+   * t(() => $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Accepted file types`)
    * ```
    */
   readonly acceptText = input(
-    $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Accepted file types`
+    t(() => $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Accepted file types`)
   );
   /**
    * Text used inside the upload button.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILE_UPLOADER.UPLOAD:Upload`
+   * t(() => $localize`:@@SI_FILE_UPLOADER.UPLOAD:Upload`)
    * ```
    */
-  readonly uploadButtonText = input($localize`:@@SI_FILE_UPLOADER.UPLOAD:Upload`);
+  readonly uploadButtonText = input(t(() => $localize`:@@SI_FILE_UPLOADER.UPLOAD:Upload`));
   /**
    * Text used inside the clear button.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILE_UPLOADER.CLEAR:Clear`
+   * t(() => $localize`:@@SI_FILE_UPLOADER.CLEAR:Clear`)
    * ```
    */
-  readonly clearButtonText = input($localize`:@@SI_FILE_UPLOADER.CLEAR:Clear`);
+  readonly clearButtonText = input(t(() => $localize`:@@SI_FILE_UPLOADER.CLEAR:Clear`));
   /**
    * Text shown during the file upload.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILE_UPLOADER.UPLOADING:Uploading`
+   * t(() => $localize`:@@SI_FILE_UPLOADER.UPLOADING:Uploading`)
    * ```
    */
-  readonly uploadingText = input($localize`:@@SI_FILE_UPLOADER.UPLOADING:Uploading`);
+  readonly uploadingText = input(t(() => $localize`:@@SI_FILE_UPLOADER.UPLOADING:Uploading`));
   /**
    * Text shown to remove a file from the file list. Required for a11y.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILE_UPLOADER.REMOVE:Remove`
+   * t(() => $localize`:@@SI_FILE_UPLOADER.REMOVE:Remove`)
    * ```
    */
-  readonly removeButtonText = input($localize`:@@SI_FILE_UPLOADER.REMOVE:Remove`);
+  readonly removeButtonText = input(t(() => $localize`:@@SI_FILE_UPLOADER.REMOVE:Remove`));
   /**
    * Text of cancel button. Shown during upload. Required for a11y.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILE_UPLOADER.CANCEL:Cancel`
+   * t(() => $localize`:@@SI_FILE_UPLOADER.CANCEL:Cancel`)
    * ```
    */
-  readonly cancelButtonText = input($localize`:@@SI_FILE_UPLOADER.CANCEL:Cancel`);
+  readonly cancelButtonText = input(t(() => $localize`:@@SI_FILE_UPLOADER.CANCEL:Cancel`));
   /**
    * Text shown if the upload was successful.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILE_UPLOADER.UPLOAD_COMPLETED:Upload completed`
+   * t(() => $localize`:@@SI_FILE_UPLOADER.UPLOAD_COMPLETED:Upload completed`)
    * ```
    */
   readonly successTextTitle = input(
-    $localize`:@@SI_FILE_UPLOADER.UPLOAD_COMPLETED:Upload completed`
+    t(() => $localize`:@@SI_FILE_UPLOADER.UPLOAD_COMPLETED:Upload completed`)
   );
   /**
    * Text shown if the upload failed.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILE_UPLOADER.UPLOAD_FAILED:Upload failed`
+   * t(() => $localize`:@@SI_FILE_UPLOADER.UPLOAD_FAILED:Upload failed`)
    * ```
    */
-  readonly errorUploadFailed = input($localize`:@@SI_FILE_UPLOADER.UPLOAD_FAILED:Upload failed`);
+  readonly errorUploadFailed = input(
+    t(() => $localize`:@@SI_FILE_UPLOADER.UPLOAD_FAILED:Upload failed`)
+  );
   /**
    * On failed upload, show the error received from the server.
    *
@@ -226,22 +232,25 @@ export class SiFileUploaderComponent implements OnChanges {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_TYPE:Incorrect file type selected`
+   * t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_TYPE:Incorrect file type selected`)
    * ```
    */
   readonly errorTextFileType = input(
-    $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_TYPE:Incorrect file type selected`
+    t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_TYPE:Incorrect file type selected`)
   );
   /**
    * Message or translation key if file exceeds the maximum file size limit.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:File exceeds allowed maximum size`
+   * t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:File exceeds allowed maximum size`)
    * ```
    */
   readonly errorTextFileMaxSize = input(
-    $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:File exceeds allowed maximum size`
+    t(
+      () =>
+        $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:File exceeds allowed maximum size`
+    )
   );
   /**
    * Config for HTTP request to upload file.

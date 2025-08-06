@@ -18,7 +18,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { SiInputPillComponent } from './si-input-pill.component';
 import {
@@ -76,11 +76,11 @@ export class SiPillsInputComponent implements OnInit, ControlValueAccessor, SiFo
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_PILLS_INPUT.INPUT_ELEMENT_ARIA_LABEL:Create item`
+   * t(() => $localize`:@@SI_PILLS_INPUT.INPUT_ELEMENT_ARIA_LABEL:Create item`)
    * ```
    */
   readonly inputElementAriaLabel = input(
-    $localize`:@@SI_PILLS_INPUT.INPUT_ELEMENT_ARIA_LABEL:Create item`
+    t(() => $localize`:@@SI_PILLS_INPUT.INPUT_ELEMENT_ARIA_LABEL:Create item`)
   );
 
   /**

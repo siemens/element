@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core
 import { SiIconNextComponent } from '@siemens/element-ng/icon';
 import { SiLoadingButtonComponent } from '@siemens/element-ng/loading-spinner';
 import { ModalRef } from '@siemens/element-ng/modal';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { take } from 'rxjs';
 
 import { AlertDialogResult } from '../si-action-dialog.types';
@@ -27,10 +27,10 @@ export class SiAlertDialogComponent {
   /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_ALERT_DIALOG.OK:OK`
+   * t(() => $localize`:@@SI_ALERT_DIALOG.OK:OK`)
    * ```
    */
-  readonly confirmBtnName = input($localize`:@@SI_ALERT_DIALOG.OK:OK`);
+  readonly confirmBtnName = input(t(() => $localize`:@@SI_ALERT_DIALOG.OK:OK`));
   /**
    * @defaultValue
    * ```

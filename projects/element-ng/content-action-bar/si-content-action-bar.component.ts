@@ -28,7 +28,7 @@ import {
   SiMenuActionService,
   SiMenuModule
 } from '@siemens/element-ng/menu';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { SiContentActionBarToggleComponent } from './si-content-action-bar-toggle.component';
 import { ContentActionBarMainItem, ViewType } from './si-content-action-bar.model';
@@ -76,10 +76,10 @@ export class SiContentActionBarComponent implements OnChanges, AfterViewInit {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_CONTENT_ACTION_BAR.TOGGLE:Toggle`
+   * t(() => $localize`:@@SI_CONTENT_ACTION_BAR.TOGGLE:Toggle`)
    * ```
    */
-  readonly toggleItemLabel = input($localize`:@@SI_CONTENT_ACTION_BAR.TOGGLE:Toggle`);
+  readonly toggleItemLabel = input(t(() => $localize`:@@SI_CONTENT_ACTION_BAR.TOGGLE:Toggle`));
   /**
    * Option to remove all icons from dropdown menus of the content action bar.
    *

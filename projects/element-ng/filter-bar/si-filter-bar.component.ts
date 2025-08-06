@@ -10,7 +10,7 @@ import {
   SiAutoCollapsableListOverflowItemDirective
 } from '@siemens/element-ng/auto-collapsable-list';
 import { BackgroundColorVariant } from '@siemens/element-ng/common';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { Filter } from './filter';
 import { SiFilterPillComponent } from './si-filter-pill.component';
@@ -37,10 +37,12 @@ export class SiFilterBarComponent {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILTER_BAR.NO_FILTERS:No filters applied`
+   * t(() => $localize`:@@SI_FILTER_BAR.NO_FILTERS:No filters applied`)
    * ```
    */
-  readonly filterDefaultText = input($localize`:@@SI_FILTER_BAR.NO_FILTERS:No filters applied`);
+  readonly filterDefaultText = input(
+    t(() => $localize`:@@SI_FILTER_BAR.NO_FILTERS:No filters applied`)
+  );
   /**
    * Array of filter items to show
    *
@@ -52,10 +54,10 @@ export class SiFilterBarComponent {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILTER_BAR.RESET_FILTERS:Reset filters`
+   * t(() => $localize`:@@SI_FILTER_BAR.RESET_FILTERS:Reset filters`)
    * ```
    */
-  readonly resetText = input($localize`:@@SI_FILTER_BAR.RESET_FILTERS:Reset filters`);
+  readonly resetText = input(t(() => $localize`:@@SI_FILTER_BAR.RESET_FILTERS:Reset filters`));
   /**
    * Set false to hide reset filters button
    *
@@ -80,11 +82,11 @@ export class SiFilterBarComponent {
    * Custom text for the collapsed filters.
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILTER_BAR.COLLAPSED_FILTERS_DESCRIPTION:+ {{count}} filters`
+   * t(() => $localize`:@@SI_FILTER_BAR.COLLAPSED_FILTERS_DESCRIPTION:+ {{count}} filters`)
    * ```
    */
   readonly collapsedFiltersDescription = input(
-    $localize`:@@SI_FILTER_BAR.COLLAPSED_FILTERS_DESCRIPTION:+ {{count}} filters`
+    t(() => $localize`:@@SI_FILTER_BAR.COLLAPSED_FILTERS_DESCRIPTION:+ {{count}} filters`)
   );
 
   /**

@@ -21,7 +21,7 @@ import {
   viewChild
 } from '@angular/core';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
-import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiSelectComplexOptionsDirective } from './options/si-select-complex-options.directive';
 import { SI_SELECT_OPTIONS_STRATEGY } from './options/si-select-options-strategy';
@@ -81,19 +81,21 @@ export class SiSelectComponent<T> implements OnChanges, AfterContentInit, SiForm
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_SELECT.SEARCH-PLACEHOLDER:Search...`
+   * t(() => $localize`:@@SI_SELECT.SEARCH-PLACEHOLDER:Search...`)
    * ```
    */
-  readonly filterPlaceholder = input($localize`:@@SI_SELECT.SEARCH-PLACEHOLDER:Search...`);
+  readonly filterPlaceholder = input(t(() => $localize`:@@SI_SELECT.SEARCH-PLACEHOLDER:Search...`));
   /**
    * Label if no item can be found.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_SELECT.NO-RESULTS-FOUND:No results found`
+   * t(() => $localize`:@@SI_SELECT.NO-RESULTS-FOUND:No results found`)
    * ```
    */
-  readonly noResultsFoundLabel = input($localize`:@@SI_SELECT.NO-RESULTS-FOUND:No results found`);
+  readonly noResultsFoundLabel = input(
+    t(() => $localize`:@@SI_SELECT.NO-RESULTS-FOUND:No results found`)
+  );
   /** Placeholder text to display when no options are selected. */
   readonly placeholder = input<TranslatableString>();
   /**

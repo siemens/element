@@ -45,7 +45,7 @@ import {
 } from '@siemens/element-ng/common';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
 import { addIcons, elementCalendar, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { getMaxDate, getMinDate } from './date-time-helper';
 import { SiDateInputDirective } from './si-date-input.directive';
@@ -123,54 +123,56 @@ export class SiDateRangeComponent
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATEPICKER.START_DATE_PLACEHOLDER:Start date`
+   * t(() => $localize`:@@SI_DATEPICKER.START_DATE_PLACEHOLDER:Start date`)
    * ```
    */
   readonly startDatePlaceholder = input<TranslatableString>(
-    $localize`:@@SI_DATEPICKER.START_DATE_PLACEHOLDER:Start date`
+    t(() => $localize`:@@SI_DATEPICKER.START_DATE_PLACEHOLDER:Start date`)
   );
   /**
    * Placeholder of the end date input.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATEPICKER.END_DATE_PLACEHOLDER:End date`
+   * t(() => $localize`:@@SI_DATEPICKER.END_DATE_PLACEHOLDER:End date`)
    * ```
    */
   readonly endDatePlaceholder = input<TranslatableString>(
-    $localize`:@@SI_DATEPICKER.END_DATE_PLACEHOLDER:End date`
+    t(() => $localize`:@@SI_DATEPICKER.END_DATE_PLACEHOLDER:End date`)
   );
   /**
    * Aria label of the date-range calendar toggle button.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATEPICKER.CALENDAR_TOGGLE_BUTTON:Open calendar`
+   * t(() => $localize`:@@SI_DATEPICKER.CALENDAR_TOGGLE_BUTTON:Open calendar`)
    * ```
    */
   readonly ariaLabelCalendarButton = input<TranslatableString>(
-    $localize`:@@SI_DATEPICKER.CALENDAR_TOGGLE_BUTTON:Open calendar`
+    t(() => $localize`:@@SI_DATEPICKER.CALENDAR_TOGGLE_BUTTON:Open calendar`)
   );
   /**
    * Form label of the start timepicker.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATEPICKER.START_TIME_LABEL:from`
+   * t(() => $localize`:@@SI_DATEPICKER.START_TIME_LABEL:from`)
    * ```
    */
   readonly startTimeLabel = input<TranslatableString>(
-    $localize`:@@SI_DATEPICKER.START_TIME_LABEL:from`
+    t(() => $localize`:@@SI_DATEPICKER.START_TIME_LABEL:from`)
   );
   /**
    * Form label of the start timepicker.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATEPICKER.END_TIME_LABEL:to`
+   * t(() => $localize`:@@SI_DATEPICKER.END_TIME_LABEL:to`)
    * ```
    */
-  readonly endTimeLabel = input<TranslatableString>($localize`:@@SI_DATEPICKER.END_TIME_LABEL:to`);
+  readonly endTimeLabel = input<TranslatableString>(
+    t(() => $localize`:@@SI_DATEPICKER.END_TIME_LABEL:to`)
+  );
   /**
    * Automatically close overlay on date selection.
    *

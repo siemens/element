@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { SiSkipLinkTargetDirective } from './si-skip-link-target.directive';
 
@@ -18,5 +18,5 @@ export class SiSkipLinksComponent {
   /** @defaultValue [] */
   readonly skipLinks = input<readonly SiSkipLinkTargetDirective[]>([]);
 
-  protected jumpToLabel = $localize`:@@SI_SKIP_LINKS.JUMP_TO:Jump to {{link}}`;
+  protected jumpToLabel = t(() => $localize`:@@SI_SKIP_LINKS.JUMP_TO:Jump to {{link}}`);
 }

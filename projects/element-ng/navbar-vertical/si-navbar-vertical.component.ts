@@ -37,7 +37,7 @@ import { MenuItem, SI_UI_STATE_SERVICE } from '@siemens/element-ng/common';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
 import { SiSkipLinkTargetDirective } from '@siemens/element-ng/skip-links';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -163,11 +163,11 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit, OnDestroy {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_NAVBAR_VERTICAL.SEARCH_PLACEHOLDER:Search ...`
+   * t(() => $localize`:@@SI_NAVBAR_VERTICAL.SEARCH_PLACEHOLDER:Search ...`)
    * ```
    */
   readonly searchPlaceholder = input(
-    $localize`:@@SI_NAVBAR_VERTICAL.SEARCH_PLACEHOLDER:Search ...`
+    t(() => $localize`:@@SI_NAVBAR_VERTICAL.SEARCH_PLACEHOLDER:Search ...`)
   );
 
   /**
@@ -206,20 +206,22 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit, OnDestroy {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_NAVBAR_VERTICAL.EXPAND:Expand`
+   * t(() => $localize`:@@SI_NAVBAR_VERTICAL.EXPAND:Expand`)
    * ```
    */
-  readonly navbarExpandButtonText = input($localize`:@@SI_NAVBAR_VERTICAL.EXPAND:Expand`);
+  readonly navbarExpandButtonText = input(t(() => $localize`:@@SI_NAVBAR_VERTICAL.EXPAND:Expand`));
 
   /**
    * Text for the navbar collapse button. Required for a11y
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_NAVBAR_VERTICAL.COLLAPSE:Collapse`
+   * t(() => $localize`:@@SI_NAVBAR_VERTICAL.COLLAPSE:Collapse`)
    * ```
    */
-  readonly navbarCollapseButtonText = input($localize`:@@SI_NAVBAR_VERTICAL.COLLAPSE:Collapse`);
+  readonly navbarCollapseButtonText = input(
+    t(() => $localize`:@@SI_NAVBAR_VERTICAL.COLLAPSE:Collapse`)
+  );
 
   /**
    * An optional stateId to uniquely identify a component instance.
@@ -232,11 +234,11 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit, OnDestroy {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_NAVBAR_VERTICAL.SKIP_LINK.NAVIGATION_LABEL:Navigation`
+   * t(() => $localize`:@@SI_NAVBAR_VERTICAL.SKIP_LINK.NAVIGATION_LABEL:Navigation`)
    * ```
    */
   readonly skipLinkNavigationLabel = input(
-    $localize`:@@SI_NAVBAR_VERTICAL.SKIP_LINK.NAVIGATION_LABEL:Navigation`
+    t(() => $localize`:@@SI_NAVBAR_VERTICAL.SKIP_LINK.NAVIGATION_LABEL:Navigation`)
   );
 
   /**
@@ -244,11 +246,11 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit, OnDestroy {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_NAVBAR_VERTICAL.SKIP_LINK.MAIN_LABEL:Main content`
+   * t(() => $localize`:@@SI_NAVBAR_VERTICAL.SKIP_LINK.MAIN_LABEL:Main content`)
    * ```
    */
   readonly skipLinkMainContentLabel = input(
-    $localize`:@@SI_NAVBAR_VERTICAL.SKIP_LINK.MAIN_LABEL:Main content`
+    t(() => $localize`:@@SI_NAVBAR_VERTICAL.SKIP_LINK.MAIN_LABEL:Main content`)
   );
 
   /**

@@ -15,7 +15,7 @@ import {
   viewChild
 } from '@angular/core';
 import { addIcons, elementUpload, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { UploadFile } from './si-file-uploader.model';
 
@@ -32,60 +32,67 @@ export class SiFileDropzoneComponent {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILE_UPLOADER.FILE_SELECT:click to upload`
+   * t(() => $localize`:@@SI_FILE_UPLOADER.FILE_SELECT:click to upload`)
    * ```
    */
-  readonly uploadTextFileSelect = input($localize`:@@SI_FILE_UPLOADER.FILE_SELECT:click to upload`);
+  readonly uploadTextFileSelect = input(
+    t(() => $localize`:@@SI_FILE_UPLOADER.FILE_SELECT:click to upload`)
+  );
   /**
    * Text or translation key of the drag&drop field (is combined with the `uploadTextFileSelect`).
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or`
+   * t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or`)
    * ```
    */
-  readonly uploadDropText = input($localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or`);
+  readonly uploadDropText = input(t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or`));
   /**
    * Text or translation key for max file size.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Maximum upload size`
+   * t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Maximum upload size`)
    * ```
    */
-  readonly maxFileSizeText = input($localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Maximum upload size`);
+  readonly maxFileSizeText = input(
+    t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Maximum upload size`)
+  );
   /**
    * Text or translation key for accepted types.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Accepted file types`
+   * t(() => $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Accepted file types`)
    * ```
    */
   readonly acceptText = input(
-    $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Accepted file types`
+    t(() => $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Accepted file types`)
   );
   /**
    * Text or translation key of message title if incorrect file type is dragged / dropped.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_TYPE:Incorrect file type selected`
+   * t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_TYPE:Incorrect file type selected`)
    * ```
    */
   readonly errorTextFileType = input(
-    $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_TYPE:Incorrect file type selected`
+    t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_TYPE:Incorrect file type selected`)
   );
   /**
    * Message or translation key if file exceeds the maximum file size limit.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:File exceeds allowed maximum size`
+   * t(() => $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:File exceeds allowed maximum size`)
    * ```
    */
   readonly errorTextFileMaxSize = input(
-    $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:File exceeds allowed maximum size`
+    t(
+      () =>
+        $localize`:@@SI_FILE_UPLOADER.ERROR_FILE_SIZE_EXCEEDED:File exceeds allowed maximum size`
+    )
   );
   /**
    * Define which file types are suggested in file browser.

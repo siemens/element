@@ -4,6 +4,7 @@
  */
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { t } from '@siemens/element-translate-ng/translate';
 
 import { SiRelativeDateComponent } from './si-relative-date.component';
 
@@ -24,8 +25,8 @@ const ONE_DAY = ONE_MINUTE * 60 * 24;
 class TestHostComponent {
   readonly value = signal(0);
   enableTimeSelection = false;
-  unitLabel = $localize`:@@SI_DATE_RANGE_FILTER.UNIT:Unit`;
-  valueLabel = $localize`:@@SI_DATE_RANGE_FILTER.UNIT:Unit`;
+  unitLabel = t(() => $localize`:@@SI_DATE_RANGE_FILTER.UNIT:Unit`);
+  valueLabel = t(() => $localize`:@@SI_DATE_RANGE_FILTER.UNIT:Unit`);
 }
 
 describe('SiRelativeDateComponent', () => {

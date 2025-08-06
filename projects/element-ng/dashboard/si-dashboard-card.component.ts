@@ -19,7 +19,7 @@ import {
   ContentActionBarMainItem,
   SiContentActionBarComponent
 } from '@siemens/element-ng/content-action-bar';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslateModule, t } from '@siemens/element-translate-ng/translate';
 
 import { SiDashboardService } from './si-dashboard.service';
 
@@ -40,19 +40,19 @@ export class SiDashboardCardComponent extends SiCardComponent implements OnDestr
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DASHBOARD.RESTORE:Restore`
+   * t(() => $localize`:@@SI_DASHBOARD.RESTORE:Restore`)
    * ```
    */
-  readonly restoreText = input($localize`:@@SI_DASHBOARD.RESTORE:Restore`);
+  readonly restoreText = input(t(() => $localize`:@@SI_DASHBOARD.RESTORE:Restore`));
   /**
    * Description of expand button & action.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DASHBOARD.EXPAND:Expand`
+   * t(() => $localize`:@@SI_DASHBOARD.EXPAND:Expand`)
    * ```
    */
-  readonly expandText = input($localize`:@@SI_DASHBOARD.EXPAND:Expand`);
+  readonly expandText = input(t(() => $localize`:@@SI_DASHBOARD.EXPAND:Expand`));
   /**
    * Option to enable and show the UI controls for card expand functionality.
    * `Expand` and `restore` action items will be added to the content action bar.

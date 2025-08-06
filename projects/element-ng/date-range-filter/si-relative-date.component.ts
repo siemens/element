@@ -21,6 +21,7 @@ import {
   SiSelectSimpleOptionsDirective,
   SiSelectSingleValueDirective
 } from '@siemens/element-ng/select';
+import { t } from '@siemens/element-translate-ng/translate';
 
 import { ONE_DAY, ONE_MINUTE } from './si-date-range-filter.types';
 
@@ -57,37 +58,37 @@ export class SiRelativeDateComponent implements OnChanges {
     {
       type: 'option',
       value: 'minutes',
-      label: $localize`:@@SI_DATE_RANGE_FILTER.MINUTES:Minutes`,
+      label: t(() => $localize`:@@SI_DATE_RANGE_FILTER.MINUTES:Minutes`),
       offset: ONE_MINUTE
     },
     {
       type: 'option',
       value: 'hours',
-      label: $localize`:@@SI_DATE_RANGE_FILTER.HOURS:Hours`,
+      label: t(() => $localize`:@@SI_DATE_RANGE_FILTER.HOURS:Hours`),
       offset: 60 * ONE_MINUTE
     },
     {
       type: 'option',
       value: 'days',
-      label: $localize`:@@SI_DATE_RANGE_FILTER.DAYS:Days`,
+      label: t(() => $localize`:@@SI_DATE_RANGE_FILTER.DAYS:Days`),
       offset: ONE_DAY
     },
     {
       type: 'option',
       value: 'weeks',
-      label: $localize`:@@SI_DATE_RANGE_FILTER.WEEKS:Weeks`,
+      label: t(() => $localize`:@@SI_DATE_RANGE_FILTER.WEEKS:Weeks`),
       offset: 7 * ONE_DAY
     },
     {
       type: 'option',
       value: 'months',
-      label: $localize`:@@SI_DATE_RANGE_FILTER.MONTHS:Months`,
+      label: t(() => $localize`:@@SI_DATE_RANGE_FILTER.MONTHS:Months`),
       offset: 30 * ONE_DAY
     },
     {
       type: 'option',
       value: 'years',
-      label: $localize`:@@SI_DATE_RANGE_FILTER.YEARS:Years`,
+      label: t(() => $localize`:@@SI_DATE_RANGE_FILTER.YEARS:Years`),
       offset: 365 * ONE_DAY
     }
   ];

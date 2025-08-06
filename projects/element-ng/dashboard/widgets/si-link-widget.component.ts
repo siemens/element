@@ -3,11 +3,12 @@
  * SPDX-License-Identifier: MIT
  */
 import { booleanAttribute, Component, computed, input } from '@angular/core';
-import { addIcons, SiIconNextComponent, elementRight2 } from '@siemens/element-ng/icon';
+import { addIcons, elementRight2, SiIconNextComponent } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
 import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 import { SiWidgetBaseComponent } from './si-widget-base.component';
+
 /**
  * The `<si-link-widget>` supports an easy composition of links and actions
  * with support for skeleton loading indicator.

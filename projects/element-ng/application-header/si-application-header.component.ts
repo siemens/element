@@ -29,7 +29,7 @@ import {
   SiIconNextComponent
 } from '@siemens/element-ng/icon';
 import { BOOTSTRAP_BREAKPOINTS, Breakpoints } from '@siemens/element-ng/resize-observer';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 import { defer, of, Subject } from 'rxjs';
 import { map, skip, takeUntil } from 'rxjs/operators';
 
@@ -55,10 +55,10 @@ export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDest
   /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_APPLICATION_HEADER.LAUNCHPAD:Launchpad`
+   * t(() => $localize`:@@SI_APPLICATION_HEADER.LAUNCHPAD:Launchpad`)
    * ```
    */
-  readonly launchpadLabel = input($localize`:@@SI_APPLICATION_HEADER.LAUNCHPAD:Launchpad`);
+  readonly launchpadLabel = input(t(() => $localize`:@@SI_APPLICATION_HEADER.LAUNCHPAD:Launchpad`));
 
   /** @internal */
   readonly closeMobileMenus = new Subject<void>();
@@ -71,7 +71,9 @@ export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDest
   protected readonly openDropdownCount = signal(0);
   protected readonly launchpadOpen = signal(false);
   protected readonly id = `__si-application-header-${SiApplicationHeaderComponent.idCounter++}`;
-  protected toggleNavigation = $localize`:@@SI_APPLICATION_HEADER.TOGGLE_NAVIGATION:Toggle navigation`;
+  protected toggleNavigation = t(
+    () => $localize`:@@SI_APPLICATION_HEADER.TOGGLE_NAVIGATION:Toggle navigation`
+  );
   protected injector = inject(Injector);
   protected readonly icons = addIcons({ elementThumbnails, elementMenu });
 

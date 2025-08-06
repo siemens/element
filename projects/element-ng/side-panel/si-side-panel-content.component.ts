@@ -31,7 +31,7 @@ import { SiLinkDirective } from '@siemens/element-ng/link';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiSidePanelService } from './si-side-panel.service';
 
@@ -106,30 +106,32 @@ export class SiSidePanelContentComponent implements OnInit {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_SIDE_PANEL.SEARCH_PLACEHOLDER:Search...`
+   * t(() => $localize`:@@SI_SIDE_PANEL.SEARCH_PLACEHOLDER:Search...`)
    * ```
    */
-  readonly searchPlaceholder = input($localize`:@@SI_SIDE_PANEL.SEARCH_PLACEHOLDER:Search...`);
+  readonly searchPlaceholder = input(
+    t(() => $localize`:@@SI_SIDE_PANEL.SEARCH_PLACEHOLDER:Search...`)
+  );
 
   /**
    * Aria label for close button. Needed for a11y
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_SIDE_PANEL.CLOSE:Close`
+   * t(() => $localize`:@@SI_SIDE_PANEL.CLOSE:Close`)
    * ```
    */
-  readonly closeButtonLabel = input($localize`:@@SI_SIDE_PANEL.CLOSE:Close`);
+  readonly closeButtonLabel = input(t(() => $localize`:@@SI_SIDE_PANEL.CLOSE:Close`));
 
   /**
    * Toggle icon aria-label, required for a11y
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_SIDE_PANEL.TOGGLE:Toggle`
+   * t(() => $localize`:@@SI_SIDE_PANEL.TOGGLE:Toggle`)
    * ```
    */
-  readonly toggleItemLabel = input($localize`:@@SI_SIDE_PANEL.TOGGLE:Toggle`);
+  readonly toggleItemLabel = input(t(() => $localize`:@@SI_SIDE_PANEL.TOGGLE:Toggle`));
 
   /**
    * Show a badge on the mobile drawer indicating a new alert or notification

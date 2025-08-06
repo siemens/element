@@ -35,7 +35,7 @@ import {
 import { addIcons, elementDown2, SiIconNextComponent } from '@siemens/element-ng/icon';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { SiDateRangeCalculationService } from './si-date-range-calculation.service';
 import {
@@ -134,163 +134,165 @@ export class SiDateRangeFilterComponent implements OnChanges {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATE_RANGE_FILTER.REF_POINT:Reference point`
+   * t(() => $localize`:@@SI_DATE_RANGE_FILTER.REF_POINT:Reference point`)
    * ```
    */
-  readonly refLabel = input($localize`:@@SI_DATE_RANGE_FILTER.REF_POINT:Reference point`);
+  readonly refLabel = input(t(() => $localize`:@@SI_DATE_RANGE_FILTER.REF_POINT:Reference point`));
   /**
    * label for the "Reference point" title
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATE_RANGE_FILTER.FROM:From`
+   * t(() => $localize`:@@SI_DATE_RANGE_FILTER.FROM:From`)
    * ```
    */
-  readonly fromLabel = input($localize`:@@SI_DATE_RANGE_FILTER.FROM:From`);
+  readonly fromLabel = input(t(() => $localize`:@@SI_DATE_RANGE_FILTER.FROM:From`));
   /**
    * label for the "Reference point" title
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATE_RANGE_FILTER.TO:To`
+   * t(() => $localize`:@@SI_DATE_RANGE_FILTER.TO:To`)
    * ```
    */
-  readonly toLabel = input($localize`:@@SI_DATE_RANGE_FILTER.TO:To`);
+  readonly toLabel = input(t(() => $localize`:@@SI_DATE_RANGE_FILTER.TO:To`));
   /**
    * label for the "Range" title
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATE_RANGE_FILTER.RANGE:Range`
+   * t(() => $localize`:@@SI_DATE_RANGE_FILTER.RANGE:Range`)
    * ```
    */
-  readonly rangeLabel = input($localize`:@@SI_DATE_RANGE_FILTER.RANGE:Range`);
+  readonly rangeLabel = input(t(() => $localize`:@@SI_DATE_RANGE_FILTER.RANGE:Range`));
   /**
    * label for the "Today" checkbox
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATE_RANGE_FILTER.TODAY:Today`
+   * t(() => $localize`:@@SI_DATE_RANGE_FILTER.TODAY:Today`)
    * ```
    */
-  readonly todayLabel = input($localize`:@@SI_DATE_RANGE_FILTER.TODAY:Today`);
+  readonly todayLabel = input(t(() => $localize`:@@SI_DATE_RANGE_FILTER.TODAY:Today`));
   /**
    * label for the "Now" checkbox
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATE_RANGE_FILTER.NOW:Now`
+   * t(() => $localize`:@@SI_DATE_RANGE_FILTER.NOW:Now`)
    * ```
    */
-  readonly nowLabel = input($localize`:@@SI_DATE_RANGE_FILTER.NOW:Now`);
+  readonly nowLabel = input(t(() => $localize`:@@SI_DATE_RANGE_FILTER.NOW:Now`));
   /**
    * label for "Date" field / radio button
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATE_RANGE_FILTER.DATE:Date`
+   * t(() => $localize`:@@SI_DATE_RANGE_FILTER.DATE:Date`)
    * ```
    */
-  readonly dateLabel = input($localize`:@@SI_DATE_RANGE_FILTER.DATE:Date`);
+  readonly dateLabel = input(t(() => $localize`:@@SI_DATE_RANGE_FILTER.DATE:Date`));
   /**
    * label for the "Preview" title
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATE_RANGE_FILTER.PREVIEW:Preview`
+   * t(() => $localize`:@@SI_DATE_RANGE_FILTER.PREVIEW:Preview`)
    * ```
    */
-  readonly previewLabel = input($localize`:@@SI_DATE_RANGE_FILTER.PREVIEW:Preview`);
+  readonly previewLabel = input(t(() => $localize`:@@SI_DATE_RANGE_FILTER.PREVIEW:Preview`));
   /**
    * Placeholder for date fields
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATE_RANGE_FILTER.DATE_PLACEHOLDER:Select date`
+   * t(() => $localize`:@@SI_DATE_RANGE_FILTER.DATE_PLACEHOLDER:Select date`)
    * ```
    */
-  readonly datePlaceholder = input($localize`:@@SI_DATE_RANGE_FILTER.DATE_PLACEHOLDER:Select date`);
+  readonly datePlaceholder = input(
+    t(() => $localize`:@@SI_DATE_RANGE_FILTER.DATE_PLACEHOLDER:Select date`)
+  );
   /**
    * label for the "Before" toggle
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATE_RANGE_FILTER.BEFORE:Before`
+   * t(() => $localize`:@@SI_DATE_RANGE_FILTER.BEFORE:Before`)
    * ```
    */
-  readonly beforeLabel = input($localize`:@@SI_DATE_RANGE_FILTER.BEFORE:Before`);
+  readonly beforeLabel = input(t(() => $localize`:@@SI_DATE_RANGE_FILTER.BEFORE:Before`));
   /**
    * label for the "After" toggle
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATE_RANGE_FILTER.AFTER:After`
+   * t(() => $localize`:@@SI_DATE_RANGE_FILTER.AFTER:After`)
    * ```
    */
-  readonly afterLabel = input($localize`:@@SI_DATE_RANGE_FILTER.AFTER:After`);
+  readonly afterLabel = input(t(() => $localize`:@@SI_DATE_RANGE_FILTER.AFTER:After`));
   /**
    * label for the "Within" toggle
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATE_RANGE_FILTER.WITHIN:Within`
+   * t(() => $localize`:@@SI_DATE_RANGE_FILTER.WITHIN:Within`)
    * ```
    */
-  readonly withinLabel = input($localize`:@@SI_DATE_RANGE_FILTER.WITHIN:Within`);
+  readonly withinLabel = input(t(() => $localize`:@@SI_DATE_RANGE_FILTER.WITHIN:Within`));
   /**
    * label for the "value" number input
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATE_RANGE_FILTER.VALUE:Value`
+   * t(() => $localize`:@@SI_DATE_RANGE_FILTER.VALUE:Value`)
    * ```
    */
-  readonly valueLabel = input($localize`:@@SI_DATE_RANGE_FILTER.VALUE:Value`);
+  readonly valueLabel = input(t(() => $localize`:@@SI_DATE_RANGE_FILTER.VALUE:Value`));
   /**
    * label for the "Unit" select
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATE_RANGE_FILTER.UNIT:Unit`
+   * t(() => $localize`:@@SI_DATE_RANGE_FILTER.UNIT:Unit`)
    * ```
    */
-  readonly unitLabel = input($localize`:@@SI_DATE_RANGE_FILTER.UNIT:Unit`);
+  readonly unitLabel = input(t(() => $localize`:@@SI_DATE_RANGE_FILTER.UNIT:Unit`));
   /**
    * label for the "search" input
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATE_RANGE_FILTER.SEARCH:Search`
+   * t(() => $localize`:@@SI_DATE_RANGE_FILTER.SEARCH:Search`)
    * ```
    */
-  readonly searchLabel = input($localize`:@@SI_DATE_RANGE_FILTER.SEARCH:Search`);
+  readonly searchLabel = input(t(() => $localize`:@@SI_DATE_RANGE_FILTER.SEARCH:Search`));
   /**
    * label for the "search" input
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATE_RANGE_FILTER.PRESETS:Presets`
+   * t(() => $localize`:@@SI_DATE_RANGE_FILTER.PRESETS:Presets`)
    * ```
    */
-  readonly presetLabel = input($localize`:@@SI_DATE_RANGE_FILTER.PRESETS:Presets`);
+  readonly presetLabel = input(t(() => $localize`:@@SI_DATE_RANGE_FILTER.PRESETS:Presets`));
   /**
    * label for the "advanced" switch
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATE_RANGE_FILTER.ADVANCED:Advanced`
+   * t(() => $localize`:@@SI_DATE_RANGE_FILTER.ADVANCED:Advanced`)
    * ```
    */
-  readonly advancedLabel = input($localize`:@@SI_DATE_RANGE_FILTER.ADVANCED:Advanced`);
+  readonly advancedLabel = input(t(() => $localize`:@@SI_DATE_RANGE_FILTER.ADVANCED:Advanced`));
   /**
    * label for the "apply" switch
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATE_RANGE_FILTER.APPLY:Apply`
+   * t(() => $localize`:@@SI_DATE_RANGE_FILTER.APPLY:Apply`)
    * ```
    */
-  readonly applyLabel = input($localize`:@@SI_DATE_RANGE_FILTER.APPLY:Apply`);
+  readonly applyLabel = input(t(() => $localize`:@@SI_DATE_RANGE_FILTER.APPLY:Apply`));
 
   /** Event fired when the apply button has been clicked */
   readonly applyClicked = output<void>();

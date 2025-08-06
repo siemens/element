@@ -11,7 +11,7 @@ import {
   InjectionToken,
   input
 } from '@angular/core';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 export const LOADING_SPINNER_BLOCKING = new InjectionToken<boolean>('isBlockingSpinner');
 export const LOADING_SPINNER_OVERLAY = new InjectionToken<boolean>('isSpinnerOverlay');
@@ -50,8 +50,8 @@ export class SiLoadingSpinnerComponent {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_LOADING_SPINNER.LABEL:Loading`
+   * t(() => $localize`:@@SI_LOADING_SPINNER.LABEL:Loading`)
    * ```
    */
-  readonly ariaLabel = input($localize`:@@SI_LOADING_SPINNER.LABEL:Loading`);
+  readonly ariaLabel = input(t(() => $localize`:@@SI_LOADING_SPINNER.LABEL:Loading`));
 }

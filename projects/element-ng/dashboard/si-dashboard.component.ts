@@ -10,6 +10,7 @@ import {
   ChangeDetectorRef,
   Component,
   computed,
+  DOCUMENT,
   ElementRef,
   inject,
   input,
@@ -17,8 +18,7 @@ import {
   OnDestroy,
   signal,
   SimpleChanges,
-  viewChild,
-  DOCUMENT
+  viewChild
 } from '@angular/core';
 import { ScrollbarHelper } from '@siemens/element-ng/common';
 import {

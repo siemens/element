@@ -31,7 +31,7 @@ import {
   SiIconNextComponent
 } from '@siemens/element-ng/icon';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { SiWizardStepComponent } from './si-wizard-step.component';
 
@@ -67,19 +67,19 @@ export class SiWizardComponent {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_WIZARD.BACK:Back`
+   * t(() => $localize`:@@SI_WIZARD.BACK:Back`)
    * ```
    */
-  readonly backText = input($localize`:@@SI_WIZARD.BACK:Back`);
+  readonly backText = input(t(() => $localize`:@@SI_WIZARD.BACK:Back`));
   /**
    * Description of next button.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_WIZARD.NEXT:Next`
+   * t(() => $localize`:@@SI_WIZARD.NEXT:Next`)
    * ```
    */
-  readonly nextText = input($localize`:@@SI_WIZARD.NEXT:Next`);
+  readonly nextText = input(t(() => $localize`:@@SI_WIZARD.NEXT:Next`));
 
   /**
    * Hide the navigation buttons previous/next.
@@ -92,10 +92,10 @@ export class SiWizardComponent {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_WIZARD.SAVE:Save`
+   * t(() => $localize`:@@SI_WIZARD.SAVE:Save`)
    * ```
    */
-  readonly saveText = input($localize`:@@SI_WIZARD.SAVE:Save`);
+  readonly saveText = input(t(() => $localize`:@@SI_WIZARD.SAVE:Save`));
   /**
    * Hide the save button.
    *
@@ -107,19 +107,19 @@ export class SiWizardComponent {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_WIZARD.COMPLETED:Wizard completed!`
+   * t(() => $localize`:@@SI_WIZARD.COMPLETED:Wizard completed!`)
    * ```
    */
-  readonly completionText = input($localize`:@@SI_WIZARD.COMPLETED:Wizard completed!`);
+  readonly completionText = input(t(() => $localize`:@@SI_WIZARD.COMPLETED:Wizard completed!`));
   /**
    * Description of cancel button.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_WIZARD.CANCEL:Cancel`
+   * t(() => $localize`:@@SI_WIZARD.CANCEL:Cancel`)
    * ```
    */
-  readonly cancelText = input($localize`:@@SI_WIZARD.CANCEL:Cancel`);
+  readonly cancelText = input(t(() => $localize`:@@SI_WIZARD.CANCEL:Cancel`));
   /**
    * Show the cancel button
    *

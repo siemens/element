@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-progressbar',
@@ -18,10 +18,10 @@ export class SiProgressbarComponent {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_PROGRESSBAR.LABEL:Progress`
+   * t(() => $localize`:@@SI_PROGRESSBAR.LABEL:Progress`)
    * ```
    */
-  readonly ariaLabel = input($localize`:@@SI_PROGRESSBAR.LABEL:Progress`);
+  readonly ariaLabel = input(t(() => $localize`:@@SI_PROGRESSBAR.LABEL:Progress`));
 
   /**
    * Max value for progressbar

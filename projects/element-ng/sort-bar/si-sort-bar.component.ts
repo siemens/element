@@ -10,7 +10,7 @@ import {
   elementSortUp,
   SiIconNextComponent
 } from '@siemens/element-ng/icon';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 export interface SortCriteria {
   name: string;
@@ -29,10 +29,10 @@ export class SiSortBarComponent implements OnInit {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_SORT_BAR.TITLE:Sort by`
+   * t(() => $localize`:@@SI_SORT_BAR.TITLE:Sort by`)
    * ```
    */
-  readonly sortTitle = input($localize`:@@SI_SORT_BAR.TITLE:Sort by`);
+  readonly sortTitle = input(t(() => $localize`:@@SI_SORT_BAR.TITLE:Sort by`));
   /**
    * List of sort criteria.
    */

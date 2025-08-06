@@ -28,6 +28,7 @@ import type { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { ContentActionBarMainItem, ViewType } from '@siemens/element-ng/content-action-bar';
 import { SiDashboardCardComponent } from '@siemens/element-ng/dashboard';
 import { MenuItem } from '@siemens/element-ng/menu';
+import { t } from '@siemens/element-translate-ng/translate';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -62,14 +63,23 @@ export class SiWidgetHostComponent implements OnInit, OnDestroy, OnChanges {
 
   readonly widgetHost = viewChild.required('widgetHost', { read: ViewContainerRef });
 
-  protected labelEdit = $localize`:@@DASHBOARD.WIDGET.EDIT:Edit`;
-  protected labelRemove = $localize`:@@DASHBOARD.WIDGET.REMOVE:Remove`;
-  protected labelExpand = $localize`:@@DASHBOARD.WIDGET.EXPAND:Expand`;
-  protected labelRestore = $localize`:@@DASHBOARD.WIDGET.RESTORE:Restore`;
-  protected labelDialogMessage = $localize`:@@DASHBOARD.REMOVE_WIDGET_CONFIRMATION_DIALOG.MESSAGE:Do you really want to remove the widget?`;
-  protected labelDialogHeading = $localize`:@@DASHBOARD.REMOVE_WIDGET_CONFIRMATION_DIALOG.HEADING:Remove widget`;
-  protected labelDialogRemove = $localize`:@@DASHBOARD.REMOVE_WIDGET_CONFIRMATION_DIALOG.REMOVE:Remove`;
-  protected labelDialogCancel = $localize`:@@DASHBOARD.REMOVE_WIDGET_CONFIRMATION_DIALOG.CANCEL:Cancel`;
+  protected labelEdit = t(() => $localize`:@@DASHBOARD.WIDGET.EDIT:Edit`);
+  protected labelRemove = t(() => $localize`:@@DASHBOARD.WIDGET.REMOVE:Remove`);
+  protected labelExpand = t(() => $localize`:@@DASHBOARD.WIDGET.EXPAND:Expand`);
+  protected labelRestore = t(() => $localize`:@@DASHBOARD.WIDGET.RESTORE:Restore`);
+  protected labelDialogMessage = t(
+    () =>
+      $localize`:@@DASHBOARD.REMOVE_WIDGET_CONFIRMATION_DIALOG.MESSAGE:Do you really want to remove the widget?`
+  );
+  protected labelDialogHeading = t(
+    () => $localize`:@@DASHBOARD.REMOVE_WIDGET_CONFIRMATION_DIALOG.HEADING:Remove widget`
+  );
+  protected labelDialogRemove = t(
+    () => $localize`:@@DASHBOARD.REMOVE_WIDGET_CONFIRMATION_DIALOG.REMOVE:Remove`
+  );
+  protected labelDialogCancel = t(
+    () => $localize`:@@DASHBOARD.REMOVE_WIDGET_CONFIRMATION_DIALOG.CANCEL:Cancel`
+  );
 
   widgetInstance?: WidgetInstance;
   widgetRef?: ComponentRef<WidgetInstance>;

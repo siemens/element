@@ -31,7 +31,11 @@ import {
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
 import { addIcons, elementDown2, SiIconNextComponent } from '@siemens/element-ng/icon';
 import { SiSelectListHasFilterComponent } from '@siemens/element-ng/select';
-import { injectSiTranslateService, SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import {
+  injectSiTranslateService,
+  SiTranslatePipe,
+  t
+} from '@siemens/element-translate-ng/translate';
 import { PhoneNumber, PhoneNumberFormat, PhoneNumberUtil } from 'google-libphonenumber';
 
 import { SiPhoneNumberInputSelectDirective } from './si-phone-number-input-select.directive';
@@ -111,42 +115,42 @@ export class SiPhoneNumberInputComponent
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_PHONE_NUMBER_INPUT.SEARCH_PLACEHOLDER:Search`
+   * t(() => $localize`:@@SI_PHONE_NUMBER_INPUT.SEARCH_PLACEHOLDER:Search`)
    * ```
    */
   readonly placeholderForSearch = input(
-    $localize`:@@SI_PHONE_NUMBER_INPUT.SEARCH_PLACEHOLDER:Search`
+    t(() => $localize`:@@SI_PHONE_NUMBER_INPUT.SEARCH_PLACEHOLDER:Search`)
   );
   /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_PHONE_NUMBER_INPUT.SEARCH_NO-RESULTS_FOUND:No results found`
+   * t(() => $localize`:@@SI_PHONE_NUMBER_INPUT.SEARCH_NO-RESULTS_FOUND:No results found`)
    * ```
    */
   readonly searchNoResultsFoundLabel = input(
-    $localize`:@@SI_PHONE_NUMBER_INPUT.SEARCH_NO-RESULTS_FOUND:No results found`
+    t(() => $localize`:@@SI_PHONE_NUMBER_INPUT.SEARCH_NO-RESULTS_FOUND:No results found`)
   );
   /**
    * Text for the country dropdown aria-label attribute.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_PHONE_NUMBER_INPUT.SELECT_COUNTRY:Select country`
+   * t(() => $localize`:@@SI_PHONE_NUMBER_INPUT.SELECT_COUNTRY:Select country`)
    * ```
    */
   readonly selectCountryAriaLabel = input(
-    $localize`:@@SI_PHONE_NUMBER_INPUT.SELECT_COUNTRY:Select country`
+    t(() => $localize`:@@SI_PHONE_NUMBER_INPUT.SELECT_COUNTRY:Select country`)
   );
   /**
    * Text for the phone number input aria-label attribute.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_PHONE_NUMBER_INPUT.PHONE_NUMBER_INPUT_LABEL:Enter phone number`
+   * t(() => $localize`:@@SI_PHONE_NUMBER_INPUT.PHONE_NUMBER_INPUT_LABEL:Enter phone number`)
    * ```
    */
   readonly phoneNumberAriaLabel = input(
-    $localize`:@@SI_PHONE_NUMBER_INPUT.PHONE_NUMBER_INPUT_LABEL:Enter phone number`
+    t(() => $localize`:@@SI_PHONE_NUMBER_INPUT.PHONE_NUMBER_INPUT_LABEL:Enter phone number`)
   );
   /**
    * List of countries in ISO2 format, from which the user is allowed to select one.

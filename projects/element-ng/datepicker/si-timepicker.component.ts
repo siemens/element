@@ -28,7 +28,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { createDate } from './date-time-helper';
 
@@ -124,31 +124,33 @@ export class SiTimepickerComponent implements ControlValueAccessor, SiFormItemCo
   /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATEPICKER.HOURS:Hours`
+   * t(() => $localize`:@@SI_DATEPICKER.HOURS:Hours`)
    * ```
    */
-  readonly hoursAriaLabel = input($localize`:@@SI_DATEPICKER.HOURS:Hours`);
+  readonly hoursAriaLabel = input(t(() => $localize`:@@SI_DATEPICKER.HOURS:Hours`));
   /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATEPICKER.MINUTES:Minutes`
+   * t(() => $localize`:@@SI_DATEPICKER.MINUTES:Minutes`)
    * ```
    */
-  readonly minutesAriaLabel = input($localize`:@@SI_DATEPICKER.MINUTES:Minutes`);
+  readonly minutesAriaLabel = input(t(() => $localize`:@@SI_DATEPICKER.MINUTES:Minutes`));
   /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATEPICKER.SECONDS:Seconds`
+   * t(() => $localize`:@@SI_DATEPICKER.SECONDS:Seconds`)
    * ```
    */
-  readonly secondsAriaLabel = input($localize`:@@SI_DATEPICKER.SECONDS:Seconds`);
+  readonly secondsAriaLabel = input(t(() => $localize`:@@SI_DATEPICKER.SECONDS:Seconds`));
   /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATEPICKER.MILLISECONDS:Milliseconds`
+   * t(() => $localize`:@@SI_DATEPICKER.MILLISECONDS:Milliseconds`)
    * ```
    */
-  readonly millisecondsAriaLabel = input($localize`:@@SI_DATEPICKER.MILLISECONDS:Milliseconds`);
+  readonly millisecondsAriaLabel = input(
+    t(() => $localize`:@@SI_DATEPICKER.MILLISECONDS:Milliseconds`)
+  );
 
   /**
    * @defaultValue 'hh'
@@ -175,10 +177,10 @@ export class SiTimepickerComponent implements ControlValueAccessor, SiFormItemCo
   /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATEPICKER.PERIOD:Period`
+   * t(() => $localize`:@@SI_DATEPICKER.PERIOD:Period`)
    * ```
    */
-  readonly meridiansAriaLabel = input($localize`:@@SI_DATEPICKER.PERIOD:Period`);
+  readonly meridiansAriaLabel = input(t(() => $localize`:@@SI_DATEPICKER.PERIOD:Period`));
 
   /** @defaultValue true */
   readonly showMinutes = input(true, { transform: booleanAttribute });
@@ -713,7 +715,7 @@ export class SiTimepickerComponent implements ControlValueAccessor, SiFormItemCo
       return;
     }
     const targets = this.inputParts();
-    const position = targets?.findIndex(t => t.nativeElement === target);
+    const position = targets?.findIndex(ref => ref.nativeElement === target);
     if (position === undefined || position === -1) {
       return;
     }

@@ -16,28 +16,28 @@ import {
   ChangeDetectorRef,
   Component,
   computed,
+  contentChild,
+  contentChildren,
   ElementRef,
   HostListener,
   inject,
+  INJECTOR,
   input,
   OnChanges,
   OnDestroy,
   OnInit,
   output,
   signal,
+  Signal,
   SimpleChanges,
   TemplateRef,
-  contentChildren,
-  contentChild,
-  viewChildren,
-  Signal,
-  INJECTOR,
-  viewChild
+  viewChild,
+  viewChildren
 } from '@angular/core';
 import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { ElementDimensions, ResizeObserverService } from '@siemens/element-ng/resize-observer';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { asyncScheduler, defer, fromEvent, merge, Observable, Subject, Subscription } from 'rxjs';
 import { map, withLatestFrom } from 'rxjs/operators';
 
@@ -160,19 +160,21 @@ export class SiTreeViewComponent
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_TREE_VIEW.EXPAND_ALL:Expand all`
+   * t(() => $localize`:@@SI_TREE_VIEW.EXPAND_ALL:Expand all`)
    * ```
    */
-  readonly expandAllTooltip = input($localize`:@@SI_TREE_VIEW.EXPAND_ALL:Expand all`);
+  readonly expandAllTooltip = input(t(() => $localize`:@@SI_TREE_VIEW.EXPAND_ALL:Expand all`));
   /**
    * Tooltip text shown for the collapse all icon.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_TREE_VIEW.COLLAPSE_ALL:Collapse all`
+   * t(() => $localize`:@@SI_TREE_VIEW.COLLAPSE_ALL:Collapse all`)
    * ```
    */
-  readonly collapseAllTooltip = input($localize`:@@SI_TREE_VIEW.COLLAPSE_ALL:Collapse all`);
+  readonly collapseAllTooltip = input(
+    t(() => $localize`:@@SI_TREE_VIEW.COLLAPSE_ALL:Collapse all`)
+  );
   /**
    * Customize icons for treeview.
    */

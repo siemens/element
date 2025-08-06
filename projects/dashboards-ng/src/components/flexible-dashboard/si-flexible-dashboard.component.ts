@@ -22,6 +22,7 @@ import {
 } from '@angular/core';
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiDashboardComponent } from '@siemens/element-ng/dashboard';
+import { t } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, combineLatest, of, Subject, Subscription } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 
@@ -130,11 +131,11 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
    *
    * @defaultValue
    * ```
-   * $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search widget`
+   * t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search widget`)
    * ```
    */
   readonly searchPlaceholder = input(
-    $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search widget`
+    t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search widget`)
   );
 
   /**
@@ -159,9 +160,9 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
    */
   readonly isModified = output<boolean>();
 
-  protected labelAddWidget = $localize`:@@DASHBOARD.ADD_WIDGET:Add widget`;
-  protected labelEditor = $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.TITLE:Edit`;
-  protected labelCatalog = $localize`:@@DASHBOARD.WIDGET_LIBRARY.TITLE:Add widget`;
+  protected labelAddWidget = t(() => $localize`:@@DASHBOARD.ADD_WIDGET:Add widget`);
+  protected labelEditor = t(() => $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.TITLE:Edit`);
+  protected labelCatalog = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.TITLE:Add widget`);
 
   protected addWidgetInstanceAction: DashboardToolbarItem = {
     type: 'action',

@@ -29,6 +29,7 @@ import { ModalRef } from '@siemens/element-ng/modal';
 import {
   injectSiTranslateService,
   SiTranslatePipe,
+  t,
   TranslatableString
 } from '@siemens/element-translate-ng/translate';
 import { first } from 'rxjs/operators';
@@ -66,47 +67,47 @@ export class SiColumnSelectionDialogComponent implements OnInit {
   /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_COLUMN_SELECTION_DIALOG.SUBMIT:Apply`
+   * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.SUBMIT:Apply`)
    * ```
    */
   readonly submitBtnName = input<TranslatableString>(
-    $localize`:@@SI_COLUMN_SELECTION_DIALOG.SUBMIT:Apply`
+    t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.SUBMIT:Apply`)
   );
   /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_COLUMN_SELECTION_DIALOG.CANCEL:Cancel`
+   * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.CANCEL:Cancel`)
    * ```
    */
   readonly cancelBtnName = input<TranslatableString>(
-    $localize`:@@SI_COLUMN_SELECTION_DIALOG.CANCEL:Cancel`
+    t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.CANCEL:Cancel`)
   );
   /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_COLUMN_SELECTION_DIALOG.RESTORE_TO_DEFAULT:Restore to default`
+   * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.RESTORE_TO_DEFAULT:Restore to default`)
    * ```
    */
   readonly restoreToDefaultBtnName = input<TranslatableString>(
-    $localize`:@@SI_COLUMN_SELECTION_DIALOG.RESTORE_TO_DEFAULT:Restore to default`
+    t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.RESTORE_TO_DEFAULT:Restore to default`)
   );
   /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_COLUMN_SELECTION_DIALOG.HIDDEN:Hidden`
+   * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.HIDDEN:Hidden`)
    * ```
    */
   readonly hiddenText = input<TranslatableString>(
-    $localize`:@@SI_COLUMN_SELECTION_DIALOG.HIDDEN:Hidden`
+    t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.HIDDEN:Hidden`)
   );
   /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_COLUMN_SELECTION_DIALOG.VISIBLE:Visible`
+   * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.VISIBLE:Visible`)
    * ```
    */
   readonly visibleText = input<TranslatableString>(
-    $localize`:@@SI_COLUMN_SELECTION_DIALOG.VISIBLE:Visible`
+    t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.VISIBLE:Visible`)
   );
   /** @defaultValue false */
   readonly restoreEnabled = input(false, { transform: booleanAttribute });
@@ -122,44 +123,47 @@ export class SiColumnSelectionDialogComponent implements OnInit {
   /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_COLUMN_SELECTION_DIALOG.LIST_ARIA_LABEL:
-   *     List of possible columns.
-   *     Items can be moved using Alt+ArrowUp or Alt+ArrowDown.
-   *     Press Enter to rename supported items.`
+   * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.LIST_ARIA_LABEL:List of possible columns. Items can be moved using Alt+ArrowUp or Alt+ArrowDown. Press Enter to rename supported items.`)
    * ```
    */
   readonly listAriaLabel = input(
-    $localize`:@@SI_COLUMN_SELECTION_DIALOG.LIST_ARIA_LABEL:List of possible columns. Items can be moved using Alt+ArrowUp or Alt+ArrowDown. Press Enter to rename supported items.`
+    t(
+      () =>
+        $localize`:@@SI_COLUMN_SELECTION_DIALOG.LIST_ARIA_LABEL:List of possible columns. Items can be moved using Alt+ArrowUp or Alt+ArrowDown. Press Enter to rename supported items.`
+    )
   );
 
   /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_COLUMN_SELECTION_DIALOG.RENAME_INPUT_ARIA_LABEL:Rename column`
+   * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.RENAME_INPUT_ARIA_LABEL:Rename column`)
    * ```
    */
   readonly renameInputAriaLabel = input(
-    $localize`:@@SI_COLUMN_SELECTION_DIALOG.RENAME_INPUT_ARIA_LABEL:Rename column`
+    t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.RENAME_INPUT_ARIA_LABEL:Rename column`)
   );
 
   /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_COLUMN_SELECTION_DIALOG.ITEM_MOVED:Item is now at position {{targetPosition}}`
+   * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.ITEM_MOVED:Item is now at position {{targetPosition}}`)
    * ```
    */
   readonly a11yItemMovedMessage = input<TranslatableString>(
-    $localize`:@@SI_COLUMN_SELECTION_DIALOG.ITEM_MOVED:Item is now at position {{targetPosition}}`
+    t(
+      () =>
+        $localize`:@@SI_COLUMN_SELECTION_DIALOG.ITEM_MOVED:Item is now at position {{targetPosition}}`
+    )
   );
   /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_COLUMN_SELECTION_DIALOG.ITEM_NOT_MOVED:Item was not moved`
+   * t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.ITEM_NOT_MOVED:Item was not moved`)
    * ```
    */
 
   readonly a11yItemNotMovedMessage = input<TranslatableString>(
-    $localize`:@@SI_COLUMN_SELECTION_DIALOG.ITEM_NOT_MOVED:Item was not moved`
+    t(() => $localize`:@@SI_COLUMN_SELECTION_DIALOG.ITEM_NOT_MOVED:Item was not moved`)
   );
   /** @defaultValue true */
   readonly columnVisibilityConfigurable = input(true, { transform: booleanAttribute });

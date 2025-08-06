@@ -13,7 +13,7 @@ import {
   viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiListDetailsComponent } from '../si-list-details.component';
 
@@ -50,10 +50,10 @@ export class SiDetailsPaneHeaderComponent {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_LIST_DETAILS.BACK:Back`
+   * t(() => $localize`:@@SI_LIST_DETAILS.BACK:Back`)
    * ```
    */
-  readonly backButtonText = input($localize`:@@SI_LIST_DETAILS.BACK:Back`);
+  readonly backButtonText = input(t(() => $localize`:@@SI_LIST_DETAILS.BACK:Back`));
 
   private readonly backButton = viewChild<ElementRef<HTMLElement>>('backButton');
 

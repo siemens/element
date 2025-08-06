@@ -4,7 +4,7 @@
  */
 import { NgClass } from '@angular/common';
 import { Component, computed } from '@angular/core';
-import { addIcons, SiIconNextComponent, elementRight2 } from '@siemens/element-ng/icon';
+import { addIcons, elementRight2, SiIconNextComponent } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
 import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
 

@@ -22,7 +22,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { correctKeyRTL, isRTL, listenGlobal } from '@siemens/element-ng/common';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
 import { addIcons, elementMinus, elementPlus, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 import { Subscription, timer } from 'rxjs';
 
 @Component({
@@ -106,28 +106,28 @@ export class SiSliderComponent implements ControlValueAccessor, SiFormItemContro
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_SLIDER.INCREMENT:Increment`
+   * t(() => $localize`:@@SI_SLIDER.INCREMENT:Increment`)
    * ```
    */
-  readonly incrementLabel = input($localize`:@@SI_SLIDER.INCREMENT:Increment`);
+  readonly incrementLabel = input(t(() => $localize`:@@SI_SLIDER.INCREMENT:Increment`));
   /**
    * Text for aria-label of decrement. Needed for a11y.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_SLIDER.DECREMENT:Decrement`
+   * t(() => $localize`:@@SI_SLIDER.DECREMENT:Decrement`)
    * ```
    */
-  readonly decrementLabel = input($localize`:@@SI_SLIDER.DECREMENT:Decrement`);
+  readonly decrementLabel = input(t(() => $localize`:@@SI_SLIDER.DECREMENT:Decrement`));
   /**
    * Text for aria-label of slider. Needed for a11y
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_SLIDER.LABEL:Value`
+   * t(() => $localize`:@@SI_SLIDER.LABEL:Value`)
    * ```
    */
-  readonly sliderLabel = input($localize`:@@SI_SLIDER.LABEL:Value`);
+  readonly sliderLabel = input(t(() => $localize`:@@SI_SLIDER.LABEL:Value`));
 
   /**
    * @defaultValue

@@ -6,7 +6,7 @@ import { booleanAttribute, Component, computed, input, model, OnChanges } from '
 import { FormsModule } from '@angular/forms';
 import { Link } from '@siemens/element-ng/link';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslateModule, t } from '@siemens/element-translate-ng/translate';
 
 import { SiWidgetBaseComponent } from '../si-widget-base.component';
 import { SiListWidgetItem, SiListWidgetItemComponent } from './si-list-widget-item.component';
@@ -37,11 +37,11 @@ export class SiListWidgetBodyComponent
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_LIST_WIDGET.SEARCH_PLACEHOLDER:Search...`
+   * t(() => $localize`:@@SI_LIST_WIDGET.SEARCH_PLACEHOLDER:Search...`)
    * ```
    */
   readonly searchPlaceholderLabel = input(
-    $localize`:@@SI_LIST_WIDGET.SEARCH_PLACEHOLDER:Search...`
+    t(() => $localize`:@@SI_LIST_WIDGET.SEARCH_PLACEHOLDER:Search...`)
   );
 
   /**

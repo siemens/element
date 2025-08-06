@@ -20,7 +20,7 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslateModule, t } from '@siemens/element-translate-ng/translate';
 import { Subscription } from 'rxjs';
 
 import {
@@ -99,15 +99,27 @@ export class SiWidgetInstanceEditorDialogComponent implements OnInit, OnDestroy 
     return wizardState ? !wizardState.hasPrevious : true;
   });
 
-  protected labelSave = $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.SAVE:Save`;
-  protected labelCancel = $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.CANCEL:Cancel`;
-  protected labelPrevious = $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.PREVIOUS:Previous`;
-  protected labelNext = $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.NEXT:Next`;
-  protected labelDialogMessage = $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.DISCARD_CONFIG_CHANGE_DIALOG.MESSAGE:The widget configuration changed. Do you want to discard the changes?`;
-  protected labelDialogHeading = $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.DISCARD_CONFIG_CHANGE_DIALOG.HEADING:Widget configuration changed`;
-  protected labelDialogSave = $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.DISCARD_CONFIG_CHANGE_DIALOG.SAVE:Save`;
-  protected labelDialogDiscard = $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.DISCARD_CONFIG_CHANGE_DIALOG.DISCARD:Discard`;
-  protected labelDialogCancel = $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.DISCARD_CONFIG_CHANGE_DIALOG.CANCEL:Cancel`;
+  protected labelSave = t(() => $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.SAVE:Save`);
+  protected labelCancel = t(() => $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.CANCEL:Cancel`);
+  protected labelPrevious = t(() => $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.PREVIOUS:Previous`);
+  protected labelNext = t(() => $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.NEXT:Next`);
+  protected labelDialogMessage = t(
+    () =>
+      $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.DISCARD_CONFIG_CHANGE_DIALOG.MESSAGE:The widget configuration changed. Do you want to discard the changes?`
+  );
+  protected labelDialogHeading = t(
+    () =>
+      $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.DISCARD_CONFIG_CHANGE_DIALOG.HEADING:Widget configuration changed`
+  );
+  protected labelDialogSave = t(
+    () => $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.DISCARD_CONFIG_CHANGE_DIALOG.SAVE:Save`
+  );
+  protected labelDialogDiscard = t(
+    () => $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.DISCARD_CONFIG_CHANGE_DIALOG.DISCARD:Discard`
+  );
+  protected labelDialogCancel = t(
+    () => $localize`:@@DASHBOARD.WIDGET_EDITOR_DIALOG.DISCARD_CONFIG_CHANGE_DIALOG.CANCEL:Cancel`
+  );
 
   /**
    * Marks the widget configuration as modified. Is set when widget editor instance

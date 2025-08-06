@@ -23,7 +23,7 @@ import {
   SiSelectSimpleOptionsDirective,
   SiSelectSingleValueDirective
 } from '@siemens/element-ng/select';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { SiReadonlyThresholdOptionComponent } from './si-readonly-threshold-option.component';
 
@@ -145,37 +145,37 @@ export class SiThresholdComponent implements OnChanges {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_THRESHOLD.DELETE:Delete step`
+   * t(() => $localize`:@@SI_THRESHOLD.DELETE:Delete step`)
    * ```
    */
-  readonly deleteAriaLabel = input($localize`:@@SI_THRESHOLD.DELETE:Delete step`);
+  readonly deleteAriaLabel = input(t(() => $localize`:@@SI_THRESHOLD.DELETE:Delete step`));
   /**
    * The aria-label for add button
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_THRESHOLD.ADD:Add step`
+   * t(() => $localize`:@@SI_THRESHOLD.ADD:Add step`)
    * ```
    */
-  readonly addAriaLabel = input($localize`:@@SI_THRESHOLD.ADD:Add step`);
+  readonly addAriaLabel = input(t(() => $localize`:@@SI_THRESHOLD.ADD:Add step`));
   /**
    * The aria-label for input field
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_THRESHOLD.INPUT_LABEL:Threshold value`
+   * t(() => $localize`:@@SI_THRESHOLD.INPUT_LABEL:Threshold value`)
    * ```
    */
-  readonly inputAriaLabel = input($localize`:@@SI_THRESHOLD.INPUT_LABEL:Threshold value`);
+  readonly inputAriaLabel = input(t(() => $localize`:@@SI_THRESHOLD.INPUT_LABEL:Threshold value`));
   /**
    * The aria-label for status selection
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_THRESHOLD.STATUS:Status`
+   * t(() => $localize`:@@SI_THRESHOLD.STATUS:Status`)
    * ```
    */
-  readonly statusAriaLabel = input($localize`:@@SI_THRESHOLD.STATUS:Status`);
+  readonly statusAriaLabel = input(t(() => $localize`:@@SI_THRESHOLD.STATUS:Status`));
 
   /** Fired when validation status changes */
   readonly validChange = output<boolean>();

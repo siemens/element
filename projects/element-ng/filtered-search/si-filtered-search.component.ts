@@ -33,6 +33,7 @@ import { SiTypeaheadDirective, TypeaheadOption } from '@siemens/element-ng/typea
 import {
   injectSiTranslateService,
   SiTranslatePipe,
+  t,
   TranslatableString
 } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, Observable, of, Subject, switchMap } from 'rxjs';
@@ -216,29 +217,31 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges, OnDestroy {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILTERED_SEARCH.SEARCH:Search`
+   * t(() => $localize`:@@SI_FILTERED_SEARCH.SEARCH:Search`)
    * ```
    */
-  readonly searchLabel = input($localize`:@@SI_FILTERED_SEARCH.SEARCH:Search`);
+  readonly searchLabel = input(t(() => $localize`:@@SI_FILTERED_SEARCH.SEARCH:Search`));
   /**
    * Clear button aria label. Needed for a11y
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILTERED_SEARCH.CLEAR:Clear`
+   * t(() => $localize`:@@SI_FILTERED_SEARCH.CLEAR:Clear`)
    * ```
    */
-  readonly clearButtonLabel = input($localize`:@@SI_FILTERED_SEARCH.CLEAR:Clear`);
+  readonly clearButtonLabel = input(t(() => $localize`:@@SI_FILTERED_SEARCH.CLEAR:Clear`));
 
   /**
    * The accessible label of the search button.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_FILTERED_SEARCH.SUBMIT_BUTTON:Submit search`
+   * t(() => $localize`:@@SI_FILTERED_SEARCH.SUBMIT_BUTTON:Submit search`)
    * ```
    */
-  readonly submitButtonLabel = input($localize`:@@SI_FILTERED_SEARCH.SUBMIT_BUTTON:Submit search`);
+  readonly submitButtonLabel = input(
+    t(() => $localize`:@@SI_FILTERED_SEARCH.SUBMIT_BUTTON:Submit search`)
+  );
 
   /**
    * Items count text appended to the count in case of multi-selection of values.

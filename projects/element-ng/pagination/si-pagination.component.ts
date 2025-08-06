@@ -9,7 +9,7 @@ import {
   elementRight3,
   SiIconNextComponent
 } from '@siemens/element-ng/icon';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-pagination',
@@ -47,30 +47,30 @@ export class SiPaginationComponent {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_PAGINATION.BACK:Back`
+   * t(() => $localize`:@@SI_PAGINATION.BACK:Back`)
    * ```
    */
-  readonly backButtonText = input($localize`:@@SI_PAGINATION.BACK:Back`);
+  readonly backButtonText = input(t(() => $localize`:@@SI_PAGINATION.BACK:Back`));
 
   /**
    * The text of the forward button for pagination. Required for a11y.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_PAGINATION.FORWARD:Forward`
+   * t(() => $localize`:@@SI_PAGINATION.FORWARD:Forward`)
    * ```
    */
-  readonly forwardButtonText = input($localize`:@@SI_PAGINATION.FORWARD:Forward`);
+  readonly forwardButtonText = input(t(() => $localize`:@@SI_PAGINATION.FORWARD:Forward`));
   /**
    * When multiple paginations are used on the same page each pagination needs a distinct aria label.
    * Required for a11y.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_PAGINATION.NAV_LABEL:Pagination`
+   * t(() => $localize`:@@SI_PAGINATION.NAV_LABEL:Pagination`)
    * ```
    */
-  readonly navAriaLabel = input($localize`:@@SI_PAGINATION.NAV_LABEL:Pagination`);
+  readonly navAriaLabel = input(t(() => $localize`:@@SI_PAGINATION.NAV_LABEL:Pagination`));
 
   private readonly calculatedTotalPages = computed(
     () => this.totalPages() ?? Math.ceil((this.totalRowCount() ?? 0) / (this.pageSize() ?? 1))

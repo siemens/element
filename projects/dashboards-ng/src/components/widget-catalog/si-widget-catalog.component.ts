@@ -23,7 +23,7 @@ import { SiActionDialogService } from '@siemens/element-ng/action-modal';
 import { SiCircleStatusComponent } from '@siemens/element-ng/circle-status';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 import { Subscription } from 'rxjs';
 
 import {
@@ -55,11 +55,11 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
    *
    * @defaultValue
    * ```
-   * $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search widget`
+   * t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search widget`)
    * ```
    */
   readonly searchPlaceholder = input(
-    $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search widget`
+    t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.SEARCH_PLACEHOLDER:Search widget`)
   );
   /**
    * Emits when the catalog is `closed`, either by canceling or by adding or saving
@@ -99,16 +99,26 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
   private widgetConfig?: Omit<WidgetConfig, 'id'>;
   private readonly hasEditor = signal<boolean>(false);
 
-  protected labelCancel = $localize`:@@DASHBOARD.WIDGET_LIBRARY.CANCEL:Cancel`;
-  protected labelPrevious = $localize`:@@DASHBOARD.WIDGET_LIBRARY.PREVIOUS:Previous`;
-  protected labelNext = $localize`:@@DASHBOARD.WIDGET_LIBRARY.NEXT:Next`;
-  protected labelAdd = $localize`:@@DASHBOARD.WIDGET_LIBRARY.ADD:Add`;
-  protected labelEmpty = $localize`:@@DASHBOARD.WIDGET_LIBRARY.EMPTY:Empty`;
+  protected labelCancel = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.CANCEL:Cancel`);
+  protected labelPrevious = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.PREVIOUS:Previous`);
+  protected labelNext = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.NEXT:Next`);
+  protected labelAdd = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.ADD:Add`);
+  protected labelEmpty = t(() => $localize`:@@DASHBOARD.WIDGET_LIBRARY.EMPTY:Empty`);
 
-  protected labelDialogHeading = $localize`:@@DASHBOARD.WIDGET_LIBRARY.DISCARD_CONFIG_CHANGE_DIALOG.HEADING:Widget configuration changed`;
-  protected labelDialogCancel = $localize`:@@DASHBOARD.WIDGET_LIBRARY.DISCARD_CONFIG_CHANGE_DIALOG.CANCEL:Cancel`;
-  protected labelDialogMessage = $localize`:@@DASHBOARD.WIDGET_LIBRARY.DISCARD_CONFIG_CHANGE_DIALOG.MESSAGE:The widget configuration changed. Do you want to discard the changes?`;
-  protected labelDialogDiscard = $localize`:@@DASHBOARD.WIDGET_LIBRARY.DISCARD_CONFIG_CHANGE_DIALOG.DISCARD:Discard`;
+  protected labelDialogHeading = t(
+    () =>
+      $localize`:@@DASHBOARD.WIDGET_LIBRARY.DISCARD_CONFIG_CHANGE_DIALOG.HEADING:Widget configuration changed`
+  );
+  protected labelDialogCancel = t(
+    () => $localize`:@@DASHBOARD.WIDGET_LIBRARY.DISCARD_CONFIG_CHANGE_DIALOG.CANCEL:Cancel`
+  );
+  protected labelDialogMessage = t(
+    () =>
+      $localize`:@@DASHBOARD.WIDGET_LIBRARY.DISCARD_CONFIG_CHANGE_DIALOG.MESSAGE:The widget configuration changed. Do you want to discard the changes?`
+  );
+  protected labelDialogDiscard = t(
+    () => $localize`:@@DASHBOARD.WIDGET_LIBRARY.DISCARD_CONFIG_CHANGE_DIALOG.DISCARD:Discard`
+  );
 
   protected readonly showAddButton = computed(() =>
     this.view() === 'list' ? !this.hasEditor() : true

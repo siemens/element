@@ -20,7 +20,7 @@ import {
   SiIconNextComponent
 } from '@siemens/element-ng/icon';
 import { SiLinkModule } from '@siemens/element-ng/link';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { SiApplicationHeaderComponent } from '../si-application-header.component';
 import { SiLaunchpadAppComponent } from './si-launchpad-app.component';
@@ -51,30 +51,30 @@ export class SiLaunchpadFactoryComponent {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_LAUNCHPAD.CLOSE:Close launchpad`
+   * t(() => $localize`:@@SI_LAUNCHPAD.CLOSE:Close launchpad`)
    * ```
    */
-  readonly closeText = input($localize`:@@SI_LAUNCHPAD.CLOSE:Close launchpad`);
+  readonly closeText = input(t(() => $localize`:@@SI_LAUNCHPAD.CLOSE:Close launchpad`));
 
   /**
    * Title of the launchpad.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_LAUNCHPAD.TITLE:Launchpad`
+   * t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Launchpad`)
    * ```
    */
-  readonly titleText = input($localize`:@@SI_LAUNCHPAD.TITLE:Launchpad`);
+  readonly titleText = input(t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Launchpad`));
 
   /**
    * Subtitle of the launchpad.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_LAUNCHPAD.SUBTITLE:Access all your apps`
+   * t(() => $localize`:@@SI_LAUNCHPAD.SUBTITLE:Access all your apps`)
    * ```
    */
-  readonly subtitleText = input($localize`:@@SI_LAUNCHPAD.SUBTITLE:Access all your apps`);
+  readonly subtitleText = input(t(() => $localize`:@@SI_LAUNCHPAD.SUBTITLE:Access all your apps`));
 
   /** All app items shown in the launchpad. */
   readonly apps = input.required<App[] | AppCategory[]>();
@@ -91,30 +91,32 @@ export class SiLaunchpadFactoryComponent {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_LAUNCHPAD.FAVORITE_APPS:Favorite apps`
+   * t(() => $localize`:@@SI_LAUNCHPAD.FAVORITE_APPS:Favorite apps`)
    * ```
    */
-  readonly favoriteAppsText = input($localize`:@@SI_LAUNCHPAD.FAVORITE_APPS:Favorite apps`);
+  readonly favoriteAppsText = input(
+    t(() => $localize`:@@SI_LAUNCHPAD.FAVORITE_APPS:Favorite apps`)
+  );
 
   /**
    * Title of the show more apps button.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_LAUNCHPAD.SHOW_MORE:Show more`
+   * t(() => $localize`:@@SI_LAUNCHPAD.SHOW_MORE:Show more`)
    * ```
    */
-  readonly showMoreAppsText = input($localize`:@@SI_LAUNCHPAD.SHOW_MORE:Show more`);
+  readonly showMoreAppsText = input(t(() => $localize`:@@SI_LAUNCHPAD.SHOW_MORE:Show more`));
 
   /**
    * Title of the show less apps button.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_LAUNCHPAD.SHOW_LESS:Show less`
+   * t(() => $localize`:@@SI_LAUNCHPAD.SHOW_LESS:Show less`)
    * ```
    */
-  readonly showLessAppsText = input($localize`:@@SI_LAUNCHPAD.SHOW_LESS:Show less`);
+  readonly showLessAppsText = input(t(() => $localize`:@@SI_LAUNCHPAD.SHOW_LESS:Show less`));
 
   readonly favoriteChange = output<FavoriteChangeEvent>();
 

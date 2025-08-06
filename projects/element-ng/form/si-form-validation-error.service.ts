@@ -4,6 +4,7 @@
  */
 import { inject, Injectable } from '@angular/core';
 import { ValidationErrors } from '@angular/forms';
+import { t } from '@siemens/element-translate-ng/translate';
 
 import { SiFormError } from './si-form-item/si-form-item.component';
 import { SiFormValidationErrorMapper } from './si-form-validation-error.model';
@@ -15,20 +16,35 @@ import { SiFormValidationErrorMapper } from './si-form-validation-error.model';
  * @internal
  */
 export const buildDefaults = (): SiFormValidationErrorMapper => ({
-  min: $localize`:@@SI_FORM_CONTAINER.ERROR.MIN:The value is too small`,
-  max: $localize`:@@SI_FORM_CONTAINER.ERROR.MAX:The value is too large.`,
-  required: $localize`:@@SI_FORM_CONTAINER.ERROR.REQUIRED:A value is required.`,
-  requiredTrue: $localize`:@@SI_FORM_CONTAINER.ERROR.REQUIRED_TRUE:The value should be true.`,
-  email: $localize`:@@SI_FORM_CONTAINER.ERROR.EMAIL:The email is not valid.`,
-  minlength: $localize`:@@SI_FORM_CONTAINER.ERROR.MIN_LENGTH:The minimum number of characters is not met.`,
-  maxlength: $localize`:@@SI_FORM_CONTAINER.ERROR.MAX_LENGTH:A maximum number of characters is exceeded.`,
-  ipv4Address: $localize`:@@SI_FORM_CONTAINER.ERROR.IPV4:Invalid IPv4 address.`,
-  ipv6Address: $localize`:@@SI_FORM_CONTAINER.ERROR.IPV6:Invalid IPv6 address.`,
-  pattern: $localize`:@@SI_FORM_CONTAINER.ERROR.PATTERN:The value does not match the predefined pattern.`,
-  numberFormat: $localize`:@@SI_FORM_CONTAINER.ERROR.NUMBER_FORMAT:The value is not a valid number.`,
-  dateFormat: $localize`:@@SI_FORM_CONTAINER.ERROR.DATE_FORMAT:Invalid date format.`,
-  maxDate: $localize`:@@SI_FORM_CONTAINER.ERROR.MAX_DATE:The date is too far in the future.`,
-  minDate: $localize`:@@SI_FORM_CONTAINER.ERROR.MIN_DATE:The date is too far in the past.`
+  min: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.MIN:The value is too small`),
+  max: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.MAX:The value is too large.`),
+  required: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.REQUIRED:A value is required.`),
+  requiredTrue: t(
+    () => $localize`:@@SI_FORM_CONTAINER.ERROR.REQUIRED_TRUE:The value should be true.`
+  ),
+  email: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.EMAIL:The email is not valid.`),
+  minlength: t(
+    () =>
+      $localize`:@@SI_FORM_CONTAINER.ERROR.MIN_LENGTH:The minimum number of characters is not met.`
+  ),
+  maxlength: t(
+    () =>
+      $localize`:@@SI_FORM_CONTAINER.ERROR.MAX_LENGTH:A maximum number of characters is exceeded.`
+  ),
+  ipv4Address: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.IPV4:Invalid IPv4 address.`),
+  ipv6Address: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.IPV6:Invalid IPv6 address.`),
+  pattern: t(
+    () =>
+      $localize`:@@SI_FORM_CONTAINER.ERROR.PATTERN:The value does not match the predefined pattern.`
+  ),
+  numberFormat: t(
+    () => $localize`:@@SI_FORM_CONTAINER.ERROR.NUMBER_FORMAT:The value is not a valid number.`
+  ),
+  dateFormat: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.DATE_FORMAT:Invalid date format.`),
+  maxDate: t(
+    () => $localize`:@@SI_FORM_CONTAINER.ERROR.MAX_DATE:The date is too far in the future.`
+  ),
+  minDate: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.MIN_DATE:The date is too far in the past.`)
 });
 
 /**

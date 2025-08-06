@@ -26,7 +26,7 @@ import {
   ResizeObserverService
 } from '@siemens/element-ng/resize-observer';
 import { SiSplitComponent, SiSplitPartComponent } from '@siemens/element-ng/split';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -119,10 +119,10 @@ export class SiMainDetailContainerComponent implements OnInit, OnChanges, OnDest
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_MAIN_DETAIL_CONTAINER.BACK:Back`
+   * t(() => $localize`:@@SI_MAIN_DETAIL_CONTAINER.BACK:Back`)
    * ```
    */
-  readonly detailsBackButtonText = input($localize`:@@SI_MAIN_DETAIL_CONTAINER.BACK:Back`);
+  readonly detailsBackButtonText = input(t(() => $localize`:@@SI_MAIN_DETAIL_CONTAINER.BACK:Back`));
 
   /**
    * CSS class(es) applied to the outermost container. Per default, Bootstrap classes

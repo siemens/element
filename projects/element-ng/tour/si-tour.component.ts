@@ -7,13 +7,13 @@ import { NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  DOCUMENT,
   ElementRef,
   HostListener,
   inject,
   OnDestroy,
   signal,
-  viewChild,
-  DOCUMENT
+  viewChild
 } from '@angular/core';
 import {
   calculateOverlayArrowPosition,
@@ -21,7 +21,7 @@ import {
   OverlayArrowPosition
 } from '@siemens/element-ng/common';
 import { addIcons, elementCancel, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 import { Subscription } from 'rxjs';
 
 import { PositionChange, SI_TOUR_TOKEN, TourAction, TourStepInternal } from './si-tour-token.model';
@@ -44,12 +44,12 @@ export class SiTourComponent implements OnDestroy {
   protected readonly icons = addIcons({ elementCancel });
   protected tourToken = inject(SI_TOUR_TOKEN);
 
-  protected backText = $localize`:@@SI_TOUR.BACK:Back`;
-  protected nextText = $localize`:@@SI_TOUR.NEXT:Next`;
-  protected skipText = $localize`:@@SI_TOUR.SKIP:Skip tour`;
-  protected doneText = $localize`:@@SI_TOUR.DONE:Done`;
-  protected ariaLabelClose = $localize`:@@SI_TOUR.CLOSE:Close`;
-  protected progressText = $localize`:@@SI_TOUR.PROGRESS: {{step}} of {{total}}`;
+  protected backText = t(() => $localize`:@@SI_TOUR.BACK:Back`);
+  protected nextText = t(() => $localize`:@@SI_TOUR.NEXT:Next`);
+  protected skipText = t(() => $localize`:@@SI_TOUR.SKIP:Skip tour`);
+  protected doneText = t(() => $localize`:@@SI_TOUR.DONE:Done`);
+  protected ariaLabelClose = t(() => $localize`:@@SI_TOUR.CLOSE:Close`);
+  protected progressText = t(() => $localize`:@@SI_TOUR.PROGRESS: {{step}} of {{total}}`);
 
   private elementRef: ElementRef<HTMLElement> = inject(ElementRef);
   private subscription?: Subscription;

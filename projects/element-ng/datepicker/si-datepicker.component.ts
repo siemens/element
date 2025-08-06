@@ -21,7 +21,7 @@ import {
   viewChild
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { Cell } from './components/si-calendar-body.component';
 import { SiDaySelectionComponent } from './components/si-day-selection.component';
@@ -110,26 +110,28 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATEPICKER.PREVIOUS:Previous`
+   * t(() => $localize`:@@SI_DATEPICKER.PREVIOUS:Previous`)
    * ```
    */
-  readonly previousLabel = input<TranslatableString>($localize`:@@SI_DATEPICKER.PREVIOUS:Previous`);
+  readonly previousLabel = input<TranslatableString>(
+    t(() => $localize`:@@SI_DATEPICKER.PREVIOUS:Previous`)
+  );
   /**
    * Aria label for the next button. Needed for a11y.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATEPICKER.NEXT:Next`
+   * t(() => $localize`:@@SI_DATEPICKER.NEXT:Next`)
    * ```
    */
-  readonly nextLabel = input<TranslatableString>($localize`:@@SI_DATEPICKER.NEXT:Next`);
+  readonly nextLabel = input<TranslatableString>(t(() => $localize`:@@SI_DATEPICKER.NEXT:Next`));
   /**
    * Aria label for week number column
    *
    * @deprecated Use `calendarWeekLabel` instead.
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATEPICKER.CALENDAR_WEEK_LABEL:Calendar week`
+   * t(() => $localize`:@@SI_DATEPICKER.CALENDAR_WEEK_LABEL:Calendar week`)
    * ```
    */
   readonly calenderWeekLabel = input<TranslatableString>();
@@ -138,11 +140,11 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_DATEPICKER.CALENDAR_WEEK_LABEL:Calendar week`
+   * t(() => $localize`:@@SI_DATEPICKER.CALENDAR_WEEK_LABEL:Calendar week`)
    * ```
    */
   readonly calendarWeekLabel = input<TranslatableString>(
-    $localize`:@@SI_DATEPICKER.CALENDAR_WEEK_LABEL:Calendar week`
+    t(() => $localize`:@@SI_DATEPICKER.CALENDAR_WEEK_LABEL:Calendar week`)
   );
   protected readonly derivedWeekLabel = computed(
     () => this.calenderWeekLabel() ?? this.calendarWeekLabel()
@@ -211,8 +213,12 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
         : this.dateRange()?.start;
   }
 
-  private readonly defaultDisabledTimeText = $localize`:@@SI_DATEPICKER.DISABLED_TIME_TEXT:Ignore time`;
-  private readonly defaultEnableTimeText = $localize`:@@SI_DATEPICKER.ENABLED_TIME_TEXT:Consider time`;
+  private readonly defaultDisabledTimeText = t(
+    () => $localize`:@@SI_DATEPICKER.DISABLED_TIME_TEXT:Ignore time`
+  );
+  private readonly defaultEnableTimeText = t(
+    () => $localize`:@@SI_DATEPICKER.ENABLED_TIME_TEXT:Consider time`
+  );
 
   protected readonly includeTimeLabel = computed(() =>
     this.disabledTime()

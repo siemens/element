@@ -33,7 +33,11 @@ import {
   ResizeObserverService,
   SiResizeObserverDirective
 } from '@siemens/element-ng/resize-observer';
-import { injectSiTranslateService, SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import {
+  injectSiTranslateService,
+  SiTranslatePipe,
+  t
+} from '@siemens/element-translate-ng/translate';
 import { Observable, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
@@ -98,19 +102,19 @@ export class SiStatusBarComponent implements DoCheck, OnDestroy, OnChanges {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_STATUS_BAR.MUTE:Mute/unmute`
+   * t(() => $localize`:@@SI_STATUS_BAR.MUTE:Mute/unmute`)
    * ```
    */
-  readonly muteButtonText = input($localize`:@@SI_STATUS_BAR.MUTE:Mute/unmute`);
+  readonly muteButtonText = input(t(() => $localize`:@@SI_STATUS_BAR.MUTE:Mute/unmute`));
   /**
    * Text/translation key for "All OK" status in mobile
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_STATUS_BAR.ALL_OK:All OK`
+   * t(() => $localize`:@@SI_STATUS_BAR.ALL_OK:All OK`)
    * ```
    */
-  readonly allOkText = input($localize`:@@SI_STATUS_BAR.ALL_OK:All OK`);
+  readonly allOkText = input(t(() => $localize`:@@SI_STATUS_BAR.ALL_OK:All OK`));
   /**
    * compact mode
    *
@@ -126,19 +130,19 @@ export class SiStatusBarComponent implements DoCheck, OnDestroy, OnChanges {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_STATUS_BAR.EXPAND:Expand`
+   * t(() => $localize`:@@SI_STATUS_BAR.EXPAND:Expand`)
    * ```
    */
-  readonly expandButtonText = input($localize`:@@SI_STATUS_BAR.EXPAND:Expand`);
+  readonly expandButtonText = input(t(() => $localize`:@@SI_STATUS_BAR.EXPAND:Expand`));
   /**
    * Text for the navbar collapse button. Required for a11y
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_STATUS_BAR.COLLAPSE:Collapse`
+   * t(() => $localize`:@@SI_STATUS_BAR.COLLAPSE:Collapse`)
    * ```
    */
-  readonly collapseButtonText = input($localize`:@@SI_STATUS_BAR.COLLAPSE:Collapse`);
+  readonly collapseButtonText = input(t(() => $localize`:@@SI_STATUS_BAR.COLLAPSE:Collapse`));
 
   /**
    * Emitted when the mute toggle button is clicked

@@ -15,7 +15,7 @@ import {
 } from '@angular/core';
 import { SI_HEADER_DROPDOWN_OPTIONS } from '@siemens/element-ng/header-dropdown';
 import { addIcons, elementOptionsVertical, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 import { Subscription } from 'rxjs';
 import { skip, takeUntil } from 'rxjs/operators';
 
@@ -41,11 +41,11 @@ export class SiHeaderCollapsibleActionsComponent implements OnDestroy {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_APPLICATION_HEADER.TOGGLE_ACTIONS:Toggle actions`
+   * t(() => $localize`:@@SI_APPLICATION_HEADER.TOGGLE_ACTIONS:Toggle actions`)
    * ```
    */
   readonly mobileToggleLabel = input(
-    $localize`:@@SI_APPLICATION_HEADER.TOGGLE_ACTIONS:Toggle actions`
+    t(() => $localize`:@@SI_APPLICATION_HEADER.TOGGLE_ACTIONS:Toggle actions`)
   );
 
   /** @internal **/

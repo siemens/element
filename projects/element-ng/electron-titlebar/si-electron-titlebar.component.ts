@@ -13,7 +13,7 @@ import {
   SiIconNextComponent
 } from '@siemens/element-ng/icon';
 import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-electron-titlebar',
@@ -71,30 +71,30 @@ export class SiElectrontitlebarComponent {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_ELECTRON_TITLEBAR.FORWARD:Forward`
+   * t(() => $localize`:@@SI_ELECTRON_TITLEBAR.FORWARD:Forward`)
    * ```
    */
-  readonly ariaLabelForward = input($localize`:@@SI_ELECTRON_TITLEBAR.FORWARD:Forward`);
+  readonly ariaLabelForward = input(t(() => $localize`:@@SI_ELECTRON_TITLEBAR.FORWARD:Forward`));
 
   /**
    * Aria Label for Back Button
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_ELECTRON_TITLEBAR.BACK:Back`
+   * t(() => $localize`:@@SI_ELECTRON_TITLEBAR.BACK:Back`)
    * ```
    */
-  readonly ariaLabelBack = input($localize`:@@SI_ELECTRON_TITLEBAR.BACK:Back`);
+  readonly ariaLabelBack = input(t(() => $localize`:@@SI_ELECTRON_TITLEBAR.BACK:Back`));
 
   /**
    * Aria Label for Menu Button
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_ELECTRON_TITLEBAR.MENU:Menu`
+   * t(() => $localize`:@@SI_ELECTRON_TITLEBAR.MENU:Menu`)
    * ```
    */
-  readonly ariaLabelMenu = input($localize`:@@SI_ELECTRON_TITLEBAR.MENU:Menu`);
+  readonly ariaLabelMenu = input(t(() => $localize`:@@SI_ELECTRON_TITLEBAR.MENU:Menu`));
 
   protected readonly icons = addIcons({ elementLeft4, elementRight4, elementOptionsVertical });
 }

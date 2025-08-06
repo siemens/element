@@ -9,13 +9,13 @@ import { AccentLineType } from '@siemens/element-ng/common';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import {
   addIcons,
-  SiIconNextComponent,
   elementRight2,
   elementSortDown,
-  elementSortUp
+  elementSortUp,
+  SiIconNextComponent
 } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslateModule, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiWidgetBaseComponent } from '../si-widget-base.component';
 import { SiListWidgetBodyComponent, SortOrder } from './si-list-widget-body.component';
@@ -55,29 +55,31 @@ export class SiListWidgetComponent
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_LIST_WIDGET.SEARCH_PLACEHOLDER:Search...`
+   * t(() => $localize`:@@SI_LIST_WIDGET.SEARCH_PLACEHOLDER:Search...`)
    * ```
    */
   readonly searchPlaceholderLabel = input(
-    $localize`:@@SI_LIST_WIDGET.SEARCH_PLACEHOLDER:Search...`
+    t(() => $localize`:@@SI_LIST_WIDGET.SEARCH_PLACEHOLDER:Search...`)
   );
 
   /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_LIST_WIDGET.SORT_ASCENDING:Sort ascending`
+   * t(() => $localize`:@@SI_LIST_WIDGET.SORT_ASCENDING:Sort ascending`)
    * ```
    */
-  readonly sortAscendingLabel = input($localize`:@@SI_LIST_WIDGET.SORT_ASCENDING:Sort ascending`);
+  readonly sortAscendingLabel = input(
+    t(() => $localize`:@@SI_LIST_WIDGET.SORT_ASCENDING:Sort ascending`)
+  );
 
   /**
    * @defaultValue
    * ```
-   * $localize`:@@SI_LIST_WIDGET.SORT_DESCENDING:Sort descending`
+   * t(() => $localize`:@@SI_LIST_WIDGET.SORT_DESCENDING:Sort descending`)
    * ```
    */
   readonly sortDescendingLabel = input(
-    $localize`:@@SI_LIST_WIDGET.SORT_DESCENDING:Sort descending`
+    t(() => $localize`:@@SI_LIST_WIDGET.SORT_DESCENDING:Sort descending`)
   );
 
   /**

@@ -10,6 +10,7 @@ import {
   Component,
   computed,
   DestroyRef,
+  DOCUMENT,
   ElementRef,
   inject,
   input,
@@ -21,8 +22,7 @@ import {
   PLATFORM_ID,
   signal,
   SimpleChanges,
-  viewChild,
-  DOCUMENT
+  viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -31,6 +31,7 @@ import {
   ElementDimensions,
   ResizeObserverService
 } from '@siemens/element-ng/resize-observer';
+import { t } from '@siemens/element-translate-ng/translate';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
@@ -92,10 +93,10 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_SIDE_PANEL.TOGGLE:Toggle`
+   * t(() => $localize`:@@SI_SIDE_PANEL.TOGGLE:Toggle`)
    * ```
    */
-  readonly toggleItemLabel = input($localize`:@@SI_SIDE_PANEL.TOGGLE:Toggle`);
+  readonly toggleItemLabel = input(t(() => $localize`:@@SI_SIDE_PANEL.TOGGLE:Toggle`));
 
   /**
    * Specifies custom breakpoints to automatically switch mode.

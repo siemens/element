@@ -37,7 +37,7 @@ import {
   SiHeaderDropdownTriggerDirective
 } from '@siemens/element-ng/header-dropdown';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 import { defer } from 'rxjs';
 
 import { AccountItem } from '../account.model';
@@ -120,60 +120,66 @@ export class SiNavbarPrimaryComponent implements OnChanges, HeaderWithDropdowns 
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_LAUNCHPAD.TITLE:Launchpad`
+   * t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Launchpad`)
    * ```
    */
-  readonly appSwitcherTitle = input($localize`:@@SI_LAUNCHPAD.TITLE:Launchpad`);
+  readonly appSwitcherTitle = input(t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Launchpad`));
 
   /**
    * sub-title for the launchpad
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_LAUNCHPAD.SUB_TITLE:Access all your apps`
+   * t(() => $localize`:@@SI_LAUNCHPAD.SUB_TITLE:Access all your apps`)
    * ```
    */
-  readonly appSwitcherSubTitle = input($localize`:@@SI_LAUNCHPAD.SUB_TITLE:Access all your apps`);
+  readonly appSwitcherSubTitle = input(
+    t(() => $localize`:@@SI_LAUNCHPAD.SUB_TITLE:Access all your apps`)
+  );
 
   /**
    * Title or translate key for the favorite apps section.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_LAUNCHPAD.FAVORITE_APPS:Favorite apps`
+   * t(() => $localize`:@@SI_LAUNCHPAD.FAVORITE_APPS:Favorite apps`)
    * ```
    */
-  readonly favoriteAppsTitle = input($localize`:@@SI_LAUNCHPAD.FAVORITE_APPS:Favorite apps`);
+  readonly favoriteAppsTitle = input(
+    t(() => $localize`:@@SI_LAUNCHPAD.FAVORITE_APPS:Favorite apps`)
+  );
 
   /**
    * Title or translate key for the default apps section.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_LAUNCHPAD.DEFAULT_CATEGORY_TITLE:Apps`
+   * t(() => $localize`:@@SI_LAUNCHPAD.DEFAULT_CATEGORY_TITLE:Apps`)
    * ```
    */
-  readonly defaultAppsTitle = input($localize`:@@SI_LAUNCHPAD.DEFAULT_CATEGORY_TITLE:Apps`);
+  readonly defaultAppsTitle = input(
+    t(() => $localize`:@@SI_LAUNCHPAD.DEFAULT_CATEGORY_TITLE:Apps`)
+  );
 
   /**
    * Title or translate key for the show more apps button.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_LAUNCHPAD.SHOW_MORE:Show more`
+   * t(() => $localize`:@@SI_LAUNCHPAD.SHOW_MORE:Show more`)
    * ```
    */
-  readonly showMoreAppsTitle = input($localize`:@@SI_LAUNCHPAD.SHOW_MORE:Show more`);
+  readonly showMoreAppsTitle = input(t(() => $localize`:@@SI_LAUNCHPAD.SHOW_MORE:Show more`));
 
   /**
    * Title or translate key for the show less apps button.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_LAUNCHPAD.SHOW_LESS:Show less`
+   * t(() => $localize`:@@SI_LAUNCHPAD.SHOW_LESS:Show less`)
    * ```
    */
-  readonly showLessAppsTitle = input($localize`:@@SI_LAUNCHPAD.SHOW_LESS:Show less`);
+  readonly showLessAppsTitle = input(t(() => $localize`:@@SI_LAUNCHPAD.SHOW_LESS:Show less`));
 
   /**
    * All app items shown in the launchpad. The launchpad will not be visible if the
@@ -217,31 +223,33 @@ export class SiNavbarPrimaryComponent implements OnChanges, HeaderWithDropdowns 
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_LAUNCHPAD.CLOSE:Close launchpad`
+   * t(() => $localize`:@@SI_LAUNCHPAD.CLOSE:Close launchpad`)
    * ```
    */
-  readonly closeAppSwitcherText = input($localize`:@@SI_LAUNCHPAD.CLOSE:Close launchpad`);
+  readonly closeAppSwitcherText = input(t(() => $localize`:@@SI_LAUNCHPAD.CLOSE:Close launchpad`));
 
   /**
    * Text for the launchpad icon. Needed for a11y.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_NAVBAR.OPEN_LAUNCHPAD:Open launchpad`
+   * t(() => $localize`:@@SI_NAVBAR.OPEN_LAUNCHPAD:Open launchpad`)
    * ```
    */
-  readonly openAppSwitcherText = input($localize`:@@SI_NAVBAR.OPEN_LAUNCHPAD:Open launchpad`);
+  readonly openAppSwitcherText = input(
+    t(() => $localize`:@@SI_NAVBAR.OPEN_LAUNCHPAD:Open launchpad`)
+  );
 
   /**
    * Text or translate key for the toggle navigation icon. Needed for a11y.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_NAVBAR.TOGGLE_NAVIGATION:Toggle navigation`
+   * t(() => $localize`:@@SI_NAVBAR.TOGGLE_NAVIGATION:Toggle navigation`)
    * ```
    */
   readonly toggleNavigationText = input(
-    $localize`:@@SI_NAVBAR.TOGGLE_NAVIGATION:Toggle navigation`
+    t(() => $localize`:@@SI_NAVBAR.TOGGLE_NAVIGATION:Toggle navigation`)
   );
 
   /**

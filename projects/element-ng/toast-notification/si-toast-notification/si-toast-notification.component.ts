@@ -22,7 +22,7 @@ import {
   STATUS_ICON_CONFIG
 } from '@siemens/element-ng/icon';
 import { SiLinkModule } from '@siemens/element-ng/link';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { SiToast } from '../si-toast.model';
 
@@ -36,7 +36,7 @@ export class SiToastNotificationComponent implements OnChanges {
   private readonly statusIcons = inject(STATUS_ICON_CONFIG);
   readonly toast = input.required<SiToast>();
 
-  protected closeAriaLabel = $localize`:@@SI_TOAST.CLOSE:Close`;
+  protected closeAriaLabel = t(() => $localize`:@@SI_TOAST.CLOSE:Close`);
   protected readonly icons = addIcons({ elementCancel });
   protected readonly status = computed(() => {
     const toast = this.toast();

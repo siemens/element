@@ -4,7 +4,7 @@
  */
 import { Component, input, output, signal } from '@angular/core';
 import { addIcons, elementHide, elementShow, SiIconNextComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-password-toggle',
@@ -34,19 +34,19 @@ export class SiPasswordToggleComponent {
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_PASSWORD_TOGGLE.SHOW:show password`
+   * t(() => $localize`:@@SI_PASSWORD_TOGGLE.SHOW:show password`)
    * ```
    */
-  readonly showLabel = input($localize`:@@SI_PASSWORD_TOGGLE.SHOW:show password`);
+  readonly showLabel = input(t(() => $localize`:@@SI_PASSWORD_TOGGLE.SHOW:show password`));
   /**
    * The aria-label (translatable) for the password hide icon.
    *
    * @defaultValue
    * ```
-   * $localize`:@@SI_PASSWORD_TOGGLE.HIDE:hide password`
+   * t(() => $localize`:@@SI_PASSWORD_TOGGLE.HIDE:hide password`)
    * ```
    */
-  readonly hideLabel = input($localize`:@@SI_PASSWORD_TOGGLE.HIDE:hide password`);
+  readonly hideLabel = input(t(() => $localize`:@@SI_PASSWORD_TOGGLE.HIDE:hide password`));
 
   protected readonly showPassword = signal<boolean>(false);
   protected readonly icons = addIcons({ elementHide, elementShow });
