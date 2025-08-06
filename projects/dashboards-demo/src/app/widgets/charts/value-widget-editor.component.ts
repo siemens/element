@@ -65,7 +65,7 @@ import { ValueWidgetComponent } from './value-widget.component';
             [form]="form"
           >
             <div si-form-container-content>
-              <si-form-item label="Heading" [disableErrorPrinting]="false">
+              <si-form-item label="Heading">
                 <input
                   type="text"
                   id="name"

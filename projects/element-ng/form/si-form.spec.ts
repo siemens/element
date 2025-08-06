@@ -40,7 +40,7 @@ describe('SiForm', () => {
         >
           <form si-form-container-content [formGroup]="form">
             <si-form-fieldset label="Fieldset-CB">
-              <si-form-item label="CB-1" [disableErrorPrinting]="false">
+              <si-form-item label="CB-1">
                 <input formControlName="cb1" class="form-check-input" type="checkbox" />
               </si-form-item>
             </si-form-fieldset>
@@ -64,7 +64,7 @@ describe('SiForm', () => {
                 />
               </si-form-item>
             </si-form-fieldset>
-            <si-form-item label="Input" [disableErrorPrinting]="false">
+            <si-form-item label="Input">
               <input formControlName="input" class="form-control" />
             </si-form-item>
           </form>
@@ -152,7 +152,7 @@ describe('SiForm', () => {
       imports: [ReactiveFormsModule, SiFormItemComponent],
       template: `
         <form [formGroup]="form">
-          <si-form-item label="Input" [disableErrorPrinting]="false">
+          <si-form-item label="Input">
             <input formControlName="input" />
           </si-form-item>
         </form>
@@ -205,7 +205,7 @@ describe('SiForm', () => {
       imports: [SiFormItemComponent, FormsModule],
       template: `
         <form>
-          <si-form-item label="Input" [disableErrorPrinting]="false">
+          <si-form-item label="Input">
             <input name="value" [required]="required" [(ngModel)]="value" />
           </si-form-item>
         </form>

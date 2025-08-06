@@ -14,11 +14,7 @@
             >
               <div si-form-container-content>
                 <si-form-fieldset label="FORM.ROLE" inline>
-                  <si-form-item
-                    label="FORM.ENGINEER"
-                    class="form-check form-check-inline"
-                    [disableErrorPrinting]="false"
-                  >
+                  <si-form-item label="FORM.ENGINEER">
                     <input
                       type="radio"
                       formControlName="role"
@@ -27,11 +23,7 @@
                       class="form-check-input"
                     />
                   </si-form-item>
-                  <si-form-item
-                    label="FORM.INSTALLER"
-                    class="form-check form-check-inline"
-                    [disableErrorPrinting]="false"
-                  >
+                  <si-form-item label="FORM.INSTALLER">
                     <input
                       type="radio"
                       formControlName="role"
@@ -41,7 +33,7 @@
                     />
                   </si-form-item>
                 </si-form-fieldset>
-                <si-form-item label="FORM.NAME" [disableErrorPrinting]="false">
+                <si-form-item label="FORM.NAME">
                   <input
                     type="text"
                     id="name"
@@ -53,7 +45,7 @@
                     [readonly]="readonly"
                   />
                 </si-form-item>
-                <si-form-item label="FORM.DESCRIPTION" [disableErrorPrinting]="false">
+                <si-form-item label="FORM.DESCRIPTION">
                   <input
                     type="text"
                     id="description"
@@ -62,7 +54,7 @@
                     [readonly]="readonly"
                   />
                 </si-form-item>
-                <si-form-item label="FORM.PHONE_NUMBER" [disableErrorPrinting]="false">
+                <si-form-item label="FORM.PHONE_NUMBER">
                   <si-phone-number-input
                     class="form-control"
                     formControlName="phoneNumber"
@@ -73,7 +65,7 @@
                     [readonly]="readonly"
                   />
                 </si-form-item>
-                <si-form-item label="FORM.BIRTHDAY" [disableErrorPrinting]="false">
+                <si-form-item label="FORM.BIRTHDAY">
                   <si-calendar-button class="w-100">
                     <input
                       type="text"
@@ -87,7 +79,7 @@
                     />
                   </si-calendar-button>
                 </si-form-item>
-                <si-form-item label="FORM.TRAVEL_DATE" [disableErrorPrinting]="false">
+                <si-form-item label="FORM.TRAVEL_DATE">
                   <si-date-range
                     id="travelDate"
                     required
@@ -95,7 +87,7 @@
                     [readonly]="readonly"
                   />
                 </si-form-item>
-                <si-form-item label="FORM.ARRIVAL" [disableErrorPrinting]="false">
+                <si-form-item label="FORM.ARRIVAL">
                   <si-timepicker
                     id="arrival"
                     formControlName="arrival"
@@ -103,7 +95,7 @@
                     [readonly]="readonly"
                   />
                 </si-form-item>
-                <si-form-item label="FORM.DEPARTURE" [disableErrorPrinting]="false">
+                <si-form-item label="FORM.DEPARTURE">
                   <si-timepicker
                     id="departure"
                     formControlName="departure"
@@ -111,7 +103,7 @@
                     [readonly]="readonly"
                   />
                 </si-form-item>
-                <si-form-item label="FORM.CLASS" [disableErrorPrinting]="false">
+                <si-form-item label="FORM.CLASS">
                   <si-select
                     class="form-control"
                     formControlName="serviceClass"
@@ -120,7 +112,7 @@
                     [readonly]="readonly"
                   />
                 </si-form-item>
-                <si-form-item label="FORM.FELLOW_PASSENGERS" [disableErrorPrinting]="false">
+                <si-form-item label="FORM.FELLOW_PASSENGERS">
                   <si-number-input
                     class="form-control"
                     formControlName="fellowPassengers"
@@ -128,10 +120,7 @@
                   />
                 </si-form-item>
                 <si-form-fieldset label="FORM.ACCEPT_TERMS">
-                  <si-form-item
-                    label="FORM.ACCEPT_TERMS_DESCRIPTION"
-                    [disableErrorPrinting]="false"
-                  >
+                  <si-form-item label="FORM.ACCEPT_TERMS_DESCRIPTION">
                     <input
                       type="checkbox"
                       class="form-check-input"
@@ -140,7 +129,7 @@
                       required
                     />
                   </si-form-item>
-                  <si-form-item label="FORM.ACCEPT_NO_PRIVACY" [disableErrorPrinting]="false">
+                  <si-form-item label="FORM.ACCEPT_NO_PRIVACY">
                     <input
                       type="checkbox"
                       class="form-check-input"
