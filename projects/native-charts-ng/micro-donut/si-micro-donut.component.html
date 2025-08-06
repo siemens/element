@@ -1,0 +1,23 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  class="chart"
+  [attr.viewBox]="'0 0 ' + dim().width + ' ' + dim().height"
+  [attr.width]="dim().width"
+  [attr.height]="dim().height"
+>
+  <g class="background">
+    <path [attr.d]="backgroundPath()" [style.stroke-width]="arcThickness()" />
+  </g>
+  <g class="data">
+    @for (series of internalSeries(); track $index) {
+      @if (series?.path) {
+        <path
+          [attr.d]="series.path"
+          [attr.data-id]="series.series.id"
+          [style.stroke]="series.colorVar"
+          [style.stroke-width]="arcThickness()"
+        />
+      }
+    }
+  </g>
+</svg>
