@@ -1,0 +1,13 @@
+<div
+  class="bar-container d-flex align-items-end pb-2 pt-2"
+  [style.width.px]="width()"
+  [style.height.px]="height() + padding"
+>
+  @for (value of series().values; track $index) {
+    <div
+      [style.height.%]="(value / maxValue()) * 100"
+      [style.width.px]="barWidth"
+      [style.backgroundColor]="'var(--' + series().colorToken + ')'"
+    ></div>
+  }
+</div>
