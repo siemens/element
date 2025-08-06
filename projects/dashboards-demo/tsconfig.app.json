@@ -5,7 +5,7 @@
   "compilerOptions": {
     "outDir": "../../out-tsc/app",
     "skipLibCheck": true,
-    "types": ["../element-translate-ng/localize-types/index.ts", "zone.js"]
+    "types": ["../element-translate-ng/localize-types/index.d.ts", "zone.js"]
   },
   "files": ["src/main.ts"],
   "include": ["src/**/*.ts", "../element-ng/public-api.ts"],

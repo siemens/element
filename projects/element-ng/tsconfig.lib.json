@@ -4,7 +4,7 @@
     "outDir": "../../out-tsc/lib",
     "declaration": true,
     "inlineSources": true,
-    "types": ["../element-translate-ng/localize-types/index.ts", "zone.js"],
+    "types": ["../element-translate-ng/localize-types/index.d.ts", "zone.js"],
     "lib": ["dom", "es2022"]
   },
   "angularCompilerOptions": {
