@@ -57,6 +57,7 @@
 
   &.disabled {
     color: variables.$element-text-disabled;
+    cursor: default;
   }
 
   &.open {
