@@ -20,7 +20,7 @@ jobs:
       - build-and-test
     steps:
       - uses: actions/configure-pages@v5
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           name: pages
           path: dist/design
