@@ -11,34 +11,34 @@ test.describe('si-select', () => {
   test(example, async ({ page, si }) => {
     await si.visitExample(example);
 
-    await page.locator('si-select').nth(1).click();
+    await page.getByRole('combobox', { name: 'FormControl' }).click();
     await si.runVisualAndA11yTests('form-select');
     await page.locator('.cdk-overlay-backdrop').click({ position: { x: 0, y: 0 }, force: true });
 
-    await page.locator('si-select').nth(2).click();
+    await page.getByRole('combobox', { name: 'Multi select' }).click();
     await si.runVisualAndA11yTests('multi-select');
     await page.locator('.cdk-overlay-backdrop').click({ position: { x: 0, y: 0 }, force: true });
 
-    await page.locator('si-select').nth(3).click();
+    await page.getByRole('combobox', { name: 'Multi-select with groups' }).click();
     await si.runVisualAndA11yTests('multi-select-with-groups');
     await page.locator('.cdk-overlay-backdrop').click({ position: { x: 0, y: 0 }, force: true });
 
-    await page.locator('si-select').nth(4).click();
+    await page.getByRole('combobox', { name: 'Select with custom template' }).click();
     await si.runVisualAndA11yTests('custom-template');
     await page.locator('.cdk-overlay-backdrop').click({ position: { x: 0, y: 0 }, force: true });
 
-    await page.locator('si-select').nth(5).click();
+    await page.getByRole('combobox', { name: 'Select with actions' }).click();
     await si.runVisualAndA11yTests('actions');
-    await page.locator('[aria-label="clear"]').click();
+    await page.getByRole('button', { name: 'clear' }).click();
     await page.locator('.cdk-overlay-backdrop').click({ position: { x: 0, y: 0 }, force: true });
 
     await page.locator('h4').first().click();
 
-    await page.locator('.form-check-inline').first().click();
+    await page.getByRole('checkbox', { name: 'Readonly' }).check();
     await si.runVisualAndA11yTests('readonly');
 
-    await page.locator('.form-check-inline').first().click();
-    await page.locator('.form-check-inline').nth(1).click();
+    await page.getByRole('checkbox', { name: 'Readonly' }).uncheck();
+    await page.getByRole('checkbox', { name: 'Disabled' }).check();
     await si.runVisualAndA11yTests('disabled');
   });
 
