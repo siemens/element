@@ -3,7 +3,7 @@
 **Main-detail** is a layout pattern that shows a list of items and the corresponding
 details of the selected item.
 It allows users to stay focused on the main content while accessing and editing
-related details without loosing context.
+related details without losing context.
 
 ## Usage ---
 
@@ -36,7 +36,7 @@ responsive behavior to adapt to various screen sizes.
 1. **Main actions (optional):** These are the functions that a user can perform within the main container.
 1. **Detail container:** Displays information from the selected node, such as tables, forms or KPIs.
 1. **Detail title (optional):** It provides context about the information displayed, e.g. name of the selected item
-1. **Detail actions(optional):** Functions that can be performed within the detail container.
+1. **Detail actions (optional):** Functions that can be performed within the detail container.
 
 ### Resizing the containers
 
