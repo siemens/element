@@ -14,6 +14,13 @@
             >
               <div si-form-container-content>
                 <si-form-fieldset label="FORM.ROLE" inline>
+                  <button
+                    si-help-button
+                    type="button"
+                    [siHelpTitle]="'FORM.INPUT_HELP_TITLE' | translate"
+                    [siHelpContent]="'FORM.INPUT_HELP_DESCRIPTION' | translate"
+                    >{{ 'FORM.ROLE_MORE_INFORMATION' | translate }}</button
+                  >
                   <si-form-item label="FORM.ENGINEER">
                     <input
                       type="radio"
@@ -44,6 +51,13 @@
                     pattern="^[A-Z].*"
                     [readonly]="readonly"
                   />
+                  <button
+                    si-help-button
+                    type="button"
+                    [siHelpTitle]="'FORM.INPUT_HELP_TITLE' | translate"
+                    [siHelpContent]="'FORM.INPUT_HELP_DESCRIPTION' | translate"
+                    >{{ 'FORM.NAME_MORE_INFORMATION' | translate }}</button
+                  >
                 </si-form-item>
                 <si-form-item label="FORM.DESCRIPTION">
                   <input
@@ -128,6 +142,13 @@
                       formControlName="termsAccepted"
                       required
                     />
+                    <button
+                      si-help-button
+                      type="button"
+                      [siHelpTitle]="'FORM.INPUT_HELP_TITLE' | translate"
+                      [siHelpContent]="'FORM.INPUT_HELP_DESCRIPTION' | translate"
+                      >{{ 'FORM.ACCEPT_TERMS_MORE_INFORMATION' | translate }}</button
+                    >
                   </si-form-item>
                   <si-form-item label="FORM.ACCEPT_NO_PRIVACY">
                     <input

@@ -24,8 +24,11 @@
   padding-block: map.get(spacers.$spacers, 4) - 1px 0;
 }
 
-.required:is(.form-label, .col-form-label, .form-check-label)::after {
-  content: '*';
+:is(.form-label, .col-form-label, .form-check-label) {
+  &.required::after,
+  .required::after {
+    content: '*';
+  }
 }
 
 .form-text {

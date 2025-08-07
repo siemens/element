@@ -1,10 +1,12 @@
 - text: Form
 - group "Role*":
+  - button "More information about the role"
   - radio "Engineer"
   - text: Engineer
   - radio "Installer"
   - text: Installer
 - text: Name*
+- button "More information about the name"
 - textbox "Name*"
 - text: Description
 - textbox "Description"
@@ -41,6 +43,7 @@
 - group "Accept terms":
   - checkbox "I confirm that I accept all and everything.*"
   - text: I confirm that I accept all and everything.*
+  - button "More information about the terms"
   - checkbox "I confirm that I do not care about my privacy.*"
   - text: I confirm that I do not care about my privacy.*
 - button "Cancel"
