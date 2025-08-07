@@ -97,9 +97,8 @@ chart.
 
 There is no support for CSS styling. Element Charts uses EChart themes with
 options defined as a simple JS object (no JSON). It is possible to load/register
-a theme for each chart separately or to load a default theme for everything. Be
-aware that if no theme is loaded, all styles of your charts are set to the
-default styles of ECharts itself.
+a theme for each chart separately or to load a default theme for everything. If 
+no theme is provided, the element theme will be loaded by default.
 
 The desired default theme can be loaded anywhere in your project like this:
 
