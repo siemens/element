@@ -40,8 +40,6 @@ Body text is used for the main content, often following a heading or as part of 
 - Use `body-lg` for larger and more prominent text.
 - Use `caption` for small, supportive text like annotations or metadata.
 
-All body styles are also available in **bold** and *italics*.
-
 ![Body fonts usage](images/typography-body-usage.png)
 
 | Style      | Font size | Line height | Font weight  |
@@ -49,6 +47,12 @@ All body styles are also available in **bold** and *italics*.
 | `body-lg`  | 16 px     | 20 px       | 400 / Roman  |
 | `body`     | 14 px     | 16 px       | 400 / Roman  |
 | `caption`  | 12 px     | 16 px       | 400 / Roman  |
+
+All body styles are also available in **bold** and *italics*.
+Bold is used to add emphasis or draw attention to key information, and is also applied in specific
+UI elements, such as button labels, or highlighted values in tables and lists.
+
+Italics is used sparingly, for cases like technical terms.
 
 ### Headings
 
