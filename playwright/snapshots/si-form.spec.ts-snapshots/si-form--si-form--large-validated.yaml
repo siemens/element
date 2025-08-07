@@ -1,10 +1,12 @@
 - text: Form
 - group "Role*":
+  - button "More information about the role"
   - radio "Engineer"
   - text: Engineer
   - radio "Installer"
   - text: Installer A value is required.
 - text: Name*
+- button "More information about the name"
 - textbox "Name*"
 - text: A minimum length of 3 characters is required. A name must start with an uppercase letter. Description
 - textbox "Description"
@@ -41,7 +43,9 @@
 - text: The value is too small
 - group "Accept terms":
   - checkbox "I confirm that I accept all and everything.*"
-  - text: I confirm that I accept all and everything.* You need to accept all terms before joining.
+  - text: I confirm that I accept all and everything.*
+  - button "More information about the terms"
+  - text: You need to accept all terms before joining.
   - checkbox "I confirm that I do not care about my privacy.*"
   - text: I confirm that I do not care about my privacy.* A value is required.
 - button "Cancel"
