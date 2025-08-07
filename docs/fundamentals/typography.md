@@ -40,6 +40,8 @@ Body text is used for the main content, often following a heading or as part of 
 - Use `body-lg` for larger and more prominent text.
 - Use `caption` for small, supportive text like annotations or metadata.
 
+All body styles are also available in **bold** and *italics*.
+
 ![Body fonts usage](images/typography-body-usage.png)
 
 | Style      | Font size | Line height | Font weight  |
@@ -50,8 +52,8 @@ Body text is used for the main content, often following a heading or as part of 
 
 ### Headings
 
-Headings are used to structure content and establish visual hierarchy.
-They guide users through sections and are defined semantically from H1 to H6.
+Headings communicate the structure and visual hierarchy of content on the page.
+They are defined semantically from `h1` to `h6`.
 
 - Use `h1` as the visual style for the largest headings.
 - Use `h2` as main page headings.
@@ -70,15 +72,29 @@ They guide users through sections and are defined semantically from H1 to H6.
 | `h5`      | 14 px     | 16 px       | 600 / Semi-bold |
 | `h5-bold` | 14 px     | 16 px       | 700 / Bold      |
 
-To ensure accessibility, each page includes a semantic `h1` element.
-When the visual style of `h1` is too prominent for in-page headings (e.g., in the [page header](../fundamentals/layouts/header.md)),
-the `h2` style is used instead.
+To [accessibility best practices](https://www.w3.org/WAI/tutorials/page-structure/headings/),
+each page should be structured according to the semantic hierarchy `h1`, `h2`, ...`h6`, starting from
+`h1` and maintaining a logical order without skipping levels.
 
-In these cases, the application name in the
-[application header](../components/layout-navigation/application-header.md) carries the `h1` tag.
-This approach preserves both visual hierarchy and a correct semantic structure for assistive technologies.
+Web browsers, plug-ins, and assistive technologies rely on this structure to provide in-page navigation.
+When visual requirements do not align with the semantic hierarchy, the appropriate HTML elements
+(`h1`, `h2`, ...`h6`) should still be used, with the desired visual style applied through CSS classes.
+
+When the visual style of `h1` is too prominent for typical in-page headings,
+such as the [page header](https://github.com/siemens/element/fundamentals/layouts/header.md),
+h2 style is used instead for visual balance.
+
+In this pattern, the `h1` tag is assigned to the application name in the [application header](https://github.com/siemens/element/components/layout-navigation/application-header.md).
+This preserves both visual hierarchy and correct semantic structure for assistive technologies.
 
 ![Headings accessibiilty semantics](images/typography-accesibility.png)
+
+#### Links
+
+- [WCAG SC 2.4.10](https://www.w3.org/WAI/WCAG22/Understanding/section-headings.html)
+- [WCAG technique G141](https://www.w3.org/WAI/WCAG22/Techniques/general/G141)
+- [WCAG technique G69](https://www.w3.org/WAI/WCAG22/Techniques/html/H69)
+- [WCAG tutorial page structure](https://www.w3.org/WAI/tutorials/page-structure/)
 
 ### Display
 
