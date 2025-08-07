@@ -214,7 +214,7 @@ describe('SiWidgetCatalogComponent', () => {
       expect(buttonsByName('Next').length).toBe(1);
       expect(fixture.debugElement.queryAll(By.css('.list-group-item')).length).toBe(1);
 
-      const nextButton = fixture.nativeElement.querySelectorAll('button')[3] as HTMLButtonElement;
+      const nextButton = buttonsByName('Next')[0].nativeElement;
       expect(nextButton.innerHTML).toBe('Next');
 
       // Navigate to next page that shows the editor of the widget and not the widget catalog.

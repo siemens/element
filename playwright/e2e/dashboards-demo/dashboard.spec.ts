@@ -51,8 +51,8 @@ test.describe('dashboard', () => {
     await si.visitExample(example, undefined);
     await openWidgetCatalog(page);
 
-    const helloWorld = page.locator('button', {
-      hasText: 'Hello World'
+    const helloWorld = page.getByRole('option', {
+      name: 'Hello World'
     });
     helloWorld.click();
     const next = page.getByText('Next', {
@@ -85,8 +85,8 @@ test.describe('dashboard', () => {
     await si.visitExample(example, undefined);
     await openWidgetCatalog(page);
 
-    const contact = page.locator('button', {
-      hasText: 'Add a contact card to your dashboard.'
+    const contact = page.getByRole('option', {
+      name: 'Add a contact card to your dashboard.'
     });
 
     await expect(contact).toBeVisible();
