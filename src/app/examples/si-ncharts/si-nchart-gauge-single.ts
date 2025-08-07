@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { SiFormItemComponent } from '@siemens/element-ng/form';
 import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
 import { LOG_EVENT } from '@siemens/live-preview';
-import { GaugeSegment, GaugeSeries, SiNChartGaugeComponent } from '@siemens/native-charts-ng';
+import { GaugeSegment, GaugeSeries, SiNChartGaugeComponent } from '@siemens/native-charts-ng/gauge';
 
 @Component({
   selector: 'app-sample',
