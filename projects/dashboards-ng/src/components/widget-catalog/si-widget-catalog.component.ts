@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { CdkListbox, CdkOption } from '@angular/cdk/listbox';
 import {
   Component,
   ComponentRef,
@@ -45,7 +46,14 @@ import { setupWidgetEditor } from '../../widget-loader';
  */
 @Component({
   selector: 'si-widget-catalog',
-  imports: [SiSearchBarComponent, SiCircleStatusComponent, SiEmptyStateComponent, SiTranslatePipe],
+  imports: [
+    SiSearchBarComponent,
+    SiCircleStatusComponent,
+    SiEmptyStateComponent,
+    SiTranslatePipe,
+    CdkListbox,
+    CdkOption
+  ],
   templateUrl: './si-widget-catalog.component.html',
   styleUrl: './si-widget-catalog.component.scss'
 })
@@ -119,6 +127,9 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
   protected labelDialogDiscard = t(
     () => $localize`:@@DASHBOARD.WIDGET_LIBRARY.DISCARD_CONFIG_CHANGE_DIALOG.DISCARD:Discard`
   );
+  protected labelWidgetCatalogList = t(
+    () => $localize`:@@DASHBOARD.WIDGET_LIBRARY.WIDGET_CATALOG_LIST:Widget catalog list`
+  );
 
   protected readonly showAddButton = computed(() =>
     this.view() === 'list' ? !this.hasEditor() : true
@@ -165,6 +176,7 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
   private dialogService = inject(SiActionDialogService);
   private injector = inject(Injector);
   private envInjector = inject(EnvironmentInjector);
+  private readonly widgetCdkListbox = viewChild(CdkListbox<Widget>);
 
   ngOnInit(): void {
     this.filteredWidgetCatalog = this.widgetCatalog;
@@ -360,6 +372,12 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
       this.hasEditor.set(true);
     } else {
       this.hasEditor.set(false);
+    }
+    if (widget) {
+      // need to keep this in setTimeout to avoid ExpressionChangedAfterItHasBeenCheckedError
+      setTimeout(() => {
+        this.widgetCdkListbox()?.selectValue(widget);
+      });
     }
   }
 

@@ -10,33 +10,35 @@
 - main:
   - heading "Add widget" [level=2]
   - textbox "Search widget"
-  - button "reportstatus none Hello World A dummy widget for testing.":
-    - status "reportstatus none"
-  - button "userstatus none Contact Add a contact card to your dashboard.":
-    - status "userstatus none"
-  - button "trendstatus none Line Chart A line chart is a type of chart used to show information that changes over time. Line charts are created by plotting a series of several points and connecting them with a straight line. Line charts are used to track changes over short and long periods.":
-    - status "trendstatus none"
-  - button "trendstatus none Bar Chart This is a bar chart widget.":
-    - status "trendstatus none"
-  - button "trendstatus none Circle Chart This is a cart with a circle.":
-    - status "trendstatus none"
-  - button "trendstatus none Gauge Chart A nice gauge charts":
-    - status "trendstatus none"
-  - button "trendstatus none List Widget Displays a list of items":
-    - status "trendstatus none"
-  - button "trendstatus none Timeline Widget Displays events or steps over a period of time":
-    - status "trendstatus none"
-  - button "trendstatus none Value Widget Displays a single KPI":
-    - status "trendstatus none"
-  - button "status none Note (web-component)":
-    - status "status none"
-  - button "status none Contact (web-component)":
-    - status "status none"
-  - button "status none Chart (web-component)":
-    - status "status none"
-  - button "status none Download (module-federation)":
-    - status "status none"
-  - button "status none Upload (module-federation)":
-    - status "status none"
+  - text: Widget catalog list
+  - listbox "Widget catalog list":
+    - option "reportstatus none Hello World A dummy widget for testing." [selected]:
+      - status "reportstatus none"
+    - option "userstatus none Contact Add a contact card to your dashboard.":
+      - status "userstatus none"
+    - option "trendstatus none Line Chart A line chart is a type of chart used to show information that changes over time. Line charts are created by plotting a series of several points and connecting them with a straight line. Line charts are used to track changes over short and long periods.":
+      - status "trendstatus none"
+    - option "trendstatus none Bar Chart This is a bar chart widget.":
+      - status "trendstatus none"
+    - option "trendstatus none Circle Chart This is a cart with a circle.":
+      - status "trendstatus none"
+    - option "trendstatus none Gauge Chart A nice gauge charts":
+      - status "trendstatus none"
+    - option "trendstatus none List Widget Displays a list of items":
+      - status "trendstatus none"
+    - option "trendstatus none Timeline Widget Displays events or steps over a period of time":
+      - status "trendstatus none"
+    - option "trendstatus none Value Widget Displays a single KPI":
+      - status "trendstatus none"
+    - option "status none Note (web-component)":
+      - status "status none"
+    - option "status none Contact (web-component)":
+      - status "status none"
+    - option "status none Chart (web-component)":
+      - status "status none"
+    - option "status none Download (module-federation)":
+      - status "status none"
+    - option "status none Upload (module-federation)":
+      - status "status none"
   - button "Cancel"
   - button "Next"
