@@ -79,23 +79,10 @@
   </si-list-pane>
   <si-details-pane class="card">
     <si-details-pane-header title="Title" [hideBackButton]="false">
-      <si-tabset
-        style="width: 0"
-        class="flex-grow-1 flex-shrink-1"
-        [(selectedTabIndex)]="selectedTabIndex"
-        (selectedTabIndexChange)="logEvent($event)"
-      >
-        @for (tab of tabs; track tab) {
-          <si-tab
-            [badgeColor]="tab.badgeColor"
-            [badgeContent]="tab.badgeContent"
-            [closable]="tab.closable"
-            [heading]="tab.heading"
-            [icon]="tab.icon"
-            [iconAltText]="tab.iconAltText"
-            (closeTriggered)="closeTab(tab)"
-          />
-        }
+      <si-tabset style="width: 0" class="flex-grow-1 flex-shrink-1">
+        <si-tab heading="Overview" />
+        <si-tab heading="History" />
+        <si-tab heading="Advanced" [disabled]="true" />
       </si-tabset>
       <si-menu-bar>
         <si-menu-item icon="element-edit" (triggered)="logEvent('editing')">Edit</si-menu-item>
