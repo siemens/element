@@ -45,7 +45,8 @@ export class SampleComponent {
     {
       name: 'Statistics',
       iconUrl: './assets/app-icons/statistics.svg',
-      href: '.'
+      type: 'router-link',
+      routerLink: 'stats'
     }
   ];
 

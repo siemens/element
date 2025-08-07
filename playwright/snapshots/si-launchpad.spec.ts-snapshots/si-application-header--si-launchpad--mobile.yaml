@@ -15,5 +15,5 @@
 - link "Rocket":
   - /url: .
 - link "Statistics":
-  - /url: .
+  - /url: "#/viewer/viewer/stats"
 - button "Close launchpad"
