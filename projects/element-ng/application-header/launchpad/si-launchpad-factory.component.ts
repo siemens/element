@@ -13,6 +13,7 @@ import {
   input,
   output
 } from '@angular/core';
+import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import {
   addIcons,
   elementCancel,
@@ -39,7 +40,9 @@ export interface FavoriteChangeEvent {
     SiLinkModule,
     SiTranslatePipe,
     SiLaunchpadAppComponent,
-    SiIconNextComponent
+    SiIconNextComponent,
+    RouterLinkActive,
+    RouterLink
   ],
   templateUrl: './si-launchpad-factory.component.html',
   styleUrl: './si-launchpad-factory.component.scss',
@@ -144,6 +147,7 @@ export class SiLaunchpadFactoryComponent {
   );
   protected readonly hasFavorites = computed(() => this.favorites().length > 0);
   protected readonly icons = addIcons({ elementDown2, elementCancel });
+  protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });
   private header = inject(SiApplicationHeaderComponent);
 
   protected closeLaunchpad(): void {

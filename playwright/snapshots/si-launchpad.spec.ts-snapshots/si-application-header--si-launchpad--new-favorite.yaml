@@ -7,6 +7,8 @@
 - text: Favorite apps
 - link "Fischbach":
   - /url: .
+- link "Rocket":
+  - /url: .
 - button "Show less"
 - link "Assets":
   - /url: .
@@ -15,5 +17,5 @@
 - link "Rocket":
   - /url: .
 - link "Statistics":
-  - /url: .
+  - /url: "#/viewer/viewer/stats"
 - button "Close launchpad"
