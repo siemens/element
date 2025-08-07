@@ -8,6 +8,12 @@ on:
         required: true
   pull_request:
 
+# Stops the workflow run if the PR is updated
+# https://stackoverflow.com/a/72408109
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-24.04
