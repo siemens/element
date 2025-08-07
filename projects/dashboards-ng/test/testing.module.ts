@@ -9,7 +9,7 @@ import { SiContentActionBarComponent } from '@siemens/element-ng/content-action-
 import { SiDashboardModule } from '@siemens/element-ng/dashboard';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 import { SiSearchBarModule } from '@siemens/element-ng/search-bar';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { Widget } from '../src/model/widgets.model';
 
@@ -37,7 +37,7 @@ export const createTestingWidget = (
     SiDashboardModule,
     SiEmptyStateComponent,
     SiSearchBarModule,
-    SiTranslateModule
+    SiTranslatePipe
   ],
   exports: [
     CommonModule,
@@ -46,7 +46,7 @@ export const createTestingWidget = (
     SiDashboardModule,
     SiEmptyStateComponent,
     SiSearchBarModule,
-    SiTranslateModule
+    SiTranslatePipe
   ]
 })
 export class TestingModule {}
