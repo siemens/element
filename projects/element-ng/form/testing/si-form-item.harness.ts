@@ -31,6 +31,7 @@ export class SiFormItemHarness extends ComponentHarness {
   }
 
   private readonly getLabelElement = this.locatorForOptional('.form-label');
+  private readonly getRequiredIndicator = this.locatorForOptional('.required');
   private readonly getFormCheckLabelElement = this.locatorForOptional('.form-check-label');
   private readonly getInvalidFeedback = this.locatorForAll('.invalid-feedback div');
   private readonly getFormCheckElement = this.locatorForOptional('input.form-check-input');
@@ -63,8 +64,6 @@ export class SiFormItemHarness extends ComponentHarness {
   }
 
   async isRequired(): Promise<boolean> {
-    return this.getLabelElement()
-      .then(element => element?.getProperty<DOMTokenList>('classList'))
-      .then(classList => !!classList?.contains('required'));
+    return this.getRequiredIndicator().then(element => !!element);
   }
 }

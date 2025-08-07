@@ -199,6 +199,25 @@ This is often required for radio inputs, but works for every other type as well.
 </si-form-fieldset>
 ```
 
+### Context help
+
+To provide contextual help within form items, use the `SiHelpButtonComponent`. 
+Add the `si-help-button` directive to a button placed inside the form item. 
+This allows you to display additional information or guidance related to the input field.
+
+```html
+<si-form-item label="Input label">
+  <button
+    si-help-button
+    type="button"
+    siHelpTitle="Help for input"
+    siHelpContent="The context help description"
+  >
+  </button>
+  <input class="form-control" >
+</si-form-item>
+```
+
 ### Custom controls
 
 `si-form-item` provides an API for being linked to custom controls implemented by an application.

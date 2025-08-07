@@ -20,4 +20,11 @@
 
 <si-form-item label="Disable help button" class="mt-5">
   <input type="checkbox" class="form-check-input" [formControl]="disabledHelp" />
+  <button
+    si-help-button
+    type="button"
+    siHelpTitle="Button triggerring"
+    siHelpContent="You can trigger a button by clicking it"
+    >How to trigger this button</button
+  >
 </si-form-item>

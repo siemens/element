@@ -25,6 +25,7 @@ export class SiFormFieldsetHarness extends ComponentHarness {
   }
 
   private readonly getLabelElement = this.locatorFor('.form-label');
+  private readonly getRequiredIndicator = this.locatorForOptional('.required');
   private readonly getInvalidFeedback = this.locatorForAll('.invalid-feedback div');
 
   async getLabel(): Promise<string> {
@@ -42,8 +43,6 @@ export class SiFormFieldsetHarness extends ComponentHarness {
   }
 
   async isRequired(): Promise<boolean> {
-    return this.getLabelElement()
-      .then(element => element?.getProperty<DOMTokenList>('classList'))
-      .then(classList => !!classList?.contains('required'));
+    return this.getRequiredIndicator().then(element => !!element);
   }
 }
