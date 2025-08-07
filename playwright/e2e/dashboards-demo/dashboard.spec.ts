@@ -191,6 +191,8 @@ test.describe('dashboard', () => {
     const buttonCount = await navbarBtn.count();
     if (buttonCount > 0) {
       await navbarBtn.click();
+      // wait for charts to render properly after collapsing the navbar
+      await page.waitForTimeout(1000);
     }
   };
 });
