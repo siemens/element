@@ -20,7 +20,7 @@ import {
   ViewContainerRef
 } from '@angular/core';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
-import { SiTranslateModule, t } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 import { Subscription } from 'rxjs';
 
 import {
@@ -41,7 +41,7 @@ import { setupWidgetEditor } from '../../widget-loader';
  */
 @Component({
   selector: 'si-widget-instance-editor-dialog',
-  imports: [SiTranslateModule],
+  imports: [SiTranslatePipe],
   templateUrl: './si-widget-instance-editor-dialog.component.html',
   styleUrl: './si-widget-instance-editor-dialog.component.scss'
 })
