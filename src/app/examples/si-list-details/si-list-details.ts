@@ -34,16 +34,6 @@ import { NgxDatatableModule } from '@siemens/ngx-datatable';
 
 import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.service';
 
-interface TabModel {
-  heading: string;
-  closable?: boolean;
-  disabled?: boolean;
-  icon?: string;
-  iconAltText?: string;
-  badgeColor?: string;
-  badgeContent?: string;
-}
-
 @Component({
   selector: 'app-sample',
   imports: [
@@ -147,23 +137,6 @@ export class SampleComponent {
       action: () => this.logEvent('Edit triggered')
     }
   ];
-
-  selectedTabIndex = 0;
-
-  tabs: TabModel[] = [
-    { heading: 'Overview' },
-    {
-      heading: 'History'
-    },
-    {
-      heading: 'Advanced',
-      disabled: true
-    }
-  ];
-
-  closeTab(tab: TabModel): void {
-    this.tabs.splice(this.tabs.indexOf(tab), 1);
-  }
 
   onDiscard(): void {
     this.logEvent('Discard');
