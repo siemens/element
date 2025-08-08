@@ -11,9 +11,11 @@ test.describe('si-loading-button', () => {
     await si.visitExample(example);
     await si.runVisualAndA11yTests('normal state');
 
-    await page.locator('input[type=checkbox]').check();
+    await page.getByRole('checkbox', { name: 'Toggle loading' }).check();
     const spinnerCount = await page.locator('si-loading-spinner').count();
     expect(spinnerCount).toBeGreaterThan(0);
+    const disabledButton = await page.locator('button[aria-disabled="true"]').count();
+    expect(disabledButton).toBe(spinnerCount);
     await si.runVisualAndA11yTests('second-step', { maxDiffPixels: 40 });
   });
 });
