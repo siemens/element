@@ -53,7 +53,7 @@ describe('formly tabset type', () => {
     fixture = TestBed.createComponent(FormlyTestComponent);
   });
 
-  it('should have createa tabset', () => {
+  it('should have created tabset', () => {
     const componentInstance = fixture.componentInstance;
     componentInstance.options = {
       formState: {
@@ -87,13 +87,14 @@ describe('formly tabset type', () => {
       }
     ];
     fixture.detectChanges();
-    const tabsContainer = fixture.debugElement.query(By.css('si-tabset'));
+    const tabsContainer = fixture.debugElement.query(By.css('si-tabset-next'));
     expect(tabsContainer).toBeTruthy();
-    const tabs = tabsContainer.queryAll(By.css('si-tab'));
+    const tabs = tabsContainer.queryAll(By.css('si-tab-next'));
     expect(tabs).toBeTruthy();
     expect(tabs.length).toEqual(3);
-    expect(tabs[0].query(By.css('h1')).nativeElement.innerHTML).toEqual('t0');
-    expect(tabs[1].query(By.css('h1')).nativeElement.innerHTML).toEqual('t1');
-    expect(tabs[2].query(By.css('h1')).nativeElement.innerHTML).toEqual('t2');
+
+    const activeTabContent = tabsContainer.query(By.css('.tab-content'));
+    expect(activeTabContent).toBeTruthy();
+    expect(activeTabContent.nativeElement.textContent).toContain('t1');
   });
 });
