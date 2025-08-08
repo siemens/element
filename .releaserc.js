@@ -5,7 +5,7 @@ export default {
   branches: [
     {
       name: 'maintenance/+([0-9])?(.{+([0-9]),x}).x',
-      channel: "${name.replace(/^maintenance\\\\//g, '')}"
+      channel: "${name.replace(/^maintenance\\//g, '')}"
     },
     'main',
     {
