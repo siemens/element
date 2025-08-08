@@ -26,6 +26,7 @@ describe('SiCopyrightNoticeComponent', () => {
         {
           provide: SI_COPYRIGHT_DETAILS,
           useValue: {
+            company: 'Sample Company',
             startYear: 2012,
             lastUpdateYear: 2019
           }
@@ -117,11 +118,14 @@ describe('SiCopyrightNoticeComponentWithInput', () => {
   it('should print default copyright notice when no input is given', () => {
     component.copyrightInfo = undefined;
     fixture.detectChanges();
-    const copyrightEl = element.querySelector<HTMLElement>('si-copyright-notice');
+    const copyrightEl = element.querySelector<HTMLElement>('si-copyright-notice')!;
     expect(copyrightEl).toBeTruthy();
 
-    expect(copyrightEl?.innerText).toContain('© Sample Company');
-    expect(copyrightEl?.innerText).toContain(new Date().getFullYear());
-    expect(copyrightEl?.innerText).not.toContain('-');
+    expect(
+      window.getComputedStyle(copyrightEl.querySelector('.company')!, ':after').content
+    ).toContain('ExampleOrg');
+    expect(copyrightEl.innerText).toContain('©');
+    expect(copyrightEl.innerText).toContain(new Date().getFullYear() + '');
+    expect(copyrightEl.innerText).not.toContain('-');
   });
 });

@@ -1,0 +1,5 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+.company:empty::after {
+  content: variables.$element-company-name;
+}
