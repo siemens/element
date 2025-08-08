@@ -24,7 +24,7 @@ const browsers =
 module.exports.buildConfig = (config, { name, testSuite }) => ({
   basePath: '',
   hostname: 'localhost',
-  frameworks: ['jasmine', '@angular-devkit/build-angular'],
+  frameworks: ['jasmine'],
   plugins: [
     require('karma-jasmine'),
     launcher,
@@ -32,8 +32,7 @@ module.exports.buildConfig = (config, { name, testSuite }) => ({
     require('karma-coverage'),
     require('karma-junit-reporter'),
     require('karma-spec-reporter'),
-    require('karma-jasmine-seed-reporter'),
-    require('@angular-devkit/build-angular/plugins/karma')
+    require('karma-jasmine-seed-reporter')
   ],
   client: {
     clearContext: false, // leave Jasmine Spec Runner output visible in browser
