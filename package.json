@@ -26,6 +26,7 @@
   "prettier": "@siemens/prettier-config/.prettierrc.json",
   "scripts": {
     "start": "ng serve",
+    "start:prod": "http-server dist/element-examples -s -p 4200 -a 127.0.0.1",
     "format": "prettier --log-level warn --write .",
     "lint:format": "prettier --check .",
     "lint:commit": "commitlint --from=origin/main",
