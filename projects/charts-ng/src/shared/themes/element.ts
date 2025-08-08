@@ -139,13 +139,15 @@ export const themeElement = {
       textStyle: {
         fontFamily
       },
-
+      richInheritPlainLabel: false,
       color: colorPalettes.default,
       gradientColor: gradientColors.default,
       backgroundColor: 'transparent',
       animationDuration: 700,
 
       title: {
+        left: 0,
+        top: 0,
         padding: [10, 0, 0, 10],
         textStyle: {
           fontFamily,
@@ -167,6 +169,7 @@ export const themeElement = {
         left: 'auto',
         right: 20,
         top: 35,
+        itemGap: 10,
         textStyle: {
           fontFamily,
           color: textColor,
@@ -274,6 +277,7 @@ export const themeElement = {
           hideOverlap: true
         },
         axisTick: {
+          show: true,
           alignWithLabel: true
         },
         splitLine: {
@@ -302,6 +306,7 @@ export const themeElement = {
           hideOverlap: true
         },
         axisTick: {
+          show: true,
           alignWithLabel: true
         },
         splitLine: {
@@ -342,7 +347,8 @@ export const themeElement = {
         },
         selectedDataBackground: {
           areaStyle: {
-            color: dataZoomLineColor
+            color: dataZoomLineColor,
+            opacity: 0.2
           },
           lineStyle: {
             color: dataZoomLineColor
@@ -388,10 +394,12 @@ export const themeElement = {
         areaStyle: {
           opacity: 0.3
         },
-        symbol: 'circle'
+        symbol: 'circle',
+        symbolSize: 4
       },
 
       pie: {
+        radius: [0, '75%'],
         label: {
           fontFamily,
           formatter: '{d}%',
@@ -400,6 +408,7 @@ export const themeElement = {
           fontSize
         },
         labelLine: {
+          length2: 15,
           lineStyle: {
             color: elementTextSecondary
           }
