@@ -156,6 +156,7 @@ nav:
     - Loading:                            'patterns/loading.md'
     - Notifications:                      'patterns/notifications.md'
     - Filter:                             'patterns/filter.md'
+    - Help:                               'patterns/help.md'
     - AI:
       - Overview:                         'patterns/ai/overview.md'
       - AI chat:                          'patterns/ai/ai-chat.md'
