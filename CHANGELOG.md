@@ -1,3 +1,10 @@
+# [47.9.0](https://github.com/siemens/element/compare/v47.8.0...v47.9.0) (2025-08-08)
+
+
+### Features
+
+* **launchpad:** support `routerLink` for launchpad apps ([47e50cf](https://github.com/siemens/element/commit/47e50cf3553a8f397ccf2cadb6ce194d3ab3b36f))
+
 # [47.8.0](https://github.com/siemens/element/compare/v47.7.0...v47.8.0) (2025-07-22)
 
 
