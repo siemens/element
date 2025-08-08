@@ -4,16 +4,16 @@
  */
 import { Component } from '@angular/core';
 import { FieldType, FormlyModule } from '@ngx-formly/core';
-import { SiTabComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
+import { SiTabNextComponent, SiTabsetNextComponent } from '@siemens/element-ng/tabs-next';
 
 @Component({
   selector: 'si-formly-object-tabset',
-  imports: [SiTabsetComponent, SiTabComponent, FormlyModule],
+  imports: [SiTabsetNextComponent, SiTabNextComponent, FormlyModule],
   templateUrl: './si-formly-object-tabset.component.html'
 })
 export class SiFormlyObjectTabsetComponent extends FieldType {
-  protected tabIndexChange(selectedTab: number): void {
-    if (this.options?.formState) {
+  protected tabIndexChange(isActive: boolean, selectedTab: number): void {
+    if (this.options?.formState && isActive) {
       this.options.formState.selectedTabIndex = selectedTab;
     }
   }
