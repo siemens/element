@@ -193,6 +193,21 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
    */
   readonly timepickerLabel = input<string>();
 
+  /**
+   * Whether the datepicker has invalid/empty fields.
+   */
+  get isInvalid(): boolean {
+    const timePicker = this.timePicker();
+    // For now only the timepicker can be invalid.
+    return (
+      !!timePicker &&
+      !timePicker.invalidMilliseconds &&
+      !timePicker.invalidSeconds &&
+      !timePicker.invalidMinutes &&
+      !timePicker.invalidHours
+    );
+  }
+
   protected get startDate(): Date | undefined {
     return this.config().enableDateRange ? this.dateRange()?.start : this.date();
   }
