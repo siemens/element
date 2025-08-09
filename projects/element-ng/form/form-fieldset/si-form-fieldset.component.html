@@ -1,6 +1,9 @@
-<div class="form-label" [class.required]="isRequired()" [id]="labelId">{{
-  label() | translate
-}}</div>
+<span class="form-label-container">
+  <span class="form-label" [class.required]="isRequired()" [id]="labelId">{{
+    label() | translate
+  }}</span>
+  <ng-content select="[si-help-button]" />
+</span>
 <div>
   <ng-content />
   @if (hasOnlyRadios()) {
