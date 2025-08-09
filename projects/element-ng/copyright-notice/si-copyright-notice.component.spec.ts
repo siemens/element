@@ -48,7 +48,6 @@ describe('SiCopyrightNoticeComponent', () => {
     const copyrightElement = element.querySelector<HTMLElement>('si-copyright-notice');
     expect(copyrightElement).toBeTruthy();
 
-    expect(copyrightElement?.innerText).toContain('Sample Company');
     expect(copyrightElement?.innerText).toContain('2012');
     expect(copyrightElement?.innerText).toContain('-');
   });
@@ -120,7 +119,7 @@ describe('SiCopyrightNoticeComponentWithInput', () => {
     const copyrightEl = element.querySelector<HTMLElement>('si-copyright-notice');
     expect(copyrightEl).toBeTruthy();
 
-    expect(copyrightEl?.innerText).toContain('© Sample Company');
+    expect(copyrightEl?.innerText).toContain('©');
     expect(copyrightEl?.innerText).toContain(new Date().getFullYear());
     expect(copyrightEl?.innerText).not.toContain('-');
   });

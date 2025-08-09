@@ -15,6 +15,7 @@ export interface CopyrightDetails {
   lastUpdateYear?: number;
   /**
    * The company name to be displayed in the copyright notice (not to be translated).
+   * If empty (recommended), the company name from the theme will be used.
    */
   company?: string;
 }
