@@ -5,7 +5,7 @@
         @if (item.shortened) {
           <li #breadcrumbItem class="item text-nowrap shortened">
             @if (!isFirst) {
-              <si-icon-next class="separator flip-rtl" [icon]="icons.elementRight2" />
+              <si-icon class="separator flip-rtl" [icon]="icons.elementRight2" />
             }
             <div class="breadcrumb-dropdown-wrapper">
               <ng-container
@@ -30,7 +30,7 @@
         @if (!item.shortened) {
           <li #breadcrumbItem class="item">
             @if (!isFirst) {
-              <si-icon-next class="separator flip-rtl" [icon]="icons.elementRight2" />
+              <si-icon class="separator flip-rtl" [icon]="icons.elementRight2" />
             }
             <ng-container *ngTemplateOutlet="itemTemplate; context: { item: item }" />
           </li>
@@ -39,7 +39,7 @@
       @if (breadcrumbShortened && item.level === ellipsesLevel) {
         <li class="item breadcrumb-ellipses-item">
           @if (!isFirst) {
-            <si-icon-next class="separator flip-rtl" [icon]="icons.elementRight2" />
+            <si-icon class="separator flip-rtl" [icon]="icons.elementRight2" />
           }
           <div class="breadcrumb-dropdown-wrapper">
             <ng-container *ngTemplateOutlet="toggleTemplate; context: { item: item, title: '' }" />
@@ -73,7 +73,7 @@
     [attr.aria-disabled]="!item.link && !item.href && !item.action"
   >
     @if (item.level === 0) {
-      <si-icon-next class="icon flip-rtl" [icon]="icons.elementBreadcrumbRoot" />
+      <si-icon class="icon flip-rtl" [icon]="icons.elementBreadcrumbRoot" />
     }
     @if (item.level !== 0) {
       <span>{{ item.title }}</span>

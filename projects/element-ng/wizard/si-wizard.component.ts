@@ -28,7 +28,7 @@ import {
   elementRadioChecked,
   elementRight4,
   elementWarningFilled,
-  SiIconNextComponent
+  SiIconComponent
 } from '@siemens/element-ng/icon';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
@@ -42,13 +42,7 @@ interface StepItem {
 
 @Component({
   selector: 'si-wizard',
-  imports: [
-    NgClass,
-    SiIconNextComponent,
-    SiResizeObserverDirective,
-    SiTranslatePipe,
-    NgTemplateOutlet
-  ],
+  imports: [NgClass, SiIconComponent, SiResizeObserverDirective, SiTranslatePipe, NgTemplateOutlet],
   templateUrl: './si-wizard.component.html',
   styleUrl: './si-wizard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

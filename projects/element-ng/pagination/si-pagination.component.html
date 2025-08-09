@@ -9,7 +9,7 @@
         [attr.aria-label]="backButtonText() | translate"
         (click)="direction($event, -1)"
       >
-        <si-icon-next class="icon flip-rtl" [icon]="icons.elementLeft3" />
+        <si-icon class="icon flip-rtl" [icon]="icons.elementLeft3" />
       </button>
     </li>
     @for (page of pageButtons(); track $index) {
@@ -40,7 +40,7 @@
         [attr.aria-label]="forwardButtonText() | translate"
         (click)="direction($event, 1)"
       >
-        <si-icon-next class="icon flip-rtl" [icon]="icons.elementRight3" />
+        <si-icon class="icon flip-rtl" [icon]="icons.elementRight3" />
       </button>
     </li>
   </ul>

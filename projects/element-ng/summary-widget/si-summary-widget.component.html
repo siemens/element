@@ -13,9 +13,9 @@
   @let actualIcon = statusIcon();
   @if (actualIcon.icon) {
     <span class="icon icon-stack">
-      <si-icon-next [class]="actualIcon.color" [icon]="actualIcon.icon" />
+      <si-icon [class]="actualIcon.color" [icon]="actualIcon.icon" />
       @if (actualIcon.stacked) {
-        <si-icon-next [class]="actualIcon.stackedColor" [icon]="actualIcon.stacked" />
+        <si-icon [class]="actualIcon.stackedColor" [icon]="actualIcon.stacked" />
       }
     </span>
   }

@@ -1,4 +1,4 @@
-<si-icon-next class="icon" [class.badge-dot]="badgeDot()" [icon]="icon()" />
+<si-icon class="icon" [class.badge-dot]="badgeDot()" [icon]="icon()" />
 @if (badgeValue()) {
   <span class="badge-text">{{ badgeValue() }}</span>
 }
@@ -7,5 +7,5 @@
   <ng-content />
 </div>
 @if (dropdownTrigger) {
-  <si-icon-next class="dropdown-caret" [icon]="icons.elementDown2" />
+  <si-icon class="dropdown-caret" [icon]="icons.elementDown2" />
 }

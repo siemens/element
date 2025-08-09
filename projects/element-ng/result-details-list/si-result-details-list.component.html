@@ -8,30 +8,30 @@
         <si-loading-spinner class="me-4" />
       }
       @if (step.icon && step.state !== 'running') {
-        <si-icon-next class="me-4 icon" [icon]="step.icon" />
+        <si-icon class="me-4 icon" [icon]="step.icon" />
       }
       @if (!step.icon && step.state !== 'running') {
         @switch (step.state) {
           @case ('passed') {
             <span class="me-4 icon icon-stack">
-              <si-icon-next class="status-success" [icon]="icons.elementCircleFilled" />
-              <si-icon-next class="status-critical-contrast" [icon]="icons.elementStateTick" />
+              <si-icon class="status-success" [icon]="icons.elementCircleFilled" />
+              <si-icon class="status-critical-contrast" [icon]="icons.elementStateTick" />
             </span>
           }
           @case ('failed') {
             <span class="me-4 icon icon-stack">
-              <si-icon-next class="status-danger" [icon]="icons.elementCircleFilled" />
-              <si-icon-next
+              <si-icon class="status-danger" [icon]="icons.elementCircleFilled" />
+              <si-icon
                 class="status-critical-contrast"
                 [icon]="icons.elementStateExclamationMark"
               />
             </span>
           }
           @case ('not-started') {
-            <si-icon-next class="me-4 icon" [icon]="icons.elementNotChecked" />
+            <si-icon class="me-4 icon" [icon]="icons.elementNotChecked" />
           }
           @default {
-            <si-icon-next class="me-4 icon" [icon]="icons.elementOutOfService" />
+            <si-icon class="me-4 icon" [icon]="icons.elementOutOfService" />
           }
         }
       }

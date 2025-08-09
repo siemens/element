@@ -14,12 +14,7 @@ import {
   output
 } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
-import {
-  addIcons,
-  elementCancel,
-  elementDown2,
-  SiIconNextComponent
-} from '@siemens/element-ng/icon';
+import { addIcons, elementCancel, elementDown2, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLinkModule } from '@siemens/element-ng/link';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
@@ -40,7 +35,7 @@ export interface FavoriteChangeEvent {
     SiLinkModule,
     SiTranslatePipe,
     SiLaunchpadAppComponent,
-    SiIconNextComponent,
+    SiIconComponent,
     RouterLinkActive,
     RouterLink
   ],

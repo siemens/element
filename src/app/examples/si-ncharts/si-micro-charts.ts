@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiIconComponent } from '@siemens/element-ng/icon';
 import { MicroBarSeries, SiMicroBarComponent } from '@siemens/native-charts-ng/micro-bar';
 import { MicroDonutSeries, SiMicroDonutComponent } from '@siemens/native-charts-ng/micro-donut';
 import { MicroLineSeries, SiMicroLineComponent } from '@siemens/native-charts-ng/micro-line';
@@ -19,7 +19,7 @@ import {
     SiMicroBarComponent,
     SiMicroLineComponent,
     SiMicroProgressComponent,
-    SiIconNextComponent
+    SiIconComponent
   ],
   templateUrl: './si-micro-charts.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

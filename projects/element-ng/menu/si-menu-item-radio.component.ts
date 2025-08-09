@@ -5,13 +5,13 @@
 import { CdkMenuItemRadio, CdkMenuTrigger } from '@angular/cdk/menu';
 import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { addIcons, elementRecordFilled, SiIconNextComponent } from '@siemens/element-ng/icon';
+import { addIcons, elementRecordFilled, SiIconComponent } from '@siemens/element-ng/icon';
 
 import { SiMenuItemBase } from './si-menu-item-base.directive';
 
 @Component({
   selector: 'si-menu-item-radio',
-  imports: [NgClass, SiIconNextComponent],
+  imports: [NgClass, SiIconComponent],
   templateUrl: './si-menu-item-radio.component.html',
   styleUrl: './si-menu-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

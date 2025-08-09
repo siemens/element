@@ -4,7 +4,7 @@
  */
 import { NgClass } from '@angular/common';
 import { Component, computed } from '@angular/core';
-import { addIcons, elementRight2, SiIconNextComponent } from '@siemens/element-ng/icon';
+import { addIcons, elementRight2, SiIconComponent } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
 import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
 
@@ -39,7 +39,7 @@ export interface SiListWidgetItem {
  */
 @Component({
   selector: 'si-list-widget-item',
-  imports: [NgClass, SiIconNextComponent, SiLinkDirective, SiTranslateModule],
+  imports: [NgClass, SiIconComponent, SiLinkDirective, SiTranslateModule],
   templateUrl: './si-list-widget-item.component.html',
   host: {
     class: 'list-group-item d-flex align-items-center',

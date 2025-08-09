@@ -53,7 +53,7 @@
           [attr.aria-label]="addAriaLabel() | translate"
           (click)="addStep($index)"
         >
-          <si-icon-next [icon]="icons.elementPlus" />
+          <si-icon [icon]="icons.elementPlus" />
         </button>
       }
       @if (!canAddRemoveSteps() || readonly() || readonlyConditions()) {

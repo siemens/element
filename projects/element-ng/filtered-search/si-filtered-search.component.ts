@@ -23,12 +23,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BackgroundColorVariant, isRTL } from '@siemens/element-ng/common';
-import {
-  addIcons,
-  elementCancel,
-  elementSearch,
-  SiIconNextComponent
-} from '@siemens/element-ng/icon';
+import { addIcons, elementCancel, elementSearch, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTypeaheadDirective, TypeaheadOption } from '@siemens/element-ng/typeahead';
 import {
   injectSiTranslateService,
@@ -59,7 +54,7 @@ import {
   selector: 'si-filtered-search',
   imports: [
     FormsModule,
-    SiIconNextComponent,
+    SiIconComponent,
     SiTypeaheadDirective,
     SiTranslatePipe,
     SiFilteredSearchValueComponent

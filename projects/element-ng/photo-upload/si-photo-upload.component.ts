@@ -26,7 +26,7 @@ import {
   elementCancel,
   elementCircleFilled,
   elementStateExclamationMark,
-  SiIconNextComponent
+  SiIconComponent
 } from '@siemens/element-ng/icon';
 import { ModalRef, SiModalService } from '@siemens/element-ng/modal';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -46,7 +46,7 @@ import { SiImageCropperStyleComponent } from './si-image-cropper-style.component
   imports: [
     NgTemplateOutlet,
     ImageCropperComponent,
-    SiIconNextComponent,
+    SiIconComponent,
     SiImageCropperStyleComponent,
     SiTranslatePipe
   ],

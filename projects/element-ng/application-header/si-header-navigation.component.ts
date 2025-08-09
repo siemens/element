@@ -4,14 +4,14 @@
  */
 import { NgClass } from '@angular/common';
 import { Component, inject, OnDestroy } from '@angular/core';
-import { addIcons, elementThumbnails, SiIconNextComponent } from '@siemens/element-ng/icon';
+import { addIcons, elementThumbnails, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiApplicationHeaderComponent } from './si-application-header.component';
 
 @Component({
   selector: 'si-header-navigation',
-  imports: [NgClass, SiTranslatePipe, SiIconNextComponent],
+  imports: [NgClass, SiTranslatePipe, SiIconComponent],
   template: `
     @if (header.launchpad()) {
       <button
@@ -20,7 +20,7 @@ import { SiApplicationHeaderComponent } from './si-application-header.component'
         [ngClass]="'d-' + header.expandBreakpoint() + '-none'"
         (click)="header.openLaunchpad()"
       >
-        <si-icon-next class="icon pe-5" [icon]="icons.elementThumbnails" />
+        <si-icon class="icon pe-5" [icon]="icons.elementThumbnails" />
         {{ header.launchpadLabel() | translate }}
       </button>
     }

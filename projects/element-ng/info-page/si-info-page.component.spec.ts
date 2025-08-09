@@ -32,7 +32,7 @@ describe('SiInfoPageComponent', () => {
     component.setInput('instructions', 'Some Description');
     fixture.detectChanges();
 
-    const icon = element.querySelector('si-icon-next > div');
+    const icon = element.querySelector('si-icon > div');
     expect(icon!.classList).toContain('element-sun');
     expect(element.querySelector('h1')!.textContent).toContain('Title');
     expect(element.querySelector('h2')!.textContent).toContain('Subtitle');

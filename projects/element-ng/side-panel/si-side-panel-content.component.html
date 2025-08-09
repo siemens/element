@@ -23,7 +23,7 @@
       [attr.aria-label]="toggleItemLabel() | translate"
       (click)="toggleSidePanel($event)"
     >
-      <si-icon-next
+      <si-icon
         class="flip-rtl"
         [class.badge-dot]="showMobileDrawerBadge()"
         [icon]="isCollapsed() ? icons.elementDoubleLeft : icons.elementDoubleRight"
@@ -41,9 +41,9 @@
             [attr.aria-label]="!isCollapsed ? '' : (dp.title | translate)"
             [siLink]="dp"
           >
-            <si-icon-next class="icon" [icon]="dp.icon!" />
+            <si-icon class="icon" [icon]="dp.icon!" />
             @if (dp.overlayIcon) {
-              <si-icon-next class="icon position-absolute" [icon]="dp.overlayIcon" />
+              <si-icon class="icon position-absolute" [icon]="dp.overlayIcon" />
             }
             <span class="ms-2 auto-hide">{{ dp.title | translate }}</span>
           </a>

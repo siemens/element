@@ -8,7 +8,7 @@ import { Component, inject } from '@angular/core';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiEmptyStateModule } from '@siemens/element-ng/empty-state';
 import { Filter, SiFilterBarComponent } from '@siemens/element-ng/filter-bar';
-import { SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiIconComponent } from '@siemens/element-ng/icon';
 import {
   SiDetailsPaneBodyComponent,
   SiDetailsPaneComponent,
@@ -46,7 +46,7 @@ import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.s
     SiDetailsPaneHeaderComponent,
     SiDetailsPaneBodyComponent,
     SiDetailsPaneFooterComponent,
-    SiIconNextComponent,
+    SiIconComponent,
     SiMenuBarDirective,
     SiMenuItemComponent,
     SiSearchBarComponent,

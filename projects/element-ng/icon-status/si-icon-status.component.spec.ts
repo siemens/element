@@ -52,19 +52,19 @@ describe('SiIconStatusComponent', () => {
   it('should apply inactive if the count is 0', () => {
     component.setInput('count', 0);
     fixture.detectChanges();
-    expect(element.querySelector('si-icon-next')?.classList).toContain('inactive');
+    expect(element.querySelector('si-icon')?.classList).toContain('inactive');
   });
 
   it('should NOT apply inactive if the count > 0', () => {
     component.setInput('count', 1);
     fixture.detectChanges();
-    expect(element.querySelector('si-icon-next')?.classList).not.toContain('inactive');
+    expect(element.querySelector('si-icon')?.classList).not.toContain('inactive');
     checkCount(1);
   });
 
   it('should apply inactive if element is disabled', () => {
     component.setInput('disabled', true);
     fixture.detectChanges();
-    expect(element.querySelector('si-icon-next')?.classList).toContain('inactive');
+    expect(element.querySelector('si-icon')?.classList).toContain('inactive');
   });
 });
