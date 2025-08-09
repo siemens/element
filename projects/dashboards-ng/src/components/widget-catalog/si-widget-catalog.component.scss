@@ -32,3 +32,11 @@
     margin-inline-start: map.get(variables.$spacers, 6);
   }
 }
+
+/* Need to override parent style to prevent clipping of focus rings on footer buttons */
+::ng-deep {
+  .si-dashboard-content {
+    padding-block: 4px;
+    margin-block: -4px;
+  }
+}
