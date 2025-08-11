@@ -20,7 +20,7 @@
   "peerDependencies": {
     "@angular/common": "20",
     "@angular/core": "20",
-    "echarts": "^5.6.0"
+    "echarts": "^6.0.0"
   },
   "exports": {
     "./docs.json": {
