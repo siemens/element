@@ -1,21 +1,21 @@
 - tree "Company locations":
-  - treeitem " Company1 Smart Infrastructure" [expanded] [level=1]:
+  - treeitem "Company1 Smart Infrastructure" [expanded] [level=1]:
     - heading "Company1" [level=5]
     - paragraph: Smart Infrastructure
-  - treeitem " Milano MIL Details" [level=2]:
+  - treeitem "Milano MIL Details" [level=2]:
     - heading "Milano" [level=5]
     - paragraph: MIL
     - paragraph: Details
-  - treeitem " Chicago CHI" [level=2]:
+  - treeitem "Chicago CHI" [level=2]:
     - heading "Chicago" [level=5]
     - paragraph: CHI
-  - treeitem " Pune PUN" [level=2] [selected]:
+  - treeitem "Pune PUN" [level=2] [selected]:
     - heading "Pune" [level=5]
     - paragraph: PUN
-  - treeitem " Zug ZG" [level=2]:
+  - treeitem "Zug ZG" [level=2]:
     - heading "Zug" [level=5]
     - paragraph: ZG
-  - treeitem " Company2 GG We don't care about your privacy" [level=1]:
+  - treeitem "Company2 GG We don't care about your privacy" [level=1]:
     - heading "Company2" [level=5]
     - paragraph: GG
     - paragraph: We don't care about your privacy
@@ -60,9 +60,7 @@
 - checkbox "Apply class .tree-sm (32px row height)"
 - text: Apply class .tree-sm (32px row height)
 - checkbox "Apply class .tree-xs (24px row height)"
-- text: Apply class .tree-xs (24px row height)
-- checkbox "Disable filled icons"
-- text: Disable filled icons Number of leaf items
+- text: Apply class .tree-xs (24px row height) Number of leaf items
 - spinbutton "Number of leaf items"
 - text: Number of folder items
 - spinbutton "Number of folder items"

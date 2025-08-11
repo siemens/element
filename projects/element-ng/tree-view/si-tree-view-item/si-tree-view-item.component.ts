@@ -22,6 +22,7 @@ import {
   viewChild
 } from '@angular/core';
 import { correctKeyRTL, MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
+import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLoadingSpinnerComponent } from '@siemens/element-ng/loading-spinner';
 import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
@@ -50,6 +51,7 @@ import {
     CdkMenuTrigger,
     NgClass,
     NgTemplateOutlet,
+    SiIconComponent,
     SiLoadingSpinnerComponent,
     SiMenuFactoryComponent,
     SiTranslatePipe
@@ -281,20 +283,6 @@ export class SiTreeViewItemComponent
       }
     }
     return '';
-  }
-
-  /**
-   * Show icon if the item is selected.
-   * Per default the `filled` icon is used, this can be configured using {@link disableFilledIcons}.
-   **/
-  protected getIconClass(): string {
-    let iconClass = this.treeItem.icon;
-    if (this.treeItem.selected && this.treeItem.selectable && this.enableSelection()) {
-      iconClass =
-        iconClass +
-        (!this.treeViewComponent.disableFilledIcons() ? ' ' + iconClass + '-filled' : '');
-    }
-    return iconClass ?? '';
   }
 
   protected getStateIndicatorColor(): string {

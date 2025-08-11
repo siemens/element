@@ -236,7 +236,6 @@ export class SampleComponent {
   classTreeXs = false;
   expandOnClick = false;
   showExpandCollapseAll = false;
-  disableFilledIcons = false;
   readonly menuItems: MenuItemAction[] = [
     {
       type: 'action',
