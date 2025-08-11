@@ -69,11 +69,11 @@ export class SiBreadcrumbDefaultResolverService implements SiBreadcrumbResolverS
     } else {
       url = '';
     }
-    const myUrl: string = route.url.map(o => o.toString()).join('/');
+    const currentRouteUrl = route.url.map(o => o.toString()).join('/');
     if (!url.endsWith('/')) {
       url = url + '/';
     }
-    url = url + myUrl;
+    url = url + currentRouteUrl;
     return url;
   }
 
