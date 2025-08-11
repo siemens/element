@@ -3,17 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { NgClass } from '@angular/common';
-import {
-  Component,
-  computed,
-  HostListener,
-  inject,
-  input,
-  OnChanges,
-  output,
-  signal,
-  SimpleChanges
-} from '@angular/core';
+import { Component, computed, HostListener, inject, input, output, signal } from '@angular/core';
 import {
   addIcons,
   elementCancel,
@@ -32,11 +22,14 @@ import { SI_TOAST_AUTO_HIDE_DELAY, SiToast } from '../si-toast.model';
   templateUrl: './si-toast-notification.component.html',
   styleUrl: './si-toast-notification.component.scss'
 })
-export class SiToastNotificationComponent implements OnChanges {
+export class SiToastNotificationComponent {
   private readonly statusIcons = inject(STATUS_ICON_CONFIG);
   readonly toast = input.required<SiToast>();
 
-  protected closeAriaLabel = t(() => $localize`:@@SI_TOAST.CLOSE:Close`);
+  private closeAriaLabelDefault = t(() => $localize`:@@SI_TOAST.CLOSE:Close`);
+  protected readonly closeAriaLabel = computed(
+    () => this.toast().closeAriaLabel ?? this.closeAriaLabelDefault
+  );
   protected readonly icons = addIcons({ elementCancel });
   protected readonly status = computed(() => {
     const toast = this.toast();
@@ -68,12 +61,6 @@ export class SiToastNotificationComponent implements OnChanges {
     if (!this.toast().disableAutoClose) {
       this.animationMode.set('running');
       this.resumed.emit();
-    }
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes?.toast.currentValue) {
-      this.closeAriaLabel = this.toast().closeAriaLabel ?? this.closeAriaLabel;
     }
   }
 

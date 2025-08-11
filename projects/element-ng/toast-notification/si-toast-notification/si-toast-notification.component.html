@@ -32,7 +32,7 @@
       type="button"
       tabindex="0"
       class="btn btn-circle btn-sm btn-ghost mt-n2 me-n2"
-      [attr.aria-label]="closeAriaLabel | translate"
+      [attr.aria-label]="closeAriaLabel() | translate"
       (keydown.enter)="close()"
       (click)="close()"
     >
