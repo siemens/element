@@ -30,6 +30,7 @@ import {
 } from '@angular/forms';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
 import { addIcons, elementDown2, SiIconNextComponent } from '@siemens/element-ng/icon';
+import { SiLocaleService } from '@siemens/element-ng/localization';
 import { SiSelectListHasFilterComponent } from '@siemens/element-ng/select';
 import {
   injectSiTranslateService,
@@ -87,6 +88,7 @@ export class SiPhoneNumberInputComponent
 
   private phoneUtil = PhoneNumberUtil.getInstance();
   private translate = injectSiTranslateService();
+  private localeService = inject(SiLocaleService);
   private changeDetectorRef = inject(ChangeDetectorRef);
   private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
@@ -344,9 +346,9 @@ export class SiPhoneNumberInputComponent
   private getCountryName(countryCode: string): string {
     // This auto translates the given country name to the selected locale language
     return (
-      new Intl.DisplayNames([this.translate.currentLanguage], { type: 'region' }).of(
-        countryCode.toUpperCase()
-      ) ?? ''
+      new Intl.DisplayNames([this.translate.currentLanguage ?? this.localeService.locale], {
+        type: 'region'
+      }).of(countryCode.toUpperCase()) ?? ''
     );
   }
 
