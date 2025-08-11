@@ -13,8 +13,8 @@ npm install --save @siemens/native-charts-ng
 
 ### Running unit tests
 
-Run `yarn native-charts:test` to perform the unit tests via [Karma](https://karma-runner.github.io).
-You can set a seed for running the tests in a specific using an environment variable: `SEED=71384 yarn native-charts:test`
+Run `npm run native-charts:test` to perform the unit tests via [Karma](https://karma-runner.github.io).
+You can set a seed for running the tests in a specific using an environment variable: `SEED=71384 npm run native-charts:test`
 
 ## License
 
