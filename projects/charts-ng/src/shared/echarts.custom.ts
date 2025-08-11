@@ -34,6 +34,7 @@ import {
   VisualMapComponent
 } from 'echarts/components';
 import * as echarts from 'echarts/core';
+import { LegacyGridContainLabel } from 'echarts/features';
 import { CanvasRenderer, SVGRenderer } from 'echarts/renderers';
 
 echarts.use([
@@ -70,7 +71,10 @@ echarts.use([
 
   // renderers
   CanvasRenderer,
-  SVGRenderer
+  SVGRenderer,
+
+  // features
+  LegacyGridContainLabel
 ]);
 
 export { echarts };
