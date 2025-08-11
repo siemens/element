@@ -5,6 +5,10 @@
     "declaration": true,
     "inlineSources": true,
     "types": ["@siemens/element-translate-ng/localize-types"],
+    "paths": {
+      "@siemens/element-translate-ng": ["dist/@siemens/element-translate-ng/"],
+      "@siemens/element-translate-ng/*": ["dist/@siemens/element-translate-ng/*"]
+    },
     "lib": ["dom", "es2022"]
   },
   "angularCompilerOptions": {
