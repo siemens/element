@@ -1,6 +1,6 @@
 @if (viewType() !== 'mobile' && primaryActions()?.length) {
   <div siAutoCollapsableList class="d-flex" [siAutoCollapsableListContainerElement]="parentElement">
-    @if (viewType() === 'collapsible' && !expanded && collapsibleListItem.canBeVisible()) {
+    @if (viewType() === 'collapsible' && !expanded() && collapsibleListItem.canBeVisible()) {
       <button
         #expandElement
         si-content-action-bar-toggle
@@ -13,7 +13,7 @@
     <si-menu-bar
       #collapsibleListItem="siAutoCollapsableListItem"
       siAutoCollapsableListItem
-      [forceHide]="!expanded"
+      [forceHide]="!expanded()"
       [disabled]="disabled()"
     >
       <!-- ?? syntax is not working for track -->
