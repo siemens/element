@@ -4,6 +4,7 @@
  */
 import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, HostListener, inject, input } from '@angular/core';
+import { SiIconComponent } from '@siemens/element-ng/icon';
 
 import { SiHeaderDropdownTriggerDirective } from './si-header-dropdown-trigger.directive';
 import { SI_HEADER_WITH_DROPDOWNS } from './si-header.model';
@@ -13,7 +14,7 @@ import { SI_HEADER_WITH_DROPDOWNS } from './si-header.model';
  */
 @Component({
   selector: 'si-header-dropdown-item, a[si-header-dropdown-item], button[si-header-dropdown-item]',
-  imports: [NgClass],
+  imports: [NgClass, SiIconComponent],
   templateUrl: './si-header-dropdown-item.component.html',
   styleUrl: './si-header-dropdown-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

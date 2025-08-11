@@ -1,9 +1,5 @@
 @if (icon()) {
-  <span
-    class="icon"
-    aria-hidden="true"
-    [ngClass]="[icon(), ownTrigger?.isOpen ? icon() + '-filled' : '']"
-  ></span>
+  <si-icon class="icon" [icon]="icon()!" />
 }
 @if (iconBadge()) {
   <div class="badge-text">{{ iconBadge() }}</div>
