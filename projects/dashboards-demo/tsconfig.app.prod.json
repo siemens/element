@@ -8,6 +8,6 @@
     "types": []
   },
   "files": ["src/main.ts"],
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "../element-ng/public-api.ts"],
+  "include": ["src/**/*.ts", "src/**/*.d.ts"],
   "exclude": ["src/**/*.spec.ts"]
 }
