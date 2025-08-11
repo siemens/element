@@ -33,6 +33,9 @@
   "exports": {
     "./docs.json": {
       "default": "./docs.json"
+    },
+    "./localize-types": {
+      "types": "./localize-types/index.d.ts"
     }
   }
 }

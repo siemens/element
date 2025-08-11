@@ -4,7 +4,7 @@
     "outDir": "../../out-tsc/lib",
     "declaration": true,
     "inlineSources": true,
-    "types": ["../element-translate-ng/localize-types/index.d.ts", "zone.js"],
+    "types": ["@siemens/element-translate-ng/localize-types", "zone.js"],
     "lib": ["dom", "es2022"]
   },
   "angularCompilerOptions": {
