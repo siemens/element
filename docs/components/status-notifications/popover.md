@@ -84,15 +84,62 @@ import { SiPopoverDirective } from '@siemens/element-ng/popover';
 
 ## Code (next) ---
 
-The popover will be re-written to enhance its functionality. It will replace the existing popover as part of Element v48.
-In the meantime, every element related to the new `si-popover` will have a `-next` suffix. With the `si-popover-next`,
-accessibility will be improved through better compatibility with tools like screen readers and standardized focus management,
-while its behavior will see some changes: the inputs `triggers`, `outsideClick` and `isOpen` will no longer be supported
-because the popover will open only on click or selection, it will always close on an outside click, and the open state will be managed internally.
+The `si-popover` is meant to hold contextual content for a specific element.
+It is implemented as a `role="dialog"`, thus following a common pattern for such elements.
 
-### Usage (next)
+### Popover trigger
 
-Use the `siPopover` directive to display the popover.
+The `siPopoverNext` directive must always be attached to a `button`, the so-called trigger.
+A popover trigger MUST NOT have any other actions attached to it.
+The trigger button must have a descriptive label, such as `More information about component xyz`.
+Do not provide generic labels like `more` or `here` as users may tab through the page without reading the context.
+
+Use the `siPopoverNext` directive to create a popover trigger.
+ 
+```html
+<button siPopoverNext="..." type="button" class="btn btn-secondary">More information about component xyz</button>
+```
+
+### Popover content
+
+A popover always has a body and a title.
+A popover will receive the `focus` when it's opened and the focus will be returned to the trigger when it's closed.
+So the content may contain interactive elements, such as links or buttons.
+
+The content can be provided in two ways:
+- using the inputs `siPopoverNext` and `siPopoverNextTitle`
+  ```html
+  <button 
+    siPopoverNext="Details Lorem ipsum ..." 
+    siPopoverNextTitle="Component xyz" 
+    type="button" class="btn btn-secondary"
+  >
+      More information about component xyz
+  </button>
+  ```
+- using a template
+  ```html
+  <button siPopoverNext="popoverContent" type="button" class="btn btn-secondary">More information about component xyz</button>
+  <ng-template #popoverContent>
+    <si-popover-title>Component xyz</si-popover-title>
+    <si-popover-body>
+      Details Lorem ipsum ...
+    </si-popover-body>
+  </ng-template>
+  ```
+- using a template and the title input
+  ```html
+  <button siPopoverNext="popoverContent" siPopoverNextTitle="Component xyz" type="button" class="btn btn-secondary">More information about component xyz</button>
+  <ng-template #popoverContent>
+    <!-- If siPopoverNextTitle is set, the content must NOT be wrapped in a si-popover-body element. -->
+    Details Lorem ipsum ...
+  </ng-template>
+  ```
+  
+
+### Usage
+
+Add the required imports to your component:
 
 ```ts
 import {
@@ -102,11 +149,9 @@ import {
 } from '@siemens/element-ng/popover-next';
 
 @Component({
-  imports: [SiPopoverNextDirective, SiPopoverTitleDirective, SiPopoverBodyDirective ...]
+  imports: [SiPopoverNextDirective, SiPopoverTitleDirective, SiPopoverBodyDirective, ...]
 })
 ```
-
-### Basic usage and positioning (next)
 
 <si-docs-component example="si-popover-next/si-popover-next" height="260"></si-docs-component>
 
