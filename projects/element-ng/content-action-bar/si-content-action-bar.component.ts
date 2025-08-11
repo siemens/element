@@ -11,8 +11,7 @@ import {
   ElementRef,
   inject,
   input,
-  OnChanges,
-  SimpleChanges,
+  linkedSignal,
   viewChild
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
@@ -50,7 +49,7 @@ import { ContentActionBarMainItem, ViewType } from './si-content-action-bar.mode
     '[class]': 'viewType()'
   }
 })
-export class SiContentActionBarComponent implements OnChanges, AfterViewInit {
+export class SiContentActionBarComponent implements AfterViewInit {
   /**
    * List of primary actions. Supports up to **4** actions and omits additional ones.
    */
@@ -139,17 +138,11 @@ export class SiContentActionBarComponent implements OnChanges, AfterViewInit {
     return secondaryActions;
   });
   protected readonly icons = addIcons({ elementCancel, elementOptionsVertical });
-  protected expanded = true;
+  protected readonly expanded = linkedSignal(() => this.viewType() === 'expanded');
   protected parentElement?: HTMLElement | null;
 
   private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   private menuActionService = inject(SiMenuActionService, { optional: true });
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.viewType) {
-      this.expanded = this.viewType() === 'expanded';
-    }
-  }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -160,12 +153,12 @@ export class SiContentActionBarComponent implements OnChanges, AfterViewInit {
   }
 
   protected expand(): void {
-    this.expanded = true;
+    this.expanded.set(true);
     setTimeout(() => this.menuBarElement()?.nativeElement.focus());
   }
 
   protected collapse(): void {
-    this.expanded = false;
+    this.expanded.set(false);
     setTimeout(() => this.expandElement()?.nativeElement.focus());
   }
 
