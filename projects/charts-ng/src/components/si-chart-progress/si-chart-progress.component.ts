@@ -17,6 +17,7 @@ import { ProgressChartSeries, ProgressValueUpdate } from './si-chart-progress.in
   styleUrl: '../si-chart/si-chart.component.scss'
 })
 export class SiChartProgressComponent extends SiChartComponent {
+  /** The series for the chart. */
   readonly series = input<ProgressChartSeries[]>();
 
   /**

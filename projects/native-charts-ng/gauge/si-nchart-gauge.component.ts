@@ -112,7 +112,7 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
    */
   readonly mode = input<'sum' | 'single'>('sum');
   /**
-   * Series
+   * The series for the chart.
    *
    * @defaultValue []
    */

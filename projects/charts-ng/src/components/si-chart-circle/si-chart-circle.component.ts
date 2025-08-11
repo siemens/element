@@ -17,6 +17,7 @@ import { CircleChartSeries, CircleValueUpdate } from './si-chart-circle.interfac
   styleUrl: '../si-chart/si-chart.component.scss'
 })
 export class SiChartCircleComponent extends SiChartComponent {
+  /** The series for the chart. */
   readonly series = input<CircleChartSeries[]>();
 
   protected override applyOptions(): void {

@@ -19,6 +19,7 @@ import { ProgressBarChartSeries, ProgressBarValueUpdate } from './si-chart-progr
   styleUrl: '../si-chart/si-chart.component.scss'
 })
 export class SiChartProgressBarComponent extends SiChartComponent {
+  /** The series for the chart. */
   readonly series = input<ProgressBarChartSeries[]>();
   /** Used to display the label in inline or above the progress-bar. */
   readonly labelPosition = input<string>();
