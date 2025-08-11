@@ -200,13 +200,6 @@ export class SiTreeViewComponent
   });
 
   /**
-   * Whether "filled" icons should not be used when a tree item is selected.
-   * Per default filled icons are used when available.
-   * @defaultValue false
-   */
-  readonly disableFilledIcons = input(false, { transform: booleanAttribute });
-
-  /**
    * Sets if the folder state icon shall be shown on the left (in LTR) or on the right (in LTR) side
    * of the tree item. Per default the icon will be shown on the left (in LTR). Has no
    * effect if flatTree is enabled.

@@ -53,7 +53,6 @@ import { LoadChildrenEventArgs, TreeItem } from './si-tree-view.model';
     [pagesVirtualized]="pagesVirtualized"
     [horizontalScrolling]="horizontalScrolling"
     [deleteChildrenOnCollapse]="deleteChildrenOnCollapse"
-    [disableFilledIcons]="disableFilledIcons"
     [expandCollapseAll]="expandCollapseAll"
     (loadChildren)="loadChildren($event)"
   />`,
@@ -107,7 +106,6 @@ class WrapperComponent {
   pageSize?: number = 10;
   pagesVirtualized?: number = 6;
   horizontalScrolling = false;
-  disableFilledIcons = false;
   deleteChildrenOnCollapse = false;
   expandCollapseAll = false;
   cdRef = inject(ChangeDetectorRef);
@@ -161,7 +159,8 @@ describe('SiTreeViewComponent', () => {
 
   it('should contain set items', () => {
     fixture.detectChanges();
-    expect(debugElement.query(By.css('.si-tree-view-item-icon.element-project'))).toBeTruthy();
+    const icon = debugElement.query(By.css('.si-tree-view-item-icon'));
+    expect(icon.attributes['data-icon']).toBe('element-project');
   });
 
   it('should contain folder state start', () => {
@@ -1104,25 +1103,18 @@ describe('SiTreeViewComponent', () => {
     });
 
     it('should display icons', fakeAsync(() => {
-      expect(debugElement.queryAll(By.css('span.si-tree-view-item-icon')).length).toBe(10);
+      expect(
+        debugElement.queryAll(By.css('.si-tree-view-item-icon :not(.si-tree-view-menu-btn)')).length
+      ).toBe(10);
     }));
 
     it('should hide icons', fakeAsync(() => {
       component.enableIcon = false;
       component.cdRef.markForCheck();
       fixture.detectChanges();
-      expect(debugElement.queryAll(By.css('span.si-tree-view-item-icon')).length).toBe(0);
-    }));
-
-    it('should display filled icons', fakeAsync(() => {
-      expect(element.querySelector('span.sample-icon-filled')).toBeTruthy();
-    }));
-
-    it('should not display filled icons if disabled', fakeAsync(() => {
-      component.disableFilledIcons = true;
-      component.cdRef.markForCheck();
-      fixture.detectChanges();
-      expect(element.querySelector('span.sample-icon-filled')).toBeNull();
+      expect(
+        debugElement.queryAll(By.css('.si-tree-view-item-icon :not(.si-tree-view-menu-btn)')).length
+      ).toBe(0);
     }));
   });
 

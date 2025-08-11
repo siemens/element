@@ -28,7 +28,6 @@
       [items]="treeItems"
       [expandOnClick]="expandOnClick"
       [expandCollapseAll]="showExpandCollapseAll"
-      [disableFilledIcons]="disableFilledIcons"
       (treeItemFolderClicked)="logEvent('treeItemFolderClicked', $event.treeItem.label)"
       (treeItemFolderStateChanged)="logEvent('treeItemFolderStateChanged', $event.treeItem.label)"
       (treeItemClicked)="logEvent('treeItemClicked', $event.label)"
@@ -99,9 +98,6 @@
     </si-form-item>
     <si-form-item label="Apply class .tree-xs (24px row height)">
       <input type="checkbox" class="form-check-input" [(ngModel)]="classTreeXs" />
-    </si-form-item>
-    <si-form-item label="Disable filled icons">
-      <input type="checkbox" class="form-check-input" [(ngModel)]="disableFilledIcons" />
     </si-form-item>
     <si-form-item class="col-3" label="Number of leaf items">
       <si-number-input
