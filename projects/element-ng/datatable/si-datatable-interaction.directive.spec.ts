@@ -13,7 +13,7 @@ import { SI_DATATABLE_CONFIG, SiDatatableModule } from '.';
   template: `
     <ngx-datatable
       style="height: 500px;"
-      class="table-element elevation-1"
+      class="table-element"
       columnMode="force"
       siDatatableInteraction
       [cssClasses]="tableConfig.cssClasses"
