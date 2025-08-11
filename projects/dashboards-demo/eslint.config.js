@@ -5,6 +5,7 @@ export default typescriptEslint.config(
   {
     extends: [...tsConfig],
     files: ['**/*.ts'],
+    ignores: ['**/environments/environment.prod.ts'],
     languageOptions: {
       parserOptions: {
         project: [

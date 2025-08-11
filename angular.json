@@ -347,7 +347,11 @@
               "node_modules/gridstack/dist/gridstack-extra.css"
             ],
             "extraWebpackConfig": "projects/dashboards-demo/webpack.config.cjs",
-            "allowedCommonJsDependencies": ["echarts", "gridstack"],
+            "allowedCommonJsDependencies": [
+              "echarts",
+              "gridstack",
+              "@angular-architects/module-federation"
+            ],
             "vendorChunk": true,
             "extractLicenses": false,
             "sourceMap": true,
