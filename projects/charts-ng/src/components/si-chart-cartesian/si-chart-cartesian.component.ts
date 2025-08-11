@@ -29,10 +29,14 @@ import {
   styleUrl: '../si-chart/si-chart.component.scss'
 })
 export class SiChartCartesianComponent extends SiChartComponent implements OnChanges {
+  /** The series for the chart. */
   readonly series = input<CartesianChartSeries[]>();
   readonly subChartGrids = input<SubchartGrid[]>();
+  /** The y axis in cartesian(rectangular) coordinate. */
   readonly yAxis = input<ChartYAxis | ChartYAxis[]>();
+  /** The x axis in cartesian(rectangular) coordinate. */
   readonly xAxis = input<ChartXAxis | ChartXAxis[]>();
+  /** The content formatter of tooltip's floating layer which supports string template and callback function (see (see {@link https://echarts.apache.org/en/option.html#tooltip.formatter }). */
   readonly tooltipFormatter = input<TooltipComponentOption['formatter']>();
   /**
    * Used to display the chart as a stacked one.

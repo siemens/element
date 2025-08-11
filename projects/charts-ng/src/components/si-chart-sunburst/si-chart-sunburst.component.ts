@@ -16,6 +16,7 @@ import { SiCustomLegendComponent } from '../si-custom-legend/si-custom-legend.co
   styleUrl: '../si-chart/si-chart.component.scss'
 })
 export class SiChartSunburstComponent extends SiChartComponent {
+  /** The series for the chart. */
   readonly series = input<SunburstSeriesOption>();
   /** @defaultValue false */
   readonly toolTip = input(false);

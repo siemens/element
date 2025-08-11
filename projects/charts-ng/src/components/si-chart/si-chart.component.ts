@@ -81,11 +81,22 @@ export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDes
   readonly options = input<EChartOption>();
   /** Used to override specific properties set in `options`. */
   readonly additionalOptions = input<EChartOption>();
+  /** The title of the chart. */
   readonly title = input<string>();
+  /** The subtitle of the chart. */
   readonly subTitle = input<string>();
-  /** @defaultValue true */
+  /**
+   * Show Echarts legend
+   *
+   * @defaultValue true
+   */
   readonly showLegend = model(true);
-  /** @defaultValue false */
+  /**
+   * Enable to show a custom legend.
+   * The custom legend offers additional features such as, scroll bar to avoid legend and chart overlapping,
+   * Left and right alignment of legends based on y-axis, etc and many more.
+   * @defaultValue false
+   */
   readonly showCustomLegend = input(false);
   /**
    * the renderer to use: canvas or svg
@@ -120,10 +131,16 @@ export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDes
   /**
    * Enables zooming inside the chart with the mouse wheel/touch.
    *
+   * Whether zooming inside the chart is possible with mouse.
+   *
    * @defaultValue false
    */
   readonly zoomInside = input(false);
-  /** @defaultValue 1000 */
+  /**
+   * Maximum number of series data points shown in the chart.
+   *
+   * @defaultValue 1000
+   */
   readonly maxEntries = input(1000);
   /**
    * No auto dataZoom update) by default. Use together with `autoZoomSeriesIndex`.
@@ -159,19 +176,42 @@ export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDes
    * @defaultValue false
    */
   readonly axisPointer = input<(boolean | string) | undefined>(false);
+  /**
+   * Apply a specific zoom range (see {@link https://echarts.apache.org/en/option.html#dataZoom-inside}).
+   */
   readonly dataZoomRange = input<DataZoomRange>();
+  /**
+   * The lower limit of the data zoom slider (see {@link https://echarts.apache.org/en/option.html#dataZoom-slider.minValueSpan}).
+   */
   readonly dataZoomMinValueSpan = input<number>();
+  /**
+   * The upper limit of the data zoom slider (see {@link https://echarts.apache.org/en/option.html#dataZoom-slider.maxValueSpan}).
+   */
   readonly dataZoomMaxValueSpan = input<number>();
-  /** @defaultValue 'none' */
+  /**
+   * The data zoom filter mode. (see {@link https://echarts.apache.org/en/option.html#dataZoom-inside.filterMode})
+   *
+   * The value 'filter' will cause the lines to be disconnected to the outside of the chart.
+   *
+   * @defaultValue 'none'
+   */
   readonly dataZoomFilterMode = input<FilterMode>('none');
+  /**
+   * Enable custom legend click actions exposed by the `selectionChanged` event.
+   */
   readonly customLegendAction = input<boolean>();
   /**
+   * Specify selected legend item.
+   *
    * @defaultValue
    * ```
    * { legendItemName: '' }
    * ```
    */
   readonly selectedItem = input<SelectedLegendItem>({ legendItemName: '' });
+  /**
+   * The height of the ECharts container as decimal.
+   */
   readonly eChartContainerHeight = input<string | null>();
   /**
    * Flag to use external zoom slider
@@ -193,12 +233,15 @@ export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDes
   readonly dataZoom = output<DataZoomEvent>();
   /** Event emitted when axis pointer moves. */
   readonly pointer = output<AxisPointerEvent>();
+  /** Event emitted when selection changes e.g. clicking on a legend item. */
   readonly selectionChanged = output<any>();
+  /** Event emitted when a chart series is clicked. */
   readonly chartSeriesClick = output<LegendItem>();
   /** Event emitted when chart grid is resized. */
   readonly chartGridResized = output<GridRectCoordinate>();
+  /** Event emitted when custom legend multi-line info changes. */
   readonly customLegendMultiLineInfoEvent = output<CustomLegendMultiLineInfo[]>();
-  /** Emitted when datazoom changes, indicating the time range in milliseconds, 0 for full range */
+  /** Emitted when data zoom changes, indicating the time range in milliseconds, 0 for full range */
   readonly timeRangeChange = output<number>();
 
   /** Allow to override options specific for a chart type. */
