@@ -18,6 +18,7 @@ import {
 } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { provideSiUiState } from '@siemens/element-ng/common';
 import { provideSiDatatableConfig } from '@siemens/element-ng/datatable';
 import { SiFormlyModule } from '@siemens/element-ng/formly';
 import { provideIconConfig } from '@siemens/element-ng/icon';
@@ -154,6 +155,7 @@ export const APP_CONFIG: ApplicationConfig = {
     provideHttpClient(withInterceptorsFromDi()),
     provideNgxTranslateForElement(),
     provideSiDatatableConfig(),
-    provideIconConfig({ disableSvgIcons: false })
+    provideIconConfig({ disableSvgIcons: false }),
+    provideSiUiState()
   ]
 };
