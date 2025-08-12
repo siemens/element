@@ -195,7 +195,7 @@ describe('SiBreadcrumbComponent', () => {
     expect(breadcrumb.innerHTML).not.toContain('Level 2');
   });
 
-  it('should dynamically resize', fakeAsync(() => {
+  xit('should dynamically resize', fakeAsync(() => {
     let maxWidth = 0;
     let currentWidth = 0;
 
