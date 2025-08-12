@@ -21,7 +21,7 @@ import {
 import { addIcons, elementCancel } from '@siemens/element-ng/icon';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
-import { SI_TABSET_NEXT } from './si-tabs-tokens';
+import { SI_TABSET } from './si-tabs-tokens';
 
 @Directive({
   selector: '[siTabNextBase]',
@@ -40,7 +40,7 @@ import { SI_TABSET_NEXT } from './si-tabs-tokens';
     '(keydown.delete)': 'closeTab($event)'
   }
 })
-export abstract class SiTabNextBaseDirective implements OnDestroy, FocusableOption {
+export abstract class SiTabBaseDirective implements OnDestroy, FocusableOption {
   abstract readonly active: Signal<boolean | undefined>;
   /** Title of the tab item. */
   readonly heading = input.required<TranslatableString>();
@@ -90,9 +90,9 @@ export abstract class SiTabNextBaseDirective implements OnDestroy, FocusableOpti
   private indexBeforeClose = -1;
 
   /** @internal */
-  tabId = `${SiTabNextBaseDirective.tabCounter++}`;
+  tabId = `${SiTabBaseDirective.tabCounter++}`;
   protected readonly icons = addIcons({ elementCancel });
-  protected tabset = inject(SI_TABSET_NEXT);
+  protected tabset = inject(SI_TABSET);
   private readonly index = computed(() => this.tabset.tabPanels().indexOf(this));
 
   constructor() {

@@ -16,17 +16,22 @@ import {
 } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
-import { SiTabsetComponent } from '../si-tabset/index';
+import { SiTabsetLegacyComponent } from '../si-tabset/index';
 
+/**
+ * @deprecated Use the new components from `@siemens/element-ng/tabs` instead.
+ * See {@link https://element.siemens.io/components/layout-navigation/tabs/#code}
+ * for usage instructions.
+ */
 @Component({
-  selector: 'si-tab',
+  selector: 'si-tab-legacy',
   template: '<ng-content />',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     role: 'tabpanel'
   }
 })
-export class SiTabComponent implements OnChanges {
+export class SiTabLegacyComponent implements OnChanges {
   private static idCounter = 0;
   /** Title of the tab item. */
   @Input() heading?: TranslatableString;
@@ -59,25 +64,25 @@ export class SiTabComponent implements OnChanges {
    */
   @Input({ transform: booleanAttribute }) closable? = false;
   /** Event emitter to notify when a tab is closed. */
-  @Output() readonly closeTriggered = new EventEmitter<SiTabComponent>();
+  @Output() readonly closeTriggered = new EventEmitter<SiTabLegacyComponent>();
 
   /** @internal */
-  @HostBinding('id') id = `__si-tab-panel-${SiTabComponent.idCounter++}`;
+  @HostBinding('id') id = `__si-tab-panel-${SiTabLegacyComponent.idCounter++}`;
   /** @internal */
-  @HostBinding('attr.aria-labelledby') tabId = `__si-tab-${SiTabComponent.idCounter}`;
+  @HostBinding('attr.aria-labelledby') tabId = `__si-tab-${SiTabLegacyComponent.idCounter}`;
 
   @HostBinding('attr.hidden')
   protected get isHidden(): boolean | null {
     return !this.active() ? true : null;
   }
 
-  private parent?: SiTabsetComponent;
+  private parent?: SiTabsetLegacyComponent;
 
   /** @internal */
   readonly active = signal(false);
 
   /** @internal */
-  registerParent(parent: SiTabsetComponent): void {
+  registerParent(parent: SiTabsetLegacyComponent): void {
     this.parent = parent;
   }
 

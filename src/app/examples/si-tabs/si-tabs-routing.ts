@@ -5,7 +5,7 @@
 import { AfterViewInit, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
-import { SiTabsetNextComponent, SiTabNextLinkComponent } from '@siemens/element-ng/tabs-next';
+import { SiTabsetComponent, SiTabLinkComponent } from '@siemens/element-ng/tabs';
 import { provideExampleRoutes } from '@siemens/live-preview';
 
 // Dummy components to be used in the router outlet for the example
@@ -55,8 +55,8 @@ export class UnitCoverageComponent {}
 
 @Component({
   selector: 'app-sample',
-  imports: [SiTabsetNextComponent, SiTabNextLinkComponent, RouterOutlet, RouterLink],
-  templateUrl: './si-tabs-next-routing.html',
+  imports: [SiTabsetComponent, SiTabLinkComponent, RouterOutlet, RouterLink],
+  templateUrl: './si-tabs-routing.html',
   providers: [
     provideExampleRoutes([
       {

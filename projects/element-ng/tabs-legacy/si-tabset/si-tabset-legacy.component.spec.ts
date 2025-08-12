@@ -6,22 +6,22 @@ import { Component, DebugElement, viewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { SiTabsModule } from '../si-tabs.module';
-import { SiTabsetComponent } from './si-tabset.component';
+import { SiTabsLegacyModule } from '../si-tabs-legacy.module';
+import { SiTabsetLegacyComponent } from './si-tabset-legacy.component';
 
 @Component({
-  imports: [SiTabsModule],
+  imports: [SiTabsLegacyModule],
   template: `
     <div class="tab-wrapper">
-      <si-tabset [tabButtonMaxWidth]="tabButtonMaxWidth">
+      <si-tabset-legacy [tabButtonMaxWidth]="tabButtonMaxWidth">
         @for (tab of tabsObject; track tab) {
-          <si-tab
+          <si-tab-legacy
             [heading]="tab.heading"
             [closable]="!!tab.closable"
             (closeTriggered)="closeTriggered(tab)"
           />
         }
-      </si-tabset>
+      </si-tabset-legacy>
     </div>
   `,
   styles: `
@@ -45,7 +45,7 @@ class TestComponent {
     });
   }
 
-  readonly tabSet = viewChild.required(SiTabsetComponent);
+  readonly tabSet = viewChild.required(SiTabsetLegacyComponent);
 
   closeTriggered(tab: { heading: string; hidde?: boolean }): void {
     this.tabsObject = this.tabsObject.filter(t => t !== tab);
@@ -54,7 +54,7 @@ class TestComponent {
 
 describe('SiTabset', () => {
   let fixture: ComponentFixture<TestComponent>;
-  let component: SiTabsetComponent;
+  let component: SiTabsetLegacyComponent;
   let testComponent: TestComponent;
 
   const getLength = (): number =>
@@ -87,7 +87,7 @@ describe('SiTabset', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [SiTabsModule, TestComponent]
+      imports: [SiTabsLegacyModule, TestComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestComponent);

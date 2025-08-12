@@ -7,22 +7,33 @@ import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiTabBadgeComponent } from './si-tab-badge.component';
-import { SiTabNextBaseDirective } from './si-tab-next-base.directive';
+import { SiTabBaseDirective } from './si-tab-base.directive';
 
-/** @experimental */
+/**
+ * Creates a normal tab that can contain any content.
+ *
+ * @example
+ * ```html
+ * <si-tabset>
+ *   <si-tab heading="Tab 1">
+ *     <p>Content of Tab 1</p>
+ *   </si-tab>
+ * </si-tabset>
+ * ```
+ */
 @Component({
-  selector: 'si-tab-next',
+  selector: 'si-tab',
   imports: [SiIconComponent, SiTranslatePipe, SiTabBadgeComponent],
-  templateUrl: './si-tab-next.component.html',
-  styleUrl: './si-tab-next.component.scss',
-  providers: [{ provide: SiTabNextBaseDirective, useExisting: SiTabNextComponent }],
+  templateUrl: './si-tab.component.html',
+  styleUrl: './si-tab.component.scss',
+  providers: [{ provide: SiTabBaseDirective, useExisting: SiTabComponent }],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '(click)': 'selectTabByUser()',
     '(keydown.enter)': 'selectTabByUser()'
   }
 })
-export class SiTabNextComponent extends SiTabNextBaseDirective implements OnDestroy {
+export class SiTabComponent extends SiTabBaseDirective implements OnDestroy {
   /**
    * Whether the tab is active or not.
    * If set to `true`, the tab will be selected and its content will be displayed.

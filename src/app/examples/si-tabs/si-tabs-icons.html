@@ -1,6 +1,6 @@
-<si-tabset-next>
+<si-tabset>
   @for (tab of tabs; track tab) {
-    <si-tab-next
+    <si-tab
       [active]="tab.active ?? false"
       [badgeColor]="tab.badgeColor"
       [badgeContent]="tab.badgeContent"
@@ -10,6 +10,6 @@
       (closeTriggered)="closeTab(tab)"
     >
       <p class="mt-4"> Content for {{ tab.heading }} </p>
-    </si-tab-next>
+    </si-tab>
   }
-</si-tabset-next>
+</si-tabset>

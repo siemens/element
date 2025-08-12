@@ -4,7 +4,7 @@
  */
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiTabDeselectionEvent, SiTabComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
+import { SiTabComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 interface TabModel {
@@ -15,11 +15,12 @@ interface TabModel {
   iconAltText?: string;
   badgeColor?: string;
   badgeContent?: string | boolean;
+  active?: boolean;
 }
 
 @Component({
   selector: 'app-sample',
-  imports: [SiTabComponent, SiTabsetComponent, FormsModule],
+  imports: [FormsModule, SiTabsetComponent, SiTabComponent],
   templateUrl: './si-tabs.html',
   host: { class: 'p-5' }
 })
@@ -29,7 +30,7 @@ export class SampleComponent {
   logEvent = inject(LOG_EVENT);
 
   tabs: TabModel[] = [
-    { heading: 'Reception', closable: true, badgeContent: '11' },
+    { heading: 'Reception', closable: true, badgeContent: '11', active: true },
     {
       heading: 'Conference room',
       closable: true,
@@ -37,9 +38,7 @@ export class SampleComponent {
     },
     {
       heading: 'Lobby',
-      disabled: true,
-      icon: 'element-couch',
-      iconAltText: 'Hall'
+      disabled: true
     },
     {
       heading: 'Pantry',
@@ -53,13 +52,10 @@ export class SampleComponent {
     }
   ];
 
-  deselection(e: SiTabDeselectionEvent): void {
-    if (e.target.heading === 'Deselectable' && !this.deselectable) {
-      e.cancel();
-    }
-  }
-
   closeTab(tab: TabModel): void {
-    this.tabs.splice(this.tabs.indexOf(tab), 1);
+    this.tabs.splice(
+      this.tabs.findIndex(t => t.heading === tab.heading),
+      1
+    );
   }
 }

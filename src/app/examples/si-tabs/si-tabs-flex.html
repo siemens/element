@@ -1,16 +1,17 @@
-<si-tabset class="h-100 d-flex" [selectedTabIndex]="2">
+<si-tabset class="h-100 d-flex">
   <si-tab heading="Basic title" class="flex-scroll">
     <p class="mt-4">Basic content</p>
   </si-tab>
-  <si-tab icon="element-favorites-filled" iconAltText="favourites" class="flex-scroll">
+  <si-tab icon="element-favorites-filled" heading="Favorites" class="flex-scroll">
     <p class="mt-4">Basic content 2</p>
   </si-tab>
   <si-tab
     icon="element-alarm-filled"
-    iconAltText="notifications"
+    heading="notifications"
     badgeColor="danger"
     badgeContent="5"
     class="flex-scroll"
+    [active]="true"
   >
     <p class="mt-4">Basic content 3</p>
 

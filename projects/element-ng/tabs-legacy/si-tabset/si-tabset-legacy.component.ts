@@ -34,13 +34,13 @@ import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { asyncScheduler, Subscription } from 'rxjs';
 import { first, observeOn } from 'rxjs/operators';
 
-import { SiTabComponent } from '../si-tab/si-tab.component';
+import { SiTabLegacyComponent } from '../si-tab/si-tab-legacy.component';
 
 export interface SiTabDeselectionEvent {
   /**
    * The target tab
    */
-  target: SiTabComponent;
+  target: SiTabLegacyComponent;
   /**
    * The index of target tab
    */
@@ -53,20 +53,25 @@ export interface SiTabDeselectionEvent {
 
 const SCROLL_INCREMENT = 55;
 
+/**
+ * @deprecated Use the new components from `@siemens/element-ng/tabs` instead.
+ * See {@link https://element.siemens.io/components/layout-navigation/tabs/#code}
+ * for usage instructions.
+ */
 @Component({
-  selector: 'si-tabset',
+  selector: 'si-tabset-legacy',
   imports: [NgClass, SiIconComponent, SiResizeObserverDirective, SiTranslatePipe],
-  templateUrl: './si-tabset.component.html',
-  styleUrl: './si-tabset.component.scss',
+  templateUrl: './si-tabset-legacy.component.html',
+  styleUrl: './si-tabset-legacy.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SiTabsetComponent implements AfterViewInit, OnDestroy {
+export class SiTabsetLegacyComponent implements AfterViewInit, OnDestroy {
   /**
    * Contains the current tab components.
    */
-  @WebComponentContentChildren(SiTabComponent)
-  @ContentChildren(SiTabComponent)
-  protected tabPanels!: QueryList<SiTabComponent>;
+  @WebComponentContentChildren(SiTabLegacyComponent)
+  @ContentChildren(SiTabLegacyComponent)
+  protected tabPanels!: QueryList<SiTabLegacyComponent>;
 
   /**
    * Component variable to indicate if scrolling is necessary or the container is big enough to display all tabs.
@@ -211,7 +216,7 @@ export class SiTabsetComponent implements AfterViewInit, OnDestroy {
    *
    * @param selectedTab - The tab to be selected. This must already be part of the container.
    */
-  protected selectTab(selectedTab: SiTabComponent): void {
+  protected selectTab(selectedTab: SiTabLegacyComponent): void {
     if (selectedTab?.disabled) {
       return;
     }
@@ -298,9 +303,9 @@ export class SiTabsetComponent implements AfterViewInit, OnDestroy {
     this.focusedTabIndex = undefined;
   }
 
-  protected closeTab(event: MouseEvent, tab: SiTabComponent): void {
+  protected closeTab(event: MouseEvent, tab: SiTabLegacyComponent): void {
     event.stopPropagation();
-    let targetActiveTab: SiTabComponent | undefined;
+    let targetActiveTab: SiTabLegacyComponent | undefined;
     if (tab.active()) {
       const index = this.tabPanels.toArray().indexOf(tab);
       targetActiveTab = this.tabPanels.toArray()[index + 1] ?? this.tabPanels.toArray()[index - 1];

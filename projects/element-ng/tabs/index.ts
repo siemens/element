@@ -2,6 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-export * from './si-tabset/index';
-export * from './si-tab/index';
-export * from './si-tabs.module';
+export * from './si-tabset.component';
+export * from './si-tab.component';
+export * from './si-tab-link.component';
