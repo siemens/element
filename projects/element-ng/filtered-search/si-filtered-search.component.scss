@@ -10,12 +10,12 @@ $filtered-search-criteria-margin: map.get(variables.$spacers, 2);
   --input-background-color: #{variables.$element-base-1};
   --input-background-hover-color: #{variables.$element-base-1};
   --filter-search-background-color: #{variables.$element-base-1};
-  --filter-pill-background-color: #{variables.$element-base-0};
+  --filter-pill-background-color: #{variables.$element-base-4};
 
   &.dark-background {
-    --input-background-color: #{variables.$element-base-0};
+    --input-background-color: #{variables.$element-base-4};
     --input-background-hover-color: #{variables.$element-ui-4};
-    --filter-search-background-color: #{variables.$element-base-0};
+    --filter-search-background-color: #{variables.$element-base-4};
     --filter-pill-background-color: #{variables.$element-base-1};
   }
 
