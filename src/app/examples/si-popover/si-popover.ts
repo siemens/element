@@ -4,12 +4,17 @@
  */
 import { Component, inject } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
-import { SiPopoverDirective } from '@siemens/element-ng/popover';
 import { LOG_EVENT } from '@siemens/live-preview';
+
+import {
+  SiPopoverDirective,
+  SiPopoverTitleDirective,
+  SiPopoverBodyDirective
+} from '../../../../projects/element-ng/popover';
 
 @Component({
   selector: 'app-sample',
-  imports: [SiPopoverDirective, SiIconComponent],
+  imports: [SiIconComponent, SiPopoverDirective, SiPopoverTitleDirective, SiPopoverBodyDirective],
   templateUrl: './si-popover.html'
 })
 export class SampleComponent {

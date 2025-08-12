@@ -19,15 +19,33 @@ test.describe('Popover', () => {
     });
   });
 
-  ['with template', 'with template and context'].forEach(direction => {
-    test(direction, async ({ page, si }) => {
+  ['with template', 'with template and context'].forEach(template => {
+    test(template, async ({ page, si }) => {
       await si.visitExample(example);
 
-      await page.locator('.btn').getByText(`Popover ${direction}`).first().click();
+      await page.locator('.btn').getByText(`Popover ${template}`).first().click();
       await expect(page.locator('.popover')).toBeVisible();
 
-      await si.runVisualAndA11yTests(direction);
+      await si.runVisualAndA11yTests(template);
       await page.locator('.popover').click();
     });
+  });
+
+  test('focus on wrapper', async ({ page, si }) => {
+    await si.visitExample(example);
+
+    await page.locator('.btn').getByText(`Popover on top`).press('Space');
+    await expect(page.locator('.popover')).toBeVisible();
+
+    await si.runVisualAndA11yTests('focus on wrapper');
+  });
+
+  test('focus on first focusable', async ({ page, si }) => {
+    await si.visitExample(example);
+
+    await page.locator('.btn').getByText(`Popover ${'with template'}`).first().press('Space');
+    await expect(page.locator('.popover')).toBeVisible();
+
+    await si.runVisualAndA11yTests('focus on first focusable');
   });
 });

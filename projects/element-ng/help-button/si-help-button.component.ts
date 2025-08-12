@@ -4,7 +4,7 @@
  */
 import { Component } from '@angular/core';
 import { addIcons, elementHelp, SiIconComponent } from '@siemens/element-ng/icon';
-import { SiPopoverNextDirective } from '@siemens/element-ng/popover-next';
+import { SiPopoverDirective } from '@siemens/element-ng/popover';
 
 /**
  * This component creates a help button that shows contextual help in a popover.
@@ -33,12 +33,12 @@ import { SiPopoverNextDirective } from '@siemens/element-ng/popover-next';
   styleUrl: './si-help-button.component.scss',
   hostDirectives: [
     {
-      directive: SiPopoverNextDirective,
+      directive: SiPopoverDirective,
       inputs: [
-        'siPopoverNextTitle:siHelpTitle',
-        'siPopoverNext:siHelpContent',
-        'siPopoverNextContext:siHelpContext',
-        'siPopoverNextPlacement:siHelpPlacement'
+        'siPopoverTitle:siHelpTitle',
+        'siPopover:siHelpContent',
+        'siPopoverContext:siHelpContext',
+        'siPopoverPlacement:siHelpPlacement'
       ]
     }
   ]

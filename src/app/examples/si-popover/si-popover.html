@@ -1,4 +1,3 @@
-<!-- trigger="focus" dismiss popover on next click -->
 <div
   class="button-container d-flex flex-wrap gap-4"
   style="padding-block: 120px 0; padding-inline: 80px 0"
@@ -7,9 +6,8 @@
     type="button"
     class="btn btn-secondary"
     siPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
-    popoverTitle="Popover on top"
-    placement="top"
-    triggers="focus"
+    siPopoverTitle="Popover on top"
+    siPopoverPlacement="top"
     (shown)="logEvent('Popover visible')"
     (hidden)="logEvent('Popover hidden')"
   >
@@ -20,9 +18,8 @@
     type="button"
     class="btn btn-secondary"
     siPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
-    popoverTitle="Popover on end"
-    placement="end"
-    triggers="focus"
+    siPopoverTitle="Popover on end"
+    siPopoverPlacement="end"
   >
     Popover on end
   </button>
@@ -31,11 +28,9 @@
     type="button"
     class="btn btn-secondary"
     siPopover="Vivamus sagittis."
-    popoverTitle="Popover auto"
-    placement="auto"
-    icon="element-info"
-    triggers="focus"
-    [outsideClick]="false"
+    siPopoverTitle="Popover auto"
+    siPopoverPlacement="auto"
+    siPopoverIcon="element-info"
   >
     Popover auto
   </button>
@@ -44,9 +39,8 @@
     type="button"
     class="btn btn-secondary"
     siPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
-    popoverTitle="Popover on start"
-    placement="start"
-    triggers="focus"
+    siPopoverTitle="Popover on start"
+    siPopoverPlacement="start"
   >
     Popover on start
   </button>
@@ -55,9 +49,8 @@
     type="button"
     class="btn btn-secondary"
     siPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
-    popoverTitle="Popover on bottom"
-    placement="bottom"
-    triggers="focus"
+    siPopoverTitle="Popover on bottom"
+    siPopoverPlacement="bottom"
   >
     Popover on bottom
   </button>
@@ -65,8 +58,7 @@
   <button
     type="button"
     class="btn btn-secondary"
-    placement="top"
-    triggers="click"
+    siPopoverPlacement="bottom"
     [siPopover]="popoverTemplate"
   >
     Popover with template
@@ -75,26 +67,42 @@
   <button
     type="button"
     class="btn btn-secondary"
-    placement="top"
-    triggers="click"
+    siPopoverPlacement="top"
     [siPopover]="popoverTemplateWithContext"
-    [popoverContext]="myContext"
+    [siPopoverContext]="myContext"
   >
     Popover with template and context
   </button>
 </div>
 
 <ng-template #popoverTemplate>
-  <div class="text-center">
-    <si-icon class="display-4" icon="element-microwave-on" />
-  </div>
-  Hello, I'm a microwave.
+  <si-popover-title class="d-flex align-items-center gap-2">
+    <si-icon class="display-4" icon="element-light-desk-filled" />
+    <div>
+      <strong>Hello, I'm the popover title</strong>
+      <div class="text-secondary mt-1">si-popover-next-title</div></div
+    >
+  </si-popover-title>
+
+  <si-popover-body>
+    <div>Vivamus sagittis lacus vel augue laoreet rutrum faucibus.</div>
+    <button type="button" class="btn btn-link mt-4 d-block">
+      <span>Action link<i class="link-icon link-end element-right-2 flip-rtl"></i></span>
+    </button>
+
+    <button type="button" class="btn btn-secondary mt-6 w-100">Confirm</button>
+  </si-popover-body>
 </ng-template>
 
 <ng-template #popoverTemplateWithContext let-data>
-  <div class="text-center">
-    <si-icon class="display-4" [icon]="data.icon" />
-  </div>
-  Hello, I'm a microwave.<br />
-  And I'm {{ data.state }} with {{ data.power }} for {{ data.duration }}.
+  <si-popover-title>
+    <strong>Hello, I'm a microwave</strong>
+  </si-popover-title>
+
+  <si-popover-body>
+    And I'm {{ data.state }} with {{ data.power }} for {{ data.duration }}.
+    <button type="button" class="btn btn-link mt-4 d-block">
+      <span>Action link<i class="link-icon link-end element-right-2 flip-rtl"></i></span>
+    </button>
+  </si-popover-body>
 </ng-template>

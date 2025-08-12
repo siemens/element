@@ -5,7 +5,6 @@
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import {
-  booleanAttribute,
   ComponentRef,
   computed,
   Directive,
@@ -14,31 +13,37 @@ import {
   inject,
   input,
   OnDestroy,
-  OnInit,
   output,
+  signal,
   TemplateRef
 } from '@angular/core';
-import { getOverlay, getPositionStrategy, hasTrigger, positions } from '@siemens/element-ng/common';
+import { getOverlay, getPositionStrategy, positions } from '@siemens/element-ng/common';
 import { Subject, takeUntil } from 'rxjs';
 
 import { PopoverComponent } from './si-popover.component';
 
 @Directive({
   selector: '[siPopover]',
+  host: {
+    '[attr.aria-expanded]': 'isOpen()',
+    '[attr.aria-controls]': 'popoverId'
+  },
   exportAs: 'si-popover'
 })
-export class SiPopoverDirective implements OnInit, OnDestroy {
+export class SiPopoverDirective implements OnDestroy {
+  private static idCounter = 0;
+
   /**
    * The popover text to be displayed
    */
-  readonly siPopover = input<string | TemplateRef<any>>();
+  readonly siPopover = input<string | TemplateRef<unknown>>();
 
   /**
    * The placement of the popover. One of 'top', 'start', end', 'bottom'
    *
    * @defaultValue 'auto'
    */
-  readonly placement = input<keyof typeof positions>('auto');
+  readonly placement = input<keyof typeof positions>('auto', { alias: 'siPopoverPlacement' });
 
   readonly placementInternal = computed(() => {
     if (
@@ -54,76 +59,50 @@ export class SiPopoverDirective implements OnInit, OnDestroy {
   });
 
   /**
-   * The trigger event(s) on which the popover shall be displayed.
-   * Applications can pass multiple triggers separated by space.
-   * Supported events are 'click', 'hover' and 'focus'.
-   *
-   * **Limitations:**
-   * Safari browsers do not raise a 'focus' event on host element click and 'focus'
-   * on tab key has to be enabled in the advanced browser settings.
-   *
-   * @defaultValue 'click'
-   */
-  readonly triggers = input('click');
-
-  /**
    * The title to be displayed on top for the popover
    *
-   * @defaultValue ''
+   * @defaultValue undefined
    */
-  readonly popoverTitle = input('');
+  readonly title = input<string>(undefined, { alias: 'siPopoverTitle' });
 
   /**
    * The class that will be applied to container of the popover
    *
    * @defaultValue ''
    */
-  readonly containerClass = input('');
-
-  /**
-   * The flag determines whether to close popover on clicking outside
-   *
-   * @defaultValue true
-   */
-  readonly outsideClick = input(true, { transform: booleanAttribute });
+  readonly containerClass = input('', { alias: 'siPopoverContainerClass' });
 
   /**
    * The icon to be displayed besides popover title
-   */
-  readonly icon = input<string>();
-
-  /**
-   * Specify whether or not the popover is currently shown
    *
-   * @defaultValue false
+   * @defaultValue undefined
    */
-  readonly isOpen = input<boolean | undefined, unknown>(false, { transform: booleanAttribute });
+  readonly icon = input<string>(undefined, { alias: 'siPopoverIcon' });
 
   /**
    * The context for the attached template
+   *
+   * @defaultValue undefined
    */
-  readonly popoverContext = input<unknown>();
+  readonly context = input<unknown>(undefined, { alias: 'siPopoverContext' });
 
   /**
-   * Emits an event when the popover is shown
+   * Emits an event when the popover is shown/hidden
    */
-  readonly shown = output<void>();
+  readonly visibilityChange = output<void>({ alias: 'siPopoverVisibilityChange' });
 
-  /**
-   * Emits an event when the popover is hidden
-   */
-  readonly hidden = output<void>();
+  /** @internal */
+  readonly popoverCounter = SiPopoverDirective.idCounter++;
+  /** @internal */
+  readonly popoverId = `__popover_${this.popoverCounter}`;
+
+  /** @internal */
+  protected readonly isOpen = signal<boolean>(false);
 
   private overlayref?: OverlayRef;
   private overlay = inject(Overlay);
   private elementRef = inject(ElementRef);
   private destroyer = new Subject<void>();
-
-  ngOnInit(): void {
-    if (this.isOpen()) {
-      this.show();
-    }
-  }
 
   ngOnDestroy(): void {
     this.overlayref?.dispose();
@@ -135,42 +114,31 @@ export class SiPopoverDirective implements OnInit, OnDestroy {
    * Displays popover and emits 'shown' event.
    */
   show(): void {
-    if (!this.overlayref?.hasAttached()) {
-      const triggers = this.triggers();
-      const backdrop =
-        this.outsideClick() && !hasTrigger('focus', triggers) && !hasTrigger('hover', triggers);
-      this.overlayref = getOverlay(
-        this.elementRef,
-        this.overlay,
-        backdrop,
-        this.placementInternal()
-      );
-      if (backdrop) {
-        this.overlayref
-          .backdropClick()
-          .pipe(takeUntil(this.destroyer))
-          .subscribe(() => this.hide());
-      }
-    }
-
-    if (this.overlayref.hasAttached()) {
+    if (this.overlayref?.hasAttached()) {
       return;
     }
+    this.overlayref = getOverlay(this.elementRef, this.overlay, false, this.placementInternal());
+    this.overlayref
+      .outsidePointerEvents()
+      .pipe(takeUntil(this.destroyer))
+      .subscribe(({ target }) => {
+        if (target !== this.elementRef.nativeElement) {
+          this.hide();
+        }
+      });
+
     const popoverPortal = new ComponentPortal(PopoverComponent);
     const popoverRef: ComponentRef<PopoverComponent> = this.overlayref.attach(popoverPortal);
 
-    popoverRef.setInput('popover', this.siPopover());
-    popoverRef.setInput('popoverTitle', this.popoverTitle());
-    popoverRef.setInput('icon', this.icon());
-    popoverRef.setInput('containerClass', this.containerClass());
-    popoverRef.setInput('popoverContext', this.popoverContext());
+    popoverRef.setInput('popoverDirective', this);
 
     const positionStrategy = getPositionStrategy(this.overlayref);
     positionStrategy?.positionChanges
       .pipe(takeUntil(this.destroyer))
       .subscribe(change => popoverRef.instance.updateArrow(change, this.elementRef));
 
-    this.shown.emit();
+    this.isOpen.set(true);
+    this.visibilityChange.emit();
   }
 
   /**
@@ -179,7 +147,8 @@ export class SiPopoverDirective implements OnInit, OnDestroy {
   hide(): void {
     if (this.overlayref?.hasAttached()) {
       this.overlayref?.detach();
-      this.hidden.emit();
+      this.isOpen.set(false);
+      this.visibilityChange.emit();
       this.destroyer.next();
     }
   }
@@ -191,27 +160,12 @@ export class SiPopoverDirective implements OnInit, OnDestroy {
     this.overlayref?.updatePosition();
   }
 
-  @HostListener('mouseenter', ['"hover"'])
-  @HostListener('mouseleave', ['"hover"'])
-  @HostListener('focus', ['"focus"'])
-  @HostListener('click', ['"click"'])
-  protected onTrigger(trigger: string): void {
-    if (hasTrigger(trigger, this.triggers())) {
-      if (this.overlayref?.hasAttached()) {
-        this.hide();
-      } else {
-        this.show();
-      }
-    }
-  }
-
-  @HostListener('touchstart')
-  @HostListener('focusout')
-  protected focusOut(): void {
-    if (hasTrigger('focus', this.triggers())) {
-      if (this.outsideClick()) {
-        this.hide();
-      }
+  @HostListener('click')
+  protected onClick(): void {
+    if (this.overlayref?.hasAttached()) {
+      this.hide();
+    } else {
+      this.show();
     }
   }
 }
