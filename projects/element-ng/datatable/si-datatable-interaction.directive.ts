@@ -22,9 +22,8 @@ export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
   /**
    * The selection type of the datatable, will automatically be set if set for datatable.
    *
-   * @defaultValue ''
    */
-  readonly selectionType = input('');
+  readonly selectionType = input<'single' | 'multi' | 'multiClick' | 'cell' | 'checkbox'>();
 
   /**
    * Automatically select every row or cell that is navigated trough.
