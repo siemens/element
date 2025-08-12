@@ -4,4 +4,4 @@
  */
 export * from './si-popover-next.directive';
 export * from './si-popover-title.directive';
-export * from './si-popover-description.directive';
+export * from './si-popover-body.directive';

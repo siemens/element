@@ -7,7 +7,7 @@ import { SiIconComponent } from '@siemens/element-ng/icon';
 import {
   SiPopoverNextDirective,
   SiPopoverTitleDirective,
-  SiPopoverDescriptionDirective
+  SiPopoverBodyDirective
 } from '@siemens/element-ng/popover-next';
 import { LOG_EVENT } from '@siemens/live-preview';
 
@@ -17,7 +17,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiIconComponent,
     SiPopoverNextDirective,
     SiPopoverTitleDirective,
-    SiPopoverDescriptionDirective
+    SiPopoverBodyDirective
   ],
   templateUrl: './si-popover-next.html'
 })

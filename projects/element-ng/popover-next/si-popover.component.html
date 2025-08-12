@@ -22,9 +22,21 @@
       <span class="si-title-2" [id]="labelledBy">{{ popover.title() }}</span>
     </div>
   }
-  <div class="popover-body">
-    @if (!popoverTemplate) {
+  @if (!popoverTemplate) {
+    <div class="popover-body">
       <div class="si-body-2" [id]="describedBy" [innerHTML]="popover.siPopoverNext()"></div>
+    </div>
+  } @else {
+    <!-- If title is already provided, we wrap the template with the `popover-body` class
+    since the template may not be in the popover body directive. Also used by SiHelpButtonComponent -->
+    @if (popover.title()) {
+      <div class="popover-body">
+        <ng-template
+          [ngTemplateOutlet]="popoverTemplate"
+          [ngTemplateOutletContext]="popover.context()"
+          [ngTemplateOutletInjector]="injector"
+        />
+      </div>
     } @else {
       <ng-template
         [ngTemplateOutlet]="popoverTemplate"
@@ -32,5 +44,5 @@
         [ngTemplateOutletInjector]="injector"
       />
     }
-  </div>
+  }
 </div>
