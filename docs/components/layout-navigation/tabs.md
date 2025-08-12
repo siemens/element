@@ -76,51 +76,6 @@ This menu contains all the tabs in the same order, ensuring consistent navigatio
 
 ## Code ---
 
-Element provides its own tab component to allow for the desired responsive
-behavior.
-
-### Usage
-
-`si-tabs` can be imported using the module
-
-```ts
-import { SiTabsModule } from '@siemens/element-ng/tabs';
-
-@NgModule({
-  imports: [SiTabsModule, ...]
-})
-```
-
-or as a standalone component:
-
-```ts
-import { SiTabComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
-
-@Component({
-  imports: [
-    SiTabComponent,
-    SiTabsetComponent,
-    ...
-  ]
-})
-```
-
-### Tabs - Basic
-
-<si-docs-component example="si-tabs/si-tabs"></si-docs-component>
-
-### Tabs - Responsive Behavior
-
-<si-docs-component example="si-tabs/si-tabs-arrow"></si-docs-component>
-
-<si-docs-api component="SiTabsetComponent"></si-docs-api>
-
-<si-docs-api component="SiTabComponent"></si-docs-api>
-
-<si-docs-types></si-docs-types>
-
-## Code (next) ---
-
 Element implements tabset and tab components that provide the correct styling and responsive behavior.
 It supports the usage combined with the Angular router (preferred way) or alternatively as plain components.
 
@@ -131,12 +86,12 @@ Make sure to nest the `<router-outlet />` inside the `si-tabset-next` component 
 No need to apply `routerLinkActive`, this is done automatically.
 
 ```html
-<si-tabset-next>
-  <a si-tab-next heading="Tab 1" routerLink="./tab-1"></a>
-  <a si-tab-next heading="Tab 2" routerLink="./tab-2"></a>
+<si-tabset>
+  <a si-tab heading="Tab 1" routerLink="./tab-1"></a>
+  <a si-tab heading="Tab 2" routerLink="./tab-2"></a>
   
   <router-outlet />
-</si-tabset-next>
+</si-tabset>
 ```
 
 ```ts
@@ -167,7 +122,7 @@ export const routes: Routes = [
 ]
 ```
 
-<si-docs-component example="si-tabs/si-tabs-next-routing"></si-docs-component>
+<si-docs-component example="si-tabs/si-tabs-routing"></si-docs-component>
 
 ### Tabs with plain components
 
@@ -175,19 +130,19 @@ In general, using the tabs with the Angular router is preferred as the state is 
 So deep-linking and bookmarking is supported.
 In some cases, this might not be needed, e.g. when using the tabs to group simple information on a page.
 
-In this case, you can use the `si-tabset-next` component with `si-tab-next` components as children.
+In this case, you can use the `si-tabset` component with `si-tab` components as children.
 
 ```html
-<si-tabset-next>
-  <si-tab-next heading="Tab 1">Tab 1 content</si-tab-next>
-  <si-tab-next heading="Tab 2" [active]="true">Tab 2 content</si-tab-next>
-</si-tabset-next>
+<si-tabset>
+  <si-tab-legacy heading="Tab 1">Tab 1 content</si-tab-legacy>
+  <si-tab-legacy heading="Tab 2" [active]="true">Tab 2 content</si-tab-legacy>
+</si-tabset>
 ```
 
 ```ts
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SiTabsetNextComponent, SiTabNextComponent } from '@siemens/element-ng/tabs-next';
+import { SiTabsetNextComponent, SiTabNextComponent } from '@siemens/element-ng/tabs';
 
 @Component({
   templateUrl: './my-component.html',
@@ -210,17 +165,17 @@ Both tab variants can be used as a closable tab.
 A tab that can be closed must be explicitly marked as closable by setting the `closable` property to `true`.
 
 ```html
-<si-tabset-next>
+<si-tabset>
   @if(showTab1) {
-    <a si-tab-next heading="Tab 1" routerLink="./tab-1" closable (closeTriggered)="removeTab1()"></a>
+    <a si-tab heading="Tab 1" routerLink="./tab-1" closable (closeTriggered)="removeTab1()"></a>
   }
-</si-tabset-next>
+</si-tabset>
 ```
 
 ```ts
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SiTabsetNextComponent, SiTabNextLinkComponent } from '@siemens/element-ng/tabs-next';
+import { SiTabsetNextComponent, SiTabNextLinkComponent } from '@siemens/element-ng/tabs';
 
 @Component({
   templateUrl: './my-component.html',
@@ -242,7 +197,7 @@ export class MyComponent {
 The tabset does not automatically remove a closed tab.
 When `closeTriggered` is emitted, you need to handle the removal of the tab in your component logic.
 
-<si-docs-component example="si-tabs/si-tabs-next"></si-docs-component>
+<si-docs-component example="si-tabs/si-tabs"></si-docs-component>
 
 <si-docs-api component="SiTabsetNextComponent"></si-docs-api>
 

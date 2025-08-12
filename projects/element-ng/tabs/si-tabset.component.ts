@@ -20,13 +20,16 @@ import { SiMenuDirective, SiMenuItemComponent } from '@siemens/element-ng/menu';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
 
 import { SiTabBadgeComponent } from './si-tab-badge.component';
-import { SiTabNextBaseDirective } from './si-tab-next-base.directive';
-import { SiTabNextLinkComponent } from './si-tab-next-link.component';
-import { SI_TABSET_NEXT } from './si-tabs-tokens';
+import { SiTabBaseDirective } from './si-tab-base.directive';
+import { SiTabLinkComponent } from './si-tab-link.component';
+import { SI_TABSET } from './si-tabs-tokens';
 
-/** @experimental */
+/**
+ * A component to group multiple tabs together.
+ * Can either be used with {@link SiTabLinkComponent} or {@link SiTabComponent} components.
+ */
 @Component({
-  selector: 'si-tabset-next',
+  selector: 'si-tabset',
   imports: [
     SiMenuDirective,
     SiMenuItemComponent,
@@ -36,22 +39,22 @@ import { SI_TABSET_NEXT } from './si-tabs-tokens';
     RouterLink,
     SiTabBadgeComponent
   ],
-  templateUrl: './si-tabset-next.component.html',
-  styleUrl: './si-tabset-next.component.scss',
+  templateUrl: './si-tabset.component.html',
+  styleUrl: './si-tabset.component.scss',
   providers: [
     {
-      provide: SI_TABSET_NEXT,
-      useExisting: SiTabsetNextComponent
+      provide: SI_TABSET,
+      useExisting: SiTabsetComponent
     }
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SiTabsetNextComponent {
+export class SiTabsetComponent {
   /** @internal */
   readonly activeTab = computed(() => this.tabPanels().find(tab => tab.active()));
 
   /** @internal */
-  readonly tabPanels = contentChildren(SiTabNextBaseDirective);
+  readonly tabPanels = contentChildren(SiTabBaseDirective);
 
   /** @internal */
   focusKeyManager = new FocusKeyManager(this.tabPanels, inject(INJECTOR))
@@ -61,8 +64,8 @@ export class SiTabsetNextComponent {
   /** @internal */
   protected readonly showMenuButton = signal(false);
 
-  protected tabIsLink(tab: unknown): tab is SiTabNextLinkComponent {
-    return tab instanceof SiTabNextLinkComponent;
+  protected tabIsLink(tab: unknown): tab is SiTabLinkComponent {
+    return tab instanceof SiTabLinkComponent;
   }
 
   /** @internal */

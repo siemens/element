@@ -4,11 +4,11 @@
  */
 import { Component } from '@angular/core';
 import { FieldType, FormlyModule } from '@ngx-formly/core';
-import { SiTabNextComponent, SiTabsetNextComponent } from '@siemens/element-ng/tabs-next';
+import { SiTabComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
 
 @Component({
   selector: 'si-formly-object-tabset',
-  imports: [SiTabsetNextComponent, SiTabNextComponent, FormlyModule],
+  imports: [SiTabsetComponent, SiTabComponent, FormlyModule],
   templateUrl: './si-formly-object-tabset.component.html'
 })
 export class SiFormlyObjectTabsetComponent extends FieldType {

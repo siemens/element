@@ -16,9 +16,9 @@ import {
 import { provideRouter, RouterLink, RouterOutlet } from '@angular/router';
 import { ResizeObserverService } from '@siemens/element-ng/resize-observer';
 
-import { SiTabNextLinkComponent } from './si-tab-next-link.component';
-import { SiTabNextComponent } from './si-tab-next.component';
-import { SiTabsetNextComponent } from './si-tabset-next.component';
+import { SiTabLinkComponent } from './si-tab-link.component';
+import { SiTabComponent } from './si-tab.component';
+import { SiTabsetComponent } from './si-tabset.component';
 import { SiTabsetNextHarness } from './testing/si-tabset-next.harness';
 
 @Component({
@@ -28,13 +28,13 @@ import { SiTabsetNextHarness } from './testing/si-tabset-next.harness';
 class SiTabRouteComponent {}
 
 @Component({
-  imports: [SiTabsetNextComponent, SiTabNextComponent],
+  imports: [SiTabsetComponent, SiTabComponent],
   template: `
     <div class="tab-wrapper" [style.width.px]="wrapperWidth()">
       @if (tabsObject().length) {
-        <si-tabset-next>
+        <si-tabset>
           @for (tab of tabsObject(); track tab) {
-            <si-tab-next
+            <si-tab
               [active]="tab.active ?? false"
               [heading]="tab.heading"
               [closable]="!!tab.closable"
@@ -42,7 +42,7 @@ class SiTabRouteComponent {}
               (closeTriggered)="closeTriggered(tab)"
             />
           }
-        </si-tabset-next>
+        </si-tabset>
       }
     </div>
   `
@@ -72,7 +72,7 @@ class TestComponent {
     );
   }
 
-  readonly tabSet = viewChild.required(SiTabsetNextComponent);
+  readonly tabSet = viewChild.required(SiTabsetComponent);
 
   closeTriggered(tab: { heading: string }): void {
     this.tabsObject.set(this.tabsObject().filter(t => t !== tab));
@@ -80,14 +80,14 @@ class TestComponent {
 }
 
 @Component({
-  imports: [SiTabsetNextComponent, SiTabNextLinkComponent, RouterOutlet, RouterLink],
+  imports: [SiTabsetComponent, SiTabLinkComponent, RouterOutlet, RouterLink],
   template: `
     <div class="tab-wrapper" [style.width.px]="wrapperWidth()">
       @if (tabsObject().length) {
-        <si-tabset-next>
+        <si-tabset>
           @for (tab of tabsObject(); track tab) {
             <a
-              si-tab-next
+              si-tab
               aria-label="tab.heading"
               [heading]="tab.heading"
               [closable]="!!tab.closable"
@@ -96,7 +96,7 @@ class TestComponent {
             ></a>
           }
           <router-outlet />
-        </si-tabset-next>
+        </si-tabset>
       }
     </div>
   `
@@ -121,7 +121,7 @@ class TestRoutingComponent {
     );
   }
 
-  readonly tabSet = viewChild.required(SiTabsetNextComponent);
+  readonly tabSet = viewChild.required(SiTabsetComponent);
 }
 
 describe('SiTabsetNext', () => {

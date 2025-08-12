@@ -2,9 +2,14 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+/* eslint-disable  @typescript-eslint/no-deprecated */
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiTabNextComponent, SiTabsetNextComponent } from '@siemens/element-ng/tabs-next';
+import {
+  SiTabDeselectionEvent,
+  SiTabLegacyComponent,
+  SiTabsetLegacyComponent
+} from '@siemens/element-ng/tabs-legacy';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 interface TabModel {
@@ -15,13 +20,12 @@ interface TabModel {
   iconAltText?: string;
   badgeColor?: string;
   badgeContent?: string | boolean;
-  active?: boolean;
 }
 
 @Component({
   selector: 'app-sample',
-  imports: [FormsModule, SiTabsetNextComponent, SiTabNextComponent],
-  templateUrl: './si-tabs-next.html',
+  imports: [SiTabLegacyComponent, SiTabsetLegacyComponent, FormsModule],
+  templateUrl: './si-tabs-legacy.html',
   host: { class: 'p-5' }
 })
 export class SampleComponent {
@@ -30,7 +34,7 @@ export class SampleComponent {
   logEvent = inject(LOG_EVENT);
 
   tabs: TabModel[] = [
-    { heading: 'Reception', closable: true, badgeContent: '11', active: true },
+    { heading: 'Reception', closable: true, badgeContent: '11' },
     {
       heading: 'Conference room',
       closable: true,
@@ -38,7 +42,9 @@ export class SampleComponent {
     },
     {
       heading: 'Lobby',
-      disabled: true
+      disabled: true,
+      icon: 'element-couch',
+      iconAltText: 'Hall'
     },
     {
       heading: 'Pantry',
@@ -52,10 +58,13 @@ export class SampleComponent {
     }
   ];
 
+  deselection(e: SiTabDeselectionEvent): void {
+    if (e.target.heading === 'Deselectable' && !this.deselectable) {
+      e.cancel();
+    }
+  }
+
   closeTab(tab: TabModel): void {
-    this.tabs.splice(
-      this.tabs.findIndex(t => t.heading === tab.heading),
-      1
-    );
+    this.tabs.splice(this.tabs.indexOf(tab), 1);
   }
 }

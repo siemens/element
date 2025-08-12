@@ -7,8 +7,8 @@ import { ComponentHarness, TestElement, TestKey } from '@angular/cdk/testing';
 
 export class SiTabsetNextHarness extends ComponentHarness {
   static hostSelector = '.tab-wrapper';
-  private tabset = this.locatorForOptional('si-tabset-next');
-  private tabItems = this.locatorForAll('si-tab-next');
+  private tabset = this.locatorForOptional('si-tabset');
+  private tabItems = this.locatorForAll('si-tab');
   private tabButtons = this.locatorForAll('[role="tab"]');
   private activeTabButton = this.locatorFor('[role="tab"][aria-selected="true"]');
   private optionsMenuButton = this.locatorForOptional(

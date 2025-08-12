@@ -10,16 +10,27 @@ import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { startWith } from 'rxjs/operators';
 
 import { SiTabBadgeComponent } from './si-tab-badge.component';
-import { SiTabNextBaseDirective } from './si-tab-next-base.directive';
+import { SiTabBaseDirective } from './si-tab-base.directive';
 
-/** @experimental */
+/**
+ * Creates a tab that uses the Angular router.
+ *
+ * @example
+ * ```html
+ * <si-tabset>
+ *   <a si-tab routerLink="/home" heading="Home"></a>
+ *
+ *   <router-outlet />
+ * </si-tabset>
+ * ```
+ */
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
-  selector: 'a[si-tab-next][routerLink]',
+  selector: 'a[si-tab][routerLink]',
   imports: [SiIconComponent, SiTranslatePipe, SiTabBadgeComponent],
-  templateUrl: './si-tab-next.component.html',
-  styleUrl: './si-tab-next.component.scss',
-  providers: [{ provide: SiTabNextBaseDirective, useExisting: SiTabNextLinkComponent }],
+  templateUrl: './si-tab.component.html',
+  styleUrl: './si-tab.component.scss',
+  providers: [{ provide: SiTabBaseDirective, useExisting: SiTabLinkComponent }],
   changeDetection: ChangeDetectionStrategy.OnPush,
   hostDirectives: [
     {
@@ -27,7 +38,7 @@ import { SiTabNextBaseDirective } from './si-tab-next-base.directive';
     }
   ]
 })
-export class SiTabNextLinkComponent extends SiTabNextBaseDirective {
+export class SiTabLinkComponent extends SiTabBaseDirective {
   private router = inject(Router);
   /** @internal */
   routerLink = inject(RouterLink, { self: true });

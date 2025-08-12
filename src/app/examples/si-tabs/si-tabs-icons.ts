@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, inject } from '@angular/core';
-import { SiTabNextComponent, SiTabsetNextComponent } from '@siemens/element-ng/tabs-next';
+import { SiTabComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 interface TabModel {
@@ -18,8 +18,8 @@ interface TabModel {
 
 @Component({
   selector: 'app-sample',
-  imports: [SiTabsetNextComponent, SiTabNextComponent],
-  templateUrl: './si-tabs-next-icons.html',
+  imports: [SiTabsetComponent, SiTabComponent],
+  templateUrl: './si-tabs-icons.html',
   host: { class: 'p-5' }
 })
 export class SampleComponent {

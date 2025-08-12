@@ -51,14 +51,14 @@ import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.s
     SiMenuItemComponent,
     SiSearchBarComponent,
     SiFilterBarComponent,
-    SiTabsetComponent,
-    SiTabComponent,
     NgxDatatableModule,
     SiDatatableModule,
     SiEmptyStateModule,
     SiMenuDirective,
     SiMenuHeaderDirective,
-    CdkMenuTrigger
+    CdkMenuTrigger,
+    SiTabsetComponent,
+    SiTabComponent
   ],
   templateUrl: './si-list-details.html',
   providers: [DataService],

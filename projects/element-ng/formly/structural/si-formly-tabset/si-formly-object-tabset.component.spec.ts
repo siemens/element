@@ -8,7 +8,6 @@ import { FormRecord, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
-import { SiTabComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
 
 import { SiFormlyObjectTabsetComponent } from './si-formly-object-tabset.component';
 
@@ -33,8 +32,6 @@ describe('formly tabset type', () => {
       imports: [
         NoopAnimationsModule,
         ReactiveFormsModule,
-        SiTabComponent,
-        SiTabsetComponent,
 
         FormlyModule.forRoot({
           types: [
@@ -87,9 +84,9 @@ describe('formly tabset type', () => {
       }
     ];
     fixture.detectChanges();
-    const tabsContainer = fixture.debugElement.query(By.css('si-tabset-next'));
+    const tabsContainer = fixture.debugElement.query(By.css('si-tabset'));
     expect(tabsContainer).toBeTruthy();
-    const tabs = tabsContainer.queryAll(By.css('si-tab-next'));
+    const tabs = tabsContainer.queryAll(By.css('si-tab'));
     expect(tabs).toBeTruthy();
     expect(tabs.length).toEqual(3);
 
