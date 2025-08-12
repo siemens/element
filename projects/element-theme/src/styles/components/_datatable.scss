@@ -291,7 +291,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
     background-color: $datatable-footer-background-color;
     color: semantic-tokens.$element-text-secondary;
     font-size: typography.$si-font-size-caption-1;
-    margin-block-start: -4px;
+    margin-block-start: -1px;
     position: relative;
     z-index: 11;
 
