@@ -17,7 +17,11 @@ import { Coordinate, makeArc, valueToRelativeAngle } from '@siemens/native-chart
 export interface MicroDonutSeries {
   /** value in percent */
   valuePercent: number;
-  /** color token */
+  /**
+   * Use a data-color. See: {@link https://element.siemens.io/fundamentals/colors/data-visualization-colors/#tokens}
+   *
+   * @example "element-data-10"
+   */
   colorToken: string;
   /** ID exposed as `data-id` */
   id?: string;
