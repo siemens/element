@@ -12,24 +12,24 @@
   - textbox "Search widget"
   - text: Widget catalog list
   - listbox "Widget catalog list":
-    - option "reportstatus none Hello World A dummy widget for testing." [selected]:
-      - status "reportstatus none"
-    - option "userstatus none Contact Add a contact card to your dashboard.":
-      - status "userstatus none"
-    - option "trendstatus none Line Chart A line chart is a type of chart used to show information that changes over time. Line charts are created by plotting a series of several points and connecting them with a straight line. Line charts are used to track changes over short and long periods.":
-      - status "trendstatus none"
-    - option "trendstatus none Bar Chart This is a bar chart widget.":
-      - status "trendstatus none"
-    - option "trendstatus none Circle Chart This is a cart with a circle.":
-      - status "trendstatus none"
-    - option "trendstatus none Gauge Chart A nice gauge charts":
-      - status "trendstatus none"
-    - option "trendstatus none List Widget Displays a list of items":
-      - status "trendstatus none"
-    - option "trendstatus none Timeline Widget Displays events or steps over a period of time":
-      - status "trendstatus none"
-    - option "trendstatus none Value Widget Displays a single KPI":
-      - status "trendstatus none"
+    - option "report status none Hello World A dummy widget for testing." [selected]:
+      - status "report status none"
+    - option "user status none Contact Add a contact card to your dashboard.":
+      - status "user status none"
+    - option "trend status none Line Chart A line chart is a type of chart used to show information that changes over time. Line charts are created by plotting a series of several points and connecting them with a straight line. Line charts are used to track changes over short and long periods.":
+      - status "trend status none"
+    - option "trend status none Bar Chart This is a bar chart widget.":
+      - status "trend status none"
+    - option "trend status none Circle Chart This is a cart with a circle.":
+      - status "trend status none"
+    - option "trend status none Gauge Chart A nice gauge charts":
+      - status "trend status none"
+    - option "trend status none List Widget Displays a list of items":
+      - status "trend status none"
+    - option "trend status none Timeline Widget Displays events or steps over a period of time":
+      - status "trend status none"
+    - option "trend status none Value Widget Displays a single KPI":
+      - status "trend status none"
     - option "status none Note (web-component)":
       - status "status none"
     - option "status none Contact (web-component)":

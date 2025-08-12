@@ -99,9 +99,9 @@ export class SiCircleStatusComponent implements OnChanges, OnDestroy {
     const status = this.status();
     const statusName = status && this.statusIcons[status] ? status : 'none';
     const direction = this.eventOut() ? ' out' : '';
-    const iconName = this.icon()?.replace(/^element-{0,1}/, '') ?? '';
+    const iconName = this.icon()?.replace(/^element-{0,1}(.+)/, '$1 ') ?? '';
     return `${iconName.toLocaleLowerCase()}${
-      this.status() && this.icon() ? ' in ' : ''
+      this.status() && this.icon() ? 'in ' : ''
     }status ${statusName}${direction}`;
   });
   protected readonly statusIcon = computed<StatusIcon | undefined>(() => {
