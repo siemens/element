@@ -62,42 +62,20 @@ They open upon **user selection**.
 
 ## Code ---
 
-### Usage
-
-Use `siPopover` directive to display the popover.
-
-```ts
-import { SiPopoverDirective } from '@siemens/element-ng/popover';
-
-@Component({
-  imports: [SiPopoverDirective, ...]
-})
-```
-
-### Basic usage and positioning
-
-<si-docs-component example="si-popover/si-popover" height="260"></si-docs-component>
-
-<si-docs-api directive="SiPopoverDirective"></si-docs-api>
-
-<si-docs-types></si-docs-types>
-
-## Code (next) ---
-
 The `si-popover` is meant to hold contextual content for a specific element.
 It is implemented as a `role="dialog"`, thus following a common pattern for such elements.
 
 ### Popover trigger
 
-The `siPopoverNext` directive must always be attached to a `button`, the so-called trigger.
+The `siPopover` directive must always be attached to a `button`, the so-called trigger.
 A popover trigger MUST NOT have any other actions attached to it.
 The trigger button must have a descriptive label, such as `More information about component xyz`.
 Do not provide generic labels like `more` or `here` as users may tab through the page without reading the context.
 
-Use the `siPopoverNext` directive to create a popover trigger.
+Use the `siPopover` directive to create a popover trigger.
  
 ```html
-<button siPopoverNext="..." type="button" class="btn btn-secondary">More information about component xyz</button>
+<button siPopover="..." type="button" class="btn btn-secondary">More information about component xyz</button>
 ```
 
 ### Popover content
@@ -106,12 +84,13 @@ A popover always has a body and a title.
 A popover will receive the `focus` when it's opened and the focus will be returned to the trigger when it's closed.
 So the content may contain interactive elements, such as links or buttons.
 
-The content can be provided in two ways:
-- using the inputs `siPopoverNext` and `siPopoverNextTitle`
+The content can be provided in the following ways:
+
+- using the inputs `siPopover` and `siPopoverTitle`
   ```html
   <button 
-    siPopoverNext="Details Lorem ipsum ..." 
-    siPopoverNextTitle="Component xyz" 
+    siPopover="Details Lorem ipsum ..." 
+    siPopoverTitle="Component xyz" 
     type="button" class="btn btn-secondary"
   >
       More information about component xyz
@@ -119,7 +98,7 @@ The content can be provided in two ways:
   ```
 - using a template
   ```html
-  <button siPopoverNext="popoverContent" type="button" class="btn btn-secondary">More information about component xyz</button>
+  <button siPopover="popoverContent" type="button" class="btn btn-secondary">More information about component xyz</button>
   <ng-template #popoverContent>
     <si-popover-title>Component xyz</si-popover-title>
     <si-popover-body>
@@ -129,9 +108,9 @@ The content can be provided in two ways:
   ```
 - using a template and the title input
   ```html
-  <button siPopoverNext="popoverContent" siPopoverNextTitle="Component xyz" type="button" class="btn btn-secondary">More information about component xyz</button>
+  <button siPopover="popoverContent" siPopoverTitle="Component xyz" type="button" class="btn btn-secondary">More information about component xyz</button>
   <ng-template #popoverContent>
-    <!-- If siPopoverNextTitle is set, the content must NOT be wrapped in a si-popover-body element. -->
+    <!-- If siPopoverTitle is set, the content must NOT be wrapped in a si-popover-body element. -->
     Details Lorem ipsum ...
   </ng-template>
   ```
@@ -143,18 +122,18 @@ Add the required imports to your component:
 
 ```ts
 import {
-  SiPopoverNextDirective,
+  SiPopoverDirective,
   SiPopoverTitleDirective,
   SiPopoverBodyDirective
-} from '@siemens/element-ng/popover-next';
+} from '@siemens/element-ng/popover';
 
 @Component({
-  imports: [SiPopoverNextDirective, SiPopoverTitleDirective, SiPopoverBodyDirective, ...]
+  imports: [SiPopoverDirective, SiPopoverTitleDirective, SiPopoverBodyDirective, ...]
 })
 ```
 
-<si-docs-component example="si-popover-next/si-popover-next" height="260"></si-docs-component>
+<si-docs-component example="si-popover/si-popover" height="260"></si-docs-component>
 
-<si-docs-api directive="SiPopoverNextDirective"></si-docs-api>
+<si-docs-api directive="SiPopoverDirective"></si-docs-api>
 
 <si-docs-types></si-docs-types>
