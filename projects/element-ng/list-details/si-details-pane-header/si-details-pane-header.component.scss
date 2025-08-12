@@ -28,6 +28,10 @@
     }
   }
 
+  .si-details-header-back {
+    isolation: isolate; // Otherwise the bottom outline of the button is not visible on focus without hover.
+  }
+
   ::ng-deep si-menu-bar si-menu-item {
     block-size: auto;
     margin-block-end: 2px; // So it's centered with the bottom line
