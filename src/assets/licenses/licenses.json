@@ -1,0 +1,10 @@
+[
+  {
+    "name": "OS",
+    "href": "assets/licenses/os/components.json"
+  },
+  {
+    "name": "Application",
+    "href": "assets/licenses/application/components.json"
+  }
+]
