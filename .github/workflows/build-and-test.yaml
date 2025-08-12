@@ -234,4 +234,4 @@ jobs:
           message: |
             [Documentation](https://simpl-element-preview.s3-eu-west-1.amazonaws.com/pr-${{ github.event.pull_request.number }}/pages/index.html).
             [Examples](https://simpl-element-preview.s3-eu-west-1.amazonaws.com/pr-${{ github.event.pull_request.number }}/pages/element-examples/index.html).
-            [Playwrigth report](https://simpl-element-preview.s3-eu-west-1.amazonaws.com/pr-${{ github.event.pull_request.number }}/playwright-report/index.html).
+            [Playwright report](https://simpl-element-preview.s3-eu-west-1.amazonaws.com/pr-${{ github.event.pull_request.number }}/playwright-report/index.html).
