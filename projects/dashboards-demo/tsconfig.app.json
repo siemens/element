@@ -4,7 +4,6 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/app",
-    "skipLibCheck": true,
     "types": ["@siemens/element-translate-ng/localize-types", "zone.js"]
   },
   "files": ["src/main.ts"],
