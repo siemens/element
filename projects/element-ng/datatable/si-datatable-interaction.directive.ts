@@ -65,6 +65,7 @@ export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
         (last as HTMLElement).focus();
       }
     }
+    event.preventDefault();
   }
 
   @HostListener('mousedown', ['$event'])
