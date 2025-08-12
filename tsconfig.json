@@ -15,7 +15,6 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "target": "es2022",
-    "skipLibCheck": true,
     "strict": true,
     "allowUmdGlobalAccess": true,
     "lib": ["es2022", "dom"],

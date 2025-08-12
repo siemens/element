@@ -4,7 +4,6 @@
     "outDir": "../../out-tsc/lib",
     "declaration": true,
     "inlineSources": true,
-    "skipLibCheck": true,
     "types": []
   },
   "angularCompilerOptions": {
