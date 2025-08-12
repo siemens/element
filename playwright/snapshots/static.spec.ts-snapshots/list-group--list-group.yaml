@@ -26,7 +26,7 @@
     - status "bath in status success"
     - text: Cras justo odio
   - listitem:
-    - status "lightstatus none"
+    - status "light status none"
     - text: Dapibus ac facilisis in
 - heading "Medium list group items with small status indication" [level=2]
 - list:
@@ -49,7 +49,7 @@
     - status "bath in status success"
     - text: Cras justo odio
   - listitem:
-    - status "lightstatus none"
+    - status "light status none"
     - text: Dapibus ac facilisis in
 - heading "Active & disabled items" [level=2]
 - list:

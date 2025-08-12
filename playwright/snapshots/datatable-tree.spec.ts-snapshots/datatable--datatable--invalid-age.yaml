@@ -9,9 +9,9 @@
       - columnheader "Age"
       - columnheader "Context options"
   - rowgroup:
-    - row "plantstatus none 1 First 1 Last 1 1 Context menu":
-      - cell "plantstatus none":
-        - status "plantstatus none"
+    - row "plant status none 1 First 1 Last 1 1 Context menu":
+      - cell "plant status none":
+        - status "plant status none"
       - cell "1"
       - cell "First 1"
       - cell "Last 1"
@@ -20,9 +20,9 @@
         - textbox "Age"
       - cell "Context menu":
         - button "Context menu"
-    - row /plantstatus none 2 First 2 Last 2 \d+ Context menu/:
-      - cell "plantstatus none":
-        - status "plantstatus none"
+    - row /plant status none 2 First 2 Last 2 \d+ Context menu/:
+      - cell "plant status none":
+        - status "plant status none"
       - cell "2"
       - cell "First 2"
       - cell "Last 2"
@@ -31,9 +31,9 @@
         - textbox "Age"
       - cell "Context menu":
         - button "Context menu"
-    - row /plantstatus none 3 First 3 Last 3 \d+ Context menu/:
-      - cell "plantstatus none":
-        - status "plantstatus none"
+    - row /plant status none 3 First 3 Last 3 \d+ Context menu/:
+      - cell "plant status none":
+        - status "plant status none"
       - cell "3"
       - cell "First 3"
       - cell "Last 3"
@@ -53,9 +53,9 @@
         - textbox "Age"
       - cell "Context menu":
         - button "Context menu"
-    - row /plantstatus none 5 First 5 Last 5 \d+ Context menu/:
-      - cell "plantstatus none":
-        - status "plantstatus none"
+    - row /plant status none 5 First 5 Last 5 \d+ Context menu/:
+      - cell "plant status none":
+        - status "plant status none"
       - cell "5"
       - cell "First 5"
       - cell "Last 5"
@@ -64,9 +64,9 @@
         - textbox "Age"
       - cell "Context menu":
         - button "Context menu"
-    - row /plantstatus none 6 First 6 Last 6 \d+ Context menu/:
-      - cell "plantstatus none":
-        - status "plantstatus none"
+    - row /plant status none 6 First 6 Last 6 \d+ Context menu/:
+      - cell "plant status none":
+        - status "plant status none"
       - cell "6"
       - cell "First 6"
       - cell "Last 6"
@@ -75,9 +75,9 @@
         - textbox "Age"
       - cell "Context menu":
         - button "Context menu"
-    - row /plantstatus none 7 First 7 Last 7 \d+ Context menu/:
-      - cell "plantstatus none":
-        - status "plantstatus none"
+    - row /plant status none 7 First 7 Last 7 \d+ Context menu/:
+      - cell "plant status none":
+        - status "plant status none"
       - cell "7"
       - cell "First 7"
       - cell "Last 7"
