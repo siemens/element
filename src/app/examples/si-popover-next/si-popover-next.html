@@ -84,25 +84,25 @@
     >
   </si-popover-title>
 
-  <si-popover-description class="d-block mt-4">
+  <si-popover-body>
     <div>Vivamus sagittis lacus vel augue laoreet rutrum faucibus.</div>
     <button type="button" class="btn btn-link mt-4 d-block">
       <span>Action link<i class="link-icon link-end element-right-2 flip-rtl"></i></span>
     </button>
-  </si-popover-description>
 
-  <button type="button" class="btn btn-secondary mt-6 w-100">Confirm</button>
+    <button type="button" class="btn btn-secondary mt-6 w-100">Confirm</button>
+  </si-popover-body>
 </ng-template>
 
 <ng-template #popoverTemplateWithContext let-data>
-  <si-popover-title class="d-flex align-items-center gap-2">
+  <si-popover-title>
     <strong>Hello, I'm a microwave</strong>
   </si-popover-title>
 
-  <si-popover-description class="d-block mt-4">
+  <si-popover-body>
     And I'm {{ data.state }} with {{ data.power }} for {{ data.duration }}.
     <button type="button" class="btn btn-link mt-4 d-block">
       <span>Action link<i class="link-icon link-end element-right-2 flip-rtl"></i></span>
     </button>
-  </si-popover-description>
+  </si-popover-body>
 </ng-template>

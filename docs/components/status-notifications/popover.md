@@ -98,11 +98,11 @@ Use the `siPopover` directive to display the popover.
 import {
   SiPopoverNextDirective,
   SiPopoverTitleDirective,
-  SiPopoverDescriptionDirective
+  SiPopoverBodyDirective
 } from '@siemens/element-ng/popover-next';
 
 @Component({
-  imports: [SiPopoverNextDirective, SiPopoverTitleDirective, SiPopoverDescriptionDirective ...]
+  imports: [SiPopoverNextDirective, SiPopoverTitleDirective, SiPopoverBodyDirective ...]
 })
 ```
 

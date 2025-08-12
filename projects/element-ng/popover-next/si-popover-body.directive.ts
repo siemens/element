@@ -8,11 +8,12 @@ import { PopoverComponent } from './si-popover.component';
 
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
-  selector: 'si-popover-description',
+  selector: 'si-popover-body',
   host: {
-    '[id]': 'this.popover.describedBy'
+    '[id]': 'this.popover.describedBy',
+    'class': 'popover-body d-block'
   }
 })
-export class SiPopoverDescriptionDirective {
+export class SiPopoverBodyDirective {
   readonly popover = inject(PopoverComponent);
 }

@@ -10,7 +10,8 @@ import { PopoverComponent } from './si-popover.component';
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'si-popover-title',
   host: {
-    '[id]': 'this.popover.labelledBy'
+    '[id]': 'this.popover.labelledBy',
+    'class': 'popover-header'
   }
 })
 export class SiPopoverTitleDirective {
