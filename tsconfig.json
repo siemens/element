@@ -30,7 +30,9 @@
       "@siemens/native-charts-ng": ["projects/native-charts-ng/public-api.ts"],
       "@siemens/native-charts-ng/*": ["projects/native-charts-ng/*/index.ts"],
       "@siemens/dashboards-ng": ["projects/dashboards-ng/src/public-api.ts"],
-      "@siemens/dashboards-ng/*": ["projects/dashboards-ng/*/index.ts"]
+      "@siemens/dashboards-ng/*": ["projects/dashboards-ng/*/index.ts"],
+      "@siemens/maps-ng": ["projects/maps-ng/src/public-api.ts"],
+      "@siemens/maps-ng/*": ["projects/maps-ng/*/index.ts"]
     }
   },
   "exclude": ["dist/**", "testing/**/*.ts"],

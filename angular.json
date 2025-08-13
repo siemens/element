@@ -56,7 +56,11 @@
             "extractLicenses": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "define": {
+              "maptilerKey": "''",
+              "maptilerUrl": "''"
+            }
           },
           "configurations": {
             "production": {
@@ -78,6 +82,14 @@
                 }
               ]
             },
+            "local-maps": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.local-maps.ts"
+                }
+              ]
+            },
             "aot": {
               "aot": true,
               "sourceMap": false,
@@ -94,6 +106,9 @@
           "configurations": {
             "production": {
               "buildTarget": "element-examples:build:production"
+            },
+            "local": {
+              "buildTarget": "element-examples:build:local"
             }
           }
         },
@@ -273,6 +288,37 @@
               "projects/native-charts-ng/**/*.html"
             ],
             "eslintConfig": "projects/native-charts-ng/eslint.config.js"
+          }
+        }
+      }
+    },
+    "maps-ng": {
+      "projectType": "library",
+      "root": "projects/maps-ng",
+      "sourceRoot": "projects/maps-ng/src",
+      "prefix": "si",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "options": {
+            "tsConfig": "projects/maps-ng/tsconfig.lib.json",
+            "project": "projects/maps-ng/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "polyfills": ["zone.js", "zone.js/testing"],
+            "tsConfig": "projects/maps-ng/tsconfig.spec.json",
+            "karmaConfig": "projects/maps-ng/karma.conf.cjs",
+            "codeCoverageExclude": ["projects/maps-ng/src/**/*.module.ts"]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/maps-ng/**/*.ts", "projects/maps-ng/**/*.html"],
+            "eslintConfig": "projects/maps-ng/eslint.config.js"
           }
         }
       }

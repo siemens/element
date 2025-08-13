@@ -1,0 +1,25 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+.si-map-tooltip {
+  text-align: start;
+  margin-block-start: map.get(variables.$spacers, 2);
+  position: relative;
+  max-inline-size: max-content;
+  padding-block: map.get(variables.$spacers, 2);
+  padding-inline: map.get(variables.$spacers, 4);
+  color: variables.$element-ui-5;
+  background-color: variables.$element-ui-1;
+  border-radius: variables.$element-radius-1;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset-block-start: -(map.get(variables.$spacers, 2));
+    left: 50%; // stylelint-disable-line liberty/use-logical-spec
+    transform: translate(-50%, 0%) rotate(45deg);
+    block-size: map.get(variables.$spacers, 4);
+    inline-size: map.get(variables.$spacers, 4);
+    background-color: inherit;
+  }
+}
