@@ -7,9 +7,7 @@
     (click)="editValue.emit()"
   >
     @if (!!value && hasMultiSelections()) {
-      @if (itemCountText()) {
-        {{ itemCountText() | translate: { itemCount: value.length } }}
-      }
+      {{ itemCountText() | translate: { itemCount: value.length } }}
     } @else if (optionValue()[0]) {
       {{ optionValue()[0].label ?? optionValue()[0].value | translate }}
     } @else {

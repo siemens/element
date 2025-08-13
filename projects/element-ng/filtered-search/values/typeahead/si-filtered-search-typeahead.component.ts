@@ -20,7 +20,11 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { SiTypeaheadDirective, TypeaheadMatch } from '@siemens/element-ng/typeahead';
-import { injectSiTranslateService, SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import {
+  injectSiTranslateService,
+  SiTranslatePipe,
+  TranslatableString
+} from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
 import { debounceTime, first, map, tap } from 'rxjs/operators';
 
@@ -50,7 +54,7 @@ export class SiFilteredSearchTypeaheadComponent
   readonly lazyValueProvider =
     input<(criterionName: string, typed: string | string[]) => Observable<OptionType[]>>();
   readonly searchDebounceTime = input.required<number>();
-  readonly itemCountText = input.required<string>();
+  readonly itemCountText = input.required<TranslatableString>();
   readonly onlySelectValue = input.required<boolean>();
   readonly maxCriteriaOptions = input.required<number>();
   readonly optionsInScrollableView = input.required<number>();

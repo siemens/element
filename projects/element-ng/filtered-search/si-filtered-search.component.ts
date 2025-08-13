@@ -242,9 +242,14 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges, OnDestroy {
    * Items count text appended to the count in case of multi-selection of values.
    * Translation key, `{{itemCount}}` in the translation will be replaced with the actual value.
    *
-   * @defaultValue ''
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_FILTERED_SEARCH.ITEM_COUNT:{{itemCount}} items`)
+   * ```
    */
-  readonly itemCountText = input<TranslatableString>('');
+  readonly itemCountText = input<TranslatableString>(
+    t(() => $localize`:@@SI_FILTERED_SEARCH.ITEM_COUNT:{{itemCount}} items`)
+  );
   /**
    * Color variant to determine component background
    *
