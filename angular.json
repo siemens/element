@@ -584,8 +584,7 @@
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": true,
-              "extraWebpackConfig": "projects/dashboards-demo/mfe/webpack.prod.config.cjs"
+              "buildOptimizer": true
             }
           }
         },
