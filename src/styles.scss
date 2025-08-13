@@ -17,10 +17,11 @@ $icon-font-path: '@simpl/element-icons/dist/fonts' !default;
   $flag-icons-use-square: false
 );
 
-@use '@simpl/brand/src/themes/element-theme-siemens-brand' with (
+@use '@simpl/brand/src/fonts/styles/siemens-sans' with (
   $siemens-font-path: $siemens-font-path
 );
 
+@use '@simpl/brand/src/themes/element-theme-siemens-brand';
 @use '@siemens/element-theme/src/theme' with (
   $element-theme-default: 'siemens-brand',
   $element-themes: (
