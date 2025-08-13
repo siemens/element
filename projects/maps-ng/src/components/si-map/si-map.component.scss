@@ -1,0 +1,97 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+$main-button-block-size: 32px;
+$main-button-margin: 1px;
+
+:host {
+  display: block;
+  inline-size: auto;
+}
+
+.map {
+  inline-size: 100%;
+  block-size: 100%;
+  z-index: -1;
+}
+
+:host::ng-deep {
+  .ol-control {
+    background-color: unset;
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: variables.$element-base-3;
+      color: variables.$element-action-secondary-text;
+      margin: 0;
+      line-height: 1;
+      border-radius: 0;
+      inline-size: 32px;
+      block-size: $main-button-block-size;
+      font-size: 1.5rem;
+      outline: none;
+
+      &:hover {
+        color: variables.$element-action-secondary-text-hover;
+        background: variables.$element-action-secondary-hover;
+      }
+
+      &:focus-visible {
+        @include variables.make-outline-focus-inside();
+      }
+
+      + button {
+        margin-block-start: $main-button-margin;
+      }
+    }
+  }
+
+  .ol-attribution,
+  .ol-full-screen,
+  .ol-zoom,
+  .ol-zoom-extent {
+    left: unset; // stylelint-disable-line liberty/use-logical-spec
+    right: unset; // stylelint-disable-line liberty/use-logical-spec
+    top: unset; // stylelint-disable-line liberty/use-logical-spec
+    bottom: unset; // stylelint-disable-line liberty/use-logical-spec
+  }
+
+  .ol-zoom,
+  .ol-zoom-extent {
+    inset-inline-end: 0;
+    inset-block-end: 0;
+    padding-inline-end: map.get(variables.$spacers, 4);
+    padding-block-end: map.get(variables.$spacers, 4);
+  }
+
+  .ol-zoom {
+    padding-block-end: map.get(variables.$spacers, 4) + $main-button-margin +
+      $main-button-block-size;
+  }
+
+  .ol-attribution {
+    inset-inline-start: 0;
+    inset-block-end: 0;
+    padding: map.get(variables.$spacers, 4);
+
+    button {
+      inline-size: 1.5rem;
+      block-size: 1.5rem;
+      font-size: 1.5rem;
+      border-radius: 50%;
+    }
+  }
+
+  .ol-full-screen {
+    inset-block-end: 10 * map.get(variables.$spacers, 4);
+    inset-inline-end: map.get(variables.$spacers, 4);
+  }
+
+  // needed for RTL
+  .ol-overlay-container {
+    left: 0; // stylelint-disable-line liberty/use-logical-spec
+  }
+}
