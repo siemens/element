@@ -10,7 +10,10 @@
         "build": {
           "builder": "@angular-builders/custom-esbuild:application",
           "options": {
-            "plugins": ["projects/live-preview/esbuild-component-loader.mjs"],
+            "plugins": [
+              "projects/live-preview/esbuild-component-loader.mjs",
+              "esbuild-env-plugin.mjs"
+            ],
             "outputPath": {
               "base": "dist/element-examples",
               "browser": ""
@@ -56,12 +59,7 @@
             "extractLicenses": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true,
-            "define": {
-              "sentryDsn": "null",
-              "maptilerKey": "'m3Gr0tZJhY4TZ4kkX4fj'",
-              "maptilerUrl": "'https://api.maptiler.com/maps/voyager/style.json?key=m3Gr0tZJhY4TZ4kkX4fj'"
-            }
+            "namedChunks": true
           },
           "configurations": {
             "production": {

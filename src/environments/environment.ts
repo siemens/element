@@ -2,12 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-declare const sentryDsn: string;
-declare const maptilerKey: string;
-declare const maptilerUrl: string;
 
 export const environment = {
-  sentryDsn,
-  maptilerKey,
-  maptilerUrl
+  maptilerKey: process.env.MAPTILER_KEY ?? 'REPLACE_WITH_YOUR_MAPTILER_KEY',
+  maptilerUrl: process.env.MAPTILER_URL ?? 'REPLACE_WITH_YOUR_MAPTILER_URL'
 };
