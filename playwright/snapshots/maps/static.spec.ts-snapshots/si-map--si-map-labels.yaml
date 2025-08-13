@@ -1,0 +1,11 @@
+- button ""
+- button ""
+- button ""
+- button "Refresh points"
+- button "Select point"
+- button "Clear map"
+- text: Colors
+- combobox "Colors":
+  - option "Status" [selected]
+  - option "Element"
+  - option "Custom Colors"
