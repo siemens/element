@@ -92,7 +92,7 @@
     "@angular/router": "20.0.6",
     "@ngx-formly/bootstrap": "^6.2.2",
     "@ngx-formly/core": "^6.2.2",
-    "@ngx-translate/core": "16.0.4",
+    "@ngx-translate/core": "17.0.0",
     "@siemens/ngx-datatable": "^24.0.0",
     "echarts": "6.0.0",
     "flag-icons": "7.5.0",
