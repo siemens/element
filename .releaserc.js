@@ -81,6 +81,12 @@ export default {
     [
       '@semantic-release/npm',
       {
+        pkgRoot: 'dist/@siemens/maps-ng'
+      }
+    ],
+    [
+      '@semantic-release/npm',
+      {
         pkgRoot: 'projects/element-theme'
       }
     ],
@@ -130,6 +136,13 @@ export default {
       '@semantic-release/npm',
       {
         pkgRoot: 'projects/dashboards-ng',
+        npmPublish: false
+      }
+    ],
+    [
+      '@semantic-release/npm',
+      {
+        pkgRoot: 'projects/maps-ng',
         npmPublish: false
       }
     ],
