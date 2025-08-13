@@ -18,7 +18,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { addIcons, elementCancel, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTypeaheadDirective } from '@siemens/element-ng/typeahead';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { Observable } from 'rxjs';
 
 import { CriterionDefinition, CriterionValue, OptionType } from './si-filtered-search.model';
@@ -53,7 +53,7 @@ export class SiFilteredSearchValueComponent implements OnInit {
   readonly lazyValueProvider =
     input<(criterionName: string, typed: string | string[]) => Observable<OptionType[]>>();
   readonly searchDebounceTime = input.required<number>();
-  readonly itemCountText = input.required<string>();
+  readonly itemCountText = input.required<TranslatableString>();
   readonly disableSelectionByColonAndSemicolon = input.required<boolean>();
   readonly searchLabel = input.required<string>();
   readonly invalidCriterion = input.required<boolean>();
