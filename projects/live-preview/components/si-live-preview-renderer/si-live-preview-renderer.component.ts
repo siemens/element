@@ -30,7 +30,7 @@ import {
   output
 } from '@angular/core';
 import { ɵDomRendererFactory2 as DomRendererFactory2 } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Routes } from '@angular/router';
 
 import { LOG_EVENT } from '../../helpers/log-event';
 import {
@@ -294,11 +294,12 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
       template: '',
       jit: true
     })
-    class AbstractRuntimeComponent implements DoCheck, AfterViewInit {
+    class AbstractRuntimeComponent implements DoCheck, AfterViewInit, OnDestroy {
       private changeDetector = inject(ChangeDetectorRef);
       // NOTE: This must be @ViewChild and not signal query as signal query doesn't work with jit
       @ViewChild('container', { read: ViewContainerRef })
       private container!: ViewContainerRef;
+      private childRouteBackup: Routes | undefined;
 
       constructor() {
         this.changeDetector.detach();
@@ -320,20 +321,27 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
       }
 
       ngAfterViewInit(): void {
-        setTimeout(() => {
-          self.setInProgress(false);
-          const exampleRoutes =
-            this.container?.injector.get(SI_LIVE_PREVIEW_EXAMPLE_ROUTES, undefined, {
-              optional: true,
-              self: true
-            }) ?? self.defaultRoutes;
+        const exampleRoutes =
+          this.container?.injector.get(SI_LIVE_PREVIEW_EXAMPLE_ROUTES, undefined, {
+            optional: true,
+            self: true
+          }) ?? self.defaultRoutes;
 
-          const route = self.activatedRoute.routeConfig;
-          if (route) {
-            // cannot use router.resetConfig here as it destroys the components on child route navigations
-            route.children = [...exampleRoutes];
-          }
-        });
+        const route = self.activatedRoute.routeConfig;
+        if (route) {
+          this.childRouteBackup = route.children;
+          // cannot use router.resetConfig here as it destroys the components on child route navigations
+          route.children = [...exampleRoutes];
+        }
+        queueMicrotask(() => self.setInProgress(false));
+      }
+
+      ngOnDestroy(): void {
+        const route = self.activatedRoute.routeConfig;
+        if (route) {
+          // restore the original child routes
+          route.children = this.childRouteBackup;
+        }
       }
 
       private handleError(error: Error): void {
