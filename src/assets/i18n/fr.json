@@ -26,6 +26,13 @@
     "SEARCH": "Chercher",
     "SELECT_COUNTRY": "Choisissez le pays"
   },
+  "DATATABLE": {
+    "HEADER": {
+      "FIRST_NAME": "Prénom",
+      "ROLE": "Rôle",
+      "AGE": "Âge"
+    }
+  },
   "LANGUAGE": {
     "EN": "English",
     "EL": "Greek",

@@ -20,6 +20,13 @@
     "SEARCH": "Search",
     "SELECT_COUNTRY": "Select Country"
   },
+  "DATATABLE": {
+    "HEADER": {
+      "FIRST_NAME": "First Name",
+      "ROLE": "Role",
+      "AGE": "Age"
+    }
+  },
   "LANGUAGE": {
     "EN": "English",
     "EL": "Greek",

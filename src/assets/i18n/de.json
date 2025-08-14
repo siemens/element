@@ -90,6 +90,13 @@
       "AUTO": "Auto"
     }
   },
+  "DATATABLE": {
+    "HEADER": {
+      "FIRST_NAME": "Vorname",
+      "ROLE": "Rolle",
+      "AGE": "Alter"
+    }
+  },
   "MODAL_DIALOGS": {
     "COLUMN_SELECTION_ITEM_MOVED_SUCCESS": "Das Element befindet sich an Stelle {{targetPosition}}"
   },
