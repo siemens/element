@@ -196,6 +196,13 @@ $form-check-label-start: $form-check-size + map.get(spacers.$spacers, 4);
   }
 }
 
+.form-check-label {
+  + button[si-help-button] {
+    margin-block-start: -1 * map.get(spacers.$spacers, 2);
+    margin-inline-start: map.get(spacers.$spacers, 2);
+  }
+}
+
 // button group
 .btn-check {
   position: absolute;

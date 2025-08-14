@@ -27,6 +27,7 @@ import {
   SiFormModule,
   SiFormValidationError
 } from '@siemens/element-ng/form';
+import { SiHelpButtonComponent } from '@siemens/element-ng/help-button';
 import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
 import { PhoneDetails, SiPhoneNumberInputComponent } from '@siemens/element-ng/phone-number';
 import { SelectOption, SiSelectModule } from '@siemens/element-ng/select';
@@ -83,18 +84,19 @@ export const noEconomy: ValidatorFn = control => {
 @Component({
   selector: 'app-sample',
   imports: [
+    JsonPipe,
+    ReactiveFormsModule,
     SiCalendarButtonComponent,
     SiCardComponent,
-    SiFormModule,
-    TranslateModule,
-    SiPhoneNumberInputComponent,
     SiDatepickerDirective,
-    SiTimepickerComponent,
     SiDateRangeComponent,
-    SiSelectModule,
+    SiFormModule,
+    SiHelpButtonComponent,
     SiNumberInputComponent,
-    JsonPipe,
-    ReactiveFormsModule
+    SiPhoneNumberInputComponent,
+    SiSelectModule,
+    SiTimepickerComponent,
+    TranslateModule
   ],
   templateUrl: './si-form.html',
   providers: [JsonPipe],

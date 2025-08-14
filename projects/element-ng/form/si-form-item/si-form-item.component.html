@@ -1,6 +1,6 @@
 <!--Block the space if no form-field is provided. Otherwise it looks weird in the formly field inline representation.-->
 @if (fieldControl()?.isFormCheck && !fieldset) {
-  <div class="form-label"></div>
+  <div class="form-label-container"></div>
 }
 @if (fieldControl()?.isFormCheck) {
   <div class="form-item-content">
@@ -9,7 +9,9 @@
     <ng-container [ngTemplateOutlet]="feedbackTemplate" />
   </div>
 } @else {
-  <ng-container [ngTemplateOutlet]="labelTemplate" />
+  <span class="form-label-container">
+    <ng-container [ngTemplateOutlet]="labelTemplate" />
+  </span>
   <div class="form-item-content">
     <ng-container [ngTemplateOutlet]="content" />
     <ng-container [ngTemplateOutlet]="feedbackTemplate" />
@@ -38,6 +40,7 @@
         >{{ label()! | translate }}</label
       >
     }
+    <ng-content select="[si-help-button]" />
   }
 </ng-template>
 <ng-template #feedbackTemplate>

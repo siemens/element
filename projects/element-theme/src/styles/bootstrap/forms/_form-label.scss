@@ -19,6 +19,11 @@
   .text-end & {
     padding-inline-end: variables.$input-padding-x;
   }
+
+  + button[si-help-button] {
+    margin-block: -1 * map.get(spacers.$spacers, 1) map.get(spacers.$spacers, 2);
+    margin-inline-start: map.get(spacers.$spacers, 2);
+  }
 }
 
 .col-form-label {
