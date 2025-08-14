@@ -279,31 +279,16 @@ export class SiTimepickerComponent implements ControlValueAccessor, SiFormItemCo
     this.disabledNgControl.set(isDisabled);
   }
 
-  /**
-   * Handle Enter, Arrow up/down and Space key press events.
-   */
-  protected handleKeyPressEvent(event: KeyboardEvent): void {
+  protected handleInput(event: Event, max: number, pad: number): void {
     const target = event.target as HTMLInputElement;
-    switch (event.key) {
-      case 'Enter':
-        this.focusNext(event);
-        break;
-      case 'ArrowUp':
-      case 'ArrowDown':
-        if (!this.readonly()) {
-          this.changeTimeComponent(target.name, event.key === 'ArrowUp');
-        } else {
-          event.preventDefault();
-        }
-        break;
-      case ' ':
-        if (this.readonly()) {
-          event.preventDefault();
-        }
-        break;
-      default:
-        break;
+    let value = parseInt(target.value, 10);
+    // TODO: Improve paste, improve number entering e.g. min 11 -> 112 = 02
+    if (value < 0) {
+      value = max;
+    } else if (isNaN(value) || value >= max) {
+      value = 0;
     }
+    target.value = value.toString().padStart(pad, '0');
   }
 
   protected toHtmlInputElement = (target?: EventTarget | null): HTMLInputElement =>
@@ -600,50 +585,6 @@ export class SiTimepickerComponent implements ControlValueAccessor, SiFormItemCo
       return false;
     }
     return true;
-  }
-
-  private changeTimeComponent(key: string, up: boolean): void {
-    const change = up ? 1 : -1;
-    const date = this.createDateUpdate(new Date(), {
-      hour: this.hours,
-      minute: this.minutes,
-      seconds: this.seconds,
-      milliseconds: this.milliseconds,
-      isPM: this.isPM()
-    });
-    switch (key) {
-      case 'hours': {
-        const newTime = this.changeTime(date, { hour: change });
-        let hour = newTime!.getHours();
-        if (this.use12HourClock()) {
-          hour = hour % 12;
-          if (hour === 0 && !this.isPM()) {
-            hour = 12;
-          } else if (hour === 0 && this.isPM()) {
-            this.toggleMeridian();
-          }
-        }
-        this.updateHours(hour);
-        break;
-      }
-      case 'minutes': {
-        const newTime = this.changeTime(date, { minute: change });
-        this.updateMinutes(newTime.getMinutes());
-        break;
-      }
-      case 'seconds': {
-        const newTime = this.changeTime(date, { seconds: change });
-        this.updateSeconds(newTime.getSeconds());
-        break;
-      }
-      case 'milliseconds': {
-        const newTime = this.changeTime(date, { milliseconds: change });
-        this.updateMilliseconds(newTime.getMilliseconds());
-        break;
-      }
-      default:
-        break;
-    }
   }
 
   private changeTime(value?: Date, diff?: TimeComponents): Date {

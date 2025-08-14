@@ -9,13 +9,14 @@
     }
     <input
       #inputPart
-      type="text"
+      type="number"
       inputmode="numeric"
-      pattern="2[0-4]|[01]?[0-9]"
       class="form-control hide-feedback-icon"
       name="hours"
-      maxlength="2"
+      min="-1"
       autocomplete="off"
+      step="1"
+      [max]="use12HourClock() ? 13 : 24"
       [attr.aria-label]="hoursAriaLabel() | translate"
       [attr.aria-describedby]="errormessageId"
       [class.is-invalid]="invalidHours"
@@ -25,7 +26,10 @@
       [value]="hours"
       (change)="updateHours(toHtmlInputElement($event.target).value)"
       (blur)="updateHours(toHtmlInputElement($event.target).value)"
-      (keydown)="handleKeyPressEvent($event)"
+      (click)="toHtmlInputElement($event.target).select()"
+      (keydown.arrowLeft)="$event.preventDefault()"
+      (keydown.enter)="focusNext($event)"
+      (input)="handleInput($event, use12HourClock() ? 12 : 24, 2)"
     />
   </label>
 
@@ -37,13 +41,14 @@
       }
       <input
         #inputPart
-        type="text"
+        type="number"
         inputmode="numeric"
-        pattern="[0-5]?[0-9]"
         class="form-control hide-feedback-icon"
         name="minutes"
-        maxlength="2"
+        max="60"
+        min="-1"
         autocomplete="off"
+        step="1"
         [attr.aria-label]="minutesAriaLabel() | translate"
         [attr.aria-describedby]="errormessageId"
         [class.is-invalid]="invalidMinutes"
@@ -53,7 +58,10 @@
         [value]="minutes"
         (change)="updateMinutes(toHtmlInputElement($event.target).value)"
         (blur)="updateMinutes(toHtmlInputElement($event.target).value)"
-        (keydown)="handleKeyPressEvent($event)"
+        (click)="toHtmlInputElement($event.target).select()"
+        (keydown.arrowLeft)="$event.preventDefault()"
+        (keydown.enter)="focusNext($event)"
+        (input)="handleInput($event, 59, 2)"
       />
     </label>
   }
@@ -66,13 +74,14 @@
       }
       <input
         #inputPart
-        type="text"
+        type="number"
         inputmode="numeric"
-        pattern="[0-5]?[0-9]"
         class="form-control hide-feedback-icon"
         name="seconds"
-        maxlength="2"
+        max="60"
+        min="-1"
         autocomplete="off"
+        step="1"
         [attr.aria-label]="secondsAriaLabel() | translate"
         [attr.aria-describedby]="errormessageId"
         [class.is-invalid]="invalidSeconds"
@@ -82,7 +91,10 @@
         [value]="seconds"
         (change)="updateSeconds(toHtmlInputElement($event.target).value)"
         (blur)="updateSeconds(toHtmlInputElement($event.target).value)"
-        (keydown)="handleKeyPressEvent($event)"
+        (click)="toHtmlInputElement($event.target).select()"
+        (keydown.arrowLeft)="$event.preventDefault()"
+        (keydown.enter)="focusNext($event)"
+        (input)="handleInput($event, 59, 2)"
       />
     </label>
   }
@@ -95,13 +107,14 @@
       }
       <input
         #inputPart
-        type="text"
+        type="number"
         inputmode="numeric"
-        pattern="[0-9]{1,3}"
         class="form-control hide-feedback-icon"
         name="milliseconds"
-        maxlength="3"
+        max="1000"
+        min="-1"
         autocomplete="off"
+        step="1"
         [attr.aria-label]="millisecondsAriaLabel() | translate"
         [attr.aria-describedby]="errormessageId"
         [class.is-invalid]="invalidMilliseconds"
@@ -111,7 +124,10 @@
         [value]="milliseconds"
         (change)="updateMilliseconds(toHtmlInputElement($event.target).value)"
         (blur)="updateMilliseconds(toHtmlInputElement($event.target).value)"
-        (keydown)="handleKeyPressEvent($event)"
+        (click)="toHtmlInputElement($event.target).select()"
+        (keydown.arrowLeft)="$event.preventDefault()"
+        (keydown.enter)="focusNext($event)"
+        (input)="handleInput($event, 999, 2)"
       />
     </label>
   }
@@ -129,7 +145,7 @@
         [class.readonly]="readonly()"
         [disabled]="disabled()"
         (change)="toggleMeridian()"
-        (keydown)="handleKeyPressEvent($event)"
+        (keydown.enter)="focusNext($event)"
       >
         <option value="am" [selected]="meridian() === 'am'">{{ periods()[0] }}</option>
         <option value="pm" [selected]="meridian() === 'pm'">{{ periods()[1] }}</option>
