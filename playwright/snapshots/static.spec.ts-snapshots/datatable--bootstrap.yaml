@@ -1,9 +1,10 @@
 - table:
   - rowgroup:
-    - row "all selected Type Data point Quality Mode Event Value":
+    - row "all selected Expand all Type Data point Quality Mode Event Value":
       - columnheader "all selected":
         - checkbox "all selected"
-      - columnheader
+      - columnheader "Expand all":
+        - button "Expand all"
       - columnheader "Type"
       - columnheader "Data point"
       - columnheader "Quality"
