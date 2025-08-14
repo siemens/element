@@ -44,6 +44,16 @@
     "BACK": "Retour",
     "NEXT": "Suivant"
   },
+  "DATATABLE": {
+    "HEADER": {
+      "TASK": "Tâche",
+      "ASSIGNEE": "Assigné",
+      "STATUS": "Statut",
+      "DUE-DATE": "Date d'échéance",
+      "DEPARTMENT": "Département",
+      "PRIORITY": "Priorité"
+    }
+  },
   "LANGUAGE": {
     "EN": "English",
     "EL": "Greek",

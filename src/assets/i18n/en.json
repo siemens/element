@@ -108,6 +108,16 @@
       "AUTO": "Auto"
     }
   },
+  "DATATABLE": {
+    "HEADER": {
+      "TASK": "Task",
+      "ASSIGNEE": "Assignee",
+      "STATUS": "Status",
+      "DUE-DATE": "Due Date",
+      "DEPARTMENT": "Department",
+      "PRIORITY": "Priority"
+    }
+  },
   "MODAL_DIALOGS": {
     "COLUMN_SELECTION_ITEM_MOVED_SUCCESS": "Item is now at position {{targetPosition}}"
   },

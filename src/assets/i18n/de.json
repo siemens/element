@@ -108,6 +108,16 @@
       "AUTO": "Auto"
     }
   },
+  "DATATABLE": {
+    "HEADER": {
+      "TASK": "Aufgabe",
+      "ASSIGNEE": "Zugewiesen",
+      "STATUS": "Status",
+      "DUE-DATE": "Fälligkeitsdatum",
+      "DEPARTMENT": "Abteilung",
+      "PRIORITY": "Priorität"
+    }
+  },
   "MODAL_DIALOGS": {
     "COLUMN_SELECTION_ITEM_MOVED_SUCCESS": "Das Element befindet sich an Stelle {{targetPosition}}"
   },
