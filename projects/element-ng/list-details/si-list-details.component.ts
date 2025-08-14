@@ -179,6 +179,8 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
    */
   readonly transferFocusToDetails = new BehaviorSubject<boolean>(false);
 
+  private animationDone?: () => void;
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.detailsActive) {
       this.transferFocus();
@@ -205,11 +207,21 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   /** @internal */
-  detailsBackClicked(): void {
+  detailsBackClicked(options?: { animationDone?: () => void }): void {
     this.detailsActive.set(false);
+    // This callback is used to route after the animation is done.
+    this.animationDone = options?.animationDone;
+  }
+
+  protected detailsExpandedAnimationDone(): void {
+    if (this.animationDone) {
+      this.animationDone();
+      this.animationDone = undefined;
+    }
   }
 
   // Transfer focus onto child panes if they would be inaccesible.
+
   private transferFocus(): void {
     // Check if dimensions have even been evaluated.
     const hasLargeSize = this.resizeDimensions() ? this.hasLargeSize() : undefined;

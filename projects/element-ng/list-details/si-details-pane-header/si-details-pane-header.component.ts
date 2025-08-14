@@ -13,8 +13,10 @@ import {
   viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
+import { SiDetailsPaneComponent } from '../si-details-pane/si-details-pane.component';
 import { SiListDetailsComponent } from '../si-list-details.component';
 
 /** @experimental */
@@ -55,6 +57,18 @@ export class SiDetailsPaneHeaderComponent {
    */
   readonly backButtonText = input(t(() => $localize`:@@SI_LIST_DETAILS.BACK:Back`));
 
+  /**
+   * The URL to navigate to when the back buttons is clicked.
+   * This is only used when the `si-details-pane` is used with a router-outlet.
+   *
+   * @defaultValue '../'
+   */
+  readonly backButtonUrl = input('../');
+
+  private isRouterBased = inject(SiDetailsPaneComponent).isRouterBased;
+  private router = inject(Router, { optional: true });
+  private activatedRoute = inject(ActivatedRoute, { optional: true });
+
   private readonly backButton = viewChild<ElementRef<HTMLElement>>('backButton');
 
   constructor() {
@@ -74,6 +88,12 @@ export class SiDetailsPaneHeaderComponent {
   }
 
   protected backClicked(): void {
-    this.parent.detailsBackClicked();
+    this.parent.detailsBackClicked({
+      animationDone: this.isRouterBased()
+        ? // We navigate back after the animation is done.
+          // This ensures, that the details pane visible while animating.
+          () => this.router!.navigate([this.backButtonUrl()], { relativeTo: this.activatedRoute })
+        : undefined
+    });
   }
 }

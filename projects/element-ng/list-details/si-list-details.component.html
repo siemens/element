@@ -31,6 +31,7 @@
     [class.gap-6]="hasLargeSize()"
     [class.details-active]="detailsActive() && !hasLargeSize()"
     [@detailsExpanded]="detailsExpandedAnimation()"
+    (@detailsExpanded.done)="detailsExpandedAnimationDone()"
   >
     <ng-container *ngTemplateOutlet="listTemplate" />
     <ng-container *ngTemplateOutlet="detailsTemplate" />
