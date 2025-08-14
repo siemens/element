@@ -9,6 +9,7 @@ import { CopyrightDetails, SI_COPYRIGHT_DETAILS } from './si-copyright-notice';
 @Component({
   selector: 'si-copyright-notice',
   templateUrl: './si-copyright-notice.component.html',
+  styleUrl: './si-copyright-notice.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiCopyrightNoticeComponent {
@@ -26,11 +27,11 @@ export class SiCopyrightNoticeComponent {
   protected readonly copyrightInfo = computed(() => {
     const lastYear = this.lastUpdateYear();
     const to = lastYear ? `-${lastYear}` : '';
-    return `${this.company()} ${this.startYear()}${to}`;
+    return `${this.startYear()}${to}`;
   });
 
   protected readonly company = computed(
-    () => this.copyright()?.company ?? this.globalCopyrightInfo?.company ?? 'Sample Company'
+    () => this.copyright()?.company ?? this.globalCopyrightInfo?.company
   );
 
   protected readonly startYear = computed(
