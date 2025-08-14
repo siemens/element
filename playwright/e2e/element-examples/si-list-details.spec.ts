@@ -103,4 +103,13 @@ test.describe('si-list-details', () => {
       axeRulesSet: [{ id: 'scrollable-region-focusable', enabled: false }]
     });
   });
+
+  test('with router in mobile mode', async ({ page, si }) => {
+    await page.setViewportSize({ width: 600, height: 800 }); // mdMinimum is 768px
+    await si.visitExample('si-list-details/si-list-details-router');
+    await page.getByRole('cell', { name: 'Max Meier 2', exact: true }).click();
+    await expect(page.getByText(`"name": "Max Meier 2"`)).toBeInViewport();
+    await page.goBack();
+    await expect(page.getByRole('cell', { name: 'Max Meier 2', exact: true })).toBeInViewport();
+  });
 });
