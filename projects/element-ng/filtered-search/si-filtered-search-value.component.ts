@@ -23,6 +23,7 @@ import { Observable } from 'rxjs';
 
 import { CriterionDefinition, CriterionValue, OptionType } from './si-filtered-search.model';
 import { SiFilteredSearchDateValueComponent } from './values/date-value/si-filtered-search-date-value.component';
+import { SiFilteredSearchMultiSelectComponent } from './values/multi-select/si-filtered-search-multi-select.component';
 import { SiFilteredSearchValueBase } from './values/si-filtered-search-value.base';
 import { SiFilteredSearchTypeaheadComponent } from './values/typeahead/si-filtered-search-typeahead.component';
 
@@ -35,6 +36,7 @@ import { SiFilteredSearchTypeaheadComponent } from './values/typeahead/si-filter
     SiTranslatePipe,
     SiFilteredSearchDateValueComponent,
     SiFilteredSearchTypeaheadComponent,
+    SiFilteredSearchMultiSelectComponent,
     SiIconComponent
   ],
   templateUrl: './si-filtered-search-value.component.html',
@@ -72,13 +74,13 @@ export class SiFilteredSearchValueComponent implements OnInit {
   private readonly valueInput = viewChild(SiFilteredSearchValueBase);
 
   readonly type = computed(() => {
-    switch (this.definition().validationType) {
-      case 'date':
-      case 'date-time':
-        return 'date';
-      default:
-        return 'typeahead';
+    const definition = this.definition();
+    const validationType = definition.validationType;
+    if (validationType === 'date' || validationType === 'date-time') {
+      return 'date';
     }
+    // Handle multi-select vs single-select for other validation types.
+    return definition.multiSelect ? 'multi-select' : 'typeahead';
   });
   readonly selectedOperatorIndex = computed(() => {
     const operator = this.value().operator;
