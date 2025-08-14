@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../out-tsc/lib",
+    "declaration": true,
+    "inlineSources": true,
+    "types": ["@siemens/element-translate-ng/localize-types"],
+    "lib": ["dom", "es2022"]
+  },
+  "angularCompilerOptions": {
+    "compilationMode": "partial",
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true,
+    "enableResourceInlining": true
+  },
+  "exclude": ["**/*.spec.ts"]
+}

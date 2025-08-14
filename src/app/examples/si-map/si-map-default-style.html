@@ -1,0 +1,25 @@
+<si-map
+  #map
+  class="flex-fill"
+  [points]="points"
+  [markerAnimation]="true"
+  [cluster]="true"
+  [clusterDistance]="40"
+  [displayTooltipOnHover]="true"
+  [displayTooltipOnClusterHover]="true"
+  [maptilerKey]="maptilerKey"
+  [multiWorld]="false"
+  [autoZoomClusterClick]="true"
+  [autoZoomFeatureClick]="false"
+  (pointsSelected)="logEvent('points', $event)"
+/>
+
+<div class="card mt-5 e2e-ignore">
+  <div class="card-body">
+    <button type="button" class="btn btn-secondary me-4" (click)="refresh()">
+      Refresh points
+    </button>
+    <button type="button" class="btn btn-secondary me-4" (click)="select()">Select point</button>
+    <button type="button" class="btn btn-secondary me-4" (click)="clear()">Clear map</button>
+  </div>
+</div>

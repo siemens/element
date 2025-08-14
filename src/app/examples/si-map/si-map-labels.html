@@ -1,0 +1,32 @@
+<si-map
+  #map
+  class="flex-fill"
+  [points]="points"
+  [markerAnimation]="true"
+  [cluster]="false"
+  [clusterDistance]="40"
+  [groupColors]="groupColors[groupColorKey]"
+  [displayTooltipOnHover]="true"
+  [displayTooltipOnClusterHover]="true"
+  [alwaysShowLabels]="true"
+  [maptilerKey]="maptilerKey"
+/>
+
+<div class="card mt-5 e2e-ignore">
+  <div class="card-body d-flex align-items-end">
+    <button type="button" class="btn btn-secondary me-4" (click)="refresh()">
+      Refresh points
+    </button>
+    <button type="button" class="btn btn-secondary me-4" (click)="select()"> Select point </button>
+    <button type="button" class="btn btn-secondary me-4" (click)="clear()"> Clear map </button>
+
+    <div class="me-4">
+      <label class="form-label" for="colorSelection">Colors</label>
+      <select class="form-control pb-4 pr-7" id="colorSelection" [(ngModel)]="groupColorKey">
+        <option value="status">Status</option>
+        <option value="element">Element</option>
+        <option value="custom">Custom Colors</option>
+      </select>
+    </div>
+  </div>
+</div>

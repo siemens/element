@@ -6,6 +6,10 @@ on:
         required: true
       SIEMENS_NPM_USER:
         required: true
+      MAPTILER_KEY:
+        required: true
+      MAPTILER_URL:
+        required: true
   pull_request:
 
 # Stops the workflow run if the PR is updated
@@ -13,6 +17,10 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
+
+env:
+  MAPTILER_KEY: ${{ secrets.MAPTILER_KEY }}
+  MAPTILER_URL: ${{ secrets.MAPTILER_URL }}
 
 jobs:
   build:

@@ -52,6 +52,9 @@ testem.log
 messages.json
 __pycache__
 
+# Environment variables
+.env
+
 # System Files
 .DS_Store
 Thumbs.db
