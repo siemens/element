@@ -1,0 +1,90 @@
+<si-list-details
+  #container
+  stateId="si-list-details-demo"
+  class="p-6 px-md-9"
+  [expandBreakpoint]="expandBreakpoint"
+  [disableResizing]="disableResizing"
+  [listWidth]="50"
+  [minListSize]="200"
+  [minDetailsSize]="100"
+  (listWidthChange)="table?.recalculate()"
+>
+  <si-list-pane class="card">
+    <si-list-pane-header>
+      <si-search-bar
+        class="flex-grow-1"
+        placeholder="Search"
+        colorVariant="base-0"
+        [showIcon]="true"
+        (searchChange)="searchTermChanged($event)"
+      />
+      <button
+        type="button"
+        class="btn btn-sm btn-circle btn-tertiary"
+        aria-label="Options"
+        [cdkMenuTriggerFor]="contextMenu"
+      >
+        <si-icon class="icon" icon="element-options-vertical" />
+      </button>
+    </si-list-pane-header>
+    <si-list-pane-header>
+      <si-filter-bar
+        style="width: 0"
+        class="flex-grow-1 flex-shrink-1"
+        colorVariant="base-0"
+        [allowReset]="false"
+        [filters]="filters"
+        (filtersChange)="logEvent($event)"
+      />
+      <button
+        type="button"
+        class="btn btn-circle btn-sm btn-ghost element-filter me-2"
+        aria-label="Filters"
+        (click)="logEvent('Filters')"
+      ></button>
+    </si-list-pane-header>
+    <si-list-pane-body>
+      <ngx-datatable
+        #table
+        class="si-layout-fixed-height table-element focus-inside"
+        siDatatableInteraction
+        selectionType="single"
+        columnMode="force"
+        [cssClasses]="tableConfig.cssClasses"
+        [rows]="rows"
+        [columns]="[
+          { name: 'Name', sortable: false },
+          { name: 'Role', sortable: false },
+          { name: 'Company', sortable: false }
+        ]"
+        [reorderable]="false"
+        [headerHeight]="tableConfig.headerHeight"
+        [rowHeight]="tableConfig.rowHeightSmall"
+        [footerHeight]="0"
+        [ghostLoadingIndicator]="isLoading > 0"
+        [scrollbarV]="true"
+        [externalPaging]="true"
+        [externalSorting]="true"
+        [count]="totalElements"
+        [offset]="pageNumber"
+        [selected]="selectedEntities"
+        [datatableInteractionAutoSelect]="container.hasLargeSize()"
+        (page)="setPage($event)"
+        (select)="datatableOnSelect($event.selected)"
+      >
+        <si-empty-state empty-content icon="element-users" heading="No users to display" />
+      </ngx-datatable>
+    </si-list-pane-body>
+  </si-list-pane>
+  <si-details-pane class="card">
+    <router-outlet />
+  </si-details-pane>
+</si-list-details>
+
+<ng-template #contextMenu>
+  <si-menu>
+    <si-menu-header>Actions</si-menu-header>
+    <si-menu-item icon="element-sort-down" disabled>Sort</si-menu-item>
+    <si-menu-item icon="element-refresh" (triggered)="logEvent('refreshing')">Refresh</si-menu-item>
+  </si-menu>
+</ng-template>
