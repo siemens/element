@@ -84,6 +84,10 @@ export class DataService {
     return of(this.getPagedData(page)).pipe(delay(this.optionalDelay(3000 * Math.random())));
   }
 
+  public getResultsById(id: number): Observable<CorporateEmployee> {
+    return of(this.getData(id)).pipe(delay(this.optionalDelay(3000 * Math.random())));
+  }
+
   public getEmptyResults(page: PageRequest): Observable<PagedData<CorporateEmployee>> {
     const pagedData = new PagedData<CorporateEmployee>();
     return of(pagedData).pipe(delay(this.optionalDelay(3000 * Math.random())));
