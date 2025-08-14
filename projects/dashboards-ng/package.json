@@ -14,6 +14,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "scripts": {
+    "postversion": "node ../../postversion.js"
+  },
   "homepage": "https://github.com/siemens/element",
   "bugs": "https://github.com/siemens/element/issues/new",
   "type": "module",

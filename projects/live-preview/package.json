@@ -17,6 +17,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "scripts": {
+    "postversion": "node ../../postversion.js"
+  },
   "dependencies": {
     "codeflask": "^1.4.1",
     "qrcode-generator": "^2.0.0",
