@@ -1,0 +1,46 @@
+<div class="modal-container w-100">
+  <div class="modal-header">
+    <h4 class="modal-title">Modal with table</h4>
+    <button
+      type="button"
+      class="btn btn-circle btn-sm btn-ghost element-cancel"
+      aria-label="Close modal"
+      (click)="modalRef.hide()"
+    >
+    </button>
+  </div>
+  <div class="modal-body pb-0">
+    <ngx-datatable
+      #table
+      class="table-element"
+      style="height: 400px"
+      siDatatableInteraction
+      columnMode="force"
+      selectionType="multi"
+      [cssClasses]="tableConfig.cssClasses"
+      [rows]="rows"
+      [columns]="[
+        { name: 'Name', sortable: false },
+        { name: 'Role', sortable: false },
+        { name: 'Company', sortable: false }
+      ]"
+      [reorderable]="true"
+      [headerHeight]="tableConfig.headerHeight"
+      [rowHeight]="tableConfig.rowHeightSmall"
+      [footerHeight]="0"
+      [ghostLoadingIndicator]="true"
+      [scrollbarV]="true"
+      [externalPaging]="true"
+      [externalSorting]="true"
+      [count]="totalElements"
+      [offset]="pageNumber"
+      [datatableInteractionAutoSelect]="true"
+      (page)="setPage($event)"
+      (select)="onSelect($event)"
+      (siResizeObserver)="table.recalculate()"
+    />
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modalRef.hide()">Close</button>
+  </div>
+</div>
