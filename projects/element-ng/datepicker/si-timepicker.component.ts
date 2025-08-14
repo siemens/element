@@ -481,43 +481,11 @@ export class SiTimepickerComponent implements ControlValueAccessor, SiFormItemCo
     return value;
   }
 
-  private parseHours(value?: string | number, isPM = false): number {
-    const hour = this.toNumber(value);
-    if (isNaN(hour) || hour < 0 || hour > (isPM ? 12 : 24)) {
-      return NaN;
-    }
-    return hour;
-  }
-
-  private parseMinutes(value?: string | number): number {
-    const minute = this.toNumber(value);
-    if (isNaN(minute) || minute < 0 || minute > 60) {
-      return NaN;
-    }
-    return minute;
-  }
-
-  private parseSeconds(value?: string | number): number {
-    const seconds = this.toNumber(value);
-    if (isNaN(seconds) || seconds < 0 || seconds > 60) {
-      return NaN;
-    }
-    return seconds;
-  }
-
-  private parseMilliseconds(value?: string | number): number {
-    const milliseconds = this.toNumber(value);
-    if (isNaN(milliseconds) || milliseconds < 0 || milliseconds > 1000) {
-      return NaN;
-    }
-    return milliseconds;
-  }
-
   private createDateUpdate(date: Date | undefined, time: TimeComponents): Date | undefined {
-    let hour = this.parseHours(time.hour);
-    const minute = this.parseMinutes(time.minute);
-    const seconds = this.parseSeconds(time.seconds) || 0;
-    const milliseconds = this.parseMilliseconds(time.milliseconds) || 0;
+    let hour = this.toNumber(time.hour, time.isPM ? 12 : 24);
+    const minute = this.toNumber(time.minute, 60);
+    const seconds = this.toNumber(time.seconds, 60) || 0;
+    const milliseconds = this.toNumber(time.milliseconds, 1000) || 0;
 
     if (time.isPM && hour !== 12) {
       hour += 12;
@@ -536,13 +504,17 @@ export class SiTimepickerComponent implements ControlValueAccessor, SiFormItemCo
     }
   }
 
-  private toNumber(value?: string | number): number {
+  private toNumber(value?: string | number, limit?: number): number {
     if (typeof value === 'undefined') {
       return NaN;
-    } else if (typeof value === 'number') {
-      return value;
+    } else if (typeof value === 'string') {
+      value = parseInt(value, 10);
     }
-    return parseInt(value, 10);
+
+    if (limit !== undefined && (isNaN(value) || value < 0 || value > limit)) {
+      return NaN;
+    }
+    return value;
   }
 
   private isInputValid(
@@ -573,19 +545,19 @@ export class SiTimepickerComponent implements ControlValueAccessor, SiFormItemCo
   }
 
   private isHourInputValid(hours: string, isPM: boolean): boolean {
-    return !isNaN(this.parseHours(hours, isPM));
+    return !isNaN(this.toNumber(hours, isPM ? 12 : 24));
   }
 
   private isMinuteInputValid(minutes: string): boolean {
-    return !isNaN(this.parseMinutes(minutes));
+    return !isNaN(this.toNumber(minutes, 60));
   }
 
   private isSecondInputValid(seconds: string): boolean {
-    return !isNaN(this.parseSeconds(seconds));
+    return !isNaN(this.toNumber(seconds, 60));
   }
 
   private isMillisecondInputValid(milliseconds: string): boolean {
-    return !isNaN(this.parseMilliseconds(milliseconds));
+    return !isNaN(this.toNumber(milliseconds, 1000));
   }
 
   private isValidLimit(): boolean {
