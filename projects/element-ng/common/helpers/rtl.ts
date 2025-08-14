@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+/** */
 export const isRTL = (elem?: HTMLElement): boolean =>
   getComputedStyle(elem ?? document.documentElement).direction === 'rtl';
 

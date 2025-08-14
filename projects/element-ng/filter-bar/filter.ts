@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+/** */
 export type FilterStatusType = 'default' | 'success' | 'info' | 'warning' | 'danger' | 'inactive';
 
 export interface Filter {

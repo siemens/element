@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+/** */
 type $localize = (strings: TemplateStringsArray, ...expressions: string[]) => string;
 
 declare global {

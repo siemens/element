@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+/** */
 export const runsInElectron = (): boolean => {
   const windowAny = window as any;
   const processAny = windowAny.process as any;
