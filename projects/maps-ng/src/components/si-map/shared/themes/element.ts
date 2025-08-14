@@ -33,13 +33,13 @@ export const themeElement = {
       colorPalette: {
         status: [status.info, status.success, status.warning, status.danger],
         element: [
-          getProp(style, '--siemens-red-500'), // $siemens-red-500
-          getProp(style, '--siemens-orange-700'), // $siemens-orange-700
-          getProp(style, '--siemens-yellow-300'), // $siemens-yellow-300
-          getProp(style, '--siemens-green-500'), // $siemens-green-500
-          getProp(style, '--siemens-blue-500'), // $siemens-blue-500
+          getProp(style, '--element-data-red-2'), // $siemens-red-500
+          getProp(style, '--element-data-orange-4'), // $siemens-orange-700
+          getProp(style, '--element-status-caution'), // $siemens-yellow-300
+          getProp(style, '--element-data-green-2'), // $siemens-green-500
+          getProp(style, '--element-status-information'), // $siemens-blue-500
           getProp(style, '--element-petrol'), // $element-petrol
-          getProp(style, '--siemens-deep-blue-500') // $siemens-deep-blue-500
+          getProp(style, '--element-data-17') // $siemens-deep-blue-500
         ]
       } as ColorPalettes
     };

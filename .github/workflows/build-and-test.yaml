@@ -7,9 +7,9 @@ on:
       SIEMENS_NPM_USER:
         required: true
       MAPTILER_KEY:
-        required: false
+        required: true
       MAPTILER_URL:
-        required: false
+        required: true
   pull_request:
 
 # Stops the workflow run if the PR is updated
@@ -17,6 +17,10 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
+
+env:
+  MAPTILER_KEY: ${{ secrets.MAPTILER_KEY }}
+  MAPTILER_URL: ${{ secrets.MAPTILER_URL }}
 
 jobs:
   build:
@@ -39,13 +43,7 @@ jobs:
       - run: npm run build:all:update-translatable-keys # Output is needed in dist for providing default translations
       - run: git diff --exit-code "projects/**/*-translatable-keys.interface.ts"
       - run: npm run build:examples
-        env:
-          MAPTILER_KEY: ${{ secrets.MAPTILER_KEY }}
-          MAPTILER_URL: ${{ secrets.MAPTILER_URL }}
       - run: npm run dashboards-demo:build:demo -- --progress=false
-        env:
-          MAPTILER_KEY: ${{ secrets.MAPTILER_KEY }}
-          MAPTILER_URL: ${{ secrets.MAPTILER_URL }}
       - run: npm run dashboards-demo:build:webcomponents -- --progress=false
       - run: npm run dashboards-demo:build:mfe -- --progress=false
       - uses: actions/upload-artifact@v4
@@ -103,9 +101,6 @@ jobs:
       - run: npm ci --prefer-offline --no-audit --include=optional
       - run: npm run prepare-brand
       - run: npm run build:examples:aot
-        env:
-          MAPTILER_KEY: ${{ secrets.MAPTILER_KEY }}
-          MAPTILER_URL: ${{ secrets.MAPTILER_URL }}
 
   e2e:
     runs-on: ubuntu-24.04
