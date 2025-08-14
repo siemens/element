@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Example One OS",
+    "href": "assets/licenses/os/example-1.copyright.txt"
+  },
+  {
+    "name": "Example Two OS",
+    "href": "assets/licenses/os/example-2.copyright.txt"
+  }
+]
