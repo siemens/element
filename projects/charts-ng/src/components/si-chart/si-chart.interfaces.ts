@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+/** */
 export type AxisType = 'value' | 'category' | 'time' | 'log';
 export type XAxisPosition = 'top' | 'bottom';
 export type YAxisPosition = 'left' | 'right';

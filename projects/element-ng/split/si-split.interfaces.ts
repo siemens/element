@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+/** */
 type CollapseTo = 'start' | 'end';
 type SplitOrientation = 'horizontal' | 'vertical';
 

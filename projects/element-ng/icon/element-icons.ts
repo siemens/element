@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+/** */
 export const elementDown2 =
   "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M352.79 203.21a12.45 12.45 0 0 1 1.44 15.86l-1.44 1.72-88 88a12.45 12.45 0 0 1-15.86 1.44l-1.72-1.44-88-88a12.43 12.43 0 0 1 15.86-19l1.72 1.44L256 282.42l79.21-79.21a12.45 12.45 0 0 1 15.86-1.44Z' data-name='Arrow/Right-3'/></svg>";
 export const elementCancel =
