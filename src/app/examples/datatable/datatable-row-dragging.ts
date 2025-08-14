@@ -5,6 +5,7 @@
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { addIcons, elementMenu, SiIconComponent } from '@siemens/element-ng/icon';
 import { DatatableRowDefDirective, NgxDatatableModule } from '@siemens/ngx-datatable';
 
@@ -14,6 +15,7 @@ import { DatatableRowDefDirective, NgxDatatableModule } from '@siemens/ngx-datat
     NgxDatatableModule,
     DatatableRowDefDirective,
     DragDropModule,
+    TranslateModule,
     DatePipe,
     SiIconComponent
   ],

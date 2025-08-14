@@ -16,35 +16,56 @@
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="Task" minWidth="200" sortable="false">
+    <ngx-datatable-column
+      minWidth="200"
+      sortable="false"
+      [name]="'DATATABLE.HEADER.TASK' | translate"
+    >
       <ng-template let-row="row" ngx-datatable-cell-template>
         <div>
           <span>{{ row.task }}</span>
         </div>
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column name="Assignee" minWidth="100" sortable="false">
+    <ngx-datatable-column
+      minWidth="100"
+      sortable="false"
+      [name]="'DATATABLE.HEADER.ASSIGNEE' | translate"
+    >
       <ng-template let-row="row" ngx-datatable-cell-template>
         <div>
           <span>{{ row.assignee }}</span>
         </div>
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column name="Status" minWidth="100" sortable="false">
+    <ngx-datatable-column
+      minWidth="100"
+      sortable="false"
+      [name]="'DATATABLE.HEADER.STATUS' | translate"
+    >
       <ng-template let-row="row" ngx-datatable-cell-template>
         <div>
           <span>{{ row.status }}</span>
         </div>
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column name="Due Date" maxWidth="100" minWidth="100" sortable="false">
+    <ngx-datatable-column
+      maxWidth="100"
+      minWidth="100"
+      sortable="false"
+      [name]="'DATATABLE.HEADER.DUE-DATE' | translate"
+    >
       <ng-template let-row="row" ngx-datatable-cell-template>
         <div>
           <span>{{ row.deadline | date }}</span>
         </div>
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column name="Department" minWidth="150" sortable="false">
+    <ngx-datatable-column
+      minWidth="150"
+      sortable="false"
+      [name]="'DATATABLE.HEADER.DEPARTMENT' | translate"
+    >
       <ng-template let-row="row" ngx-datatable-cell-template>
         <div>
           <span>{{ row.department }}</span>
@@ -52,7 +73,12 @@
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="Priority" maxWidth="150" minWidth="100" sortable="false">
+    <ngx-datatable-column
+      maxWidth="150"
+      minWidth="100"
+      sortable="false"
+      [name]="'DATATABLE.HEADER.PRIORITY' | translate"
+    >
       <ng-template let-row="row" ngx-datatable-cell-template>
         <div>
           <span>{{ row.priority }}</span>
