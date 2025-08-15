@@ -904,7 +904,7 @@ export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDes
       if (subTitle) {
         this.modifyTopAlignment('subTitle');
       }
-    } else if (!title && !subTitle) {
+    } else if (!title && !subTitle && !options.title) {
       this.modifyTopAlignment('noTitle');
     }
   }
