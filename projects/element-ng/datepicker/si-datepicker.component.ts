@@ -572,11 +572,9 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
         !this.disabledTime() &&
         ((config.minDate && date < config.minDate) || (config.maxDate && date > config.maxDate))
       ) {
-        timePicker.invalidHours = timePicker.invalidMinutes = true;
-        timePicker.invalidSeconds = timePicker.invalidMilliseconds = true;
+        timePicker.forceInvalid.set(true);
       } else {
-        timePicker.invalidHours = timePicker.invalidMinutes = false;
-        timePicker.invalidSeconds = timePicker.invalidMilliseconds = false;
+        timePicker.forceInvalid.set(false);
       }
       this.cdRef.markForCheck();
     });
