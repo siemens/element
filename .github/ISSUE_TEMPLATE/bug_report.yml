@@ -1,6 +1,5 @@
 name: Bug report
 description: Report a bug for Siemens Element
-labels: ['triage']
 body:
   - type: markdown
     attributes:

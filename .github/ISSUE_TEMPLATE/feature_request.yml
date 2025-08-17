@@ -1,6 +1,5 @@
 name: Feature request
 description: Suggest a feature for Siemens Element
-labels: ['triage']
 body:
   - type: checkboxes
     attributes:
