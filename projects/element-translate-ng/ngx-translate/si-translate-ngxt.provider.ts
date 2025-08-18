@@ -3,8 +3,10 @@
  * SPDX-License-Identifier: MIT
  */
 import { EnvironmentProviders, Provider } from '@angular/core';
+import { MissingTranslationHandler } from '@ngx-translate/core';
 import { SiTranslateServiceBuilder } from '@siemens/element-translate-ng/translate';
 
+import { SiMissingTranslateService } from './si-missing-translate.service';
 import { SiTranslateNgxTServiceBuilder } from './si-translate-ngxt.service-builder';
 
 /**
@@ -13,4 +15,30 @@ import { SiTranslateNgxTServiceBuilder } from './si-translate-ngxt.service-build
  */
 export const provideNgxTranslateForElement = (): (EnvironmentProviders | Provider)[] => {
   return [{ provide: SiTranslateServiceBuilder, useClass: SiTranslateNgxTServiceBuilder }];
+};
+
+/**
+ * This provider configures default translations for ngx-translate, applying Element's built-in translations.
+ *
+ * Usage:
+ * ```typescript
+ *   providers: [
+ *     provideTranslateService({
+ *       missingTranslationHandler: provideElementMissingTranslationHandler(),
+ *       ...
+ *     }),
+ *     provideNgxTranslateForElement(),
+ *     ...
+ *   ]
+ * ```
+ */
+export const provideElementMissingTranslationHandler = (
+  appMissingTranslationHandler?: MissingTranslationHandler
+): Provider => {
+  return {
+    provide: MissingTranslationHandler,
+    useFactory: () => {
+      return new SiMissingTranslateService(appMissingTranslationHandler);
+    }
+  };
 };
