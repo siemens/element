@@ -131,7 +131,7 @@
 }
 
 .example-active {
-  font-weight: bold;
+  font-weight: variables.$live-preview-font-weight-semibold;
 }
 
 a {
