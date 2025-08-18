@@ -2,7 +2,10 @@
   <div class="w-100" siFormlyFormFieldProvider [field]="field">
     <ng-template #fieldComponent />
     <div class="invalid-feedback" [class.d-block]="showError">
-      <formly-validation-message [field]="field" />
+      <!-- This string is hard-coded in the bootstrap fields. -->
+      <!-- See https://github.com/ngx-formly/ngx-formly/blob/main/src/ui/bootstrap/input/src/input.type.ts -->
+      <!-- We should get rid of the bootstrap package, to make it rely on our si-form-item code. -->
+      <formly-validation-message [field]="field" [id]="field.id + '-formly-validation-error'" />
     </div>
   </div>
 </si-form-item>
