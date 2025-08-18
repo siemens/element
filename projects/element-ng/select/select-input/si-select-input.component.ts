@@ -37,13 +37,15 @@ import { SelectOption } from '../si-select.types';
   styleUrl: './si-select-input.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    role: 'combobox',
+    // In readonly mode, the select needs to be announced as a textbox.
+    // Otherwise, screen-reader won't announce the readonly state.
     class: 'select focus-none dropdown-toggle d-flex align-items-center ps-4',
     'aria-autocomplete': 'none',
-    'aria-haspopup': 'listbox',
-    '[attr.aria-expanded]': 'open()',
+    '[attr.role]': 'readonly() ? "textbox": "combobox"',
+    '[attr.aria-haspopup]': 'readonly() ? undefined : "listbox"',
+    '[attr.aria-expanded]': 'readonly() ? undefined : open()',
+    '[attr.aria-controls]': 'readonly() ? undefined : controls()',
     '[attr.aria-readonly]': 'readonly()',
-    '[attr.aria-controls]': 'controls()',
     '[attr.aria-labelledby]': 'labeledBy()',
     '[attr.aria-disabled]': 'selectionStrategy.disabled()',
     '[attr.tabindex]': 'selectionStrategy.disabled() ? "-1" : "0"',

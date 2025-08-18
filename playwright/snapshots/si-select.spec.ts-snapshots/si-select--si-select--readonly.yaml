@@ -1,15 +1,15 @@
 - heading "Inline" [level=4]
-- combobox "Inline"
+- textbox "Inline"
 - heading "FormControl" [level=4]
-- combobox "FormControl"
+- textbox "FormControl"
 - heading "Multi select" [level=4]
-- combobox "Multi select"
+- textbox "Multi select"
 - heading "Multi-select with groups" [level=4]
-- combobox "Multi-select with groups"
+- textbox "Multi-select with groups"
 - heading "Select with custom template" [level=4]
-- combobox "Select with custom template"
+- textbox "Select with custom template"
 - heading "Select with actions" [level=4]
-- combobox "Select with actions"
+- textbox "Select with actions"
 - text: "Control panel Current value: fair"
 - checkbox "Readonly" [checked]
 - text: Readonly
