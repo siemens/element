@@ -200,7 +200,7 @@ $font-sizes: (
 $headings-margin-bottom: spacers.$spacer * 0.5 !default;
 $headings-font-family: null !default;
 $headings-font-style: null !default;
-$headings-font-weight: typography.$si-font-weight-bold !default;
+$headings-font-weight: typography.$si-font-weight-semibold !default;
 $headings-line-height: 1.2 !default;
 $headings-color: semantic-tokens.$element-text-primary !default;
 
