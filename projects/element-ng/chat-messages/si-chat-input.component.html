@@ -1,0 +1,151 @@
+<div class="input-wrapper border rounded-3 bg-body">
+  <!-- File attachments display -->
+  @if (hasAttachments()) {
+    <div class="p-3 pb-0">
+      <si-attachment-list
+        [attachments]="attachments()"
+        [removeAttachmentLabel]="removeAttachmentLabel()"
+        (removeAttachment)="removeAttachment($event)"
+      />
+    </div>
+  }
+
+  <!-- Textarea -->
+  <div class="p-4 pb-0 si-body-2">
+    <textarea
+      #textInput
+      class="chat-textarea w-100 border-0 p-2 bg-transparent"
+      rows="1"
+      [placeholder]="placeholder() | translate"
+      [disabled]="disabled() || sending()"
+      [maxlength]="maxLength() || null"
+      [ngModel]="value()"
+      (ngModelChange)="onInputChange($event)"
+      (keydown)="onKeyDown($event)"
+      (input)="adjustTextareaHeight($event)"
+    ></textarea>
+  </div>
+
+  <!-- Actions row -->
+  <div class="d-flex align-items-center justify-content-between px-3 ps-4 pb-2">
+    <!-- Left side actions -->
+    <div class="d-flex align-items-center gap-1">
+      <!-- File attachment button -->
+      @if (allowAttachments()) {
+        <input
+          #fileInput
+          type="file"
+          class="d-none"
+          [accept]="acceptedFileTypes().join(',')"
+          [multiple]="true"
+          (change)="onFileSelect($event)"
+        />
+
+        <button
+          type="button"
+          class="btn btn-ghost btn-circle btn-sm"
+          [attr.aria-label]="attachFileLabel() | translate"
+          [disabled]="disabled() || sending()"
+          (click)="fileInput.click()"
+        >
+          <si-icon icon="element-attachment" />
+        </button>
+      }
+
+      <!-- Primary action buttons - hide on xs -->
+      @for (action of actions(); track action.id) {
+        <button
+          type="button"
+          class="btn btn-ghost btn-circle btn-sm d-none d-sm-flex"
+          [disabled]="action.disabled || disabled() || sending()"
+          [attr.aria-label]="action.label | translate"
+          (click)="onActionClick(action)"
+        >
+          <si-icon [icon]="action.icon" />
+        </button>
+      }
+
+      <!-- Combined actions dropdown for mobile -->
+      @if (hasActions() || hasSecondaryActions()) {
+        <button
+          type="button"
+          class="btn btn-ghost btn-circle btn-sm d-sm-none"
+          [cdkMenuTriggerFor]="mobileActionsMenu"
+          [attr.aria-label]="moreActionsLabel() | translate"
+          [disabled]="disabled() || sending()"
+        >
+          <si-icon icon="element-optionsVertical" />
+        </button>
+
+        <ng-template #mobileActionsMenu>
+          <si-menu>
+            @for (action of actions(); track action.id) {
+              <si-menu-item
+                [disabled]="action.disabled"
+                [icon]="action.icon"
+                (triggered)="onActionClick(action)"
+              >
+                {{ action.label | translate }}
+              </si-menu-item>
+            }
+            @for (action of secondaryActions(); track action.id) {
+              <si-menu-item
+                [disabled]="action.disabled"
+                [icon]="action.icon"
+                (triggered)="onActionClick(action)"
+              >
+                {{ action.label | translate }}
+              </si-menu-item>
+            }
+          </si-menu>
+        </ng-template>
+      }
+
+      <!-- Secondary actions dropdown for desktop -->
+      @if (hasSecondaryActions()) {
+        <button
+          type="button"
+          class="btn btn-ghost btn-circle btn-sm d-none d-sm-block"
+          [cdkMenuTriggerFor]="secondaryActionsMenu"
+          [attr.aria-label]="moreActionsLabel() | translate"
+          [disabled]="disabled() || sending()"
+        >
+          <si-icon icon="element-optionsVertical" />
+        </button>
+
+        <ng-template #secondaryActionsMenu>
+          <si-menu>
+            @for (action of secondaryActions(); track action.id) {
+              <si-menu-item
+                [disabled]="action.disabled"
+                [icon]="action.icon"
+                (triggered)="onActionClick(action)"
+              >
+                {{ action.label | translate }}
+              </si-menu-item>
+            }
+          </si-menu>
+        </ng-template>
+      }
+    </div>
+
+    <!-- Send button -->
+    <si-loading-button
+      type="button"
+      buttonClass="btn btn-ghost btn-circle btn-sm"
+      [disabled]="!canSend()"
+      [loading]="sending()"
+      [ariaLabel]="sendButtonLabel() | translate"
+      (click)="onSend()"
+    >
+      <si-icon class="text-primary" [icon]="sendButtonIcon()" />
+    </si-loading-button>
+  </div>
+</div>
+
+<!-- disclaimer -->
+@if (disclaimer()) {
+  <div class="text-center mt-2 px-3">
+    <span class="si-caption text-secondary d-block">{{ disclaimer() | translate }}</span>
+  </div>
+}
