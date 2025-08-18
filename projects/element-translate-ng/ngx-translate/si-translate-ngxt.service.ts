@@ -2,35 +2,36 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Injectable } from '@angular/core';
-import {
-  MissingTranslationHandler,
-  MissingTranslationHandlerParams,
-  TranslateService
-} from '@ngx-translate/core';
+import { isDevMode } from '@angular/core';
+import { MissingTranslationHandler, TranslateService } from '@ngx-translate/core';
 import { SiTranslateService, TranslationResult } from '@siemens/element-translate-ng/translate';
 import { merge, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+import { SiMissingTranslateService } from './si-missing-translate.service';
 
 /**
  * {@link SiTranslateService} wrapper around ngx-translate
  *
  * @internal
  */
-@Injectable()
 export class SiTranslateNgxTService extends SiTranslateService {
   private ngxTranslateService: TranslateService;
-  private defaultTranslations: Record<string, string> = {};
-  private originalMissingHandler: MissingTranslationHandler;
+  private readonly fallbackTranslations?: SiMissingTranslateService;
 
-  // eslint-disable-next-line @angular-eslint/prefer-inject
-  constructor(ngxTranslateService: TranslateService) {
+  constructor(
+    ngxTranslateService: TranslateService,
+    missingTranslateHandler: MissingTranslationHandler | null
+  ) {
     super();
     this.ngxTranslateService = ngxTranslateService;
-    this.originalMissingHandler = ngxTranslateService.missingTranslationHandler;
-    ngxTranslateService.missingTranslationHandler = {
-      handle: params => this.handleMissingTranslation(params)
-    };
+    if (missingTranslateHandler instanceof SiMissingTranslateService) {
+      this.fallbackTranslations = missingTranslateHandler;
+    } else if (isDevMode()) {
+      console.warn(
+        'SiMissingTranslateService not provided as missingTranslateHandler, default translations will not work.'
+      );
+    }
 
     this.translationChange$ = merge(
       this.ngxTranslateService.onTranslationChange,
@@ -38,11 +39,11 @@ export class SiTranslateNgxTService extends SiTranslateService {
     ).pipe(map(() => {}));
   }
 
-  override get currentLanguage(): string {
+  override get currentLanguage(): string | undefined {
     return this.ngxTranslateService.currentLang;
   }
 
-  override get availableLanguages(): string[] {
+  override get availableLanguages(): readonly string[] {
     return this.ngxTranslateService.getLangs();
   }
 
@@ -55,7 +56,7 @@ export class SiTranslateNgxTService extends SiTranslateService {
     return this.ngxTranslateService.use(lang).pipe(map(() => {}));
   }
 
-  override getDefaultLanguage(): string {
+  override getDefaultLanguage(): string | null {
     return this.ngxTranslateService.getDefaultLang();
   }
 
@@ -95,15 +96,6 @@ export class SiTranslateNgxTService extends SiTranslateService {
   }
 
   override setTranslation(key: string, value: string): void {
-    this.defaultTranslations[key] = value;
-  }
-
-  private handleMissingTranslation(params: MissingTranslationHandlerParams): string {
-    return (
-      params.translateService.parser.interpolate(
-        this.defaultTranslations[params.key],
-        params.interpolateParams
-      ) ?? this.originalMissingHandler.handle(params)
-    );
+    this.fallbackTranslations?.setTranslation(key, value);
   }
 }

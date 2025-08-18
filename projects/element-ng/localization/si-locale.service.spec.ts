@@ -5,7 +5,7 @@
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SiTranslateNgxTModule } from '@siemens/element-translate-ng/ngx-translate';
-import { Observable, of } from 'rxjs';
+import { Observable, of, take } from 'rxjs';
 
 import { SiLocaleStore } from './si-locale-store';
 import { SI_LOCALE_CONFIG, SiLocaleConfig, SiLocaleService } from './si-locale.service';
@@ -231,7 +231,7 @@ describe('SiLocaleService', () => {
           fail();
         }
       });
-      translate.onLangChange.subscribe(() => {
+      translate.onLangChange.pipe(take(1)).subscribe(() => {
         translate.use('de');
       });
     });

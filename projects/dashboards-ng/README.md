@@ -28,15 +28,14 @@ providers: [
   provideRouter(routes, withHashLocation()),
   { provide: SI_WIDGET_STORE, useClass: AppWidgetStorage },
   { provide: SI_DASHBOARD_CONFIGURATION, useValue: config },
-  importProvidersFrom(
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: createTranslateLoader,
-        deps: [HttpBackend]
-      }
-    })
-  ),
+  provideTranslateService({
+    loader: {
+      provide: TranslateLoader,
+      useFactory: createTranslateLoader,
+      deps: [HttpBackend]
+    },
+    missingTranslationHandler: provideMissingTranslationHandlerForElement()
+  }),
   provideAnimations(),
   provideNgxTranslateForElement(),
   provideHttpClient(withInterceptorsFromDi())

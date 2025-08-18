@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Injectable, Injector } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { MissingTranslationHandler, TranslateService } from '@ngx-translate/core';
 import {
   SiTranslateService,
   SiTranslateServiceBuilder
@@ -24,10 +24,11 @@ export class SiTranslateNgxTServiceBuilder extends SiTranslateServiceBuilder {
   buildService(injector: Injector): SiTranslateService {
     // Get instance of NGX Translate via injector instance of the current scope (see isolated mode)
     const ngxTranslateService = injector.get(TranslateService);
+    const missingTranslateHandler = injector.get(MissingTranslationHandler, null);
 
     let ngxTServiceWrapper = this.serviceCache.get(ngxTranslateService);
     if (!ngxTServiceWrapper) {
-      ngxTServiceWrapper = new SiTranslateNgxTService(ngxTranslateService);
+      ngxTServiceWrapper = new SiTranslateNgxTService(ngxTranslateService, missingTranslateHandler);
       this.serviceCache.set(ngxTranslateService, ngxTServiceWrapper);
     }
 

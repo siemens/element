@@ -13,6 +13,7 @@ import {
   ElementRef,
   inject,
   input,
+  LOCALE_ID,
   model,
   OnChanges,
   output,
@@ -87,6 +88,7 @@ export class SiPhoneNumberInputComponent
 
   private phoneUtil = PhoneNumberUtil.getInstance();
   private translate = injectSiTranslateService();
+  private locale = inject(LOCALE_ID).toString();
   private changeDetectorRef = inject(ChangeDetectorRef);
   private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
@@ -361,7 +363,7 @@ export class SiPhoneNumberInputComponent
   private getCountryName(countryCode: string): string {
     // This auto translates the given country name to the selected locale language
     return (
-      new Intl.DisplayNames([this.translate.currentLanguage], { type: 'region' }).of(
+      new Intl.DisplayNames([this.translate.currentLanguage ?? this.locale], { type: 'region' }).of(
         countryCode.toUpperCase()
       ) ?? ''
     );
