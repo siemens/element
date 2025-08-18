@@ -1,0 +1,30 @@
+- heading "EULA" [level=2]
+- text: End user license agreement
+- paragraph: This End User License Agreement (“EULA”) sets forth the terms and conditions for the use of software, hardware, and related services (“Products” and “Services”). By accepting these terms, the user confirms to have read and understood this Agreement. If not accepted, the user must refrain from installing or using the Products or Services.
+- heading "1. DEFINITIONS" [level=3]
+- paragraph: “Software” means licensed applications, updates, and related documentation.
+- paragraph: “Hardware” means devices, equipment, or components provided under this Agreement.
+- paragraph: “Services” means support, maintenance, consulting, or professional activities offered.
+- paragraph: “Order” means the document or process confirming the purchase of Products or Services.
+- paragraph: “Documentation” means manuals, guides, or instructions supplied in any format.
+- heading "2. ORDERS AND PAYMENTS" [level=3]
+- heading "2.1 Ordering" [level=4]
+- paragraph: Products or Services may be purchased through an Order, which will be subject to this EULA and any applicable supplemental terms.
+- heading "2.2 Delivery" [level=4]
+- paragraph: Delivery of Software will usually occur electronically. Hardware may be delivered physically according to agreed terms.
+- heading "2.3 Payment" [level=4]
+- paragraph: Payments must be made according to the terms defined in the Order. Taxes, duties, and other charges are the responsibility of the customer unless exempt by law.
+- heading "3. LICENSE TERMS" [level=3]
+- paragraph: The user is granted a limited, non-exclusive, non-transferable license to use the Software and Documentation solely for internal purposes. Use is subject to all restrictions and applicable laws.
+- heading "4. WARRANTIES AND DISCLAIMERS" [level=3]
+- paragraph: Products and Services are provided “as is” unless otherwise stated. No guarantee is made that they will be error-free or uninterrupted.
+- heading "5. LIMITATION OF LIABILITY" [level=3]
+- paragraph: Liability is limited to the amount paid for the relevant Product or Service. Indirect, incidental, or consequential damages are excluded to the maximum extent permitted by law.
+- heading "6. TERMINATION" [level=3]
+- paragraph: This Agreement may be terminated if the user breaches its terms or fails to comply with payment obligations. Upon termination, all rights to use the Products and Services cease immediately.
+- heading "7. COMPLIANCE" [level=3]
+- paragraph: The user agrees to comply with applicable laws, including export control, data protection, and confidentiality obligations.
+- heading "8. FINAL PROVISIONS" [level=3]
+- paragraph: This Agreement represents the entire understanding between the parties and supersedes prior discussions. Any conflicting terms are void unless expressly agreed in writing.
+- button "Back"
+- button "Accept"

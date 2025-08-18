@@ -1,24 +1,26 @@
-- alert: System is currently under maintenance
-- alert: Warning System is currently under maintenance
-- img "Element App's Background"
+- img
 - combobox "Language switcher":
   - option "English" [selected]
   - option "Deutsch"
   - option "Français"
+- text: Software Suite X
 - heading "Element App" [level=1]
-- alert: Danger Sample login error message
+- heading "Dive in into the wonderful world of Element" [level=2]
 - text: Username
-- textbox "Username"
+- textbox "Username": name@siemens.com
 - text: Password
 - textbox "Password"
 - button "show password"
-- link "Forgot Password":
-  - /url: "#/viewer/viewer"
-- button "Log in"
+- link "Forgot password":
+  - /url: https://myid.siemens.com/help/
+- button "Back"
+- button "Login"
 - text: Don't have an account?
 - link "Register now":
-  - /url: "#/viewer/viewer"
-- text: Productive Data You are about to connect to productive data. Please note that changes will take effect immediately
+  - /url: https://myid.siemens.com/help/
+- text: You agree to the
+- button "Terms of Use"
+- text: policy by logging into this application.
 - contentinfo:
   - link "Corporate Information":
     - /url: http://www.examples.org/corporate-information
@@ -26,4 +28,5 @@
     - /url: http://www.examples.org/privacy-notice
   - link "Terms of Use":
     - /url: http://www.examples.org/terms-of-use
-  - paragraph: /© Example Company \d+/
+  - text: "/Version: \\d+\\.\\d+/"
+  - paragraph: /© Example Company \d+-\d+/

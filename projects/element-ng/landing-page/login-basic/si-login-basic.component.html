@@ -1,0 +1,68 @@
+@let forgotPasswordLink = this.forgotPasswordLink();
+@let registerNowLink = this.registerNowLink();
+@let secondStepVisible = this.secondStepVisible();
+
+<form #loginForm [formGroup]="loginCredentials" (ngSubmit)="submit()">
+  <div class="my-4">
+    <label class="form-label" [for]="usernameId">{{ usernameLabel() | translate }}</label>
+    <input type="email" class="form-control" formControlName="username" [id]="usernameId" />
+  </div>
+  <div class="login-basic-second-step--container" [class.active]="!twoStep() || secondStepVisible">
+    <div class="login-basic-second-step--content">
+      <div class="mb-4">
+        <label class="form-label" [for]="passwordId">{{ passwordLabel() | translate }}</label>
+        <si-password-toggle #toggle>
+          <input
+            class="form-control"
+            formControlName="password"
+            [id]="passwordId"
+            [type]="toggle.inputType"
+          />
+        </si-password-toggle>
+      </div>
+      @if (forgotPasswordLink) {
+        <a class="si-h5 mb-4" [siLink]="forgotPasswordLink">{{
+          forgotPasswordLink.title | translate
+        }}</a>
+      }
+      <div class="d-flex align-items-center gap-6 mt-8">
+        @if (twoStep()) {
+          <button type="button" class="btn btn-secondary w-100" (click)="goBack()">
+            {{ backButtonLabel() | translate }}
+          </button>
+        }
+        <si-loading-button
+          type="submit"
+          class="w-100"
+          buttonClass="btn btn-primary"
+          [disabled]="disableLogin()"
+          [loading]="loading()"
+        >
+          {{ loginButtonLabel() | translate }}
+        </si-loading-button>
+      </div>
+    </div>
+  </div>
+  @if (twoStep()) {
+    <div
+      class="login-basic-next-button--container"
+      [attr.aria-hidden]="secondStepVisible"
+      [class.active]="!secondStepVisible"
+    >
+      <si-loading-button
+        class="login-basic-next-button w-100"
+        buttonClass="btn btn-primary"
+        [loading]="loadingNext()"
+        (click)="validateUsername()"
+      >
+        {{ nextButtonLabel() | translate }}
+      </si-loading-button>
+    </div>
+  }
+</form>
+@if (registerNowLink) {
+  <div class="si-body mt-8">
+    {{ registerNowIntroText() | translate }}
+    <a class="si-h5 ms-6" [siLink]="registerNowLink">{{ registerNowLink.title | translate }}</a>
+  </div>
+}

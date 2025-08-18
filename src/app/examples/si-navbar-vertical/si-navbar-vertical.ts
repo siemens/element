@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import {
   SiApplicationHeaderComponent,
   SiHeaderBrandDirective,
@@ -25,7 +25,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
   templateUrl: './si-navbar-vertical.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SampleComponent {
+export class SampleComponent implements OnInit {
   menuItems: NavbarVerticalItem[] = [
     {
       type: 'router-link',
@@ -93,5 +93,11 @@ export class SampleComponent {
     }
   ];
 
+  private activeRoute = inject(ActivatedRoute);
+  private router = inject(Router);
   logEvent = inject(LOG_EVENT);
+
+  ngOnInit(): void {
+    this.router.navigate(['home'], { relativeTo: this.activeRoute });
+  }
 }

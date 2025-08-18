@@ -1,6 +1,10 @@
 {
   "APP": {
-    "CLAIM": "Plongez dans le monde merveilleux de Element"
+    "CLAIM": "Plongez dans le monde merveilleux de Element",
+    "PRODUCTIVE_DATA": {
+      "TITLE": "Données productives",
+      "CONTENT": "Vous êtes sur le point de vous connecter à des données productives. Veuillez noter que les changements prendront effet immédiatement."
+    }
   },
   "FORM": {
     "ENGINEER": "Ingénieur",
@@ -19,7 +23,16 @@
     "MINLENGTH": "Une longueur minimale de {{requiredLength}} caractères est requise.",
     "INVALID_PHONE": "Numéro de téléphone invalide",
     "SEARCH": "Chercher",
-    "SELECT_COUNTRY": "Choisissez le pays"
+    "SELECT_COUNTRY": "Choisissez le pays",
+    "USERNAME": "Nom d'utilisateur",
+    "PASSWORD": "Mot de passe",
+    "FORGOT_PASSWORD": "Mot de passe oublié",
+    "REGISTER_NOW_INTRO": "Vous n'avez pas de compte ?",
+    "REGISTER_NOW": "S'inscrire maintenant",
+    "LOGIN": "Connexion",
+    "LOGIN_SSO": "Connexion / S'inscrire",
+    "BACK": "Retour",
+    "NEXT": "Suivant"
   },
   "LANGUAGE": {
     "EN": "English",

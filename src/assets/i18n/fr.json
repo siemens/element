@@ -5,6 +5,10 @@
       "LANGUAGE": "Langue",
       "THEME": "Thème",
       "PROFILE": "Profil"
+    },
+    "PRODUCTIVE_DATA": {
+      "TITLE": "Données productives",
+      "CONTENT": "Vous êtes sur le point de vous connecter à des données productives. Veuillez noter que les changements prendront effet immédiatement."
     }
   },
   "FORM": {
@@ -29,7 +33,16 @@
     "ROLE": "Rôle",
     "ROLE_MORE_INFORMATION": "Plus d'informations sur le rôle",
     "SEARCH": "Chercher",
-    "SELECT_COUNTRY": "Choisissez le pays"
+    "SELECT_COUNTRY": "Choisissez le pays",
+    "USERNAME": "Nom d'utilisateur",
+    "PASSWORD": "Mot de passe",
+    "FORGOT_PASSWORD": "Mot de passe oublié",
+    "REGISTER_NOW_INTRO": "Vous n'avez pas de compte ?",
+    "REGISTER_NOW": "S'inscrire",
+    "LOGIN": "Connexion",
+    "LOGIN_SSO": "Connexion / S'inscrire",
+    "BACK": "Retour",
+    "NEXT": "Suivant"
   },
   "LANGUAGE": {
     "EN": "English",

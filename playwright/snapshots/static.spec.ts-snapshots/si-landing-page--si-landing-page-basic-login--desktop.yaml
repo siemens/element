@@ -1,0 +1,29 @@
+- img
+- combobox "Language switcher":
+  - option "English" [selected]
+  - option "Deutsch"
+  - option "Français"
+- text: Software Suite X
+- heading "Element App" [level=1]
+- heading "Dive in into the wonderful world of Element" [level=2]
+- text: Username
+- textbox "Username"
+- text: Password
+- textbox "Password"
+- button "show password"
+- link "Forgot password":
+  - /url: https://myid.siemens.com/help/
+- button "Login"
+- text: Don't have an account?
+- link "Register now":
+  - /url: https://myid.siemens.com/help/
+- text: Productive data You are about to connect to productive data. Please note that changes will take effect immediately.
+- contentinfo:
+  - link "Corporate Information":
+    - /url: http://www.examples.org/corporate-information
+  - link "Privacy Notice":
+    - /url: http://www.examples.org/privacy-notice
+  - link "Terms of Use":
+    - /url: http://www.examples.org/terms-of-use
+  - text: "/Version: \\d+\\.\\d+/"
+  - paragraph: /© Example Company \d+-\d+/

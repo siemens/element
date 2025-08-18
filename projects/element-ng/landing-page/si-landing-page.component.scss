@@ -33,14 +33,30 @@ $margin-bottom-footer: map.get(all-variables.$spacers, 9);
 }
 
 .landing-page-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: relative;
+  block-size: 100vh;
+  overflow-y: auto;
   inline-size: 40%;
   background-color: all-variables.$element-base-0;
   padding-block: $margin-bottom-header $margin-bottom-footer;
   padding-inline: $margin-content;
+
+  &:has(si-explicit-legal-acknowledge, si-change-password) {
+    block-size: 100%;
+  }
+}
+
+.landing-page-content-inner {
+  block-size: 100%;
+  min-block-size: min-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.landing-page-main {
+  &:has(si-explicit-legal-acknowledge, si-change-password) {
+    block-size: 100%;
+  }
 }
 
 .landing-page-logo {
@@ -58,9 +74,19 @@ $margin-bottom-footer: map.get(all-variables.$spacers, 9);
   content: none;
 }
 
+.landing-page-alert {
+  position: absolute;
+  inset-block-end: -20px;
+}
+
 .landing-page-custom-content {
-  margin-block: map.get(all-variables.$spacers, 6);
+  margin-block: 28px;
   margin-inline: 0;
+
+  &:has(si-explicit-legal-acknowledge, si-change-password) {
+    margin-block: 0;
+    block-size: 100%;
+  }
 }
 
 .landing-page-links a {

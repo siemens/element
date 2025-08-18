@@ -5,6 +5,10 @@
       "LANGUAGE": "Sprache",
       "THEME": "Design",
       "PROFILE": "Profil"
+    },
+    "PRODUCTIVE_DATA": {
+      "TITLE": "Produktive Daten",
+      "CONTENT": "Sie sind dabei, eine Verbindung zu produktiven Daten herzustellen. Bitte beachten Sie, dass die Änderungen sofort wirksam werden."
     }
   },
   "SI_FILTERED_SEARCH": {
@@ -52,7 +56,16 @@
     "SEARCH": "Suche",
     "SELECT_COUNTRY": "Land auswählen",
     "TRAVEL_DATE_REQUIRED": "Reisedatum ist erforderlich.",
-    "TRAVEL_DATE": "Reise datum"
+    "TRAVEL_DATE": "Reise datum",
+    "USERNAME": "Nutzername",
+    "PASSWORD": "Passwort",
+    "FORGOT_PASSWORD": "Passwort vergessen",
+    "REGISTER_NOW_INTRO": "Sie haben noch kein Konto?",
+    "REGISTER_NOW": "Jetzt anmelden",
+    "LOGIN": "Anmeldung",
+    "LOGIN_SSO": "Anmelden / Registrieren",
+    "BACK": "Zurück",
+    "NEXT": "Weiter"
   },
   "LANGUAGE": {
     "EN": "English",

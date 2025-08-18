@@ -1,0 +1,28 @@
+<si-landing-page
+  heading="Element App"
+  subheading="Software Suite X"
+  version="Version: 3.05"
+  subtitle="APP.CLAIM"
+  [implicitLegalAcknowledge]="legalAcknowledge"
+  [copyrightDetails]="copyrightDetails"
+  [links]="[
+    { title: 'Corporate Information', href: 'http://www.examples.org/corporate-information' },
+    { title: 'Privacy Notice', href: 'http://www.examples.org/privacy-notice' },
+    { title: 'Terms of Use', href: 'http://www.examples.org/terms-of-use' }
+  ]"
+  [availableLanguages]="[
+    { value: 'en', name: 'English' },
+    { value: 'de', name: 'Deutsch' },
+    { value: 'fr', name: 'Français' }
+  ]"
+  [loginAlert]="loginAlert()"
+>
+  <router-outlet />
+  <ng-template #legalAcknowledge>
+    You agree to the
+    <span class="d-inline-flex"
+      ><button type="button" class="btn btn-link">Terms of Use</button></span
+    >
+    policy by logging into this application.
+  </ng-template>
+</si-landing-page>
