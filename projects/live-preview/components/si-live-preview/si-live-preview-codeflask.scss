@@ -152,7 +152,7 @@ $lines-background-dark: #666;
 
     &.important,
     &.bold {
-      font-weight: bold;
+      font-weight: variables.$live-preview-font-weight-semibold;
     }
 
     &.italic {

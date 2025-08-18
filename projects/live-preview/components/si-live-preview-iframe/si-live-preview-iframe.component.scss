@@ -55,7 +55,7 @@ iframe {
     color: variables.$live-preview-control-fill-color;
     display: inline;
     font-size: $font-size-small;
-    font-weight: bold;
+    font-weight: variables.$live-preview-font-weight-semibold;
     margin-block: 0;
     margin-inline: 0 8px;
     overflow: hidden;
