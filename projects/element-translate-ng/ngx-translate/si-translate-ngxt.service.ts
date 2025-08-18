@@ -2,34 +2,40 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Injectable } from '@angular/core';
 import {
-  MissingTranslationHandler,
   MissingTranslationHandlerParams,
-  TranslateService
+  TranslateParser,
+  TranslateService,
+  Translation
 } from '@ngx-translate/core';
 import { SiTranslateService, TranslationResult } from '@siemens/element-translate-ng/translate';
 import { merge, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+interface MissingTranslationHandler {
+  handle: (params: MissingTranslationHandlerParams) => Translation | Observable<Translation>;
+}
 
 /**
  * {@link SiTranslateService} wrapper around ngx-translate
  *
  * @internal
  */
-@Injectable()
 export class SiTranslateNgxTService extends SiTranslateService {
   private ngxTranslateService: TranslateService;
+  private parser: TranslateParser;
   private defaultTranslations: Record<string, string> = {};
   private originalMissingHandler: MissingTranslationHandler;
 
   // eslint-disable-next-line @angular-eslint/prefer-inject
-  constructor(ngxTranslateService: TranslateService) {
+  constructor(ngxTranslateService: TranslateService, parser: TranslateParser) {
     super();
     this.ngxTranslateService = ngxTranslateService;
-    this.originalMissingHandler = ngxTranslateService.missingTranslationHandler;
-    ngxTranslateService.missingTranslationHandler = {
-      handle: params => this.handleMissingTranslation(params)
+    this.parser = parser;
+    this.originalMissingHandler = (ngxTranslateService as any)
+      .missingTranslationHandler as MissingTranslationHandler;
+    (ngxTranslateService as any).missingTranslationHandler = {
+      handle: (params: MissingTranslationHandlerParams) => this.handleMissingTranslation(params)
     };
 
     this.translationChange$ = merge(
@@ -38,11 +44,12 @@ export class SiTranslateNgxTService extends SiTranslateService {
     ).pipe(map(() => {}));
   }
 
-  override get currentLanguage(): string {
+  override get currentLanguage(): string | undefined {
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     return this.ngxTranslateService.currentLang;
   }
 
-  override get availableLanguages(): string[] {
+  override get availableLanguages(): readonly string[] {
     return this.ngxTranslateService.getLangs();
   }
 
@@ -55,12 +62,14 @@ export class SiTranslateNgxTService extends SiTranslateService {
     return this.ngxTranslateService.use(lang).pipe(map(() => {}));
   }
 
-  override getDefaultLanguage(): string {
+  override getDefaultLanguage(): string | null {
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     return this.ngxTranslateService.getDefaultLang();
   }
 
   override setDefaultLanguage(lang: string): void {
     this.setDocumentLanguage(lang);
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     this.ngxTranslateService.setDefaultLang(lang);
   }
 
@@ -99,11 +108,14 @@ export class SiTranslateNgxTService extends SiTranslateService {
   }
 
   private handleMissingTranslation(params: MissingTranslationHandlerParams): string {
-    return (
-      params.translateService.parser.interpolate(
-        this.defaultTranslations[params.key],
-        params.interpolateParams
-      ) ?? this.originalMissingHandler.handle(params)
+    const result =
+      this.parser.interpolate(this.defaultTranslations[params.key], params.interpolateParams) ??
+      this.originalMissingHandler.handle(params);
+    if (typeof result === 'string') {
+      return result;
+    }
+    throw new Error(
+      `Invalid result type of missing translation handler: ${typeof result} ${result}`
     );
   }
 }
