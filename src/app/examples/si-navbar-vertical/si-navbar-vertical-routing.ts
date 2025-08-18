@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Route, RouterLink, RouterOutlet } from '@angular/router';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Route, Router, RouterLink, RouterOutlet } from '@angular/router';
 import {
   SiApplicationHeaderComponent,
   SiHeaderBrandDirective,
@@ -91,7 +91,7 @@ export const ROUTES: Route[] = [
   providers: [provideExampleRoutes(ROUTES)],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SampleComponent {
+export class SampleComponent implements OnInit {
   menuItems: NavbarVerticalItem[] = [
     {
       type: 'router-link',
@@ -116,4 +116,11 @@ export class SampleComponent {
       badgeColor: 'danger'
     }
   ];
+
+  private activeRoute = inject(ActivatedRoute);
+  private router = inject(Router);
+
+  ngOnInit(): void {
+    this.router.navigate(['home'], { relativeTo: this.activeRoute });
+  }
 }

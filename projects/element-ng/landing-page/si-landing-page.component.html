@@ -1,15 +1,18 @@
-@let announcementAlert = announcement();
-@let supportedLanguages = availableLanguages();
-@let loginAlertDetails = loginAlert();
+@let announcement = this.announcement();
+@let availableLanguages = this.availableLanguages();
+@let loginAlert = this.loginAlert();
+@let implicitLegalAcknowledge = this.implicitLegalAcknowledge();
+@let liveDataWarning = this.liveDataWarning();
+@let isFullHeightSection = this.isFullHeightSection();
 
-@if (announcementAlert) {
+@if (announcement) {
   <si-inline-notification
     class="rounded-0"
-    [severity]="announcementAlert.severity"
-    [heading]="announcementAlert.heading"
-    [message]="announcementAlert.message"
-    [action]="announcementAlert.action"
-    [translationParams]="announcementAlert.translationParams"
+    [severity]="announcement.severity"
+    [heading]="announcement.heading"
+    [message]="announcement.message"
+    [action]="announcement.action"
+    [translationParams]="announcement.translationParams"
   />
 }
 <div class="landing-page">
@@ -19,64 +22,88 @@
   >
   </div>
   <div class="landing-page-content">
-    <div class="d-flex justify-content-between align-items-center pb-9">
-      @if (!logoUrl()) {
-        <span role="img" class="landing-page-logo"></span>
-      }
-      @if (logoUrl()) {
-        <img
-          class="landing-page-logo landing-page-custom-logo"
-          [src]="logoUrl()"
-          [alt]="heading() + '\'s Background'"
-        />
-      }
-      @if (supportedLanguages && supportedLanguages.length > 1) {
-        <div class="landing-page-language-switcher">
-          <si-language-switcher
-            [translationKey]="translationKey()"
-            [availableLanguages]="supportedLanguages"
-          />
-        </div>
-      }
-    </div>
-    <div class="landing-page-main">
-      @if (subheading()) {
-        <div class="si-h2">{{ subheading() }}</div>
-      }
-      <h1 class="si-h1-bold my-2">{{ heading() }}</h1>
-      @if (!loginAlert()) {
-        <h2 class="mt-10 si-h2">{{ subtitle() }}</h2>
-      }
-      @if (loginAlertDetails) {
-        <si-inline-notification
-          class="my-6"
-          [severity]="loginAlertDetails.severity || 'danger'"
-          [heading]="loginAlertDetails.heading"
-          [message]="loginAlertDetails.message"
-        />
-      }
-      <div class="landing-page-custom-content">
-        <ng-content />
-      </div>
-    </div>
-    <footer>
-      <div>
-        <div class="d-flex justify-content-start flex-row flex-wrap mt-6">
-          @for (link of links(); track $index) {
-            <span>
-              <a siLinkDefaultTarget="_blank" class="si-body d-flex-inline me-6" [siLink]="link">
-                {{ link.title | translate }}
-              </a>
-            </span>
+    <div class="landing-page-content-inner">
+      @if (!isFullHeightSection) {
+        <div class="d-flex justify-content-between align-items-center pb-9">
+          @if (!logoUrl()) {
+            <span role="img" class="landing-page-logo"></span>
+          } @else {
+            <img
+              class="landing-page-logo landing-page-custom-logo"
+              [src]="logoUrl()"
+              [alt]="heading() + '\'s Background'"
+            />
+          }
+          @if (availableLanguages.length > 1) {
+            <div class="landing-page-language-switcher">
+              <si-language-switcher
+                [translationKey]="translationKey()"
+                [availableLanguages]="availableLanguages"
+              />
+            </div>
           }
         </div>
-        <div class="si-caption mt-4 mb-6 text-secondary d-flex flex-wrap">
-          @if (version()) {
-            <span class="me-6">{{ version() }}</span>
+      }
+      <div class="landing-page-main">
+        @if (!isFullHeightSection) {
+          @if (subheading()) {
+            <div class="si-h2">{{ subheading() | translate }}</div>
           }
-          <si-copyright-notice [copyright]="copyrightDetails()" />
+          <h1 class="si-h1-bold my-2">{{ heading() | translate }}</h1>
+          <div class="position-relative">
+            <h2 class="mt-10 si-h2" [class.invisible]="loginAlert">{{ subtitle() | translate }}</h2>
+            @if (loginAlert) {
+              <si-inline-notification
+                class="landing-page-alert w-100"
+                [severity]="loginAlert.severity || 'danger'"
+                [heading]="loginAlert.heading"
+                [message]="loginAlert.message"
+              />
+            }
+          </div>
+        }
+        <div class="landing-page-custom-content">
+          <ng-content />
+          @if (!isFullHeightSection) {
+            @if (implicitLegalAcknowledge) {
+              @if (typeof implicitLegalAcknowledge === 'string') {
+                <div class="text-secondary mt-8" [innerHTML]="implicitLegalAcknowledge"></div>
+              } @else {
+                <div class="text-secondary mt-8">
+                  <ng-container [ngTemplateOutlet]="implicitLegalAcknowledge" />
+                </div>
+              }
+            }
+            @if (liveDataWarning) {
+              <div class="text-secondary mt-8">
+                <div class="si-h5">{{ liveDataWarning.title | translate }}</div>
+                <div class="si-body my-4">{{ liveDataWarning.content | translate }}</div>
+              </div>
+            }
+          }
         </div>
       </div>
-    </footer>
+      @if (!isFullHeightSection) {
+        <footer>
+          <div>
+            <div class="d-flex justify-content-start flex-row flex-wrap mt-6">
+              @for (link of links(); track $index) {
+                <span>
+                  <a siLinkDefaultTarget="_blank" class="si-body me-6" [siLink]="link">
+                    {{ link.title | translate }}
+                  </a>
+                </span>
+              }
+            </div>
+            <div class="si-caption mt-4 mb-6 text-secondary d-flex flex-wrap">
+              @if (version()) {
+                <span class="me-6">{{ version() }}</span>
+              }
+              <si-copyright-notice [copyright]="copyrightDetails()" />
+            </div>
+          </div>
+        </footer>
+      }
+    </div>
   </div>
 </div>

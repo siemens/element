@@ -62,8 +62,16 @@ test('si-info-page/si-info-page', ({ si }) => si.static());
 test('si-info-page/si-info-page-stacked-icon', ({ si }) => si.static());
 test('si-info-page/si-info-page-illustration', ({ si }) => si.static());
 test('si-inline-notification/si-inline-notification', ({ si }) => si.static());
-test('si-landing-page/si-landing-page-custom', ({ si }) => si.static());
-test('si-landing-page/si-landing-page', ({ si }) => si.static());
+test('si-landing-page/si-landing-page-custom', ({ si }) =>
+  si.static({ viewports: [{ name: 'desktop', width: 1000, height: 794 }] }));
+test('si-landing-page/si-landing-page-change-password', ({ si }) =>
+  si.static({ viewports: [{ name: 'desktop', width: 1000, height: 794 }] }));
+test('si-landing-page/si-landing-page-eula', ({ si }) =>
+  si.static({ viewports: [{ name: 'desktop', width: 1000, height: 794 }] }));
+test('si-landing-page/si-landing-page-basic-login', ({ si }) =>
+  si.static({ viewports: [{ name: 'desktop', width: 1000, height: 794 }] }));
+test('si-landing-page/si-landing-page-single-sign-on-login', ({ si }) =>
+  si.static({ viewports: [{ name: 'desktop', width: 1000, height: 794 }] }));
 test('si-language-switcher/si-language-switcher', ({ si }) => si.static());
 test('si-layouts/content-full-layout-fixed-height', ({ si }) => si.static());
 test('si-layouts/content-tile-layout-full-scroll', ({ si }) => si.static());

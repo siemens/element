@@ -1,6 +1,10 @@
 {
   "APP": {
-    "CLAIM": "Dive in into the wonderful world of Element"
+    "CLAIM": "Dive in into the wonderful world of Element",
+    "PRODUCTIVE_DATA": {
+      "TITLE": "Productive data",
+      "CONTENT": "You are about to connect to productive data. Please note that changes will take effect immediately."
+    }
   },
   "FORM": {
     "ACCEPT_TERMS_DESCRIPTION": "I confirm that I accept all and everything.",

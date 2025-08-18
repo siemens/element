@@ -5,6 +5,10 @@
       "LANGUAGE": "Language",
       "THEME": "Theme",
       "PROFILE": "Profile"
+    },
+    "PRODUCTIVE_DATA": {
+      "TITLE": "Productive data",
+      "CONTENT": "You are about to connect to productive data. Please note that changes will take effect immediately."
     }
   },
   "FORM": {
@@ -42,7 +46,16 @@
     "SEARCH": "Search",
     "SELECT_COUNTRY": "Select Country",
     "TRAVEL_DATE_REQUIRED": "Travel date is required.",
-    "TRAVEL_DATE": "Travel Date"
+    "TRAVEL_DATE": "Travel Date",
+    "USERNAME": "Username",
+    "PASSWORD": "Password",
+    "FORGOT_PASSWORD": "Forgot password",
+    "REGISTER_NOW_INTRO": "Don't have an account?",
+    "REGISTER_NOW": "Register now",
+    "LOGIN": "Login",
+    "LOGIN_SSO": "Login / Sign up",
+    "BACK": "Back",
+    "NEXT": "Next"
   },
   "LANGUAGE": {
     "EN": "English",
