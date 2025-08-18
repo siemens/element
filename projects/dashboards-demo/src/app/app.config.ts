@@ -3,17 +3,20 @@
  * SPDX-License-Identifier: MIT
  */
 import { HttpBackend, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withHashLocation } from '@angular/router';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, provideTranslateService } from '@ngx-translate/core';
 import {
   Config,
   SI_DASHBOARD_CONFIGURATION,
   SI_WIDGET_ID_PROVIDER,
   SI_WIDGET_STORE
 } from '@siemens/dashboards-ng';
-import { provideNgxTranslateForElement } from '@siemens/element-translate-ng/ngx-translate';
+import {
+  provideMissingTranslationHandlerForElement,
+  provideNgxTranslateForElement
+} from '@siemens/element-translate-ng/ngx-translate';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 
 import { AppWidgetIdProvider } from './app-widget-id-provider';
@@ -37,15 +40,14 @@ export const appConfig: ApplicationConfig = {
     { provide: SI_WIDGET_STORE, useClass: AppWidgetStorage },
     { provide: SI_DASHBOARD_CONFIGURATION, useValue: config },
     { provide: SI_WIDGET_ID_PROVIDER, useClass: AppWidgetIdProvider },
-    importProvidersFrom(
-      TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useFactory: createTranslateLoader,
-          deps: [HttpBackend]
-        }
-      })
-    ),
+    provideTranslateService({
+      missingTranslationHandler: provideMissingTranslationHandlerForElement(),
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpBackend]
+      }
+    }),
     // eslint-disable-next-line @typescript-eslint/no-deprecated
     provideAnimations(),
     provideHttpClient(withInterceptorsFromDi()),

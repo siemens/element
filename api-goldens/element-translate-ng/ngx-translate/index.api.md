@@ -9,6 +9,9 @@ import * as i0 from '@angular/core';
 import { Provider } from '@angular/core';
 
 // @public
+export const provideMissingTranslationHandlerForElement: (missingTranslationHandlerProvider?: Provider) => Provider;
+
+// @public
 export const provideNgxTranslateForElement: () => (EnvironmentProviders | Provider)[];
 
 // @public

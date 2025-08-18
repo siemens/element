@@ -37,7 +37,7 @@ export abstract class SiTranslateService {
   /**
    * The currently used language.
    */
-  abstract get currentLanguage(): string;
+  abstract get currentLanguage(): string | undefined;
 
   /**
    * Sets a new language to be used. If needed, loads the language file.
@@ -56,12 +56,12 @@ export abstract class SiTranslateService {
    * The language to be used as default.
    * @returns The code of the default language.
    */
-  abstract getDefaultLanguage(): string;
+  abstract getDefaultLanguage(): string | null;
 
   /**
    * The available languages.
    */
-  abstract get availableLanguages(): string[];
+  abstract get availableLanguages(): readonly string[];
   abstract set availableLanguages(languages: string[]);
 
   /**
