@@ -3,10 +3,15 @@
 // Auto-generated file. Run 'npm run build:all:update-translatable-keys' to update.
 
 export interface SiTranslatableKeys {
+  'SI_AI_MESSAGE.AI_ASSISTANT'?: string;
+  'SI_AI_MESSAGE.AI_THINKING'?: string;
+  'SI_AI_MESSAGE.LOADING'?: string;
+  'SI_AI_MESSAGE.MORE_ACTIONS'?: string;
   'SI_ALERT_DIALOG.OK'?: string;
   'SI_APPLICATION_HEADER.LAUNCHPAD'?: string;
   'SI_APPLICATION_HEADER.TOGGLE_ACTIONS'?: string;
   'SI_APPLICATION_HEADER.TOGGLE_NAVIGATION'?: string;
+  'SI_ATTACHMENT_LIST.REMOVE_ATTACHMENT'?: string;
   'SI_BREADCRUMB'?: string;
   'SI_CHANGE_PASSWORD.BACK'?: string;
   'SI_CHANGE_PASSWORD.CHANGE'?: string;
@@ -15,6 +20,12 @@ export interface SiTranslatableKeys {
   'SI_CHANGE_PASSWORD.CONFIRM_PASSWORD'?: string;
   'SI_CHANGE_PASSWORD.NEW_PASSWORD'?: string;
   'SI_CHANGE_PASSWORD.PASSWORD_POLICY'?: string;
+  'SI_CHAT_INPUT.AI_DISCLAIMER'?: string;
+  'SI_CHAT_INPUT.ATTACH_FILE'?: string;
+  'SI_CHAT_INPUT.MORE_ACTIONS'?: string;
+  'SI_CHAT_INPUT.PLACEHOLDER'?: string;
+  'SI_CHAT_INPUT.REMOVE_ATTACHMENT'?: string;
+  'SI_CHAT_INPUT.SEND'?: string;
   'SI_COLUMN_SELECTION_DIALOG.CANCEL'?: string;
   'SI_COLUMN_SELECTION_DIALOG.HIDDEN'?: string;
   'SI_COLUMN_SELECTION_DIALOG.ITEM_MOVED'?: string;
@@ -203,6 +214,8 @@ export interface SiTranslatableKeys {
   'SI_TREE_VIEW.COLLAPSE_ALL'?: string;
   'SI_TREE_VIEW.EXPAND_ALL'?: string;
   'SI_TYPEAHEAD.AUTOCOMPLETE_LIST_LABEL'?: string;
+  'SI_USER_MESSAGE.MESSAGE_ACTIONS'?: string;
+  'SI_USER_MESSAGE.USER_AVATAR'?: string;
   'SI_WIZARD.BACK'?: string;
   'SI_WIZARD.CANCEL'?: string;
   'SI_WIZARD.COMPLETED'?: string;

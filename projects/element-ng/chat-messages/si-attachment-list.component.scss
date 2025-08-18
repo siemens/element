@@ -1,0 +1,20 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+// Attachment item styling
+.attachment-item {
+  max-inline-size: 200px;
+  min-inline-size: 120px;
+
+  .attachment-name {
+    max-inline-size: 120px;
+  }
+}
+
+// Container responsive behavior
+:host-context(.si-container-xs) {
+  .attachment-item {
+    min-inline-size: 100px;
+    max-inline-size: 150px;
+  }
+}

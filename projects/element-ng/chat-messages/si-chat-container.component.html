@@ -1,0 +1,77 @@
+<div class="d-flex flex-column h-100 d-block w-100 overflow-hidden" siResponsiveContainer>
+  <!-- Messages Area -->
+  <div
+    #messagesContainer
+    class="flex-grow-1 overflow-auto messages-area"
+    [class.p-3]="!isEmpty()"
+    [class.p-sm-4]="!isEmpty()"
+    (scroll)="onScroll()"
+  >
+    <!-- Empty State -->
+    @if (isEmpty()) {
+      <div
+        class="d-flex flex-column align-items-center justify-content-center h-100 text-center p-4"
+      >
+        @if (emptyStateTemplate()) {
+          <ng-container *ngTemplateOutlet="emptyStateTemplate(); context: emptyStateContext()" />
+        } @else {
+          <div class="empty-state text-muted mb-4 text-secondary">
+            <si-icon icon="element-stateInfo" class="display-1" />
+          </div>
+          <h5 class="fw-medium mb-3">{{ emptyStateTitle() | translate }}</h5>
+          <p class="text-muted mb-0 si-body-1">{{ emptyStateDescription() | translate }}</p>
+        }
+      </div>
+    }
+
+    <!-- Message List -->
+    @if (!isEmpty()) {
+      @for (message of messages(); track message.id) {
+        <div class="pb-4">
+          <!-- User Message -->
+          @if (message.type === 'user') {
+            <si-user-message
+              [messageId]="message.id"
+              [content]="message.content"
+              [attachments]="message.attachments || []"
+              [actions]="message.actions || []"
+              [messageClass]="message.messageClass || ''"
+              (actionClick)="onUserMessageAction($event, message.id)"
+              (attachmentClick)="onAttachmentClick($event, message.id)"
+            />
+          }
+
+          <!-- AI Message -->
+          @if (message.type === 'ai') {
+            <si-ai-message
+              [messageId]="message.id"
+              [content]="message.content"
+              [loading]="message.loading || false"
+              [actions]="getAiMessagePrimaryActions(message)"
+              [secondaryActions]="getAiMessageSecondaryActions(message)"
+              [messageClass]="message.messageClass || ''"
+              (actionClick)="onAiMessageAction($event, message.id)"
+            />
+          }
+        </div>
+      }
+    }
+  </div>
+
+  <!-- Chat Input Area -->
+  <div class="chat-input-area p-3 p-sm-4 d-flex justify-content-center">
+    <si-chat-input
+      class="w-100"
+      [placeholder]="inputPlaceholder()"
+      [disabled]="disabled()"
+      [sending]="sending()"
+      [disclaimer]="disclaimer()"
+      [actions]="inputPrimaryActions()"
+      [secondaryActions]="inputSecondaryActions()"
+      [allowAttachments]="allowAttachments()"
+      [acceptedFileTypes]="acceptedFileTypes()"
+      [maxFileSize]="maxFileSize()"
+      (send)="onMessageSent($event)"
+    />
+  </div>
+</div>

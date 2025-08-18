@@ -1,0 +1,57 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+.markdown-content ::ng-deep {
+  word-wrap: break-word;
+
+  strong {
+    font-weight: variables.$si-font-weight-bold;
+  }
+
+  code {
+    background-color: variables.$element-ui-4;
+    padding-block: map.get(variables.$spacers, 1);
+    padding-inline: map.get(variables.$spacers, 2);
+    border-radius: variables.$element-radius-1;
+    font-family:
+      'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+    font-size: 0.875em;
+  }
+
+  pre {
+    background-color: variables.$element-ui-4;
+    padding-block: map.get(variables.$spacers, 4);
+    padding-inline: map.get(variables.$spacers, 5);
+    border-radius: variables.$element-radius-1;
+    overflow-x: auto;
+    margin-block: map.get(variables.$spacers, 2);
+    margin-inline: 0;
+
+    code {
+      background-color: transparent;
+      padding-block: 0;
+      padding-inline: 0;
+      border-radius: 0;
+      font-size: 0.875em;
+    }
+  }
+
+  ul {
+    margin-block-end: 0;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  blockquote {
+    border-inline-start: 4px solid variables.$element-ui-3;
+    padding-inline-start: map.get(variables.$spacers, 4);
+    margin-block: map.get(variables.$spacers, 3);
+    color: variables.$element-text-secondary;
+
+    p {
+      margin-block-end: 0;
+    }
+  }
+}
