@@ -4,7 +4,7 @@
     "outDir": "../../out-tsc/lib",
     "declaration": true,
     "inlineSources": true,
-    "types": ["@siemens/element-translate-ng/localize-types", "zone.js"],
+    "types": ["@siemens/element-translate-ng/localize-types"],
     "lib": ["dom", "es2018"],
     "paths": {
       "@siemens/element-translate-ng": ["dist/@siemens/element-translate-ng"],

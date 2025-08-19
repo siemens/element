@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "types": ["jasmine", "@siemens/element-translate-ng/localize-types", "node", "zone.js"],
+    "types": ["jasmine", "@siemens/element-translate-ng/localize-types", "node"],
     "paths": {
       "@siemens/element-translate-ng": [
         "projects/element-translate-ng/public-api.ts",

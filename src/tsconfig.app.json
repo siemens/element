@@ -4,7 +4,7 @@
     "outDir": "./out-tsc/app",
     "noUnusedLocals": false,
     "useDefineForClassFields": true,
-    "types": ["@siemens/element-translate-ng/localize-types", "zone.js"]
+    "types": ["@siemens/element-translate-ng/localize-types"]
   },
   "include": ["**/*.ts"],
   "exclude": ["**/*.spec.ts"]

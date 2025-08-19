@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/spec",
-    "types": ["jasmine", "@siemens/element-translate-ng/localize-types", "zone.js"]
+    "types": ["jasmine", "@siemens/element-translate-ng/localize-types"]
   },
   "include": ["**/*.spec.ts", "**/*.d.ts"]
 }
