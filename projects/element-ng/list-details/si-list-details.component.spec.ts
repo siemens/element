@@ -192,12 +192,12 @@ describe('ListDetailsComponent', () => {
       const splitHandleBox = splitHandle.getBoundingClientRect();
       const x = splitBox.x + splitBox.width - splitHandleBox.width / 2;
       const y = splitBox.y + splitBox.height / 2;
-      expect(component.listDetails.listWidth()).toBe('default');
+      const listWidth = component.listDetails.listWidth();
       drag(splitHandle, x, y, x - 0.25 * splitBox.width, y);
       fixture.detectChanges();
       flush();
       fixture.detectChanges();
-      expect(component.listDetails.listWidth()).not.toBe('default');
+      expect(component.listDetails.listWidth()).not.toBe(listWidth);
     }));
 
     it('should unset detailsActive when back button is clicked', fakeAsync(() => {
