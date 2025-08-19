@@ -8,7 +8,6 @@
   [minListSize]="200"
   [minDetailsSize]="100"
   [(detailsActive)]="detailsActive"
-  (listWidthChange)="table?.recalculate()"
 >
   <si-list-pane class="card">
     <si-list-pane-header>
@@ -72,6 +71,7 @@
         [datatableInteractionAutoSelect]="container.hasLargeSize()"
         (page)="setPage($event)"
         (select)="datatableOnSelect($event.selected)"
+        (siResizeObserver)="table.recalculate()"
       >
         <si-empty-state empty-content icon="element-users" heading="No users to display" />
       </ngx-datatable>
