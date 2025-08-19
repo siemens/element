@@ -1758,7 +1758,7 @@ export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDes
     const bodyStyle: CSSStyleDeclaration = window.getComputedStyle(document.body);
     const options = this.actualOptions;
     options.textStyle = {
-      fontFamily: bodyStyle.fontFamily,
+      fontFamily: navigator.webdriver ? 'sans-serif' : bodyStyle.fontFamily,
       fontSize: bodyStyle.fontSize
     };
     this.extZoomSliderOptions.textStyle = options.textStyle;
