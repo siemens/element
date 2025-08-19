@@ -792,7 +792,7 @@ export class SiMapComponent implements AfterViewInit, OnChanges, OnDestroy, Afte
    * On feature hovering show tooltip and change cursor style
    * @param event - A hovering event
    */
-  onFeatureHover(event: MapBrowserEvent<UIEvent>): void {
+  onFeatureHover(event: MapBrowserEvent): void {
     if (!this.map) {
       return;
     }
@@ -858,7 +858,7 @@ export class SiMapComponent implements AfterViewInit, OnChanges, OnDestroy, Afte
    * Clicking on cluster event
    * @param event - openlayers event
    */
-  onClusterClick(event: MapBrowserEvent<UIEvent>): void {
+  onClusterClick(event: MapBrowserEvent): void {
     if (!this.map) {
       return;
     }
