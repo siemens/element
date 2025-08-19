@@ -4,7 +4,6 @@
     "outDir": "../../out-tsc/lib",
     "declaration": true,
     "inlineSources": true,
-    "types": ["zone.js"],
     "paths": {
       "@siemens/element-translate-ng/*": ["projects/element-translate-ng/*"]
     }
