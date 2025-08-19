@@ -64,9 +64,17 @@ button {
     margin-block: -#{map.get(spacers.$spacers, 2)};
     margin-inline: -#{map.get(spacers.$spacers, 2)} #{map.get(spacers.$spacers, 2)};
   }
+
+  &.btn-icon {
+    padding-inline: calc(#{map.get(spacers.$spacers, 2)} - var(--btn-border-width, 0px));
+
+    .icon {
+      margin-inline: 0;
+    }
+  }
 }
 
-.btn:not(:is(.btn-circle, .btn-link, .btn-close)) {
+.btn:not(:is(.btn-circle, .btn-link, .btn-close, .btn-icon)) {
   min-inline-size: variables.$btn-width-normal;
 }
 

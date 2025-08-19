@@ -1,0 +1,18 @@
+- group "Split button primary":
+  - button " Button"
+  - button "Dropdown toggle"
+- group "Split button secondary":
+  - button " Button"
+  - button "Dropdown toggle"
+- group "Split button primary label only":
+  - button "Button"
+  - button "Dropdown toggle"
+- group "Split button secondary label only":
+  - button "Button"
+  - button "Dropdown toggle"
+- group "Split button primary icon only":
+  - button "Button"
+  - button "Dropdown toggle"
+- group "Split button secondary icon only":
+  - button "Button"
+  - button "Dropdown toggle"
