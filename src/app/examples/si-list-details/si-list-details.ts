@@ -26,7 +26,10 @@ import {
   SiMenuHeaderDirective,
   SiMenuItemComponent
 } from '@siemens/element-ng/menu';
-import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
+import {
+  BOOTSTRAP_BREAKPOINTS,
+  SiResizeObserverDirective
+} from '@siemens/element-ng/resize-observer';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
 import { SiTabComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
 import { LOG_EVENT } from '@siemens/live-preview';
@@ -58,7 +61,8 @@ import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.s
     SiMenuHeaderDirective,
     CdkMenuTrigger,
     SiTabsetComponent,
-    SiTabComponent
+    SiTabComponent,
+    SiResizeObserverDirective
   ],
   templateUrl: './si-list-details.html',
   providers: [DataService],
