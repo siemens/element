@@ -6,6 +6,10 @@
   inline-size: 100%;
   overflow: hidden;
 
+  &:empty {
+    display: none;
+  }
+
   &,
   .title-subgroup {
     display: flex;
