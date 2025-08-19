@@ -9,13 +9,9 @@ import { SiMenuModule } from '@siemens/element-ng/menu';
 @Component({
   selector: 'app-sample',
   imports: [SiMenuModule, CdkMenuTrigger],
-  templateUrl: './buttontypes.html',
-  host: {
-    class: 'bg-base-1'
-  }
+  templateUrl: './toolbar.html'
 })
 export class SampleComponent {
-  disabled = false;
   splitOpen1 = false;
   splitOpen2 = false;
   splitOpen3 = false;
@@ -25,7 +21,7 @@ export class SampleComponent {
 
   menuItems = [
     { icon: 'element-download', text: 'Download as PDF' },
-    { icon: 'element-download', text: 'Download as CSV' },
+    { icon: 'element-export', text: 'Export as CSV' },
     { icon: 'element-share', text: 'Share' }
   ];
 }
