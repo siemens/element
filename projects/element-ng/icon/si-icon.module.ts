@@ -4,10 +4,11 @@
  */
 import { NgModule } from '@angular/core';
 
+import { SiIconLegacyComponent } from './si-icon-legacy.component';
 import { SiIconComponent } from './si-icon.component';
 
 @NgModule({
-  imports: [SiIconComponent],
-  exports: [SiIconComponent]
+  imports: [SiIconComponent, SiIconLegacyComponent],
+  exports: [SiIconComponent, SiIconLegacyComponent]
 })
 export class SiIconModule {}
