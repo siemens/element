@@ -16,7 +16,6 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
-  Signal,
   signal,
   SimpleChanges
 } from '@angular/core';
@@ -99,11 +98,10 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
   /**
    * The percentage width of the list view of the overall component width.
-   * Can be a number or `'default'`, which is 32%.
    *
-   * @defaultValue 'default'
+   * @defaultValue 32
    */
-  readonly listWidth = model<number | 'default'>('default');
+  readonly listWidth = model<number>(32);
 
   /**
    * Sets the minimal width of the list component in pixel.
@@ -125,25 +123,10 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
    */
   readonly stateId = input<string>();
 
-  private readonly actualListWidth = computed(() => {
-    const listWidth = this.listWidth();
-    return listWidth === 'default' ? 32 : listWidth;
-  });
-
   protected readonly splitSizes = computed<[number, number]>(() => [
-    this.actualListWidth(),
-    100 - this.actualListWidth()
+    this.listWidth(),
+    100 - this.listWidth()
   ]);
-  /**
-   * The max size to limit the list view in the static flex layout (if less than 50%), otherwise not set.
-   * @internal
-   */
-  readonly maxListSize = this.getMaxSize(0);
-  /**
-   * The max size to limit the details view in the static flex layout (if less than 50%), otherwise not set.
-   * @internal
-   */
-  readonly maxDetailsSize = this.getMaxSize(1);
 
   protected readonly listStateId = computed(() => {
     const stateId = this.stateId();
@@ -244,19 +227,5 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
     }
     this.hadLargeSizePreviously = hasLargeSize;
     this.detailsActivePreviously = detailsActive;
-  }
-
-  /**
-   * Get the max size to limit in the static flex layout (if less than 50%), otherwise not set
-   */
-  private getMaxSize(part: 0 | 1): Signal<string> {
-    return computed(() =>
-      !this.disableResizing() ||
-      this.listWidth() === 'default' ||
-      !this.hasLargeSize() ||
-      this.splitSizes()[part] > 50
-        ? ''
-        : this.splitSizes()[part] + '%'
-    );
   }
 }
