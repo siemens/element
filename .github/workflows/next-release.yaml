@@ -29,6 +29,7 @@ jobs:
     secrets:
       SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
       SIEMENS_NPM_USER: ${{ secrets.SIEMENS_NPM_USER }}
+      MAPTILER_KEY: ${{ secrets.MAPTILER_KEY }}
 
   publish:
     runs-on: ubuntu-24.04
