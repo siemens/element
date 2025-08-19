@@ -11,36 +11,63 @@
   display: inline-flex;
   vertical-align: middle;
 
-  .btn {
+  .btn:not(.btn-circle) {
+    position: relative;
+    flex: 1 1 auto;
     border-radius: 0;
   }
 
-  > .btn:first-of-type,
-  > label:first-of-type .btn {
+  .btn-primary + .btn-primary {
+    border-inline-start: 1px solid var(--btn-color, inherit);
+  }
+
+  > .btn:first-of-type:not(.btn-circle),
+  > label:first-of-type .btn:not(.btn-circle) {
     border-start-start-radius: semantic-tokens.$element-button-radius;
     border-end-start-radius: semantic-tokens.$element-button-radius;
   }
 
-  > .btn:last-of-type,
-  > label:last-of-type .btn {
+  > .btn:last-of-type:not(.btn-circle),
+  > label:last-of-type .btn:not(.btn-circle) {
     border-start-end-radius: semantic-tokens.$element-button-radius;
     border-end-end-radius: semantic-tokens.$element-button-radius;
   }
 
-  > .btn,
-  label > .btn {
-    position: relative;
-    flex: 1 1 auto;
+  > .btn-check:focus + .btn,
+  > .btn:is(:hover, :active, .active, :focus-visible) {
+    z-index: 1;
   }
 
-  > .btn-check:focus + .btn,
-  > .btn:is(:hover, :active, .active) {
-    z-index: 1;
+  // Add separator border on primary button hover/focus to keep the layout consistent
+  > .btn-primary:has(+ .btn-primary):is(:hover, :active, .active, :focus-visible)::after {
+    content: '';
+    position: absolute;
+    inset-inline-end: 0;
+    border-inline-end: 1px solid var(--btn-color, inherit);
+    block-size: 100%;
   }
 
   > .btn:not(:first-of-type),
   label + label {
     margin-inline-start: -1px;
+  }
+
+  // Dropdown toggle styling for split buttons
+  .btn.dropdown-toggle {
+    inline-size: 24px;
+    padding: 0;
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+
+    .dropdown-caret {
+      margin-inline: 0;
+      padding-inline: 0;
+      transform-origin: center;
+    }
+  }
+
+  &[inert] {
+    opacity: semantic-tokens.$element-action-disabled-opacity;
   }
 }
 
@@ -52,6 +79,11 @@
     border: 1px solid semantic-tokens.$element-ui-4;
     transition: none;
 
+    &.btn-icon {
+      padding-inline: map.get(spacers.$spacers, 5) - 1px;
+    }
+
+    // @deprecated Will be removed in a future major version, use .btn-icon instead.
     &.icon-only {
       min-inline-size: unset;
       padding-inline: map.get(spacers.$spacers, 5) - 1px;
