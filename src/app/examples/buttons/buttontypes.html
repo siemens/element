@@ -154,3 +154,11 @@
     </div>
   </div>
 </div>
+
+<ng-template #dropdownMenu>
+  <si-menu>
+    @for (item of menuItems; track $index) {
+      <si-menu-item [icon]="item.icon">{{ item.text }}</si-menu-item>
+    }
+  </si-menu>
+</ng-template>
