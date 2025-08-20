@@ -28,40 +28,8 @@
   }
 }
 
-/// ACCOUNT FOR MEASURED CONTAINERS
-:host-context(.si-container-sm),
-:host-context(.si-container-md),
-:host-context(.si-container-lg),
-:host-context(.si-container-xl),
-:host-context(.si-container-xxl) {
-  :host.si-form-input {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .form-label {
-    align-self: start;
-    padding-block: all-variables.add(
-      all-variables.$input-padding-y,
-      all-variables.$input-border-width
-    );
-    padding-inline: map.get(all-variables.$spacers, 6);
-    inline-size: var(--si-form-label-width, math.percentage(math.div(2, 12)));
-    line-height: all-variables.$input-line-height;
-
-    &:empty {
-      display: block;
-    }
-  }
-
-  :host-context(si-form-fieldset) .form-label {
-    padding-block: map.get(all-variables.$spacers, 1) 0;
-  }
-
-  :host(.form-check) {
-    .form-label {
-      padding-block: 2px;
-    }
-  }
+.col-form-label {
+  align-self: start;
+  padding-inline: map.get(all-variables.$spacers, 6);
+  inline-size: var(--si-form-label-width, math.percentage(math.div(2, 12)));
 }

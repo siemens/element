@@ -55,7 +55,9 @@ export interface SiFormError {
     '[style.--si-form-label-width]': 'labelWidthCssVar()',
     '[class.form-check]': 'fieldControl()?.isFormCheck',
     '[class.form-check-inline]': 'fieldset?.inline()',
-    '[class.si-form-input]': '!fieldset'
+    '[class.si-form-input]': '!fieldset',
+    '[class.flex-row]': 'container?.isInline()',
+    '[class.align-items-center]': 'container?.isInline()'
   }
 })
 export class SiFormItemComponent

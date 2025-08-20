@@ -1,4 +1,5 @@
 @use '../../variables/spacers';
+@use '../../bootstrap/functions';
 @use '../variables';
 
 @use 'sass:map';
@@ -22,7 +23,7 @@
 }
 
 .col-form-label {
-  padding-block: map.get(spacers.$spacers, 4) - 1px 0;
+  padding-block: functions.add(variables.$input-padding-y, variables.$input-border-width);
 }
 
 .required:is(.form-label, .col-form-label, .form-check-label)::after {
