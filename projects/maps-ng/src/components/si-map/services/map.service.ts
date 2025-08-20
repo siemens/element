@@ -346,7 +346,7 @@ export class MapService {
    * Separate feature styling with icon
    * @param feature - to style
    * @param cluster - indication
-   * @param grouping - colors
+   * @param features - list of features
    */
   getFeatureStyle(feature: Feature, cluster: boolean, features: Feature[], dummy = false): Style[] {
     const subFeatures = feature.getProperties()?.features;

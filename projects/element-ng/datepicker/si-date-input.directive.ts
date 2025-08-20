@@ -216,7 +216,6 @@ export class SiDateInputDirective
 
   /**
    * Handles `input` events on the input element.
-   * @param value - current input value.
    */
   @HostListener('input', ['$event'])
   protected onInput(event: Event): void {
