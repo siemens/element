@@ -14,10 +14,6 @@ import { SiFormlyFormFieldProviderDirective } from './si-formly-form-field-provi
   templateUrl: './si-formly-wrapper.component.html'
 })
 export class SiFormlyWrapperComponent extends FieldWrapper {
-  protected get label(): string | undefined {
-    return this.props.label && this.props.hideLabel !== true ? this.props.label : undefined;
-  }
-
   protected get labelWidth(): number | undefined {
     return this.props.labelWidth;
   }

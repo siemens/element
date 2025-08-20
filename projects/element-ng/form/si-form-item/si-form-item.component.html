@@ -17,27 +17,25 @@
 }
 
 <ng-template #labelTemplate>
-  @if (label()) {
-    @let labeledBy = formItemLabelledBy;
-    @if (labeledBy) {
-      <span
-        class="text-break"
-        [id]="labeledBy"
-        [class.form-label]="!fieldControl()?.isFormCheck"
-        [class.form-check-label]="fieldControl()?.isFormCheck"
-        [class.required]="required() && !this.fieldset?.hasOnlyRadios()"
-        >{{ label()! | translate }}</span
-      >
-    } @else {
-      <label
-        class="text-break"
-        [for]="formItemId"
-        [class.form-label]="!fieldControl()?.isFormCheck"
-        [class.form-check-label]="fieldControl()?.isFormCheck"
-        [class.required]="required() && !this.fieldset?.hasOnlyRadios()"
-        >{{ label()! | translate }}</label
-      >
-    }
+  @let labeledBy = formItemLabelledBy;
+  @if (labeledBy) {
+    <span
+      class="text-break"
+      [id]="labeledBy"
+      [class.form-label]="!fieldControl()?.isFormCheck"
+      [class.form-check-label]="fieldControl()?.isFormCheck"
+      [class.required]="required() && !this.fieldset?.hasOnlyRadios()"
+      >{{ label()! | translate }}</span
+    >
+  } @else {
+    <label
+      class="text-break"
+      [for]="formItemId"
+      [class.form-label]="!fieldControl()?.isFormCheck"
+      [class.form-check-label]="fieldControl()?.isFormCheck"
+      [class.required]="required() && !this.fieldset?.hasOnlyRadios()"
+      >{{ label()! | translate }}</label
+    >
   }
 </ng-template>
 <ng-template #feedbackTemplate>
