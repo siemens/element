@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { NgTemplateOutlet } from '@angular/common';
-import { booleanAttribute, Component, computed, inject, input } from '@angular/core';
+import { booleanAttribute, Component, computed, inject, input, viewChild } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { Breakpoints, SiResponsiveContainerDirective } from '@siemens/element-ng/resize-observer';
 
@@ -114,6 +114,18 @@ export class SiFormContainerComponent<TControl extends { [K in keyof TControl]: 
     return {
       ...customMapper
     };
+  });
+
+  private readonly responsiveContainer = viewChild(SiResponsiveContainerDirective);
+
+  /** @internal */
+  readonly isInline = computed(() => {
+    const responsiveContainer = this.responsiveContainer();
+    if (responsiveContainer) {
+      return !responsiveContainer.xs();
+    } else {
+      return false;
+    }
   });
 
   /**
