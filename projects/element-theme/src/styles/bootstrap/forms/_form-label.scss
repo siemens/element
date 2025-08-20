@@ -13,8 +13,8 @@
 
 .form-label {
   display: inline-block;
-  line-height: 0.875rem;
-  padding-block: map.get(spacers.$spacers, 3) map.get(spacers.$spacers, 2);
+  // As designed in figma --> diverging from the standard spacers
+  padding-block: 5px 3px;
 
   .text-end & {
     padding-inline-end: variables.$input-padding-x;
