@@ -1,0 +1,182 @@
+name: Generate Fresh Snapshots
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Branch or commit to run against'
+        required: false
+        default: 'main'
+        type: string
+
+jobs:
+  check-prerequisites:
+    runs-on: ubuntu-24.04
+    outputs:
+      workflow-run-id: ${{ steps.get-workflow.outputs.workflow-run-id }}
+      workflow-status: ${{ steps.get-workflow.outputs.workflow-status }}
+    steps:
+      - name: Get latest workflow run
+        id: get-workflow
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: runs } = await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'build-and-test.yaml',
+              branch: '${{ inputs.ref || github.ref_name }}',
+              per_page: 1,
+              status: 'completed'
+            });
+            
+            if (runs.total_count === 0) {
+              core.setFailed('No completed workflow runs found for the specified branch');
+              return;
+            }
+            
+            const latestRun = runs.workflow_runs[0];
+            core.setOutput('workflow-run-id', latestRun.id);
+            core.setOutput('workflow-status', latestRun.conclusion);
+            
+            if (latestRun.conclusion !== 'success') {
+              core.setFailed(`Latest workflow run (${latestRun.id}) did not complete successfully. Status: ${latestRun.conclusion}`);
+            }
+
+  generate-snapshots:
+    runs-on: ubuntu-24.04
+    container: mcr.microsoft.com/playwright:v1.54.2-noble
+    needs: check-prerequisites
+    env:
+      # See: https://github.com/microsoft/playwright/issues/27620
+      HOME: /root
+    steps:
+      # As we are in another container, we need to install LFS manually.
+      # See: https://github.com/orgs/community/discussions/160433
+      - name: Install LFS
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
+          apt install git-lfs
+
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+          lfs: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/jod
+          cache: 'npm'
+
+      # Download the dist artifacts from the latest successful build-and-test workflow
+      - name: Download build artifacts
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            
+            // Get artifacts from the successful workflow run
+            const { data: artifacts } = await github.rest.actions.listWorkflowRunArtifacts({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: ${{ needs.check-prerequisites.outputs.workflow-run-id }}
+            });
+            
+            const distArtifact = artifacts.artifacts.find(artifact => artifact.name === 'dist');
+            if (!distArtifact) {
+              core.setFailed('No dist artifact found in the latest workflow run');
+              return;
+            }
+            
+            // Download the artifact
+            const download = await github.rest.actions.downloadArtifact({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              artifact_id: distArtifact.id,
+              archive_format: 'zip',
+            });
+            
+            fs.writeFileSync('dist.zip', Buffer.from(download.data));
+
+      - name: Extract build artifacts
+        run: |
+          unzip -q dist.zip
+          ls -la
+
+      # Not injecting the token will exclude the brand packages, but this is fine for e2e tests.
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit --include=optional
+
+      - name: Generate fresh snapshots
+        run: npx playwright test --update-snapshots=all
+        env:
+          PLAYWRIGHT_CONTAINER: true
+          PLAYWRIGHT_isvrt: true
+
+      - name: Create snapshots archive
+        run: |
+          # Create a timestamped archive of the updated snapshots
+          TIMESTAMP=$(date +"%Y%m%d-%H%M%S")
+          BRANCH_NAME="${{ inputs.ref || github.ref_name }}"
+          ARCHIVE_NAME="playwright-snapshots-${BRANCH_NAME}-${TIMESTAMP}"
+          
+          # Create archive directory structure
+          mkdir -p "${ARCHIVE_NAME}"
+          cp -r playwright/snapshots "${ARCHIVE_NAME}/"
+          
+          # Add metadata file
+          cat > "${ARCHIVE_NAME}/snapshot-info.txt" << EOF
+          Generated on: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          Branch/Ref: ${BRANCH_NAME}
+          Commit SHA: ${{ github.sha }}
+          Workflow Run: ${{ github.run_id }}
+          Generated from workflow run: ${{ needs.check-prerequisites.outputs.workflow-run-id }}
+          EOF
+          
+          # Create tar.gz archive
+          tar -czf "${ARCHIVE_NAME}.tar.gz" "${ARCHIVE_NAME}"
+          
+          echo "ARCHIVE_NAME=${ARCHIVE_NAME}" >> $GITHUB_ENV
+
+      - name: Upload fresh snapshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.ARCHIVE_NAME }}
+          path: ${{ env.ARCHIVE_NAME }}.tar.gz
+          retention-days: 30
+
+      - name: Generate test report
+        if: always()
+        run: npx playwright show-report --reporter=html || true
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report-snapshots-${{ inputs.ref || github.ref_name }}-${{ github.run_id }}
+          path: playwright-report
+          retention-days: 7
+
+  summary:
+    runs-on: ubuntu-24.04
+    needs: [check-prerequisites, generate-snapshots]
+    if: always()
+    steps:
+      - name: Generate summary
+        run: |
+          echo "## Snapshot Generation Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Branch/Ref:** ${{ inputs.ref || github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Based on workflow run:** ${{ needs.check-prerequisites.outputs.workflow-run-id }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Status:** ${{ needs.generate-snapshots.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ needs.generate-snapshots.result }}" = "success" ]; then
+            echo "✅ Fresh snapshots have been generated successfully!" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "The updated snapshots are available as downloadable artifacts from this workflow run." >> $GITHUB_STEP_SUMMARY
+            echo "Look for the artifact named \`playwright-snapshots-*\` in the artifacts section." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Snapshot generation failed. Check the logs for details." >> $GITHUB_STEP_SUMMARY
+          fi
