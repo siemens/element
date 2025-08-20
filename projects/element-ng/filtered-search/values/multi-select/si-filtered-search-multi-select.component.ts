@@ -83,18 +83,16 @@ export class SiFilteredSearchMultiSelectComponent
 
   protected override buildOptions(): Observable<TypeaheadOptionCriterion[]> | undefined {
     const translatedOptions = super.buildOptions();
-    if (this.definition().options) {
-      return translatedOptions?.pipe(
-        switchMap(options =>
-          this.selectionChange!.pipe(
-            tap(value => selectOptions(options, value)),
-            map(() => options)
-          )
+    return translatedOptions?.pipe(
+      switchMap(options =>
+        this.selectionChange!.pipe(
+          tap(value => {
+            selectOptions(options, value);
+          }),
+          map(() => options)
         )
-      );
-    } else {
-      return translatedOptions;
-    }
+      )
+    );
   }
 
   protected processTypeaheadOptions(options: TypeaheadOptionCriterion[]): void {
