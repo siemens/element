@@ -446,7 +446,6 @@ export class SampleComponent {
       type: 'button',
       className: 'd-block mb-4',
       props: {
-        hideLabel: true, // Hide wrapper label
         label: 'Button function handler',
         clickListener: (a: string, b: string) => {
           alert(
@@ -461,7 +460,6 @@ export class SampleComponent {
       type: 'button',
       className: 'd-block mb-4',
       props: {
-        hideLabel: true, // Hide wrapper label
         label: 'Button expression handler',
         clickListener: 'formState.btnClicked',
         clickArgs: ['1st', 23]
@@ -472,7 +470,6 @@ export class SampleComponent {
       type: 'button',
       className: 'd-block mb-4',
       props: {
-        hideLabel: true, // Hide wrapper label
         label: 'Primary',
         clickListener: 'formState.btnClicked',
         clickArgs: ['primary', 23],
@@ -484,7 +481,6 @@ export class SampleComponent {
       type: 'button',
       className: 'd-block mb-4',
       props: {
-        hideLabel: true, // Hide wrapper label
         label: 'Secondary (Default)',
         clickListener: 'formState.btnClicked',
         clickArgs: ['secondary', 23],
@@ -496,7 +492,6 @@ export class SampleComponent {
       type: 'button',
       className: 'd-block mb-4',
       props: {
-        hideLabel: true, // Hide wrapper label
         label: 'Tertiary',
         clickListener: 'formState.btnClicked',
         clickArgs: ['tertiary', 23],
@@ -508,7 +503,6 @@ export class SampleComponent {
       type: 'button',
       className: 'd-block mb-4',
       props: {
-        hideLabel: true, // Hide wrapper label
         label: 'Warning',
         clickListener: 'formState.btnClicked',
         clickArgs: ['warning', 23],
@@ -520,7 +514,6 @@ export class SampleComponent {
       type: 'button',
       className: 'd-block mb-4',
       props: {
-        hideLabel: true, // Hide wrapper label
         label: 'Danger',
         clickListener: 'formState.btnClicked',
         clickArgs: ['danger', 23],
