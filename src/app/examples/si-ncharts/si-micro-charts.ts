@@ -46,5 +46,9 @@ export class SampleComponent {
     values: [2, 3, 6, 5, 4, 7, 8],
     colorToken: 'element-data-10'
   };
+  lineMarkerSeries: MicrochartLineSeries = {
+    values: [1, 3, 1, 9, 5, 10, 12],
+    colorToken: 'element-data-1'
+  };
   progressSeries: MicrochartProgressSeries = { valuePercent: 80, colorToken: 'element-data-2' };
 }
