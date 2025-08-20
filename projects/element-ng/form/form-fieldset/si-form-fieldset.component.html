@@ -1,4 +1,9 @@
-<div class="form-label d-flex gap-2">
+<div
+  class="d-flex gap-2"
+  [class.form-label]="!container?.isInline()"
+  [class.col-form-label]="container?.isInline()"
+  [class.py-1]="container?.isInline()"
+>
   <span [class.required]="isRequired()" [id]="labelId">{{ label() | translate }}</span>
   <ng-content select="[si-help-button]" />
 </div>
