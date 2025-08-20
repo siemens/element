@@ -1,6 +1,6 @@
 <!--Block the space if no form-field is provided. Otherwise it looks weird in the formly field inline representation.-->
-@if (fieldControl()?.isFormCheck && !fieldset) {
-  <div class="form-label"></div>
+@if (fieldControl()?.isFormCheck && !fieldset && container?.isInline()) {
+  <div class="col-form-label"></div>
 }
 @if (fieldControl()?.isFormCheck) {
   <div class="form-item-content">
@@ -20,7 +20,8 @@
   @if (label()) {
     <div
       class="d-flex gap-2"
-      [class.form-label]="!fieldControl()?.isFormCheck"
+      [class.form-label]="!fieldControl()?.isFormCheck && !container?.isInline()"
+      [class.col-form-label]="!fieldControl()?.isFormCheck && container?.isInline()"
       [class.form-check-label]="fieldControl()?.isFormCheck"
     >
       @let labeledBy = formItemLabelledBy;
