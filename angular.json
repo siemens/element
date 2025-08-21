@@ -646,12 +646,10 @@
           },
           "configurations": {
             "development": {
-              "buildTarget": "dashboards-demo-mfe:build:development",
-              "extraWebpackConfig": "projects/dashboards-demo/mfe/webpack.prod.config.cjs"
+              "buildTarget": "dashboards-demo-mfe:build:development"
             },
             "production": {
-              "buildTarget": "dashboards-demo-mfe:build:production",
-              "extraWebpackConfig": "projects/dashboards-demo/mfe/webpack.prod.config.cjs"
+              "buildTarget": "dashboards-demo-mfe:build:production"
             }
           },
           "defaultConfiguration": "development"
