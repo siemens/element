@@ -1,3 +1,12 @@
+## [47.9.1](https://github.com/siemens/element/compare/v47.9.0...v47.9.1) (2025-08-21)
+
+
+### Bug Fixes
+
+* **formly:** link error messages to input ([69f2e25](https://github.com/siemens/element/commit/69f2e25c2a26976615f5b1cf88f91720d9a79ed2))
+* **navbar-vertical:** support flexible drop down positioning ([4146bcf](https://github.com/siemens/element/commit/4146bcff2a1e9e0f0ddce995d242f028f3a6e2e9))
+* **select:** announce readonly flag in screen-reader ([923a776](https://github.com/siemens/element/commit/923a776a0c3a4bfda90eacea423f21736beeb36e))
+
 # [47.9.0](https://github.com/siemens/element/compare/v47.8.0...v47.9.0) (2025-08-08)
 
 
