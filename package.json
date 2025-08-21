@@ -80,7 +80,8 @@
     "projects/charts-ng",
     "projects/native-charts-ng",
     "projects/dashboards-ng",
-    "projects/dashboards-demo"
+    "projects/dashboards-demo",
+    "projects/maps-ng"
   ],
   "dependencies": {
     "@angular-architects/module-federation": "20.0.0",
