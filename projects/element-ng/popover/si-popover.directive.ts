@@ -18,6 +18,7 @@ import {
   TemplateRef
 } from '@angular/core';
 import { getOverlay, getPositionStrategy, positions } from '@siemens/element-ng/common';
+import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
 import { Subject, takeUntil } from 'rxjs';
 
 import { PopoverComponent } from './si-popover.component';
@@ -36,7 +37,7 @@ export class SiPopoverDirective implements OnDestroy {
   /**
    * The popover text to be displayed
    */
-  readonly siPopover = input<string | TemplateRef<unknown>>();
+  readonly siPopover = input<TranslatableString | TemplateRef<unknown>>();
 
   /**
    * The placement of the popover. One of 'top', 'start', end', 'bottom'
@@ -63,7 +64,7 @@ export class SiPopoverDirective implements OnDestroy {
    *
    * @defaultValue undefined
    */
-  readonly title = input<string>(undefined, { alias: 'siPopoverTitle' });
+  readonly title = input<TranslatableString>(undefined, { alias: 'siPopoverTitle' });
 
   /**
    * The class that will be applied to container of the popover
