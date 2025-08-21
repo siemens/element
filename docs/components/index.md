@@ -69,6 +69,7 @@ documentation.
 ## L
 
 - [Landing Page](pages/landing-page.md)
+- [Language switcher](forms-inputs/language-switcher.md)
 - [Launchpad](layout-navigation/launchpad.md)
 - [Line Chart](charts/line-chart.md)
 - [List Group](lists-tables-trees/list-group.md)
