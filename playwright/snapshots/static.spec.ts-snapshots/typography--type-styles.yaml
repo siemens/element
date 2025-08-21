@@ -1,18 +1,23 @@
 - heading "H1 Heading" [level=1]
-- heading "H1 Heading Black" [level=1]
-- heading "H2 Subheading" [level=2]
-- heading "H3 Subheading" [level=3]
-- paragraph: Title 2
-- paragraph: Body 2
+- heading "H1 Heading Bold" [level=1]
+- heading "H2 Heading" [level=2]
+- heading "H3 Heading" [level=3]
+- heading "H4 Heading" [level=4]
+- heading "H4 Heading Bold" [level=4]
+- heading "H5 Heading" [level=5]
+- heading "H5 Heading Bold" [level=5]
+- paragraph: Body
+- paragraph: Body Bold
+- paragraph: Body Italic
 - separator
 - paragraph: H1 Heading
-- paragraph: H1 Heading Black
-- paragraph: H2 Subheading
-- paragraph: H3 Subheading
-- paragraph: Title 1 Bold
-- paragraph: Title 1
-- paragraph: Body 1
-- paragraph: Title 2 Bold
-- paragraph: Title 2
-- paragraph: Body 2
+- paragraph: H1 Heading Bold
+- paragraph: H2 Heading
+- paragraph: H3 Heading
+- paragraph: H4 Heading
+- paragraph: H4 Heading Bold
+- paragraph: H5 Heading
+- paragraph: H5 Heading Bold
+- paragraph: Body Large
+- paragraph: Body
 - paragraph: Caption
