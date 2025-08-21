@@ -4,7 +4,7 @@
  */
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
-export interface MicroProgressSeries {
+export interface MicrochartProgressSeries {
   /** Value in percent */
   valuePercent: number;
   /**
@@ -16,21 +16,21 @@ export interface MicroProgressSeries {
 }
 
 @Component({
-  selector: 'si-micro-progress',
-  templateUrl: './si-micro-progress.component.html',
-  styleUrl: './si-micro-progress.component.scss',
+  selector: 'si-microchart-progress',
+  templateUrl: './si-microchart-progress.component.html',
+  styleUrl: './si-microchart-progress.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SiMicroProgressComponent {
+export class SiMicrochartProgressComponent {
   /**
-   * Micro progress series.
+   * Microchart progress series.
    * Example series can be:
    * @example
    * ```ts
-   * Series: MicroProgressSeries = { valuePercent: 80, colorToken: 'element-data-7' };
+   * Series: MicrochartProgressSeries = { valuePercent: 80, colorToken: 'element-data-7' };
    * ```
    */
-  readonly series = input.required<MicroProgressSeries>();
+  readonly series = input.required<MicrochartProgressSeries>();
   /** @defaultValue 64 */
   readonly barWidth = input<number>(64);
   /** @defaultValue 4 */

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-export * from './micro-bar';
-export * from './micro-donut';
-export * from './micro-line';
-export * from './micro-progress';
+export * from './microchart-bar';
+export * from './microchart-donut';
+export * from './microchart-line';
+export * from './microchart-progress';

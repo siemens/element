@@ -12,9 +12,9 @@ import {
 import { Coordinate, makeArc, valueToRelativeAngle } from '@siemens/native-charts-ng/utils';
 
 /**
- * One series of the micro donut chart.
+ * One series of the microchart donut.
  */
-export interface MicroDonutSeries {
+export interface MicrochartDonutSeries {
   /** value in percent */
   valuePercent: number;
   /**
@@ -28,30 +28,30 @@ export interface MicroDonutSeries {
 }
 
 interface InternalSeries {
-  series: MicroDonutSeries;
+  series: MicrochartDonutSeries;
   path: string;
   colorVar: string;
 }
 
 @Component({
-  selector: 'si-micro-donut',
-  templateUrl: './si-micro-donut.component.html',
-  styleUrl: './si-micro-donut.component.scss',
+  selector: 'si-microchart-donut',
+  templateUrl: './si-microchart-donut.component.html',
+  styleUrl: './si-microchart-donut.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SiMicroDonutComponent {
+export class SiMicrochartDonutComponent {
   /**
-   * Micro donut series. Can also be an array representing multiple series.
+   * Microchart donut series. Can also be an array representing multiple series.
    * Each series, in case of multiple, forms section of the arc, in percentage
    * of the respective value.
    * Example series can be:
    * @example
    * ```ts
-   * Series: MicroDonutSeries[] = [{ valuePercent: 40, colorToken: 'element-data-4' }];
+   * Series: MicrochartDonutSeries[] = [{ valuePercent: 40, colorToken: 'element-data-4' }];
    * ```
    * @defaultValue []
    */
-  readonly series = input.required<MicroDonutSeries[]>();
+  readonly series = input.required<MicrochartDonutSeries[]>();
   /**
    * Radius of donut. The radius is calculated from center of the donut to the mid point of the arc.
    * @defaultValue 7.5
@@ -107,7 +107,7 @@ export class SiMicroDonutComponent {
 
   private toInternalSeries(
     startAngle: number,
-    series: MicroDonutSeries,
+    series: MicrochartDonutSeries,
     color?: string
   ): { nextAngle: number; internal: InternalSeries } {
     let nextAngle =

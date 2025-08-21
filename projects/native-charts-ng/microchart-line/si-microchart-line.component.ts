@@ -5,7 +5,7 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { Coordinate, makePolyline } from '@siemens/native-charts-ng/utils';
 
-export interface MicroLineSeries {
+export interface MicrochartLineSeries {
   /** Series values */
   values: number[];
   /**
@@ -17,20 +17,20 @@ export interface MicroLineSeries {
 }
 
 @Component({
-  selector: 'si-micro-line',
-  templateUrl: './si-micro-line.component.html',
+  selector: 'si-microchart-line',
+  templateUrl: './si-microchart-line.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SiMicroLineComponent {
+export class SiMicrochartLineComponent {
   /**
-   * Micro line series.
+   * Microchart line series.
    * Example series can be:
    * @example
    * ```ts
-   * Series: MicroLineSeries = { values: [2, 3, 6, 5, 4, 7, 8], colorToken: 'element-data-10' };
+   * Series: MicrochartLineSeries = { values: [2, 3, 6, 5, 4, 7, 8], colorToken: 'element-data-10' };
    * ```
    */
-  readonly series = input.required<MicroLineSeries>();
+  readonly series = input.required<MicrochartLineSeries>();
   /** @defaultValue 64 */
   readonly width = input<number>(64);
   /** @defaultValue 24 */
