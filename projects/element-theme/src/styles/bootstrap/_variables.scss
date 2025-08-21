@@ -163,9 +163,9 @@ $font-family-code: $font-family-monospace !default;
 // $font-size-root effects the value of `rem`, which is used for as well font sizes, paddings and margins
 // $font-size-base effects the font size of the body text
 $font-size-root: null !default;
-$font-size-base: typography.$si-font-size-body-2 !default;
-$font-size-lg: typography.$si-font-size-body-1 !default;
-$font-size-sm: typography.$si-font-size-caption-1 !default;
+$font-size-base: typography.$si-font-size-body !default;
+$font-size-lg: typography.$si-font-size-body-lg !default;
+$font-size-sm: typography.$si-font-size-caption !default;
 
 $font-weight-lighter: typography.$si-font-weight-lighter;
 $font-weight-light: typography.$si-font-weight-light;
@@ -177,7 +177,7 @@ $font-weight-bolder: typography.$si-font-weight-bolder;
 
 $font-weight-base: $font-weight-normal !default;
 
-$line-height-base: typography.$si-line-height-body-2 !default;
+$line-height-base: typography.$si-line-height-body !default;
 $line-height-sm: 1.25 !default;
 $line-height-lg: 2 !default;
 
@@ -204,10 +204,10 @@ $headings-font-weight: typography.$si-font-weight-semibold !default;
 $headings-line-height: 1.2 !default;
 $headings-color: semantic-tokens.$element-text-primary !default;
 
-$lead-font-size: typography.$si-font-size-body-1 !default;
+$lead-font-size: typography.$si-font-size-body-lg !default;
 $lead-font-weight: typography.$si-font-weight-normal !default;
 
-$small-font-size: typography.$si-font-size-caption-1 !default;
+$small-font-size: typography.$si-font-size-caption !default;
 
 $sub-sup-font-size: 0.75em !default;
 
@@ -216,7 +216,7 @@ $initialism-font-size: $small-font-size !default;
 $text-muted: semantic-tokens.$element-text-disabled !default;
 
 $blockquote-margin-y: spacers.$spacer !default;
-$blockquote-font-size: typography.$si-font-size-body-1 !default;
+$blockquote-font-size: typography.$si-font-size-body-lg !default;
 $blockquote-footer-color: semantic-tokens.$element-text-secondary !default;
 $blockquote-footer-font-size: $small-font-size !default;
 
@@ -289,7 +289,7 @@ $table-variants: (
 $btn-padding-y: map.get(spacers.$spacers, 4);
 $btn-padding-x: map.get(spacers.$spacers, 6);
 $btn-font-size: $font-size-base;
-$btn-line-height: typography.$si-line-height-title-2 !default;
+$btn-line-height: typography.$si-line-height-h5 !default;
 $btn-white-space: null !default; // Set to `nowrap` to prevent text wrapping
 
 $btn-font-size-sm: $font-size-sm;
@@ -320,7 +320,7 @@ $form-text-font-weight: null !default;
 $form-text-color: semantic-tokens.$element-text-secondary !default;
 
 $form-label-margin-bottom: 4px !default;
-$form-label-font-size: typography.$si-font-size-body-2 !default;
+$form-label-font-size: typography.$si-font-size-body !default;
 $form-label-font-style: null !default;
 $form-label-font-weight: null !default;
 $form-label-color: semantic-tokens.$element-text-secondary !default;
@@ -418,8 +418,8 @@ $form-validation-states: (
 
 $nav-link-padding-y: 10px;
 $nav-link-padding-x: map.get(spacers.$spacers, 8);
-$nav-link-font-size: typography.$si-font-size-title-1;
-$nav-link-font-weight: typography.$si-font-weight-title-1;
+$nav-link-font-size: typography.$si-font-size-h4;
+$nav-link-font-weight: typography.$si-font-weight-h4;
 $nav-link-color: semantic-tokens.$element-text-secondary !default;
 $nav-link-hover-color: $link-hover-color !default;
 $nav-link-transition: ();
@@ -515,8 +515,8 @@ $popover-arrow-color: $popover-bg !default;
 $popover-arrow-outer-color: $popover-border-color !default;
 
 // Badges
-$badge-font-size: typography.$si-font-size-body-2;
-$badge-font-weight: typography.$si-font-weight-body-2;
+$badge-font-size: typography.$si-font-size-body;
+$badge-font-weight: typography.$si-font-weight-body;
 $badge-color: semantic-tokens.$element-text-inverse !default;
 $badge-padding-y: 0;
 $badge-padding-x: map.get(spacers.$spacers, 4);
@@ -533,7 +533,7 @@ $modal-footer-margin-between: map.get(spacers.$spacers, 6);
 $modal-dialog-margin: map.get(spacers.$spacers, 4);
 $modal-dialog-margin-y-sm-up: map.get(spacers.$spacers, 9);
 
-$modal-title-line-height: typography.$si-line-height-title-1 !default;
+$modal-title-line-height: typography.$si-line-height-h4 !default;
 
 $modal-content-color: null !default;
 $modal-content-bg: semantic-tokens.$element-base-1 !default;

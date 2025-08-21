@@ -151,7 +151,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
       padding-block: 0;
       padding-inline: 4px;
       min-inline-size: $datatable-cell-min-width;
-      line-height: typography.$si-line-height-body-2;
+      line-height: typography.$si-line-height-body;
 
       > div {
         padding: 4px;
@@ -189,9 +189,9 @@ $datatable-ghost-cell-strip-radius: 0 !default;
     color: $datatable-header-color;
     block-size: $datatable-header-height;
     vertical-align: baseline;
-    font-size: typography.$si-font-size-title-2;
-    font-weight: typography.$si-font-weight-title-2;
-    line-height: typography.$si-line-height-title-2;
+    font-size: typography.$si-font-size-h5;
+    font-weight: typography.$si-font-weight-h5;
+    line-height: typography.$si-line-height-h5;
     user-select: none;
 
     .sort-btn {
@@ -290,7 +290,7 @@ $datatable-ghost-cell-strip-radius: 0 !default;
     align-content: flex-end;
     background-color: $datatable-footer-background-color;
     color: semantic-tokens.$element-text-secondary;
-    font-size: typography.$si-font-size-caption-1;
+    font-size: typography.$si-font-size-caption;
     margin-block-start: -1px;
     position: relative;
     z-index: 11;

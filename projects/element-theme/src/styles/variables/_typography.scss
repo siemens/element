@@ -26,13 +26,13 @@ $si-font-weight-bold: 700 !default;
 $si-font-weight-bolder: bolder !default;
 $si-font-weight-black: 900 !default;
 
+$si-font-size-h1-bold: px-to-rem(30px);
+$si-line-height-h1-bold: px-to-ratio($si-font-size-h1-bold, 36px);
+$si-font-weight-h1-bold: $si-font-weight-bold;
+
 $si-font-size-h1: px-to-rem(30px);
 $si-line-height-h1: px-to-ratio($si-font-size-h1, 36px);
 $si-font-weight-h1: $si-font-weight-normal;
-
-$si-font-size-h1-black: $si-font-size-h1;
-$si-line-height-h1-black: $si-line-height-h1;
-$si-font-weight-h1-black: $si-font-weight-bold;
 
 $si-font-size-h2: px-to-rem(20px);
 $si-line-height-h2: px-to-ratio($si-font-size-h2, 24px);
@@ -42,46 +42,106 @@ $si-font-size-h3: px-to-rem(18px);
 $si-line-height-h3: px-to-ratio($si-font-size-h3, 24px);
 $si-font-weight-h3: $si-font-weight-semibold;
 
-$si-font-size-title-1-bold: px-to-rem(16px);
-$si-line-height-title-1-bold: px-to-ratio($si-font-size-title-1-bold, 20px);
-$si-font-weight-title-1-bold: $si-font-weight-bold;
+$si-font-size-h4: px-to-rem(16px);
+$si-line-height-h4: px-to-ratio($si-font-size-h4, 20px);
+$si-font-weight-h4: $si-font-weight-semibold;
 
-$si-font-size-title-1: px-to-rem(16px);
-$si-line-height-title-1: px-to-ratio($si-font-size-title-1, 20px);
-$si-font-weight-title-1: $si-font-weight-semibold;
+$si-font-size-h4-bold: px-to-rem(16px);
+$si-line-height-h4-bold: px-to-ratio($si-font-size-h4-bold, 20px);
+$si-font-weight-h4-bold: $si-font-weight-bold;
 
-$si-font-size-body-1: px-to-rem(16px);
-$si-line-height-body-1: px-to-ratio($si-font-size-body-1, 20px);
-$si-font-weight-body-1: $si-font-weight-normal;
+$si-font-size-h5: px-to-rem(14px);
+$si-line-height-h5: px-to-ratio($si-font-size-h5, 16px);
+$si-font-weight-h5: $si-font-weight-semibold;
 
-$si-font-size-title-2-bold: px-to-rem(14px);
-$si-line-height-title-2-bold: px-to-ratio($si-font-size-title-2-bold, 16px);
-$si-font-weight-title-2-bold: $si-font-weight-bold;
+$si-font-size-h5-bold: px-to-rem(14px);
+$si-line-height-h5-bold: px-to-ratio($si-font-size-h5-bold, 16px);
+$si-font-weight-h5-bold: $si-font-weight-bold;
 
-$si-font-size-title-2: px-to-rem(14px);
-$si-line-height-title-2: px-to-ratio($si-font-size-title-2, 16px);
-$si-font-weight-title-2: $si-font-weight-semibold;
+$si-font-size-body-lg: px-to-rem(16px);
+$si-line-height-body-lg: px-to-ratio($si-font-size-body-lg, 20px);
+$si-font-weight-body-lg: $si-font-weight-normal;
 
-$si-font-size-body-2: px-to-rem(14px);
-$si-line-height-body-2: px-to-ratio($si-font-size-body-2, 16px);
-$si-font-weight-body-2: $si-font-weight-normal;
+$si-font-size-body: px-to-rem(14px);
+$si-line-height-body: px-to-ratio($si-font-size-body, 16px);
+$si-font-weight-body: $si-font-weight-normal;
 
-$si-font-size-caption-1: px-to-rem(12px);
-$si-line-height-caption-1: px-to-ratio($si-font-size-caption-1, 16px);
-$si-font-weight-caption-1: $si-font-weight-normal;
+$si-font-size-caption: px-to-rem(12px);
+$si-line-height-caption: px-to-ratio($si-font-size-caption, 16px);
+$si-font-weight-caption: $si-font-weight-normal;
 
-$si-font-size-display-1: px-to-rem(56px);
-$si-line-height-display-1: px-to-ratio($si-font-size-display-1, 72px);
-$si-font-weight-display-1: $si-font-weight-normal;
+$si-font-size-display-xl: px-to-rem(56px);
+$si-line-height-display-xl: px-to-ratio($si-font-size-display-xl, 72px);
+$si-font-weight-display-xl: $si-font-weight-normal;
 
-$si-font-size-display-2: px-to-rem(48px);
-$si-line-height-display-2: px-to-ratio($si-font-size-display-2, 64px);
-$si-font-weight-display-2: $si-font-weight-normal;
+$si-font-size-display-lg: px-to-rem(48px);
+$si-line-height-display-lg: px-to-ratio($si-font-size-display-lg, 64px);
+$si-font-weight-display-lg: $si-font-weight-normal;
 
-$si-font-size-display-3: px-to-rem(40px);
-$si-line-height-display-3: px-to-ratio($si-font-size-display-3, 52px);
-$si-font-weight-display-3: $si-font-weight-bold;
+$si-font-size-display-bold: px-to-rem(40px);
+$si-line-height-display-bold: px-to-ratio($si-font-size-display-bold, 52px);
+$si-font-weight-display-bold: $si-font-weight-bold;
 
-$si-font-size-display-4: px-to-rem(40px);
-$si-line-height-display-4: px-to-ratio($si-font-size-display-4, 52px);
-$si-font-weight-display-4: $si-font-weight-normal;
+$si-font-size-display: px-to-rem(40px);
+$si-line-height-display: px-to-ratio($si-font-size-display, 52px);
+$si-font-weight-display: $si-font-weight-normal;
+
+// @deprecated Will be removed in a future major version, use `$si-*-h1-bold` instead.
+$si-font-size-h1-black: $si-font-size-h1-bold;
+$si-line-height-h1-black: $si-line-height-h1-bold;
+$si-font-weight-h1-black: $si-font-weight-h1-bold;
+
+// @deprecated Will be removed in a future major version, use `$si-*-h4-bold` instead.
+$si-font-size-title-1-bold: $si-font-size-h4-bold;
+$si-line-height-title-1-bold: $si-line-height-h4-bold;
+$si-font-weight-title-1-bold: $si-font-weight-h4-bold;
+
+// @deprecated Will be removed in a future major version, use `$si-*-h4` instead.
+$si-font-size-title-1: $si-font-size-h4;
+$si-line-height-title-1: $si-line-height-h4;
+$si-font-weight-title-1: $si-font-weight-h4;
+
+// @deprecated Will be removed in a future major version, use `$si-*-h5-bold` instead.
+$si-font-size-title-2-bold: $si-font-size-h5-bold;
+$si-line-height-title-2-bold: $si-line-height-h5-bold;
+$si-font-weight-title-2-bold: $si-font-weight-h5-bold;
+
+// @deprecated Will be removed in a future major version, use `$si-*-h5` instead.
+$si-font-size-title-2: $si-font-size-h5;
+$si-line-height-title-2: $si-line-height-h5;
+$si-font-weight-title-2: $si-font-weight-h5;
+
+// @deprecated Will be removed in a future major version, use `$si-*-body-lg` instead.
+$si-font-size-body-1: $si-font-size-body-lg;
+$si-line-height-body-1: $si-line-height-body-lg;
+$si-font-weight-body-1: $si-font-weight-body-lg;
+
+// @deprecated Will be removed in a future major version, use `$si-*-body` instead.
+$si-font-size-body-2: $si-font-size-body;
+$si-line-height-body-2: $si-line-height-body;
+$si-font-weight-body-2: $si-font-weight-body;
+
+// @deprecated Will be removed in a future major version, use `$si-*-caption` instead.
+$si-font-size-caption-1: $si-font-size-caption;
+$si-line-height-caption-1: $si-line-height-caption;
+$si-font-weight-caption-1: $si-font-weight-caption;
+
+// @deprecated Will be removed in a future major version, use `$si-*-display-xl` instead.
+$si-font-size-display-1: $si-font-size-display-xl;
+$si-line-height-display-1: $si-line-height-display-xl;
+$si-font-weight-display-1: $si-font-weight-display-xl;
+
+// @deprecated Will be removed in a future major version, use `$si-*-display-lg` instead.
+$si-font-size-display-2: $si-font-size-display-lg;
+$si-line-height-display-2: $si-line-height-display-lg;
+$si-font-weight-display-2: $si-font-weight-display-lg;
+
+// @deprecated Will be removed in a future major version, use `$si-*-display-bold` instead.
+$si-font-size-display-3: $si-font-size-display-bold;
+$si-line-height-display-3: $si-line-height-display-bold;
+$si-font-weight-display-3: $si-font-weight-display-bold;
+
+// @deprecated Will be removed in a future major version, use `$si-*-display` instead.
+$si-font-size-display-4: $si-font-size-display;
+$si-line-height-display-4: $si-line-height-display;
+$si-font-weight-display-4: $si-font-weight-display;

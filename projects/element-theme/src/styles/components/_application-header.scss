@@ -76,8 +76,8 @@
 }
 
 .application-name {
-  font-size: typography.$si-font-size-body-1;
-  font-weight: typography.$si-font-weight-body-1;
+  font-size: typography.$si-font-size-body-lg;
+  font-weight: typography.$si-font-weight-body-lg;
   padding: map.get(spacers.$spacers, 5);
   white-space: nowrap;
 }
@@ -133,9 +133,9 @@
   position: relative;
   color: semantic-tokens.$element-text-primary;
   inline-size: 100%;
-  font-size: typography.$si-font-size-title-1;
-  line-height: typography.$si-line-height-title-1;
-  font-weight: typography.$si-font-weight-title-1;
+  font-size: typography.$si-font-size-h4;
+  line-height: typography.$si-line-height-h4;
+  font-weight: typography.$si-font-weight-h4;
   padding-block: 13px;
   padding-inline: map.get(spacers.$spacers, 5);
   background: none;
@@ -176,9 +176,9 @@
 
   &.header-selection-item {
     color: semantic-tokens.$element-action-secondary-text;
-    font-size: typography.$si-font-size-title-2;
-    font-weight: typography.$si-font-weight-title-2;
-    line-height: typography.$si-line-height-title-2;
+    font-size: typography.$si-font-size-h5;
+    font-weight: typography.$si-font-weight-h5;
+    line-height: typography.$si-line-height-h5;
 
     &:hover {
       color: semantic-tokens.$element-action-secondary-text-hover;

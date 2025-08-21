@@ -87,7 +87,7 @@
 
 .form-control:not(textarea):not(select[multiple]) {
   // force height to fix line-height issue in firefox
-  block-size: calc(#{typography.$si-line-height-body-2}em + #{2 * map.get(spacers.$spacers, 4)});
+  block-size: calc(#{typography.$si-line-height-body}em + #{2 * map.get(spacers.$spacers, 4)});
 }
 
 .addon-second-icon {

@@ -27,7 +27,7 @@ button {
 
 :is(.btn, .btn-close) {
   line-height: bootstrap-variables.$btn-line-height;
-  font-weight: typography.$si-font-weight-title-2;
+  font-weight: typography.$si-font-weight-h5;
   padding-block: calc(bootstrap-variables.$btn-padding-y - var(--btn-border-width, 0px));
   padding-inline: calc(bootstrap-variables.$btn-padding-x - var(--btn-border-width, 0px));
   font-size: bootstrap-variables.$btn-font-size;
@@ -133,7 +133,7 @@ button {
 .btn-link {
   --btn-color: #{bootstrap-variables.$btn-link-color};
   --btn-color-hover: #{bootstrap-variables.$btn-link-hover-color};
-  font-weight: typography.$si-font-weight-body-2;
+  font-weight: typography.$si-font-weight-body;
   justify-content: flex-start;
   text-decoration: bootstrap-variables.$link-decoration;
   padding: 0;
@@ -222,9 +222,9 @@ button {
   --btn-border-color-hover: #{semantic-tokens.$element-ui-1};
 
   @include typography.si-font(
-    typography.$si-font-size-body-2,
-    typography.$si-line-height-body-2,
-    typography.$si-font-weight-body-2
+    typography.$si-font-size-body,
+    typography.$si-line-height-body,
+    typography.$si-font-weight-body
   );
   padding-block: bootstrap-variables.$input-padding-y;
   padding-inline: 7px;

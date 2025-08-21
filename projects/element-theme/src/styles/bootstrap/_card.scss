@@ -77,8 +77,8 @@
 }
 
 .card-header {
-  font-size: typography.$si-font-size-title-2;
-  font-weight: typography.$si-font-weight-title-2;
+  font-size: typography.$si-font-size-h5;
+  font-weight: typography.$si-font-weight-h5;
   min-block-size: map.get(spacers.$spacers, 9) + map.get(spacers.$spacers, 4);
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -88,7 +88,7 @@
   margin-block-end: 0; // Removes the default margin-bottom of <hN>
   color: variables.$card-cap-color;
   background-color: variables.$card-cap-bg;
-  line-height: typography.$si-font-size-title-2;
+  line-height: typography.$si-font-size-h5;
 
   .icon {
     // The icon would be 8px too high without this.
