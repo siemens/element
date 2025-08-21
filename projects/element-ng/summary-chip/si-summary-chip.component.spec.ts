@@ -29,8 +29,8 @@ describe('SiSummaryChipComponent', () => {
   it('should set label and value', () => {
     fixture.detectChanges();
 
-    expect(element.querySelector('.si-body-2')?.textContent).toContain('test label');
-    expect(element.querySelector('.si-title-2')?.textContent).toContain('42');
+    expect(element.querySelector('.si-body')?.textContent).toContain('test label');
+    expect(element.querySelector('.si-h5')?.textContent).toContain('42');
     expect(element.querySelector('si-icon')).toBeFalsy();
   });
 
@@ -38,8 +38,8 @@ describe('SiSummaryChipComponent', () => {
     componentRef.setInput('hideLabel', 'true');
     fixture.detectChanges();
 
-    expect(element.querySelector('.si-body-2')?.textContent).toContain('test label');
-    expect(element.querySelector('.si-body-2')).toHaveClass('visually-hidden');
+    expect(element.querySelector('.si-body')?.textContent).toContain('test label');
+    expect(element.querySelector('.si-body')).toHaveClass('visually-hidden');
   });
 
   it('should display selected state', () => {

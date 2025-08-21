@@ -164,7 +164,7 @@ semantic, you can use the `.si-` text classes.
 
 ### Display styles classes
 
-The display styles are provided as `si-display-{1,2,3,4}` and are
+The display styles are provided as `si-display*` and are
 mapped to the related Bootstrap classes.
 
 <si-docs-component example="typography/display-styles" height="280"></si-docs-component>

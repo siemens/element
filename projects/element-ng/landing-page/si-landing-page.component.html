@@ -43,7 +43,7 @@
       @if (subheading()) {
         <div class="si-h2">{{ subheading() }}</div>
       }
-      <h1 class="si-h1-black my-2">{{ heading() }}</h1>
+      <h1 class="si-h1-bold my-2">{{ heading() }}</h1>
       @if (!loginAlert()) {
         <h2 class="mt-10 si-h2">{{ subtitle() }}</h2>
       }
@@ -64,7 +64,7 @@
         <div class="d-flex justify-content-start flex-row flex-wrap mt-6">
           @for (link of links(); track $index) {
             <span>
-              <a siLinkDefaultTarget="_blank" class="si-body-2 d-flex-inline me-6" [siLink]="link">
+              <a siLinkDefaultTarget="_blank" class="si-body d-flex-inline me-6" [siLink]="link">
                 {{ link.title | translate }}
               </a>
             </span>

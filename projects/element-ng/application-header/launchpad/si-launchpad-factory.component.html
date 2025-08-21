@@ -7,17 +7,17 @@
   (keydown.escape)="escape()"
 >
   @if (titleText()) {
-    <p class="mb-4 si-title-1 lh-1">{{ titleText() | translate }}</p>
+    <p class="mb-4 si-h4 lh-1">{{ titleText() | translate }}</p>
   }
   @if (subtitleText()) {
-    <p class="si-body-2 text-secondary mb-4">{{ subtitleText() | translate }}</p>
+    <p class="si-body text-secondary mb-4">{{ subtitleText() | translate }}</p>
   }
   <div class="apps-scroll pb-8 ms-n2 ps-2">
     @for (category of categories(); track category; let first = $first) {
       @if (!enableFavorites() || !hasFavorites() || first || showAllApps) {
         <div class="mt-4">
           @if (category.name) {
-            <span class="si-title-1">
+            <span class="si-h4">
               {{ category.name | translate }}
             </span>
           }
@@ -76,7 +76,7 @@
       @if (enableFavorites() && first && hasFavorites()) {
         <button
           type="button"
-          class="btn btn-link dropdown-toggle text-decoration-none my-4 si-title-2"
+          class="btn btn-link dropdown-toggle text-decoration-none my-4 si-h5"
           [class.show]="showAllApps"
           (click)="showAllApps = !showAllApps"
         >

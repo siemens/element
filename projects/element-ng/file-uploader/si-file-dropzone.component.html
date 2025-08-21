@@ -5,11 +5,11 @@
   (dragover)="dragOverHandler($event)"
   (dragleave)="dragOver = false"
 >
-  <si-icon class="mb-6 si-display-3" [icon]="icons.elementUpload" />
-  <span class="drag-and-drop-description si-title-2 d-flex">
+  <si-icon class="mb-6 si-display-bold" [icon]="icons.elementUpload" />
+  <span class="drag-and-drop-description si-h5 d-flex">
     <span>{{ uploadDropText() | translate }}</span>
     &nbsp;
-    <label class="select-file si-title-2 mb-0">
+    <label class="select-file si-h5 mb-0">
       <span tabindex="0" (keydown.enter)="inputEnterHandler()">{{
         uploadTextFileSelect() | translate
       }}</span>

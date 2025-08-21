@@ -81,8 +81,6 @@ describe('SiProgressbarComponent', () => {
     element = fixture.nativeElement;
     componentRef.setInput('heading', 'Test Title');
     fixture.detectChanges();
-    expect((element.querySelector('span.si-title-2') as HTMLSpanElement)?.innerText).toBe(
-      'Test Title'
-    );
+    expect((element.querySelector('span.si-h5') as HTMLSpanElement)?.innerText).toBe('Test Title');
   });
 });

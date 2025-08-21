@@ -100,17 +100,17 @@
   <div class="card-body card-text d-flex align-items-center justify-content-around">
     @switch (type) {
       @case ('door') {
-        <p class="display-1 text-center my-10">{{ doorEventsWeek | number }}</p>
+        <p class="si-display-xl text-center my-10">{{ doorEventsWeek | number }}</p>
       }
       @default {
         <div class="text-center">
-          <p class="display-2"
+          <p class="si-display-lg"
             >{{ linesAddedWeek }}
-            <si-icon class="status-success display-2" icon="element-plus" />
+            <si-icon class="status-success si-display-lg" icon="element-plus" />
           </p>
-          <p class="display-2"
+          <p class="si-display-lg"
             >{{ linesRemovedWeek }}
-            <si-icon class="status-danger display-2" icon="element-minus" />
+            <si-icon class="status-danger si-display-lg" icon="element-minus" />
           </p>
         </div>
       }

@@ -15,7 +15,7 @@ export class SiLaunchpadCategoryHarness extends ComponentHarness {
     );
   }
 
-  private name = this.locatorForOptional('.si-title-1');
+  private name = this.locatorForOptional('.si-h4');
 
   async getName(): Promise<string | null> {
     return this.name().then(name => name?.text() ?? null);

@@ -3,13 +3,13 @@
 } @else if (iconClass()) {
   <si-icon class="app-icon" [icon]="iconClass()!" />
 }
-<div class="si-title-2 text-truncate mw-100">
+<div class="si-h5 text-truncate mw-100">
   <ng-content select="[app-name]" />
   @if (external()) {
     <si-icon class="icon mt-n2" [icon]="icons.elementExport" />
   }
 </div>
-<div class="si-body-2 text-truncate mw-100">
+<div class="si-body text-truncate mw-100">
   <ng-content select="[app-systemName]" />
 </div>
 @if (enableFavoriteToggle()) {

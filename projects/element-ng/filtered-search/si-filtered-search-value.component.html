@@ -6,7 +6,7 @@
   [class.invalid-criterion]="invalidCriterion()"
   (cdkFocusChange)="focusChange($event)"
 >
-  <div class="pill pill-interactive criterion-label si-title-2" (click)="edit()">
+  <div class="pill pill-interactive criterion-label si-h5" (click)="edit()">
     {{ definition().label | translate }}
   </div>
   @if (definition().operators?.length) {

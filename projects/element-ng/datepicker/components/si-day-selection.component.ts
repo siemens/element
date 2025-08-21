@@ -120,7 +120,7 @@ export class SiDaySelectionComponent extends SiInitialFocusComponent {
         isPreview: !activeMonth,
         isToday,
         valueRaw: createDate(date),
-        cssClasses: ['day', activeMonth ? 'si-title-1' : 'si-body-1']
+        cssClasses: ['day', activeMonth ? 'si-h4' : 'si-body-lg']
       });
     }
     return weeks;

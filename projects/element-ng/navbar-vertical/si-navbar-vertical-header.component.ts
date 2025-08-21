@@ -13,7 +13,7 @@ import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
   imports: [SiNavbarVerticalDividerComponent],
   template: `
     @if (!navbar.collapsed()) {
-      <div class="si-title-2 text-secondary p-5">
+      <div class="si-h5 text-secondary p-5">
         <ng-content />
       </div>
     } @else {
@@ -29,7 +29,7 @@ import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
       state('true', style({ blockSize: '13px' })),
       state('false', style({ blockSize: '40px' })),
       transition('* <=> *', [
-        query('.si-title-2', style({ position: 'absolute' }), { optional: true }),
+        query('.si-h5', style({ position: 'absolute' }), { optional: true }),
         group([
           query(
             ':leave',

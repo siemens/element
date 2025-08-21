@@ -7,7 +7,7 @@
   }
   <span class="me-auto">
     @if (!isLink()) {
-      <span class="si-title-2">{{ label() | translate }}</span>
+      <span class="si-h5">{{ label() | translate }}</span>
     } @else {
       <a class="" [siLink]="link()"
         >{{ link().title | translate
@@ -15,7 +15,7 @@
       </a>
     }
     @if (valueObject.description) {
-      <div class="mt-1 si-body-2 text-secondary">{{ valueObject.description | translate }}</div>
+      <div class="mt-1 si-body text-secondary">{{ valueObject.description | translate }}</div>
     }
   </span>
   <span>{{ valueObject.text | translate }}</span>

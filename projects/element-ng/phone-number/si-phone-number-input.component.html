@@ -35,7 +35,7 @@
       [ngClass]="'fi-' + (selectedCountry?.isoCode?.toLowerCase() ?? 'xx')"
     ></span>
     @if (selectedCountry) {
-      <span class="si-body-2 ms-4" [id]="id() + '-value'">
+      <span class="si-body ms-4" [id]="id() + '-value'">
         <span class="visually-hidden">{{ selectedCountry.name }}</span>
         +{{ selectedCountry.countryCode }}
       </span>

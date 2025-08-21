@@ -7,7 +7,7 @@
 @use './skeleton';
 
 .si-value-widget-value {
-  @extend .si-display-3;
+  @extend .si-display-bold;
   display: inline-block;
   min-block-size: variables.$si-font-size-display-bold * variables.$si-line-height-display-bold;
 }
@@ -17,7 +17,7 @@
 * the line height.
 */
 .si-value-widget-value-skeleton {
-  @extend .si-display-3;
+  @extend .si-display-bold;
   @extend .si-skeleton;
   display: inline-block;
   block-size: variables.$si-font-size-display-bold;
@@ -26,7 +26,7 @@
 }
 
 .si-value-widget-unit {
-  @extend .si-body-1;
+  @extend .si-body-lg;
   display: inline-block;
   margin-inline-start: map.get(variables.$spacers, 2);
 }

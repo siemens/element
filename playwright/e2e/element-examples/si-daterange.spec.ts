@@ -20,8 +20,8 @@ test.describe('si-datepicker', () => {
   test(example + ' selection', async ({ page, si }) => {
     await si.visitExample(example);
     await page.getByLabel('Open calendar').first().click();
-    await page.locator('tbody > tr .si-title-1').first().click();
-    await page.locator('tbody > tr .si-title-1').nth(5).click();
+    await page.locator('tbody > tr .si-h4').first().click();
+    await page.locator('tbody > tr .si-h4').nth(5).click();
     await si.runVisualAndA11yTests('selection');
   });
 });
@@ -37,8 +37,8 @@ test.describe('si-datepicker', () => {
   test(example + ' selection', async ({ page, si }) => {
     await si.visitExample(example);
     await page.getByLabel('Open calendar').first().click();
-    await page.locator('tbody > tr .si-title-1').first().click();
-    await page.locator('tbody > tr .si-title-1').nth(5).click();
+    await page.locator('tbody > tr .si-h4').first().click();
+    await page.locator('tbody > tr .si-h4').nth(5).click();
     await si.runVisualAndA11yTests('selection');
   });
 

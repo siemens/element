@@ -83,7 +83,7 @@ describe('SiTimelineWidgetItemComponent', () => {
       icon: 'element-plant'
     };
     fixture.detectChanges();
-    expect(element.querySelector('.si-title-2')!.innerHTML).toContain('Title');
+    expect(element.querySelector('.si-h5')!.innerHTML).toContain('Title');
   });
 
   it('should display the item description string', () => {
@@ -94,7 +94,7 @@ describe('SiTimelineWidgetItemComponent', () => {
       icon: 'element-plant'
     };
     fixture.detectChanges();
-    expect(element.querySelector('.si-body-2')!.innerHTML).toContain('Description');
+    expect(element.querySelector('.si-body')!.innerHTML).toContain('Description');
   });
 
   it('should display the item icon', () => {

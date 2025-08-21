@@ -5,7 +5,7 @@
     [disabled]="isPreviousButtonDisabled()"
     (clicked)="changeVisibleYearRange(-1)"
   />
-  <span class="year-range-label flex-fill mx-4 si-title-1 text-secondary calendar-button">
+  <span class="year-range-label flex-fill mx-4 si-h4 text-secondary calendar-button">
     {{ fromYear() | date: 'yyyy' }} - {{ toYear() | date: 'yyyy' }}
   </span>
   <si-calendar-direction-button
