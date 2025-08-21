@@ -60,6 +60,7 @@ documentation.
 
 ## I
 
+- [Icon](status-notifications/icon.md)
 - [Icon Status](status-notifications/icon-status.md)
 - [Info Page](pages/info-page.md)
 - [Inline Notification](status-notifications/inline-notification.md)

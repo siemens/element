@@ -30,6 +30,7 @@ nav:
       - Grid:                             'fundamentals/layouts/grid.md'
       - Spacing:                          'fundamentals/layouts/spacing.md'
     - Elevation:                          'fundamentals/elevation.md'
+    - Icons:                              'fundamentals/icons.md'
     - Localization:                       'fundamentals/localization.md'
     - UX Writing:
       - Overview:                           'fundamentals/ux-text-style-guide/index.md'
@@ -121,6 +122,7 @@ nav:
       - Connection Strength:              'components/status-notifications/connection-strength.md'
       - Copyright Notice:                 'components/status-notifications/copyright-notice.md'
       - Empty State:                      'components/status-notifications/empty-state.md'
+      - Icon:                             'components/status-notifications/icon.md'
       - Icon Status:                      'components/status-notifications/icon-status.md'
       - Inline Notification:              'components/status-notifications/inline-notification.md'
       - Popover:                          'components/status-notifications/popover.md'
