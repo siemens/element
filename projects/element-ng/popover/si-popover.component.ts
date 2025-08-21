@@ -16,16 +16,18 @@ import {
   signal,
   TemplateRef,
   viewChild,
-  DOCUMENT
+  DOCUMENT,
+  computed
 } from '@angular/core';
 import { calculateOverlayArrowPosition, OverlayArrowPosition } from '@siemens/element-ng/common';
 import { SiIconComponent } from '@siemens/element-ng/icon';
+import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 import { SiPopoverDirective } from './si-popover.directive';
 
 @Component({
   selector: 'si-popover',
-  imports: [NgClass, NgTemplateOutlet, SiIconComponent],
+  imports: [NgClass, NgTemplateOutlet, SiIconComponent, SiTranslateModule],
   templateUrl: './si-popover.component.html',
   host: {
     '[id]': 'this.popoverDirective().popoverId'
@@ -41,6 +43,10 @@ export class PopoverComponent implements OnInit, OnDestroy {
   describedBy: string | undefined;
   protected readonly positionClass = signal('');
   protected readonly arrowPos = signal<OverlayArrowPosition | undefined>(undefined);
+  protected readonly description = computed(() => {
+    const description = this.popoverDirective().siPopover();
+    return !(description instanceof TemplateRef) ? description : undefined;
+  });
   protected popoverTemplate: TemplateRef<any> | null = null;
   protected injector = inject(Injector);
 
