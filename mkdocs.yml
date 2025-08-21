@@ -70,6 +70,7 @@ nav:
       - File Uploader:                    'components/forms-inputs/file-uploader.md'
       - Forms:                            'components/forms-inputs/forms.md'
       - Input:                            'components/forms-inputs/input.md'
+      - Language switcher:                'components/forms-inputs/language-switcher.md'
       - Number Input:                     'components/forms-inputs/number-input.md'
       - Phone Number Input:               'components/forms-inputs/phone-number-input.md'
       - Pills Input:                      'components/forms-inputs/pills-input.md'
