@@ -103,6 +103,7 @@ documentation.
 
 - [Scatter Chart](charts/scatter-chart.md)
 - [Search Bar](sorting-filtering/search-bar.md)
+- [Segmented Button](buttons-menus/segmented-button.md)
 - [Select](forms-inputs/select.md)
 - [Side Panel](layout-navigation/side-panel.md)
 - [Skeleton](progress-indication/skeleton.md)
