@@ -1,5 +1,5 @@
 @if (customLegend() && customLegend()?.customLegends) {
-  <div #customLegendContainer class="legend-container si-body-2">
+  <div #customLegendContainer class="legend-container si-body">
     @for (leg of customLegend()?.customLegends; track legendIndex; let legendIndex = $index) {
       @if (legendIndex === 0 && leg && leg.list && leg.list.length > 0) {
         <div

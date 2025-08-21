@@ -210,7 +210,7 @@ export class SiMonthSelectionComponent extends SiInitialFocusComponent implement
         isPreview: false,
         isToday,
         valueRaw: createDate(date),
-        cssClasses: ['month', 'si-title-1', 'text-truncate']
+        cssClasses: ['month', 'si-h4', 'text-truncate']
       });
     }
     this.monthCells.push(row);

@@ -181,7 +181,7 @@
     &:hover {
       background: variables.$element-base-1-hover;
 
-      div.si-title-1:hover {
+      div.si-h4:hover {
         background: transparent;
       }
     }
@@ -200,8 +200,8 @@
     background: variables.$element-ui-0;
     color: variables.$element-base-1;
 
-    div.si-title-1,
-    div.si-body-1 {
+    div.si-h4,
+    div.si-body-lg {
       &:hover {
         background: transparent;
         color: variables.$element-base-1;

@@ -41,7 +41,7 @@ describe('SiListWidgetItemComponent', () => {
   it('should display the item label string', () => {
     component.item = { label: 'label' };
     fixture.detectChanges();
-    expect(element.querySelector('.si-title-2')!.innerHTML).toContain('label');
+    expect(element.querySelector('.si-h5')!.innerHTML).toContain('label');
   });
 
   it('should display the item link', () => {
@@ -67,7 +67,7 @@ describe('SiListWidgetItemComponent', () => {
   it('should display the item description', () => {
     component.item = { label: 'label', description: 'description' };
     fixture.detectChanges();
-    expect(element.querySelector('.si-body-2')!.innerHTML).toContain('description');
+    expect(element.querySelector('.si-body')!.innerHTML).toContain('description');
   });
 
   it('should display the item text', () => {

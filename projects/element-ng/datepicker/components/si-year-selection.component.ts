@@ -236,7 +236,7 @@ export class SiYearSelectionComponent extends SiInitialFocusComponent implements
         isPreview: false,
         isToday,
         valueRaw: createDate(date),
-        cssClasses: ['year', 'si-title-1']
+        cssClasses: ['year', 'si-h4']
       });
     }
     this.yearCells.push(row);

@@ -91,7 +91,7 @@ describe('SiPhoneNumberInputComponent', () => {
     selectCountry.click();
     fixture.detectChanges();
     const displaySelectedCountry = element.querySelector(
-      '.dropdown-toggle .si-body-2'
+      '.dropdown-toggle .si-body'
     ) as HTMLElement;
     expect(displaySelectedCountry.textContent).toContain('+49');
   });
@@ -123,7 +123,7 @@ describe('SiPhoneNumberInputComponent', () => {
     // Selecting this option should update the selected value to +41
     await list.getItem(0).then(item => item.click());
     const displaySelectedCountry = element.querySelector(
-      '.dropdown-toggle .si-body-2'
+      '.dropdown-toggle .si-body'
     ) as HTMLElement;
     expect(displaySelectedCountry.textContent).toContain('+41');
   });
@@ -161,7 +161,7 @@ describe('SiPhoneNumberInputComponent', () => {
     fixture.componentInstance.form.controls.workPhone.setValue('+911234567890');
     fixture.detectChanges();
     const displaySelectedCountry = element.querySelector(
-      '.dropdown-toggle .si-body-2'
+      '.dropdown-toggle .si-body'
     ) as HTMLElement;
     expect(displaySelectedCountry.textContent).toContain('+91');
     expect(inputElement.value).toEqual('1234 567 890');
@@ -224,7 +224,7 @@ describe('SiPhoneNumberInputComponent', () => {
     component.country = 'US';
     fixture.detectChanges();
 
-    const countryCode = element.querySelector<HTMLElement>('span.si-body-2');
+    const countryCode = element.querySelector<HTMLElement>('span.si-body');
     expect(countryCode?.innerText.trim()).toContain('+1');
   });
 
@@ -232,7 +232,7 @@ describe('SiPhoneNumberInputComponent', () => {
     component.country = 'AU';
     fixture.detectChanges();
 
-    const countryCode = element.querySelector<HTMLElement>('span.si-body-2');
+    const countryCode = element.querySelector<HTMLElement>('span.si-body');
     expect(countryCode?.innerText.trim()).toContain('+61');
   });
 

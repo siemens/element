@@ -42,7 +42,7 @@
 } @else {
   <div class="text-center">
     <si-icon class="completion-icon-size text-success" [icon]="icons.elementChecked" />
-    <p class="si-title-1"> {{ completionText() | translate }}</p>
+    <p class="si-h4"> {{ completionText() | translate }}</p>
   </div>
 }
 
@@ -76,7 +76,7 @@
               class="step-icon number-step d-flex justify-content-center align-items-center px-1"
             >
               <div class="circle" [class.status-warning]="item.step.failed()">
-                <span class="si-title-2 px-2" [class.completed-color]="item.index < index">
+                <span class="si-h5 px-2" [class.completed-color]="item.index < index">
                   {{ item.index + 1 }}
                 </span>
               </div>
@@ -89,7 +89,7 @@
             />
           }
           <div
-            class="title si-title-2"
+            class="title si-h5"
             [class.text-center]="!verticalLayout()"
             [class.px-6]="!verticalLayout()"
             [attr.aria-disabled]="getAriaDisabled(item.index)"
@@ -126,7 +126,7 @@
         >
           <si-icon [icon]="icons.elementCancel" />
         </button>
-        <div class="si-title-2 text-primary">{{ cancelText() | translate }}</div>
+        <div class="si-h5 text-primary">{{ cancelText() | translate }}</div>
       </div>
     </div>
   }
@@ -196,7 +196,7 @@
         >
           <si-icon class="flip-rtl" [icon]="icons.elementLeft4" />
         </button>
-        <div class="si-title-2 text-primary">{{ backText() | translate }}</div>
+        <div class="si-h5 text-primary">{{ backText() | translate }}</div>
       </div>
     }
   </div>
@@ -215,7 +215,7 @@
           <si-icon class="flip-rtl" [icon]="icons.elementRight4" />
         </button>
         <div
-          class="si-title-2 text-primary"
+          class="si-h5 text-primary"
           [class.text-muted]="!currentStep?.isValid()"
           [attr.aria-disabled]="!currentStep?.isValid()"
           >{{ nextText() | translate }}</div

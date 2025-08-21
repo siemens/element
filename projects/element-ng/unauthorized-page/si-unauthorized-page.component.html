@@ -7,7 +7,7 @@
     <h2 class="mb-9">{{ subHeading() | translate }}</h2>
   }
   @if (description()) {
-    <p class="text-pre-wrap text-center si-body-1 mb-9">{{ description() | translate }}</p>
+    <p class="text-pre-wrap text-center si-body-lg mb-9">{{ description() | translate }}</p>
   }
   @if (link()?.title) {
     <a class="btn btn-primary" [siLink]="link()">{{ link()?.title | translate }}</a>

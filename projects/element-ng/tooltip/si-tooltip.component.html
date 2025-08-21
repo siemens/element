@@ -11,7 +11,7 @@
   ></div>
   <div class="tooltip-inner">
     @if (tooltipText()) {
-      <div class="si-body-2">{{ tooltipText() | translate }}</div>
+      <div class="si-body">{{ tooltipText() | translate }}</div>
     } @else if (tooltipTemplate()) {
       <ng-template
         [ngTemplateOutlet]="tooltipTemplate()"

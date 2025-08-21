@@ -155,7 +155,7 @@ describe('SiSidePanelComponent', () => {
       service.setSidePanelContent(template);
       fixture.detectChanges();
 
-      const title = element.querySelector<HTMLDivElement>('p.si-title-2');
+      const title = element.querySelector<HTMLDivElement>('p.si-h5');
       expect(title!.innerText).toBe('side-panel');
       const content = element.querySelector<HTMLDivElement>('div.dynamic-content');
       expect(content).toBeTruthy();
@@ -165,7 +165,7 @@ describe('SiSidePanelComponent', () => {
       service.showTemporaryContent(component.content());
       fixture.detectChanges();
 
-      const title = element.querySelector<HTMLDivElement>('p.si-title-2');
+      const title = element.querySelector<HTMLDivElement>('p.si-h5');
       expect(title!.innerText).toBe('side-panel');
       const innerElements = Array.from(element.querySelectorAll<HTMLDivElement>('div.inner'));
       expect(innerElements).toHaveSize(2);

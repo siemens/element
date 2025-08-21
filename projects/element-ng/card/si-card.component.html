@@ -14,10 +14,10 @@
       <ng-content #cardHeaderIcon select="[headerIcon]" />
       <div>
         @if (heading()) {
-          <div class="text-truncate si-title-2">{{ heading() | translate }}</div>
+          <div class="text-truncate si-h5">{{ heading() | translate }}</div>
         }
         @if (subHeading()) {
-          <div class="text-truncate si-body-2 text-secondary pt-2">{{
+          <div class="text-truncate si-body text-secondary pt-2">{{
             subHeading() | translate
           }}</div>
         }

@@ -19,12 +19,12 @@
       @if (iconValue) {
         <si-icon class="icon me-1" [icon]="iconValue" />
       }
-      <span class="si-title-2" [id]="labelledBy">{{ popover.title() }}</span>
+      <span class="si-h5" [id]="labelledBy">{{ popover.title() }}</span>
     </div>
   }
   @if (!popoverTemplate) {
     <div class="popover-body">
-      <div class="si-body-2" [id]="describedBy" [innerHTML]="popover.siPopover()"></div>
+      <div class="si-body" [id]="describedBy" [innerHTML]="popover.siPopover()"></div>
     </div>
   } @else {
     <!-- If title is already provided, we wrap the template with the `popover-body` class

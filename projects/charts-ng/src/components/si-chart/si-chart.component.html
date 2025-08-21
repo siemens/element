@@ -1,11 +1,8 @@
 @if (showCustomLegend() && (title() || subTitle())) {
-  <div
-    class="si-title-2 chart-title chart-title-width"
-    [style.background-color]="backgroundColor()"
-  >
+  <div class="si-h5 chart-title chart-title-width" [style.background-color]="backgroundColor()">
     <div class="chart-title-text" [style.color]="titleColor()">{{ title() }}</div>
     @if (subTitle()) {
-      <div class="si-body-2" [style.color]="subTitleColor()">{{ subTitle() }}</div>
+      <div class="si-body" [style.color]="subTitleColor()">{{ subTitle() }}</div>
     }
   </div>
 }

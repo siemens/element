@@ -38,16 +38,14 @@
       <div class="d-flex flex-column justify-content-center w-100 overflow-hidden">
         <div class="d-flex">
           <div class="result-description">
-            <span class="si-title-2">{{
-              step.description | translate: step.translationParams
-            }}</span>
+            <span class="si-h5">{{ step.description | translate: step.translationParams }}</span>
             @if (step.detail) {
-              <div class="si-body-2 text-secondary result-detail">{{
+              <div class="si-body text-secondary result-detail">{{
                 step.detail | translate: step.translationParams
               }}</div>
             }
             @if (step.errorMessage) {
-              <div class="si-title-2 text-danger">{{
+              <div class="si-h5 text-danger">{{
                 step.errorMessage | translate: step.translationParams
               }}</div>
             }

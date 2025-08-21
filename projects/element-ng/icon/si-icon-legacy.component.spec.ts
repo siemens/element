@@ -48,10 +48,10 @@ describe('SiIconComponent', () => {
 
   it('should set size', () => {
     component.setInput('icon', 'element-alarm');
-    component.setInput('size', 'display-1');
+    component.setInput('size', 'display-xl');
     fixture.detectChanges();
-    const icon = fixture.nativeElement.querySelector('.display-1');
-    expect(icon.classList).toContain('display-1');
+    const icon = fixture.nativeElement.querySelector('.display-xl');
+    expect(icon.classList).toContain('display-xl');
   });
 
   it('should set stackedIcon and stackedColor', () => {

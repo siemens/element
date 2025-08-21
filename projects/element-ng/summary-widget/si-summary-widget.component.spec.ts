@@ -30,7 +30,7 @@ describe('SiSummaryWidgetComponent', () => {
     fixture.detectChanges();
 
     expect(element.querySelector('.text-secondary')?.textContent).toContain('test label');
-    expect(element.querySelector('.si-title-2')?.textContent).toContain('42');
+    expect(element.querySelector('.si-h5')?.textContent).toContain('42');
     expect(element.querySelector('si-icon')).toBeFalsy();
   });
 

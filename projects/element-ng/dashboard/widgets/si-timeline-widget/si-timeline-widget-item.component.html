@@ -15,9 +15,9 @@
     </div>
     <div class="d-flex flex-column gap-1 py-4 flex-grow-1">
       <span class="si-caption text-secondary">{{ valueObject.timeStamp | translate }}</span>
-      <span class="si-title-2">{{ valueObject.title | translate }}</span>
+      <span class="si-h5">{{ valueObject.title | translate }}</span>
       @if (valueObject.description) {
-        <span class="si-body-2 text-secondary">{{ valueObject.description | translate }}</span>
+        <span class="si-body text-secondary">{{ valueObject.description | translate }}</span>
       }
     </div>
     @if (valueObject.action) {

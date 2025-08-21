@@ -35,7 +35,7 @@
       <ng-template #account>
         <si-header-dropdown>
           <div class="mx-5">
-            <div class="si-title-2">Jane Smith</div>
+            <div class="si-h5">Jane Smith</div>
             <div>jane.smith&#64;siemens.com</div>
             <div class="d-flex align-items-center text-secondary mt-2">Siemens AG</div>
           </div>
@@ -155,15 +155,16 @@
   <div class="card-body card-text d-flex align-items-center justify-content-around">
     @switch (type) {
       @case ('door') {
-        <p class="display-1 text-center my-10">{{ doorEventsWeek | number }}</p>
+        <p class="si-display-xl text-center my-10">{{ doorEventsWeek | number }}</p>
       }
       @default {
         <div class="text-center">
-          <p class="display-2"
-            >{{ linesAddedWeek }}<si-icon class="status-success display-2" icon="element-plus"
+          <p class="si-display-lg"
+            >{{ linesAddedWeek }}<si-icon class="status-success si-display-lg" icon="element-plus"
           /></p>
-          <p class="display-2"
-            >{{ linesRemovedWeek }}<si-icon class="status-danger display-2" icon="element-minus"
+          <p class="si-display-lg"
+            >{{ linesRemovedWeek
+            }}<si-icon class="status-danger si-display-lg" icon="element-minus"
           /></p>
         </div>
       }
