@@ -168,7 +168,9 @@ nav:
     - Motion and animation:               'architecture/motion-animation.md'
     - Theming:                            'architecture/theming.md'
     - UI state:                           'architecture/ui-state.md'
-  - Contributing:                         'CONTRIBUTING.md'
+  - Contributing:
+    - Guidelines:                         'CONTRIBUTING.md'
+    - Code of Conduct:                    'CODE_OF_CONDUCT.md'
   - Changelog:                            'CHANGELOG.md'
 
 theme:
