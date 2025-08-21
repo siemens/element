@@ -2,7 +2,7 @@
 - link "Jump to Navigation"
 - banner:
   - button "Launchpad"
-  - text: Smart Buildings
+  - heading "Smart Buildings" [level=1]
   - button "API"
   - button "Jane Smith"
 - navigation:

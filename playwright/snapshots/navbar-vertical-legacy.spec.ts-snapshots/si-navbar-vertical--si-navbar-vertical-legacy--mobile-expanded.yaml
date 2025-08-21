@@ -1,7 +1,7 @@
 - link "Jump to Main content"
 - link "Jump to Navigation"
 - banner:
-  - text: Navbar vertical
+  - heading "Navbar vertical" [level=1]
   - button "Jane Smith"
 - navigation:
   - button "collapse" [expanded]

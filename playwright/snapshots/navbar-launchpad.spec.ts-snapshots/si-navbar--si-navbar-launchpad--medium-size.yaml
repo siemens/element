@@ -1,6 +1,6 @@
 - banner:
   - button "Launchpad" [expanded]
-  - text: Application name
+  - heading "Application name" [level=1]
   - navigation "Header main":
     - link "Item 1":
       - /url: "#/viewer/viewer/item1"
@@ -10,13 +10,13 @@
   - button "Jane Smith"
 - paragraph: Launchpad
 - paragraph: Access all your apps
-- link:
+- link "Assets":
   - /url: .
-- link:
+- link "Water":
   - /url: .
-- link:
+- link "Rocket":
   - /url: .
-- link:
+- link "Statistics":
   - /url: .
 - link "Add more":
   - /url: https://example.org

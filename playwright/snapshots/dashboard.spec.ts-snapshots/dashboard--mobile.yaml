@@ -1,7 +1,7 @@
 - link "Jump to Main content"
 - link "Jump to Navigation"
 - banner:
-  - text: Siemens Dashboards
+  - heading "Siemens Dashboards" [level=1]
   - button "Toggle theme"
 - navigation:
   - button "expand"

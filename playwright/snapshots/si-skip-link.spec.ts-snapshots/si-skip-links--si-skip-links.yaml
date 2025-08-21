@@ -5,7 +5,7 @@
 - banner:
   - link "Siemens logo":
     - /url: "#/"
-  - text: Skip Links
+  - heading "Skip Links" [level=1]
   - navigation:
     - button "Item 1"
     - button "Item 2"

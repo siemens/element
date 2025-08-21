@@ -1,6 +1,6 @@
 - banner:
   - button "Toggle navigation"
-  - text: My application
+  - heading "My application" [level=1]
   - button "Notifications"
   - button "Toggle actions" [expanded]
   - button "Tenant 1"

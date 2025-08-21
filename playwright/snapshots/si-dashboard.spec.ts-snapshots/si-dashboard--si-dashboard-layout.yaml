@@ -4,7 +4,7 @@
   - button "Launchpad"
   - link "Siemens logo":
     - /url: "#/"
-  - text: Smart Buildings
+  - heading "Smart Buildings" [level=1]
   - button "API"
   - button "Jane Smith"
 - navigation:

@@ -79,6 +79,8 @@
   font-size: typography.$si-font-size-body-lg;
   font-weight: typography.$si-font-weight-body-lg;
   padding: map.get(spacers.$spacers, 5);
+  margin: 0;
+  line-height: normal;
   white-space: nowrap;
 }
 

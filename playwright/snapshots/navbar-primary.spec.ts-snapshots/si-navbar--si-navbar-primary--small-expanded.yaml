@@ -1,6 +1,6 @@
 - banner:
   - button "Toggle navigation" [expanded]
-  - text: Navbar primary
+  - heading "Navbar primary" [level=1]
   - navigation "Header main":
     - link "item 1":
       - /url: "#/viewer/viewer/item1"

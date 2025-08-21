@@ -2,7 +2,7 @@
   - button "Launchpad"
   - link "Siemens logo":
     - /url: https://element.siemens.io/
-  - text: Application name
+  - heading "Application name" [level=1]
   - navigation "Header main":
     - link "Item 1":
       - /url: "#/viewer/viewer/item1"

@@ -1,10 +1,11 @@
 - link "Jump to Main content"
 - link "Jump to Navigation"
+- alert: System maintenance scheduled for 2 AM - 4 AM UTC
 - banner:
   - button "Launchpad"
   - link "Siemens logo":
     - /url: "#/"
-  - text: Application name
+  - heading "Application name" [level=1]
   - button "Jane Smith"
 - navigation:
   - button "expand"

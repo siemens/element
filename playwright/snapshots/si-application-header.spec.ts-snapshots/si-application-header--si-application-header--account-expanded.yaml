@@ -1,7 +1,7 @@
 - banner:
   - link "Siemens logo":
     - /url: "#/"
-  - text: My application
+  - heading "My application" [level=1]
   - navigation "Main navigation":
     - link "Module 1":
       - /url: "#/viewer/viewer/m1"
