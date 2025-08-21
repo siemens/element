@@ -32,7 +32,7 @@ $toast-timer-height: 2px;
   padding-inline: map.get(all-variables.$spacers, 5) $toast-padding;
   padding-block: $toast-padding;
   margin-block-end: $toast-window-margin;
-  font-size: all-variables.$si-font-size-body-1;
+  font-size: all-variables.$si-font-size-body-lg;
   pointer-events: all;
   overflow: hidden;
   min-inline-size: $toast-min-width;

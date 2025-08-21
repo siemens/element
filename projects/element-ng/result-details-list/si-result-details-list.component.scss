@@ -25,7 +25,7 @@ si-loading-spinner {
   letter-spacing: 0.15px;
   display: block;
   display: -webkit-box;
-  max-block-size: variables.$si-font-size-body-2 * variables.$si-line-height-body-2 * 2;
+  max-block-size: variables.$si-font-size-body * variables.$si-line-height-body * 2;
   word-wrap: break-word;
   line-clamp: 2;
   -webkit-line-clamp: 2;

@@ -7,6 +7,6 @@
 }
 
 si-loading-spinner {
-  --loading-spinner-size: #{variables.$si-font-size-body-1};
+  --loading-spinner-size: #{variables.$si-font-size-body-lg};
   --loading-spinner-color: #{variables.$element-text-inverse};
 }

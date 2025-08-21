@@ -111,9 +111,9 @@ h1,
 
 .si-h1-black {
   @include typography.si-font(
-    typography.$si-font-size-h1-black,
-    typography.$si-line-height-h1-black,
-    typography.$si-font-weight-h1-black
+    typography.$si-font-size-h1-bold,
+    typography.$si-line-height-h1-bold,
+    typography.$si-font-weight-h1-bold
   );
 }
 
@@ -144,101 +144,101 @@ h6,
 .h5,
 .h6 {
   @include typography.si-font(
-    typography.$si-font-size-body-1,
-    typography.$si-line-height-body-1,
-    typography.$si-font-weight-body-1
+    typography.$si-font-size-body-lg,
+    typography.$si-line-height-body-lg,
+    typography.$si-font-weight-body-lg
   );
 }
 
 .si-title-1-bold {
   @include typography.si-font(
-    typography.$si-font-size-title-1-bold,
-    typography.$si-line-height-title-1-bold,
-    typography.$si-font-weight-title-1-bold
+    typography.$si-font-size-h4-bold,
+    typography.$si-line-height-h4-bold,
+    typography.$si-font-weight-h4-bold
   );
 }
 
 .si-title-1 {
   @include typography.si-font(
-    typography.$si-font-size-title-1,
-    typography.$si-line-height-title-1,
-    typography.$si-font-weight-title-1
+    typography.$si-font-size-h4,
+    typography.$si-line-height-h4,
+    typography.$si-font-weight-h4
   );
 }
 
 .si-body-1 {
   @include typography.si-font(
-    typography.$si-font-size-body-1,
-    typography.$si-line-height-body-1,
-    typography.$si-font-weight-body-1
+    typography.$si-font-size-body-lg,
+    typography.$si-line-height-body-lg,
+    typography.$si-font-weight-body-lg
   );
 }
 
 .si-title-2-bold {
   @include typography.si-font(
-    typography.$si-font-size-title-2-bold,
-    typography.$si-line-height-title-2-bold,
-    typography.$si-font-weight-title-2-bold
+    typography.$si-font-size-h5-bold,
+    typography.$si-line-height-h5-bold,
+    typography.$si-font-weight-h5-bold
   );
 }
 
 .si-title-2 {
   @include typography.si-font(
-    typography.$si-font-size-title-2,
-    typography.$si-line-height-title-2,
-    typography.$si-font-weight-title-2
+    typography.$si-font-size-h5,
+    typography.$si-line-height-h5,
+    typography.$si-font-weight-h5
   );
 }
 
 .si-body-2 {
   @include typography.si-font(
-    typography.$si-font-size-body-2,
-    typography.$si-line-height-body-2,
-    typography.$si-font-weight-body-2
+    typography.$si-font-size-body,
+    typography.$si-line-height-body,
+    typography.$si-font-weight-body
   );
 }
 
 .si-caption {
   @include typography.si-font(
-    typography.$si-font-size-caption-1,
-    typography.$si-line-height-caption-1,
-    typography.$si-font-weight-caption-1
+    typography.$si-font-size-caption,
+    typography.$si-line-height-caption,
+    typography.$si-font-weight-caption
   );
 }
 
 .display-1,
 .si-display-1 {
   @include typography.si-font(
-    typography.$si-font-size-display-1,
-    typography.$si-line-height-display-1,
-    typography.$si-font-weight-display-1
+    typography.$si-font-size-display-xl,
+    typography.$si-line-height-display-xl,
+    typography.$si-font-weight-display-xl
   );
 }
 
 .display-2,
 .si-display-2 {
   @include typography.si-font(
-    typography.$si-font-size-display-2,
-    typography.$si-line-height-display-2,
-    typography.$si-font-weight-display-2
+    typography.$si-font-size-display-lg,
+    typography.$si-line-height-display-lg,
+    typography.$si-font-weight-display-lg
   );
 }
 
 .display-3,
 .si-display-3 {
   @include typography.si-font(
-    typography.$si-font-size-display-3,
-    typography.$si-line-height-display-3,
-    typography.$si-font-weight-display-3
+    typography.$si-font-size-display-bold,
+    typography.$si-line-height-display-bold,
+    typography.$si-font-weight-display-bold
   );
 }
 
 .display-4,
 .si-display-4 {
   @include typography.si-font(
-    typography.$si-font-size-display-4,
-    typography.$si-line-height-display-4,
-    typography.$si-font-weight-display-4
+    typography.$si-font-size-display,
+    typography.$si-line-height-display,
+    typography.$si-font-weight-display
   );
 }
 

@@ -22,12 +22,12 @@
 
 .alert,
 .alert-link {
-  font-size: typography.$si-font-size-title-1;
-  line-height: typography.$si-line-height-title-1;
+  font-size: typography.$si-font-size-h4;
+  line-height: typography.$si-line-height-h4;
 }
 
 .alert-link {
-  font-weight: typography.$si-font-weight-title-1;
+  font-weight: typography.$si-font-weight-h4;
   color: inherit;
 
   &:hover {

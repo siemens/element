@@ -22,7 +22,7 @@
   &.tiny,
   &.xsmall,
   &.small {
-    --initials-size: #{variables.$si-font-size-title-2};
+    --initials-size: #{variables.$si-font-size-h5};
     --indicator-size: 16px;
     --indicator-offset-x: -8px;
     --indicator-offset-y: -4px;

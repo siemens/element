@@ -25,8 +25,8 @@ $page-button-size: 24px;
   padding-inline: map.get(spacers.$spacers, 2);
   margin-inline: map.get(spacers.$spacers, 1);
   background: transparent;
-  font-size: typography.$si-font-size-title-2;
-  font-weight: typography.$si-font-weight-title-2;
+  font-size: typography.$si-font-size-h5;
+  font-weight: typography.$si-font-weight-h5;
   color: semantic-tokens.$element-text-primary;
   border: 0;
 

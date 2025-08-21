@@ -9,7 +9,7 @@
 .si-value-widget-value {
   @extend .si-display-3;
   display: inline-block;
-  min-block-size: variables.$si-font-size-display-3 * variables.$si-line-height-display-3;
+  min-block-size: variables.$si-font-size-display-bold * variables.$si-line-height-display-bold;
 }
 
 /**
@@ -20,7 +20,7 @@
   @extend .si-display-3;
   @extend .si-skeleton;
   display: inline-block;
-  block-size: variables.$si-font-size-display-3;
+  block-size: variables.$si-font-size-display-bold;
   vertical-align: middle;
   inline-size: 100%;
 }
@@ -47,7 +47,7 @@
 
 .si-link-widget-skeleton {
   @extend .si-skeleton;
-  block-size: calc(variables.$si-font-size-body-2 * variables.$si-line-height-body-2);
+  block-size: calc(variables.$si-font-size-body * variables.$si-line-height-body);
   inline-size: 100%;
 }
 

@@ -120,14 +120,14 @@
   }
 
   th {
-    font-weight: variables.$si-font-weight-caption-1;
+    font-weight: variables.$si-font-weight-caption;
     text-align: center;
     block-size: 32px;
   }
 
   .week-num,
   th {
-    font-size: variables.$si-font-size-caption-1;
+    font-size: variables.$si-font-size-caption;
     color: variables.$element-text-secondary;
     inline-size: 32px;
     cursor: default;
@@ -224,9 +224,9 @@
   }
 
   .calendar-button {
-    font-weight: variables.$si-font-weight-title-2;
-    font-size: variables.$si-font-size-title-2;
-    line-height: variables.$si-line-height-title-2;
+    font-weight: variables.$si-font-weight-h5;
+    font-size: variables.$si-font-size-h5;
+    line-height: variables.$si-line-height-h5;
     color: variables.$element-text-active;
     min-inline-size: 0 !important; // stylelint-disable-line declaration-no-important
   }
