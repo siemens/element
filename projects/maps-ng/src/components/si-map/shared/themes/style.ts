@@ -5,9 +5,9 @@
 
 // Fonts
 // TODO: This is a workaround to disable loading of google fonts.
-const italicFonts = ['Siemens Sans'];
-const regularFonts = ['Siemens Sans'];
-const boldFonts = ['Siemens Sans'];
+const italicFonts = ['SiemensSans Pro', 'sans-serif'];
+const regularFonts = ['SiemensSans Pro', 'sans-serif'];
+const boldFonts = ['SiemensSans Pro', 'sans-serif'];
 
 // Colors
 const deepBlue900 = 'rgba(32, 33, 50, 1)';
