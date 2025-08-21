@@ -23,6 +23,7 @@ import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
     :host {
       display: block;
       overflow: hidden;
+      position: static;
     }
   `,
   host: {
