@@ -1,9 +1,6 @@
 @charset "UTF-8";
 @use 'sass:map';
 
-$siemens-font-path: '@simpl/brand/assets/fonts' !default;
-$icon-font-path: '@simpl/element-icons/dist/fonts' !default;
-
 @use '@siemens/element-ng/element-ng';
 @use '@siemens/element-theme/src/styles/variables/spacers';
 @use '@siemens/element-theme/src/styles/variables/semantic-tokens';
@@ -17,9 +14,7 @@ $icon-font-path: '@simpl/element-icons/dist/fonts' !default;
   $flag-icons-use-square: false
 );
 
-@use '@simpl/brand/assets/fonts/styles/siemens-sans' with (
-  $siemens-font-path: $siemens-font-path
-);
+@use '@simpl/brand/assets/fonts/styles/siemens-sans';
 
 @use '@simpl/brand/dist/element-theme-siemens-brand-light' as brand-light;
 @use '@simpl/brand/dist/element-theme-siemens-brand-dark' as brand-dark;
@@ -32,9 +27,7 @@ $icon-font-path: '@simpl/element-icons/dist/fonts' !default;
   )
 );
 
-@use '@simpl/element-icons/dist/style/simpl-element-icons' with (
-  $font-path: $icon-font-path
-);
+@use '@simpl/element-icons/dist/style/simpl-element-icons';
 
 @use '@siemens/element-theme/src/styles/themes';
 // OpenLayers styling
