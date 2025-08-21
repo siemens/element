@@ -50,13 +50,13 @@ Make use of data visualization [categorial colors](../../fundamentals/colors/dat
 ### Usage
 
 ```ts
-import { SiMicroBarComponent } from '@siemens/native-charts-ng/micro-bar';
-import { SiMicroDonutComponent } from '@siemens/native-charts-ng/micro-donut';
-import { SiMicroLineComponent } from '@siemens/native-charts-ng/micro-line';
-import { SiMicroProgressComponent } from '@siemens/native-charts-ng/micro-progress';
+import { SiMicrochartBarComponent } from '@siemens/native-charts-ng/microchart-bar';
+import { SiMicrochartDonutComponent } from '@siemens/native-charts-ng/microchart-donut';
+import { SiMicrochartLineComponent } from '@siemens/native-charts-ng/microchart-line';
+import { SiMicrochartProgressComponent } from '@siemens/native-charts-ng/microchart-progress';
 
 @Component({
-  imports: [SiMicroBarComponent, SiMicroDonutComponent, SiMicroLineComponent, SiMicroProgressComponent, ...]
+  imports: [SiMicrochartBarComponent, SiMicrochartDonutComponent, SiMicrochartLineComponent, SiMicrochartProgressComponent, ...]
 })
 ```
 
@@ -64,12 +64,12 @@ import { SiMicroProgressComponent } from '@siemens/native-charts-ng/micro-progre
 
 <si-docs-component example="si-ncharts/si-micro-charts" height="400"></si-docs-component>
 
-<si-docs-api component="SiMicroBarComponent" package="@siemens/native-charts-ng" hideImplicitlyPublic="true"></si-docs-api>
+<si-docs-api component="SiMicrochartBarComponent" package="@siemens/native-charts-ng" hideImplicitlyPublic="true"></si-docs-api>
 
-<si-docs-api component="SiMicroDonutComponent" package="@siemens/native-charts-ng" hideImplicitlyPublic="true"></si-docs-api>
+<si-docs-api component="SiMicrochartDonutComponent" package="@siemens/native-charts-ng" hideImplicitlyPublic="true"></si-docs-api>
 
-<si-docs-api component="SiMicroLineComponent" package="@siemens/native-charts-ng" hideImplicitlyPublic="true"></si-docs-api>
+<si-docs-api component="SiMicrochartLineComponent" package="@siemens/native-charts-ng" hideImplicitlyPublic="true"></si-docs-api>
 
-<si-docs-api component="SiMicroProgressComponent" package="@siemens/native-charts-ng" hideImplicitlyPublic="true"></si-docs-api>
+<si-docs-api component="SiMicrochartProgressComponent" package="@siemens/native-charts-ng" hideImplicitlyPublic="true"></si-docs-api>
 
 <si-docs-types></si-docs-types>

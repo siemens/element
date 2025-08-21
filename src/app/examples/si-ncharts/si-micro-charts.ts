@@ -4,21 +4,30 @@
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
-import { MicroBarSeries, SiMicroBarComponent } from '@siemens/native-charts-ng/micro-bar';
-import { MicroDonutSeries, SiMicroDonutComponent } from '@siemens/native-charts-ng/micro-donut';
-import { MicroLineSeries, SiMicroLineComponent } from '@siemens/native-charts-ng/micro-line';
 import {
-  MicroProgressSeries,
-  SiMicroProgressComponent
-} from '@siemens/native-charts-ng/micro-progress';
+  MicrochartBarSeries,
+  SiMicrochartBarComponent
+} from '@siemens/native-charts-ng/microchart-bar';
+import {
+  MicrochartDonutSeries,
+  SiMicrochartDonutComponent
+} from '@siemens/native-charts-ng/microchart-donut';
+import {
+  MicrochartLineSeries,
+  SiMicrochartLineComponent
+} from '@siemens/native-charts-ng/microchart-line';
+import {
+  MicrochartProgressSeries,
+  SiMicrochartProgressComponent
+} from '@siemens/native-charts-ng/microchart-progress';
 
 @Component({
   selector: 'app-sample',
   imports: [
-    SiMicroDonutComponent,
-    SiMicroBarComponent,
-    SiMicroLineComponent,
-    SiMicroProgressComponent,
+    SiMicrochartDonutComponent,
+    SiMicrochartBarComponent,
+    SiMicrochartLineComponent,
+    SiMicrochartProgressComponent,
     SiIconComponent
   ],
   templateUrl: './si-micro-charts.html',
@@ -28,11 +37,14 @@ import {
   }
 })
 export class SampleComponent {
-  donutSeries: MicroDonutSeries[] = [{ valuePercent: 40, colorToken: 'element-data-4' }];
-  barSeries: MicroBarSeries = {
+  donutSeries: MicrochartDonutSeries[] = [{ valuePercent: 40, colorToken: 'element-data-4' }];
+  barSeries: MicrochartBarSeries = {
     values: [2, 4, 5, 3, 5, 7, 7, 9, 11, 10, 12, 9],
     colorToken: 'element-data-7'
   };
-  lineSeries: MicroLineSeries = { values: [2, 3, 6, 5, 4, 7, 8], colorToken: 'element-data-10' };
-  progressSeries: MicroProgressSeries = { valuePercent: 80, colorToken: 'element-data-2' };
+  lineSeries: MicrochartLineSeries = {
+    values: [2, 3, 6, 5, 4, 7, 8],
+    colorToken: 'element-data-10'
+  };
+  progressSeries: MicrochartProgressSeries = { valuePercent: 80, colorToken: 'element-data-2' };
 }
