@@ -98,6 +98,7 @@
   background-color: transparent; // For `<button>`s
   border: 0; // For `<button>`s
   cursor: pointer;
+  border-radius: 0;
 
   .item-title {
     flex: 1;
