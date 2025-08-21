@@ -103,7 +103,7 @@
     "ngx-image-cropper": "^9.0.0",
     "ol": "10.6.1",
     "ol-ext": "4.0.33",
-    "ol-mapbox-style": "12.6.1",
+    "ol-mapbox-style": "13.1.0",
     "rxjs": "7.8.2",
     "tslib": "^2.8.1",
     "zone.js": "0.15.1"
