@@ -1,0 +1,14 @@
+<si-chat-container
+  inputPlaceholder="Ask something..."
+  emptyStateTitle="Start a conversation"
+  emptyStateDescription="Send a message to begin chatting with AI"
+  [messages]="messages()"
+  [sending]="isTyping()"
+  [allowAttachments]="true"
+  [inputActions]="inputActions"
+  [acceptedFileTypes]="['image/*', '.pdf', '.doc', '.docx', '.txt']"
+  [maxFileSize]="5242880"
+  (messageSent)="onMessageSent($event)"
+  (messageAction)="onMessageAction($event)"
+  (attachmentClick)="onAttachmentClick($event)"
+/>
