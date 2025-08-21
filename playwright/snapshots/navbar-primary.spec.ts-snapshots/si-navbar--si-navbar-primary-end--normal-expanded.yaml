@@ -1,7 +1,7 @@
 - banner:
   - link "Siemens logo":
     - /url: "#/"
-  - text: Navbar primary end
+  - heading "Navbar primary end" [level=1]
   - navigation "Header main":
     - link "Operation":
       - /url: "#/viewer/viewer/operation"

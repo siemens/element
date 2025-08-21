@@ -1,6 +1,6 @@
 - banner:
   - button "Toggle navigation" [expanded]
-  - text: Application name
+  - heading "Application name" [level=1]
   - navigation "Header main":
     - button "Launchpad"
     - link "Item 1":

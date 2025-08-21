@@ -9,7 +9,7 @@
 - banner:
   - link "Siemens logo":
     - /url: "#/"
-  - text: Side panel
+  - heading "Side panel" [level=1]
 - button "Toggle side panel"
 - button "scroll - Mode"
 - button "regular - Width"

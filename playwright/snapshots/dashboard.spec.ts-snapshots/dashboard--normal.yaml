@@ -3,7 +3,7 @@
 - banner:
   - link "Siemens logo":
     - /url: "#/"
-  - text: Siemens Dashboards
+  - heading "Siemens Dashboards" [level=1]
   - button "Toggle theme"
 - navigation:
   - button "expand"

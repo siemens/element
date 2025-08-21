@@ -9,7 +9,7 @@
 - banner:
   - link "Siemens logo":
     - /url: "#/"
-  - text: Side panel collapsible
+  - heading "Side panel collapsible" [level=1]
   - button "Layout"
   - button "Help"
 - button "Toggle side panel"

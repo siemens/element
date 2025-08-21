@@ -109,7 +109,7 @@ The brand section contains brand related content, most likely the logo and the a
 <si-application-header>
   <si-header-brand>
     <a siHeaderLogo routerLink="/" class="d-none d-md-flex"></a>
-    <span class="application-name">My application</span>
+    <h1 class="application-name">My application</h1>
   </si-header-brand>
   ...
 </si-application-header>

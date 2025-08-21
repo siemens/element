@@ -1,6 +1,6 @@
 - banner:
   - button "Toggle navigation"
-  - text: My application
+  - heading "My application" [level=1]
   - button "Notifications" [expanded]
   - group "Notifications":
     - button "Message 1"

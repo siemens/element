@@ -2,7 +2,7 @@
   - button "Launchpad" [expanded]
   - link "Siemens logo":
     - /url: "#/"
-  - text: Application name
+  - heading "Application name" [level=1]
   - navigation "Header main":
     - link "Item 1":
       - /url: "#/viewer/viewer/item1"

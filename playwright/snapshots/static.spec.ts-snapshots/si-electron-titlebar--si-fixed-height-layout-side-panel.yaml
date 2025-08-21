@@ -8,7 +8,7 @@
   - button "Launchpad"
   - link "Siemens logo":
     - /url: "#/"
-  - text: Application name
+  - heading "Application name" [level=1]
   - button "Layout"
   - button "Help"
   - button "Jane Smith"

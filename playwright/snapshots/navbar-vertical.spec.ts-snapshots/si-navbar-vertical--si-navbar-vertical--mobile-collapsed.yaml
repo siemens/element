@@ -3,7 +3,7 @@
 - banner:
   - link "Siemens logo":
     - /url: "#/"
-  - text: Navbar Vertical Example
+  - heading "Navbar Vertical Example" [level=1]
 - navigation:
   - button "expand"
 - main:

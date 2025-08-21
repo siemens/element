@@ -1,7 +1,7 @@
 - banner:
   - link "Siemens logo":
     - /url: "#/"
-  - text: Application name
+  - heading "Application name" [level=1]
   - button "Jane Smith"
 - heading "Title describing what page content to expect" [level=2]
 - paragraph: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

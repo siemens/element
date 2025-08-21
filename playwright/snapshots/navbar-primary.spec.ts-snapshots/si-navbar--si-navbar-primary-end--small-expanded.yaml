@@ -1,6 +1,6 @@
 - banner:
   - button "Toggle navigation"
-  - text: Navbar primary end
+  - heading "Navbar primary end" [level=1]
   - button "Toggle actions" [expanded]
   - link "Messages":
     - /url: "#/viewer/viewer/messages"

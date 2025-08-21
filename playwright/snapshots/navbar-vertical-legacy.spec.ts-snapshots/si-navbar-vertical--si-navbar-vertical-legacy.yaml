@@ -3,7 +3,7 @@
 - banner:
   - link "Siemens logo":
     - /url: "#/"
-  - text: Navbar vertical
+  - heading "Navbar vertical" [level=1]
   - button "Jane Smith"
 - navigation:
   - button "collapse" [expanded]
