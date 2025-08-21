@@ -1,0 +1,219 @@
+name: VRT Update
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Branch name to run against (e.g., main, develop, feature/my-branch)'
+        required: true
+        default: 'main'
+        type: string
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - '.github/workflows/vrt-update.yaml' # Only trigger if this workflow file changes
+
+jobs:
+  vrt-update:
+    runs-on: ubuntu-24.04
+    container: mcr.microsoft.com/playwright:v1.55.0-noble
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.run_attempt > 1)
+    steps:
+      - name: Check execution conditions and set target ref
+        id: check
+        run: |
+          echo "should-run=true" >> $GITHUB_OUTPUT
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "target-ref=${{ inputs.ref }}" >> $GITHUB_OUTPUT
+          else
+            # For PR re-runs, use the head ref
+            echo "target-ref=${{ github.head_ref }}" >> $GITHUB_OUTPUT
+          fi
+
+      # As we are in another container, we need to install LFS manually.
+      # See: https://github.com/orgs/community/discussions/160433
+      - name: Install LFS
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
+          apt install git-lfs -y
+
+      - name: Configure Git
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ steps.check.outputs.target-ref }}
+          lfs: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/jod
+          cache: 'npm'
+
+      - name: Get latest workflow run
+        id: get-workflow
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: runs } = await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'build-and-test.yaml',
+              branch: '${{ steps.check.outputs.target-ref }}',
+              per_page: 10,
+              status: 'completed'
+            });
+
+            if (runs.total_count === 0) {
+              core.setFailed(`No completed workflow runs found for branch '${{ steps.check.outputs.target-ref }}'. Make sure the build-and-test workflow has run on this branch.`);
+              return;
+            }
+
+            // Find the most recent run that has the required jobs completed successfully
+            const requiredJobs = ['build'];
+            let latestValidRun = null;
+
+            for (const run of runs.workflow_runs) {
+              try {
+                // Get jobs for this workflow run
+                const { data: jobs } = await github.rest.actions.listJobsForWorkflowRun({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  run_id: run.id
+                });
+
+                // Check if all required jobs completed successfully
+                const jobStatuses = {};
+                for (const job of jobs.jobs) {
+                  jobStatuses[job.name] = job.conclusion;
+                }
+
+                console.log(`Checking run ${run.id}: Jobs found:`, Object.keys(jobStatuses));
+                console.log(`Job statuses:`, jobStatuses);
+
+                const allRequiredJobsSuccessful = requiredJobs.every(jobName => 
+                  jobStatuses[jobName] === 'success'
+                );
+
+                if (allRequiredJobsSuccessful) {
+                  latestValidRun = run;
+                  break;
+                } else {
+                  const failedJobs = requiredJobs.filter(jobName => 
+                    !jobStatuses[jobName] || jobStatuses[jobName] !== 'success'
+                  );
+                  console.log(`❌ Run ${run.id} missing or failed jobs:`, failedJobs);
+                }
+              } catch (error) {
+                console.log(`Error checking run ${run.id}:`, error.message);
+                continue;
+              }
+            }
+
+            if (!latestValidRun) {
+              core.setFailed(`No workflow runs found for branch '${{ steps.check.outputs.target-ref }}' with successful completion of required jobs: ${requiredJobs.join(', ')}. Make sure build, test, and aot jobs have completed successfully.`);
+              return;
+            }
+
+            core.setOutput('workflow-run-id', latestValidRun.id);
+
+      # Download the dist artifacts from the latest successful build-and-test workflow
+      - name: Download build artifacts
+        uses: actions/download-artifact@v5
+        with:
+          name: dist
+          path: dist
+          run-id: ${{ steps.get-workflow.outputs.workflow-run-id }}
+          github-token: ${{ github.token }}
+      # Not injecting the token will exclude the brand packages, but this is fine for e2e tests.
+      - run: npm ci --prefer-offline --no-audit --include=optional
+
+      - name: Update VRTs
+        run: |
+          # Remove existing snapshots to ensure we generate fresh ones
+          if [ -d "playwright/snapshots" ]; then
+            echo "Removing existing snapshots to ensure fresh generation..."
+            rm -rf playwright/snapshots
+          fi
+
+          # Create snapshots directory
+          mkdir -p playwright/snapshots
+
+          echo "Starting fresh snapshot generation..."
+          npx playwright test --update-snapshots=all
+
+          # Verify that snapshots were generated
+          if [ ! -d "playwright/snapshots" ] || [ -z "$(ls -A playwright/snapshots 2>/dev/null)" ]; then
+            echo "ERROR: No snapshots were generated!"
+            exit 1
+          fi
+
+          echo "Snapshots generated successfully:"
+          find playwright/snapshots -type f -name "*.png" | head -10
+        env:
+          PLAYWRIGHT_CONTAINER: true
+          PLAYWRIGHT_isvrt: 'true'
+          PLAYWRIGHT_isa11y: 'false'
+          PLAYWRIGHT_WEB_SERVER_TIMEOUT: 120000
+
+      - name: Create snapshots archive
+        run: |
+          # Create a timestamped archive of the updated snapshots
+          TIMESTAMP=$(date +"%Y%m%d-%H%M%S")
+          BRANCH_NAME="${{ inputs.ref || github.ref_name }}"
+
+          # Sanitize branch name by replacing invalid characters for artifact names
+          # Replace forward slashes, colons, and other invalid characters with hyphens
+          SAFE_BRANCH_NAME=$(echo "$BRANCH_NAME" | sed 's/[\/\\:*?"<>|]/-/g')
+
+          ARCHIVE_NAME="playwright-snapshots-${SAFE_BRANCH_NAME}-${TIMESTAMP}"
+
+          # Create archive directory structure
+          mkdir -p "${ARCHIVE_NAME}"
+          cp -r playwright/snapshots "${ARCHIVE_NAME}/"
+
+          # Verify the copy was successful
+          COPIED_COUNT=$(find "${ARCHIVE_NAME}/snapshots" -type f -name "*.png" | wc -l)
+          echo "Copied $COPIED_COUNT snapshot files to archive"
+
+          if [ "$COPIED_COUNT" -ne "$SNAPSHOT_COUNT" ]; then
+            echo "WARNING: Snapshot count mismatch! Original: $SNAPSHOT_COUNT, Copied: $COPIED_COUNT"
+          fi
+
+          # Create tar.gz archive
+          tar -czf "${ARCHIVE_NAME}.tar.gz" "${ARCHIVE_NAME}"
+
+          echo "ARCHIVE_NAME=${ARCHIVE_NAME}" >> $GITHUB_ENV
+          echo "Archive created: ${ARCHIVE_NAME}.tar.gz"
+
+      - name: Upload fresh snapshots
+        id: upload-artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.ARCHIVE_NAME }}
+          path: ${{ env.ARCHIVE_NAME }}.tar.gz
+          retention-days: 30
+
+      - name: Get artifact download URL
+        if: success()
+        id: artifact
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Wait a bit for the artifact to be uploaded and indexed
+            await new Promise(resolve => setTimeout(resolve, 5000));
+
+            const downloadUrl = "${{ steps.upload-artifact.outputs.artifact-url }}";
+
+            core.setOutput('download_url', downloadUrl);
+
+      - name: Comment on PR with download link
+        if: success() && github.event_name == 'pull_request'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: |
+            [⬇️ Download VRTs](${{ steps.artifact.outputs.download_url }})
