@@ -1,6 +1,25 @@
 import { glob } from 'node:fs/promises';
 import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { major, parse, satisfies } from 'semver';
+
+/**
+ * This assumes that we currently either have a fixed version or only a major version.
+ * @param currentVersionOrRange Either a fixed version (e.g. `1.2.3`) or a major version (e.g. `2`)
+ * @param newVersion
+ * @return {string} The new version or range
+ */
+function getNewVersionOrRange(currentVersionOrRange, newVersion) {
+  const parsed = parse(currentVersionOrRange);
+  if (parsed) {
+    return newVersion;
+  } else {
+    if (!satisfies(newVersion, currentVersionOrRange)) {
+      // set the new version
+      return `${major(newVersion)}`;
+    }
+  }
+}
 
 async function updatePeerDependencies() {
   const rootDir = new URL('.', import.meta.url).pathname;
@@ -29,9 +48,11 @@ async function updatePeerDependencies() {
         'optionalDependencies'
       ]) {
         for (const name of Object.keys(content[dependencyType] ?? [])) {
-          const version = versions.get(name);
           if (versions.has(name)) {
-            content[dependencyType][name] = version;
+            content[dependencyType][name] = getNewVersionOrRange(
+              content[dependencyType][name],
+              versions.get(name)
+            );
             updated = true;
           }
         }
