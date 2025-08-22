@@ -78,6 +78,7 @@
     "projects/element-theme",
     "projects/live-preview",
     "projects/charts-ng",
+    "projects/maps-ng",
     "projects/native-charts-ng",
     "projects/dashboards-ng",
     "projects/dashboards-demo"

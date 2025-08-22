@@ -23,7 +23,7 @@
     "ol": "~10.6.0",
     "ol-ext": "^4.0.24",
     "ol-mapbox-style": "^13.1.0",
-    "@siemens/element-translate-ng": "48"
+    "@siemens/element-translate-ng": "47"
   },
   "exports": {
     "./docs.json": {
