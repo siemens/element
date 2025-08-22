@@ -6,11 +6,12 @@ import fs from 'fs';
 
 const currentDir = dirname(fileURLToPath(import.meta.url));
 const cwd = process.cwd();
-let relativeCwd = relative(currentDir, cwd);
-let nodeModulesPath = join(currentDir, relativeCwd, 'node_modules');
+
+const nodeModulesDirName = 'node_modules';
+let basePath = cwd;
 let maxLevels = 10;
-while (!fs.existsSync(join(currentDir, nodeModulesPath))) {
-  nodeModulesPath = join('..', nodeModulesPath);
+while (!fs.existsSync(join(basePath, nodeModulesDirName))) {
+  basePath = dirname(basePath);
   maxLevels -= 1;
   if (maxLevels <= 0) {
     throw new Error(
@@ -21,13 +22,17 @@ while (!fs.existsSync(join(currentDir, nodeModulesPath))) {
 const packagePath =
   process.env.DOCS_COMPOSER_DEV &&
   ['true', '1', 'yes', 'y'].includes(process.env.DOCS_COMPOSER_DEV.toLowerCase())
-    ? relativeCwd
-    : join(nodeModulesPath, '@simpl', 'docs-composer');
-if (!fs.existsSync(join(currentDir, packagePath))) {
+    ? cwd
+    : join(basePath, nodeModulesDirName, '@simpl', 'docs-composer');
+if (!fs.existsSync(packagePath)) {
   throw new Error(
     `Package path '${packagePath}' does not exist, please ensure you have installed the '@simpl/docs-composer' package.`
   );
 }
-const entrypointPath = join(packagePath, 'dist', 'index.js');
+const relativePackagePath = relative(currentDir, packagePath);
+const entrypointPath = join(relativePackagePath, 'dist', 'index.js').replace(
+  /(?<!\\)\\(?!\\)/g,
+  '/'
+); // Convert unescaped backslashes.
 
 export default import(entrypointPath);
