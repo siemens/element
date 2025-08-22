@@ -25,7 +25,7 @@ jobs:
         with:
           name: pages
           path: dist/design
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: 'dist/design'
       - uses: actions/deploy-pages@v4
