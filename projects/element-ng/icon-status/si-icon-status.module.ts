@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { NgModule } from '@angular/core';
-
-import { SiStatusCounterComponent } from '../status-counter/si-status-counter.component';
+import { SiStatusCounterComponent } from '@siemens/element-ng/status-counter';
 
 /**
  * @deprecated Using `SiIconStatusModule` and `SiIconStatusComponent` is deprecated. Instead
