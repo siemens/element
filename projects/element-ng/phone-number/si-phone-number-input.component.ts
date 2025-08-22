@@ -175,8 +175,17 @@ export class SiPhoneNumberInputComponent
 
   readonly valueChange = output<PhoneDetails>();
 
-  /** @internal */
-  readonly errormessageId = `${this.id()}-errormessage`;
+  /**
+   * This ID will be bound to the `aria-describedby` attribute of the phone-number-input.
+   * Use this to reference the element containing the error message(s) for the phone-number-input.
+   * It will be picked by the {@link SiFormItemComponent} if the phone-number-input is used inside a form item.
+   *
+   * @defaultValue
+   * ```
+   * `${this.id()}-errormessage`
+   * ```
+   */
+  readonly errormessageId = input(`${this.id()}-errormessage`);
 
   protected readonly phoneInput = viewChild.required<ElementRef<HTMLInputElement>>('phoneInput');
   protected selectedCountry?: CountryInfo;

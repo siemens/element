@@ -153,8 +153,17 @@ export class SiSliderComponent implements ControlValueAccessor, SiFormItemContro
     return value;
   });
 
-  /** @internal */
-  readonly errormessageId = `${this.id()}-errormessage`;
+  /**
+   * This ID will be bound to the `aria-describedby` attribute of the slider.
+   * Use this to reference the element containing the error message(s) for the slider.
+   * It will be picked by the {@link SiFormItemComponent} if the slider is used inside a form item.
+   *
+   * @defaultValue
+   * ```
+   * `${this.id()}-errormessage`
+   * ```
+   */
+  readonly errormessageId = input(`${this.id()}-errormessage`);
 
   protected readonly indicatorPos = computed(() => {
     const range = this.max() - this.min();

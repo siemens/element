@@ -55,7 +55,7 @@ import {
     '[attr.tabindex]': 'tabindex()',
     '[attr.aria-activedescendant]': 'activeDescendant()',
     '[attr.aria-labelledby]': 'labelledby()',
-    '[attr.aria-describedby]': 'errormessageId'
+    '[attr.aria-describedby]': 'errormessageId()'
   }
 })
 export class SiPillsInputComponent implements OnInit, ControlValueAccessor, SiFormItemControl {
@@ -109,8 +109,17 @@ export class SiPillsInputComponent implements OnInit, ControlValueAccessor, SiFo
    */
   readonly labelledby = input(`${this.id()}-label`);
 
-  /** @internal */
-  readonly errormessageId = `${this.id()}-errormessage`;
+  /**
+   * This ID will be bound to the `aria-describedby` attribute of the pills-input.
+   * Use this to reference the element containing the error message(s) for the pills-input.
+   * It will be picked by the {@link SiFormItemComponent} if the pills-input is used inside a form item.
+   *
+   * @defaultValue
+   * ```
+   * `${this.id()}-errormessage`
+   * ```
+   */
+  readonly errormessageId = input(`${this.id()}-errormessage`);
 
   protected inputValue = '';
   protected onTouched: () => void = () => {};

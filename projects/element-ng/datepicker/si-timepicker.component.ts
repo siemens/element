@@ -222,8 +222,17 @@ export class SiTimepickerComponent implements ControlValueAccessor, SiFormItemCo
 
   private readonly inputParts = viewChildren<ElementRef<HTMLElement>>('inputPart');
 
-  /** @internal */
-  readonly errormessageId = `${this.id()}-errormessage`;
+  /**
+   * This ID will be bound to the `aria-describedby` attribute of the timepicker.
+   * Use this to reference the element containing the error message(s) for the timepicker.
+   * It will be picked by the {@link SiFormItemComponent} if the timepicker is used inside a form item.
+   *
+   * @defaultValue
+   * ```
+   * `${this.id()}-errormessage`
+   * ```
+   */
+  readonly errormessageId = input(`${this.id()}-errormessage`);
 
   private onChange: (val: any) => void = () => {};
   private onTouched: () => void = () => {};
