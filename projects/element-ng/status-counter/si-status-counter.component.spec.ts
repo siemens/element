@@ -6,9 +6,9 @@ import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SiIconModule } from '@siemens/element-ng/icon';
 
-import { SiIconStatusComponent as TestComponent } from './si-icon-status.component';
+import { SiStatusCounterComponent as TestComponent } from './si-status-counter.component';
 
-describe('SiIconStatusComponent', () => {
+describe('SiStatusCounterComponent', () => {
   let component: ComponentRef<TestComponent>;
   let fixture: ComponentFixture<TestComponent>;
   let element: HTMLElement;

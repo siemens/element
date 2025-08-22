@@ -4,10 +4,14 @@
  */
 import { NgModule } from '@angular/core';
 
-import { SiIconStatusComponent } from './si-icon-status.component';
+import { SiStatusCounterComponent } from '../status-counter/si-status-counter.component';
 
+/**
+ * @deprecated Using `SiIconStatusModule` and `SiIconStatusComponent` is deprecated. Instead
+ * use `SiStatusCounterComponent` and `si-status-counter`.
+ */
 @NgModule({
-  imports: [SiIconStatusComponent],
-  exports: [SiIconStatusComponent]
+  imports: [SiStatusCounterComponent],
+  exports: [SiStatusCounterComponent]
 })
 export class SiIconStatusModule {}
