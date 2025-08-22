@@ -61,7 +61,6 @@ documentation.
 ## I
 
 - [Icon](status-notifications/icon.md)
-- [Icon Status](status-notifications/icon-status.md)
 - [Info Page](pages/info-page.md)
 - [Inline Notification](status-notifications/inline-notification.md)
 - [Input](forms-inputs/input.md)
@@ -115,6 +114,7 @@ documentation.
 - [Split](layout-navigation/split.md)
 - [Split buttons](buttons-menus/split-button.md)
 - [Status Bar](status-notifications/status-bar.md)
+- [Status Counter](status-notifications/status-counter.md)
 - [Status Toggle](status-notifications/status-toggle.md)
 - [Summary Chip](status-notifications/summary-chip.md)
 - [Summary Widget](status-notifications/summary-widget.md)
