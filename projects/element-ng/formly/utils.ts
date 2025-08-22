@@ -2,6 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { Pipe, PipeTransform } from '@angular/core';
+
 /** */
 export const getFieldValue = (model: any, path: string[]): any => {
   for (const p of path) {
@@ -29,3 +31,10 @@ export const getKeyPath = (key?: any): string[] => {
   }
   return path.slice(0);
 };
+
+@Pipe({ name: 'siValidationErrorId' })
+export class SiValidationErrorIdPipe implements PipeTransform {
+  transform(value: string, ...args: any[]): string {
+    return `${value}-formly-validation-error`;
+  }
+}

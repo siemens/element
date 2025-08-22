@@ -12,4 +12,5 @@
   [required]="props.required ?? false"
   [readonly]="props.readonly ?? dateRange.readonly()"
   [autoClose]="props.autoClose ?? dateRange.autoClose()"
+  [errormessageId]="id | siValidationErrorId"
 />

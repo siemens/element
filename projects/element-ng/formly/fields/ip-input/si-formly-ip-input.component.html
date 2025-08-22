@@ -7,6 +7,7 @@
     [formControl]="formControl"
     [formlyAttributes]="field"
     [id]="id"
+    [attr.aria-describedby]="id | siValidationErrorId"
   />
 } @else {
   <input
@@ -17,5 +18,6 @@
     [formControl]="formControl"
     [formlyAttributes]="field"
     [id]="id"
+    [attr.aria-describedby]="id | siValidationErrorId"
   />
 }

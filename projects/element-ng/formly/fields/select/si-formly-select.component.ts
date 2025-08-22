@@ -12,6 +12,8 @@ import {
   SiSelectSingleValueDirective
 } from '@siemens/element-ng/select';
 
+import { SiValidationErrorIdPipe } from '../../utils';
+
 @Component({
   selector: 'si-formly-select',
   imports: [
@@ -21,7 +23,8 @@ import {
     SiSelectComponent,
     SiSelectSimpleOptionsDirective,
     SiSelectMultiValueDirective,
-    SiSelectSingleValueDirective
+    SiSelectSingleValueDirective,
+    SiValidationErrorIdPipe
   ],
   templateUrl: './si-formly-select.component.html'
 })
