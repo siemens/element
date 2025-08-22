@@ -6,9 +6,11 @@ import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FieldType, FieldTypeConfig, FormlyModule } from '@ngx-formly/core';
 
+import { SiValidationErrorIdPipe } from '../../utils';
+
 @Component({
   selector: 'si-formly-email',
-  imports: [FormsModule, ReactiveFormsModule, FormlyModule],
+  imports: [FormsModule, ReactiveFormsModule, FormlyModule, SiValidationErrorIdPipe],
   templateUrl: './si-formly-email.component.html'
 })
 export class SiFormlyEmailComponent extends FieldType<FieldTypeConfig> {

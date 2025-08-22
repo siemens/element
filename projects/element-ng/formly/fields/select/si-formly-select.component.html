@@ -13,6 +13,7 @@
     [formControl]="formControl"
     [formlyAttributes]="field"
     [readonly]="props.readonly || false"
+    [errormessageId]="id | siValidationErrorId"
   />
 } @else {
   <si-select
@@ -28,5 +29,6 @@
     [formControl]="formControl"
     [formlyAttributes]="field"
     [readonly]="props.readonly || false"
+    [errormessageId]="id | siValidationErrorId"
   />
 }

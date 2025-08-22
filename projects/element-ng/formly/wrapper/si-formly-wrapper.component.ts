@@ -6,11 +6,17 @@ import { Component } from '@angular/core';
 import { FieldWrapper, FormlyModule } from '@ngx-formly/core';
 import { SiFormItemComponent } from '@siemens/element-ng/form';
 
+import { SiValidationErrorIdPipe } from '../utils';
 import { SiFormlyFormFieldProviderDirective } from './si-formly-form-field-provider.directive';
 
 @Component({
   selector: 'si-formly-wrapper',
-  imports: [SiFormItemComponent, FormlyModule, SiFormlyFormFieldProviderDirective],
+  imports: [
+    SiFormItemComponent,
+    FormlyModule,
+    SiFormlyFormFieldProviderDirective,
+    SiValidationErrorIdPipe
+  ],
   templateUrl: './si-formly-wrapper.component.html'
 })
 export class SiFormlyWrapperComponent extends FieldWrapper {

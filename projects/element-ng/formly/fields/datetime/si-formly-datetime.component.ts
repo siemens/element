@@ -7,9 +7,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FieldType, FieldTypeConfig } from '@ngx-formly/core';
 import { SiCalendarButtonComponent, SiDatepickerDirective } from '@siemens/element-ng/datepicker';
 
+import { SiValidationErrorIdPipe } from '../../utils';
+
 @Component({
   selector: 'si-formly-datetime',
-  imports: [FormsModule, ReactiveFormsModule, SiCalendarButtonComponent, SiDatepickerDirective],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    SiCalendarButtonComponent,
+    SiDatepickerDirective,
+    SiValidationErrorIdPipe
+  ],
   templateUrl: './si-formly-datetime.component.html'
 })
 export class SiFormlyDateTimeComponent extends FieldType<FieldTypeConfig> implements OnInit {

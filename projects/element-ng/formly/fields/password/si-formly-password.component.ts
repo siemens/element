@@ -10,6 +10,8 @@ import {
   SiPasswordStrengthDirective
 } from '@siemens/element-ng/password-strength';
 
+import { SiValidationErrorIdPipe } from '../../utils';
+
 @Component({
   selector: 'si-formly-password',
   imports: [
@@ -17,7 +19,8 @@ import {
     ReactiveFormsModule,
     FormlyModule,
     SiPasswordStrengthComponent,
-    SiPasswordStrengthDirective
+    SiPasswordStrengthDirective,
+    SiValidationErrorIdPipe
   ],
   templateUrl: './si-formly-password.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
