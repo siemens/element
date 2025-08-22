@@ -18,7 +18,7 @@
         type="text"
         inputmode="numeric"
         [attr.aria-label]="config.ariaLabel | translate"
-        [attr.aria-describedby]="errormessageId"
+        [attr.aria-describedby]="errormessageId()"
         [attr.maxlength]="config.maxLength"
         [class.is-invalid]="!unitValidation()[config.name] || this.forceInvalid()"
         [disabled]="disabled()"
@@ -42,7 +42,7 @@
         #inputPart
         class="form-control"
         [attr.aria-label]="meridiansAriaLabel() | translate"
-        [attr.aria-describedby]="errormessageId"
+        [attr.aria-describedby]="errormessageId()"
         [class.readonly]="readonly()"
         [disabled]="disabled()"
         (change)="toggleMeridian()"

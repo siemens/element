@@ -139,8 +139,17 @@ export class SiSelectComponent<T> implements OnChanges, AfterContentInit, SiForm
 
   /** @internal */
   readonly labelledby = computed(() => this.labelledbyInput() ?? this.id() + '-label');
-  /** @internal */
-  readonly errormessageId = `${this.id()}-errormessage`;
+  /**
+   * This ID will be bound to the `aria-describedby` attribute of the select.
+   * Use this to reference the element containing the error message(s) for the select.
+   * It will be picked by the {@link SiFormItemComponent} if the select is used inside a form item.
+   *
+   * @defaultValue
+   * ```
+   * `${this.id()}-errormessage`
+   * ```
+   */
+  readonly errormessageId = input(`${this.id()}-errormessage`);
 
   protected rows: readonly SelectItem<T>[] = [];
   protected overlayWidth = 0;

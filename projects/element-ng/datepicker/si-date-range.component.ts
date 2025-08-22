@@ -208,8 +208,17 @@ export class SiDateRangeComponent
    */
   readonly value = model<DateRange>();
 
-  /** @internal */
-  readonly errormessageId = `${this.id()}-errormessage`;
+  /**
+   * This ID will be bound to the `aria-describedby` attribute of the date-range.
+   * Use this to reference the element containing the error message(s) for the date-range.
+   * It will be picked by the {@link SiFormItemComponent} if the date-range is used inside a form item.
+   *
+   * @defaultValue
+   * ```
+   * `${this.id()}-errormessage`
+   * ```
+   */
+  readonly errormessageId = input(`${this.id()}-errormessage`);
 
   private validator!: ValidatorFn;
   private onChange = (val: any): void => {};

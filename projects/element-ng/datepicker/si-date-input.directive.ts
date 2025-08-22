@@ -108,7 +108,9 @@ export class SiDateInputDirective
   readonly readonly = input(false, { transform: booleanAttribute });
 
   /**
-   * Overrides the value of aria-describedby
+   * This ID will be bound to the `aria-describedby` attribute of the date-input.
+   * Use this to reference the element containing the error message(s) for the date-input.
+   * It will be picked by the {@link SiFormItemComponent} if the date-input is used inside a form item.
    *
    * @defaultValue
    * ```

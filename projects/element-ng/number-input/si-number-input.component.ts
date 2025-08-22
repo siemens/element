@@ -141,8 +141,17 @@ export class SiNumberInputComponent
 
   readonly inputElement = viewChild.required<ElementRef<HTMLInputElement>>('inputElement');
 
-  /** @internal */
-  readonly errormessageId = `${this.id()}-errormessage`;
+  /**
+   * This ID will be bound to the `aria-describedby` attribute of the number-input.
+   * Use this to reference the element containing the error message(s) for the number-input.
+   * It will be picked by the {@link SiFormItemComponent} if the number-input is used inside a form item.
+   *
+   * @defaultValue
+   * ```
+   * `${this.id()}-errormessage`
+   * ```
+   */
+  readonly errormessageId = input(`${this.id()}-errormessage`);
 
   protected canInc = true;
   protected canDec = true;
