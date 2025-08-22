@@ -20,7 +20,7 @@
         [attr.aria-label]="config.ariaLabel | translate"
         [attr.aria-describedby]="errormessageId"
         [attr.maxlength]="config.maxLength"
-        [class.is-invalid]="!unitValidation()[config.name] || this.forceInvalid()"
+        [class.is-invalid]="touched() && !unitValidation()[config.name]"
         [disabled]="disabled()"
         [name]="config.name"
         [pattern]="config.pattern"
