@@ -114,14 +114,14 @@ This section describes the general usage of the element modals.
 
 <si-docs-component example="si-modals/si-modal-dialogs" height="450"></si-docs-component>
 
-#### Action dialogs
+#### Action dialog
 
 Element provides the service `SiActionDialogService`.
 The service provides a method to display the modal dialogs for each dialog type.
 They offer mandatory and optional parameters to configure the dialogs and
 return an `Observable` with the user's result.
 
-##### Alert Dialog
+##### Alert dialog
 
 Use the alert dialog to request the attention of the user to a certain
 event, which is so severe, that the normal use of the application is
@@ -140,7 +140,7 @@ with the close button returns a decline.
 Use the delete confirmation dialog to request user confirmation before
 deleting any object.
 
-##### Edit-discard dialog
+##### Edit-discard dialog (unsaved data)
 
 Use the edit-discard dialog when leaving or canceling a data form
 that was modified. User results are `Save`, `Discard`, or `Cancel`.
