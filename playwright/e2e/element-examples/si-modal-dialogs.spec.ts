@@ -18,7 +18,7 @@ test.describe('si-modal-dialogs', () => {
   test(example + ' alert', async ({ page, si }) => {
     await si.visitExample(example);
 
-    await page.locator('.btn').getByText('Default Alert').click();
+    await page.locator('.btn').getByText('Default alert').click();
     await expect(page.locator('.modal-body')).toBeVisible();
 
     await si.runVisualAndA11yTests('alert');
@@ -27,7 +27,7 @@ test.describe('si-modal-dialogs', () => {
   test(example + ' confirmation', async ({ page, si }) => {
     await si.visitExample(example);
 
-    await page.locator('.btn').getByText('Confirmation 1').click();
+    await page.locator('.btn').getByText('Yes/No confirmation').click();
     await expect(page.locator('.modal-body')).toBeVisible();
 
     await si.runVisualAndA11yTests('confirmation');
@@ -36,7 +36,7 @@ test.describe('si-modal-dialogs', () => {
   test(example + ' edit-discard', async ({ page, si }) => {
     await si.visitExample(example);
 
-    await page.locator('.btn').getByText('Edit-Discard').first().click();
+    await page.locator('.btn').getByText('Edit-Discard with save', { exact: true }).click();
     await expect(page.locator('.modal-body')).toBeVisible();
 
     await si.runVisualAndA11yTests('edit-discard');
@@ -45,7 +45,7 @@ test.describe('si-modal-dialogs', () => {
   test(example + ' delete-confirmation', async ({ page, si }) => {
     await si.visitExample(example);
 
-    await page.locator('.btn').getByText('Delete Confirmation').click();
+    await page.locator('.btn').getByText('Delete confirmation', { exact: true }).click();
     await expect(page.locator('.modal-body')).toBeVisible();
 
     await si.runVisualAndA11yTests('delete-confirmation');

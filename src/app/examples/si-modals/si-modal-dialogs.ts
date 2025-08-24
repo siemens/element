@@ -30,14 +30,14 @@ export class SampleComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // note: this is normally in translation file, this is for demo proposes only
-    this.translate.set('DEMO.SAVE_CONFIRM_HEAD', 'Save changes');
-    this.translate.set('DEMO.SAVE_CONFIRM_MSG', 'Do you want to save changes to "{{what}}"?');
-    this.translate.set('DEMO.DISCARD_CONFIRM_HEAD', 'Discard changes');
-    this.translate.set('DEMO.DISCARD_CONFIRM_MSG', 'Do you want to discard changes of "{{what}}"?');
-    this.translate.set('DEMO.DELETE_CONFIRM_HEAD', 'Delete "{{what}}"');
+    this.translate.set('DEMO.SAVE_CONFIRM_HEAD', 'Unsaved data');
+    this.translate.set('DEMO.SAVE_CONFIRM_MSG', 'Save {{what}}?');
+    this.translate.set('DEMO.DISCARD_CONFIRM_HEAD', 'Unsaved data');
+    this.translate.set('DEMO.DISCARD_CONFIRM_MSG', 'Discard changes of {{what}}?');
+    this.translate.set('DEMO.DELETE_CONFIRM_HEAD', 'Delete scheduler');
     this.translate.set(
       'DEMO.DELETE_CONFIRM_MSG',
-      'Do you want to delete "{{what}}"?\nRestoring is not possible'
+      'Delete "{{what}}"?\n\nThis action cannot be undone'
     );
   }
 
