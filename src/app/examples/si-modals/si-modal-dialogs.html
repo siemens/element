@@ -1,4 +1,4 @@
-<h2>Alert Dialogs</h2>
+<h2>Alert dialogs</h2>
 <div class="d-flex flex-wrap gap-5">
   <button
     type="button"
@@ -7,12 +7,12 @@
       showActionDialog({
         type: 'alert',
         icon: 'element-info',
-        heading: 'Alert',
-        message: 'This is all about modal dialogs'
+        heading: 'Default alert',
+        message: 'Modal dialog with an icon in heading'
       })
     "
   >
-    Default Alert
+    Default alert
   </button>
   <button
     type="button"
@@ -20,13 +20,13 @@
     (click)="
       showActionDialog({
         type: 'alert',
-        heading: 'Alert Title',
-        message: 'We provide awesome dialogs',
-        confirmBtnName: 'Got it'
+        heading: 'Custom alert',
+        message: 'Modal dialogs are customizable',
+        confirmBtnName: 'Acknowledge'
       })
     "
   >
-    Custom Alert
+    Custom alert
   </button>
   <button
     type="button"
@@ -35,17 +35,17 @@
       showActionDialog({
         type: 'alert',
         icon: 'element-fire',
-        heading: 'This thing is on fire',
-        message: 'Deal with it',
+        heading: 'Alert with delay',
+        message: 'Closing alert may take few seconds',
         delayDismiss: fakeLoading
       })
     "
   >
-    Alert w/ dismiss delay
+    Alert with delay
   </button>
 </div>
 
-<h2 class="mt-6">Confirmation Dialogs</h2>
+<h2 class="mt-6">Confirmation dialogs</h2>
 <div class="d-flex flex-wrap gap-5">
   <button
     type="button"
@@ -53,12 +53,12 @@
     (click)="
       showActionDialog({
         type: 'confirmation',
-        heading: 'My Question',
-        message: 'Do you really want to do this?'
+        heading: 'Replace Yes/No with clear actions',
+        message: 'Avoid using "Yes" and "No" as buttons, instead use suitable verbs to make the action directly understandable'
       })
     "
   >
-    Confirmation 1
+    Yes/No confirmation
   </button>
   <button
     type="button"
@@ -66,14 +66,14 @@
     (click)="
       showActionDialog({
         type: 'confirmation',
-        heading: 'My Question!',
-        message: 'Are you ok?',
-        confirmBtnName: 'I\'m fine',
-        declineBtnName: 'Moderately'
+        heading: 'Save site',
+        message: 'Save Siemens HQ Munich?',
+        confirmBtnName: 'Save',
+        declineBtnName: 'Cancel'
       })
     "
   >
-    Confirmation 2
+    Custom confirmation (save)
   </button>
   <button
     type="button"
@@ -81,17 +81,19 @@
     (click)="
       showActionDialog({
         type: 'confirmation',
-        heading: 'My question',
-        message: 'Do you really want do do this?',
+        heading: 'Save site',
+        message: 'Save Siemens HQ Munich?\n\nSaving may take few seconds',
+        confirmBtnName: 'Save',
+        declineBtnName: 'Cancel',
         delayDismiss: fakeLoading
       })
     "
   >
-    Confirmation w/ dismiss delay
+    Custom confirmation with delay
   </button>
 </div>
 
-<h2 class="mt-6">Edit-Discard Dialog</h2>
+<h2 class="mt-6">Edit-Discard dialogs (unsaved data)</h2>
 <div class="d-flex flex-wrap gap-5">
   <button
     type="button"
@@ -105,7 +107,7 @@
       })
     "
   >
-    Edit-Discard
+    Edit-Discard with save
   </button>
   <button
     type="button"
@@ -120,7 +122,7 @@
       })
     "
   >
-    Edit-Discard with disabled save
+    Edit-Discard without save
   </button>
   <button
     type="button"
@@ -128,17 +130,17 @@
     (click)="
       showActionDialog({
         type: 'edit-discard',
-        heading: 'Discard changes?',
-        message: 'Want to discard changes?',
+        heading: 'Unsaved data',
+        message: 'Save changes?\n\nSaving may take few seconds',
         delayDismiss: fakeLoading
       })
     "
   >
-    Edit-Discard w/ dismiss delay
+    Edit-Discard with save and delay
   </button>
 </div>
 
-<h2 class="mt-6">Delete Confirmation Dialog</h2>
+<h2 class="mt-6">Delete confirmation dialogs</h2>
 <div class="d-flex flex-wrap gap-5">
   <button
     type="button"
@@ -152,7 +154,7 @@
       })
     "
   >
-    Delete Confirmation
+    Delete confirmation
   </button>
   <button
     type="button"
@@ -160,22 +162,22 @@
     (click)="
       showActionDialog({
         type: 'delete-confirm',
-        heading: 'Delete branch?',
-        message: 'Do you want to delete the branch?',
+        heading: 'Delete site',
+        message: 'Delete Siemens HQ Munich?\n\nDeleting may take few seconds',
         delayDismiss: fakeLoading
       })
     "
   >
-    Delete confirm w/ dismiss delay
+    Delete confirmation with delay
   </button>
 </div>
 
-<h2 class="mt-6">Column Selection Dialog</h2>
+<h2 class="mt-6">Column selection dialog</h2>
 <button type="button" class="btn btn-secondary" (click)="showColumnSelection()">
   Many columns
 </button>
 
-<h2 class="mt-6">Column Selection Dialog without visibility toggle</h2>
+<h2 class="mt-6">Column selection dialog without visibility toggle</h2>
 <button type="button" class="btn btn-secondary" (click)="showColumnSelectionNoVisibilityDialog()">
   Many columns
 </button>

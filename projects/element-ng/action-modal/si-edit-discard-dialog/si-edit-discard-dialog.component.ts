@@ -44,11 +44,11 @@ export class SiEditDiscardDialogComponent {
   /**
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_EDIT_DISCARD_DIALOG.DISCARD_BTN:Don't save`)
+   * t(() => $localize`:@@SI_EDIT_DISCARD_DIALOG.DISCARD_BTN:Discard`)
    * ```
    */
   readonly discardBtnName = input(
-    t(() => $localize`:@@SI_EDIT_DISCARD_DIALOG.DISCARD_BTN:Don't save`)
+    t(() => $localize`:@@SI_EDIT_DISCARD_DIALOG.DISCARD_BTN:Discard`)
   );
   /**
    * @defaultValue
