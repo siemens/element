@@ -36,7 +36,7 @@ test.describe('si-modal-dialogs', () => {
   test(example + ' edit-discard', async ({ page, si }) => {
     await si.visitExample(example);
 
-    await page.locator('.btn').getByText('Edit-Discard with save').first().click();
+    await page.locator('.btn').getByText('Edit-Discard with save', { exact: true }).click();
     await expect(page.locator('.modal-body')).toBeVisible();
 
     await si.runVisualAndA11yTests('edit-discard');
@@ -45,7 +45,7 @@ test.describe('si-modal-dialogs', () => {
   test(example + ' delete-confirmation', async ({ page, si }) => {
     await si.visitExample(example);
 
-    await page.locator('.btn').getByText('Delete confirmation').click();
+    await page.locator('.btn').getByText('Delete confirmation', { exact: true }).click();
     await expect(page.locator('.modal-body')).toBeVisible();
 
     await si.runVisualAndA11yTests('delete-confirmation');
