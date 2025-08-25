@@ -25,7 +25,7 @@ area is managed:
 
 - When displaying structured data (e.g., tables, lists, or trees), ensure that the container maintains a consistent height,
   even if only a few entries are present.
-- Ensure visual balance between related content containers (e.g., main-detail). Avoid situations where one container stretches while another
+- Ensure visual balance between related content containers (e.g., list-details). Avoid situations where one container stretches while another
   remains mostly empty, creating asymmetry in the layout.
 
 ![Layout scaling considerations](images/layout-scaling.png)
@@ -94,9 +94,9 @@ based on the 12-column grid system.
 
 ![Tile layout responsive](images/layout-tile-responsive.png)
 
-### Main-detail
+### List-details
 
-The specifics of this layout are described within the main-detail container chapter.
+The specifics of this layout are described within the list-details chapter.
 
 ## Code ---
 
