@@ -75,7 +75,7 @@ documentation.
 
 ## M
 
-- [Main-Detail Container](layout-navigation/main-detail-container.md)
+- [List-Details](layout-navigation/list-details.md)
 - [Maps](maps/maps.md)
 - [Menu](buttons-menus/menu.md)
 - [Micro charts](charts/micro-charts.md)
