@@ -15,14 +15,14 @@ The supported components are
 
 - [Vertical Navigation](../components/layout-navigation/vertical-navigation.md)
 - [Split](../components/layout-navigation/split.md)
-- [Main-Detail Container](../components/layout-navigation/main-detail-container.md)
+- [List-Details](../components/layout-navigation/list-details.md)
 
 Expanded and split size states are persisted in e.g. the `localStorage` of the browser and re-applied on reload.
 
 <si-docs-component editor="false" height="500">
   <si-docs-tab example="si-navbar-vertical/si-navbar-vertical" heading="Vertical Navigation"></si-docs-tab>
   <si-docs-tab example="si-split/si-split-mixed" heading="Split"></si-docs-tab>
-  <si-docs-tab example="si-main-detail-container/si-main-detail-container" heading="Main-Detail"></si-docs-tab>
+  <si-docs-tab example="si-list-details/si-list-details" heading="List-Details"></si-docs-tab>
 </si-docs-component>
 
 ## How to enable the UI state storage
