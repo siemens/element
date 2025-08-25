@@ -7,8 +7,8 @@ import { ChangeDetectionStrategy, Component, computed, inject, input } from '@an
 import { EntityStatusType } from '@siemens/element-ng/common';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
-import { STATUS_ICON_CONFIG } from './icon-status';
 import { SiIconComponent } from './si-icon.component';
+import { STATUS_ICON_CONFIG } from './status-icon';
 
 @Component({
   selector: 'si-status-icon',
