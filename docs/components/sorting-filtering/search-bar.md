@@ -34,7 +34,7 @@ The **search bar** allows users to quickly find content using free text.
 ### Interaction states
 
 The search bar container color should always be in contrast with its
-surrounding background. Use `base-0` or `base-1` accordingly.
+surrounding background. Use `base-4` or `base-1` accordingly.
 
 ![search bar states](images/search-bar-states.png)
 
