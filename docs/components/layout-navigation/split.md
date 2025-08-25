@@ -75,7 +75,7 @@ the application allows said actions.
 
 Ensure that the chosen layout works well on all device types. For small screen
 sizes, consider changing the layout to an interactive one where users can switch
-between panes. See the [main-detail](../layout-navigation/main-detail-container.md)
+between panes. See the [list-details](../layout-navigation/list-details.md)
 pattern's responsive behavior as an example.
 
 ## Code ---

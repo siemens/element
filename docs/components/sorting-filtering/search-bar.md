@@ -19,7 +19,7 @@ The **search bar** allows users to quickly find content using free text.
 - Consider adding other search capabilities according to project needs (e.g. use
   quotes to search for exact matches).
 - The placement of the *Search Bar* depends on the layout of the viewport. See
-  the [main-detail container](../layout-navigation/main-detail-container.md)
+  the [list-details](../layout-navigation/list-details.md)
   for placement guidance. See [data table](../lists-tables-trees/datatable.md)
   for search placement within a data table.
 
