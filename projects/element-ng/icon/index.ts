@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 export * from './si-icon.module';
-export * from './icon-status';
+export * from './status-icon';
 export { addIcons } from './si-icons';
 export * from './si-icon.component';
 export * from './si-icon-legacy.component';
