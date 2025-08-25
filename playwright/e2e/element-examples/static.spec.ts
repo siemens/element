@@ -56,6 +56,7 @@ test('si-empty-state/si-empty-state', ({ si }) => si.static());
 test('si-footer/si-footer', ({ si }) => si.static());
 test('si-icon/si-icon', ({ si }) => si.static({ skipAriaSnapshot: true }));
 test('si-icon/si-icon-composite', ({ si }) => si.static());
+test('si-icon/si-status-icon', ({ si }) => si.static());
 test('si-icon/si-icon-legacy', ({ si }) => si.static({ skipAriaSnapshot: true }));
 test('si-status-counter/si-status-counter', ({ si }) => si.static());
 test('si-info-page/si-info-page', ({ si }) => si.static());
