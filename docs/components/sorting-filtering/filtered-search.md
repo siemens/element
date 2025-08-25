@@ -38,7 +38,7 @@ and a value.
 ### Interaction states
 
 The filtered search container color should always be in contrast with its
-surrounding background. Use `base-0` or `base-1` according to that.
+surrounding background. Use `base-4` or `base-1` according to that.
 
 ![Filtered search states](images/filtered-search-states.png)
 
