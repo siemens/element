@@ -438,6 +438,23 @@ describe('SiFilteredSearchComponent', () => {
       await newCriteriaValue!.focus();
       expect(component.lazyValueProvider).toHaveBeenCalledWith('location', '');
     });
+
+    it('should show selected criterion on label click', async () => {
+      component.criteria.set([
+        {
+          name: 'location',
+          label: 'Location',
+          multiSelect: true
+        }
+      ]);
+      component.searchCriteria.set({ criteria: [{ name: 'location', value: ['Bar'] }], value: '' });
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      const criteria = await filteredSearch.getCriteria();
+      await criteria[0].clickLabel();
+      const criteriaValue = await criteria[0].value();
+      await criteriaValue?.click();
+      expect(await criteriaValue?.getItemLabels({ isSelected: true })).toEqual(['Bar']);
+    });
   });
 
   describe('with lazy loaded values and optiontype as return type', () => {
