@@ -44,37 +44,39 @@
       ></button>
     </si-list-pane-header>
     <si-list-pane-body>
-      <ngx-datatable
-        #table
-        class="si-layout-fixed-height table-element focus-inside"
-        siDatatableInteraction
-        selectionType="single"
-        columnMode="force"
-        [cssClasses]="tableConfig.cssClasses"
-        [rows]="rows"
-        [columns]="[
-          { name: 'Name', sortable: false },
-          { name: 'Role', sortable: false },
-          { name: 'Company', sortable: false }
-        ]"
-        [reorderable]="false"
-        [headerHeight]="tableConfig.headerHeight"
-        [rowHeight]="tableConfig.rowHeightSmall"
-        [footerHeight]="0"
-        [ghostLoadingIndicator]="isLoading > 0"
-        [scrollbarV]="true"
-        [externalPaging]="true"
-        [externalSorting]="true"
-        [count]="totalElements"
-        [offset]="pageNumber"
-        [selected]="selectedEntities"
-        [datatableInteractionAutoSelect]="container.hasLargeSize()"
-        (page)="setPage($event)"
-        (select)="datatableOnSelect($event.selected)"
-        (siResizeObserver)="table.recalculate()"
-      >
-        <si-empty-state empty-content icon="element-users" heading="No users to display" />
-      </ngx-datatable>
+      <div class="si-layout-fixed-height overflow-auto">
+        <ngx-datatable
+          #table
+          class="si-layout-fixed-height table-element focus-inside"
+          siDatatableInteraction
+          selectionType="single"
+          columnMode="force"
+          [cssClasses]="tableConfig.cssClasses"
+          [rows]="rows"
+          [columns]="[
+            { name: 'Name', sortable: false },
+            { name: 'Role', sortable: false },
+            { name: 'Company', sortable: false }
+          ]"
+          [reorderable]="false"
+          [headerHeight]="tableConfig.headerHeight"
+          [rowHeight]="tableConfig.rowHeightSmall"
+          [footerHeight]="0"
+          [ghostLoadingIndicator]="isLoading > 0"
+          [scrollbarV]="true"
+          [externalPaging]="true"
+          [externalSorting]="true"
+          [count]="totalElements"
+          [offset]="pageNumber"
+          [selected]="selectedEntities"
+          [datatableInteractionAutoSelect]="container.hasLargeSize()"
+          (page)="setPage($event)"
+          (select)="datatableOnSelect($event.selected)"
+          (siResizeObserver)="table.recalculate()"
+        >
+          <si-empty-state empty-content icon="element-users" heading="No users to display" />
+        </ngx-datatable>
+      </div>
     </si-list-pane-body>
   </si-list-pane>
   <si-details-pane class="card">
