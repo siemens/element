@@ -10,7 +10,7 @@ import {
   injectSiTranslateService
 } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, ReplaySubject } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 
 import { SiDefaultLocaleStore, SiLocaleStore } from './si-locale-store';
 
@@ -132,7 +132,10 @@ export class SiLocaleService {
     // If a user changes the language on the translate service directly,
     // we synchronize the change again.
     this.translate.translationChange.subscribe(() => {
-      this.locale = this.translate.currentLanguage;
+      const current = this.translate.currentLanguage;
+      if (current) {
+        this.locale = current;
+      }
     });
 
     if (this.config.fallbackEnabled) {
@@ -155,7 +158,7 @@ export class SiLocaleService {
     }
     this.localeStore
       .saveLocale(value)
-      .pipe(first())
+      .pipe(take(1))
       .subscribe({
         next: (saveSucceed: boolean) => {
           if (saveSucceed) {
@@ -185,7 +188,7 @@ export class SiLocaleService {
         this.localePackageLoaded$.next();
         this.translate
           .setCurrentLanguage(value)
-          .pipe(first())
+          .pipe(take(1))
           .subscribe(() => {
             if (this.locale$.value !== value) {
               this.locale$.next(value);
@@ -199,7 +202,7 @@ export class SiLocaleService {
         // Initialization of locale rejected. Setting default locale.
         this.translate
           .setCurrentLanguage(this.config.defaultLocale!)
-          .pipe(first())
+          .pipe(take(1))
           .subscribe(() => {
             if (this.locale$.value !== this.config.defaultLocale!) {
               this.locale$.next(this.config.defaultLocale!);
