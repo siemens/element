@@ -1,24 +1,24 @@
-# Main-detail container
+# List-detail container
 
-**Main-detail** is a layout pattern that shows a list of items and the corresponding
+**List-detail** is a layout pattern that shows a list of items and the corresponding
 details of the selected item.
-It allows users to stay focused on the main content while accessing and editing
+It allows users to stay focused on the list content while accessing and editing
 related details without losing context.
 
 ## Usage ---
 
 Use this layout when viewing details from an item in a large list or group on the same page is required.
 
-The content in the main container such as list, data table or simple navigation is used to
+The content in the list container is used to
 control the information shown in the details container.
 
-Selecting an item from the main container opens the detail view.
-The user can select another item from the main container to switch content of the detail container.
+Selecting an item from the list container opens the detail view.
+The user can select another item from the list container to switch content of the detail container.
 
-Main-detail layouts are optimized for wider screens, while also incorporating a
+List-detail layouts are optimized for wider screens, while also incorporating a
 responsive behavior to adapt to various screen sizes.
 
-![Main-detail](images/main-detail.png)
+![List-detail](images/list-detail.png)
 
 ### When to use
 
@@ -30,10 +30,10 @@ responsive behavior to adapt to various screen sizes.
 
 ### Elements
 
-![Main-detail elements](images/main-detail-elements.png)
+![List-detail elements](images/list-detail-elements.png)
 
-1. **Main container:** Displays content types such as lists, tables or trees.
-1. **Main actions (optional):** These are the functions that a user can perform within the main container.
+1. **List container:** Displays content types such as lists, tables or trees.
+1. **List actions (optional):** These are the functions that a user can perform within the list container.
 1. **Detail container:** Displays information from the selected node, such as tables, forms or KPIs.
 1. **Detail title (optional):** It provides context about the information displayed, e.g. name of the selected item
 1. **Detail actions (optional):** Functions that can be performed within the detail container.
@@ -43,23 +43,23 @@ responsive behavior to adapt to various screen sizes.
 The two sections can be dynamically resizable: when users hover over the dividing area,
 the cursor turns into a double-sided arrow, allowing for size adjustments.
 
-![Main-detail resize](images/main-detail-resize.png)
+![List-detail resize](images/list-detail-resize.png)
 
 ### Edit mode
 
 An 'Edit mode' can be optionally enabled in the detail area, allowing content modifications.
 When active, 'Save' and 'Cancel' actions are displayed in a footer.
 
-The main content area is scrollable independently of the footer.
+The list content area is scrollable independently of the footer.
 This way, the footer remains visible and accessible even when the content overflows.
 
-![Main-detail edit](images/main-detail-edit.png)
+![List-detail edit](images/list-detail-edit.png)
 
-### Search and actions in main
+### Search and actions in list
 
-These actions are designed to manipulate data in the main container.
+These actions are designed to manipulate data in the list container.
 
-They are context-specific, meaning they directly affect the item in the main view.
+They are context-specific, meaning they directly affect the item in the list view.
 For example, a bulk action to "Update user permissions" to modify settings
 for multiple users at once, or "Adjust settings for multiple zones"
 enables uniform changes across different areas in a single step.
@@ -67,57 +67,57 @@ enables uniform changes across different areas in a single step.
 Any button type can be used as an action.
 However, if more than one action is needed, they should be collapsed over a menu, or reconsidered as global actions.
 
-![Main-detail actions](images/main-actions.png)
+![List-detail actions](images/list-actions.png)
 
-### Filtering in the main
+### Filtering in the list
 
-If filters are needed in the main, a filter button can be placed above the content.
+If filters are needed in the list, a filter button can be placed above the content.
 Applied filters can be represented with a filter bar.
 
 If the action next to the search bar is used for another purpose, the filter button can be placed next to the applied filters.
 
-![Main-detail filters](images/main-filters.png)
+![List-detail filters](images/list-filters.png)
 
-Filters in the main area can overlay the content to show filtering options.
+Filters in the list area can overlay the content to show filtering options.
 When activated, a panel appears, allowing users to select criteria, and then retracts
 to update the displayed content based on the selected filters.
 
-![Main-detail filters flow](images/main-detail-filters-flow.png)
+![List-detail filters flow](images/list-detail-filters-flow.png)
 
 ### Global search and actions
 
-Unlike the actions that are exclusive to the 'Main' or 'Detail',
+Unlike the actions that are exclusive to the 'list' or 'detail',
 global actions transcend specific areas and provide functionality that
 is consistently relevant regardless of the user's current focus.
-E.g.: A 'Create' button that initiates the process to create a new entry to the main container.
+E.g.: A 'Create' button that initiates the process to create a new entry to the list container.
 
-![Main-detail global actions](images/main-detail-global-actions.png)
+![List-detail global actions](images/list-detail-global-actions.png)
 
 ### Bulk actions
 
 When multiple items can be selected, the detail view will display an [empty state](../status-notifications/empty-state.md)
 guiding users to either perform an action or clear the selection.
 
-![Main-detail bulk actions](images/main-detail-bulk-action.png)
+![List-detail bulk actions](images/list-detail-bulk-action.png)
 
 ### Initial interaction
 
 Consider the initial interaction: It can either feature a preselected item, displaying its details,
 or be user-initiated, where the detail view remains empty until an item is selected or created.
 
-There can also be situations where the main view itself is not populated until the user creates or adds an item.
+There can also be situations where the list view itself is not populated until the user creates or adds an item.
 
 In instances, where no data is immediately available, use an [empty state](../status-notifications/empty-state.md)
 to guide the user.
 
-![Main-detail initial interaction](images/main-detail-initial-interaction.png)
+![List-detail initial interaction](images/list-detail-initial-interaction.png)
 
 ### Responsive behavior
 
-In responsive mode, the Main-Detail splits into two screens: first displaying the main content,
+In responsive mode, the list-detail splits into two screens: first displaying the list content,
 then the details of a selected node with a 'Back' button.
 
-![Main-detail responsive](images/main-detail-responsive.png)
+![List-detail responsive](images/list-detail-responsive.png)
 
 ## Code ---
 
