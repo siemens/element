@@ -9,4 +9,6 @@ import { SiMapModule } from './components/si-map/index';
 @NgModule({
   exports: [SiMapModule]
 })
-export class ElementMapsNgModule {}
+export class SiMapsNgModule {}
+
+export { SiMapsNgModule as SimplMapsNgModule };
