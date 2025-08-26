@@ -1,7 +1,7 @@
 {
   "name": "@siemens/charts-ng",
   "description": "Element Charts library.",
-  "version": "47.8.0",
+  "version": "48.0.0",
   "license": "MIT",
   "repository": {
     "type": "git",
