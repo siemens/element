@@ -9,8 +9,6 @@
 /bazel-out
 # generated typedoc documentation
 /src/assets/typedoc
-# generated docs-composer documentation
-/docs-out
 # icon preview documentation
 docs/_src/fonts
 docs/_src/style
