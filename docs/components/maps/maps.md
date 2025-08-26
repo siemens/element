@@ -137,7 +137,7 @@ Add the library to the list of *imports* in your Angular *AppModule* like this:
 // [...]
 
 // Import this library and required dependencies
-import { ElementMapsNgModule } from '@siemens/maps-ng';
+import { SiMapsNgModule } from '@siemens/maps-ng';
 
 @NgModule({
   declarations: [AppComponent],
@@ -145,7 +145,7 @@ import { ElementMapsNgModule } from '@siemens/maps-ng';
     BrowserModule,
 
     // Import this library
-    ElementMapsNgModule
+    SiMapsNgModule
   ],
   bootstrap: [AppComponent]
 })
