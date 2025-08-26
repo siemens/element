@@ -2,6 +2,11 @@
 
 Tabs are used to separate information into logical sections in the context of a single page and to quickly navigate between them.
 
+With Element v48, the tabs have been completely re-implemented including breaking changes in the API.
+The old tabs have been renamed to `*-legacy` and are available via legacy entrypoint
+`@siemens/element-ng/tabs-legacy`. For more details, see the BREAKING CHANGES notes for
+Element v48.0.0 in the [changelog](../../CHANGELOG.md).
+
 ## Usage ---
 
 ![Tabs](images/tabs.png)
@@ -76,34 +81,72 @@ This menu contains all the tabs in the same order, ensuring consistent navigatio
 
 ## Code ---
 
+### Usage
+
+```ts
+import { SiTabComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
+
+@Component({
+  imports: [
+    SiTabComponent,
+    SiTabsetComponent,
+    ...
+  ]
+})
+```
+
+### Tabs
+
+<si-docs-component example="si-tabs/si-tabs"></si-docs-component>
+
+### Tabs - Routing
+
+<si-docs-component example="si-tabs/si-tabs-routing"></si-docs-component>
+
+### Tabs - Icons
+
+<si-docs-component example="si-tabs/si-tabs-icons"></si-docs-component>
+
+<si-docs-api component="SiTabsetComponent"></si-docs-api>
+
+<si-docs-api component="SiTabComponent"></si-docs-api>
+
+<si-docs-api component="SiTabLinkComponent"></si-docs-api>
+
+<si-docs-types></si-docs-types>
+
+## Code (legacy) ---
+
 Element implements tabset and tab components that provide the correct styling and responsive behavior.
 It supports the usage combined with the Angular router (preferred way) or alternatively as plain components.
+
+> **Note:** This is the legacy tabs implementation. For new projects, use the [improved tabs component](#code).
 
 ### Tabs with Angular Router
 
 When using the tabs with the Angular router, each tab is just an anchor with a `routerLink`.
-Make sure to nest the `<router-outlet />` inside the `si-tabset-next` component as the tabset applies some accessibility attributes.
+Make sure to nest the `<router-outlet />` inside the `si-tabset-legacy` component as the tabset applies some accessibility attributes.
 No need to apply `routerLinkActive`, this is done automatically.
 
 ```html
-<si-tabset>
-  <a si-tab heading="Tab 1" routerLink="./tab-1"></a>
-  <a si-tab heading="Tab 2" routerLink="./tab-2"></a>
+<si-tabset-legacy>
+  <a si-tab-legacy heading="Tab 1" routerLink="./tab-1"></a>
+  <a si-tab-legacy heading="Tab 2" routerLink="./tab-2"></a>
   
   <router-outlet />
-</si-tabset>
+</si-tabset-legacy>
 ```
 
 ```ts
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SiTabsetNextComponent, SiTabNextLinkComponent } from '@siemens/element-ng/tabs-next';
+import { SiTabsetLegacyComponent, SiTabLegacyComponent } from '@siemens/element-ng/tabs-legacy';
 
 @Component({
   templateUrl: './my-component.html',
   imports: [
-    SiTabsetNextComponent,
-    SiTabNextLinkComponent,
+    SiTabsetLegacyComponent,
+    SiTabLegacyComponent,
     RouterLink
   ]
 })
@@ -122,8 +165,6 @@ export const routes: Routes = [
 ]
 ```
 
-<si-docs-component example="si-tabs/si-tabs-routing"></si-docs-component>
-
 ### Tabs with plain components
 
 In general, using the tabs with the Angular router is preferred as the state is stored in the URL.
@@ -133,22 +174,22 @@ In some cases, this might not be needed, e.g. when using the tabs to group simpl
 In this case, you can use the `si-tabset` component with `si-tab` components as children.
 
 ```html
-<si-tabset>
+<si-tabset-legacy>
   <si-tab-legacy heading="Tab 1">Tab 1 content</si-tab-legacy>
   <si-tab-legacy heading="Tab 2" [active]="true">Tab 2 content</si-tab-legacy>
-</si-tabset>
+</si-tabset-legacy>
 ```
 
 ```ts
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SiTabsetNextComponent, SiTabNextComponent } from '@siemens/element-ng/tabs';
+import { SiTabsetLegacyComponent, SiTabLegacyComponent } from '@siemens/element-ng/tabs-legacy';
 
 @Component({
   templateUrl: './my-component.html',
   imports: [
-    SiTabsetNextComponent,
-    SiTabNextComponent
+    SiTabsetLegacyComponent,
+    SiTabLegacyComponent
   ]
 })
 export class MyComponent { }
@@ -165,23 +206,23 @@ Both tab variants can be used as a closable tab.
 A tab that can be closed must be explicitly marked as closable by setting the `closable` property to `true`.
 
 ```html
-<si-tabset>
+<si-tabset-legacy>
   @if(showTab1) {
-    <a si-tab heading="Tab 1" routerLink="./tab-1" closable (closeTriggered)="removeTab1()"></a>
+    <a si-tab-legacy heading="Tab 1" routerLink="./tab-1" closable (closeTriggered)="removeTab1()"></a>
   }
-</si-tabset>
+</si-tabset-legacy>
 ```
 
 ```ts
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SiTabsetNextComponent, SiTabNextLinkComponent } from '@siemens/element-ng/tabs';
+import { SiTabsetLegacyComponent, SiTabLegacyComponent } from '@siemens/element-ng/tabs-legacy';
 
 @Component({
   templateUrl: './my-component.html',
   imports: [
-    SiTabsetNextComponent,
-    SiTabNextLinkComponent,
+    SiTabsetLegacyComponent,
+    SiTabLegacyComponent,
     RouterLink
   ]
 })
@@ -197,12 +238,8 @@ export class MyComponent {
 The tabset does not automatically remove a closed tab.
 When `closeTriggered` is emitted, you need to handle the removal of the tab in your component logic.
 
-<si-docs-component example="si-tabs/si-tabs"></si-docs-component>
+<si-docs-component example="si-tabs/si-tabs-legacy"></si-docs-component>
 
-<si-docs-api component="SiTabsetNextComponent"></si-docs-api>
+<si-docs-api component="SiTabsetLegacyComponent"></si-docs-api>
 
-<si-docs-api component="SiTabNextLinkComponent"></si-docs-api>
-
-<si-docs-api component="SiTabNextComponent"></si-docs-api>
-
-<si-docs-types></si-docs-types>
+<si-docs-api component="SiTabLegacyComponent"></si-docs-api>

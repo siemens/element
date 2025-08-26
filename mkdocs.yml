@@ -95,7 +95,6 @@ nav:
       - Side Panel:                       'components/layout-navigation/side-panel.md'
       - Split:                            'components/layout-navigation/split.md'
       - Tabs:                             'components/layout-navigation/tabs.md'
-      - Tabs Next:                        'components/layout-navigation/tabs-next.md'
       - Tour:                             'components/layout-navigation/tour.md'
       - Vertical Navigation:              'components/layout-navigation/vertical-navigation.md'
       - Wizard:                           'components/layout-navigation/wizard.md'
