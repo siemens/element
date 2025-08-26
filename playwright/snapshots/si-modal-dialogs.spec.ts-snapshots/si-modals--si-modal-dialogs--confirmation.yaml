@@ -17,8 +17,8 @@
 - button "Many columns"
 - heading "Column selection dialog without visibility toggle" [level=2]
 - button "Many columns"
-- dialog "Yes/No confirmation":
+- dialog "Replace Yes/No with clear actions":
   - button "No"
-  - text: Is avoiding yes/no buttons a best practice?
+  - text: Avoid using 'Yes' and 'No' as buttons, instead use suitable verbs to make the action directly understandable
   - button "No"
   - button "Yes"
