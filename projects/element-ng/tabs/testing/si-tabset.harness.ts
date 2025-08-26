@@ -5,7 +5,7 @@
 import { LEFT_ARROW, RIGHT_ARROW } from '@angular/cdk/keycodes';
 import { ComponentHarness, TestElement, TestKey } from '@angular/cdk/testing';
 
-export class SiTabsetNextHarness extends ComponentHarness {
+export class SiTabsetHarness extends ComponentHarness {
   static hostSelector = '.tab-wrapper';
   private tabset = this.locatorForOptional('si-tabset');
   private tabItems = this.locatorForAll('si-tab');

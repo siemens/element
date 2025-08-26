@@ -19,7 +19,7 @@ import { ResizeObserverService } from '@siemens/element-ng/resize-observer';
 import { SiTabLinkComponent } from './si-tab-link.component';
 import { SiTabComponent } from './si-tab.component';
 import { SiTabsetComponent } from './si-tabset.component';
-import { SiTabsetNextHarness } from './testing/si-tabset-next.harness';
+import { SiTabsetHarness } from './testing/si-tabset.harness';
 
 @Component({
   selector: 'si-tab-route',
@@ -124,11 +124,11 @@ class TestRoutingComponent {
   readonly tabSet = viewChild.required(SiTabsetComponent);
 }
 
-describe('SiTabsetNext', () => {
+describe('SiTabset', () => {
   let fixture: ComponentFixture<TestComponent>;
   let testComponent: TestComponent;
   let loader: HarnessLoader;
-  let tabsetHarness: SiTabsetNextHarness;
+  let tabsetHarness: SiTabsetHarness;
 
   const detectSizeChange = (): void => {
     fixture.detectChanges();
@@ -147,7 +147,7 @@ describe('SiTabsetNext', () => {
     fixture = TestBed.createComponent(TestComponent);
     testComponent = fixture.componentInstance;
     loader = TestbedHarnessEnvironment.loader(fixture);
-    tabsetHarness = await loader.getHarness(SiTabsetNextHarness);
+    tabsetHarness = await loader.getHarness(SiTabsetHarness);
   });
 
   it('should be possible to create a tabComponent instance', async () => {
@@ -311,11 +311,11 @@ describe('SiTabsetNext', () => {
   });
 });
 
-describe('SiTabsetNext Routing', () => {
+describe('SiTabset Routing', () => {
   let fixture: ComponentFixture<TestRoutingComponent>;
   let testComponent: TestRoutingComponent;
   let loader: HarnessLoader;
-  let tabsetHarness: SiTabsetNextHarness;
+  let tabsetHarness: SiTabsetHarness;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -335,7 +335,7 @@ describe('SiTabsetNext Routing', () => {
     fixture = TestBed.createComponent(TestRoutingComponent);
     testComponent = fixture.componentInstance;
     loader = TestbedHarnessEnvironment.loader(fixture);
-    tabsetHarness = await loader.getHarness(SiTabsetNextHarness);
+    tabsetHarness = await loader.getHarness(SiTabsetHarness);
   });
 
   it('should render router link tab', fakeAsync(async () => {
