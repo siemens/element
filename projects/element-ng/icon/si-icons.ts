@@ -86,6 +86,6 @@ export class IconService {
   }
 
   private kebabToCamelCase(str: string): string {
-    return str.replace(/-./g, match => match.charAt(1).toUpperCase());
+    return str?.replace(/-./g, match => match.charAt(1).toUpperCase());
   }
 }
