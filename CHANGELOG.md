@@ -12,12 +12,12 @@
 * **element-translation-ng:** add `t`-function to locally override $localize ([b2916f4](https://github.com/siemens/element/commit/b2916f4e214fbd7a67c6e2d41e13ba8fc0f2bf86)), closes [#436](https://github.com/siemens/element/issues/436)
 * **filtered-search:** align with theme updates ([72f2227](https://github.com/siemens/element/commit/72f22278bdb96a07b36adff7874bf224357c1c97))
 * **form:** drop form-item legacy mode ([5d83257](https://github.com/siemens/element/commit/5d83257ac919dc8d62b85e3acd2f0a98c158f3b7))
-* **forms:** allow overriding of errormessage IDs on custom form controls ([3afbc5a](https://github.com/siemens/element/commit/3afbc5aa27a303b6d37628ff12d2a4488451a69c))
+* **form:** allow overriding of errormessage IDs on custom form controls ([3afbc5a](https://github.com/siemens/element/commit/3afbc5aa27a303b6d37628ff12d2a4488451a69c))
 * **form:** support context help button in form-items ([6bd0863](https://github.com/siemens/element/commit/6bd0863a1628018db0a3858b6c3ca74ecf7e69c8)), closes [#511](https://github.com/siemens/element/issues/511)
 * **header-dropdown:** remove automatic filled icon when the dropdown is open ([d259942](https://github.com/siemens/element/commit/d25994213e295dbe56c160e82f294e753f5319ef))
 * **help-button:** introduce a help button component ([29ff865](https://github.com/siemens/element/commit/29ff865d3a00fac34f27d786e3e897874f4bb4a0))
 * **icon:** replace current `si-icon` with `si-icon-next` ([cb06a07](https://github.com/siemens/element/commit/cb06a0793c256cb56c4b945059778e6890792db5))
-* improve visual appearance of long and multiline checkbox and  radio labels ([32a18ce](https://github.com/siemens/element/commit/32a18ce9204e16de60736166711b674cbed59fb0))
+* **form:** improve visual appearance of long and multiline checkbox and radio labels ([32a18ce](https://github.com/siemens/element/commit/32a18ce9204e16de60736166711b674cbed59fb0))
 * **landing-page:** add landing page feature components ([26e0066](https://github.com/siemens/element/commit/26e0066c7ad85def573244434d37a9cf2b1a882d))
 * **launchpad:** support `routerLink` for launchpad apps ([bf78c1f](https://github.com/siemens/element/commit/bf78c1f0d444a7bbd7da7e60526f4c8208087703))
 * **list-details:** support usage with the Angular router ([4731e77](https://github.com/siemens/element/commit/4731e7717c748eeced6691b886c7ee7acf192eba))
@@ -53,7 +53,6 @@
 * **formly:** link error messages to custom controls ([1dfb9ee](https://github.com/siemens/element/commit/1dfb9eed4737631388cc1e83e94312f1fa56f71a))
 * **formly:** link error messages to input ([11c1b61](https://github.com/siemens/element/commit/11c1b6172e792a474f85738066ee29a58930c9ca))
 * **help-button:** don't change color on hover when disabled ([5df4d9f](https://github.com/siemens/element/commit/5df4d9f2ce3261a20ef413db8123a628b88346c1))
-* **icon-status:** add missing ng-package.json file ([9b7132a](https://github.com/siemens/element/commit/9b7132a6c15279be43e08e4fcdf7f3132909dc4e))
 * **live-preview:** change initialization order to fix locale change loop ([acf2190](https://github.com/siemens/element/commit/acf21904d3aa16b18097a98aad6948cfb1b8ea52)), closes [#451](https://github.com/siemens/element/issues/451)
 * **maps:** use new fonts, fallback to sans-serif ([6b17274](https://github.com/siemens/element/commit/6b17274b980b049c923bb0a2c5b7d917c6045986))
 * **navbar-vertical:** support flexible drop down positioning ([24acde0](https://github.com/siemens/element/commit/24acde01a21ac53ba29fbc49b1e48567b6f505b7))
@@ -175,18 +174,25 @@
 * **tree-view:** Removed `SiTreeViewComponent.disableFilledIcons` input.
   
   Tree items no longer show a filled icon on selection.
-* **icon:** The `si-icon` component was replaced with the `si-icon-next`
-  leading to a few API changes.
-  The overall goal of this change is to ensure a similar behavior compared to
-  the direct use via css classes.
+* **icon:** The `si-icon` component has been completely re-implemented
+  including breaking changes in the API. The main motivation of this change is
+  support for SVG icons and to ensure a similar behavior compared to the direct
+  use via CSS classes, making icon usage more interchangeable.
   
-  We recommend adjusting your code to the new `si-icon`.
-  Alternatively, existing usages can be replaced
+  We recommend adjusting your code to the new `si-icon`. Alternatively, you may
+  use `si-icon-legacy` to preserve the previous behavior.
+  
   The most notable changes are:
-  - dropping the default size
-  - dropping most inputs in favor of using css classes
-  
-  Single colored icon can be converted like this:
+  - Dropped all inputs other than the `icon` input. Use CSS classes instead.
+  - Dropped the default size along with the `size` input. Use CSS class `icon`
+    to apply the default size via CSS or use any other
+    [text size](https://element.siemens.io/fundamentals/typography/#type-styles-classes) class.
+  - The content of this component is hidden in the a11y tree. If needed, set
+    proper labels e.g. `aria-label="Close"`.
+  - Dropped support for stacked icons via inputs. Use HTML and the `icon-stack`
+    class to construct layered icons.
+
+  Single colored icons can be converted as follows:
   
   ```html
   <!-- before -->
@@ -194,31 +200,46 @@
   <!-- after -->
   <si-icon icon="element-user" class="icon text-danger" />
   ```
-  
-  **Important:** Previously, the class `icon` was automatically applied. Unless not needed,
+
+  **Important:** Previously, the class icon was automatically applied. Unless not needed,
   it must now be applied manually.
-  The icon class sets a fixed size of `1.5rem`
+  The icon class sets a fixed size of 1.5rem.
   
-  Stacked icons need to be constructed in HTML directly.
-  If applicable, the `si-status-icon` component should be used instead.
-  
+  Stacked (composite) icons need to be constructed using HTML.
+
   ```html
   <!-- before -->
   <si-icon
-    icon="element-circle-filled"
-    color="status-success"
-    stackedIcon="element-state-tick"
-    stackedColor="status-success-contrast"
-    alt="Success"
+    icon="element-alarm-background-filled"
+    color="status-danger"
+    stackedIcon="element-alarm-tick"
+    stackedColor="text-secondary"
+    size="display-2"
   />
-  
+
   <!-- after -->
-  <div class="icon-stack icon" aria-label="Success">
-    <si-icon icon="element-circle-filled" class="status-success" />
-    <si-icon icon="element-state-tick" class="status-success-contrast" />
-  </div>
+  <span class="icon icon-stack">
+    <si-icon class="si-display-lg status-danger" icon="element-alarm-background-filled" />
+    <si-icon class="si-display-lg text-secondary" icon="element-alarm-tick" />
+  </span>
   ```
-* Checkboxes and radio inputs (`<input type="checkbox">` or `<input type="radio">`) must now be wrapped in a `.form-check` container.
+
+For status icons, the new `si-status-icon` component simplifies usage even more:
+
+```html
+<!-- before -->
+<si-icon
+icon="element-circle-filled"
+color="status-danger"
+stackedIcon="element-state-exclamation-mark"
+stackedColor="status-danger-contrast"
+size="display-2"
+/>
+
+<!-- after -->
+<si-status-icon class="si-display-lg" status="danger" />
+```
+* **form:** Checkboxes and radio inputs (`<input type="checkbox">` or `<input type="radio">`) must now be wrapped in a `.form-check` container.
   
   Additionally, when using Bootstrap’s grid system (bs-grid), each `.form-check` must be placed
   inside a `.col-*` element and cannot be a direct child of a `.row`.
@@ -292,13 +313,13 @@
   Use the build-in mechanism of the `si-form-item` to show validation errors.
   See: https://element.siemens.io/components/forms-inputs/forms/#error-messages
 * **result-details-list:** Removed `ResultDetailStepState` as object. Use `ResultDetailStepState` as type with direct string values.
-* **filtered-search:** Removed following deprecated inputs
-  
-    - `SiFilteredSearchComponent.showIcon`
-    - `SiFilteredSearchComponent.selectedCriteriaIndex`
-    - `SiFilteredSearchComponent.noMatchingCriteriaText`
-    - `SiFilteredSearchComponent.submitText` (replaced by `SiFilteredSearchComponent.submitButtonLabel`)
-    - `SiFilteredSearchComponent.items` (replaced by `SiFilteredSearchComponent.itemCountText`)
+* **filtered-search:** Removed following deprecated inputs:
+
+  - `SiFilteredSearchComponent.showIcon` without any replacement.
+  - `SiFilteredSearchComponent.selectedCriteriaIndex`. Instead of preselecting the most relevant option, sort the options by relevance.
+  - `SiFilteredSearchComponent.noMatchingCriteriaText` without any replacement.
+  - `SiFilteredSearchComponent.submitText`. Use `SiFilteredSearchComponent.submitButtonLabel` instead.
+  - `SiFilteredSearchComponent.items`. Use `SiFilteredSearchComponent.itemCountText` instead.
 * **wizard:** Removed `SiWizardComponent.hasNavigation` input and `SiWizardComponent.cancel` output. Use `SiWizardComponent.hideNavigation` and  `SiWizardComponent.wizardCancel` respectively instead.
 * **action-modal:** Removed deprecated methods:
   
