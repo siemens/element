@@ -96,6 +96,12 @@ export default {
         pkgRoot: 'projects/element-translate-cli'
       }
     ],
+    [
+      '@semantic-release/npm',
+      {
+        pkgRoot: 'projects/dashboards-demo'
+      }
+    ],
     // Only update remaining package.json that are not directly published
     [
       '@semantic-release/npm',
@@ -143,6 +149,13 @@ export default {
       '@semantic-release/npm',
       {
         pkgRoot: 'projects/maps-ng',
+        npmPublish: false
+      }
+    ],
+    [
+      '@semantic-release/npm',
+      {
+        pkgRoot: 'projects/dashboards-demo',
         npmPublish: false
       }
     ],
