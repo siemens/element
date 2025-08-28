@@ -1,3 +1,15 @@
+# [47.10.0](https://github.com/siemens/element/compare/v47.9.1...v47.10.0) (2025-08-28)
+
+
+### Features
+
+* **charts/gauge:** support custom value formatter ([e74dd7d](https://github.com/siemens/element/commit/e74dd7d68a48d0b5ac86acc2cfb2deb49aa2f156))
+
+
+### DEPRECATIONS
+
+* **charts/gauge:** Input `SiChartGaugeComponent.labelFormatter` should no longer be used to format the value. Use `SiChartGaugeComponent.valueFormatter` instead.
+
 ## [47.9.1](https://github.com/siemens/element/compare/v47.9.0...v47.9.1) (2025-08-21)
 
 
