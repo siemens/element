@@ -41,11 +41,17 @@ export class SiChartGaugeComponent extends SiChartComponent implements OnChanges
   /** @defaultValue false */
   readonly unitsOnSplit = input(false);
   /**
-   * Custom formatter for axis labels and value.
+   * Custom formatter for axis labels.
    * Takes precedence when specified, i.e. number of decimals, unit etc needs
    * to be set by the user using this formatter.
    */
   readonly labelFormatter = input<(val: number) => string>();
+  /**
+   * Custom formatter for value.
+   * Takes precedence when specified, i.e. number of decimals needs
+   * to be set by the user using this formatter.
+   */
+  readonly valueFormatter = input<(val: number) => string>();
   /**
    * Sets the number of decimals.
    * @deprecated Use `minNumberOfDecimals` and `maxNumberOfDecimals` instead.
@@ -332,7 +338,7 @@ export class SiChartGaugeComponent extends SiChartComponent implements OnChanges
       detail: {
         offsetCenter: [0, -0.5 * resp.valueFontSize],
         valueAnimation: true,
-        formatter: this.valueFormatter(),
+        formatter: this.valueFormatterInternal(),
         rich: {
           value: {
             fontSize: resp.valueFontSize,
@@ -357,20 +363,24 @@ export class SiChartGaugeComponent extends SiChartComponent implements OnChanges
     this.applyTitles();
   }
 
-  private valueFormatter(): (val: number) => string {
-    return (
-      this.labelFormatter() ??
-      ((value: number) => {
-        const formattedValue = this.numberFormat().format(value);
-        const unit = this.unit();
-        const formattedUnit = unit
-          ? unit.length > 5
-            ? `\n{unit|${unit}}`
-            : ` {unit|${unit}}`
-          : '';
-        return `{value|${formattedValue}}${formattedUnit}`;
-      })
-    );
+  private valueFormatterInternal(): (val: number) => string {
+    const unit = this.unit();
+    const valueFormatter = this.valueFormatter();
+    const labelFormatter = this.labelFormatter();
+
+    const formattedUnit = unit ? (unit.length > 5 ? `\n{unit|${unit}}` : ` {unit|${unit}}`) : '';
+
+    return (value: number): string => {
+      if (valueFormatter) {
+        return `{value|${valueFormatter(value)}}${formattedUnit}`;
+      }
+      // DEPRECATED: Use the new input `valueFormatter` to format the value.
+      // labelFormatter should be removed from here in future versions.
+      if (labelFormatter) {
+        return labelFormatter(value);
+      }
+      return `{value|${this.numberFormat().format(value)}}${formattedUnit}`;
+    };
   }
 
   override ngOnChanges(changes: SimpleChanges): void {
