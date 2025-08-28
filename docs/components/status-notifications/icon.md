@@ -16,9 +16,6 @@ import { SiIconComponent } from '@simpl/element-ng/icon';
 })
 ```
 
-The `si-icon` component includes a fallback alternative text to make icons more
-accessible.
-
 <si-docs-component example="si-icon/si-icon"></si-docs-component>
 
 ### Composite icons
