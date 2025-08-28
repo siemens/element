@@ -9,7 +9,7 @@ export interface MapPoint extends MapPointMetaData {
    */
   lat: number;
   /**
-   * Longtitude value for marker
+   * Longitude value for marker
    */
   lon: number;
 }
