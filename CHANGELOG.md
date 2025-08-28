@@ -14,10 +14,10 @@
 * **form:** drop form-item legacy mode ([5d83257](https://github.com/siemens/element/commit/5d83257ac919dc8d62b85e3acd2f0a98c158f3b7))
 * **form:** allow overriding of errormessage IDs on custom form controls ([3afbc5a](https://github.com/siemens/element/commit/3afbc5aa27a303b6d37628ff12d2a4488451a69c))
 * **form:** support context help button in form-items ([6bd0863](https://github.com/siemens/element/commit/6bd0863a1628018db0a3858b6c3ca74ecf7e69c8)), closes [#511](https://github.com/siemens/element/issues/511)
+* **form:** improve visual appearance of long and multiline checkbox and radio labels ([32a18ce](https://github.com/siemens/element/commit/32a18ce9204e16de60736166711b674cbed59fb0))
 * **header-dropdown:** remove automatic filled icon when the dropdown is open ([d259942](https://github.com/siemens/element/commit/d25994213e295dbe56c160e82f294e753f5319ef))
 * **help-button:** introduce a help button component ([29ff865](https://github.com/siemens/element/commit/29ff865d3a00fac34f27d786e3e897874f4bb4a0))
 * **icon:** replace current `si-icon` with `si-icon-next` ([cb06a07](https://github.com/siemens/element/commit/cb06a0793c256cb56c4b945059778e6890792db5))
-* **form:** improve visual appearance of long and multiline checkbox and radio labels ([32a18ce](https://github.com/siemens/element/commit/32a18ce9204e16de60736166711b674cbed59fb0))
 * **landing-page:** add landing page feature components ([26e0066](https://github.com/siemens/element/commit/26e0066c7ad85def573244434d37a9cf2b1a882d))
 * **launchpad:** support `routerLink` for launchpad apps ([bf78c1f](https://github.com/siemens/element/commit/bf78c1f0d444a7bbd7da7e60526f4c8208087703))
 * **list-details:** support usage with the Angular router ([4731e77](https://github.com/siemens/element/commit/4731e7717c748eeced6691b886c7ee7acf192eba))
@@ -92,88 +92,109 @@
   }
   ```
 
+
 ### BREAKING CHANGES
 
+* **accordion:** Removed `SiAccordionComponent.colorVariant` input without any replacement.
+* **action-modal:** Removed `AlertDialogResult`, `EditDiscardDialogResult`, `ConfirmationDialogResult` and `DeleteConfirmationDialogResult` as const objects. Use them only as type.
+* **angular:** Angular 20+ is required.
+  Follow the Angular update guide to update your app: <https://angular.dev/update-guide?v=19.0-20.0>
+* **charts-ng:** The `@siemens/charts-ng` package now requires ECharts version 6.0.0 or higher. Please update your dependencies accordingly. For details on ECharts 6, see: https://github.com/apache/echarts/releases/tag/6.0.0
+* **collapsible-panel:** Removed `SiCollapsiblePanelComponent.toggle` output use `SiCollapsiblePanelComponent.panelToggle` instead.
+* **dashboards-ng:** gridstack.js v12 is required. To migrate to v12,
+  update the package and drop the inclusion of `gridstack-extra.css`
+  in `angular.json`
+* **datepicker:** Removed `SiDatepickerOverlayComponent.isFocused` and `SiDatepickerOverlayDirective.isFocused` without any replacement.
+* **datepicker:** Removed `SiDatepickerOverlayDirective.toggleOverlay` method. Use `SiDatepickerOverlayDirective.showOverlay` or `SiDatepickerOverlayDirective.closeOverlay` methods instead.
+* **datepicker:** Removed `SiDateInputDirective.dateInputDebounceTime`, `SiDateRangeComponent .debounceTime` and `SiDatepickerDirective.triggeringInput` inputs without any replacement as they had no effect.
 * **element-theme:** The `make-theme` SCSS mixin no longer prefixes
   variables with `element-` hence custom build-time OEM themes have
   to be adapted accordingly, see:
   https://element.siemens.io/architecture/theming/#build-time-custom-theme.
-* **popover:** The `siPopover` directive has been completely re-implemented,
-  including breaking changes in the API.
-  The main highlight is a complete accessibility support and
-  unified interaction.
+* **filtered-search:** Removed following deprecated inputs:
+
+  - `SiFilteredSearchComponent.showIcon` without any replacement.
+  - `SiFilteredSearchComponent.selectedCriteriaIndex`. Instead of preselecting the most relevant option, sort the options by relevance.
+  - `SiFilteredSearchComponent.noMatchingCriteriaText` without any replacement.
+  - `SiFilteredSearchComponent.submitText`. Use `SiFilteredSearchComponent.submitButtonLabel` instead.
+  - `SiFilteredSearchComponent.items`. Use `SiFilteredSearchComponent.itemCountText` instead.
+* **form:** Removed deprecated `SiFormContainerComponent.getValidationErrors` method.
   
-  The most noteable changes are:
-  - the triggers opening or closing a popover can no longer be modified
-  - instead of having two `shown`/`hidden` events there is one `visibilityChange` event
-  - all inputs and outputs are prefixed with `siPopover` to avoid name conflicts
-  - a popover always receives the focus on open
+  Use the build-in mechanism of the `si-form-item` to show validation errors.
+  See: https://element.siemens.io/components/forms-inputs/forms/#error-messages* **action-modal:** Removed deprecated methods:
   
-  The new popover was already available as a preview via `siPopoverNext` in v47 and is now fully
-  replacing the old popover with v48. If you are already using `siPopoverNext`, you can do a simple
-  search & replace removing the `next` suffix.
+  - `SiActionDialogService.showAlertDialog`
+  - `SiActionDialogService.showConfirmationDialog`
+  - `SiActionDialogService.showEditDiscardDialog`
+  - `SiActionDialogService.showDeleteConfirmationDialog`
   
-  The "old" popover is still available with via the legacy entrypoint
-  `@siemens/element-ng/popover-legacy`.
-  Classes and selectors were renamed accordingly:
-  - `siPopover` --> `siPopoverLegacy`
-  - `SiPopoverDirective` --> `SiPopoverLegacyDirective`
-  - `SiPopoverModule` --> `SiPopoverLegacyModule`
+  Use `SiActionDialogService.showActionDialog` instead.
+* **form:** Removed `SiFormItemComponent.inputId` and `SiFormItemComponent.readonly` inputs without any replacement.
+* **form:** Removed `siFormItemControl` directive.
   
-  Usually, the migration to new popover is simple.
+  Replace this directive with either the class form-control or form-check-input:
   
-  If the `trigger` or `outsideClick` was modified, please read the
-  [popover documentation](https://element.siemens.io/components/status-notifications/popover/)
-  on how to properly use a popover.
+  ```
+  <!-- Before -->
+  <input type="checkbox" siFormItemControl>
+  <input siFormItemControl>
   
-  In all other cases, it is sufficient to replace `shown` / `hidden` events with `visibilityChange`
-  and prefix all input / outputs with `siPopover`.
-* **tabs:** The `si-tabs` component has been completely re-implemented
-  including breaking changes in the API. The main highlights are enhanced
-  accessibility, improved responsive behavior, and Angular router support.
+  <!-- After -->
+  <input type="checkbox" class="form-check-input">
+  <input class="form-control">
+  ```
+* **form:** Checkboxes and radio inputs (`<input type="checkbox">` or `<input type="radio">`) must now be wrapped in a `.form-check` container.
   
-  The most notable changes are:
-  - replacing the `selectedIndex` with an `active` input in the `si-tab`
-  - dropping `iconAltText` in favor of enforcing `heading`
-  - if an icon is provided, the heading is always visually hidden
-  - no tab is selected by default
-  - dropping `deselect` and `selectedTabIndexChange` in favor of using `activeChange` on the `si-tab`
+  Additionally, when using Bootstrap’s grid system (bs-grid), each `.form-check` must be placed
+  inside a `.col-*` element and cannot be a direct child of a `.row`.
+  This change is necessary to ensure proper alignment and spacing, especially for long or multiline
+  labels.
   
-  The new tabs were already available as a preview via `si-tabs-next` in v47 and are now fully
-  replacing the old tabs with v48. If you are already using `si-tabs-next`, you can do a simple
-  search & replace removing the `-next` suffix.
-  
-  The "old" tabs are still available via legacy entrypoint `@siemens/element-ng/tabs-legacy`.
-  Classes and selectors were renamed accordingly:
-  - `si-tabset` --> `si-tabset-legacy`
-  - `SiTabsetComponent` --> `SiTabsetLegacyComponent`
-  - `si-tab` --> `si-tab-legacy`
-  - `SiTabComponent` --> `SiTabLegacyComponent`
-  - `SiTabModule` --> `SiTabLegacyModule`
-  
-  When migrating to the new tabs, we recommend checking whether using the
-  [router based approach](https://element.siemens.io/components/layout-navigation/tabs/#tabs-with-angular-router)
-  is applicable.
-  
-  Otherwise, code needs to be changed to use the new `active` input
-  and renaming `iconAltText` to `heading`:
+  Before:
   
   ```html
-  <!-- before -->
-  <si-tabset selectedTabIndex="0" (selectedTabIndexChange)="changedTab($event)">
-    <si-tab iconAltText="Favorites" icon="element-favorite">...</si-tab>
-  </si-tabset>
-  
-  <!-- after -->
-  <si-tabset>
-    <si-tab heading="Favorites" icon="element-favorite" [active]="true" (activeChange)="changedTab($event)">...</si-tab>
-  </si-tabset>
+  <input type="checkbox" class="form-check-input">
+  <label class="form-check-label">Label</label>
   ```
   
-  Please note, the implementation of `changedTab` must also be adjusted.
-* **tree-view:** Removed `SiTreeViewComponent.disableFilledIcons` input.
+  After:
   
-  Tree items no longer show a filled icon on selection.
+  ```html
+  <div class="form-check">
+    <input type="checkbox" class="form-check-input">
+    <label class="form-check-label">Label</label>
+  </div>
+  ```
+* **form:** Using multiple form-controls within a single si-form-item is no longer supported.
+  Use si-form-fieldset to group multiple si-form-item components.
+
+  Before:
+
+  ```html
+  <si-form-item label="Group label">
+    <div class="form-check">
+      <input type="checkbox" id="check-1" class="form-check-input" [formControl]="check1" />
+      <label for="check-1">Label 1</label>
+    </div>
+    <div class="form-check">
+      <input type="checkbox" id="check-2" class="form-check-input" [formControl]="check2" />
+      <label for="check-2">Label 2</label>
+    </div>
+  </si-form-item>
+  ```
+
+  After:
+  
+  ```html
+  <si-form-fieldset label="Group label">
+    <si-form-item label="Label 1">
+      <input type="checkbox" class="form-check-input" [formControl]="check1" />
+    </si-form-item>
+    <si-form-item label="Label 2">
+      <input type="checkbox" class="form-check-input" [formControl]="check2" />
+    </si-form-item>
+  </si-form-fieldset>
+  ```
 * **icon:** The `si-icon` component has been completely re-implemented
   including breaking changes in the API. The main motivation of this change is
   support for SVG icons and to ensure a similar behavior compared to the direct
@@ -224,151 +245,124 @@
   </span>
   ```
 
-For status icons, the new `si-status-icon` component simplifies usage even more:
+  For status icons, the new `si-status-icon` component simplifies usage even more:
 
-```html
-<!-- before -->
-<si-icon
-icon="element-circle-filled"
-color="status-danger"
-stackedIcon="element-state-exclamation-mark"
-stackedColor="status-danger-contrast"
-size="display-2"
-/>
+  ```html
+  <!-- before -->
+  <si-icon
+  icon="element-circle-filled"
+  color="status-danger"
+  stackedIcon="element-state-exclamation-mark"
+  stackedColor="status-danger-contrast"
+  size="display-2"
+  />
 
-<!-- after -->
-<si-status-icon class="si-display-lg" status="danger" />
-```
-* **form:** Checkboxes and radio inputs (`<input type="checkbox">` or `<input type="radio">`) must now be wrapped in a `.form-check` container.
-  
-  Additionally, when using Bootstrap’s grid system (bs-grid), each `.form-check` must be placed
-  inside a `.col-*` element and cannot be a direct child of a `.row`.
-  This change is necessary to ensure proper alignment and spacing, especially for long or multiline
-  labels.
-  
-  Before:
-  
-  ```html
-  <input type="checkbox" class="form-check-input">
-  <label class="form-check-label">Label</label>
+  <!-- after -->
+  <si-status-icon class="si-display-lg" status="danger" />
   ```
-  
-  After:
-  
-  ```html
-  <div class="form-check">
-    <input type="checkbox" class="form-check-input">
-    <label class="form-check-label">Label</label>
-  </div>
-  ```
+* **maps-ng:** The `@siemens/maps-ng` package now requires ol-mapbox-style version 13.1.0 or higher. Please update your dependencies accordingly. For details on ol-mapbox-style 13, see: https://github.com/openlayers/ol-mapbox-style/releases/tag/v13.0.0
+* **navbar-vertical:** Removed `SiNavbarVerticalComponent.autoCollapseDelay` input without any replacement.
+* **popover:** The `siPopover` directive has been completely re-implemented,
+  including breaking changes in the API.
+  The main highlight is a complete accessibility support and
+  unified interaction.
+
+  The most noteable changes are:
+  - the triggers opening or closing a popover can no longer be modified
+  - instead of having two `shown`/`hidden` events there is one `visibilityChange` event
+  - all inputs and outputs are prefixed with `siPopover` to avoid name conflicts
+  - a popover always receives the focus on open
+
+  The new popover was already available as a preview via `siPopoverNext` in v47 and is now fully
+  replacing the old popover with v48. If you are already using `siPopoverNext`, you can do a simple
+  search & replace removing the `next` suffix.
+
+  The "old" popover is still available with via the legacy entrypoint
+  `@siemens/element-ng/popover-legacy`.
+  Classes and selectors were renamed accordingly:
+  - `siPopover` --> `siPopoverLegacy`
+  - `SiPopoverDirective` --> `SiPopoverLegacyDirective`
+  - `SiPopoverModule` --> `SiPopoverLegacyModule`
+
+  Usually, the migration to new popover is simple.
+
+  If the `trigger` or `outsideClick` was modified, please read the
+  [popover documentation](https://element.siemens.io/components/status-notifications/popover/)
+  on how to properly use a popover.
+
+  In all other cases, it is sufficient to replace `shown` / `hidden` events with `visibilityChange`
+  and prefix all input / outputs with `siPopover`.
+* **result-details-list:** Removed `ResultDetailStepState` as object. Use `ResultDetailStepState` as type with direct string values.
 * **search-bar:** `SiSearchBarComponent.searchChange` is not emitted during initialisation with `value` input
+* **split:** Removed unused `SiSplitPartComponent.headerStatusColor` and `SiSplitPartComponent.headerStatusIconClass` inputs without any replacement.
+* **tabs:** The `si-tabs` component has been completely re-implemented
+  including breaking changes in the API. The main highlights are enhanced
+  accessibility, improved responsive behavior, and Angular router support.
+  
+  The most notable changes are:
+  - replacing the `selectedIndex` with an `active` input in the `si-tab`
+  - dropping `iconAltText` in favor of enforcing `heading`
+  - if an icon is provided, the heading is always visually hidden
+  - no tab is selected by default
+  - dropping `deselect` and `selectedTabIndexChange` in favor of using `activeChange` on the `si-tab`
+  
+  The new tabs were already available as a preview via `si-tabs-next` in v47 and are now fully
+  replacing the old tabs with v48. If you are already using `si-tabs-next`, you can do a simple
+  search & replace removing the `-next` suffix.
+  
+  The "old" tabs are still available via legacy entrypoint `@siemens/element-ng/tabs-legacy`.
+  Classes and selectors were renamed accordingly:
+  - `si-tabset` --> `si-tabset-legacy`
+  - `SiTabsetComponent` --> `SiTabsetLegacyComponent`
+  - `si-tab` --> `si-tab-legacy`
+  - `SiTabComponent` --> `SiTabLegacyComponent`
+  - `SiTabModule` --> `SiTabLegacyModule`
+  
+  When migrating to the new tabs, we recommend checking whether using the
+  [router based approach](https://element.siemens.io/components/layout-navigation/tabs/#tabs-with-angular-router)
+  is applicable.
+  
+  Otherwise, code needs to be changed to use the new `active` input
+  and renaming `iconAltText` to `heading`:
+
+  ```html
+  <!-- before -->
+  <si-tabset selectedTabIndex="0" (selectedTabIndexChange)="changedTab($event)">
+    <si-tab iconAltText="Favorites" icon="element-favorite">...</si-tab>
+  </si-tabset>
+
+  <!-- after -->
+  <si-tabset>
+    <si-tab heading="Favorites" icon="element-favorite" [active]="true" (activeChange)="changedTab($event)">...</si-tab>
+  </si-tabset>
+  ```
+
+  Please note, the implementation of `changedTab` must also be adjusted.
+* **tree-view:** Removed `SiTreeViewComponent.disableFilledIcons` input.
+
+  Tree items no longer show a filled icon on selection.
+* **tree-view:** Removed `SiTreeViewComponent.trackByFunction` input which had no effect.
+* **typeahead:** Removed `SiTypeaheadDirective.typeaheadOnMultiselectClose` and `SiTypeaheadDirective.typeaheadClosed` output. Use `SiTypeaheadDirective.typeaheadOpenChange` instead.
 * **wizard:** The `si-wizard` now has the navigation buttons by default in the footer.
-  
+
   To restore the old behavior set `SiWizardComponent.inlineNavigation` to `true`:
-  
+
   ```
   <si-wizard inlineNavigation>
      ...
   </si-wizard>
   ```
-* **form:** Using multiple form-controls within a single si-form-item is no longer supported.
-  Use si-form-fieldset to group multiple si-form-item components.
-  
-  Before:
-  
-  ```html
-  <si-form-item label="Group label">
-    <div class="form-check">
-      <input type="checkbox" id="check-1" class="form-check-input" [formControl]="check1" />
-      <label for="check-1">Label 1</label>
-    </div>
-    <div class="form-check">
-      <input type="checkbox" id="check-2" class="form-check-input" [formControl]="check2" />
-      <label for="check-2">Label 2</label>
-    </div>
-  </si-form-item>
-  ```
-  
-  After:
-  
-  ```html
-  <si-form-fieldset label="Group label">
-    <si-form-item label="Label 1">
-      <input type="checkbox" class="form-check-input" [formControl]="check1" />
-    </si-form-item>
-    <si-form-item label="Label 2">
-      <input type="checkbox" class="form-check-input" [formControl]="check2" />
-    </si-form-item>
-  </si-form-fieldset>
-  ```
-* **angular:** Angular 20+ is required.
-  Follow the Angular update guide to update your app: <https://angular.dev/update-guide?v=19.0-20.0>
-* **maps-ng:** The `@siemens/maps-ng` package now requires ol-mapbox-style version 13.1.0 or higher. Please update your dependencies accordingly. For details on ol-mapbox-style 13, see: https://github.com/openlayers/ol-mapbox-style/releases/tag/v13.0.0
-* **dashboards-ng:** gridstack.js v12 is required. To migrate to v12,
-  update the package and drop the inclusion of `gridstack-extra.css`
-  in `angular.json`
-* **charts-ng:** The `@siemens/charts-ng` package now requires ECharts version 6.0.0 or higher. Please update your dependencies accordingly. For details on ECharts 6, see: https://github.com/apache/echarts/releases/tag/6.0.0
-* **form:** Removed deprecated `SiFormContainerComponent.getValidationErrors` method.
-  
-  Use the build-in mechanism of the `si-form-item` to show validation errors.
-  See: https://element.siemens.io/components/forms-inputs/forms/#error-messages
-* **result-details-list:** Removed `ResultDetailStepState` as object. Use `ResultDetailStepState` as type with direct string values.
-* **filtered-search:** Removed following deprecated inputs:
-
-  - `SiFilteredSearchComponent.showIcon` without any replacement.
-  - `SiFilteredSearchComponent.selectedCriteriaIndex`. Instead of preselecting the most relevant option, sort the options by relevance.
-  - `SiFilteredSearchComponent.noMatchingCriteriaText` without any replacement.
-  - `SiFilteredSearchComponent.submitText`. Use `SiFilteredSearchComponent.submitButtonLabel` instead.
-  - `SiFilteredSearchComponent.items`. Use `SiFilteredSearchComponent.itemCountText` instead.
 * **wizard:** Removed `SiWizardComponent.hasNavigation` input and `SiWizardComponent.cancel` output. Use `SiWizardComponent.hideNavigation` and  `SiWizardComponent.wizardCancel` respectively instead.
-* **action-modal:** Removed deprecated methods:
-  
-  - `SiActionDialogService.showAlertDialog`
-  - `SiActionDialogService.showConfirmationDialog`
-  - `SiActionDialogService.showEditDiscardDialog`
-  - `SiActionDialogService.showDeleteConfirmationDialog`
-  
-  Use `SiActionDialogService.showActionDialog` instead.
-* **action-modal:** Removed `AlertDialogResult`, `EditDiscardDialogResult`, `ConfirmationDialogResult` and `DeleteConfirmationDialogResult` as const objects. Use them only as type.
-* **form:** Removed `SiFormItemComponent.inputId` and `SiFormItemComponent.readonly` inputs without any replacement.
-* **form:** Removed `siFormItemControl` directive.
-  
-  Replace this directive with either the class form-control or form-check-input:
-  
-  ```
-  <!-- Before -->
-  <input type="checkbox" siFormItemControl>
-  <input siFormItemControl>
-  
-  <!-- After -->
-  <input type="checkbox" class="form-check-input">
-  <input class="form-control">
-  ```
-* **collapsible-panel:** Removed `SiCollapsiblePanelComponent.toggle` output use `SiCollapsiblePanelComponent.panelToggle` instead.
-* **accordion:** Removed `SiAccordionComponent.colorVariant` input without any replacement.
-* **datepicker:** Removed `SiDatepickerOverlayComponent.isFocused` and `SiDatepickerOverlayDirective.isFocused` without any replacement.
-* **datepicker:** Removed `SiDatepickerOverlayDirective.toggleOverlay` method. Use `SiDatepickerOverlayDirective.showOverlay` or `SiDatepickerOverlayDirective.closeOverlay` methods instead.
-* **datepicker:** Removed `SiDateInputDirective.dateInputDebounceTime`, `SiDateRangeComponent .debounceTime` and `SiDatepickerDirective.triggeringInput` inputs without any replacement as they had no effect.
-* **split:** Removed unused `SiSplitPartComponent.headerStatusColor` and `SiSplitPartComponent.headerStatusIconClass` inputs without any replacement.
-* **navbar-vertical:** Removed `SiNavbarVerticalComponent.autoCollapseDelay` input without any replacement.
-* **tree-view:** Removed `SiTreeViewComponent.trackByFunction` input which had no effect.
-* **typeahead:** Removed `SiTypeaheadDirective.typeaheadOnMultiselectClose` and `SiTypeaheadDirective.typeaheadClosed` output. Use `SiTypeaheadDirective.typeaheadOpenChange` instead.
+
 
 ### DEPRECATIONS
 
 * **charts/gauge:** Input `labelFormatter` should no longer be used to format the value. Use `valueFormatter` instead.
-* **status-counter:** The component `si-icon-status` has been renamed to
-  `si-status-counter`. The class name changes from `SiIconStatusComponent`
-  to `SiStatusCounterComponent`. The old names still work and will
-  be removed in future release.
-  
-  To migrate to the new names, change imports from `SiIconStatusComponent`
-  or `SiIconStatusModule` to `SiStatusCounterComponent` and replace
-  `si-icon-status` with `si-status-counter` in all templates.
+* **datepicker:** `SiDatepickerComponent.calenderWeekLabel` input is deprecated. Use `SiDatepickerComponent.calendarWeekLabel` instead.
 * **element-theme:** All `.si-*` typography utility classes were adapted to match the
   new typography system. Replace the following matches with their new
   counterparts:
-  
+
   - Instead of `.si-h1-black`, use `.si-h1-bold` instead.
   - Instead of `.si-title-1-bold`, use `.si-h4-bold` instead.
   - Instead of `.si-title-1`, use `.si-h4` instead.
@@ -383,7 +377,7 @@ size="display-2"
 * **element-theme:** All `$si-font-size-*`, `$si-line-height-*`, and `$si-font-weight-*`
   variables were adapted to match the new typography system. Replace the following
   matches with their new counterparts:
-  
+
   - Instead of `$si-*-h1-black`, use `$si-*-h1-bold` instead.
   - Instead of `$si-*-title-1-bold`, use `$si-*-h4-bold` instead.
   - Instead of `$si-*-title-1`, use `$si-*-h4` instead.
@@ -396,7 +390,15 @@ size="display-2"
   - Instead of `$si-*-display-2`, use `$si-*-display-lg` instead.
   - Instead of `$si-*-display-3`, use `$si-*-display-bold` instead.
   - Instead of `$si-*-display-4`, use `$si-*-display` instead.
-* **datepicker:** `SiDatepickerComponent.calenderWeekLabel` input is deprecated. Use `SiDatepickerComponent.calendarWeekLabel` instead.
+* **status-counter:** The component `si-icon-status` has been renamed to
+  `si-status-counter`. The class name changes from `SiIconStatusComponent`
+  to `SiStatusCounterComponent`. The old names still work and will
+  be removed in future release.
+
+  To migrate to the new names, change imports from `SiIconStatusComponent`
+  or `SiIconStatusModule` to `SiStatusCounterComponent` and replace
+  `si-icon-status` with `si-status-counter` in all templates.
+
 
 # [47.8.0](https://github.com/siemens/element/compare/v47.7.0...v47.8.0) (2025-07-22)
 
