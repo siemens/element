@@ -47,7 +47,8 @@ The tour usually highlights key elements of the interface and provides brief ins
 
 ### Contextual help
 
-This provides immediate, on-the-spot assistance via a help button with an
+This provides immediate, on-the-spot assistance via a
+[help button](https://element.siemens.io/element-examples/#/overview/si-help-button/si-help-button?q=help) with an
 `element-help` icon, combined with a [popover](../components/status-notifications/popover.md).
 It’s designed to help users understand specific actions or features on the current page without needing to navigate away.
 
