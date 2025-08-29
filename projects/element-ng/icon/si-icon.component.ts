@@ -120,7 +120,7 @@ export class SiIconComponent {
 
   private camelToKebabCase(str: string): string {
     return str
-      .replace(/([a-z])([A-Z0-9])/g, '$1-$2')
+      ?.replace(/([a-z])([A-Z0-9])/g, '$1-$2')
       .replace(/([0-9])([A-Z])/g, '$1-$2')
       .toLowerCase();
   }
