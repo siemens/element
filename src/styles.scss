@@ -58,19 +58,3 @@ body {
 si-live-preview-webcomponent > div {
   padding: 12px;
 }
-
-// Doing this here to use theme icons.
-.ngx-datatable.table-element {
-  .datatable-tree-button span i {
-    @extend .element-right-2;
-    @extend [class^='element-'];
-
-    @include utilities.rtl {
-      transform: scaleX(-1);
-    }
-  }
-
-  .datatable-tree-button span i.datatable-icon-down {
-    @extend .element-down-2;
-  }
-}

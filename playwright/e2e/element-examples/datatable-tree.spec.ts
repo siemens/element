@@ -21,10 +21,10 @@ test.describe('datatable', () => {
 
   test(exampleTree, async ({ page, si }) => {
     await si.visitExample(exampleTree);
-    const button = page.locator('.datatable-tree-button').first();
+    const button = page.getByRole('button', { name: 'collapsed' }).first();
     await button.click();
     await button.blur();
-    await expect(page.locator('.datatable-icon-down').first()).toBeVisible();
+    await expect(page.getByRole('button', { name: 'expanded' }).first()).toBeVisible();
     await si.runVisualAndA11yTests();
   });
 });
