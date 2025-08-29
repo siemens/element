@@ -1,0 +1,6 @@
+<div class="si-map-tooltip">
+  <div #content></div>
+  @if (hiddenEntries()) {
+    <div>{{ moreText() | translate: { length: hiddenEntries() } }}</div>
+  }
+</div>

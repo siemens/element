@@ -10,7 +10,12 @@ export const config: Config = {
     'projects/charts-ng',
     'projects/dashboards-ng',
     'projects/native-charts-ng',
-    'projects/element-translate-ng'
+    'projects/element-translate-ng',
+    {
+      packageDir: 'projects/maps-ng',
+      publicEntrypoint: 'docs.ts',
+      publicTsconfig: 'tsconfig.docs.json'
+    }
   ],
   typedocJson: 'src/assets/typedoc/**/docs.json',
   generate: {

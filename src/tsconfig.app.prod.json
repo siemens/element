@@ -12,7 +12,9 @@
       "@siemens/charts-ng": ["dist/@siemens/charts-ng"],
       "@siemens/native-charts-ng": ["dist/@siemens/native-charts-ng"],
       "@siemens/dashboards-ng": ["dist/@siemens/dashboards-ng"],
-      "@siemens/dashboards-ng/*": ["dist/@siemens/dashboards-ng/*"]
+      "@siemens/dashboards-ng/*": ["dist/@siemens/dashboards-ng/*"],
+      "@siemens/maps-ng": ["dist/@siemens/maps-ng"],
+      "@siemens/maps-ng/*": ["dist/@siemens/maps-ng/*"]
     },
     "useDefineForClassFields": true
   },

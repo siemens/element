@@ -1,0 +1,26 @@
+<div #popover class="si-map-popover">
+  <div class="si-map-popover-arrow"></div>
+
+  <div class="si-map-popover-content">
+    <div class="overflow-auto px-5">
+      <div #contentContainer></div>
+    </div>
+  </div>
+</div>
+
+<ng-template #defaultContent let-mapPoint="mapPoint" siMapPopoverTemplate>
+  <div>{{ mapPoint?.name }}</div>
+  <div [innerHTML]="mapPoint?.description"></div>
+</ng-template>
+<ng-template #defaultCluster let-mapPoints="mapPoints" siMapPopoverClusterTemplate>
+  <div [style.max-block-size.px]="maxHeight()">
+    <div class="si-map-popover-list">
+      @for (point of mapPoints; track $index) {
+        <div class="si-map-popover-item">
+          <div class="si-map-popover-item-title">{{ point.name }}</div>
+          <div class="si-map-popover-item-description" [innerHTML]="point.description"></div>
+        </div>
+      }
+    </div>
+  </div>
+</ng-template>
