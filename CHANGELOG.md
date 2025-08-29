@@ -120,7 +120,7 @@
   - `SiFilteredSearchComponent.items`. Use `SiFilteredSearchComponent.itemCountText` instead.
 * **form:** Removed deprecated `SiFormContainerComponent.getValidationErrors` method.
   
-  Use the build-in mechanism of the `si-form-item` to show validation errors.
+  Use the built-in mechanism of the `si-form-item` to show validation errors.
   See: https://element.siemens.io/components/forms-inputs/forms/#error-messages* **action-modal:** Removed deprecated methods:
   
   - `SiActionDialogService.showAlertDialog`
@@ -267,7 +267,7 @@
   The main highlight is a complete accessibility support and
   unified interaction.
 
-  The most noteable changes are:
+  The most notable changes are:
   - the triggers opening or closing a popover can no longer be modified
   - instead of having two `shown`/`hidden` events there is one `visibilityChange` event
   - all inputs and outputs are prefixed with `siPopover` to avoid name conflicts
