@@ -10,7 +10,7 @@ components.
 
 ## Components overview
 
-![Component structure](docs/live-preview-components-structure.drawio.png)
+![Component structure](https://github.com/siemens/element/blob/main/projects/live-preview/docs/live-preview-components-structure.drawio.png)
 
 ## License
 
@@ -19,4 +19,4 @@ unless explicitly mentioned.
 
 Copyright (c) Siemens 2016 - 2025
 
-MIT, see [LICENSE.md](LICENSE.md).
+MIT, see [LICENSE.md](https://github.com/siemens/element/blob/main/LICENSE.md).
