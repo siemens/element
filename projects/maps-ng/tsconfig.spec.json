@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["jasmine", "../element-translate-ng/localize-types/index.ts", "node", "zone.js"],
+    "paths": {
+      "@siemens/element-translate-ng": [
+        "projects/element-translate-ng/public-api.ts",
+        "projects/element-translate-ng/"
+      ],
+      "@siemens/element-translate-ng/*": ["projects/element-translate-ng/*"],
+      "@siemens/element-ng": ["projects/element-ng/public-api.ts", "projects/element-ng"],
+      "@siemens/element-ng/*": ["projects/element-ng/*"],
+      "@siemens/maps-ng": ["projects/maps-ng/src/public-api.ts", "projects/maps-ng/src"],
+      "@siemens/maps-ng/*": ["projects/maps-ng/*"]
+    }
+  },
+  "include": ["**/*.spec.ts", "**/*.d.ts"]
+}

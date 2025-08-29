@@ -6,7 +6,13 @@ on:
         required: true
       SIEMENS_NPM_USER:
         required: true
+      MAPTILER_KEY:
+        required: true
   pull_request:
+
+env:
+  MAPTILER_KEY: ${{ secrets.MAPTILER_KEY }}
+  MAPTILER_URL: https://api.maptiler.com/maps/voyager/style.json?key=${{ secrets.MAPTILER_KEY }}
 
 jobs:
   build:
@@ -28,7 +34,7 @@ jobs:
       - run: npm run prepare-brand
       - run: npm run build:all:update-translatable-keys # Output is needed in dist for providing default translations
       - run: git diff --exit-code "projects/**/*-translatable-keys.interface.ts"
-      - run: npm run build:examples
+      - run: npm run build:examples --define="maptilerKey='$MAPTILER_KEY'" --define="maptilerUrl='$MAPTILER_URL'"
       - run: npm run dashboards-demo:build:demo -- --progress=false
       - run: npm run dashboards-demo:build:webcomponents -- --progress=false
       - run: npm run dashboards-demo:build:mfe -- --progress=false
@@ -65,6 +71,7 @@ jobs:
       - run: npm run lib:test -- --watch=false --progress=false --code-coverage
       - run: npm run charts:test -- --watch=false --progress=false
       - run: npm run dashboards:test -- --watch=false --progress=false
+      - run: npm run maps:test -- --watch=false --progress=false
       # TODO: Upload coverage reports
 
   aot:
@@ -86,7 +93,7 @@ jobs:
           SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
       - run: npm ci --prefer-offline --no-audit --include=optional
       - run: npm run prepare-brand
-      - run: npm run build:examples:aot
+      - run: npm run build:examples:aot --define="maptilerKey='$MAPTILER_KEY'" --define="maptilerUrl='$MAPTILER_URL'"
 
   e2e:
     runs-on: ubuntu-24.04

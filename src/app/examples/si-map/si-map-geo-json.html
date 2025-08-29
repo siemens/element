@@ -1,0 +1,25 @@
+<si-map
+  #map
+  class="flex-fill"
+  [points]="points"
+  [markerAnimation]="false"
+  [cluster]="false"
+  [clusterDistance]="40"
+  [displayPopoverOnClick]="true"
+  [displayTooltipOnHover]="false"
+  [displayTooltipOnClusterHover]="false"
+  [maptilerKey]="maptilerKey"
+  [geoJson]="geoJson"
+  [featureClickZoom]="21"
+  [fitGeoJsonPadding]="[50, 200, 200, 50]"
+  [styleFunction]="styleFunction"
+  [popoverComponent]="popoverComponent"
+/>
+
+<div class="card mt-5 e2e-ignore">
+  <div class="card-body">
+    <button type="button" class="btn btn-secondary me-4" (click)="changeGeoJson()">
+      Change GeoJson
+    </button>
+  </div>
+</div>
