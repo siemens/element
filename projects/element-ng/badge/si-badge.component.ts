@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { type StatusType } from '@siemens/element-ng/common';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 
@@ -27,6 +27,7 @@ export type BadgeType =
     }
     <span class="text-truncate"><ng-content /></span>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     role: 'status',
     class: 'badge',
