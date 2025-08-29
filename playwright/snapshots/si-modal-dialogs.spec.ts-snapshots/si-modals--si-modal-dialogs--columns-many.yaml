@@ -1,21 +1,21 @@
-- heading "Alert Dialogs" [level=2]
-- button "Default Alert"
-- button "Custom Alert"
-- button "Alert w/ dismiss delay"
-- heading "Confirmation Dialogs" [level=2]
-- button "Confirmation 1"
-- button "Confirmation 2"
-- button "Confirmation w/ dismiss delay"
-- heading "Edit-Discard Dialog" [level=2]
-- button "Edit-Discard"
-- button "Edit-Discard with disabled save"
-- button "Edit-Discard w/ dismiss delay"
-- heading "Delete Confirmation Dialog" [level=2]
-- button "Delete Confirmation"
-- button "Delete confirm w/ dismiss delay"
-- heading "Column Selection Dialog" [level=2]
+- heading "Alert dialogs" [level=2]
+- button "Default alert"
+- button "Custom alert"
+- button "Alert with delay"
+- heading "Confirmation dialogs" [level=2]
+- button "Yes/No confirmation"
+- button "Custom confirmation (save)"
+- button "Custom confirmation with delay"
+- heading "Edit-Discard dialogs (unsaved data)" [level=2]
+- button "Edit-Discard with save"
+- button "Edit-Discard without save"
+- button "Edit-Discard with save and delay"
+- heading "Delete confirmation dialogs" [level=2]
+- button "Delete confirmation"
+- button "Delete confirmation with delay"
+- heading "Column selection dialog" [level=2]
 - button "Many columns"
-- heading "Column Selection Dialog without visibility toggle" [level=2]
+- heading "Column selection dialog without visibility toggle" [level=2]
 - button "Many columns"
 - dialog "Customize columns":
   - button "Cancel"
