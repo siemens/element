@@ -9,13 +9,35 @@ export * from './si-datatable.module';
 
 /*
  * Configuration interface for the upstream @siemens/ngx-datatable project.
- * See https://github.com/siemens/ngx-datatable/blob/6baa21a9aa37639c8060b0f6c4040ae242186517/projects/ngx-datatable/src/lib/ngx-datatable.module.ts#L107.
+ * See https://github.com/siemens/ngx-datatable/blob/main/projects/ngx-datatable/src/lib/ngx-datatable.config.ts#L50.
  */
 export interface INgxDatatableConfig {
   messages?: {
+    /** Message to show when the array is present but empty */
     emptyMessage: string;
+    /** Footer total message */
     totalMessage: string;
+    /** Footer selected message */
     selectedMessage: string;
+    /** Pager screen reader message for the first page button */
+    ariaFirstPageMessage: string;
+    /**
+     * Pager screen reader message for the n-th page button.
+     * It will be rendered as: `{{ariaPageNMessage}} {{n}}`.
+     */
+    ariaPageNMessage: string;
+    /** Pager screen reader message for the previous page button */
+    ariaPreviousPageMessage: string;
+    /** Pager screen reader message for the next page button */
+    ariaNextPageMessage: string;
+    /** Pager screen reader message for the last page button */
+    ariaLastPageMessage: string;
+    /** Row checkbox aria label */
+    ariaRowCheckboxMessage: string;
+    /** Header checkbox aria label */
+    ariaHeaderCheckboxMessage: string;
+    /** Group header checkbox aria label */
+    ariaGroupHeaderCheckboxMessage: string;
   };
   cssClasses?: {
     sortAscending: string;
@@ -25,10 +47,14 @@ export interface INgxDatatableConfig {
     pagerRightArrow: string;
     pagerPrevious: string;
     pagerNext: string;
+    treeStatusLoading: string;
+    treeStatusExpanded: string;
+    treeStatusCollapsed: string;
   };
   headerHeight?: number;
   footerHeight?: number;
   rowHeight?: number;
+  defaultColumnWidth?: number;
 }
 
 /*
@@ -52,7 +78,10 @@ export const SI_DATATABLE_CONFIG: SiDatatableConfig = {
     pagerRightArrow: 'icon element-right-2 flip-rtl',
     pagerPrevious: 'icon element-double-left flip-rtl',
     pagerNext: 'icon element-double-right flip-rtl',
-    sortUnset: ''
+    sortUnset: '',
+    treeStatusLoading: '',
+    treeStatusExpanded: 'icon element-down-2 flip-rtl',
+    treeStatusCollapsed: 'icon element-right-2 flip-rtl'
   },
   headerHeight: 40,
   footerHeight: 40,
