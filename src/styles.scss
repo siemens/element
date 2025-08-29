@@ -34,6 +34,8 @@ $icon-font-path: '@simpl/element-icons/dist/fonts' !default;
 );
 
 @use '@siemens/element-theme/src/styles/themes';
+// OpenLayers styling
+@use 'ol/ol.css';
 @include themes.make-theme(element-theme-siemens-brand.$theme-siemens-brand-light, 'siemens-brand');
 @include themes.make-theme(
   element-theme-siemens-brand.$theme-siemens-brand-dark,

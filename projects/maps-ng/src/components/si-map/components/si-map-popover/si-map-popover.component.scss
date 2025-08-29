@@ -1,0 +1,70 @@
+@use 'sass:map';
+@use 'sass:math';
+@use '@siemens/element-theme/src/styles/all-variables';
+@use '@siemens/element-theme/src/styles/variables/spacers';
+
+.si-map-popover {
+  position: absolute;
+  z-index: all-variables.$zindex-popover;
+  display: block;
+  min-inline-size: 280px;
+  word-wrap: break-word;
+  background-color: all-variables.$popover-bg;
+  background-clip: padding-box;
+  border: all-variables.$popover-border-width solid all-variables.$popover-border-color;
+  border-radius: all-variables.$popover-border-radius;
+  box-shadow: all-variables.$popover-box-shadow;
+  margin-block-start: all-variables.$popover-arrow-height - 2px;
+  inset-inline-start: map.get(all-variables.$spacers, 7) * -1;
+
+  &-arrow {
+    position: absolute;
+    display: block;
+    inline-size: all-variables.$popover-arrow-width;
+    block-size: all-variables.$popover-arrow-height;
+    margin-block: 0;
+    margin-inline: map.get(all-variables.$spacers, 5) + all-variables.$popover-border-width;
+
+    inset-block-start: all-variables.subtract(
+      -(all-variables.$popover-arrow-height),
+      all-variables.$popover-border-width
+    );
+
+    &::before,
+    &::after {
+      position: absolute;
+      display: block;
+      content: '';
+      border-color: transparent;
+      border-style: solid;
+      border-inline-width: (all-variables.$popover-arrow-width * 0.5);
+      border-block-width: 0 all-variables.$popover-arrow-height;
+    }
+
+    &::before {
+      inset-block-start: 0;
+      border-block-end-color: all-variables.$popover-arrow-outer-color;
+    }
+
+    &::after {
+      inset-block-start: all-variables.$popover-border-width;
+      border-block-end-color: all-variables.$popover-arrow-color;
+    }
+  }
+
+  &-content {
+    padding-block: all-variables.$popover-body-padding-y;
+    color: all-variables.$popover-body-color;
+  }
+
+  .si-map-popover-item {
+    display: flex;
+    margin-block-end: map.get(all-variables.$spacers, 5);
+    flex-direction: column;
+    gap: map.get(all-variables.$spacers, 2);
+  }
+
+  .si-map-popover-item-title {
+    font-weight: bolder;
+  }
+}
