@@ -142,12 +142,12 @@ import { SiLandingPageComponent } from '@siemens/element-ng/landing-page';
 })
 ```
 
-### Landing page - Basic
+### Landing page with two step login
 
 The size of the logo is changeable with CSS Variable `--landing-page-logo-width`
 (default: 180px) and `--landing-page-logo-height` (default: auto).
 
-<si-docs-component example="si-landing-page/si-landing-page" height="500"></si-docs-component>
+<si-docs-component example="si-landing-page/si-landing-page-two-step-login" height="500"></si-docs-component>
 
 ### Custom background image and logo
 
