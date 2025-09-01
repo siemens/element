@@ -1,3 +1,10 @@
+# [47.11.0](https://github.com/siemens/element/compare/v47.10.0...v47.11.0) (2025-09-01)
+
+
+### Features
+
+* **maps-ng:** add maps-ng ([d1ebd75](https://github.com/siemens/element/commit/d1ebd754a4528e67354805b68b5baed13302728a))
+
 # [47.10.0](https://github.com/siemens/element/compare/v47.9.1...v47.10.0) (2025-08-28)
 
 
