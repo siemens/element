@@ -1,0 +1,18 @@
+<div class="p-5 d-flex flex-column h-100">
+  <div class="mb-5">
+    <button type="button" class="btn btn-secondary" (click)="showColumnSelectionDialog()">
+      Reorder columns
+    </button>
+  </div>
+  <ngx-datatable
+    #table
+    class="table-element si-layout-fixed-height"
+    columnMode="force"
+    siDatatableInteraction
+    [rows]="rows"
+    [columns]="columns"
+    [scrollbarV]="true"
+    [footerHeight]="0"
+    (siResizeObserver)="table.recalculate()"
+  />
+</div>
