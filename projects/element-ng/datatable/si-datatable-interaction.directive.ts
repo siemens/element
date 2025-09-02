@@ -53,6 +53,7 @@ export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
           : this.element.querySelector('.datatable-row-wrapper > .datatable-body-row');
       if (first) {
         (first as HTMLElement).focus();
+        event.preventDefault();
       }
     } else if (event.key === 'ArrowUp') {
       const last =
@@ -63,9 +64,9 @@ export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
           : this.element.querySelector('.datatable-row-wrapper:last-child > .datatable-body-row');
       if (last) {
         (last as HTMLElement).focus();
+        event.preventDefault();
       }
     }
-    event.preventDefault();
   }
 
   @HostListener('mousedown', ['$event'])
