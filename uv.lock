@@ -148,11 +148,11 @@ wheels = [
 
 [[package]]
 name = "javascript"
-version = "1!1.2.4"
+version = "1!1.2.5"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/bf/be/b7744aaa7db8cf47f6e14efe54382eabfbd8c833c75e8aa2d836c15beaa8/javascript-1!1.2.4.tar.gz", hash = "sha256:d9114703fbb5cba56af6dab7b4dc30345b771ac155cdf33feaf758be93deb98a", size = 38314 }
+sdist = { url = "https://files.pythonhosted.org/packages/9a/c1/818ee649cea03a4b694c25e9f66faa4b90cf9b092f97a839d544aa8287d0/javascript-1!1.2.5.tar.gz", hash = "sha256:94bd35084843f7d7bc7cdd6d1afa16f13ca28265b5007d796357982f4492aea6", size = 38493 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/8d/ea/c3f43afc0448b31553ae5f6e761d6eed27d473ee3cf82d425a85714e2d0e/javascript-1!1.2.4-py3-none-any.whl", hash = "sha256:430649423415a12b489a57103dd1c38f88cf22ac9650eaa501427293e4c6f075", size = 34506 },
+    { url = "https://files.pythonhosted.org/packages/91/dc/88b0b516073c4d5bbd4d8bb53095fb48c0655f761ece70d6f8c02884ceaa/javascript-1!1.2.5-py3-none-any.whl", hash = "sha256:3cfc53f0b23166e297cb85b6d66d148b604c946dd9249b529914f833f163f184", size = 34787 },
 ]
 
 [[package]]
@@ -279,7 +279,7 @@ dependencies = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "javascript", specifier = "==1!1.2.4" }]
+requires-dist = [{ name = "javascript", specifier = "==1!1.2.5" }]
 
 [[package]]
 name = "mkdocs-get-deps"
