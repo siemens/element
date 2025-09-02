@@ -10,8 +10,6 @@ on:
         type: string
   pull_request:
     types: [opened, synchronize, reopened]
-    paths:
-      - '.github/workflows/vrt-update.yaml' # Only trigger if this workflow file changes
 
 jobs:
   vrt-update:
