@@ -359,7 +359,7 @@ export class SiTreeViewItemComponent implements OnInit, OnDestroy, AfterViewInit
     // (undocumented)
     protected treeViewComponent: _siemens_element_ng_tree_view.SiTreeViewComponent;
     // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiTreeViewItemComponent, "si-tree-view-item", never, {}, {}, never, never, true, never>;
+    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiTreeViewItemComponent, "si-tree-view-item", never, {}, {}, never, [":not(si-tree-view-item):not([dragPreview])"], true, never>;
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiTreeViewItemComponent, never>;
 }
@@ -378,7 +378,7 @@ export class SiTreeViewItemDirective implements AfterViewInit, OnDestroy {
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiTreeViewItemDirective, never>;
 }
 
-// @public (undocumented)
+// @public @deprecated
 export class SiTreeViewItemTemplateDirective {
     // (undocumented)
     readonly name: _angular_core.InputSignal<string | undefined>;
