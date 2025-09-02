@@ -11,19 +11,20 @@ For production code, we recommend using flex-box in your whole application.
   [enableContextMenuButton]="false"
   [items]="treeItems"
 >
-  <ng-template let-item siTreeViewItemTemplate="root">
-    <div>
-      <span class="si-h5">ROOT-ITEM: {{ item.label }}</span>
-      <p>
-        This content is injected via a defined template. In this case the 'root' template is used.
-      </p>
-    </div>
-  </ng-template>
-
-  <ng-template let-item siTreeViewItemTemplate="child">
-    <div>
-      <span>CHILD-ITEM: {{ item.label }}</span>
-      <p>This content is injected via a custom template which applies to all child notes.</p>
-    </div>
+  <ng-template let-item="treeItem" siTreeViewItem>
+    <si-tree-view-item>
+      <div>
+        @if (item.level === 0) {
+          <span class="si-h5">ROOT-ITEM: {{ item.label }}</span>
+          <p>
+            This content is injected via a defined template. In this case the 'root' template is
+            used.
+          </p>
+        } @else {
+          <span>CHILD-ITEM: {{ item.label }}</span>
+          <p> This content is injected via a custom template which applies to all child notes. </p>
+        }
+      </div>
+    </si-tree-view-item>
   </ng-template>
 </si-tree-view>
