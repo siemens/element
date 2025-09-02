@@ -50,7 +50,7 @@ Tokenization is disabled here as it is not needed and normally enabled by defaul
 
 ### Typeahead - OnFocus & Scrollable
 
-In many cases you would want the typeahead to already appear when the user focusses (click or tab into it) the input field.
+In many cases you would want the typeahead to already appear when the user focuses (click or tab into it) the input field.
 
 Additionally, you maybe only want it to display after a certain amount of time
 to allow the user to quickly tab through multiple input fields.
