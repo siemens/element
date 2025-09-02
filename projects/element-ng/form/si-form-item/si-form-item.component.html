@@ -36,7 +36,11 @@
 </ng-template>
 <ng-template #feedbackTemplate>
   @if (printErrors() && !fieldset?.hasOnlyRadios()) {
-    <div class="invalid-feedback" [attr.id]="formItemErrormessageId">
+    <div
+      class="invalid-feedback"
+      [class.show-when-dirty]="showLiveErrors()"
+      [attr.id]="formItemErrormessageId"
+    >
       @for (error of errors(); track error.key) {
         <div>
           {{ error.message | translate: error.params }}
