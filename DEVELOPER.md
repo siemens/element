@@ -4,11 +4,11 @@
 
 - [Git](https://git-scm.com/) to clone the repository
 - [Git LFS](https://git-lfs.github.com/) to fetch test assets
-- [NodeJS](https://nodejs.org/) version as specified in the [package.json](package.json)
+- [NodeJS](https://nodejs.org/) version as specified in the [package.json](https://github.com/siemens/element/blob/main/package.json)
 
 To run the documentation, you will also need:
 
-- [Python](https://www.python.org/) version as specified in the [pyproject.toml](pyproject.toml)
+- [Python](https://www.python.org/) version as specified in the [pyproject.toml](https://github.com/siemens/element/blob/main/pyproject.toml)
 - [UV](https://uv.readthedocs.io/en/latest/) to manage Python virtual environments
 
 ## Installation

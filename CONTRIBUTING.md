@@ -155,7 +155,7 @@ Enhancement suggestions are tracked as [GitHub issues](https://github.com/siemen
 
 ### Your First Code Contribution
 
-Read the [developer guide](https://github.com/siemens/element/blob/main/DEVELOPER.md) to get started with the development of Siemens Element.
+Read the [developer guide](DEVELOPER.md) to get started with the development of Siemens Element.
 
 ## Styleguides
 
