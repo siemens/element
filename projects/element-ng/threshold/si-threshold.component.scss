@@ -49,6 +49,9 @@ si-select {
   // This is a weird one. When zooming, it seems like `border-width` and relative `line-height` are scaled differently on inputs
   // Since the threshold needs correct size to keep the lines aligned, setting it to a fixed value here.
   block-size: calc(1rem + (map.get(variables.$spacers, 4) * 2));
+  // Ensure the number input and its buttons are above other elements
+  position: relative;
+  z-index: 1;
 }
 
 .line {
