@@ -12,7 +12,7 @@
   @if (heading() || displayContentActionBar()) {
     <div class="card-header d-flex justify-content-between">
       <ng-content #cardHeaderIcon select="[headerIcon]" />
-      <div>
+      <div class="heading">
         @if (heading()) {
           <div class="text-truncate si-h5">{{ heading() | translate }}</div>
         }
