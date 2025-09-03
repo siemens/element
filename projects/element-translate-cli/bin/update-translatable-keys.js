@@ -97,7 +97,7 @@ function generateFiles() {
     const interfaceLine = keys.map(key => `  '${key}'?: string;`);
     const interfaceFull = `/* eslint-disable */
 
-// Auto-generated file. Run 'npm run build:all:update-translatable-keys' to update.
+// Auto-generated file. Run 'npx update-translatable-keys' to update.
 
 export interface ${config.keysInterfaceName} {
 ${interfaceLine.join('\n')}

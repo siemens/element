@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-// Auto-generated file. Run 'npm run build:all:update-translatable-keys' to update.
+// Auto-generated file. Run 'npx update-translatable-keys' to update.
 
 export interface SiTranslatableKeys {
   'SI_ALERT_DIALOG.OK'?: string;
