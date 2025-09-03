@@ -173,6 +173,7 @@ nav:
   - Contributing:
     - Guidelines:                         'CONTRIBUTING.md'
     - Code of Conduct:                    'CODE_OF_CONDUCT.md'
+    - Developer guide:                    'DEVELOPER.md'
   - Changelog:                            'CHANGELOG.md'
 
 theme:
