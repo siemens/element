@@ -13,18 +13,14 @@ import {
   OnDestroy,
   OnInit
 } from '@angular/core';
+import { DatatableComponent } from '@siemens/ngx-datatable';
 
 @Directive({
-  selector: '[siDatatableInteraction]',
+  selector: 'ngx-datatable[siDatatableInteraction]',
   exportAs: 'si-datatable-interaction'
 })
 export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
-  /**
-   * The selection type of the datatable, will automatically be set if set for datatable.
-   *
-   */
-  readonly selectionType = input<'single' | 'multi' | 'multiClick' | 'cell' | 'checkbox'>();
-
+  private table = inject(DatatableComponent, { self: true });
   /**
    * Automatically select every row or cell that is navigated trough.
    * Is ignored unless `selectionType` is `single` or `cell`.
@@ -46,7 +42,7 @@ export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
   protected onKeydown(event: KeyboardEvent): void {
     if (event.key === 'ArrowDown') {
       const first =
-        this.selectionType() === 'cell'
+        this.table.selectionType === 'cell'
           ? this.element.querySelector(
               '.datatable-row-wrapper > .datatable-body-row .datatable-body-cell'
             )
@@ -57,7 +53,7 @@ export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
       }
     } else if (event.key === 'ArrowUp') {
       const last =
-        this.selectionType() === 'cell'
+        this.table.selectionType === 'cell'
           ? this.element.querySelector(
               '.datatable-row-wrapper:last-child > .datatable-body-row .datatable-body-cell'
             )
@@ -89,7 +85,7 @@ export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
     clearTimeout(this.autoSelectTimeout);
     // Re-select on every element
 
-    const selectionType = this.selectionType();
+    const selectionType = this.table.selectionType;
     if (
       !this.isMousedown &&
       this.datatableInteractionAutoSelect() &&
@@ -105,7 +101,7 @@ export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
         rowOrCell.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', keyCode: 13 }));
       }, 100);
     }
-    if (this.element.classList.contains('virtualized')) {
+    if (this.table.virtualization) {
       if (this.tableBody) {
         const lastList =
           selectionType === 'cell'
