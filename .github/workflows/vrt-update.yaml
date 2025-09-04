@@ -54,7 +54,7 @@ jobs:
 
       - name: Get latest workflow run
         id: get-workflow
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const { data: runs } = await github.rest.actions.listWorkflowRuns({
@@ -199,7 +199,7 @@ jobs:
       - name: Get artifact download URL
         if: success()
         id: artifact
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             // Wait a bit for the artifact to be uploaded and indexed
