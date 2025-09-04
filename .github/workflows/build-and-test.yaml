@@ -78,7 +78,48 @@ jobs:
       - run: npm run charts:test -- --watch=false --progress=false
       - run: npm run dashboards:test -- --watch=false --progress=false
       - run: npm run maps:test -- --watch=false --progress=false
-      # TODO: Upload coverage reports
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage-reports
+          path: dist/coverage
+          retention-days: 30
+
+  coverage:
+    if: ${{ !cancelled() && github.event_name == 'pull_request' }}
+    runs-on: ubuntu-24.04
+    permissions:
+      pull-requests: write
+      contents: read
+    needs:
+      - test
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v5
+        with:
+          name: coverage-reports
+          path: dist/coverage
+      - name: Code Coverage Summary Report
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: 'dist/coverage/*/cobertura-coverage.xml'
+          badge: true
+          format: markdown
+          output: both
+          hide_branch_rate: true
+          hide_complexity: true
+          indicators: false
+          file_coverage_mode: changes
+      - name: Extract Coverage Badge Only
+        run: |
+          # Extract only the badge line and total coverage line
+          head -n 2 code-coverage-results.md > coverage-badge.md
+      - name: Add Coverage Badge PR Comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        if: github.event_name == 'pull_request'
+        with:
+          recreate: true
+          header: coverage
+          path: coverage-badge.md
 
   aot:
     runs-on: ubuntu-24.04
@@ -212,6 +253,7 @@ jobs:
     needs:
       - e2e-merge-reports
       - documentation
+      - coverage
     steps:
       - uses: actions/download-artifact@v5
         with:
@@ -221,6 +263,10 @@ jobs:
         with:
           name: html-report--attempt-${{ github.run_attempt }}
           path: playwright-report
+      - uses: actions/download-artifact@v5
+        with:
+          name: coverage-reports
+          path: coverage-reports
       - uses: aws-actions/configure-aws-credentials@v5.0.0
         with:
           role-to-assume: arn:aws:iam::974483672234:role/simpl-element-preview
@@ -229,9 +275,14 @@ jobs:
       - run: |
           aws s3 cp --quiet --no-progress --recursive ./pages s3://${{ env.BUCKET_NAME }}/pr-${{ github.event.pull_request.number }}/pages
           aws s3 cp --quiet --no-progress --recursive ./playwright-report s3://${{ env.BUCKET_NAME }}/pr-${{ github.event.pull_request.number }}/playwright-report
+          aws s3 cp --quiet --no-progress --recursive ./coverage-reports s3://${{ env.BUCKET_NAME }}/pr-${{ github.event.pull_request.number }}/coverage-reports
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
           message: |
             [Documentation](https://simpl-element-preview.s3-eu-west-1.amazonaws.com/pr-${{ github.event.pull_request.number }}/pages/index.html).
             [Examples](https://simpl-element-preview.s3-eu-west-1.amazonaws.com/pr-${{ github.event.pull_request.number }}/pages/element-examples/index.html).
             [Playwright report](https://simpl-element-preview.s3-eu-west-1.amazonaws.com/pr-${{ github.event.pull_request.number }}/playwright-report/index.html).
+
+            **Coverage Reports:**
+            - [element-ng](https://simpl-element-preview.s3-eu-west-1.amazonaws.com/pr-${{ github.event.pull_request.number }}/coverage-reports/element-ng/index.html)
+            - [element-translate-ng](https://simpl-element-preview.s3-eu-west-1.amazonaws.com/pr-${{ github.event.pull_request.number }}/coverage-reports/element-translate-ng/index.html)
