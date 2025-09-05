@@ -1,3 +1,28 @@
+## [48.0.1](https://github.com/siemens/element/compare/v48.0.0...v48.0.1) (2025-09-05)
+
+
+### Bug Fixes
+
+* **card:** show ellipsis on heading text overflow ([2d772a1](https://github.com/siemens/element/commit/2d772a19335fb6397fbea33e3f7f8e67e1bc4007)), closes [#689](https://github.com/siemens/element/issues/689)
+* **datatable:** not possible to tab out from table ([9869db1](https://github.com/siemens/element/commit/9869db1fb6217bea9a4c681ef3d11ede7bae57d5))
+* **datatable:** use `NgxDatatableConfig` from upstream ([2fb7903](https://github.com/siemens/element/commit/2fb79039af682b1d31e4028790d5010cf5c32f28))
+* **icon:** handle undefined icon use case ([7c52855](https://github.com/siemens/element/commit/7c52855e847bb5c7ca2a7c75ddd9a26e5ce42435))
+* **modal-dialogs:** update confirmation dialog text and update snapshots ([2d69d63](https://github.com/siemens/element/commit/2d69d63b81c90b55ca49b5df02656d64b1a35336))
+* **threshold:** ensure number input and buttons are above other elements ([6d8f3bf](https://github.com/siemens/element/commit/6d8f3bff890c9418b3f0bc00be2faa5764f2a5ba))
+
+
+### DEPRECATIONS
+
+* **datatable:** `INgxDatatableConfig` is deprecated in favor of upstream `NgxDatatableConfig`.
+  
+  Replace `INgxDatatableConfig` imports with `NgxDatatableConfig` from @siemens/ngx-datatable:
+  
+  // Before
+  import { INgxDatatableConfig } from '@siemens/element-ng/datatable';
+  
+  // After
+  import { NgxDatatableConfig } from '@siemens/ngx-datatable';
+
 # [48.0.0](https://github.com/siemens/element/compare/v47.8.0...v48.0.0) (2025-08-26)
 
 
