@@ -95,6 +95,14 @@ export class SiFormItemComponent
   // eslint-disable-next-line @angular-eslint/no-input-rename
   readonly requiredInput = input(false, { transform: booleanAttribute, alias: 'required' });
 
+  /**
+   * Shows the form errors when the control is dirty and during active focus.
+   * Default is false in which the errors are displayed when focus is moved.
+   *
+   * @defaultValue false
+   */
+  readonly showLiveErrors = input(false, { transform: booleanAttribute });
+
   protected readonly fieldControlQuery = contentChild(SI_FORM_ITEM_CONTROL, { descendants: true });
   /** @internal */
   readonly ngControl = contentChild(NgControl, { descendants: true });
