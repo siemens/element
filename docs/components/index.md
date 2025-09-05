@@ -58,6 +58,10 @@ documentation.
 - [Gauge Chart](charts/gauge-chart.md)
 - [Generic Chart](charts/generic-chart.md)
 
+## H
+
+- [Help Button](buttons-menus/help-button.md)
+
 ## I
 
 - [Icon](status-notifications/icon.md)
