@@ -54,6 +54,7 @@ nav:
       - Menu:                             'components/buttons-menus/menu.md'
       - Segmented Button:                 'components/buttons-menus/segmented-button.md'
       - Split buttons:                    'components/buttons-menus/split-button.md'
+      - Help Button:                      'components/buttons-menus/help-button.md'
     - Dashboards:
       - Overview:                         'components/dashboards/index.md'
       - Dashboard:                        'components/dashboards/dashboard.md'
