@@ -7,14 +7,15 @@ export default {
   branches: [
     {
       name: 'release/+([0-9])?(.{+([0-9]),x}).x',
+      range: "${name.replace(/^release\\//g, '')}",
       channel: "${name.replace(/^release\\//g, '')}"
     },
+    'main',
     {
       name: 'next',
       channel: 'next',
-      prerelease: true
-    },
-    'main'
+      prerelease: 'rc'
+    }
   ],
   plugins: [
     [
@@ -94,12 +95,6 @@ export default {
       '@semantic-release/npm',
       {
         pkgRoot: 'projects/element-translate-cli'
-      }
-    ],
-    [
-      '@semantic-release/npm',
-      {
-        pkgRoot: 'projects/dashboards-demo'
       }
     ],
     // Only update remaining package.json that are not directly published
