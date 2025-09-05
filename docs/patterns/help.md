@@ -47,8 +47,7 @@ The tour usually highlights key elements of the interface and provides brief ins
 
 ### Contextual help
 
-This provides immediate, on-the-spot assistance via a help button with an
-`element-help` icon, combined with a [popover](../components/status-notifications/popover.md).
+This provides immediate, on-the-spot assistance via a [help button](../components/buttons-menus/help-button.md).
 It’s designed to help users understand specific actions or features on the current page without needing to navigate away.
 
 ![Help - contextual elements](images/help-contextual-elements.png)
