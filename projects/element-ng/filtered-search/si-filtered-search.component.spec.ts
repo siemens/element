@@ -56,6 +56,7 @@ import { SiFilteredSearchHarness } from './testing/si-filtered-search.harness';
     [(searchCriteria)]="searchCriteria"
     (doSearch)="doSearch($event)"
     (searchCriteriaChange)="searchCriteriaChange($event)"
+    (searchCriteriaBlur)="searchCriteriaBlur($event)"
     (interceptDisplayedCriteria)="showCriteria($event)"
   />`,
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -88,6 +89,8 @@ class TestHostComponent {
   cdRef = inject(ChangeDetectorRef);
 
   doSearch(event: SearchCriteria): void {}
+
+  searchCriteriaBlur(event: SearchCriteria): void {}
 
   logEvent(event: any): void {}
 
@@ -2363,5 +2366,75 @@ describe('SiFilteredSearchComponent - With translation', () => {
       criteriaValid.map(criterion => criterion.value().then(value => value!.text()))
     );
     expect(validValues).toEqual(['translated(GermanyKey)']);
+  });
+
+  describe('searchCriteriaBlur event', () => {
+    beforeEach(() => {
+      component.criteria.set([
+        {
+          name: 'location',
+          label: 'Location',
+          multiSelect: true,
+          options: ['Lünen', 'Karlsruhe', 'Munich', 'Zug']
+        }
+      ]);
+    });
+
+    it('should not emit searchCriteriaBlur on initial load', async () => {
+      const searchCriteriaBlurSpy = spyOn(component, 'searchCriteriaBlur');
+
+      // Set initial search criteria without user interaction
+      component.searchCriteria.set({
+        criteria: [{ name: 'status', value: 'active' }],
+        value: ''
+      });
+
+      await runOnPushChangeDetection(fixture);
+
+      // Should not emit on initial load
+      expect(searchCriteriaBlurSpy).not.toHaveBeenCalled();
+    });
+
+    it('should emit searchCriteriaBlur when user interacts with a criterion', async () => {
+      const searchCriteriaBlurSpy = spyOn(component, 'searchCriteriaBlur');
+
+      // Set up initial state with a criterion
+      component.criteria.set([
+        {
+          name: 'location',
+          label: 'Location',
+          multiSelect: true,
+          options: ['Denmark', 'Karlsruhe', 'Munich', 'Zug']
+        }
+      ]);
+      component.searchCriteria.set({
+        criteria: [{ name: 'location', value: ['Munich', 'Zug'] }],
+        value: ''
+      });
+
+      await runOnPushChangeDetection(fixture);
+
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+
+      const criteria = await filteredSearch.getCriteria();
+      await criteria[0].clickLabel();
+
+      const criteriaValue = await criteria[0].value();
+      await criteriaValue?.focus();
+
+      expect(await criteriaValue?.getItems({ isSelected: true })).toHaveSize(2);
+      expect(await criteriaValue?.getItemLabels({ isSelected: true })).toEqual(['Munich', 'Zug']);
+
+      await criteriaValue?.select({ text: 'Denmark' });
+
+      expect(await criteriaValue?.getItems({ isSelected: true })).toHaveSize(3);
+      expect(await criteriaValue?.getItemLabels({ isSelected: true })).toEqual([
+        'Denmark',
+        'Munich',
+        'Zug'
+      ]);
+      await criteriaValue?.blur();
+      expect(searchCriteriaBlurSpy).toHaveBeenCalledTimes(1);
+    });
   });
 });
