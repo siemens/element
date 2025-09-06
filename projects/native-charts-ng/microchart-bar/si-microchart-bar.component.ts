@@ -18,14 +18,13 @@ export interface MicrochartBarSeries {
 @Component({
   selector: 'si-microchart-bar',
   templateUrl: './si-microchart-bar.component.html',
-  styleUrl: './si-microchart-bar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiMicrochartBarComponent {
   /** @defaultValue 64 */
   readonly width = input<number>(64);
-  /** @defaultValue 16 */
-  readonly height = input<number>(16);
+  /** @defaultValue 24 */
+  readonly height = input<number>(24);
   /**
    * Microchart bar series.
    * Example series can be:
@@ -37,9 +36,47 @@ export class SiMicrochartBarComponent {
   readonly series = input.required<MicrochartBarSeries>();
 
   protected barWidth = 4;
-  protected padding = 8;
-  protected readonly maxValue = computed(() => {
-    const currentSeries = this.series();
-    return currentSeries?.values.length ? Math.max(...currentSeries.values) : 1;
+
+  protected readonly seriesData = computed(() => {
+    const values = this.series().values;
+    const maxValue = Math.max(...values, 1);
+    const minValue = Math.min(...values, 0);
+    const allNegative = maxValue <= 0;
+    const allPositive = minValue >= 0;
+    const range = Math.abs(maxValue) + Math.abs(minValue);
+    const zeroPosition = allNegative ? 0 : allPositive ? 100 : (Math.abs(maxValue) / range) * 100;
+
+    return {
+      values,
+      maxValue,
+      minValue,
+      allNegative,
+      allPositive,
+      range,
+      zeroPosition
+    };
   });
+
+  protected getBarHeight(value: number): number {
+    const data = this.seriesData();
+    const maxRange = data.allNegative
+      ? Math.abs(data.minValue)
+      : data.allPositive
+        ? data.maxValue
+        : data.range;
+    return (Math.abs(value) / maxRange) * 100;
+  }
+
+  protected getBarTop(value: number): number {
+    const data = this.seriesData();
+    if (data.allNegative) return 0;
+    if (data.allPositive) return 100 - this.getBarHeight(value);
+
+    // For mixed values
+    if (value >= 0) {
+      return data.zeroPosition - this.getBarHeight(value);
+    } else {
+      return data.zeroPosition;
+    }
+  }
 }

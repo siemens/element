@@ -1,4 +1,7 @@
-- text: Micro charts
+- text: Micro line chart
+- img
+- text: Micro donut chart
 - img
 - img
-- text: /\d+%/
+- img
+- text: /Micro bar chart Micro progress chart \d+% \d+% Markers/
