@@ -92,8 +92,10 @@
       <si-timepicker
         #timePicker
         [id]="timepickerId"
-        [ngModel]="time"
+        [ngModel]="time()"
         [disabled]="disabledTime()"
+        [min]="effectiveMinTime()"
+        [max]="effectiveMaxTime()"
         [hoursLabel]="config().hoursLabel ?? timePicker.hoursLabel()"
         [minutesLabel]="config().minutesLabel ?? timePicker.minutesLabel()"
         [secondsLabel]="config().secondsLabel ?? timePicker.secondsLabel()"
