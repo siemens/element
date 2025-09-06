@@ -4,6 +4,7 @@
  */
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   contentChild,
   contentChildren,
@@ -24,6 +25,7 @@ import { SiPasswordStrengthDirective } from './si-password-strength.directive';
     </si-password-toggle>
   `,
   styleUrl: './si-password-strength.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.bad]': 'bad()',
     '[class.weak]': 'weak()',
