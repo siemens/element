@@ -1,0 +1,23 @@
+<div class="d-flex flex-wrap gap-2">
+  @for (attachment of attachments(); track attachment.id) {
+    <div
+      class="attachment-item d-flex align-items-center gap-2 px-2 py-1 border rounded bg-body-secondary"
+      [class.py-3]="!showRemoveButton()"
+    >
+      <si-icon class="icon flex-shrink-0" icon="element-document" />
+      <span class="attachment-name text-truncate si-body-2 pe-1" [title]="attachment.name">
+        {{ attachment.name }}
+      </span>
+      @if (showRemoveButton()) {
+        <button
+          type="button"
+          class="btn btn-ghost btn-circle btn-sm flex-shrink-0 ms-auto"
+          [attr.aria-label]="(removeAttachmentLabel() | translate) + ' ' + attachment.name"
+          (click)="onRemoveAttachment(attachment.id)"
+        >
+          <si-icon icon="element-delete" />
+        </button>
+      }
+    </div>
+  }
+</div>

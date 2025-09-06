@@ -1,0 +1,36 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  max-inline-size: 80%;
+}
+
+.ai-avatar {
+  margin-block-start: map.get(variables.$spacers, 2);
+  margin-inline-end: map.get(variables.$spacers, 2);
+}
+
+// Loading spinner size adjustment
+si-loading-spinner {
+  --loading-spinner-size: 1.5em;
+}
+
+// Container responsive adjustments
+:host-context(.si-container-xs) {
+  max-inline-size: 95%;
+
+  .ai-avatar {
+    margin-block-start: 0;
+    margin-inline-end: 0;
+    margin-block-end: map.get(variables.$spacers, 1);
+    margin-inline-start: map.get(variables.$spacers, 4);
+  }
+
+  .ai-message-container {
+    flex-direction: column;
+  }
+}
+
+:host-context(.si-container-sm) {
+  max-inline-size: 85%;
+}

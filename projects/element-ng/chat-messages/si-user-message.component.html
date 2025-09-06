@@ -1,0 +1,47 @@
+<div class="d-flex flex-column align-items-end si-body-2 mb-2" siResponsiveContainer>
+  <!-- Attachments -->
+  @if (hasAttachments()) {
+    <div class="d-flex justify-content-end mb-3">
+      <si-attachment-list [attachments]="mappedAttachments()" [showRemoveButton]="false" />
+    </div>
+  }
+
+  <div class="d-flex align-items-start gap-2 position-relative user-message-wrapper">
+    <!-- Message Actions -->
+    @if (hasActions()) {
+      <button
+        type="button"
+        class="btn btn-ghost btn-circle btn-sm border-0 p-1 mt-1 message-actions"
+        [cdkMenuTriggerFor]="actionsMenu"
+        [attr.aria-label]="messageActionsLabel() | translate"
+        [attr.title]="messageActionsLabel() | translate"
+      >
+        <si-icon icon="element-optionsVertical" />
+      </button>
+
+      <ng-template #actionsMenu>
+        <si-menu>
+          @for (action of actions(); track action.id) {
+            <si-menu-item
+              [disabled]="action.disabled"
+              [icon]="action.icon"
+              (triggered)="onActionClick(action)"
+            >
+              {{ action.label | translate }}
+            </si-menu-item>
+          }
+        </si-menu>
+      </ng-template>
+    }
+
+    <!-- Message Content -->
+    <div
+      class="user-message-bubble rounded-3 position-relative p-4 mw-100 text-break"
+      [ngClass]="messageClass()"
+    >
+      <div class="p-1">
+        <si-markdown-content [content]="content()" />
+      </div>
+    </div>
+  </div>
+</div>
