@@ -11,7 +11,7 @@
     [disableFreeTextSearch]="disableFreeTextSearch"
     [criteria]="[
       { name: 'company', label: 'Company' },
-      { name: 'location', label: 'Location' },
+      { name: 'location', label: 'Location', multiSelect: true },
       { name: 'country', label: 'Country' }
     ]"
     [lazyValueProvider]="filteredSearch.lazyValueProvider"
