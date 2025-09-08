@@ -200,6 +200,8 @@ export class SiTreeViewComponent
   });
 
   /**
+   * @deprecated Use `folderStateEnd` instead.
+   *
    * Sets if the folder state icon shall be shown on the left (in LTR) or on the right (in LTR) side
    * of the tree item. Per default the icon will be shown on the left (in LTR). Has no
    * effect if flatTree is enabled.
@@ -208,11 +210,32 @@ export class SiTreeViewComponent
   readonly folderStateStart = input(true, { transform: booleanAttribute });
 
   /**
+   * Sets if the folder state icon shall be shown on the left (in LTR) or on the right (in LTR) side
+   * of the tree item. By default the icon will be shown on the left (in LTR). Has no
+   * effect if flatTree is enabled.
+   * @defaultValue false
+   */
+  readonly folderStateEnd = input(false, { transform: booleanAttribute });
+
+  /**
+   * @deprecated Use `disableVirtualization` instead.
+   *
    * Sets if the tree list shall virtualize the tree items.
    * This input field must be set at startup and shall not be changed afterwards.
    * @defaultValue true
    */
   readonly isVirtualized = input(true, { transform: booleanAttribute });
+
+  /**
+   * Set to turn off virtualization.
+   * This input field must be set at startup and shall not be changed afterwards.
+   * @defaultValue false
+   */
+  readonly disableVirtualization = input(false, { transform: booleanAttribute });
+
+  protected readonly enableVirtualization = computed(
+    () => this.isVirtualized() && !this.disableVirtualization()
+  );
 
   /**
    * Sets the root tree items of all the trees (Required).
@@ -246,23 +269,48 @@ export class SiTreeViewComponent
   readonly enableDataField2 = input(false, { transform: booleanAttribute });
 
   /**
+   * @deprecated Use `hideStateIndicator` instead.
+   *
    * Shows or hides state pipe.
    * @defaultValue true
    */
   readonly enableStateIndicator = input(true, { transform: booleanAttribute });
 
   /**
+   * Hides state indicator.
+   * @defaultValue false
+   */
+  readonly hideStateIndicator = input(false, { transform: booleanAttribute });
+
+  /**
+   * @deprecated Use `hideIcon` instead.
+   *
    * Shows or hides icon
    * @defaultValue true
    */
   readonly enableIcon = input(true, { transform: booleanAttribute });
 
   /**
+   * Hide icon
+   * @defaultValue false
+   */
+  readonly hideIcon = input(false, { transform: booleanAttribute });
+
+  /**
+   * @deprecated Use `hideContextMenuButton` instead.
+   *
    * Shows or hides context menu button and also controls context menu visibility on right click.
    * @defaultValue true
    * @defaultref {@link SiTreeViewService#enableContextMenuButton}
    */
   readonly enableContextMenuButton = input(true, { transform: booleanAttribute });
+
+  /**
+   * Hides context menu button and also controls context menu visibility on right click.
+   * @defaultValue false
+   * @defaultref {@link SiTreeViewService#enableContextMenuButton}
+   */
+  readonly hideContextMenuButton = input(false, { transform: booleanAttribute });
 
   /**
    * Allows / disabled selecting of tree items by clicking on them.
@@ -317,10 +365,18 @@ export class SiTreeViewComponent
   readonly expandOnClick = input(false, { transform: booleanAttribute });
 
   /**
+   * @deprecated Use `preventInheritChecked` instead.
+   *
    * Sets if the checkbox state of a tree item is inherited to its children/parent.
    * @defaultValue true
    */
   readonly inheritChecked = input(true, { transform: booleanAttribute });
+
+  /**
+   * Prevents checkbox state of a tree item to be inherited to its children/parent.
+   * @defaultValue false
+   */
+  readonly preventInheritChecked = input(false, { transform: booleanAttribute });
 
   /**
    * String to be shown when there are no content actions.
@@ -448,7 +504,7 @@ export class SiTreeViewComponent
    * Bind these to the HTML.
    */
   get itemsVirtualized(): TreeItem[] {
-    return this.isVirtualized()
+    return this.enableVirtualization()
       ? this.siTreeViewVirtualizationService.itemsVirtualized
       : this.siTreeViewConverterService.flattenedTrees;
   }
@@ -531,7 +587,7 @@ export class SiTreeViewComponent
   ngOnInit(): void {
     this.scroll$ = defer(() => fromEvent(this.treeViewInnerElement().nativeElement, 'scroll'));
     this.siTreeViewService.scroll$ = this.scroll$;
-    if (this.isVirtualized()) {
+    if (this.enableVirtualization()) {
       this.subscriptions.push(this.scroll$.subscribe(event => this.onScroll(event)));
     }
 
@@ -598,7 +654,7 @@ export class SiTreeViewComponent
     ) {
       const oldHeight = this.siTreeViewItemHeightService.itemHeight;
       let newHeight: number | undefined;
-      if (this.isVirtualized()) {
+      if (this.enableVirtualization()) {
         newHeight = this.siTreeViewItemHeightService.updateItemHeight(
           this.treeViewInnerElement().nativeElement,
           this.siTreeViewConverterService.flattenedTrees,
@@ -632,7 +688,7 @@ export class SiTreeViewComponent
     ) {
       const oldHeight = this.siTreeViewItemHeightService.groupItemHeight;
       let newHeight: number | undefined;
-      if (this.isVirtualized()) {
+      if (this.enableVirtualization()) {
         newHeight = this.siTreeViewItemHeightService.updateGroupedItemHeight(
           this.treeViewInnerElement().nativeElement,
           this.siTreeViewConverterService.flattenedTrees,
@@ -1044,7 +1100,7 @@ export class SiTreeViewComponent
   private handleTreeMode(): void {
     let ti: TreeItem | undefined;
 
-    if (this.isVirtualized()) {
+    if (this.enableVirtualization()) {
       ti = this.siTreeViewVirtualizationService.calculateFirstVisibleTreeItem();
     }
 
@@ -1159,7 +1215,7 @@ export class SiTreeViewComponent
   }
 
   private onScroll(event: Event): void {
-    if (this.isVirtualized()) {
+    if (this.enableVirtualization()) {
       const scrollTop: number = (event.target as Element).scrollTop;
       this.siTreeViewVirtualizationService.handleScroll(
         scrollTop,
@@ -1173,7 +1229,7 @@ export class SiTreeViewComponent
    */
   private onScrollIntoViewByConsumer(treeItem: TreeItem | undefined): void {
     if (treeItem) {
-      if (this.isVirtualized()) {
+      if (this.enableVirtualization()) {
         this.siTreeViewVirtualizationService.virtualizeItem(
           treeItem,
           this.siTreeViewConverterService.flattenedTrees
@@ -1226,7 +1282,7 @@ export class SiTreeViewComponent
 
   protected updateVirtualizedItemList(): void {
     this.updateHasChildren();
-    if (this.isVirtualized() && this.initialized) {
+    if (this.enableVirtualization() && this.initialized) {
       this.siTreeViewVirtualizationService.updateVirtualizedItemList(
         this.siTreeViewConverterService.flattenedTrees
       );
@@ -1236,7 +1292,7 @@ export class SiTreeViewComponent
 
   private resetVirtualizedItemList(): void {
     this.updateHasChildren();
-    if (this.isVirtualized() && this.initialized) {
+    if (this.enableVirtualization() && this.initialized) {
       this.siTreeViewVirtualizationService.resetVirtualizedItemList(
         this.siTreeViewConverterService.flattenedTrees
       );
@@ -1285,7 +1341,7 @@ export class SiTreeViewComponent
    * @param dimension - current tree dimensions.
    */
   private updatePageSize(dimension: ElementDimensions): void {
-    if (this.isVirtualized()) {
+    if (this.enableVirtualization()) {
       // Re-calc number of virtualized items based on the visible component dimensions
       const itemHeight = this.siTreeViewItemHeightService.itemHeight;
       // Proceeding with itemHeight==0 leads to an error in
@@ -1360,7 +1416,7 @@ export class SiTreeViewComponent
       this.selectedTreeItems.push(items);
       this.setFlatTreeSelectedFolder(items.parent);
 
-      if (this.isVirtualized()) {
+      if (this.enableVirtualization()) {
         this.siTreeViewVirtualizationService.virtualizeItem(
           items,
           this.siTreeViewConverterService.flattenedTrees

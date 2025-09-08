@@ -91,6 +91,7 @@ export class SiTreeViewItemComponent
   protected readonly isContextMenuButtonVisible = computed(() => {
     return (
       this.enableContextMenuButton() &&
+      !this.hideContextMenuButton() &&
       !!this._contextMenuItems() &&
       !!this.contextMenuItems()?.length
     );
@@ -183,6 +184,7 @@ export class SiTreeViewItemComponent
   protected readonly enableSelection = this.treeViewComponent.enableSelection;
 
   protected readonly enableContextMenuButton = this.treeViewComponent.enableContextMenuButton;
+  protected readonly hideContextMenuButton = this.treeViewComponent.hideContextMenuButton;
 
   protected readonly enableDataField1 = this.treeViewComponent.enableDataField1;
 
@@ -213,6 +215,7 @@ export class SiTreeViewItemComponent
     return (
       this.displayFolderState &&
       this.treeViewComponent.folderStateStart() &&
+      !this.treeViewComponent.folderStateEnd() &&
       !this.treeViewComponent.flatTree() &&
       (!!this.isGroupedItem || !this.siTreeViewService.groupedList)
     );
@@ -227,9 +230,14 @@ export class SiTreeViewItemComponent
   }
 
   protected readonly showStateIndicator = this.treeViewComponent.enableStateIndicator;
+  protected readonly hideStateIndicator = this.treeViewComponent.hideStateIndicator;
 
   protected readonly showIcon = computed(() => {
-    return this.treeViewComponent.enableIcon() && !!this.treeItem.icon;
+    return (
+      this.treeViewComponent.enableIcon() &&
+      !this.treeViewComponent.hideIcon() &&
+      !!this.treeItem.icon
+    );
   });
 
   protected get showCheckOrOptionBox(): boolean {
@@ -261,7 +269,10 @@ export class SiTreeViewItemComponent
       if (this.treeViewComponent.flatTree()) {
         // flat tree mode
         return this.icons().itemCollapsedFlat;
-      } else if (this.treeViewComponent.folderStateStart()) {
+      } else if (
+        this.treeViewComponent.folderStateStart() &&
+        !this.treeViewComponent.folderStateEnd()
+      ) {
         // normal tree mode; folder state icon shown on the left (in LTR) side
         return this.icons().itemCollapsedLeft; // si-tree-view-item-collapsed
       } else {
@@ -274,7 +285,10 @@ export class SiTreeViewItemComponent
       if (this.treeViewComponent.flatTree()) {
         // flat tree mode
         return this.icons().itemExpandedFlat;
-      } else if (this.treeViewComponent.folderStateStart()) {
+      } else if (
+        this.treeViewComponent.folderStateStart() &&
+        !this.treeViewComponent.folderStateEnd()
+      ) {
         // normal tree mode; folder state icon shown on the left (in LTR) side
         return this.icons().itemExpandedLeft; // si-tree-view-item-expanded
       } else {
@@ -406,7 +420,10 @@ export class SiTreeViewItemComponent
       return;
     }
     const oldState = this.treeItem.checked ?? 'unchecked';
-    boxClicked(this.treeItem, this.treeViewComponent.inheritChecked());
+    boxClicked(
+      this.treeItem,
+      this.treeViewComponent.inheritChecked() && !this.treeViewComponent.preventInheritChecked()
+    );
     this.siTreeViewService.checkboxClickEvent.next(
       new CheckboxClickEventArgs(this.treeItem, oldState, this.treeItem.checked ?? 'unchecked')
     );
