@@ -4,6 +4,11 @@
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
+import {
+  provideMockTranslateServiceBuilder,
+  SiTranslateService
+} from '@siemens/element-translate-ng/translate';
+import { of } from 'rxjs';
 
 import { Filter } from './filter';
 import { SiFilterPillComponent } from './index';
@@ -27,7 +32,16 @@ describe('SiFilterPillComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [SiFilterPillComponent, TestHostComponent]
+      imports: [SiFilterPillComponent, TestHostComponent],
+      providers: [
+        provideMockTranslateServiceBuilder(
+          () =>
+            ({
+              translate: (key: string) => `translated:${key}`,
+              translateAsync: (key: string) => of(`translated:${key}`)
+            }) as SiTranslateService
+        )
+      ]
     })
   );
 
@@ -45,8 +59,8 @@ describe('SiFilterPillComponent', () => {
       status: 'warning'
     };
     fixture.detectChanges();
-    expect(element.querySelector('div.name')!.innerHTML).toBe('Current Location');
-    expect(element.querySelector('div.value')!.innerHTML).toBe('Florida');
+    expect(element.querySelector('div.name')!.innerHTML.trim()).toBe('translated:Current Location');
+    expect(element.querySelector('div.value')!.innerHTML.trim()).toBe('translated:Florida');
     expect(element.querySelector('.pill.pill-warning')!.innerHTML).toBeDefined();
   }));
 
@@ -63,5 +77,20 @@ describe('SiFilterPillComponent', () => {
     element.querySelector<HTMLElement>('[aria-label="Remove"]')?.click();
     fixture.detectChanges();
     expect(spyEvent).toHaveBeenCalled();
+  }));
+
+  it('should not translate the title and description if disableAutoTranslation is true', fakeAsync(() => {
+    component.filter = {
+      filterName: 'language',
+      title: 'LANGUAGE',
+      description: 'LANGUAGE',
+      status: 'default',
+      disableAutoTranslation: true
+    };
+    fixture.detectChanges();
+    flush();
+
+    expect(element.querySelector('div.name')!.innerHTML.trim()).toBe('LANGUAGE');
+    expect(element.querySelector('div.value')!.innerHTML.trim()).toBe('LANGUAGE');
   }));
 });

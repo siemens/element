@@ -48,6 +48,13 @@ export class SampleComponent {
       status: 'default'
     },
     {
+      filterName: 'language',
+      title: 'LANGUAGE',
+      description: 'LANGUAGE',
+      status: 'default',
+      disableAutoTranslation: true
+    },
+    {
       filterName: 'only-key',
       title: 'Only Key',
       description: '',

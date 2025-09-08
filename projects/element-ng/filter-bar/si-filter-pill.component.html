@@ -1,18 +1,23 @@
+@let filter = this.filter();
 <div
   class="pill responsive"
   [class.pe-0]="!disabled()"
   [class.disabled]="disabled()"
-  [ngClass]="filter().status ? 'pill-' + filter().status : ''"
+  [ngClass]="filter.status ? 'pill-' + filter.status : ''"
   [attr.aria-disabled]="disabled()"
 >
   <div class="wrapper">
-    @if (filter().title) {
-      <div class="name">{{ filter().title | translate }}</div>
+    @if (filter.title) {
+      <div class="name">
+        {{ filter.disableAutoTranslation ? filter.title : (filter.title | translate) }}
+      </div>
     }
-    @if (filter().title && filter().description) {
+    @if (filter.title && filter.description) {
       <span class="name pe-4">:</span>
     }
-    <div class="value">{{ filter().description | translate }}</div>
+    <div class="value">
+      {{ filter.disableAutoTranslation ? filter.description : (filter.description | translate) }}
+    </div>
   </div>
   @if (!disabled()) {
     <ng-container *ngTemplateOutlet="remove" />

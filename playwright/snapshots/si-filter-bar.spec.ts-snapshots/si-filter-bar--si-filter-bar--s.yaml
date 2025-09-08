@@ -5,7 +5,7 @@
 - button "Remove"
 - text: "/Date : \\d+-\\d+-\\d+/"
 - button "Remove"
-- text: + 4 filters
+- text: + 5 filters
 - button "Remove"
 - button "Reset filters"
 - heading "Variant Dark" [level=4]
@@ -15,12 +15,12 @@
 - button "Remove"
 - text: "/Date : \\d+-\\d+-\\d+/"
 - button "Remove"
-- text: + 4 filters
+- text: + 5 filters
 - button "Remove"
 - button "Reset filters"
 - heading "Variant Light Disabled" [level=4]
-- text: "/Temperature : \\d+° Time : \\d+:\\d+ AM Date : \\d+-\\d+-\\d+ \\+ 4 filters/"
+- text: "/Temperature : \\d+° Time : \\d+:\\d+ AM Date : \\d+-\\d+-\\d+ \\+ 5 filters/"
 - button "Reset filters" [disabled]
 - heading "Variant Dark Disabled" [level=4]
-- text: "/Temperature : \\d+° Time : \\d+:\\d+ AM Date : \\d+-\\d+-\\d+ \\+ 4 filters/"
+- text: "/Temperature : \\d+° Time : \\d+:\\d+ AM Date : \\d+-\\d+-\\d+ \\+ 5 filters/"
 - button "Reset filters" [disabled]
