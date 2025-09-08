@@ -320,6 +320,11 @@ directive to have it automatically select on keyboard navigation.
 <si-docs-component example="datatable/datatable-row-dragging" height="600">
 </si-docs-component>
 
+### Column management
+
+<si-docs-component example="datatable/datatable-column-reorder" height="600">
+</si-docs-component>
+
 ### Resizing
 
 Datatables do have a fixed, automatically updated size, assumed during their
