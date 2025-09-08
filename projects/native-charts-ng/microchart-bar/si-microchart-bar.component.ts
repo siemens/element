@@ -13,19 +13,28 @@ export interface MicrochartBarSeries {
    * @example "element-data-10"
    */
   colorToken: string;
+  /**
+   * Color token for negative values
+   */
+  negativeColorToken?: string;
+}
+
+interface SeriesInternal {
+  top: number;
+  height: number;
+  colorToken: string;
 }
 
 @Component({
   selector: 'si-microchart-bar',
   templateUrl: './si-microchart-bar.component.html',
-  styleUrl: './si-microchart-bar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiMicrochartBarComponent {
   /** @defaultValue 64 */
   readonly width = input<number>(64);
-  /** @defaultValue 16 */
-  readonly height = input<number>(16);
+  /** @defaultValue 24 */
+  readonly height = input<number>(24);
   /**
    * Microchart bar series.
    * Example series can be:
@@ -37,9 +46,26 @@ export class SiMicrochartBarComponent {
   readonly series = input.required<MicrochartBarSeries>();
 
   protected barWidth = 4;
-  protected padding = 8;
-  protected readonly maxValue = computed(() => {
-    const currentSeries = this.series();
-    return currentSeries?.values.length ? Math.max(...currentSeries.values) : 1;
+
+  protected readonly internalSeries = computed<SeriesInternal[]>(() => {
+    const series = this.series();
+    const maxValue = Math.max(...series.values, 1);
+    const minValue = Math.min(...series.values, 0);
+    const allNegative = maxValue <= 0;
+    const allPositive = minValue >= 0;
+    const range = Math.abs(maxValue) + Math.abs(minValue);
+    const zeroPosition = allNegative ? 0 : allPositive ? 100 : (Math.abs(maxValue) / range) * 100;
+
+    const maxRange = allNegative ? Math.abs(minValue) : allPositive ? maxValue : range;
+
+    const int = series.values.map<SeriesInternal>(value => {
+      const height = (Math.abs(value) / maxRange) * 100;
+      const top = value >= 0 ? zeroPosition - height : zeroPosition;
+      const colorToken =
+        value < 0 && series.negativeColorToken ? series.negativeColorToken : series.colorToken;
+      return { top, height, colorToken };
+    });
+
+    return int;
   });
 }

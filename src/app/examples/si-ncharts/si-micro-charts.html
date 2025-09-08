@@ -1,11 +1,41 @@
-<div class="d-flex flex-column gap-4">
+<div class="d-flex flex-column gap-5">
   <div class="card">
-    <div class="card-header">Micro charts</div>
-    <div class="card-body d-flex flex-row gap-8">
-      <si-microchart-donut [series]="donutSeries" />
-      <si-microchart-bar [series]="barSeries" />
+    <div class="card-header">Line micro chart</div>
+    <div class="card-body d-flex flex-row gap-8 align-items-center">
       <si-microchart-line [series]="lineSeries" />
-      <si-microchart-progress [series]="progressSeries" />
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Donut micro chart</div>
+    <div class="card-body d-flex flex-row gap-8 align-items-center">
+      <si-microchart-donut [series]="donutSeries1" />
+      <si-microchart-donut [series]="donutSeries2" />
+      <si-microchart-donut [series]="donutSeriesMulti" />
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Bar micro chart</div>
+    <div class="card-body d-flex flex-row gap-8 align-items-center">
+      <si-microchart-bar [series]="positiveSeries" />
+      <si-microchart-bar [series]="negativeSeries" />
+      <si-microchart-bar [series]="mixedSeries" />
+      <si-microchart-bar [series]="mixedSeries2" />
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Progress micro chart</div>
+    <div class="card-body d-flex flex-row gap-8 align-items-center">
+      <si-microchart-progress [series]="progressSeries1" />
+      <si-microchart-progress [series]="progressSeries2" />
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Markers</div>
+    <div class="card-body d-flex flex-row gap-8 align-items-center">
       <si-icon class="icon status-success" icon="element-up-1-filled" />
       <si-icon class="icon status-danger" icon="element-down-1-filled" />
     </div>

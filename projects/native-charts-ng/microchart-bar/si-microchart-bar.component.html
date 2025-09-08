@@ -1,13 +1,14 @@
-<div
-  class="bar-container d-flex align-items-end pb-2 pt-2"
-  [style.width.px]="width()"
-  [style.height.px]="height() + padding"
->
-  @for (value of series().values; track $index) {
-    <div
-      [style.height.%]="(value / maxValue()) * 100"
-      [style.width.px]="barWidth"
-      [style.backgroundColor]="'var(--' + series().colorToken + ')'"
-    ></div>
-  }
+<div class="py-2" [style.width.px]="width()" [style.height.px]="height()">
+  <div class="position-relative h-100">
+    @for (item of internalSeries(); track $index) {
+      <div
+        class="position-absolute"
+        [style.height.%]="item.height"
+        [style.top.%]="item.top"
+        [style.left.px]="$index * (barWidth + 1)"
+        [style.width.px]="barWidth"
+        [style.backgroundColor]="'var(--' + item.colorToken + ')'"
+      ></div>
+    }
+  </div>
 </div>
