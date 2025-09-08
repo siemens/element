@@ -37,14 +37,42 @@ import {
   }
 })
 export class SampleComponent {
-  donutSeries: MicrochartDonutSeries[] = [{ valuePercent: 40, colorToken: 'element-data-4' }];
+  donutSeries1: MicrochartDonutSeries[] = [{ valuePercent: 40, colorToken: 'element-data-4' }];
+  donutSeries2: MicrochartDonutSeries[] = [{ valuePercent: 75, colorToken: 'element-data-15' }];
+  donutSeriesMulti: MicrochartDonutSeries[] = [
+    { valuePercent: 25, colorToken: 'element-data-10' },
+    { valuePercent: 50, colorToken: 'element-data-5' }
+  ];
   barSeries: MicrochartBarSeries = {
-    values: [2, 4, 5, 3, 5, 7, 7, 9, 11, 10, 12, 9],
+    values: [3, 7, 2, 8, 5, 9, 4, 6, 8, 7, 5, 9],
     colorToken: 'element-data-7'
   };
+
+  mixedSeries: MicrochartBarSeries = {
+    values: [5, -12, 18, -25, 30, -8, 15, -20, 22, -15, 28, -18],
+    colorToken: 'element-data-3'
+  };
+
+  mixedSeries2: MicrochartBarSeries = {
+    values: [5, -12, 18, -25, 30, -8, 15, -20, 22, -15, 28, -18],
+    colorToken: 'element-data-3',
+    negativeColorToken: 'element-data-10'
+  };
+
+  positiveSeries: MicrochartBarSeries = {
+    values: [5, 8, 12, 18, 25, 30, 38, 42, 48, 55, 62, 70],
+    colorToken: 'element-data-2'
+  };
+
+  negativeSeries: MicrochartBarSeries = {
+    values: [-5, -8, -12, -18, -25, -30, -38, -42, -48, -55, -62, -70],
+    colorToken: 'element-data-9'
+  };
+
   lineSeries: MicrochartLineSeries = {
     values: [2, 3, 6, 5, 4, 7, 8],
     colorToken: 'element-data-10'
   };
-  progressSeries: MicrochartProgressSeries = { valuePercent: 80, colorToken: 'element-data-2' };
+  progressSeries1: MicrochartProgressSeries = { valuePercent: 40, colorToken: 'element-data-2' };
+  progressSeries2: MicrochartProgressSeries = { valuePercent: 80, colorToken: 'element-data-12' };
 }
