@@ -1,0 +1,160 @@
+<div class="notification-item px-6 py-5">
+  <div class="notification-item-indicator">
+    <div>
+      @if (unread()) {
+        <span class="dot"></span>
+      }
+      <ng-content select="si-avatar,si-circle-status,si-icon,si-status-icon" />
+    </div>
+  </div>
+
+  <div class="notification-item-content">
+    @let itemLinkValue = itemLink();
+    @if (itemLinkValue) {
+      @switch (itemLinkValue.type) {
+        @case ('link') {
+          <a
+            [href]="itemLinkValue.href"
+            [target]="itemLinkValue.target"
+            [attr.aria-label]="heading() + ' link'"
+          >
+            <ng-container *ngTemplateOutlet="content" />
+          </a>
+        }
+        @case ('router-link') {
+          <a
+            [routerLink]="itemLinkValue.routerLink"
+            [queryParams]="itemLinkValue.extras?.queryParams"
+            [queryParamsHandling]="itemLinkValue.extras?.queryParamsHandling"
+            [fragment]="itemLinkValue.extras?.fragment"
+            [state]="itemLinkValue.extras?.state"
+            [relativeTo]="itemLinkValue.extras?.relativeTo ?? activatedRoute"
+            [preserveFragment]="itemLinkValue.extras?.preserveFragment"
+            [skipLocationChange]="itemLinkValue.extras?.skipLocationChange"
+            [replaceUrl]="itemLinkValue.extras?.replaceUrl"
+            [attr.aria-label]="heading() + ' link'"
+          >
+            <ng-container *ngTemplateOutlet="content" />
+          </a>
+        }
+      }
+    } @else {
+      <ng-container *ngTemplateOutlet="content" />
+    }
+  </div>
+
+  @let primaryActionValue = primaryAction();
+  @if (primaryActionValue) {
+    <div class="notification-item-primary-action">
+      @if (primaryActionValue.type === 'menu') {
+        <ng-container *ngTemplateOutlet="menu; context: { $implicit: primaryActionValue }" />
+      } @else if (primaryActionValue.type === 'action-button') {
+        <button
+          type="button"
+          class="btn btn-tertiary"
+          (click)="primaryActionValue.action(primaryActionValue)"
+          >{{ primaryActionValue.label | translate }}</button
+        >
+      } @else {
+        <ng-container *ngTemplateOutlet="action; context: { $implicit: primaryActionValue }" />
+      }
+    </div>
+  } @else {
+    <div class="notification-item-primary-action">
+      <ng-content select="[action]" />
+    </div>
+  }
+
+  @let quickActionsValue = quickActions();
+  @if (quickActionsValue) {
+    <div class="notification-item-quick-actions">
+      @for (quickAction of quickActionsValue; track $index) {
+        <ng-container *ngTemplateOutlet="action; context: { $implicit: quickAction }" />
+      }
+    </div>
+  } @else {
+    <div class="notification-item-quick-actions">
+      <ng-content select="[quick-actions]" />
+    </div>
+  }
+</div>
+
+<ng-template #action let-action>
+  @switch (action.type) {
+    @case ('action-circle-button') {
+      <ng-container *ngTemplateOutlet="actionButton; context: { $implicit: action }" />
+    }
+    @case ('router-link') {
+      <ng-container *ngTemplateOutlet="routerLink; context: { $implicit: action }" />
+    }
+    @case ('link') {
+      <ng-container *ngTemplateOutlet="link; context: { $implicit: action }" />
+    }
+  }
+</ng-template>
+
+<ng-template #content>
+  <div class="d-flex flex-column gap-3 text-body">
+    <span class="si-body text-secondary">{{ timeStamp() | translate }}</span>
+    <span [ngClass]="unread() ? 'si-h5-bold' : 'si-h5'">{{ heading() | translate }}</span>
+    @if (description()) {
+      <span class="si-body">{{ description() | translate }}</span>
+    }
+    <div class="si-body">
+      <ng-content select="[description]" />
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #actionButton let-action>
+  <button
+    type="button"
+    class="btn btn-ghost btn-sm btn-circle"
+    [attr.aria-label]="action.ariaLabel"
+    (click)="action.action(action)"
+  >
+    <i [ngClass]="'icon ' + action.icon"></i>
+  </button>
+</ng-template>
+
+<ng-template #routerLink let-action>
+  <a
+    class="btn btn-ghost btn-sm p-2 btn-circle"
+    [routerLink]="action.routerLink"
+    [queryParams]="action.extras?.queryParams"
+    [queryParamsHandling]="action.extras?.queryParamsHandling"
+    [fragment]="action.extras?.fragment"
+    [state]="action.extras?.state"
+    [relativeTo]="action.extras?.relativeTo ?? activatedRoute"
+    [preserveFragment]="action.extras?.preserveFragment"
+    [skipLocationChange]="action.extras?.skipLocationChange"
+    [replaceUrl]="action.extras?.replaceUrl"
+    [attr.aria-label]="action.ariaLabel"
+  >
+    <i class="icon" [ngClass]="action.icon"></i>
+  </a>
+</ng-template>
+
+<ng-template #link let-action>
+  <a
+    class="btn btn-ghost btn-sm p-2 btn-circle"
+    [href]="action.href"
+    [target]="action.target"
+    [attr.aria-label]="action.ariaLabel"
+  >
+    <i class="icon" [ngClass]="action.icon"></i>
+  </a>
+</ng-template>
+
+<ng-template #menu let-action>
+  <button
+    type="button"
+    class="btn btn-ghost btn-circle btn-sm element-options-vertical"
+    [attr.aria-label]="heading() + ' dropdown'"
+    [cdkMenuTriggerFor]="actionMenu"
+  ></button>
+
+  <ng-template #actionMenu>
+    <si-menu-factory [items]="action.menuItems" />
+  </ng-template>
+</ng-template>
