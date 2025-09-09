@@ -33,7 +33,6 @@ export class SiResizeObserverDirective implements OnInit, OnDestroy {
   /** @defaultValue 100 */
   readonly resizeThrottle = input(100);
   /** @defaultValue true */
-  // TODO: switch default to false in v48.0.0
   readonly emitInitial = input(true, { transform: booleanAttribute });
   readonly siResizeObserver = output<ElementDimensions>();
 
