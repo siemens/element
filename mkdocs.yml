@@ -125,6 +125,7 @@ nav:
       - Empty State:                      'components/status-notifications/empty-state.md'
       - Icon:                             'components/status-notifications/icon.md'
       - Inline Notification:              'components/status-notifications/inline-notification.md'
+      - Notification Item:                'components/status-notifications/notification-item.md'
       - Popover:                          'components/status-notifications/popover.md'
       - Status Bar:                       'components/status-notifications/status-bar.md'
       - Status Toggle:                    'components/status-notifications/status-toggle.md'
