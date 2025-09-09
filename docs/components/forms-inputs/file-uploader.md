@@ -53,10 +53,9 @@ In the case that it was successful, you will be provided with the output emitter
 
 ```ts
 import { SiFileUploaderComponent } from '@siemens/element-ng/file-uploader';
-import { HttpClientModule } from '@angular/common/http';
 
 @Component({
-  imports: [SiFileUploaderComponent, HttpClientModule, ...]
+  imports: [SiFileUploaderComponent, ...]
 })
 ```
 
