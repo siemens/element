@@ -1,0 +1,51 @@
+- heading "Notification Types & Visual Indicators" [level=2]
+- link "System Alert - Basic notification link":
+  - /url: https://www.siemens.com
+  - text: /Today at \d+:\d+ System Alert - Basic notification Important system notification requiring your attention\. Please review the details and take appropriate action if needed\./
+- button "System Alert - Basic notification dropdown"
+- text: Danger
+- link "Security Warning - High priority alert link":
+  - /url: https://www.siemens.com
+  - text: /Today at \d+:\d+ Security Warning - High priority alert Important system notification requiring your attention\. Please review the details and take appropriate action if needed\./
+- button "Share"
+- button "Read"
+- button "Archive"
+- button "Delete"
+- status "plant in status danger"
+- link "Plant maintenance required link":
+  - /url: https://www.siemens.com
+  - text: /Today at \d+:\d+ Plant maintenance required Important system notification requiring your attention\. Please review the details and take appropriate action if needed\./
+- button "Dismiss"
+- text: JD
+- link "John shared a document link":
+  - /url: https://www.siemens.com
+  - text: /Today at \d+:\d+ John shared a document Important system notification requiring your attention\. Please review the details and take appropriate action if needed\./
+- button "John shared a document dropdown"
+- link "Home":
+  - /url: https://www.siemens.com
+- link "Home":
+  - /url: "#/"
+- text: JD
+- link "John reported an issue link":
+  - /url: https://www.siemens.com
+  - text: /Today at \d+:\d+ John reported an issue Important system notification requiring your attention\. Please review the details and take appropriate action if needed\./
+- button "John reported an issue dropdown"
+- button "Read"
+- button "Archive"
+- button "Delete"
+- heading "Custom Action Integration" [level=2]
+- text: /Today at \d+:\d+ Approval Request Important system notification requiring your attention\. Please review the details and take appropriate action if needed\./
+- button "Approve request"
+- button "Reject request"
+- text: /Today at \d+:\d+ Meeting Invitation - Weekly team sync Important system notification requiring your attention\. Please review the details and take appropriate action if needed\./
+- button "Accept"
+- button "Decline"
+- text: /Today at \d+:\d+ Project milestone reached Important system notification requiring your attention\. Please review the details and take appropriate action if needed\./
+- button "View achievement details"
+- text: Interactive Demo Controls
+- checkbox "Unread (indicator and emphasis)" [checked]
+- text: Unread (indicator and emphasis)
+- checkbox "Display primary actions" [checked]
+- text: Display primary actions
+- checkbox "Display quick actions" [checked]
+- text: Display quick actions
