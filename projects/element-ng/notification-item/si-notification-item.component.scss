@@ -1,0 +1,107 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  div:empty {
+    display: none !important; // stylelint-disable-line declaration-no-important
+  }
+
+  div:has(.notification-item-content a):hover {
+    background-color: variables.$element-base-1-hover;
+  }
+
+  .notification-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto auto;
+
+    a {
+      text-decoration: none;
+
+      &:focus-visible div {
+        @include variables.make-outline-focus();
+      }
+    }
+
+    .notification-item-indicator {
+      grid-column: 1;
+      grid-row: 1;
+
+      div {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    .notification-item-content {
+      grid-column: 2;
+      grid-row: 1;
+      flex-grow: 1;
+    }
+
+    .notification-item-primary-action {
+      grid-column: 3;
+      grid-row: 1 / span 2;
+      display: flex;
+      align-items: center;
+      margin-inline-start: map.get(variables.$spacers, 4);
+    }
+
+    .notification-item-quick-actions {
+      grid-column: 2;
+      grid-row: 2;
+      display: flex;
+      gap: map.get(variables.$spacers, 4);
+      margin-block-start: map.get(variables.$spacers, 4);
+    }
+  }
+
+  .dot {
+    display: block;
+    position: absolute;
+    block-size: map.get(variables.$spacers, 3);
+    inline-size: map.get(variables.$spacers, 3);
+    border-radius: 50%;
+    background-color: variables.$element-ui-1;
+    inset-inline-start: calc(
+      -1 * (map.get(variables.$spacers, 2) + map.get(variables.$spacers, 3))
+    );
+  }
+
+  .notification-item-indicator {
+    &:has(si-avatar) {
+      margin-inline-end: map.get(variables.$spacers, 6);
+    }
+
+    &:has(si-circle-status) {
+      margin-inline-end: map.get(variables.$spacers, 2);
+    }
+
+    // If si-icon is used for the indicator
+    &:not(:has(si-avatar, si-circle-status)):has(si-icon) {
+      margin-inline-end: map.get(variables.$spacers, 4);
+      // timestamp plus center alignment to heading
+      margin-block-start: calc(
+        variables.$si-font-size-body * variables.$si-line-height-body +
+          map.get(variables.$spacers, 1)
+      );
+    }
+
+    &:not(:has(si-avatar, si-circle-status, si-icon)) {
+      inline-size: 0;
+      // timestamp plus spacer
+      margin-block-start: calc(
+        variables.$si-font-size-body * variables.$si-line-height-body +
+          map.get(variables.$spacers, 3)
+      );
+
+      div {
+        // Unread heading block-size
+        block-size: variables.$si-font-size-h5-bold * variables.$si-line-height-h5-bold;
+      }
+    }
+  }
+}

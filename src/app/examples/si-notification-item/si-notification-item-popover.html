@@ -1,0 +1,155 @@
+<div class="has-navbar-fixed-top">
+  <si-application-header>
+    <si-header-brand>
+      <a siHeaderLogo routerLink="/" class="d-none d-md-flex"></a>
+      <span class="application-name">Application name</span>
+    </si-header-brand>
+
+    <si-header-actions>
+      <button
+        class="d-none d-sm-flex"
+        type="button"
+        si-header-selection-item
+        [siHeaderDropdownTriggerFor]="tenants"
+        >{{ activeTenant }}</button
+      >
+      <button
+        type="button"
+        icon="element-language"
+        si-header-action-item
+        [badge]="5"
+        [siHeaderDropdownTriggerFor]="notifications"
+      >
+        Notifications
+      </button>
+
+      <si-header-collapsible-actions>
+        <button
+          class="d-sm-none"
+          type="button"
+          si-header-selection-item
+          [siHeaderDropdownTriggerFor]="tenants"
+          >{{ activeTenant }}</button
+        >
+        <button
+          si-header-action-item
+          type="button"
+          icon="element-help"
+          [siHeaderDropdownTriggerFor]="support"
+          >Support</button
+        >
+      </si-header-collapsible-actions>
+
+      <button
+        si-header-account-item
+        type="button"
+        name="John Doe"
+        [siHeaderDropdownTriggerFor]="account"
+      >
+      </button>
+    </si-header-actions>
+  </si-application-header>
+
+  <ng-template #tenants>
+    <si-header-dropdown>
+      @for (tenant of allTenants; track tenant) {
+        <button
+          si-header-dropdown-item
+          type="button"
+          [checked]="tenant === activeTenant ? 'check' : undefined"
+          (click)="activeTenant = tenant"
+        >
+          {{ tenant }}
+        </button>
+      }
+    </si-header-dropdown>
+  </ng-template>
+
+  <ng-template #notifications>
+    <si-header-dropdown style="max-width: 400px">
+      <div class="dropdown-header d-flex justify-content-between align-items-center px-6 py-5">
+        <span class="si-title-2">Notifications</span>
+        <button type="button" class="btn btn-tertiary" (click)="logEvent('Dismiss all')"
+          >Dismiss all</button
+        >
+      </div>
+      <si-notification-item
+        timeStamp="Just now"
+        heading="Security Alert - Unusual login detected"
+        description="A new login from Germany was detected on your account. If this wasn't you, please review your security settings immediately."
+        [itemLink]="itemLink"
+      >
+        <si-status-icon status="danger" class="icon" />
+      </si-notification-item>
+
+      <si-notification-item
+        timeStamp="One month ago"
+        heading="System Maintenance - Scheduled downtime"
+        description="Planned maintenance window completed successfully. All systems are now operational and performance has been improved."
+        [itemLink]="itemLink"
+      >
+        <si-status-icon status="info" class="icon" />
+      </si-notification-item>
+
+      <si-notification-item
+        timeStamp="24.02.2025 09:40"
+        heading="Team Update - Sarah joined your project"
+        description="Sarah Miller has been added to the Industrial IoT Analytics project and has access to all shared resources."
+        [itemLink]="itemLink"
+      >
+        <si-status-icon status="info" class="icon" />
+      </si-notification-item>
+
+      <si-notification-item
+        timeStamp="18.02.2025 13:20"
+        heading="Report Ready - Monthly analytics available"
+        description="Your February performance report is ready for download. Click to view insights and key metrics for this period."
+        [itemLink]="itemLink"
+      >
+        <si-status-icon status="info" class="icon" />
+      </si-notification-item>
+
+      <div class="dropdown-divider mt-4 mb-5"></div>
+
+      <a class="px-6 pb-5 si-title-2" href="#">Show all</a>
+    </si-header-dropdown>
+  </ng-template>
+
+  <ng-template #account>
+    <si-header-dropdown>
+      <div class="mx-5">
+        <div class="si-title-2">John Doe</div>
+        <div>john.doe&#64;siemens.com</div>
+        <div class="d-flex align-items-center text-secondary mt-2">
+          Siemens AG
+          <span class="badge bg-default">Admin</span>
+        </div>
+      </div>
+      <div class="dropdown-divider"></div>
+      <button
+        si-header-dropdown-item
+        icon="element-language"
+        type="button"
+        [siHeaderDropdownTriggerFor]="language"
+      >
+        Language
+      </button>
+      <button si-header-dropdown-item icon="element-user" type="button">Profile</button>
+    </si-header-dropdown>
+  </ng-template>
+
+  <ng-template #language>
+    <si-header-dropdown>
+      <div class="dropdown-header">Selection has no effect!</div>
+      <button si-header-dropdown-item type="button">German</button>
+      <button si-header-dropdown-item type="button">English</button>
+    </si-header-dropdown>
+  </ng-template>
+
+  <ng-template #support>
+    <si-header-dropdown>
+      <button si-header-dropdown-item type="button">Help</button>
+      <button si-header-dropdown-item type="button">Contact</button>
+    </si-header-dropdown>
+  </ng-template>
+</div>

@@ -1,0 +1,137 @@
+<div class="card d-flex flex-row flex-wrap gap-4 p-5">
+  <div class="col">
+    <h2 class="ps-6">Notification Types & Visual Indicators</h2>
+    <div>
+      <si-notification-item
+        timeStamp="Today at 11:45"
+        heading="System Alert - Basic notification"
+        [description]="description"
+        [itemLink]="itemLink"
+        [primaryAction]="showPrimaryAction ? menu : undefined"
+        [unread]="unread"
+      />
+      <si-notification-item
+        timeStamp="Today at 11:45"
+        heading="Security Warning - High priority alert"
+        [description]="description"
+        [itemLink]="itemLink"
+        [primaryAction]="showPrimaryAction ? circleButton : undefined"
+        [quickActions]="showQuickActions ? quickActions : undefined"
+        [unread]="unread"
+      >
+        <si-status-icon status="danger" class="icon" />
+      </si-notification-item>
+      <si-notification-item
+        timeStamp="Today at 11:45"
+        heading="Plant maintenance required"
+        [description]="description"
+        [itemLink]="itemLink"
+        [primaryAction]="showPrimaryAction ? actionButton : undefined"
+        [unread]="unread"
+      >
+        <si-circle-status icon="element-plant" status="danger" />
+      </si-notification-item>
+      <si-notification-item
+        timeStamp="Today at 11:45"
+        heading="John shared a document"
+        [description]="description"
+        [itemLink]="itemLink"
+        [primaryAction]="showPrimaryAction ? menu : undefined"
+        [quickActions]="showQuickActions ? quickActionsLinks : undefined"
+        [unread]="unread"
+      >
+        <si-avatar altText="John Doe" initials="JD" name="John Doe" />
+      </si-notification-item>
+      <si-notification-item
+        timeStamp="Today at 11:45"
+        heading="John reported an issue"
+        [description]="description"
+        [itemLink]="itemLink"
+        [primaryAction]="showPrimaryAction ? menu : undefined"
+        [quickActions]="showQuickActions ? quickActions : undefined"
+        [unread]="unread"
+      >
+        <si-avatar altText="John Doe" initials="JD" name="John Doe" status="danger" />
+      </si-notification-item>
+    </div>
+  </div>
+
+  <div class="col">
+    <h2 class="ps-6">Custom Action Integration</h2>
+    <div>
+      <si-notification-item
+        timeStamp="Today at 11:45"
+        heading="Approval Request"
+        [description]="description"
+        [unread]="unread"
+      >
+        <button
+          quick-actions
+          type="button"
+          class="btn btn-circle btn-sm btn-primary element-ok"
+          aria-label="Approve request"
+          (click)="logEvent('Approve request')"
+        ></button>
+        <button
+          quick-actions
+          type="button"
+          class="btn btn-circle btn-sm btn-secondary-danger element-cancel"
+          aria-label="Reject request"
+          (click)="logEvent('Reject request')"
+        ></button>
+      </si-notification-item>
+      <si-notification-item
+        timeStamp="Today at 11:45"
+        heading="Meeting Invitation - Weekly team sync"
+        [description]="description"
+        [unread]="unread"
+      >
+        <button
+          quick-actions
+          type="button"
+          class="btn btn-primary"
+          (click)="logEvent('Accept meeting')"
+          >Accept</button
+        >
+        <button
+          quick-actions
+          type="button"
+          class="btn btn-secondary-danger"
+          (click)="logEvent('Decline meeting')"
+          >Decline</button
+        >
+      </si-notification-item>
+      <si-notification-item
+        timeStamp="Today at 11:45"
+        heading="Project milestone reached"
+        [description]="description"
+        [unread]="unread"
+      >
+        <button
+          action
+          type="button"
+          class="btn btn-circle btn-sm btn-secondary element-light"
+          aria-label="View achievement details"
+          (click)="logEvent('View achievement')"
+        ></button>
+      </si-notification-item>
+    </div>
+  </div>
+</div>
+
+<div class="card mt-6 e2e-ignore">
+  <div class="card-header">Interactive Demo Controls</div>
+  <div class="card-body">
+    <si-form-item class="col" label="Unread (indicator and emphasis)">
+      <input type="checkbox" class="form-check-input" [(ngModel)]="unread" />
+    </si-form-item>
+    <div class="col d-flex">
+      <si-form-item label="Display primary actions">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="showPrimaryAction" />
+      </si-form-item>
+      <si-form-item label="Display quick actions">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="showQuickActions" />
+      </si-form-item>
+    </div>
+  </div>
+</div>
