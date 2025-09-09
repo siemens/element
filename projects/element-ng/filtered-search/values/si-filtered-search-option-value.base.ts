@@ -4,7 +4,7 @@
  */
 import { computed, DestroyRef, Directive, inject, input } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { SiTranslateService } from '@siemens/element-translate-ng/translate';
+import { injectSiTranslateService } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
 import { debounceTime, first, map, tap } from 'rxjs/operators';
 
@@ -31,7 +31,7 @@ export abstract class SiFilteredSearchOptionValueBase extends SiFilteredSearchVa
   protected readonly inputChange = new BehaviorSubject('');
 
   private readonly destroyRef = inject(DestroyRef);
-  protected readonly translateService = inject(SiTranslateService);
+  protected readonly translateService = injectSiTranslateService();
 
   readonly inputType = computed(() =>
     this.definition().validationType === 'integer' || this.definition().validationType === 'float'
