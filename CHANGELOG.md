@@ -1,3 +1,10 @@
+## [48.0.2](https://github.com/siemens/element/compare/v48.0.1...v48.0.2) (2025-09-10)
+
+
+### Bug Fixes
+
+* **microchart-bar:** handle negative values ([3e32a33](https://github.com/siemens/element/commit/3e32a331c4d37a881925b7cedffb8a0badc90453))
+
 ## [48.0.1](https://github.com/siemens/element/compare/v48.0.0...v48.0.1) (2025-09-05)
 
 
