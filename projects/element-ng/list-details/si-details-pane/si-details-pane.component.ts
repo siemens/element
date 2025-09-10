@@ -40,6 +40,7 @@ export class SiDetailsPaneComponent {
     effect(() => {
       const outlet = this.routerOutlet();
       if (outlet) {
+        this.parent.detailsActive.set(!outlet.activatedRouteData.SI_EMPTY_DETAILS);
         outlet.activateEvents.subscribe(() =>
           this.parent.detailsActive.set(!outlet.activatedRouteData.SI_EMPTY_DETAILS)
         );
