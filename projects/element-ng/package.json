@@ -1,7 +1,7 @@
 {
   "name": "@siemens/element-ng",
   "description": "Element Angular component library, implementing the Siemens Design Language",
-  "version": "48.0.2",
+  "version": "48.0.3",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -29,8 +29,8 @@
     "@angular/router": "20",
     "@ngx-formly/bootstrap": "^6.2.2",
     "@ngx-formly/core": "^6.2.2",
-    "@siemens/element-translate-ng": "48.0.2",
-    "@siemens/element-theme": "48.0.2",
+    "@siemens/element-translate-ng": "48.0.3",
+    "@siemens/element-theme": "48.0.3",
     "@siemens/ngx-datatable": "22 - 24",
     "flag-icons": "^7.3.2",
     "google-libphonenumber": "^3.2.40",

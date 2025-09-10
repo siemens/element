@@ -1,3 +1,10 @@
+## [48.0.3](https://github.com/siemens/element/compare/v48.0.2...v48.0.3) (2025-09-10)
+
+
+### Bug Fixes
+
+* **list-details:** load route details state on initial load ([419a3d1](https://github.com/siemens/element/commit/419a3d145ebc0df13af326544fc4c1fb6a6543db))
+
 ## [48.0.2](https://github.com/siemens/element/compare/v48.0.1...v48.0.2) (2025-09-10)
 
 
