@@ -121,6 +121,7 @@
 }
 
 .badge-text {
-  inset-block-start: - map.get(variables.$spacers, 4);
-  inset-inline-start: - map.get(variables.$spacers, 3);
+  position: absolute;
+  inset-block-start: map.get(variables.$spacers, 2);
+  inset-inline-end: map.get(variables.$spacers, 3);
 }
