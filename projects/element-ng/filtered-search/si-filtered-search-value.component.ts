@@ -64,6 +64,7 @@ export class SiFilteredSearchValueComponent implements OnInit {
 
   readonly deleteCriterion = output<{ triggerSearch: boolean } | void>();
   readonly submitCriterion = output<{ freeText: string } | void>();
+  readonly searchCriteriaBlur = output<void>();
 
   protected readonly active = signal<boolean>(false);
   protected readonly icons = addIcons({ elementCancel });
@@ -139,8 +140,9 @@ export class SiFilteredSearchValueComponent implements OnInit {
       return;
     }
     setTimeout(() => {
-      // We need to wait for the overlay, that might be shown and now close as well on onside click.
+      // We need to wait for the overlay, that might be shown and now close as well on outside click.
       if (this.active() && !focusOrigin && !this.valueInput()?.focusInOverlay()) {
+        this.searchCriteriaBlur.emit();
         this.active.set(false);
       }
     });
