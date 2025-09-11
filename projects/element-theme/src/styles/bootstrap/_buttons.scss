@@ -64,9 +64,13 @@ button {
     margin-block: -#{map.get(spacers.$spacers, 2)};
     margin-inline: -#{map.get(spacers.$spacers, 2)} #{map.get(spacers.$spacers, 2)};
   }
+
+  &.icon-only .icon {
+    margin-inline: 0;
+  }
 }
 
-.btn:not(:is(.btn-circle, .btn-link, .btn-close, .dropdown-toggle)) {
+.btn:not(:is(.btn-circle, .btn-link, .btn-close, .icon-only)) {
   min-inline-size: variables.$btn-width-normal;
 }
 
@@ -240,53 +244,5 @@ button {
 
   &:focus {
     --btn-border-color: #{semantic-tokens.$element-ui-1};
-  }
-}
-
-// Split Button
-.btn-split {
-  display: inline-flex;
-
-  .btn:first-child {
-    border-start-end-radius: 0;
-    border-end-end-radius: 0;
-
-    &.btn-primary {
-      border-inline-end: 1px solid var(--btn-color, inherit);
-    }
-  }
-
-  &:has(.btn:focus-visible) .btn:first-child.btn-primary {
-    border-inline-end-width: 0;
-    margin-inline-end: 1px;
-  }
-
-  .btn:is(:focus-visible) {
-    z-index: 1;
-  }
-
-  .btn.dropdown-toggle {
-    inline-size: 24px;
-    padding: 0;
-    border-inline-start: none;
-    border-start-start-radius: 0;
-    border-end-start-radius: 0;
-
-    .dropdown-caret {
-      margin-inline: 0;
-      padding-inline: 0;
-      transform-origin: center;
-    }
-
-    &.show .dropdown-caret {
-      transform: rotate(180deg);
-    }
-  }
-
-  &:is(.disabled, :disabled) {
-    .btn {
-      pointer-events: none;
-      opacity: semantic-tokens.$element-action-disabled-opacity;
-    }
   }
 }
