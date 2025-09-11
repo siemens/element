@@ -41,7 +41,7 @@ They are minimalistic in design and keep visual noise low to maintain clarity.
 
 ### Colors
 
-Make use of data visualization [categorial colors](../../fundamentals/colors/data-visualization-colors.md/#categorical-colors).
+Make use of data visualization [categorical colors](../../fundamentals/colors/data-visualization-colors.md/#categorical-colors).
 
 ![Micro charts colors](images/micro-chart-colors.png)
 
