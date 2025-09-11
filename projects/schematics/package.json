@@ -1,0 +1,38 @@
+{
+  "name": "@siemens/schematics",
+  "version": "48.0.3",
+  "description": "Collection of angular schematics for element projects.",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && jasmine ./**/*_spec.js"
+  },
+  "keywords": [
+    "schematics"
+  ],
+  "author": {
+    "name": "Siemens AG",
+    "email": "info@siemens.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/siemens/element.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "schematics": "./collection.json",
+  "homepage": "https://github.com/siemens/element",
+  "bugs": "https://github.com/siemens/element/issues/new",
+  "dependencies": {
+    "@angular-devkit/core": "20.0.6",
+    "@angular-devkit/schematics": "20.0.6",
+    "typescript": "5.8.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.19",
+    "@types/jasmine": "~5.1.0",
+    "@schematics/angular": "^20.2.1",
+    "jasmine": "^5.0.0"
+  }
+}
