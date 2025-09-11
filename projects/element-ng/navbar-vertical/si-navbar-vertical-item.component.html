@@ -1,8 +1,10 @@
 @if (item().icon) {
   <i class="icon me-n2" aria-hidden="true" [ngClass]="[item().icon]"></i>
 }
-@if (item().icon && item().badge) {
-  <span class="badge-text">{{ item().badge }}</span>
+@if (item().icon && formattedBadge()) {
+  <div class="w-100 h-100 position-absolute">
+    <span class="badge-text">{{ formattedBadge() }}</span>
+  </div>
 }
 <div
   class="item-title text-truncate si-h5"
@@ -10,9 +12,9 @@
 >
   <ng-content />
 </div>
-@if (item().badge) {
+@if (formattedBadge()) {
   <span class="badge" [ngClass]="'bg-' + item().badgeColor">
-    {{ item().badge }}
+    {{ formattedBadge() }}
   </span>
 }
 @if (group) {
