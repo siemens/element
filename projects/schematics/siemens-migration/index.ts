@@ -3,6 +3,10 @@
  * SPDX-License-Identifier: MIT
  */
 import { Rule, SchematicContext, SchematicsException, Tree } from '@angular-devkit/schematics';
+// import { findNodes } from '@schematics/angular/utility/ast-utils';
+// import { applyToUpdateRecorder, ReplaceChange } from '@schematics/angular/utility/change';
+// import { getEOL } from '@schematics/angular/utility/eol';
+// import * as ts from 'typescript';
 import { dirname, resolve } from 'path';
 
 import { createFullPathTree, getTsConfigPaths } from '../utils';
@@ -39,44 +43,48 @@ export function siemensMigration(_options: MigrationOptions): Rule {
     //     return false;
     //   }
 
-    //   try {
-    //     const sourceFile = ts.createSourceFile(
-    //       filePath,
-    //       content.toString(),
-    //       ts.ScriptTarget.Latest,
-    //       true
-    //     );
+    // files.forEach(filePath => {
+    //   const content = tree.read(filePath);
+    //   if (!content) {
+    //     return false;
+    //   }
 
-    //     const allImports = findNodes(
-    //       sourceFile,
-    //       ts.SyntaxKind.ImportDeclaration
-    //     ) as ts.ImportDeclaration[];
+    //   const sourceFile = ts.createSourceFile(
+    //     filePath,
+    //     content.toString(),
+    //     ts.ScriptTarget.Latest,
+    //     true
+    //   );
 
-    //     const relevantImportNodes = allImports.filter(
-    //       node =>
-    //         node.moduleSpecifier &&
-    //         ts.isStringLiteral(node.moduleSpecifier) &&
-    //         node.moduleSpecifier.text.startsWith('@simpl/')
-    //     );
+    // const allImports = findNodes(
+    //   sourceFile,
+    //   ts.SyntaxKind.ImportDeclaration
+    // ) as ts.ImportDeclaration[];
 
-    //     // Remove all relevant @simpl/ import statements
-    //     const recorder = tree.beginUpdate(filePath);
+    // const relevantImportNodes = allImports.filter(
+    //   node =>
+    //     node.moduleSpecifier &&
+    //     ts.isStringLiteral(node.moduleSpecifier) &&
+    //     node.moduleSpecifier.text.startsWith('@simpl/')
+    // );
 
-    //     relevantImportNodes.forEach(node => {
-    //       // Extract all imported component names or module names from @simpl/ imports
-    //       const imports =
-    //         node.importClause?.namedBindings && ts.isNamedImports(node.importClause.namedBindings)
-    //           ? node.importClause.namedBindings.elements
-    //           : [];
+    // // Remove all relevant @simpl/ import statements
+    // const recorder = tree.beginUpdate(filePath);
+    // relevantImportNodes.forEach(node => {
+    //   // Extract all imported component names or module names from @simpl/ imports
+    //   const imports =
+    //     node.importClause?.namedBindings && ts.isNamedImports(node.importClause.namedBindings)
+    //       ? node.importClause.namedBindings.elements
+    //       : [];
 
-    //       const symbolNames = imports.map(e => e.name.getText());
+    //   const symbolNames = imports.map(e => e.name.getText());
 
-    //       const newImportPath = findComponentImportPath(symbolNames[0]);
+    //   const newImportPath = '@siemens/element-ng';
 
-    //       if (!newImportPath) {
-    //         this.context.logger.warn(`No new import path found for component: ${symbolNames}`);
-    //         return;
-    //       }
+    //   if (!newImportPath) {
+    //     context.logger.warn(`No new import path found for component: ${symbolNames}`);
+    //     return;
+    //   }
 
     //       const eol = getEOL(sourceFile.getText());
     //       const newImport = `import { ${symbolNames.join(', ')} } from '${newImportPath}';${eol}`;
