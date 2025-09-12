@@ -2,14 +2,15 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FieldWrapper, FormlyModule } from '@ngx-formly/core';
 import { SiFormFieldsetComponent } from '@siemens/element-ng/form';
 
 @Component({
   selector: 'si-formly-fieldset',
   imports: [FormlyModule, SiFormFieldsetComponent],
-  templateUrl: './si-formly-fieldset.component.html'
+  templateUrl: './si-formly-fieldset.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiFormlyFieldsetComponent extends FieldWrapper {
   protected get label(): string | undefined {
