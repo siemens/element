@@ -3,6 +3,7 @@
     "baseUrl": "./projects/schematics",
     "lib": ["es2022"],
     "declaration": true,
+    "esModuleInterop": true,
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmitOnError": true,

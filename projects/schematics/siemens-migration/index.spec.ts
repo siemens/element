@@ -6,13 +6,22 @@ import { Tree } from '@angular-devkit/schematics';
 import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
 
+import { createTestApp } from '../utils/testing';
+
 const collectionPath = path.join(__dirname, '../collection.json');
 
 describe('siemensMigration', () => {
-  it('works', async () => {
-    const runner = new SchematicTestRunner('siemens-migration', collectionPath);
-    const tree = await runner.runSchematic('siemens-migration', {}, Tree.empty());
+  const name = 'siemens-migration';
+  let runner: SchematicTestRunner;
+  let appTree: Tree;
 
+  beforeEach(async () => {
+    runner = new SchematicTestRunner(name, collectionPath);
+    appTree = await createTestApp(runner);
+  });
+
+  it('works', async () => {
+    const tree = await runner.runSchematic('siemens-migration', {}, appTree);
     expect(tree.files).toEqual([]);
   });
 });
