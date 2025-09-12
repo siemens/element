@@ -1,0 +1,35 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  max-inline-size: 80%;
+  margin-inline-start: auto;
+}
+
+// User message bubble with experimental color
+.user-message-bubble {
+  background-color: variables.$element-base-input-experimental;
+}
+
+// Message actions - show on hover
+.message-actions {
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.user-message-wrapper:hover .message-actions {
+  opacity: 1;
+}
+
+// Container responsive adjustments
+:host-context(.si-container-xs) {
+  max-inline-size: 95%;
+
+  .message-actions {
+    opacity: 1;
+  }
+}
+
+:host-context(.si-container-sm) {
+  max-inline-size: 85%;
+}

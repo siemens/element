@@ -1,0 +1,72 @@
+<div class="d-flex align-items-start ai-message-container si-body-2" siResponsiveContainer>
+  <!-- AI Avatar/Icon -->
+  @if (showIcon()) {
+    <div class="flex-shrink-0 icon ai-avatar">
+      <si-icon [icon]="aiIcon()" [ariaLabel]="aiIconAltText() | translate" />
+    </div>
+  }
+
+  <!-- Message Content -->
+  <div class="flex-grow-1">
+    <!-- Loading State -->
+    @if (loading()) {
+      <div class="ai-message-bubble rounded-3 p-3 mw-100 text-break">
+        <div class="d-flex align-items-center gap-3 text-secondary si-body-2">
+          <si-loading-spinner [ariaLabel]="loadingAriaLabel() | translate" />
+          <span>{{ loadingText() | translate }}</span>
+        </div>
+      </div>
+    } @else {
+      <!-- Message Text Content -->
+      <div class="ai-message-bubble rounded-3 p-3 mw-100 text-break">
+        <si-markdown-content [content]="content()" />
+      </div>
+
+      <!-- Action Buttons -->
+      @if (hasActions() || hasSecondaryActions()) {
+        <div class="d-flex align-items-center gap-1 mt-2 ms-1">
+          <!-- Primary Actions -->
+          @for (action of actions(); track action.id) {
+            <button
+              type="button"
+              class="btn btn-ghost btn-circle btn-sm"
+              [disabled]="action.disabled"
+              [attr.aria-label]="action.label | translate"
+              [attr.title]="action.label | translate"
+              (click)="onActionClick(action)"
+            >
+              <si-icon [icon]="action.icon" />
+            </button>
+          }
+
+          <!-- Secondary Actions Dropdown -->
+          @if (hasSecondaryActions()) {
+            <button
+              type="button"
+              class="btn btn-ghost btn-circle btn-sm"
+              [cdkMenuTriggerFor]="secondaryActionsMenu"
+              [attr.aria-label]="moreActionsLabel() | translate"
+              [attr.title]="moreActionsLabel() | translate"
+            >
+              <si-icon icon="element-optionsVertical" />
+            </button>
+
+            <ng-template #secondaryActionsMenu>
+              <si-menu>
+                @for (action of secondaryActions(); track action.id) {
+                  <si-menu-item
+                    [disabled]="action.disabled"
+                    [icon]="action.icon"
+                    (triggered)="onActionClick(action)"
+                  >
+                    {{ action.label | translate }}
+                  </si-menu-item>
+                }
+              </si-menu>
+            </ng-template>
+          }
+        </div>
+      }
+    }
+  </div>
+</div>
