@@ -15,6 +15,7 @@ import {
   model,
   OnChanges,
   OnInit,
+  Signal,
   signal,
   SimpleChange,
   SimpleChanges,
@@ -193,6 +194,15 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
    */
   readonly timepickerLabel = input<string>();
 
+  /**
+   * Whether the datepicker has invalid/empty fields.
+   */
+  readonly invalid = computed(() => {
+    const timePicker = this.timePicker();
+    // For now only the timepicker can be invalid.
+    return !!timePicker && timePicker.invalid();
+  });
+
   protected get startDate(): Date | undefined {
     return this.config().enableDateRange ? this.dateRange()?.start : this.date();
   }
@@ -273,12 +283,67 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
    * in separate objects to not change the date when flipping time.
    * After change, a new date object is created with an adapted time.
    */
-  protected time?: Date;
+  protected readonly time = signal<Date | undefined>(undefined);
   /**
    * Used to hold the last time when setting the time to disabled.
    * Value will be reset on enabling the time again.
    */
   private previousTime?: Date;
+
+  /**
+   * Functions returning a computed property to get the effective min or max time constraint for the time picker
+   * based on the selected date and the min/max date of the datepicker configuration.
+   */
+  private getTimePickerLimit(direction: 'min' | 'max'): Signal<Date | undefined> {
+    return computed(() => {
+      if (!this.config().enableTimeValidation) {
+        return undefined;
+      }
+
+      const selectedDate = this.date();
+      const dateLimit = direction === 'min' ? this.config().minDate : this.config().maxDate;
+
+      if (!dateLimit || !selectedDate) {
+        return undefined;
+      }
+
+      // If selected date is the same day as min date, use min time
+      if (
+        dateLimit.getFullYear() === selectedDate.getFullYear() &&
+        dateLimit.getMonth() === selectedDate.getMonth() &&
+        dateLimit.getDate() === selectedDate.getDate()
+      ) {
+        return dateLimit;
+      }
+
+      // If selected date is after min date or before max date, no time constraint
+      if (
+        (direction === 'min' && selectedDate > dateLimit) ||
+        (direction === 'max' && selectedDate < dateLimit)
+      ) {
+        return undefined;
+      }
+
+      // If selected date is before min date or after max date, set impossible time (23:59:59.999 for min, 00:00:00.000 for max)
+      const impossibleTime = new Date(selectedDate);
+      if (direction === 'min') {
+        impossibleTime.setHours(0, 0, 0, 0);
+      } else {
+        impossibleTime.setHours(23, 59, 59, 999);
+      }
+      return impossibleTime;
+    });
+  }
+
+  /**
+   * Computed property for effective minimum time constraint based on selected date
+   */
+  protected readonly effectiveMinTime = this.getTimePickerLimit('min');
+
+  /**
+   * Computed property for effective maximum time constraint based on selected date
+   */
+  protected readonly effectiveMaxTime = this.getTimePickerLimit('max');
 
   private readonly timePicker = viewChild(SiTimepickerComponent);
   /** Reference to the current day selection component. Shown when view === 'week' */
@@ -316,10 +381,10 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
       if (date) {
         if (changes.date.isFirstChange()) {
           this.previousTime = new Date(date);
-          this.time = date;
+          this.time.set(date);
         }
-        if (this.time?.getTime() !== date?.getTime()) {
-          this.time = date;
+        if (this.time()?.getTime() !== date?.getTime()) {
+          this.time.set(date);
         }
         this.focusedDate.set(date);
       }
@@ -367,7 +432,7 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
 
         if (newDate && changes.dateRange.isFirstChange()) {
           this.previousTime = new Date(newDate);
-          this.time = newDate;
+          this.time.set(newDate);
         }
       }
     }
@@ -466,10 +531,6 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
       this.ngOnChanges({ date: new SimpleChange(undefined, date, true) });
     }
 
-    if (config.enableTimeValidation && this.timePicker() && (config.minDate || config.maxDate)) {
-      this.validateTime(newDate);
-    }
-
     this.cdRef.markForCheck();
   }
 
@@ -504,27 +565,27 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
     }
 
     // Break event cycle
-    if (this.time?.getTime() === newTime.getTime()) {
-      this.validateTime(newTime);
+    if (this.time()?.getTime() === newTime.getTime()) {
       return;
     }
 
-    this.previousTime = this.time;
-    this.time = newTime;
+    this.previousTime = this.time();
+    this.time.set(newTime);
 
     const oldDate = this.getRelevantDate() ?? new Date();
     let newDate: Date;
     if (this.disabledTime()) {
       // if time is disabled, ensure that 00:00:00 is displayed in any timezone
       newDate = createDate(oldDate);
-      this.time = newDate;
+      this.time.set(newDate);
     } else {
+      const currentTime = this.time();
       newDate = createDate(
         oldDate,
-        this.time.getHours(),
-        this.time.getMinutes(),
-        this.time.getSeconds(),
-        this.time.getMilliseconds()
+        currentTime!.getHours(),
+        currentTime!.getMinutes(),
+        currentTime!.getSeconds(),
+        currentTime!.getMilliseconds()
       );
     }
     if (!this.config().enableDateRange) {
@@ -563,34 +624,18 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
     }
   }
 
-  private validateTime(date: Date): void {
-    // wait for a cycle to initialize timepicker
-    setTimeout(() => {
-      const config = this.config();
-      const timePicker = this.timePicker()!;
-      if (
-        !this.disabledTime() &&
-        ((config.minDate && date < config.minDate) || (config.maxDate && date > config.maxDate))
-      ) {
-        timePicker.forceInvalid.set(true);
-      } else {
-        timePicker.forceInvalid.set(false);
-      }
-      this.cdRef.markForCheck();
-    });
-  }
-
   /**
    * Handle selection in the day view.
    * @param selection - selected date.
    */
   protected selectionChange(selection: Date): void {
+    const currentTime = this.time();
     const newDate = createDate(
       selection,
-      this.time?.getHours(),
-      this.time?.getMinutes(),
-      this.time?.getSeconds(),
-      this.time?.getMilliseconds()
+      currentTime?.getHours(),
+      currentTime?.getMinutes(),
+      currentTime?.getSeconds(),
+      currentTime?.getMilliseconds()
     );
     if (this.config().enableDateRange) {
       const rangeType = this.rangeType();
