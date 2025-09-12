@@ -96,12 +96,12 @@
         class="si-tree-view-item-end-icons d-flex ms-2 align-items-center"
         [class.si-tree-view-item-end-icons-sticky]="stickyEndItems()"
       >
-        @if (showStateIndicator() && getStateIndicatorColor()) {
+        @if (showStateIndicator() && !hideStateIndicator() && getStateIndicatorColor()) {
           <div
             class="si-tree-view-state-indicator"
             [style.background-color]="getStateIndicatorColor()"
             [class.si-tree-view-state-indicator-endmost]="
-              !enableContextMenuButton() && !showFolderStateEnd
+              (!enableContextMenuButton() || hideContextMenuButton()) && !showFolderStateEnd
             "
           ></div>
         }
