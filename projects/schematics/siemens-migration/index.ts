@@ -7,7 +7,7 @@ import { Rule, SchematicContext, SchematicsException, Tree } from '@angular-devk
 // import { applyToUpdateRecorder, ReplaceChange } from '@schematics/angular/utility/change';
 // import { getEOL } from '@schematics/angular/utility/eol';
 // import * as ts from 'typescript';
-import { dirname, resolve } from 'path';
+import { dirname, isAbsolute, resolve } from 'path';
 
 import { createFullPathTree, getTsConfigPaths } from '../utils';
 import { parseTsconfigFile } from '../utils/ts-utils';
@@ -38,7 +38,9 @@ export function siemensMigration(_options: MigrationOptions): Rule {
 
     // Filter all files which are in the path
     if (_options.path) {
-      sourceFiles = sourceFiles.filter(f => f.startsWith(_options.path));
+      sourceFiles = isAbsolute(_options.path)
+        ? sourceFiles.filter(f => f.startsWith(_options.path))
+        : sourceFiles.filter(f => f.startsWith(resolve(basePath, _options.path)));
     }
 
     console.log('Source files:', sourceFiles);

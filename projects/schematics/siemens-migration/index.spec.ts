@@ -21,9 +21,8 @@ describe('siemensMigration', () => {
   });
 
   it('works', async () => {
-    const tree = await runner.runSchematic('siemens-migration', {}, appTree);
-    addTestFiles(tree, {
-      'projects/schematics/app/components/fake-1/fake-1.component.ts': `
+    const files = {
+      '/projects/app/src/app/fake-1.component.ts': `
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -41,7 +40,14 @@ export class Fake1Component {
   value = 50;
 }
 `
-    });
+    };
+    addTestFiles(appTree, files);
+    const tree = await runner.runSchematic(
+      'siemens-migration',
+      { path: 'projects/app/src' },
+      appTree
+    );
+
     expect(tree.files).toEqual([]);
   });
 });

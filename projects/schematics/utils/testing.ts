@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { Tree } from '@angular-devkit/schematics';
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 
 /**
@@ -9,9 +10,13 @@ import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/te
  */
 export const createTestApp = async (
   runner: SchematicTestRunner,
-  appOptions = {}
+  appOptions = {},
+  files?: { [path: string]: string }
 ): Promise<UnitTestTree> => {
   let tree = await createWorkspace(runner);
+  if (files) {
+    addTestFiles(tree, files);
+  }
   tree = await runner.runExternalSchematic(
     '@schematics/angular',
     'application',
@@ -35,10 +40,7 @@ const createWorkspace = (runner: SchematicTestRunner): Promise<UnitTestTree> => 
   });
 };
 
-export const addTestFiles = (
-  tree: UnitTestTree,
-  files: { [path: string]: string }
-): UnitTestTree => {
+export const addTestFiles = (tree: Tree, files: { [path: string]: string }): Tree => {
   Object.entries(files).forEach(([path, content]) => {
     tree.create(path, content);
   });
