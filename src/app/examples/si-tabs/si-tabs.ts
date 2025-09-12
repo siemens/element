@@ -58,4 +58,8 @@ export class SampleComponent {
       1
     );
   }
+
+  canDeactivate = (): boolean => {
+    return this.deselectable;
+  };
 }
