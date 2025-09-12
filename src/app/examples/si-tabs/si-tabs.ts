@@ -27,6 +27,7 @@ interface TabModel {
 export class SampleComponent {
   selectedTabIndex = 0;
   deselectable = true;
+  activable = true;
   logEvent = inject(LOG_EVENT);
 
   tabs: TabModel[] = [
@@ -58,4 +59,15 @@ export class SampleComponent {
       1
     );
   }
+
+  canDeactivate = (): boolean => {
+    return this.deselectable;
+  };
+
+  canActivate = (): boolean => {
+    if (!this.activable) {
+      this.logEvent('Enable Allow Lobby tab activation to activate this tab');
+    }
+    return this.activable;
+  };
 }
