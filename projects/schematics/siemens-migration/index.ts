@@ -2,11 +2,11 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
-import { findNodes } from '@schematics/angular/utility/ast-utils';
-import * as ts from 'typescript';
+import { Rule, SchematicContext, SchematicsException, Tree } from '@angular-devkit/schematics';
+import { dirname, resolve } from 'path';
 
-import { getAllTypeScriptFiles } from '../utils';
+import { createFullPathTree, getTsConfigPaths } from '../utils';
+import { parseTsconfigFile } from '../utils/ts-utils';
 
 interface MigrationOptions {
   path: string;
@@ -16,9 +16,22 @@ interface MigrationOptions {
 // per file.
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export function siemensMigration(_options: MigrationOptions): Rule {
-  return (tree: Tree, _context: SchematicContext) => {
-    _context.logger.info('🚀 Starting Simpl to Siemens migration...');
-
+  return async (tree: Tree, context: SchematicContext) => {
+    context.logger.info('🚀 Starting Simpl to Siemens migration...');
+    const basePath = process.cwd().replace(/\\/g, '/');
+    const tsConfigs = await getTsConfigPaths({ tree, context });
+    if (!tsConfigs.length) {
+      throw new SchematicsException('Could not find any tsconfig file. Cannot run the migration.');
+    }
+    const sourceFiles: string[] = [];
+    // Wrap the tree to force full paths since typescript expect them
+    const tsTree = createFullPathTree(basePath, tree);
+    for (const configPath of tsConfigs) {
+      const tsConfigPath = resolve(basePath, configPath);
+      const config = parseTsconfigFile(tsConfigPath, dirname(tsConfigPath), tsTree);
+      sourceFiles.push(...config.fileNames.filter(f => f.endsWith('.ts')));
+    }
+    console.log('Source files:', sourceFiles);
     // const files = getAllTypeScriptFiles(_options.path, tree);
     // files.forEach(filePath => {
     //   const content = tree.read(filePath);
@@ -86,7 +99,7 @@ export function siemensMigration(_options: MigrationOptions): Rule {
     //   }
     // });
 
-    _context.logger.info('✅ Simpl to Siemens migration completed!');
+    context.logger.info('✅ Simpl to Siemens migration completed!');
     return tree;
   };
 }
