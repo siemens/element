@@ -1,0 +1,26 @@
+@use '@simpl/element-theme/src/styles/variables/semantic-tokens';
+
+.fake-component {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 10px 0;
+  background-color: #f9f9f9;
+}
+
+.fake-component h2 {
+  color: #666;
+  margin-bottom: 15px;
+}
+
+si-checkbox, si-radio, si-select {
+  display: block;
+  margin: 8px 0;
+}
+
+input[siDateInput] {
+  margin: 10px 0;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

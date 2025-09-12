@@ -1,0 +1,19 @@
+@use 'sass:map';
+
+@use '@simpl/element-theme/src/styles/variables';
+
+.fake-component {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+.fake-component h2 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+si-input, si-slider, si-button {
+  margin: 10px 5px;
+}

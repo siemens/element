@@ -70,8 +70,11 @@
     "dashboards-demo:build:prod": "ng build dashboards-demo --configuration production",
     "dashboards-demo:build:webcomponents": "ng build dashboards-demo-webcomponents --configuration production --output-hashing none && node projects/dashboards-demo/webcomponents/concat.cjs",
     "dashboards-demo:build:mfe": "ng build dashboards-demo-mfe --configuration production --output-hashing none",
-    "schematics:build": "tsc -p projects/schematics/tsconfig.json && cpy projects/schematics/{package.json,collection.json} \"./dist/@siemens/schematics/\" --flat",
+    "schematics:build": "tsc -p projects/schematics/tsconfig.json ",
+    "postschematics:build": "cpy projects/schematics/{package.json,collection.json} \"./dist/@siemens/schematics/\" --flat && cpy projects/schematics/**/*/schema.json \"./dist/@siemens/schematics/\"",
     "schematics:test": "ts-node --project projects/schematics/tsconfig.json node_modules/jasmine/bin/jasmine \"projects/schematics/**/*.spec.ts\"",
+    "schematics:run": "npm run schematics:build && schematics ./dist/@siemens/schematics:siemens-migration --path=\"projects/schematics/app\" --dry-run=false",
+    "schematics:dry-run": "npm run schematics:build && schematics ./dist/@siemens/schematics:siemens-migration --dry-run --path=\"projects/schematics/app\"",
     "schematics:test:debug": "ts-node-dev --respawn --project projects/schematics/tsconfig.json node_modules/jasmine/bin/jasmine \"projects/schematics/**/*.spec.ts\""
   },
   "workspaces": [
