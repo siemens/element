@@ -39,6 +39,8 @@ class SiTabRouteComponent {}
               [heading]="tab.heading"
               [closable]="!!tab.closable"
               [style.max-width.px]="tabButtonMaxWidth()"
+              [canDeactivate]="tab.canDeactivate"
+              [canActivate]="tab.canActivate"
               (closeTriggered)="closeTriggered(tab)"
             />
           }
@@ -56,7 +58,14 @@ class TestComponent {
 
   set tabs(
     value: (
-      | { heading: string; closable?: true; routerLinkUrl?: string; active?: boolean }
+      | {
+          heading: string;
+          closable?: true;
+          routerLinkUrl?: string;
+          active?: boolean;
+          canDeactivate?: () => boolean;
+          canActivate?: () => boolean;
+        }
       | string
     )[]
   ) {
@@ -308,6 +317,41 @@ describe('SiTabset', () => {
     fixture.detectChanges();
     testComponent.tabs = ['1', { heading: '2', active: true }, '3'];
     expect(await tabsetHarness.isTabFocussable(1)).toBeTrue();
+  });
+
+  it('should not change active if canDeactivate returns false', async () => {
+    testComponent.tabs = [
+      { heading: '1', active: true },
+      { heading: '2', closable: true, canDeactivate: () => false }
+    ];
+    fixture.detectChanges();
+    expect(await tabsetHarness.isTabItemActive(0)).toBeTrue();
+    expect(await tabsetHarness.isTabItemActive(1)).toBeFalse();
+
+    (await tabsetHarness.getTabItemButtonAt(1)).click();
+    fixture.detectChanges();
+    expect(await tabsetHarness.isTabItemActive(0)).toBeFalse();
+    expect(await tabsetHarness.isTabItemActive(1)).toBeTrue();
+
+    (await tabsetHarness.getTabItemButtonAt(0)).click();
+    fixture.detectChanges();
+    expect(await tabsetHarness.isTabItemActive(0)).toBeFalse();
+    expect(await tabsetHarness.isTabItemActive(1)).toBeTrue();
+  });
+
+  it('should not change active if canActivate returns false', async () => {
+    testComponent.tabs = [
+      { heading: '1', active: true },
+      { heading: '2', closable: true, canActivate: () => false }
+    ];
+    fixture.detectChanges();
+    expect(await tabsetHarness.isTabItemActive(0)).toBeTrue();
+    expect(await tabsetHarness.isTabItemActive(1)).toBeFalse();
+
+    (await tabsetHarness.getTabItemButtonAt(1)).click();
+    fixture.detectChanges();
+    expect(await tabsetHarness.isTabItemActive(0)).toBeTrue();
+    expect(await tabsetHarness.isTabItemActive(1)).toBeFalse();
   });
 });
 

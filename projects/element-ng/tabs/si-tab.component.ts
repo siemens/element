@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, model, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, model, OnDestroy } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
@@ -41,14 +41,33 @@ export class SiTabComponent extends SiTabBaseDirective implements OnDestroy {
    * */
   override readonly active = model(false);
 
+  /**
+   * Guard to check if the tab can be activated.
+   * If not provided, the tab can always be activated.
+   */
+  readonly canActivate = input<() => boolean>();
+  /**
+   * Guard to check if the tab can be deactivated.
+   * If not provided, the tab can always be deactivated.
+   */
+  readonly canDeactivate = input<() => boolean>();
+
   protected selectTabByUser(): void {
-    if (!this.active()) {
+    const canActivate = this.canActivate();
+    if (!this.active() && (canActivate ? canActivate() : true)) {
       this.selectTab();
     }
   }
 
   /** {@inheritDoc} */
   override selectTab(retainFocus?: boolean): void {
+    const activeTab = this.tabset.activeTab();
+    if (activeTab instanceof SiTabComponent) {
+      const canDeactivate = activeTab?.canDeactivate();
+      if (canDeactivate ? !canDeactivate() : false) {
+        return;
+      }
+    }
     this.tabset.activeTab()?.deSelectTab();
     this.active.set(true);
     super.selectTab(retainFocus);
