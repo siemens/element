@@ -34,3 +34,13 @@ const createWorkspace = (runner: SchematicTestRunner): Promise<UnitTestTree> => 
     newProjectRoot: 'projects'
   });
 };
+
+export const addTestFiles = (
+  tree: UnitTestTree,
+  files: { [path: string]: string }
+): UnitTestTree => {
+  Object.entries(files).forEach(([path, content]) => {
+    tree.create(path, content);
+  });
+  return tree;
+};

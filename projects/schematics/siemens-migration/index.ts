@@ -27,7 +27,7 @@ export function siemensMigration(_options: MigrationOptions): Rule {
     if (!tsConfigs.length) {
       throw new SchematicsException('Could not find any tsconfig file. Cannot run the migration.');
     }
-    const sourceFiles: string[] = [];
+    let sourceFiles: string[] = [];
     // Wrap the tree to force full paths since typescript expect them
     const tsTree = createFullPathTree(basePath, tree);
     for (const configPath of tsConfigs) {
@@ -35,6 +35,12 @@ export function siemensMigration(_options: MigrationOptions): Rule {
       const config = parseTsconfigFile(tsConfigPath, dirname(tsConfigPath), tsTree);
       sourceFiles.push(...config.fileNames.filter(f => f.endsWith('.ts')));
     }
+
+    // Filter all files which are in the path
+    if (_options.path) {
+      sourceFiles = sourceFiles.filter(f => f.startsWith(_options.path));
+    }
+
     console.log('Source files:', sourceFiles);
     // const files = getAllTypeScriptFiles(_options.path, tree);
     // files.forEach(filePath => {
