@@ -1,0 +1,153 @@
+<si-side-panel #sidePanel mode="scroll" [collapsed]="collapsed" (closed)="collapsed = true">
+  <si-application-header>
+    <si-header-brand>
+      <a siHeaderLogo routerLink="/" class="d-none d-md-flex"></a>
+      <span class="application-name">Application name</span>
+    </si-header-brand>
+
+    <si-header-actions>
+      <button
+        class="d-none d-sm-flex"
+        type="button"
+        si-header-selection-item
+        [siHeaderDropdownTriggerFor]="tenants"
+        >{{ activeTenant }}</button
+      >
+      <button
+        type="button"
+        icon="element-language"
+        si-header-action-item
+        [badge]="4"
+        (click)="toggleSidepanel()"
+      >
+        Notifications
+      </button>
+
+      <si-header-collapsible-actions>
+        <button
+          class="d-sm-none"
+          type="button"
+          si-header-selection-item
+          [siHeaderDropdownTriggerFor]="tenants"
+          >{{ activeTenant }}</button
+        >
+        <button
+          si-header-action-item
+          type="button"
+          icon="element-help"
+          [siHeaderDropdownTriggerFor]="support"
+          >Support</button
+        >
+      </si-header-collapsible-actions>
+
+      <button
+        si-header-account-item
+        type="button"
+        name="John Doe"
+        [siHeaderDropdownTriggerFor]="account"
+      >
+      </button>
+    </si-header-actions>
+  </si-application-header>
+
+  <ng-template #tenants>
+    <si-header-dropdown>
+      @for (tenant of allTenants; track tenant) {
+        <button
+          si-header-dropdown-item
+          type="button"
+          [checked]="tenant === activeTenant ? 'check' : undefined"
+          (click)="activeTenant = tenant"
+        >
+          {{ tenant }}
+        </button>
+      }
+    </si-header-dropdown>
+  </ng-template>
+
+  <ng-template #account>
+    <si-header-dropdown>
+      <div class="mx-5">
+        <div class="si-title-2">John Doe</div>
+        <div>john.doe&#64;siemens.com</div>
+        <div class="d-flex align-items-center text-secondary mt-2">
+          Siemens AG
+          <span class="badge bg-default">Admin</span>
+        </div>
+      </div>
+      <div class="dropdown-divider"></div>
+      <button
+        si-header-dropdown-item
+        icon="element-language"
+        type="button"
+        [siHeaderDropdownTriggerFor]="language"
+      >
+        Language
+      </button>
+      <button si-header-dropdown-item icon="element-user" type="button">Profile</button>
+    </si-header-dropdown>
+  </ng-template>
+
+  <ng-template #language>
+    <si-header-dropdown>
+      <div class="dropdown-header">Selection has no effect!</div>
+      <button si-header-dropdown-item type="button">German</button>
+      <button si-header-dropdown-item type="button">English</button>
+    </si-header-dropdown>
+  </ng-template>
+
+  <ng-template #support>
+    <si-header-dropdown>
+      <button si-header-dropdown-item type="button">Help</button>
+      <button si-header-dropdown-item type="button">Contact</button>
+    </si-header-dropdown>
+  </ng-template>
+
+  <si-side-panel-content heading="Notifications" [primaryActions]="sidePanelPrimaryAction">
+    <div class="d-flex flex-column h-100">
+      <div style="flex: 0 0 auto">
+        <div class="px-6 py-4">
+          <si-search-bar
+            placeholder="Search..."
+            showIcon
+            colorVariant="base-0"
+            [debounceTime]="400"
+          />
+        </div>
+        <form class="px-6 py-4 d-flex flex-row gap-4" [formGroup]="notificationFilters">
+          <si-summary-chip
+            label="All"
+            [value]="notificationAll.length.toString()"
+            [selected]="notificationFilters.controls.showAll.value"
+            (selectedChange)="notificationFilters.controls.showAll.setValue($event)"
+          />
+          <si-summary-chip
+            label="Unread"
+            [value]="notificationsUnread.length.toString()"
+            [selected]="notificationFilters.controls.showUnread.value"
+            (selectedChange)="notificationFilters.controls.showUnread.setValue($event)"
+          />
+          <si-summary-chip
+            label="Archived"
+            icon="element-archive"
+            [value]="notificationsArchived.length.toString()"
+            [selected]="notificationFilters.controls.showArchived.value"
+            (selectedChange)="notificationFilters.controls.showArchived.setValue($event)"
+          />
+        </form>
+      </div>
+      <div style="overflow-y: auto">
+        @for (notification of filteredNotifications; track notification) {
+          <si-notification-item
+            [itemLink]="notification.itemLink"
+            [timeStamp]="notification.timeStamp"
+            [heading]="notification.heading"
+            [description]="notification.description"
+            [quickActions]="notification.quickActions"
+            [unread]="notification.unread"
+          />
+        }
+      </div>
+    </div>
+  </si-side-panel-content>
+</si-side-panel>

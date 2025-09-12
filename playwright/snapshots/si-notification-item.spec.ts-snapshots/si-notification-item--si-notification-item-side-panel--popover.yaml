@@ -1,0 +1,88 @@
+- paragraph: Notifications
+- menubar:
+  - menuitem "Mark all as read"
+- button "Close"
+- textbox "Search..."
+- checkbox "All 8" [checked]
+- checkbox "Unread 4" [checked]
+- checkbox "Archived 2"
+- link "System alert requires attention link":
+  - /url: https://www.siemens.com
+  - text: Just now System alert requires attention Production equipment has stopped unexpectedly. Technical team has been notified and is investigating the issue.
+- button "Read"
+- button "Archive"
+- button "Delete"
+- link "Team assignment completed link":
+  - /url: https://www.siemens.com
+  - text: /2 minutes ago Team assignment completed Maintenance personnel have been dispatched to address the equipment issue\. Estimated resolution time is \d+ minutes\./
+- button "Read"
+- button "Archive"
+- button "Delete"
+- link "Budget approval requested link":
+  - /url: https://www.siemens.com
+  - text: /Today at \d+:\d+ Budget approval requested Additional funds needed for equipment replacement\. Please review the request and provide approval by end of business day\./
+- button "Read"
+- button "Archive"
+- button "Delete"
+- link "Access permissions updated link":
+  - /url: https://www.siemens.com
+  - text: /Today at \d+:\d+ Access permissions updated Temporary access has been granted to external contractor for equipment maintenance\. Access expires at 6:\d+ PM today\./
+- button "Read"
+- button "Archive"
+- button "Delete"
+- link "Software update completed link":
+  - /url: https://www.siemens.com
+  - text: Two weeks ago Software update completed System sensors have been successfully upgraded to the latest firmware version. Enhanced monitoring capabilities are now available.
+- button "Read"
+- button "Archive"
+- button "Delete"
+- link "Training session completed link":
+  - /url: https://www.siemens.com
+  - text: One month ago Training session completed All team members have completed the required safety certification training. Certificates remain valid for one year.
+- button "Read"
+- button "Archive"
+- button "Delete"
+- link "Monthly performance report available link":
+  - /url: https://www.siemens.com
+  - text: One month ago Monthly performance report available Latest analytics show improvement in operational efficiency. Detailed metrics and insights are available for review.
+- button "Read"
+- button "Archive"
+- button "Delete"
+- link "Contractor evaluation completed link":
+  - /url: https://www.siemens.com
+  - text: One month ago Contractor evaluation completed Performance review has been completed for external service provider. Overall rating shows satisfactory work quality.
+- button "Read"
+- button "Archive"
+- button "Delete"
+- link "Annual budget approved link":
+  - /url: https://www.siemens.com
+  - text: Two months ago Annual budget approved Funding has been approved for equipment replacement and maintenance operations for the upcoming fiscal year.
+- button "Read"
+- button "Archive"
+- button "Delete"
+- link "Maintenance schedule finalized link":
+  - /url: https://www.siemens.com
+  - text: Two months ago Maintenance schedule finalized Quarterly maintenance plan has been completed. All equipment inspections are scheduled for the following week.
+- button "Read"
+- button "Archive"
+- button "Delete"
+- link "New team member onboarded link":
+  - /url: https://www.siemens.com
+  - text: Two months ago New team member onboarded A new supervisor has joined the maintenance team. Onboarding process is complete and start date is confirmed.
+- button "Read"
+- button "Archive"
+- button "Delete"
+- link "Security audit completed link":
+  - /url: https://www.siemens.com
+  - text: Two months ago Security audit completed Annual security review has been completed successfully. All access controls and permissions have been verified and updated.
+- button "Read"
+- button "Archive"
+- button "Delete"
+- banner:
+  - link "Siemens logo":
+    - /url: "#/"
+  - text: Application name
+  - button "Tenant 1"
+  - button "4 Notifications"
+  - button "Support"
+  - button "John Doe"

@@ -88,6 +88,7 @@ documentation.
 ## N
 
 - [Number Input](forms-inputs/number-input.md)
+- [Notification Item](status-notifications/notification-item.md)
 
 ## P
 
