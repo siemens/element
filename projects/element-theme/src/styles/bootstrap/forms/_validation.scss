@@ -17,6 +17,13 @@
     &.is-#{$state} {
       @content;
     }
+    &.ng-dirty.ng-#{$state} {
+      // show error message when dirty, independent of `.ng-touched`
+      ~ .show-when-dirty {
+        display: flex !important; // stylelint-disable-line declaration-no-important
+        flex-direction: column;
+      }
+    }
   } @else {
     &.is-#{$state} {
       @content;
