@@ -168,15 +168,9 @@ export class SiFilteredSearchValueComponent implements OnInit {
   }
 
   protected clear(): void {
-    if (!this.active() || !this.value().value?.length) {
-      this.deleteCriterion.emit({ triggerSearch: true });
-      return;
-    }
-
-    this.value.update(v => ({
-      ...v,
-      dateValue: undefined,
-      value: this.definition().multiSelect ? [] : ''
-    }));
+    // Clear the input value first
+    this.value.update(v => ({ ...v, value: '', dateValue: undefined }));
+    // Always delete the criterion when clear button is clicked
+    this.deleteCriterion.emit({ triggerSearch: true });
   }
 }
