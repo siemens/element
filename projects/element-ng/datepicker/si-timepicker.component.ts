@@ -441,7 +441,8 @@ export class SiTimepickerComponent implements ControlValueAccessor, SiFormItemCo
 
       let hours = time.getHours();
       if (this.use12HourClock()) {
-        this.meridian.set(hours >= 12 ? 'pm' : 'am');
+        // 12:00 am is midnight while 12:00 pm is noon when users enter a value greater than 12 we can assume it's pm
+        this.meridian.set(hours > 12 ? 'pm' : 'am');
         this.meridianChange.emit(this.meridian());
         hours = hours % 12;
         if (hours === 0) {
