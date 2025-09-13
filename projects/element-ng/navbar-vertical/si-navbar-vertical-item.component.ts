@@ -6,6 +6,7 @@ import { NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   HostListener,
   inject,
   input,
@@ -61,6 +62,20 @@ export class SiNavbarVerticalItemComponent implements OnInit {
   });
   private readonly routerLinkActive = inject(RouterLinkActive, { optional: true });
   private readonly siLink = inject(SiLinkDirective, { optional: true });
+
+  /**
+   * Formats badge value to limit display to "+99" for numbers greater than 99
+   */
+  protected readonly formattedBadge = computed(() => {
+    const badge = this.item().badge;
+    if (!badge) {
+      return '';
+    }
+    if (typeof badge === 'number') {
+      return badge > 99 ? '+99' : badge.toString();
+    }
+    return badge.toString();
+  });
 
   ngOnInit(): void {
     if (this.group && this.active) {
