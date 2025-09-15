@@ -16,10 +16,10 @@ import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SI_FORM_ITEM_CONTROL } from '@siemens/element-ng/form';
 import { Subscription } from 'rxjs';
 
+import { is12HourFormat } from './date-time-helper';
 import { SiDateInputDirective } from './si-date-input.directive';
 import { SiDatepickerOverlayComponent } from './si-datepicker-overlay.component';
 import { SiDatepickerOverlayDirective } from './si-datepicker-overlay.directive';
-import { getDatepickerFormat } from './si-datepicker.model';
 
 @Directive({
   selector: '[siDatepicker]',
@@ -122,7 +122,7 @@ export class SiDatepickerDirective extends SiDateInputDirective implements After
       this.overlayToggle.showOverlay(initialFocus, {
         config: this.siDatepickerConfig(),
         date: this.date,
-        time12h: this.getTime12h()
+        time12h: is12HourFormat(this.locale, this.siDatepickerConfig() ?? {})
       })
     );
   }
@@ -139,11 +139,6 @@ export class SiDatepickerDirective extends SiDateInputDirective implements After
     if (!this.externalTrigger) {
       this.show();
     }
-  }
-
-  private getTime12h(): boolean | undefined {
-    const dateFormat = getDatepickerFormat(this.locale, this.siDatepickerConfig(), true);
-    return dateFormat?.includes('a');
   }
 
   private subscribeDateChanges(overlay?: ComponentRef<SiDatepickerOverlayComponent>): void {

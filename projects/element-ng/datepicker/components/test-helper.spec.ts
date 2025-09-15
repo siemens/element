@@ -96,6 +96,12 @@ export class CalenderTestHelper {
     return this.element.querySelector('si-timepicker input[name="seconds"]') as HTMLInputElement;
   }
 
+  getMeridian(): HTMLSelectElement | null {
+    return this.element.querySelector<HTMLSelectElement>(
+      'si-timepicker select[aria-label="Period"]'
+    );
+  }
+
   getTodayButton(): HTMLButtonElement {
     return this.element.querySelector('.today-button') as HTMLButtonElement;
   }
