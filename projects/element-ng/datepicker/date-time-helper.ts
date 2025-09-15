@@ -13,7 +13,7 @@ import {
   TranslationWidth
 } from '@angular/common';
 
-import { WeekStart } from './si-datepicker.model';
+import { DatepickerInputConfig, getDatepickerFormat, WeekStart } from './si-datepicker.model';
 
 export interface DayOfWeek {
   id: string;
@@ -790,4 +790,12 @@ export const minDate = (first?: Date, second?: Date): Date | undefined => {
 
 export const maxDate = (first?: Date, second?: Date): Date | undefined => {
   return !!first && !!second ? (first > second ? first : second) : (first ?? second);
+};
+
+/**
+ * Indicate whether the time use the 12-hour format
+ */
+export const is12HourFormat = (locale: string, config: DatepickerInputConfig): boolean => {
+  const dateFormat = getDatepickerFormat(locale, config, true);
+  return dateFormat?.includes('a') ?? false;
 };
