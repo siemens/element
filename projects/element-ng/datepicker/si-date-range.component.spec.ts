@@ -199,6 +199,21 @@ describe('SiDateRangeComponent', () => {
     expect(dateRange.end).toBeNull();
     expect(dateRange.start).toEqual(new Date(2023, 4, 1));
   });
+
+  it('should show meridian when time format is 12h', async () => {
+    component.siDatepickerConfig.set({
+      enableDateRange: true,
+      enableTwoMonthDateRange: false,
+      showTime: true,
+      dateTimeFormat: 'MM/dd/yyyy, hh:mm a'
+    });
+
+    openCalendarButton().click();
+    await fixture.whenStable();
+    const helper = new CalenderTestHelper(document.querySelector('si-datepicker-overlay')!);
+    const meridianInput = helper.getMeridian();
+    expect(meridianInput).toBeTruthy();
+  });
 });
 
 @Component({

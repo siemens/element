@@ -15,6 +15,7 @@ import {
   HostListener,
   inject,
   input,
+  LOCALE_ID,
   model,
   OnChanges,
   output,
@@ -47,7 +48,7 @@ import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/for
 import { addIcons, elementCalendar, SiIconNextComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
-import { getMaxDate, getMinDate } from './date-time-helper';
+import { getMaxDate, getMinDate, is12HourFormat } from './date-time-helper';
 import { SiDateInputDirective } from './si-date-input.directive';
 import { SiDatepickerOverlayComponent } from './si-datepicker-overlay.component';
 import { CloseCause, SiDatepickerOverlayDirective } from './si-datepicker-overlay.directive';
@@ -223,6 +224,7 @@ export class SiDateRangeComponent
   protected readonly disabled = computed(() => this.disabledInput() || this.disabledNgControl());
   private readonly disabledNgControl = signal(false);
   private readonly cdRef = inject(ChangeDetectorRef);
+  private readonly locale = inject(LOCALE_ID).toString();
   private readonly overlayToggle = inject(SiDatepickerOverlayDirective);
   private readonly elementRef = inject(ElementRef);
   private readonly defaultPlacement = [
@@ -321,7 +323,8 @@ export class SiDateRangeComponent
     this.subscribeRangeChanges(
       this.overlayToggle.showOverlay(true, {
         config: this.siDatepickerConfig(),
-        dateRange: this.value()
+        dateRange: this.value(),
+        time12h: is12HourFormat(this.locale, this.siDatepickerConfig())
       })
     );
   }
