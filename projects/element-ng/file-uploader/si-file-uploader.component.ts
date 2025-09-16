@@ -410,6 +410,8 @@ export class SiFileUploaderComponent implements OnChanges {
     this.cdRef.markForCheck();
 
     if (this.autoUpload()) {
+      // allow concurrent uploads for auto upload mode.
+      this.uploadEnabled = true;
       this.fileUpload(false);
     }
   }
