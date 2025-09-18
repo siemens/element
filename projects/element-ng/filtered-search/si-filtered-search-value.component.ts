@@ -105,6 +105,12 @@ export class SiFilteredSearchValueComponent implements OnInit {
     }
   }
 
+  closeOverlay(): void {
+    if (this.active()) {
+      this.active.set(false);
+    }
+  }
+
   edit(field?: 'value' | 'operator'): void {
     if (this.readonly()) {
       return;

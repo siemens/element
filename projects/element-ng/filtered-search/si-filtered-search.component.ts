@@ -482,6 +482,14 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
 
+    // Close any active overlays before deleting the criterion
+    // This could happen in case when user has opened a multiselect pill
+    // and then clicks on clear button of other pill.
+    this.valueComponents().forEach(component => {
+      component.closeOverlay();
+    });
+    this.cdRef.detectChanges();
+
     this.values = this.values.filter(v => v.value !== criterion);
     this.emitChangeEvent();
     this.allowedCriteriaCache = undefined;
