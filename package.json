@@ -99,7 +99,7 @@
     "@siemens/ngx-datatable": "^24.0.0",
     "echarts": "6.0.0",
     "flag-icons": "7.5.0",
-    "google-libphonenumber": "3.2.42",
+    "google-libphonenumber": "3.2.43",
     "gridstack": "12.3.3",
     "ngx-image-cropper": "^9.0.0",
     "ol": "10.6.1",
