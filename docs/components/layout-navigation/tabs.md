@@ -238,6 +238,19 @@ export class MyComponent {
 The tabset does not automatically remove a closed tab.
 When `closeTriggered` is emitted, you need to handle the removal of the tab in your component logic.
 
+### Tab access control and guarding
+
+By default, tabs should be hidden when the feature is irrelevant to the user’s role.
+However if there’s a clear reason for the user to see the tab 
+(for example: to request access, or contact an admin), the tab may remain visible.
+In this case, navigation should still work but lead to a screen with an info page component with something like:
+"You don’t have access to this feature."
+"Contact your administrator to request access."
+
+To achieve this use `canActivate` or `canDeactivate` provided by angular router guards or as custom
+callback input function in case of tabs with plain components to determine whether
+given tab can be activated or deactivated.
+
 <si-docs-component example="si-tabs/si-tabs-legacy"></si-docs-component>
 
 <si-docs-api component="SiTabsetLegacyComponent"></si-docs-api>
