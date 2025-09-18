@@ -7,10 +7,13 @@ import {
   Component,
   computed,
   contentChild,
+  DestroyRef,
   effect,
   inject
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterOutlet } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { SiListDetailsComponent } from '../si-list-details.component';
 
@@ -33,6 +36,8 @@ export class SiDetailsPaneComponent {
   protected parent = inject(SiListDetailsComponent);
 
   private readonly routerOutlet = contentChild(RouterOutlet);
+  private subscription?: Subscription;
+  private destroyer = inject(DestroyRef);
   /** @internal */
   readonly isRouterBased = computed(() => !!this.routerOutlet());
 
@@ -41,9 +46,12 @@ export class SiDetailsPaneComponent {
       const outlet = this.routerOutlet();
       if (outlet) {
         this.parent.detailsActive.set(!outlet.activatedRouteData.SI_EMPTY_DETAILS);
-        outlet.activateEvents.subscribe(() =>
-          this.parent.detailsActive.set(!outlet.activatedRouteData.SI_EMPTY_DETAILS)
-        );
+        this.subscription?.unsubscribe();
+        this.subscription = outlet.activateEvents
+          .pipe(takeUntilDestroyed(this.destroyer))
+          .subscribe(() =>
+            this.parent.detailsActive.set(!outlet.activatedRouteData.SI_EMPTY_DETAILS)
+          );
       }
     });
   }
