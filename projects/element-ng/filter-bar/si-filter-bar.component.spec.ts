@@ -349,6 +349,6 @@ describe('SiFilterBarComponent', () => {
     await timeout(200);
     fixture.detectChanges();
     const values = element.querySelectorAll<HTMLElement>('si-filter-pill .value');
-    expect(values[values.length - 1].innerHTML).toBe('+ 2 filters');
+    expect(values[values.length - 1].innerHTML.trim()).toBe('+ 2 filters');
   });
 });

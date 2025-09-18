@@ -25,4 +25,10 @@ export interface Filter {
    * Status of filter pill
    */
   status: FilterStatusType;
+  /**
+   * Disables automatic translation of title and description text.
+   * When set to true, the title and description will be displayed as-is without
+   * attempting translation.
+   */
+  disableAutoTranslation?: boolean;
 }
