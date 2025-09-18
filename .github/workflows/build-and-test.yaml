@@ -85,7 +85,7 @@ jobs:
           retention-days: 30
 
   coverage:
-    if: ${{ !cancelled() && github.event_name == 'pull_request' }}
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-24.04
     permissions:
       pull-requests: write
@@ -94,11 +94,12 @@ jobs:
       - test
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/download-artifact@v5
+      - name: Download coverage reports
+        uses: actions/download-artifact@v5
         with:
           name: coverage-reports
           path: dist/coverage
-      - name: Code Coverage Summary Report
+      - name: Generate coverage summary
         uses: irongut/CodeCoverageSummary@v1.3.0
         with:
           filename: 'dist/coverage/*/cobertura-coverage.xml'
@@ -109,17 +110,30 @@ jobs:
           hide_complexity: true
           indicators: false
           file_coverage_mode: changes
-      - name: Extract Coverage Badge Only
+      - name: Extract coverage badge for PR comment
+        if: github.event_name == 'pull_request'
         run: |
           # Extract only the badge line and total coverage line
           head -n 2 code-coverage-results.md > coverage-badge.md
-      - name: Add Coverage Badge PR Comment
+      - name: Add coverage badge to PR comment
         uses: marocchino/sticky-pull-request-comment@v2
         if: github.event_name == 'pull_request'
         with:
           recreate: true
           header: coverage
           path: coverage-badge.md
+      - name: Generate coverage summary JSON
+        run: |
+          # Extract coverage percentage from markdown and create JSON badge
+          TOTAL_COVERAGE=$(grep -E "(Summary|Total)" code-coverage-results.md | grep -oE '[0-9]+(\.[0-9]+)?%' | head -1 | sed 's/%//')
+          echo "Extracted coverage: $TOTAL_COVERAGE%"
+          echo "{\"schemaVersion\": 1, \"label\": \"coverage\", \"message\": \"$TOTAL_COVERAGE%\", \"color\": \"brightgreen\"}" > coverage-summary.json
+      - name: Upload coverage summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-summary
+          path: coverage-summary.json
+          retention-days: 1
 
   aot:
     runs-on: ubuntu-24.04
@@ -206,6 +220,8 @@ jobs:
     runs-on: ubuntu-24.04
     needs:
       - build
+      - coverage
+      - test
     steps:
       - uses: actions/checkout@v5
       - uses: astral-sh/setup-uv@v6
@@ -213,6 +229,14 @@ jobs:
         with:
           name: dist
           path: dist
+      - uses: actions/download-artifact@v5
+        with:
+          name: coverage-summary
+          path: .
+      - uses: actions/download-artifact@v5
+        with:
+          name: coverage-reports
+          path: dist/coverage
       - uses: actions/setup-node@v5
         with:
           node-version: lts/jod
@@ -236,6 +260,8 @@ jobs:
         if: ${{ github.ref != 'refs/heads/main' }}
       - run: mv dist/element-examples/ dist/design/
       - run: mv dist/dashboards-demo/ dist/design/
+      - run: mv coverage-summary.json dist/design/
+      - run: mv dist/coverage/ dist/design/
       - uses: actions/upload-artifact@v4
         with:
           name: pages
@@ -275,7 +301,6 @@ jobs:
       - run: |
           aws s3 cp --quiet --no-progress --recursive ./pages s3://${{ env.BUCKET_NAME }}/pr-${{ github.event.pull_request.number }}/pages
           aws s3 cp --quiet --no-progress --recursive ./playwright-report s3://${{ env.BUCKET_NAME }}/pr-${{ github.event.pull_request.number }}/playwright-report
-          aws s3 cp --quiet --no-progress --recursive ./coverage-reports s3://${{ env.BUCKET_NAME }}/pr-${{ github.event.pull_request.number }}/coverage-reports
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
           message: |
@@ -284,5 +309,5 @@ jobs:
             [Playwright report](https://simpl-element-preview.s3-eu-west-1.amazonaws.com/pr-${{ github.event.pull_request.number }}/playwright-report/index.html).
 
             **Coverage Reports:**
-            - [element-ng](https://simpl-element-preview.s3-eu-west-1.amazonaws.com/pr-${{ github.event.pull_request.number }}/coverage-reports/element-ng/index.html)
-            - [element-translate-ng](https://simpl-element-preview.s3-eu-west-1.amazonaws.com/pr-${{ github.event.pull_request.number }}/coverage-reports/element-translate-ng/index.html)
+            - [element-ng](https://simpl-element-preview.s3-eu-west-1.amazonaws.com/pr-${{ github.event.pull_request.number }}/pages/coverage/element-ng/index.html)
+            - [element-translate-ng](https://simpl-element-preview.s3-eu-west-1.amazonaws.com/pr-${{ github.event.pull_request.number }}/pages/coverage/element-translate-ng/index.html)

@@ -6,6 +6,12 @@
 
 <h1 align="center">Siemens Element</h1>
 
+<p align="center">
+  <a href="https://element.siemens.io/coverage/element-ng/index.html">
+    <img src="https://img.shields.io/endpoint?url=https://element.siemens.io/coverage-summary.json" alt="Code Coverage">
+  </a>
+</p>
+
 <p></p>
 <p align="center">
   Siemens Element is a design system of the smart infrastructure domain
