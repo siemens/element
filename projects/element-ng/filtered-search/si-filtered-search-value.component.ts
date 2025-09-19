@@ -51,13 +51,13 @@ export class SiFilteredSearchValueComponent implements OnInit {
   readonly onlySelectValue = input.required<boolean>();
   readonly maxCriteriaOptions = input.required<number>();
   readonly optionsInScrollableView = input.required<number>();
-  readonly clearButtonLabel = input.required<string>();
+  readonly clearButtonLabel = input.required<TranslatableString>();
   readonly lazyValueProvider =
     input<(criterionName: string, typed: string | string[]) => Observable<OptionType[]>>();
   readonly searchDebounceTime = input.required<number>();
   readonly itemCountText = input.required<TranslatableString>();
   readonly disableSelectionByColonAndSemicolon = input.required<boolean>();
-  readonly searchLabel = input.required<string>();
+  readonly searchLabel = input.required<TranslatableString>();
   readonly invalidCriterion = input.required<boolean>();
   readonly isStrictOrOnlySelectValue = input.required<boolean>();
   readonly editOnCreation = input.required<boolean>();

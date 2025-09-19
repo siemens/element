@@ -12,7 +12,7 @@ import {
   input,
   signal
 } from '@angular/core';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiFormItemComponent } from '../si-form-item/si-form-item.component';
 
@@ -32,7 +32,7 @@ export class SiFormFieldsetComponent implements DoCheck {
   private static labelIdCounter = 0;
 
   /** The label for the entire fieldset. */
-  readonly label = input.required<string>();
+  readonly label = input.required<TranslatableString>();
 
   /** Overrides the parent label width. */
   readonly labelWidth = input<string>();

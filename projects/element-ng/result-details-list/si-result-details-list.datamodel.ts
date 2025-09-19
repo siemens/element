@@ -2,12 +2,15 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
+
 /** */
 export interface ResultDetailStep {
   /**
    * A description of the step.
    */
-  description: string;
+  description: TranslatableString;
   /**
    * A state object defining the state of the step.
    */
@@ -27,7 +30,7 @@ export interface ResultDetailStep {
   /**
    * Optional detail text which appears below description.
    */
-  detail?: string;
+  detail?: TranslatableString;
   /**
    * Optional translation params to be used with translate pipe.
    */

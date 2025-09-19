@@ -2,6 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
+
 /** */
 export type FilterStatusType = 'default' | 'success' | 'info' | 'warning' | 'danger' | 'inactive';
 
@@ -15,12 +17,12 @@ export interface Filter {
    * Shown title of filter pill.
    * Can be left empty if {@link description} is used.
    */
-  title?: string;
+  title?: TranslatableString;
   /**
    * Short description of filter pill.
    * Can be left empty if {@link title} is used to align the title to middle of pill.
    */
-  description?: string;
+  description?: TranslatableString;
   /**
    * Status of filter pill
    */

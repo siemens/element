@@ -20,7 +20,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { areAnimationsDisabled, BackgroundColorVariant } from '@siemens/element-ng/common';
 import { addIcons, elementDown2, SiIconComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { filter } from 'rxjs';
 
 import { SiAccordionHCollapseService } from './si-accordion-hcollapse.service';
@@ -65,7 +65,7 @@ export class SiCollapsiblePanelComponent {
   /**
    * Heading for the collapsible panel.
    */
-  readonly heading = input<string>();
+  readonly heading = input<TranslatableString>();
   /**
    * Additional CSS classes for the top element.
    *

@@ -20,7 +20,7 @@ import {
   TemplateRef
 } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { Action, CollapseTo, PartState, Scale, SplitOrientation } from './si-split.interfaces';
 
@@ -65,7 +65,7 @@ export class SiSplitPartComponent implements OnChanges {
   /**
    * Sets the title of the split part header.
    */
-  @Input() heading!: string;
+  @Input() heading!: TranslatableString;
 
   /**
    * Minimum size in px.
@@ -110,7 +110,7 @@ export class SiSplitPartComponent implements OnChanges {
    *
    * @defaultValue 'collapse'
    */
-  @Input() collapseLabel = 'collapse';
+  @Input() collapseLabel: TranslatableString = 'collapse';
   /**
    * An optional stateId to uniquely identify a component instance.
    * Required for persistence of ui state.

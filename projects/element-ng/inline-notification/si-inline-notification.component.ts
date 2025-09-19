@@ -7,7 +7,7 @@ import { booleanAttribute, Component, input } from '@angular/core';
 import { StatusType } from '@siemens/element-ng/common';
 import { SiStatusIconComponent } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-inline-notification',
@@ -24,12 +24,12 @@ export class SiInlineNotificationComponent {
   /**
    * Heading of the message.
    */
-  readonly heading = input<string>();
+  readonly heading = input<TranslatableString>();
 
   /**
    * Main message of this inline notification.
    */
-  readonly message = input.required<string>();
+  readonly message = input.required<TranslatableString>();
 
   /**
    * Optional link action for inline notification events.

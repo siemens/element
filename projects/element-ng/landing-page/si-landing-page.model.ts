@@ -2,9 +2,11 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
+
 export interface LandingPageWarning {
-  title: string;
-  content: string;
+  title: TranslatableString;
+  content: TranslatableString;
 }
 
 export interface UsernamePassword {

@@ -26,7 +26,7 @@ import {
   ResizeObserverService
 } from '@siemens/element-ng/resize-observer';
 import { SiSplitComponent, SiSplitPartComponent } from '@siemens/element-ng/split';
-import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -79,7 +79,7 @@ export class SiMainDetailContainerComponent implements OnInit, OnChanges, OnDest
    *
    * @defaultValue ''
    */
-  readonly heading = input('');
+  readonly heading = input<TranslatableString>('');
 
   /**
    * Whether the heading should be truncated (single line) or not.
@@ -94,7 +94,7 @@ export class SiMainDetailContainerComponent implements OnInit, OnChanges, OnDest
    *
    * @defaultValue ''
    */
-  readonly detailsHeading = input('');
+  readonly detailsHeading = input<TranslatableString>('');
 
   /**
    * Whether the main and detail parts should be resizable by a splitter or not.

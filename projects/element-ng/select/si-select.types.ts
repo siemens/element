@@ -1,7 +1,10 @@
 /**
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
- *
+ */
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
+
+/**
  * @deprecated Use {@link SelectOption} instead.
  */
 export interface SelectOptionLegacy {
@@ -10,7 +13,7 @@ export interface SelectOptionLegacy {
   /** Identifies the option, will be used as `value` for the component */
   id: string;
   /** Title to display */
-  title: string;
+  title: TranslatableString;
   /** Optional icon to display */
   icon?: string;
   /** Optional color class for the icon */
@@ -26,7 +29,7 @@ export interface SelectGroup<T> {
   /** An optional key to identify this group in a custom template. */
   key?: string;
   /** A label to be shown as header for this group. Is optional if a custom template is provided. */
-  label?: string;
+  label?: TranslatableString;
   /** All options that are part of this group. */
 
   options: SelectOption<T>[];
@@ -57,12 +60,12 @@ export interface SelectOption<T> {
    * A label to be shown for this option.
    * Is optional if a custom template is provided or if the value should directly be rendered.
    */
-  label?: string;
+  label?: TranslatableString;
   /**
    * Used for typeahead functionality when filtering is disabled.
    * If provided, this will be used, otherwise the innerText of the rendered element.
    */
-  typeaheadLabel?: string;
+  typeaheadLabel?: TranslatableString;
 }
 
 /** Alias for {@link SelectOption} or {@link SelectGroup} */
