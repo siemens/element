@@ -37,3 +37,5 @@ export const findComponentImportPath = (
       return undefined;
   }
 };
+
+export * from './style-mappings';

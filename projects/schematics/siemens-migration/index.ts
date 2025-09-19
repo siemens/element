@@ -17,9 +17,15 @@ import {
   getImportNodes,
   getSymbols,
   createFullPathTree,
-  parseTsconfigFile
+  parseTsconfigFile,
+  getGlobalStyles
 } from '../utils';
-import { findComponentImportPath } from './mappings';
+import {
+  findComponentImportPath,
+  scssUsePatterns,
+  styleReplacements,
+  themeStyleEntries
+} from './mappings';
 import { MigrationOptions, Migrations } from './model';
 
 // You don't have to export the function as default. You can also have more than one rule factory
@@ -41,6 +47,43 @@ export const siemensMigration = (_options: MigrationOptions): Rule => {
 
       const rule = rewriteImportsInFile(filePath, migrations);
       rules.push(rule);
+    }
+
+    const globalStyles = getGlobalStyles(tree);
+    for (const style of globalStyles) {
+      if (style.endsWith('.scss') || style.endsWith('.sass')) {
+        const content = tree.readText(style);
+
+        for (const pattern of scssUsePatterns) {
+          const match = pattern.exec(content);
+          if (match) {
+            rules.push(migrateScssImports(style, [{ replace: match[0], new: '' }]));
+          }
+        }
+
+        let predecessor = '';
+        for (const themeEntry of themeStyleEntries) {
+          const match = content.match(themeEntry.pattern ?? themeEntry.insert);
+          if (match) {
+            predecessor = match[0];
+            continue;
+          }
+
+          rules.push(applyGlobalStyles(style, predecessor, themeEntry.insert + '\n'));
+          predecessor = themeEntry.insert;
+        }
+      }
+    }
+
+    const scssFiles = discoverSourceFiles(tree, context, _options, '.scss');
+    for (const filePath of scssFiles) {
+      const content = tree.readText(filePath);
+      if (
+        content.includes(styleReplacements[0].replace) ||
+        content.includes(styleReplacements[1].replace)
+      ) {
+        rules.push(migrateScssImports(filePath));
+      }
     }
 
     const chainedRules = chain([...rules]);
@@ -121,7 +164,8 @@ const rewriteImportsInFile = (filePath: string, migrations: Migrations): Rule =>
 const discoverSourceFiles = (
   tree: Tree,
   context: SchematicContext,
-  options: MigrationOptions
+  options: MigrationOptions,
+  extension: string = '.ts'
 ): string[] => {
   const basePath = process.cwd().replace(/\\/g, '/');
 
@@ -138,7 +182,7 @@ const discoverSourceFiles = (
   for (const configPath of tsConfigs) {
     const tsConfigPath = resolve(basePath, configPath);
     const config = parseTsconfigFile(tsConfigPath, dirname(tsConfigPath), tsTree);
-    sourceFiles.push(...config.fileNames.filter(f => f.endsWith('.ts')));
+    sourceFiles.push(...config.fileNames.filter(f => f.endsWith(extension)));
   }
 
   // Filter all files which are in the path
@@ -149,4 +193,46 @@ const discoverSourceFiles = (
   }
 
   return Array.from(new Set(sourceFiles)).map(path => path.substring(basePath.length + 1));
+};
+
+const migrateScssImports = (
+  filePath: string,
+  replacements: { replace: string; new: string }[] = styleReplacements
+): Rule => {
+  return (tree: Tree): Tree => {
+    const recorder = tree.beginUpdate(filePath);
+    const content = tree.readText(filePath);
+    let offset = 0;
+    let hasMore = true;
+    while (hasMore) {
+      hasMore = false;
+      for (const replacement of replacements) {
+        const start = content.indexOf(replacement.replace, offset);
+        if (start >= 0) {
+          recorder.remove(start, replacement.replace.length);
+          recorder.insertLeft(start, replacement.new);
+          const size = replacement.new.length === 0 ? 1 : replacement.new.length;
+          offset = start + size;
+          hasMore = true;
+        }
+      }
+    }
+    tree.commitUpdate(recorder);
+    return tree;
+  };
+};
+
+const applyGlobalStyles = (filePath: string, anchor: string, insert: string): Rule => {
+  return (tree: Tree): Tree => {
+    const recorder = tree.beginUpdate(filePath);
+    const content = tree.readText(filePath);
+    let pos = content.indexOf(anchor) + anchor.length;
+    if (pos > 0) {
+      // If the insert position is not the file start we want to insert the next line after the new line
+      pos = content.indexOf('\n', pos) + 1;
+    }
+    recorder.insertRight(pos, insert);
+    tree.commitUpdate(recorder);
+    return tree;
+  };
 };
