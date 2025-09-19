@@ -85,6 +85,14 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges, OnDestroy {
   readonly doSearchOnInputChange = input(false, {
     transform: booleanAttribute
   });
+
+  /**
+   * Emits when any search criterion loses focus (becomes inactive).
+   * This event is triggered for all criterion types when the user finishes
+   * interacting with a criterion and it becomes inactive.
+   */
+  readonly searchCriteriaBlur = output<SearchCriteria>();
+
   /**
    * In addition to lazy loaded value, you can also lazy load the criteria itself
    */
@@ -704,5 +712,9 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges, OnDestroy {
     if (this.doSearchOnInputChange()) {
       this.searchEmitQueue.next(this.searchCriteria());
     }
+  }
+
+  protected handleSearchCriteriaBlur(): void {
+    this.searchCriteriaBlur.emit(this.searchCriteria()!);
   }
 }
