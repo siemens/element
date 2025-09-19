@@ -20,19 +20,13 @@ import {
   parseTsconfigFile,
   getGlobalStyles
 } from '../utils';
-import { findComponentImportPath } from './mappings';
+import {
+  findComponentImportPath,
+  scssUsePatterns,
+  styleReplacements,
+  themeStyleEntries
+} from './mappings';
 import { MigrationOptions, Migrations } from './model';
-
-const styleReplacements = [
-  {
-    replace: `@import '@simpl/element-theme/`,
-    new: `@import '@siemens/element-theme/`
-  },
-  {
-    replace: `@use '@simpl/element-theme/`,
-    new: `@use '@siemens/element-theme/`
-  }
-];
 
 // You don't have to export the function as default. You can also have more than one rule factory
 // per file.
@@ -59,45 +53,16 @@ export const siemensMigration = (_options: MigrationOptions): Rule => {
     for (const style of globalStyles) {
       if (style.endsWith('.scss') || style.endsWith('.sass')) {
         const content = tree.readText(style);
-        for (const pattern of [
-          /@use '@simpl\/element-theme\/src\/theme' with \(([\s\S]*?)\);/g,
-          /@use '@simpl\/element-ng\/simpl-element-ng' with \(([\s\S]*?)\);/g,
-          /@use '@simpl\/element-theme\/src\/theme';/g
-        ]) {
+
+        for (const pattern of scssUsePatterns) {
           const match = pattern.exec(content);
           if (match) {
             rules.push(migrateScssImports(style, [{ replace: match[0], new: '' }]));
           }
         }
 
-        // Apply theme styles if not already present
-        const themeStyles = [
-          { insert: `@use '@simpl/brand/assets/fonts/styles/siemens-sans';` },
-          {
-            insert: `@use '@siemens/element-theme/src/theme' with (
-  $element-theme-default: 'siemens-brand',
-  $element-themes: (
-    'siemens-brand',
-    'element'
-  )
-);`,
-            pattern: /@use '@siemens\/element-theme\/src\/theme' with \(([\s\S]*?)\);/g
-          },
-          { insert: `@use '@siemens/element-ng/element-ng';` },
-          { insert: `@use '@siemens/element-theme/src/styles/themes';` },
-          { insert: `@use '@simpl/brand/dist/element-theme-siemens-brand-light' as brand-light;` },
-          { insert: `@use '@simpl/brand/dist/element-theme-siemens-brand-dark' as brand-dark;` },
-          {
-            insert: `@include themes.make-theme(brand-light.$tokens, 'siemens-brand');`,
-            pattern: /@include themes\.make-theme\(brand-light\.\$tokens, 'siemens-brand'\);/g
-          },
-          {
-            insert: `@include themes.make-theme(brand-dark.$tokens, 'siemens-brand', true);`,
-            pattern: /@include themes\.make-theme\(brand-dark\.\$tokens, 'siemens-brand', true\);/g
-          }
-        ];
         let predecessor = '';
-        for (const themeEntry of themeStyles) {
+        for (const themeEntry of themeStyleEntries) {
           const match = content.match(themeEntry.pattern ?? themeEntry.insert);
           if (match) {
             predecessor = match[0];

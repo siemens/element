@@ -55,6 +55,7 @@ export const getGlobalStyles = (tree: Tree): string[] => {
 
   return [...globalStyles];
 };
+
 export const createFullPathTree = (basePath: string, tree: Tree): Tree => {
   const t: Tree = {
     branch: (): Tree => tree.branch(),
