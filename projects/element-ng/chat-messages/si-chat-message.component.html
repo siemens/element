@@ -1,0 +1,65 @@
+<div class="d-flex flex-column si-body-2" siResponsiveContainer>
+  <div class="mb-3" [class.align-self-end]="alignment() === 'end'">
+    <ng-content select="si-attachment-list" />
+  </div>
+
+  <div
+    class="d-flex si-chat-message-main"
+    [class.si-chat-message-row]="true"
+    [class.si-chat-message-row-reverse]="avatarPosition() === 'end'"
+    [class.si-chat-message-align-start]="alignment() === 'start'"
+  >
+    <div
+      class="avatar-wrapper flex-shrink-0"
+      [class.me-2]="avatarPosition() === 'start'"
+      [class.ms-2]="avatarPosition() === 'end'"
+      [class.si-chat-message-avatar]="true"
+      [class.si-chat-message-avatar-end]="avatarPosition() === 'end'"
+    >
+      <ng-content select="si-icon, si-avatar" />
+    </div>
+
+    <div
+      class="message-content flex-grow-1 w-100"
+      [class.si-chat-message-content-end]="alignment() === 'end'"
+    >
+      @if (loading()) {
+        <div class="rounded-3 p-3 mw-100 text-break loading-message-bubble">
+          <div class="d-flex flex-column gap-2">
+            <div class="si-skeleton skeleton-line skeleton-line-full"></div>
+            <div class="si-skeleton skeleton-line skeleton-line-half"></div>
+          </div>
+        </div>
+      } @else {
+        <div
+          class="message-wrapper d-flex si-chat-message-wrapper"
+          [class.flex-column]="actionsPosition() === 'bottom'"
+          [class.flex-row]="actionsPosition() === 'start' && alignment() === 'start'"
+          [class.flex-row-reverse]="actionsPosition() === 'start' && alignment() === 'end'"
+          [class.align-items-start]="actionsPosition() === 'start'"
+          [class.align-items-end]="actionsPosition() === 'bottom' && alignment() === 'end'"
+          [class.justify-content-end]="alignment() === 'end' && actionsPosition() === 'bottom'"
+          [class.justify-content-start]="alignment() === 'start' && actionsPosition() === 'bottom'"
+        >
+          <div
+            class="rounded-3 py-3 p-4 mw-100 text-break message-bubble"
+            [class.si-chat-message-bubble-end]="
+              alignment() === 'end' && actionsPosition() === 'bottom'
+            "
+          >
+            <ng-content />
+          </div>
+
+          <div
+            class="actions-wrapper"
+            [class.ms-3]="actionsPosition() === 'start' && alignment() === 'start'"
+            [class.me-3]="actionsPosition() === 'start' && alignment() === 'end'"
+            [class.align-self-start]="actionsPosition() === 'start'"
+          >
+            <ng-content select="si-action-bar" />
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

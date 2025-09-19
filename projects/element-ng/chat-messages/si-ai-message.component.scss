@@ -1,0 +1,12 @@
+:host {
+  display: block;
+}
+
+si-chat-message {
+  --chat-message-bubble-bg: transparent;
+}
+
+// Loading spinner size adjustment (inherited from generic component)
+:host ::ng-deep si-loading-spinner {
+  --loading-spinner-size: 1.5em;
+}

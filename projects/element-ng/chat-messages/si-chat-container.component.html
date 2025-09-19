@@ -1,0 +1,86 @@
+<div class="d-flex flex-column h-100 overflow-hidden" siResponsiveContainer>
+  <div
+    #messagesContainer
+    class="flex-grow-1 overflow-auto messages-area pb-0"
+    [class.p-3]="!isEmpty()"
+    (scroll)="onScroll()"
+  >
+    @if (isEmpty()) {
+      <div
+        class="d-flex flex-column align-items-center justify-content-center h-100 text-center p-4"
+      >
+        <si-empty-state
+          [icon]="aiIcon()"
+          [heading]="emptyStateTitle()"
+          [content]="emptyStateDescription()"
+        />
+      </div>
+    }
+
+    @if (!isEmpty()) {
+      @for (message of messages(); track message.id) {
+        <div class="pb-4">
+          @if (message.type === 'user') {
+            <si-user-message
+              class="si-user-message-container"
+              [messageId]="message.id"
+              [content]="message.content"
+              [attachments]="message.attachments || []"
+              [actions]="message.actions || []"
+              [actionParam]="actionParam()"
+              [actionsLabel]="userMessageActionsLabel()"
+            />
+          }
+
+          @if (message.type === 'ai') {
+            <si-ai-message
+              [messageId]="message.id"
+              [content]="message.content"
+              [loading]="message.loading || false"
+              [aiIcon]="aiIcon()"
+              [aiIconAltText]="aiIconAltText()"
+              [actions]="getAiMessagePrimaryActions(message)"
+              [secondaryActions]="getAiMessageSecondaryActions(message)"
+              [actionParam]="actionParam()"
+              [secondaryActionsLabel]="secondaryActionsLabel()"
+            />
+          }
+        </div>
+      }
+    }
+  </div>
+
+  @if (statusSeverity() && statusMessage()) {
+    <div class="p-4 pt-1 pb-2">
+      <si-inline-notification
+        class="si-body-2 overflow-hidden"
+        [severity]="statusSeverity()!"
+        [heading]="statusHeading()"
+        [message]="statusMessage()!"
+        [action]="statusAction()"
+      />
+    </div>
+  }
+
+  <div class="chat-input-area p-3 d-flex justify-content-center">
+    <si-chat-input
+      class="w-100"
+      [placeholder]="inputPlaceholder()"
+      [disabled]="disabled()"
+      [sending]="sending()"
+      [disclaimer]="disclaimer()"
+      [actions]="inputPrimaryActions()"
+      [secondaryActions]="inputSecondaryActions()"
+      [allowAttachments]="allowAttachments()"
+      [acceptedFileTypes]="acceptedFileTypes()"
+      [maxFileSize]="maxFileSize()"
+      [actionParam]="actionParam()"
+      [secondaryActionsLabel]="secondaryActionsLabel()"
+      [sendButtonLabel]="sendButtonLabel()"
+      [sendButtonIcon]="sendButtonIcon()"
+      [attachFileLabel]="attachFileLabel()"
+      [removeAttachmentLabel]="removeAttachmentLabel()"
+      (send)="onMessageSent($event)"
+    />
+  </div>
+</div>

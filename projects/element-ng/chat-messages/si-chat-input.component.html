@@ -1,0 +1,79 @@
+<div class="input-wrapper border rounded-3 bg-body">
+  @if (hasAttachments()) {
+    <div class="p-4 pb-0">
+      <si-attachment-list
+        [attachments]="attachmentList"
+        [removeLabel]="removeAttachmentLabel()"
+        [removable]="true"
+        (remove)="removeAttachment($event)"
+      />
+    </div>
+  }
+
+  <div class="p-4 pb-0 si-body-2">
+    <textarea
+      #textInput
+      class="chat-textarea w-100 border-0 p-2 bg-transparent"
+      rows="1"
+      [placeholder]="placeholder() | translate"
+      [disabled]="disabled() || sending()"
+      [maxlength]="maxLength() || null"
+      [ngModel]="value()"
+      (ngModelChange)="onInputChange($event)"
+      (keydown)="onKeyDown($event)"
+      (input)="adjustTextareaHeight($event)"
+    ></textarea>
+  </div>
+
+  <div class="d-flex align-items-center justify-content-between px-3 ps-4 pb-2">
+    <div class="d-flex align-items-center">
+      @if (allowAttachments()) {
+        <input
+          #fileInput
+          type="file"
+          class="d-none"
+          [accept]="acceptedFileTypes().join(',')"
+          [multiple]="true"
+          (change)="onFileSelect($event)"
+        />
+
+        <button
+          type="button"
+          class="btn btn-ghost btn-circle btn-sm"
+          [attr.aria-label]="attachFileLabel() | translate"
+          [disabled]="disabled() || sending()"
+          (click)="fileInput.click()"
+        >
+          <si-icon icon="element-attachment" />
+        </button>
+      }
+
+      @if (hasActions() || hasSecondaryActions()) {
+        <si-action-bar
+          class="ps-1"
+          [actions]="actions()"
+          [secondaryActions]="secondaryActions()"
+          [secondaryActionsLabel]="secondaryActionsLabel()"
+          [actionParam]="actionParam()"
+        />
+      }
+    </div>
+
+    <si-loading-button
+      type="button"
+      buttonClass="btn btn-ghost btn-circle btn-sm"
+      [disabled]="!canSend()"
+      [loading]="sending()"
+      [ariaLabel]="sendButtonLabel() | translate"
+      (click)="onSend()"
+    >
+      <si-icon class="text-primary" [icon]="sendButtonIcon()" />
+    </si-loading-button>
+  </div>
+</div>
+
+@if (disclaimer()) {
+  <div class="text-center mt-2 px-3">
+    <span class="si-caption text-secondary d-block">{{ disclaimer() | translate }}</span>
+  </div>
+}

@@ -1,0 +1,39 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/all-variables';
+
+:host {
+  inline-size: 100%;
+  block-size: 100%;
+  max-block-size: 100vh;
+}
+
+:host-context(.si-container-xs, .si-container-sm) {
+  .messages-area {
+    // stylelint-disable-next-line declaration-no-important
+    padding-block: map.get(all-variables.$spacers, 2) !important;
+    // stylelint-disable-next-line declaration-no-important
+    padding-inline: map.get(all-variables.$spacers, 2) !important;
+  }
+
+  .chat-input-area {
+    // stylelint-disable-next-line declaration-no-important
+    padding-block: map.get(all-variables.$spacers, 2) !important;
+    // stylelint-disable-next-line declaration-no-important
+    padding-inline: map.get(all-variables.$spacers, 2) !important;
+  }
+}
+
+si-inline-notification {
+  justify-self: center;
+  max-inline-size: 720px;
+}
+
+.si-user-message-container {
+  padding-inline-end: map.get(all-variables.$spacers, 4);
+}
+
+:host-context(.si-container-xs, .si-container-sm) {
+  .si-user-message-container {
+    padding-inline-end: 0;
+  }
+}

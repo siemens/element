@@ -1,0 +1,16 @@
+<si-chat-container
+  inputPlaceholder="Ask something..."
+  emptyStateTitle="Start a conversation"
+  emptyStateDescription="Send a message to begin chatting with AI"
+  statusSeverity="info"
+  statusHeading="AI Assistant Status"
+  statusMessage="AI responses are generated for demonstration purposes only."
+  [messages]="messages()"
+  [sending]="isTyping()"
+  [allowAttachments]="true"
+  [inputActions]="inputActions"
+  [acceptedFileTypes]="['image/*', '.pdf', '.doc', '.docx', '.txt']"
+  [maxFileSize]="5242880"
+  [statusAction]="{ title: 'Learn More', href: '#', target: '_blank' }"
+  (messageSent)="onMessageSent($event)"
+/>
