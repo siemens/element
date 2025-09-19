@@ -43,6 +43,22 @@ export const getTsConfigPaths = (tree: Tree): string[] => {
   return [...buildPaths];
 };
 
+export const getGlobalStyles = (tree: Tree): string[] => {
+  const globalStyles = new Set<string>();
+
+  for (const target of getTargets(getWorkspace(tree))) {
+    if (target.options?.styles && Array.isArray(target.options.styles)) {
+      target.options.styles.forEach((style: JsonValue) => {
+        if (typeof style === 'string') {
+          globalStyles.add(normalize(style));
+        }
+      });
+    }
+  }
+
+  return [...globalStyles];
+};
+
 export const createFullPathTree = (basePath: string, tree: Tree): Tree => {
   const t: Tree = {
     branch: (): Tree => tree.branch(),
