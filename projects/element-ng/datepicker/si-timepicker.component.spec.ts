@@ -172,6 +172,9 @@ describe('SiTimepickerComponent', () => {
     fixture.detectChanges();
     component.writeValue('2021-01-12 10:23:59.435');
     fixture.detectChanges();
+    getHours().focus();
+    getHours().blur();
+    fixture.detectChanges();
     expect(getHours().classList).toContain('is-invalid');
   }));
 
@@ -179,6 +182,9 @@ describe('SiTimepickerComponent', () => {
     componentRef.setInput('max', new Date('2022-01-12 16:23:59.435'));
     fixture.detectChanges();
     component.writeValue('2021-01-12 18:23:59.435');
+    fixture.detectChanges();
+    getHours().focus();
+    getHours().blur();
     fixture.detectChanges();
     expect(getHours().classList).toContain('is-invalid');
   }));
@@ -189,6 +195,7 @@ describe('SiTimepickerComponent', () => {
     fixture.detectChanges();
 
     enterValue(getHours(), '19');
+    fixture.detectChanges();
     expect(getHours().classList).toContain('is-invalid');
   });
 
