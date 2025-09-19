@@ -24,7 +24,7 @@ import {
   SiIconComponent,
   STATUS_ICON_CONFIG
 } from '@siemens/element-ng/icon';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
@@ -91,7 +91,7 @@ export class SiCircleStatusComponent implements OnChanges, OnDestroy {
   /**
    * Aria label for icon and status combo. Needed for a11y
    */
-  readonly ariaLabel = input<string>();
+  readonly ariaLabel = input<TranslatableString>();
 
   protected readonly backgroundClass = computed(() => this.statusIcon()?.background ?? '');
   protected readonly theAriaLabel = computed(() => this.ariaLabel() ?? this.autoLabel());

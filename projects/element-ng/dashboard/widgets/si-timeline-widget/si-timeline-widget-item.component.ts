@@ -16,7 +16,7 @@ import { SiWidgetBaseComponent } from '../si-widget-base.component';
 /** Base for action items in the timeline widget. */
 export interface TimelineWidgetActionBase {
   /** Label that is shown to the user. */
-  label: string;
+  label: TranslatableString;
   /** The web font icon class name (e.g. element-settings-outline). */
   icon?: string;
   /** Defines if only the icon is shown in the default navigation bar. */

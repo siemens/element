@@ -2,6 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
+
 /** */
 export interface IsoLanguageValue {
   /**
@@ -11,5 +13,5 @@ export interface IsoLanguageValue {
   /**
    * Language name, ex "English" or translatable string, ex "LANGUAGES.EN"
    */
-  name: string;
+  name: TranslatableString;
 }

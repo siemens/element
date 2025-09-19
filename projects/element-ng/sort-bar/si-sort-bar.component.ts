@@ -10,10 +10,10 @@ import {
   elementSortUp,
   SiIconComponent
 } from '@siemens/element-ng/icon';
-import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 export interface SortCriteria {
-  name: string;
+  name: TranslatableString;
   key: number | string;
 }
 

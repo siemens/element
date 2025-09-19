@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { ExtendedStatusType } from '@siemens/element-ng/common';
 import { SiIconComponent, STATUS_ICON_CONFIG } from '@siemens/element-ng/icon';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-status-bar-item',
@@ -28,8 +28,8 @@ import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 export class SiStatusBarItemComponent {
   private readonly statusIcons = inject(STATUS_ICON_CONFIG);
   readonly status = input<ExtendedStatusType>();
-  readonly value = input.required<string | number>();
-  readonly heading = input.required<string>();
+  readonly value = input.required<TranslatableString | number>();
+  readonly heading = input.required<TranslatableString>();
   readonly color = input<string>();
   /** @defaultValue false */
   readonly blink = input(false, { transform: booleanAttribute });

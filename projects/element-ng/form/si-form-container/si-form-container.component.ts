@@ -6,13 +6,14 @@ import { NgTemplateOutlet } from '@angular/common';
 import { booleanAttribute, Component, computed, inject, input } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { Breakpoints, SiResponsiveContainerDirective } from '@siemens/element-ng/resize-observer';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiFormValidationErrorMapper } from '../si-form-validation-error.model';
 
 export interface SiFormValidationError {
   controlName?: string;
   controlNameTranslationKey?: string;
-  errorCode: string;
+  errorCode: TranslatableString;
   errorCodeTranslationKey?: string;
   errorParams?: any;
 }

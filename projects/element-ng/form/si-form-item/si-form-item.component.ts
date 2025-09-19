@@ -28,7 +28,7 @@ import {
   ValidationErrors,
   ValidatorFn
 } from '@angular/forms';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiFormFieldsetComponent } from '../form-fieldset/si-form-fieldset.component';
 import { SiFormContainerComponent } from '../si-form-container/si-form-container.component';
@@ -40,7 +40,7 @@ import { SiFormFieldNativeControl } from './si-form-field-native.control';
 /** @internal */
 export interface SiFormError {
   key: string;
-  message?: string;
+  message?: TranslatableString;
   params: any;
 }
 
@@ -65,7 +65,7 @@ export class SiFormItemComponent
    * The label to be displayed in the form item.
    * It will be translated if a translation key is available.
    */
-  readonly label = input<string | null>();
+  readonly label = input<TranslatableString | null>();
 
   /**
    * A custom width value to be applied to the label.

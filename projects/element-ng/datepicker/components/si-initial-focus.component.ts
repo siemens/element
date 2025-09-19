@@ -11,6 +11,7 @@ import {
   output,
   viewChild
 } from '@angular/core';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { Cell, SiCalendarBodyComponent } from './si-calendar-body.component';
 
@@ -52,9 +53,9 @@ export class SiInitialFocusComponent implements AfterViewInit {
    */
   readonly maxMonth = input<Date>();
   /** Aria label for the next button. Needed for a11y. */
-  readonly previousLabel = input.required<string>();
+  readonly previousLabel = input.required<TranslatableString>();
   /**  Aria label for the next button. Needed for a11y. */
-  readonly nextLabel = input.required<string>();
+  readonly nextLabel = input.required<TranslatableString>();
   /**
    * Is range selection enabled, when enabled it shows a preview between the startDate and the focused date.
    *

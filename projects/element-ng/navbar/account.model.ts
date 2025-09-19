@@ -36,5 +36,5 @@ export interface AccountItem extends MenuItem {
   /**
    * Role name shown as a badge in the bottom
    */
-  role?: string;
+  role?: TranslatableString;
 }

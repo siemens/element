@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-progressbar',
@@ -40,7 +40,7 @@ export class SiProgressbarComponent {
   /**
    * Heading to display on top of progress bar.
    */
-  readonly heading = input<string>();
+  readonly heading = input<TranslatableString>();
 
   /**
    * Optional progress text to be shown on top right (in LTR).

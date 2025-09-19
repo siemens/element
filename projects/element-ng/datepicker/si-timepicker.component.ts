@@ -50,8 +50,8 @@ interface Value {
 }
 
 interface Config {
-  ariaLabel: string;
-  label: string;
+  ariaLabel: TranslatableString;
+  label: TranslatableString;
   maxLength: number;
   max: number;
   name: keyof Value;

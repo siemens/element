@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Directive, ElementRef, input, model, output, signal, Signal } from '@angular/core';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { CriterionDefinition, CriterionValue } from '../si-filtered-search.model';
 
@@ -17,7 +18,7 @@ export abstract class SiFilteredSearchValueBase {
   readonly criterionValue = model.required<CriterionValue>();
   readonly definition = input.required<CriterionDefinition>();
   readonly disabled = input.required<boolean>();
-  readonly searchLabel = input.required<string>();
+  readonly searchLabel = input.required<TranslatableString>();
 
   readonly submitValue = output<{ freeText: string } | void>();
   readonly editValue = output();

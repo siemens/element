@@ -10,6 +10,7 @@ import {
   output,
   signal
 } from '@angular/core';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-wizard-step',
@@ -18,7 +19,7 @@ import {
 })
 export class SiWizardStepComponent {
   /** @defaultValue '' */
-  readonly heading = input('');
+  readonly heading = input<TranslatableString>('');
   /** @defaultValue true */
   readonly isValid = input(true, { transform: booleanAttribute });
   /** @defaultValue true */

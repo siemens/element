@@ -73,7 +73,7 @@ export class SiCardComponent {
   /**
    * Alt text for a provided image.
    */
-  readonly imgAlt = input<string>();
+  readonly imgAlt = input<TranslatableString>();
   /**
    * Defines if an image is placed on top or start (left) of the card.
    *

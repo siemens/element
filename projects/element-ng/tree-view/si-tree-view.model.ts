@@ -4,6 +4,7 @@
  */
 import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { MenuItem } from '@siemens/element-ng/menu';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 import { Observable } from 'rxjs';
 
 import type { SiTreeViewComponent } from './si-tree-view.component';
@@ -62,12 +63,12 @@ export interface TreeItem<T = any> {
   /**
    * The text shown for the tree item data field 1.
    */
-  dataField1?: string;
+  dataField1?: TranslatableString;
 
   /**
    * The text shown for the tree item data field 2.
    */
-  dataField2?: string;
+  dataField2?: TranslatableString;
 
   /**
    * The hierarchy level of the node. This will be auto-calculated by the tree view control.
@@ -82,7 +83,7 @@ export interface TreeItem<T = any> {
   /**
    * The text shown for the tree item label (header).
    */
-  label?: string;
+  label?: TranslatableString;
 
   /**
    * The parent tree item. This will be automatically set by the tree view control.

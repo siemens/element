@@ -15,7 +15,7 @@ import {
   output
 } from '@angular/core';
 import { isRTL } from '@siemens/element-ng/common';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import {
   addDaysInRange,
@@ -69,9 +69,9 @@ export class SiDaySelectionComponent extends SiInitialFocusComponent {
    */
   readonly focusedDate = model.required<Date>();
   /** Today button text */
-  readonly todayLabel = input<string>();
+  readonly todayLabel = input<TranslatableString>();
   /** Aria label for calendar week column */
-  readonly calendarWeekLabel = input<string>();
+  readonly calendarWeekLabel = input<TranslatableString>();
   /** Emits when the active focused date changed to another month / year, typically during keyboard navigation */
   readonly activeMonthChange = output<Date>();
   /** Emits when the user requests a different to show a different view */
