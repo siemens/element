@@ -8,10 +8,10 @@
     [class.text-body]="color() === 0"
     [title]="altText()"
     [attr.aria-label]="altText()"
-    >{{ displayInitials }}</div
+    >{{ displayInitials() }}</div
   >
 }
-@let iconConfig = statusIcon();
+@let iconConfig = statusIcon(); 
 @if (iconConfig) {
   <span class="indicator-size indicator icon-stack">
     <si-icon class="drop-shadow" [ngClass]="iconConfig.color" [icon]="iconConfig.icon" />
