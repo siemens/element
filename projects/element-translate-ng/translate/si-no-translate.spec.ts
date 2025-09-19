@@ -5,7 +5,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { injectSiTranslateService } from './si-translate.inject';
-import { SiTranslateService } from './si-translate.service';
+import { getBrowserLanguage, SiTranslateService } from './si-translate.service';
 
 describe('SiNoTranslate', () => {
   let service: SiTranslateService;
@@ -35,5 +35,30 @@ describe('SiNoTranslate', () => {
 
   it('should translate sync', () => {
     expect(service.translateSync('VALUE-3')).toBe('VALUE-3');
+  });
+
+  it('should return language code from different browser locales', () => {
+    // Mock different browser languages
+    const originalNavigator = window.navigator;
+
+    // Test German
+    Object.defineProperty(window, 'navigator', {
+      value: { ...originalNavigator, language: 'de-DE' },
+      writable: true
+    });
+    expect(getBrowserLanguage()).toBe('de');
+
+    // Test French
+    Object.defineProperty(window, 'navigator', {
+      value: { ...originalNavigator, language: 'fr-FR' },
+      writable: true
+    });
+    expect(getBrowserLanguage()).toBe('fr');
+
+    // Restore original navigator
+    Object.defineProperty(window, 'navigator', {
+      value: originalNavigator,
+      writable: true
+    });
   });
 });
