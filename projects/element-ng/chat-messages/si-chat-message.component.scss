@@ -1,0 +1,104 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: block;
+  --chat-message-bubble-bg: #{variables.$element-base-1};
+}
+
+:host ::ng-deep si-loading-spinner {
+  --loading-spinner-size: 1.5em;
+}
+
+.skeleton-line-full {
+  inline-size: 100%;
+}
+
+.skeleton-line-half {
+  inline-size: 50%;
+}
+
+.loading-message-bubble {
+  inline-size: max-content;
+  min-inline-size: 75%;
+  margin-block-end: auto;
+  background-color: var(--chat-message-bubble-bg);
+}
+
+.message-bubble {
+  margin-block-end: auto;
+  background-color: var(--chat-message-bubble-bg);
+}
+
+.message-wrapper {
+  max-inline-size: 75%;
+}
+
+.message-content:has(si-attachment-list) .actions-wrapper {
+  margin-block-start: map.get(variables.$spacers, 1);
+}
+
+.si-chat-message-main {
+  flex-direction: column;
+}
+
+.avatar-wrapper:not(:has(> *)) {
+  display: none;
+}
+
+.avatar-wrapper {
+  margin-inline-start: map.get(variables.$spacers, 3);
+}
+
+:host-context(.si-container-md, .si-container-lg, .si-container-xl, .si-container-xxl) {
+  .si-chat-message-main {
+    flex-direction: row;
+  }
+
+  .si-chat-message-row-reverse {
+    flex-direction: row-reverse;
+  }
+
+  .si-chat-message-align-start {
+    align-items: flex-start;
+  }
+
+  .avatar-wrapper {
+    margin-inline-start: 0;
+    margin-block-end: 0;
+    margin-inline-end: map.get(variables.$spacers, 2);
+    margin-block-start: map.get(variables.$spacers, 3);
+    align-self: flex-start;
+  }
+
+  .si-chat-message-avatar-end {
+    margin-inline-start: map.get(variables.$spacers, 2);
+    margin-inline-end: 0;
+  }
+
+  .si-chat-message-content-end {
+    margin-inline-start: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .si-chat-message-wrapper {
+    max-inline-size: 80%;
+  }
+
+  .si-chat-message-bubble-end {
+    margin-inline-start: auto;
+  }
+}
+
+:host-context(.si-container-xs, .si-container-sm) {
+  .message-wrapper {
+    max-inline-size: unset;
+  }
+
+  .avatar-wrapper {
+    margin-inline-start: map.get(variables.$spacers, 3);
+    margin-block-end: 0;
+  }
+}

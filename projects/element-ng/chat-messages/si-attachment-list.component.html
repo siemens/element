@@ -1,0 +1,34 @@
+<div class="d-flex flex-wrap gap-2" [class.justify-content-end]="alignment() === 'end'">
+  @for (attachment of attachments(); track attachment.id) {
+    <div
+      class="attachment-item d-flex align-items-center gap-1 p-1 border rounded bg-body-secondary"
+      [class.attachment-item--clickable]="!!attachment.previewTemplate"
+      [class.p-2]="!removable()"
+      [attr.role]="attachment.previewTemplate ? 'button' : null"
+      [attr.tabindex]="attachment.previewTemplate ? '0' : null"
+      [attr.title]="attachment.name"
+      (click)="
+        attachment.previewTemplate ? modalService.show(attachment.previewTemplate, {}) : null
+      "
+    >
+      <si-icon class="attachment-icon icon flex-shrink-0" [icon]="getFileIcon(attachment.name)" />
+
+      <div class="attachment-info flex-grow-1 min-width-0">
+        <span class="attachment-name text-truncate si-body-2 d-block" [title]="attachment.name">
+          {{ attachment.name }}
+        </span>
+      </div>
+
+      @if (removable()) {
+        <button
+          type="button"
+          class="btn btn-ghost btn-circle btn-sm flex-shrink-0 ms-auto"
+          [attr.aria-label]="(removeLabel() | translate) + ' ' + attachment.name"
+          (click)="remove.emit(attachment.id); $event.stopPropagation()"
+        >
+          <si-icon class="icon" icon="element-delete" />
+        </button>
+      }
+    </div>
+  }
+</div>
