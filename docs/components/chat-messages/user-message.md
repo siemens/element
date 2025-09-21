@@ -43,4 +43,8 @@ following the AI pattern guidelines.
 
 ## Code ---
 
-Angular component is coming soon.
+<si-docs-component example="si-chat-messages/si-chat-messages"></si-docs-component>
+
+<si-docs-api component="SiUserMessageComponent"></si-docs-api>
+
+<si-docs-types></si-docs-types>

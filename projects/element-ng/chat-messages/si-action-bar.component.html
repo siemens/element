@@ -1,0 +1,30 @@
+@for (action of actions(); track action.id) {
+  <button
+    type="button"
+    class="btn btn-ghost btn-circle btn-sm"
+    [attr.data-id]="action.id"
+    [disabled]="action.disabled"
+    [attr.aria-label]="action.label | translate"
+    (click)="runAction(action)"
+  >
+    <si-icon [icon]="action.icon" />
+  </button>
+}
+
+@if (dropdownActions().length > 0) {
+  <button
+    type="button"
+    class="btn btn-ghost btn-circle btn-sm"
+    [cdkMenuTriggerFor]="dropdownActionsMenu"
+    [attr.aria-label]="
+      (actions().length ? secondaryActionsLabel() : dropdownActionsLabel()) | translate
+    "
+    [attr.title]="(actions().length ? secondaryActionsLabel() : dropdownActionsLabel()) | translate"
+  >
+    <si-icon icon="element-optionsVertical" />
+  </button>
+
+  <ng-template #dropdownActionsMenu>
+    <si-menu-factory [items]="dropdownActions()" [actionParam]="actionParam()" />
+  </ng-template>
+}
