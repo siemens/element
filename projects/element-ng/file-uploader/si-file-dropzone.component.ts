@@ -7,21 +7,19 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  ElementRef,
-  inject,
   input,
-  LOCALE_ID,
   output,
   viewChild
 } from '@angular/core';
 import { addIcons, elementUpload, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
+import { SiFileUploadDirective, FileUploadError } from './si-file-upload.directive';
 import { UploadFile } from './si-file-uploader.model';
 
 @Component({
   selector: 'si-file-dropzone',
-  imports: [SiIconComponent, SiTranslatePipe],
+  imports: [SiIconComponent, SiTranslatePipe, SiFileUploadDirective],
   templateUrl: './si-file-dropzone.component.html',
   styleUrl: './si-file-dropzone.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -111,9 +109,15 @@ export class SiFileDropzoneComponent {
    */
   readonly multiple = input(false, { transform: booleanAttribute });
   /**
-   * Event emitted when files are added.
+   * Event emitted when valid files are added.
+   * Invalid files are also included here, but with status 'invalid' and an errorText describing why they were ignored.
    */
   readonly filesAdded = output<UploadFile[]>();
+
+  /**
+   * Event emitted when file validation errors occur, including files that were ignored due to size or type.
+   */
+  readonly fileError = output<FileUploadError>();
 
   /**
    * Enable directory upload.
@@ -124,23 +128,21 @@ export class SiFileDropzoneComponent {
 
   protected readonly maxFileSizeString = computed(() => {
     const maxFileSize = this.maxFileSize();
-    return maxFileSize ? this.fileSizeToString(maxFileSize) : '';
+    return maxFileSize ? this.fileUploadDirective().fileSizeToString(maxFileSize) : '';
   });
 
   protected readonly icons = addIcons({ elementUpload });
 
   protected dragOver = false;
 
-  private readonly fileInput = viewChild.required<ElementRef>('fileInput');
-  private locale = inject(LOCALE_ID).toString();
-  private numberFormat = new Intl.NumberFormat(this.locale, { maximumFractionDigits: 2 });
+  private readonly fileUploadDirective = viewChild.required(SiFileUploadDirective);
 
   protected dropHandler(event: DragEvent): void {
     event.preventDefault();
     if (this.directoryUpload()) {
-      this.handleItems(event.dataTransfer!.items);
+      this.fileUploadDirective().handleItems(event.dataTransfer!.items);
     } else {
-      this.handleFiles(event.dataTransfer!.files);
+      this.fileUploadDirective().handleFiles(event.dataTransfer!.files);
     }
     this.dragOver = false;
   }
@@ -152,136 +154,21 @@ export class SiFileDropzoneComponent {
   }
 
   protected inputEnterHandler(): void {
-    this.fileInput().nativeElement.click();
+    this.fileUploadDirective().triggerClick();
   }
 
-  protected inputHandler(event: Event): void {
-    this.handleFiles((event.target as HTMLInputElement).files);
+  protected onFilesAdded(files: UploadFile[]): void {
+    this.filesAdded.emit(files);
   }
 
-  protected handleFiles(files: FileList | null): void {
-    if (!files?.length) {
-      return;
-    }
-
-    const newFiles: UploadFile[] = [];
-
-    // eslint-disable-next-line @typescript-eslint/prefer-for-of
-    for (let i = 0; i < files.length; i++) {
-      newFiles.push(this.makeUploadFile(files[i]));
-    }
-    newFiles.sort((a, b) => a.fileName.localeCompare(b.fileName));
-
-    this.filesAdded.emit(newFiles);
-    this.reset();
+  protected onFileError(error: FileUploadError): void {
+    this.fileError.emit(error);
   }
 
   /**
    * Reset all the files inside the native file input (and therefore the dropzone).
    */
   reset(): void {
-    this.fileInput().nativeElement.value = '';
-  }
-
-  private makeUploadFile(file: File): UploadFile {
-    const uploadFile: UploadFile = {
-      fileName: file.name,
-      file,
-      size: this.fileSizeToString(file.size),
-      progress: 0,
-      status: 'added'
-    };
-    // use MIME type of file if set. Otherwise fall back to file name ending
-    const ext = '.' + uploadFile.file.name.split('.').pop();
-    if (!this.verifyFileType(uploadFile.file.type, ext)) {
-      uploadFile.status = 'invalid';
-      uploadFile.errorText = this.errorTextFileType();
-    } else if (!this.verifyFileSize(uploadFile.file.size)) {
-      uploadFile.status = 'invalid';
-      uploadFile.errorText = this.errorTextFileMaxSize();
-    }
-    return uploadFile;
-  }
-
-  private verifyFileSize(size: number): boolean {
-    const maxFileSize = this.maxFileSize();
-    return !maxFileSize || size <= maxFileSize;
-  }
-
-  private verifyFileType(fileType: string | undefined, ext: string | undefined): boolean {
-    const accept = this.accept();
-    if (!accept) {
-      return true;
-    }
-    if (fileType === undefined && ext === undefined) {
-      return false;
-    }
-    // Spec says that comma is the delimiter for filetypes. Also allow pipe for compatibility
-    return accept.split(/,|\|/).some(acceptedType => {
-      // convert accept glob into regex (example: images/* --> images/.*)
-      const acceptedRegexStr = acceptedType.replace('.', '.').replace('*', '.*').trim();
-      const acceptedRegex = new RegExp(acceptedRegexStr, 'i');
-
-      // if fileType is set and accepted type looks like a MIME type, match that otherwise extension
-      if (fileType && acceptedType.includes('/')) {
-        return !!fileType.match(acceptedRegex);
-      }
-      return !!ext?.match(acceptedRegex);
-    });
-  }
-
-  private fileSizeToString(num: number): string {
-    let suffix = 'B';
-    if (num >= 1_073_741_824) {
-      num /= 1_073_741_824;
-      suffix = 'GB';
-    }
-    if (num >= 1_048_576) {
-      num /= 1_048_576;
-      suffix = 'MB';
-    } else if (num >= 1_024) {
-      num /= 1_024;
-      suffix = 'KB';
-    }
-    return this.numberFormat.format(num) + suffix;
-  }
-
-  private handleItems(items: DataTransferItemList): void {
-    const newFiles: UploadFile[] = [];
-    let pendingEntries = 0;
-
-    const traverseFileTree = (item: FileSystemEntry): void => {
-      if (item.isFile) {
-        (item as FileSystemFileEntry).file(file => {
-          newFiles.push(this.makeUploadFile(file));
-          if (--pendingEntries === 0) {
-            this.filesAdded.emit(newFiles);
-            this.reset();
-          }
-        });
-      } else if (item.isDirectory) {
-        const dirReader = (item as FileSystemDirectoryEntry).createReader();
-        dirReader.readEntries(entries => {
-          for (const entry of entries) {
-            pendingEntries++;
-            traverseFileTree(entry);
-          }
-          if (--pendingEntries === 0) {
-            this.filesAdded.emit(newFiles);
-            this.reset();
-          }
-        });
-      }
-    };
-
-    // items is not an array but of type DataTransferItemList
-    // eslint-disable-next-line @typescript-eslint/prefer-for-of
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i].webkitGetAsEntry();
-      if (item) {
-        pendingEntries++;
-        traverseFileTree(item);
-      }
-    }
+    this.fileUploadDirective().reset();
   }
 }

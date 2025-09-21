@@ -83,3 +83,11 @@ When the AI cannot complete a task due to a known limitation, it should respond 
 These are not treated as errors and do not require a separate notification.
 
 ![AI errors and limitations](images/ai-errors.png)
+
+## Code ---
+
+<si-docs-component example="si-chat-messages/si-chat-messages"></si-docs-component>
+
+<si-docs-api component="SiChatContainerComponent"></si-docs-api>
+
+<si-docs-types></si-docs-types>
