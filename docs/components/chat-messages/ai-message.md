@@ -62,3 +62,11 @@ The **si-markdown-content** component is used to render markdown content within 
 <si-docs-component example="si-chat-messages/si-markdown-content"></si-docs-component>
 
 <si-docs-api component="SiMarkdownContentComponent"></si-docs-api>
+
+## Code (Tool Message Component) ---
+
+The **si-tool-message** component is a similar to the AI message component, but it includes a tool icon instead of an AI icon and is used to display tool calls and their results.
+
+<si-docs-component example="si-chat-messages/si-tool-message"></si-docs-component>
+
+<si-docs-api component="SiToolMessageComponent"></si-docs-api>
