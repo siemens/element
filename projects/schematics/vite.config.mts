@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
+import { version } from '../../package.json';
 
 export default defineConfig({
   build: {
@@ -45,5 +46,9 @@ export default defineConfig({
   },
   esbuild: {
     target: 'node16'
+  },
+  define: {
+    '__PLACEHOLDER_VERSION__': JSON.stringify(version),
+    '__SIMPL_BRAND_VERSION__': JSON.stringify('2.2.0')
   }
 });
