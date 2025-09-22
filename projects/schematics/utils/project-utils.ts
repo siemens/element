@@ -44,6 +44,19 @@ export const getTsConfigPaths = (tree: Tree): string[] => {
   return [...buildPaths];
 };
 
+export const getAllPackageJson = (tree: Tree): string[] => {
+  const packageJsonPaths = new Set<string>(['/package.json']);
+  const workspace = getWorkspace(tree);
+  for (const [, projectRaw] of Object.entries(workspace.projects)) {
+    const projectDefinition = projectRaw as ProjectDefinition;
+    const packageJsonPath = normalize(join(projectDefinition.root, 'package.json'));
+    if (tree.exists(packageJsonPath)) {
+      packageJsonPaths.add(packageJsonPath);
+    }
+  }
+  return [...packageJsonPaths];
+};
+
 export const getGlobalStyles = (tree: Tree): string[] => {
   const globalStyles = new Set<string>();
 

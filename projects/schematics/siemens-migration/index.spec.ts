@@ -4,6 +4,11 @@
  */
 import { Tree } from '@angular-devkit/schematics';
 import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
+import {
+  addPackageJsonDependency,
+  NodeDependency,
+  NodeDependencyType
+} from '@schematics/angular/utility/dependencies';
 import * as path from 'path';
 import { beforeEach, describe, expect, test } from 'vitest';
 
@@ -350,6 +355,136 @@ import { SiDatepickerComponent, SiDateInputDirective } from '@simpl/element-ng/d
       ];
       const actual = readLines(tree, scssFile);
       expect(actual).toEqual(expected);
+    });
+  });
+
+  describe('add/remove dependencies migration', () => {
+    test('should update the package.json files with new deps and remove the older', async () => {
+      addTestFiles(appTree, {
+        '/package.json': `{
+         "dependencies": {
+          "@simpl/element-ng": "47.0.3",
+          "@simpl/maps-ng": "47.0.3",
+          "@simpl/dashboards-ng": "47.0.3",
+          "@simpl/element-translate-ng": "47.0.3",
+          "some-other-dep": "1.2.3"
+        }
+        }`
+      });
+
+      const tree = await runner.runSchematic(
+        'siemens-migration',
+        { path: 'projects/app/src' },
+        appTree
+      );
+
+      const packageJson = tree.readJson('/package.json') as any;
+      const dependencies = packageJson?.dependencies;
+
+      const elementNg = dependencies?.['@siemens/element-ng'];
+      const dashboardsNg = dependencies?.['@siemens/dashboards-ng'];
+      const translateNg = dependencies?.['@siemens/element-translate-ng'];
+      const mapsNg = dependencies?.['@siemens/maps-ng'];
+
+      expect(dependencies?.['@simpl/element-ng']).not.toBeDefined();
+      expect(elementNg).toBeDefined();
+      expect(elementNg).not.toBe('47.0.3');
+      expect(elementNg).toBe('48.0.3');
+
+      expect(dependencies?.['@simpl/dashboards-ng']).not.toBeDefined();
+      expect(dashboardsNg).toBeDefined();
+      expect(dashboardsNg).not.toBe('47.0.3');
+      expect(dashboardsNg).toBe('48.0.3');
+
+      expect(dependencies?.['@simpl/element-translate-ng']).not.toBeDefined();
+      expect(translateNg).toBeDefined();
+      expect(translateNg).not.toBe('47.0.3');
+      expect(translateNg).toBe('48.0.3');
+
+      expect(dependencies?.['@simpl/maps-ng']).not.toBeDefined();
+      expect(mapsNg).toBeDefined();
+      expect(mapsNg).not.toBe('47.0.3');
+      expect(mapsNg).toBe('48.0.3');
+    });
+
+    test('should add simpl brand package if any of the simpl replacements are found', async () => {
+      addTestFiles(appTree, {
+        '/package.json': `{
+         "dependencies": {
+          "@simpl/element-ng": "47.0.3",
+          "some-other-dep": "1.2.3"
+        }
+        }`
+      });
+
+      const tree = await runner.runSchematic(
+        'siemens-migration',
+        { path: 'projects/app/src' },
+        appTree
+      );
+
+      const packageJson = tree.readJson('/package.json') as any;
+      const simplBrand = packageJson?.dependencies?.['@simpl/brand'];
+
+      expect(simplBrand).toBeDefined();
+      expect(simplBrand).toBe('2.2.0');
+    });
+
+    test('should not add simpl brand package if none of the simpl replacements are found', async () => {
+      const tree = await runner.runSchematic(
+        'siemens-migration',
+        { path: 'projects/app/src' },
+        appTree
+      );
+
+      const packageJson = tree.readJson('/package.json') as any;
+      const simplBrand = packageJson?.dependencies?.['@simpl/brand'];
+
+      expect(simplBrand).not.toBeDefined();
+    });
+
+    test('should not update simpl deps found in peer dependencies', async () => {
+      addTestFiles(appTree, {
+        '/package.json': `{
+         "dependencies": {
+          "@simpl/element-ng": "47.0.3",
+          "some-other-dep": "1.2.3"
+        },
+        "peerDependencies": {
+          "@simpl/maps-ng": "47.0.3",
+          "@simpl/dashboards-ng": "47.0.3",
+          "@simpl/element-translate-ng": "47.0.3"
+        }
+      }`
+      });
+
+      const tree = await runner.runSchematic(
+        'siemens-migration',
+        { path: 'projects/app/src' },
+        appTree
+      );
+
+      const packageJson = tree.readJson('/package.json') as any;
+
+      const elementNg = packageJson?.dependencies?.['@siemens/element-ng'];
+
+      const peerDashboardsNg = packageJson?.peerDependencies?.['@simpl/dashboards-ng'];
+      const peerTranslateNg = packageJson?.peerDependencies?.['@simpl/element-translate-ng'];
+      const peerMapsNg = packageJson?.peerDependencies?.['@simpl/maps-ng'];
+
+      expect(packageJson?.dependencies?.['@simpl/element-ng']).not.toBeDefined();
+
+      expect(elementNg).toBeDefined();
+      expect(elementNg).toBe('48.0.3');
+
+      expect(peerDashboardsNg).toBeDefined();
+      expect(peerDashboardsNg).toBe('47.0.3');
+
+      expect(peerTranslateNg).toBeDefined();
+      expect(peerTranslateNg).toBe('47.0.3');
+
+      expect(peerMapsNg).toBeDefined();
+      expect(peerMapsNg).toBe('47.0.3');
     });
   });
 });

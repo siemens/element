@@ -39,3 +39,4 @@ export const findComponentImportPath = (
 };
 
 export * from './style-mappings';
+export * from './dependency-mappings';

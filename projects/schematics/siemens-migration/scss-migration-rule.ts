@@ -28,6 +28,7 @@ import { MigrationOptions } from './model';
 export const scssMigrationRule = (_options: MigrationOptions): Rule => {
   return (tree: Tree, context: SchematicContext) => {
     const rules: Rule[] = [];
+    context.logger.info('🎨 Migrating SCSS styles...');
     const globalStyles = getGlobalStyles(tree);
     for (const style of globalStyles) {
       if (style.endsWith('.scss') || style.endsWith('.sass')) {

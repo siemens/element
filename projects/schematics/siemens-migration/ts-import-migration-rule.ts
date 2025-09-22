@@ -27,7 +27,7 @@ import { MigrationOptions, Migrations } from './model';
 export const importMigrationRule = (_options: MigrationOptions): Rule => {
   return (tree: Tree, context: SchematicContext) => {
     const rules: Rule[] = [];
-
+    context.logger.info('📦 Migrating TypeScript imports...');
     const sourceFiles = discoverSourceFiles(tree, context, _options);
 
     for (const filePath of sourceFiles) {
