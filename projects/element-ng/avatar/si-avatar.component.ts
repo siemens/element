@@ -7,11 +7,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   inject,
   input,
-  numberAttribute,
-  OnChanges,
-  SimpleChanges
+  numberAttribute
 } from '@angular/core';
 import { EntityStatusType } from '@siemens/element-ng/common';
 import { SiIconComponent, STATUS_ICON_CONFIG } from '@siemens/element-ng/icon';
@@ -37,7 +36,7 @@ export type AvatarSize = 'tiny' | 'xsmall' | 'small' | 'regular' | 'large' | 'xl
     }
   ]
 })
-export class SiAvatarComponent implements OnChanges {
+export class SiAvatarComponent {
   private readonly statusIcons = inject(STATUS_ICON_CONFIG);
   /**
    * Size of the component.
@@ -79,42 +78,41 @@ export class SiAvatarComponent implements OnChanges {
     const status = this.status();
     return status ? this.statusIcons[status] : undefined;
   });
-  protected displayInitials?: string;
-  private readonly autoBackgroundColorDirective = inject(SiAvatarBackgroundColorDirective);
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.initials || changes.altText) {
-      this.setInitials();
-      this.autoBackgroundColorDirective.calculateColorFromInitials(this.displayInitials);
-    }
-  }
-
-  private setInitials(): void {
+  protected readonly displayInitials = computed(() => {
     const initials = this.initials();
     if (initials) {
-      this.displayInitials = initials;
-    } else {
-      const name = this.altText()
-        .replaceAll(/\([^)]*\)/g, '')
-        .trim();
-      const byComma = name.split(/,\s*/);
-      let first: string;
-      let last: string;
-      if (byComma.length > 1) {
-        last = byComma[0];
-        first = byComma[1];
-      } else {
-        const parts = name.split(' ');
-        first = parts.shift() ?? '';
-        last = parts.pop() ?? '';
-      }
-      if (first) {
-        first = first[0].toLocaleUpperCase();
-      }
-      if (last) {
-        last = last[0].toLocaleUpperCase();
-      }
-      this.displayInitials = first + last;
+      return initials;
     }
+
+    const name = this.altText()
+      .replaceAll(/\([^)]*\)/g, '')
+      .trim();
+    const byComma = name.split(/,\s*/);
+    let first: string;
+    let last: string;
+    if (byComma.length > 1) {
+      last = byComma[0];
+      first = byComma[1];
+    } else {
+      const parts = name.split(' ');
+      first = parts.shift() ?? '';
+      last = parts.pop() ?? '';
+    }
+    if (first) {
+      first = first[0].toLocaleUpperCase();
+    }
+    if (last) {
+      last = last[0].toLocaleUpperCase();
+    }
+    return first + last;
+  });
+
+  private readonly autoBackgroundColorDirective = inject(SiAvatarBackgroundColorDirective);
+
+  constructor() {
+    effect(() => {
+      this.autoBackgroundColorDirective.calculateColorFromInitials(this.displayInitials());
+    });
   }
 }

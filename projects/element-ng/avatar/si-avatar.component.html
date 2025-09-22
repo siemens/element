@@ -8,7 +8,7 @@
     [class.text-body]="color() === 0"
     [title]="altText()"
     [attr.aria-label]="altText()"
-    >{{ displayInitials }}</div
+    >{{ displayInitials() }}</div
   >
 }
 @let iconConfig = statusIcon();
