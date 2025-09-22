@@ -10,11 +10,15 @@ import {
   FileEntry,
   FileVisitor,
   MergeStrategy,
+  SchematicContext,
   SchematicsException,
   Tree,
   UpdateRecorder
 } from '@angular-devkit/schematics';
-import { join } from 'path';
+import { dirname, isAbsolute, join, resolve } from 'path';
+import { MigrationOptions } from 'siemens-migration/model';
+
+import { parseTsconfigFile } from './ts-utils';
 
 export const getWorkspace = (tree: Tree): workspaces.WorkspaceDefinition => {
   const workspace = tree.read('/angular.json');
@@ -103,6 +107,40 @@ export const createFullPathTree = (basePath: string, tree: Tree): Tree => {
     actions: []
   };
   return t;
+};
+
+export const discoverSourceFiles = (
+  tree: Tree,
+  context: SchematicContext,
+  options: MigrationOptions,
+  extension: string = '.ts'
+): string[] => {
+  const basePath = process.cwd().replace(/\\/g, '/');
+
+  // Wrap the tree to force full paths since parsing the typescript config requires full paths.
+  const tsTree = createFullPathTree(basePath, tree);
+  const tsConfigs = getTsConfigPaths(tree);
+
+  if (!tsConfigs.length) {
+    throw new SchematicsException('Could not find any tsconfig file. Cannot run the migration.');
+  }
+
+  context.logger.debug(`Found tsconfig files: ${tsConfigs.join(', ')}`);
+  let sourceFiles: string[] = [];
+  for (const configPath of tsConfigs) {
+    const tsConfigPath = resolve(basePath, configPath);
+    const config = parseTsconfigFile(tsConfigPath, dirname(tsConfigPath), tsTree);
+    sourceFiles.push(...config.fileNames.filter(f => f.endsWith(extension)));
+  }
+
+  // Filter all files which are in the path
+  if (options.path) {
+    sourceFiles = isAbsolute(options.path)
+      ? sourceFiles.filter(f => f.startsWith(options.path))
+      : sourceFiles.filter(f => f.startsWith(resolve(basePath, options.path)));
+  }
+
+  return Array.from(new Set(sourceFiles)).map(path => path.substring(basePath.length + 1));
 };
 
 function* getTargets(
