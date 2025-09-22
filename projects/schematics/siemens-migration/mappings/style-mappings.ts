@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-export const styleReplacements = [
+export const STYLE_REPLACEMENTS = [
   {
     replace: `@import '@simpl/element-theme/`,
     new: `@import '@siemens/element-theme/`
@@ -13,7 +13,7 @@ export const styleReplacements = [
   }
 ];
 // Apply theme styles if not already present
-export const themeStyleEntries = [
+export const THEME_STYLE_ENTRIES = [
   { insert: `@use '@simpl/brand/assets/fonts/styles/siemens-sans';` },
   {
     insert: `@use '@siemens/element-theme/src/theme' with (
@@ -39,7 +39,7 @@ export const themeStyleEntries = [
   }
 ];
 
-export const scssUsePatterns = [
+export const SCSS_USE_PATTERNS = [
   /@use '@simpl\/element-theme\/src\/theme' with \(([\s\S]*?)\);/g,
   /@use '@simpl\/element-ng\/simpl-element-ng' with \(([\s\S]*?)\);/g,
   /@use '@simpl\/element-theme\/src\/theme';/g
