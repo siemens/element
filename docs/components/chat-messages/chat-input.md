@@ -62,7 +62,7 @@ If multiple attachments are added, they wrap and stack within the input field to
 
 ## Code ---
 
-<si-docs-component example="si-chat-messages/si-chat-messages"></si-docs-component>
+<si-docs-component example="si-chat-input/si-chat-input"></si-docs-component>
 
 <si-docs-api component="SiChatInputComponent"></si-docs-api>
 
