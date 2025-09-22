@@ -9,10 +9,22 @@ import { SCSS_USE_PATTERNS, STYLE_REPLACEMENTS, THEME_STYLE_ENTRIES } from './ma
 import { MigrationOptions } from './model';
 
 /**
- * Copyright (c) Siemens 2016 - 2025
- * SPDX-License-Identifier: MIT
+ * Creates a schematic rule for migrating SCSS files in a Siemens migration context.
+ *
+ * This rule performs the following migration tasks:
+ * - Processes global styles files (`.scss` and `.sass`) and removes specific SCSS use patterns
+ * - Applies theme style entries to global styles based on predefined patterns
+ * - Discovers and migrates SCSS source files that contain specific style replacements
+ *
+ * @param _options - Migration options configuration (currently unused)
+ * @returns A schematic rule function that processes the file tree and applies SCSS migrations
+ *
+ * @example
+ * ```typescript
+ * const rule = scssMigrationRule({ path: 'some-path' });
+ * // Use with Angular Schematics
+ * ```
  */
-
 export const scssMigrationRule = (_options: MigrationOptions): Rule => {
   return (tree: Tree, context: SchematicContext) => {
     const rules: Rule[] = [];

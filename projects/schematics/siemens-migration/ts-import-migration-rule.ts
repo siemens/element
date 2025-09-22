@@ -9,6 +9,21 @@ import { getImportNodes, getSymbols, discoverSourceFiles } from '../utils';
 import { findComponentImportPath } from './mappings';
 import { MigrationOptions, Migrations } from './model';
 
+/**
+ * Creates a migration rule that updates import statements in TypeScript files.
+ *
+ * This rule discovers source files, analyzes their import statements, and applies
+ * necessary transformations to migrate imports according to the specified options.
+ * It processes each file individually and chains all the resulting rules together.
+ *
+ * @param _options - Configuration options for the migration process
+ * @returns A Rule function that can be executed by Angular Schematics
+ *
+ * @example
+ * ```typescript
+ * const migrationRule = importMigrationRule({ path: 'some-path' });
+ * ```
+ */
 export const importMigrationRule = (_options: MigrationOptions): Rule => {
   return (tree: Tree, context: SchematicContext) => {
     const rules: Rule[] = [];
