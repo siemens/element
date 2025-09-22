@@ -243,6 +243,28 @@ describe('SiTimepickerComponent', () => {
     expect(select?.value).not.toBe(currentMeridian);
   });
 
+  it('should not toggle meridian', () => {
+    component.writeValue('2021-01-12 01:01:00.000');
+    fixture.detectChanges();
+    // Entering 12 am (midnight) should not toggle the meridian
+    enterValue(getHours(), '12');
+
+    fixture.detectChanges();
+    const select = element.querySelector<HTMLSelectElement>('select');
+    expect(select?.value).not.toBe('pm');
+  });
+
+  it('should toggle meridian when hours > 12', () => {
+    component.writeValue('2021-01-12 01:01:00.000');
+    fixture.detectChanges();
+    // Entering hours above 12 should toggle the meridian to PM
+    enterValue(getHours(), '13');
+
+    fixture.detectChanges();
+    const select = element.querySelector<HTMLSelectElement>('select');
+    expect(select?.value).toBe('pm');
+  });
+
   it('should not show meridian', () => {
     component.writeValue('2021-01-12 18:23:58.435');
     componentRef.setInput('showMeridian', false);
