@@ -8,3 +8,4 @@ export * from './element-ng-mappings';
 export * from './element-translate-ng-mappings';
 export * from './maps-ng-mappings';
 export * from './style-mappings';
+export * from './dependency-mappings';
