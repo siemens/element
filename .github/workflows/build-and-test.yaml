@@ -254,9 +254,11 @@ jobs:
         env:
           EXAMPLES_BASE: /element-examples
         if: ${{ github.ref == 'refs/heads/main' }}
-      - run: npm run docs:build:api
+      - run: 'uv run mkdocs build --strict --no-directory-urls'
         env:
           EXAMPLES_BASE: /element-examples
+          DOCS_COMPOSER: true
+          DOCS_COMPOSER_OPTIONS: '{ "demoRelLevel": -2 }'
         if: ${{ github.ref != 'refs/heads/main' }}
       - run: mv dist/element-examples/ dist/design/
       - run: mv dist/dashboards-demo/ dist/design/

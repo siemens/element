@@ -3,6 +3,8 @@ import xml.etree.ElementTree as etree
 from abc import abstractmethod
 from typing import cast
 from urllib.parse import urlencode
+import os
+
 
 from markdown import Extension
 from markdown.preprocessors import Preprocessor
@@ -101,6 +103,63 @@ class ElementExamplePreProcessor(ElementHtmlPreProcessor):
     self.examples_base = examples_base
     super().__init__('si-docs-component', *args, **kwargs)
 
+  def get_page_context(self):
+    """Get current page context from the global plugin instance."""
+    try:
+      # Import here to avoid circular imports
+      import mkdocs_element_docs_builder.plugin as plugin_module
+      # Get the current plugin instance if it exists
+      instances = getattr(plugin_module, '_plugin_instances', [])
+      for plugin_instance in instances:
+        if hasattr(plugin_instance, 'current_page_context'):
+          return plugin_instance.current_page_context
+    except Exception:
+      pass
+    return {'page_url': '', 'use_directory_urls': True}
+
+  def get_relative_examples_base(self):
+    """Calculate relative path to examples base from current page."""
+    if not self.examples_base:
+      return self.examples_base
+
+    # If examples_base is already a full URL (including localhost), use it as-is
+    if self.examples_base.startswith(('http://', 'https://', '//')):
+      return self.examples_base
+
+    # Get current page context
+    context = self.get_page_context()
+    page_url = context.get('page_url', '').strip('/')
+    use_directory_urls = context.get('use_directory_urls', True)
+
+    if not page_url:
+      return self.examples_base
+
+    if use_directory_urls:
+      # For directory URLs like components/buttons/ -> we're in a subdirectory
+      # We need to go up the same number of levels as the page depth
+      levels_up = page_url.count('/') + 1  # +1 because directory URLs have implicit trailing directory
+    else:
+      # For file URLs like components/buttons.html -> depth is the directory part only
+      # Count directory separators (not including the file part)
+      page_dir = os.path.dirname(page_url)
+      levels_up = page_dir.count('/') + 1 if page_dir else 0
+
+    # Build relative path from current page to examples_base
+    if levels_up > 0:
+      path_to_root = '../' * levels_up
+    else:
+      path_to_root = ''
+
+    examples_base_path = self.examples_base.lstrip('/').rstrip('/')
+
+    if not use_directory_urls:
+      examples_base_path += '/index.html'
+
+    # Join path to root with examples_base, using normpath to resolve .. properly
+    combined_path = os.path.normpath(path_to_root + examples_base_path).replace('\\', '/')
+
+    return combined_path
+
   def convert_tag(self, line) -> str:
     examples = []
     element = cast(etree.Element, etree.fromstring(line))
@@ -117,12 +176,16 @@ class ElementExamplePreProcessor(ElementHtmlPreProcessor):
     element.clear()
     element.tag = 'iframe'
     element.set('class', 'component-preview')
-    # on server: ../../../demo/index.html
-    # dev: http://localhost:4200
-    encode_object = {'base': examples_base if examples_base else '','e': list(map(lambda x: f'{x[0]};{x[1]}' if len(x) > 1 else x[0], examples))}
-    element.set('data-src', f'{self.examples_base}#/viewer/editor?{urlencode(encode_object, doseq=True)}')
+
+    # Use relative path to examples base
+    relative_examples_base = self.get_relative_examples_base()
+    encode_object = {
+      'base': examples_base if examples_base else '',
+      'e': list(map(lambda x: f'{x[0]};{x[1]}' if len(x) > 1 else x[0], examples))
+    }
+    element.set('data-src', f'{relative_examples_base}#/viewer/editor?{urlencode(encode_object, doseq=True)}')
     element.set('height', f'{int(prev_height if prev_height else 204) + 411}px')
-    element.set('width', f'100%')
+    element.set('width', '100%')
     element.set('style', 'opacity: 0;')
     element.set('allowfullscreen', 'true')
 
@@ -138,7 +201,9 @@ class ElementDocsExtension(Extension):
 
   def extendMarkdown(self, md):
     """Add Tabbed to Markdown instance."""
-    md.preprocessors.register(ElementExamplePreProcessor(self.config.get('examples_base')[0], md), 'element_example', 10)
+    examples_base = self.config.get('examples_base')
+    examples_base_value = examples_base[0] if examples_base else ''
+    md.preprocessors.register(ElementExamplePreProcessor(examples_base_value, md), 'element_example', 10)
     md.treeprocessors.register(ElementTabTreeProcessor(md), 'element_tabs', 10)
 
 

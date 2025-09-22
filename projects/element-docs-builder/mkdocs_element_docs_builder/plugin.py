@@ -11,6 +11,9 @@ from os.path import dirname
 
 from md_extension_element_docs_composer import DocsComposerExtension
 
+# Global registry for plugin instances
+_plugin_instances = []
+
 api_enabled = os.environ.get('DOCS_COMPOSER', 'false') in ('true', '1', 'yes', 'y')
 api_generate = True if os.environ.get('DOCS_COMPOSER_GENERATE', 'false') in ('true', '1', 'yes', 'y') else (
   False if os.environ.get('DOCS_COMPOSER_GENERATE', 'false') not in ('false', '0', 'no', 'n') else None
@@ -30,6 +33,12 @@ class ElementDocsBuilderPlugin(BasePlugin):
   ran_typedoc = False
   generated_nav: Any | None = None
   extension: Any | None = None
+  element_docs_extension: Any | None = None
+  current_page_context: dict = {}
+
+  def __init__(self):
+    super().__init__()
+    _plugin_instances.append(self)
 
   def on_startup(self, command: str, dirty: bool) -> None:
     if not api_enabled:
@@ -41,7 +50,6 @@ class ElementDocsBuilderPlugin(BasePlugin):
   def on_config(self, config: Config):
     config.get('extra_css').append('docs-builder.css')
     config.get('extra_javascript').append('docs-builder.js')
-
     if not api_enabled:
       return config
 
@@ -94,18 +102,25 @@ class ElementDocsBuilderPlugin(BasePlugin):
     if self.extension is not None:
       # Save the file path (relative to the repo dir) to the extension for later use
       self.extension.current_file_path = relpath(page.file.abs_src_path, os.getcwd())
+
+    # Store current page context for the extension to access
+    self.current_page_context = {
+      'page_url': page.url if hasattr(page, 'url') else '',
+      'use_directory_urls': config.get('use_directory_urls', True)
+    }
+
     return markdown
 
   def on_post_build(self, config: Config) -> None:
-      if not api_enabled:
-        return
+    if not api_enabled:
+      return
 
-      if self.extension is not None:
-        docs_composer.saveLLMsTxt(
-          self.docs_composer_configuration,
-          '.',
-          timeout=1000 * 60 * 1,  # 1 minute timeout
-        )
+    if self.extension is not None:
+      docs_composer.saveLLMsTxt(
+        self.docs_composer_configuration,
+        '.',
+        timeout=1000 * 60 * 1,  # 1 minute timeout
+      )
 
   def on_files(self, files: Files, config: Config):
     files.append(File('docs-builder.css', dirname(__file__), config.get('site_dir'), config.get('use_directory_urls')))
