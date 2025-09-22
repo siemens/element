@@ -86,7 +86,9 @@ These are not treated as errors and do not require a separate notification.
 
 ## Code ---
 
-<si-docs-component example="si-chat-messages/si-chat-messages"></si-docs-component>
+The **si-chat-container** component provides a complete AI chat interface, it should be inserted into a layout with fixed height, if no fixed height is provided, please set a height in pixels.
+
+<si-docs-component example="si-chat-container/si-chat-container"></si-docs-component>
 
 <si-docs-api component="SiChatContainerComponent"></si-docs-api>
 
