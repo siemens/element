@@ -54,6 +54,7 @@ describe('SiTimepickerComponent', () => {
     e.value = v;
     e.dispatchEvent(new Event('input'));
     e.dispatchEvent(new Event('change'));
+    e.dispatchEvent(new Event('blur'));
   };
   const generateKeyEvent = (key: 'ArrowDown' | 'ArrowUp'): KeyboardEvent => {
     const event: KeyboardEvent = new KeyboardEvent('keydown', { bubbles: true, cancelable: true });
@@ -64,10 +65,10 @@ describe('SiTimepickerComponent', () => {
   describe('with default configuration', () => {
     let fixture: ComponentFixture<TestComponent>;
 
-    beforeEach(() => {
-      TestBed.configureTestingModule({
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
         imports: [TestComponent]
-      });
+      }).compileComponents();
       fixture = TestBed.createComponent(TestComponent);
       element = fixture.nativeElement;
       fixture.detectChanges();
@@ -199,53 +200,50 @@ describe('SiTimepickerComponent', () => {
       expect(component.picker().isPM()).toBeFalse();
     });
 
-    it('should validate time limit against min value', async () => {
-      component.min.set(new Date('2022-01-12 16:23:59.435'));
-      fixture.detectChanges();
-      component.time.setValue('2021-01-12 10:23:59.435');
-      fixture.detectChanges();
-      expect(getHours().classList).toContain('is-invalid');
-    });
-
-    it('should validate time limit against max value', fakeAsync(() => {
-      component.max.set(new Date('2022-01-12 16:23:59.435'));
-      fixture.detectChanges();
-      component.time.setValue('2021-01-12 18:23:59.435');
-      fixture.detectChanges();
-      expect(getHours().classList).toContain('is-invalid');
-    }));
-
-    it('should update invalidHours to true if value is invalid', () => {
+    it('should validate hours range', () => {
       component.max.set(new Date('2022-01-12 16:23:59.435'));
       component.time.setValue('2021-01-12 18:23:59.435');
+      enterValue(getHours(), '24');
       fixture.detectChanges();
-
-      enterValue(getHours(), '19');
-      expect(getHours().classList).toContain('is-invalid');
+      expect(component.time.errors).toEqual({ hours: { max: 12 } });
+      expect(getHours().classList).toContain('ng-invalid');
     });
 
-    it('should update invalidMinutes to true if value is invalid', () => {
-      component.max.set(new Date('2022-01-12 16:23:59.435'));
+    it('should validate minutes range', async () => {
       component.time.setValue('2021-01-12 18:23:59.435');
+      enterValue(getMinutes(), '70'); // Invalid minutes
       fixture.detectChanges();
 
-      enterValue(getMinutes(), '24');
-      fixture.detectChanges();
-      expect(getMinutes().classList).toContain('is-invalid');
+      expect(component.time.errors).toEqual({ minutes: { max: 59 } });
+      expect(getMinutes().classList).toContain('ng-invalid');
     });
 
-    it('should update invalidSeconds to true if value is invalid', () => {
+    it('should validate seconds range', async () => {
       component.showSeconds.set(true);
+      fixture.detectChanges();
+      enterValue(getSeconds(), '70'); // Invalid seconds
+      fixture.detectChanges();
+
+      expect(component.time.errors).toEqual({ seconds: { max: 59 } });
+      expect(getSeconds().classList).toContain('ng-invalid');
+    });
+
+    it('should validate max with hours', async () => {
       component.max.set(new Date('2022-01-12 16:23:58.435'));
       component.time.setValue('2021-01-12 18:23:58.435');
       fixture.detectChanges();
-
-      enterValue(getSeconds(), '59');
+      enterValue(getHours(), '5');
       fixture.detectChanges();
-      expect(getSeconds().classList).toContain('is-invalid');
+
+      expect(component.time.errors).toEqual({
+        maxTime: {
+          actual: new Date('2021-01-12 17:23:58.435'),
+          max: new Date('2021-01-12 16:23:58.435')
+        }
+      });
     });
 
-    it('should update invalidMilliseconds to true if value is invalid', () => {
+    it('should validate max with milliseconds', () => {
       component.showMilliseconds.set(true);
       component.max.set(new Date('2022-01-12 16:23:58.435'));
       component.time.setValue('2021-01-12 18:23:58.435');
@@ -253,7 +251,28 @@ describe('SiTimepickerComponent', () => {
 
       enterValue(getMilliseconds(), '500');
       fixture.detectChanges();
-      expect(getMilliseconds().classList).toContain('is-invalid');
+      expect(component.time.errors).toEqual({
+        maxTime: {
+          actual: new Date('2021-01-12 18:23:58.500'),
+          max: new Date('2021-01-12 16:23:58.435')
+        }
+      });
+    });
+
+    it('should validate min with hours', async () => {
+      component.min.set(new Date('2022-01-12 16:23:58.435'));
+      component.time.setValue('2021-01-12 18:23:58.435');
+      fixture.detectChanges();
+
+      enterValue(getHours(), '3');
+      fixture.detectChanges();
+
+      expect(component.time.errors).toEqual({
+        minTime: {
+          actual: new Date('2021-01-12 15:23:58.435'),
+          min: new Date('2021-01-12 16:23:58.435')
+        }
+      });
     });
 
     it('should disable component', fakeAsync(() => {

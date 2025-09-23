@@ -16,6 +16,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   ElementRef,
   HostAttributeToken,
   inject,
@@ -25,7 +26,17 @@ import {
   signal,
   viewChildren
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  FormBuilder,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+  ValidationErrors,
+  Validator,
+  ValidatorFn
+} from '@angular/forms';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
@@ -52,14 +63,22 @@ interface Config {
   separator?: string;
 }
 
+const dateWithTime = (base: Date, time: Date): Date =>
+  createDate(base, time.getHours(), time.getMinutes(), time.getSeconds(), time.getMilliseconds());
+
 @Component({
   selector: 'si-timepicker',
-  imports: [NgTemplateOutlet, SiTranslatePipe, A11yModule],
+  imports: [A11yModule, NgTemplateOutlet, ReactiveFormsModule, SiTranslatePipe],
   templateUrl: './si-timepicker.component.html',
   styleUrl: './si-timepicker.component.scss',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
+      useExisting: SiTimepickerComponent,
+      multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
       useExisting: SiTimepickerComponent,
       multi: true
     },
@@ -76,10 +95,10 @@ interface Config {
     '[attr.aria-labelledby]': 'labelledby'
   }
 })
-export class SiTimepickerComponent implements ControlValueAccessor, SiFormItemControl {
+export class SiTimepickerComponent implements ControlValueAccessor, Validator, SiFormItemControl {
   private static idCounter = 0;
-  /** @internal */
-  readonly forceInvalid = signal(false);
+  private readonly locale = inject(LOCALE_ID).toString();
+  private readonly formBuilder = inject(FormBuilder);
 
   /**
    * @defaultValue
@@ -283,40 +302,26 @@ export class SiTimepickerComponent implements ControlValueAccessor, SiFormItemCo
     }
     return config;
   });
+
   /* Input fields state */
-  protected readonly unitValues = signal({
-    hours: '',
-    minutes: '',
-    seconds: '',
-    milliseconds: ''
+  protected readonly timeControls = this.formBuilder.group({
+    hours: this.formBuilder.nonNullable.control('', [this.validateTime('hours')]),
+    minutes: this.formBuilder.nonNullable.control('', [this.validateTime('minutes')]),
+    seconds: this.formBuilder.nonNullable.control('', [this.validateTime('seconds')]),
+    milliseconds: this.formBuilder.nonNullable.control('', [this.validateTime('milliseconds')])
   });
-  /** Validation state of the input fields */
-  protected readonly unitValidation = computed(() => {
-    const units = this.units();
-    const values = this.unitValues();
-    const validation = {
-      hours: true,
-      minutes: true,
-      seconds: true,
-      milliseconds: true
-    };
-    // Only validate the input fields that are visible and have a value.
-    // An empty field is considered as valid because it might be not required.
-    // The actual required validation must be done using a form validator.
-    const empty = Object.entries(values)
-      .filter(e => units.find(u => u.name === e[0]))
-      .every(e => e[1].length === 0);
-    if (!empty) {
-      for (const config of units) {
-        validation[config.name] =
-          values[config.name].length > 0 && !isNaN(this.toNumber(values[config.name], config.max));
+  /** Indicate whether one of the input fields has an invalid value. */
+  protected hasInvalidUnit(): boolean {
+    const values = this.timeControls.value;
+    for (const config of this.units()) {
+      const unit = values[config.name]!;
+      if (isNaN(this.toNumber(unit, config.max))) {
+        return true;
       }
     }
-
-    return validation;
-  });
+    return false;
+  }
   private readonly disabledNgControl = signal(false);
-  private readonly locale = inject(LOCALE_ID).toString();
 
   /**
    * Holds the time as date object that is presented by this control.
@@ -330,6 +335,22 @@ export class SiTimepickerComponent implements ControlValueAccessor, SiFormItemCo
       FormStyle.Format,
       TranslationWidth.Short
     ).slice();
+    effect(() => {
+      if (this.disabled()) {
+        this.timeControls.disable({ emitEvent: false, onlySelf: true });
+      } else {
+        this.timeControls.enable({ emitEvent: false, onlySelf: true });
+      }
+    });
+    Object.values(this.timeControls.controls).forEach(control => {
+      control.valueChanges.subscribe(value => {
+        // Enforce digits only
+        const cleaned = value.replace(/\D/g, '');
+        if (cleaned !== value) {
+          control?.setValue(cleaned, { emitEvent: false });
+        }
+      });
+    });
   }
 
   writeValue(obj?: Date | string): void {
@@ -356,17 +377,22 @@ export class SiTimepickerComponent implements ControlValueAccessor, SiFormItemCo
   setDisabledState(isDisabled: boolean): void {
     this.disabledNgControl.set(isDisabled);
   }
-  /**
-   * Handle input event to remove non-numeric characters.
-   */
-  protected handleInput(event: Event): void {
-    const inputEl = event.target as HTMLInputElement;
-    const current = inputEl.value;
-    const cleaned = current.replace(/\D/g, '');
-    if (current !== cleaned) {
-      inputEl.value = cleaned;
+
+  /** @internal */
+  validate(control: AbstractControl): ValidationErrors | null {
+    const childErrors = this.units()
+      .map(u => this.timeControls.controls[u.name].errors)
+      .reduce((prevObj, field) => ({ ...prevObj, ...field }), {} as ValidationErrors);
+    if (childErrors && Object.keys(childErrors).length) {
+      return childErrors;
     }
+    const errors: ValidationErrors = {
+      ...this.validateMin(control),
+      ...this.validateMax(control)
+    };
+    return Object.keys(errors).length ? errors : null;
   }
+
   /**
    * Handle Enter, Arrow up/down and Space key press events.
    */
@@ -398,17 +424,9 @@ export class SiTimepickerComponent implements ControlValueAccessor, SiFormItemCo
     target as HTMLInputElement;
 
   protected updateField(name: keyof Value, value: string): void {
-    const prev = this.unitValues()[name];
-    const config = this.units().find(u => u.name === name)!;
-    if (prev !== value) {
-      // Only fill 0 when the user entered a value.
-      value = value.length > 0 ? value.padStart(config.maxLength, '0') : '';
-      this.unitValues.update(v => ({
-        ...v,
-        [name]: value
-      }));
-      this.updateTime();
-    }
+    this.timeControls.get(name)?.setValue(value, { emitEvent: false });
+    this.updateTime();
+    this.onTouched();
   }
 
   protected toggleMeridian(): void {
@@ -421,7 +439,7 @@ export class SiTimepickerComponent implements ControlValueAccessor, SiFormItemCo
    * accordingly, if they UI input values are valid.
    */
   private updateTime(): void {
-    if (Object.values(this.unitValidation()).some(valid => !valid)) {
+    if (this.hasInvalidUnit()) {
       this.isValid.emit(false);
       this.onChange(null);
       return;
@@ -452,12 +470,15 @@ export class SiTimepickerComponent implements ControlValueAccessor, SiFormItemCo
    */
   private updateUI(value?: string | Date): void {
     if (!value || !this.isValidDate(value)) {
-      this.unitValues.set({
-        hours: '',
-        minutes: '',
-        seconds: '',
-        milliseconds: ''
-      });
+      this.timeControls.setValue(
+        {
+          hours: '',
+          minutes: '',
+          seconds: '',
+          milliseconds: ''
+        },
+        { emitEvent: false }
+      );
       this.meridian.set('am');
       this.meridianChange.emit(this.meridian());
     } else {
@@ -476,12 +497,15 @@ export class SiTimepickerComponent implements ControlValueAccessor, SiFormItemCo
           hours = 12;
         }
       }
-      this.unitValues.set({
-        hours: hours.toString().padStart(2, '0'),
-        minutes: time.getMinutes().toString().padStart(2, '0'),
-        seconds: time.getUTCSeconds().toString().padStart(2, '0'),
-        milliseconds: time.getUTCMilliseconds().toString().padStart(3, '0')
-      });
+      this.timeControls.setValue(
+        {
+          hours: hours.toString().padStart(2, '0'),
+          minutes: time.getMinutes().toString().padStart(2, '0'),
+          seconds: time.getUTCSeconds().toString().padStart(2, '0'),
+          milliseconds: time.getUTCMilliseconds().toString().padStart(3, '0')
+        },
+        { emitEvent: false }
+      );
     }
   }
 
@@ -510,7 +534,7 @@ export class SiTimepickerComponent implements ControlValueAccessor, SiFormItemCo
 
   private createDateUpdate(date: Date | undefined): Date | undefined {
     const units = this.units();
-    const value = this.unitValues();
+    const value = this.timeControls.value;
     let hour = this.toNumber(value.hours, units.find(u => u.name === 'hours')?.max);
     const minute = this.toNumber(value.minutes, units.find(u => u.name === 'minutes')?.max);
     const seconds = this.toNumber(value.seconds, units.find(u => u.name === 'seconds')?.max) || 0;
@@ -545,40 +569,6 @@ export class SiTimepickerComponent implements ControlValueAccessor, SiFormItemCo
       return NaN;
     }
     return value;
-  }
-
-  protected isValidLimit(max?: Date, min?: Date): boolean {
-    const refDate = new Date();
-    const newDate = this.createDateUpdate(refDate);
-
-    if (!newDate) {
-      return false;
-    }
-
-    let refMax: Date | undefined;
-    if (max) {
-      refMax = new Date(refDate);
-      refMax.setHours(max.getHours());
-      refMax.setMinutes(max.getMinutes());
-      refMax.setSeconds(max.getSeconds());
-      refMax.setMilliseconds(max.getMilliseconds());
-    }
-
-    let refMin: Date | undefined;
-    if (min) {
-      refMin = new Date(refDate);
-      refMin.setHours(min.getHours());
-      refMin.setMinutes(min.getMinutes());
-      refMin.setSeconds(min.getSeconds());
-      refMin.setMilliseconds(min.getMilliseconds());
-    }
-
-    if (refMax && newDate > refMax) {
-      return false;
-    } else if (refMin && newDate < refMin) {
-      return false;
-    }
-    return true;
   }
 
   private changeTimeComponent(key: string, up: boolean): void {
@@ -676,5 +666,40 @@ export class SiTimepickerComponent implements ControlValueAccessor, SiFormItemCo
     if (event === null) {
       this.onTouched();
     }
+  }
+
+  protected validateMin(control: AbstractControl): ValidationErrors | null {
+    const current = control.value;
+    let min = this.min();
+    if (control.value instanceof Date && min) {
+      min = dateWithTime(current, min);
+      if (current < min) {
+        return { minTime: { actual: current, min: min } };
+      }
+    }
+    return null;
+  }
+
+  protected validateMax(control: AbstractControl): ValidationErrors | null {
+    const error: ValidationErrors = {};
+    const current = control.value;
+    let max = this.max();
+    if (control.value instanceof Date && max) {
+      max = dateWithTime(current, max);
+      if (current > max) {
+        error.maxTime = { actual: current, max: max };
+      }
+    }
+    return Object.keys(error).length ? error : null;
+  }
+
+  protected validateTime(name: string): ValidatorFn {
+    return (c: AbstractControl): ValidationErrors | null => {
+      const max = this.units().find(u => u.name === name)?.max;
+      if (max !== undefined && c.value && parseInt(c.value, 10) > max) {
+        return { [name]: { max } };
+      }
+      return null;
+    };
   }
 }
