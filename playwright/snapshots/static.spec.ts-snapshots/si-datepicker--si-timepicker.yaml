@@ -9,7 +9,7 @@
     - option "PM"
 - text: Control panel
 - strong: "Validation:"
-- text: "null"
+- text: "/\\{\"minTime\":\\{\"actual\":\"\\d+-\\d+-12T05:\\d+:\\d+\\.000Z\",\"min\":\"\\d+-\\d+-12T06:\\d+:\\d+\\.000Z\"\\}\\}/"
 - checkbox "Show seconds" [checked]
 - text: Show seconds
 - checkbox "Show milliseconds" [checked]
