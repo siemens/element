@@ -28,6 +28,7 @@ export interface SiTranslatableKeys {
   'SI_CONFIRMATION_DIALOG.YES'?: string;
   'SI_CONTENT_ACTION_BAR.TOGGLE'?: string;
   'SI_DASHBOARD.EXPAND'?: string;
+  'SI_DASHBOARD.EXPAND_WIDGET_ACTIONS'?: string;
   'SI_DASHBOARD.RESTORE'?: string;
   'SI_DATEPICKER.CALENDAR_TOGGLE_BUTTON'?: string;
   'SI_DATEPICKER.CALENDAR_WEEK_LABEL'?: string;
