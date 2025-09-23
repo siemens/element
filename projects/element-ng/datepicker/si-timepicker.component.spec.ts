@@ -2,10 +2,33 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ComponentRef } from '@angular/core';
+import { Component, ComponentRef, signal, viewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { FormsModule, NgControl } from '@angular/forms';
 
 import { SiTimepickerComponent as TestComponent } from './index';
+
+@Component({
+  imports: [TestComponent, FormsModule],
+  template: `
+    <si-timepicker
+      #control="ngModel"
+      [min]="min()"
+      [max]="max()"
+      [showMinutes]="true"
+      [showSeconds]="true"
+      [showMilliseconds]="true"
+      [showMeridian]="true"
+      [(ngModel)]="timeValue"
+    />
+  `
+})
+class WrapperComponent {
+  readonly control = viewChild.required<NgControl>('control');
+  timeValue? = new Date(2023, 2, 1);
+  readonly min = signal<Date | undefined>(undefined);
+  readonly max = signal<Date | undefined>(undefined);
+}
 
 describe('SiTimepickerComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -387,5 +410,81 @@ describe('SiTimepickerComponent', () => {
 
     enterValue(getHours(), '1a');
     expect(getHours().value).toBe('1');
+  });
+});
+
+describe('SiTimepickerComponent within form', () => {
+  let fixture: ComponentFixture<WrapperComponent>;
+  let wrapperComponent: WrapperComponent;
+  let element: HTMLElement;
+
+  const getHours = (): HTMLInputElement =>
+    element.querySelector<HTMLInputElement>('input[name="hours"]')!;
+  const getMinutes = (): HTMLInputElement =>
+    element.querySelector<HTMLInputElement>('input[name="minutes"]')!;
+  const getSeconds = (): HTMLInputElement =>
+    element.querySelector<HTMLInputElement>('input[name="seconds"]')!;
+  const enterValue = (e: HTMLInputElement, v: string): void => {
+    e.value = v;
+    e.dispatchEvent(new Event('change'));
+  };
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [WrapperComponent]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(WrapperComponent);
+    wrapperComponent = fixture.componentInstance;
+    element = fixture.nativeElement;
+    fixture.detectChanges();
+  });
+
+  it('should validate hours range', async () => {
+    enterValue(getHours(), '25'); // Invalid hour
+    fixture.detectChanges();
+    expect(wrapperComponent.control().errors).toEqual({ hours: { max: 23 } });
+  });
+
+  it('should validate minutes range', async () => {
+    enterValue(getMinutes(), '70'); // Invalid minutes
+    fixture.detectChanges();
+
+    expect(wrapperComponent.control().errors).toEqual({ minutes: { max: 59 } });
+  });
+
+  it('should validate seconds range', async () => {
+    enterValue(getSeconds(), '70'); // Invalid seconds
+    fixture.detectChanges();
+
+    expect(wrapperComponent.control().errors).toEqual({ seconds: { max: 59 } });
+  });
+
+  it('should validate min', async () => {
+    wrapperComponent.min.set(new Date('2023-03-01T10:00:00.000'));
+    fixture.detectChanges();
+    enterValue(getHours(), '9');
+    fixture.detectChanges();
+
+    expect(wrapperComponent.control().errors).toEqual({
+      minTime: {
+        actual: new Date('2023-03-01T09:00:00.000'),
+        min: new Date('2023-03-01T10:00:00.000')
+      }
+    });
+  });
+
+  it('should validate max', async () => {
+    wrapperComponent.max.set(new Date('2023-03-01T10:00:00.000'));
+    fixture.detectChanges();
+    enterValue(getHours(), '11');
+    fixture.detectChanges();
+
+    expect(wrapperComponent.control().errors).toEqual({
+      maxTime: {
+        actual: new Date('2023-03-01T11:00:00.000'),
+        max: new Date('2023-03-01T10:00:00.000')
+      }
+    });
   });
 });
