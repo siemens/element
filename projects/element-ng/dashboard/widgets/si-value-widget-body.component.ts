@@ -5,7 +5,7 @@
 import { Component, input, OnInit } from '@angular/core';
 import { EntityStatusType } from '@siemens/element-ng/common';
 import { SiIconComponent, SiStatusIconComponent } from '@siemens/element-ng/icon';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiWidgetBaseComponent } from './si-widget-base.component';
 
@@ -14,7 +14,7 @@ import { SiWidgetBaseComponent } from './si-widget-base.component';
  */
 @Component({
   selector: 'si-value-widget-body',
-  imports: [SiIconComponent, SiStatusIconComponent, SiTranslateModule],
+  imports: [SiIconComponent, SiStatusIconComponent, SiTranslatePipe],
   templateUrl: './si-value-widget-body.component.html'
 })
 export class SiValueWidgetBodyComponent

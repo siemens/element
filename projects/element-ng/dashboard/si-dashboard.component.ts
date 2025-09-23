@@ -26,7 +26,7 @@ import {
   ElementDimensions,
   ResizeObserverService
 } from '@siemens/element-ng/resize-observer';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -37,7 +37,7 @@ const FIX_SCROLL_PADDING_RESIZE_OBSERVER_THROTTLE = 10;
 
 @Component({
   selector: 'si-dashboard',
-  imports: [PortalModule, SiTranslateModule],
+  imports: [PortalModule, SiTranslatePipe],
   templateUrl: './si-dashboard.component.html',
   styleUrl: './si-dashboard.component.scss',
   providers: [SiDashboardService],
