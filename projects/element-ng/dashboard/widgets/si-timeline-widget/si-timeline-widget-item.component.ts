@@ -9,7 +9,7 @@ import { Component, inject, input, OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, RouterLink } from '@angular/router';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { MenuItem, SiMenuModule } from '@siemens/element-ng/menu';
-import { SiTranslateModule, t, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiWidgetBaseComponent } from '../si-widget-base.component';
 
@@ -114,7 +114,7 @@ export interface SiTimelineWidgetItem {
   selector: 'si-timeline-widget-item',
   imports: [
     SiIconComponent,
-    SiTranslateModule,
+    SiTranslatePipe,
     NgClass,
     A11yModule,
     RouterLink,
