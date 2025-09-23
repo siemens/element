@@ -55,7 +55,7 @@
   [class.si-tree-view-flat]="flatTree()"
   [class.si-tree-expand-collapse]="!flatTree() && expandCollapseAll()"
 >
-  @if (isVirtualized()) {
+  @if (enableVirtualization()) {
     <div [class.w-100]="horizontalScrolling()" [style.height]="heightBefore"></div>
   }
   @if (itemsVirtualized) {
@@ -66,7 +66,7 @@
       }
     </div>
   }
-  @if (isVirtualized()) {
+  @if (enableVirtualization()) {
     <div [class.w-100]="horizontalScrolling()" [style.height]="heightAfter"></div>
   }
 </div>
