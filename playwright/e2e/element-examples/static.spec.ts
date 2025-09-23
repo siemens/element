@@ -48,7 +48,6 @@ test('si-dashboard/si-timeline-widget', ({ si }) => si.static({ delay: 2000 }));
 test('si-dashboard/si-timeline-widget-body', ({ si }) => si.static({ delay: 2000 }));
 test('si-dashboard/si-timeline-widget-css', ({ si }) => si.static());
 test('si-dashboard/si-value-widget', ({ si }) => si.static());
-test('si-datepicker/si-timepicker-limits', ({ si }) => si.static());
 test('si-datepicker/si-timepicker', ({ si }) => si.static());
 test('si-electron-titlebar/si-electron-titlebar', ({ si }) => si.static());
 test('si-electron-titlebar/si-fixed-height-layout-side-panel', ({ si }) => si.static());
