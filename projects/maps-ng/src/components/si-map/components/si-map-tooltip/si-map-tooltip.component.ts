@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, ElementRef, inject, input, signal, viewChild } from '@angular/core';
-import { SiTranslateModule, t } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { TOOLTIP_FEATURES_TO_DISPLAY } from '../../models/constants';
 
 @Component({
   selector: 'si-map-tooltip',
   // eslint-disable-next-line @typescript-eslint/no-deprecated
-  imports: [SiTranslateModule],
+  imports: [SiTranslatePipe],
   templateUrl: './si-map-tooltip.component.html',
   styleUrl: './si-map-tooltip.component.scss'
 })

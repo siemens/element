@@ -23,12 +23,7 @@ import {
   Type,
   viewChild
 } from '@angular/core';
-import {
-  SiTranslateModule,
-  SiNoTranslateService,
-  SiTranslateServiceBuilder,
-  t
-} from '@siemens/element-translate-ng';
+import { SiNoTranslateService, SiTranslateServiceBuilder, t } from '@siemens/element-translate-ng';
 import { apply as applyMapboxStyle } from 'ol-mapbox-style';
 import Control from 'ol/control/Control';
 import { defaults as defaultControls } from 'ol/control/defaults';
@@ -76,7 +71,7 @@ interface ClusterHolder {
 @Component({
   selector: 'si-map',
   // eslint-disable-next-line @typescript-eslint/no-deprecated
-  imports: [SiMapTooltipComponent, SiMapPopoverComponent, SiTranslateModule],
+  imports: [SiMapTooltipComponent, SiMapPopoverComponent],
   templateUrl: './si-map.component.html',
   styleUrl: './si-map.component.scss',
   providers: [MapService],
