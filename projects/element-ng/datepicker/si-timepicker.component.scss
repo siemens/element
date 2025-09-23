@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '@siemens/element-theme/src/styles/variables';
 
 $input-min-width: 35px;
@@ -6,7 +7,12 @@ $input-max-width: 45px;
 :host {
   display: block;
 
-  &.ng-touched.ng-invalid {
+  // Apply invalid styling to all form controls when the timepicker component itself is invalid
+  // but none of its individual input fields are marked as invalid. This handles cases where
+  // the overall time range validation fails (e.g., time outside min/max bounds) while
+  // individual field values are technically valid (e.g., valid hour/minute numbers).
+  // When individual fields are invalid, they will show their own validation styling instead.
+  &.ng-touched.ng-invalid:not(:has(.ng-touched.ng-invalid)) {
     .form-control {
       --border-color: var(--element-status-danger);
     }

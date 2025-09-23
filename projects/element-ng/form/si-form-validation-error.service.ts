@@ -44,7 +44,18 @@ export const buildDefaults = (): SiFormValidationErrorMapper => ({
   maxDate: t(
     () => $localize`:@@SI_FORM_CONTAINER.ERROR.MAX_DATE:The date is too far in the future.`
   ),
-  minDate: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.MIN_DATE:The date is too far in the past.`)
+  minDate: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.MIN_DATE:The date is too far in the past.`),
+  maxTime: t(
+    () => $localize`:@@SI_FORM_CONTAINER.ERROR.MAX_TIME:The time is too far in the future.`
+  ),
+  minTime: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.MIN_TIME:The time is too far in the past.`),
+  hours: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.HOURS:The hours are not valid.`),
+
+  minutes: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.MINUTES:The minutes are not valid.`),
+  seconds: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.SECONDS:The seconds are not valid.`),
+  milliseconds: t(
+    () => $localize`:@@SI_FORM_CONTAINER.ERROR.MILLISECONDS:The milliseconds are not valid.`
+  )
 });
 
 /**
