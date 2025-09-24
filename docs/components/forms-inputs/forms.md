@@ -114,7 +114,7 @@ setting form control states and feedback messages explicitly in the template:
 These states are available:
 
 - valid --> `is-valid`
-- warning --> `ìs-waring`
+- warning --> `is-warning`
 - error --> `is-error`
 
 For warning and error states, a respective icon is automatically added.

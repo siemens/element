@@ -39,7 +39,7 @@ Provide a status on the affected entity (e.g., "Scanning network…") and notify
 - Implement the process (e.g., on the backend) in a way that prevents any invalid states,
   even if the network is interrupted or the user refreshes the browser at any time.
 - Size indicators proportionally to their associated components and place them where users expect feedback.
-- Consider complemeting the loading indicators with a brief text for context.
+- Consider complementing the loading indicators with a brief text for context.
 
 ## Design ---
 
