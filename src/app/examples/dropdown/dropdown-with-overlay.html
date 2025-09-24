@@ -25,8 +25,14 @@
     [cdkTrapFocus]="true"
     [cdkTrapFocusAutoCapture]="true"
   >
-    <button class="dropdown-item" type="button" (click)="logEvent('Action')">Action</button>
-    <button class="dropdown-item" type="button" (click)="logEvent('Action 2')">Action 2</button>
-    <button class="dropdown-item" type="button" (click)="logEvent('Action 3')">Action 3</button>
+    <button class="dropdown-item focus-inside" type="button" (click)="logEvent('Action')"
+      >Action</button
+    >
+    <button class="dropdown-item focus-inside" type="button" (click)="logEvent('Action 2')"
+      >Action 2</button
+    >
+    <button class="dropdown-item focus-inside" type="button" (click)="logEvent('Action 3')"
+      >Action 3</button
+    >
   </div>
 </ng-template>

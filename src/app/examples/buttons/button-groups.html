@@ -1,0 +1,301 @@
+<div class="p-5">
+  <!-- Basic Button Groups -->
+  <h3 class="mb-4">Basic Button Groups</h3>
+  <div class="d-flex flex-wrap align-items-center gap-4 mb-6">
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <button type="button" class="btn btn-primary">Left</button>
+      <button type="button" class="btn btn-primary">Middle</button>
+      <button type="button" class="btn btn-primary">Right</button>
+    </div>
+
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <button type="button" class="btn btn-secondary">Left</button>
+      <button type="button" class="btn btn-secondary">Middle</button>
+      <button type="button" class="btn btn-secondary">Right</button>
+    </div>
+
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <button type="button" class="btn btn-tertiary">Left</button>
+      <button type="button" class="btn btn-tertiary">Middle</button>
+      <button type="button" class="btn btn-tertiary">Right</button>
+    </div>
+  </div>
+
+  <!-- Split Buttons (Button Groups with Dropdown) -->
+  <h3 class="mb-4">Split Buttons</h3>
+  <div class="d-flex flex-wrap align-items-center gap-4 mb-6">
+    <div class="btn-group" role="group" aria-label="Split button primary">
+      <button type="button" class="btn btn-primary">
+        <i class="icon element-download"></i>
+        Download
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary icon-only dropdown-toggle"
+        aria-label="Dropdown toggle"
+        [cdkMenuTriggerFor]="dropdownMenu"
+        [class.show]="splitOpen1"
+        (cdkMenuOpened)="splitOpen1 = true"
+        (cdkMenuClosed)="splitOpen1 = false"
+      >
+        <i class="dropdown-caret icon element-down-2"></i>
+      </button>
+    </div>
+
+    <div class="btn-group" role="group" aria-label="Split button secondary">
+      <button type="button" class="btn btn-secondary">
+        <i class="icon element-download"></i>
+        Download
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary icon-only dropdown-toggle"
+        aria-label="Dropdown toggle"
+        [cdkMenuTriggerFor]="dropdownMenu"
+        [class.show]="splitOpen2"
+        (cdkMenuOpened)="splitOpen2 = true"
+        (cdkMenuClosed)="splitOpen2 = false"
+      >
+        <i class="dropdown-caret icon element-down-2"></i>
+      </button>
+    </div>
+
+    <div class="btn-group" role="group" aria-label="Split button tertiary">
+      <button type="button" class="btn btn-tertiary">
+        <i class="icon element-download"></i>
+        Download
+      </button>
+      <button
+        type="button"
+        class="btn btn-tertiary icon-only dropdown-toggle"
+        aria-label="Dropdown toggle"
+        [cdkMenuTriggerFor]="dropdownMenu"
+        [class.show]="splitOpen3"
+        (cdkMenuOpened)="splitOpen3 = true"
+        (cdkMenuClosed)="splitOpen3 = false"
+      >
+        <i class="dropdown-caret icon element-down-2"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Segmented Button Groups (Option Buttons) -->
+  <h3 class="mb-4">Segmented Button Groups</h3>
+  <div class="d-flex flex-wrap align-items-center gap-4 mb-6">
+    <div class="btn-group" role="group" aria-label="View options">
+      <input type="radio" class="btn-check" name="view-options" id="option1" />
+      <label class="btn btn-secondary" for="option1">
+        <i class="icon element-list"></i>
+        List
+      </label>
+
+      <input type="radio" class="btn-check" name="view-options" id="option2" checked />
+      <label class="btn btn-secondary" for="option2">
+        <i class="icon element-special-object"></i>
+        Grid
+      </label>
+
+      <input type="radio" class="btn-check" name="view-options" id="option3" />
+      <label class="btn btn-secondary" for="option3">
+        <i class="icon element-report"></i>
+        Chart
+      </label>
+    </div>
+
+    <div class="btn-group" role="group" aria-label="Text alignment">
+      <input type="checkbox" class="btn-check" id="btncheck1" />
+      <label class="btn btn-secondary btn-sm" for="btncheck1">
+        <i class="icon element-align-left"></i>
+      </label>
+
+      <input type="checkbox" class="btn-check" id="btncheck2" checked />
+      <label class="btn btn-secondary btn-sm" for="btncheck2">
+        <i class="icon element-align-center"></i>
+      </label>
+
+      <input type="checkbox" class="btn-check" id="btncheck3" />
+      <label class="btn btn-secondary btn-sm" for="btncheck3">
+        <i class="icon element-align-right"></i>
+      </label>
+    </div>
+  </div>
+
+  <!-- Button Group Sizes -->
+  <h3 class="mb-4">Button Group Sizes</h3>
+  <div class="d-flex flex-wrap align-items-center gap-4 mb-6">
+    <div class="btn-group btn-group-lg" role="group" aria-label="Large group">
+      <button type="button" class="btn btn-lg btn-primary">Large</button>
+      <button type="button" class="btn btn-lg btn-primary">Group</button>
+      <button type="button" class="btn btn-lg btn-primary">Size</button>
+    </div>
+
+    <div class="btn-group" role="group" aria-label="Default group">
+      <button type="button" class="btn btn-primary">Default</button>
+      <button type="button" class="btn btn-primary">Group</button>
+      <button type="button" class="btn btn-primary">Size</button>
+    </div>
+
+    <div class="btn-group btn-group-sm" role="group" aria-label="Small group">
+      <button type="button" class="btn btn-sm btn-primary">Small</button>
+      <button type="button" class="btn btn-sm btn-primary">Group</button>
+      <button type="button" class="btn btn-sm btn-primary">Size</button>
+    </div>
+  </div>
+
+  <div class="d-flex flex-wrap align-items-center gap-4 mb-6">
+    <div class="btn-group btn-group-lg" role="group" aria-label="Large group">
+      <button type="button" class="btn btn-lg btn-secondary">Large</button>
+      <button type="button" class="btn btn-lg btn-secondary">Group</button>
+      <button type="button" class="btn btn-lg btn-secondary">Size</button>
+    </div>
+
+    <div class="btn-group" role="group" aria-label="Default group">
+      <button type="button" class="btn btn-secondary">Default</button>
+      <button type="button" class="btn btn-secondary">Group</button>
+      <button type="button" class="btn btn-secondary">Size</button>
+    </div>
+
+    <div class="btn-group btn-group-sm" role="group" aria-label="Small group">
+      <button type="button" class="btn btn-sm btn-secondary">Small</button>
+      <button type="button" class="btn btn-sm btn-secondary">Group</button>
+      <button type="button" class="btn btn-sm btn-secondary">Size</button>
+    </div>
+  </div>
+
+  <div class="d-flex flex-wrap align-items-center gap-4 mb-6">
+    <div class="btn-group btn-group-lg" role="group" aria-label="Large group">
+      <button type="button" class="btn btn-lg btn-tertiary">Large</button>
+      <button type="button" class="btn btn-lg btn-tertiary">Group</button>
+      <button type="button" class="btn btn-lg btn-tertiary">Size</button>
+    </div>
+
+    <div class="btn-group" role="group" aria-label="Default group">
+      <button type="button" class="btn btn-tertiary">Default</button>
+      <button type="button" class="btn btn-tertiary">Group</button>
+      <button type="button" class="btn btn-tertiary">Size</button>
+    </div>
+
+    <div class="btn-group btn-group-sm" role="group" aria-label="Small group">
+      <button type="button" class="btn btn-sm btn-tertiary">Small</button>
+      <button type="button" class="btn btn-sm btn-tertiary">Group</button>
+      <button type="button" class="btn btn-sm btn-tertiary">Size</button>
+    </div>
+  </div>
+
+  <!-- Toolbar Example -->
+  <h3 class="mb-4">Toolbar</h3>
+  <div
+    class="d-flex flex-wrap align-items-center gap-3 mb-6"
+    role="toolbar"
+    aria-label="Toolbar with button groups"
+  >
+    <div class="btn-group" role="group" aria-label="Primary group">
+      <button type="button" class="btn icon-only btn-primary">
+        <i class="icon element-edit"></i>
+      </button>
+      <button type="button" class="btn icon-only btn-primary">
+        <i class="icon element-copy"></i>
+      </button>
+      <button type="button" class="btn icon-only btn-primary">
+        <i class="icon element-delete"></i>
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary icon-only dropdown-toggle"
+        aria-label="Dropdown toggle"
+        [cdkMenuTriggerFor]="dropdownMenu"
+        [class.show]="splitOpen6"
+        (cdkMenuOpened)="splitOpen6 = true"
+        (cdkMenuClosed)="splitOpen6 = false"
+      >
+        <i class="dropdown-caret icon element-down-2"></i>
+      </button>
+    </div>
+
+    <div class="btn-group" role="group" aria-label="Secondary group">
+      <button type="button" class="btn icon-only btn-secondary">
+        <i class="icon element-edit"></i>
+      </button>
+      <button type="button" class="btn icon-only btn-secondary">
+        <i class="icon element-copy"></i>
+      </button>
+      <button type="button" class="btn icon-only btn-secondary">
+        <i class="icon element-delete"></i>
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary icon-only dropdown-toggle"
+        aria-label="Dropdown toggle"
+        [cdkMenuTriggerFor]="dropdownMenu"
+        [class.show]="splitOpen4"
+        (cdkMenuOpened)="splitOpen4 = true"
+        (cdkMenuClosed)="splitOpen4 = false"
+      >
+        <i class="dropdown-caret icon element-down-2"></i>
+      </button>
+    </div>
+
+    <div class="btn-group" role="group" aria-label="Tertiary group">
+      <button type="button" class="btn icon-only btn-tertiary">
+        <i class="icon element-edit"></i>
+      </button>
+      <button type="button" class="btn icon-only btn-tertiary">
+        <i class="icon element-copy"></i>
+      </button>
+      <button type="button" class="btn icon-only btn-tertiary">
+        <i class="icon element-delete"></i>
+      </button>
+      <button
+        type="button"
+        class="btn btn-tertiary icon-only dropdown-toggle"
+        aria-label="Dropdown toggle"
+        [cdkMenuTriggerFor]="dropdownMenu"
+        [class.show]="splitOpen5"
+        (cdkMenuOpened)="splitOpen5 = true"
+        (cdkMenuClosed)="splitOpen5 = false"
+      >
+        <i class="dropdown-caret icon element-down-2"></i>
+      </button>
+    </div>
+  </div>
+
+  <h3 class="mb-4">Header Toolbar</h3>
+  <div
+    style="border-radius: 2px"
+    class="bg-base-1 d-flex flex-wrap align-items-center gap-3 mb-6"
+    role="toolbar"
+    aria-label="Toolbar with button groups"
+  >
+    <div class="btn-group" role="group" aria-label="Tertiary group">
+      <button type="button" class="btn p-5 toolbar-item icon-only btn-tertiary">
+        <i class="icon element-edit"></i>
+      </button>
+      <button type="button" class="btn p-5 toolbar-item icon-only btn-tertiary">
+        <i class="icon element-copy"></i>
+      </button>
+      <button type="button" class="btn p-5 toolbar-item icon-only btn-tertiary">
+        <i class="icon element-delete"></i>
+      </button>
+      <button
+        class="btn p-5 toolbar-item btn-tertiary"
+        type="button"
+        [cdkMenuTriggerFor]="dropdownMenu"
+        (cdkMenuOpened)="splitOpen7 = true"
+        (cdkMenuClosed)="splitOpen7 = false"
+      >
+        Export
+        <span class="icon-only dropdown-toggle" [class.show]="splitOpen7">
+          <i class="dropdown-caret icon element-down-2"></i>
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<ng-template #dropdownMenu>
+  <si-menu>
+    @for (item of menuItems; track $index) {
+      <si-menu-item [icon]="item.icon">{{ item.text }}</si-menu-item>
+    }
+  </si-menu>
+</ng-template>
