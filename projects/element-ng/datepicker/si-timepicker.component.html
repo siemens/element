@@ -20,15 +20,15 @@
         [attr.aria-label]="config.ariaLabel | translate"
         [attr.aria-describedby]="errormessageId()"
         [attr.maxlength]="config.maxLength"
-        [class.is-invalid]="!unitValidation()[config.name] || this.forceInvalid()"
+        [class.is-invalid]="invalidUnit()[config.name] || invalidRange() || forceInvalid()"
         [disabled]="disabled()"
         [name]="config.name"
-        [pattern]="config.pattern"
         [placeholder]="config.placeholder"
         [readonly]="readonly()"
         [value]="unitValues()[config.name]"
         (change)="updateField(config.name, toHtmlInputElement($event.target).value)"
         (blur)="updateField(config.name, toHtmlInputElement($event.target).value)"
+        (input)="handleInput($event)"
         (keydown)="handleKeyPressEvent($event)"
       />
     </label>
