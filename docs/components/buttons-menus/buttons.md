@@ -20,7 +20,7 @@ Buttons are defined by the type of action they represent:
 - **Warning buttons** signify actions that require extra caution (e.g. confirming risky decisions).
 - **Danger buttons** are used for destructive or irreversible actions (e.g. deleting data).
 
-### Visual weigth
+### Visual weight
 
 Buttons can be primary, secondary, or tertiary, regardless of their semantic meaning
 (default, warning, or danger). Visual weight indicates the importance of the action:

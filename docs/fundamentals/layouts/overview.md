@@ -4,7 +4,7 @@
 They help developers and designers to ensure consistency, efficiency,
 and effective communication in the user experience.
 
-Effective layout design presents the information in a logical, coherent way and make
+Effective layout design presents the information in a logical, coherent way and makes
 the content easier to understand.
 
 ![Layout](images/layout.png)
