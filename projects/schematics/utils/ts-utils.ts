@@ -112,6 +112,17 @@ export const getImportNodes = (
 };
 
 /**
+ * Reads and returns a TypeScript source file from the given tree.
+ */
+export const getSource = (tree: Tree, filePath: string): ts.SourceFile => {
+  const content = tree.read(filePath);
+  if (!content) {
+    throw new SchematicsException(`File ${filePath} not found`);
+  }
+  return ts.createSourceFile(filePath, content.toString(), ts.ScriptTarget.Latest, true);
+};
+
+/**
  * Gets the imported symbols from an import declaration.
  */
 export const getSymbols = (node: ts.ImportDeclaration): ts.NodeArray<ts.ImportSpecifier> | [] => {
