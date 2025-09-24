@@ -2,28 +2,28 @@
   - /url: "#"
 - link "Link in new Window":
   - /url: "#"
-- link " Default Icon Link":
+- link "Default Icon Link":
   - /url: "#"
-- link " Icon Link in new Window":
+- link "Icon Link in new Window":
   - /url: "#"
-- link "Default Icon Link ":
+- link "Default Icon Link":
   - /url: "#"
-- link "Icon Link in new Window ":
+- link "Icon Link in new Window":
   - /url: "#"
 - link "Default Link":
   - /url: "#"
 - link "Link in new Window":
   - /url: "#"
-- link " Default Icon Link":
+- link "Default Icon Link":
   - /url: "#"
-- link " Icon Link in new Window":
+- link "Icon Link in new Window":
   - /url: "#"
-- link "Default Icon Link ":
+- link "Default Icon Link":
   - /url: "#"
-- link "Icon Link in new Window ":
+- link "Icon Link in new Window":
   - /url: "#"
 - button "Button Link"
-- button "Button Link with icon "
+- button "Button Link with icon"
 - paragraph:
   - text: This is a paragraph of text with an
   - link "embedded link":

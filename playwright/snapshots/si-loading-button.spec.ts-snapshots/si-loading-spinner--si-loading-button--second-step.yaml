@@ -12,7 +12,7 @@
 - img "Loading"
 - button "Danger" [disabled]
 - img "Loading"
-- button " Default" [disabled]
+- button "Default" [disabled]
 - img "Loading"
 - button "clock" [disabled]
 - img "Loading"

@@ -23,4 +23,6 @@
 - status: 2.9%
 - status: Battery low
 - status: Maintenance
-- text: /  8  \d+\+/
+- status "notifications"
+- status "8 notifications"
+- status /More than \d+ notifications/

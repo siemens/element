@@ -8,12 +8,12 @@
 - button "Tertiary"
 - button "Warning"
 - button "Danger"
-- button " Default"
-- button " Warning"
-- button " Danger"
-- button " Secondary"
-- button / \d+\.\d+\.\d+ - \d+\.\d+\.\d+ /
-- button " Tertiary"
+- button "Default"
+- button "Warning"
+- button "Danger"
+- button "Secondary"
+- button /\d+\.\d+\.\d+ - \d+\.\d+\.\d+/
+- button "Tertiary"
 - button "clock"
 - button "bath"
 - button "library"
