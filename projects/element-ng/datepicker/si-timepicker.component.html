@@ -29,6 +29,7 @@
         [value]="unitValues()[config.name]"
         (change)="updateField(config.name, toHtmlInputElement($event.target).value)"
         (blur)="updateField(config.name, toHtmlInputElement($event.target).value)"
+        (input)="handleInput($event)"
         (keydown)="handleKeyPressEvent($event)"
       />
     </label>

@@ -365,7 +365,17 @@ export class SiTimepickerComponent implements ControlValueAccessor, SiFormItemCo
   setDisabledState(isDisabled: boolean): void {
     this.disabledNgControl.set(isDisabled);
   }
-
+  /**
+   * Handle input event to remove non-numeric characters.
+   */
+  protected handleInput(event: Event): void {
+    const inputEl = event.target as HTMLInputElement;
+    const current = inputEl.value;
+    const cleaned = current.replace(/\D/g, '');
+    if (current !== cleaned) {
+      inputEl.value = cleaned;
+    }
+  }
   /**
    * Handle Enter, Arrow up/down and Space key press events.
    */

@@ -23,6 +23,7 @@ describe('SiTimepickerComponent', () => {
     element.querySelector<HTMLInputElement>('input[name="milliseconds"]')!;
   const enterValue = (e: HTMLInputElement, v: string): void => {
     e.value = v;
+    e.dispatchEvent(new Event('input'));
     e.dispatchEvent(new Event('change'));
   };
   beforeEach(() =>
@@ -375,5 +376,16 @@ describe('SiTimepickerComponent', () => {
     const spyInputCompleted = spyOn(component.inputCompleted, 'emit');
     getMilliseconds().dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
     expect(spyInputCompleted).toHaveBeenCalled();
+  });
+
+  it('should ignore non-numeric characters', () => {
+    componentRef.setInput('showMinutes', true);
+    fixture.detectChanges();
+
+    enterValue(getHours(), 'a');
+    expect(getHours().value).toBe('');
+
+    enterValue(getHours(), '1a');
+    expect(getHours().value).toBe('1');
   });
 });
