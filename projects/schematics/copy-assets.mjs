@@ -16,7 +16,10 @@ await cpy(['**/*.json', '!package.json', '!tsconfig.json'], destination, {
 });
 // The actual shipped bundle requires the .cjs extension
 const collectionJson = `${destination}/collection.json`;
-await writeFileAsync(
-  collectionJson,
-  (await readFileAsync(collectionJson, 'utf8')).replace(/index#/gi, 'index.cjs#')
-);
+const migrationJson = `${destination}/migration.json`;
+
+for (const file of [collectionJson, migrationJson]) {
+  const content = await readFileAsync(file, 'utf8');
+  const updatedContent = content.replace(/index#/gi, 'index.cjs#');
+  await writeFileAsync(file, updatedContent);
+}

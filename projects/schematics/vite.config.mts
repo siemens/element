@@ -6,7 +6,8 @@ export default defineConfig({
   build: {
     lib: {
       entry: {
-        'siemens-migration/index': resolve(__dirname, 'siemens-migration/index.ts')
+        'siemens-migration/index': resolve(__dirname, 'siemens-migration/index.ts'),
+        'ng-update/index': resolve(__dirname, 'ng-update/index.ts')
       },
       formats: ['cjs'],
       fileName: (_format, entryName) => `${entryName}.cjs`
