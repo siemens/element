@@ -20,10 +20,13 @@
         [attr.aria-label]="config.ariaLabel | translate"
         [attr.aria-describedby]="errormessageId()"
         [attr.maxlength]="config.maxLength"
-        [class.is-invalid]="!unitValidation()[config.name] || this.forceInvalid()"
+        [class.is-invalid]="
+          !unitValidation()[config.name] ||
+          !isValidLimit(this.max(), this.min()) ||
+          this.forceInvalid()
+        "
         [disabled]="disabled()"
         [name]="config.name"
-        [pattern]="config.pattern"
         [placeholder]="config.placeholder"
         [readonly]="readonly()"
         [value]="unitValues()[config.name]"
