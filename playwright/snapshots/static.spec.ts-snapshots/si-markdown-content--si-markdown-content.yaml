@@ -1,0 +1,55 @@
+- heading "AI Assistant Response" [level=2]:
+  - strong: AI Assistant Response
+- paragraph:
+  - text: Here's a
+  - strong: comprehensive example
+  - text: of markdown content with various formatting options.
+- paragraph: This is a separate paragraph that demonstrates how double line breaks create proper paragraph spacing.
+- heading "Code Examples" [level=2]
+- paragraph:
+  - text: You can use inline code like
+  - code: console.log('Hello World')
+  - text: "or multi-line code blocks:"
+- code: "function calculateSum(a, b) { return a + b; }"
+- paragraph:
+  - code: "const result = calculateSum(5, 3); console.log(`Result: ${result}`);"
+- paragraph
+- heading "Formatting Options" [level=2]
+- paragraph: Here's a paragraph explaining the formatting options available.
+- paragraph: "Another paragraph with different formatting elements:"
+- list:
+  - listitem:
+    - strong: Bold text
+    - text: for emphasis
+  - listitem:
+    - emphasis: Italic text
+    - text: for subtle emphasis
+  - listitem:
+    - code: inline code
+    - text: for technical terms
+- heading "Lists and Bullets" [level=2]
+- paragraph: "Here are the key features:"
+- list:
+  - listitem: Multi-line code blocks with syntax preservation
+  - listitem: Bold and italic text formatting
+  - listitem: Inline code highlighting
+  - listitem: Bullet point lists
+  - listitem: Blockquote support
+- paragraph: This paragraph appears after the list to show proper spacing.
+- heading "Ordered Lists" [level=2]
+- paragraph: "Step-by-step instructions:"
+- list:
+  - listitem: First, analyze the requirements
+  - listitem: Then, implement the solution
+  - listitem: Finally, test the implementation
+- blockquote: This is a blockquote that demonstrates how quoted text appears in the markdown content component.
+- paragraph: This paragraph follows the blockquotes to demonstrate proper paragraph separation.
+- paragraph: This is a separate paragraph created by double line breaks.
+- list:
+  - listitem: Unordered item
+  - listitem: Another item
+- paragraph: Another paragraph between the lists.
+- list:
+  - listitem: First ordered item
+  - listitem: Second ordered item
+- paragraph: Final paragraph to show proper spacing.

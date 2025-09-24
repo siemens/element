@@ -1,0 +1,12 @@
+- text: error-log.txt screenshot.png
+- paragraph:
+  - text: Can you help me with this
+  - strong: code snippet
+  - text: "? I'm getting an error when I run it."
+  - emphasis
+- button "Copy"
+- button "Edit"
+- button "More actions"
+- text: JD Thanks for the help! That worked perfectly.
+- button "Copy"
+- button "Edit"
