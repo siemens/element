@@ -73,6 +73,7 @@ jobs:
       - run: npm run lint:scss
       - run: npm run lint:ng
       - run: npm run lint:playwright:eslint
+      - run: npm run schematics:test
       - run: npm run translate:test -- --watch=false --progress=false --code-coverage
       - run: npm run lib:test -- --watch=false --progress=false --code-coverage
       - run: npm run charts:test -- --watch=false --progress=false

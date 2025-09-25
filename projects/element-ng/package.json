@@ -55,5 +55,6 @@
     "google-libphonenumber": {
       "optional": true
     }
-  }
+  },
+  "schematics": "./schematics/collection.json"
 }
