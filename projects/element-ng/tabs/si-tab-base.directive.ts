@@ -82,6 +82,7 @@ export abstract class SiTabBaseDirective implements OnDestroy, FocusableOption {
   /** Event emitter to notify when a tab is closed. */
   readonly closeTriggered = output();
 
+  /** @internal */
   protected readonly tabButton = inject<ElementRef<HTMLElement>>(ElementRef);
   /** @internal */
   readonly tabContent = viewChild('tabContent', { read: TemplateRef });
@@ -128,11 +129,7 @@ export abstract class SiTabBaseDirective implements OnDestroy, FocusableOption {
   focus(): void {
     this.tabButton.nativeElement.focus({ preventScroll: true });
     // The element is not fully scrolled into view when focused. So we prevent and scroll it manually.
-    this.tabButton.nativeElement.scrollIntoView({
-      inline: 'nearest',
-      block: 'nearest',
-      behavior: 'instant'
-    });
+    this.scrollTabIntoView();
   }
 
   /** @internal */
@@ -154,5 +151,14 @@ export abstract class SiTabBaseDirective implements OnDestroy, FocusableOption {
   /** @internal */
   deSelectTab(): void {
     // Empty be default, can be overridden in derived classes.
+  }
+
+  /** @internal */
+  scrollTabIntoView(): void {
+    this.tabButton.nativeElement.scrollIntoView({
+      inline: 'nearest',
+      block: 'nearest',
+      behavior: 'instant'
+    });
   }
 }
