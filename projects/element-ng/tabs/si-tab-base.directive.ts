@@ -82,7 +82,8 @@ export abstract class SiTabBaseDirective implements OnDestroy, FocusableOption {
   /** Event emitter to notify when a tab is closed. */
   readonly closeTriggered = output();
 
-  protected readonly tabButton = inject<ElementRef<HTMLElement>>(ElementRef);
+  /** @internal */
+  readonly tabButton = inject<ElementRef<HTMLElement>>(ElementRef);
   /** @internal */
   readonly tabContent = viewChild('tabContent', { read: TemplateRef });
 

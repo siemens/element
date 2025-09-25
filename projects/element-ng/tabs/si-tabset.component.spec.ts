@@ -260,6 +260,31 @@ describe('SiTabset', () => {
     expect(await tabsetHarness.isTabVisible(3)).toBeTrue();
   }));
 
+  it('should always scroll active tab into view', fakeAsync(async () => {
+    testComponent.tabButtonMaxWidth.set(90);
+    const tabs = [
+      { heading: 'Tab 1' },
+      { heading: 'Tab 2' },
+      { heading: 'Tab 3' },
+      { heading: 'Tab 4' },
+      { heading: 'Tab 5' },
+      { heading: 'Tab 6' },
+      { heading: 'Tab 7', active: true }
+    ];
+    testComponent.tabs = tabs;
+    testComponent.wrapperWidth.set(300);
+    fixture.detectChanges();
+    expect(await tabsetHarness.getOptionsMenuButton()).toBeDefined();
+    expect(await tabsetHarness.isTabVisible(6)).toBeTrue();
+    expect(await tabsetHarness.isTabVisible(0)).toBeFalse();
+
+    tabs[0].active = true;
+    tabs[6].active = false;
+    fixture.detectChanges();
+    expect(await tabsetHarness.isTabVisible(0)).toBeTrue();
+    expect(await tabsetHarness.isTabVisible(6)).toBeFalse();
+  }));
+
   it('should emit tab close event for closable tab and preserve active tab', async () => {
     testComponent.tabs = ['1', '2', { heading: '3', closable: true }, '4'];
     fixture.detectChanges();
