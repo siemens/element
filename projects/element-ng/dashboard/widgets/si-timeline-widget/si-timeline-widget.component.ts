@@ -9,7 +9,7 @@ import { AccentLineType, MenuItem as MenuItemLegacy } from '@siemens/element-ng/
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
 import { MenuItem } from '@siemens/element-ng/menu';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiWidgetBaseComponent } from '../si-widget-base.component';
 import { SiTimelineWidgetBodyComponent } from './si-timeline-widget-body.component';
@@ -21,8 +21,8 @@ import { SiTimelineWidgetItem } from './si-timeline-widget-item.component';
     NgClass,
     SiLinkDirective,
     SiCardComponent,
-    SiTranslateModule,
-    SiTimelineWidgetBodyComponent
+    SiTimelineWidgetBodyComponent,
+    SiTranslatePipe
   ],
   templateUrl: './si-timeline-widget.component.html'
 })

@@ -5,7 +5,7 @@
 import { booleanAttribute, Component, computed, input } from '@angular/core';
 import { addIcons, SiIconComponent, elementRight2 } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiWidgetBaseComponent } from './si-widget-base.component';
 
@@ -15,7 +15,7 @@ import { SiWidgetBaseComponent } from './si-widget-base.component';
  */
 @Component({
   selector: 'si-link-widget',
-  imports: [SiIconComponent, SiLinkDirective, SiTranslateModule],
+  imports: [SiIconComponent, SiLinkDirective, SiTranslatePipe],
   templateUrl: './si-link-widget.component.html',
   host: { class: 'si-link-widget' }
 })
