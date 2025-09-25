@@ -9,14 +9,15 @@
 
 :is(.form-control, .form-select) {
   --border-color: #{semantic-tokens.$element-ui-2};
+  --si-input-padding-inline-end: calc(
+    var(--si-feedback-icon-offset, 0px) + var(--si-action-icon-offset, 0px) +
+      #{variables.$input-padding-x}
+  );
   display: block;
   inline-size: 100%;
   padding-block: variables.$input-padding-y;
   padding-inline-start: variables.$input-padding-x;
-  padding-inline-end: calc(
-    var(--si-feedback-icon-offset, 0px) + var(--si-action-icon-offset, 0px) +
-      #{variables.$input-padding-x}
-  );
+  padding-inline-end: var(--si-input-padding-inline-end);
   font-family: variables.$input-font-family;
   font-size: variables.$input-font-size;
   font-weight: variables.$input-font-weight;
@@ -96,8 +97,10 @@
 
 textarea.form-control {
   min-block-size: variables.$input-height;
-  padding-block: variables.$input-padding-y;
-  line-height: 1.5;
+  padding-block: calc(variables.$input-padding-y - 3px);
+  padding-inline-start: calc(variables.$input-padding-x - 3px);
+  padding-inline-end: calc(var(--si-input-padding-inline-end) - 3px);
+  line-height: variables.$input-line-height;
   // prevent scrollbar overlapping rounded borders
   box-shadow: 0 0 0 1px var(--border-color);
   border: 3px solid variables.$input-bg !important; // stylelint-disable-line declaration-no-important
