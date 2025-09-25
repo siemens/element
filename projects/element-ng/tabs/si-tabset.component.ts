@@ -10,6 +10,7 @@ import {
   Component,
   computed,
   contentChildren,
+  effect,
   inject,
   INJECTOR,
   signal
@@ -66,6 +67,17 @@ export class SiTabsetComponent {
 
   protected tabIsLink(tab: unknown): tab is SiTabLinkComponent {
     return tab instanceof SiTabLinkComponent;
+  }
+
+  constructor() {
+    effect(() => {
+      if (this.showMenuButton() && this.activeTab()) {
+        // wait for menu button to render on DOM
+        setTimeout(() => {
+          this.activeTab()?.scrollTabIntoView();
+        });
+      }
+    });
   }
 
   /** @internal */
