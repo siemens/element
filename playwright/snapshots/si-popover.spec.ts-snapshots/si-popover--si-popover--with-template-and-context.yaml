@@ -8,4 +8,4 @@
 - dialog "Hello, I'm a microwave":
   - strong: Hello, I'm a microwave
   - text: /And I'm powered on with \d+ W for 5 minutes\./
-  - button "Action link "
+  - button "Action link"

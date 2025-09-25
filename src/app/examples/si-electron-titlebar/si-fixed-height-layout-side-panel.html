@@ -181,29 +181,31 @@
       <button
         type="button"
         class="layout-button btn btn-tertiary me-6"
+        aria-label="compact"
         [class.active]="statusBarCompact"
         (click)="statusBarCompact = true"
       >
-        <i class="element-layout-statusbar-small"></i>
+        <i aria-hidden="true" class="element-layout-statusbar-small"></i>
       </button>
       <button
         type="button"
         class="layout-button btn btn-tertiary me-6"
+        aria-label="large"
         [class.active]="!statusBarCompact"
         (click)="statusBarCompact = false"
       >
-        <i class="element-layout-statusbar-large"></i>
+        <i aria-hidden="true" class="element-layout-statusbar-large"></i>
       </button>
 
       <p class="small mt-5">Pane layout</p>
-      <button type="button" class="layout-button btn btn-tertiary me-6">
-        <i class="element-layout-pane-1"></i>
+      <button type="button" aria-label="pane 1" class="layout-button btn btn-tertiary me-6">
+        <i aria-hidden="true" class="element-layout-pane-1"></i>
       </button>
-      <button type="button" class="layout-button btn btn-tertiary me-6">
-        <i class="element-layout-pane-2"></i>
+      <button type="button" aria-label="pane 2" class="layout-button btn btn-tertiary me-6">
+        <i aria-hidden="true" class="element-layout-pane-2"></i>
       </button>
-      <button type="button" class="layout-button btn btn-tertiary me-6 active">
-        <i class="element-layout-pane-4"></i>
+      <button type="button" aria-label="pane 4" class="layout-button btn btn-tertiary me-6 active">
+        <i aria-hidden="true" class="element-layout-pane-4"></i>
       </button>
     </div>
   </si-side-panel-content>
