@@ -169,7 +169,7 @@ describe('SiCardComponent', () => {
       let img = element.querySelector('img');
       expect(img).toBeNull();
 
-      wrapperComponent.imgSrc = './testing/assets/element-logo.png';
+      wrapperComponent.imgSrc = './assets/landing-page-steel.webp';
       runOnPushChangeDetection(fixture);
       img = element.querySelector('img');
       expect(img).not.toBeNull();
@@ -178,7 +178,7 @@ describe('SiCardComponent', () => {
     });
 
     it('direction should be changed to horizontal', () => {
-      wrapperComponent.imgSrc = './testing/assets/element-logo.png';
+      wrapperComponent.imgSrc = './assets/landing-page-steel.webp';
       wrapperComponent.imgDir = 'horizontal';
       runOnPushChangeDetection(fixture);
 
@@ -189,7 +189,7 @@ describe('SiCardComponent', () => {
     });
 
     it('alt text should be set', () => {
-      wrapperComponent.imgSrc = './testing/assets/element-logo.png';
+      wrapperComponent.imgSrc = './assets/landing-page-steel.webp';
       runOnPushChangeDetection(fixture);
 
       let img = element.querySelector('img');
@@ -202,7 +202,7 @@ describe('SiCardComponent', () => {
     });
 
     it('object fit should be scale-down as default and should be changed to cover', () => {
-      wrapperComponent.imgSrc = './testing/assets/element-logo.png';
+      wrapperComponent.imgSrc = './assets/landing-page-steel.webp';
       runOnPushChangeDetection(fixture);
 
       let img = element.querySelector('img');
@@ -216,7 +216,7 @@ describe('SiCardComponent', () => {
     });
 
     it('object position should be changed by setting left', () => {
-      wrapperComponent.imgSrc = './testing/assets/element-logo.png';
+      wrapperComponent.imgSrc = './assets/landing-page-steel.webp';
       runOnPushChangeDetection(fixture);
 
       let img = element.querySelector('img');

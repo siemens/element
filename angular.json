@@ -140,6 +140,13 @@
             "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/element-ng/tsconfig.spec.json",
             "karmaConfig": "projects/element-ng/karma.conf.cjs",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/element-ng/assets/images",
+                "output": "assets"
+              }
+            ],
             "stylePreprocessorOptions": {
               "includePaths": ["node_modules/"]
             },
