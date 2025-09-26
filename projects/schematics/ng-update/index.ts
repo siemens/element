@@ -5,7 +5,7 @@
 
 import { SchematicContext, Tree } from '@angular-devkit/schematics';
 
-import { actionDialogMigrationRule } from '../migrations/action-modal';
+import { actionDialogMigrationRule } from '../migrations';
 
 export const updateToV48 = (_options: { path: string }) => {
   return (tree: Tree, context: SchematicContext) => {
