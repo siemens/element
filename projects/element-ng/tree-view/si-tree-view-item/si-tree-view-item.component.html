@@ -16,23 +16,14 @@
   >
     <div class="si-tree-view-item" (mousedown)="onMouseDownTreeItem($event)">
       @if (showFolderStateStart && treeItem.state !== 'leaf') {
-        <a
-          class="si-tree-stretch-center si-tree-view-item-toggle"
-          tabindex="-1"
-          [style.margin-inline-start]="'-' + biggerPaddingStart"
-          [style.padding-inline-start]="paddingStart"
-          (click)="onItemFolderClicked()"
-        >
-          @if (isExpanding) {
-            <si-loading-spinner [@.disabled]="true" />
-          } @else {
-            <i
-              aria-hidden="true"
-              class="si-tree-view-item-dropdown-caret"
-              [ngClass]="getItemFolderStateClass()"
-            ></i>
-          }
-        </a>
+        <ng-container
+          [ngTemplateOutlet]="toggleTemplate"
+          [ngTemplateOutletContext]="{
+            biggerPaddingStart: '-' + biggerPaddingStart,
+            paddingStart: paddingStart,
+            toggleIcon: 'si-tree-view-item-dropdown-caret'
+          }"
+        />
       }
       <ng-container [ngTemplateOutlet]="checkboxOrOption" />
 
@@ -112,28 +103,14 @@
             </div>
           </div>
         }
-        @if (showFolderStateEnd && treeItem.state !== 'leaf') {
-          <a
-            class="si-tree-stretch-center si-tree-view-item-toggle si-tree-view-item-toggle-end"
-            tabindex="-1"
-            [class.disabled]="!getItemFolderStateClass()"
-            (click)="onItemFolderClicked()"
-          >
-            @if (isExpanding) {
-              <si-loading-spinner class="si-tree-view-item-icon" />
-            } @else {
-              <i
-                aria-hidden="true"
-                class="si-tree-view-item-icon"
-                [ngClass]="getItemFolderStateClass()"
-              ></i>
-            }
-          </a>
-        }
-        @if (showFolderStateEnd && treeItem.state === 'leaf') {
-          <div class="si-tree-stretch-center si-tree-view-item-toggle si-tree-view-item-toggle-end">
-            <i aria-hidden="true" class="si-tree-view-item-icon si-tree-view-item-icon-spacer"></i>
-          </div>
+        @if (showFolderStateEnd) {
+          <ng-container
+            [ngTemplateOutlet]="treeItem.state === 'leaf' ? spacerTemplate : toggleTemplate"
+            [ngTemplateOutletContext]="{
+              toggleIcon: 'si-tree-view-item-icon',
+              positionEnd: true
+            }"
+          />
         }
       </div>
     </div>
@@ -142,21 +119,12 @@
   <div class="si-tree-view-li focus-direct-sub-inside">
     <div class="si-tree-view-item-group">
       @if (showFolderStateStart) {
-        <a
-          class="si-tree-stretch-center si-tree-view-item-toggle"
-          tabindex="-1"
-          (click)="onItemFolderClicked()"
-        >
-          @if (isExpanding) {
-            <si-loading-spinner />
-          } @else {
-            <i
-              aria-hidden="true"
-              class="si-tree-view-item-icon"
-              [ngClass]="getItemFolderStateClass()"
-            ></i>
-          }
-        </a>
+        <ng-container
+          [ngTemplateOutlet]="toggleTemplate"
+          [ngTemplateOutletContext]="{
+            toggleIcon: 'si-tree-view-item-icon'
+          }"
+        />
       }
       <ng-container
         [ngTemplateOutlet]="checkboxOrOption"
@@ -165,22 +133,12 @@
 
       <p class="mb-0">{{ treeItem.label | translate }}</p>
       @if (showFolderStateEnd) {
-        <a
-          class="si-tree-stretch-center"
-          tabindex="-1"
-          [class.disabled]="!getItemFolderStateClass()"
-          (click)="onItemFolderClicked()"
-        >
-          @if (isExpanding) {
-            <si-loading-spinner />
-          } @else {
-            <i
-              aria-hidden="true"
-              class="si-tree-view-item-icon"
-              [ngClass]="getItemFolderStateClass()"
-            ></i>
-          }
-        </a>
+        <ng-container
+          [ngTemplateOutlet]="toggleTemplate"
+          [ngTemplateOutletContext]="{
+            toggleIcon: 'si-tree-view-item-icon'
+          }"
+        />
       }
     </div>
   </div>
@@ -205,4 +163,38 @@
       />
     </a>
   }
+</ng-template>
+
+<ng-template
+  #toggleTemplate
+  let-biggerPaddingStart="biggerPaddingStart"
+  let-paddingStart="paddingStart"
+  let-toggleIcon="toggleIcon"
+  let-positionEnd="positionEnd"
+>
+  @let folderStateClass = getItemFolderStateClass();
+  <a
+    class="si-tree-stretch-center si-tree-view-item-toggle"
+    tabindex="-1"
+    [class.si-tree-view-item-toggle-end]="positionEnd"
+    [class.disabled]="!folderStateClass"
+    [style.margin-inline-start]="biggerPaddingStart"
+    [style.padding-inline-start]="paddingStart"
+    (click)="onItemFolderClicked()"
+  >
+    @if (isExpanding) {
+      <si-loading-spinner [@.disabled]="true" />
+    } @else {
+      <i aria-hidden="true" [class]="toggleIcon" [ngClass]="folderStateClass"></i>
+    }
+  </a>
+</ng-template>
+
+<ng-template #spacerTemplate let-positionEnd="positionEnd">
+  <div
+    class="si-tree-stretch-center si-tree-view-item-toggle"
+    [class.si-tree-view-item-toggle-end]="positionEnd"
+  >
+    <i aria-hidden="true" class="si-tree-view-item-icon si-tree-view-item-icon-spacer"></i>
+  </div>
 </ng-template>
