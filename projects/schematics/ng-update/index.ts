@@ -3,11 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+import { chain, Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+
+import { iconMigrationRule } from './icon-migration';
 
 export const updateToV48 = (): Rule => {
   return (tree: Tree, context: SchematicContext) => {
     context.logger.info('🚀 Starting update to version 48...');
-    return tree;
+    const chainedRules = chain([iconMigrationRule()]);
+    return chainedRules(tree, context);
   };
 };
