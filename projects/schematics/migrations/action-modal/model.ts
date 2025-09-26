@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 
-export const ACTION_DIALOG_SYMBOLS: string[] = [
+import ts from 'typescript';
+
+export const ACTION_MODAL_SYMBOLS: string[] = [
   'ConfirmationDialogResult',
   'SiActionDialogService'
 ] as const;
@@ -20,6 +22,12 @@ export type LegacyMethodName = (typeof LEGACY_METHODS)[number];
 export interface DialogMethodConfig {
   type: string;
   parameters: Record<string, number>; // paramName -> argIndex
+}
+
+export interface CodeTransformation {
+  node: ts.Node;
+  newCode: string;
+  type: 'method-call' | 'type-reference';
 }
 
 export const DIALOG_METHOD_CONFIGS: Record<LegacyMethodName, DialogMethodConfig> = {
@@ -78,3 +86,42 @@ export const DIALOG_METHOD_CONFIGS: Record<LegacyMethodName, DialogMethodConfig>
     }
   }
 };
+
+export const ACTION_DIALOG_TYPES_REPLACEMENTS = [
+  // Alert dialog
+  {
+    old: 'AlertDialogResult.Confirm',
+    new: 'confirm'
+  },
+
+  // Edit discard dialog
+  {
+    old: 'EditDiscardDialogResult.Save',
+    new: 'save'
+  },
+  {
+    old: 'EditDiscardDialogResult.Discard',
+    new: 'discard'
+  },
+  {
+    old: 'EditDiscardDialogResult.Cancel',
+    new: 'cancel'
+  },
+
+  // Confirmation dialog
+  {
+    old: 'ConfirmationDialogResult.Confirm',
+    new: 'confirm'
+  },
+  { old: 'ConfirmationDialogResult.Decline', new: 'decline' },
+
+  // Delete confirmation dialog
+  {
+    old: 'DeleteConfirmationDialogResult.Delete',
+    new: 'delete'
+  },
+  {
+    old: 'DeleteConfirmationDialogResult.Cancel',
+    new: 'cancel'
+  }
+];

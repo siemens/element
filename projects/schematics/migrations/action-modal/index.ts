@@ -3,13 +3,15 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+import { Rule, SchematicContext, SchematicsException, Tree } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
 
 import { discoverSourceFiles } from '../../utils/project-utils';
 import { getImportSpecifiers } from '../../utils/ts-utils';
 import {
-  ACTION_DIALOG_SYMBOLS,
+  ACTION_DIALOG_TYPES_REPLACEMENTS,
+  ACTION_MODAL_SYMBOLS,
+  CodeTransformation,
   DIALOG_METHOD_CONFIGS,
   LEGACY_METHODS,
   LegacyMethodName
@@ -37,48 +39,85 @@ export const actionDialogMigrationRule = (options: { path: string }): Rule => {
       const actionModalImports = getImportSpecifiers(
         sourceFile,
         '@simpl/element-ng/action-modal',
-        ACTION_DIALOG_SYMBOLS
+        ACTION_MODAL_SYMBOLS
       );
 
       if (!actionModalImports || actionModalImports.length === 0) {
         continue;
       }
 
-      const methodCallTransformations: { node: ts.CallExpression; newCode: string }[] = [];
+      const pendingTransformations: CodeTransformation[] = [];
 
-      const collectTransformations = (node: ts.Node): void => {
-        if (ts.isCallExpression(node) && isLegacyActionDialogCall(node)) {
-          const fullMethodCall = node.expression.getText();
-          const methodCallSegments = fullMethodCall.split('.');
-          const methodName = methodCallSegments.pop() as LegacyMethodName;
-          const servicePath = methodCallSegments.join('.');
-
-          if (!LEGACY_METHODS.includes(methodName)) {
-            return;
+      const visitNodeAndCollectTransformations = (node: ts.Node): void => {
+        // Collect method call transformations
+        if (ts.isCallExpression(node)) {
+          const methodTransformation = createMethodCallTransformation(node);
+          if (methodTransformation) {
+            pendingTransformations.push(methodTransformation);
           }
-
-          const dialogProperties: string[] = generateDialogProperties(methodName, node.arguments);
-
-          methodCallTransformations.push({
-            node,
-            newCode: `${servicePath}.showActionDialog({ ${dialogProperties.join(', ')} })`
-          });
-          context.logger.debug(
-            `${methodName} → showActionDialog (${dialogProperties.length} props)`
-          );
-        } else {
-          node.forEachChild(collectTransformations);
         }
-      };
-      sourceFile.forEachChild(collectTransformations);
 
-      if (methodCallTransformations.length > 0) {
-        applyMethodCallTransformations(tree, filePath, methodCallTransformations);
-        context.logger.info(`Transformed ${methodCallTransformations.length} calls in ${filePath}`);
+        // Collect type reference transformations
+        if (ts.isPropertyAccessExpression(node)) {
+          const typeTransformation = createTypeReferenceTransformation(node);
+          if (typeTransformation) {
+            pendingTransformations.push(typeTransformation);
+          }
+        }
+
+        node.forEachChild(visitNodeAndCollectTransformations);
+      };
+      sourceFile.forEachChild(visitNodeAndCollectTransformations);
+
+      if (pendingTransformations.length > 0) {
+        applyCodeTransformations(tree, filePath, pendingTransformations);
       }
     }
 
     return tree;
+  };
+};
+
+const createMethodCallTransformation = (node: ts.CallExpression): CodeTransformation | null => {
+  const fullMethodCall = node.expression.getText();
+
+  const methodMatch = LEGACY_METHODS.find(m => fullMethodCall.endsWith(`.${m}`));
+
+  if (!methodMatch) {
+    return null;
+  }
+
+  const methodCallSegments = fullMethodCall.split('.');
+  const methodName = methodCallSegments.pop() as LegacyMethodName;
+  const servicePath = methodCallSegments.join('.');
+
+  const dialogProperties = generateDialogProperties(methodName, node.arguments);
+  const newCode = `${servicePath}.showActionDialog({ ${dialogProperties.join(', ')} })`;
+
+  return {
+    node,
+    newCode,
+    type: 'method-call'
+  };
+};
+
+const createTypeReferenceTransformation = (
+  node: ts.PropertyAccessExpression
+): CodeTransformation | null => {
+  const nodeText = node.getText().trim();
+
+  const matchingReplacement = ACTION_DIALOG_TYPES_REPLACEMENTS.find(
+    typeReplacement => nodeText === typeReplacement.old
+  );
+
+  if (!matchingReplacement) {
+    return null;
+  }
+
+  return {
+    node,
+    newCode: `'${matchingReplacement.new}'`,
+    type: 'type-reference'
   };
 };
 
@@ -87,6 +126,11 @@ const generateDialogProperties = (
   nodeArguments: ts.NodeArray<ts.Expression>
 ): string[] => {
   const methodConfig = DIALOG_METHOD_CONFIGS[methodName];
+
+  if (!methodConfig) {
+    throw new SchematicsException(`Unknown method configuration for: ${methodName}`);
+  }
+
   const dialogProperties = [`type: '${methodConfig.type}'`];
 
   const indexToParamMap: Record<number, string> = {};
@@ -103,14 +147,14 @@ const generateDialogProperties = (
   return dialogProperties;
 };
 
-const applyMethodCallTransformations = (
+const applyCodeTransformations = (
   tree: Tree,
   filePath: string,
-  methodCallTransformations: { node: ts.CallExpression; newCode: string }[]
+  codeTransformations: CodeTransformation[]
 ): void => {
   const recorder = tree.beginUpdate(filePath);
   // Sort by position (descending) to avoid offset issues
-  methodCallTransformations
+  codeTransformations
     .sort((a, b) => b.node.getStart() - a.node.getStart())
     .forEach(({ node, newCode }) => {
       recorder.remove(node.getStart(), node.getWidth());
@@ -118,6 +162,3 @@ const applyMethodCallTransformations = (
     });
   tree.commitUpdate(recorder);
 };
-
-const isLegacyActionDialogCall = (node: ts.CallExpression): boolean =>
-  LEGACY_METHODS.some(methodName => node.expression.getText().endsWith(`.${methodName}`));
