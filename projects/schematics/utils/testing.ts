@@ -24,7 +24,7 @@ export const createTestApp = async (
     tree
   );
 
-  return runner.runExternalSchematic(
+  return await runner.runExternalSchematic(
     '@schematics/angular',
     'application',
     { name: 'second-app', ...appOptions },
