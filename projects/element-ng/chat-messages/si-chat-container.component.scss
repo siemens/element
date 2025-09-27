@@ -1,0 +1,61 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  &.base-0 {
+    background-color: variables.$element-base-0;
+
+    .chat-input-area {
+      // Gradient from transparent to base-0, should be transparent on top, then fading to base-0 (already at the halfway point)
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        variables.$element-base-0 50%,
+        variables.$element-base-0
+      );
+    }
+  }
+
+  &.base-1 {
+    background-color: variables.$element-base-1;
+
+    .chat-input-area {
+      // Gradient from transparent to base-1, should be transparent on top, then fading to base-1 (already at the halfway point)
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        variables.$element-base-1 50%,
+        variables.$element-base-1
+      );
+    }
+  }
+}
+
+.messages-container {
+  &.initialized {
+    scroll-behavior: smooth;
+  }
+
+  // Ensure the container can grow to fill available space
+  min-block-size: 0;
+  overflow-y: auto;
+}
+
+si-inline-notification {
+  justify-self: center;
+  max-inline-size: 720px;
+}
+
+.chat-input-area {
+  position: sticky;
+  inset-block-end: 0;
+}
+
+// In mobile mode the inline-notification is massive compared to the scrollable area
+:host-context(.si-container-xs, .si-container-sm) {
+  si-inline-notification ::ng-deep {
+    .alert,
+    .alert-link {
+      font-size: variables.$si-font-size-body;
+    }
+  }
+}

@@ -1,0 +1,24 @@
+<div class="p-4">
+  <si-chat-message alignment="start" actionsPosition="bottom">
+    <si-attachment-list [attachments]="attachments" />
+    <si-icon class="icon" icon="element-user" />
+    <si-markdown-content
+      content="Can you help me with this **code snippet**? I'm getting an error when I run it.**"
+    />
+    <si-action-bar [actions]="actions" [dropdownActions]="dropdownActions" />
+  </si-chat-message>
+
+  <div class="mt-5">
+    <si-chat-message alignment="end" avatarPosition="end" actionsPosition="side">
+      <si-avatar initials="JD" altText="User" />
+      Thanks for the help! That worked perfectly.
+      <si-action-bar [actions]="actions" />
+    </si-chat-message>
+  </div>
+
+  <div class="mt-5">
+    <si-chat-message alignment="start" [loading]="true">
+      <si-icon class="icon" icon="element-ai" />
+    </si-chat-message>
+  </div>
+</div>

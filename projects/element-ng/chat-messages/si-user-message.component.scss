@@ -1,0 +1,36 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: block;
+}
+
+.user-message-actions {
+  opacity: 0;
+}
+
+si-chat-message {
+  --chat-message-bubble-bg: #{variables.$element-base-input-experimental};
+}
+
+:host:hover .user-message-actions {
+  // stylelint-disable-next-line declaration-no-important
+  opacity: 1 !important;
+  visibility: visible;
+}
+
+.user-message-actions:hover {
+  // stylelint-disable-next-line declaration-no-important
+  opacity: 1 !important;
+  visibility: visible;
+}
+
+.user-message-actions:has(::ng-deep [aria-expanded='true']) {
+  // stylelint-disable-next-line declaration-no-important
+  opacity: 1 !important;
+  visibility: visible;
+}
+
+:host-context(.si-container-xs, .si-container-sm) .user-message-actions:active {
+  // stylelint-disable-next-line declaration-no-important
+  opacity: 1 !important;
+}

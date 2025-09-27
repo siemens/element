@@ -1,0 +1,151 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: block;
+  --chat-message-bubble-bg: #{variables.$element-base-1};
+  --chat-message-avatar-base-margin: #{map.get(variables.$spacers, 3)};
+}
+
+:host ::ng-deep si-loading-spinner {
+  --loading-spinner-size: 1.5em;
+}
+
+.skeleton-line-full {
+  inline-size: 100%;
+}
+
+.skeleton-line-half {
+  inline-size: 50%;
+}
+
+.loading-message-bubble {
+  inline-size: max-content;
+  min-inline-size: 75%;
+  margin-block-end: auto;
+  background-color: var(--chat-message-bubble-bg);
+}
+
+.message-bubble {
+  margin-block-end: auto;
+  background-color: var(--chat-message-bubble-bg);
+  max-inline-size: 100%;
+  min-inline-size: 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
+
+  &:empty {
+    display: none;
+
+    ~ .actions-wrapper {
+      // stylelint-disable-next-line declaration-no-important
+      margin-inline: 0 !important;
+    }
+  }
+}
+
+.message-wrapper {
+  max-inline-size: 100%;
+  min-inline-size: 0;
+}
+
+.attachment-slot {
+  &:empty {
+    display: none;
+  }
+
+  &:not(:empty) ~ .message-wrapper:not(:has(.message-bubble:empty)) {
+    margin-block-start: map.get(variables.$spacers, 4);
+  }
+
+  &:not(:empty) ~ .message-wrapper:has(.message-bubble:empty) .actions-wrapper.actions-horizontal {
+    // Since it will be on the bottom of the attachment (but is not in bottom mode), we need some spacing
+    margin-block-start: map.get(variables.$spacers, 2);
+  }
+}
+
+.actions-wrapper:empty {
+  display: none;
+}
+
+.avatar-wrapper {
+  &:not(.end) {
+    align-self: flex-start;
+    margin-inline-end: var(--chat-message-avatar-base-margin);
+  }
+
+  &.end {
+    align-self: flex-end;
+    margin-inline-start: var(--chat-message-avatar-base-margin);
+  }
+
+  ::ng-deep &:has(si-icon) {
+    // stylelint-disable-next-line declaration-no-important
+    margin-block-start: map.get(variables.$spacers, 3) !important;
+  }
+
+  &:empty {
+    display: none;
+  }
+}
+
+:host-context(.si-container-md, .si-container-lg, .si-container-xl, .si-container-xxl) {
+  .chat-message-container {
+    flex-direction: row;
+
+    &.reverse {
+      flex-direction: row-reverse;
+    }
+
+    &.start {
+      align-items: flex-start;
+    }
+  }
+
+  .message-wrapper {
+    max-inline-size: 80%;
+    min-inline-size: 0;
+    inline-size: auto;
+
+    &.end {
+      margin-inline-start: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+  }
+
+  .message-bubble.end {
+    margin-inline-start: auto;
+  }
+}
+
+:host-context(.si-container-xs, .si-container-sm) {
+  .message-wrapper {
+    max-inline-size: 100%;
+    min-inline-size: 0;
+
+    &.end {
+      margin-inline-start: auto;
+    }
+  }
+
+  .chat-message-container {
+    flex-direction: column;
+  }
+
+  .avatar-wrapper {
+    margin-block-end: var(--chat-message-avatar-base-margin);
+    // stylelint-disable-next-line declaration-no-important
+    margin-inline: 0 !important;
+
+    &::ng-deep &:has(si-icon) {
+      // stylelint-disable-next-line declaration-no-important
+      margin-block-start: 0 !important;
+      // stylelint-disable-next-line declaration-no-important
+      margin-inline-start: map.get(variables.$spacers, 4) !important;
+      // stylelint-disable-next-line declaration-no-important
+      margin-inline-end: map.get(variables.$spacers, 4) !important;
+    }
+  }
+}

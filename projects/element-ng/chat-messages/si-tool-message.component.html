@@ -1,0 +1,34 @@
+<si-chat-message
+  alignment="start"
+  actionsPosition="bottom"
+  avatarPosition="start"
+  [loading]="false"
+>
+  @if (toolIcon()) {
+    <si-icon class="icon mb-n1" [icon]="toolIcon()" />
+  }
+
+  <div class="tool-message-content d-flex flex-column gap-3">
+    @if (name()) {
+      <h6 class="tool-name">{{ name() }}</h6>
+    }
+
+    @if (hasInputArguments()) {
+      <si-collapsible-panel [heading]="inputArgumentsLabel()" [opened]="false">
+        <pre class="tool-data"><code>{{ formatData(inputArguments()) }}</code></pre>
+      </si-collapsible-panel>
+    }
+
+    @if (hasOutput() && !loading()) {
+      <si-collapsible-panel [heading]="outputLabel()" [opened]="false" [icon]="undefined">
+        <pre class="tool-data"><code>{{ formatData(output()) }}</code></pre>
+      </si-collapsible-panel>
+    }
+
+    @if (loading()) {
+      <si-collapsible-panel [opened]="false" [disabled]="true">
+        <div si-panel-heading class="si-skeleton placeholder-lg loading-panel-header"> </div>
+      </si-collapsible-panel>
+    }
+  </div>
+</si-chat-message>
