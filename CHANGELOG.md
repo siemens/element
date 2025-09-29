@@ -1,3 +1,13 @@
+## [47.11.1](https://github.com/siemens/element/compare/v47.11.0...v47.11.1) (2025-09-29)
+
+
+### Bug Fixes
+
+* **column-dialog:** align row icons in case of long title ([20e0276](https://github.com/siemens/element/commit/20e0276e335c0bdf289c4714f7a26009d0fd787f))
+* **datepicker:** update the AM/PM meridian for 12-hour clock ([b1c0667](https://github.com/siemens/element/commit/b1c0667c1ec2ebb660b19a8338cf54f68fdedf08))
+* **theme:** apply correct style for `rounded-end` utility ([4bceca2](https://github.com/siemens/element/commit/4bceca244ba258016f996c0a2006fed12e3412ce))
+* **threshold:** ensure number input and buttons are above other elements ([1d615b8](https://github.com/siemens/element/commit/1d615b84977711c2aefb21fbd5e73e8a471788c4))
+
 # [47.11.0](https://github.com/siemens/element/compare/v47.10.0...v47.11.0) (2025-09-01)
 
 

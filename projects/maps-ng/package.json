@@ -1,7 +1,7 @@
 {
   "name": "@siemens/maps-ng",
   "description": "Element maps library based on OpenLayers.",
-  "version": "47.11.0",
+  "version": "47.11.1",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
     "ol": "~10.2.1",
     "ol-ext": "^4.0.24",
     "ol-mapbox-style": "^12.4.0",
-    "@siemens/element-translate-ng": "47.11.0"
+    "@siemens/element-translate-ng": "47.11.1"
   },
   "exports": {
     "./docs.json": {
