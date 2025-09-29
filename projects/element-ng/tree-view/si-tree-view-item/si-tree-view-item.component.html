@@ -34,20 +34,8 @@
           }
         </a>
       }
-      @if (showCheckOrOptionBox) {
-        <a class="input-box" tabindex="-1">
-          <input
-            class="form-check-input"
-            tabindex="-1"
-            [type]="getInputType()"
-            [indeterminate]="this.treeItem.checked === 'indeterminate' ? true : null"
-            [checked]="this.treeItem.checked === 'checked'"
-            [disabled]="!treeItem.selectable"
-            [attr.aria-label]="treeItem.label | translate"
-            (click)="onBoxClicked()"
-          />
-        </a>
-      }
+      <ng-container [ngTemplateOutlet]="checkboxOrOption" />
+
       <div
         class="si-tree-view-item-main d-flex flex-grow-1 align-self-stretch grab-area"
         (click)="onItemClicked($event)"
@@ -170,19 +158,11 @@
           }
         </a>
       }
-      @if (showCheckOrOptionBox) {
-        <a class="form-check input-box" tabindex="-1">
-          <input
-            class="form-check-input"
-            tabindex="-1"
-            [type]="getInputType()"
-            [indeterminate]="this.treeItem.checked === 'indeterminate' ? true : null"
-            [checked]="this.treeItem.checked === 'checked'"
-            [attr.aria-label]="treeItem.label | translate"
-            (click)="onBoxClicked()"
-          />
-        </a>
-      }
+      <ng-container
+        [ngTemplateOutlet]="checkboxOrOption"
+        [ngTemplateOutletContext]="{ classNames: 'form-check' }"
+      />
+
       <p class="mb-0">{{ treeItem.label | translate }}</p>
       @if (showFolderStateEnd) {
         <a
@@ -208,4 +188,21 @@
 
 <ng-template #contextMenu>
   <si-menu-factory class="me-5" [items]="contextMenuItems()!" [actionParam]="treeItem" />
+</ng-template>
+
+<ng-template #checkboxOrOption let-classNames="classNames">
+  @if (showCheckOrOptionBox) {
+    <a class="input-box" tabindex="-1" [ngClass]="classNames">
+      <input
+        class="form-check-input"
+        tabindex="-1"
+        [type]="getInputType()"
+        [indeterminate]="this.treeItem.checked === 'indeterminate' ? true : null"
+        [checked]="this.treeItem.checked === 'checked'"
+        [disabled]="!treeItem.selectable"
+        [attr.aria-label]="treeItem.label | translate"
+        (click)="onBoxClicked()"
+      />
+    </a>
+  }
 </ng-template>
