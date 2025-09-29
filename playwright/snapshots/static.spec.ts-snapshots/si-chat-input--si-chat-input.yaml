@@ -1,0 +1,11 @@
+- text: project-spec.pdf
+- button "Remove attachment project-spec.pdf"
+- text: mockup.png
+- button "Remove attachment mockup.png"
+- textbox "Chat message input"
+- button "Attach files"
+- button "Take photo"
+- button "Text formatting"
+- button "More actions"
+- button "Send Message"
+- text: AI responses are generated for demonstration purposes. Please verify important information.
