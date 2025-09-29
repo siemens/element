@@ -62,6 +62,7 @@ export class SiTooltipDirective implements OnDestroy {
   protected describedBy = `__tooltip_${SiTooltipDirective.idCounter++}`;
 
   private tooltipRef?: TooltipRef;
+  private isTooltipVisible = false;
   private tooltipService = inject(SiTooltipService);
   private elementRef = inject(ElementRef);
   private destroyer = new Subject<void>();
@@ -83,6 +84,17 @@ export class SiTooltipDirective implements OnDestroy {
       placement: this.placement()
     });
     this.tooltipRef.show(this.siTooltip(), this.tooltipContext());
+    this.isTooltipVisible = true;
+  }
+
+  @HostListener('click')
+  // Ensures dismissible tooltip works on Safari by manually focusing the trigger.
+  // See MDN: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button#clicking_and_focus
+  // See WebKit Bug #22261: https://bugs.webkit.org/show_bug.cgi?id=22261#c68
+  protected manuallyFocusTrigger(): void {
+    if (!this.isTooltipVisible) {
+      this.elementRef.nativeElement.focus();
+    }
   }
 
   @HostListener('focus')
@@ -102,6 +114,7 @@ export class SiTooltipDirective implements OnDestroy {
   @HostListener('focusout')
   protected hide(): void {
     this.tooltipRef?.hide();
+    this.isTooltipVisible = false;
     this.destroyer.next();
   }
 
