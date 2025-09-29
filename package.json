@@ -122,7 +122,7 @@
     "@commitlint/cli": "19.8.1",
     "@commitlint/config-conventional": "19.8.1",
     "@eslint/js": "9.36.0",
-    "@playwright/test": "1.55.0",
+    "@playwright/test": "1.55.1",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@siemens/commitlint-config": "2.3.1",
