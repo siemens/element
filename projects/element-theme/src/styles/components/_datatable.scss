@@ -177,6 +177,24 @@ $datatable-ghost-cell-strip-radius: 0 !default;
         }
       }
     }
+
+    .horizontal-overflow {
+      .datatable-row-left {
+        .datatable-body-cell:last-child,
+        .datatable-header-cell:last-child {
+          box-shadow: 0 0 8px var(--element-box-shadow-color-1);
+          clip-path: inset(0 -8px 0 0);
+        }
+      }
+
+      .datatable-row-right {
+        .datatable-body-cell:first-child,
+        .datatable-header-cell:first-child {
+          box-shadow: 0 0 8px var(--element-box-shadow-color-1);
+          clip-path: inset(0 0 0 -8px);
+        }
+      }
+    }
   }
 
   // Header Styles
@@ -207,6 +225,10 @@ $datatable-ghost-cell-strip-radius: 0 !default;
         padding-block: 0;
         padding-inline: 2px;
       }
+    }
+
+    .datatable-header-inner {
+      block-size: 100%;
     }
 
     :is(.datatable-row-left, .datatable-row-right) {
