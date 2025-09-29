@@ -232,6 +232,21 @@ describe('SiFilteredSearchComponent', () => {
       await criteria[0].clickClearButton();
       expect(await loader.getAllHarnesses(SiFilteredSearchCriterionHarness)).toHaveSize(0);
     });
+
+    it('should clear input value if clear is pressed while criterion is active', async () => {
+      // Having an option used to be responsible for preventing the criterion text to be cleared.
+      component.criteria.set([{ name: 'foo', options: [{ value: 'bar', label: 'Bar' }] }]);
+      const criteria = await loader.getAllHarnesses(SiFilteredSearchCriterionHarness);
+      expect(criteria).toHaveSize(1);
+      await criteria[0].clickLabel();
+      expect(await criteria[0].value().then(value => value?.getValue())).toBe('Bar');
+      await criteria[0].clickClearButton();
+      expect(criteria).toHaveSize(1);
+      expect(await criteria[0].value().then(value => value?.getValue())).toBe('');
+      const harness = await loader.getHarness(SiFilteredSearchHarness);
+      await harness.freeTextSearch().then(search => search.focus());
+      expect(await criteria[0].value().then(value => value?.text())).toBe('');
+    });
   });
 
   describe('with lazy loaded category values', () => {
