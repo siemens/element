@@ -7,8 +7,10 @@ import {
   Component,
   computed,
   ElementRef,
+  OnChanges,
   OnInit,
   signal,
+  SimpleChanges,
   untracked,
   viewChild
 } from '@angular/core';
@@ -33,15 +35,24 @@ import { SiFilteredSearchValueBase } from '../si-filtered-search-value.base';
 })
 export class SiFilteredSearchTypeaheadComponent
   extends SiFilteredSearchOptionValueBase
-  implements OnInit
+  implements OnChanges, OnInit
 {
   protected override readonly valueInput = viewChild<ElementRef<HTMLInputElement>>('valueInput');
   protected readonly optionValue = signal<OptionCriterion | undefined>(undefined);
+
+  // This must be a separate signal as it should only emit when the actual empty state changes.
+  private readonly inputEmpty = computed(() => !this.criterionValue().value);
 
   // This MUST only be updated if the active state changes.
   // Otherwise, user values might be overridden.
   // It is only used to pass the initial input value if the user starts editing the input.
   readonly valueLabel = computed(() => {
+    // This is needed for the clear button.
+    // But we cannot subscribe to the value changes itself, as those would cause to many updates.
+    if (this.inputEmpty()) {
+      return '';
+    }
+
     if (this.active()) {
       const option = untracked(() => this.optionValue());
       if (option) {
@@ -52,6 +63,12 @@ export class SiFilteredSearchTypeaheadComponent
     }
     return '';
   });
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.criterionValue && this.criterionValue().value !== this.optionValue()?.value) {
+      this.optionValue.set(undefined);
+    }
+  }
 
   ngOnInit(): void {
     this.inputChange.next((this.criterionValue().value as string) ?? '');
