@@ -1,3 +1,26 @@
+# [48.1.0](https://github.com/siemens/element/compare/v48.0.3...v48.1.0) (2025-09-29)
+
+
+### Features
+
+* **datepicker:** allow only digits to be entered in si-timepicker ([3de8109](https://github.com/siemens/element/commit/3de81093a01c8e8de5b9b4705918d9f824457155))
+* **notification-item:** introduce new component ([ed52f95](https://github.com/siemens/element/commit/ed52f9519c53d82521b7852f8275b9c32886adf1))
+* **tabs:** provide canActivate and canDeactivate guards ([1d33374](https://github.com/siemens/element/commit/1d333747278c07e6c7c2924cdd2f13b884c60edd))
+
+
+### Bug Fixes
+
+* **column-dialog:** align row icons in case of long title ([c7441c2](https://github.com/siemens/element/commit/c7441c252af6bd4e492f6247ed7fd378e5bb526b))
+* **dashboard:** consistently translate labels ([bd04c6b](https://github.com/siemens/element/commit/bd04c6b82b405c60f625a88ed1a7e869af326feb))
+* **datepicker:** update the AM/PM meridian for 12-hour clock ([9da7f15](https://github.com/siemens/element/commit/9da7f159b2aa71f05264bf8a4414c66e9ce58810))
+* **file-uploader:** allow concurrent uploads in auto-upload mode ([fb97873](https://github.com/siemens/element/commit/fb9787305f5d1fd913959cfed4fe02a35c356c24))
+* **filtered-search:** filter pill overlay stays open opn focus out scenario ([6571588](https://github.com/siemens/element/commit/65715880a2403472bf8367e04e6d2aeaec6a0240))
+* **filtered-search:** handle invalid date ([d9871d6](https://github.com/siemens/element/commit/d9871d6e5eaea6875070f6274efd9009d00c807b))
+* **filtered-search:** multi select options should call the lazyValueProvider on input event ([a6e1d05](https://github.com/siemens/element/commit/a6e1d05fbfbc8851625d002ff089ddb9f149e5d6))
+* **list-details:** unsubscribe observables to avoid memory leaks ([e0d3c91](https://github.com/siemens/element/commit/e0d3c914cd6038daf538f63f79a9f07195bef335))
+* **navbar-vertical-item:** align badge in collapse state correctly ([2acaf4d](https://github.com/siemens/element/commit/2acaf4d58d3455eea96ceb17d5ee69acc3ba3d0c))
+* **tabs:** always scroll active tab into view ([d557f9a](https://github.com/siemens/element/commit/d557f9a11206de5ee7a9b1e88be71744e6d122f4)), closes [#772](https://github.com/siemens/element/issues/772)
+
 ## [48.0.3](https://github.com/siemens/element/compare/v48.0.2...v48.0.3) (2025-09-10)
 
 

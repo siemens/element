@@ -115,7 +115,7 @@ node.
 
 ![Drag and drop ](images/drag-and-drop-tree.png)
 
-### Accesibility considerations
+### Accessibility considerations
 
 **Always provide a keyboard-accessible alternative** to perform the same tasks,
 for users who cannot use a mouse or touch screen. Consider implementing
@@ -129,7 +129,7 @@ Alternatively, implement these interactions using keyboard shortcuts, such as
 shortcuts either through visually hidden text, or by announcing the shortcuts
 within the corresponding context menu items.
 
-*Note: Applications will have to implement these accesibility alternatives based on their use case. Element does not provide them by default.*
+*Note: Applications will have to implement these accessibility alternatives based on their use case. Element does not provide them by default.*
 
 ## Code ---
 

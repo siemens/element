@@ -8,5 +8,5 @@
 - dialog "Hello, I'm the popover title si-popover-next-title":
   - strong: Hello, I'm the popover title
   - text: si-popover-next-title Vivamus sagittis lacus vel augue laoreet rutrum faucibus.
-  - button "Action link "
+  - button "Action link"
   - button "Confirm"

@@ -20,12 +20,12 @@
     <div class="card-footer" footer>
       @if (!linkValue.action) {
         <a [siLink]="linkValue">
-          {{ linkValue.title }}
+          {{ linkValue.title | translate }}
           <i class="link-icon link-end element-right-2 flip-rtl"></i>
         </a>
       } @else {
         <button type="button" class="btn btn-link" [siLink]="linkValue">{{
-          linkValue.title
+          linkValue.title | translate
         }}</button>
       }
     </div>

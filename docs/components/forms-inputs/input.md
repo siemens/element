@@ -28,7 +28,7 @@ It supports different types of input formats like **text**, **number**, **passwo
 - Distinguish between editable vs. read-only fields.
 - Differentiate between required and optional fields.
 - Maintain a proper field size, according to each specific case.
-- Define the width of the input field according the content and the grid system.
+- Define the width of the input field according to the content and the grid system.
 - Do not use single-line text fields for longer input texts.
 
 ## Design ---

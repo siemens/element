@@ -22,7 +22,7 @@ They are typically used in cards, lists, horizontal navigation and account page:
 
 ### Variants
 
-The Avatar can show the content as image, intials or icon.
+The Avatar can show the content as image, initials or icon.
 
 ![Avatar - Variants](images/avatar-usage-variants.png)
 
@@ -30,7 +30,7 @@ Generic rule of usage:
 
 - **Image**: Use an image if the application offers the service for customization and an image is available.
 
-- **Initals**: If no image is available, use up to two letters instead. If the record name contains two words, like first and last name, use the first capitalized letter of each.
+- **Initials**: If no image is available, use up to two letters instead. If the record name contains two words, like first and last name, use the first capitalized letter of each.
 For records that only have a single word name, use the first two letters of that word.
 
 - **Icon**: If neither image nor initials are available, use the icon as fallback.

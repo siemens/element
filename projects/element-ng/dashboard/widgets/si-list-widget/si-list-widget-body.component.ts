@@ -6,7 +6,7 @@ import { booleanAttribute, Component, computed, input, model, OnChanges } from '
 import { FormsModule } from '@angular/forms';
 import { Link } from '@siemens/element-ng/link';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
-import { SiTranslateModule, t } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { SiWidgetBaseComponent } from '../si-widget-base.component';
 import { SiListWidgetItem, SiListWidgetItemComponent } from './si-list-widget-item.component';
@@ -20,7 +20,7 @@ export type SortOrder = 'ASC' | 'DSC';
  */
 @Component({
   selector: 'si-list-widget-body',
-  imports: [SiListWidgetItemComponent, SiSearchBarComponent, SiTranslateModule, FormsModule],
+  imports: [SiListWidgetItemComponent, SiSearchBarComponent, SiTranslatePipe, FormsModule],
   templateUrl: './si-list-widget-body.component.html',
   styleUrl: './si-list-widget-body.component.scss',
   host: { class: '' }

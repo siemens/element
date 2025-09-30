@@ -86,7 +86,7 @@ To run the E2E tests, use the following commands:
 
 ```shell
 # On linux the host parameter can be omitted
-npm run start --  --host 0.0.0.0
+npm run start -- --allowed-hosts true --host 0.0.0.0
 
 # Run the E2E tests on another terminal
 ./e2e-local.sh
@@ -129,8 +129,8 @@ DOCKER=podman ./e2e-local.sh
 
 Setup notes for Rancher Desktop on Windows:
 
-1. Install WSL 2: https://learn.microsoft.com/en-us/windows/wsl/install
-2. Download and install Rancher Desktop: https://rancherdesktop.io/
+1. Install [WSL 2](https://learn.microsoft.com/en-us/windows/wsl/install)
+2. Download and install [Rancher Desktop](https://rancherdesktop.io/)
 3. Start Rancher Desktop and tick the "Enable networking tunnel" checkbox under File > Preferences > Network
 
 Unlike Podman, Rancher allows you to run `./vrt-local.sh` without any additional
@@ -140,10 +140,12 @@ Desktop service or Vmmem using lots of CPU in idle state. If you don't need GUI
 apps then you can disable WSLg which should resolve the issue:
 
 1. Create the file `%USERPROFILE%\.wslconfig` if it doesn't already exist and add the following:
+
    ```
    [wsl2]
    guiApplications=false
    ```
+
 2. Restart WSL by running wsl --shutdown
 
 ## Documentation

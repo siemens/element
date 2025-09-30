@@ -19,13 +19,13 @@ import {
   ContentActionBarMainItem,
   SiContentActionBarComponent
 } from '@siemens/element-ng/content-action-bar';
-import { SiTranslateModule, t } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { SiDashboardService } from './si-dashboard.service';
 
 @Component({
   selector: 'si-dashboard-card',
-  imports: [SiContentActionBarComponent, SiTranslateModule],
+  imports: [SiContentActionBarComponent, SiTranslatePipe],
   templateUrl: './si-dashboard-card.component.html',
   styleUrl: './si-dashboard-card.component.scss',
   host: {

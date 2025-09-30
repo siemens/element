@@ -40,7 +40,7 @@ When possible, arrange the radio button groups vertically for easier reading.
 Always use clear and concise labels for radio buttons. Labels should always be
 placed to the right of radio button inputs.
 
-If labels are too extensive, try to reworded them to be shorter. If it's not
+If labels are too extensive, try to reword them to be shorter. If it's not
 possible, wrap the text to a second line so the radio button and label are top
 aligned.
 

@@ -162,7 +162,6 @@ and can be used in Angular Forms.
 
 <si-docs-component base="si-datepicker">
   <si-docs-tab example="si-timepicker" heading="Timepicker"  height="350"></si-docs-tab>
-  <si-docs-tab example="si-timepicker-limits" heading="Timepicker With Min And Max" height="100"></si-docs-tab>
 </si-docs-component>
 
 <si-docs-api component="SiDatepickerComponent"></si-docs-api>

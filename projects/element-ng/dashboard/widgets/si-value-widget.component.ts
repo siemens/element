@@ -13,7 +13,7 @@ import {
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
 import { MenuItem } from '@siemens/element-ng/menu';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiValueWidgetBodyComponent } from './si-value-widget-body.component';
 
@@ -31,13 +31,7 @@ import { SiValueWidgetBodyComponent } from './si-value-widget-body.component';
  */
 @Component({
   selector: 'si-value-widget',
-  imports: [
-    NgClass,
-    SiCardComponent,
-    SiLinkDirective,
-    SiTranslateModule,
-    SiValueWidgetBodyComponent
-  ],
+  imports: [NgClass, SiCardComponent, SiLinkDirective, SiTranslatePipe, SiValueWidgetBodyComponent],
   templateUrl: './si-value-widget.component.html'
 })
 export class SiValueWidgetComponent {

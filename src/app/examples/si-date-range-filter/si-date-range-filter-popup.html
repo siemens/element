@@ -5,7 +5,7 @@
   cdkOverlayOrigin
   (click)="open = true"
 >
-  <i class="icon element-calendar"></i>
+  <i aria-hidden="true" class="icon element-calendar"></i>
   @if (resolved?.valid) {
     {{ resolved?.start | date: 'shortDate' }} -
     {{ resolved?.end | date: 'shortDate' }}

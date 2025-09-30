@@ -1,63 +1,101 @@
-<div class="container-fluid">
-  <div class="mb-6 row">
-    <label for="timepickerLong" class="col-sm-2 col-form-label">Timepicker on date object</label>
-    <div class="col-sm-10">
-      <si-timepicker
-        id="timepickerLong"
-        [showMinutes]="true"
-        [showSeconds]="true"
-        [showMilliseconds]="true"
-        [showMeridian]="undefined"
-        [(ngModel)]="mytime"
-      />
+<div class="p-5">
+  <div class="row justify-content-center">
+    <div class="col-xs-12 col-12 col-md-4 my-6">
+      <si-form-item label="Timepicker on date object">
+        <si-timepicker
+          #control="ngModel"
+          [hideLabels]="hideLabels"
+          [max]="max()"
+          [min]="min()"
+          [showMinutes]="true"
+          [showSeconds]="showSeconds"
+          [showMilliseconds]="showMilliseconds"
+          [showMeridian]="showMeridian"
+          [readonly]="readonly"
+          [disabled]="disabled"
+          [(ngModel)]="mytime"
+        />
+      </si-form-item>
     </div>
   </div>
-  <div class="mb-6 row">
-    <label for="timepickerShort" class="col-sm-2 col-form-label"
-      >2nd Timepicker on same date object with different config</label
-    >
-    <div class="col-sm-10">
-      <si-timepicker
-        id="timepickerShort"
-        [showMinutes]="true"
-        [showSeconds]="showSeconds"
-        [readonly]="readonly"
-        [disabled]="disabled"
-        [(ngModel)]="mytime"
-      />
-      <div class="mt-5">
-        <div class="form-check form-check-inline">
-          <input
-            type="checkbox"
-            class="form-check-input"
-            id="showSeconds"
-            (change)="showSeconds = !showSeconds"
-          />
-          <label class="form-check-label" for="showSeconds"
-            >Show seconds in seconds timepicker</label
-          >
+  <div class="card mt-6 e2e-ignore">
+    <div class="card-header">Control panel</div>
+    <div class="card-body">
+      <div class="mb-6"><strong>Validation:</strong> {{ stringify(control.errors) }}</div>
+      <div class="row">
+        <div class="col-sm-3">
+          <si-form-item label="Show seconds">
+            <input type="checkbox" class="form-check-input" [(ngModel)]="showSeconds" />
+          </si-form-item>
         </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" id="readonly" type="checkbox" [(ngModel)]="readonly" />
-          <label class="form-check-label" for="readonly">Readonly</label>
+        <div class="col-sm-3">
+          <si-form-item label="Show milliseconds">
+            <input type="checkbox" class="form-check-input" [(ngModel)]="showMilliseconds" />
+          </si-form-item>
         </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" id="disabled" type="checkbox" [(ngModel)]="disabled" />
-          <label class="form-check-label" for="disabled">Disabled</label>
+        <div class="col-sm-3">
+          <si-form-item label="Show meridian">
+            <input type="checkbox" class="form-check-input" [(ngModel)]="showMeridian" />
+          </si-form-item>
+        </div>
+        <div class="col-sm-3">
+          <si-form-item label="Hide labels">
+            <input class="form-check-input" type="checkbox" [(ngModel)]="hideLabels" />
+          </si-form-item>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <si-form-item label="Readonly">
+            <input class="form-check-input" id="readonly" type="checkbox" [(ngModel)]="readonly" />
+          </si-form-item>
+        </div>
+        <div class="col-sm-3">
+          <si-form-item label="Disabled">
+            <input class="form-check-input" type="checkbox" [(ngModel)]="disabled" />
+          </si-form-item>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <si-form-item label="Min time">
+            <input
+              #inputMin
+              class="form-control"
+              type="time"
+              name="min-time"
+              step="1"
+              [ngModel]="toTime(min(), inputMin.value)"
+              (ngModelChange)="update(min, $event)"
+            />
+          </si-form-item>
+        </div>
+        <div class="col-sm-3">
+          <si-form-item label="Max time">
+            <input
+              #inputMax
+              class="form-control"
+              type="time"
+              name="max-time"
+              step="1"
+              [ngModel]="toTime(max(), inputMax.value)"
+              (ngModelChange)="update(max, $event)"
+            />
+          </si-form-item>
         </div>
       </div>
     </div>
   </div>
-  <div class="mb-6 row">
-    <label for="fullDate" class="col-sm-2 col-form-label">Date</label>
-    <div class="col-sm-10" id="fullDate">{{ mytime | date: 'fullDate' }}</div>
+  <div class="row mt-6">
+    <span class="col-sm-2 text-secondary">Date</span>
+    <span class="col-sm-10" id="fullDate">{{ mytime | date: 'fullDate' }}</span>
   </div>
-  <div class="mb-6 row">
-    <label for="fullTime" class="col-sm-2 col-form-label">Time</label>
-    <div class="col-sm-10" id="fullTime">{{ mytime | date: 'fullTime' }}</div>
+  <div class="row mt-6">
+    <span class="col-sm-2 text-secondary">Time</span>
+    <span class="col-sm-10" id="fullTime">{{ mytime | date: 'fullTime' }}</span>
   </div>
-  <div class="mb-6 row">
-    <label for="dateTime" class="col-sm-2 col-form-label">Date & Time</label>
+  <div class="row mt-6">
+    <label for="dateTime" class="col-sm-2 text-secondary">Date & Time</label>
     <div class="col-sm-10" id="dateTime">{{
       mytime | date: 'EEEE, MMMM d, y, h:mm:ss:SSS a zzzz'
     }}</div>

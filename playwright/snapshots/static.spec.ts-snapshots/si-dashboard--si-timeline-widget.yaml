@@ -19,31 +19,31 @@
 - list:
   - listitem:
     - text: /Today \d+:\d+ Title Description/
-    - button "Title dropdown"
+    - button "Expand actions"
   - listitem:
     - text: /Today \d+:\d+ Title Description/
-    - button "Title dropdown"
+    - button "Expand actions"
   - listitem:
     - text: /Today \d+:\d+ Title Description/
     - button " Redo"
   - listitem:
     - text: /Today \d+:\d+ Title Description/
-    - button "Title dropdown"
+    - button "Expand actions"
 - button "Do something"
 - text: Heading
 - list:
   - listitem:
     - text: /Today \d+:\d+ Title/
-    - button "Title dropdown"
+    - button "Expand actions"
   - listitem:
     - text: /Today \d+:\d+ Title/
-    - button "Title dropdown"
+    - button "Expand actions"
   - listitem:
     - text: /Today \d+:\d+ Title/
     - button " Redo"
   - listitem:
     - text: /Today \d+:\d+ Title/
-    - button "Title dropdown"
+    - button "Expand actions"
 - text: Heading
 - button "Toggle"
 - list:

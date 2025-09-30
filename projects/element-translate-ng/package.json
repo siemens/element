@@ -1,7 +1,7 @@
 {
   "name": "@siemens/element-translate-ng",
   "description": "Element translation abstraction layer.",
-  "version": "48.0.3",
+  "version": "48.1.0",
   "license": "MIT",
   "type": "module",
   "repository": {

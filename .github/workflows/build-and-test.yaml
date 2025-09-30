@@ -52,7 +52,7 @@ jobs:
   test:
     runs-on: ubuntu-24.04
     # We use playwright browser to run karma tests
-    container: mcr.microsoft.com/playwright:v1.55.0-noble
+    container: mcr.microsoft.com/playwright:v1.55.1-noble
     env:
       # See: https://github.com/microsoft/playwright/issues/27620
       HOME: /root
@@ -159,7 +159,7 @@ jobs:
 
   e2e:
     runs-on: ubuntu-24.04
-    container: mcr.microsoft.com/playwright:v1.55.0-noble
+    container: mcr.microsoft.com/playwright:v1.55.1-noble
     needs:
       - build
     strategy:
