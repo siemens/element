@@ -148,11 +148,11 @@ wheels = [
 
 [[package]]
 name = "javascript"
-version = "1!1.2.5"
+version = "1!1.2.6"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/9a/c1/818ee649cea03a4b694c25e9f66faa4b90cf9b092f97a839d544aa8287d0/javascript-1!1.2.5.tar.gz", hash = "sha256:94bd35084843f7d7bc7cdd6d1afa16f13ca28265b5007d796357982f4492aea6", size = 38493, upload-time = "2025-09-01T23:52:05.708Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/1d/e5/782b7cfba2491e96ff463e24fadb4486ce2bc226f2071e493a9caa07f345/javascript-1!1.2.6.tar.gz", hash = "sha256:442e885b54dd9a6afe797dd6d5c3c575ec38da02a7d16749bf315aad0fa620c9", size = 38508, upload-time = "2025-09-25T11:15:44.411Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/91/dc/88b0b516073c4d5bbd4d8bb53095fb48c0655f761ece70d6f8c02884ceaa/javascript-1!1.2.5-py3-none-any.whl", hash = "sha256:3cfc53f0b23166e297cb85b6d66d148b604c946dd9249b529914f833f163f184", size = 34787, upload-time = "2025-09-01T23:52:04.062Z" },
+    { url = "https://files.pythonhosted.org/packages/95/4f/43e4b0bd6b76930e921cf5d9357cefb8ace9a2615bf53c05ff2e314ec434/javascript-1!1.2.6-py3-none-any.whl", hash = "sha256:0c68af196d450715bb74e9a25f11db67435070d91ceaff5ef28c4b4c95235ebf", size = 34802, upload-time = "2025-09-25T11:15:42.142Z" },
 ]
 
 [[package]]
@@ -279,7 +279,7 @@ dependencies = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "javascript", specifier = "==1!1.2.5" }]
+requires-dist = [{ name = "javascript", specifier = "==1!1.2.6" }]
 
 [[package]]
 name = "mkdocs-get-deps"

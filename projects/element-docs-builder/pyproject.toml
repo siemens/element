@@ -10,7 +10,7 @@ authors = [{ name = "Siemens AG", email = "info@siemens.com" }]
 requires-python = ">=3.11, <4"
 license = "MIT"
 dependencies = [
-    "javascript==1!1.2.5",
+    "javascript==1!1.2.6",
 ]
 
 [project.urls]
