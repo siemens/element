@@ -1,5 +1,5 @@
-- button ""
-- button ""
+- button "Expand all"
+- button "Collapse all"
 - tree "Company locations":
   - treeitem "Company1" [expanded] [level=1]:
     - heading "Company1" [level=5]
