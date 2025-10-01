@@ -15,6 +15,7 @@ import {
 } from '@angular/core';
 import { getOverlay, getPositionStrategy, positions } from '@siemens/element-ng/common';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { Subscription } from 'rxjs';
 
 import { TooltipComponent } from './si-tooltip.component';
 
@@ -32,6 +33,8 @@ class TooltipRef {
     private injector?: Injector
   ) {}
 
+  private subscription?: Subscription;
+
   show(content: TranslatableString | TemplateRef<any> | Type<any>, tooltipContext?: unknown): void {
     if (this.overlayRef.hasAttached()) {
       return;
@@ -45,17 +48,20 @@ class TooltipRef {
     tooltipRef.setInput('tooltipContext', tooltipContext);
 
     const positionStrategy = getPositionStrategy(this.overlayRef);
-    positionStrategy?.positionChanges.subscribe(change =>
+    this.subscription?.unsubscribe();
+    this.subscription = positionStrategy?.positionChanges.subscribe(change =>
       tooltipRef.instance.updateTooltipPosition(change, this.element)
     );
   }
 
   hide(): void {
     this.overlayRef.detach();
+    this.subscription?.unsubscribe();
   }
 
   destroy(): void {
     this.overlayRef.dispose();
+    this.subscription?.unsubscribe();
   }
 }
 
