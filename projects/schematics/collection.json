@@ -5,6 +5,11 @@
       "description": "A migration schematic to update simpl imports to siemens imports.",
       "factory": "./siemens-migration/index#siemensMigration",
       "schema": "./siemens-migration/schema.json"
+    },
+    "ng-add": {
+      "description": "A schematic to add the siemens element library to your project.",
+      "factory": "./ng-add/index#ngAdd",
+      "schema": "./ng-add/schema.json"
     }
   }
 }
