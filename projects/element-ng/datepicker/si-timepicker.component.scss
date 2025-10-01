@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '@siemens/element-theme/src/styles/variables';
 
 $input-min-width: 35px;
@@ -5,6 +6,14 @@ $input-max-width: 45px;
 
 :host {
   display: block;
+
+  // Force invalid border on all valid form-control when the parent form is invalid but non of the form-controls are invalid
+  // Invalid time ranges should mark all fields as invalid but when a single field is invalid only that field should be marked as invalid
+  &.ng-touched.ng-invalid:not(:has(.ng-touched.ng-invalid)) {
+    .form-control.ng-valid {
+      --border-color: var(--element-status-danger);
+    }
+  }
 }
 
 .min-width {
