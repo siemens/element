@@ -45,6 +45,16 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiStatusIconComponent
   ],
   templateUrl: './si-notification-item-popover.html',
+  styles: `
+    /** .header-dropdown-overlay is only applied to the si-header-dropdown if it is shown in an overlay. So not in the mobile mode */
+    .header-dropdown-overlay .notification-dropdown {
+      max-width: 400px;
+    }
+
+    .notification-dropdown {
+      max-height: 70vh;
+    }
+  `,
   host: { class: 'p-5' }
 })
 export class SampleComponent {
