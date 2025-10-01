@@ -225,6 +225,6 @@ Here is the [demo](./src/app/pages/fixed-widgets-dashboard/fixed-widgets-dashboa
 
 ## License
 
-Code and documentation copyright 2021-2025 Siemens AG.
+Code and documentation Copyright (c) Siemens 2016 - 2025
 
 See [LICENSE.md](../../LICENSE.md).
