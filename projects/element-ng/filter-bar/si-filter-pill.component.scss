@@ -46,34 +46,3 @@ $filter-pill-gap: map.get(variables.$spacers, 4);
     color: variables.$element-text-disabled;
   }
 }
-
-@mixin filter-pill-variant($color) {
-  .value {
-    color: $color;
-  }
-}
-
-.pill,
-.pill-default {
-  @include filter-pill-variant(variables.$element-text-active);
-}
-
-.pill-success {
-  @include filter-pill-variant(variables.$element-text-success);
-}
-
-.pill-info {
-  @include filter-pill-variant(variables.$element-text-information);
-}
-
-.pill-warning {
-  @include filter-pill-variant(variables.$element-text-warning);
-}
-
-.pill-danger {
-  @include filter-pill-variant(variables.$element-text-danger);
-}
-
-.pill-inactive {
-  @include filter-pill-variant(variables.$element-text-secondary);
-}

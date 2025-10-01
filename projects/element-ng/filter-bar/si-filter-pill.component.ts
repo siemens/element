@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { booleanAttribute, Component, input, output } from '@angular/core';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
@@ -10,7 +10,7 @@ import { Filter } from './filter';
 
 @Component({
   selector: 'si-filter-pill',
-  imports: [NgClass, NgTemplateOutlet, SiTranslatePipe],
+  imports: [NgTemplateOutlet, SiTranslatePipe],
   templateUrl: './si-filter-pill.component.html',
   styleUrl: './si-filter-pill.component.scss'
 })

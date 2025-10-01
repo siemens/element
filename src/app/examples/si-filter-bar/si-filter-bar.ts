@@ -20,44 +20,37 @@ export class SampleComponent {
     {
       filterName: 'temperature',
       title: 'Temperature',
-      description: '30°',
-      status: 'default'
+      description: '30°'
     },
     {
       filterName: 'time',
       title: 'Time',
-      description: '10:10 AM',
-      status: 'default'
+      description: '10:10 AM'
     },
     {
       filterName: 'date',
       title: 'Date',
-      description: '27-12-2022',
-      status: 'default'
+      description: '27-12-2022'
     },
     {
       filterName: 'company',
       title: 'Company',
-      description: 'Siemens',
-      status: 'default'
+      description: 'Siemens'
     },
     {
       filterName: 'location',
       title: 'Location',
-      description: 'Zug',
-      status: 'default'
+      description: 'Zug'
     },
     {
       filterName: 'only-key',
       title: 'Only Key',
-      description: '',
-      status: 'default'
+      description: ''
     },
     {
       filterName: 'only-value',
       title: '',
-      description: 'Only Value',
-      status: 'default'
+      description: 'Only Value'
     }
   ];
 }

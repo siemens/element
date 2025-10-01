@@ -2,7 +2,6 @@
   class="pill responsive"
   [class.pe-0]="!disabled()"
   [class.disabled]="disabled()"
-  [ngClass]="filter().status ? 'pill-' + filter().status : ''"
   [attr.aria-disabled]="disabled()"
 >
   <div class="wrapper">
