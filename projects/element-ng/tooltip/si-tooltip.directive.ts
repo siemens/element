@@ -14,7 +14,6 @@ import {
 } from '@angular/core';
 import { positions } from '@siemens/element-ng/common';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
-import { Subject } from 'rxjs';
 
 import { SiTooltipService, TooltipRef } from './si-tooltip.service';
 
@@ -64,12 +63,9 @@ export class SiTooltipDirective implements OnDestroy {
   private tooltipRef?: TooltipRef;
   private tooltipService = inject(SiTooltipService);
   private elementRef = inject(ElementRef);
-  private destroyer = new Subject<void>();
 
   ngOnDestroy(): void {
     this.tooltipRef?.destroy();
-    this.destroyer.next();
-    this.destroyer.complete();
   }
 
   private showTooltip(): void {
@@ -102,7 +98,6 @@ export class SiTooltipDirective implements OnDestroy {
   @HostListener('focusout')
   protected hide(): void {
     this.tooltipRef?.hide();
-    this.destroyer.next();
   }
 
   @HostListener('mouseleave')
