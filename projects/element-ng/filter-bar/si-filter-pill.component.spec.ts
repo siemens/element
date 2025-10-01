@@ -41,21 +41,18 @@ describe('SiFilterPillComponent', () => {
     component.filter = {
       filterName: 'location',
       title: 'Current Location',
-      description: 'Florida',
-      status: 'warning'
+      description: 'Florida'
     };
     fixture.detectChanges();
     expect(element.querySelector('div.name')!.innerHTML).toBe('Current Location');
     expect(element.querySelector('div.value')!.innerHTML).toBe('Florida');
-    expect(element.querySelector('.pill.pill-warning')!.innerHTML).toBeDefined();
   }));
 
   it('should emit a deleted event if deleted - for single pill', fakeAsync(() => {
     component.filter = {
       filterName: 'lastName',
       title: 'Last Name',
-      description: 'Your Last Name',
-      status: 'info'
+      description: 'Your Last Name'
     };
     const spyEvent = spyOn(component, 'deleteFilters');
     fixture.detectChanges();
