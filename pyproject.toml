@@ -4,7 +4,7 @@ version = "0.0.0"
 description = "Siemens Element design system documentation."
 authors = [{ name = "Siemens", email = "opensource@siemens.com" }]
 license = "MIT"
-requires-python = "~=3.11"
+requires-python = ">=3.11, <4"
 readme = "README.md"
 dependencies = [
     "mkdocs-code-siemens-code-docs-theme>=7.7.0,<8",

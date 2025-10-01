@@ -5,7 +5,7 @@
 import { TranslateLoader } from '@ngx-translate/core';
 import { from, Observable } from 'rxjs';
 
-export class WebpackTranslateLoader implements TranslateLoader {
+export class BundlerTranslateLoader implements TranslateLoader {
   getTranslation(lang: string): Observable<any> {
     // Esbuild is preventing extensions of imported json files.
     // So we clone it.

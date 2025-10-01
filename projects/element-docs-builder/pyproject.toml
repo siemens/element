@@ -7,10 +7,10 @@ name = "mkdocs_element_docs_builder"
 version = "1.0.0"
 description = "Element Design System documentation and core components for web applications."
 authors = [{ name = "Siemens AG", email = "info@siemens.com" }]
-requires-python = "~=3.11"
+requires-python = ">=3.11, <4"
 license = "MIT"
 dependencies = [
-    "javascript==1!1.2.5",
+    "javascript==1!1.2.6",
 ]
 
 [project.urls]

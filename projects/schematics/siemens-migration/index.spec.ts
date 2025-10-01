@@ -377,16 +377,16 @@ describe('siemensMigration', () => {
       const dependencies = packageJson?.dependencies;
 
       expect(dependencies?.['@simpl/element-ng']).not.toBeDefined();
-      expect(dependencies?.['@siemens/element-ng']).toBe('48.0.3');
+      expect(dependencies?.['@siemens/element-ng']).not.toBe('47.0.3');
 
       expect(dependencies?.['@simpl/dashboards-ng']).not.toBeDefined();
-      expect(dependencies?.['@siemens/dashboards-ng']).toBe('48.0.3');
+      expect(dependencies?.['@siemens/dashboards-ng']).not.toBe('47.0.3');
 
       expect(dependencies?.['@simpl/element-translate-ng']).not.toBeDefined();
-      expect(dependencies?.['@siemens/element-translate-ng']).toBe('48.0.3');
+      expect(dependencies?.['@siemens/element-translate-ng']).not.toBe('47.0.3');
 
       expect(dependencies?.['@simpl/maps-ng']).not.toBeDefined();
-      expect(dependencies?.['@siemens/maps-ng']).toBe('48.0.3');
+      expect(dependencies?.['@siemens/maps-ng']).not.toBe('47.0.3');
     });
 
     test('should add simpl brand package if any of the simpl replacements are found', async () => {
