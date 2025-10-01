@@ -1,5 +1,5 @@
 <!-- Template to be used for every match, can be replaced using an input. -->
-<ng-template #defaultItemTemplate let-match="match" siTypeaheadTemplate>
+<ng-template #defaultItemTemplate let-match="match" siTypeaheadItemTemplate>
   @if (multiselect()) {
     <div class="d-flex pe-4" aria-hidden="true">
       <span class="form-check-input si-form-checkbox" [class.checked]="match.itemSelected"></span>
