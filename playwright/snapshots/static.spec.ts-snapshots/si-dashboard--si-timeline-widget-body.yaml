@@ -8,14 +8,14 @@
 - list:
   - listitem:
     - text: /Today \d+:\d+ Title Description/
-    - button " Copy"
+    - button "Copy"
   - listitem: /Today \d+:\d+ Title Description/
   - listitem: /Today \d+:\d+ Title Description/
   - listitem: /Today \d+:\d+ Title Description/
 - list:
   - listitem:
     - text: /Today \d+:\d+ Title/
-    - button " Copy"
+    - button "Copy"
   - listitem: /Today \d+:\d+ Title/
   - listitem: /Today \d+:\d+ Title/
   - listitem: /Today \d+:\d+ Title/

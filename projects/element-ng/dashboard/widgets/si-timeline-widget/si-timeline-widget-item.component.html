@@ -33,7 +33,7 @@
             (click)="action.action(action)"
           >
             @if (action.icon) {
-              <i class="icon" [ngClass]="action.icon"></i>
+              <si-icon class="icon" [icon]="action.icon" />
             }
             <span [class.visually-hidden]="action.iconOnly">
               {{ action.label | translate }}
@@ -56,7 +56,7 @@
             [class.btn-sm]="action.iconOnly"
           >
             @if (action.icon) {
-              <i class="icon" [ngClass]="action.icon"></i>
+              <si-icon class="icon" [icon]="action.icon" />
             }
             <span [class.visually-hidden]="action.iconOnly">
               {{ action.label | translate }}
@@ -72,7 +72,7 @@
             [class.btn-sm]="action.iconOnly"
           >
             @if (action.icon) {
-              <i class="icon" [ngClass]="action.icon"></i>
+              <si-icon class="icon" [icon]="action.icon" />
             }
             <span [class.visually-hidden]="action.iconOnly">
               {{ action.label | translate }}
