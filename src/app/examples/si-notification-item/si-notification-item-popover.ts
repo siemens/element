@@ -45,6 +45,18 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiStatusIconComponent
   ],
   templateUrl: './si-notification-item-popover.html',
+  styles: `
+    .notification-dropdown {
+      max-width: none;
+      max-height: 70vh;
+    }
+
+    @media (min-width: 768px) {
+      .notification-dropdown {
+        max-width: 400px;
+      }
+    }
+  `,
   host: { class: 'p-5' }
 })
 export class SampleComponent {
