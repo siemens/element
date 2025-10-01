@@ -21,7 +21,7 @@
       @if (!linkValue.action) {
         <a [siLink]="linkValue">
           {{ linkValue.title | translate }}
-          <i class="link-icon link-end element-right-2 flip-rtl"></i>
+          <si-icon class="link-icon link-end flip-rtl" [icon]="icons.elementRight2" />
         </a>
       } @else {
         <button type="button" class="btn btn-link" [siLink]="linkValue">{{

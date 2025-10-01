@@ -13,7 +13,7 @@
   - listitem:
     - text: /Today \d+:\d+ Title Description/
     - button "Action"
-- link "Home ":
+- link "Home":
   - /url: "#/"
 - text: Heading
 - list:
@@ -25,7 +25,7 @@
     - button "Expand actions"
   - listitem:
     - text: /Today \d+:\d+ Title Description/
-    - button " Redo"
+    - button "Redo"
   - listitem:
     - text: /Today \d+:\d+ Title Description/
     - button "Expand actions"
@@ -40,7 +40,7 @@
     - button "Expand actions"
   - listitem:
     - text: /Today \d+:\d+ Title/
-    - button " Redo"
+    - button "Redo"
   - listitem:
     - text: /Today \d+:\d+ Title/
     - button "Expand actions"
@@ -59,7 +59,7 @@
   - listitem:
     - text: /Today \d+:\d+ Title Description/
     - button "Action"
-- link "Home ":
+- link "Home":
   - /url: "#/"
 - text: Heading
 - list:
@@ -67,12 +67,10 @@
     - text: Just now Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
     - link "Export":
       - /url: https://element.siemens.io
-      - text:  Export
   - listitem:
     - text: /Today \d+:\d+ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua\. Ut enim ad minim veniam, quis/
     - link "Export":
       - /url: https://element.siemens.io
-      - text:  Export
   - listitem: /Today \d+:\d+ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua\. Ut enim ad minim veniam, quis/
 - button "Do something"
 - text: Heading
@@ -80,12 +78,11 @@
   - listitem: /Today \d+:\d+ Title/
   - listitem:
     - text: /Today \d+:\d+ Title/
-    - button " Copy"
+    - button "Copy"
   - listitem: /Today \d+:\d+ Title/
   - listitem:
     - text: /Yesterday \d+:\d+ Title/
     - link "Home":
       - /url: "#/"
-      - text:  Home
   - listitem: /Yesterday \d+:\d+ Title/
   - listitem: /Yesterday \d+:\d+ Title/
