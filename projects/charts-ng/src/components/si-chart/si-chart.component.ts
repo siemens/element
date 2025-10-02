@@ -21,7 +21,6 @@ import {
   viewChild,
   viewChildren
 } from '@angular/core';
-import { Subscription } from 'rxjs';
 
 import { echarts } from '../../shared/echarts.custom';
 import {
@@ -274,7 +273,6 @@ export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDes
   protected activeTheme: any;
   protected autoZoomUpdate = true;
 
-  private subscriptions = new Subscription();
   private prevAxisPointer: any = {};
   private lastValidDataZoom: any = {};
   private presetDataZoomRange?: DataZoomRange;
@@ -580,7 +578,6 @@ export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDes
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
     this.disposeChart();
   }
 
