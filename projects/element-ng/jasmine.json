@@ -1,0 +1,6 @@
+{
+  "spec_dir": "./projects/element-ng/schematics",
+  "spec_files": ["**/*.spec.ts", "!*/files/**/*"],
+  "stopSpecOnExpectationFailure": false,
+  "random": true
+}

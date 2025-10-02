@@ -1,0 +1,4 @@
+{
+  "extends": "./tsconfig.schematics.json",
+  "exclude": ["schematics/*/files/**/*"]
+}
