@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "siemens-migration": {
+      "description": "A migration schematic to update simpl imports to siemens imports.",
+      "factory": "./siemens-migration/index#siemensMigration",
+      "schema": "./siemens-migration/schema.json"
+    }
+  }
+}
