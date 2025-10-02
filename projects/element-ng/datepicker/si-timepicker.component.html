@@ -20,19 +20,11 @@
         [attr.aria-label]="config.ariaLabel | translate"
         [attr.aria-describedby]="errormessageId()"
         [attr.maxlength]="config.maxLength"
-        [class.is-invalid]="
-          !unitValidation()[config.name] ||
-          !isValidLimit(this.max(), this.min()) ||
-          this.forceInvalid()
-        "
-        [disabled]="disabled()"
+        [formControl]="timeControls.controls[config.name]"
         [name]="config.name"
         [placeholder]="config.placeholder"
         [readonly]="readonly()"
-        [value]="unitValues()[config.name]"
-        (change)="updateField(config.name, toHtmlInputElement($event.target).value)"
         (blur)="updateField(config.name, toHtmlInputElement($event.target).value)"
-        (input)="handleInput($event)"
         (keydown)="handleKeyPressEvent($event)"
       />
     </label>
