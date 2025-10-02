@@ -36,5 +36,6 @@
     }"
     (doSearch)="logEvent($event)"
     (searchCriteriaChange)="logEvent('searchCriteriaChange', $event)"
+    (searchCriteriaBlur)="logEvent('searchCriteriaBlur', $event)"
   />
 </app-filter-settings>
