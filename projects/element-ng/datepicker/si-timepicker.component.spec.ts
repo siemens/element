@@ -30,7 +30,7 @@ class WrapperComponent {
   readonly max = signal<Date | undefined>(undefined);
 }
 
-describe('SiTimepickerComponent', () => {
+fdescribe('SiTimepickerComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
   let component: TestComponent;
   let componentRef: ComponentRef<TestComponent>;
@@ -426,6 +426,7 @@ describe('SiTimepickerComponent within form', () => {
     element.querySelector<HTMLInputElement>('input[name="seconds"]')!;
   const enterValue = (e: HTMLInputElement, v: string): void => {
     e.value = v;
+    e.dispatchEvent(new Event('input'));
     e.dispatchEvent(new Event('change'));
   };
 

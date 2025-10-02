@@ -16,6 +16,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   ElementRef,
   HostAttributeToken,
   inject,
@@ -337,6 +338,19 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
       FormStyle.Format,
       TranslationWidth.Short
     ).slice();
+    effect(() => {
+      if (this.disabled()) {
+        this.timeControls.disable({ emitEvent: false, onlySelf: true });
+      } else {
+        this.timeControls.enable({ emitEvent: false, onlySelf: true });
+      }
+    });
+    Object.keys(this.timeControls.controls).forEach(k => {
+      const key = k as keyof Value;
+      this.timeControls.controls[key].valueChanges.subscribe(v => {
+        this.inputChange(key, v);
+      });
+    });
   }
 
   writeValue(obj?: Date | string): void {
@@ -377,17 +391,7 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
 
     return Object.keys(errors).length ? errors : null;
   }
-  /**
-   * Handle input event to remove non-numeric characters.
-   */
-  protected handleInput(event: Event): void {
-    const inputEl = event.target as HTMLInputElement;
-    const current = inputEl.value;
-    const cleaned = current.replace(/\D/g, '');
-    if (current !== cleaned) {
-      inputEl.value = cleaned;
-    }
-  }
+
   /**
    * Handle Enter, Arrow up/down and Space key press events.
    */
@@ -420,10 +424,6 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
 
   protected updateField(name: keyof Value, value: string): void {
     const control = this.timeControls.get(name);
-    const config = this.units().find(u => u.name === name)!;
-
-    // Only fill 0 when the user entered a value.
-    value = value.length > 0 ? value.padStart(config.maxLength, '0') : '';
     control?.setValue(value, { emitEvent: false });
     this.updateTime();
     this.onTouched();
@@ -700,5 +700,33 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
       return { [name]: { max } };
     }
     return null;
+  }
+
+  private inputChange(key: keyof Value, value: string): void {
+    const cleaned = value.replace(/\D/g, '');
+    const number = parseInt(cleaned, 10);
+    if (isNaN(number)) {
+      if (cleaned !== value) {
+        this.timeControls.get(key)?.setValue(cleaned, { emitEvent: false });
+      }
+      return;
+    }
+    const time = new Date(this.time!);
+    switch (key) {
+      case 'hours':
+        time.setHours(number);
+        break;
+      case 'minutes':
+        time.setMinutes(number);
+        break;
+      case 'seconds':
+        time.setSeconds(number);
+        break;
+      case 'milliseconds':
+        time.setMilliseconds(number);
+        break;
+    }
+    this.time = time;
+    this.onChange(this.time);
   }
 }
