@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "rootDir": "schematics",
+    "outDir": "../../dist/@siemens/element-ng/schematics",
+    "sourceMap": false,
+    "target": "es2022",
+    "types": ["jasmine", "node"]
+  },
+  "include": ["schematics/**/*"],
+  "exclude": ["schematics/*/files/**/*", "**/*.spec.ts"]
+}
