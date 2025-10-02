@@ -12,7 +12,12 @@ export default typescriptEslint.config(
 
     languageOptions: {
       parserOptions: {
-        project: ['projects/element-ng/tsconfig.lib.json', 'projects/element-ng/tsconfig.spec.json']
+        project: [
+          'projects/element-ng/tsconfig.lib.json',
+          'projects/element-ng/tsconfig.spec.json',
+          'projects/element-ng/tsconfig.schematics.json',
+          'projects/element-ng/tsconfig.schematics.spec.json'
+        ]
       }
     },
     rules: {
