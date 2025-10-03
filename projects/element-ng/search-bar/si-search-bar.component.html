@@ -21,8 +21,8 @@
   @if (searchValue()) {
     <button
       type="button"
-      aria-label="clear"
       class="btn btn-circle btn-xs btn-ghost cancel-button"
+      [attr.aria-label]="clearButtonAriaLabel() | translate"
       [disabled]="disabled() || readonly()"
       (click)="resetForm()"
       (focusin)="onCancelFocus($event)"
