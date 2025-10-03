@@ -176,6 +176,7 @@ export interface SiTranslatableKeys {
   'SI_PHOTO_UPLOAD.UPLOAD_PHOTO'?: string;
   'SI_PILLS_INPUT.INPUT_ELEMENT_ARIA_LABEL'?: string;
   'SI_PROGRESSBAR.LABEL'?: string;
+  'SI_SEARCH_BAR.CLEAR_BUTTON'?: string;
   'SI_SELECT.NO-RESULTS-FOUND'?: string;
   'SI_SELECT.SEARCH-PLACEHOLDER'?: string;
   'SI_SIDE_PANEL.CLOSE'?: string;

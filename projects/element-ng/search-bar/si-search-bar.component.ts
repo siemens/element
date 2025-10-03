@@ -22,12 +22,13 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BackgroundColorVariant } from '@siemens/element-ng/common';
 import { elementCancel, elementSearch, addIcons, SiIconComponent } from '@siemens/element-ng/icon';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'si-search-bar',
-  imports: [SiIconComponent],
+  imports: [SiIconComponent, SiTranslatePipe],
   templateUrl: './si-search-bar.component.html',
   styleUrl: './si-search-bar.component.scss',
   providers: [
@@ -93,6 +94,16 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
   /** @defaultValue false */
   // eslint-disable-next-line @angular-eslint/no-input-rename
   readonly disabledInput = input(false, { alias: 'disabled', transform: booleanAttribute });
+
+  /**
+   * Aria label for the clear button.
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_SEARCH_BAR.CLEAR_BUTTON:clear`)
+   * ```
+   */
+  readonly clearButtonAriaLabel = input(t(() => $localize`:@@SI_SEARCH_BAR.CLEAR_BUTTON:clear`));
 
   /**
    * Output callback event will provide you with search term if search input changes.
