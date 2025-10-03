@@ -140,6 +140,7 @@
             "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/element-ng/tsconfig.spec.json",
             "karmaConfig": "projects/element-ng/karma.conf.cjs",
+            "exclude": ["projects/element-ng/schematics/**"],
             "assets": [
               {
                 "glob": "**/*",

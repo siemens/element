@@ -20,6 +20,7 @@
     "postversion": "node ../../postversion.js"
   },
   "type": "module",
+  "schematics": "./schematics/collection.json",
   "peerDependencies": {
     "@angular/animations": "20",
     "@angular/cdk": "20",
