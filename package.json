@@ -121,7 +121,7 @@
     "@axe-core/playwright": "4.10.2",
     "@commitlint/cli": "20.1.0",
     "@commitlint/config-conventional": "20.0.0",
-    "@eslint/js": "9.36.0",
+    "@eslint/js": "9.37.0",
     "@playwright/test": "1.55.1",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
