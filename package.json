@@ -36,7 +36,7 @@
     "build:examples": "ng build",
     "build:examples:prod": "ng build --configuration production",
     "build:examples:aot": "ng build --configuration aot",
-    "build:all": "npm run translate:build && npm run lib:build && npm run live-preview:build && npm run charts:build && npm run native-charts:build && npm run dashboards:build && npm run maps:build",
+    "build:all": "npm run translate:build && npm run lib:build && npm run live-preview:build && npm run charts:build && npm run native-charts:build && npm run dashboards:build && npm run maps:build && npm run schematics:build",
     "build:all:update-translatable-keys": "npm exec update-translatable-keys",
     "lib:build": "ng build element-ng && cpy \"projects/element-ng/*.scss\" \"./dist/@siemens/element-ng\" && cpy \"{LICENSE.md,README.md}\" \"./dist/@siemens/element-ng/\"",
     "lib:test": "ng test element-ng",
@@ -69,7 +69,11 @@
     "dashboards-demo:build:demo": "ng build dashboards-demo --configuration demo-deployment",
     "dashboards-demo:build:prod": "ng build dashboards-demo --configuration production",
     "dashboards-demo:build:webcomponents": "ng build dashboards-demo-webcomponents --configuration production --output-hashing none && node projects/dashboards-demo/webcomponents/concat.cjs",
-    "dashboards-demo:build:mfe": "ng build dashboards-demo-mfe --configuration production --output-hashing none"
+    "dashboards-demo:build:mfe": "ng build dashboards-demo-mfe --configuration production --output-hashing none",
+    "schematics:build": "vite build -c projects/schematics/vite.config.mts && node projects/schematics/copy-assets.mjs",
+    "schematics:test": "npm run schematics:build && vitest run --config projects/schematics/vite.config.mts",
+    "schematics:run": "npm run schematics:build && schematics ./dist/@siemens/element-ng:siemens-migration --path=\"src/app\" --dry-run=false",
+    "schematics:dry-run": "npm run schematics:build && schematics ./dist/@siemens/element-ng:siemens-migration --dry-run --path=\"src/app\""
   },
   "workspaces": [
     "projects/element-ng",
@@ -81,7 +85,8 @@
     "projects/maps-ng",
     "projects/native-charts-ng",
     "projects/dashboards-ng",
-    "projects/dashboards-demo"
+    "projects/dashboards-demo",
+    "projects/schematics"
   ],
   "dependencies": {
     "@angular-architects/module-federation": "20.0.0",
@@ -112,6 +117,7 @@
   "devDependencies": {
     "@angular-builders/custom-esbuild": "20.0.0",
     "@angular-devkit/build-angular": "20.0.6",
+    "@angular-devkit/schematics": "20.0.6",
     "@angular/build": "20.0.6",
     "@angular/cli": "20.0.6",
     "@angular/compiler": "20.0.6",
@@ -123,6 +129,7 @@
     "@commitlint/config-conventional": "20.0.0",
     "@eslint/js": "9.36.0",
     "@playwright/test": "1.55.1",
+    "@schematics/angular": "20.0.6",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@siemens/commitlint-config": "2.4.0",
@@ -160,6 +167,8 @@
     "postcss": "8.5.6",
     "postcss-scss": "4.0.9",
     "prettier": "3.6.2",
+    "vite": "6.3.5",
+    "vitest": "^3.1.1",
     "semantic-release": "^24.2.3",
     "semver": "7.7.2",
     "stylelint": "16.24.0",
