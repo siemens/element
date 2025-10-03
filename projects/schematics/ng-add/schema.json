@@ -3,6 +3,14 @@
   "$id": "siemens-element-ng-add",
   "title": "Siemens Element ng-add schematic",
   "type": "object",
-  "properties": {},
+  "properties": {
+    "path": {
+      "type": "string",
+      "description": "Path to the directory where all simpl imports should be migrated.",
+      "x-prompt": "Which directory do you want to migrate?",
+      "format": "path",
+      "default": "src/app"
+    }
+  },
   "required": []
 }
