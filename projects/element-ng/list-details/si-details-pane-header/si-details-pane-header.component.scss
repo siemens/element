@@ -1,5 +1,5 @@
 @use 'sass:map';
-@use '@siemens/element-theme/src/styles/variables';
+@use '@siemens/element-theme/src/styles/all-variables';
 
 :host {
   flex: none;
@@ -15,7 +15,6 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    gap: map.get(variables.$spacers, 3);
 
     > .nav-link {
       min-inline-size: auto;
@@ -23,13 +22,9 @@
   }
 
   .si-details-header-title {
-    cursor: unset;
-    color: variables.$element-text-secondary;
-
-    &:hover {
-      background-color: unset;
-      border-block-end-color: transparent;
-    }
+    display: flex;
+    align-items: center;
+    padding-block: all-variables.$nav-link-padding-y;
   }
 
   .si-details-header-back {
