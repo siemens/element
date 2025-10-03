@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "SimplToSiemensMigration",
+  "title": "Simpl to Siemens Migration Schema",
+  "type": "object",
+  "properties": {
+    "path": {
+      "type": "string",
+      "description": "Path to the directory where all simpl imports should be migrated.",
+      "x-prompt": "Which directory do you want to migrate?",
+      "format": "path",
+      "default": "src/app"
+    }
+  },
+  "required": []
+}
