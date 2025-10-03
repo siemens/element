@@ -4,7 +4,7 @@
       <button
         #backButton
         type="button"
-        class="si-details-header-back nav-link focus-inside px-6 pe-5"
+        class="si-details-header-back nav-link focus-inside px-6"
         (click)="backClicked()"
         ><span
           class="pe-2 d-inline-block position-relative element-back icon"
@@ -15,7 +15,7 @@
       >
     }
     @if (title()) {
-      <span class="si-details-header-title nav-link px-6 pe-5">{{ title() | translate }}</span>
+      <span class="si-details-header-title si-body px-6">{{ title() | translate }}</span>
     }
   </div>
 }
