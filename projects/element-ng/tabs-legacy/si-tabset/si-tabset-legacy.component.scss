@@ -50,6 +50,7 @@
 
 .nav-link {
   flex-shrink: 0;
+  color: variables.$element-text-secondary;
   // TODO: can define a max width here if this is desired
   // max-inline-size: 240px;
 
