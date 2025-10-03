@@ -90,6 +90,15 @@ export class SiFilterBarComponent {
   );
 
   /**
+   * Aria label for the remove filter icon.
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_FILTER_BAR.REMOVE_FILTER:Remove`)
+   * ```
+   */
+  readonly removeFilterAriaLabel = input(t(() => $localize`:@@SI_FILTER_BAR.REMOVE_FILTER:Remove`));
+
+  /**
    * Output callback to be executed when the reset filter is clicked
    */
   readonly resetFilters = output<void>();
