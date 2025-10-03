@@ -1,0 +1,24 @@
+<si-chat-message
+  alignment="start"
+  actionsPosition="bottom"
+  avatarPosition="start"
+  [loading]="loading()"
+>
+  @if (aiIcon()) {
+    <si-icon class="icon mb-n1" [icon]="aiIcon()" />
+  }
+
+  @if (content()) {
+    <si-markdown-content [content]="content()" />
+  }
+
+  @if (actions().length > 0 || secondaryActions().length > 0) {
+    <si-action-bar
+      class="d-flex ps-2 mt-n1 align-items-center"
+      [actions]="actions()"
+      [dropdownActions]="secondaryActions()"
+      [actionParam]="actionParam()"
+      [secondaryActionsLabel]="secondaryActionsLabel()"
+    />
+  }
+</si-chat-message>

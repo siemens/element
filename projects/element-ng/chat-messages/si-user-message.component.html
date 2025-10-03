@@ -1,0 +1,18 @@
+<si-chat-message alignment="end" actionsPosition="side" avatarPosition="end" [loading]="false">
+  @if (hasAttachments()) {
+    <si-attachment-list alignment="end" [attachments]="attachments()" [removable]="false" />
+  }
+
+  @if (content()) {
+    <si-markdown-content [content]="content()" />
+  }
+
+  @if (actions().length > 0) {
+    <si-action-bar
+      class="user-message-actions"
+      [dropdownActions]="actions()"
+      [actionParam]="actionParam()"
+      [dropdownActionsLabel]="actionsLabel()"
+    />
+  }
+</si-chat-message>

@@ -1,0 +1,13 @@
+<div class="p-2">
+  <si-attachment-list
+    alignment="start"
+    removeLabel="Remove attachment"
+    [attachments]="attachments"
+    [removable]="true"
+    (remove)="onRemoveAttachment($event)"
+  />
+
+  <div class="mt-5">
+    <si-attachment-list alignment="start" [attachments]="readOnlyAttachments" [removable]="false" />
+  </div>
+</div>

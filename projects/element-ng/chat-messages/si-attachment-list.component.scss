@@ -1,0 +1,37 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+.attachment-item {
+  max-inline-size: 200px;
+  min-inline-size: 120px;
+
+  &.attachment-item--clickable {
+    cursor: pointer;
+
+    &:focus {
+      outline: 2px solid variables.$element-focus-default;
+      outline-offset: 1px;
+    }
+  }
+}
+
+.attachment-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.attachment-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-inline-size: 0;
+
+  .attachment-name {
+    line-height: 1.2;
+  }
+
+  .attachment-size {
+    line-height: 1;
+  }
+}
