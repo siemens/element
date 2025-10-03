@@ -1,0 +1,168 @@
+<div class="p-5">
+  <div
+    class="d-flex flex-wrap align-items-center gap-3 mb-6"
+    role="toolbar"
+    aria-label="Toolbar with labeled button groups"
+  >
+    <div class="btn-group" role="group" aria-label="Primary labeled group">
+      <button type="button" class="btn btn-primary">
+        <i class="icon element-edit"></i>
+        Edit
+      </button>
+      <button type="button" class="btn btn-primary">
+        <i class="icon element-copy"></i>
+        Copy
+      </button>
+      <button type="button" class="btn btn-primary">
+        <i class="icon element-delete"></i>
+        Delete
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary icon-only dropdown-toggle"
+        aria-label="More actions"
+        [cdkMenuTriggerFor]="dropdownMenu"
+        [class.show]="splitOpen4"
+        (cdkMenuOpened)="splitOpen4 = true"
+        (cdkMenuClosed)="splitOpen4 = false"
+      >
+        <i class="dropdown-caret icon element-down-2"></i>
+      </button>
+    </div>
+
+    <div class="btn-group" role="group" aria-label="Secondary labeled group">
+      <button type="button" class="btn btn-secondary">
+        <i class="icon element-edit"></i>
+        Edit
+      </button>
+      <button type="button" class="btn btn-secondary">
+        <i class="icon element-copy"></i>
+        Copy
+      </button>
+      <button type="button" class="btn btn-secondary">
+        <i class="icon element-delete"></i>
+        Delete
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary icon-only dropdown-toggle"
+        aria-label="More actions"
+        [cdkMenuTriggerFor]="dropdownMenu"
+        [class.show]="splitOpen5"
+        (cdkMenuOpened)="splitOpen5 = true"
+        (cdkMenuClosed)="splitOpen5 = false"
+      >
+        <i class="dropdown-caret icon element-down-2"></i>
+      </button>
+    </div>
+
+    <div class="btn-group" role="group" aria-label="Tertiary labeled group">
+      <button type="button" class="btn btn-tertiary">
+        <i class="icon element-edit"></i>
+        Edit
+      </button>
+      <button type="button" class="btn btn-tertiary">
+        <i class="icon element-copy"></i>
+        Copy
+      </button>
+      <button type="button" class="btn btn-tertiary">
+        <i class="icon element-delete"></i>
+        Delete
+      </button>
+      <button
+        type="button"
+        class="btn btn-tertiary icon-only dropdown-toggle"
+        aria-label="More actions"
+        [cdkMenuTriggerFor]="dropdownMenu"
+        [class.show]="splitOpen6"
+        (cdkMenuOpened)="splitOpen6 = true"
+        (cdkMenuClosed)="splitOpen6 = false"
+      >
+        <i class="dropdown-caret icon element-down-2"></i>
+      </button>
+    </div>
+  </div>
+
+  <div
+    class="d-flex flex-wrap align-items-center gap-3 mb-6"
+    role="toolbar"
+    aria-label="Toolbar with button groups"
+  >
+    <div class="btn-group" role="group" aria-label="Primary group">
+      <button type="button" class="btn icon-only btn-primary" aria-label="Edit">
+        <i class="icon element-edit"></i>
+      </button>
+      <button type="button" class="btn icon-only btn-primary" aria-label="Copy">
+        <i class="icon element-copy"></i>
+      </button>
+      <button type="button" class="btn icon-only btn-primary" aria-label="Delete">
+        <i class="icon element-delete"></i>
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary icon-only dropdown-toggle"
+        aria-label="Dropdown toggle"
+        [cdkMenuTriggerFor]="dropdownMenu"
+        [class.show]="splitOpen3"
+        (cdkMenuOpened)="splitOpen3 = true"
+        (cdkMenuClosed)="splitOpen3 = false"
+      >
+        <i class="dropdown-caret icon element-down-2"></i>
+      </button>
+    </div>
+
+    <div class="btn-group" role="group" aria-label="Secondary group">
+      <button type="button" class="btn icon-only btn-secondary" aria-label="Edit">
+        <i class="icon element-edit"></i>
+      </button>
+      <button type="button" class="btn icon-only btn-secondary" aria-label="Copy">
+        <i class="icon element-copy"></i>
+      </button>
+      <button type="button" class="btn icon-only btn-secondary" aria-label="Delete">
+        <i class="icon element-delete"></i>
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary icon-only dropdown-toggle"
+        aria-label="Dropdown toggle"
+        [cdkMenuTriggerFor]="dropdownMenu"
+        [class.show]="splitOpen1"
+        (cdkMenuOpened)="splitOpen1 = true"
+        (cdkMenuClosed)="splitOpen1 = false"
+      >
+        <i class="dropdown-caret icon element-down-2"></i>
+      </button>
+    </div>
+
+    <div class="btn-group" role="group" aria-label="Tertiary group">
+      <button type="button" class="btn icon-only btn-tertiary" aria-label="Edit">
+        <i class="icon element-edit"></i>
+      </button>
+      <button type="button" class="btn icon-only btn-tertiary" aria-label="Copy">
+        <i class="icon element-copy"></i>
+      </button>
+      <button type="button" class="btn icon-only btn-tertiary" aria-label="Delete">
+        <i class="icon element-delete"></i>
+      </button>
+      <button
+        type="button"
+        class="btn btn-tertiary icon-only dropdown-toggle"
+        aria-label="Dropdown toggle"
+        [cdkMenuTriggerFor]="dropdownMenu"
+        [class.show]="splitOpen2"
+        (cdkMenuOpened)="splitOpen2 = true"
+        (cdkMenuClosed)="splitOpen2 = false"
+      >
+        <i class="dropdown-caret icon element-down-2"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<ng-template #dropdownMenu>
+  <si-menu>
+    @for (item of menuItems; track $index) {
+      <si-menu-item [icon]="item.icon">{{ item.text }}</si-menu-item>
+    }
+  </si-menu>
+</ng-template>
