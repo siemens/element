@@ -420,7 +420,7 @@ $nav-link-padding-y: 10px;
 $nav-link-padding-x: map.get(spacers.$spacers, 8);
 $nav-link-font-size: typography.$si-font-size-h4;
 $nav-link-font-weight: typography.$si-font-weight-h4;
-$nav-link-color: semantic-tokens.$element-text-secondary !default;
+$nav-link-color: semantic-tokens.$element-text-primary !default;
 $nav-link-hover-color: $link-hover-color !default;
 $nav-link-transition: ();
 $nav-link-disabled-color: semantic-tokens.$element-text-disabled !default;
