@@ -2,15 +2,44 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ComponentRef } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { SiTimepickerComponent as TestComponent } from './index';
 
+@Component({
+  imports: [TestComponent, ReactiveFormsModule],
+  template: `
+    <si-timepicker
+      [disabled]="disabled()"
+      [formControl]="time"
+      [min]="min()"
+      [max]="max()"
+      [readonly]="readonly()"
+      [showMinutes]="showMinutes()"
+      [showSeconds]="showSeconds()"
+      [showMilliseconds]="showMilliseconds()"
+      [showMeridian]="showMeridian()"
+      (inputCompleted)="onInputCompleted()"
+    />
+  `
+})
+class WrapperComponent {
+  readonly picker = viewChild.required<TestComponent>(TestComponent);
+  readonly disabled = signal(false);
+  readonly time = new FormControl<Date | string | undefined>(undefined);
+  readonly readonly = signal(false);
+  readonly showMinutes = signal(true);
+  readonly showSeconds = signal(false);
+  readonly showMilliseconds = signal(false);
+  readonly showMeridian = signal(true);
+  readonly min = signal<Date | undefined>(undefined);
+  readonly max = signal<Date | undefined>(undefined);
+  onInputCompleted = (): void => {};
+}
+
 describe('SiTimepickerComponent', () => {
-  let fixture: ComponentFixture<TestComponent>;
-  let component: TestComponent;
-  let componentRef: ComponentRef<TestComponent>;
   let element: HTMLElement;
 
   const getHours = (): HTMLInputElement =>
@@ -26,366 +55,365 @@ describe('SiTimepickerComponent', () => {
     e.dispatchEvent(new Event('input'));
     e.dispatchEvent(new Event('change'));
   };
-  beforeEach(() =>
-    TestBed.configureTestingModule({
-      imports: [TestComponent]
-    })
-  );
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(TestComponent);
-    component = fixture.componentInstance;
-    componentRef = fixture.componentRef;
-    element = fixture.nativeElement;
-    fixture.detectChanges();
-  });
-
   const generateKeyEvent = (key: 'ArrowDown' | 'ArrowUp'): KeyboardEvent => {
     const event: KeyboardEvent = new KeyboardEvent('keydown', { bubbles: true, cancelable: true });
     Object.defineProperty(event, 'key', { value: key });
     return event;
   };
 
-  it('should have a default empty default value with hours and minutes configuration', () => {
-    expect(getHours().value).toEqual('');
-    expect(getMinutes().value).toEqual('');
-    expect(getSeconds()).toBeNull();
-    expect(getMilliseconds()).toBeNull();
+  describe('with default configuration', () => {
+    let fixture: ComponentFixture<TestComponent>;
+
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [TestComponent]
+      });
+      fixture = TestBed.createComponent(TestComponent);
+      element = fixture.nativeElement;
+      fixture.detectChanges();
+    });
+
+    it('should have a default empty default value with hours and minutes configuration', () => {
+      expect(getHours().value).toEqual('');
+      expect(getMinutes().value).toEqual('');
+      expect(getSeconds()).toBeNull();
+      expect(getMilliseconds()).toBeNull();
+    });
   });
 
-  it('should display seconds and milliseconds input', fakeAsync(() => {
-    componentRef.setInput('showSeconds', true);
-    componentRef.setInput('showMilliseconds', true);
-    fixture.detectChanges();
+  describe('with forms', () => {
+    let fixture: ComponentFixture<WrapperComponent>;
+    let component: WrapperComponent;
 
-    expect(getHours().value).toEqual('');
-    expect(getMinutes().value).toEqual('');
-    expect(getSeconds().value).toEqual('');
-    expect(getMilliseconds().value).toEqual('');
-  }));
+    beforeEach(() => {
+      fixture = TestBed.createComponent(WrapperComponent);
+      component = fixture.componentInstance;
+      element = fixture.nativeElement;
+      fixture.detectChanges();
+    });
 
-  it('should display time components in input elements', () => {
-    componentRef.setInput('showSeconds', true);
-    componentRef.setInput('showMilliseconds', true);
-    component.writeValue(new Date('2022-01-12 16:23'));
-    fixture.detectChanges();
+    it('should display seconds and milliseconds input', fakeAsync(() => {
+      component.showSeconds.set(true);
+      component.showMilliseconds.set(true);
+      fixture.detectChanges();
 
-    expect(getHours().value).toEqual('04');
-    expect(getMinutes().value).toEqual('23');
-    expect(getSeconds().value).toEqual('00');
-    expect(getMilliseconds().value).toEqual('000');
-  });
+      expect(getHours().value).toEqual('');
+      expect(getMinutes().value).toEqual('');
+      expect(getSeconds().value).toEqual('');
+      expect(getMilliseconds().value).toEqual('');
+    }));
 
-  it('should display time in 24 hours mode with date object input', fakeAsync(() => {
-    componentRef.setInput('showSeconds', true);
-    componentRef.setInput('showMilliseconds', true);
-    componentRef.setInput('showMeridian', false);
-    fixture.detectChanges();
-    component.writeValue(new Date('2022-01-12 16:23:59.435'));
-    fixture.detectChanges();
+    it('should display time components in input elements', () => {
+      component.showSeconds.set(true);
+      component.showMilliseconds.set(true);
+      component.time.setValue(new Date('2022-01-12 16:23'));
+      fixture.detectChanges();
 
-    expect(getHours().value).toEqual('16');
-    expect(getMinutes().value).toEqual('23');
-    expect(getSeconds().value).toEqual('59');
-    expect(getMilliseconds().value).toEqual('435');
-  }));
+      expect(getHours().value).toEqual('04');
+      expect(getMinutes().value).toEqual('23');
+      expect(getSeconds().value).toEqual('00');
+      expect(getMilliseconds().value).toEqual('000');
+    });
 
-  it('should display time in 24 hours mode with string object input', fakeAsync(() => {
-    componentRef.setInput('showSeconds', true);
-    componentRef.setInput('showMilliseconds', true);
-    componentRef.setInput('showMinutes', true);
-    componentRef.setInput('showMeridian', false);
-    fixture.detectChanges();
-    component.writeValue('2022-01-12 16:23:59.435');
-    fixture.detectChanges();
+    it('should display time in 24 hours mode with date object input', fakeAsync(() => {
+      component.showSeconds.set(true);
+      component.showMilliseconds.set(true);
+      component.showMeridian.set(false);
+      fixture.detectChanges();
+      component.time.setValue(new Date('2022-01-12 16:23:59.435'));
+      fixture.detectChanges();
 
-    expect(getHours().value).toEqual('16');
-    expect(getMinutes().value).toEqual('23');
-    expect(getSeconds().value).toEqual('59');
-    expect(getMilliseconds().value).toEqual('435');
-  }));
+      expect(getHours().value).toEqual('16');
+      expect(getMinutes().value).toEqual('23');
+      expect(getSeconds().value).toEqual('59');
+      expect(getMilliseconds().value).toEqual('435');
+    }));
 
-  it('should remove time components when setting undefined time', () => {
-    component.writeValue('2022-01-12 16:23:59.435');
-    fixture.detectChanges();
-    expect(getHours().value).toEqual('04');
+    it('should display time in 24 hours mode with string object input', fakeAsync(() => {
+      component.showSeconds.set(true);
+      component.showMilliseconds.set(true);
+      component.showMeridian.set(false);
+      fixture.detectChanges();
+      component.time.setValue('2022-01-12 16:23:59.435');
+      fixture.detectChanges();
 
-    component.writeValue();
-    fixture.detectChanges();
-    expect(getHours().value).toEqual('');
-  });
+      expect(getHours().value).toEqual('16');
+      expect(getMinutes().value).toEqual('23');
+      expect(getSeconds().value).toEqual('59');
+      expect(getMilliseconds().value).toEqual('435');
+    }));
 
-  it('should not change time components when setting wrong time string', () => {
-    component.writeValue('2022-01-12 16:23:59.435');
-    fixture.detectChanges();
-    expect(getHours().value).toEqual('04');
+    it('should remove time components when setting undefined time', () => {
+      component.time.setValue('2022-01-12 16:23:59.435');
+      fixture.detectChanges();
+      expect(getHours().value).toEqual('04');
 
-    component.writeValue('invalid');
-    fixture.detectChanges();
-    expect(getHours().value).toEqual('04');
-  });
+      component.time.setValue(undefined);
+      fixture.detectChanges();
+      expect(getHours().value).toEqual('');
+    });
 
-  it('should update time on ui changes', () => {
-    componentRef.setInput('showSeconds', true);
-    componentRef.setInput('showMilliseconds', true);
-    const spyOnChange = spyOn<any>(component, 'onChange');
-    component.writeValue('2022-01-12 16:23:59.435');
-    fixture.detectChanges();
+    it('should not change time components when setting wrong time string', () => {
+      component.time.setValue('2022-01-12 16:23:59.435');
+      fixture.detectChanges();
+      expect(getHours().value).toEqual('04');
 
-    expect(getHours().value).toEqual('04');
-    enterValue(getHours(), '03');
-    expect(spyOnChange).toHaveBeenCalled();
+      component.time.setValue('invalid');
+      fixture.detectChanges();
+      expect(getHours().value).toEqual('04');
+    });
 
-    enterValue(getMinutes(), '03');
-    expect(spyOnChange).toHaveBeenCalled();
+    it('should update time on ui changes', () => {
+      component.showSeconds.set(true);
+      component.showMilliseconds.set(true);
+      component.time.setValue('2022-01-12 16:23:59.435');
+      fixture.detectChanges();
 
-    enterValue(getSeconds(), '06');
-    expect(spyOnChange).toHaveBeenCalled();
+      expect(getHours().value).toEqual('04');
+      enterValue(getHours(), '03');
+      enterValue(getMinutes(), '03');
+      enterValue(getSeconds(), '06');
+      enterValue(getMilliseconds(), '999');
+      expect(component.time.value).toEqual(new Date('2022-01-12 15:03:06.999'));
+    });
 
-    enterValue(getMilliseconds(), '999');
-    expect(spyOnChange).toHaveBeenCalled();
-  });
+    it('should determine the meridian', () => {
+      component.time.setValue('2022-01-12 16:23:59.435');
+      fixture.detectChanges();
 
-  it('should determine the meridian', () => {
-    component.writeValue('2022-01-12 16:23:59.435');
-    fixture.detectChanges();
+      expect(component.picker().isPM()).toBeTrue();
 
-    expect(component.isPM()).toBeTrue();
+      component.time.setValue('2022-01-12 04:23:59.435');
+      fixture.detectChanges();
+      expect(component.picker().isPM()).toBeFalse();
+    });
 
-    component.writeValue('2022-01-12 04:23:59.435');
-    fixture.detectChanges();
-    expect(component.isPM()).toBeFalse();
-  });
+    it('should falsify isPM when meridian is hidden', () => {
+      fixture.detectChanges();
+      component.time.setValue('2022-01-12 16:23:59.435');
+      fixture.detectChanges();
+      expect(component.picker().isPM()).toBeTrue();
 
-  it('should falsify isPM when meridian is hidden', () => {
-    fixture.detectChanges();
-    component.writeValue('2022-01-12 16:23:59.435');
-    fixture.detectChanges();
-    expect(component.isPM()).toBeTrue();
+      component.showMeridian.set(false);
+      fixture.detectChanges();
+      expect(component.picker().isPM()).toBeFalse();
+    });
 
-    componentRef.setInput('showMeridian', false);
-    fixture.detectChanges();
-    expect(component.isPM()).toBeFalse();
-  });
+    it('should validate time limit against min value', async () => {
+      component.min.set(new Date('2022-01-12 16:23:59.435'));
+      fixture.detectChanges();
+      component.time.setValue('2021-01-12 10:23:59.435');
+      fixture.detectChanges();
+      expect(getHours().classList).toContain('is-invalid');
+    });
 
-  it('should validate time limit against min value', fakeAsync(() => {
-    componentRef.setInput('min', new Date('2022-01-12 16:23:59.435'));
-    fixture.detectChanges();
-    component.writeValue('2021-01-12 10:23:59.435');
-    fixture.detectChanges();
-    expect(getHours().classList).toContain('is-invalid');
-  }));
+    it('should validate time limit against max value', fakeAsync(() => {
+      component.max.set(new Date('2022-01-12 16:23:59.435'));
+      fixture.detectChanges();
+      component.time.setValue('2021-01-12 18:23:59.435');
+      fixture.detectChanges();
+      expect(getHours().classList).toContain('is-invalid');
+    }));
 
-  it('should validate time limit against max value', fakeAsync(() => {
-    componentRef.setInput('max', new Date('2022-01-12 16:23:59.435'));
-    fixture.detectChanges();
-    component.writeValue('2021-01-12 18:23:59.435');
-    fixture.detectChanges();
-    expect(getHours().classList).toContain('is-invalid');
-  }));
+    it('should update invalidHours to true if value is invalid', () => {
+      component.max.set(new Date('2022-01-12 16:23:59.435'));
+      component.time.setValue('2021-01-12 18:23:59.435');
+      fixture.detectChanges();
 
-  it('should update invalidHours to true if value is invalid', () => {
-    componentRef.setInput('max', new Date('2022-01-12 16:23:59.435'));
-    component.writeValue('2021-01-12 18:23:59.435');
-    fixture.detectChanges();
+      enterValue(getHours(), '19');
+      expect(getHours().classList).toContain('is-invalid');
+    });
 
-    enterValue(getHours(), '19');
-    expect(getHours().classList).toContain('is-invalid');
-  });
+    it('should update invalidMinutes to true if value is invalid', () => {
+      component.max.set(new Date('2022-01-12 16:23:59.435'));
+      component.time.setValue('2021-01-12 18:23:59.435');
+      fixture.detectChanges();
 
-  it('should update invalidMinutes to true if value is invalid', () => {
-    componentRef.setInput('max', new Date('2022-01-12 16:23:59.435'));
-    component.writeValue('2021-01-12 18:23:59.435');
-    fixture.detectChanges();
+      enterValue(getMinutes(), '24');
+      fixture.detectChanges();
+      expect(getMinutes().classList).toContain('is-invalid');
+    });
 
-    enterValue(getMinutes(), '24');
-    fixture.detectChanges();
-    expect(getMinutes().classList).toContain('is-invalid');
-  });
+    it('should update invalidSeconds to true if value is invalid', () => {
+      component.showSeconds.set(true);
+      component.max.set(new Date('2022-01-12 16:23:58.435'));
+      component.time.setValue('2021-01-12 18:23:58.435');
+      fixture.detectChanges();
 
-  it('should update invalidSeconds to true if value is invalid', () => {
-    componentRef.setInput('showSeconds', true);
-    componentRef.setInput('max', new Date('2022-01-12 16:23:58.435'));
-    component.writeValue('2021-01-12 18:23:58.435');
-    fixture.detectChanges();
+      enterValue(getSeconds(), '59');
+      fixture.detectChanges();
+      expect(getSeconds().classList).toContain('is-invalid');
+    });
 
-    enterValue(getSeconds(), '59');
-    fixture.detectChanges();
-    expect(getSeconds().classList).toContain('is-invalid');
-  });
+    it('should update invalidMilliseconds to true if value is invalid', () => {
+      component.showMilliseconds.set(true);
+      component.max.set(new Date('2022-01-12 16:23:58.435'));
+      component.time.setValue('2021-01-12 18:23:58.435');
+      fixture.detectChanges();
 
-  it('should update invalidMilliseconds to true if value is invalid', () => {
-    componentRef.setInput('showMilliseconds', true);
-    componentRef.setInput('max', new Date('2022-01-12 16:23:58.435'));
-    component.writeValue('2021-01-12 18:23:58.435');
-    fixture.detectChanges();
+      enterValue(getMilliseconds(), '500');
+      fixture.detectChanges();
+      expect(getMilliseconds().classList).toContain('is-invalid');
+    });
 
-    enterValue(getMilliseconds(), '500');
-    fixture.detectChanges();
-    expect(getMilliseconds().classList).toContain('is-invalid');
-  });
+    it('should disable component', fakeAsync(() => {
+      fixture.detectChanges();
+      component.time.setValue('2021-01-12 18:23:58.435');
+      component.disabled.set(true);
+      fixture.detectChanges();
+      expect(getHours().disabled).toBeTruthy();
+      expect(getMinutes().disabled).toBeTruthy();
+    }));
 
-  it('should disable component', fakeAsync(() => {
-    fixture.detectChanges();
-    component.writeValue('2021-01-12 18:23:58.435');
-    componentRef.setInput('disabled', true);
-    fixture.detectChanges();
-    expect(getHours().disabled).toBeTruthy();
-    expect(getMinutes().disabled).toBeTruthy();
-  }));
+    it('should toggle meridian', () => {
+      component.time.setValue('2021-01-12 18:23:58.435');
+      fixture.detectChanges();
+      const select = element.querySelector<HTMLSelectElement>('select');
+      const currentMeridian = select?.value;
+      select?.dispatchEvent(new Event('change'));
+      fixture.detectChanges();
+      expect(select?.value).not.toBe(currentMeridian);
+    });
 
-  it('should toggle meridian', () => {
-    component.writeValue('2021-01-12 18:23:58.435');
-    fixture.detectChanges();
-    const select = element.querySelector<HTMLSelectElement>('select');
-    const currentMeridian = select?.value;
-    select?.dispatchEvent(new Event('change'));
-    fixture.detectChanges();
-    expect(select?.value).not.toBe(currentMeridian);
-  });
+    it('should not toggle meridian', () => {
+      component.time.setValue('2021-01-12 01:01:00.000');
+      fixture.detectChanges();
+      // Entering 12 am (midnight) should not toggle the meridian
+      enterValue(getHours(), '12');
 
-  it('should not toggle meridian', () => {
-    component.writeValue('2021-01-12 01:01:00.000');
-    fixture.detectChanges();
-    // Entering 12 am (midnight) should not toggle the meridian
-    enterValue(getHours(), '12');
+      fixture.detectChanges();
+      const select = element.querySelector<HTMLSelectElement>('select');
+      expect(select?.value).not.toBe('pm');
+    });
 
-    fixture.detectChanges();
-    const select = element.querySelector<HTMLSelectElement>('select');
-    expect(select?.value).not.toBe('pm');
-  });
+    it('should toggle meridian when hours > 12', () => {
+      component.time.setValue('2021-01-12 01:01:00.000');
+      fixture.detectChanges();
+      // Entering hours above 12 should toggle the meridian to PM
+      enterValue(getHours(), '13');
 
-  it('should toggle meridian when hours > 12', () => {
-    component.writeValue('2021-01-12 01:01:00.000');
-    fixture.detectChanges();
-    // Entering hours above 12 should toggle the meridian to PM
-    enterValue(getHours(), '13');
+      fixture.detectChanges();
+      const select = element.querySelector<HTMLSelectElement>('select');
+      expect(select?.value).toBe('pm');
+    });
 
-    fixture.detectChanges();
-    const select = element.querySelector<HTMLSelectElement>('select');
-    expect(select?.value).toBe('pm');
-  });
+    it('should not show meridian', () => {
+      component.time.setValue('2021-01-12 18:23:58.435');
+      component.showMeridian.set(false);
+      fixture.detectChanges();
 
-  it('should not show meridian', () => {
-    component.writeValue('2021-01-12 18:23:58.435');
-    componentRef.setInput('showMeridian', false);
-    fixture.detectChanges();
+      expect(element.querySelector<HTMLSelectElement>('select')).toBeFalsy();
+    });
 
-    expect(element.querySelector<HTMLSelectElement>('select')).toBeFalsy();
-  });
+    it('should update time using up and down keys', () => {
+      component.time.setValue('2021-01-12 5:23:58.435');
+      component.showMinutes.set(true);
+      component.showSeconds.set(true);
+      component.showMilliseconds.set(true);
+      fixture.detectChanges();
 
-  it('should update time using up and down keys', () => {
-    component.writeValue('2021-01-12 5:23:58.435');
-    componentRef.setInput('showMinutes', true);
-    componentRef.setInput('showSeconds', true);
-    componentRef.setInput('showMilliseconds', true);
-    fixture.detectChanges();
+      const hours = getHours();
+      const minutes = getMinutes();
+      const seconds = getSeconds();
 
-    const hours = getHours();
-    const minutes = getMinutes();
-    const seconds = getSeconds();
+      hours?.dispatchEvent(generateKeyEvent('ArrowDown'));
+      minutes?.dispatchEvent(generateKeyEvent('ArrowDown'));
+      seconds?.dispatchEvent(generateKeyEvent('ArrowDown'));
+      fixture.detectChanges();
 
-    hours?.dispatchEvent(generateKeyEvent('ArrowDown'));
-    minutes?.dispatchEvent(generateKeyEvent('ArrowDown'));
-    seconds?.dispatchEvent(generateKeyEvent('ArrowDown'));
-    fixture.detectChanges();
+      expect(hours.value).toBe('04');
+      expect(minutes.value).toBe('22');
+      expect(seconds.value).toBe('57');
 
-    expect(hours.value).toBe('04');
-    expect(minutes.value).toBe('22');
-    expect(seconds.value).toBe('57');
+      hours?.dispatchEvent(generateKeyEvent('ArrowUp'));
+      minutes?.dispatchEvent(generateKeyEvent('ArrowUp'));
+      seconds?.dispatchEvent(generateKeyEvent('ArrowUp'));
 
-    hours?.dispatchEvent(generateKeyEvent('ArrowUp'));
-    minutes?.dispatchEvent(generateKeyEvent('ArrowUp'));
-    seconds?.dispatchEvent(generateKeyEvent('ArrowUp'));
+      fixture.detectChanges();
+      expect(hours.value).toBe('05');
+      expect(minutes.value).toBe('23');
+      expect(seconds.value).toBe('58');
+    });
 
-    fixture.detectChanges();
-    expect(hours.value).toBe('05');
-    expect(minutes.value).toBe('23');
-    expect(seconds.value).toBe('58');
-  });
+    it('should not update time using up and down keys when readonly is set', () => {
+      component.time.setValue('2023-01-01 11:00:59.123');
+      component.readonly.set(true);
+      component.showMinutes.set(true);
+      component.showSeconds.set(true);
+      component.showMilliseconds.set(true);
+      fixture.detectChanges();
 
-  it('should not update time using up and down keys when readonly is set', () => {
-    component.writeValue('2023-01-01 11:00:59.123');
-    componentRef.setInput('readonly', true);
-    componentRef.setInput('showMinutes', true);
-    componentRef.setInput('showSeconds', true);
-    componentRef.setInput('showMilliseconds', true);
-    fixture.detectChanges();
+      const hours = getHours();
+      const minutes = getMinutes();
+      const seconds = getSeconds();
+      const milliSeconds = getMilliseconds();
+      const meridianSelector = element.querySelector<HTMLSelectElement>('select');
+      const currentMeridian = meridianSelector?.value;
 
-    const hours = getHours();
-    const minutes = getMinutes();
-    const seconds = getSeconds();
-    const milliSeconds = getMilliseconds();
-    const meridianSelector = element.querySelector<HTMLSelectElement>('select');
-    const currentMeridian = meridianSelector?.value;
+      hours?.dispatchEvent(generateKeyEvent('ArrowDown'));
+      minutes?.dispatchEvent(generateKeyEvent('ArrowDown'));
+      seconds?.dispatchEvent(generateKeyEvent('ArrowDown'));
+      milliSeconds?.dispatchEvent(generateKeyEvent('ArrowDown'));
+      meridianSelector?.dispatchEvent(generateKeyEvent('ArrowDown'));
+      fixture.detectChanges();
+      meridianSelector?.dispatchEvent(generateKeyEvent('ArrowDown')); // Simulate PM selection
+      fixture.detectChanges();
+      meridianSelector?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+      fixture.detectChanges();
 
-    hours?.dispatchEvent(generateKeyEvent('ArrowDown'));
-    minutes?.dispatchEvent(generateKeyEvent('ArrowDown'));
-    seconds?.dispatchEvent(generateKeyEvent('ArrowDown'));
-    milliSeconds?.dispatchEvent(generateKeyEvent('ArrowDown'));
-    meridianSelector?.dispatchEvent(generateKeyEvent('ArrowDown'));
-    fixture.detectChanges();
-    meridianSelector?.dispatchEvent(generateKeyEvent('ArrowDown')); // Simulate PM selection
-    fixture.detectChanges();
-    meridianSelector?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
-    fixture.detectChanges();
+      expect(hours.value).toBe('11');
+      expect(minutes.value).toBe('00');
+      expect(seconds.value).toBe('59');
+      expect(milliSeconds.value).toBe('123');
+      expect(meridianSelector?.value).toBe(currentMeridian);
 
-    expect(hours.value).toBe('11');
-    expect(minutes.value).toBe('00');
-    expect(seconds.value).toBe('59');
-    expect(milliSeconds.value).toBe('123');
-    expect(meridianSelector?.value).toBe(currentMeridian);
+      hours?.dispatchEvent(generateKeyEvent('ArrowUp'));
+      minutes?.dispatchEvent(generateKeyEvent('ArrowUp'));
+      seconds?.dispatchEvent(generateKeyEvent('ArrowUp'));
+      milliSeconds?.dispatchEvent(generateKeyEvent('ArrowUp'));
+      meridianSelector?.dispatchEvent(generateKeyEvent('ArrowUp'));
+      fixture.detectChanges();
+      meridianSelector?.dispatchEvent(generateKeyEvent('ArrowDown')); // Simulate PM selection
+      fixture.detectChanges();
+      meridianSelector?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+      fixture.detectChanges();
 
-    hours?.dispatchEvent(generateKeyEvent('ArrowUp'));
-    minutes?.dispatchEvent(generateKeyEvent('ArrowUp'));
-    seconds?.dispatchEvent(generateKeyEvent('ArrowUp'));
-    milliSeconds?.dispatchEvent(generateKeyEvent('ArrowUp'));
-    meridianSelector?.dispatchEvent(generateKeyEvent('ArrowUp'));
-    fixture.detectChanges();
-    meridianSelector?.dispatchEvent(generateKeyEvent('ArrowDown')); // Simulate PM selection
-    fixture.detectChanges();
-    meridianSelector?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
-    fixture.detectChanges();
+      expect(hours.value).toBe('11');
+      expect(minutes.value).toBe('00');
+      expect(seconds.value).toBe('59');
+      expect(milliSeconds.value).toBe('123');
+      expect(meridianSelector?.value).toBe(currentMeridian);
+    });
 
-    expect(hours.value).toBe('11');
-    expect(minutes.value).toBe('00');
-    expect(seconds.value).toBe('59');
-    expect(milliSeconds.value).toBe('123');
-    expect(meridianSelector?.value).toBe(currentMeridian);
-  });
+    it('should focus next input on Enter key and emit inputCompleted event on last', () => {
+      component.showSeconds.set(true);
+      component.showMilliseconds.set(true);
+      component.showMeridian.set(false);
+      fixture.detectChanges();
 
-  it('should focus next input on Enter key and emit inputCompleted event on last', () => {
-    componentRef.setInput('showMinutes', true);
-    componentRef.setInput('showSeconds', true);
-    componentRef.setInput('showMilliseconds', true);
-    componentRef.setInput('showMeridian', false);
-    fixture.detectChanges();
+      const spyMinutes = spyOn(getMinutes(), 'focus').and.callThrough();
+      getHours().dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+      expect(spyMinutes).toHaveBeenCalled();
 
-    const spyMinutes = spyOn(getMinutes(), 'focus').and.callThrough();
-    getHours().dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
-    expect(spyMinutes).toHaveBeenCalled();
+      const spySeconds = spyOn(getSeconds(), 'focus').and.callThrough();
+      getMinutes().dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+      expect(spySeconds).toHaveBeenCalled();
 
-    const spySeconds = spyOn(getSeconds(), 'focus').and.callThrough();
-    getMinutes().dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
-    expect(spySeconds).toHaveBeenCalled();
+      const spyMilliseconds = spyOn(getMilliseconds(), 'focus').and.callThrough();
+      getSeconds().dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+      expect(spyMilliseconds).toHaveBeenCalled();
 
-    const spyMilliseconds = spyOn(getMilliseconds(), 'focus').and.callThrough();
-    getSeconds().dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
-    expect(spyMilliseconds).toHaveBeenCalled();
+      const spyInputCompleted = spyOn(component, 'onInputCompleted');
+      getMilliseconds().dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+      expect(spyInputCompleted).toHaveBeenCalled();
+    });
 
-    const spyInputCompleted = spyOn(component.inputCompleted, 'emit');
-    getMilliseconds().dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
-    expect(spyInputCompleted).toHaveBeenCalled();
-  });
+    it('should ignore non-numeric characters', () => {
+      enterValue(getHours(), 'a');
+      expect(getHours().value).toBe('');
 
-  it('should ignore non-numeric characters', () => {
-    componentRef.setInput('showMinutes', true);
-    fixture.detectChanges();
-
-    enterValue(getHours(), 'a');
-    expect(getHours().value).toBe('');
-
-    enterValue(getHours(), '1a');
-    expect(getHours().value).toBe('1');
+      enterValue(getHours(), '1a');
+      expect(getHours().value).toBe('1');
+    });
   });
 });
