@@ -16,7 +16,7 @@ import {
   signal
 } from '@angular/core';
 import { outputToObservable, takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { getOverlayPositions, isRTL, positions } from '@siemens/element-ng/common';
+import { isRTL } from '@siemens/element-ng/common';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { merge, Observable, Subject } from 'rxjs';
 import { filter, map, skip, takeUntil, tap } from 'rxjs/operators';
@@ -59,7 +59,7 @@ export class SiDatepickerOverlayDirective implements OnDestroy {
    * component are different.
    * @internal
    */
-  readonly placement = signal<keyof typeof positions | ConnectionPositionPair[]>([
+  readonly placement = signal<ConnectionPositionPair[]>([
     {
       overlayX: 'start',
       overlayY: 'top',
@@ -229,12 +229,11 @@ export class SiDatepickerOverlayDirective implements OnDestroy {
   }
 
   protected createDesktopOverlay(): void {
-    const popoverPositions = getOverlayPositions(this.triggerElementRef, this.placement(), false);
     this.overlayRef = this.overlay.create({
       positionStrategy: this.overlay
         .position()
         .flexibleConnectedTo(this.triggerElementRef)
-        .withPositions(popoverPositions)
+        .withPositions(this.placement())
         .withPush(true)
         .withGrowAfterOpen(true)
         .withFlexibleDimensions(true)
