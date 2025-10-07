@@ -58,28 +58,28 @@ describe('SiIp6InputDirective', () => {
     fixture.detectChanges();
   });
 
-  it('should be valid', () => {
-    [
-      '1:2:3:4:5:6:7:8',
-      '1::',
-      '1:2:3:4:5:6:7::',
-      '1::8',
-      '1:2:3:4:5:6::8',
-      '1::7:8',
-      '1:2:3:4:5::7:8',
-      '1:2:3:4:5::8',
-      '1::6:7:8',
-      '1:2:3:4::6:7:8',
-      '1:2:3:4::8',
-      '1::5:6:7:8',
-      '1:2:3::5:6:7:8',
-      '1:2:3::8',
-      '1::4:5:6:7:8',
-      '1:2::4:5:6:7:8  1:2::8',
-      '1::3:4:5:6:7:8',
-      '1::3:4:5:6:7:8',
-      '1::8'
-    ].forEach(i => {
+  [
+    '1:2:3:4:5:6:7:8',
+    '1::',
+    '::2:3:4:5:6:7:8',
+    '1:2:3:4:5:6:7::',
+    '1::8',
+    '1:2:3:4:5:6::8',
+    '1::7:8',
+    '1:2:3:4:5::7:8',
+    '1:2:3:4:5::8',
+    '1::6:7:8',
+    '1:2:3:4::6:7:8',
+    '1:2:3:4::8',
+    '1::5:6:7:8',
+    '1:2:3::5:6:7:8',
+    '1:2:3::8',
+    '1::4:5:6:7:8',
+    '1:2::4:5:6:7:8',
+    '1::3:4:5:6:7:8',
+    '1::8'
+  ].forEach(i => {
+    it(`should be valid with input ${i}`, () => {
       typeInput(i);
       input.blur();
       fixture.detectChanges();
@@ -87,11 +87,12 @@ describe('SiIp6InputDirective', () => {
     });
   });
 
-  it('should be invalid', () => {
-    ['::1111::1/', '::1111::1/1', '::1111::1/128'].forEach(i => {
-      fixture.detectChanges();
+  ['2001:db8:::1', '::1111::1/', '::1111::1/1', '::1111::1/128'].forEach(async i => {
+    it(`should be invalid with ${i}`, async () => {
       // Skip masking otherwise multiple occurrences of :: will be dropped
-      input.value = i;
+      component.address.set(i);
+      fixture.detectChanges();
+      await fixture.whenStable();
       input.blur();
       fixture.detectChanges();
       expect(input.value).toEqual(i);
@@ -164,7 +165,7 @@ describe('SiIp6InputDirective', () => {
     });
 
     it('should be invalid', () => {
-      ['2001::8:800:200C:417A/129'].forEach(i => {
+      ['2001:DB8:::1/64', '2001::8:800:200C:417A/129'].forEach(i => {
         // Deactivate masking otherwise multiple occurrences of :: we be dropped
         fixture.detectChanges();
         typeInput(i);
