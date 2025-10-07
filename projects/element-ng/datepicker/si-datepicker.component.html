@@ -92,8 +92,7 @@
       <si-timepicker
         #timePicker
         [id]="timepickerId"
-        [ngModel]="time"
-        [disabled]="disabledTime()"
+        [formControl]="time"
         [hoursLabel]="config().hoursLabel ?? timePicker.hoursLabel()"
         [minutesLabel]="config().minutesLabel ?? timePicker.minutesLabel()"
         [secondsLabel]="config().secondsLabel ?? timePicker.secondsLabel()"
@@ -118,7 +117,6 @@
         [showSeconds]="config().showSeconds ?? false"
         [showMilliseconds]="config().showMilliseconds ?? false"
         [showMeridian]="time12h()"
-        (ngModelChange)="timeSelected($event)"
       />
     </div>
   </div>

@@ -9,6 +9,7 @@ import {
   ChangeDetectorRef,
   Component,
   computed,
+  effect,
   inject,
   input,
   LOCALE_ID,
@@ -20,7 +21,12 @@ import {
   SimpleChanges,
   viewChild
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  ReactiveFormsModule,
+  ValidationErrors
+} from '@angular/forms';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { Cell } from './components/si-calendar-body.component';
@@ -55,11 +61,11 @@ export type RangeType = 'START' | 'END' | undefined;
 @Component({
   selector: 'si-datepicker',
   imports: [
+    ReactiveFormsModule,
     SiYearSelectionComponent,
     SiMonthSelectionComponent,
     SiDaySelectionComponent,
     SiTimepickerComponent,
-    FormsModule,
     SiTranslatePipe
   ],
   templateUrl: './si-datepicker.component.html',
@@ -273,14 +279,16 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
    * in separate objects to not change the date when flipping time.
    * After change, a new date object is created with an adapted time.
    */
-  protected time?: Date;
+  protected time = new FormControl<Date | undefined>(undefined, {
+    validators: [control => this.validateTime(control)],
+    nonNullable: true
+  });
   /**
    * Used to hold the last time when setting the time to disabled.
    * Value will be reset on enabling the time again.
    */
   private previousTime?: Date;
 
-  private readonly timePicker = viewChild(SiTimepickerComponent);
   /** Reference to the current day selection component. Shown when view === 'week' */
   private readonly daySelection = viewChild(SiDaySelectionComponent);
   /** Reference to the current month selection component. Shown when view === 'month' */
@@ -304,6 +312,14 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
         : weekStart === WeekDay.Saturday
           ? 'saturday'
           : 'monday';
+    effect(() => {
+      if (this.disabledTime()) {
+        this.time.disable({ emitEvent: false });
+      } else {
+        this.time.enable({ emitEvent: false });
+      }
+    });
+    this.time.valueChanges.subscribe((newTime?: Date) => this.timeSelected(newTime));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -316,10 +332,10 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
       if (date) {
         if (changes.date.isFirstChange()) {
           this.previousTime = new Date(date);
-          this.time = date;
+          this.time.setValue(date, { emitEvent: false });
         }
-        if (this.time?.getTime() !== date?.getTime()) {
-          this.time = date;
+        if (this.time.value?.getTime() !== date?.getTime()) {
+          this.time.setValue(date, { emitEvent: false });
         }
         this.focusedDate.set(date);
       }
@@ -367,7 +383,7 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
 
         if (newDate && changes.dateRange.isFirstChange()) {
           this.previousTime = new Date(newDate);
-          this.time = newDate;
+          this.time.setValue(newDate, { emitEvent: false });
         }
       }
     }
@@ -466,10 +482,6 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
       this.ngOnChanges({ date: new SimpleChange(undefined, date, true) });
     }
 
-    if (config.enableTimeValidation && this.timePicker() && (config.minDate || config.maxDate)) {
-      this.validateTime(newDate);
-    }
-
     this.cdRef.markForCheck();
   }
 
@@ -498,33 +510,27 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
     return true;
   }
 
-  protected timeSelected(newTime: Date): void {
-    if (!newTime) {
+  protected timeSelected(newTime?: Date): void {
+    if (newTime == null || newTime === this.time.value) {
       return;
     }
 
-    // Break event cycle
-    if (this.time?.getTime() === newTime.getTime()) {
-      this.validateTime(newTime);
-      return;
-    }
-
-    this.previousTime = this.time;
-    this.time = newTime;
+    this.previousTime = this.time.value;
+    this.time.setValue(newTime, { emitEvent: false });
 
     const oldDate = this.getRelevantDate() ?? new Date();
     let newDate: Date;
     if (this.disabledTime()) {
       // if time is disabled, ensure that 00:00:00 is displayed in any timezone
       newDate = createDate(oldDate);
-      this.time = newDate;
+      this.time.setValue(newDate, { emitEvent: false });
     } else {
       newDate = createDate(
         oldDate,
-        this.time.getHours(),
-        this.time.getMinutes(),
-        this.time.getSeconds(),
-        this.time.getMilliseconds()
+        newTime.getHours(),
+        newTime.getMinutes(),
+        newTime.getSeconds(),
+        newTime.getMilliseconds()
       );
     }
     if (!this.config().enableDateRange) {
@@ -563,21 +569,18 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
     }
   }
 
-  private validateTime(date: Date): void {
-    // wait for a cycle to initialize timepicker
-    setTimeout(() => {
-      const config = this.config();
-      const timePicker = this.timePicker()!;
-      if (
-        !this.disabledTime() &&
-        ((config.minDate && date < config.minDate) || (config.maxDate && date > config.maxDate))
-      ) {
-        timePicker.forceInvalid.set(true);
-      } else {
-        timePicker.forceInvalid.set(false);
+  private validateTime(control: AbstractControl): ValidationErrors | null {
+    const config = this.config();
+    const errors: ValidationErrors = {};
+    if (!this.disabledTime() && config.enableTimeValidation && control.value) {
+      if (config.minDate && control.value < config.minDate) {
+        errors.minDate = { requiredDate: config.minDate, actual: control.value };
+      } else if (config.maxDate && control.value > config.maxDate) {
+        errors.maxDate = { requiredDate: config.maxDate, actual: control.value };
       }
-      this.cdRef.markForCheck();
-    });
+    }
+
+    return Object.keys(errors).length ? errors : null;
   }
 
   /**
@@ -585,12 +588,13 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
    * @param selection - selected date.
    */
   protected selectionChange(selection: Date): void {
+    const time = this.time.value;
     const newDate = createDate(
       selection,
-      this.time?.getHours(),
-      this.time?.getMinutes(),
-      this.time?.getSeconds(),
-      this.time?.getMilliseconds()
+      time?.getHours(),
+      time?.getMinutes(),
+      time?.getSeconds(),
+      time?.getMilliseconds()
     );
     if (this.config().enableDateRange) {
       const rangeType = this.rangeType();
