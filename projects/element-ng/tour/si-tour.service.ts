@@ -6,12 +6,11 @@ import {
   FlexibleConnectedPositionStrategy,
   Overlay,
   OverlayOutsideClickDispatcher,
-  OverlayRef,
-  PositionStrategy
+  OverlayRef
 } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { ElementRef, inject, Injectable, Injector, signal, DOCUMENT } from '@angular/core';
-import { makeOverlay, makePositionStrategy } from '@siemens/element-ng/common';
+import { DOCUMENT, ElementRef, inject, Injectable, Injector, signal } from '@angular/core';
+import { isRTL } from '@siemens/element-ng/common';
 import { ResizeObserverService } from '@siemens/element-ng/resize-observer';
 import { map, merge, Subject, Subscription, tap, throttleTime } from 'rxjs';
 
@@ -145,7 +144,11 @@ export class SiTourService {
       ? new ElementRef(anchorElement!)
       : undefined;
 
-    this.makeOverlay(anchorElementRef);
+    if (anchorElementRef) {
+      this.attachOverlay(anchorElementRef);
+    } else {
+      this.centerOverlay();
+    }
     this.handleResizeSubscription(anchorElementRef);
 
     this.tourToken.currentStep.next({
@@ -179,12 +182,57 @@ export class SiTourService {
     }
   }
 
-  private makeOverlay(anchorElement: ElementRef<HTMLElement> | undefined): void {
-    const strategy = makePositionStrategy(anchorElement, this.overlay, 'auto');
-    this.handlePositionChangeSubscription(strategy, anchorElement);
+  private centerOverlay(): void {
+    this.positionChangeSub?.unsubscribe();
+    this.createOrUpdateOverlays();
 
+    const positionStrategy = this.overlayRef!.getConfig().positionStrategy;
+    if (!positionStrategy || positionStrategy instanceof FlexibleConnectedPositionStrategy) {
+      this.overlayRef!.updatePositionStrategy(
+        this.overlay.position().global().centerHorizontally().centerVertically()
+      );
+    }
+    this.tourToken.positionChange.next(undefined);
+  }
+
+  private attachOverlay(anchor: ElementRef<HTMLElement>): void {
+    this.createOrUpdateOverlays();
+
+    const positionStrategy = this.overlayRef!.getConfig().positionStrategy;
+    if (positionStrategy && positionStrategy instanceof FlexibleConnectedPositionStrategy) {
+      positionStrategy.setOrigin(anchor);
+    } else {
+      this.createFlexiblePositionStrategy(anchor);
+    }
+  }
+
+  private createFlexiblePositionStrategy(anchor: ElementRef<HTMLElement>): void {
+    const positionStrategy = this.overlay
+      .position()
+      .flexibleConnectedTo(anchor)
+      .withGrowAfterOpen(true)
+      .withPositions([
+        // On top
+        { originX: 'center', overlayX: 'center', originY: 'top', overlayY: 'bottom' },
+        { originX: 'start', overlayX: 'start', originY: 'top', overlayY: 'bottom' },
+        { originX: 'end', overlayX: 'end', originY: 'top', overlayY: 'bottom' },
+        // On bottom
+        { originX: 'center', overlayX: 'center', originY: 'bottom', overlayY: 'top' },
+        { originX: 'start', overlayX: 'start', originY: 'bottom', overlayY: 'top' },
+        { originX: 'end', overlayX: 'end', originY: 'bottom', overlayY: 'top' },
+        // Left and right
+        { originX: 'start', overlayX: 'end', originY: 'center', overlayY: 'center' },
+        { originX: 'end', overlayX: 'start', originY: 'center', overlayY: 'center' }
+      ]);
+    this.overlayRef!.updatePositionStrategy(positionStrategy);
+    this.positionChangeSub = positionStrategy.positionChanges
+      .pipe(map(change => ({ change, anchor })))
+      // We only want to forward the next channel, as the positionChanges completes when setting a new origin.
+      .subscribe(value => this.tourToken.positionChange.next(value));
+  }
+
+  private createOrUpdateOverlays(): void {
     if (this.overlayRef) {
-      this.overlayRef.updatePositionStrategy(strategy);
       // This moves the dispatcher to the top, allowing it to catch other open overlays.
       // Much lighter than to detach and re-attach the portal, not re-creating the si-tour
       // component for each step
@@ -207,10 +255,13 @@ export class SiTourService {
 
     // then the dialog
     this.portal = new ComponentPortal(SiTourComponent, undefined, componentInjector);
-    this.overlayRef = makeOverlay(strategy, this.overlay, true);
+    this.overlayRef = this.overlay.create({
+      scrollStrategy: this.overlay.scrollStrategies.reposition(),
+      direction: isRTL() ? 'rtl' : 'ltr'
+    });
+    this.overlayRef.attach(this.portal);
     // needs a subscriber, otherwise events will be ignored and the .backdrop CSS hack doesn't help
     this.overlayRef.outsidePointerEvents().subscribe();
-    this.overlayRef.attach(this.portal);
   }
 
   private handleResizeSubscription(anchorElement: ElementRef<HTMLElement> | undefined): void {
@@ -228,7 +279,7 @@ export class SiTourService {
           tap(() => {
             if (!this.isElementVisible(anchorElement?.nativeElement)) {
               // repositions to center if anchor disappears
-              this.makeOverlay(undefined);
+              this.centerOverlay();
             } else {
               this.overlayRef?.updatePosition();
             }
@@ -241,20 +292,6 @@ export class SiTourService {
   private isElementVisible(element: HTMLElement | undefined): boolean {
     const rect = element?.getBoundingClientRect();
     return !!rect?.width && !!rect.height;
-  }
-
-  private handlePositionChangeSubscription(
-    strategy: PositionStrategy,
-    anchor?: ElementRef<HTMLElement>
-  ): void {
-    this.positionChangeSub?.unsubscribe();
-    if (anchor && strategy instanceof FlexibleConnectedPositionStrategy) {
-      this.positionChangeSub = strategy.positionChanges
-        .pipe(map(change => ({ change, anchor })))
-        .subscribe(this.tourToken.positionChange);
-    } else {
-      this.tourToken.positionChange.next(undefined);
-    }
   }
 
   private getElement(
