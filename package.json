@@ -148,8 +148,8 @@
     "eslint-plugin-tsdoc": "0.4.0",
     "http-server": "14.1.1",
     "husky": "9.1.7",
-    "jasmine": "5.11.0",
-    "jasmine-core": "5.11.0",
+    "jasmine": "5.12.0",
+    "jasmine-core": "5.12.0",
     "karma": "6.4.4",
     "karma-chrome-launcher": "3.2.0",
     "karma-coverage": "2.2.1",
@@ -170,7 +170,7 @@
     "stylelint-use-logical-spec": "5.0.1",
     "tsx": "4.20.6",
     "typescript": "5.8.3",
-    "typescript-eslint": "8.45.0"
+    "typescript-eslint": "8.46.0"
   },
   "optionalDependencies": {
     "@simpl/brand": "^2.2.0",
