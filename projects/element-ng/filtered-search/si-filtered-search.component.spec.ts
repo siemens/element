@@ -782,7 +782,7 @@ describe('SiFilteredSearchComponent', () => {
     await freeTextSearch.focus();
     await freeTextSearch.select({ text: 'Company' });
     const [criteria] = await filteredSearch.getCriteria({ labelText: 'Company' });
-    criteria.value().then(value => value!.select({ text: 'Foo' }));
+    await criteria.value().then(value => value!.select({ text: 'Foo' }));
     await freeTextSearch.focus();
     expect(await freeTextSearch.getItems()).toEqual(['Age']);
     await criteria.clickClearButton();
