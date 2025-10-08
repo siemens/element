@@ -118,5 +118,5 @@ export abstract class SiIpInputDirective {
     this.onTouched();
   }
 
-  abstract maskInput(e: AddrInputEvent): void;
+  protected abstract maskInput(e: AddrInputEvent): void;
 }
