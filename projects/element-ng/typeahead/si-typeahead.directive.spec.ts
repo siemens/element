@@ -392,9 +392,10 @@ describe('SiTypeaheadDirective', () => {
 
     const inputElement = wrapperElement.querySelector('input')! as HTMLInputElement;
     inputElement.dispatchEvent(new Event('focusin'));
-
     tick();
-
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
     inputElement.dispatchEvent(
       new KeyboardEvent('keydown', {
         key: 'ArrowDown',
