@@ -4,6 +4,17 @@
     "hello-world": {
       "description": "A blank schematic.",
       "factory": "./hello-world/index#helloWorld"
+    },
+    "simpl-siemens-migration": {
+      "description": "A migration schematic for replacing @simpl/* packages with @siemens/*",
+      "factory": "./simpl-siemens-migration/index#simplSiemensMigration",
+      "schema": "./simpl-siemens-migration/schema.json",
+      "aliases": ["s2s-migration"]
+    },
+    "ng-add": {
+      "description": "A schematic to add the @siemens/element-ng to your project.",
+      "factory": "./ng-add/index#ngAdd",
+      "schema": "./ng-add/schema.json"
     }
   }
 }

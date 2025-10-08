@@ -21,6 +21,9 @@
   },
   "type": "module",
   "schematics": "./schematics/collection.json",
+  "ng-add": {
+    "save": "dependencies"
+  },
   "peerDependencies": {
     "@angular/animations": "20",
     "@angular/cdk": "20",
