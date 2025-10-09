@@ -6,4 +6,4 @@ import { InjectionToken } from '@angular/core';
 
 import { SiTabsetComponent } from './si-tabset.component';
 
-export const SI_TABSET = new InjectionToken<SiTabsetComponent>('SiTabsetNextComponent');
+export const SI_TABSET = new InjectionToken<SiTabsetComponent>('SiTabsetComponent');
