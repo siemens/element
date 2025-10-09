@@ -94,7 +94,7 @@ import { SiCardComponent } from '@siemens/element-ng/card';
 })
 ```
 
-The `si-card` component makes use of the bootstrap card classes. The header
+The `si-card` component makes use of the card classes. The header
 is configurable by input properties (see API). A header icon and the card body are
 provided using content projection, with the selectors `headerIcon` and `body`.
 
@@ -110,19 +110,6 @@ is placed on the edge of the card and padding is set internally.
 <si-docs-api component="SiCardComponent"></si-docs-api>
 
 ### Native HTML markup
-
-#### Image card
-
-```html
-<div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
-</div>
-```
 
 #### Body
 
@@ -159,6 +146,24 @@ Use the following classes to style standard content elements within a card. It's
   </div>
 </div>
 ```
+
+#### Images and text
+
+To properly integrate an image with a card, apply the `.card-img-top` or `.card-img-bottom` class to your `<img>` element.
+This automatically rounds the image's top or bottom corners to match the card's border radius.
+
+```html
+<div class="card" style="width: 18rem;">
+  <img src="..." class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+```
+
+#### List groups
 
 ### Card container
 
