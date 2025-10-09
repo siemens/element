@@ -5,7 +5,7 @@
 Notifications keep users updated on changes, prompt timely responses to important updates, and guide them through interactions.
 They can be delivered through various channels, such as push notifications, emails, or texts.
 
-Element provides guidance on **in-app notifications**, which deliver updates and feedback within the application experience.
+Element provides [guidance](./../../patterns/notifications.md) on **in-app notifications**, which deliver updates and feedback within the application experience.
 
 ### Notification anatomy
 

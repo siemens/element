@@ -56,11 +56,11 @@ The following examples show how to structure notifications, adapt based on the u
 
 The popover is accessed through the application header, providing quick,
 non-intrusive access to recent notifications without disrupting the workflow.
-Users can select a notification to be redirected to the relevant page, task, or item.
+Users can select a [notification item](./../components/status-notifications/notification-item.md) to be redirected to the relevant page, task, or item.
 
 ![Notifications popopver](images/notifications-popover.png)
 
-> 1. Global actions (optional), 2. Search (optional), 3. Notification, 4. Footer (optional)
+> 1. Global actions (optional), 2. Search (optional), 3. [Notification item](./../components/status-notifications/notification-item.md), 4. Footer (optional)
 
 The popover supports various actions. The footer and header are reserved for global actions.
 Additionally, it can include a search function for quick filtering.
@@ -81,7 +81,7 @@ Just like in the popover, users can select a notification to be redirected to th
 
 ![Notifications in side panel](images/notifications-side-panel.png)
 
-> 1. Global actions (optional), 2. Search (optional), 3. Notification
+> 1. Global actions (optional), 2. Search (optional), 3. [Notification item](./../components/status-notifications/notification-item.md)
 
 #### Action placement
 
