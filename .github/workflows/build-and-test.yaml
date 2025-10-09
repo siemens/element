@@ -121,6 +121,7 @@ jobs:
         if: github.event_name == 'pull_request'
         with:
           recreate: true
+          # test comment permissions
           header: coverage
           path: coverage-badge.md
       - name: Generate coverage summary JSON
