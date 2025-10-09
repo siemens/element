@@ -4,12 +4,22 @@
  */
 import { isRTL } from './rtl';
 
+/** @deprecated Use the CDK Overlay instead. */
 export type Direction = 'down' | 'up' | 'start' | 'end';
+
+/** @deprecated Use the CDK Overlay instead. */
 export type PlacementBasicVertical = 'top' | 'bottom';
+
+/** @deprecated Use the CDK Overlay instead. */
 export type PlacementBasic = 'start' | 'end' | PlacementBasicVertical;
+
+/** @deprecated Use the CDK Overlay instead. */
 export type Placement = '' | PlacementBasic | `${PlacementBasic} ${PlacementBasic}`;
+
+/** @deprecated Use the CDK Overlay instead. */
 export type Align = 'start' | 'center' | 'end';
 
+/** @deprecated Use the CDK Overlay instead. */
 export const AXIS_X = {
   axis: 'X',
   directionRegular: 'end',
@@ -19,6 +29,8 @@ export const AXIS_X = {
   size: 'width',
   windowSize: 'innerWidth'
 } as const;
+
+/** @deprecated Use the CDK Overlay instead. */
 export const AXIS_Y = {
   axis: 'Y',
   directionRegular: 'down',
@@ -28,6 +40,8 @@ export const AXIS_Y = {
   size: 'height',
   windowSize: 'innerHeight'
 } as const;
+
+/** @deprecated Use the CDK Overlay instead. */
 export const BOUNDING_RECT_WINDOW = {
   getBoundingClientRect: () => ({
     top: 0,
@@ -37,6 +51,7 @@ export const BOUNDING_RECT_WINDOW = {
   })
 };
 
+/** @deprecated Use the CDK Overlay instead. */
 export const resolveReference = (
   hostElement: HTMLElement,
   reference: string
@@ -237,6 +252,7 @@ const getRelativeContentPosition = (params: {
   return { left: leftOffset, top: topOffset };
 };
 
+/** @deprecated Use the CDK Overlay instead. */
 export const getContentPositionString = (params: {
   contentElement: HTMLElement;
   direction: Direction;
@@ -257,6 +273,7 @@ export const getContentPositionString = (params: {
   return `translate3d(${position.left}px, ${position.top}px, 0px)`;
 };
 
+/** @deprecated Use the CDK Overlay instead. */
 export const responsivelyCheckDirection = (params: {
   isScrolling?: boolean;
   currentDirection: Direction;
