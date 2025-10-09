@@ -9,7 +9,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
 @Component({
   selector: 'app-sample',
   imports: [SiCardComponent],
-  templateUrl: './bootstrap-card-grid.html',
+  templateUrl: './card-group.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
