@@ -15,7 +15,7 @@ jobs:
   vrt-update:
     runs-on: ubuntu-24.04
     container: mcr.microsoft.com/playwright:v1.56.0-noble
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.run_attempt > 1)
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.run_attempt > 1 && contains(fromJSON('["COLLABORATOR", "MEMBER", "OWNER"]'), github.event.pull_request.author_association))
     steps:
       - name: Check execution conditions and set target ref
         id: check

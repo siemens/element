@@ -9,7 +9,7 @@
 
 // Seems like an esbuild problem what we need to solve here.
 // Without this flag-icon would emit two icons with the same name although they are located in different directories.
-// Webpack could handle this, esbuild cannot.
+// Webpack could handle this, esbuild cannot. test to skip VRT
 @use 'flag-icons/sass/flag-icons' with (
   $flag-icons-use-square: false
 );
