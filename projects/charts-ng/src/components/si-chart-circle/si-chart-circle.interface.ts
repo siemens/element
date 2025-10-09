@@ -21,6 +21,18 @@ export interface CircleChartSeries {
   name: string;
   radius?: string[]; // array length 2 e.g. [ '0%', '40%' ]
   data: CircleChartData[];
+  /**
+   * The start angle from which the circle should start, the range is [0, 360].
+   * @defaultValue 90
+   */
+  startAngle?: number;
+  /**
+   * The end angle where the circle should end.
+   *
+   * @defaultValue 'auto' - In this case the end Angle is calculated
+   * automatically based on startAngle to ensure it is a complete circle.
+   */
+  endAngle?: number;
   label?: {
     /**
      * A custom label formatter based on echarts, some commonly used variations can be
