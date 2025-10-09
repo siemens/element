@@ -82,8 +82,6 @@ With the bootstrap 12 column grid system in place, cards will first vary their w
 
 ## Code ---
 
-The card component is based on the [Bootstrap cards](https://getbootstrap.com/docs/5.1/components/card/).
-
 For the maximize/restore functionality to work correctly the cards container/working area needs to have `position: relative;`.
 
 ### Usage
@@ -110,6 +108,57 @@ is placed on the edge of the card and padding is set internally.
 <si-docs-component example="si-card/si-card" height="300"></si-docs-component>
 
 <si-docs-api component="SiCardComponent"></si-docs-api>
+
+### Native HTML markup
+
+#### Image card
+
+```html
+<div class="card" style="width: 18rem;">
+  <img src="..." class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card’s content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+```
+
+#### Body
+
+The `.card-body` class provides essential padding for content within a card. Use it as the primary container for text, images, or any other elements that need to be grouped and spaced correctly inside a `<div class="card">`.
+
+```html
+<div class="card">
+  <div class="card-body">
+  This is some text within a card body.
+  </div>
+</div>
+```
+
+#### Titles, text, and links
+
+Use the following classes to style standard content elements within a card. It's best practice to place all these elements inside a `.card-body` container for correct padding and alignment.
+
+- `.card-title` (on an `<h1>` through `<h6>`): Gives a large, primary heading to your card content.
+- `.card-subtitle` (on an `<h1>` through `<h6>`): Used for secondary text below the title, often styled with a muted color or smaller font size for distinction.
+- `.card-text` (on a `<p>` tag): The primary class for body text.
+- `.card-link` (on an `<a>` tag): Styles a link to be used inside the card. Multiple links placed together will be spaced appropriately.
+
+```html
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <h6 class="card-subtitle mb-2 text-secondary">Card subtitle</h6>
+    <p class="card-text">
+      Some quick example text to build on the card title and make up the bulk of the card’s
+      content.
+    </p>
+    <a href="#" class="card-link">Card link</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
+</div>
+```
 
 ### Card container
 
