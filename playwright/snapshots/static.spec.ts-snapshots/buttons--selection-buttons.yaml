@@ -11,7 +11,7 @@
   - radio "One pane" [checked]
   - radio "Two panes"
   - radio "Three panes"
-- heading "Small size" [level=5]
+- heading "Small size" [level=4]
 - group "Basic radio toggle button group":
   - radio "Day" [checked]
   - radio "Week"
