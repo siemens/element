@@ -18,14 +18,19 @@ import { SiCustomLegendComponent } from '../si-custom-legend/si-custom-legend.co
 export class SiChartSunburstComponent extends SiChartComponent {
   /** The series for the chart. */
   readonly series = input<SunburstSeriesOption>();
-  /** @defaultValue false */
+  /**
+   * @deprecated Use `tooltip` instead.
+   * @defaultValue false
+   */
   readonly toolTip = input(false);
+  /** @defaultValue false */
+  readonly tooltip = input(false);
 
   protected override applyOptions(): void {
     const series = this.series();
     this.actualOptions = {
       series: series ? (Object.assign({ type: 'sunburst' }, series) as any) : [],
-      tooltip: { show: this.toolTip() }
+      tooltip: { show: this.toolTip() || this.tooltip() }
     };
 
     this.applyTitles();
