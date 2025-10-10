@@ -8,7 +8,7 @@ on:
         required: true
       MAPTILER_KEY:
         required: true
-  pull_request:
+  pull_request_target:
 
 # Stops the workflow run if the PR is updated
 # https://stackoverflow.com/a/72408109
