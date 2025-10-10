@@ -7,3 +7,4 @@ export * from './dashboards-ng-mappings.js';
 export * from './element-ng-mappings.js';
 export * from './element-translate-ng-mappings.js';
 export * from './maps-ng-mappings.js';
+export * from './style-mappings.js';

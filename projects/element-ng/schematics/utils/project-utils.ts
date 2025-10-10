@@ -2,12 +2,28 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { normalize, workspaces } from '@angular-devkit/core';
+import { JsonValue, normalize, workspaces } from '@angular-devkit/core';
 import { ProjectDefinition } from '@angular-devkit/core/src/workspace/definitions';
 import { SchematicContext, SchematicsException, Tree } from '@angular-devkit/schematics';
 import { dirname, isAbsolute, resolve } from 'path';
 
 import { parseTsconfigFile } from './ts-utils.js';
+
+export const getGlobalStyles = (tree: Tree): string[] => {
+  const globalStyles = new Set<string>();
+
+  for (const target of getTargets(getWorkspace(tree))) {
+    if (target.options?.styles && Array.isArray(target.options.styles)) {
+      target.options.styles.forEach((style: JsonValue) => {
+        if (typeof style === 'string') {
+          globalStyles.add(normalize(style));
+        }
+      });
+    }
+  }
+
+  return [...globalStyles];
+};
 
 export const getWorkspace = (tree: Tree): Record<string, any> => {
   const workspace = tree.read('/angular.json');
