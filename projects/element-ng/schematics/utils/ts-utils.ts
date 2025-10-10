@@ -4,10 +4,35 @@
  */
 import { normalize } from '@angular-devkit/core';
 import { SchematicsException, Tree } from '@angular-devkit/schematics';
-import { isAbsolute } from 'path';
+import { dirname, isAbsolute } from 'path';
 import ts from 'typescript';
 
 import { SchematicsFileSystem } from './schematics-file-system';
+
+export interface AngularTemplate {
+  filePath: string;
+  offset: number;
+  text: string;
+}
+
+export const findClassDecorators = (
+  filePaths: string[],
+  name: string,
+  tree: Tree
+): ts.Decorator[] => {
+  const decorators: ts.Decorator[] = [];
+  for (const filePath of filePaths) {
+    const source = getSource(tree, filePath);
+    ts.forEachChild(source, (node: ts.Node) => {
+      // Skipping any non component declarations
+      if (!ts.isClassDeclaration(node)) {
+        return;
+      }
+      decorators.push(...getClassDecorators(node).filter(d => name === getDecoratorName(d)));
+    });
+  }
+  return decorators;
+};
 
 /**
  * Reads and parses a tsconfig file from the given path.
@@ -85,6 +110,48 @@ export const findNodes = <T extends ts.Node>(
   return arr;
 };
 
+export const getClassDecorators = (classNode: ts.ClassDeclaration): ts.Decorator[] => {
+  return Array.from(ts.getDecorators(classNode) ?? []);
+};
+
+export const getComponentMetadata = (
+  decorator: ts.Decorator
+): Record<string, { offset: number; text: string }> => {
+  const args = (decorator.expression as ts.CallExpression).arguments;
+  const configObject = args.at(0) as ts.ObjectLiteralExpression;
+  const metadata: Record<string, any> = {};
+  configObject.properties.forEach(property => {
+    if (!ts.isPropertyAssignment(property) || !ts.isIdentifier(property.name)) {
+      return;
+    }
+
+    const propertyName = property.name.text;
+    const initializer = property.initializer;
+    property.initializer.getStart();
+    if (ts.isStringLiteral(initializer) || ts.isNoSubstitutionTemplateLiteral(initializer)) {
+      metadata[propertyName] = { offset: initializer.getStart(), text: initializer.text };
+    }
+  });
+
+  return metadata;
+};
+
+export const getDecoratorName = (decorator: ts.Decorator): string | undefined => {
+  const expression = decorator.expression;
+
+  // Handle @DecoratorName
+  if (ts.isIdentifier(expression)) {
+    return expression.text;
+  }
+
+  // Handle @DecoratorName(...args)
+  if (ts.isCallExpression(expression) && ts.isIdentifier(expression.expression)) {
+    return expression.expression.text;
+  }
+
+  return undefined;
+};
+
 /**
  * Gets the import nodes from a TypeScript file which start the given import path.
  */
@@ -115,6 +182,14 @@ export const getImportNodes = (
 };
 
 /**
+ * Reads and returns a TypeScript source file from the given tree.
+ */
+export const getSource = (tree: Tree, filePath: string): ts.SourceFile => {
+  const content = tree.readText(filePath).replace(/^\uFEFF/, '');
+  return ts.createSourceFile(filePath, content, ts.ScriptTarget.Latest, true);
+};
+
+/**
  * Gets the imported symbols from an import declaration.
  */
 export const getSymbols = (node: ts.ImportDeclaration): ts.NodeArray<ts.ImportSpecifier> | [] => {
@@ -122,6 +197,29 @@ export const getSymbols = (node: ts.ImportDeclaration): ts.NodeArray<ts.ImportSp
   return node.importClause?.namedBindings && ts.isNamedImports(node.importClause.namedBindings)
     ? node.importClause.namedBindings.elements
     : [];
+};
+
+export const getTemplate = (tree: Tree, decorator: ts.Decorator): AngularTemplate | undefined => {
+  const metadata = getComponentMetadata(decorator);
+  const filePath = decorator.getSourceFile().fileName;
+  if (metadata.template) {
+    return {
+      filePath: filePath,
+      offset: metadata.template.offset + 1, // For the beginning single quote
+      text: metadata.template.text
+    };
+  } else if (metadata.templateUrl) {
+    const templatePath = normalize(`${dirname(filePath)}/${metadata.templateUrl.text}`);
+    const templateContent = tree.readText(templatePath);
+    if (templateContent) {
+      return {
+        filePath: templatePath,
+        offset: 0,
+        text: templateContent.toString()
+      };
+    }
+  }
+  return undefined;
 };
 
 const visitDirectory = (fs: SchematicsFileSystem, dirPath: string): string[] => {
