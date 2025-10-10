@@ -2,7 +2,7 @@
 
 /* stylelint-disable declaration-no-important */
 
-body:has(.cdk-drag-preview) {
+body:has(.cdk-drag-preview, .ui-draggable-dragging) {
   cursor: grabbing !important;
 
   .cdk-drop-list:not(.cdk-drop-list-dragging) {
