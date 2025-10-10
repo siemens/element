@@ -5,6 +5,11 @@
       "description": "A blank schematic.",
       "factory": "./hello-world/index#helloWorld"
     },
+    "initial-migration": {
+      "description": "A initial migration schematic for element 48",
+      "factory": "./initial-migration/index#initialMigration",
+      "schema": "./initial-migration/schema.json"
+    },
     "simpl-siemens-migration": {
       "description": "A migration schematic for replacing @simpl/* packages with @siemens/*",
       "factory": "./simpl-siemens-migration/index#simplSiemensMigration",

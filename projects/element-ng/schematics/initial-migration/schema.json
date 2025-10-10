@@ -1,0 +1,8 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "InitialMigration",
+  "title": "Initial Migration Schema",
+  "type": "object",
+  "properties": {},
+  "required": []
+}
