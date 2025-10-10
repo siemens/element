@@ -16,6 +16,20 @@ import { splitIpV6Sections } from './address-utils';
 import { ipV6Validator } from './address-validators';
 import { AddrInputEvent, SiIpInputDirective } from './si-ip-input.directive';
 
+/**
+ * Directive for IPv6 address input fields.
+ *
+ * Usage:
+ *
+ * ```ts
+ * import { SiIp6InputDirective } from '@siemens/element-ng/ip-input';
+ *
+ * @Component({
+ *   template: `<input type="text" class="form-control" siIpV6 />`,
+ *   imports: [SiIp6InputDirective, ...]
+ * })
+ * ```
+ */
 @Directive({
   selector: 'input[siIpV6]',
   providers: [
@@ -44,7 +58,7 @@ export class SiIp6InputDirective
     return this.validatorFn()(control);
   }
 
-  maskInput(e: AddrInputEvent): void {
+  protected maskInput(e: AddrInputEvent): void {
     const { value, pos, type } = e;
     if (!value) {
       this.renderer.setProperty(this.inputEl, 'value', '');
