@@ -3,6 +3,11 @@
     <div class="card-header">Line micro chart</div>
     <div class="card-body d-flex flex-row gap-8 align-items-center">
       <si-microchart-line [series]="lineSeries" />
+      <si-microchart-line
+        markerColor="element-data-2"
+        [showMarkers]="true"
+        [series]="lineMarkerSeries"
+      />
     </div>
   </div>
 

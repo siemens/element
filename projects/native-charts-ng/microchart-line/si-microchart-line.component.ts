@@ -35,27 +35,67 @@ export class SiMicrochartLineComponent {
   readonly width = input<number>(64);
   /** @defaultValue 24 */
   readonly height = input<number>(24);
+  /**
+   * Display circular markers at each data point on the line.
+   * When enabled, markers help highlight individual values and improve readability.
+   *
+   * @defaultValue false
+   */
+  readonly showMarkers = input<boolean>(false);
+  /**
+   * Line width in pixels.
+   *
+   * @defaultValue 2
+   */
+  readonly lineWidth = input<number>(2);
+  /**
+   * Marker color token. If not provided, uses the series color token.
+   * Use a data-color. See: {@link https://element.siemens.io/fundamentals/colors/data-visualization-colors/#tokens}
+   *
+   * @example "element-data-2"
+   */
+  readonly markerColor = input<string>();
 
-  protected strokeWidth = 2;
+  protected readonly markerRadius = computed(() => this.lineWidth());
+  protected readonly viewBox = computed(() => {
+    return `0 0 ${this.width()} ${this.height()}`;
+  });
 
   protected readonly path = computed(() => {
     const series = this.series();
     if (!series || series.values.length < 2) {
       return '';
     }
-    const points = this.mapToCoordinates(series.values, this.width(), this.height());
+    const points = this.mapToCoordinates(series.values);
     return makePolyline(points);
   });
 
-  private mapToCoordinates(values: number[], width: number, height: number): Coordinate[] {
+  protected readonly markerPoints = computed(() => {
+    const series = this.series();
+    if (!series || series.values.length === 0) {
+      return [];
+    }
+    return this.mapToCoordinates(series.values);
+  });
+
+  private mapToCoordinates(values: number[]): Coordinate[] {
     const max = Math.max(...values);
     const min = Math.min(...values);
-    const scaleX = width / (values.length - 1);
-    const scaleY = max !== min ? height / (max - min) : 1;
+
+    // Calculate available space, accounting for marker radius or line width
+    // This helps avoid the markers on the edges or the edges of the line getting cropped.
+    const horizontalMargin = this.showMarkers() ? this.markerRadius() : this.lineWidth() / 2;
+    const verticalMargin = this.showMarkers() ? this.markerRadius() : this.lineWidth() / 2;
+
+    const availableWidth = this.width() - horizontalMargin * 2;
+    const availableHeight = this.height() - verticalMargin * 2;
+
+    const scaleX = values.length > 1 ? availableWidth / (values.length - 1) : 0;
+    const scaleY = max !== min ? availableHeight / (max - min) : 1;
 
     return values.map((value, i) => ({
-      x: i * scaleX,
-      y: height - (value - min) * scaleY
+      x: horizontalMargin + i * scaleX,
+      y: this.height() - verticalMargin - (value - min) * scaleY
     }));
   }
 }
