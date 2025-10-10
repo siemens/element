@@ -1,0 +1,101 @@
+/**
+ * Copyright (c) Siemens 2016 - 2025
+ * SPDX-License-Identifier: MIT
+ */
+import { Component, inject, signal } from '@angular/core';
+import {
+  SiChatInputComponent,
+  ActionBarItem,
+  ChatInputAttachment
+} from '@siemens/element-ng/chat-messages';
+import { MenuItemAction } from '@siemens/element-ng/menu';
+import { LOG_EVENT } from '@siemens/live-preview';
+
+@Component({
+  selector: 'app-sample',
+  imports: [SiChatInputComponent],
+  templateUrl: './si-chat-input.html'
+})
+export class SampleComponent {
+  logEvent = inject(LOG_EVENT);
+
+  readonly inputValue = signal('');
+  readonly sending = signal(false);
+  readonly disabled = signal(false);
+
+  actions: ActionBarItem[] = [
+    {
+      type: 'action',
+      id: 'camera',
+      label: 'Take photo',
+      icon: 'element-camera',
+      action: () => this.logEvent('Camera clicked')
+    },
+    {
+      type: 'action',
+      id: 'formatting',
+      label: 'Text formatting',
+      icon: 'element-brush',
+      action: () => this.logEvent('Text formatting clicked')
+    }
+  ];
+
+  secondaryActions: MenuItemAction[] = [
+    {
+      type: 'action',
+      id: 'schedule',
+      label: 'Schedule message',
+      icon: 'element-clock',
+      action: () => this.logEvent('Schedule clicked')
+    },
+    {
+      type: 'action',
+      id: 'save-draft',
+      label: 'Save as draft',
+      icon: 'element-save',
+      action: () => this.logEvent('Save draft clicked')
+    }
+  ];
+
+  preAttachedFiles: ChatInputAttachment[] = [
+    {
+      id: 'pre1',
+      name: 'project-spec.pdf',
+      size: 1234567,
+      type: 'application/pdf',
+      file: new File([''], 'project-spec.pdf', { type: 'application/pdf' })
+    },
+    {
+      id: 'pre2',
+      name: 'mockup.png',
+      size: 987654,
+      type: 'image/png',
+      file: new File([''], 'mockup.png', { type: 'image/png' })
+    }
+  ];
+
+  onMessageSent(event: { content: string; attachments: ChatInputAttachment[] }): void {
+    this.logEvent(`Message sent: "${event.content}" with ${event.attachments.length} attachments`);
+
+    this.sending.set(true);
+    setTimeout(() => {
+      this.sending.set(false);
+    }, 2000);
+  }
+
+  onFileError(error: any): void {
+    this.logEvent(`File error: ${error.errorText} - ${error.fileName}`);
+  }
+
+  toggleDisabled(): void {
+    this.disabled.update(current => !current);
+  }
+
+  toggleSending(): void {
+    this.sending.update(current => !current);
+  }
+
+  setInputValue(value: string): void {
+    this.inputValue.set(value);
+  }
+}

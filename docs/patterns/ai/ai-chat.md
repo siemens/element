@@ -83,3 +83,13 @@ When the AI cannot complete a task due to a known limitation, it should respond 
 These are not treated as errors and do not require a separate notification.
 
 ![AI errors and limitations](images/ai-errors.png)
+
+## Code ---
+
+The **si-chat-container** component provides a complete AI chat interface, it should be inserted into a layout with fixed height, if no fixed height is provided, please set a height in pixels.
+
+<si-docs-component example="si-chat-container/si-chat-container"></si-docs-component>
+
+<si-docs-api component="SiChatContainerComponent"></si-docs-api>
+
+<si-docs-types></si-docs-types>

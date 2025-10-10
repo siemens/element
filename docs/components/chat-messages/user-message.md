@@ -43,4 +43,43 @@ following the AI pattern guidelines.
 
 ## Code ---
 
-Angular component is coming soon.
+<si-docs-component example="si-user-message/si-user-message"></si-docs-component>
+
+<si-docs-api component="SiUserMessageComponent"></si-docs-api>
+
+<si-docs-types></si-docs-types>
+
+## Code (Base Components) ---
+
+### Chat Message
+
+Use these base components to build custom chat message interfaces.
+
+The **si-chat-message** component is a wrapper component, it has slots for different parts of a chat message.
+
+The slots are:
+- `si-attachment-list/si-badge` - For displaying attachments related to the message.
+- `si-avatar/si-icon/img` - For the avatar or icon representing the message sender.
+- `si-action-bar/si-menu-bar/button` - For actions related to the message.
+
+<si-docs-component example="si-chat-message/si-chat-message"></si-docs-component>
+
+<si-docs-api component="SiChatMessageComponent"></si-docs-api>
+
+### Attachment List
+
+<si-docs-component example="si-attachment-list/si-attachment-list"></si-docs-component>
+
+<si-docs-api component="SiAttachmentListComponent"></si-docs-api>
+
+### Action Bar
+
+<si-docs-component example="si-action-bar/si-action-bar"></si-docs-component>
+
+<si-docs-api component="SiActionBarComponent"></si-docs-api>
+
+### Markdown Content
+
+<si-docs-component example="si-markdown-content/si-markdown-content"></si-docs-component>
+
+<si-docs-api component="SiMarkdownContentComponent"></si-docs-api>
