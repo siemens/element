@@ -23,6 +23,7 @@
       (submitCriterion)="focusNext($index, $event)"
       (deleteCriterion)="deleteCriterion(criterion.value, $index, $event)"
       (valueChange)="valueChange($event, criterion)"
+      (searchCriteriaBlur)="handleSearchCriteriaBlur()"
     />
   }
   <!-- criterion input -->
