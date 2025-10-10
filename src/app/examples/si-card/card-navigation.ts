@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './card.html'
+  templateUrl: './card-navigation.html'
 })
 export class SampleComponent {}

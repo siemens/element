@@ -111,19 +111,35 @@ is placed on the edge of the card and padding is set internally.
 
 ### Native HTML markup
 
-#### Body
+Cards support a wide variety of content, including images, text, list groups, links, and more. Below are examples of what’s supported.
 
-The `.card-body` class provides essential padding for content within a card. Use it as the primary container for text, images, or any other elements that need to be grouped and spaced correctly inside a `<div class="card">`.
+#### Content types
+
+##### Header, body and footer
+
+Cards allow to group your content in three sections:
+
+- Header (optional) apply `.card-header` to <h*> elements or a `<div>`.
+- Body which provides essential padding for content within a card. Use it as the primary container for text, images, or any other elements that need to be grouped and spaced correctly inside a card.
+- Footer (optional) apply `.card-footer` which stick to the bottom of the card
 
 ```html
 <div class="card">
+  <div class="card-header">
+    Card header
+  </div>
   <div class="card-body">
-  This is some text within a card body.
+    <h5 class="card-title">Special title treatment</h5>
+    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+  <div class="card-footer">
+    Card footer
   </div>
 </div>
 ```
 
-#### Titles, text, and links
+##### Titles, text, and links
 
 Use the following classes to style standard content elements within a card. It's best practice to place all these elements inside a `.card-body` container for correct padding and alignment.
 
@@ -147,13 +163,13 @@ Use the following classes to style standard content elements within a card. It's
 </div>
 ```
 
-#### Images and text
+##### Images and text
 
 To properly integrate an image with a card, apply the `.card-img-top` or `.card-img-bottom` class to your `<img>` element.
 This automatically rounds the image's top or bottom corners to match the card's border radius.
 
 ```html
-<div class="card" style="width: 18rem;">
+<div class="card">
   <img src="..." class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title">Card title</h5>
@@ -163,7 +179,179 @@ This automatically rounds the image's top or bottom corners to match the card's 
 </div>
 ```
 
-#### List groups
+##### List groups
+
+Create lists of content in a card with a flush list group.
+
+```html
+<div class="card">
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">An item</li>
+    <li class="list-group-item">A second item</li>
+    <li class="list-group-item">A third item</li>
+  </ul>
+</div>
+```
+
+Combine a card list group with a header.
+
+```html
+<div class="card">
+  <div class="card-header">
+    Header text
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">An item</li>
+    <li class="list-group-item">A second item</li>
+    <li class="list-group-item">A third item</li>
+  </ul>
+</div>
+```
+
+Apply a footer to card list group.
+
+```html
+<div class="card">
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">An item</li>
+    <li class="list-group-item">A second item</li>
+    <li class="list-group-item">A third item</li>
+  </ul>
+  <div class="card-footer">
+    Card footer
+  </div>
+</div>
+```
+
+#### Sizing
+
+Cards assume no specific width to start, so they’ll be 100% wide unless otherwise stated. You can change this as needed with custom CSS, grid classes, grid Sass mixins, or utilities.
+
+##### Grid markup
+
+Using the grid, wrap cards in columns and rows as needed.
+
+```html
+<div class="row gap-5">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+##### Sizing utils
+
+Use our handful of available sizing utilities to quickly set a card’s width.
+
+```html
+<!-- Take 75% of the available viewport width -->
+<div class="card w-75 mb-3">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <a href="#" class="btn btn-primary">Button</a>
+  </div>
+</div>
+<!-- Take 50% of the available viewport width -->
+<div class="card w-50">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <a href="#" class="btn btn-primary">Button</a>
+  </div>
+</div>
+```
+
+##### Custom CSS
+
+Use custom CSS in your stylesheets or as inline styles to set a width.
+
+```html
+<!-- Take 18 rem width where em unit is relative to the font-size of the parent -->
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">Special title treatment</h5>
+    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+```
+
+#### Text alignment
+
+You can quickly change the text alignment of any card either entirely or only specific parts via text align classes.
+
+```html
+<!-- Text alignment start (default) -->
+<div class="card mb-3">
+  <div class="card-body">
+    <h5 class="card-title">Special title treatment</h5>
+    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+<!-- Text alignment centered -->
+<div class="card text-center mb-3">
+  <div class="card-body">
+    <h5 class="card-title">Special title treatment</h5>
+    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+<!-- Text alignment end -->
+<div class="card text-end">
+  <div class="card-body">
+    <h5 class="card-title">Special title treatment</h5>
+    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+```
+
+#### Navigation
+
+Add some navigation to a card’s header (or block) with nav components.
+
+```html
+<div class="card text-center">
+  <div class="card-header">
+    <!-- Apply header navigation -->
+    <ul class="nav nav-tabs card-header-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="true" href="#">Active</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+      </li>
+    </ul>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Special title treatment</h5>
+    <p class="card-text">
+      With supporting text below as a natural lead-in to additional content.
+    </p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+```
 
 ### Card container
 
@@ -177,7 +365,7 @@ The samples help to ensure compatibility between the element components and Boot
 
 See [Bootstrap documentation](https://getbootstrap.com/docs/5.1/components/card/#card-groups)
 
-<si-docs-component example="si-card/bootstrap-card-group" height="500"></si-docs-component>
+<si-docs-component example="si-card/card-group" height="500"></si-docs-component>
 
 #### Grid cards
 
