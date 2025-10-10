@@ -5,9 +5,22 @@
 import { JsonValue, normalize, workspaces } from '@angular-devkit/core';
 import { ProjectDefinition } from '@angular-devkit/core/src/workspace/definitions';
 import { SchematicContext, SchematicsException, Tree } from '@angular-devkit/schematics';
-import { dirname, isAbsolute, resolve } from 'path';
+import { dirname, isAbsolute, join, resolve } from 'path';
 
 import { parseTsconfigFile } from './ts-utils.js';
+
+export const getAllPackageJson = (tree: Tree): string[] => {
+  const packageJsonPaths = new Set<string>(['/package.json']);
+  const workspace = getWorkspace(tree);
+  for (const [, projectRaw] of Object.entries(workspace.projects)) {
+    const projectDefinition = projectRaw as ProjectDefinition;
+    const packageJsonPath = normalize(join(projectDefinition.root, 'package.json'));
+    if (tree.exists(packageJsonPath)) {
+      packageJsonPaths.add(packageJsonPath);
+    }
+  }
+  return [...packageJsonPaths];
+};
 
 export const getGlobalStyles = (tree: Tree): string[] => {
   const globalStyles = new Set<string>();
