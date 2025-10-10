@@ -6,6 +6,12 @@
 }
 
 ::ng-deep {
+  body:not(:has(.ui-draggable-dragging)) {
+    .draggable-overlay {
+      cursor: grab;
+    }
+  }
+
   si-content-action-bar {
     // Lift the content action bar above the draggable-overlay
     // to enable users to click the edit button, when an image
@@ -54,7 +60,6 @@
 }
 
 .draggable-overlay {
-  cursor: move;
   inset-block-end: map.get(variables.$spacers, 8);
   inset-block-start: 40px;
   inset-inline: map.get(variables.$spacers, 8);
