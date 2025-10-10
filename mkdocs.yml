@@ -202,10 +202,14 @@ theme:
     - content.action.edit
 
 extra_javascript:
+  - '_src/js/version-redirect.js'
   - '//w3.siemens.com/ote/ote_config.js'
   - '//w3.siemens.com/ote/sinet/ote.js'
   - 'https://assets.adobedtm.com/5dfc7d97c6fb/f16b45bec907/launch-af252bb19983.min.js'
 extra:
+  version:
+    provider: mike
+    default: latest
   links:
     - name: 'GitHub'
       value: 'https://github.com/siemens/element'
