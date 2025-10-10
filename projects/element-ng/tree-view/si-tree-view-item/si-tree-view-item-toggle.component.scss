@@ -1,0 +1,75 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+@use '../si-tree-view-variables';
+
+.si-tree-view-item-dropdown-caret,
+.si-tree-view-item-dropdown-caret:hover,
+.si-tree-view-item-icon,
+.si-tree-view-item-icon:hover {
+  color: variables.$element-text-primary;
+  text-decoration: none;
+  font-size: var(--si-tree-view-icon-size);
+}
+
+.si-tree-view-item-icon {
+  padding-inline-end: map.get(variables.$spacers, 4);
+
+  &.si-tree-view-item-icon-spacer {
+    box-sizing: content-box;
+    inline-size: var(--si-tree-view-icon-size);
+  }
+}
+
+.si-tree-view-item-icon {
+  margin-block: 0;
+  margin-inline: calc(var(--si-tree-view-padding-base-horizontal) / 4);
+}
+
+:host-context(.si-tree-view-item-group) {
+  .si-tree-view-item-dropdown-caret:hover,
+  .si-tree-view-item-icon:hover {
+    cursor: pointer;
+  }
+}
+
+:host-context(.si-tree-view-li.si-tree-view-li-item.si-tree-view-item-not-selectable) {
+  .si-tree-view-item-dropdown-caret {
+    cursor: pointer;
+  }
+
+  .si-tree-view-item-toggle-end {
+    cursor: pointer;
+
+    .si-tree-view-item-icon {
+      color: variables.$element-text-primary;
+    }
+  }
+}
+
+:host-context(si-tree-view-item.cdk-drag-preview) {
+  .si-tree-view-item-toggle {
+    padding-inline-start: 12px !important; // stylelint-disable-line declaration-no-important
+  }
+}
+
+.si-tree-stretch-center {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  text-decoration: none;
+}
+
+.si-tree-view-item-toggle.disabled .si-tree-view-item-icon {
+  inline-size: map.get(variables.$spacers, 8);
+}
+
+.si-tree-stretch-center.si-tree-view-item-toggle-end .si-tree-view-item-icon {
+  margin-inline-start: -1 * map.get(variables.$spacers, 2);
+}
+
+si-loading-spinner {
+  --loading-spinner-size: var(--si-tree-view-icon-size);
+}

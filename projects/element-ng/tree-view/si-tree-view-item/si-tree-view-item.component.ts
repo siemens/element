@@ -23,7 +23,6 @@ import {
 } from '@angular/core';
 import { correctKeyRTL, MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { SiIconComponent } from '@siemens/element-ng/icon';
-import { SiLoadingSpinnerComponent } from '@siemens/element-ng/loading-spinner';
 import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { asyncScheduler, Subject, Subscription } from 'rxjs';
@@ -43,6 +42,7 @@ import {
   removeUndefinedState,
   setActive
 } from '../si-tree-view.utils';
+import { SiTreeViewItemToggleComponent } from './si-tree-view-item-toggle.component';
 
 @Component({
   selector: 'si-tree-view-item',
@@ -52,9 +52,9 @@ import {
     NgClass,
     NgTemplateOutlet,
     SiIconComponent,
-    SiLoadingSpinnerComponent,
     SiMenuFactoryComponent,
-    SiTranslatePipe
+    SiTranslatePipe,
+    SiTreeViewItemToggleComponent
   ],
   templateUrl: './si-tree-view-item.component.html',
   styleUrl: './si-tree-view-item.component.scss',

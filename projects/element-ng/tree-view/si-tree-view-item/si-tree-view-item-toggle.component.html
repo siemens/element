@@ -1,0 +1,24 @@
+@if (!spacer()) {
+  <a
+    class="si-tree-stretch-center si-tree-view-item-toggle"
+    tabindex="-1"
+    [class.si-tree-view-item-toggle-end]="positionEnd()"
+    [class.disabled]="disabled()"
+    [style.margin-inline-start]="biggerPaddingStart()"
+    [style.padding-inline-start]="paddingStart()"
+    (click)="itemToggled.emit()"
+  >
+    @if (isExpanding()) {
+      <si-loading-spinner [@.disabled]="true" />
+    } @else {
+      <i aria-hidden="true" [class]="toggleIcon()" [ngClass]="folderStateClass()"></i>
+    }
+  </a>
+} @else {
+  <div
+    class="si-tree-stretch-center si-tree-view-item-toggle"
+    [class.si-tree-view-item-toggle-end]="positionEnd()"
+  >
+    <i aria-hidden="true" class="si-tree-view-item-icon si-tree-view-item-icon-spacer"></i>
+  </div>
+}
