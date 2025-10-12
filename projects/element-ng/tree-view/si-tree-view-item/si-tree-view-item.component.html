@@ -16,24 +16,13 @@
   >
     <div class="si-tree-view-item" (mousedown)="onMouseDownTreeItem($event)">
       @if (showFolderStateStart && treeItem.state !== 'leaf') {
-        <a
-          class="si-tree-stretch-center si-tree-view-item-toggle"
-          tabindex="-1"
-          [style.margin-inline-start]="'-' + biggerPaddingStart"
-          [style.padding-inline-start]="paddingStart"
-          (click)="onItemFolderClicked()"
-        >
-          @if (isExpanding) {
-            <si-loading-spinner [@.disabled]="true" />
-          }
-          @if (!isExpanding) {
-            <i
-              aria-hidden="true"
-              class="si-tree-view-item-dropdown-caret"
-              [ngClass]="getItemFolderStateClass()"
-            ></i>
-          }
-        </a>
+        <si-tree-view-item-toggle
+          [isExpanding]="isExpanding"
+          [biggerPaddingStart]="'-' + biggerPaddingStart"
+          [paddingStart]="paddingStart"
+          [folderStateClass]="getItemFolderStateClass()"
+          (itemToggled)="onItemFolderClicked()"
+        />
       }
       @if (showCheckOrOptionBox) {
         <a class="input-box" tabindex="-1">
@@ -123,29 +112,17 @@
             </div>
           </div>
         }
-        @if (showFolderStateEnd && treeItem.state !== 'leaf') {
-          <a
-            class="si-tree-stretch-center si-tree-view-item-toggle si-tree-view-item-toggle-end"
-            tabindex="-1"
-            [class.disabled]="!getItemFolderStateClass()"
-            (click)="onItemFolderClicked()"
-          >
-            @if (isExpanding) {
-              <si-loading-spinner class="si-tree-view-item-icon" />
-            }
-            @if (!isExpanding) {
-              <i
-                aria-hidden="true"
-                class="si-tree-view-item-icon"
-                [ngClass]="getItemFolderStateClass()"
-              ></i>
-            }
-          </a>
-        }
-        @if (showFolderStateEnd && treeItem.state === 'leaf') {
-          <div class="si-tree-stretch-center si-tree-view-item-toggle si-tree-view-item-toggle-end">
-            <i aria-hidden="true" class="si-tree-view-item-icon si-tree-view-item-icon-spacer"></i>
-          </div>
+        @if (showFolderStateEnd) {
+          @let folderStateClass = getItemFolderStateClass();
+          <si-tree-view-item-toggle
+            toggleIcon="si-tree-view-item-icon"
+            [isExpanding]="isExpanding"
+            [positionEnd]="true"
+            [disabled]="!folderStateClass"
+            [folderStateClass]="folderStateClass"
+            [spacer]="treeItem.state === 'leaf'"
+            (itemToggled)="onItemFolderClicked()"
+          />
         }
       </div>
     </div>
@@ -156,22 +133,12 @@
   <div class="si-tree-view-li focus-direct-sub-inside">
     <div class="si-tree-view-item-group">
       @if (showFolderStateStart) {
-        <a
-          class="si-tree-stretch-center si-tree-view-item-toggle"
-          tabindex="-1"
-          (click)="onItemFolderClicked()"
-        >
-          @if (isExpanding) {
-            <si-loading-spinner />
-          }
-          @if (!isExpanding) {
-            <i
-              aria-hidden="true"
-              class="si-tree-view-item-icon"
-              [ngClass]="getItemFolderStateClass()"
-            ></i>
-          }
-        </a>
+        <si-tree-view-item-toggle
+          toggleIcon="si-tree-view-item-icon"
+          [folderStateClass]="getItemFolderStateClass()"
+          [isExpanding]="isExpanding"
+          (itemToggled)="onItemFolderClicked()"
+        />
       }
       @if (showCheckOrOptionBox) {
         <a class="form-check input-box" tabindex="-1">
@@ -188,23 +155,12 @@
       }
       <p class="mb-0">{{ treeItem.label | translate }}</p>
       @if (showFolderStateEnd) {
-        <a
-          class="si-tree-stretch-center"
-          tabindex="-1"
-          [class.disabled]="!getItemFolderStateClass()"
-          (click)="onItemFolderClicked()"
-        >
-          @if (isExpanding) {
-            <si-loading-spinner />
-          }
-          @if (!isExpanding) {
-            <i
-              aria-hidden="true"
-              class="si-tree-view-item-icon"
-              [ngClass]="getItemFolderStateClass()"
-            ></i>
-          }
-        </a>
+        <si-tree-view-item-toggle
+          toggleIcon="si-tree-view-item-icon"
+          [isExpanding]="isExpanding"
+          [folderStateClass]="getItemFolderStateClass()"
+          (itemToggled)="onItemFolderClicked()"
+        />
       }
     </div>
   </div>
