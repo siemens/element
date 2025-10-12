@@ -10,7 +10,11 @@ import {
   Injectable
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { injectSiTranslateService, t } from '@siemens/element-translate-ng/translate';
+import {
+  bypassTranslation,
+  injectSiTranslateService,
+  t
+} from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -167,6 +171,12 @@ describe('SiTranslatePipe', () => {
       expect(nativeElement.innerText).toBe(
         'translated=>KEY-{"value":"string","otherValue":"otherString"}'
       );
+    });
+
+    it('should return the bypass translation value', () => {
+      component.toTranslateKey = bypassTranslation('Test string');
+      component.cdRef.detectChanges();
+      expect(nativeElement.innerText).toBe('Test string');
     });
   });
 
