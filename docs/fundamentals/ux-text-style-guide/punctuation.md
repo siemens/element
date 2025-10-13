@@ -21,7 +21,9 @@ Always consider whether necessary
 
 ### Full stops `.`
 
-- Full stops at the end of all full sentences
+- In larger text paragraphs, use full stops at the end of full sentences (e.g. documentation, emails, app tour).
+- Avoid full sentences in interactive UI pages and use telegram styled sentences without full stop. Telegram style
+  sentences are separated by full stops. Last telegram has no full stop.
 - Full stops before all lower-case file extensions: .csv .txt .zip
 - Avoid full stops before upper-case file extensions: CSV TXT ZIP
 - Consistent use of full stops throughout the application
