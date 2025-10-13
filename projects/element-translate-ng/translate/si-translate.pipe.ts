@@ -5,6 +5,7 @@
 import { ChangeDetectorRef, inject, OnDestroy, Pipe, PipeTransform } from '@angular/core';
 import { Subscription } from 'rxjs';
 
+import { getBypassValue, isBypassTranslation } from './si-bypass-translate';
 import { injectSiTranslateService } from './si-translate.inject';
 import { SiTranslateService } from './si-translate.service';
 
@@ -39,6 +40,9 @@ export class SiTranslatePipe implements PipeTransform, OnDestroy {
   transform(key: string | null | undefined, params?: any): string | null | undefined {
     if (!key) {
       return key;
+    }
+    if (isBypassTranslation(key)) {
+      return getBypassValue(key);
     }
 
     const currentKeyParams = params ? `${key}-${JSON.stringify(params)}` : key;
