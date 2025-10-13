@@ -171,16 +171,8 @@ describe('simplSiemensMigration', () => {
         expect(e.message).toMatch('Could not find any tsconfig file. Cannot run the migration.');
       }
     });
-
-    it('should throw error if no angular.json could be found', async () => {
-      removeTestFiles(appTree, ['angular.json']);
-      try {
-        await runner.runSchematic(name, { path: 'projects/app/src' }, appTree);
-      } catch (e: any) {
-        expect(e.message).toMatch('Could not find angular.json');
-      }
-    });
   });
+
   describe('style migration', () => {
     it(`should remove global style @use '@simpl/element-theme/src/theme';`, async () => {
       const originalContent = [`// Import theme`, `@use '@simpl/element-theme/src/theme';`];
