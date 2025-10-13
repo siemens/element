@@ -19,9 +19,7 @@
       </g>
     }
   </svg>
-}
-
-@if (!wlan()) {
+} @else {
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" [class.none]="numberValue() < 1">
     <path
       d="M128,228a12,12,0,0,0,0,24A132.14,132.14,0,0,1,260,384a12,12,0,0,0,24,0C284,298,214,228,128,228Z"

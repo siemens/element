@@ -39,9 +39,7 @@
     [dataId]="dataId"
     [template]="template"
   />
-}
-
-@if (mode === 'editor') {
+} @else {
   <si-live-preview
     [ticketBaseUrl]="ticketBaseUrl"
     [baseUrl]="baseUrl"

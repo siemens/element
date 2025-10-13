@@ -19,8 +19,7 @@
             <button class="btn btn-danger" type="button" (click)="remove($index)">
               {{ props.removeText | translate }}
             </button>
-          }
-          @if (!props.removeText) {
+          } @else {
             <button class="btn btn-danger" type="button" (click)="remove($index)"> - </button>
           }
         </div>
@@ -33,8 +32,7 @@
         <button class="btn btn-primary" type="button" (click)="add()">
           {{ props.addText | translate }}
         </button>
-      }
-      @if (!props.addText) {
+      } @else {
         <button class="btn btn-primary" type="button" (click)="add()"> + </button>
       }
     </div>

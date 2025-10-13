@@ -47,8 +47,7 @@
             }
             <span class="ms-2 auto-hide">{{ dp.title | translate }}</span>
           </a>
-        }
-        @if (dp.disabled) {
+        } @else {
           <div class="rpanel-statusaction dot-outer" aria-hidden="true">
             <div class="dot text-muted text-center">&bull;</div>
           </div>
