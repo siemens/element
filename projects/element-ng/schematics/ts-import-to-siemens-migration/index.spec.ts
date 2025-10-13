@@ -166,7 +166,7 @@ describe('ts-import-to-siemens migration', () => {
     try {
       await runner.runSchematic(name, { path: 'projects/app/src' }, appTree);
     } catch (e: any) {
-      expect(e.message).toMatch('Could not find angular.json');
+      expect(e.message).toMatch('Path "/angular.json" does not exist.');
     }
   });
 });
