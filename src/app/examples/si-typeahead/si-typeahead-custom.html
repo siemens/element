@@ -8,8 +8,7 @@
 
   @if (!selectedOption) {
     <p class="mt-11">Home sweet home</p>
-  }
-  @if (selectedOption) {
+  } @else {
     <p class="mt-11">Sweet home {{ selectedOption }}</p>
   }
   <si-search-bar

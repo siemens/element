@@ -25,8 +25,7 @@
         >
           @if (isExpanding) {
             <si-loading-spinner [@.disabled]="true" />
-          }
-          @if (!isExpanding) {
+          } @else {
             <i
               aria-hidden="true"
               class="si-tree-view-item-dropdown-caret"
@@ -132,8 +131,7 @@
           >
             @if (isExpanding) {
               <si-loading-spinner class="si-tree-view-item-icon" />
-            }
-            @if (!isExpanding) {
+            } @else {
               <i
                 aria-hidden="true"
                 class="si-tree-view-item-icon"
@@ -150,9 +148,7 @@
       </div>
     </div>
   </div>
-}
-
-@if (isGroupedItem) {
+} @else {
   <div class="si-tree-view-li focus-direct-sub-inside">
     <div class="si-tree-view-item-group">
       @if (showFolderStateStart) {
@@ -163,8 +159,7 @@
         >
           @if (isExpanding) {
             <si-loading-spinner />
-          }
-          @if (!isExpanding) {
+          } @else {
             <i
               aria-hidden="true"
               class="si-tree-view-item-icon"
@@ -196,8 +191,7 @@
         >
           @if (isExpanding) {
             <si-loading-spinner />
-          }
-          @if (!isExpanding) {
+          } @else {
             <i
               aria-hidden="true"
               class="si-tree-view-item-icon"

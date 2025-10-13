@@ -9,7 +9,7 @@ import { TOOLTIP_FEATURES_TO_DISPLAY } from '../../models/constants';
 
 @Component({
   selector: 'si-map-tooltip',
-  // eslint-disable-next-line @typescript-eslint/no-deprecated
+
   imports: [SiTranslatePipe],
   templateUrl: './si-map-tooltip.component.html',
   styleUrl: './si-map-tooltip.component.scss'

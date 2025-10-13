@@ -26,8 +26,7 @@
               }
             </div>
           </li>
-        }
-        @if (!item.shortened) {
+        } @else {
           <li #breadcrumbItem class="item">
             @if (!isFirst) {
               <si-icon class="separator flip-rtl" [icon]="icons.elementRight2" />
@@ -74,8 +73,7 @@
   >
     @if (item.level === 0) {
       <si-icon class="icon flip-rtl" [icon]="icons.elementBreadcrumbRoot" />
-    }
-    @if (item.level !== 0) {
+    } @else {
       <span>{{ item.title }}</span>
     }
   </a>

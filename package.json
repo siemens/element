@@ -136,7 +136,7 @@
     "@types/google-libphonenumber": "^7.4.23",
     "@types/jasmine": "5.1.9",
     "@types/node": "~22.18.0",
-    "angular-eslint": "20.3.0",
+    "angular-eslint": "20.4.0",
     "axe-html-reporter": "2.2.11",
     "concat": "1.0.3",
     "cpy-cli": "6.0.0",

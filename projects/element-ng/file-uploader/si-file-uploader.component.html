@@ -46,8 +46,7 @@
               : {{ file.httpErrorText }}
             }
           </div>
-        }
-        @if (!file.errorText) {
+        } @else {
           <div class="position-relative">
             <div class="position-absolute si-caption end-0 mt-n8">{{ file.progress }} %</div>
             <si-progressbar

@@ -157,8 +157,7 @@
                 <si-menu-factory [items]="primaryAction.items" />
               </ng-template>
             </a>
-          }
-          @if (!primaryAction.items) {
+          } @else {
             <a
               si-menu-item
               activeClass="active"

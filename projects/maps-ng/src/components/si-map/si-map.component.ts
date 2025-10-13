@@ -70,7 +70,7 @@ interface ClusterHolder {
 
 @Component({
   selector: 'si-map',
-  // eslint-disable-next-line @typescript-eslint/no-deprecated
+
   imports: [SiMapTooltipComponent, SiMapPopoverComponent],
   templateUrl: './si-map.component.html',
   styleUrl: './si-map.component.scss',
