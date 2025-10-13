@@ -22,10 +22,10 @@ import {
  * @returns A schematic rule for migrating action modal methods.
  */
 export const actionModalMigrationRule = (options: { path: string }): Rule => {
-  return (tree: Tree, context: SchematicContext) => {
+  return async (tree: Tree, context: SchematicContext) => {
     context.logger.info('🔄 Migrating action modal methods to v48...');
 
-    const tsSourceFiles = discoverSourceFiles(tree, context, options.path);
+    const tsSourceFiles = await discoverSourceFiles(tree, context, options.path);
 
     for (const filePath of tsSourceFiles) {
       const content = tree.read(filePath);

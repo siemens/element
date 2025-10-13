@@ -38,10 +38,10 @@ export const tsImportMigration = (_options: { path: string }): Rule => {
  * ```
  */
 export const tsImportMigrationRule = (_options: { path: string }): Rule => {
-  return (tree: Tree, context: SchematicContext) => {
+  return async (tree: Tree, context: SchematicContext) => {
     const rules: Rule[] = [];
     context.logger.info('📦 Migrating TypeScript imports...');
-    const sourceFiles = discoverSourceFiles(tree, context, _options.path);
+    const sourceFiles = await discoverSourceFiles(tree, context, _options.path);
 
     for (const filePath of sourceFiles) {
       const migrations = collectMigrationImports(filePath, tree, context);

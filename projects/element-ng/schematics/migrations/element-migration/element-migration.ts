@@ -19,8 +19,8 @@ import {
 import { getElementMigrationData } from '../data/index.js';
 
 export const elementMigrationRule = (options: { path: string }): Rule => {
-  return (tree: Tree, context: SchematicContext) => {
-    const tsSourceFiles = discoverSourceFiles(tree, context, options.path);
+  return async (tree: Tree, context: SchematicContext) => {
+    const tsSourceFiles = await discoverSourceFiles(tree, context, options.path);
 
     const migrationData = getElementMigrationData();
 

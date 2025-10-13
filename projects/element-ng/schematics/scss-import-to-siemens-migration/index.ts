@@ -29,10 +29,10 @@ export const scssImportMigration = (_options: { path: string }): Rule => {
  * ```
  */
 export const scssMigrationRule = (_options: { path: string }): Rule => {
-  return (tree: Tree, context: SchematicContext) => {
+  return async (tree: Tree, context: SchematicContext) => {
     const rules: Rule[] = [];
     context.logger.info('🎨 Migrating SCSS styles...');
-    const globalStyles = getGlobalStyles(tree);
+    const globalStyles = await getGlobalStyles(tree);
     for (const style of globalStyles) {
       if (style.endsWith('.scss') || style.endsWith('.sass')) {
         const content = tree.readText(style);
@@ -58,7 +58,7 @@ export const scssMigrationRule = (_options: { path: string }): Rule => {
       }
     }
 
-    const scssFiles = discoverSourceFiles(tree, context, _options.path, '.scss');
+    const scssFiles = await discoverSourceFiles(tree, context, _options.path, '.scss');
     for (const filePath of scssFiles) {
       const content = tree.readText(filePath);
       if (
