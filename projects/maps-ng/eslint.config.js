@@ -1,7 +1,7 @@
-import typescriptEslint from 'typescript-eslint';
 import { tsConfig, templateConfig } from '../../eslint.config.js';
 import defaultValuePlugin from '@siemens/eslint-plugin-defaultvalue';
-export default typescriptEslint.config(
+import { defineConfig } from 'eslint/config';
+export default defineConfig(
   {
     extends: [...tsConfig],
     plugins: {
