@@ -170,7 +170,7 @@
     "stylelint-use-logical-spec": "5.0.1",
     "tsx": "4.20.6",
     "typescript": "5.8.3",
-    "typescript-eslint": "8.46.0"
+    "typescript-eslint": "8.46.1"
   },
   "optionalDependencies": {
     "@simpl/brand": "2.2.0",

@@ -410,7 +410,7 @@ export class MapService {
       // Here we iterate over all clusters and check if the feature is among them
       clusterSource.getFeatures().forEach(cluster => {
         clusterFeatures = cluster.get('features');
-        if (clusterFeatures && clusterFeatures.length === 1 && clusterFeatures[0] === feature) {
+        if (clusterFeatures?.length === 1 && clusterFeatures[0] === feature) {
           isClustered = false;
         }
       });
