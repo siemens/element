@@ -10,10 +10,12 @@ export const ngAdd = (options: { path: string }): Rule => {
     context.logger.info('🔧 Adding @siemens/element-ng to your project...');
 
     const hasSimplElementNgDependency = getPackageJsonDependency(tree, '@simpl/element-ng');
-
+    const rules = [];
     if (hasSimplElementNgDependency) {
-      const chainedRules = chain([schematic('siemens-migration', options)]);
-      return chainedRules(tree, context);
+      rules.push(schematic('siemens-migration', options));
     }
+    rules.push(schematic('initial-migration', options));
+    const chainedRules = chain(rules);
+    return chainedRules(tree, context);
   };
 };
