@@ -7,7 +7,7 @@ import { SchematicsException, Tree } from '@angular-devkit/schematics';
 import { isAbsolute } from 'path';
 import ts from 'typescript';
 
-import { SchematicsFileSystem } from './schematics-file-system';
+import { SchematicsFileSystem } from './schematics-file-system.js';
 
 /**
  * Reads and parses a tsconfig file from the given path.
