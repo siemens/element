@@ -41,7 +41,6 @@ export const tsConfig = defineConfig({
         style: 'kebab-case'
       }
     ],
-    '@angular-eslint/no-experimental': ['off'],
     '@angular-eslint/prefer-signals': [
       'error',
       { preferInputSignals: false, preferQuerySignals: false }
