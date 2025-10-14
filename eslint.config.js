@@ -47,7 +47,7 @@ export const tsConfig = defineConfig({
       { preferInputSignals: false, preferQuerySignals: false }
     ],
     '@angular-eslint/no-experimental': ['off'],
-    '@angular-eslint/no-developer-preview': ['off'],
+    '@angular-eslint/no-developer-preview': ['error'],
     'no-console': [
       'error',
       {
