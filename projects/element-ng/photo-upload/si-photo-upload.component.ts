@@ -378,7 +378,7 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
       this.cropperPosition = undefined;
       this.croppedPhoto.set(undefined);
     }
-    if (changes.sourcePhoto && changes.sourcePhoto.currentValue !== this.imageCropperPhoto()) {
+    if (changes.sourcePhoto?.currentValue !== this.imageCropperPhoto()) {
       const sourcePhoto = this.sourcePhoto();
       this.setPhoto(sourcePhoto);
       this.cropperPosition = undefined;

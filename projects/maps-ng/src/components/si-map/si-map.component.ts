@@ -478,7 +478,7 @@ export class SiMapComponent implements AfterViewInit, OnChanges, OnDestroy, Afte
     this.map!.getLayers().forEach(layer => {
       if (layer instanceof Layer) {
         const source = layer.getSource();
-        if (source && source.tilePixelRatio_ !== undefined) {
+        if (source?.tilePixelRatio_ !== undefined) {
           source.tilePixelRatio_ = devicePixelRatio;
           source.refresh();
         }
@@ -828,7 +828,7 @@ export class SiMapComponent implements AfterViewInit, OnChanges, OnDestroy, Afte
     }
     for (const feat of feats) {
       const features = this.featureCallback(feat);
-      if (features && features.length === 1) {
+      if (features?.length === 1) {
         this.showTooltipContent(features[0]);
         return;
       }

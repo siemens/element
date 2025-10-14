@@ -124,7 +124,7 @@ export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
   }
 
   private onMessage(event: MessageEvent): void {
-    if (!event.data || event.data.src !== 'renderer') {
+    if (event.data?.src !== 'renderer') {
       return;
     }
 

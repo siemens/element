@@ -269,7 +269,7 @@ export class SiChartCartesianComponent extends SiChartComponent implements OnCha
         if (this.showLegend() && series.name) {
           let legendIndex = 0;
           const axis = yAxisArray[series.yAxisIndex ?? 0];
-          if (axis && axis.position === 'right') {
+          if (axis?.position === 'right') {
             legendIndex = 1;
           }
 

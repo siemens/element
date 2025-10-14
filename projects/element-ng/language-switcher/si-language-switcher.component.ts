@@ -63,7 +63,7 @@ export class SiLanguageSwitcherComponent {
   protected switchLanguage(target: EventTarget | null): void {
     const language = (target as HTMLSelectElement)?.value;
     const translationKey = this.translationKey();
-    if (!language || !translationKey || translationKey.length === 0) {
+    if (!language || !translationKey?.length) {
       return;
     }
     this.translate.setCurrentLanguage(language);

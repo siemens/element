@@ -72,7 +72,7 @@ export class SiMicrochartLineComponent {
 
   protected readonly markerPoints = computed(() => {
     const series = this.series();
-    if (!series || series.values.length === 0) {
+    if (series?.values.length === 0) {
       return [];
     }
     return this.mapToCoordinates(series.values);

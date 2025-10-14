@@ -91,7 +91,7 @@ export class SiLivePreviewWrapperComponent {
   }
 
   private onMessage(event: MessageEvent): void {
-    if (!event.data || event.data.src !== 'editor') {
+    if (event.data?.src !== 'editor') {
       return;
     }
 
