@@ -111,6 +111,17 @@ is placed on the edge of the card and padding is set internally.
 
 <si-docs-api component="SiCardComponent"></si-docs-api>
 
+### Action cards
+
+Action cards function as interactive buttons that can perform actions when clicked.
+Use `si-action-card` when you need cards that trigger specific actions.
+
+The component includes a `selectable` input that enables selection state on the card.
+
+<si-docs-component example="si-card/si-action-card" height="300"></si-docs-component>
+
+<si-docs-api component="SiActionCardComponent"></si-docs-api>
+
 ### Card container
 
 Bootstrap provides different container to manage and organize cards. The following takes the different
