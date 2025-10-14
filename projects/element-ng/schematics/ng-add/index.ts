@@ -12,7 +12,7 @@ export const ngAdd = (options: { path: string }): Rule => {
     const hasSimplElementNgDependency = getPackageJsonDependency(tree, '@simpl/element-ng');
 
     if (hasSimplElementNgDependency) {
-      const chainedRules = chain([schematic('siemens-migration', options)]);
+      const chainedRules = chain([schematic('simpl-siemens-migration', options)]);
       return chainedRules(tree, context);
     }
   };
