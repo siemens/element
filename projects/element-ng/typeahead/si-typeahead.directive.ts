@@ -385,10 +385,35 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
     this.typeaheadOpenChange.emit(true);
   }
 
-  // Get the matches and push them to the subject of the component, then set the query of the component.
-  // If the typeahead options are objects, pick the specified field/property.
-  private getOptionValue(option: TypeaheadOption, field: string): string {
-    return typeof option !== 'object' ? option.toString() : (option[field] ?? '');
+  /**
+   * Extracts the display value from a typeahead option.
+   *
+   * For string options, returns the string value directly.
+   * For object options, returns the value of the field specified by {@link typeaheadOptionField}
+   * (defaults to 'name'), or an empty string if the field doesn't exist.
+   *
+   * @param option - The typeahead option to extract the value from
+   * @returns The string representation of the option for display purposes
+   */
+  private getOptionValue(option: TypeaheadOption): string {
+    return typeof option !== 'object'
+      ? option.toString()
+      : (option[this.typeaheadOptionField()] ?? '');
+  }
+
+  /**
+   * Extracts a specific field value from a typeahead option.
+   *
+   * This method is used to access additional properties of object-type options,
+   * such as 'selected' for multi-select functionality or 'iconClass' for displaying icons.
+   *
+   * @param option - The typeahead option to extract the field from
+   * @param field - The name of the field to extract
+   * @returns The field value as a string if the option is an object and the field exists,
+   *          otherwise undefined
+   */
+  private getOptionField(option: TypeaheadOption, field: string): string | undefined {
+    return typeof option !== 'object' ? undefined : option[field];
   }
 
   // If enabled, process the matches and sort through them.
@@ -413,11 +438,11 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
           // Check if the options need to be processed, if not just return an unprocessed object.
           if (!this.typeaheadProcess()) {
             return options.map(option => {
-              const optionValue = this.getOptionValue(option, this.typeaheadOptionField());
+              const optionValue = this.getOptionValue(option);
               const itemSelected = this.typeaheadMultiSelect()
-                ? this.getOptionValue(option, 'selected')
+                ? this.getOptionField(option, 'selected')
                 : false;
-              const iconClass = this.getOptionValue(option, 'iconClass');
+              const iconClass = this.getOptionField(option, 'iconClass');
               return {
                 option,
                 itemSelected,
@@ -441,13 +466,13 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
             // Process the options.
             const matches: TypeaheadMatch[] = [];
             options.forEach(option => {
-              const optionValue = this.getOptionValue(option, this.typeaheadOptionField());
+              const optionValue = this.getOptionValue(option);
               const stringMatch =
                 optionValue.toLocaleLowerCase().trim() === query.toLocaleLowerCase().trim();
               const itemSelected = this.typeaheadMultiSelect()
                 ? option['selected' as keyof TypeaheadOption]
                 : false;
-              const iconClass = this.getOptionValue(option, 'iconClass');
+              const iconClass = this.getOptionField(option, 'iconClass');
               const candidate: TypeaheadMatch = {
                 option,
                 itemSelected,
