@@ -1,7 +1,7 @@
-import typescriptEslint from 'typescript-eslint';
 import { tsConfig, templateConfig } from '../../eslint.config.js';
+import { defineConfig } from 'eslint/config';
 
-export default typescriptEslint.config(
+export default defineConfig(
   {
     extends: [...tsConfig],
     files: ['**/*.ts'],

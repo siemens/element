@@ -1,16 +1,16 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
-import typescriptEslint from 'typescript-eslint';
 import angularTypescriptConfig from '@siemens/eslint-config-angular';
 import angularTemplateConfig from '@siemens/eslint-config-angular/template';
 import tsdocPlugin from 'eslint-plugin-tsdoc';
 import eslintPluginHeaders from 'eslint-plugin-headers';
+import { defineConfig } from 'eslint/config';
 
 // mimic CommonJS variables
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export const tsConfig = typescriptEslint.config({
+export const tsConfig = defineConfig({
   extends: [...angularTypescriptConfig],
   files: ['**/*.ts'],
   languageOptions: {
@@ -94,7 +94,7 @@ export const tsConfig = typescriptEslint.config({
   }
 });
 
-export const templateConfig = typescriptEslint.config({
+export const templateConfig = defineConfig({
   extends: [...angularTemplateConfig],
   files: ['**/*.html'],
   rules: {
@@ -120,4 +120,4 @@ export const templateConfig = typescriptEslint.config({
   }
 });
 
-export default typescriptEslint.config(...tsConfig, ...templateConfig);
+export default defineConfig(...tsConfig, ...templateConfig);
