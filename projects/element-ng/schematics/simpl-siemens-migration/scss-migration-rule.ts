@@ -3,8 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 import { chain, Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+import {
+  NodeDependency,
+  addPackageJsonDependency,
+  NodeDependencyType,
+  getPackageJsonDependency
+} from '@schematics/angular/utility/dependencies';
 
-import { getGlobalStyles, discoverSourceFiles } from '../utils';
+import { getGlobalStyles, discoverSourceFiles, getAllPackageJson } from '../utils';
 import { SCSS_USE_PATTERNS, STYLE_REPLACEMENTS, THEME_STYLE_ENTRIES } from './mappings';
 
 /**
@@ -28,6 +34,18 @@ export const scssMigrationRule = (_options: { path: string }): Rule => {
   return (tree: Tree, context: SchematicContext) => {
     const rules: Rule[] = [];
     context.logger.info('🎨 Migrating SCSS styles...');
+
+    // Ensure @simpl/brand is added if @simpl/element-theme is used
+    const packageJsonPaths = getAllPackageJson(tree);
+    for (const packageJson of packageJsonPaths) {
+      const requireBrand =
+        getPackageJsonDependency(tree, '@simpl/element-theme', packageJson) &&
+        !getPackageJsonDependency(tree, '@simpl/brand', packageJson);
+      if (requireBrand) {
+        addSimplBrandDependency(tree, packageJson);
+      }
+    }
+
     const globalStyles = getGlobalStyles(tree);
     for (const style of globalStyles) {
       if (style.endsWith('.scss') || style.endsWith('.sass')) {
@@ -109,4 +127,15 @@ const applyGlobalStyles = (filePath: string, anchor: string, insert: string): Ru
     tree.commitUpdate(recorder);
     return tree;
   };
+};
+
+const addSimplBrandDependency = (tree: Tree, packageJsonPath: string): void => {
+  const dep: NodeDependency = {
+    type: NodeDependencyType.Default,
+    name: `@simpl/brand`,
+    version: '2.2.0',
+    overwrite: true
+  };
+
+  addPackageJsonDependency(tree, dep, packageJsonPath);
 };
