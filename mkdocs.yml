@@ -27,6 +27,7 @@ nav:
       - Anatomy:                          'fundamentals/layouts/anatomy.md'
       - Header:                           'fundamentals/layouts/header.md'
       - Content:                          'fundamentals/layouts/content.md'
+      - Breakpoints:                      'fundamentals/layouts/breakpoints.md'
       - Grid:                             'fundamentals/layouts/grid.md'
       - Spacing:                          'fundamentals/layouts/spacing.md'
     - Elevation:                          'fundamentals/elevation.md'
@@ -44,6 +45,7 @@ nav:
       - Best practices:                     'fundamentals/ux-text-style-guide/best-practices.md'
       - Errors, warnings and notifications: 'fundamentals/ux-text-style-guide/error-messages.md'
       - Dialogs and buttons:                'fundamentals/ux-text-style-guide/dialogs-and-buttons.md'
+    - Grid system:                         'fundamentals/grid-system.md'
   - Components:
     - Overview:                           'components/index.md'
     - Buttons & menus:
