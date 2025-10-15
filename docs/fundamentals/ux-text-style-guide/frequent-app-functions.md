@@ -15,7 +15,7 @@ Many applications share common actions and associated icons. For example for act
 | Save      | <i class="icon-large element-save"></i>       | Persists changed data permanently. Mainly used for application entities like saving the user name change. Use `Apply` to confirm a view or filter change. |
 | Apply     | <i class="icon-large element-state-tick"></i> | Applies changes or changed setting temporary. |
 | Cancel    | <i class="icon-large element-cancel"></i>     | Stops current action and returns to previous context. Warn users about potential data loss if significant unsaved changes exist. Use a [Secondary or Tertiary button](../../components/buttons-menus/buttons.md) to cancel actions. |
-| Copy      | <i class="icon-large element-copy"></i>       | Copies the selected objects to a temporary memory, e.g., clipboard. The object can be be `pasted` later. |
+| Copy      | <i class="icon-large element-copy"></i>       | Copies the selected objects to a temporary memory, e.g., clipboard. The object can be `pasted` later. |
 | Paste     | <i class="icon-large element-paste"></i>      | Inserts the data from the temporary memory (e.g., clipboard) to a form or other component. |
 | Duplicate | <i class="icon-large element-copy"></i>       | Creates new identical instances. The duplicate must have a different name. Use the following naming conventions: `Copy of {{originalName}}` as the default name and `Copy {{count}} of {{originalName}}` for any existing default name. |
 | Clear     | <i class="icon-large element-cancel"></i>     | Removes data from fields, deselects options or resets controls. E.g. [see Search Bar](../../components/sorting-filtering/search-bar.md). |

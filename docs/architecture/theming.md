@@ -46,7 +46,7 @@ and follow these few steps:
 - In the application's SCSS, make sure to use the semantic tokens everywhere,
   i.e. use `$element-ui-4` for border colors instead of `$element-gray-200`.
 
-- In some cases using the `$element-ui-*` tokens will fails, e.g. for things
+- In some cases using the `$element-ui-*` tokens will fail, e.g. for things
   like `background-color: rgba($element-ui-4, 0.5)`.
 
 ## Custom themes
@@ -75,7 +75,7 @@ You need to provide your implementation in the main app module:
 
 It's also possible to use custom themes at build time. This option is mostly for OEM theming. To
 use a theme at build time, first set up a SCSS file with the theme definitions. These are a SCSS
-map. For the required keys, please see the the
+map. For the required keys, please see the
 [Siemens Brand](https://github.com/siemens/element/tree/main/projects/element-theme/src/styles/variables/siemens-brand/_theme-siemens-brand.scss)
 definitions.
 
