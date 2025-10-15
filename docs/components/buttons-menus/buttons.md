@@ -162,7 +162,7 @@ width will increases the text lines.
 Second row uses text truncation to keep button text in one line. Make sure the user
 can read important text. Optionally, work with min-width.
 
-Third row uses uses the responsive grid to for a vertical button placement if width
+Third row uses the responsive grid to for a vertical button placement if width
 is smaller than 576px (see [Bootstrap Grid](https://getbootstrap.com/docs/5.1/layout/grid/)).
 
 Row four and five show the same layout for task based dialogs like a modal dialog.

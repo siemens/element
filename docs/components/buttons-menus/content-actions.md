@@ -89,7 +89,7 @@ import { SiContentActionBarComponent } from '@siemens/element-ng/content-action-
 
 ### Action bar configuration
 
-Configure the the content action bar with `MenuItem`s as primary and secondary actions. You can
+Configure the content action bar with `MenuItem`s as primary and secondary actions. You can
 configure an Angular router or a href target as well as a custom action. Sub-menus are supported
 by the `items` property.
 

@@ -58,7 +58,7 @@ This component is flexible enough to accommodate additional options, allowing fo
 
 ## Code ---
 
-We support the the list widget in two ways:
+We support the list widget in two ways:
 
 - Angular components that are configured by data objects to support minimum
   effort on the application development.
