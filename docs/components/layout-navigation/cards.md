@@ -57,6 +57,16 @@ Use distinct colors, such as `$element-ui-0`, to emphasize information without i
 
 For status indication, refer to the [value widget](../dashboards/value-widget.md).
 
+### Action cards
+
+Action cards are interactive elements where the entire container is selectable and triggers a single action.
+They support hover, pressed, focus, and disabled states.
+They can also retain a selection state, behaving like a toggle.
+
+Action cards do not include other interactive elements to prevent conflicting interactions.
+
+![Action cards](images/card-action.png)
+
 ### Card sizes
 
 ![Card sizes](images/card-usage-sizes.png)
