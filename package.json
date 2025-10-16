@@ -134,7 +134,7 @@
     "@siemens/stylelint-config-scss": "2.4.0",
     "@types/geojson": "7946.0.16",
     "@types/google-libphonenumber": "7.4.30",
-    "@types/jasmine": "5.1.9",
+    "@types/jasmine": "5.1.11",
     "@types/node": "22.18.10",
     "angular-eslint": "20.4.0",
     "axe-html-reporter": "2.2.11",
