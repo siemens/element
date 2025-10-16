@@ -15,6 +15,12 @@
       "description": "A schematic to add the @siemens/element-ng to your project.",
       "factory": "./ng-add/index#ngAdd",
       "schema": "./ng-add/schema.json"
+    },
+    "migrate-ts-imports-to-siemens": {
+      "description": "A migration schematic for updating TypeScript imports from @simpl/* to @siemens/*",
+      "factory": "./ts-import-to-siemens-migration/index#tsImportMigration",
+      "schema": "./ts-import-to-siemens-migration/schema.json",
+      "aliases": ["ts-i-migration"]
     }
   }
 }
