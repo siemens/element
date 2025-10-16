@@ -48,7 +48,7 @@ Apps should be grouped in a logical and meaningful way.
 
 ![Launchpad favorites](images/launchpad-usage-favorites-collapsed.png)
 
-For a better overview, the concept of **favorites** allows the user to only show the most important apps at at a glance and to hide less frequent used ones.
+For a better overview, the concept of **favorites** allows the user to only show the most important apps at a glance and to hide less frequent used ones.
 
 ![Launchpad favorites expanded](images/launchpad-usage-favorites-expanded.png)
 

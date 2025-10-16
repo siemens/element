@@ -51,7 +51,7 @@ If multiple actions are available, they should be collapsed into a menu.
 
 ## Code ---
 
-We support the the timeline widget in two ways:
+We support the timeline widget in two ways:
 
 - Angular components that are configured by data objects to support minimum
   effort on the application development.

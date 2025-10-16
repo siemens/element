@@ -85,10 +85,10 @@ When visual requirements do not align with the semantic hierarchy, the appropria
 (`h1`, `h2`, ... `h6`) should still be used, with the desired visual style applied through CSS classes.
 
 When the visual style of `h1` is too prominent for typical in-page headings,
-such as the [page header](https://github.com/siemens/element/fundamentals/layouts/header.md),
+such as the [page header](layouts/header.md),
 the `h2` style is used instead for visual balance.
 
-In this pattern, the `h1` tag is assigned to the application name in the [application header](https://github.com/siemens/element/components/layout-navigation/application-header.md).
+In this pattern, the `h1` tag is assigned to the application name in the [application header](../components/layout-navigation/application-header.md).
 This preserves both visual hierarchy and correct semantic structure for assistive technologies.
 
 ![Headings accessibility semantics](images/typography-accesibility.png)
@@ -153,7 +153,7 @@ See the [Text Colors](colors/ui-colors.md#text) chapter.
 ### Type styles classes
 
 Implementation of typography is done via [Bootstrap's typography system](https://getbootstrap.com/docs/5.1/content/typography/).
-Mosts scenarios allow you to use the HTML semantic (e.g. `h1`, `p`) directly, all the required
+Most scenarios allow you to use the HTML semantic (e.g. `h1`, `p`) directly, all the required
 styles are set by default.
 
 In case you can't use the HTML semantic (*e.g. apply a text style to a non*

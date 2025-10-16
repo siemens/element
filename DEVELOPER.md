@@ -71,7 +71,7 @@ npm run lint:scss
 
 ## Unit Tests
 
-Runt the unit tests using the corresponding npm script:
+Run the unit tests using the corresponding npm script:
 
 ```shell
 npm run <module-name>:test

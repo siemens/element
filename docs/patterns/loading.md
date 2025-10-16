@@ -24,7 +24,7 @@ Provide a status on the affected entity (e.g., "Scanning network…") and notify
 
 ### When to use
 
-- When process that takes more than 1 second.
+- When a process takes more than 1 second.
 - When performing actions that involve waiting for external processes (e.g., API calls).
 - When transitioning between major views or content updates.
 - When process is performed asynchronously.

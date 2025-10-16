@@ -7,7 +7,9 @@ import { ComponentPortal } from '@angular/cdk/portal';
 import {
   booleanAttribute,
   ComponentRef,
+  computed,
   Directive,
+  effect,
   ElementRef,
   HostListener,
   inject,
@@ -21,9 +23,10 @@ import {
   SimpleChanges,
   TemplateRef
 } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { SiAutocompleteDirective } from '@siemens/element-ng/autocomplete';
 import { t } from '@siemens/element-translate-ng/translate';
-import { isObservable, Observable, of, ReplaySubject, Subscription } from 'rxjs';
+import { isObservable, ReplaySubject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { SiTypeaheadComponent } from './si-typeahead.component';
@@ -31,10 +34,10 @@ import {
   Typeahead,
   TypeaheadArray,
   TypeaheadMatch,
-  TypeaheadObservable,
   TypeaheadOption,
   TypeaheadOptionItemContext
 } from './si-typeahead.model';
+import { typeaheadSearch } from './si-typeahead.search';
 import { SiTypeaheadSorting } from './si-typeahead.sorting';
 
 @Directive({
@@ -241,9 +244,12 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
   readonly typeaheadOpenChange = output<boolean>();
 
   /** @internal */
-  readonly foundMatches = signal<TypeaheadMatch[]>([]);
+  readonly foundMatches = computed(() =>
+    this.typeaheadProcess() ? this.processedSearch() : this.unprocessedSearch()
+  );
   /** @internal */
-  readonly query = signal<string>('');
+  readonly query = signal('');
+
   /**
    * Indicates whether the typeahead is shown.
    */
@@ -257,14 +263,107 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
 
   private $typeahead = new ReplaySubject<TypeaheadArray>(1);
   private componentRef?: ComponentRef<SiTypeaheadComponent>;
-  private component?: SiTypeaheadComponent;
   private inputTimer: any;
 
   private sourceSubscription?: Subscription;
-  private subscription?: Subscription;
   private matchSorter = new SiTypeaheadSorting();
 
   private overlayRef?: OverlayRef;
+
+  /**
+   * Indicates that the typeahead can be potentially open.
+   * This signal is typically `true` when the input is focussed.
+   * It may be overridden and set to `false` when escape is pressed
+   * or when an option was selected.
+   */
+  private readonly canBeOpen = signal(false);
+  private readonly selectionCounter = signal(0);
+  private readonly typeaheadOptions = toSignal(
+    this.$typeahead.pipe(
+      map(options =>
+        options.map(option => ({
+          text: this.getOptionValue(option),
+          option
+        }))
+      )
+    ),
+    { initialValue: [] }
+  );
+  private readonly typeaheadSearch = typeaheadSearch(
+    this.typeaheadOptions,
+    this.query,
+    computed(() => ({
+      matchAllTokens: this.typeaheadMatchAllTokens(),
+      disableTokenizing: !this.typeaheadTokenize(),
+      skipProcessing: !this.typeaheadProcess()
+    }))
+  );
+  private readonly processedSearch = computed(() => {
+    this.selectionCounter(); // This is a workaround for the multi-select which needs to trigger a change detection in the typeahead component.
+    const matches = this.typeaheadSearch().map(match => ({
+      ...match,
+      itemSelected: this.typeaheadMultiSelect()
+        ? (match.option as Record<string, any>).selected
+        : false,
+      iconClass: this.getOptionField(match.option, 'iconClass')
+    }));
+
+    if (this.typeaheadSkipSortingMatches()) {
+      return matches;
+    } else {
+      return this.matchSorter.sortMatches(matches);
+    }
+  });
+  private readonly unprocessedSearch = computed(() => {
+    this.selectionCounter(); // This is a workaround for the multi-select which needs to trigger a change detection in the typeahead component.
+    return this.typeaheadOptions().map(option => {
+      const itemSelected = this.typeaheadMultiSelect()
+        ? (option as Record<string, any>).selected
+        : false;
+      return {
+        option,
+        text: option.text,
+        result: option.text
+          ? [{ text: option.text, isMatching: false, matches: 0, uniqueMatches: 0 }]
+          : [],
+        itemSelected,
+        iconClass: this.getOptionField(option.option, 'iconClass'),
+        stringMatch: false,
+        atBeginning: false,
+        matches: 0,
+        uniqueMatches: 0,
+        uniqueSeparateMatches: 0,
+        matchesEntireQuery: false,
+        matchesAllParts: false,
+        matchesAllPartsSeparately: false,
+        active: false
+      };
+    });
+  });
+
+  constructor() {
+    effect(() => {
+      // The value needs to fulfil the minimum length requirement set.
+      if (this.canBeOpen() && this.query().length >= this.typeaheadMinLength()) {
+        const matches = this.foundMatches();
+        const escapedQuery = this.escapeRegex(this.query());
+        const equalsExp = new RegExp(`^${escapedQuery}$`, 'i');
+        const fullMatches = matches.filter(
+          match => match.result.length === 1 && equalsExp.test(match.text)
+        );
+        if (fullMatches.length > 0) {
+          this.typeaheadOnFullMatch.emit(fullMatches[0]);
+        }
+        if (matches.length) {
+          this.loadComponent();
+        } else {
+          this.removeComponent();
+        }
+      } else {
+        this.removeComponent();
+      }
+    });
+  }
 
   // Every time the main input changes, detect whether it is async and if it is not make an observable out of the array.
   ngOnChanges(changes: SimpleChanges): void {
@@ -283,10 +382,7 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
   @HostListener('focusout')
   protected onBlur(): void {
     this.clearTimer();
-    if (this.component) {
-      this.removeComponent();
-    }
-    this.subscription?.unsubscribe();
+    this.canBeOpen.set(false);
   }
 
   // Start the input timeout to display the typeahead when the host is focussed or a value is inputted into it.
@@ -304,38 +400,16 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
       this.inputTimer = undefined;
       const value = (target.value || target.textContent) ?? firstValue ?? '';
       this.query.set(value);
-      this.subscription?.unsubscribe();
-      // The value needs to fulfil the minimum length requirement set.
-      if (value.length >= this.typeaheadMinLength()) {
-        this.subscription = this.getMatches(this.$typeahead, value).subscribe(matches => {
-          this.foundMatches.set(matches);
-          const escapedQuery = this.escapeRegex(value);
-          const equalsExp = new RegExp(`^${escapedQuery}$`, 'i');
-          const fullMatches = matches.filter(
-            match => match.result.length === 1 && equalsExp.test(match.text)
-          );
-          if (fullMatches.length > 0) {
-            this.typeaheadOnFullMatch.emit(fullMatches[0]);
-          }
-          if (matches.length) {
-            this.loadComponent();
-          } else {
-            this.removeComponent();
-          }
-        });
-      } else {
-        this.removeComponent();
-      }
       this.typeaheadOnInput.emit(value ?? '');
+      this.canBeOpen.set(true);
     }, this.typeaheadWaitMs());
   }
 
   @HostListener('keydown.escape')
   protected onKeydownEscape(): void {
     if (this.typeaheadCloseOnEsc()) {
-      this.subscription?.unsubscribe();
       this.clearTimer();
-      this.removeComponent();
+      this.canBeOpen.set(false);
     }
   }
 
@@ -348,7 +422,7 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
       if (value) {
         this.selectMatch(value);
         // this forces change detection in the typeahead component.
-        this.foundMatches.update(matches => [...matches]);
+        this.selectionCounter.update(v => v + 1);
       }
     }
   }
@@ -356,7 +430,6 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
   ngOnDestroy(): void {
     this.clearTimer();
     this.sourceSubscription?.unsubscribe();
-    this.subscription?.unsubscribe();
 
     this.overlayRef?.dispose();
   }
@@ -381,7 +454,6 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
     }
     const typeaheadPortal = new ComponentPortal(SiTypeaheadComponent, null, this.injector);
     this.componentRef = this.overlayRef.attach(typeaheadPortal);
-    this.component = this.componentRef.instance;
     this.typeaheadOpenChange.emit(true);
   }
 
@@ -416,243 +488,6 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
     return typeof option !== 'object' ? undefined : option[field];
   }
 
-  // If enabled, process the matches and sort through them.
-  private getMatches(
-    observableList: TypeaheadObservable,
-    query: string
-  ): Observable<TypeaheadMatch[]> {
-    try {
-      const entireQueryRegex = new RegExp(this.escapeRegex(query), 'gi');
-
-      const queryParts = this.typeaheadTokenize()
-        ? query.split(/\s+/g).filter(queryPart => queryPart)
-        : query
-          ? [query]
-          : [];
-
-      const queryRegexes = queryParts.map(
-        queryPart => new RegExp(this.escapeRegex(queryPart), 'gi')
-      );
-      return observableList.pipe(
-        map(options => {
-          // Check if the options need to be processed, if not just return an unprocessed object.
-          if (!this.typeaheadProcess()) {
-            return options.map(option => {
-              const optionValue = this.getOptionValue(option);
-              const itemSelected = this.typeaheadMultiSelect()
-                ? this.getOptionField(option, 'selected')
-                : false;
-              const iconClass = this.getOptionField(option, 'iconClass');
-              return {
-                option,
-                itemSelected,
-                text: optionValue,
-                iconClass,
-                result: optionValue
-                  ? [{ text: optionValue, isMatching: false, matches: 0, uniqueMatches: 0 }]
-                  : [],
-                stringMatch: false,
-                atBeginning: false,
-                matches: 0,
-                uniqueMatches: 0,
-                uniqueSeparateMatches: 0,
-                matchesEntireQuery: false,
-                matchesAllParts: false,
-                matchesAllPartsSeparately: false,
-                active: false
-              } as TypeaheadMatch;
-            });
-          } else {
-            // Process the options.
-            const matches: TypeaheadMatch[] = [];
-            options.forEach(option => {
-              const optionValue = this.getOptionValue(option);
-              const stringMatch =
-                optionValue.toLocaleLowerCase().trim() === query.toLocaleLowerCase().trim();
-              const itemSelected = this.typeaheadMultiSelect()
-                ? option['selected' as keyof TypeaheadOption]
-                : false;
-              const iconClass = this.getOptionField(option, 'iconClass');
-              const candidate: TypeaheadMatch = {
-                option,
-                itemSelected,
-                text: optionValue,
-                iconClass,
-                result: [],
-                stringMatch,
-                atBeginning: false,
-                matches: 0,
-                uniqueMatches: 0,
-                uniqueSeparateMatches: 0,
-                matchesEntireQuery: false,
-                matchesAllParts: false,
-                matchesAllPartsSeparately: false
-              };
-
-              // Only search the options if a part of the query is at least one character long to prevent an endless loop.
-              if (queryParts.length === 0) {
-                if (optionValue) {
-                  candidate.result.push({
-                    text: optionValue,
-                    isMatching: false,
-                    matches: 0,
-                    uniqueMatches: 0
-                  });
-                }
-                matches.push(candidate);
-              } else {
-                const allResults: { index: number; start: number; end: number; result: string }[] =
-                  [];
-                const allIndexes: number[] = [];
-
-                candidate.matchesEntireQuery = !!optionValue.match(entireQueryRegex);
-
-                // Loop through the option value to find multiple matches, then store every segment (matching or non-matching) in the results.
-                queryRegexes.forEach((queryRegex, index) => {
-                  let regexMatch = queryRegex.exec(optionValue);
-
-                  while (regexMatch) {
-                    allResults.push({
-                      index,
-                      start: regexMatch.index,
-                      end: regexMatch.index + regexMatch[0].length,
-                      result: regexMatch[0]
-                    });
-                    if (!regexMatch.index) {
-                      candidate.atBeginning = true;
-                    }
-                    if (!allIndexes.includes(index)) {
-                      allIndexes.push(index);
-                    }
-                    regexMatch = queryRegex.exec(optionValue);
-                  }
-                });
-
-                candidate.matchesAllParts = allIndexes.length === queryParts.length;
-
-                // Check if all parts of the query match at least once (if required).
-                if (this.typeaheadMatchAllTokens() === 'no' || candidate.matchesAllParts) {
-                  const combinedResults: {
-                    indexes: number[];
-                    uniqueIndexes: number[];
-                    start: number;
-                    end: number;
-                    result: string;
-                  }[] = [];
-
-                  // First combine intersecting (or if set to independently adjacent) results to combined results.
-                  // We achieve this by first sorting them by the starting index, then by the ending index and then looking for overlaps.
-                  allResults
-                    .sort((a, b) => a.start - b.start || a.end - b.end)
-                    .forEach(result => {
-                      if (combinedResults.length) {
-                        const foundPreviousResult = combinedResults.find(previousResult =>
-                          this.typeaheadMatchAllTokens() === 'independently'
-                            ? result.start <= previousResult.end
-                            : result.start < previousResult.end
-                        );
-                        if (foundPreviousResult) {
-                          foundPreviousResult.result += result.result.slice(
-                            foundPreviousResult.end - result.start,
-                            result.result.length
-                          );
-                          if (result.end > foundPreviousResult.end) {
-                            foundPreviousResult.end = result.end;
-                          }
-                          foundPreviousResult.indexes.push(result.index);
-                          if (!foundPreviousResult.uniqueIndexes.includes(result.index)) {
-                            foundPreviousResult.uniqueIndexes.push(result.index);
-                          }
-                          return;
-                        }
-                      }
-                      combinedResults.push({
-                        ...result,
-                        indexes: [result.index],
-                        uniqueIndexes: [result.index]
-                      });
-                    });
-
-                  // Recursively go through all unique combinations of the unique indexes to get the option which has the most indexes.
-                  const countUniqueSubindexes = (
-                    indexIndex = 0,
-                    previousIndexes: number[] = []
-                  ): number =>
-                    indexIndex === combinedResults.length
-                      ? previousIndexes.length
-                      : Math.max(
-                          previousIndexes.length,
-                          ...combinedResults[indexIndex].uniqueIndexes
-                            .filter(index => !previousIndexes.includes(index))
-                            .map(index =>
-                              countUniqueSubindexes(indexIndex + 1, [index, ...previousIndexes])
-                            )
-                        );
-
-                  candidate.uniqueSeparateMatches = countUniqueSubindexes();
-                  candidate.matchesAllPartsSeparately =
-                    candidate.uniqueSeparateMatches === queryParts.length;
-
-                  let currentPreviousEnd = 0;
-
-                  // Add the combined results to the candidate including the non-matching parts in between.
-                  combinedResults.forEach(result => {
-                    const textBefore = optionValue.slice(currentPreviousEnd, result.start);
-                    if (textBefore) {
-                      candidate.result.push({
-                        text: textBefore,
-                        isMatching: false,
-                        matches: 0,
-                        uniqueMatches: 0
-                      });
-                    }
-                    candidate.result.push({
-                      text: result.result,
-                      isMatching: true,
-                      matches: result.indexes.length,
-                      uniqueMatches: result.uniqueIndexes.length
-                    });
-                    currentPreviousEnd = result.end;
-                    candidate.matches += result.indexes.length;
-                    candidate.uniqueMatches += result.uniqueIndexes.length;
-                  });
-
-                  // Check if there are result segments and all parts are matched independently (if required).
-                  if (
-                    candidate.result.length !== 0 &&
-                    ((this.typeaheadMatchAllTokens() !== 'separately' &&
-                      this.typeaheadMatchAllTokens() !== 'independently') ||
-                      candidate.matchesAllPartsSeparately)
-                  ) {
-                    const textAtEnd = optionValue.slice(currentPreviousEnd);
-                    if (textAtEnd) {
-                      candidate.result.push({
-                        text: textAtEnd,
-                        isMatching: false,
-                        matches: 0,
-                        uniqueMatches: 0
-                      });
-                    }
-                    matches.push(candidate);
-                  }
-                }
-              }
-            });
-
-            if (this.typeaheadSkipSortingMatches()) {
-              return matches;
-            } else {
-              return this.matchSorter.sortMatches(matches);
-            }
-          }
-        })
-      );
-    } catch {
-      // Could not create regex (only in extremely rare cases, maybe even impossible), so return an empty array.
-      return of([]);
-    }
-  }
-
   // Select a match, either gets called due to a enter keypress or from the component due to a click.
   /** @internal */
   selectMatch(match: TypeaheadMatch): void {
@@ -668,7 +503,7 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
     this.clearTimer();
     this.typeaheadOnSelect.emit(match);
     if (!this.typeaheadMultiSelect()) {
-      this.removeComponent();
+      this.canBeOpen.set(false);
     }
   }
 
@@ -681,7 +516,6 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
 
     this.componentRef?.destroy();
     this.componentRef = undefined;
-    this.component = undefined;
   }
 
   private clearTimer(): void {
