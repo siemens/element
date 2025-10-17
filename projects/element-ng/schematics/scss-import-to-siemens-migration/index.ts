@@ -5,7 +5,11 @@
 import { chain, Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 
 import { getGlobalStyles, discoverSourceFiles } from '../utils/index.js';
-import { SCSS_USE_PATTERNS, STYLE_REPLACEMENTS, THEME_STYLE_ENTRIES } from './mappings/index.js';
+import { SCSS_USE_PATTERNS, STYLE_REPLACEMENTS, THEME_STYLE_ENTRIES } from './style-mappings.js';
+
+export const scssImportMigration = (_options: { path: string }): Rule => {
+  return (tree: Tree, context: SchematicContext) => scssMigrationRule(_options)(tree, context);
+};
 
 /**
  * Creates a schematic rule for migrating SCSS files in a Siemens migration context.
