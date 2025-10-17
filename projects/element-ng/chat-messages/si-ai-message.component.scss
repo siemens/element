@@ -1,0 +1,24 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: block;
+}
+
+si-chat-message {
+  --chat-message-bubble-bg: transparent;
+  // Because of the transparent background we need to remove the padding
+  --chat-message-bubble-padding: 0;
+
+  margin-block-end: -1 * map.get(variables.$spacers, 2);
+}
+
+.ai-message-actions {
+  margin-block-start: map.get(variables.$spacers, 5) - map.get(variables.$spacers, 2);
+}
+
+// Loading spinner size adjustment (inherited from generic component)
+:host ::ng-deep si-loading-spinner {
+  --loading-spinner-size: 1.5em;
+}
