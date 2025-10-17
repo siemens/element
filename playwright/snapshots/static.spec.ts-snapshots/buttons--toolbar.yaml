@@ -1,0 +1,32 @@
+- toolbar "Toolbar with labeled button groups":
+  - group "Primary labeled group":
+    - button " Edit"
+    - button " Copy"
+    - button " Delete"
+    - button "More actions"
+  - group "Secondary labeled group":
+    - button " Edit"
+    - button " Copy"
+    - button " Delete"
+    - button "More actions"
+  - group "Tertiary labeled group":
+    - button " Edit"
+    - button " Copy"
+    - button " Delete"
+    - button "More actions"
+- toolbar "Toolbar with button groups":
+  - group "Primary group":
+    - button "Edit"
+    - button "Copy"
+    - button "Delete"
+    - button "Dropdown toggle"
+  - group "Secondary group":
+    - button "Edit"
+    - button "Copy"
+    - button "Delete"
+    - button "Dropdown toggle"
+  - group "Tertiary group":
+    - button "Edit"
+    - button "Copy"
+    - button "Delete"
+    - button "Dropdown toggle"

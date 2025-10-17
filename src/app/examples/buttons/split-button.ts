@@ -9,23 +9,22 @@ import { SiMenuModule } from '@siemens/element-ng/menu';
 @Component({
   selector: 'app-sample',
   imports: [SiMenuModule, CdkMenuTrigger],
-  templateUrl: './buttontypes.html',
-  host: {
-    class: 'bg-base-1'
-  }
+  templateUrl: './split-button.html'
 })
 export class SampleComponent {
-  disabled = false;
   splitOpen1 = false;
   splitOpen2 = false;
   splitOpen3 = false;
   splitOpen4 = false;
   splitOpen5 = false;
   splitOpen6 = false;
+  splitOpen7 = false;
+  splitOpen8 = false;
+  splitOpen9 = false;
 
   menuItems = [
     { icon: 'element-download', text: 'Download as PDF' },
-    { icon: 'element-download', text: 'Download as CSV' },
+    { icon: 'element-export', text: 'Export as CSV' },
     { icon: 'element-share', text: 'Share' }
   ];
 }
