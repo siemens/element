@@ -16,6 +16,25 @@ import { splitIpV4Sections } from './address-utils';
 import { ipV4CIDRValidator, ipV4Validator } from './address-validators';
 import { AddrInputEvent, SiIpInputDirective } from './si-ip-input.directive';
 
+/**
+ * Directive for IPv4 address input fields.
+ *
+ * Usage:
+ *
+ * ```ts
+ * import { SiFormItemComponent } from '@siemens/element-ng/form';
+ * import { SiIp4InputDirective } from '@siemens/element-ng/ip-input';
+ *
+ * @Component({
+ *   template: `
+ *     <si-form-item label="IPv4 address">
+ *       <input type="text" class="form-control" siIpV4 />
+ *     </si-form-item>
+ *   `,
+ *   imports: [SiFormItemComponent, SiIp4InputDirective, ...]
+ * })
+ * ```
+ */
 @Directive({
   selector: 'input[siIpV4]',
   providers: [
@@ -40,7 +59,7 @@ export class SiIp4InputDirective
     return this.cidr() ? ipV4CIDRValidator(control) : ipV4Validator(control);
   }
 
-  maskInput(e: AddrInputEvent): void {
+  protected maskInput(e: AddrInputEvent): void {
     const { value, pos, type } = e;
     const sections = splitIpV4Sections({ type, input: value, pos, cidr: this.cidr() });
 

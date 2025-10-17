@@ -15,6 +15,13 @@ import {
 } from './mappings/index.js';
 import { Migrations } from './model.js';
 
+export const tsImportMigration = (_options: { path: string }): Rule => {
+  return (tree: Tree, context: SchematicContext) => {
+    context.logger.info('🚀 Starting Simpl to Siemens migration...');
+    return tsImportMigrationRule(_options)(tree, context);
+  };
+};
+
 /**
  * Creates a migration rule that updates import statements in TypeScript files.
  *
@@ -27,10 +34,10 @@ import { Migrations } from './model.js';
  *
  * @example
  * ```typescript
- * const migrationRule = importMigrationRule({ path: 'some-path' });
+ * const migrationRule = tsImportMigrationRule({ path: 'some-path' });
  * ```
  */
-export const importMigrationRule = (_options: { path: string }): Rule => {
+export const tsImportMigrationRule = (_options: { path: string }): Rule => {
   return (tree: Tree, context: SchematicContext) => {
     const rules: Rule[] = [];
     context.logger.info('📦 Migrating TypeScript imports...');
