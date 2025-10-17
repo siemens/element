@@ -1,0 +1,85 @@
+<div class="input-wrapper border rounded-3 bg-body" (click)="onContainerClick($event)">
+  @if (hasAttachments()) {
+    <div class="p-4 pb-0">
+      <si-attachment-list
+        [attachments]="attachmentList"
+        [removeLabel]="removeAttachmentLabel()"
+        [removable]="true"
+        (remove)="removeAttachment($event)"
+      />
+    </div>
+  }
+
+  <div class="p-4 pe-2 pb-0 si-body-2">
+    <label class="form-label d-none" [for]="id">{{ label() | translate }}</label>
+    <textarea
+      #textInput
+      class="chat-textarea w-100 border-0 p-2"
+      rows="1"
+      [id]="id"
+      [placeholder]="placeholder() | translate"
+      [disabled]="disabled()"
+      [maxlength]="maxLength() || null"
+      [(ngModel)]="value"
+      (keydown)="onKeyDown($event)"
+      (input)="adjustTextareaHeight($event)"
+    ></textarea>
+  </div>
+
+  <div class="d-flex align-items-center justify-content-between px-4 ps-5 pb-2">
+    <div class="d-flex align-items-center gap-4">
+      @if (allowAttachments()) {
+        <input
+          #fileInput
+          type="file"
+          class="d-none"
+          siFileUpload
+          [accept]="accept()"
+          [maxFileSize]="maxFileSize()"
+          [multiple]="true"
+          (validFiles)="onFilesAdded($event)"
+          (fileError)="onFileError($event)"
+        />
+
+        <button
+          type="button"
+          class="btn btn-ghost btn-circle btn-sm"
+          [attr.aria-label]="attachFileLabel() | translate"
+          [disabled]="disabled()"
+          (click)="fileInput.click()"
+        >
+          <si-icon icon="element-attachment" />
+        </button>
+      }
+
+      @if (hasActions() || hasSecondaryActions()) {
+        <si-action-bar
+          class="ps-1"
+          [actions]="actions()"
+          [dropdownActions]="secondaryActions()"
+          [secondaryActionsLabel]="secondaryActionsLabel()"
+          [actionParam]="actionParam()"
+        />
+      }
+      <div #projected class="d-flex flex-wrap align-items-start gap-4">
+        <ng-content />
+      </div>
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-ghost btn-circle btn-sm"
+      [disabled]="buttonDisabled()"
+      [attr.aria-label]="buttonLabel() | translate"
+      (click)="onButtonClick()"
+    >
+      <si-icon class="text-primary" [icon]="buttonIcon()" />
+    </button>
+  </div>
+</div>
+
+@if (disclaimer()) {
+  <div class="text-center mt-4 px-3">
+    <span class="si-caption text-secondary d-block">{{ disclaimer() | translate }}</span>
+  </div>
+}
