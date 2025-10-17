@@ -34,6 +34,8 @@ nav:
     - Elevation:                          'fundamentals/elevation.md'
     - Icons:                              'fundamentals/icons.md'
     - Localization:                       'fundamentals/localization.md'
+    - Styles:
+      - Flex:                              'fundamentals/styles/flex.md'
     - UX Writing:
       - Overview:                           'fundamentals/ux-text-style-guide/index.md'
       - Basics:                             'fundamentals/ux-text-style-guide/basics.md'
