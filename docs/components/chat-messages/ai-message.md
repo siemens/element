@@ -28,7 +28,7 @@ It supports optional actions or other content relevant to the user.
 
 ![AI message elements](images/ai-message-elements.png)
 
-> 1. AI icon, 2. AI message, 3. Actions (optional)
+> 1. AI message, 2. Actions (optional)
 
 ### Actions
 
@@ -39,11 +39,8 @@ Is possible to display up to 4 actions inline; any additional actions will be co
 
 ### Responsive behavior
 
-For breakpoints sm (≥576px):
-
-- AI icon is placed above the AI reply text.
-- All actions are positioned above the AI reply text.
-- All actions collapse under a menu.
+For breakpoints sm (≥576px), the layout remains the same.
+The text reflows to fit the available space while preserving hierarchy and alignment.
 
 ![AI message responsive](images/message-ai-responsive.png)
 
