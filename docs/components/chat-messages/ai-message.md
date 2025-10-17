@@ -49,4 +49,16 @@ For breakpoints sm (≥576px):
 
 ## Code ---
 
-Angular component is coming soon.
+<si-docs-component example="si-chat-messages/si-ai-message"></si-docs-component>
+
+<si-docs-api component="SiAiMessageComponent"></si-docs-api>
+
+<si-docs-types></si-docs-types>
+
+## Code (Base Markdown Component) ---
+
+The **si-markdown-content** component is used to render markdown content within the AI message.
+
+<si-docs-component example="si-chat-messages/si-markdown-content"></si-docs-component>
+
+<si-docs-api component="SiMarkdownContentComponent"></si-docs-api>
