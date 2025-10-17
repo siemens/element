@@ -1,0 +1,48 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  --attachment-list-bg: #{variables.$element-base-1-hover};
+  --attachment-name-color: #{variables.$element-text-primary};
+}
+
+.attachment-item {
+  border-radius: variables.$element-radius-2;
+  overflow: hidden;
+  background-color: var(--attachment-list-bg);
+  color: var(--attachment-name-color);
+
+  &.attachment-item--clickable {
+    cursor: pointer;
+
+    &:focus {
+      outline: 2px solid variables.$element-focus-default;
+      outline-offset: 1px;
+    }
+  }
+}
+
+.attachment-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.attachment-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-inline-size: 0;
+
+  .attachment-name {
+    line-height: 1.2;
+  }
+
+  .attachment-size {
+    line-height: 1;
+  }
+}
+
+.square-button {
+  border-radius: 0;
+}
