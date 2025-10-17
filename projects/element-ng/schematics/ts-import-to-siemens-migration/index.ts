@@ -5,7 +5,6 @@
 import { Tree, SchematicContext, Rule, chain } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
 
-import { Migrations } from '../simpl-siemens-migration/model.js';
 import { getImportNodes, getSymbols, discoverSourceFiles } from '../utils/index.js';
 import {
   CHARTS_NG_MAPPINGS,
@@ -14,6 +13,7 @@ import {
   ELEMENT_TRANSLATE_NG_MAPPINGS,
   MAPS_NG_MAPPINGS
 } from './mappings/index.js';
+import { Migrations } from './model.js';
 
 export const tsImportMigration = (_options: { path: string }): Rule => {
   return (tree: Tree, context: SchematicContext) => {
