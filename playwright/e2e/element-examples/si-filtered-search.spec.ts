@@ -80,6 +80,18 @@ test.describe('filtered search', () => {
     await si.runVisualAndA11yTests('invalid-criterion');
   });
 
+  test('should show focus ring on empty criterion value', async ({ si, page }) => {
+    await si.visitExample('si-filtered-search/si-filtered-search-playground');
+    const searchCriteriaInput = page.getByPlaceholder(/Enter and assign search criteria/);
+    await searchCriteriaInput.fill(
+      '{ "criteria": [{"name":"location", "value":""}], "value": "" }'
+    );
+    await searchCriteriaInput.blur();
+    const criterionValue = page.locator('.criterion-value-text');
+    await criterionValue.focus();
+    await si.runVisualAndA11yTests('empty-value-focused');
+  });
+
   test('should not be interactive when disabled', async ({ si, page }) => {
     await si.visitExample('si-filtered-search/si-filtered-search-playground');
     await page.getByLabel('Disabled').check();
