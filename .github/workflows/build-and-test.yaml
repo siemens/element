@@ -64,6 +64,9 @@ jobs:
         with:
           node-version: lts/jod
           cache: 'npm'
+      - run: npm config set //code.siemens.com/api/v4/packages/npm/:_authToken $SIEMENS_NPM_TOKEN
+        env:
+          SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
       - uses: actions/download-artifact@v5
         with:
           name: dist
