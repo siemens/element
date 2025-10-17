@@ -1,12 +1,12 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "$id": "TsImportToSiemensMigrationSchema",
-  "title": "TypeScript import to Siemens Migration Schema",
+  "$id": "ScssImportToSiemensMigrationSchema",
+  "title": "SCSS Import to Siemens Migration Schema",
   "type": "object",
   "properties": {
     "path": {
       "type": "string",
-      "description": "Path to the directory where all simpl imports should be migrated.",
+      "description": "Path to the directory where all SCSS imports should be migrated.",
       "x-prompt": "Which directory do you want to migrate?",
       "format": "path",
       "default": "/"
