@@ -139,3 +139,56 @@ const visitDirectory = (fs: SchematicsFileSystem, dirPath: string): string[] => 
 
   return files;
 };
+
+/** Finds an import specifier with a particular name. */
+export const findImportSpecifier = (
+  nodes: ts.NodeArray<ts.ImportSpecifier>,
+  specifierName: string
+): ts.ImportSpecifier | undefined => {
+  return nodes.find(element => {
+    const { name, propertyName } = element;
+    return propertyName ? propertyName.text === specifierName : name.text === specifierName;
+  });
+};
+
+/**
+ * Note: returns only matching imports specifiers,
+ * Unmatched imports will be ignored (you won't get undefined), but a shorter array.
+ */
+export const getImportSpecifiers = (
+  sourceFile: ts.SourceFile,
+  moduleName: string | RegExp,
+  specifierOrSpecifiers: string | string[]
+): ts.ImportSpecifier[] => {
+  const matches: ts.ImportSpecifier[] = [];
+  for (const node of sourceFile.statements) {
+    if (!ts.isImportDeclaration(node) || !ts.isStringLiteral(node.moduleSpecifier)) {
+      continue;
+    }
+
+    const namedBindings = node.importClause?.namedBindings;
+    const isMatch =
+      typeof moduleName === 'string'
+        ? node.moduleSpecifier.text === moduleName
+        : moduleName.test(node.moduleSpecifier.text);
+
+    if (!isMatch || !namedBindings || !ts.isNamedImports(namedBindings)) {
+      continue;
+    }
+
+    if (typeof specifierOrSpecifiers === 'string') {
+      const match = findImportSpecifier(namedBindings.elements, specifierOrSpecifiers);
+      if (match) {
+        matches.push(match);
+      }
+    } else {
+      for (const specifierName of specifierOrSpecifiers) {
+        const match = findImportSpecifier(namedBindings.elements, specifierName);
+        if (match) {
+          matches.push(match);
+        }
+      }
+    }
+  }
+  return matches;
+};

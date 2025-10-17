@@ -11,7 +11,8 @@ export const simplSiemensMigration = (_options: { path: string }): Rule => {
     context.logger.info('🚀 Starting Simpl to Siemens migration...');
     const chainedRules = chain([
       schematic('migrate-ts-imports-to-siemens', _options),
-      schematic('migrate-scss-imports-to-siemens', _options)
+      schematic('migrate-scss-imports-to-siemens', _options),
+      schematic('migrate-v47-to-v48', _options)
     ]);
     return chainedRules(tree, context);
   };
