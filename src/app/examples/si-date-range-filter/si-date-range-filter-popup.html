@@ -7,8 +7,7 @@
 >
   <i aria-hidden="true" class="icon element-calendar"></i>
   @if (resolved?.valid) {
-    {{ resolved?.start | date: 'shortDate' }} -
-    {{ resolved?.end | date: 'shortDate' }}
+    {{ resolved?.start | date: 'shortDate' }} - {{ resolved?.end | date: 'shortDate' }}
   } @else {
     ?
   }
