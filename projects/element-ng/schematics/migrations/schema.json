@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "v47to48MigrationSchema",
+  "title": "Siemens Element v47 to v48 migration",
+  "type": "object",
+  "properties": {
+    "path": {
+      "type": "string",
+      "description": "Path to the directory where the migration should be applied.",
+      "x-prompt": "Which directory do you want to migrate?",
+      "format": "path",
+      "default": "/"
+    }
+  },
+  "required": []
+}
