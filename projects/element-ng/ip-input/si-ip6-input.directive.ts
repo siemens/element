@@ -71,20 +71,13 @@ export class SiIp6InputDirective
     }
 
     // TODO: Restore cursor position
-    const sections = splitIpV6Sections({
+    const ipv6 = splitIpV6Sections({
       type,
       input: value,
       pos,
       zeroCompression: true,
       cidr: this.cidr()
     });
-    this.renderer.setProperty(
-      this.inputEl,
-      'value',
-      sections
-        .splice(0, this.cidr() ? 17 : 15)
-        .map(s => s.value)
-        .join('')
-    );
+    this.renderer.setProperty(this.inputEl, 'value', ipv6.value);
   }
 }

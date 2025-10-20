@@ -2,10 +2,10 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-/** */
-export interface Section {
+interface Section {
   value: string;
   current?: boolean;
+  partNo?: number;
   /** Indicate this is a network mask. */
   mask?: boolean;
 }
@@ -13,14 +13,14 @@ export interface Section {
 export interface Ip4SplitOptions {
   type?: 'insert' | 'delete' | 'paste';
   input?: string | null;
-  pos?: number;
+  pos: number;
   cidr?: boolean;
 }
 
 export interface Ip6SplitOptions {
   type?: 'insert' | 'delete' | 'paste';
   input?: string | null;
-  pos?: number;
+  pos: number;
   zeroCompression?: boolean;
   cidr?: boolean;
 }
@@ -28,99 +28,81 @@ export interface Ip6SplitOptions {
 const isDigit = (c: string): boolean => c >= '0' && c <= '9';
 const isHex = (c: string): boolean => (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F');
 
+const recursiveSplitIpV4 = (
+  options: Ip4SplitOptions,
+  input: string,
+  sections: Section[] = [{ value: '', partNo: 0 }],
+  index: number = 0,
+  cursorDelta: number = 0
+): { sections: Section[]; cursorDelta: number } => {
+  // Base case: no more input to process
+  if (input.length === 0) {
+    return { sections, cursorDelta };
+  }
+  const current = sections.at(-1)!;
+  const char = input[0];
+  input = input.substring(1);
+  if (isDigit(char)) {
+    const part = `${current.value}${char}`;
+    const limit = current.mask ? 32 : 255;
+    // Append digits to current part until the part limit exceeds
+    if (part.length <= 3 && parseInt(part, 10) <= limit) {
+      current.value = part;
+    } else {
+      // Base case: IP completely entered
+      if ((options.cidr && current.mask) || (!options.cidr && current.partNo === 3)) {
+        return { sections, cursorDelta };
+      }
+      // Force separators since the part exceeded his limit
+      if (current.partNo === 3) {
+        input = `/${char}${input.replace('.', '').replace('/', '')}`;
+      } else {
+        const dotIndex = input.indexOf('.');
+        if (dotIndex >= 0) {
+          input = input.substring(0, dotIndex) + input.substring(dotIndex + 1);
+        }
+        input = `.${char}${input}`;
+      }
+      // In case the cursor position is at the the position of the exceeded digit it is necessary
+      // to move the cursor one position forward since a separator will be added before the digit
+      if (index === options.pos) {
+        cursorDelta = 1;
+      }
+    }
+  } else if (current.value !== '' && (char === '.' || char === '/')) {
+    // Handle separators
+    if ('partNo' in current && current.partNo! < 3) {
+      sections.push({ value: '.' }, { value: '', partNo: current.partNo! + 1 });
+    } else if (options.cidr && !current.mask) {
+      sections.push({ value: '/' }, { value: '', mask: true });
+    }
+  }
+
+  return recursiveSplitIpV4(options, input, sections, index + 1, cursorDelta);
+};
+
 /**
  * Parse IPv4 input string into IPv4 address section array.
  */
-export const splitIpV4Sections = (options: Ip4SplitOptions): Section[] => {
-  const { input, pos, cidr } = options;
-  const sections: Section[] = [{ value: '' }];
+export const splitIpV4Sections = (
+  options: Ip4SplitOptions
+): { value: string; cursorDelta: number } => {
+  const { input } = options;
   if (!input) {
-    return sections;
+    return { value: '', cursorDelta: 0 };
   }
-  let maxDots = 3;
-  for (let i = 0; i < input.length; i++) {
-    const c = input.charAt(i);
-    if (isDigit(c)) {
-      sections.at(-1)!.value += c;
-    } else if (c === '.' && maxDots > 0) {
-      maxDots--;
-      sections.push({ value: c }, { value: '' });
-    } else if (cidr && c === '/') {
-      sections.push({ value: c }, { value: '', mask: true });
-    }
-    if (pos === i) {
-      sections.at(-1)!.current = true;
-    }
-  }
-
-  // Trim empty sections for example the user entered ..
-  let previousDivider = false;
-  for (let i = 0; i < sections.length; i += 2) {
-    const isDivider = sections.at(i)?.value === '' && sections.at(i + 1)?.value === '.';
-    if (previousDivider && isDivider) {
-      sections.splice(i, 2);
-    }
-    previousDivider = isDivider;
-  }
-
-  // Split values > 255 in multiple sections:
-  // - 256 will be split into 25 and 6
-  // - 255255255 will be split into 255, 255 and 255
-  for (let i = 0; i < sections.length; i++) {
-    const { value, current } = sections[i];
-    if (value.length >= 3 && parseInt(value, 10) > 255) {
-      const append: Section[] = [];
-      let n = '';
-      for (const c of value) {
-        if (parseInt(n + c, 10) > 255) {
-          append.push({ value: n }, { value: '.' });
-          n = c;
-        } else {
-          n += c;
-        }
-      }
-      if (n.length > 0) {
-        append.push({ value: n });
-      }
-      sections.splice(i, 1, ...append);
-      if (current) {
-        sections[i + append.length - 1].current = true;
-      }
-    }
-  }
-
-  // Split leading zero sections:
-  // Assume a string starting by 0 e.g. 012 will be split into 0 and 12
-  for (let i = 0; i < sections.length; i++) {
-    const sec = sections[i];
-    if (sec.value.length > 1 && sec.value.startsWith('0')) {
-      sections.splice(i, 1, { value: '0' }, { value: sec.value.substring(1) });
-    }
-  }
-
-  // Ensure the that the CIDR divider is a slash
-  if (cidr) {
-    const startCidr = 7;
-    if (startCidr < sections.length && sections[startCidr].value === '.') {
-      sections[startCidr].value = '/';
-    }
-    const prefixPos = startCidr + 1;
-    if (prefixPos < sections.length) {
-      const prefixLength = sections[prefixPos].value;
-      if (parseInt(prefixLength, 10) > 32) {
-        sections[prefixPos].value = prefixLength.substring(0, 2);
-      }
-    }
-  }
-
-  return sections;
+  const { sections, cursorDelta } = recursiveSplitIpV4(options, input);
+  return {
+    value: sections.map(s => s.value).join(''),
+    cursorDelta
+  };
 };
 
-export const splitIpV6Sections = (options: Ip6SplitOptions): Section[] => {
+export const splitIpV6Sections = (options: Ip6SplitOptions): { value: string } => {
   const { type, input, pos, zeroCompression, cidr } = options;
   const sections: Section[] = [{ value: '' }];
   if (!input) {
-    return sections;
+    return { value: '' };
   }
 
   for (let i = 0; i < input.length; i++) {
@@ -164,7 +146,7 @@ export const splitIpV6Sections = (options: Ip6SplitOptions): Section[] => {
   }
 
   // Drop invalid zero compression indicators '::'
-  const removeEnd = pos === input.length - 1 || type === 'paste';
+  const removeEnd = pos === input.length || type === 'paste';
   let matches = sections.filter(s => s.value.startsWith('::'));
   if (matches) {
     matches = removeEnd ? matches : matches.reverse();
@@ -192,5 +174,9 @@ export const splitIpV6Sections = (options: Ip6SplitOptions): Section[] => {
     }
   }
 
-  return sections;
+  const value = sections
+    .splice(0, cidr ? 17 : 15)
+    .map(s => s.value)
+    .join('');
+  return { value };
 };

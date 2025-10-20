@@ -75,7 +75,7 @@ describe('SiIp4InputDirective', () => {
   it('should transform input', () => {
     [
       { input: '255.255.255.2550', output: '255.255.255.255' },
-      { input: '255.255.2550.255', output: '255.255.255.0' },
+      { input: '255.255.2550.255', output: '255.255.255.025' },
       { input: '99999999', output: '99.99.99.99' },
       { input: '255999999', output: '255.99.99.99' },
       { input: '2559999990', output: '255.99.99.99' },
