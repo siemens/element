@@ -100,12 +100,11 @@ export abstract class SiIpInputDirective {
     const el = e.target as HTMLInputElement;
     const selStart = el.selectionStart ?? 0;
     const { inputType, data } = e as InputEvent;
-    const len = data?.length ?? 0;
     this.maskInput({
       value: el.value,
       type: eventMap.get(inputType),
       change: data,
-      pos: selStart - len,
+      pos: selStart,
       previous: this.value
     });
 

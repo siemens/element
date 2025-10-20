@@ -61,15 +61,15 @@ export class SiIp4InputDirective
 
   protected maskInput(e: AddrInputEvent): void {
     const { value, pos, type } = e;
-    const sections = splitIpV4Sections({ type, input: value, pos, cidr: this.cidr() });
+    const ipv4 = splitIpV4Sections({ type, input: value, pos, cidr: this.cidr() });
 
-    this.renderer.setProperty(
-      this.inputEl,
-      'value',
-      sections
-        .splice(0, this.cidr() ? 9 : 7)
-        .map(s => s.value)
-        .join('')
-    );
+    this.renderer.setProperty(this.inputEl, 'value', ipv4.value);
+    const el = this.elementRef.nativeElement;
+    if (value?.length === pos) {
+      el.setSelectionRange(ipv4.value.length, ipv4.value.length);
+    } else {
+      const newPos = pos + ipv4.cursorDelta;
+      el.setSelectionRange(newPos, newPos);
+    }
   }
 }
