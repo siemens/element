@@ -1,4 +1,4 @@
-- toolbar "Toolbar with labeled button groups":
+- toolbar "Actions with labeled button groups":
   - group "Primary labeled group":
     - button " Edit"
     - button " Copy"
@@ -14,7 +14,7 @@
     - button " Copy"
     - button " Delete"
     - button "More actions"
-- toolbar "Toolbar with button groups":
+- toolbar "Actions with button groups":
   - group "Primary group":
     - button "Edit"
     - button "Copy"

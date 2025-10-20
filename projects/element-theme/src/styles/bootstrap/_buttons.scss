@@ -74,7 +74,7 @@ button {
   }
 }
 
-.btn:not(:is(.btn-circle, .btn-link, .btn-close, .btn-split, .icon-only)) {
+.btn:not(:is(.btn-circle, .btn-link, .btn-close, .icon-only)) {
   min-inline-size: variables.$btn-width-normal;
 }
 

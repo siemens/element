@@ -5,11 +5,11 @@
 import { test } from '../../support/test-helpers';
 
 test('badges/badges', ({ si }) => si.static());
+test('buttons/action-group', ({ si }) => si.static());
 test('buttons/buttons', ({ si }) => si.static());
 test('buttons/button-groups', ({ si }) => si.static());
 test('buttons/selection-buttons', ({ si }) => si.static());
 test('buttons/split-button', ({ si }) => si.static());
-test('buttons/toolbar', ({ si }) => si.static());
 test('colors/color-utils', ({ si }) => si.static());
 test('custom-form-elements/checkbox', ({ si }) => si.static());
 test('custom-form-elements/radio', ({ si }) => si.static());

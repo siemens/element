@@ -75,11 +75,6 @@
     }
   }
 
-  // Reduce padding for tertiary buttons preceding dropdown toggle
-  .btn-split.btn-tertiary {
-    padding-inline: map.get(spacers.$spacers, 4);
-  }
-
   &:is(.disabled, :disabled) {
     .btn {
       pointer-events: none;

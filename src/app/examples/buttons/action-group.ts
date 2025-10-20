@@ -9,7 +9,7 @@ import { SiMenuModule } from '@siemens/element-ng/menu';
 @Component({
   selector: 'app-sample',
   imports: [SiMenuModule, CdkMenuTrigger],
-  templateUrl: './toolbar.html'
+  templateUrl: './action-group.html'
 })
 export class SampleComponent {
   splitOpen1 = false;
