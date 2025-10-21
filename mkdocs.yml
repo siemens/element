@@ -38,10 +38,12 @@ nav:
     - Icons:                              'fundamentals/icons.md'
     - Localization:                       'fundamentals/localization.md'
     - Styles:
+      - Colors:                            'fundamentals/styles/colors.md'
       - Display:                           'fundamentals/styles/display.md'
       - Flex:                              'fundamentals/styles/flex.md'
       - Overflow:                          'fundamentals/styles/overflow.md'
       - Sizing:                            'fundamentals/styles/sizing.md'
+      - Text:                              'fundamentals/styles/text.md'
       - Visibility:                        'fundamentals/styles/visibility.md'
     - UX Writing:
       - Overview:                           'fundamentals/ux-text-style-guide/index.md'
