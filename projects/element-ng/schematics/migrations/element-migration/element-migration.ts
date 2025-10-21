@@ -8,6 +8,7 @@ import * as ts from 'typescript';
 import { EmitHint } from 'typescript';
 
 import {
+  classMemberReplacements,
   discoverSourceFiles,
   renameApi,
   renameAttribute,
@@ -22,20 +23,15 @@ export const elementMigrationRule = (
   migrationData: ElementMigrationData
 ): Rule => {
   return async (tree: Tree, context: SchematicContext) => {
-    const tsSourceFiles = await discoverSourceFiles(tree, context, options.path);
-
-    for (const filePath of tsSourceFiles) {
+    for await (const { path: filePath, sourceFile, typeChecker } of discoverSourceFiles(
+      tree,
+      context,
+      options.path
+    )) {
       const content = tree.read(filePath);
       if (!content) {
         continue;
       }
-
-      const sourceFile = ts.createSourceFile(
-        filePath,
-        content.toString(),
-        ts.ScriptTarget.Latest,
-        true
-      );
 
       let recorder: UpdateRecorder | undefined = undefined;
       let printer: ts.Printer | undefined = undefined;
@@ -115,6 +111,19 @@ export const elementMigrationRule = (
             elementName: change.elementSelector,
             attributeSelector: change.attributeSelector,
             names: change.names
+          });
+        }
+      }
+
+      if (migrationData.classMemberReplacementChanges) {
+        recorder ??= tree.beginUpdate(filePath);
+
+        for (const change of migrationData.classMemberReplacementChanges) {
+          classMemberReplacements({
+            recorder,
+            sourceFile,
+            instruction: change,
+            typeChecker
           });
         }
       }

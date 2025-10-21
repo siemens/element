@@ -9,9 +9,17 @@ import {
   allWorkspaceTargets,
   getWorkspace
 } from '@schematics/angular/utility/workspace';
-import { dirname, isAbsolute, resolve } from 'path/posix';
+import { dirname, isAbsolute, relative, resolve } from 'path/posix';
+import * as ts from 'typescript';
 
+import { createTreeAwareCompilerHost } from './ts-compiler-host.js';
 import { parseTsconfigFile } from './ts-utils.js';
+
+export interface DiscoveredSourceFile {
+  path: string;
+  sourceFile: ts.SourceFile;
+  typeChecker: ts.TypeChecker;
+}
 
 export const getGlobalStyles = async (tree: Tree): Promise<string[]> => {
   const globalStyles = new Set<string>();
@@ -52,15 +60,35 @@ export const getTsConfigPaths = async (tree: Tree): Promise<string[]> => {
   return [...buildPaths];
 };
 
-export const discoverSourceFiles = async (
+export async function* createPrograms(tree: Tree): AsyncGenerator<ts.Program> {
+  const basePath = normalize(process.cwd());
+
+  // Wrap the tree to force full paths since parsing the TypeScript config requires full paths.
+  const tsConfigs = await getTsConfigPaths(tree);
+
+  if (!tsConfigs.length) {
+    throw new SchematicsException('Could not find any tsconfig file. Cannot run the migration.');
+  }
+
+  for (const configPath of tsConfigs) {
+    const tsConfigPath = resolve(basePath, configPath);
+    const config = parseTsconfigFile(tsConfigPath, dirname(tsConfigPath), tree);
+    yield ts.createProgram({
+      options: config.options,
+      rootNames: config.fileNames,
+      host: createTreeAwareCompilerHost(tree, config.options)
+    });
+  }
+}
+
+export async function* discoverSourceFiles(
   tree: Tree,
   context: SchematicContext,
   projectPath?: string,
   extension: string = '.ts'
-): Promise<string[]> => {
+): AsyncGenerator<DiscoveredSourceFile> {
   const basePath = normalize(process.cwd());
 
-  // Wrap the tree to force full paths since parsing the typescript config requires full paths.
   const tsConfigs = await getTsConfigPaths(tree);
 
   if (!tsConfigs.length) {
@@ -68,19 +96,47 @@ export const discoverSourceFiles = async (
   }
 
   context.logger.debug(`Found tsconfig files: ${tsConfigs.join(', ')}`);
-  let sourceFiles: string[] = [];
-  for (const configPath of tsConfigs) {
-    const tsConfigPath = resolve(basePath, configPath);
-    const config = parseTsconfigFile(tsConfigPath, dirname(tsConfigPath), tree);
-    sourceFiles.push(...config.fileNames.filter(f => f.endsWith(extension)));
-  }
 
-  // Filter all files which are in the path
-  if (projectPath) {
-    sourceFiles = isAbsolute(projectPath)
-      ? sourceFiles.filter(f => f.startsWith(projectPath))
-      : sourceFiles.filter(f => f.startsWith(resolve(basePath, projectPath)));
-  }
+  const normalizedProjectPath = projectPath
+    ? normalize(isAbsolute(projectPath) ? projectPath : resolve(basePath, projectPath))
+    : undefined;
 
-  return Array.from(new Set(sourceFiles)).map(p => p.substring(basePath.length + 1));
-};
+  const emitted = new Set<string>();
+
+  for await (const program of createPrograms(tree)) {
+    const typeChecker = program.getTypeChecker();
+    for (const sourceFile of program.getSourceFiles()) {
+      if (sourceFile.isDeclarationFile) {
+        continue;
+      }
+
+      const absolutePath = normalize(sourceFile.fileName);
+
+      if (!absolutePath.endsWith(extension)) {
+        continue;
+      }
+
+      if (normalizedProjectPath && !absolutePath.startsWith(normalizedProjectPath)) {
+        continue;
+      }
+
+      const relativePath = normalize(relative(basePath, absolutePath));
+
+      if (!tree.exists(relativePath)) {
+        continue;
+      }
+
+      if (emitted.has(relativePath)) {
+        continue;
+      }
+
+      emitted.add(relativePath);
+
+      yield {
+        path: relativePath,
+        sourceFile,
+        typeChecker
+      };
+    }
+  }
+}

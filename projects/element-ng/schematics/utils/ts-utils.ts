@@ -3,11 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 import { normalize } from '@angular-devkit/core';
-import { SchematicsException, Tree } from '@angular-devkit/schematics';
+import { SchematicsException, Tree, UpdateRecorder } from '@angular-devkit/schematics';
 import { isAbsolute } from 'path/posix';
+import {
+  ComponentNamesInstruction,
+  ClassMemberReplacementInstruction
+} from 'schematics/migrations/data';
 import ts from 'typescript';
 
-import { ComponentNamesInstruction } from '../migrations/data/component-names.js';
 import { SchematicsFileSystem } from './schematics-file-system.js';
 
 /**
@@ -285,6 +288,93 @@ export function* renameIdentifier({
     }
   }
 }
+
+interface Replacement {
+  start: number;
+  end: number;
+  text: string;
+}
+
+/**
+ * Performs type-based replacements using the TypeScript type checker.
+ * This function identifies nodes based on their actual TypeScript type and applies transformations.
+ */
+export const classMemberReplacements = ({
+  recorder,
+  sourceFile,
+  instruction,
+  typeChecker
+}: {
+  recorder: UpdateRecorder;
+  sourceFile: ts.SourceFile;
+  instruction: ClassMemberReplacementInstruction;
+  typeChecker: ts.TypeChecker;
+}): void => {
+  if (!typeChecker) {
+    return;
+  }
+
+  const hasRelevantImport = sourceFile.statements.some(
+    stmt =>
+      ts.isImportDeclaration(stmt) &&
+      ts.isStringLiteral(stmt.moduleSpecifier) &&
+      instruction.module.test(stmt.moduleSpecifier.text)
+  );
+
+  if (!hasRelevantImport) {
+    return;
+  }
+
+  const replacementsToMake: Replacement[] = [];
+
+  // Visit all nodes to find property access expressions
+  const visit = (node: ts.Node): void => {
+    if (ts.isPropertyAccessExpression(node) && ts.isIdentifier(node.name)) {
+      try {
+        const type = typeChecker.getTypeAtLocation(node.expression);
+        const typeName = type.symbol?.name;
+
+        if (typeName && instruction.typeNames.includes(typeName)) {
+          const propertyName = node.name.text;
+
+          // Find matching replacement
+          const replacement = instruction.propertyReplacements.find(
+            r => r.property === propertyName
+          );
+
+          if (replacement) {
+            const expressionText = node.expression.getText(sourceFile);
+            const replacementText = replacement.replacement
+              .replace(/\$\{expression\}/g, expressionText)
+              .replace(/\$\{property\}/g, propertyName);
+
+            replacementsToMake.push({
+              start: node.getStart(sourceFile),
+              end: node.getEnd(),
+              text: replacementText
+            });
+          }
+        }
+      } catch {
+        // Ignore type checking errors
+      }
+    }
+
+    ts.forEachChild(node, visit);
+  };
+
+  visit(sourceFile);
+
+  // Apply replacements in reverse order to maintain correct positions
+  if (replacementsToMake.length > 0) {
+    replacementsToMake.sort((a, b) => b.start - a.start);
+
+    for (const replacement of replacementsToMake) {
+      recorder.remove(replacement.start, replacement.end - replacement.start);
+      recorder.insertLeft(replacement.start, replacement.text);
+    }
+  }
+};
 
 export interface VisitFunctionCallOptions {
   sourceFile: ts.SourceFile;

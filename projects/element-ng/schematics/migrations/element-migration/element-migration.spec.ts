@@ -146,4 +146,8 @@ describe('to legacy migration', () => {
   it('should remove the deprecated api from module based accordion', async () => {
     await checkTemplateMigration(['module-based.accordion-inline-template.ts']);
   });
+
+  it('should rename functions of classes', async () => {
+    await checkTemplateMigration(['function-rename.ts']);
+  });
 });
