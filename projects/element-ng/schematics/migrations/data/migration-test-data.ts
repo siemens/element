@@ -9,7 +9,8 @@ import {
   ElementMigrationData,
   ElementSelectorInstruction,
   OutputNamesInstruction,
-  SymbolRemovalInstruction
+  SymbolRemovalInstruction,
+  ClassMemberReplacementInstruction
 } from './index.js';
 
 const COMPONENT_NAMES_MIGRATION: ComponentNamesInstruction[] = [
@@ -169,6 +170,21 @@ const OUTPUT_NAMES_MIGRATION: OutputNamesInstruction[] = [
   }
 ];
 
+const CLASS_MEMBER_REPLACEMENTS_MIGRATION: ClassMemberReplacementInstruction[] = [
+  {
+    module: /@(siemens|simpl)\/element-ng(\/resize-observer)?/,
+    typeNames: ['SiResponsiveContainerDirective'],
+    propertyReplacements: [
+      { property: 'isXs', replacement: '${expression}.xs()' },
+      { property: 'isSm', replacement: '${expression}.sm()' },
+      { property: 'isMd', replacement: '${expression}.md()' },
+      { property: 'isLg', replacement: '${expression}.lg()' },
+      { property: 'isXl', replacement: '${expression}.xl()' },
+      { property: 'isXxl', replacement: '${expression}.xxl()' }
+    ]
+  }
+];
+
 /**
  * Stable migration data for testing.
  * This data is frozen and used for testing to ensure test stability.
@@ -179,5 +195,6 @@ export const getElementMigrationTestData = (): ElementMigrationData => ({
   componentNameChanges: COMPONENT_NAMES_MIGRATION,
   elementSelectorChanges: ELEMENT_SELECTORS_MIGRATION,
   symbolRemovalChanges: SYMBOL_REMOVALS_MIGRATION,
-  outputNameChanges: OUTPUT_NAMES_MIGRATION
+  outputNameChanges: OUTPUT_NAMES_MIGRATION,
+  classMemberReplacementChanges: CLASS_MEMBER_REPLACEMENTS_MIGRATION
 });
