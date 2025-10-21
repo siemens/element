@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './display-styles.html',
-  host: { class: 'p-5' }
+  templateUrl: './headings.html',
+  host: { class: 'p-5 d-flex gap-8' }
 })
 export class SampleComponent {}
