@@ -1,0 +1,16 @@
+- paragraph:
+  - text: This paragraph demonstrates how the
+  - strong: lh-1
+  - text: line-height utility class affects text spacing. Apply these classes directly to elements or their parent containers as needed.
+- paragraph:
+  - text: This paragraph demonstrates how the
+  - strong: lh-sm
+  - text: line-height utility class affects text spacing. Apply these classes directly to elements or their parent containers as needed.
+- paragraph:
+  - text: This paragraph demonstrates how the
+  - strong: lh-base
+  - text: line-height utility class affects text spacing. Apply these classes directly to elements or their parent containers as needed.
+- paragraph:
+  - text: This paragraph demonstrates how the
+  - strong: lh-lg
+  - text: line-height utility class affects text spacing. Apply these classes directly to elements or their parent containers as needed.

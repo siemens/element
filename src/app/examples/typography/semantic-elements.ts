@@ -6,7 +6,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './display-styles.html',
+  templateUrl: './semantic-elements.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })

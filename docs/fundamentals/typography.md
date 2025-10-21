@@ -107,12 +107,12 @@ They should be used sparingly to maintain clarity.
 
 ![Display fonts usage](images/typography-display-usage.png)
 
-| Style          | Font size | Line height | Font weight |
-| -------------- | --------- | ----------- | ----------- |
-| `display-xl`   | 56 px     | 72 px       | 400 / Roman |
-| `display-lg`   | 48 px     | 64 px       | 400 / Roman |
-| `display-bold` | 40 px     | 52 px       | 700 / Bold  |
-| `display`      | 40 px     | 52 px       | 400 / Roman |
+| CSS class          | Font size | Line height | Font weight |
+| ------------------ | --------- | ----------- | ----------- |
+| `.si-display-xl`   | 56 px     | 72 px       | 400 / Roman |
+| `.si-display-lg`   | 48 px     | 64 px       | 400 / Roman |
+| `.si-display-bold` | 40 px     | 52 px       | 700 / Bold  |
+| `.si-display`      | 40 px     | 52 px       | 400 / Roman |
 
 ### Using the bounding box
 
@@ -150,24 +150,79 @@ See the [Text Colors](colors/ui-colors.md#text) chapter.
 
 ## Code ---
 
-### Type styles classes
-
-Implementation of typography is done via [Bootstrap's typography system](https://getbootstrap.com/docs/5.1/content/typography/).
-Most scenarios allow you to use the HTML semantic (e.g. `h1`, `p`) directly, all the required
-styles are set by default.
+Most scenarios allow you to use the HTML semantic element(s) (e.g. `h1`, `p`) directly, all the required styles are set by default.
 
 In case you can't use the HTML semantic (_e.g. apply a text style to a non_
 _associated HTML tag_) or you have to use a type style without matching
 semantic, you can use the `.si-` text classes.
 
-<si-docs-component example="typography/type-styles" height="300"></si-docs-component>
+### Headings
+
+Heading elements (`<h1>` through `<h6>`) are styled by default. For cases where you need heading-style typography but must use a different HTML element for semantic reasons, corresponding CSS classes are available.
+
+```html
+<div class="si-h1">.si-h1 heading</div>
+<div class="si-h1-bold">.si-h1-bold heading bold</div>
+<div class="si-h2">.si-h2 heading</div>
+<div class="si-h3">.si-h3 heading</div>
+<div class="si-h4">.si-h4 heading</div>
+<div class="si-h4-bold">.si-h4-bold heading bold</div>
+<div class="si-h5">.si-h5 heading</div>
+<div class="si-h5-bold">.si-h5-bold heading bold</div>
+```
+
+<si-docs-component example="typography/headings" height="300"></si-docs-component>
 
 ### Display styles classes
 
-The display styles are provided as `si-display*` and are
-mapped to the related Bootstrap classes.
+Apply display typography using CSS classes prefixed with `.si-display-`. These classes mirror the display typography scale defined in the design system and can be applied to any element.
 
 <si-docs-component example="typography/display-styles" height="280"></si-docs-component>
+
+### Lead
+
+Use the `.lead` class to make a paragraph visually prominent with larger text. This is typically used for introductory paragraphs or to emphasize key content at the beginning of a section.
+
+```html
+<p class="lead">
+  Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non
+  commodo luctus.
+</p>
+```
+
+### Inline text elements
+
+Use these tags for semantic purposes:
+
+| Semantic element | Alternative style               | Description                                                                                                             |
+| ---------------- | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `<mark>`         | `.mark`                         | Represents text which is marked or highlighted for reference or notation purposes.                                      |
+| `<del>`          |                                 | Represents a range of text that has been deleted from a document.                                                       |
+| `<ins>`          |                                 | Represents a range of text that has been added to a document.                                                           |
+| `<s>`            | `.text-decoration-line-through` | Represents elements that are no longer relevant or no longer accurate.                                                  |
+| `<u>`            | `.text-decoration-underline`    | Represents a span of inline text which should be rendered in a way that indicates that it has a non-textual annotation. |
+| `<small>`        | `.small`                        | Represents side-comments and small print, like copyright and legal text.                                                |
+| `<strong>`       | `.fw-bold`                      | Represents a bold text.                                                                                                 |
+| `<em>`           | `.fst-italic`                   | Represents text rendered as italicized text.                                                                            |
+
+While not shown above, feel free to use `<b>` and `<i>` in HTML5. `<b>` is meant to highlight words or phrases without conveying additional importance, while `<i>` is mostly for voice, technical terms, etc.
+
+```html
+<p>You can use the mark tag to <mark>highlight</mark> text.</p>
+<p><del>This line of text is meant to be treated as deleted text.</del></p>
+<p><s>This line of text is meant to be treated as no longer accurate.</s></p>
+<p><ins>This line of text is meant to be treated as an addition to the document.</ins></p>
+<p><u>This line of text will render as underlined.</u></p>
+<p><small>This line of text is meant to be treated as fine print.</small></p>
+<p><strong>This line is rendered as bold text.</strong></p>
+<p><em>This line is rendered as italicized text.</em></p>
+```
+
+<si-docs-component example="typography/inline-elements" height="280"></si-docs-component>
+
+### Text utilities
+
+Change text alignment, colors, decoration, line-height, style, transform and weight with our [text utilities](./styles/text.md) and [text color](./styles/colors.md) classes.
 
 ### Typography specification
 
@@ -185,39 +240,6 @@ font-weight: variables.$si-font-weight-h1;
 ```
 
 We use the specifications for defining the style CSS classes and for configuring
-Bootstrap's typography system.
+Element's typography system.
 
-### Color variants classes
-
-Changing the color of a text can be done using bootstraps utility classes,
-without the need to of any custom SASS styling and is recommended in most cases.
-The default text color is applied automatically and only has to be defined, if
-a higher level component overwrites it.
-
-<si-docs-component example="typography/color-variants" height="380"></si-docs-component>
-
-All color variants can also be applied alternatively using SASS. It is heavily
-recommended to use the contextual colors for this:
-
-```scss
-@use '@siemens/element-theme/src/styles/variables';
-
-color: variables.$element-text-primary;
-color: variables.$element-text-secondary;
-color: variables.$element-text-disabled;
-color: variables.$element-text-active;
-background-color: variables.$element-base-warning;
-background-color: variables.$element-base-danger;
-color: variables.$element-status-danger-contrast;
-background-color: variables.$element-status-danger;
-```
-
-See [\_semantic-tokens](https://github.com/siemens/element/tree/main/projects/element-theme/src/styles/variables/_semantic-tokens.scss).
-
-### Bootstrap typography utilities
-
-Further typographical styling can be done using Bootstrap's wide range of font
-and text utility classes. They closely follow the HTML semantic and can be used
-without any additional styling.
-
-<si-docs-component example="typography/bootstrap" height="400"></si-docs-component>
+<si-docs-component example="typography/semantic-elements" height="400"></si-docs-component>
