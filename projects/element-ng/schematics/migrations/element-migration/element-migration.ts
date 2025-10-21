@@ -22,23 +22,31 @@ export const elementMigrationRule = (
   migrationData: ElementMigrationData
 ): Rule => {
   return async (tree: Tree, context: SchematicContext) => {
-    const tsSourceFiles = await discoverSourceFiles(tree, context, options.path);
-
-    for (const filePath of tsSourceFiles) {
+    for await (const { path: filePath, sourceFile, typeChecker } of discoverSourceFiles(
+      tree,
+      context,
+      options.path
+    )) {
       const content = tree.read(filePath);
       if (!content) {
         continue;
       }
 
-      const sourceFile = ts.createSourceFile(
-        filePath,
-        content.toString(),
-        ts.ScriptTarget.Latest,
-        true
-      );
-
       let recorder: UpdateRecorder | undefined = undefined;
       let printer: ts.Printer | undefined = undefined;
+
+      const visitor = (node: ts.Node): void => {
+        if (ts.isPropertyAccessExpression(node) && ts.isIdentifier(node.name)) {
+          const locationType = typeChecker.getTypeAtLocation(node.expression);
+          if (locationType.symbol?.name === 'SiResponsiveContainerDirective') {
+            console.log(node.expression.getText(), locationType.symbol.name, node.name.text);
+            // TODO: This successfully identifies property access on SiResponsiveContainerDirective. Now this need to be generalized an the actual transformation needs to be implemented.
+          }
+        }
+        node.forEachChild(visitor);
+      };
+
+      sourceFile.forEachChild(visitor);
 
       // Remove the ifs when it grows a bit more and split into multiple functions
       if (migrationData.componentNameChanges) {
