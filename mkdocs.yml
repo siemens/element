@@ -40,6 +40,7 @@ nav:
     - Styles:
       - Display:                           'fundamentals/styles/display.md'
       - Flex:                              'fundamentals/styles/flex.md'
+      - Overflow:                          'fundamentals/styles/overflow.md'
       - Sizing:                            'fundamentals/styles/sizing.md'
       - Visibility:                        'fundamentals/styles/visibility.md'
     - UX Writing:
