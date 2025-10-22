@@ -2,6 +2,10 @@
 
 $rpanel-width-regular: 390px;
 $rpanel-width-wide: 500px;
+$rpanel-width-extended-lg: 480px;
+$rpanel-width-extended-xl: 640px;
+$rpanel-width-extended-xxl: 720px;
+$rpanel-width-extended-xxxl: 912px;
 $rpanel-transition-duration: all-variables.$element-default-transition-duration;
 $rpanel-overlay-bg: rgba(0, 0, 0, 0.4);
 $rpanel-collapsed-width: 48px;
@@ -34,10 +38,16 @@ $rpanel-collapsed-width: 48px;
     --rpanel-size: #{$rpanel-width-wide};
   }
 
+  &.rpanel-size--extended {
+    --rpanel-size: 100%;
+  }
+
   &.rpanel-resize-sm,
   &.rpanel-resize-md,
   &.rpanel-resize-lg,
-  &.rpanel-resize-xl {
+  &.rpanel-resize-xl,
+  &.rpanel-resize-xxl,
+  &.rpanel-resize-xxxl {
     &.rpanel-mode--over {
       padding-inline-end: var(--rpanel-collapsed-width);
 
@@ -51,6 +61,36 @@ $rpanel-collapsed-width: 48px;
     &.rpanel-mode--scroll.rpanel-size--wide {
       padding-inline-end: var(--rpanel-collapsed-width);
     }
+
+    &.rpanel-mode--scroll.rpanel-size--extended {
+      padding-inline-end: var(--rpanel-collapsed-width);
+    }
+
+    &.rpanel-size--extended {
+      --rpanel-size: #{$rpanel-width-extended-lg};
+    }
+  }
+
+  &.rpanel-resize-xl {
+    &.rpanel-mode--scroll.rpanel-size--extended {
+      padding-inline-end: var(--rpanel-collapsed-width);
+    }
+
+    &.rpanel-size--extended {
+      --rpanel-size: #{$rpanel-width-extended-xl};
+    }
+  }
+
+  &.rpanel-resize-xxl {
+    &.rpanel-size--extended {
+      --rpanel-size: #{$rpanel-width-extended-xxl};
+    }
+  }
+
+  &.rpanel-resize-xxxl {
+    &.rpanel-size--extended {
+      --rpanel-size: #{$rpanel-width-extended-xxxl};
+    }
   }
 
   &.rpanel-resize-sm,
@@ -60,6 +100,19 @@ $rpanel-collapsed-width: 48px;
 
       &:not(.rpanel-collapsed) .side-panel {
         box-shadow: all-variables.$element-elevation-2;
+      }
+    }
+
+    &.rpanel-size--extended {
+      &:not(.rpanel-collapsed) {
+        .side-panel,
+        .side-panel > .inner {
+          inline-size: 100%;
+        }
+      }
+
+      .side-panel {
+        z-index: all-variables.$zindex-sidepanel-responsive;
       }
     }
   }
