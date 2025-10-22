@@ -48,6 +48,7 @@ import { SidePanelMode, SidePanelSize } from './side-panel.model';
     '[class.enable-mobile]': 'enableMobile()',
     '[class.rpanel-size--regular]': 'this.size() === "regular"',
     '[class.rpanel-size--wide]': 'this.size() === "wide"',
+    '[class.rpanel-size--extended]': 'this.size() === "extended"',
     '[class.rpanel-mode--over]': 'this.mode() === "over"',
     '[class.rpanel-mode--scroll]': 'isScrollMode()',
     '[class.rpanel-collapsed]': 'isCollapsed()',
@@ -59,10 +60,17 @@ import { SidePanelMode, SidePanelSize } from './side-panel.model';
     '[class.rpanel-resize-sm]': 'isSm()',
     '[class.rpanel-resize-md]': 'isMd()',
     '[class.rpanel-resize-lg]': 'isLg()',
-    '[class.rpanel-resize-xl]': 'isXl()'
+    '[class.rpanel-resize-xl]': 'isXl()',
+    '[class.rpanel-resize-xxl]': 'isXxl()',
+    '[class.rpanel-resize-xxxl]': 'isXxxl()'
   }
 })
 export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
+  /**
+   * Custom breakpoint for ultra-wide screens (≥1920px)
+   */
+  private static readonly xxxlMinimum = 1920;
+
   /**
    * @defaultValue false
    */
@@ -132,6 +140,8 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
   protected readonly isMd = signal(true);
   protected readonly isLg = signal(false);
   protected readonly isXl = signal(false);
+  protected readonly isXxl = signal(false);
+  protected readonly isXxxl = signal(false);
   protected readonly isCollapsed = signal(false);
   protected readonly ready = signal(false);
   protected readonly isHidden = signal(false);
@@ -276,7 +286,9 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
     this.isSm.set(width >= breakpoints.smMinimum && width < breakpoints.mdMinimum);
     this.isMd.set(width >= breakpoints.mdMinimum && width < breakpoints.lgMinimum);
     this.isLg.set(width >= breakpoints.lgMinimum && width < breakpoints.xlMinimum);
-    this.isXl.set(width >= breakpoints.xlMinimum);
+    this.isXl.set(width >= breakpoints.xlMinimum && width < breakpoints.xxlMinimum);
+    this.isXxl.set(width >= breakpoints.xxlMinimum && width < SiSidePanelComponent.xxxlMinimum);
+    this.isXxxl.set(width >= SiSidePanelComponent.xxxlMinimum);
   }
 
   private sendResize(): void {
