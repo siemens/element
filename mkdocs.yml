@@ -42,6 +42,7 @@ nav:
       - Display:                           'fundamentals/styles/display.md'
       - Flex:                              'fundamentals/styles/flex.md'
       - Overflow:                          'fundamentals/styles/overflow.md'
+      - Position:                          'fundamentals/styles/position.md'
       - Sizing:                            'fundamentals/styles/sizing.md'
       - Text:                              'fundamentals/styles/text.md'
       - Visibility:                        'fundamentals/styles/visibility.md'
