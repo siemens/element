@@ -19,16 +19,6 @@ import { TemplateRef } from '@angular/core';
 export class SiHeaderDropdownComponent {
     constructor();
     // (undocumented)
-    protected escape(): void;
-    // (undocumented)
-    protected get show(): boolean;
-    // (undocumented)
-    protected get submenu(): boolean;
-    // (undocumented)
-    protected get trapFocus(): boolean;
-    // (undocumented)
-    protected trigger: SiHeaderDropdownTriggerDirective;
-    // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiHeaderDropdownComponent, "si-header-dropdown", never, {}, {}, never, ["*"], true, never>;
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiHeaderDropdownComponent, never>;
