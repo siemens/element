@@ -66,6 +66,10 @@ export class SiHeaderDropdownComponent {
     return this.trigger.isOpen;
   }
 
+  @HostBinding('class.header-dropdown-overlay') protected get overlay(): boolean {
+    return this.trigger.isOverlay;
+  }
+
   @HostBinding('class.sub-menu') protected get submenu(): boolean {
     return this.trigger.level > 1;
   }
