@@ -21,7 +21,7 @@ Circle status is available in two sizes: `Regular` or `Small`.
 - At the beginning (left side) of a row
 - Indicate the status on a type icon
 
-## Best practices
+### Best practices
 
 - Badge on circle status shall be colored according definition for the [status colors](../../fundamentals/colors/ui-colors.md/#status)
 - Use it with severity symbols when there is a need to identify different severities
