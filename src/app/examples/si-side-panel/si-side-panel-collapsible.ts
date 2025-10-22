@@ -121,7 +121,13 @@ export class SampleComponent implements OnDestroy {
   }
 
   changeSize(): void {
-    this.size = this.size === 'regular' ? 'wide' : 'regular';
+    if (this.size === 'regular') {
+      this.size = 'wide';
+    } else if (this.size === 'wide') {
+      this.size = 'extended';
+    } else {
+      this.size = 'regular';
+    }
   }
 
   contentResize(dim: ElementDimensions): void {
