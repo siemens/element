@@ -34,6 +34,7 @@ import { SI_HEADER_DROPDOWN_OPTIONS } from './si-header.model';
   }
 })
 export class SiHeaderDropdownComponent {
+  /** @internal */
   protected trigger = inject(SiHeaderDropdownTriggerDirective);
 
   private readonly focusTrap = viewChild.required(CdkTrapFocus);
@@ -61,19 +62,23 @@ export class SiHeaderDropdownComponent {
     });
   }
 
+  /** @internal */
   @HostBinding('class.show')
   protected get show(): boolean {
     return this.trigger.isOpen;
   }
 
+  /** @internal */
   @HostBinding('class.header-dropdown-overlay') protected get overlay(): boolean {
     return this.trigger.isOverlay;
   }
 
+  /** @internal */
   @HostBinding('class.sub-menu') protected get submenu(): boolean {
     return this.trigger.level > 1;
   }
 
+  /** @internal */
   protected get trapFocus(): boolean {
     return (
       this.trigger.isOverlay ||
@@ -81,6 +86,7 @@ export class SiHeaderDropdownComponent {
     );
   }
 
+  /** @internal */
   @HostListener('keydown.escape')
   protected escape(): void {
     this.trigger?.close();
