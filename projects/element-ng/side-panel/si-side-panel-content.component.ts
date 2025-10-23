@@ -16,7 +16,7 @@ import {
   signal
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SiAccordionHCollapseService } from '@siemens/element-ng/accordion';
 import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import {
@@ -156,6 +156,7 @@ export class SiSidePanelContentComponent implements OnInit {
   readonly searchEvent = output<string>();
 
   protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });
+  protected readonly router = inject(Router, { optional: true });
   protected readonly service = inject(SiSidePanelService);
   protected readonly isCollapsed = signal(false);
   protected readonly isExpanded = signal(true);
@@ -204,11 +205,15 @@ export class SiSidePanelContentComponent implements OnInit {
     });
 
     effect(() => {
-      if (this.isCollapsed() && this.isFullscreen()) {
+      if (this.isCollapsed() && !this.service.isTemporaryOpen() && this.isFullscreen()) {
         setTimeout(() => {
           this.service.setFullscreen(false);
         }, this.resizeAnimationDelay);
       }
+    });
+
+    effect(() => {
+      this.updateUrlParam(!this.isCollapsed());
     });
 
     accordionHcollapse.open$
@@ -223,18 +228,55 @@ export class SiSidePanelContentComponent implements OnInit {
       .subscribe(({ matches }) => {
         this.mobileSize.set(matches);
       });
+
+    this.initializeFromUrl();
+  }
+
+  /**
+   * Initialize side panel state from URL query parameters
+   */
+  private initializeFromUrl(): void {
+    if (!this.activatedRoute) {
+      return;
+    }
+
+    const params = this.activatedRoute.snapshot.queryParams;
+    if (params.sidePanelOpen === 'true') {
+      this.service.open();
+    }
+  }
+
+  /**
+   * Update the sidePanelOpen query parameter in the URL
+   */
+  private updateUrlParam(isOpen: boolean): void {
+    if (!this.router || !this.activatedRoute) {
+      return;
+    }
+
+    const queryParams = { ...this.activatedRoute.snapshot.queryParams };
+
+    if (isOpen) {
+      queryParams.sidePanelOpen = 'true';
+    } else {
+      delete queryParams.sidePanelOpen;
+    }
+
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams,
+      replaceUrl: true
+    });
   }
 
   /**
    * Toggle fullscreen overlay mode
    */
   toggleFullscreen(): void {
-    if (!this.service.isOpen()) {
+    if (this.isCollapsed() && !this.service.isTemporaryOpen()) {
       return;
     }
     this.service.toggleFullscreen();
-
-    // TODO: Persist state in URL
   }
 
   protected toggleSidePanel(event?: MouseEvent): void {
