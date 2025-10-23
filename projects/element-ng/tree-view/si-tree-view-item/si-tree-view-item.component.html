@@ -61,7 +61,9 @@
           class="si-tree-view-item-object-data d-flex flex-column justify-content-center overflow-hidden"
         >
           @if (!templates().length) {
-            <h5 class="text-truncate">{{ treeItem.label | translate }}</h5>
+            <ng-content select=":not(si-tree-view-item):not([dragPreview])"
+              ><h5 class="text-truncate">{{ treeItem.label | translate }}</h5></ng-content
+            >
           } @else {
             <div>
               <ng-container
