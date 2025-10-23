@@ -14,7 +14,9 @@
     @if (displayMode() === 'navigate' && navigateConfig) {
       @if (navigateConfig.type === 'router-link') {
         <a
-          class="navigate-button btn btn-circle btn-sm btn-ghost ms-4 auto-hide"
+          class="btn btn-circle btn-sm btn-ghost auto-hide"
+          [class.ms-4]="collapsible()"
+          [class.mx-4]="!collapsible()"
           [routerLink]="navigateConfig.routerLink"
           [queryParams]="navigateConfig.extras?.queryParams"
           [queryParamsHandling]="navigateConfig.extras?.queryParamsHandling"
@@ -33,9 +35,12 @@
         >
       } @else if (navigateConfig.type === 'link') {
         <a
-          class="navigate-button btn btn-circle btn-sm btn-ghost ms-4 auto-hide"
+          class="btn btn-circle btn-sm btn-ghost auto-hide"
+          [class.ms-4]="collapsible()"
+          [class.mx-4]="!collapsible()"
           [href]="navigateConfig.href"
           [target]="navigateConfig.target"
+          [attr.rel]="navigateConfig.target === '_blank' ? 'noopener noreferrer' : null"
           [attr.aria-label]="navigateConfig.label | translate"
         >
           <si-icon class="icon" icon="element-export" />
@@ -48,9 +53,13 @@
     @if (displayMode() === 'overlay') {
       <button
         type="button"
-        class="overlay-button btn btn-circle btn-sm btn-ghost element-zoom ms-4 auto-hide"
+        class="fullscreen-button btn btn-circle btn-sm btn-ghost auto-hide"
+        [class.element-pinch]="isFullscreen()"
+        [class.element-zoom]="!isFullscreen()"
+        [class.ms-4]="collapsible()"
+        [class.mx-4]="!collapsible()"
         [attr.aria-label]="
-          (service.isFullscreen() ? 'Exit fullscreen' : 'Enter fullscreen') | translate
+          (isFullscreen() ? exitFullscreenLabel() : enterFullscreenLabel()) | translate
         "
         [tabindex]="focusable() ? '0' : '-1'"
         (click)="toggleFullscreen()"
@@ -58,7 +67,7 @@
     }
     <button
       type="button"
-      class="close-button btn btn-circle btn-sm btn-ghost element-cancel mx-4"
+      class="close-button btn btn-circle btn-sm btn-ghost element-cancel me-4"
       [attr.aria-label]="closeButtonLabel() | translate"
       [tabindex]="focusable() ? '0' : '-1'"
       (click)="toggleSidePanel($event)"
