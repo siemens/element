@@ -3,6 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { NavigationExtras } from '@angular/router';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
+
 /**
  * Side panel mode options.
  * - scroll: pushes content when side panel opens/closes,
@@ -27,11 +30,32 @@ export type SidePanelSize = 'regular' | 'wide' | 'extended';
 export type SidePanelDisplayMode = 'navigate' | 'overlay';
 
 /**
- * Configuration for side panel navigation
+ *  Interface representing a router link item in the side panel.
  */
-export interface SidePanelNavigateConfig {
-  /** URL or route to navigate to when export icon is clicked */
-  navigateUrl: string;
-  /** Optional target for navigation (e.g., '_blank' for new tab) */
+export interface SidePanelNavigateRouterLink {
+  type: 'router-link';
+  /** Label that is shown to the user. */
+  label: TranslatableString;
+  /** Link for the angular router. Accepts the same values as {@link RouterLink}. */
+  routerLink: string | any[];
+  /** Navigation extras that are passed to the {@link RouterLink}. */
+  extras?: NavigationExtras;
+}
+
+/**
+ * Interface representing a link item in the side panel.
+ */
+export interface SidePanelNavigateLink {
+  type: 'link';
+  /** Label that is shown to the user. */
+  label: TranslatableString;
+  /** The href property of the anchor. */
+  href: string;
+  /** The target property of the anchor. */
   target?: string;
 }
+
+/**
+ * Configuration for side panel navigation.
+ */
+export type SidePanelNavigateConfig = SidePanelNavigateRouterLink | SidePanelNavigateLink;
