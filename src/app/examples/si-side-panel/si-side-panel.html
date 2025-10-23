@@ -12,6 +12,12 @@
         <a siHeaderLogo routerLink="/" class="d-none d-md-flex"></a>
         <h1 class="application-name">Side panel</h1>
       </si-header-brand>
+
+      <si-header-actions>
+        <button type="button" si-header-action-item icon="element-menu" (click)="toggle()">
+          Layout
+        </button>
+      </si-header-actions>
     </si-application-header>
 
     <br />
@@ -114,7 +120,7 @@
     </div>
     <hr />
     <div class="mb-4">
-      <h3>Modes and Sizes</h3>
+      <h2>Modes and sizes</h2>
       <p>
         <code class="text-primary">Over:</code> The side panel overlays on top of the main content,
         which remains in its original position. Ideal for temporary interactions without losing
@@ -142,7 +148,6 @@
     heading="Title"
     [displayMode]="displayMode"
     [navigateConfig]="navigateConfig"
-    (navigate)="onNavigate($event)"
   >
     <si-accordion>
       <si-collapsible-panel heading="Hey there">

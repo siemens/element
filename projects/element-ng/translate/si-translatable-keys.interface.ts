@@ -195,6 +195,8 @@ export interface SiTranslatableKeys {
   'SI_SELECT.NO-RESULTS-FOUND'?: string;
   'SI_SELECT.SEARCH-PLACEHOLDER'?: string;
   'SI_SIDE_PANEL.CLOSE'?: string;
+  'SI_SIDE_PANEL.ENTER_FULLSCREEN'?: string;
+  'SI_SIDE_PANEL.EXIT_FULLSCREEN'?: string;
   'SI_SIDE_PANEL.SEARCH_PLACEHOLDER'?: string;
   'SI_SIDE_PANEL.TOGGLE'?: string;
   'SI_SKIP_LINKS.JUMP_TO'?: string;

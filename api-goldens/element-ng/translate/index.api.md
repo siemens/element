@@ -394,6 +394,10 @@ export interface SiTranslatableKeys {
     // (undocumented)
     'SI_SIDE_PANEL.CLOSE'?: string;
     // (undocumented)
+    'SI_SIDE_PANEL.ENTER_FULLSCREEN'?: string;
+    // (undocumented)
+    'SI_SIDE_PANEL.EXIT_FULLSCREEN'?: string;
+    // (undocumented)
     'SI_SIDE_PANEL.SEARCH_PLACEHOLDER'?: string;
     // (undocumented)
     'SI_SIDE_PANEL.TOGGLE'?: string;

@@ -4,12 +4,14 @@
 
 ```ts
 
+import { ActivatedRoute } from '@angular/router';
 import * as _angular_core from '@angular/core';
 import { Breakpoints } from '@siemens/element-ng/resize-observer';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import { ElementDimensions } from '@siemens/element-ng/resize-observer';
 import { MenuItem } from '@siemens/element-ng/common';
 import { MenuItem as MenuItem_2 } from '@siemens/element-ng/menu';
+import { NavigationExtras } from '@angular/router';
 import { Observable } from 'rxjs';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
@@ -20,10 +22,34 @@ import { SimpleChanges } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public
+export type SidePanelDisplayMode = 'navigate' | 'overlay';
+
+// @public
 export type SidePanelMode = 'scroll' | 'over';
 
 // @public
-export type SidePanelSize = 'wide' | 'regular';
+export type SidePanelNavigateConfig = SidePanelNavigateRouterLink | SidePanelNavigateLink;
+
+// @public
+export interface SidePanelNavigateLink {
+    href: string;
+    label: TranslatableString;
+    target?: string;
+    // (undocumented)
+    type: 'link';
+}
+
+// @public
+export interface SidePanelNavigateRouterLink {
+    extras?: NavigationExtras;
+    label: TranslatableString;
+    routerLink: string | any[];
+    // (undocumented)
+    type: 'router-link';
+}
+
+// @public
+export type SidePanelSize = 'regular' | 'wide' | 'extended';
 
 // @public (undocumented)
 export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
@@ -38,6 +64,8 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
     // (undocumented)
     protected readonly isCollapsed: _angular_core.WritableSignal<boolean>;
     // (undocumented)
+    protected readonly isFullscreenOverlay: _angular_core.WritableSignal<boolean>;
+    // (undocumented)
     protected readonly isHidden: _angular_core.WritableSignal<boolean>;
     // (undocumented)
     protected readonly isLg: _angular_core.WritableSignal<boolean>;
@@ -51,6 +79,10 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
     protected readonly isXl: _angular_core.WritableSignal<boolean>;
     // (undocumented)
     protected readonly isXs: _angular_core.WritableSignal<boolean>;
+    // (undocumented)
+    protected readonly isXxl: _angular_core.WritableSignal<boolean>;
+    // (undocumented)
+    protected readonly isXxxl: _angular_core.WritableSignal<boolean>;
     readonly mode: _angular_core.InputSignal<SidePanelMode>;
     // (undocumented)
     ngOnChanges(changes: SimpleChanges): void;
@@ -74,11 +106,18 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
 // @public (undocumented)
 export class SiSidePanelContentComponent implements OnInit {
     constructor();
+    // (undocumented)
+    protected readonly activatedRoute: ActivatedRoute | null;
     readonly closeButtonLabel: _angular_core.InputSignal<TranslatableString>;
     // (undocumented)
-    readonly collapsible: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    protected readonly collapsible: _angular_core.Signal<boolean>;
+    // @deprecated (undocumented)
+    readonly collapsibleInput: _angular_core.InputSignalWithTransform<boolean | undefined, unknown>;
+    readonly displayMode: _angular_core.InputSignal<SidePanelDisplayMode | undefined>;
     // (undocumented)
     protected readonly enableMobile: _angular_core.Signal<boolean>;
+    readonly enterFullscreenLabel: _angular_core.InputSignal<TranslatableString>;
+    readonly exitFullscreenLabel: _angular_core.InputSignal<TranslatableString>;
     // (undocumented)
     protected readonly focusable: _angular_core.Signal<boolean>;
     readonly heading: _angular_core.InputSignal<TranslatableString>;
@@ -89,7 +128,10 @@ export class SiSidePanelContentComponent implements OnInit {
     // (undocumented)
     protected readonly isExpanded: _angular_core.WritableSignal<boolean>;
     // (undocumented)
+    protected readonly isFullscreen: _angular_core.WritableSignal<boolean>;
+    // (undocumented)
     protected readonly mobileSize: _angular_core.WritableSignal<boolean>;
+    readonly navigateConfig: _angular_core.InputSignal<SidePanelNavigateConfig | undefined>;
     // (undocumented)
     ngOnInit(): void;
     readonly primaryActions: _angular_core.InputSignal<(MenuItem | ContentActionBarMainItem)[]>;
@@ -97,13 +139,16 @@ export class SiSidePanelContentComponent implements OnInit {
     readonly searchEvent: _angular_core.OutputEmitterRef<string>;
     readonly searchPlaceholder: _angular_core.InputSignal<TranslatableString>;
     readonly secondaryActions: _angular_core.InputSignal<(MenuItem | MenuItem_2)[]>;
+    // (undocumented)
+    protected readonly service: SiSidePanelService;
     readonly showMobileDrawerBadge: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly statusActions: _angular_core.InputSignal<StatusItem[]>;
+    toggleFullscreen(): void;
     readonly toggleItemLabel: _angular_core.InputSignal<TranslatableString>;
     // (undocumented)
     protected toggleSidePanel(event?: MouseEvent): void;
     // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSidePanelContentComponent, "si-side-panel-content", never, { "collapsible": { "alias": "collapsible"; "required": false; "isSignal": true; }; "heading": { "alias": "heading"; "required": false; "isSignal": true; }; "primaryActions": { "alias": "primaryActions"; "required": false; "isSignal": true; }; "secondaryActions": { "alias": "secondaryActions"; "required": false; "isSignal": true; }; "statusActions": { "alias": "statusActions"; "required": false; "isSignal": true; }; "searchable": { "alias": "searchable"; "required": false; "isSignal": true; }; "searchPlaceholder": { "alias": "searchPlaceholder"; "required": false; "isSignal": true; }; "closeButtonLabel": { "alias": "closeButtonLabel"; "required": false; "isSignal": true; }; "toggleItemLabel": { "alias": "toggleItemLabel"; "required": false; "isSignal": true; }; "showMobileDrawerBadge": { "alias": "showMobileDrawerBadge"; "required": false; "isSignal": true; }; }, { "searchEvent": "searchEvent"; }, never, ["*"], true, never>;
+    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSidePanelContentComponent, "si-side-panel-content", never, { "collapsibleInput": { "alias": "collapsible"; "required": false; "isSignal": true; }; "heading": { "alias": "heading"; "required": false; "isSignal": true; }; "primaryActions": { "alias": "primaryActions"; "required": false; "isSignal": true; }; "secondaryActions": { "alias": "secondaryActions"; "required": false; "isSignal": true; }; "statusActions": { "alias": "statusActions"; "required": false; "isSignal": true; }; "searchable": { "alias": "searchable"; "required": false; "isSignal": true; }; "searchPlaceholder": { "alias": "searchPlaceholder"; "required": false; "isSignal": true; }; "closeButtonLabel": { "alias": "closeButtonLabel"; "required": false; "isSignal": true; }; "toggleItemLabel": { "alias": "toggleItemLabel"; "required": false; "isSignal": true; }; "enterFullscreenLabel": { "alias": "enterFullscreenLabel"; "required": false; "isSignal": true; }; "exitFullscreenLabel": { "alias": "exitFullscreenLabel"; "required": false; "isSignal": true; }; "showMobileDrawerBadge": { "alias": "showMobileDrawerBadge"; "required": false; "isSignal": true; }; "displayMode": { "alias": "displayMode"; "required": false; "isSignal": true; }; "navigateConfig": { "alias": "navigateConfig"; "required": false; "isSignal": true; }; }, { "searchEvent": "searchEvent"; }, never, ["*"], true, never>;
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSidePanelContentComponent, never>;
 }
@@ -122,13 +167,17 @@ export class SiSidePanelModule {
 export class SiSidePanelService {
     close(): void;
     hideTemporaryContent(): boolean;
+    readonly isFullscreen$: Observable<boolean>;
+    isFullscreen(): boolean;
     readonly isOpen$: Observable<boolean>;
     isOpen(): boolean;
     isTemporaryOpen(): boolean;
     open(): void;
+    setFullscreen(fullscreen: boolean): void;
     setSidePanelContent(portal: Portal<any> | undefined): void;
     showTemporaryContent(portal: Portal<any> | undefined): Observable<void>;
     toggle(): void;
+    toggleFullscreen(): void;
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSidePanelService, never>;
     // (undocumented)

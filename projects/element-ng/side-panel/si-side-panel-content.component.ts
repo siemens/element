@@ -16,6 +16,7 @@ import {
   signal
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { SiAccordionHCollapseService } from '@siemens/element-ng/accordion';
 import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import {
@@ -34,6 +35,7 @@ import { MenuItem } from '@siemens/element-ng/menu';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { timer } from 'rxjs';
 
 import { SiSidePanelService } from './si-side-panel.service';
 import { SidePanelDisplayMode, SidePanelNavigateConfig } from './side-panel.model';
@@ -51,6 +53,7 @@ export interface StatusItem extends MenuItemLegacy {
     SiContentActionBarComponent,
     SiIconComponent,
     SiLinkDirective,
+    RouterLink,
     SiSearchBarComponent,
     SiTranslatePipe
   ],
@@ -65,6 +68,16 @@ export interface StatusItem extends MenuItemLegacy {
   }
 })
 export class SiSidePanelContentComponent implements OnInit {
+  /**
+   * @deprecated This input is no longer used. The collapsible state is managed by the SiSidePanelService.
+   * This input will be removed in a future major version.
+   * @defaultValue undefined
+   */
+  readonly collapsibleInput = input(undefined, {
+    // eslint-disable-next-line @angular-eslint/no-input-rename
+    alias: 'collapsible',
+    transform: booleanAttribute
+  });
   /**
    * Header of side panel
    *
@@ -133,6 +146,30 @@ export class SiSidePanelContentComponent implements OnInit {
   readonly toggleItemLabel = input(t(() => $localize`:@@SI_SIDE_PANEL.TOGGLE:Toggle`));
 
   /**
+   * Enter fullscreen aria-label, required for a11y
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_SIDE_PANEL.ENTER_FULLSCREEN:Enter fullscreen`)
+   * ```
+   */
+  readonly enterFullscreenLabel = input(
+    t(() => $localize`:@@SI_SIDE_PANEL.ENTER_FULLSCREEN:Enter fullscreen`)
+  );
+
+  /**
+   * Exit fullscreen aria-label, required for a11y
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_SIDE_PANEL.EXIT_FULLSCREEN:Exit fullscreen`)
+   * ```
+   */
+  readonly exitFullscreenLabel = input(
+    t(() => $localize`:@@SI_SIDE_PANEL.EXIT_FULLSCREEN:Exit fullscreen`)
+  );
+
+  /**
    * Show a badge on the mobile drawer indicating a new alert or notification
    *
    * @defaultValue false
@@ -150,21 +187,19 @@ export class SiSidePanelContentComponent implements OnInit {
   readonly navigateConfig = input<SidePanelNavigateConfig>();
 
   /**
-   * Emits when navigate icon is clicked
-   */
-  readonly navigate = output<string>();
-
-  /**
    * Output for search bar input
    */
   readonly searchEvent = output<string>();
 
+  protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });
   protected readonly service = inject(SiSidePanelService);
   protected readonly isCollapsed = signal(false);
   protected readonly isExpanded = signal(true);
   protected readonly isFullscreen = signal(false);
   protected readonly enableMobile = computed(() => this.service?.enableMobile() ?? false);
-  protected readonly collapsible = computed(() => this.service?.collapsible() ?? false);
+  protected readonly collapsible = computed(() => {
+    return this.collapsibleInput() ?? this.service?.collapsible() ?? false;
+  });
   protected readonly mobileSize = signal(false);
   protected readonly focusable = computed(
     () => !this.mobileSize() || !this.enableMobile() || !this.isCollapsed()
@@ -205,6 +240,17 @@ export class SiSidePanelContentComponent implements OnInit {
         accordionHcollapse.hcollapsed.set(this.isCollapsed());
       }
     });
+
+    effect(() => {
+      if (this.isCollapsed() && !this.service.isTemporaryOpen() && this.isFullscreen()) {
+        timer(this.resizeAnimationDelay)
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe(() => {
+            this.service.setFullscreen(false);
+          });
+      }
+    });
+
     accordionHcollapse.open$.pipe(takeUntilDestroyed()).subscribe(() => this.service.open());
   }
 
@@ -218,25 +264,13 @@ export class SiSidePanelContentComponent implements OnInit {
   }
 
   /**
-   * Handle navigate action - emits navigate event with URL
-   */
-  onNavigate(): void {
-    const config = this.navigateConfig();
-    if (config?.navigateUrl) {
-      this.navigate.emit(config.navigateUrl);
-    }
-  }
-
-  /**
    * Toggle fullscreen overlay mode
    */
   toggleFullscreen(): void {
-    if (!this.service.isOpen()) {
+    if (this.isCollapsed() && !this.service.isTemporaryOpen()) {
       return;
     }
     this.service.toggleFullscreen();
-
-    // TODO: Persist state in URL
   }
 
   protected toggleSidePanel(event?: MouseEvent): void {

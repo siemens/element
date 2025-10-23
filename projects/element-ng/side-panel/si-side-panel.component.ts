@@ -192,7 +192,7 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
         .subscribe(() => {
           this.openingOrClosing = false;
           this.emitResizeOutputs();
-          this.isFullscreenOverlay.set(false);
+          this.service.setFullscreen(false);
           if (this.isCollapsedInternal && !this.collapsible()) {
             this.isHidden.set(true);
           }
@@ -207,9 +207,13 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
       } else {
         this.service.open();
       }
-    } else if (changes.enableMobile) {
+    }
+
+    if (changes.enableMobile) {
       this.service.enableMobile.set(this.enableMobile());
-    } else if (changes.collapsible) {
+    }
+
+    if (changes.collapsible) {
       this.service.collapsible.set(this.collapsible());
     }
   }
