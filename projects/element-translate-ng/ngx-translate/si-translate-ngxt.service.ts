@@ -8,7 +8,11 @@ import {
   MissingTranslationHandlerParams,
   TranslateService
 } from '@ngx-translate/core';
-import { SiTranslateService, TranslationResult } from '@siemens/element-translate-ng/translate';
+import {
+  isBypassTranslation,
+  SiTranslateService,
+  TranslationResult
+} from '@siemens/element-translate-ng/translate';
 import { merge, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -81,6 +85,9 @@ export class SiTranslateNgxTService extends SiTranslateService {
     if (Array.isArray(keys) && !keys.length) {
       return of({} as TranslationResult<T>);
     }
+    if (typeof keys === 'string' && isBypassTranslation(keys)) {
+      return of(keys as unknown as TranslationResult<T>);
+    }
     return this.ngxTranslateService.stream(keys, params);
   }
 
@@ -90,6 +97,9 @@ export class SiTranslateNgxTService extends SiTranslateService {
   ): TranslationResult<T> {
     if (Array.isArray(keys) && !keys.length) {
       return {} as TranslationResult<T>;
+    }
+    if (isBypassTranslation(keys)) {
+      return keys.value as unknown as TranslationResult<T>;
     }
     return this.ngxTranslateService.instant(keys, params);
   }

@@ -11,6 +11,13 @@
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface Translatable {}
 /**
+ * Represent a string that should not be translated by the translation service.
+ */
+export interface BypassTranslation {
+  bypassTranslation: true;
+  value: string;
+}
+/**
  * Represents a translatable string. This can either be a translation key, e.g. `ACTIONS.EDIT` that
  * will be automatically translated when displayed on the UI or a pre-translated string, e.g. `Edit`.
  * Equivalent to a normal string in usage and functionality.
