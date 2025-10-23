@@ -11,30 +11,11 @@
       <i class="icon element-command-open" aria-hidden="true"></i>
       Toggle side panel
     </button>
-    <br />
-    <div class="btn-group btn-group-sm mt-5" role="group" aria-label="Mode toggle button group">
-      <input
-        type="radio"
-        class="btn-check"
-        name="mode"
-        id="mode-over"
-        [checked]="mode === 'over'"
-      />
-      <label class="btn btn-sm" for="mode-over" (click)="mode = 'over'">
-        <i class="icon element-menu" aria-hidden="true"></i>
-        Over
-      </label>
-      <input
-        type="radio"
-        class="btn-check"
-        name="mode"
-        id="mode-scroll"
-        [checked]="mode === 'scroll'"
-      />
-      <label class="btn btn-sm" for="mode-scroll" (click)="mode = 'scroll'">
-        <i class="icon element-jump-to-list-item" aria-hidden="true"></i>
-        Scroll
-      </label>
+    <div class="btn-group btn-group-sm ms-5" role="group" aria-label="Content toggle button group">
+      <input type="radio" class="btn-check" name="content" id="content-1" />
+      <label class="btn btn-sm" for="content-1" (click)="setContent1()"> Content 1 </label>
+      <input type="radio" class="btn-check" name="content" id="content-2" />
+      <label class="btn btn-sm" for="content-2" (click)="setContent2()"> Content 2 </label>
     </div>
     <br />
     <div class="btn-group btn-group-sm mt-5" role="group" aria-label="Size toggle button group">
@@ -73,11 +54,61 @@
       </label>
     </div>
     <br />
-    <div class="btn-group btn-group-sm mt-5" role="group" aria-label="Content toggle button group">
-      <input type="radio" class="btn-check" name="content" id="content-1" />
-      <label class="btn btn-sm" for="content-1" (click)="setContent1()"> Content 1 </label>
-      <input type="radio" class="btn-check" name="content" id="content-2" />
-      <label class="btn btn-sm" for="content-2" (click)="setContent2()"> Content 2 </label>
+    <div
+      class="btn-group btn-group-sm mt-5"
+      role="group"
+      aria-label="Display mode toggle button group"
+    >
+      <input
+        type="radio"
+        class="btn-check"
+        name="displayMode"
+        id="display-navigate"
+        [checked]="displayMode === 'navigate'"
+      />
+      <label class="btn btn-sm" for="display-navigate" (click)="displayMode = 'navigate'">
+        <i class="icon element-export" aria-hidden="true"></i>
+        Navigate
+      </label>
+      <input
+        type="radio"
+        class="btn-check"
+        name="displayMode"
+        id="display-overlay"
+        [checked]="displayMode === 'overlay'"
+      />
+      <label class="btn btn-sm" for="display-overlay" (click)="displayMode = 'overlay'">
+        <i class="icon element-zoom" aria-hidden="true"></i>
+        Overlay
+      </label>
+    </div>
+    <div
+      class="btn-group btn-group-sm ms-5 mt-5"
+      role="group"
+      aria-label="Mode toggle button group"
+    >
+      <input
+        type="radio"
+        class="btn-check"
+        name="mode"
+        id="mode-over"
+        [checked]="mode === 'over'"
+      />
+      <label class="btn btn-sm" for="mode-over" (click)="mode = 'over'">
+        <i class="icon element-menu" aria-hidden="true"></i>
+        Over
+      </label>
+      <input
+        type="radio"
+        class="btn-check"
+        name="mode"
+        id="mode-scroll"
+        [checked]="mode === 'scroll'"
+      />
+      <label class="btn btn-sm" for="mode-scroll" (click)="mode = 'scroll'">
+        <i class="icon element-jump-to-list-item" aria-hidden="true"></i>
+        Scroll
+      </label>
     </div>
     <hr />
     <div class="mb-4">
@@ -100,7 +131,12 @@
 </si-side-panel>
 
 <ng-template #content1 cdkPortal>
-  <si-side-panel-content heading="Content 1">
+  <si-side-panel-content
+    heading="Content 1"
+    [displayMode]="displayMode"
+    [navigateConfig]="navigateConfig"
+    (navigate)="onNavigate($event)"
+  >
     <si-accordion>
       <si-collapsible-panel heading="Hey there️">
         <div class="p-6"> And here we have some content </div>
@@ -116,7 +152,12 @@
 </ng-template>
 
 <ng-template #content2 cdkPortal>
-  <si-side-panel-content heading="Content 2">
+  <si-side-panel-content
+    heading="Content 2"
+    [displayMode]="displayMode"
+    [navigateConfig]="navigateConfig"
+    (navigate)="onNavigate($event)"
+  >
     <div class="p-6">Different content</div>
   </si-side-panel-content>
 </ng-template>
