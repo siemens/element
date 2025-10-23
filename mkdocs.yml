@@ -38,6 +38,7 @@ nav:
     - Icons:                              'fundamentals/icons.md'
     - Localization:                       'fundamentals/localization.md'
     - Styles:
+      - Borders:                           'fundamentals/styles/borders.md'
       - Colors:                            'fundamentals/styles/colors.md'
       - Display:                           'fundamentals/styles/display.md'
       - Flex:                              'fundamentals/styles/flex.md'

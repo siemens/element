@@ -6,7 +6,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './shapes.html',
+  templateUrl: './borders.html',
   styles: `
     :host {
       .example {
