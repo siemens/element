@@ -8,6 +8,7 @@ import {
   Component,
   computed,
   DestroyRef,
+  effect,
   inject,
   input,
   OnInit,
@@ -34,6 +35,7 @@ import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiSidePanelService } from './si-side-panel.service';
+import { SidePanelDisplayMode, SidePanelNavigateConfig } from './side-panel.model';
 
 /**
  * An extension of MenuItem to support combined icons
@@ -57,15 +59,11 @@ export interface StatusItem extends MenuItemLegacy {
   host: {
     '[class.collapsed]': 'isCollapsed()',
     '[class.expanded]': 'isExpanded()',
-    '[class.enable-mobile]': 'enableMobile()'
+    '[class.enable-mobile]': 'enableMobile()',
+    '[class.rpanel-fullscreen-overlay]': 'isFullscreen()'
   }
 })
 export class SiSidePanelContentComponent implements OnInit {
-  /**
-   * @defaultValue false
-   */
-  readonly collapsible = input(false, { transform: booleanAttribute });
-
   /**
    * Header of side panel
    *
@@ -141,13 +139,31 @@ export class SiSidePanelContentComponent implements OnInit {
   readonly showMobileDrawerBadge = input(false, { transform: booleanAttribute });
 
   /**
+   * Display mode for side panel - enables navigate or overlay functionality
+   */
+  readonly displayMode = input<SidePanelDisplayMode>();
+
+  /**
+   * Configuration for navigate mode
+   */
+  readonly navigateConfig = input<SidePanelNavigateConfig>();
+
+  /**
+   * Emits when navigate icon is clicked
+   */
+  readonly navigate = output<string>();
+
+  /**
    * Output for search bar input
    */
   readonly searchEvent = output<string>();
 
+  protected readonly service = inject(SiSidePanelService);
   protected readonly isCollapsed = signal(false);
   protected readonly isExpanded = signal(true);
+  protected readonly isFullscreen = signal(false);
   protected readonly enableMobile = computed(() => this.service?.enableMobile() ?? false);
+  protected readonly collapsible = computed(() => this.service?.collapsible() ?? false);
   protected readonly mobileSize = signal(false);
   protected readonly focusable = computed(
     () => !this.mobileSize() || !this.enableMobile() || !this.isCollapsed()
@@ -159,13 +175,17 @@ export class SiSidePanelContentComponent implements OnInit {
    */
   private readonly resizeAnimationDelay = 500;
   private readonly destroyRef = inject(DestroyRef);
-  private readonly service = inject(SiSidePanelService);
   private readonly breakpointObserver = inject(BreakpointObserver);
 
   private expandedTimeout: any;
 
   constructor() {
     const accordionHcollapse = inject(SiAccordionHCollapseService);
+
+    this.service.isFullscreen$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(fullscreen => {
+      this.isFullscreen.set(fullscreen);
+    });
+
     this.service.isOpen$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(state => {
       this.isCollapsed.set(!state);
       clearTimeout(this.expandedTimeout);
@@ -177,7 +197,12 @@ export class SiSidePanelContentComponent implements OnInit {
           this.isExpanded.set(true);
         }, this.resizeAnimationDelay / 2);
       }
-      accordionHcollapse.hcollapsed.set(!state);
+    });
+
+    effect(() => {
+      if (this.collapsible()) {
+        accordionHcollapse.hcollapsed.set(this.isCollapsed());
+      }
     });
     accordionHcollapse.open$
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -191,6 +216,28 @@ export class SiSidePanelContentComponent implements OnInit {
       .subscribe(({ matches }) => {
         this.mobileSize.set(matches);
       });
+  }
+
+  /**
+   * Handle navigate action - emits navigate event with URL
+   */
+  onNavigate(): void {
+    const config = this.navigateConfig();
+    if (config?.navigateUrl) {
+      this.navigate.emit(config.navigateUrl);
+    }
+  }
+
+  /**
+   * Toggle fullscreen overlay mode
+   */
+  toggleFullscreen(): void {
+    if (!this.service.isOpen()) {
+      return;
+    }
+    this.service.toggleFullscreen();
+
+    // TODO: Persist state in URL
   }
 
   protected toggleSidePanel(event?: MouseEvent): void {

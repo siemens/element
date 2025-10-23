@@ -56,6 +56,7 @@ import { SidePanelMode, SidePanelSize } from './side-panel.model';
     '[class.collapsible]': 'collapsible() && !this.showTempContent()',
     '[class.collapsible-temp]': 'collapsible() && this.showTempContent()',
     '[class.rpanel-hidden]': 'isHidden()',
+    '[class.rpanel-fullscreen-overlay]': 'isFullscreenOverlay()',
     '[class.rpanel-resize-xs]': 'isXs()',
     '[class.rpanel-resize-sm]': 'isSm()',
     '[class.rpanel-resize-md]': 'isMd()',
@@ -134,7 +135,6 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
   readonly contentResize = output<ElementDimensions>();
 
   protected readonly isScrollMode = computed(() => this.mode() === 'scroll');
-
   protected readonly isXs = signal(false);
   protected readonly isSm = signal(false);
   protected readonly isMd = signal(true);
@@ -145,6 +145,7 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
   protected readonly isCollapsed = signal(false);
   protected readonly ready = signal(false);
   protected readonly isHidden = signal(false);
+  protected readonly isFullscreenOverlay = signal(false);
   protected readonly showTempContent = signal(false);
 
   private readonly panelElement = viewChild.required<ElementRef>('sidePanel');
@@ -180,6 +181,10 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
   private readonly document = inject(DOCUMENT);
 
   constructor() {
+    this.service.isFullscreen$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(fullscreen => {
+      this.isFullscreenOverlay.set(fullscreen);
+    });
+
     if (this.isBrowser) {
       this.resizeEvent
         .asObservable()
@@ -187,6 +192,7 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
         .subscribe(() => {
           this.openingOrClosing = false;
           this.emitResizeOutputs();
+          this.isFullscreenOverlay.set(false);
           if (this.isCollapsedInternal && !this.collapsible()) {
             this.isHidden.set(true);
           }
@@ -203,6 +209,8 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
       }
     } else if (changes.enableMobile) {
       this.service.enableMobile.set(this.enableMobile());
+    } else if (changes.collapsible) {
+      this.service.collapsible.set(this.collapsible());
     }
   }
 
@@ -212,6 +220,7 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
     this.isCollapsedInternal = collapsed;
     this.isHidden.set(collapsed);
     this.isCollapsed.set(collapsed);
+    this.service.collapsible.set(this.collapsible());
 
     this.resizeObserver
       .observe(this.element.nativeElement, 100, true)
