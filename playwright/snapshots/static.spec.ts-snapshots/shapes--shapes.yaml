@@ -1,1 +1,4 @@
-- text: /Radius Variants rounded-0 - 0px rounded-1 - 4px rounded-2 - 8px rounded-3 - 12px Bootstrap Utilities rounded-0 - 0px rounded - 8px rounded-circle - \d+% rounded-pill - 50rem Bootstrap Side Utilities rounded-top rounded-end rounded-bottom rounded-start/
+- heading "Add rounded corners" [level=3]
+- text: rounded rounded-top rounded-end rounded-bottom rounded-start
+- heading "Customize rounded corner radius" [level=3]
+- text: /rounded-0 - 0px rounded-1 - 4px rounded-2 - 8px rounded-circle - \d+% rounded-pill - 50rem/
