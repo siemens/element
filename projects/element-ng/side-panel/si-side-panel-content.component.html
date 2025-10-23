@@ -9,28 +9,50 @@
       [toggleItemLabel]="toggleItemLabel()"
     />
   }
-  <button
-    type="button"
-    class="close-button btn btn-circle btn-sm btn-ghost me-4"
-    [attr.aria-label]="closeButtonLabel() | translate"
-    [tabindex]="focusable() ? '0' : '-1'"
-    (click)="toggleSidePanel($event)"
-  >
-    <si-icon [icon]="icons.elementCancel" />
-  </button>
-  <div class="collapse-toggle">
+  <div class="d-flex">
+    @if (displayMode() === 'navigate' && navigateConfig()) {
+      <button
+        type="button"
+        class="navigate-button btn btn-circle btn-sm btn-ghost element-export ms-4 auto-hide"
+        [attr.aria-label]="'Navigate to dedicated page' | translate"
+        [tabindex]="focusable() ? '0' : '-1'"
+        (click)="onNavigate()"
+      ></button>
+    }
+    @if (displayMode() === 'overlay') {
+      <button
+        type="button"
+        class="overlay-button btn btn-circle btn-sm btn-ghost element-zoom ms-4 auto-hide"
+        [attr.aria-label]="
+          (service.isFullscreen() ? 'Exit fullscreen' : 'Enter fullscreen') | translate
+        "
+        [tabindex]="focusable() ? '0' : '-1'"
+        (click)="toggleFullscreen()"
+      ></button>
+    }
     <button
       type="button"
-      class="side-panel-collapse-toggle btn btn-circle btn-sm btn-ghost mx-4"
-      [attr.aria-label]="toggleItemLabel() | translate"
+      class="close-button btn btn-circle btn-sm btn-ghost mx-4"
+      [attr.aria-label]="closeButtonLabel() | translate"
+      [tabindex]="focusable() ? '0' : '-1'"
       (click)="toggleSidePanel($event)"
     >
-      <si-icon
-        class="flip-rtl"
-        [class.badge-dot]="showMobileDrawerBadge()"
-        [icon]="isCollapsed() ? icons.elementDoubleLeft : icons.elementDoubleRight"
-      />
-    </button>
+    <si-icon [icon]="icons.elementCancel" />
+  </button>
+    <div class="collapse-toggle">
+      <button
+        type="button"
+        class="side-panel-collapse-toggle btn btn-circle btn-sm btn-ghost mx-4"
+        [attr.aria-label]="toggleItemLabel() | translate"
+        (click)="toggleSidePanel($event)"
+      >
+        <si-icon
+          class="flip-rtl"
+          [class.badge-dot]="showMobileDrawerBadge()"
+          [icon]="isCollapsed() ? icons.elementDoubleLeft : icons.elementDoubleRight"
+        />
+      </button>
+    </div>
   </div>
 </div>
 <div class="rpanel-wrapper d-flex flex-column">
