@@ -14,6 +14,8 @@ import { ElementDimensions } from '@siemens/element-ng/resize-observer';
 import {
   SidePanelMode,
   SidePanelSize,
+  SidePanelDisplayMode,
+  SidePanelNavigateConfig,
   SiSidePanelComponent,
   SiSidePanelContentComponent
 } from '@siemens/element-ng/side-panel';
@@ -38,6 +40,13 @@ export class SampleComponent {
   collapsed = true;
   mode: SidePanelMode = 'scroll';
   size: SidePanelSize = 'regular';
+  displayMode: SidePanelDisplayMode = 'overlay';
+
+  // Configurazioni per le nuove modalità
+  navigateConfig: SidePanelNavigateConfig = {
+    navigateUrl: '/side-panel-dedicated-page',
+    target: '_blank'
+  };
 
   logEvent = inject(LOG_EVENT);
 
@@ -61,5 +70,10 @@ export class SampleComponent {
 
   contentResize(dim: ElementDimensions): void {
     this.logEvent(`content resized: ${dim.width}, ${dim.height}`);
+  }
+
+  onNavigate(url: string): void {
+    this.logEvent(`Navigate clicked: ${url}`);
+    // window.open(url, this.navigateConfig.target ?? '_self');
   }
 }
