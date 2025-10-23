@@ -10,35 +10,70 @@
     />
   }
   <div class="d-flex">
-    @if (displayMode() === 'navigate' && navigateConfig()) {
-      <button
-        type="button"
-        class="navigate-button btn btn-circle btn-sm btn-ghost element-export ms-4 auto-hide"
-        [attr.aria-label]="'Navigate to dedicated page' | translate"
-        [tabindex]="focusable() ? '0' : '-1'"
-        (click)="onNavigate()"
-      ></button>
+    @let navigateConfig = this.navigateConfig();
+    @if (displayMode() === 'navigate' && navigateConfig) {
+      @if (navigateConfig.type === 'router-link') {
+        <a
+          class="btn btn-circle btn-sm btn-ghost auto-hide"
+          [class.ms-4]="collapsible()"
+          [class.mx-4]="!collapsible() || service.isTemporaryOpen()"
+          [routerLink]="navigateConfig.routerLink"
+          [queryParams]="navigateConfig.extras?.queryParams"
+          [queryParamsHandling]="navigateConfig.extras?.queryParamsHandling"
+          [fragment]="navigateConfig.extras?.fragment"
+          [state]="navigateConfig.extras?.state"
+          [relativeTo]="navigateConfig.extras?.relativeTo ?? activatedRoute"
+          [preserveFragment]="navigateConfig.extras?.preserveFragment"
+          [skipLocationChange]="navigateConfig.extras?.skipLocationChange"
+          [replaceUrl]="navigateConfig.extras?.replaceUrl"
+          [attr.aria-label]="navigateConfig.label | translate"
+        >
+          <si-icon class="icon" icon="element-export" />
+          <span class="visually-hidden">
+            {{ navigateConfig.label | translate }}
+          </span></a
+        >
+      } @else if (navigateConfig.type === 'link') {
+        <a
+          class="btn btn-circle btn-sm btn-ghost auto-hide"
+          [class.ms-4]="collapsible()"
+          [class.mx-4]="!collapsible()"
+          [href]="navigateConfig.href"
+          [target]="navigateConfig.target"
+          [attr.rel]="navigateConfig.target === '_blank' ? 'noopener noreferrer' : null"
+          [attr.aria-label]="navigateConfig.label | translate"
+        >
+          <si-icon class="icon" icon="element-export" />
+          <span class="visually-hidden">
+            {{ navigateConfig.label | translate }}
+          </span></a
+        >
+      }
     }
     @if (displayMode() === 'overlay') {
       <button
         type="button"
-        class="overlay-button btn btn-circle btn-sm btn-ghost element-zoom ms-4 auto-hide"
+        class="fullscreen-button btn btn-circle btn-sm btn-ghost auto-hide"
+        [class.ms-4]="collapsible()"
+        [class.mx-4]="!collapsible() || service.isTemporaryOpen()"
         [attr.aria-label]="
-          (service.isFullscreen() ? 'Exit fullscreen' : 'Enter fullscreen') | translate
+          (isFullscreen() ? exitFullscreenLabel() : enterFullscreenLabel()) | translate
         "
         [tabindex]="focusable() ? '0' : '-1'"
         (click)="toggleFullscreen()"
-      ></button>
+      >
+        <si-icon [icon]="isFullscreen() ? 'element-pinch' : 'element-zoom'" />
+      </button>
     }
     <button
       type="button"
-      class="close-button btn btn-circle btn-sm btn-ghost mx-4"
+      class="close-button btn btn-circle btn-sm btn-ghost me-4"
       [attr.aria-label]="closeButtonLabel() | translate"
       [tabindex]="focusable() ? '0' : '-1'"
       (click)="toggleSidePanel($event)"
     >
-    <si-icon [icon]="icons.elementCancel" />
-  </button>
+      <si-icon [icon]="icons.elementCancel" />
+    </button>
     <div class="collapse-toggle">
       <button
         type="button"

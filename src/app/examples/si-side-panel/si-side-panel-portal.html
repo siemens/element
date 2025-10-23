@@ -5,6 +5,12 @@
         <a siHeaderLogo routerLink="/" class="d-none d-md-flex"></a>
         <h1 class="application-name">Side panel portal</h1>
       </si-header-brand>
+
+      <si-header-actions>
+        <button type="button" si-header-action-item icon="element-menu" (click)="toggle()">
+          Layout
+        </button>
+      </si-header-actions>
     </si-application-header>
     <br />
     <button type="button" class="btn btn-secondary" (click)="toggle()">
@@ -112,7 +118,7 @@
     </div>
     <hr />
     <div class="mb-4">
-      <h3>Portal-based Side Panel</h3>
+      <h2>Portal-based side panel</h2>
       <p>
         This example demonstrates <code class="text-primary">dynamic content loading</code> using
         Angular CDK Portal. Content can be switched between different templates at runtime without
@@ -135,7 +141,6 @@
     heading="Content 1"
     [displayMode]="displayMode"
     [navigateConfig]="navigateConfig"
-    (navigate)="onNavigate($event)"
   >
     <si-accordion>
       <si-collapsible-panel heading="Hey there️">
@@ -156,7 +161,6 @@
     heading="Content 2"
     [displayMode]="displayMode"
     [navigateConfig]="navigateConfig"
-    (navigate)="onNavigate($event)"
   >
     <div class="p-6">Different content</div>
   </si-side-panel-content>
