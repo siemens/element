@@ -14,6 +14,7 @@ import {
   SiHeaderLogoDirective
 } from '@siemens/element-ng/application-header';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
+import { Link } from '@siemens/element-ng/link';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { ElementDimensions } from '@siemens/element-ng/resize-observer';
 import {
@@ -51,13 +52,15 @@ export class SampleComponent implements OnDestroy {
   size: SidePanelSize = 'regular';
   displayMode: SidePanelDisplayMode = 'overlay';
   showHelpAction = false;
-
-  // Configurazioni per le nuove modalità
-  navigateConfig: SidePanelNavigateConfig = {
-    navigateUrl: '/side-panel-dedicated-page',
-    target: '_blank'
-  };
   showLayout = false;
+
+  routerLink: Link = { title: 'Side panel router link', 'link': '/' };
+
+  navigateConfig: SidePanelNavigateConfig = {
+    type: 'router-link',
+    label: this.routerLink.title!,
+    routerLink: this.routerLink.link!
+  };
 
   primaryActions: ContentActionBarMainItem[] = [
     {
@@ -177,10 +180,5 @@ export class SampleComponent implements OnDestroy {
       return true;
     }
     return false;
-  }
-
-  onNavigate(url: string): void {
-    this.logEvent(`Navigate clicked: ${url}`);
-    // window.open(url, this.navigateConfig.target ?? '_self');
   }
 }

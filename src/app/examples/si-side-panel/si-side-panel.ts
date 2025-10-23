@@ -8,7 +8,9 @@ import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/elem
 import {
   SiApplicationHeaderComponent,
   SiHeaderBrandDirective,
-  SiHeaderLogoDirective
+  SiHeaderLogoDirective,
+  SiHeaderActionsDirective,
+  SiHeaderActionItemComponent
 } from '@siemens/element-ng/application-header';
 import { ElementDimensions } from '@siemens/element-ng/resize-observer';
 import {
@@ -31,7 +33,9 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiAccordionComponent,
     SiCollapsiblePanelComponent,
     SiApplicationHeaderComponent,
-    SiHeaderLogoDirective
+    SiHeaderLogoDirective,
+    SiHeaderActionsDirective,
+    SiHeaderActionItemComponent
   ],
   templateUrl: './si-side-panel.html',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -42,10 +46,11 @@ export class SampleComponent {
   size: SidePanelSize = 'regular';
   displayMode: SidePanelDisplayMode = 'overlay';
 
-  // Configurazioni per le nuove modalità
   navigateConfig: SidePanelNavigateConfig = {
-    navigateUrl: '/side-panel-dedicated-page',
-    target: '_blank'
+    type: 'link',
+    label: 'Side panel link',
+    target: '_self',
+    href: 'https://element.siemens.io'
   };
 
   logEvent = inject(LOG_EVENT);
@@ -70,10 +75,5 @@ export class SampleComponent {
 
   contentResize(dim: ElementDimensions): void {
     this.logEvent(`content resized: ${dim.width}, ${dim.height}`);
-  }
-
-  onNavigate(url: string): void {
-    this.logEvent(`Navigate clicked: ${url}`);
-    // window.open(url, this.navigateConfig.target ?? '_self');
   }
 }

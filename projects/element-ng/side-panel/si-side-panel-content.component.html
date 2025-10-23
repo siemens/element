@@ -10,14 +10,40 @@
     />
   }
   <div class="d-flex">
-    @if (displayMode() === 'navigate' && navigateConfig()) {
-      <button
-        type="button"
-        class="navigate-button btn btn-circle btn-sm btn-ghost element-export ms-4 auto-hide"
-        [attr.aria-label]="'Navigate to dedicated page' | translate"
-        [tabindex]="focusable() ? '0' : '-1'"
-        (click)="onNavigate()"
-      ></button>
+    @let navigateConfig = this.navigateConfig();
+    @if (displayMode() === 'navigate' && navigateConfig) {
+      @if (navigateConfig.type === 'router-link') {
+        <a
+          class="navigate-button btn btn-circle btn-sm btn-ghost ms-4 auto-hide"
+          [routerLink]="navigateConfig.routerLink"
+          [queryParams]="navigateConfig.extras?.queryParams"
+          [queryParamsHandling]="navigateConfig.extras?.queryParamsHandling"
+          [fragment]="navigateConfig.extras?.fragment"
+          [state]="navigateConfig.extras?.state"
+          [relativeTo]="navigateConfig.extras?.relativeTo ?? activatedRoute"
+          [preserveFragment]="navigateConfig.extras?.preserveFragment"
+          [skipLocationChange]="navigateConfig.extras?.skipLocationChange"
+          [replaceUrl]="navigateConfig.extras?.replaceUrl"
+          [attr.aria-label]="navigateConfig.label | translate"
+        >
+          <si-icon class="icon" icon="element-export" />
+          <span class="visually-hidden">
+            {{ navigateConfig.label | translate }}
+          </span></a
+        >
+      } @else if (navigateConfig.type === 'link') {
+        <a
+          class="navigate-button btn btn-circle btn-sm btn-ghost ms-4 auto-hide"
+          [href]="navigateConfig.href"
+          [target]="navigateConfig.target"
+          [attr.aria-label]="navigateConfig.label | translate"
+        >
+          <si-icon class="icon" icon="element-export" />
+          <span class="visually-hidden">
+            {{ navigateConfig.label | translate }}
+          </span></a
+        >
+      }
     }
     @if (displayMode() === 'overlay') {
       <button

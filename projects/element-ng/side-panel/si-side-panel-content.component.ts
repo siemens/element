@@ -16,6 +16,7 @@ import {
   signal
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { SiAccordionHCollapseService } from '@siemens/element-ng/accordion';
 import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import {
@@ -50,6 +51,7 @@ export interface StatusItem extends MenuItemLegacy {
     SiContentActionBarComponent,
     SiIconComponent,
     SiLinkDirective,
+    RouterLink,
     SiSearchBarComponent,
     SiTranslatePipe
   ],
@@ -149,15 +151,11 @@ export class SiSidePanelContentComponent implements OnInit {
   readonly navigateConfig = input<SidePanelNavigateConfig>();
 
   /**
-   * Emits when navigate icon is clicked
-   */
-  readonly navigate = output<string>();
-
-  /**
    * Output for search bar input
    */
   readonly searchEvent = output<string>();
 
+  protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });
   protected readonly service = inject(SiSidePanelService);
   protected readonly isCollapsed = signal(false);
   protected readonly isExpanded = signal(true);
@@ -204,6 +202,15 @@ export class SiSidePanelContentComponent implements OnInit {
         accordionHcollapse.hcollapsed.set(this.isCollapsed());
       }
     });
+
+    effect(() => {
+      if (this.isCollapsed() && this.isFullscreen()) {
+        setTimeout(() => {
+          this.service.setFullscreen(false);
+        }, this.resizeAnimationDelay);
+      }
+    });
+
     accordionHcollapse.open$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.service.open());
@@ -216,16 +223,6 @@ export class SiSidePanelContentComponent implements OnInit {
       .subscribe(({ matches }) => {
         this.mobileSize.set(matches);
       });
-  }
-
-  /**
-   * Handle navigate action - emits navigate event with URL
-   */
-  onNavigate(): void {
-    const config = this.navigateConfig();
-    if (config?.navigateUrl) {
-      this.navigate.emit(config.navigateUrl);
-    }
   }
 
   /**
