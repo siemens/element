@@ -10,6 +10,14 @@ $rpanel-transition-duration: all-variables.$element-default-transition-duration;
 $rpanel-overlay-bg: rgba(0, 0, 0, 0.4);
 $rpanel-collapsed-width: 48px;
 
+@mixin rpanel-over-mode {
+  padding-inline-end: var(--rpanel-collapsed-width);
+
+  &:not(.rpanel-collapsed) .side-panel {
+    box-shadow: all-variables.$element-elevation-2;
+  }
+}
+
 :host {
   --rpanel-collapsed-padding: 0;
   --rpanel-size: #{$rpanel-width-regular};
@@ -19,14 +27,15 @@ $rpanel-collapsed-width: 48px;
   &.ready {
     transition: padding-inline-end $rpanel-transition-duration;
 
-    .side-panel {
+    .side-panel,
+    .side-panel > .inner {
       transition: inline-size $rpanel-transition-duration;
     }
   }
 
   .side-panel,
   .side-panel > .inner {
-    inline-size: var(--rpanel-size);
+    inline-size: var(--rpanel-width-fullscreen, var(--rpanel-size));
   }
 
   &.collapsible,
@@ -42,6 +51,10 @@ $rpanel-collapsed-width: 48px;
     --rpanel-size: 100%;
   }
 
+  &.rpanel-fullscreen-overlay {
+    --rpanel-width-fullscreen: 100vw;
+  }
+
   &.rpanel-resize-sm,
   &.rpanel-resize-md,
   &.rpanel-resize-lg,
@@ -49,21 +62,17 @@ $rpanel-collapsed-width: 48px;
   &.rpanel-resize-xxl,
   &.rpanel-resize-xxxl {
     &.rpanel-mode--over {
-      padding-inline-end: var(--rpanel-collapsed-width);
-
-      &:not(.rpanel-collapsed) .side-panel {
-        box-shadow: all-variables.$element-elevation-2;
-      }
+      @include rpanel-over-mode;
     }
   }
 
   &.rpanel-resize-lg {
     &.rpanel-mode--scroll.rpanel-size--wide {
-      padding-inline-end: var(--rpanel-collapsed-width);
+      @include rpanel-over-mode;
     }
 
     &.rpanel-mode--scroll.rpanel-size--extended {
-      padding-inline-end: var(--rpanel-collapsed-width);
+      @include rpanel-over-mode;
     }
 
     &.rpanel-size--extended {
@@ -73,7 +82,7 @@ $rpanel-collapsed-width: 48px;
 
   &.rpanel-resize-xl {
     &.rpanel-mode--scroll.rpanel-size--extended {
-      padding-inline-end: var(--rpanel-collapsed-width);
+      @include rpanel-over-mode;
     }
 
     &.rpanel-size--extended {
@@ -96,11 +105,7 @@ $rpanel-collapsed-width: 48px;
   &.rpanel-resize-sm,
   &.rpanel-resize-md {
     &.rpanel-mode--scroll {
-      padding-inline-end: var(--rpanel-collapsed-width);
-
-      &:not(.rpanel-collapsed) .side-panel {
-        box-shadow: all-variables.$element-elevation-2;
-      }
+      @include rpanel-over-mode;
     }
 
     &.rpanel-size--extended {
@@ -128,6 +133,10 @@ $rpanel-collapsed-width: 48px;
     }
 
     &:not(.rpanel-collapsed) {
+      .side-panel {
+        box-shadow: all-variables.$element-elevation-2;
+      }
+
       .side-panel,
       .side-panel > .inner {
         inline-size: 100%;

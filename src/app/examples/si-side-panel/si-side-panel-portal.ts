@@ -14,6 +14,8 @@ import {
 import {
   SidePanelMode,
   SidePanelSize,
+  SidePanelDisplayMode,
+  SidePanelNavigateConfig,
   SiSidePanelComponent,
   SiSidePanelContentComponent,
   SiSidePanelService
@@ -38,6 +40,13 @@ import {
 export class SampleComponent implements OnDestroy {
   mode: SidePanelMode = 'scroll';
   size: SidePanelSize = 'regular';
+  displayMode: SidePanelDisplayMode = 'overlay';
+
+  // Configurazioni per le nuove modalità
+  navigateConfig: SidePanelNavigateConfig = {
+    navigateUrl: '/side-panel-dedicated-page',
+    target: '_blank'
+  };
 
   readonly content1 = viewChild.required('content1', { read: CdkPortal });
   readonly content2 = viewChild.required('content2', { read: CdkPortal });
@@ -74,5 +83,11 @@ export class SampleComponent implements OnDestroy {
   setContent2(): void {
     this.sidePanelService.setSidePanelContent(this.content2());
     this.sidePanelService.open();
+  }
+
+  onNavigate(url: string): void {
+    // eslint-disable-next-line no-console
+    console.log(`Navigate clicked: ${url}`);
+    // window.open(url, this.navigateConfig.target ?? '_self');
   }
 }
