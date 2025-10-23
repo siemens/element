@@ -154,7 +154,6 @@
     [secondaryActions]="secondaryActions"
     [statusActions]="statusActions"
     [searchable]="true"
-    (navigate)="onNavigate($event)"
   >
     <si-accordion [fullHeight]="true">
       <si-collapsible-panel
@@ -177,13 +176,21 @@
 </si-side-panel>
 
 <ng-template #helpPanel cdkPortal>
-  <si-side-panel-content heading="Help">
+  <si-side-panel-content
+    heading="Help"
+    [displayMode]="displayMode"
+    [navigateConfig]="navigateConfig"
+  >
     <div class="p-6">Help yourself</div>
   </si-side-panel-content>
 </ng-template>
 
 <ng-template #layoutPanel cdkPortal>
-  <si-side-panel-content heading="Layout">
+  <si-side-panel-content
+    heading="Layout"
+    [displayMode]="displayMode"
+    [navigateConfig]="navigateConfig"
+  >
     <div class="p-6">
       <p class="small">Status bar height</p>
       <button type="button" aria-label="small" class="layout-button btn btn-tertiary me-6 active">

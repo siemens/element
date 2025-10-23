@@ -9,7 +9,9 @@ import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/elem
 import {
   SiApplicationHeaderComponent,
   SiHeaderBrandDirective,
-  SiHeaderLogoDirective
+  SiHeaderLogoDirective,
+  SiHeaderActionsDirective,
+  SiHeaderActionItemComponent
 } from '@siemens/element-ng/application-header';
 import {
   SidePanelMode,
@@ -32,7 +34,9 @@ import {
     RouterLink,
     SiApplicationHeaderComponent,
     SiHeaderBrandDirective,
-    SiHeaderLogoDirective
+    SiHeaderLogoDirective,
+    SiHeaderActionsDirective,
+    SiHeaderActionItemComponent
   ],
   templateUrl: './si-side-panel-portal.html',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -42,10 +46,11 @@ export class SampleComponent implements OnDestroy {
   size: SidePanelSize = 'regular';
   displayMode: SidePanelDisplayMode = 'overlay';
 
-  // Configurazioni per le nuove modalità
   navigateConfig: SidePanelNavigateConfig = {
-    navigateUrl: '/side-panel-dedicated-page',
-    target: '_blank'
+    type: 'link',
+    label: 'Side panel link',
+    target: '_self',
+    href: 'https://element.siemens.io'
   };
 
   readonly content1 = viewChild.required('content1', { read: CdkPortal });
@@ -83,11 +88,5 @@ export class SampleComponent implements OnDestroy {
   setContent2(): void {
     this.sidePanelService.setSidePanelContent(this.content2());
     this.sidePanelService.open();
-  }
-
-  onNavigate(url: string): void {
-    // eslint-disable-next-line no-console
-    console.log(`Navigate clicked: ${url}`);
-    // window.open(url, this.navigateConfig.target ?? '_self');
   }
 }
