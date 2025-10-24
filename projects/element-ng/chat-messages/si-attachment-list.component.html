@@ -1,0 +1,40 @@
+<div class="d-flex flex-wrap gap-4" [class.justify-content-end]="alignment() === 'end'">
+  @for (attachment of attachments(); track attachment.id) {
+    <div
+      class="attachment-item d-flex align-items-center"
+      [class.attachment-item--clickable]="!!attachment.previewTemplate"
+      [attr.role]="attachment.previewTemplate ? 'button' : null"
+      [attr.tabindex]="attachment.previewTemplate ? '0' : null"
+      [attr.title]="attachment.name"
+      [attr.aria-label]="attachment.previewTemplate ? attachment.name : null"
+      (click)="openPreview($event, attachment)"
+      (keydown.enter)="openPreview($event, attachment)"
+      (keydown.space)="openPreview($event, attachment)"
+    >
+      <si-icon
+        class="attachment-icon icon flex-shrink-0 mx-1"
+        [icon]="getFileIcon(attachment.name)"
+      />
+
+      <div class="attachment-info flex-grow-1 min-width-0">
+        <span
+          class="attachment-name me-4 text-truncate si-body-2 d-block"
+          [title]="attachment.name"
+        >
+          {{ attachment.name }}
+        </span>
+      </div>
+
+      @if (removable()) {
+        <button
+          type="button"
+          class="btn btn-ghost btn-circle btn-sm square-button flex-shrink-0 ms-auto focus-inside"
+          [attr.aria-label]="(removeLabel() | translate) + ' ' + attachment.name"
+          (click)="remove.emit(attachment.id); $event.stopPropagation()"
+        >
+          <si-icon class="icon" icon="element-delete" />
+        </button>
+      }
+    </div>
+  }
+</div>
