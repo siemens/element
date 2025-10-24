@@ -1,16 +1,26 @@
 # Breakpoints
 
-Breakpoints are configurable thresholds that define how your layout adapts to different screen sizes and devices. By setting specific widths, you control when and how design changes occur, ensuring a seamless and responsive user experience across a wide range of viewports.
+**Breakpoints** are configurable thresholds that define how a layout adapts to different screen sizes.
 
-## Concept
+## Overview
 
-- Breakpoints are crucial for building responsive designs. They allow you to tailor layouts and styles according to specific viewport or device sizes.
-- In CSS, media queries are the main method for implementing breakpoints. By using conditions such as `min-width`, you can apply styles only when the viewport matches certain criteria.
-- A mobile-first approach ensures your layout is optimized for smaller screens by default, then progressively enhances the experience for larger devices. This leads to more efficient CSS, faster rendering, and a consistent user experience across all devices.
+By setting specific widths, breakpoints determine when design adjustments occur, ensuring a consistent
+and responsive experience across all viewports.
+
+In CSS, media queries are used to implement breakpoints through conditions such as `min-width`,
+which apply styles only when the viewport meets defined criteria.
+
+## Best practices
+
+- Begin with a **mobile-first approach**, defining styles for smaller screens first, as it’s easier to scale up.
+- When designing, reference only the relevant breakpoints instead of accounting for every possible size.
+- Test across real devices and viewport sizes to validate that breakpoints behave as intended.
+- Keep component behavior consistent across breakpoints to preserve familiarity.
 
 ## Available breakpoints
 
-Breakpoints determine how responsive layouts adapt to different device or viewport sizes.
+These breakpoints align with container widths in multiples of 12 and cover the most common device ranges,
+providing a consistent and flexible foundation for responsive design.
 
 | Class infix | Device target | Dimensions | Common use cases |
 |-------------|--------------|------------|------------------|
@@ -21,4 +31,3 @@ Breakpoints determine how responsive layouts adapt to different device or viewpo
 | `xl`        | Large desktops | ≥1200px  | Large screens, high-res monitors |
 | `xxl`       | Extra large screens | ≥1400px | 4K displays, ultra-wide monitors |
 
-These breakpoints are selected to comfortably accommodate containers with widths that are multiples of 12. They represent a subset of common device sizes and viewport dimensions, providing a reliable foundation for responsive design. While not tailored to every device or use case, these ranges offer consistency and flexibility for nearly any project.
