@@ -225,7 +225,7 @@ export class SiMainDetailContainerComponent implements OnInit, OnChanges, OnDest
 
   ngOnInit(): void {
     this.resizeSubs = this.resizeObserver
-      .observe(this.elementRef.nativeElement, 100, true)
+      .observe(this.elementRef.nativeElement, { throttle: 100, emitInitial: true })
       .subscribe(dimensions => this.determineLayout(dimensions));
   }
 

@@ -95,7 +95,10 @@ export class SiResponsiveContainerDirective implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subs = this.service
-      .observe(this.element.nativeElement, this.resizeThrottle(), true)
+      .observe(this.element.nativeElement, {
+        throttle: this.resizeThrottle(),
+        emitInitial: true
+      })
       .subscribe(event => this.setResponsiveSize(event.width, event.height));
   }
 

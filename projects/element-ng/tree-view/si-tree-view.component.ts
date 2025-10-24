@@ -1272,7 +1272,11 @@ export class SiTreeViewComponent
    * @returns observable with the current tree dimensions.
    */
   private monitorTreeSizeChanges(): Observable<ElementDimensions> {
-    const resize = this.resizeObserver.observe(this.element.nativeElement, 100, true, true);
+    const resize = this.resizeObserver.observe(this.element.nativeElement, {
+      throttle: 100,
+      emitInitial: true,
+      emitImmediate: true
+    });
     const merged = merge(resize, this.siTreeViewItemHeightService.itemHeightChange);
     return merged.pipe(
       withLatestFrom(resize),

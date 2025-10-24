@@ -17,17 +17,19 @@ export class SiAutoCollapsableListMeasurable {
    * @defaultValue
    * ```
    * this.resizeObserverService
-   *       .observe(this.elementRef.nativeElement, 0, true, true)
-   *       .pipe(
-   *         map(size => size.width),
-   *         distinctUntilChanged(),
-   *         shareReplay(1)
-   *       )
+   *     .observe(this.elementRef.nativeElement, { throttle: 0, emitInitial: true, emitImmediate: true })
+   *     .pipe(
+   *       map(size => size.width),
+   *       distinctUntilChanged(),
+   *       shareReplay(1)
+   *     )
    * ```
    */
-  size$ = this.resizeObserverService.observe(this.elementRef.nativeElement, 0, true, true).pipe(
-    map(size => size.width),
-    distinctUntilChanged(),
-    shareReplay(1)
-  );
+  size$ = this.resizeObserverService
+    .observe(this.elementRef.nativeElement, { throttle: 0, emitInitial: true, emitImmediate: true })
+    .pipe(
+      map(size => size.width),
+      distinctUntilChanged(),
+      shareReplay(1)
+    );
 }

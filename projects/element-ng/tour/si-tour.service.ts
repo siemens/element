@@ -219,8 +219,11 @@ export class SiTourService {
     if (anchorElement) {
       this.resizeSub = merge(
         // this catches edge cases e.g. with side-panel
-        this.resizeObserver.observe(this.document.body, 20, false),
-        this.resizeObserver.observe(anchorElement.nativeElement, 20, false)
+        this.resizeObserver.observe(this.document.body, { throttle: 20, emitInitial: false }),
+        this.resizeObserver.observe(anchorElement.nativeElement, {
+          throttle: 20,
+          emitInitial: false
+        })
       )
         .pipe(
           throttleTime(20, undefined, { trailing: true }),

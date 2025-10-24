@@ -64,7 +64,11 @@ export class SiAccordionComponent implements AfterContentInit, OnChanges {
 
   ngAfterContentInit(): void {
     this.resizeObserver
-      .observe(this.element.nativeElement, 100, true, true)
+      .observe(this.element.nativeElement, {
+        throttle: 100,
+        emitInitial: true,
+        emitImmediate: true
+      })
       .pipe(takeUntilDestroyed(this.destroyer))
       .subscribe(() => this.calcFullHeight());
 

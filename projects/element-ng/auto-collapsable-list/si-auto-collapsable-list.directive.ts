@@ -112,7 +112,13 @@ export class SiAutoCollapsableListDirective implements AfterViewInit, OnChanges,
   private setupResizeListener(): void {
     this.disableInitSubscription?.unsubscribe();
     const containerSize$ = this.containerElementSubject.pipe(
-      switchMap(element => this.resizeObserverService.observe(element!, 0, true, true)),
+      switchMap(element =>
+        this.resizeObserverService.observe(element!, {
+          throttle: 0,
+          emitInitial: true,
+          emitImmediate: true
+        })
+      ),
       map(size => size.width),
       distinctUntilChanged(),
       map(size => {

@@ -119,11 +119,15 @@ export class SiDashboardComponent implements OnChanges, OnDestroy, AfterViewInit
 
   ngAfterViewInit(): void {
     this.resizeObserver
-      .observe(this.dashboard().nativeElement, FIX_SCROLL_PADDING_RESIZE_OBSERVER_THROTTLE)
+      .observe(this.dashboard().nativeElement, {
+        throttle: FIX_SCROLL_PADDING_RESIZE_OBSERVER_THROTTLE
+      })
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(x => this.setDashboardFrameEndPadding(this.dashboardFrameDimensions, x));
     this.resizeObserver
-      .observe(this.dashboardFrame().nativeElement, FIX_SCROLL_PADDING_RESIZE_OBSERVER_THROTTLE)
+      .observe(this.dashboardFrame().nativeElement, {
+        throttle: FIX_SCROLL_PADDING_RESIZE_OBSERVER_THROTTLE
+      })
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(dims => this.setDashboardFrameEndPadding(dims, this.dashboardDimensions));
   }

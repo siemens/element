@@ -204,7 +204,10 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
     this.isCollapsed.set(collapsed);
 
     this.resizeObserver
-      .observe(this.element.nativeElement, 100, true)
+      .observe(this.element.nativeElement, {
+        throttle: 100,
+        emitInitial: true
+      })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(dim => {
         this.setBreakpoints(dim.width, dim.height);

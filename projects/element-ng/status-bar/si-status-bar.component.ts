@@ -175,7 +175,10 @@ export class SiStatusBarComponent implements DoCheck, OnDestroy, OnChanges {
 
   constructor() {
     this.resizeObserver
-      .observe(this.element.nativeElement, 100, true)
+      .observe(this.element.nativeElement, {
+        throttle: 100,
+        emitInitial: true
+      })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.resizeHandler());
     this.translateService.translationChange

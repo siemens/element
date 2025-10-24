@@ -172,7 +172,7 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit(): void {
     this.resizeSubs = this.resizeObserver
-      .observe(this.elementRef.nativeElement, 100, true)
+      .observe(this.elementRef.nativeElement, { throttle: 100, emitInitial: true })
       .subscribe(dimensions => {
         this.resizeDimensions.set(dimensions);
         this.transferFocus();

@@ -26,20 +26,24 @@ export interface Breakpoints {
     xxlMinimum: number;
 }
 
-// @public (undocumented)
+// @public
 export interface ElementDimensions {
-    // (undocumented)
     height: number;
-    // (undocumented)
     width: number;
 }
 
 // @public
 export class ResizeObserverService {
-    constructor();
     // @deprecated
     _checkAll(): void;
+    // @deprecated
     observe(element: Element, throttle: number, emitInitial?: boolean, emitImmediate?: boolean): Observable<ElementDimensions>;
+    observe(element: Element, config: {
+        throttle: number;
+        emitInitial?: boolean;
+        emitImmediate?: boolean;
+        box?: 'content-box' | 'border-box';
+    }): Observable<ElementDimensions>;
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<ResizeObserverService, never>;
     // (undocumented)
