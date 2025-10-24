@@ -17,6 +17,9 @@ docs/_src/style
 /node_modules
 /projects/*/node_modules
 
+# we migrate from package-lock.json on every install
+bun.lock
+
 # profiling files
 chrome-profiler-events*.json
 
