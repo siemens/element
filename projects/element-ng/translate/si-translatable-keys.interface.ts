@@ -3,10 +3,13 @@
 // Auto-generated file. Run 'npx update-translatable-keys' to update.
 
 export interface SiTranslatableKeys {
+  'SI_ACTION_BAR.DROPDOWN_ACTIONS'?: string;
+  'SI_ACTION_BAR.SECONDARY_ACTIONS'?: string;
   'SI_ALERT_DIALOG.OK'?: string;
   'SI_APPLICATION_HEADER.LAUNCHPAD'?: string;
   'SI_APPLICATION_HEADER.TOGGLE_ACTIONS'?: string;
   'SI_APPLICATION_HEADER.TOGGLE_NAVIGATION'?: string;
+  'SI_ATTACHMENT_LIST.REMOVE_ATTACHMENT'?: string;
   'SI_BREADCRUMB'?: string;
   'SI_CHANGE_PASSWORD.BACK'?: string;
   'SI_CHANGE_PASSWORD.CHANGE'?: string;
@@ -15,6 +18,15 @@ export interface SiTranslatableKeys {
   'SI_CHANGE_PASSWORD.CONFIRM_PASSWORD'?: string;
   'SI_CHANGE_PASSWORD.NEW_PASSWORD'?: string;
   'SI_CHANGE_PASSWORD.PASSWORD_POLICY'?: string;
+  'SI_CHAT_CONTAINER.DISCLAIMER'?: string;
+  'SI_CHAT_CONTAINER.EMPTY_STATE_DESCRIPTION'?: string;
+  'SI_CHAT_CONTAINER.EMPTY_STATE_TITLE'?: string;
+  'SI_CHAT_CONTAINER.PLACEHOLDER'?: string;
+  'SI_CHAT_INPUT.ATTACH_FILE'?: string;
+  'SI_CHAT_INPUT.INTERRUPT'?: string;
+  'SI_CHAT_INPUT.LABEL'?: string;
+  'SI_CHAT_INPUT.PLACEHOLDER'?: string;
+  'SI_CHAT_INPUT.SEND'?: string;
   'SI_COLUMN_SELECTION_DIALOG.CANCEL'?: string;
   'SI_COLUMN_SELECTION_DIALOG.HIDDEN'?: string;
   'SI_COLUMN_SELECTION_DIALOG.ITEM_MOVED'?: string;
@@ -202,6 +214,8 @@ export interface SiTranslatableKeys {
   'SI_THRESHOLD.INPUT_LABEL'?: string;
   'SI_THRESHOLD.STATUS'?: string;
   'SI_TOAST.CLOSE'?: string;
+  'SI_TOOL_MESSAGE.INPUT_ARGUMENTS'?: string;
+  'SI_TOOL_MESSAGE.OUTPUT'?: string;
   'SI_TOUR.BACK'?: string;
   'SI_TOUR.CLOSE'?: string;
   'SI_TOUR.DONE'?: string;

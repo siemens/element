@@ -1,0 +1,15 @@
+<si-chat-message alignment="start" actionsPosition="bottom" [loading]="loading()">
+  @if (content()) {
+    <si-markdown-content [content]="content()" />
+  }
+
+  @if (actions().length > 0 || secondaryActions().length > 0) {
+    <si-action-bar
+      class="ai-message-actions"
+      [actions]="actions()"
+      [dropdownActions]="secondaryActions()"
+      [actionParam]="actionParam()"
+      [secondaryActionsLabel]="secondaryActionsLabel()"
+    />
+  }
+</si-chat-message>

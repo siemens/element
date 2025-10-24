@@ -12,6 +12,10 @@ export const provideSiTranslatableOverrides: (values: SiTranslatableKeys) => Pro
 // @public (undocumented)
 export interface SiTranslatableKeys {
     // (undocumented)
+    'SI_ACTION_BAR.DROPDOWN_ACTIONS'?: string;
+    // (undocumented)
+    'SI_ACTION_BAR.SECONDARY_ACTIONS'?: string;
+    // (undocumented)
     'SI_ALERT_DIALOG.OK'?: string;
     // (undocumented)
     'SI_APPLICATION_HEADER.LAUNCHPAD'?: string;
@@ -19,6 +23,8 @@ export interface SiTranslatableKeys {
     'SI_APPLICATION_HEADER.TOGGLE_ACTIONS'?: string;
     // (undocumented)
     'SI_APPLICATION_HEADER.TOGGLE_NAVIGATION'?: string;
+    // (undocumented)
+    'SI_ATTACHMENT_LIST.REMOVE_ATTACHMENT'?: string;
     // (undocumented)
     'SI_CHANGE_PASSWORD.BACK'?: string;
     // (undocumented)
@@ -33,6 +39,24 @@ export interface SiTranslatableKeys {
     'SI_CHANGE_PASSWORD.NEW_PASSWORD'?: string;
     // (undocumented)
     'SI_CHANGE_PASSWORD.PASSWORD_POLICY'?: string;
+    // (undocumented)
+    'SI_CHAT_CONTAINER.DISCLAIMER'?: string;
+    // (undocumented)
+    'SI_CHAT_CONTAINER.EMPTY_STATE_DESCRIPTION'?: string;
+    // (undocumented)
+    'SI_CHAT_CONTAINER.EMPTY_STATE_TITLE'?: string;
+    // (undocumented)
+    'SI_CHAT_CONTAINER.PLACEHOLDER'?: string;
+    // (undocumented)
+    'SI_CHAT_INPUT.ATTACH_FILE'?: string;
+    // (undocumented)
+    'SI_CHAT_INPUT.INTERRUPT'?: string;
+    // (undocumented)
+    'SI_CHAT_INPUT.LABEL'?: string;
+    // (undocumented)
+    'SI_CHAT_INPUT.PLACEHOLDER'?: string;
+    // (undocumented)
+    'SI_CHAT_INPUT.SEND'?: string;
     // (undocumented)
     'SI_COLUMN_SELECTION_DIALOG.CANCEL'?: string;
     // (undocumented)
@@ -407,6 +431,10 @@ export interface SiTranslatableKeys {
     'SI_THRESHOLD.STATUS'?: string;
     // (undocumented)
     'SI_TOAST.CLOSE'?: string;
+    // (undocumented)
+    'SI_TOOL_MESSAGE.INPUT_ARGUMENTS'?: string;
+    // (undocumented)
+    'SI_TOOL_MESSAGE.OUTPUT'?: string;
     // (undocumented)
     'SI_TOUR.BACK'?: string;
     // (undocumented)

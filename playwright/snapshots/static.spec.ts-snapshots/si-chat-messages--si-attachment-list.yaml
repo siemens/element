@@ -1,0 +1,11 @@
+- text: quarterly-report.xlsx
+- button "Remove attachment quarterly-report.xlsx"
+- text: screenshot.png
+- button "Remove attachment screenshot.png"
+- text: very-long-filename-that-demonstrates-text-truncation-behavior.pdf
+- button "Remove attachment very-long-filename-that-demonstrates-text-truncation-behavior.pdf"
+- text: data.csv
+- button "Remove attachment data.csv"
+- text: audio.mp3
+- button "Remove attachment audio.mp3"
+- text: final-report.docx diagram.jpg config.json
