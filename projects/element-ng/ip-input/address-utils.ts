@@ -69,7 +69,7 @@ const recursiveSplitIpV4 = (
         cursorDelta = 1;
       }
     }
-  } else if (current.value !== '' && (char === '.' || char === '/')) {
+  } else if (char === '.' || char === '/') {
     // Handle separators
     if ('partNo' in current && current.partNo! < 3) {
       sections.push({ value: '.' }, { value: '', partNo: current.partNo! + 1 });
