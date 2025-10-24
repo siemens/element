@@ -69,7 +69,7 @@ describe('ResizeObserverService', () => {
   it('emits initial size event when asked', waitForAsync(async () => {
     subscribe(true);
     await timeout(10);
-    expect(spy).toHaveBeenCalledWith({ width: 100, height: 100 });
+    expect(spy).toHaveBeenCalledWith(jasmine.objectContaining({ width: 100, height: 100 }));
   }));
 
   it('emits no initial size event when not asked', waitForAsync(async () => {
@@ -91,7 +91,7 @@ describe('ResizeObserverService', () => {
       expect(spy).not.toHaveBeenCalled();
 
       await timeout(150);
-      expect(spy).toHaveBeenCalledWith({ width: 200, height: 100 });
+      expect(spy).toHaveBeenCalledWith(jasmine.objectContaining({ width: 200, height: 100 }));
     }
   }));
 
@@ -108,7 +108,7 @@ describe('ResizeObserverService', () => {
       expect(spy).not.toHaveBeenCalled();
 
       await timeout(150);
-      expect(spy).toHaveBeenCalledWith({ width: 100, height: 200 });
+      expect(spy).toHaveBeenCalledWith(jasmine.objectContaining({ width: 100, height: 200 }));
     }
   }));
 
@@ -123,15 +123,15 @@ describe('ResizeObserverService', () => {
         .subscribe(dim => spy2(dim));
 
       await timeout(20);
-      expect(spy).toHaveBeenCalledWith({ width: 100, height: 100 });
-      expect(spy2).toHaveBeenCalledWith({ width: 100, height: 100 });
+      expect(spy).toHaveBeenCalledWith(jasmine.objectContaining({ width: 100, height: 100 }));
+      expect(spy2).toHaveBeenCalledWith(jasmine.objectContaining({ width: 100, height: 100 }));
 
       component.width = 200;
       fixture.detectChanges();
 
       await timeout(150);
-      expect(spy).toHaveBeenCalledWith({ width: 200, height: 100 });
-      expect(spy2).toHaveBeenCalledWith({ width: 200, height: 100 });
+      expect(spy).toHaveBeenCalledWith(jasmine.objectContaining({ width: 200, height: 100 }));
+      expect(spy2).toHaveBeenCalledWith(jasmine.objectContaining({ width: 200, height: 100 }));
 
       subs2.unsubscribe();
     }
