@@ -58,6 +58,10 @@
   }
 }
 
+.fullscreen-button {
+  display: var(--fullscreen-button-display);
+}
+
 .collapse-toggle {
   display: none;
 
