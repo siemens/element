@@ -64,7 +64,9 @@ describe('SiResizeObserverDirective', () => {
   }));
 
   it('emits initial size event', fakeAsync(() => {
-    expect(component.resizeHandler).toHaveBeenCalledWith({ width: 100, height: 100 });
+    expect(component.resizeHandler).toHaveBeenCalledWith(
+      jasmine.objectContaining({ width: 100, height: 100 })
+    );
   }));
 
   it('emits on width change', fakeAsync(() => {
@@ -79,7 +81,9 @@ describe('SiResizeObserverDirective', () => {
     expect(component.resizeHandler).not.toHaveBeenCalled();
 
     flush();
-    expect(component.resizeHandler).toHaveBeenCalledWith({ width: 200, height: 100 });
+    expect(component.resizeHandler).toHaveBeenCalledWith(
+      jasmine.objectContaining({ width: 200, height: 100 })
+    );
   }));
 
   it('emits on height change', fakeAsync(() => {
@@ -94,7 +98,9 @@ describe('SiResizeObserverDirective', () => {
     expect(component.resizeHandler).not.toHaveBeenCalled();
 
     flush();
-    expect(component.resizeHandler).toHaveBeenCalledWith({ width: 100, height: 200 });
+    expect(component.resizeHandler).toHaveBeenCalledWith(
+      jasmine.objectContaining({ width: 100, height: 200 })
+    );
   }));
 });
 

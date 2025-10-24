@@ -28,9 +28,9 @@ export interface Breakpoints {
 
 // @public (undocumented)
 export interface ElementDimensions {
-    // (undocumented)
+    borderBoxSize?: ResizeObserverSize;
+    contentBoxSize?: ResizeObserverSize;
     height: number;
-    // (undocumented)
     width: number;
 }
 

@@ -7,8 +7,14 @@ import { inject, Injectable, NgZone, PLATFORM_ID } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
 
 export interface ElementDimensions {
+  /** The width of the element */
   width: number;
+  /** The height of the element */
   height: number;
+  /** The border box size of the observed element */
+  borderBoxSize?: ResizeObserverSize;
+  /** The new content box size of the observed element */
+  contentBoxSize?: ResizeObserverSize;
 }
 
 interface ResizeSubscriber {
@@ -31,6 +37,11 @@ interface QueueEntry {
   force: boolean;
 }
 
+interface ResizeEvent {
+  target: Element;
+  borderBoxSize?: readonly ResizeObserverSize[];
+  contentBoxSize?: readonly ResizeObserverSize[];
+}
 /**
  * A service wrapping `ResizeObserver`. This is a service for those reasons:
  * - only one `ResizeObserver` should be used for performance reason.
@@ -52,7 +63,7 @@ export class ResizeObserverService {
       return;
     }
     this.resizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) =>
-      entries.forEach(entry => this.handleElement(entry.target))
+      entries.forEach(entry => this.handleElement(entry))
     );
   }
 
@@ -118,18 +129,24 @@ export class ResizeObserverService {
     subscriber.sub.complete();
   }
 
-  private handleElement(element: Element): void {
+  private handleElement(event: ResizeEvent): void {
+    const element = event.target;
     const entry = this.listeners.get(element);
     if (!entry) {
       this.resizeObserver?.unobserve(element);
       return;
     }
-    entry.subscribers.forEach(sub => this.handleResizeSubscriber(element, sub));
+    entry.subscribers.forEach(sub => this.handleResizeSubscriber(event, sub));
   }
 
-  private handleResizeSubscriber(element: Element, entry: ResizeSubscriber): void {
+  private handleResizeSubscriber(event: ResizeEvent, entry: ResizeSubscriber): void {
     if (entry.blocked) {
       return;
+    }
+    const element = event.target;
+    if (entry.dim) {
+      entry.dim.borderBoxSize = event.borderBoxSize?.at(0);
+      entry.dim.contentBoxSize = event.contentBoxSize?.at(0);
     }
     if (entry.emitImmediate) {
       this.schedule(0, element, entry, false);
@@ -138,7 +155,12 @@ export class ResizeObserverService {
   }
 
   private emitSize(element: Element, entry: ResizeSubscriber, force = false): void {
-    const dimensions = { width: element.clientWidth, height: element.clientHeight };
+    const dimensions: ElementDimensions = {
+      width: element.clientWidth,
+      height: element.clientHeight,
+      borderBoxSize: entry.dim?.borderBoxSize,
+      contentBoxSize: entry.dim?.contentBoxSize
+    };
     if (
       !force &&
       entry.dim?.width === dimensions.width &&
@@ -201,6 +223,8 @@ export class ResizeObserverService {
    */
   // eslint-disable-next-line @typescript-eslint/naming-convention
   _checkAll(): void {
-    this.listeners.forEach(entry => this.handleElement(entry.element));
+    this.listeners.forEach(entry =>
+      this.handleElement({ target: entry.element, borderBoxSize: [], contentBoxSize: [] })
+    );
   }
 }
