@@ -7,7 +7,34 @@ and effective communication in the user experience.
 Effective layout design presents the information in a logical, coherent way and makes
 the content easier to understand.
 
-![Layout](images/layout.png)
+## Design grid
+
+Layouts use a `8px` grid that is used to dictate the placement of all elements within the UI.
+If needed, it is possible to use a `4px` grid to smaller adjustments.
+
+![Baseline grid](images/layout-grid.png)
+
+## Margin, columns and gutters
+
+The placement of content follows a flexible 12-column system where each column
+has a [gutter](../layouts/gutters.md) of `16px`.
+
+For screens wider than `768px`, use a `32px` horizontal margin. For screens
+narrower than `768px`, reduce the margin to `16px`.
+
+![Layout margins, columns and gutters](images/layout-margins.png)
+
+## Fluid vs. fixed layout
+
+Choose between a fluid or fixed layout width based on content requirements.
+
+**Fixed layouts** have a maximum width defined for the content area.
+
+**Fluid layouts** consume all the available screen space. It stretches the
+content to accommodate the browser window's width, regardless of how wide it
+becomes.
+
+![Layout responsive](images/layout-fluid-fixed.png)
 
 ## Best practices
 
@@ -17,13 +44,3 @@ the content easier to understand.
 - Group related content in cards.
 - Arrange elements on the page based on their importance and the intended user flow.
 - Use size, spacing, and visual cues to guide users attention and emphasize key information.
-
-## Content
-
-The Element layouts are describes in the following chapters:
-
-- [Anatomy](anatomy.md) describes the common building blocks of an Element application page.
-- [Header](header.md) describes the top section of the main content area.
-- [Content layouts](content.md) refer to standardized templates for arranging visual elements and content on a page.
-- [Grid](grid.md) defines the underlying grid system for element placement.
-- [Spacing](spacing.md) defines spacing between elements.
