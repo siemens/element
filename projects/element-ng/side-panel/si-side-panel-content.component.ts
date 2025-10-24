@@ -134,6 +134,30 @@ export class SiSidePanelContentComponent implements OnInit {
   readonly toggleItemLabel = input(t(() => $localize`:@@SI_SIDE_PANEL.TOGGLE:Toggle`));
 
   /**
+   * Enter fullscreen aria-label, required for a11y
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_SIDE_PANEL.ENTER_FULLSCREEN:Enter fullscreen`)
+   * ```
+   */
+  readonly enterFullscreenLabel = input(
+    t(() => $localize`:@@SI_SIDE_PANEL.ENTER_FULLSCREEN:Enter fullscreen`)
+  );
+
+  /**
+   * Exit fullscreen aria-label, required for a11y
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_SIDE_PANEL.EXIT_FULLSCREEN:Exit fullscreen`)
+   * ```
+   */
+  readonly exitFullscreenLabel = input(
+    t(() => $localize`:@@SI_SIDE_PANEL.EXIT_FULLSCREEN:Exit fullscreen`)
+  );
+
+  /**
    * Show a badge on the mobile drawer indicating a new alert or notification
    *
    * @defaultValue false
