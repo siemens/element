@@ -11,3 +11,6 @@ api-goldens
 # Formatting is broken
 docs
 mkdocs.yml
+
+# Ignore test files in schematics
+**/schematics/**/files/**

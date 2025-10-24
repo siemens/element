@@ -192,3 +192,94 @@ export const getImportSpecifiers = (
   }
   return matches;
 };
+
+export interface RenameInstruction {
+  module: RegExp;
+  toModule?: string;
+  symbolRenamings: [from: string, to: string][];
+}
+
+interface ChangeInstruction {
+  start: number;
+  width: number;
+  newNode: ts.Node;
+}
+
+export function* renameIdentifier({
+  sourceFile,
+  renamingInstructions
+}: {
+  sourceFile: ts.SourceFile;
+  renamingInstructions: RenameInstruction[];
+}): Generator<ChangeInstruction> {
+  for (const node of sourceFile.statements) {
+    if (!ts.isImportDeclaration(node) || !ts.isStringLiteral(node.moduleSpecifier)) {
+      continue;
+    }
+
+    for (const renamingInstruction of renamingInstructions) {
+      if (!renamingInstruction.module.test(node.moduleSpecifier.text)) {
+        continue;
+      }
+
+      if (
+        !(node.importClause?.namedBindings && ts.isNamedImports(node.importClause.namedBindings))
+      ) {
+        continue;
+      }
+
+      for (const [index, [fromName, toName]] of renamingInstruction.symbolRenamings.entries()) {
+        const importSpecifiers = findImportSpecifier(
+          node.importClause.namedBindings.elements,
+          fromName
+        );
+
+        if (!importSpecifiers) {
+          continue;
+        }
+
+        yield {
+          start: importSpecifiers.name.getStart(),
+          width: importSpecifiers.name.getWidth(),
+          newNode: ts.factory.createIdentifier(toName)
+        };
+        if (
+          renamingInstruction.toModule &&
+          !node.moduleSpecifier.text.endsWith('@simpl/element-ng') &&
+          index === 0
+        ) {
+          const newPath = node.moduleSpecifier.text.replace(
+            renamingInstruction.module,
+            renamingInstruction.toModule
+          );
+
+          yield {
+            start: node.moduleSpecifier.getStart(),
+            width: node.moduleSpecifier.getWidth(),
+            newNode: ts.factory.createStringLiteral(newPath, true)
+          };
+        }
+
+        const visitor = function* (visitedNode: ts.Node): Generator<ChangeInstruction> {
+          if (ts.isIdentifier(visitedNode) && visitedNode.text === fromName) {
+            yield {
+              start: visitedNode.getStart(),
+              width: visitedNode.getWidth(),
+              newNode: ts.factory.createIdentifier(toName)
+            };
+          } else {
+            for (const child of visitedNode.getChildren()) {
+              yield* visitor(child);
+            }
+          }
+        };
+
+        for (const statement of sourceFile.statements) {
+          if (!ts.isImportDeclaration(statement)) {
+            yield* visitor(statement);
+          }
+        }
+      }
+    }
+  }
+}

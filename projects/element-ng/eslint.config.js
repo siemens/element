@@ -1,7 +1,8 @@
 import { tsConfig, templateConfig } from '../../eslint.config.js';
 import defaultValuePlugin from '@siemens/eslint-plugin-defaultvalue';
-import { defineConfig } from 'eslint/config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 export default defineConfig(
+  globalIgnores(['**/schematics/**/files/**']),
   {
     extends: [...tsConfig],
     plugins: {
