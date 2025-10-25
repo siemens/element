@@ -44,7 +44,7 @@ jobs:
       - run: npm run dashboards-demo:build:demo -- --progress=false
       - run: npm run dashboards-demo:build:webcomponents -- --progress=false
       - run: npm run dashboards-demo:build:mfe -- --progress=false
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: dist
           path: dist
@@ -64,7 +64,7 @@ jobs:
         with:
           node-version: lts/jod
           cache: 'npm'
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: dist
           path: dist
@@ -79,7 +79,7 @@ jobs:
       - run: npm run charts:test -- --watch=false --progress=false
       - run: npm run dashboards:test -- --watch=false --progress=false
       - run: npm run maps:test -- --watch=false --progress=false
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: coverage-reports
           path: dist/coverage
@@ -96,7 +96,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - name: Download coverage reports
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: coverage-reports
           path: dist/coverage
@@ -130,7 +130,7 @@ jobs:
           echo "Extracted coverage: $TOTAL_COVERAGE%"
           echo "{\"schemaVersion\": 1, \"label\": \"coverage\", \"message\": \"$TOTAL_COVERAGE%\", \"color\": \"brightgreen\"}" > coverage-summary.json
       - name: Upload coverage summary
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: coverage-summary
           path: coverage-summary.json
@@ -146,7 +146,7 @@ jobs:
         with:
           node-version: lts/jod
           cache: 'npm'
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: dist
           path: dist
@@ -183,14 +183,14 @@ jobs:
         with:
           node-version: lts/jod
           cache: 'npm'
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: dist
           path: dist
       # Not injecting the token will exclude the brand packages, but this is fine for e2e tests.
       - run: npm ci --prefer-offline --no-audit --include=optional
       - run: npx playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         if: ${{ !cancelled() }}
         with:
           name: blob-report-${{ matrix.shardIndex }}
@@ -206,13 +206,13 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/jod
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           path: all-blob-reports
           pattern: blob-report-*
           merge-multiple: true
       - run: npx playwright merge-reports --reporter html ./all-blob-reports
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: html-report--attempt-${{ github.run_attempt }}
           path: playwright-report
@@ -227,15 +227,15 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: astral-sh/setup-uv@v7
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: dist
           path: dist
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: coverage-summary
           path: .
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: coverage-reports
           path: dist/coverage
@@ -264,7 +264,7 @@ jobs:
       - run: mv dist/dashboards-demo/ dist/design/
       - run: mv coverage-summary.json dist/design/
       - run: mv dist/coverage/ dist/design/
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: pages
           path: dist/design
@@ -283,15 +283,15 @@ jobs:
       - documentation
       - coverage
     steps:
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: pages
           path: pages
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: html-report--attempt-${{ github.run_attempt }}
           path: playwright-report
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v6
         with:
           name: coverage-reports
           path: coverage-reports
