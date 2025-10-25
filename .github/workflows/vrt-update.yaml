@@ -124,7 +124,7 @@ jobs:
 
       # Download the dist artifacts from the latest successful build-and-test workflow
       - name: Download build artifacts
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: dist
           path: dist
@@ -193,7 +193,7 @@ jobs:
 
       - name: Upload fresh snapshots
         id: upload-artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ env.ARCHIVE_NAME }}
           path: ${{ env.ARCHIVE_NAME }}.tar.gz
