@@ -63,7 +63,7 @@
       />
     </ng-template>
     <ng-template #optionTemplate let-option>
-      <span class="fi me-5" [ngClass]="'fi-' + option.value.isoCode.toLowerCase()"></span>
+      <span class="fi me-5" [ngClass]="'fi-' + (option.value.isoCode | lowercase)"></span>
       {{ option.value.name }} +{{ option.value.countryCode }}
     </ng-template>
   </button>
