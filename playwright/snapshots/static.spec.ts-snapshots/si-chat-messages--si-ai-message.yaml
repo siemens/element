@@ -1,0 +1,15 @@
+- paragraph:
+  - text: Here's a
+  - strong: simple response
+  - text: with basic formatting.
+- paragraph:
+  - text: You can use
+  - code: inline code
+  - text: "and create lists:"
+- list:
+  - listitem: First item
+  - listitem: Second item
+- button "Good response"
+- button "Copy response"
+- button "Retry response"
+- button "More actions"
