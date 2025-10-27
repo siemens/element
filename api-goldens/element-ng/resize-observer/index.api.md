@@ -5,9 +5,11 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
+import { ElementRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
+import { Signal } from '@angular/core';
 
 // @public (undocumented)
 export const BOOTSTRAP_BREAKPOINTS: Breakpoints;
@@ -35,6 +37,9 @@ export interface ElementDimensions {
 }
 
 // @public
+export const observeElementSize: (source: Source, opt?: ResizeSignalOptions) => Signal<ResizeObserverEntry[]>;
+
+// @public
 export class ResizeObserverService {
     constructor();
     _checkAll(): void;
@@ -43,6 +48,11 @@ export class ResizeObserverService {
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<ResizeObserverService, never>;
     // (undocumented)
     static ɵprov: _angular_core.ɵɵInjectableDeclaration<ResizeObserverService>;
+}
+
+// @public
+export interface ResizeSignalOptions {
+    box?: ResizeObserverBoxOptions;
 }
 
 // @public
