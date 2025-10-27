@@ -1,0 +1,31 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: block;
+
+  &:not(:has([siChatMessageAction])) si-chat-message {
+    // Keep in sync with button size and actions wrapper padding
+    // stylelint-disable-next-line declaration-no-important
+    padding-block-end: calc(32px + #{map.get(variables.$spacers, 2)}) !important;
+  }
+}
+
+.user-message-actions {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+si-chat-message {
+  --chat-message-bubble-bg: #{variables.$element-base-input-experimental};
+  max-inline-size: 600px;
+  margin-inline-start: auto;
+}
+
+:host:hover .user-message-actions,
+.user-message-actions:hover,
+.user-message-actions:has(::ng-deep [aria-expanded='true']),
+:host-context(.si-container-xs, .si-container-sm) .user-message-actions:active {
+  opacity: 1;
+}
