@@ -1,0 +1,127 @@
+@use '../variables';
+
+@use 'sass:map';
+
+.markdown-content {
+  max-inline-size: 100%;
+  min-inline-size: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+
+  strong {
+    font-weight: variables.$si-font-weight-semibold;
+  }
+
+  code {
+    color: variables.$element-text-primary;
+    background-color: variables.$element-ui-4;
+    padding-block: map.get(variables.$spacers, 1);
+    padding-inline: map.get(variables.$spacers, 2);
+    border-radius: variables.$element-radius-1;
+    font-family:
+      'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  }
+
+  ul,
+  ol {
+    max-inline-size: 100%;
+    overflow-wrap: break-word;
+
+    li:first-child {
+      margin-block-start: 0;
+    }
+
+    li:last-child {
+      margin-block-end: 0;
+    }
+  }
+
+  li {
+    margin-block: map.get(variables.$spacers, 2);
+    max-inline-size: 100%;
+    overflow-wrap: break-word;
+  }
+
+  pre {
+    background-color: variables.$element-ui-4;
+    padding-block: map.get(variables.$spacers, 4);
+    padding-inline: map.get(variables.$spacers, 4);
+    border-radius: variables.$element-radius-1;
+    overflow-x: auto;
+    margin-inline: 0;
+    inline-size: max-content;
+    max-inline-size: 100%;
+    box-sizing: border-box;
+
+    code {
+      background-color: transparent;
+      padding-block: 0;
+      padding-inline: 0;
+      border-radius: 0;
+    }
+
+    p {
+      margin-block: 0;
+    }
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  blockquote {
+    border-inline-start: 4px solid variables.$element-ui-3;
+    padding-inline-start: map.get(variables.$spacers, 4);
+
+    p {
+      margin-block-end: 0;
+    }
+  }
+
+  > *:first-child {
+    // stylelint-disable-next-line declaration-no-important
+    margin-block-start: 0 !important;
+  }
+
+  > *:last-child {
+    // stylelint-disable-next-line declaration-no-important
+    margin-block-end: 0 !important;
+  }
+
+  table {
+    inline-size: max-content;
+    max-inline-size: 100%;
+    // stylelint-disable-next-line declaration-no-important
+    margin-block-start: map.get(variables.$spacers, 6) !important;
+    // stylelint-disable-next-line declaration-no-important
+    margin-block-end: 0 !important;
+    overflow: auto;
+    display: block;
+    white-space: nowrap;
+
+    ul,
+    ol {
+      // stylelint-disable-next-line declaration-no-important
+      padding-inline-start: map.get(variables.$spacers, 6) !important;
+    }
+  }
+
+  table td,
+  table th {
+    max-inline-size: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    *:last-child {
+      // stylelint-disable-next-line declaration-no-important
+      margin-block-end: 0 !important;
+    }
+  }
+
+  p {
+    max-inline-size: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+}
