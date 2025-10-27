@@ -1,0 +1,143 @@
+- heading "AI Assistant Response" [level=2]:
+  - strong: AI Assistant Response
+- paragraph:
+  - text: Here's a
+  - strong: comprehensive example
+  - text: of markdown content with various formatting options.
+- paragraph: This is a separate paragraph that demonstrates how double line breaks create proper paragraph spacing.
+- heading "Code Examples" [level=2]
+- paragraph:
+  - text: You can use inline code like
+  - code: console.log('Hello World')
+  - text: "or multi-line code blocks:"
+- paragraph
+- code: "function calculateSum(a, b) { return a + b; } const result = calculateSum(5, 3); console.log(`Result: ${result}`);"
+- paragraph
+- heading "Formatting Options" [level=2]
+- paragraph: Here's a paragraph explaining the formatting options available.
+- paragraph: "Another paragraph with different formatting elements:"
+- list:
+  - listitem:
+    - strong: Bold text
+    - text: for emphasis
+  - listitem:
+    - emphasis: Italic text
+    - text: for subtle emphasis
+  - listitem:
+    - code: inline code
+    - text: for technical terms
+- heading "Links" [level=2]
+- paragraph:
+  - text: You can include links such as
+  - link "Element":
+    - /url: https://element.siemens.io
+  - text: for more information, as well as local links like
+  - link "Internal Page":
+    - /url: "/#/internal-page"
+  - text: .
+- paragraph:
+  - text: "Links are also automatically detected:"
+  - link "https://angular.io":
+    - /url: https://angular.io
+- heading "Lists and Bullets" [level=2]
+- paragraph: "Here are the key features:"
+- list:
+  - listitem: Multi-line code blocks with syntax preservation
+  - listitem: Bold and italic text formatting
+  - listitem: Inline code highlighting
+  - listitem: Bullet point lists
+  - listitem: Blockquote support
+- paragraph: This paragraph appears after the list to show proper spacing.
+- heading "Ordered Lists" [level=2]
+- paragraph: "Step-by-step instructions:"
+- list:
+  - listitem: First, analyze the requirements
+  - listitem: Then, implement the solution
+  - listitem: Finally, test the implementation
+- blockquote: This is a blockquote that demonstrates how quoted text appears in the markdown content component.
+- paragraph: This paragraph follows the blockquotes to demonstrate proper paragraph separation.
+- paragraph: This is a separate paragraph created by double line breaks.
+- list:
+  - listitem: Unordered item
+  - listitem: Another item
+- paragraph: Another paragraph between the lists.
+- list:
+  - listitem: First ordered item
+  - listitem: Second ordered item
+- paragraph: Final paragraph to show proper spacing.
+- heading "Tables" [level=2]
+- paragraph: "Tables are also supported:"
+- paragraph
+- table:
+  - rowgroup:
+    - row "Feature Examples Status Notes":
+      - cell "Feature":
+        - paragraph: Feature
+      - cell "Examples":
+        - paragraph: Examples
+      - cell "Status":
+        - paragraph: Status
+      - cell "Notes":
+        - paragraph: Notes
+    - row "Basic content Alice Johnson Bob Smith ✓ Complete Simple text and line breaks":
+      - cell "Basic content":
+        - paragraph:
+          - strong: Basic content
+      - cell "Alice Johnson Bob Smith":
+        - paragraph: Alice Johnson Bob Smith
+      - cell "✓ Complete":
+        - paragraph: ✓ Complete
+      - cell "Simple text and line breaks":
+        - paragraph: Simple text and line breaks
+    - row "Formatting Bold and italic Plus code and multiline code ✓ Complete Multiple markdown formats":
+      - cell "Formatting":
+        - paragraph:
+          - emphasis: Formatting
+      - cell "Bold and italic Plus code and multiline code":
+        - paragraph:
+          - strong: Bold
+          - text: and
+          - emphasis: italic
+          - text: Plus
+          - code: code
+          - text: and
+          - code: multiline code
+      - cell "✓ Complete":
+        - paragraph: ✓ Complete
+      - cell "Multiple markdown formats":
+        - paragraph: Multiple markdown formats
+    - row "Lists in cells First item Second item Third item ✓ Complete Bullet lists work properly":
+      - cell "Lists in cells":
+        - paragraph: Lists in cells
+      - cell "First item Second item Third item":
+        - list:
+          - listitem: First item
+          - listitem: Second item
+          - listitem: Third item
+      - cell "✓ Complete":
+        - paragraph: ✓ Complete
+      - cell "Bullet lists work properly":
+        - paragraph: Bullet lists work properly
+    - 'row "Escaped pipes grep \"text|pattern\" awk ''{print $1|$2}'' ✓ Complete Use | for literal pipes"':
+      - cell "Escaped pipes":
+        - paragraph: Escaped pipes
+      - 'cell "grep \"text|pattern\" awk ''{print $1|$2}''"':
+        - paragraph: "grep \"text|pattern\" awk '{print $1|$2}'"
+      - cell "✓ Complete":
+        - paragraph: ✓ Complete
+      - cell "Use | for literal pipes":
+        - paragraph: Use | for literal pipes
+    - row "Line breaks Line 1 Line 2 Line 3 ✓ Complete Uses <br> tags":
+      - cell "Line breaks":
+        - paragraph: Line breaks
+      - cell "Line 1 Line 2 Line 3":
+        - paragraph: Line 1 Line 2 Line 3
+      - cell "✓ Complete":
+        - paragraph: ✓ Complete
+      - cell "Uses <br> tags":
+        - paragraph:
+          - text: Uses
+          - code: <br>
+          - text: tags
+- text: This paragraph appears after the tables to demonstrate proper spacing.
+- paragraph
