@@ -1,0 +1,66 @@
+<div class="p-4">
+  <si-chat-message alignment="start" actionsPosition="bottom">
+    <si-attachment-list [attachments]="attachments" />
+    <si-icon class="icon" icon="element-user" />
+    <si-markdown-renderer
+      text="Can you help me with this **code snippet**? I'm getting an error when I run it."
+    />
+    @for (action of actions; track $index) {
+      <button
+        type="button"
+        class="btn btn-ghost btn-circle btn-sm"
+        siChatMessageAction
+        [disabled]="action.disabled"
+        [attr.aria-label]="action.label | translate"
+        (click)="action.action('message-1', action)"
+      >
+        <si-icon [icon]="action.icon" />
+      </button>
+    }
+    <button
+      type="button"
+      class="btn btn-ghost btn-circle btn-sm"
+      siChatMessageAction
+      [cdkMenuTriggerFor]="secondaryActionsMenu"
+      [attr.aria-label]="secondaryActionsLabel | translate"
+      [attr.title]="secondaryActionsLabel | translate"
+    >
+      <si-icon icon="element-optionsVertical" />
+    </button>
+
+    <ng-template #secondaryActionsMenu>
+      <si-menu-factory actionParam="message-1" [items]="secondaryActions" />
+    </ng-template>
+  </si-chat-message>
+
+  <div class="mt-5">
+    <si-chat-message alignment="end" actionsPosition="side">
+      <si-avatar size="small" initials="JD" altText="User" />
+      Thanks for the help! That worked perfectly.
+      @for (action of actions; track $index) {
+        <button
+          type="button"
+          class="btn btn-ghost btn-circle btn-sm"
+          siChatMessageAction
+          [disabled]="action.disabled"
+          [attr.aria-label]="action.label | translate"
+        >
+          <si-icon [icon]="action.icon" />
+        </button>
+      }
+    </si-chat-message>
+  </div>
+
+  <div class="mt-5">
+    <si-chat-message alignment="start" [loading]="true">
+      <si-icon class="icon" icon="element-user" />
+    </si-chat-message>
+  </div>
+
+  <div class="mt-5">
+    <si-chat-message alignment="end" actionsPosition="side" [loading]="true">
+      <si-attachment-list [attachments]="attachments" />
+      <si-icon class="icon" icon="element-user" />
+    </si-chat-message>
+  </div>
+</div>
