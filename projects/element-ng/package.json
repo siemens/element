@@ -22,7 +22,7 @@
   "type": "module",
   "schematics": "./schematics/collection.json",
   "ng-add": {
-    "save": "dependencies"
+    "save": "false"
   },
   "peerDependencies": {
     "@angular/animations": "20",

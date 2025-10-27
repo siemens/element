@@ -5,6 +5,8 @@
 import { chain, Rule, schematic, SchematicContext, Tree } from '@angular-devkit/schematics';
 import { getPackageJsonDependency } from '@schematics/angular/utility/dependencies';
 
+import { installPackages } from './install-packages.js';
+
 export const ngAdd = (options: { path: string }): Rule => {
   return (tree: Tree, context: SchematicContext) => {
     context.logger.info('🔧 Adding @siemens/element-ng to your project...');
@@ -12,8 +14,8 @@ export const ngAdd = (options: { path: string }): Rule => {
     const hasSimplElementNgDependency = getPackageJsonDependency(tree, '@simpl/element-ng');
 
     if (hasSimplElementNgDependency) {
-      const chainedRules = chain([schematic('simpl-siemens-migration', options)]);
-      return chainedRules(tree, context);
+      context.addTask(installPackages(tree));
+      return chain([schematic('simpl-siemens-migration', options)])(tree, context);
     }
   };
 };
