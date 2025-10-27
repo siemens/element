@@ -24,6 +24,7 @@ $_themes: () !default;
 @use 'styles/components/system-banner';
 @use 'styles/components/widgets';
 @use 'styles/components/drag_drop';
+@use 'styles/components/markdown';
 
 // accessibility extensions
 @use 'styles/accessibility';
