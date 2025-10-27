@@ -8,7 +8,17 @@ import * as i0 from '@angular/core';
 import * as i1 from '@angular/cdk/menu';
 import { MenuItem as MenuItem_2 } from '@siemens/element-ng/common';
 import { NavigationExtras } from '@angular/router';
-import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { TranslatableString as TranslatableString_2 } from '@siemens/element-translate-ng/translate-types';
+
+// @public
+export interface ActionBarItem {
+    action: ((actionParam: any, source: this) => void) | string;
+    disabled?: boolean;
+    icon: string;
+    id?: string;
+    label: TranslatableString;
+}
 
 // @public (undocumented)
 export interface MenuDivider {
@@ -34,7 +44,7 @@ export interface MenuItemBase {
     icon?: string;
     iconBadge?: boolean | number | string;
     id?: string;
-    label: TranslatableString;
+    label: TranslatableString_2;
 }
 
 // @public (undocumented)
@@ -88,6 +98,20 @@ export interface MenuItemRouterLink extends MenuItemBase {
     routerLink: string | any[];
     // (undocumented)
     type: 'router-link';
+}
+
+// @public
+export class SiActionBarComponent {
+    readonly actionParam: i0.InputSignal<any>;
+    readonly actions: i0.InputSignal<ActionBarItem[]>;
+    // (undocumented)
+    protected runAction(item: ActionBarItem): void;
+    readonly secondaryActions: i0.InputSignal<MenuItem[]>;
+    readonly secondaryActionsLabel: i0.InputSignal<TranslatableString>;
+    // (undocumented)
+    static ɵcmp: i0.ɵɵComponentDeclaration<SiActionBarComponent, "si-action-bar", never, { "actions": { "alias": "actions"; "required": false; "isSignal": true; }; "secondaryActions": { "alias": "secondaryActions"; "required": false; "isSignal": true; }; "actionParam": { "alias": "actionParam"; "required": false; "isSignal": true; }; "secondaryActionsLabel": { "alias": "secondaryActionsLabel"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
+    // (undocumented)
+    static ɵfac: i0.ɵɵFactoryDeclaration<SiActionBarComponent, never>;
 }
 
 // @public

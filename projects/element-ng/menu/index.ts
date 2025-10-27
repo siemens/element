@@ -13,3 +13,4 @@ export * from './si-menu-divider.directive';
 export * from './si-menu-factory.component';
 export * from './si-menu-model';
 export * from './si-menu-action.service';
+export * from './si-action-bar.component';

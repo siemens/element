@@ -1,0 +1,28 @@
+@for (action of actions(); track $index) {
+  <button
+    type="button"
+    class="btn btn-ghost btn-circle btn-sm"
+    [attr.data-id]="action.id"
+    [disabled]="action.disabled"
+    [attr.aria-label]="action.label | translate"
+    (click)="runAction(action)"
+  >
+    <si-icon [icon]="action.icon" />
+  </button>
+}
+
+@if (secondaryActions().length > 0) {
+  <button
+    type="button"
+    class="btn btn-ghost btn-circle btn-sm"
+    [cdkMenuTriggerFor]="secondaryActionsMenu"
+    [attr.aria-label]="secondaryActionsLabel() | translate"
+    [attr.title]="secondaryActionsLabel() | translate"
+  >
+    <si-icon icon="element-optionsVertical" />
+  </button>
+
+  <ng-template #secondaryActionsMenu>
+    <si-menu-factory [items]="secondaryActions()" [actionParam]="actionParam()" />
+  </ng-template>
+}

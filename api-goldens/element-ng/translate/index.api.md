@@ -12,6 +12,8 @@ export const provideSiTranslatableOverrides: (values: SiTranslatableKeys) => Pro
 // @public (undocumented)
 export interface SiTranslatableKeys {
     // (undocumented)
+    'SI_ACTION_BAR.SECONDARY_ACTIONS'?: string;
+    // (undocumented)
     'SI_ALERT_DIALOG.OK'?: string;
     // (undocumented)
     'SI_APPLICATION_HEADER.LAUNCHPAD'?: string;
