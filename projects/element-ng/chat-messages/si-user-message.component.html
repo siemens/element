@@ -1,0 +1,45 @@
+<si-chat-message alignment="end" actionsPosition="bottom" [loading]="false">
+  @if (hasAttachments()) {
+    <si-attachment-list alignment="end" [attachments]="attachments()" [removable]="false" />
+  }
+
+  @if (content()) {
+    @let content = textContent();
+    @if (content) {
+      <span class="text-pre-wrap">{{ content }}</span>
+    } @else {
+      <div #formattedContent> </div>
+    }
+  }
+  @if (actions().length > 0 || secondaryActions().length > 0) {
+    <div class="d-flex gap-4 user-message-actions" siChatMessageAction>
+      @for (action of actions(); track $index) {
+        <button
+          type="button"
+          class="btn btn-ghost btn-circle btn-sm"
+          [disabled]="action.disabled"
+          [attr.aria-label]="action.label | translate"
+          (click)="action.action(actionParam(), action)"
+        >
+          <si-icon [icon]="action.icon" />
+        </button>
+      }
+
+      @if (secondaryActions().length > 0) {
+        <button
+          type="button"
+          class="btn btn-ghost btn-circle btn-sm"
+          [cdkMenuTriggerFor]="secondaryActionsMenu"
+          [attr.aria-label]="secondaryActionsLabel() | translate"
+          [attr.title]="secondaryActionsLabel() | translate"
+        >
+          <si-icon icon="element-optionsVertical" />
+        </button>
+
+        <ng-template #secondaryActionsMenu>
+          <si-menu-factory [items]="secondaryActions()" [actionParam]="actionParam()" />
+        </ng-template>
+      }
+    </div>
+  }
+</si-chat-message>
