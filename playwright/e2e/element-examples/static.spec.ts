@@ -106,3 +106,5 @@ test('typography/color-variants', ({ si }) => si.static());
 test('typography/type-styles', ({ si }) => si.static());
 test('typography/display-styles', ({ si }) => si.static());
 test('typography/typography', ({ si }) => si.static());
+test('si-markdown-renderer/si-markdown-renderer', ({ si }) =>
+  si.static({ disabledA11yRules: ['link-in-text-block'] }));
