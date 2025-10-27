@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkConnectedOverlay, CdkOverlayOrigin } from '@angular/cdk/overlay';
-import { NgClass } from '@angular/common';
+import { LowerCasePipe, NgClass } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -50,7 +50,8 @@ import { CountryInfo, PhoneDetails } from './si-phone-number-input.models';
     SiIconComponent,
     SiPhoneNumberInputSelectDirective,
     SiSelectListHasFilterComponent,
-    SiTranslatePipe
+    SiTranslatePipe,
+    LowerCasePipe
   ],
   templateUrl: './si-phone-number-input.component.html',
   styleUrl: './si-phone-number-input.component.scss',

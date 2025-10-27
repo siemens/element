@@ -47,6 +47,7 @@ export const tsConfig = defineConfig({
     ],
     '@angular-eslint/no-experimental': ['off'],
     '@angular-eslint/no-developer-preview': ['error'],
+    '@angular-eslint/prefer-host-metadata-property': ['off'],
     'no-console': [
       'error',
       {
