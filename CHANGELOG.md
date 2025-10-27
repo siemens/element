@@ -1,3 +1,48 @@
+# [48.2.0](https://github.com/siemens/element/compare/v48.1.0...v48.2.0) (2025-10-27)
+
+
+### Features
+
+* **card:** introduce si-action-card component ([7732ec0](https://github.com/siemens/element/commit/7732ec0249235db6368a1130050bebd41d073d62))
+* **charts/circle:** support start and end angle ([261ea86](https://github.com/siemens/element/commit/261ea86573ebc7555f66e81223fbe0904ade5292))
+* **datatable:** separator line between pinned and scrollable columns ([80e9522](https://github.com/siemens/element/commit/80e95223a8f1a70b72a979e6c1ef301400e132bb))
+* **datepicker:** expose form control validation for si-timepicker ([74b95ea](https://github.com/siemens/element/commit/74b95ea3865bb9e4bd574db1fe8610cce3a920a6)), closes [#739](https://github.com/siemens/element/issues/739)
+* **datepicker:** show error border on invalid time input ([192104a](https://github.com/siemens/element/commit/192104af3969cf36a8403a601488d9352bdac181)), closes [#739](https://github.com/siemens/element/issues/739)
+* **datepicker:** support 12 hours clock for date-ranges ([47b862b](https://github.com/siemens/element/commit/47b862b2d2b491cbff3abf78f0efb3ea5b449f2a))
+* **header-dropdown:** add class `header-dropdown-overlay` when rendered as overlay ([1c30d4c](https://github.com/siemens/element/commit/1c30d4ca135b1cff484b26374fc5095507751ebf))
+* **micro-line-chart:** support markers ([2f05c49](https://github.com/siemens/element/commit/2f05c49467c464d48217cf7beb46a30efa320a41))
+* **migration:** add schematics for simpl to siemens migration ([5b5144d](https://github.com/siemens/element/commit/5b5144dc6a46c4ff4e5d2668338700b68f8d8df5))
+* **schematics:** add migration for legacy component updates ([bceb6c8](https://github.com/siemens/element/commit/bceb6c8a6ec150eaeaf0385e7f972c32cd4c5b8d))
+* **schematics:** add migration schematic for updating action-modal from v47 to v48 ([4c33b5b](https://github.com/siemens/element/commit/4c33b5b3577dc53292960c836b50914d0aa4f5c1))
+* **schematics:** migrate style imports to siemens ([35645bb](https://github.com/siemens/element/commit/35645bba64a6741baaa3a493c35cdee3b1327b6a))
+* **search-bar:** translatable aria label for clear button ([0db4cf8](https://github.com/siemens/element/commit/0db4cf88489f29516c93a1e6eb0cdc3b171bbaeb))
+
+
+### Bug Fixes
+
+* **charts/sankey:** add new `tooltip` input to replace misspelled `toolTip` input ([0ed875e](https://github.com/siemens/element/commit/0ed875ea23a844c570558618f20cb069ad89d276))
+* **charts/sunburst:** add new `tooltip` input to replace misspelled `toolTip` input ([eded236](https://github.com/siemens/element/commit/eded236ce133a7f390daef603d136328cfe5836c))
+* **dashboard:** ignore icons on screen reader ([06c3a0a](https://github.com/siemens/element/commit/06c3a0a9e0ec6a1f5b368f05d81fc1a471665410))
+* **dashboards-ng:** align drag cursor style with figma ([09e3c3e](https://github.com/siemens/element/commit/09e3c3eaf9bc775e87a8033f2ec032afa22cf17c))
+* **datepicker:** correct si-timepicker input field validation ([818b9d8](https://github.com/siemens/element/commit/818b9d8fbdd5096fa17e8176dc49c18ef3e9f6e8))
+* **element-theme:** update default `$nav-link-color` to `element-text-primary` ([3401ec3](https://github.com/siemens/element/commit/3401ec3419c80e6368b90e65fe06237740598d7f))
+* **filtered-search:** visually clear input text in active mode if clear is pressed ([2b51b09](https://github.com/siemens/element/commit/2b51b09797ec2d1a6bbfceb2797e83ef7ffb146e))
+* **ip-input:** ensure validation verifies the entire input string ([9fcacb1](https://github.com/siemens/element/commit/9fcacb1ae0661f67b206fb49c9999277e4eb264c))
+* **list-details:** align details-header with design specs ([f2cef2f](https://github.com/siemens/element/commit/f2cef2f07d481fbad56cdd08c7d27fbb81012bbb))
+* **list-details:** hide empty header ([c75ae23](https://github.com/siemens/element/commit/c75ae23ac27556cccdc826016718bb24e9d8df91))
+* **list-details:** ignore icon with screen reader ([b18b63f](https://github.com/siemens/element/commit/b18b63f14450811ad554f83b01aa21e6455260f8))
+* **textarea:** align spacing and line height with design specs ([a1b2171](https://github.com/siemens/element/commit/a1b21712f656fcc4da17b390ac0c93a2eccb803c))
+* **tooltip:** unsubscribe from observable to avoid memory leaks ([3f05889](https://github.com/siemens/element/commit/3f0588988fb991041400f75b6b12b9d143dc352b))
+* **tree-view:** use aria label for expand collapse icons ([d2eacf0](https://github.com/siemens/element/commit/d2eacf0054e34e2e5152804a9083fbaddb67ceab))
+* **typeahead:** remove `icon` component if no icon is provided ([5943e8d](https://github.com/siemens/element/commit/5943e8d683d2d6c8bae0044e05913ba660b951f2))
+
+
+### DEPRECATIONS
+
+* **charts/sunburst:** `SiChartSunburstComponent.toolTip` input is deprecated. Use `SiChartSunburstComponent.tooltip` instead.
+* **charts/sankey:** `SiChartSankeyComponent.toolTip` input is deprecated. Use `SiChartSankeyComponent.tooltip` instead.
+* **filter-bar:** `Filter.status` and `FilterStatusType` are deprecated as they have no visual effect.
+
 # [48.1.0](https://github.com/siemens/element/compare/v48.0.3...v48.1.0) (2025-09-29)
 
 
