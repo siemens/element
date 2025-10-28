@@ -137,17 +137,17 @@ const config: PlaywrightTestConfig = {
   projects: [
     {
       name: `element-examples/chromium/light`,
-      metadata: { livePreviewer: true, theme: 'light' },
+      metadata: { livePreviewer: true, theme: 'light', isA11y, isVrt },
       testDir: './playwright/e2e/element-examples'
     },
     {
       name: `element-examples/chromium/dark`,
-      metadata: { livePreviewer: true, theme: 'dark', skipAriaSnapshot: true },
+      metadata: { livePreviewer: true, theme: 'dark', skipAriaSnapshot: true, isA11y, isVrt },
       testDir: './playwright/e2e/element-examples'
     },
     {
       name: `dashboards-demo/chromium/light`,
-      metadata: { theme: 'light' },
+      metadata: { theme: 'light', isA11y, isVrt },
       use: {
         baseURL: `http://${localAddress}:${dashboardsPort}`
       },
@@ -155,7 +155,7 @@ const config: PlaywrightTestConfig = {
     },
     {
       name: `dashboards-demo/chromium/dark`,
-      metadata: { theme: 'dark', skipAriaSnapshot: true },
+      metadata: { theme: 'dark', skipAriaSnapshot: true, isA11y, isVrt },
       use: {
         baseURL: `http://${localAddress}:${dashboardsPort}`
       },
