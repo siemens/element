@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { Component, ElementRef, viewChild } from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
@@ -12,16 +12,20 @@ import {
   waitForAsync
 } from '@angular/core/testing';
 
-import { ElementDimensions, ResizeObserverService } from './index';
+import { ElementDimensions } from './index';
+import {
+  MockResizeObserver,
+  mockResizeObserver,
+  restoreResizeObserver
+} from './mock-resize-observer.spec';
 import { SiResizeObserverDirective } from './si-resize-observer.directive';
 
 @Component({
   imports: [SiResizeObserverDirective],
   template: `
     <div
+      #theDiv
       style="width: 100px; height: 100px;"
-      [style.width.px]="width"
-      [style.height.px]="height"
       [emitInitial]="emitInitial"
       (siResizeObserver)="resizeHandler($event)"
     >
@@ -30,8 +34,7 @@ import { SiResizeObserverDirective } from './si-resize-observer.directive';
   `
 })
 class TestHostComponent {
-  width = 100;
-  height = 100;
+  readonly theDiv = viewChild.required<ElementRef>('theDiv');
   emitInitial = true;
 
   resizeHandler(dim: ElementDimensions): void {}
@@ -42,10 +45,14 @@ describe('SiResizeObserverDirective', () => {
   let component: TestHostComponent;
   let spy: jasmine.Spy<(dim: ElementDimensions) => void>;
 
-  const detectSizeChange = (): void => {
+  const detectSizeChange = (inlineSize: number = 100, blockSize: number = 100): void => {
+    MockResizeObserver.triggerResize({
+      target: component.theDiv().nativeElement,
+      inlineSize,
+      blockSize
+    });
     fixture.detectChanges();
     tick();
-    TestBed.inject(ResizeObserverService)._checkAll();
   };
 
   beforeEach(waitForAsync(() => {
@@ -56,12 +63,17 @@ describe('SiResizeObserverDirective', () => {
   }));
 
   beforeEach(fakeAsync(() => {
+    mockResizeObserver();
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     spy = spyOn(component, 'resizeHandler');
     fixture.detectChanges();
     tick();
   }));
+
+  afterEach(() => {
+    restoreResizeObserver();
+  });
 
   it('emits initial size event', fakeAsync(() => {
     expect(component.resizeHandler).toHaveBeenCalledWith({ width: 100, height: 100 });
@@ -70,9 +82,7 @@ describe('SiResizeObserverDirective', () => {
   it('emits on width change', fakeAsync(() => {
     // not interested in the initial event
     spy.calls.reset();
-
-    component.width = 200;
-    detectSizeChange();
+    detectSizeChange(200, 100);
 
     // with throttling, this shouldn't fire just yet
     tick(10);
@@ -86,8 +96,7 @@ describe('SiResizeObserverDirective', () => {
     // not interested in the initial event
     spy.calls.reset();
 
-    component.height = 200;
-    detectSizeChange();
+    detectSizeChange(100, 200);
 
     // with throttling, this shouldn't fire just yet
     tick(10);

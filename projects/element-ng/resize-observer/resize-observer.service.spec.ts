@@ -6,23 +6,17 @@ import { Component, ElementRef, viewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { Subscription } from 'rxjs';
 
+import {
+  MockResizeObserver,
+  mockResizeObserver,
+  restoreResizeObserver
+} from './mock-resize-observer.spec';
 import { ElementDimensions, ResizeObserverService } from './resize-observer.service';
 
 @Component({
-  template: `
-    <div
-      #theDiv
-      style="width: 100px; height: 100px;"
-      [style.width.px]="width"
-      [style.height.px]="height"
-    >
-      Testli
-    </div>
-  `
+  template: ` <div #theDiv style="width: 100px; height: 100px;">Testli</div> `
 })
 class TestHostComponent {
-  width = 100;
-  height = 100;
   readonly theDiv = viewChild.required<ElementRef>('theDiv');
 }
 
@@ -53,6 +47,7 @@ describe('ResizeObserverService', () => {
   }));
 
   beforeEach(fakeAsync(() => {
+    mockResizeObserver();
     service = TestBed.inject(ResizeObserverService);
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
@@ -64,12 +59,13 @@ describe('ResizeObserverService', () => {
 
   afterEach(() => {
     subscription?.unsubscribe();
+    restoreResizeObserver();
   });
 
   it('emits initial size event when asked', waitForAsync(async () => {
     subscribe(true);
     await timeout(10);
-    expect(spy).toHaveBeenCalledWith({ width: 100, height: 100 });
+    expect(spy).toHaveBeenCalledWith(jasmine.objectContaining({ width: 100, height: 100 }));
   }));
 
   it('emits no initial size event when not asked', waitForAsync(async () => {
@@ -81,7 +77,11 @@ describe('ResizeObserverService', () => {
   it('emits on width change', waitForAsync(async () => {
     subscribe(false);
 
-    component.width = 200;
+    MockResizeObserver.triggerResize({
+      target: component.theDiv().nativeElement,
+      inlineSize: 200,
+      blockSize: 100
+    });
     fixture.detectChanges();
 
     // Skip test when browser is not focussed to prevent failures.
@@ -91,14 +91,18 @@ describe('ResizeObserverService', () => {
       expect(spy).not.toHaveBeenCalled();
 
       await timeout(150);
-      expect(spy).toHaveBeenCalledWith({ width: 200, height: 100 });
+      expect(spy).toHaveBeenCalledWith(jasmine.objectContaining({ width: 200, height: 100 }));
     }
   }));
 
   it('emits on height change', waitForAsync(async () => {
     subscribe(false);
 
-    component.height = 200;
+    MockResizeObserver.triggerResize({
+      target: component.theDiv().nativeElement,
+      inlineSize: 100,
+      blockSize: 200
+    });
     fixture.detectChanges();
 
     // Skip test when browser is not focussed to prevent failures.
@@ -108,7 +112,7 @@ describe('ResizeObserverService', () => {
       expect(spy).not.toHaveBeenCalled();
 
       await timeout(150);
-      expect(spy).toHaveBeenCalledWith({ width: 100, height: 200 });
+      expect(spy).toHaveBeenCalledWith(jasmine.objectContaining({ width: 100, height: 200 }));
     }
   }));
 
@@ -123,15 +127,19 @@ describe('ResizeObserverService', () => {
         .subscribe(dim => spy2(dim));
 
       await timeout(20);
-      expect(spy).toHaveBeenCalledWith({ width: 100, height: 100 });
-      expect(spy2).toHaveBeenCalledWith({ width: 100, height: 100 });
+      expect(spy).toHaveBeenCalledWith(jasmine.objectContaining({ width: 100, height: 100 }));
+      expect(spy2).toHaveBeenCalledWith(jasmine.objectContaining({ width: 100, height: 100 }));
 
-      component.width = 200;
+      MockResizeObserver.triggerResize({
+        target: component.theDiv().nativeElement,
+        inlineSize: 200,
+        blockSize: 100
+      });
       fixture.detectChanges();
 
       await timeout(150);
-      expect(spy).toHaveBeenCalledWith({ width: 200, height: 100 });
-      expect(spy2).toHaveBeenCalledWith({ width: 200, height: 100 });
+      expect(spy).toHaveBeenCalledWith(jasmine.objectContaining({ width: 200, height: 100 }));
+      expect(spy2).toHaveBeenCalledWith(jasmine.objectContaining({ width: 200, height: 100 }));
 
       subs2.unsubscribe();
     }
