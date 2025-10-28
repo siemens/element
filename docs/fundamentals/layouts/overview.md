@@ -7,14 +7,14 @@ and effective communication in the user experience.
 Effective layout design presents the information in a logical, coherent way and makes
 the content easier to understand.
 
-### Design grid
+## Design grid
 
 Layouts use a `8px` grid that is used to dictate the placement of all elements within the UI.
 If needed, it is possible to use a `4px` grid to smaller adjustments.
 
 ![Baseline grid](images/layout-grid.png)
 
-### Margin, columns and gutters
+## Margin, columns and gutters
 
 The placement of content follows a flexible 12-column system where each column
 has a [gutter](../layouts/gutters.md) of `16px`.
@@ -24,7 +24,7 @@ narrower than `768px`, reduce the margin to `16px`.
 
 ![Layout margins, columns and gutters](images/layout-margins.png)
 
-### Fluid vs. fixed layout
+## Fluid vs. fixed layout
 
 Choose between a fluid or fixed layout width based on content requirements.
 

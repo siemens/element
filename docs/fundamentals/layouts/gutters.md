@@ -3,13 +3,11 @@
 Gutters are the paddings between columns in the [grid system](./grid.md#code),
 providing responsive separation and alignment for the content.
 
-## Usage ---
+## Overview
 
 - Gutters refer to the horizontal gaps between column content, achieved by applying padding to the start and end of each column. Negative margins on the row ensure content remains properly aligned at the edges.
 - By default, gutters are `1rem` (`16px`) wide, matching the grid’s spacing scale for consistent layout.
 - Gutters can be adjusted responsively using breakpoint-specific classes, allowing you to control horizontal, vertical, or both types of spacing as needed.
-
-## Code ---
 
 ## Horizontal gutters
 

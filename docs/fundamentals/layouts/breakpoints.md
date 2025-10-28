@@ -2,7 +2,7 @@
 
 **Breakpoints** are configurable thresholds that define how a layout adapts to different screen sizes.
 
-## Usage ---
+## Overview
 
 By setting specific widths, breakpoints determine when design adjustments occur, ensuring a consistent
 and responsive experience across all viewports.
@@ -10,14 +10,12 @@ and responsive experience across all viewports.
 In CSS, media queries are used to implement breakpoints through conditions such as `min-width`,
 which apply styles only when the viewport meets defined criteria.
 
-### Best practices
+## Best practices
 
 - Begin with a **mobile-first approach**, defining styles for smaller screens first, as it’s easier to scale up.
 - When designing, reference only the relevant breakpoints instead of accounting for every possible size.
 - Test across real devices and viewport sizes to validate that breakpoints behave as intended.
 - Keep component behavior consistent across breakpoints to preserve familiarity.
-
-## Design ---
 
 ## Available breakpoints
 

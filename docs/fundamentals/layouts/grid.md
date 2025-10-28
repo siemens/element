@@ -2,7 +2,7 @@
 
 The **flexbox grid** is used to create layouts of any complexity using a 12-column system, six responsive [breakpoints](./breakpoints.md), and a wide range of predefined utility classes. The grid system is based on the well-known and beloved Bootstrap grid.
 
-## Usage ---
+## Overview
 
 Here’s an overview of how the grid system functions:
 
@@ -12,11 +12,9 @@ Here’s an overview of how the grid system functions:
 - **Columns** are highly flexible, with 12 available per row. You can combine columns in any configuration, and column classes (e.g., `.col-4`) specify how many columns an element should span. All widths are set in percentages, ensuring consistent relative sizing across breakpoints.
 - **Gutters** the spaces between columns — are fully responsive and customizable. Use gutter utility classes like `.gx-*` for horizontal spacing, `.gy-*` for vertical spacing, or `.g-*` for both. To remove gutters entirely, use `.g-0`.
 
-## Code ---
+## Column layout
 
-### Column layout
-
-#### Equal-width columns
+### Equal-width columns
 
 By using the `.col` class, columns automatically divide available space evenly, adapting to any number of columns and all breakpoints.
 
@@ -34,7 +32,7 @@ By using the `.col` class, columns automatically divide available space evenly, 
 </div>
 ```
 
-#### Setting column span
+### Setting column span
 
 With the grid auto-layout, you can specify the width of one column while allowing the remaining columns to automatically adjust and share the available space.
 This can be achieved using predefined grid classes (as shown below) or inline styles.
@@ -55,7 +53,7 @@ Regardless of the width you set for a specific column, its siblings will flexibl
 </div>
 ```
 
-#### Variable width content
+### Variable width content
 
 To automatically size columns according to their content, use the `col-{breakpoint}-auto` classes. These classes allow a column to expand just enough to fit its content, rather than occupying a fixed portion of the grid.
 This is especially useful for layouts with variable-width elements, such as buttons or labels, ensuring your grid remains flexible and visually balanced across different screen sizes.
@@ -75,12 +73,12 @@ This is especially useful for layouts with variable-width elements, such as butt
 </div>
 ```
 
-### Responsive classes
+## Responsive classes
 
 The grid system provides six tiers of predefined classes, enabling you to build sophisticated layouts that adapt seamlessly across all device sizes.
 You can tailor the width of your columns for extra small, small, medium, large, extra large, and extra extra large screens, ensuring optimal presentation on any device.
 
-#### All breakpoints
+### All breakpoints
 
 To create grids that maintain the same structure from the smallest to the largest screens, use the `.col` and `.col-*` classes. The `.col` class automatically distributes available space evenly among columns, while `.col-*` lets you specify the exact number of columns an element should span. Use numbered classes when you need precise control over column width; otherwise, `.col` provides a flexible, responsive layout.
 
@@ -99,7 +97,7 @@ To create grids that maintain the same structure from the smallest to the larges
 </div>
 ```
 
-#### Stacked to horizontal
+### Stacked to horizontal
 
 By applying `.col-sm-*` classes, you can build a grid that stacks columns vertically on extra small screens and arranges them horizontally starting at the small (`sm`) breakpoint.
 This approach ensures your layout is mobile-friendly by default, then transitions to a horizontal format as the viewport widens, providing a seamless and responsive experience across devices.
@@ -118,7 +116,7 @@ This approach ensures your layout is mobile-friendly by default, then transition
 </div>
 ```
 
-#### Mix and match
+### Mix and match
 
 You can combine different grid classes across breakpoints to achieve complex, adaptive layouts. Instead of having columns stack or remain uniform at every screen size, apply unique class combinations for each tier to control how columns behave as the viewport changes.
 The example below demonstrates how you can mix and match classes to create layouts that respond intelligently to different devices.
@@ -146,7 +144,7 @@ The example below demonstrates how you can mix and match classes to create layou
 </div>
 ```
 
-#### Row columns
+### Row columns
 
 Easily control the number of columns in a row using responsive `.row-cols-*` classes. Unlike `.col-*` classes, which are applied to individual columns to set their width, `.row-cols-*` classes are added to the parent `.row` element to define how many columns should be displayed per row.
 
