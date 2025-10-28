@@ -19,25 +19,6 @@ export { expect } from '@playwright/test';
 
 const SI_EXAMPLE_NAME_ID = 'siExampleName';
 
-const detectTestTypes = (): { isA11y: boolean; isVrt: boolean } => {
-  let isA11y =
-    !!process.env.PLAYWRIGHT_isa11y &&
-    process.env.PLAYWRIGHT_isa11y.toLocaleLowerCase() !== 'false';
-
-  let isVrt =
-    !!process.env.PLAYWRIGHT_isvrt && process.env.PLAYWRIGHT_isvrt.toLocaleLowerCase() !== 'false';
-
-  // Per default do both A11y and VRT
-  if (!isA11y && !isVrt) {
-    isA11y = true;
-    isVrt = true;
-  }
-
-  return { isA11y, isVrt };
-};
-
-const { isA11y, isVrt } = detectTestTypes();
-
 const staticTest = process.env.PLAYWRIGHT_staticTest
   ? new Set(process.env.PLAYWRIGHT_staticTest.split(':'))
   : undefined;
@@ -174,7 +155,7 @@ class SiTestHelpers {
     await test.step(
       'runVisualAndA11yTests: ' + testName,
       async () => {
-        if (isA11y) {
+        if (this.testInfo.project.metadata.isA11y) {
           await this.enableDisableAnimations(this.page, false);
           const rules = (options?.axeRulesSet ?? [])
             .filter(
@@ -224,7 +205,7 @@ class SiTestHelpers {
           }
           await expectNoA11yViolations(this.testInfo, axeResults.violations, testName);
         }
-        if (isVrt) {
+        if (this.testInfo.project.metadata.isVrt) {
           try {
             await this.showHideIgnores(this.page, false, options?.snapshotDelay);
             await expect(this.page).toHaveScreenshot(testName + '.png', {
