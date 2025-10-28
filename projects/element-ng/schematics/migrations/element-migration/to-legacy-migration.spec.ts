@@ -17,7 +17,7 @@ const buildRelativeFromFile = (relativePath: string): string =>
 
 const collectionPath = buildRelativeFromFile('../../collection.json');
 
-describe('legacy migration', () => {
+describe('to legacy migration', () => {
   let runner: SchematicTestRunner;
   let appTree: Tree;
   const name = 'migrate-v47-to-v48';
