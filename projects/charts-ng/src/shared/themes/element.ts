@@ -401,6 +401,7 @@ export const themeElement = {
       pie: {
         radius: [0, '75%'],
         label: {
+          distanceToLabelLine: 2,
           fontFamily,
           formatter: '{d}%',
           color: elementTextSecondary,
@@ -408,7 +409,8 @@ export const themeElement = {
           fontSize
         },
         labelLine: {
-          length2: 15,
+          length: 15,
+          length2: 8,
           lineStyle: {
             color: elementTextSecondary
           }
