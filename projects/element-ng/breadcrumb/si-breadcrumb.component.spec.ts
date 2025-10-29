@@ -7,11 +7,15 @@ import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from '@angu
 import { By } from '@angular/platform-browser';
 import { Router, RouterModule, Routes } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { ResizeObserverService } from '@siemens/element-ng/resize-observer';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 import { SiTranslateNgxTModule } from '@siemens/element-translate-ng/ngx-translate';
 
 import { SiBreadcrumbComponent as TestComponent } from '.';
+import {
+  mockResizeObserver,
+  MockResizeObserver,
+  restoreResizeObserver
+} from '../resize-observer/mock-resize-observer.spec';
 import { BreadcrumbItem } from './breadcrumb-item.model';
 
 const TEST_ITEMS = [
@@ -78,12 +82,15 @@ describe('SiBreadcrumbComponent', () => {
   }));
 
   beforeEach(() => {
+    mockResizeObserver();
     fixture = TestBed.createComponent(WrapperComponent);
     wrapperComponent = fixture.componentInstance;
     wrapperElement = fixture.nativeElement;
     element = fixture.debugElement.query(By.directive(TestComponent)).nativeElement;
     router = TestBed.inject(Router);
   });
+
+  afterEach(() => restoreResizeObserver());
 
   it('should contain items', () => {
     wrapperComponent.items = [
@@ -201,7 +208,7 @@ describe('SiBreadcrumbComponent', () => {
       if (i === 0) {
         fixture.detectChanges();
       } else {
-        TestBed.inject(ResizeObserverService)._checkAll();
+        MockResizeObserver.triggerResize({});
       }
       flush();
       fixture.detectChanges();
