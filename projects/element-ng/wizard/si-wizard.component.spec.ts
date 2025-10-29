@@ -5,7 +5,7 @@
 import { Component, input, viewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ResizeObserverService, SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
+import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
 
 import { runOnPushChangeDetection } from '../test-helpers/change-detection.helper';
 import { SiWizardStepComponent, SiWizardComponent as TestComponent } from './index';
@@ -73,7 +73,7 @@ describe('SiWizardComponent', () => {
     component = fixture.componentInstance.wizard();
     element = fixture.nativeElement.querySelector('si-wizard');
     fixture.detectChanges();
-    TestBed.inject(ResizeObserverService)._checkAll();
+
     flush();
     tick();
     fixture.detectChanges();
