@@ -15,7 +15,6 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SiLoadingSpinnerModule } from '@siemens/element-ng/loading-spinner';
 import { MenuItem } from '@siemens/element-ng/menu';
-import { ResizeObserverService } from '@siemens/element-ng/resize-observer';
 import { MenuItemsProvider, SiTreeViewModule } from '@siemens/element-ng/tree-view';
 import { BehaviorSubject } from 'rxjs';
 
@@ -1564,8 +1563,6 @@ describe('SiTreeViewComponent', () => {
       fixture.detectChanges();
       const tree = element.querySelector<HTMLElement>('si-tree-view')!;
       tree.style.height = '100px';
-      TestBed.inject(ResizeObserverService)._checkAll();
-
       flush();
       expect(component.treeViewComponent().pageSize()).toBe(oldPageSize);
     }));

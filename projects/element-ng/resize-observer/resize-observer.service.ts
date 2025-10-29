@@ -198,6 +198,19 @@ export class ResizeObserverService {
 
   /**
    * check size on all observed elements. Only use in testing!
+   * @deprecated Will be removed in major version 50! For testing purposes use the resize observer mock:
+   *
+   * ```ts
+   * beforeEach(() => mockResizeObserver());
+   * afterEach(() => restoreResizeObserver());
+   * it('should trigger resize', () => {
+   *   // For all observed elements
+   *   MockResizeObserver.triggerResize({});
+   *   // For specific HTML element
+   *   MockResizeObserver.triggerResize({ target: myElement });
+   * });
+   * ```
+
    */
   // eslint-disable-next-line @typescript-eslint/naming-convention
   _checkAll(): void {
