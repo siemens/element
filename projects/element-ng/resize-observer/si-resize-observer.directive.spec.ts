@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, ElementRef, viewChild } from '@angular/core';
+import { Component, ElementRef, signal, viewChild } from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
@@ -25,7 +25,8 @@ import { SiResizeObserverDirective } from './si-resize-observer.directive';
   template: `
     <div
       #theDiv
-      style="width: 100px; height: 100px;"
+      [style.width.px]="width()"
+      [style.height.px]="height()"
       [emitInitial]="emitInitial"
       (siResizeObserver)="resizeHandler($event)"
     >
@@ -35,6 +36,8 @@ import { SiResizeObserverDirective } from './si-resize-observer.directive';
 })
 class TestHostComponent {
   readonly theDiv = viewChild.required<ElementRef>('theDiv');
+  readonly width = signal(100);
+  readonly height = signal(100);
   emitInitial = true;
 
   resizeHandler(dim: ElementDimensions): void {}
@@ -46,24 +49,19 @@ describe('SiResizeObserverDirective', () => {
   let spy: jasmine.Spy<(dim: ElementDimensions) => void>;
 
   const detectSizeChange = (inlineSize: number = 100, blockSize: number = 100): void => {
-    MockResizeObserver.triggerResize({
-      target: component.theDiv().nativeElement,
-      inlineSize,
-      blockSize
-    });
+    component.width.set(inlineSize);
+    component.height.set(blockSize);
+    fixture.detectChanges();
+    MockResizeObserver.triggerResize({});
     fixture.detectChanges();
     tick();
   };
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: []
-    }).compileComponents();
-  }));
-
   beforeEach(fakeAsync(() => {
     mockResizeObserver();
+    TestBed.configureTestingModule({
+      imports: [TestHostComponent]
+    });
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     spy = spyOn(component, 'resizeHandler');

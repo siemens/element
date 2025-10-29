@@ -14,8 +14,12 @@ import {
   waitForAsync
 } from '@angular/core/testing';
 import { provideRouter, RouterLink, RouterOutlet } from '@angular/router';
-import { ResizeObserverService } from '@siemens/element-ng/resize-observer';
 
+import {
+  MockResizeObserver,
+  mockResizeObserver,
+  restoreResizeObserver
+} from '../resize-observer/mock-resize-observer.spec';
 import { SiTabLinkComponent } from './si-tab-link.component';
 import { SiTabComponent } from './si-tab.component';
 import { SiTabsetComponent } from './si-tabset.component';
@@ -141,23 +145,24 @@ describe('SiTabset', () => {
 
   const detectSizeChange = (): void => {
     fixture.detectChanges();
-    tick();
-    TestBed.inject(ResizeObserverService)._checkAll();
+    MockResizeObserver.triggerResize({});
+    fixture.detectChanges();
   };
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    mockResizeObserver();
+    await TestBed.configureTestingModule({
       imports: [TestComponent],
       providers: [provideRouter([])]
     }).compileComponents();
-  }));
-
-  beforeEach(async () => {
     fixture = TestBed.createComponent(TestComponent);
     testComponent = fixture.componentInstance;
     loader = TestbedHarnessEnvironment.loader(fixture);
     tabsetHarness = await loader.getHarness(SiTabsetHarness);
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000;
   });
+
+  afterEach(() => restoreResizeObserver());
 
   it('should be possible to create a tabComponent instance', async () => {
     const tabs = await tabsetHarness.getTabItemsLength();
@@ -313,7 +318,7 @@ describe('SiTabset', () => {
     expect(await tabsetHarness.isTabVisible(0)).toBe(false);
   }));
 
-  it('should delete tab on close and recaculate visisble tabs', async () => {
+  it('should delete tab on close and recalculate visible tabs', async () => {
     testComponent.tabs = [
       {
         heading: '1',
@@ -329,6 +334,7 @@ describe('SiTabset', () => {
 
     await (await tabsetHarness.getTabItemButtonAt(0)).click();
     await (await tabsetHarness.getTabItemButtonAt(0)).sendKeys(TestKey.DELETE);
+    detectSizeChange();
     // Firefox requires a slight delay, otherwise resize Event is not triggered.
     await new Promise(resolve => setTimeout(resolve, 110));
     fixture.detectChanges();

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, ElementRef, viewChild } from '@angular/core';
+import { Component, ElementRef, signal, viewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { Subscription } from 'rxjs';
 
@@ -14,10 +14,12 @@ import {
 import { ElementDimensions, ResizeObserverService } from './resize-observer.service';
 
 @Component({
-  template: ` <div #theDiv style="width: 100px; height: 100px;">Testli</div> `
+  template: `<div #theDiv [style.width.px]="width()" [style.height.px]="height()">Testli</div>`
 })
 class TestHostComponent {
   readonly theDiv = viewChild.required<ElementRef>('theDiv');
+  readonly width = signal(100);
+  readonly height = signal(100);
 }
 
 // A timeout that works with `await`. We have to use `waitForAsync()``
@@ -39,15 +41,19 @@ describe('ResizeObserverService', () => {
       .subscribe(dim => spy(dim));
   };
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: []
-    }).compileComponents();
-  }));
+  const detectSizeChange = (inlineSize: number = 100, blockSize: number = 100): void => {
+    component.width.set(inlineSize);
+    component.height.set(blockSize);
+    fixture.detectChanges();
+    MockResizeObserver.triggerResize({});
+    fixture.detectChanges();
+  };
 
   beforeEach(fakeAsync(() => {
     mockResizeObserver();
+    TestBed.configureTestingModule({
+      imports: [TestHostComponent]
+    });
     service = TestBed.inject(ResizeObserverService);
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
@@ -76,13 +82,7 @@ describe('ResizeObserverService', () => {
 
   it('emits on width change', waitForAsync(async () => {
     subscribe(false);
-
-    MockResizeObserver.triggerResize({
-      target: component.theDiv().nativeElement,
-      inlineSize: 200,
-      blockSize: 100
-    });
-    fixture.detectChanges();
+    detectSizeChange(200, 100);
 
     // Skip test when browser is not focussed to prevent failures.
     if (document.hasFocus()) {
@@ -97,13 +97,7 @@ describe('ResizeObserverService', () => {
 
   it('emits on height change', waitForAsync(async () => {
     subscribe(false);
-
-    MockResizeObserver.triggerResize({
-      target: component.theDiv().nativeElement,
-      inlineSize: 100,
-      blockSize: 200
-    });
-    fixture.detectChanges();
+    detectSizeChange(100, 200);
 
     // Skip test when browser is not focussed to prevent failures.
     if (document.hasFocus()) {
@@ -130,12 +124,7 @@ describe('ResizeObserverService', () => {
       expect(spy).toHaveBeenCalledWith(jasmine.objectContaining({ width: 100, height: 100 }));
       expect(spy2).toHaveBeenCalledWith(jasmine.objectContaining({ width: 100, height: 100 }));
 
-      MockResizeObserver.triggerResize({
-        target: component.theDiv().nativeElement,
-        inlineSize: 200,
-        blockSize: 100
-      });
-      fixture.detectChanges();
+      detectSizeChange(200, 100);
 
       await timeout(150);
       expect(spy).toHaveBeenCalledWith(jasmine.objectContaining({ width: 200, height: 100 }));

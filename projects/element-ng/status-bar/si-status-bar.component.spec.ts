@@ -2,10 +2,14 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, ElementRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, signal } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
-import { ResizeObserverService } from '@siemens/element-ng/resize-observer';
 
+import {
+  MockResizeObserver,
+  mockResizeObserver,
+  restoreResizeObserver
+} from '../resize-observer/mock-resize-observer.spec';
 import { SiStatusBarComponent, StatusBarItem } from './index';
 
 @Component({
@@ -16,9 +20,13 @@ import { SiStatusBarComponent, StatusBarItem } from './index';
       display: block;
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '[style.width.px]': 'width()'
+  }
 })
 class TestHostComponent {
+  readonly width = signal<number | undefined>(undefined);
   items: StatusBarItem[] = [];
   muteButton?: boolean;
   ref = inject(ElementRef);
@@ -36,10 +44,13 @@ describe('SiStatusBarComponent', () => {
   );
 
   beforeEach(() => {
+    mockResizeObserver();
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
   });
+
+  afterEach(() => restoreResizeObserver());
 
   it('should display all items with relevant content', () => {
     component.items = [
@@ -87,9 +98,9 @@ describe('SiStatusBarComponent', () => {
     const sizes = [575, 766, 989, 1300];
 
     const applySize = (outerSize: number): void => {
-      component.ref.nativeElement.style.width = outerSize + 'px';
+      component.width.set(outerSize);
       fixture.detectChanges();
-      TestBed.inject(ResizeObserverService)._checkAll();
+      MockResizeObserver.triggerResize({});
       flush();
       fixture.detectChanges();
     };

@@ -2,20 +2,24 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, viewChildren } from '@angular/core';
+import { Component, signal, viewChildren } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { ResizeObserverService } from '@siemens/element-ng/resize-observer';
 
+import {
+  MockResizeObserver,
+  mockResizeObserver,
+  restoreResizeObserver
+} from '../resize-observer/mock-resize-observer.spec';
 import { SiAutoCollapsableListItemDirective } from './si-auto-collapsable-list-item.directive';
 import { SiAutoCollapsableListModule } from './si-auto-collapsable-list.module';
 
 @Component({
   imports: [SiAutoCollapsableListModule],
   template: `
-    <div #containerElement [style.width.px]="containerWidth">
+    <div #containerElement [style.width.px]="containerWidth()" [style.height.px]="50">
       <div
         class="d-flex flex-align-start"
-        [style.width.px]="width"
+        [style.width.px]="width()"
         [siAutoCollapsableList]="!disabled"
         [siAutoCollapsableListContainerElement]="useContainerElement ? containerElement : undefined"
       >
@@ -49,8 +53,8 @@ import { SiAutoCollapsableListModule } from './si-auto-collapsable-list.module';
   `
 })
 class TestComponent {
-  width = 600;
-  containerWidth = 700;
+  readonly width = signal(600);
+  readonly containerWidth = signal(700);
 
   moreItems: number[] = [];
 
@@ -76,24 +80,30 @@ describe('SiAutoCollapsableListDirective', () => {
       element => element.style.visibility
     );
 
-  const detectSizeChange = (): void => {
+  const detectSizeChange = (opts?: { width?: number; containerWidth?: number }): void => {
+    if (opts?.width !== undefined) {
+      component.width.set(opts.width);
+    }
+    if (opts?.containerWidth !== undefined) {
+      component.containerWidth.set(opts.containerWidth);
+    }
     fixture.detectChanges();
     tick();
-    TestBed.inject(ResizeObserverService)._checkAll();
+    MockResizeObserver.triggerResize({});
     fixture.detectChanges();
   };
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    mockResizeObserver();
+    await TestBed.configureTestingModule({
       imports: [SiAutoCollapsableListModule, TestComponent]
     }).compileComponents();
-  });
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;
     hostElement = fixture.nativeElement;
   });
+
+  afterEach(() => restoreResizeObserver());
 
   it('should not flicker on initial render', fakeAsync(() => {
     fixture.detectChanges();
@@ -112,15 +122,12 @@ describe('SiAutoCollapsableListDirective', () => {
     fixture.detectChanges();
     // Skip test when browser is not focussed to prevent failures.
     if (document.hasFocus()) {
-      detectSizeChange();
-      component.width = 300;
-      detectSizeChange();
+      detectSizeChange({ width: 300 });
       expect(readVisibilityStates()).toEqual(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
       expect(
         hostElement.querySelector<HTMLElement>('[siAutoCollapsableListOverflowItem]')!.innerText
       ).toBe('Overflown Items: 3');
-      component.width = 600;
-      detectSizeChange();
+      detectSizeChange({ width: 600 });
       expect(readVisibilityStates()).toEqual([
         'visible',
         'visible',
@@ -140,9 +147,8 @@ describe('SiAutoCollapsableListDirective', () => {
     // Skip test when browser is not focussed to prevent failures.
     if (document.hasFocus()) {
       detectSizeChange();
-      component.width = 300;
       component.showAdditionalContent = true;
-      detectSizeChange();
+      detectSizeChange({ width: 300 });
       expect(readVisibilityStates()).toEqual(['visible', 'hidden', 'hidden', 'hidden', 'hidden']);
     }
   }));
@@ -153,8 +159,7 @@ describe('SiAutoCollapsableListDirective', () => {
     if (document.hasFocus()) {
       detectSizeChange();
       component.moreItems.push(100, 100);
-      component.width = 700;
-      detectSizeChange();
+      detectSizeChange({ width: 700 });
       expect(readVisibilityStates()).toEqual([
         'visible',
         'visible',
@@ -179,8 +184,7 @@ describe('SiAutoCollapsableListDirective', () => {
   }));
 
   it('should react to disabled changes', fakeAsync(() => {
-    component.width = 300;
-    detectSizeChange();
+    detectSizeChange({ width: 300 });
     expect(readVisibilityStates()).toEqual(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
     component.disabled = true;
     detectSizeChange();
@@ -191,8 +195,7 @@ describe('SiAutoCollapsableListDirective', () => {
   }));
 
   it('should react to list reset', fakeAsync(() => {
-    component.width = 300;
-    detectSizeChange();
+    detectSizeChange({ width: 300 });
     expect(readVisibilityStates()).toEqual(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
     expect(
       hostElement.querySelector<HTMLElement>('[siAutoCollapsableListOverflowItem]')!.innerText
@@ -226,14 +229,12 @@ describe('SiAutoCollapsableListDirective', () => {
     component.forceHideSecondItem = true;
     detectSizeChange();
     expect(readVisibilityStates()).toEqual(['visible', 'hidden', 'visible', 'visible', 'visible']);
-    component.width = 300;
-    detectSizeChange();
+    detectSizeChange({ width: 300 });
     expect(readVisibilityStates()).toEqual(['visible', 'hidden', 'hidden', 'hidden', 'hidden']);
   }));
 
   it('should use host width', fakeAsync(() => {
-    component.width = 300;
-    detectSizeChange();
+    detectSizeChange({ width: 300 });
     expect(readVisibilityStates()).toEqual(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
     component.useContainerElement = true;
     detectSizeChange();

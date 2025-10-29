@@ -2,28 +2,31 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
-import {
-  ComponentFixture,
-  fakeAsync,
-  flush,
-  TestBed,
-  tick,
-  waitForAsync
-} from '@angular/core/testing';
+import { Component, signal } from '@angular/core';
+import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
 
-import { ResizeObserverService, SiResponsiveContainerDirective } from './index';
+import { SiResponsiveContainerDirective } from './index';
+import {
+  MockResizeObserver,
+  mockResizeObserver,
+  restoreResizeObserver
+} from './mock-resize-observer.spec';
 
 @Component({
   imports: [SiResponsiveContainerDirective],
   template: `
-    <div siResponsiveContainer style="width: 100px" [resizeThrottle]="10" [style.width.px]="width">
+    <div
+      siResponsiveContainer
+      style="width: 100px"
+      [resizeThrottle]="10"
+      [style.width.px]="width()"
+    >
       Testli
     </div>
   `
 })
 class TestHostComponent {
-  width = 100;
+  readonly width = signal(100);
 }
 
 describe('SiResponsiveContainerDirective', () => {
@@ -31,25 +34,23 @@ describe('SiResponsiveContainerDirective', () => {
   let component: TestHostComponent;
   let element: HTMLElement;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(() => {
+    mockResizeObserver();
     TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: []
-    }).compileComponents();
-  }));
-
-  beforeEach(fakeAsync(() => {
+      imports: [TestHostComponent]
+    });
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
     fixture.detectChanges();
-    tick();
-  }));
+  });
+
+  afterEach(() => restoreResizeObserver());
 
   const testSize = async (size: number, clazz: string): Promise<void> => {
-    component.width = size;
+    component.width.set(size);
     fixture.detectChanges();
-    TestBed.inject(ResizeObserverService)._checkAll();
+    MockResizeObserver.triggerResize({});
     flush();
     fixture.detectChanges();
 
