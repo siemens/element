@@ -62,4 +62,8 @@ If multiple attachments are added, they wrap and stack within the input field to
 
 ## Code ---
 
-Angular component is coming soon.
+<si-docs-component example="si-chat-messages/si-chat-input"></si-docs-component>
+
+<si-docs-api component="SiChatInputComponent"></si-docs-api>
+
+<si-docs-types></si-docs-types>
