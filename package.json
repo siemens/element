@@ -14,7 +14,7 @@
   },
   "type": "module",
   "engines": {
-    "node": "^20.0.0 || ^22.0.0",
+    "node": "^20.0.0 || ^22.0.0 || ^24.0.0",
     "yarn": "Please use NPM to install dependencies",
     "npm": "10 - 11"
   },
@@ -139,7 +139,7 @@
     "@types/geojson": "7946.0.16",
     "@types/google-libphonenumber": "7.4.30",
     "@types/jasmine": "5.1.12",
-    "@types/node": "22.18.13",
+    "@types/node": "24.9.2",
     "angular-eslint": "20.5.0",
     "axe-html-reporter": "2.2.11",
     "concat": "1.0.3",
