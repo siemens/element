@@ -1,0 +1,13 @@
+<div class="p-4">
+  <si-tool-message
+    toolIcon="element-maintenance"
+    [name]="toolName"
+    [inputArguments]="inputArguments"
+    [output]="output"
+    [contentFormatter]="markdownRenderer"
+  />
+
+  <div class="mt-4">
+    <si-tool-message name="processing_data" toolIcon="element-settings" [loading]="true" />
+  </div>
+</div>
