@@ -30,10 +30,12 @@ import { SiAttachmentListComponent, Attachment } from './si-attachment-list.comp
 /**
  * Attachment item interface for file attachments in chat messages, extension of {@link Attachment} for {@link SiAttachmentListComponent} to use within {@link SiChatInputComponent}.
  * Adds the action file information.
+ * Can be used within {@link SiChatContainerComponent}.
  *
  * @see {@link Attachment} for base attachment interface
  * @see {@link SiAttachmentListComponent} for the attachment list component
  * @see {@link SiChatInputComponent} for the chat input component
+ * @see {@link SiChatContainerComponent} for the chat container component
  *
  * @experimental
  */

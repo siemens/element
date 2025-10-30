@@ -11,7 +11,7 @@
       <div #formattedContent> </div>
     }
   }
-  @if (actions().length > 0 || secondaryActions().length > 0) {
+  @if ((actions()?.length ?? 0 > 0) || (secondaryActions()?.length ?? 0 > 0)) {
     <div class="d-flex gap-4 user-message-actions" siChatMessageAction>
       @for (action of actions(); track $index) {
         <button
@@ -25,7 +25,7 @@
         </button>
       }
 
-      @if (secondaryActions().length > 0) {
+      @if (secondaryActions()?.length ?? 0 > 0) {
         <button
           type="button"
           class="btn btn-ghost btn-circle btn-sm"

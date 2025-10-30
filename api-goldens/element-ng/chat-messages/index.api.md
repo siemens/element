@@ -4,12 +4,14 @@
 
 ```ts
 
+import { AfterContentInit } from '@angular/core';
 import { AfterViewInit } from '@angular/core';
 import * as _angular_core from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { FileUploadError } from '@siemens/element-ng/file-uploader';
 import * as i1 from '@siemens/element-ng/resize-observer';
 import { MenuItem } from '@siemens/element-ng/menu';
+import { OnDestroy } from '@angular/core';
 import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
 import { SiModalService } from '@siemens/element-ng/modal';
 import { TemplateRef } from '@angular/core';
@@ -77,18 +79,15 @@ export class SiAttachmentListComponent {
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiAttachmentListComponent, never>;
 }
 
-// @public (undocumented)
+// @public
 export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
     constructor();
-    // (undocumented)
     readonly colorVariant: _angular_core.InputSignal<string>;
-    // (undocumented)
     focus(): void;
     // (undocumented)
     ngAfterContentInit(): void;
     // (undocumented)
     ngOnDestroy(): void;
-    // (undocumented)
     readonly noAutoScroll: _angular_core.InputSignalWithTransform<boolean, string | boolean>;
     // (undocumented)
     protected onScroll(): void;
@@ -98,7 +97,7 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChatContainerComponent, never>;
 }
 
-// @public (undocumented)
+// @public
 export class SiChatContainerInputDirective {
     // (undocumented)
     static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiChatContainerInputDirective, "[siChatContainerInput]", never, {}, {}, never, never, true, never>;
