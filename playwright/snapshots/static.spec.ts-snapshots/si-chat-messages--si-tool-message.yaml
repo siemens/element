@@ -1,0 +1,6 @@
+- heading "fetch_weather_data" [level=6]
+- button "Input Arguments"
+- region "Input Arguments"
+- button "Output"
+- region "Output"
+- heading "processing_data" [level=6]
