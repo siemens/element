@@ -1,0 +1,34 @@
+<div class="p-2">
+  <si-chat-input
+    placeholder="Enter a command, question or topic..."
+    disclaimer="The content is AI generated. Always verify the information for accuracy."
+    accept="image/*,.pdf,.doc,.docx,.txt,.xlsx,.csv"
+    sendButtonLabel="Send Message"
+    sendButtonIcon="element-send-filled"
+    attachFileLabel="Attach files"
+    [allowAttachments]="true"
+    [maxFileSize]="5242880"
+    [maxLength]="280"
+    [autoFocus]="false"
+    [value]="inputValue()"
+    [sending]="sending()"
+    [disabled]="disabled()"
+    [interruptible]="interruptible()"
+    [attachments]="preAttachedFiles"
+    [actions]="actions"
+    [secondaryActions]="secondaryActions"
+    (send)="onMessageSent($event)"
+    (fileError)="onFileError($event)"
+    (interrupt)="onInterrupt()"
+  >
+    <!-- Custom actions via ng-content slot -->
+    <button
+      type="button"
+      class="btn btn-ghost btn-circle btn-sm"
+      title="Insert emoji"
+      (click)="logEvent('Emoji picker clicked')"
+    >
+      <si-icon icon="element-face-very-happy" />
+    </button>
+  </si-chat-input>
+</div>
