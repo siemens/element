@@ -1,0 +1,35 @@
+<si-chat-message alignment="start" actionsPosition="bottom" [loading]="false">
+  @if (toolIcon()) {
+    <si-icon class="icon mb-n1" [icon]="toolIcon()" />
+  }
+
+  <div class="tool-message-content d-flex flex-column gap-3">
+    @if (name()) {
+      <h6 class="tool-name mb-0 py-2">{{ name() }}</h6>
+    }
+
+    <div>
+      @if (hasInputArguments()) {
+        <si-collapsible-panel [heading]="inputArgumentsLabel()" [opened]="expandInputArguments()">
+          <pre class="tool-data"><code>{{ formatData(inputArguments()) }}</code></pre>
+        </si-collapsible-panel>
+      }
+
+      @if (hasOutput() && !getLoadingState()) {
+        <si-collapsible-panel
+          [heading]="outputLabel()"
+          [opened]="expandOutput()"
+          [icon]="undefined"
+        >
+          <pre class="tool-data"><code>{{ formatData(getOutputValue()) }}</code></pre>
+        </si-collapsible-panel>
+      }
+
+      @if (getLoadingState()) {
+        <si-collapsible-panel aria-hidden="true" [opened]="false" [disabled]="true">
+          <div si-panel-heading class="si-skeleton placeholder-lg loading-panel-header"> </div>
+        </si-collapsible-panel>
+      }
+    </div>
+  </div>
+</si-chat-message>
