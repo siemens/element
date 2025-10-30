@@ -127,11 +127,6 @@ button.card {
   background-color: variables.$card-cap-bg;
   line-height: typography.$si-font-size-h5;
 
-  .icon {
-    // The icon would be 8px too high without this.
-    margin-block: - map.get(spacers.$spacers, 2);
-  }
-
   + .card-body {
     margin-block-start: map.get(spacers.$spacers, 2) * -1;
     padding-block-start: map.get(spacers.$spacers, 2);
