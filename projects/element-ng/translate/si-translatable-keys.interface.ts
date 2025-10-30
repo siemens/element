@@ -219,6 +219,8 @@ export interface SiTranslatableKeys {
   'SI_THRESHOLD.INPUT_LABEL'?: string;
   'SI_THRESHOLD.STATUS'?: string;
   'SI_TOAST.CLOSE'?: string;
+  'SI_TOOL_MESSAGE.INPUT_ARGUMENTS'?: string;
+  'SI_TOOL_MESSAGE.OUTPUT'?: string;
   'SI_TOUR.BACK'?: string;
   'SI_TOUR.CLOSE'?: string;
   'SI_TOUR.DONE'?: string;

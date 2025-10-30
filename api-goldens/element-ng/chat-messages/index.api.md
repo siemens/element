@@ -225,6 +225,33 @@ export class SiChatMessageComponent {
 }
 
 // @public
+export class SiToolMessageComponent {
+    readonly expandInputArguments: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly expandOutput: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    // (undocumented)
+    protected formatData(data: string | object | Signal<string | object> | undefined): string;
+    // (undocumented)
+    protected getLoadingState(): boolean;
+    // (undocumented)
+    protected getOutputValue(): string | object | undefined;
+    // (undocumented)
+    protected hasInputArguments(): boolean;
+    // (undocumented)
+    protected hasOutput(): boolean;
+    readonly inputArguments: _angular_core.InputSignal<string | object | undefined>;
+    readonly inputArgumentsLabel: _angular_core.InputSignal<TranslatableString_2>;
+    readonly loading: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly name: _angular_core.InputSignal<string>;
+    readonly output: _angular_core.InputSignal<string | object | undefined>;
+    readonly outputLabel: _angular_core.InputSignal<TranslatableString_2>;
+    readonly toolIcon: _angular_core.InputSignal<string>;
+    // (undocumented)
+    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiToolMessageComponent, "si-tool-message", never, { "name": { "alias": "name"; "required": false; "isSignal": true; }; "inputArguments": { "alias": "inputArguments"; "required": false; "isSignal": true; }; "output": { "alias": "output"; "required": false; "isSignal": true; }; "expandInputArguments": { "alias": "expandInputArguments"; "required": false; "isSignal": true; }; "expandOutput": { "alias": "expandOutput"; "required": false; "isSignal": true; }; "loading": { "alias": "loading"; "required": false; "isSignal": true; }; "toolIcon": { "alias": "toolIcon"; "required": false; "isSignal": true; }; "inputArgumentsLabel": { "alias": "inputArgumentsLabel"; "required": false; "isSignal": true; }; "outputLabel": { "alias": "outputLabel"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
+    // (undocumented)
+    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiToolMessageComponent, never>;
+}
+
+// @public
 export class SiUserMessageComponent {
     constructor();
     readonly actionParam: _angular_core.InputSignal<any>;
