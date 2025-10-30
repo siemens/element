@@ -19,6 +19,7 @@ import { SiChatMessageComponent } from './si-chat-message.component';
  * The user message component renders user-submitted content in (AI) chat interfaces,
  * supporting text, attachments, and contextual actions. It appears as a text bubble
  * aligned to the right side and supports markdown formatting for rich content.
+ * Can be used within {@link SiChatContainerComponent}.
  *
  * The component automatically handles:
  * - Styling for user messages distinct from AI or generic chat messages
@@ -30,6 +31,7 @@ import { SiChatMessageComponent } from './si-chat-message.component';
  * @see {@link SiAiMessageComponent} for the AI message component
  * @see {@link SiAttachmentListComponent} for the base attachment component
  * @see {@link getMarkdownRenderer} for markdown formatting support
+ * @see {@link SiChatContainerComponent} for the chat container to use this within
  *
  * @experimental
  */
@@ -104,7 +106,7 @@ export class SiUserMessageComponent {
     t(() => $localize`:@@SI_USER_MESSAGE.SECONDARY_ACTIONS:More actions`)
   );
 
-  protected readonly hasAttachments = computed(() => this.attachments().length > 0);
+  protected readonly hasAttachments = computed(() => this.attachments()?.length > 0);
 
   protected readonly textContent = signal<string | undefined>(undefined);
 

@@ -11,6 +11,7 @@ import { SiResponsiveContainerDirective } from '@siemens/element-ng/resize-obser
  * This component handles the core message layout including avatar positioning, loading states,
  * and action button as well as attachment list placement. It serves as the foundation for more specialized message components
  * like {@link SiUserMessageComponent} and {@link SiAiMessageComponent}.
+ * Can be used within {@link SiChatContainerComponent}.
  *
  * The component provides:
  * - Flexible alignment (start/end) for different message types
@@ -31,6 +32,7 @@ import { SiResponsiveContainerDirective } from '@siemens/element-ng/resize-obser
  * @see {@link SiAttachmentListComponent} for attachment list to slot in
  * @see {@link SiChatMessageActionDirective} for action buttons to slot in
  * @see {@link SiMarkdownRendererComponent} for markdown content rendering
+ * @see {@link SiChatContainerComponent} for the chat container to use this within
  *
  * @experimental
  */

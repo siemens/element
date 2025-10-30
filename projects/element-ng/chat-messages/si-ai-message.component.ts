@@ -26,6 +26,7 @@ import { SiChatMessageComponent } from './si-chat-message.component';
  * The AI message component renders AI-generated content in chat interfaces,
  * supporting text formatting, markdown, loading states, and contextual actions.
  * It appears as text (no bubble) aligned to the left side without any avatar/icon slot.
+ * Can be used within {@link SiChatContainerComponent}.
  *
  * The component automatically handles:
  * - Styling for AI messages distinct from user or generic chat messages
@@ -36,6 +37,7 @@ import { SiChatMessageComponent } from './si-chat-message.component';
  * @see {@link SiChatMessageComponent} for the base message wrapper component
  * @see {@link SiUserMessageComponent} for the user message component
  * @see {@link getMarkdownRenderer} for markdown formatting support
+ * @see {@link SiChatContainerComponent} for the chat container to use this within
  *
  * @experimental
  */
