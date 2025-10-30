@@ -204,6 +204,29 @@ export class SiChatMessageComponent {
 }
 
 // @public
+export class SiToolMessageComponent {
+    readonly expandInputArguments: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly expandOutput: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    // (undocumented)
+    protected formatData(data: string | object | Signal<string | object> | undefined): string;
+    // (undocumented)
+    protected getLoadingState(): boolean;
+    // (undocumented)
+    protected getOutputValue(): string | object | undefined;
+    // (undocumented)
+    protected hasInputArguments(): boolean;
+    // (undocumented)
+    protected hasOutput(): boolean;
+    readonly inputArguments: _angular_core.InputSignal<string | object | undefined>;
+    readonly inputArgumentsLabel: _angular_core.InputSignal<TranslatableString_2>;
+    readonly loading: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly name: _angular_core.InputSignal<string>;
+    readonly output: _angular_core.InputSignal<string | object | undefined>;
+    readonly outputLabel: _angular_core.InputSignal<TranslatableString_2>;
+    readonly toolIcon: _angular_core.InputSignal<string>;
+}
+
+// @public
 export class SiUserMessageComponent {
     constructor();
     readonly actionParam: _angular_core.InputSignal<any>;

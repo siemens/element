@@ -442,6 +442,10 @@ export interface SiTranslatableKeys {
     // (undocumented)
     'SI_TOAST.CLOSE'?: string;
     // (undocumented)
+    'SI_TOOL_MESSAGE.INPUT_ARGUMENTS'?: string;
+    // (undocumented)
+    'SI_TOOL_MESSAGE.OUTPUT'?: string;
+    // (undocumented)
     'SI_TOUR.BACK'?: string;
     // (undocumented)
     'SI_TOUR.CLOSE'?: string;
