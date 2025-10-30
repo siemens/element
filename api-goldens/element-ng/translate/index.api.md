@@ -38,6 +38,16 @@ export interface SiTranslatableKeys {
     // (undocumented)
     'SI_CHANGE_PASSWORD.PASSWORD_POLICY'?: string;
     // (undocumented)
+    'SI_CHAT_CONTAINER.DISCLAIMER'?: string;
+    // (undocumented)
+    'SI_CHAT_CONTAINER.EMPTY_STATE_DESCRIPTION'?: string;
+    // (undocumented)
+    'SI_CHAT_CONTAINER.EMPTY_STATE_TITLE'?: string;
+    // (undocumented)
+    'SI_CHAT_CONTAINER.PLACEHOLDER'?: string;
+    // (undocumented)
+    'SI_CHAT_CONTAINER.SECONDARY_ACTIONS'?: string;
+    // (undocumented)
     'SI_CHAT_INPUT.ATTACH_FILE'?: string;
     // (undocumented)
     'SI_CHAT_INPUT.INTERRUPT'?: string;
