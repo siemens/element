@@ -6,3 +6,4 @@ export * from './si-file-uploader.model';
 export * from './si-file-dropzone.component';
 export * from './si-file-uploader.component';
 export * from './si-file-uploader.module';
+export * from './si-file-upload.directive';

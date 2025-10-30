@@ -18,10 +18,15 @@
         type="file"
         tabindex="-1"
         class="d-none"
-        [attr.webkitdirectory]="directoryUpload() ? true : null"
+        siFileUpload
         [accept]="accept()"
+        [maxFileSize]="maxFileSize()"
         [multiple]="multiple()"
-        (change)="inputHandler($event)"
+        [directoryUpload]="directoryUpload()"
+        [errorTextFileType]="errorTextFileType()"
+        [errorTextFileMaxSize]="errorTextFileMaxSize()"
+        (filesAdded)="onFilesAdded($event)"
+        (fileError)="onFileError($event)"
         (cancel)="$event.stopPropagation()"
       />
     </label>

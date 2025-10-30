@@ -31,6 +31,14 @@ export interface FileUploadConfig {
     url: string;
 }
 
+// @public (undocumented)
+export interface FileUploadError extends UploadFile {
+    // (undocumented)
+    errorText: TranslatableString;
+    // (undocumented)
+    status: 'invalid';
+}
+
 // @public
 export interface FileUploadResult {
     // (undocumented)
@@ -54,27 +62,55 @@ export class SiFileDropzoneComponent {
     protected dropHandler(event: DragEvent): void;
     readonly errorTextFileMaxSize: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly errorTextFileType: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly fileError: _angular_core.OutputEmitterRef<FileUploadError>;
     readonly filesAdded: _angular_core.OutputEmitterRef<UploadFile[]>;
-    // (undocumented)
-    protected handleFiles(files: FileList | null): void;
     // (undocumented)
     protected readonly icons: Record<"elementUpload", string>;
     // (undocumented)
     protected inputEnterHandler(): void;
-    // (undocumented)
-    protected inputHandler(event: Event): void;
     readonly maxFileSize: _angular_core.InputSignal<number | undefined>;
     // (undocumented)
     protected readonly maxFileSizeString: _angular_core.Signal<string>;
     readonly maxFileSizeText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly multiple: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    // (undocumented)
+    protected onFileError(error: FileUploadError): void;
+    // (undocumented)
+    protected onFilesAdded(files: UploadFile[]): void;
     reset(): void;
     readonly uploadDropText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly uploadTextFileSelect: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiFileDropzoneComponent, "si-file-dropzone", never, { "uploadTextFileSelect": { "alias": "uploadTextFileSelect"; "required": false; "isSignal": true; }; "uploadDropText": { "alias": "uploadDropText"; "required": false; "isSignal": true; }; "maxFileSizeText": { "alias": "maxFileSizeText"; "required": false; "isSignal": true; }; "acceptText": { "alias": "acceptText"; "required": false; "isSignal": true; }; "errorTextFileType": { "alias": "errorTextFileType"; "required": false; "isSignal": true; }; "errorTextFileMaxSize": { "alias": "errorTextFileMaxSize"; "required": false; "isSignal": true; }; "accept": { "alias": "accept"; "required": false; "isSignal": true; }; "maxFileSize": { "alias": "maxFileSize"; "required": false; "isSignal": true; }; "multiple": { "alias": "multiple"; "required": false; "isSignal": true; }; "directoryUpload": { "alias": "directoryUpload"; "required": false; "isSignal": true; }; }, { "filesAdded": "filesAdded"; }, never, never, true, never>;
+    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiFileDropzoneComponent, "si-file-dropzone", never, { "uploadTextFileSelect": { "alias": "uploadTextFileSelect"; "required": false; "isSignal": true; }; "uploadDropText": { "alias": "uploadDropText"; "required": false; "isSignal": true; }; "maxFileSizeText": { "alias": "maxFileSizeText"; "required": false; "isSignal": true; }; "acceptText": { "alias": "acceptText"; "required": false; "isSignal": true; }; "errorTextFileType": { "alias": "errorTextFileType"; "required": false; "isSignal": true; }; "errorTextFileMaxSize": { "alias": "errorTextFileMaxSize"; "required": false; "isSignal": true; }; "accept": { "alias": "accept"; "required": false; "isSignal": true; }; "maxFileSize": { "alias": "maxFileSize"; "required": false; "isSignal": true; }; "multiple": { "alias": "multiple"; "required": false; "isSignal": true; }; "directoryUpload": { "alias": "directoryUpload"; "required": false; "isSignal": true; }; }, { "filesAdded": "filesAdded"; "fileError": "fileError"; }, never, never, true, never>;
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiFileDropzoneComponent, never>;
+}
+
+// @public
+export class SiFileUploadDirective {
+    readonly accept: _angular_core.InputSignal<string | undefined>;
+    readonly directoryUpload: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly errorTextFileMaxSize: _angular_core.InputSignal<TranslatableString>;
+    readonly errorTextFileType: _angular_core.InputSignal<TranslatableString>;
+    readonly fileError: _angular_core.OutputEmitterRef<FileUploadError>;
+    readonly filesAdded: _angular_core.OutputEmitterRef<UploadFile[]>;
+    // (undocumented)
+    fileSizeToString(num: number): string;
+    // (undocumented)
+    static formatFileSize(num: number, formatter?: Intl.NumberFormat): string;
+    handleFiles(files: FileList | null): void;
+    handleItems(items: DataTransferItemList): void;
+    readonly maxFileSize: _angular_core.InputSignal<number | undefined>;
+    readonly multiple: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    // (undocumented)
+    protected onInputChange(event: Event): void;
+    reset(): void;
+    triggerClick(): void;
+    readonly validFiles: _angular_core.OutputEmitterRef<UploadFile[]>;
+    // (undocumented)
+    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiFileUploadDirective, "input[type=\"file\"][siFileUpload]", never, { "errorTextFileType": { "alias": "errorTextFileType"; "required": false; "isSignal": true; }; "errorTextFileMaxSize": { "alias": "errorTextFileMaxSize"; "required": false; "isSignal": true; }; "accept": { "alias": "accept"; "required": false; "isSignal": true; }; "maxFileSize": { "alias": "maxFileSize"; "required": false; "isSignal": true; }; "multiple": { "alias": "multiple"; "required": false; "isSignal": true; }; "directoryUpload": { "alias": "directoryUpload"; "required": false; "isSignal": true; }; }, { "validFiles": "validFiles"; "filesAdded": "filesAdded"; "fileError": "fileError"; }, never, never, true, never>;
+    // (undocumented)
+    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiFileUploadDirective, never>;
 }
 
 // @public (undocumented)
@@ -143,7 +179,7 @@ export class SiFileUploaderModule {
     // (undocumented)
     static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiFileUploaderModule>;
     // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiFileUploaderModule, never, [typeof SiFileDropzoneComponent, typeof SiFileUploaderComponent], [typeof SiFileDropzoneComponent, typeof SiFileUploaderComponent]>;
+    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiFileUploaderModule, never, [typeof SiFileDropzoneComponent, typeof SiFileUploaderComponent, typeof SiFileUploadDirective], [typeof SiFileDropzoneComponent, typeof SiFileUploaderComponent, typeof SiFileUploadDirective]>;
 }
 
 // @public (undocumented)
