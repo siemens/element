@@ -1,6 +1,6 @@
 @use 'sass:map';
 
-@use '@siemens/element-theme/src/styles/variables';
+@use '@siemens/element-theme/src/styles/variables/spacers';
 
 :host {
   &.card-horizontal {
@@ -35,6 +35,11 @@
   inline-size: 50%;
   object-fit: var(--si-card-img-object-fit, scale-down);
   object-position: var(--si-card-img-object-position, left center);
+}
+
+.card-header ::ng-deep .icon[headerIcon] {
+  // The icon would be 8px too high without this.
+  margin-block: - map.get(spacers.$spacers, 2);
 }
 
 .card-content-split {
