@@ -1,6 +1,8 @@
 <div class="position-relative" [class.disabled]="disabled()" [class.focus]="inFocus">
   @if (showIcon()) {
-    <si-icon class="search-bar-icon icon text-secondary" [icon]="icons.elementSearch" />
+    <div class="search-bar-icon">
+      <si-icon class="icon" [icon]="icons.elementSearch" />
+    </div>
   }
   <input
     #inputRef
