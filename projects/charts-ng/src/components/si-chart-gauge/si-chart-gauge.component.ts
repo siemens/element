@@ -209,8 +209,8 @@ export class SiChartGaugeComponent extends SiChartComponent implements OnChanges
       splits: 0,
       axisLabelDist: 20,
       axisFontSize: 20,
-      valueFontSize: 48,
-      unitFontSize: 16
+      valueFontSize: 40,
+      unitFontSize: 14
     };
   }
 
