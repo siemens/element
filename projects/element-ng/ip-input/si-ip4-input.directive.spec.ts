@@ -72,6 +72,7 @@ describe('SiIp4InputDirective', () => {
       expect(component.validation().errors?.ipv4Address).toBeTruthy();
     });
   });
+
   it('should transform input', () => {
     [
       { input: '255.255.255.2550', output: '255.255.255.255' },
@@ -84,6 +85,18 @@ describe('SiIp4InputDirective', () => {
       input.value = '';
       typeInput(i.input);
       expect(component.address()).toEqual(i.output ?? i.input);
+    });
+  });
+
+  [
+    { input: '001.1.01.2', output: '1.1.1.2' },
+    { input: '000.1.00.2', output: '0.1.0.2' }
+  ].forEach(i => {
+    it(`should trim leading ${i.input} zeros on blur`, () => {
+      typeInput(i.input);
+      input.dispatchEvent(new Event('blur'));
+      fixture.detectChanges();
+      expect(component.address()).toEqual(i.output);
     });
   });
 

@@ -58,7 +58,20 @@ export class SiIp4InputDirective
   validate(control: AbstractControl): ValidationErrors | null {
     return this.cidr() ? ipV4CIDRValidator(control) : ipV4Validator(control);
   }
-
+  /**
+   * Trim leading zeros from each part of the IPv4 address
+   */
+  protected override leaveInput(): void {
+    const trimmedValue = this.value
+      ?.split('.')
+      .map(part => part.replace(/^0+(\d)/, '$1'))
+      .join('.');
+    if (this.value !== trimmedValue) {
+      this.renderer.setProperty(this.inputEl, 'value', trimmedValue);
+      this.onChange(trimmedValue);
+    }
+  }
+  /** @internal */
   protected maskInput(e: AddrInputEvent): void {
     const { value, pos, type } = e;
     const ipv4 = splitIpV4Sections({ type, input: value, pos, cidr: this.cidr() });
