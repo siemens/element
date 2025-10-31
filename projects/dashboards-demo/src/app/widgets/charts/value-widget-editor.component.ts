@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, model, OnInit, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, model, OnInit, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {
   ObjectFit,
@@ -124,7 +124,8 @@ import { ValueWidgetComponent } from './value-widget.component';
         </form>
       </div>
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ValueWidgetEditorComponent implements WidgetInstanceEditor, OnInit {
   readonly config = model.required<WidgetConfig | Omit<WidgetConfig, 'id'>>();

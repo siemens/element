@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  ChangeDetectionStrategy,
   Component,
   DestroyRef,
   inject,
@@ -30,7 +31,8 @@ import { DataService } from '../../widgets/charts/data.service';
       [unit]="valueWidgetValue?.unit"
     />
     <ng-template #footer><a [siLink]="link">Go to issues</a></ng-template>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ValueWidgetComponent implements OnInit, WidgetInstance {
   readonly config = input.required<WidgetConfig>();
