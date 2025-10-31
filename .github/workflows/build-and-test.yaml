@@ -254,11 +254,11 @@ jobs:
           UV_INDEX_CODE_DOCS_THEME_PASSWORD: ${{ secrets.SIEMENS_NPM_TOKEN }}
       - run: npm run docs:build:generate
         env:
-          EXAMPLES_BASE: /element-examples
+          EXAMPLES_BASE: /element-examples/
         if: ${{ github.ref == 'refs/heads/main' }}
       - run: npm run docs:build:api
         env:
-          EXAMPLES_BASE: /element-examples
+          EXAMPLES_BASE: /element-examples/
         if: ${{ github.ref != 'refs/heads/main' }}
       - run: mv dist/element-examples/ dist/design/
       - run: mv dist/dashboards-demo/ dist/design/
