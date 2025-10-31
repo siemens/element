@@ -14,6 +14,24 @@ import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import * as _siemens_element_ng_header_dropdown from '@siemens/element-ng/header-dropdown';
 import { TemplateRef } from '@angular/core';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
+
+// @public
+export interface AccountItem {
+    company?: string;
+    email?: string;
+    role?: TranslatableString;
+    title: string;
+}
+
+// @public (undocumented)
+export class SiHeaderDropdownAccountItemComponent {
+    readonly account: _angular_core.InputSignal<AccountItem>;
+    // (undocumented)
+    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiHeaderDropdownAccountItemComponent, "si-header-dropdown-account-item", never, { "account": { "alias": "account"; "required": true; "isSignal": true; }; }, {}, never, never, true, never>;
+    // (undocumented)
+    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiHeaderDropdownAccountItemComponent, never>;
+}
 
 // @public
 export class SiHeaderDropdownComponent {
