@@ -28,8 +28,7 @@ export const ipV6Validator: (options: {
 
 // @public
 export class SiIp4InputDirective extends SiIpInputDirective implements ControlValueAccessor, Validator {
-    // (undocumented)
-    protected maskInput(e: AddrInputEvent): void;
+    protected leaveInput(): void;
     // (undocumented)
     validate(control: AbstractControl): ValidationErrors | null;
     // (undocumented)
