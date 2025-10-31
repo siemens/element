@@ -5,6 +5,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import {
+  SiAccountDetailsComponent,
   SiApplicationHeaderComponent,
   SiHeaderAccountItemComponent,
   SiHeaderActionItemComponent,
@@ -30,6 +31,7 @@ import {
     SiHeaderCollapsibleActionsComponent,
     RouterLink,
     RouterLinkActive,
+    SiAccountDetailsComponent,
     SiHeaderDropdownComponent,
     SiHeaderDropdownTriggerDirective,
     SiHeaderDropdownItemComponent,

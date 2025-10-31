@@ -8,6 +8,7 @@ import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/elem
 import {
   App,
   AppCategory,
+  SiAccountDetailsComponent,
   SiApplicationHeaderComponent,
   SiHeaderAccountItemComponent,
   SiHeaderActionItemComponent,
@@ -39,6 +40,7 @@ import { SiSystemBannerComponent } from '@siemens/element-ng/system-banner';
   imports: [
     RouterLink,
     SiAccordionComponent,
+    SiAccountDetailsComponent,
     SiApplicationHeaderComponent,
     SiBreadcrumbComponent,
     SiCollapsiblePanelComponent,

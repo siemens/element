@@ -15,11 +15,11 @@
       </button>
       <ng-template #account>
         <si-header-dropdown>
-          <div class="mx-5">
-            <div class="si-h5">Jane Smith</div>
-            <div>jane.smith&#64;example.org</div>
-            <div class="d-flex align-items-center text-secondary mt-2">ExampleOrg</div>
-          </div>
+          <si-account-details
+            name="Jane Smith"
+            email="jane.smith@example.org"
+            company="ExampleOrg"
+          />
         </si-header-dropdown>
       </ng-template>
     </si-header-actions>
