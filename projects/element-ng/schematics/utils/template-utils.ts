@@ -119,6 +119,56 @@ const renameAttributeInTemplate = ({
   });
 };
 
+const renameApiInTemplate = ({
+  template,
+  offset,
+  recorder,
+  elementName,
+  apis
+}: {
+  recorder: UpdateRecorder;
+  template: string;
+  offset: number;
+  elementName: string;
+  apis: { replace: string; replaceWith: string }[];
+}): void => {
+  findElement(template, element => element.name === elementName).forEach(el => {
+    for (const api of apis) {
+      el.attrs
+        .filter(attr => attr.name === api.replace)
+        .forEach(attr => {
+          recorder.remove(attr.sourceSpan.start.offset + offset, api.replace.length);
+          recorder.insertLeft(attr.sourceSpan.start.offset + offset, api.replaceWith);
+        });
+    }
+  });
+};
+
+const removeSymbols = ({
+  template,
+  offset,
+  recorder,
+  elementName,
+  names
+}: {
+  recorder: UpdateRecorder;
+  template: string;
+  offset: number;
+  elementName: string;
+  names: string[];
+}): void => {
+  findElement(template, element => element.name === elementName).forEach(el => {
+    for (const name of names) {
+      el.attrs
+        .filter(attr => attr.name === name)
+        .forEach(attr => {
+          const apiLength = attr.sourceSpan.toString().length;
+          recorder.remove(attr.sourceSpan.start.offset + offset, apiLength);
+        });
+    }
+  });
+};
+
 interface RenameElementTagParams {
   tree: Tree;
   filePath: string;
@@ -187,6 +237,84 @@ export const renameAttribute = ({
       toName,
       fromName,
       recorder: templateRecorder
+    });
+    tree.commitUpdate(templateRecorder);
+  });
+};
+
+export const renameApi = ({
+  tree,
+  filePath,
+  sourceFile,
+  recorder,
+  elementName,
+  apis
+}: {
+  tree: Tree;
+  filePath: string;
+  sourceFile: ts.SourceFile;
+  recorder: UpdateRecorder;
+  elementName: string;
+  apis: { replace: string; replaceWith: string }[];
+}): void => {
+  getInlineTemplates(sourceFile).forEach(template =>
+    renameApiInTemplate({
+      template: template.text,
+      offset: template.getStart() + 1,
+      elementName,
+      recorder,
+      apis
+    })
+  );
+  getTemplateUrl(sourceFile).forEach(templateUrl => {
+    const templatePath = join(dirname(filePath), templateUrl);
+    const templateContent = tree.read(templatePath)!.toString('utf-8');
+    const templateRecorder = tree.beginUpdate(templatePath);
+    renameApiInTemplate({
+      template: templateContent,
+      offset: 0,
+      elementName,
+      recorder: templateRecorder,
+      apis
+    });
+    tree.commitUpdate(templateRecorder);
+  });
+};
+
+export const removeSymbol = ({
+  tree,
+  filePath,
+  sourceFile,
+  recorder,
+  elementName,
+  names
+}: {
+  tree: Tree;
+  filePath: string;
+  sourceFile: ts.SourceFile;
+  recorder: UpdateRecorder;
+  elementName: string;
+  names: string[];
+}): void => {
+  getInlineTemplates(sourceFile).forEach(template =>
+    removeSymbols({
+      template: template.text,
+      offset: template.getStart() + 1,
+      elementName,
+      recorder,
+      names
+    })
+  );
+  getTemplateUrl(sourceFile).forEach(templateUrl => {
+    const templatePath = join(dirname(filePath), templateUrl);
+    const templateContent = tree.read(templatePath)!.toString('utf-8');
+    const templateRecorder = tree.beginUpdate(templatePath);
+    removeSymbols({
+      template: templateContent,
+      offset: 0,
+      elementName,
+      recorder: templateRecorder,
+      names
     });
     tree.commitUpdate(templateRecorder);
   });

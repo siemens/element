@@ -7,6 +7,7 @@ import { SchematicsException, Tree } from '@angular-devkit/schematics';
 import { isAbsolute } from 'path';
 import ts from 'typescript';
 
+import { ComponentNamesInstruction } from '../migrations/data/component-names.js';
 import { SchematicsFileSystem } from './schematics-file-system.js';
 
 /**
@@ -193,12 +194,6 @@ export const getImportSpecifiers = (
   return matches;
 };
 
-export interface RenameInstruction {
-  module: RegExp;
-  toModule?: string;
-  symbolRenamings: [from: string, to: string][];
-}
-
 interface ChangeInstruction {
   start: number;
   width: number;
@@ -210,7 +205,7 @@ export function* renameIdentifier({
   renamingInstructions
 }: {
   sourceFile: ts.SourceFile;
-  renamingInstructions: RenameInstruction[];
+  renamingInstructions: ComponentNamesInstruction[];
 }): Generator<ChangeInstruction> {
   for (const node of sourceFile.statements) {
     if (!ts.isImportDeclaration(node) || !ts.isStringLiteral(node.moduleSpecifier)) {
@@ -228,10 +223,13 @@ export function* renameIdentifier({
         continue;
       }
 
-      for (const [index, [fromName, toName]] of renamingInstruction.symbolRenamings.entries()) {
+      for (const [
+        index,
+        { replace, replaceWith }
+      ] of renamingInstruction.symbolRenamings.entries()) {
         const importSpecifiers = findImportSpecifier(
           node.importClause.namedBindings.elements,
-          fromName
+          replace
         );
 
         if (!importSpecifiers) {
@@ -241,7 +239,7 @@ export function* renameIdentifier({
         yield {
           start: importSpecifiers.name.getStart(),
           width: importSpecifiers.name.getWidth(),
-          newNode: ts.factory.createIdentifier(toName)
+          newNode: ts.factory.createIdentifier(replaceWith)
         };
         if (
           renamingInstruction.toModule &&
@@ -261,11 +259,11 @@ export function* renameIdentifier({
         }
 
         const visitor = function* (visitedNode: ts.Node): Generator<ChangeInstruction> {
-          if (ts.isIdentifier(visitedNode) && visitedNode.text === fromName) {
+          if (ts.isIdentifier(visitedNode) && visitedNode.text === replace) {
             yield {
               start: visitedNode.getStart(),
               width: visitedNode.getWidth(),
-              newNode: ts.factory.createIdentifier(toName)
+              newNode: ts.factory.createIdentifier(replaceWith)
             };
           } else {
             for (const child of visitedNode.getChildren()) {
