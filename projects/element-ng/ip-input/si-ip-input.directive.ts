@@ -111,11 +111,18 @@ export abstract class SiIpInputDirective {
     this.value = el.value;
     this.onChange(this.value);
   }
-
+  /** @internal */
   @HostListener('blur')
   protected blur(): void {
+    this.leaveInput();
     this.onTouched();
   }
-
+  /**
+   * Allow to adjust the input value when leaving the input field.
+   */
+  protected leaveInput(): void {}
+  /**
+   * Enforce a format on user input.
+   */
   protected abstract maskInput(e: AddrInputEvent): void;
 }
