@@ -242,6 +242,7 @@ markdown_extensions:
   - md_in_html
   - element-docs:
       examples_base: !ENV [ EXAMPLES_BASE, 'http://localhost:4200' ]
+      md_file: !relative
   - toc:
       permalink: true
 
