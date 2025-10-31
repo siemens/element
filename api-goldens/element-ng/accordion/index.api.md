@@ -44,6 +44,7 @@ export class SiCollapsiblePanelComponent {
     constructor();
     readonly badge: _angular_core.InputSignal<string | number | undefined>;
     readonly badgeColor: _angular_core.InputSignal<string | undefined>;
+    // @deprecated
     readonly colorVariant: _angular_core.InputSignal<BackgroundColorVariant | undefined>;
     readonly contentBgClasses: _angular_core.InputSignal<string>;
     readonly contentCssClasses: _angular_core.InputSignal<string>;
