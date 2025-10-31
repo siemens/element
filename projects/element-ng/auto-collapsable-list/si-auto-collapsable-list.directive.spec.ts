@@ -144,13 +144,10 @@ describe('SiAutoCollapsableListDirective', () => {
 
   it('should respect additional content', fakeAsync(() => {
     fixture.detectChanges();
-    // Skip test when browser is not focussed to prevent failures.
-    if (document.hasFocus()) {
-      detectSizeChange();
-      component.showAdditionalContent = true;
-      detectSizeChange({ width: 300 });
-      expect(readVisibilityStates()).toEqual(['visible', 'hidden', 'hidden', 'hidden', 'hidden']);
-    }
+    detectSizeChange();
+    component.showAdditionalContent = true;
+    detectSizeChange({ width: 300 });
+    expect(readVisibilityStates()).toEqual(['visible', 'hidden', 'hidden', 'hidden', 'hidden']);
   }));
 
   it('should react to item changes', fakeAsync(() => {
