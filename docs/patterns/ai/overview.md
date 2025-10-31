@@ -31,7 +31,6 @@ The icon can appear in different contexts, such as:
 - [Buttons](../../components/buttons-menus/buttons.md) that initiate AI actions.
 - [Badges](../../components/status-notifications/badges.md) labeling content created or modified by AI.
   The secondary style is preferred for a neutral and consistent look.
-- [Avatars](../../components/status-notifications/avatar.md) for AI-generated messages in conversational interfaces.
 
 ![AI icon usage examples](images/ai-icon-usage.png)
 

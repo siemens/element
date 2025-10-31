@@ -22,7 +22,6 @@ The chat input enables users to send messages or comments depending on context:
 
 - Always autofocus the input prompt when the page or chat view is opened.
 - Limit input width to 720px for legibility.
-- Match placeholder text to context (e.g., “Ask anything”, “Type a message”, “Leave a comment”).
 - Disable the send button when input is empty or invalid.
 - Add the legal disclaimer when used for AI functions.
 
@@ -40,7 +39,8 @@ The chat input enables users to send messages or comments depending on context:
 
 ### Actions
 
-When actions are available, they appear directly below the text area. Up to three actions can be displayed inline; any additional actions are grouped into a menu.
+When actions are available, they appear directly below the text area.
+Up to three actions can be displayed inline; any additional actions are grouped into a menu.
 
 ![Chat input actions](images/chat-input-actions.png)
 
