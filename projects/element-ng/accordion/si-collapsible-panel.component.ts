@@ -100,7 +100,13 @@ export class SiCollapsiblePanelComponent {
    * @defaultValue false
    */
   readonly disabled = input(false, { transform: booleanAttribute });
-  /** Color to use for component background */
+  /**
+   * Color variant for component background.
+   *
+   * @deprecated This input has no effect on the component styling.
+   * Background colors are managed internally by the component.
+   * This input will be removed in a future major version.
+   */
   readonly colorVariant = input<BackgroundColorVariant>();
   /**
    * Defines the content of the optional badge. Should be a number or something like "100+".
