@@ -68,6 +68,18 @@ export interface FavoriteChangeEvent {
     favorite: boolean;
 }
 
+// @public (undocumented)
+export class SiAccountDetailsComponent {
+    readonly company: _angular_core.InputSignal<string | undefined>;
+    readonly email: _angular_core.InputSignal<string | undefined>;
+    readonly name: _angular_core.InputSignal<string>;
+    readonly userRole: _angular_core.InputSignal<TranslatableString | undefined>;
+    // (undocumented)
+    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiAccountDetailsComponent, "si-account-details", never, { "name": { "alias": "name"; "required": true; "isSignal": true; }; "company": { "alias": "company"; "required": false; "isSignal": true; }; "email": { "alias": "email"; "required": false; "isSignal": true; }; "userRole": { "alias": "userRole"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
+    // (undocumented)
+    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiAccountDetailsComponent, never>;
+}
+
 // @public
 export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDestroy {
     // (undocumented)

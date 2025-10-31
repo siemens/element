@@ -5,6 +5,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
+  SiAccountDetailsComponent,
   SiApplicationHeaderComponent,
   SiHeaderAccountItemComponent,
   SiHeaderActionsDirective,
@@ -36,6 +37,7 @@ import { CorporateEmployee, DataService, Page, PageRequest } from '../datatable/
     SiResizeObserverDirective,
     SiSearchBarComponent,
     RouterLink,
+    SiAccountDetailsComponent,
     SiApplicationHeaderComponent,
     SiHeaderAccountItemComponent,
     SiHeaderDropdownComponent,

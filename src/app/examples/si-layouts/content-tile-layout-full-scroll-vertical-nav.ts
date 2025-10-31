@@ -7,6 +7,7 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
 import {
+  SiAccountDetailsComponent,
   SiApplicationHeaderComponent,
   SiHeaderAccountItemComponent,
   SiHeaderActionsDirective,
@@ -42,6 +43,7 @@ import { delay, of } from 'rxjs';
     SiSidePanelContentComponent,
     SiCollapsiblePanelComponent,
     RouterLink,
+    SiAccountDetailsComponent,
     SiApplicationHeaderComponent,
     SiHeaderAccountItemComponent,
     SiHeaderDropdownComponent,
