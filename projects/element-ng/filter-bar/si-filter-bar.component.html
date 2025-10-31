@@ -6,6 +6,7 @@
         [totalPills]="$count"
         [filter]="filter"
         [disabled]="disabled()"
+        [removeFilterAriaLabel]="removeFilterAriaLabel()"
         (deleteFilters)="deleteFilters($event)"
       />
     </div>
@@ -27,6 +28,7 @@
       title: '',
       filterName: ''
     }"
+    [removeFilterAriaLabel]="removeFilterAriaLabel()"
     (deleteFilters)="deleteOverflowFilter()"
   />
   @if (allowReset() && this.filters().length) {
