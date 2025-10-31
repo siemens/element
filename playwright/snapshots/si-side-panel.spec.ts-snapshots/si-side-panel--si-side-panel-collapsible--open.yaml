@@ -3,6 +3,7 @@
   - menuitem "Path"
   - menuitem "Edit"
   - menuitem "Toggle"
+- button "Enter fullscreen"
 - button "Toggle"
 - link "Out of Service":
   - /url: ""
@@ -22,8 +23,31 @@
   - button "Layout"
   - button "Help"
 - button "Toggle side panel"
-- button "close"
-- button "scroll - Mode"
-- button "regular - Width"
+- button "Close"
+- group "Size toggle button group":
+  - radio "Regular" [checked]
+  - radio "Wide"
+  - radio "Extended"
+- group "Display mode toggle button group":
+  - radio "Navigate"
+  - radio "Overlay" [checked]
+- group "Mode toggle button group":
+  - radio "Over"
+  - radio "Scroll" [checked]
 - separator
-- paragraph: Hey there! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Alias, ab ex quis iste non nemo delectus sequi tempore nihil sit ducimus illo reprehenderit saepe iusto cum tenetur, voluptatibus corrupti unde? Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat autem ducimus minus! Ducimus qui quam laborum enim nihil, accusantium maiores inventore aliquam laudantium eveniet reiciendis praesentium libero consectetur eum eius!
+- heading "Collapsible side panel" [level=2]
+- paragraph:
+  - text: This example demonstrates a
+  - code: collapsible
+  - text: side panel with mobile support enabled. The panel can be collapsed to a minimal width while maintaining visibility of key navigation elements.
+- paragraph:
+  - code: "Over:"
+  - text: Panel overlays content for temporary interactions.
+  - code: "Scroll:"
+  - text: Panel pushes content aside for persistent workflows.
+  - code: "Regular (390px):"
+  - text: Standard width for navigation and settings.
+  - code: "Wide (500px):"
+  - text: Expanded width for complex forms and content.
+  - code: "Extended (Responsive):"
+  - text: Adaptive width scaling from mobile full-width to desktop 912px max.
