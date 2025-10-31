@@ -12,6 +12,8 @@ export const provideSiTranslatableOverrides: (values: SiTranslatableKeys) => Pro
 // @public (undocumented)
 export interface SiTranslatableKeys {
     // (undocumented)
+    'SI_AI_MESSAGE.SECONDARY_ACTIONS'?: string;
+    // (undocumented)
     'SI_ALERT_DIALOG.OK'?: string;
     // (undocumented)
     'SI_APPLICATION_HEADER.LAUNCHPAD'?: string;
@@ -19,6 +21,8 @@ export interface SiTranslatableKeys {
     'SI_APPLICATION_HEADER.TOGGLE_ACTIONS'?: string;
     // (undocumented)
     'SI_APPLICATION_HEADER.TOGGLE_NAVIGATION'?: string;
+    // (undocumented)
+    'SI_ATTACHMENT_LIST.REMOVE_ATTACHMENT'?: string;
     // (undocumented)
     'SI_CHANGE_PASSWORD.BACK'?: string;
     // (undocumented)
@@ -425,6 +429,8 @@ export interface SiTranslatableKeys {
     'SI_TREE_VIEW.EXPAND_ALL'?: string;
     // (undocumented)
     'SI_TYPEAHEAD.AUTOCOMPLETE_LIST_LABEL'?: string;
+    // (undocumented)
+    'SI_USER_MESSAGE.SECONDARY_ACTIONS'?: string;
     // (undocumented)
     'SI_WIZARD.BACK'?: string;
     // (undocumented)

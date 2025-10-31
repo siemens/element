@@ -1,0 +1,12 @@
+- group: error-log.txt
+- group: screenshot.png
+- paragraph:
+  - text: Can you help me with this
+  - strong: code snippet
+  - text: "?"
+- paragraph:
+  - code: console.log('Hello World')
+- paragraph: I'm getting an error when I run it.
+- button "Edit message"
+- button "Copy message"
+- button "Delete message"
