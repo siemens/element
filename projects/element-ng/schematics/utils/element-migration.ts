@@ -2,27 +2,25 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+
 import { Rule, SchematicContext, Tree, UpdateRecorder } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
 import { EmitHint } from 'typescript';
 
+import { ElementMigrationConfig } from './element-migration.config.js';
 import {
   discoverSourceFiles,
   renameAttribute,
   renameElementTag,
   renameIdentifier
-} from '../../utils/index.js';
-import {
-  IDENTIFIER_RENAMING_INSTRUCTIONS,
-  ELEMENT_RENAMING_INSTRUCTIONS,
-  ATTRIBUTE_RENAMING_INSTRUCTIONS
-} from './to-legacy-replacement.js';
+} from './index.js';
 
-export const toLegacyMigrationRule = (options: { path: string }): Rule => {
+export const elementMigrationRule = (
+  elementMigrationConfig: ElementMigrationConfig,
+  path: string
+): Rule => {
   return (tree: Tree, context: SchematicContext) => {
-    context.logger.info('🔄 Running legacy migration rule...');
-
-    const tsSourceFiles = discoverSourceFiles(tree, context, options.path);
+    const tsSourceFiles = discoverSourceFiles(tree, context, path);
 
     for (const filePath of tsSourceFiles) {
       const content = tree.read(filePath);
@@ -39,7 +37,7 @@ export const toLegacyMigrationRule = (options: { path: string }): Rule => {
 
       const changeInstructions = renameIdentifier({
         sourceFile,
-        renamingInstructions: IDENTIFIER_RENAMING_INSTRUCTIONS
+        renamingInstructions: elementMigrationConfig.identifierRenameInstructions
       });
 
       let recorder: UpdateRecorder | undefined = undefined;
@@ -57,7 +55,7 @@ export const toLegacyMigrationRule = (options: { path: string }): Rule => {
       if (!recorder) {
         continue;
       }
-      for (const [fromName, toName] of ELEMENT_RENAMING_INSTRUCTIONS) {
+      for (const [fromName, toName] of elementMigrationConfig.elementRenameInstructions) {
         renameElementTag({
           tree,
           recorder,
@@ -68,7 +66,7 @@ export const toLegacyMigrationRule = (options: { path: string }): Rule => {
         });
       }
 
-      for (const [fromName, toName] of ATTRIBUTE_RENAMING_INSTRUCTIONS) {
+      for (const [fromName, toName] of elementMigrationConfig.attributeRenameInstructions) {
         renameAttribute({
           tree,
           recorder,
@@ -81,7 +79,7 @@ export const toLegacyMigrationRule = (options: { path: string }): Rule => {
 
       tree.commitUpdate(recorder);
     }
-    context.logger.info(`✅ Legacy migration complete!`);
+
     return tree;
   };
 };
