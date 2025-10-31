@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { AsyncPipe } from '@angular/common';
-import { Component, inject, input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, OnInit } from '@angular/core';
 import { SimplChartsNgModule } from '@siemens/charts-ng';
 import { WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
@@ -24,7 +24,8 @@ export type WidgetChartGaugeConfig = {
 @Component({
   selector: 'app-gauge',
   imports: [SimplChartsNgModule, SiResizeObserverDirective, AsyncPipe],
-  templateUrl: './gauge.component.html'
+  templateUrl: './gauge.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GaugeComponent implements OnInit, WidgetInstance {
   readonly config = input.required<WidgetConfig>();

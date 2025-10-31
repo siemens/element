@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, input, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, TemplateRef, ViewChild } from '@angular/core';
 import { WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
 import { SiTimelineWidgetBodyComponent, SiTimelineWidgetItem } from '@siemens/element-ng/dashboard';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
@@ -16,7 +16,8 @@ import { Link, SiLinkDirective } from '@siemens/element-ng/link';
         <a [siLink]="link">Go to...</a>
       </ng-template>
     </si-timeline-widget-body>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimelineWidgetComponent implements WidgetInstance {
   readonly config = input.required<WidgetConfig>();

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SiFlexibleDashboardComponent, Widget } from '@siemens/dashboards-ng';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
@@ -22,7 +22,8 @@ import { HELLO_DESCRIPTOR } from '../../widgets/hello-widget/widget-descriptors'
   selector: 'app-routed-dashboard',
   imports: [SiFlexibleDashboardComponent, DashboardFiltersComponent, SiEmptyStateComponent],
   templateUrl: './routed-dashboard.component.html',
-  styleUrl: './routed-dashboard.component.scss'
+  styleUrl: './routed-dashboard.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RoutedDashboardPageComponent implements OnInit {
   widgetCatalog: Widget[] = [

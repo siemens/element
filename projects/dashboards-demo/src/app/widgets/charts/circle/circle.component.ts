@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { AsyncPipe } from '@angular/common';
-import { Component, inject, input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, OnInit } from '@angular/core';
 import { CircleChartSeries, SimplChartsNgModule } from '@siemens/charts-ng';
 import { WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
@@ -14,7 +14,8 @@ import { DataService } from '../../../widgets/charts/data.service';
 @Component({
   selector: 'app-circle',
   imports: [SimplChartsNgModule, SiResizeObserverDirective, AsyncPipe],
-  templateUrl: './circle.component.html'
+  templateUrl: './circle.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CircleComponent implements OnInit, WidgetInstance {
   readonly config = input.required<WidgetConfig>();
