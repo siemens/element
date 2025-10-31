@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+export * from './si-header-dropdown-account-item.component';
 export * from './si-header-dropdown.component';
 export * from './si-header-dropdown-trigger.directive';
 export * from './si-header-dropdown-item.component';
