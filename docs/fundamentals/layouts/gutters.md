@@ -1,6 +1,6 @@
 # Gutters
 
-Gutters are the paddings between columns in the [grid system](./grid.md#code),
+Gutters are the paddings between columns in the [grid system](./grid.md#overview),
 providing responsive separation and alignment for the content.
 
 ## Overview
