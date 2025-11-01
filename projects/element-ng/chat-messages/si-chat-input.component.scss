@@ -1,0 +1,45 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  max-inline-size: 720px;
+}
+
+.input-wrapper {
+  border-color: variables.$element-ui-4;
+  background-color: variables.$element-base-input-experimental;
+}
+
+.chat-textarea {
+  // Prevent layout shift on first input
+  min-block-size: calc(1.5em * variables.$si-line-height-body);
+  font-family: inherit;
+  outline: none;
+  resize: none;
+  // stylelint-disable-next-line declaration-no-important
+  background-color: transparent !important;
+
+  &::placeholder {
+    color: variables.$element-text-secondary;
+  }
+
+  &:disabled {
+    // stylelint-disable-next-line declaration-no-important
+    background-color: transparent !important;
+    color: variables.$element-text-disabled;
+    cursor: not-allowed;
+
+    &::placeholder {
+      color: variables.$element-text-disabled;
+    }
+  }
+}
+
+.input-wrapper:has(.chat-textarea:focus-visible) {
+  @include variables.make-outline-focus();
+  border-color: variables.$element-ui-1;
+}
+
+.disclaimer-wrapper:empty {
+  display: none;
+}

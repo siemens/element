@@ -1,0 +1,21 @@
+- group:
+  - button "quarterly-report.xlsx"
+  - button "Remove attachment quarterly-report.xlsx"
+- group:
+  - button "screenshot.png"
+  - button "Remove attachment screenshot.png"
+- group:
+  - button "very-long-filename-that-demonstrates-text-truncation-behavior.pdf"
+  - button "Remove attachment very-long-filename-that-demonstrates-text-truncation-behavior.pdf"
+- group:
+  - button "data.csv"
+  - button "Remove attachment data.csv"
+- group:
+  - button "audio.mp3"
+  - button "Remove attachment audio.mp3"
+- group:
+  - button "final-report.docx"
+- group:
+  - button "diagram.jpg"
+- group:
+  - button "config.json"
