@@ -1,0 +1,56 @@
+<div class="d-flex flex-wrap gap-4" [class.justify-content-end]="alignment() === 'end'">
+  @for (attachment of attachments(); track $index) {
+    <div class="attachment-item d-flex align-items-stretch" role="group">
+      @if (attachment.previewTemplate) {
+        <button
+          type="button"
+          class="attachment-main focus-inside d-flex align-items-center flex-grow-1 min-width-0"
+          [attr.title]="attachment.name"
+          [attr.aria-label]="attachment.name"
+          (click)="openPreview($event, attachment)"
+          (keydown.enter)="openPreview($event, attachment)"
+          (keydown.space)="openPreview($event, attachment)"
+        >
+          <si-icon
+            class="attachment-icon icon flex-shrink-0 mx-1"
+            [icon]="getFileIcon(attachment.name)"
+          />
+          <div class="attachment-info flex-grow-1 min-width-0">
+            <span
+              class="attachment-name me-4 text-truncate si-body-2 d-block"
+              [title]="attachment.name"
+            >
+              {{ attachment.name }}
+            </span>
+          </div>
+        </button>
+      } @else {
+        <div class="attachment-main--static d-flex align-items-center flex-grow-1 min-width-0">
+          <si-icon
+            class="attachment-icon icon flex-shrink-0 mx-1"
+            [icon]="getFileIcon(attachment.name)"
+          />
+          <div class="attachment-info flex-grow-1 min-width-0">
+            <span
+              class="attachment-name me-4 text-truncate si-body-2 d-block"
+              [title]="attachment.name"
+            >
+              {{ attachment.name }}
+            </span>
+          </div>
+        </div>
+      }
+
+      @if (removable()) {
+        <button
+          type="button"
+          class="btn btn-ghost btn-circle btn-sm expand-button flex-shrink-0 ms-auto align-self-center focus-inside"
+          [attr.aria-label]="(removeLabel() | translate) + ' ' + attachment.name"
+          (click)="remove.emit(attachment); $event.stopPropagation()"
+        >
+          <si-icon class="icon" icon="element-delete" />
+        </button>
+      }
+    </div>
+  }
+</div>
