@@ -532,11 +532,11 @@ export const themeElement = {
         progress: {
           itemWidth: 6,
           itemGap: 6,
-          grey: elementUi4
+          grey: elementUi0
         },
 
         progressBar: {
-          labelColor: textColor,
+          labelColor: elementTextPrimary,
           itemWidth: 20,
           grid: {
             left: 16,
