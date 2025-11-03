@@ -185,6 +185,7 @@ nav:
     - CSS framework:                      'architecture/css-framework.md'
     - Dynamic forms:                      'architecture/dynamic-forms.md'
     - Motion and animation:               'architecture/motion-animation.md'
+    - Resize observer:                    'architecture/resize-observer.md'
     - Theming:                            'architecture/theming.md'
     - UI state:                           'architecture/ui-state.md'
   - Contributing:
