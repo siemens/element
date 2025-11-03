@@ -59,6 +59,7 @@
         <si-number-input
           required
           class="form-control"
+          [min]="0"
           [ngModelOptions]="{ standalone: true }"
           [step]="1"
           [(ngModel)]="minDecimals"
@@ -70,6 +71,7 @@
         <si-number-input
           required
           class="form-control"
+          [min]="0"
           [ngModelOptions]="{ standalone: true }"
           [step]="1"
           [(ngModel)]="maxDecimals"
@@ -81,6 +83,7 @@
         <si-number-input
           required
           class="form-control"
+          [min]="0"
           [ngModelOptions]="{ standalone: true }"
           [step]="1"
           [(ngModel)]="axisDecimals"
