@@ -131,16 +131,19 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
   readonly unit = input('');
   /**
    * Min number of decimals.
+   * Possible values are from 0 to 100.
    * @defaultValue 0
    */
   readonly minNumberOfDecimals = input(0);
   /**
    * Max number of decimals.
+   * Possible values are from 0 to 100.
    * @defaultValue 2
    */
   readonly maxNumberOfDecimals = input(2);
   /**
    * Number of decimals on the axis.
+   * Possible values are from 0 to 100.
    * @defaultValue 0
    */
   readonly axisNumberOfDecimals = input(0);
