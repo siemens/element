@@ -29,6 +29,7 @@ export interface GaugeSeries {
 export class SiNChartGaugeComponent implements OnInit, OnChanges {
     // (undocumented)
     protected additionalHeight: number;
+    readonly axisLabelFormatter: _angular_core.InputSignal<((val: number) => string) | undefined>;
     readonly axisNumberOfDecimals: _angular_core.InputSignal<number>;
     // (undocumented)
     protected backgroundPath: string;
@@ -73,8 +74,9 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
     readonly unit: _angular_core.InputSignal<string>;
     // (undocumented)
     protected valignMiddle: boolean;
+    readonly valueFormatter: _angular_core.InputSignal<((val: number) => string) | undefined>;
     // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiNChartGaugeComponent, "si-nchart-gauge", never, { "startAngle": { "alias": "startAngle"; "required": false; "isSignal": true; }; "endAngle": { "alias": "endAngle"; "required": false; "isSignal": true; }; "min": { "alias": "min"; "required": false; "isSignal": true; }; "max": { "alias": "max"; "required": false; "isSignal": true; }; "mode": { "alias": "mode"; "required": false; "isSignal": true; }; "series": { "alias": "series"; "required": false; "isSignal": true; }; "segments": { "alias": "segments"; "required": false; "isSignal": true; }; "unit": { "alias": "unit"; "required": false; "isSignal": true; }; "minNumberOfDecimals": { "alias": "minNumberOfDecimals"; "required": false; "isSignal": true; }; "maxNumberOfDecimals": { "alias": "maxNumberOfDecimals"; "required": false; "isSignal": true; }; "axisNumberOfDecimals": { "alias": "axisNumberOfDecimals"; "required": false; "isSignal": true; }; "showTicks": { "alias": "showTicks"; "required": false; "isSignal": true; }; "showLegend": { "alias": "showLegend"; "required": false; "isSignal": true; }; "legendPosition": { "alias": "legendPosition"; "required": false; "isSignal": true; }; "showRangeLabelsOutside": { "alias": "showRangeLabelsOutside"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
+    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiNChartGaugeComponent, "si-nchart-gauge", never, { "startAngle": { "alias": "startAngle"; "required": false; "isSignal": true; }; "endAngle": { "alias": "endAngle"; "required": false; "isSignal": true; }; "min": { "alias": "min"; "required": false; "isSignal": true; }; "max": { "alias": "max"; "required": false; "isSignal": true; }; "mode": { "alias": "mode"; "required": false; "isSignal": true; }; "series": { "alias": "series"; "required": false; "isSignal": true; }; "segments": { "alias": "segments"; "required": false; "isSignal": true; }; "unit": { "alias": "unit"; "required": false; "isSignal": true; }; "minNumberOfDecimals": { "alias": "minNumberOfDecimals"; "required": false; "isSignal": true; }; "maxNumberOfDecimals": { "alias": "maxNumberOfDecimals"; "required": false; "isSignal": true; }; "axisNumberOfDecimals": { "alias": "axisNumberOfDecimals"; "required": false; "isSignal": true; }; "axisLabelFormatter": { "alias": "axisLabelFormatter"; "required": false; "isSignal": true; }; "valueFormatter": { "alias": "valueFormatter"; "required": false; "isSignal": true; }; "showTicks": { "alias": "showTicks"; "required": false; "isSignal": true; }; "showLegend": { "alias": "showLegend"; "required": false; "isSignal": true; }; "legendPosition": { "alias": "legendPosition"; "required": false; "isSignal": true; }; "showRangeLabelsOutside": { "alias": "showRangeLabelsOutside"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiNChartGaugeComponent, never>;
 }
