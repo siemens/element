@@ -17,7 +17,7 @@ const buildRelativeFromFile = (relativePath: string): string =>
 
 const collectionPath = buildRelativeFromFile('../../collection.json');
 
-describe('legacy migration', () => {
+describe('to legacy migration', () => {
   let runner: SchematicTestRunner;
   let appTree: Tree;
   const name = 'migrate-v47-to-v48';
@@ -90,5 +90,9 @@ describe('legacy migration', () => {
 
   it('should migrate siPopover used in an inline template', async () => {
     await checkTemplateMigration(['popover-inline-template.ts']);
+  });
+
+  it('should remove the deprecated api from accordion', async () => {
+    await checkTemplateMigration(['accordion-inline-template.ts']);
   });
 });
