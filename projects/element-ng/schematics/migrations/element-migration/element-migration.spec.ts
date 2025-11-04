@@ -95,4 +95,36 @@ describe('to legacy migration', () => {
   it('should remove the deprecated api from accordion', async () => {
     await checkTemplateMigration(['accordion-inline-template.ts']);
   });
+
+  it('should remove the deprecated api from SiDateRangeComponent', async () => {
+    await checkTemplateMigration(['date-range-inline-template.ts']);
+  });
+
+  it('should remove the deprecated api from SiDateInputDirective', async () => {
+    await checkTemplateMigration(['date-input-directive-inline-template.ts']);
+  });
+
+  it('should remove the deprecated api from SiDatepickerDirective', async () => {
+    await checkTemplateMigration(['date-picker-inline-template.ts']);
+  });
+
+  it('should remove the deprecated api from SiFilteredSearchComponent', async () => {
+    await checkTemplateMigration(['filtered-search-inline-template.ts']);
+  });
+
+  it('should remove the deprecated api from SiFormItemComponent', async () => {
+    await checkTemplateMigration(['form-item-inline-template.ts']);
+  });
+
+  it('should remove the deprecated api from SiNavbarVerticalComponent', async () => {
+    await checkTemplateMigration(['navbar-vertical-inline.template.ts']);
+  });
+
+  it('should remove the deprecated api from SiSplitPartComponent', async () => {
+    await checkTemplateMigration(['split-inline.template.ts']);
+  });
+
+  it('should remove the deprecated api from SiTreeViewComponent', async () => {
+    await checkTemplateMigration(['tree-inline.template.ts']);
+  });
 });
