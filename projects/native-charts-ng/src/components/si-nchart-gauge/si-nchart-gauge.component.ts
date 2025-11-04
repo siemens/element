@@ -146,6 +146,18 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
    */
   readonly axisNumberOfDecimals = input(0);
   /**
+   * Custom formatter for axis labels.
+   * Takes precedence when specified, i.e. number of decimals needs
+   * to be set by the user using this formatter.
+   */
+  readonly axisLabelFormatter = input<(val: number) => string>();
+  /**
+   * Custom formatter for value.
+   * Takes precedence when specified, i.e. number of decimals needs
+   * to be set by the user using this formatter.
+   */
+  readonly valueFormatter = input<(val: number) => string>();
+  /**
    * Whether to show ticks
    *
    * @defaultValue true
@@ -220,7 +232,9 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
       changes.max ||
       changes.showTicks ||
       changes.showRangeLabelsOutside ||
-      changes.segments
+      changes.segments ||
+      changes.axisLabelFormatter ||
+      changes.valueFormatter
     ) {
       calc = true;
     }
@@ -283,7 +297,7 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
       }
     }
 
-    this.totalSumString = this.numberFormat.format(this.totalSum);
+    this.totalSumString = this.formatValue(this.totalSum);
   }
 
   private calcSeriesSingle(): void {
@@ -329,7 +343,12 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
     );
     this.addInternalSeries(this.startAngle(), series, false, activeSegment?.colorToken);
 
-    this.totalSumString = this.numberFormat.format(this.totalSum);
+    this.totalSumString = this.formatValue(this.totalSum);
+  }
+
+  private formatValue(value: number): string {
+    const formatter = this.valueFormatter();
+    return formatter ? formatter(value) : this.numberFormat.format(value);
   }
 
   private addTick(angle: number, title: number, boundary: boolean): void {
@@ -346,9 +365,10 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
       textPos.y += 6;
     }
 
+    const axisLabelFormatter = this.axisLabelFormatter();
     this.ticks.push({
       path: this.showTicks() ? this.makeTickPath(angle) : '',
-      label: this.axisNumberFormat.format(title),
+      label: axisLabelFormatter ? axisLabelFormatter(title) : this.axisNumberFormat.format(title),
       textPos
     });
   }
