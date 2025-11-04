@@ -95,7 +95,7 @@ export const elementMigrationRule = (options: { path: string }): Rule => {
           const importSpecifiers = getImportSpecifiers(
             sourceFile,
             change.module,
-            change.componentName
+            change.componentOrModuleName
           );
 
           if (!importSpecifiers?.length) {
@@ -120,7 +120,7 @@ export const elementMigrationRule = (options: { path: string }): Rule => {
           const importSpecifiers = getImportSpecifiers(
             sourceFile,
             change.module,
-            change.componentName
+            change.componentOrModuleName
           );
 
           if (!importSpecifiers?.length) {
@@ -133,6 +133,7 @@ export const elementMigrationRule = (options: { path: string }): Rule => {
             sourceFile,
             filePath,
             elementName: change.elementSelector,
+            attributeSelector: change.attributeSelector,
             names: change.names
           });
         }
