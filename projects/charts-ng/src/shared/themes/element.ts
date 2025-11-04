@@ -540,7 +540,7 @@ export const themeElement = {
           itemWidth: 20,
           grid: {
             left: 16,
-            right: 52,
+            right: 22,
             containLabel: true
           }
         },
