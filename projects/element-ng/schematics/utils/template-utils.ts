@@ -149,18 +149,29 @@ const removeSymbols = ({
   offset,
   recorder,
   elementName,
+  attributeSelector,
   names
 }: {
   recorder: UpdateRecorder;
   template: string;
   offset: number;
   elementName: string;
+  attributeSelector: string | undefined;
   names: string[];
 }): void => {
   findElement(template, element => element.name === elementName).forEach(el => {
+    if (attributeSelector) {
+      const hasAttributeSelector = el.attrs.some(attr => attr.name === attributeSelector);
+      if (!hasAttributeSelector) {
+        return;
+      }
+    }
+
     for (const name of names) {
       el.attrs
-        .filter(attr => attr.name === name)
+        .filter(
+          attr => attr.name === name || attr.name === `[${name}]` || attr.name === `(${name})`
+        )
         .forEach(attr => {
           const apiLength = attr.sourceSpan.toString().length;
           recorder.remove(attr.sourceSpan.start.offset + offset, apiLength);
@@ -287,6 +298,7 @@ export const removeSymbol = ({
   sourceFile,
   recorder,
   elementName,
+  attributeSelector,
   names
 }: {
   tree: Tree;
@@ -294,6 +306,7 @@ export const removeSymbol = ({
   sourceFile: ts.SourceFile;
   recorder: UpdateRecorder;
   elementName: string;
+  attributeSelector: string | undefined;
   names: string[];
 }): void => {
   getInlineTemplates(sourceFile).forEach(template =>
@@ -301,6 +314,7 @@ export const removeSymbol = ({
       template: template.text,
       offset: template.getStart() + 1,
       elementName,
+      attributeSelector,
       recorder,
       names
     })
@@ -313,6 +327,7 @@ export const removeSymbol = ({
       template: templateContent,
       offset: 0,
       elementName,
+      attributeSelector,
       recorder: templateRecorder,
       names
     });
