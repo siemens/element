@@ -8,7 +8,7 @@ import ts, { NoSubstitutionTemplateLiteral, PropertyAssignment, StringLiteral } 
 
 import { findAttribute, findElement } from './html-utils.js';
 
-const getInlineTemplates = (
+export const getInlineTemplates = (
   source: ts.SourceFile
 ): (NoSubstitutionTemplateLiteral | StringLiteral)[] => {
   const templateNodes: (NoSubstitutionTemplateLiteral | StringLiteral)[] = [];
@@ -45,7 +45,7 @@ const getInlineTemplates = (
   return templateNodes;
 };
 
-const getTemplateUrl = (source: ts.SourceFile): string[] => {
+export const getTemplateUrl = (source: ts.SourceFile): string[] => {
   const templateUrls: string[] = [];
   const componentDecoratorVisitor = (node: ts.Node): void => {
     if (
