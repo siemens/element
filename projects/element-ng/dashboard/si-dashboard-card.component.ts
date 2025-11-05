@@ -19,6 +19,7 @@ import {
   ContentActionBarMainItem,
   SiContentActionBarComponent
 } from '@siemens/element-ng/content-action-bar';
+import { addIcons, elementPinch, elementZoom } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { SiDashboardService } from './si-dashboard.service';
@@ -123,7 +124,7 @@ export class SiDashboardCardComponent extends SiCardComponent implements OnDestr
         {
           type: 'action',
           label: this.isExpanded() ? this.restoreText() : this.expandText(),
-          icon: this.isExpanded() ? 'element-pinch' : 'element-zoom',
+          icon: this.isExpanded() ? this.icons.elementPinch : this.icons.elementZoom,
           iconOnly: true,
           action: () => this.expandCard(!this.isExpanded())
         }
@@ -150,6 +151,10 @@ export class SiDashboardCardComponent extends SiCardComponent implements OnDestr
     }
   );
 
+  private readonly icons = addIcons({
+    elementPinch,
+    elementZoom
+  });
   private readonly expandRestoreIconTooltip = computed(() => {
     return this.isExpanded() ? this.restoreText() : this.expandText();
   });
@@ -157,7 +162,7 @@ export class SiDashboardCardComponent extends SiCardComponent implements OnDestr
     return {
       type: 'action',
       label: this.expandText(),
-      icon: 'element-zoom',
+      icon: this.icons.elementZoom,
       iconOnly: true,
       action: () => this.expandCard(true)
     } as ContentActionBarMainItem;
@@ -166,7 +171,7 @@ export class SiDashboardCardComponent extends SiCardComponent implements OnDestr
     return {
       type: 'action',
       label: this.restoreText(),
-      icon: 'element-pinch',
+      icon: this.icons.elementPinch,
       iconOnly: true,
       action: () => this.expandCard(false)
     } as ContentActionBarMainItem;
