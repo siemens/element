@@ -26,8 +26,7 @@
 
 * **accordion:** `SiCollapsiblePanelComponent.colorVariant` input has no effect
   and is deprecated.
-  
-  Co-authored-by: ljanner <78341770+ljanner@users.noreply.github.com>
+
 * **tree-view:** `siTreeViewItemTemplate` is deprecated in favor of `siTreeViewItem`.
   
   Currently there are 2 directives `siTreeViewItemTemplate` for providing custom template and `siTreeViewItem` for applying custom directives (e.g cdkDrag) on tree item.
