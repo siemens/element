@@ -97,10 +97,7 @@ import { SiChatMessageComponent } from './si-chat-message.component';
     SiTranslatePipe
   ],
   templateUrl: './si-ai-message.component.html',
-  styleUrl: './si-ai-message.component.scss',
-  host: {
-    class: 'si-ai-message'
-  }
+  styleUrl: './si-ai-message.component.scss'
 })
 export class SiAiMessageComponent {
   protected readonly formattedContent = viewChild<ElementRef<HTMLDivElement>>('formattedContent');
