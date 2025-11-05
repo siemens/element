@@ -8,6 +8,7 @@ import { RouterLink } from '@angular/router';
 import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
 import {
   App,
+  SiAccountDetailsComponent,
   SiApplicationHeaderComponent,
   SiHeaderAccountItemComponent,
   SiHeaderActionItemComponent,
@@ -47,6 +48,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiElectrontitlebarComponent,
     PortalModule,
     RouterLink,
+    SiAccountDetailsComponent,
     SiApplicationHeaderComponent,
     SiHeaderAccountItemComponent,
     SiHeaderActionItemComponent,

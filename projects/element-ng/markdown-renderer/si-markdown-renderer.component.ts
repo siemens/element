@@ -9,7 +9,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { getMarkdownRenderer } from './markdown-renderer';
 
 /**
- * Component to display markdown text, uses the {@link getMarkdownRenderer} function internally, relies on theme .markdown-renderer styles.
+ * Component to display markdown text, uses the {@link getMarkdownRenderer} function internally, relies on `markdown-content` theme class.
  * @experimental
  */
 @Component({
@@ -20,7 +20,7 @@ import { getMarkdownRenderer } from './markdown-renderer';
 export class SiMarkdownRendererComponent {
   private sanitizer = inject(DomSanitizer);
   private hostElement = inject(ElementRef<HTMLElement>);
-  private markdownFormatter = getMarkdownRenderer(this.sanitizer);
+  private markdownRenderer = getMarkdownRenderer(this.sanitizer);
 
   /**
    * The markdown text to transform and display
@@ -34,7 +34,7 @@ export class SiMarkdownRendererComponent {
       const containerEl = this.hostElement.nativeElement;
 
       if (containerEl) {
-        const formattedNode = this.markdownFormatter(contentValue);
+        const formattedNode = this.markdownRenderer(contentValue);
         containerEl.innerHTML = '';
         containerEl.appendChild(formattedNode);
       }

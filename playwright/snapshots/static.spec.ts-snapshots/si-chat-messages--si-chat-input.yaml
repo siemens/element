@@ -1,0 +1,15 @@
+- group:
+  - text: project-spec.pdf
+  - button "Remove attachment project-spec.pdf"
+- group:
+  - text: mockup.png
+  - button "Remove attachment mockup.png"
+- textbox "Chat message input":
+  - /placeholder: Enter a command, question or topic...
+- button "Attach files"
+- button "Take photo"
+- button "Text formatting"
+- button "More actions"
+- button "Insert emoji"
+- button "Send Message"
+- text: The content is AI generated. Always verify the information for accuracy.

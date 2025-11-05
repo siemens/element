@@ -1,0 +1,55 @@
+<!--- Flex-row if alignment start, flex-row-reverse if alignment end, flex-column if mobile -->
+<div class="d-flex si-body-2 chat-message-container" [class.start]="alignment() === 'start'">
+  <div class="avatar-wrapper flex-shrink-0" [class.end]="alignment() === 'end'">
+    <ng-content select="si-icon,si-avatar,img" />
+  </div>
+
+  <div class="d-flex flex-column flex-grow-1 w-100">
+    <div class="attachment-slot" [class.align-self-end]="alignment() === 'end'">
+      <ng-content select="si-attachment-list,si-badge" />
+    </div>
+
+    @if (loading()) {
+      <div
+        class="message-wrapper rounded-3 w-75 text-break loading-message-bubble mb-2"
+        [class.align-self-end]="alignment() === 'end'"
+      >
+        <div class="d-flex flex-column w-100 gap-2">
+          <div class="si-skeleton skeleton-line skeleton-line-full"></div>
+          <div class="si-skeleton skeleton-line skeleton-line-half"></div>
+        </div>
+      </div>
+    } @else {
+      <!-- Flex-column if actions bottom, flex-row/flex-row-reverse if actions start -->
+      <div
+        class="message-wrapper mw-0 d-flex mb-2"
+        [class.end]="alignment() === 'end'"
+        [class.flex-column]="actionsPosition() === 'bottom'"
+        [class.flex-row]="actionsPosition() === 'side' && alignment() === 'start'"
+        [class.flex-row-reverse]="actionsPosition() === 'side' && alignment() === 'end'"
+        [class.align-items-start]="actionsPosition() === 'side'"
+        [class.align-items-end]="actionsPosition() === 'bottom' && alignment() === 'end'"
+        [class.justify-content-end]="alignment() === 'end' && actionsPosition() === 'bottom'"
+        [class.justify-content-start]="alignment() === 'start' && actionsPosition() === 'bottom'"
+      >
+        <div
+          class="rounded-3 text-break message-bubble"
+          [class.end]="alignment() === 'end' && actionsPosition() === 'bottom'"
+        >
+          <ng-content />
+        </div>
+
+        <div
+          class="actions-wrapper d-flex gap-4"
+          [class.ms-3]="actionsPosition() === 'side' && alignment() === 'start'"
+          [class.me-3]="actionsPosition() === 'side' && alignment() === 'end'"
+          [class.mt-2]="actionsPosition() === 'bottom'"
+          [class.actions-horizontal]="actionsPosition() !== 'bottom'"
+          [class.align-self-start]="actionsPosition() === 'side'"
+        >
+          <ng-content select="[siChatMessageAction]" />
+        </div>
+      </div>
+    }
+  </div>
+</div>

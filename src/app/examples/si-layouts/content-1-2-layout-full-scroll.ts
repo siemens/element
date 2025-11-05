@@ -6,6 +6,7 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SiChartCircleComponent, themeElement, themeSupport } from '@siemens/charts-ng';
 import {
+  SiAccountDetailsComponent,
   SiApplicationHeaderComponent,
   SiHeaderAccountItemComponent,
   SiHeaderActionsDirective,
@@ -39,6 +40,7 @@ themeSupport.setDefault(themeElement);
     SiResizeObserverDirective,
     SiSearchBarComponent,
     RouterLink,
+    SiAccountDetailsComponent,
     SiApplicationHeaderComponent,
     SiHeaderAccountItemComponent,
     SiHeaderDropdownComponent,

@@ -220,14 +220,12 @@ deprecated `si-primary-navbar`.
 
   <ng-template #account>
     <si-header-dropdown>
-      <div class="mx-5">
-        <div class="si-h5">Lars Vegas</div>
-        <div>lars.vegas&#64;siemens.com</div>
-        <div class="d-flex align-items-center text-secondary mt-2">
-          Siemens AG
-          <span class="badge bg-default">Admin</span>
-        </div>
-      </div>
+        <si-account-details
+          name="Lars Vegas"
+          email="lars.vegas@siemens.com"
+          company="Siemens AG"
+          userRole="Admin"
+        />
       <div class="dropdown-divider"></div>
       <button
         si-header-dropdown-item

@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 export * from './si-application-header.component';
+export * from './si-account-details.component';
 export * from './si-header-navigation-item.component';
 export * from './si-header-collapsible-actions.component';
 export * from './si-header-action-item.component';

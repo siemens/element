@@ -5,6 +5,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
+  SiAccountDetailsComponent,
   SiApplicationHeaderComponent,
   SiHeaderAccountItemComponent,
   SiHeaderActionsDirective,
@@ -25,6 +26,7 @@ import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
     SiCardComponent,
     SiSearchBarComponent,
     RouterLink,
+    SiAccountDetailsComponent,
     SiApplicationHeaderComponent,
     SiHeaderAccountItemComponent,
     SiHeaderDropdownTriggerDirective,

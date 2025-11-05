@@ -14,6 +14,7 @@ export * from './badge';
 export * from './breadcrumb';
 export * from './breadcrumb-router';
 export * from './card';
+export * from './chat-messages';
 export * from './circle-status';
 export * from './color-picker';
 export * from './column-selection-dialog';
