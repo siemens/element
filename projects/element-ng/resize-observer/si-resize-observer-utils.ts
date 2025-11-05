@@ -12,6 +12,8 @@ export const getElementSize = (
 ): { width: number; height: number } => {
   let width = element.clientWidth;
   let height = element.clientHeight;
+  // eslint-disable-next-line no-console
+  console.log('client width', width, 'height', height);
   if (box === 'border-box') {
     // The border box calculation is based on https://github.com/juggle/resize-observer
     const cs = getComputedStyle(element);

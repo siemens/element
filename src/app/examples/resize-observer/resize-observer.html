@@ -1,0 +1,8 @@
+<div #main class="border-1 m-5">
+  @for (item of items(); track $index) {
+    <button appDummy type="button" class="btn btn-secondary m-1">
+      {{ item }}
+    </button>
+  }
+</div>
+<button type="button" class="btn" (click)="changeSize()">Change size</button>

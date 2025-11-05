@@ -110,6 +110,16 @@ export class SiResizeSubscriptions {
   }
 
   private handleElement(event: ResizeEvent): void {
+    // eslint-disable-next-line no-console
+    console.log(
+      'resize event:',
+      this.box,
+      'borderBox',
+      event.borderBoxSize?.at(0),
+      'contentBox',
+      event.contentBoxSize?.at(0),
+      event.target
+    );
     const element = event.target;
     const entry = this.listeners.get(element);
     if (!entry) {
