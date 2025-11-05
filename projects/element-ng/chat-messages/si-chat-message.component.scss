@@ -88,6 +88,19 @@
   }
 }
 
+.message-wrapper {
+  min-inline-size: 0;
+  inline-size: auto;
+
+  &.start {
+    margin-inline-end: auto;
+  }
+
+  &.end {
+    margin-inline-start: auto;
+  }
+}
+
 :host-context(.si-container-md, .si-container-lg, .si-container-xl, .si-container-xxl) {
   .chat-message-container {
     flex-direction: row;
@@ -98,18 +111,6 @@
 
     &:not(.start) {
       flex-direction: row-reverse;
-    }
-  }
-
-  .message-wrapper {
-    min-inline-size: 0;
-    inline-size: auto;
-
-    &.end {
-      margin-inline-start: auto;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
     }
   }
 
@@ -124,14 +125,6 @@
 }
 
 :host-context(.si-container-xs, .si-container-sm) {
-  .message-wrapper {
-    min-inline-size: 0;
-
-    &.end {
-      margin-inline-start: auto;
-    }
-  }
-
   .chat-message-container {
     flex-direction: column;
   }
