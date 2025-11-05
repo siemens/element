@@ -15,7 +15,7 @@ import {
   viewChild
 } from '@angular/core';
 import { SiTypeaheadDirective, TypeaheadMatch } from '@siemens/element-ng/typeahead';
-import { SiTranslateModule, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
@@ -26,7 +26,7 @@ import { SiFilteredSearchValueBase } from '../si-filtered-search-value.base';
 
 @Component({
   selector: 'si-filtered-search-multi-select',
-  imports: [SiTranslateModule, SiTypeaheadDirective],
+  imports: [SiTranslatePipe, SiTypeaheadDirective],
   templateUrl: './si-filtered-search-multi-select.component.html',
   styleUrl: './si-filtered-search-multi-select.component.scss',
   providers: [
