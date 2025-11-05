@@ -47,6 +47,7 @@ nav:
       - Sizing:                            'fundamentals/styles/sizing.md'
       - Text:                              'fundamentals/styles/text.md'
       - Visibility:                        'fundamentals/styles/visibility.md'
+      - Z-Index:                           'fundamentals/styles/z-index.md'
     - UX Writing:
       - Overview:                           'fundamentals/ux-text-style-guide/index.md'
       - Basics:                             'fundamentals/ux-text-style-guide/basics.md'
