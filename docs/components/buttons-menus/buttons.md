@@ -33,11 +33,11 @@ Buttons can be primary, secondary, or tertiary, regardless of their semantic mea
 ### Categories
 
 Buttons can have text or a combination of text and labels, or they can be purely icon-based.
-When the button contains only an icon, it adopts a circular shape.
+Icon buttons can be either square or circular, depending on their placement and the geometry of the surrounding container.
 
 <si-docs-component example="buttons/buttoncategories" editor="false" height="150"></si-docs-component>
 
-The circular variant also includes a ghost button style.
+The icon variant also includes a ghost button style.
 Ghost buttons are subtle and blend into the interface, used for low-priority or optional actions.
 They signal availability without drawing attention, ideal for less critical or contextual options.
 
@@ -81,7 +81,7 @@ where a regular button would be too bulky.
 | Spacing(margin)    | `$spacing-l` | Spacing between buttons and other components/containers |
 | Min-width          | 100px        | Minimum width of button irrespective of text length     |
 
-#### Circle buttons
+#### Icon buttons
 
 - **Large**
 
