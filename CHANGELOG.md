@@ -1,3 +1,74 @@
+# [48.3.0](https://github.com/siemens/element/compare/v48.2.0...v48.3.0) (2025-11-05)
+
+
+### Features
+
+* **buttons:** introduce button group with sub variants ([bd261ba](https://github.com/siemens/element/commit/bd261bad1913d1f715d393d1287d9283f31c40e8))
+* **chat-messages:** add base chat components ([b32133e](https://github.com/siemens/element/commit/b32133ed61024a98a6313511793c4a6109235e90))
+* **chat-messages:** add chat input ([0f10739](https://github.com/siemens/element/commit/0f107399f138efefb829176fc8963893f9a4fd27))
+* **file-uploader:** provide standalone file-upload directive ([03c2dd1](https://github.com/siemens/element/commit/03c2dd123f5b7e0bb017c2cdc4428e7ca6239864))
+* **header-dropdown:** provide account item component ([1b5cd8f](https://github.com/siemens/element/commit/1b5cd8fe0fd986bc3a7e7247d26bf73bb9b18cb4))
+* **markdown-renderer:** add markdown renderer and styles ([62666a0](https://github.com/siemens/element/commit/62666a00d44e6e438861863fb8225d4016859359))
+* **native-charts/gauge:** add support for label and value formatter ([ec1b1b0](https://github.com/siemens/element/commit/ec1b1b0bc2d3d7f3507cc9174a692a14daefa738))
+* **schematics:** implement migration rule for wizard API and add related test files ([4a7f527](https://github.com/siemens/element/commit/4a7f527ac0c13fdfbd8299b417bdd714688dc8dc))
+* **schematics:** remove the deprecated API usages in various components ([b9dee69](https://github.com/siemens/element/commit/b9dee69c4ccc293846fcdc239f01d7a3be2b4468))
+
+
+### Bug Fixes
+
+* **charts/gauge:** align with figma specs ([19d32c9](https://github.com/siemens/element/commit/19d32c970b7b2507709f0eb6764383caa88a556e))
+* **ip-input:** shift remaining numbers to the right when inserting in middle of an ipv4 input ([e8db6bd](https://github.com/siemens/element/commit/e8db6bd2d815294ea180bc4f89521d08be24e444))
+* **ip-input:** trim leading zeros from IPv4 on focus lost ([d7f0e4f](https://github.com/siemens/element/commit/d7f0e4ff785123e3179484f729f7b55081216ecf))
+* **theme:** fix unintended alignment change for icons in card header ([5fc8dc4](https://github.com/siemens/element/commit/5fc8dc4c2e69898b7ef1dbe058e3327ce51d645a))
+
+
+### DEPRECATIONS
+
+* **accordion:** `SiCollapsiblePanelComponent.colorVariant` input has no effect
+  and is deprecated.
+  
+  Co-authored-by: ljanner <78341770+ljanner@users.noreply.github.com>
+* **tree-view:** `siTreeViewItemTemplate` is deprecated in favor of `siTreeViewItem`.
+  
+  Currently there are 2 directives `siTreeViewItemTemplate` for providing custom template and `siTreeViewItem` for applying custom directives (e.g cdkDrag) on tree item.
+  
+  the `siTreeViewItemTemplate` has 2 main DX problems:
+  
+  - Every tree item needs to specify templateName in its json structure.
+  - For every unique custom template there needs a separate ng-template with exact mapping of that templateName which doesn't provide type safety.
+  
+  Migration Guide:
+  
+  Before (deprecated):
+  ```html
+  <si-tree-view>
+    <ng-template siTreeViewItemTemplate="root" let-item>
+      <div class="custom-item">Root {{ item.name }}</div>
+    </ng-template>
+    <ng-template siTreeViewItemTemplate="child" let-item>
+      <div class="custom-item">Child {{ item.name }}</div>
+    </ng-template>
+  </si-tree-view>
+  ```
+  
+  After (recommended):
+  ```html
+  <si-tree-view>
+    <ng-template siTreeViewItem let-item="treeItem">
+      <si-tree-view-item>
+        <div class="custom-item">
+        @if (item.level === 0) {
+          Root {{ item.name }}
+        } @else {
+          Child {{ item.name }}
+        }
+        </div>
+      </si-tree-view-item>
+    </ng-template>
+  </si-tree-view>
+  ```
+* **resize-observer:** `ResizeObserverService._checkAll` method is deprecated without replacement.
+
 # [48.2.0](https://github.com/siemens/element/compare/v48.1.0...v48.2.0) (2025-10-27)
 
 
