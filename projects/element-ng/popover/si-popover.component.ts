@@ -21,13 +21,13 @@ import {
 } from '@angular/core';
 import { calculateOverlayArrowPosition, OverlayArrowPosition } from '@siemens/element-ng/common';
 import { SiIconComponent } from '@siemens/element-ng/icon';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiPopoverDirective } from './si-popover.directive';
 
 @Component({
   selector: 'si-popover',
-  imports: [NgClass, NgTemplateOutlet, SiIconComponent, SiTranslateModule],
+  imports: [NgClass, NgTemplateOutlet, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-popover.component.html',
   host: {
     '[id]': 'this.popoverDirective().popoverId'
