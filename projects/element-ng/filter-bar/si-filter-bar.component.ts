@@ -2,7 +2,15 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { booleanAttribute, Component, input, model, output, viewChild } from '@angular/core';
+import {
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  model,
+  output,
+  viewChild
+} from '@angular/core';
 import {
   SiAutoCollapsableListAdditionalContentDirective,
   SiAutoCollapsableListDirective,
@@ -27,6 +35,7 @@ import { SiFilterPillComponent } from './si-filter-pill.component';
   ],
   templateUrl: './si-filter-bar.component.html',
   styleUrl: './si-filter-bar.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.reset]': 'allowReset()'
   }
