@@ -39,7 +39,7 @@ export interface Attachment {
 export interface BaseChatMessage {
     content?: string | Signal<string>;
     loading?: boolean | Signal<boolean>;
-    type: 'user' | 'ai';
+    type: 'user' | 'ai' | 'tool';
 }
 
 // @public
@@ -50,7 +50,7 @@ export interface ChatInputAttachment extends Attachment {
 }
 
 // @public
-export type ChatMessage = UserChatMessage | AiChatMessage | TemplateChatMessage;
+export type ChatMessage = UserChatMessage | AiChatMessage | ToolChatMessage | TemplateChatMessage;
 
 // @public
 export interface MessageAction {
@@ -73,15 +73,14 @@ export class SiAiChatContainerComponent {
     // (undocumented)
     focus(): void;
     // (undocumented)
-    protected getContentValue(content: string | Signal<string> | undefined): string;
-    // (undocumented)
-    protected getLoadingState(messageLoading: boolean | Signal<boolean> | undefined, content: string | Signal<string> | undefined, isLatest: boolean, globalLoading?: boolean): boolean;
+    protected getContentValue<T extends string | object>(content: T | Signal<T> | undefined): T;
+    protected getLoadingState(messageLoading: boolean | Signal<boolean> | undefined, content: string | object | Signal<string | object> | undefined, isLatest: boolean, globalLoading?: boolean, allowEmptyContent?: boolean): boolean;
     // (undocumented)
     protected getMessagePrimaryActions(message: ChatMessage): MessageAction[];
     // (undocumented)
     protected getMessageSecondaryActions(message: ChatMessage): MenuItem[];
     // (undocumented)
-    protected getOutputValue(content: string | Signal<string> | undefined): string | Signal<string>;
+    protected getOutputValue(outputValue: string | object | Signal<string | object> | undefined): string | object | undefined;
     // (undocumented)
     protected readonly inputInterruptible: Signal<boolean>;
     // (undocumented)
@@ -106,6 +105,10 @@ export class SiAiChatContainerComponent {
     readonly noAutoScroll: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly secondaryActionsLabel: _angular_core.InputSignal<TranslatableString_2>;
     readonly sending: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    // (undocumented)
+    protected shouldAutoExpandInputArguments(message: ChatMessage): boolean;
+    // (undocumented)
+    protected shouldAutoExpandOutput(message: ChatMessage): boolean;
     readonly statusAction: _angular_core.InputSignal<{
         title: string;
         href: string;
@@ -114,8 +117,10 @@ export class SiAiChatContainerComponent {
     readonly statusHeading: _angular_core.InputSignal<string | undefined>;
     readonly statusMessage: _angular_core.InputSignal<string | undefined>;
     readonly statusSeverity: _angular_core.InputSignal<"info" | "success" | "warning" | "danger" | "caution" | "critical" | undefined>;
+    readonly toolInputArgumentsLabel: _angular_core.InputSignal<TranslatableString_2>;
+    readonly toolOutputLabel: _angular_core.InputSignal<TranslatableString_2>;
     // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiAiChatContainerComponent, "si-ai-chat-container", never, { "messages": { "alias": "messages"; "required": false; "isSignal": true; }; "sending": { "alias": "sending"; "required": false; "isSignal": true; }; "loading": { "alias": "loading"; "required": false; "isSignal": true; }; "disableInterrupt": { "alias": "disableInterrupt"; "required": false; "isSignal": true; }; "interrupting": { "alias": "interrupting"; "required": false; "isSignal": true; }; "noAutoScroll": { "alias": "noAutoScroll"; "required": false; "isSignal": true; }; "aiIcon": { "alias": "aiIcon"; "required": false; "isSignal": true; }; "colorVariant": { "alias": "colorVariant"; "required": false; "isSignal": true; }; "emptyStateTitle": { "alias": "emptyStateTitle"; "required": false; "isSignal": true; }; "emptyStateDescription": { "alias": "emptyStateDescription"; "required": false; "isSignal": true; }; "secondaryActionsLabel": { "alias": "secondaryActionsLabel"; "required": false; "isSignal": true; }; "statusSeverity": { "alias": "statusSeverity"; "required": false; "isSignal": true; }; "statusHeading": { "alias": "statusHeading"; "required": false; "isSignal": true; }; "statusMessage": { "alias": "statusMessage"; "required": false; "isSignal": true; }; "statusAction": { "alias": "statusAction"; "required": false; "isSignal": true; }; }, { "messageSent": "messageSent"; }, ["chatInput"], ["si-chat-input"], true, [{ directive: typeof i1.SiResponsiveContainerDirective; inputs: {}; outputs: {}; }]>;
+    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiAiChatContainerComponent, "si-ai-chat-container", never, { "messages": { "alias": "messages"; "required": false; "isSignal": true; }; "sending": { "alias": "sending"; "required": false; "isSignal": true; }; "loading": { "alias": "loading"; "required": false; "isSignal": true; }; "disableInterrupt": { "alias": "disableInterrupt"; "required": false; "isSignal": true; }; "interrupting": { "alias": "interrupting"; "required": false; "isSignal": true; }; "noAutoScroll": { "alias": "noAutoScroll"; "required": false; "isSignal": true; }; "aiIcon": { "alias": "aiIcon"; "required": false; "isSignal": true; }; "colorVariant": { "alias": "colorVariant"; "required": false; "isSignal": true; }; "emptyStateTitle": { "alias": "emptyStateTitle"; "required": false; "isSignal": true; }; "emptyStateDescription": { "alias": "emptyStateDescription"; "required": false; "isSignal": true; }; "secondaryActionsLabel": { "alias": "secondaryActionsLabel"; "required": false; "isSignal": true; }; "statusSeverity": { "alias": "statusSeverity"; "required": false; "isSignal": true; }; "statusHeading": { "alias": "statusHeading"; "required": false; "isSignal": true; }; "statusMessage": { "alias": "statusMessage"; "required": false; "isSignal": true; }; "statusAction": { "alias": "statusAction"; "required": false; "isSignal": true; }; "toolInputArgumentsLabel": { "alias": "toolInputArgumentsLabel"; "required": false; "isSignal": true; }; "toolOutputLabel": { "alias": "toolOutputLabel"; "required": false; "isSignal": true; }; }, { "messageSent": "messageSent"; }, ["chatInput"], ["si-chat-input"], true, [{ directive: typeof i1.SiResponsiveContainerDirective; inputs: {}; outputs: {}; }]>;
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiAiChatContainerComponent, never>;
 }
@@ -353,6 +358,17 @@ export class SiUserMessageComponent {
 export interface TemplateChatMessage {
     template: TemplateRef<any>;
     templateContext?: any;
+}
+
+// @public
+export interface ToolChatMessage extends BaseChatMessage {
+    autoExpandInputArguments?: boolean;
+    autoExpandOutput?: boolean;
+    icon?: string;
+    inputArguments?: string | object;
+    name: string;
+    output?: string | object | Signal<string | object>;
+    type: 'tool';
 }
 
 // @public
