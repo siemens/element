@@ -52,14 +52,15 @@ export interface Attachment {
  *
  * @see {@link ChatMessage} for the chat message type union
  * @see {@link UserChatMessage} for user messages
- * @see {@link AiChatMessage} for AI messages
+ * @see {@link AiChatMessage} for AI chat messages
+ * @see {@link ToolChatMessage} for tool messages
  * @see {@link TemplateChatMessage} for template-based messages
  *
  * @experimental
  */
 export interface BaseChatMessage {
   /** Type of message */
-  type: 'user' | 'ai';
+  type: 'user' | 'ai' | 'tool';
   /** Message content - can be a string or a Signal<string>, empty string shows loading state */
   content?: string | Signal<string>;
   /** Whether the message is currently loading/being generated - can be a boolean or Signal<boolean> */
@@ -100,6 +101,29 @@ export interface AiChatMessage extends BaseChatMessage {
   actions?: MessageAction[];
 }
 
+/** AI tool call display
+ *
+ * @see {@link SiAiChatContainerComponent} for the AI chat container where this is used
+ *
+ * @experimental
+ */
+export interface ToolChatMessage extends BaseChatMessage {
+  /** Type of message */
+  type: 'tool';
+  /** Tool name/title */
+  name: string;
+  /** Input arguments for the tool call */
+  inputArguments?: string | object;
+  /** Output result from the tool call - can be a string/object or Signal\<string | object\>, empty does not show loading state. */
+  output?: string | object | Signal<string | object>;
+  /** Whether the input arguments section should be expanded by default if it's the latest message (and closed after) */
+  autoExpandInputArguments?: boolean;
+  /** Whether the output section should be expanded by default if it's the latest message (and closed after) */
+  autoExpandOutput?: boolean;
+  /** Alternative tool icon, defaults to 'element-maintenance' */
+  icon?: string;
+}
+
 /**
  * Render custom chat message via template, consider using {@link SiChatMessageComponent} inside the template for consistent styling
  *
@@ -123,10 +147,11 @@ export interface TemplateChatMessage {
  *
  * @see {@link UserChatMessage} for user messages
  * @see {@link AiChatMessage} for AI messages
+ * @see {@link ToolChatMessage} for AI tool calls
  * @see {@link TemplateChatMessage} for template-based messages
  * @see {@link BaseChatMessage} for the base chat message interface
  * @see {@link SiAiChatContainerComponent} for the AI chat container where this is used
  *
  * @experimental
  */
-export type ChatMessage = UserChatMessage | AiChatMessage | TemplateChatMessage;
+export type ChatMessage = UserChatMessage | AiChatMessage | ToolChatMessage | TemplateChatMessage;

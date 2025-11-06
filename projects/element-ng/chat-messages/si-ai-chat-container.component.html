@@ -49,6 +49,20 @@
             [contentFormatter]="markdownRenderer()"
           />
         }
+
+        @if (message.type === 'tool') {
+          <si-tool-message
+            [name]="message.name"
+            [inputArguments]="message.inputArguments"
+            [output]="getOutputValue(message.output)"
+            [toolIcon]="message.icon ?? 'element-maintenance'"
+            [loading]="getLoadingState(message.loading, message.output, false, false, true)"
+            [inputArgumentsLabel]="toolInputArgumentsLabel()"
+            [outputLabel]="toolOutputLabel()"
+            [expandInputArguments]="shouldAutoExpandInputArguments(message)"
+            [expandOutput]="shouldAutoExpandOutput(message)"
+          />
+        }
       }
     }
   }

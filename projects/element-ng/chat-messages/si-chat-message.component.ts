@@ -30,6 +30,7 @@ import { SiResponsiveContainerDirective } from '@siemens/element-ng/resize-obser
  *
  * @see {@link SiUserMessageComponent} for the user message component
  * @see {@link SiAiMessageComponent} for the AI message component
+ * @see {@link SiToolMessageComponent} for the AI tool call display
  * @see {@link SiAttachmentListComponent} for attachment list to slot in
  * @see {@link SiChatMessageActionDirective} for action buttons to slot in
  * @see {@link SiMarkdownRendererComponent} for markdown content rendering

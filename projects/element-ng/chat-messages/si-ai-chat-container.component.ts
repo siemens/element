@@ -45,6 +45,7 @@ import { PromptSuggestion, SiAiWelcomeScreenComponent } from './si-ai-welcome-sc
 import { SiChatContainerInputDirective } from './si-chat-container-input.directive';
 import { SiChatContainerComponent } from './si-chat-container.component';
 import { ChatInputAttachment, SiChatInputComponent } from './si-chat-input.component';
+import { SiToolMessageComponent } from './si-tool-message.component';
 import { SiUserMessageComponent } from './si-user-message.component';
 
 /**
@@ -60,11 +61,13 @@ import { SiUserMessageComponent } from './si-user-message.component';
  * @see {@link ChatMessage} for the chat message model
  * @see {@link AiChatMessage} for the AI chat message model
  * @see {@link UserChatMessage} for the user chat message model
+ * @see {@link ToolChatMessage} for the tool chat message model
  * @see {@link TemplateChatMessage} for the template chat message model
  * @see {@link SiChatInputComponent} for the chat input component
  * @see {@link SiChatContainerComponent} for the base chat container component
  * @see {@link SiAiMessageComponent} for the used AI message component
  * @see {@link SiUserMessageComponent} for the used user message component
+ * @see {@link SiToolMessageComponent} for the used tool message component
  * @see {@link SiChatMessageComponent} for the base wrapper chat message component used by AI and user message components
  *
  * @experimental
@@ -75,6 +78,7 @@ import { SiUserMessageComponent } from './si-user-message.component';
     NgTemplateOutlet,
     SiInlineNotificationComponent,
     SiAiMessageComponent,
+    SiToolMessageComponent,
     SiUserMessageComponent,
     SiChatContainerComponent,
     SiChatContainerInputDirective,
@@ -305,6 +309,30 @@ export class SiAiChatContainerComponent {
   readonly statusAction = input<{ title: string; href: string; target?: string }>();
 
   /**
+   * Label for tool message input arguments section
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_TOOL_MESSAGE.INPUT_ARGUMENTS:Input Arguments`)
+   * ```
+   */
+  readonly toolInputArgumentsLabel = input<TranslatableString>(
+    t(() => $localize`:@@SI_TOOL_MESSAGE.INPUT_ARGUMENTS:Input Arguments`)
+  );
+
+  /**
+   * Label for tool message output section
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_TOOL_MESSAGE.OUTPUT:Output`)
+   * ```
+   */
+  readonly toolOutputLabel = input<TranslatableString>(
+    t(() => $localize`:@@SI_TOOL_MESSAGE.OUTPUT:Output`)
+  );
+
+  /**
    * Emitted when a new message is sent
    */
   readonly messageSent = output<{
@@ -343,6 +371,7 @@ export class SiAiChatContainerComponent {
     const messages = this.messages();
     if (!messages?.length) {
       if (this.loading()) {
+        // If loading but no messages, show a single loading AI message
         const loadingMessage: AiChatMessage = {
           type: 'ai',
           content: '',
@@ -353,18 +382,11 @@ export class SiAiChatContainerComponent {
       return [];
     }
 
+    // If global loading is true, check if we need to add an AI message
     if (this.loading() && messages.length > 0) {
       const latestMessage = messages[messages.length - 1];
 
-      const shouldAddAiMessage =
-        this.isTemplateMessage(latestMessage) ||
-        (latestMessage.type === 'ai' &&
-          this.getContentValue(latestMessage.content) &&
-          !this.getLoadingState(latestMessage.loading, latestMessage.content, false) &&
-          !this.isStreamingContent(latestMessage.content)) ||
-        latestMessage.type === 'user';
-
-      if (shouldAddAiMessage) {
+      if (this.shouldInjectLoadingMessage(latestMessage)) {
         const newMessages = [...messages];
         const loadingMessage: AiChatMessage = {
           type: 'ai',
@@ -379,12 +401,28 @@ export class SiAiChatContainerComponent {
     return messages;
   });
 
+  /**
+   * Determines if a loading AI message should be injected after the given message.
+   * Returns true unless the latest message is an AI message that's either empty, currently loading, or streaming.
+   */
+  private shouldInjectLoadingMessage(latestMessage: ChatMessage): boolean {
+    if (this.isTemplateMessage(latestMessage)) return true;
+    if (latestMessage.type !== 'ai') return true;
+
+    // Don't inject if AI message is empty/loading/streaming
+    const hasContent = !!this.getContentValue(latestMessage.content);
+    const isLoading = this.getLoadingState(latestMessage.loading, latestMessage.content, false);
+    const isStreaming = this.isStreamingContent(latestMessage.content);
+
+    return hasContent && !isLoading && !isStreaming;
+  }
+
   private getMessageActions(message: ChatMessage): {
     primary: MessageAction[];
     secondary: MenuItem[];
     version: number;
   } {
-    if (this.isTemplateMessage(message)) {
+    if (this.isTemplateMessage(message) || message.type === 'tool') {
       return { primary: [], secondary: [], version: 0 };
     }
 
@@ -447,48 +485,106 @@ export class SiAiChatContainerComponent {
     }
   }
 
-  protected getContentValue(content: string | Signal<string> | undefined): string {
-    if (isSignal(content)) {
-      return content();
-    }
-    return content ?? '';
+  protected getContentValue<T extends string | object>(content: T | Signal<T> | undefined): T {
+    if (!content) return '' as T;
+    return isSignal(content) ? (content as Signal<T>)() : content;
   }
 
-  protected getOutputValue(content: string | Signal<string> | undefined): string | Signal<string> {
-    return content ?? '';
+  protected getOutputValue(
+    outputValue: string | object | Signal<string | object> | undefined
+  ): string | object | undefined {
+    if (outputValue === undefined || outputValue === null) return undefined;
+    return isSignal(outputValue) ? (outputValue as Signal<string | object>)() : outputValue;
   }
 
-  private isEmptyContent(content: string | Signal<string> | undefined): boolean {
+  private isEmptyContent(content: string | object | Signal<string | object> | undefined): boolean {
     const contentValue = this.getContentValue(content);
-    return !contentValue || contentValue.trim().length === 0;
+
+    return !contentValue;
   }
 
   private getLoadingValue(loading: boolean | Signal<boolean> | undefined): boolean {
-    if (isSignal(loading)) {
-      return loading();
-    }
-    return loading ?? false;
+    return loading !== undefined ? (isSignal(loading) ? loading() : loading) : false;
   }
 
-  private isStreamingContent(content: string | Signal<string> | undefined): boolean {
-    return isSignal(content) && this.getContentValue(content).trim().length > 0;
+  private isStreamingContent(
+    content: string | object | Signal<string | object> | undefined
+  ): boolean {
+    return isSignal(content) && !this.isEmptyContent(content);
   }
 
+  /**
+   * Helper method to get loading state from boolean or signal
+   *
+   * Behavior:
+   * - Shows loading when content is empty and allowEmptyContent is false
+   * - Shows loading when message.loading is true
+   * - Shows loading when it's the latest message, globalLoading is true, and content is empty
+   *
+   * @param messageLoading - The loading state of the individual message
+   * @param content - The content of the message
+   * @param isLatest - Whether this is the latest message in the list
+   * @param globalLoading - The global loading state for the chat container
+   * @param allowEmptyContent - Whether to allow empty content without showing loading
+   * @returns Whether to show the loading state
+   */
   protected getLoadingState(
     messageLoading: boolean | Signal<boolean> | undefined,
-    content: string | Signal<string> | undefined,
+    content: string | object | Signal<string | object> | undefined,
     isLatest: boolean,
-    globalLoading: boolean = false
+    globalLoading: boolean = false,
+    allowEmptyContent: boolean = false
   ): boolean {
     const messageLoadingValue = this.getLoadingValue(messageLoading);
     const isEmptyContent = this.isEmptyContent(content);
+
+    // If the content is empty, always show loading (unless allowEmptyContent is true)
+    if (isEmptyContent && !allowEmptyContent) {
+      return true;
+    }
 
     return messageLoadingValue || (isLatest && globalLoading && isEmptyContent);
   }
 
   protected isLatestMessage(message: ChatMessage): boolean {
     const messages = this.displayMessages();
+    if (!messages || messages.length === 0) return false;
     return messages[messages.length - 1] === message;
+  }
+  private isLatestToolMessage(message: ChatMessage): boolean {
+    const messages = this.displayMessages();
+    if (!messages || messages.length === 0) return false;
+
+    const messageIndex = messages.findIndex(m => m === message);
+    if (messageIndex === -1) return false;
+
+    if (messageIndex === messages.length - 1) return true;
+
+    if (messageIndex < messages.length - 2) return false;
+
+    const nextMessage = messages[messageIndex + 1];
+
+    // Auto-expand only applies when an AI response is being generated.
+    // If a user message or another tool message follows, this is no longer the latest tool call.
+    if (!this.isTemplateMessage(nextMessage) && nextMessage.type === 'ai') return true;
+
+    return false;
+  }
+
+  protected shouldAutoExpandInputArguments(message: ChatMessage): boolean {
+    if (this.isTemplateMessage(message) || message.type !== 'tool') return false;
+    if (!message.autoExpandInputArguments) {
+      return false;
+    }
+    return this.isLatestToolMessage(message);
+  }
+
+  protected shouldAutoExpandOutput(message: ChatMessage): boolean {
+    if (this.isTemplateMessage(message) || message.type !== 'tool') return false;
+    if (!message.autoExpandOutput) {
+      return false;
+    }
+    return this.isLatestToolMessage(message);
   }
 
   protected readonly isSignal = isSignal;

@@ -39,7 +39,7 @@ export interface Attachment {
 export interface BaseChatMessage {
     content?: string | Signal<string>;
     loading?: boolean | Signal<boolean>;
-    type: 'user' | 'ai';
+    type: 'user' | 'ai' | 'tool';
 }
 
 // @public
@@ -50,7 +50,7 @@ export interface ChatInputAttachment extends Attachment {
 }
 
 // @public
-export type ChatMessage = UserChatMessage | AiChatMessage | TemplateChatMessage;
+export type ChatMessage = UserChatMessage | AiChatMessage | ToolChatMessage | TemplateChatMessage;
 
 // @public
 export interface MessageAction {
@@ -106,6 +106,8 @@ export class SiAiChatContainerComponent {
     readonly statusMessage: _angular_core.InputSignal<string | undefined>;
     readonly statusSeverity: _angular_core.InputSignal<"info" | "success" | "warning" | "danger" | "caution" | "critical" | undefined>;
     readonly syntaxHighlighter: _angular_core.InputSignal<((code: string, language?: string) => string | undefined) | undefined>;
+    readonly toolInputArgumentsLabel: _angular_core.InputSignal<TranslatableString_2>;
+    readonly toolOutputLabel: _angular_core.InputSignal<TranslatableString_2>;
     readonly welcomeMessage: _angular_core.InputSignal<TranslatableString_2>;
 }
 
@@ -207,16 +209,6 @@ export class SiChatMessageComponent {
 export class SiToolMessageComponent {
     readonly expandInputArguments: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly expandOutput: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected formatData(data: string | object | Signal<string | object> | undefined): string;
-    // (undocumented)
-    protected getLoadingState(): boolean;
-    // (undocumented)
-    protected getOutputValue(): string | object | undefined;
-    // (undocumented)
-    protected hasInputArguments(): boolean;
-    // (undocumented)
-    protected hasOutput(): boolean;
     readonly inputArguments: _angular_core.InputSignal<string | object | undefined>;
     readonly inputArgumentsLabel: _angular_core.InputSignal<TranslatableString_2>;
     readonly loading: _angular_core.InputSignalWithTransform<boolean, unknown>;
@@ -242,6 +234,17 @@ export class SiUserMessageComponent {
 export interface TemplateChatMessage {
     template: TemplateRef<any>;
     templateContext?: any;
+}
+
+// @public
+export interface ToolChatMessage extends BaseChatMessage {
+    autoExpandInputArguments?: boolean;
+    autoExpandOutput?: boolean;
+    icon?: string;
+    inputArguments?: string | object;
+    name: string;
+    output?: string | object | Signal<string | object>;
+    type: 'tool';
 }
 
 // @public
