@@ -24,13 +24,13 @@ export const restoreResizeObserver = (): void => {
  * `ResizeObserver` mock for testing purposes.
  */
 export class MockResizeObserver {
-  static instance: MockResizeObserver;
+  static instances: MockResizeObserver[] = [];
   private callback: ResizeObserverCallback;
   observed: [Element, ResizeObserverOptions | undefined][] = [];
 
   constructor(callback: ResizeObserverCallback) {
     this.callback = callback;
-    MockResizeObserver.instance = this;
+    MockResizeObserver.instances.push(this);
   }
 
   disconnect = jasmine.createSpy('disconnect').and.callFake(() => (this.observed = []));
@@ -52,23 +52,24 @@ export class MockResizeObserver {
    * If a target is provided, only that element is resized otherwise all observed elements are resized.
    */
   static triggerResize(options: ResizeOptions): void {
-    const elements = options.target
-      ? [options.target]
-      : MockResizeObserver.instance.observed.map(x => x[0] as HTMLElement);
-    for (const target of elements) {
-      const inlineSize = options.inlineSize ?? target.clientWidth;
-      const blockSize = options.blockSize ?? target.clientHeight;
-      const e: ResizeObserverEntry = {
-        target,
-        contentRect: target.getBoundingClientRect(),
-        borderBoxSize: [{ inlineSize, blockSize }],
-        contentBoxSize: [{ inlineSize, blockSize }],
-        devicePixelContentBoxSize: [{ inlineSize, blockSize }]
-      };
-      // Mock clientWidth and clientHeight to simulate size change
-      const instance = MockResizeObserver.instance;
-      if (instance.observed.filter(x => !!x).length !== 0) {
-        instance.callback?.([e], instance);
+    for (const instance of MockResizeObserver.instances) {
+      const elements = options.target
+        ? [options.target]
+        : instance.observed.map(x => x[0] as HTMLElement);
+      for (const target of elements) {
+        const inlineSize = options.inlineSize ?? target.clientWidth;
+        const blockSize = options.blockSize ?? target.clientHeight;
+        const e: ResizeObserverEntry = {
+          target,
+          contentRect: target.getBoundingClientRect(),
+          borderBoxSize: [{ inlineSize, blockSize }],
+          contentBoxSize: [{ inlineSize, blockSize }],
+          devicePixelContentBoxSize: [{ inlineSize, blockSize }]
+        };
+        // Mock clientWidth and clientHeight to simulate size change
+        if (instance.observed.filter(x => !!x).length !== 0) {
+          instance.callback?.([e], instance);
+        }
       }
     }
   }
