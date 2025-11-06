@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+export * from './si-observe-element-size';
 export * from './resize-observer.service';
 export * from './si-resize-observer.directive';
 export * from './si-resize-observer.module';
