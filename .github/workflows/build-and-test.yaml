@@ -29,7 +29,7 @@ jobs:
           fetch-depth: 0 # We need this for commit-lint
       - uses: actions/setup-node@v6
         with:
-          node-version: lts/jod
+          node-version: lts/krypton
           cache: 'npm'
       - run: npm config set //code.siemens.com/api/v4/packages/npm/:_authToken $SIEMENS_NPM_TOKEN
         env:
@@ -62,7 +62,7 @@ jobs:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v6
         with:
-          node-version: lts/jod
+          node-version: lts/krypton
           cache: 'npm'
       - uses: actions/download-artifact@v6
         with:
@@ -144,7 +144,7 @@ jobs:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v6
         with:
-          node-version: lts/jod
+          node-version: lts/krypton
           cache: 'npm'
       - uses: actions/download-artifact@v6
         with:
@@ -181,7 +181,7 @@ jobs:
           lfs: true
       - uses: actions/setup-node@v6
         with:
-          node-version: lts/jod
+          node-version: lts/krypton
           cache: 'npm'
       - uses: actions/download-artifact@v6
         with:
@@ -205,7 +205,7 @@ jobs:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v6
         with:
-          node-version: lts/jod
+          node-version: lts/krypton
       - uses: actions/download-artifact@v6
         with:
           path: all-blob-reports
@@ -241,7 +241,7 @@ jobs:
           path: dist/coverage
       - uses: actions/setup-node@v6
         with:
-          node-version: lts/jod
+          node-version: lts/krypton
           cache: 'npm'
       - run: npm config set //code.siemens.com/api/v4/packages/npm/:_authToken $SIEMENS_NPM_TOKEN
         env:

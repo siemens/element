@@ -52,7 +52,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: lts/jod
+          node-version: lts/krypton
           cache: 'npm'
 
       - name: Get latest workflow run
@@ -96,7 +96,7 @@ jobs:
                 console.log(`Checking run ${run.id}: Jobs found:`, Object.keys(jobStatuses));
                 console.log(`Job statuses:`, jobStatuses);
 
-                const allRequiredJobsSuccessful = requiredJobs.every(jobName => 
+                const allRequiredJobsSuccessful = requiredJobs.every(jobName =>
                   jobStatuses[jobName] === 'success'
                 );
 
@@ -104,7 +104,7 @@ jobs:
                   latestValidRun = run;
                   break;
                 } else {
-                  const failedJobs = requiredJobs.filter(jobName => 
+                  const failedJobs = requiredJobs.filter(jobName =>
                     !jobStatuses[jobName] || jobStatuses[jobName] !== 'success'
                   );
                   console.log(`❌ Run ${run.id} missing or failed jobs:`, failedJobs);
