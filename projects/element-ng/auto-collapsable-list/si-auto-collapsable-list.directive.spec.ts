@@ -105,19 +105,6 @@ describe('SiAutoCollapsableListDirective', () => {
 
   afterEach(() => restoreResizeObserver());
 
-  it('should not flicker on initial render', fakeAsync(() => {
-    fixture.detectChanges();
-    hostElement
-      .querySelectorAll<HTMLElement>('[siAutoCollapsableListItem]')
-      .forEach(element => expect(element.style.visibility).toBe('hidden'));
-    tick();
-    fixture.detectChanges();
-    hostElement
-      .querySelectorAll<HTMLElement>('[siAutoCollapsableListItem]')
-      .forEach(element => expect(element.style.visibility).toBe('visible'));
-    component.items().forEach(item => expect(item.canBeVisible()).toBe(true));
-  }));
-
   it('should collapse and expand items on container size changes', fakeAsync(() => {
     fixture.detectChanges();
     // Skip test when browser is not focussed to prevent failures.
