@@ -14,9 +14,9 @@
   },
   "type": "module",
   "engines": {
-    "node": "^20.0.0 || ^22.0.0 || ^24.0.0",
+    "node": "^24.0.0",
     "yarn": "Please use NPM to install dependencies",
-    "npm": "10 - 11"
+    "npm": "11"
   },
   "commitlint": {
     "extends": [
