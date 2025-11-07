@@ -11,7 +11,12 @@ import { SiFilterPillComponent } from './index';
 @Component({
   imports: [SiFilterPillComponent],
   template: `
-    <si-filter-pill [totalPills]="1" [filter]="filter" (deleteFilters)="deleteFilters($event)" />
+    <si-filter-pill
+      removeFilterAriaLabel="Remove"
+      [totalPills]="1"
+      [filter]="filter"
+      (deleteFilters)="deleteFilters($event)"
+    />
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
