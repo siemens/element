@@ -33,6 +33,7 @@ import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-transla
 import { CropperPosition, ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';
 
 import { SiImageCropperStyleComponent } from './si-image-cropper-style.component';
+import { ImageResolutionLimits } from './si-photo-upload.model';
 
 /**
  * A component used to upload, edit, and delete a user's photo. The user can upload
@@ -310,6 +311,39 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
    */
   readonly croppedPhoto = model<string>();
 
+  /**
+   * The maximum/minimum resolution limits of the image.
+   * If not set, the resolution is not limited.
+   */
+  readonly resolutionLimits = input<ImageResolutionLimits>();
+
+  /**
+   * If the uploaded image exceeds the allowed resolution limit, this
+   * error message will be displayed to the user.
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_PHOTO_UPLOAD.ERROR_RESOLUTION_HIGH:Resolution is too high`)
+   * ```
+   */
+  readonly resolutionExceededErrorMsg = input(
+    t(() => $localize`:@@SI_PHOTO_UPLOAD.ERROR_RESOLUTION_HIGH:Resolution is too high`)
+  );
+
+  /**
+   * If the uploaded image is below the allowed resolution limit, this
+   * error message will be displayed to the user.
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_PHOTO_UPLOAD.ERROR_RESOLUTION_LOW:Resolution is too low`)
+   * ```
+   */
+  readonly resolutionTooLowErrorMsg = input(
+    t(() => $localize`:@@SI_PHOTO_UPLOAD.ERROR_RESOLUTION_LOW:Resolution is too low`)
+  );
+
+
   protected readonly editPhotoTemplate = viewChild.required<TemplateRef<any>>('editPhotoTemplate');
   protected readonly fileInput = viewChild.required<ElementRef<any>>('fileInput');
   protected readonly imageCropper = viewChild<ImageCropperComponent>('imageCropper');
@@ -515,6 +549,21 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
    *
    */
   protected cropperImageCropped(event: ImageCroppedEvent): void {
+    const resLimits = this.resolutionLimits();
+    if (resLimits) {
+      const height = event.imagePosition.x1 + event.imagePosition.x2;
+      const width = event.imagePosition.y1 + event.imagePosition.y2;
+
+      if (height < resLimits.minHeight || width < resLimits.minWidth) {
+        this.uploadErrorMessage.set(this.resolutionTooLowErrorMsg());
+        return;
+      }
+
+      if (height > resLimits.maxHeight || width > resLimits.maxWidth) {
+        this.uploadErrorMessage.set(this.resolutionExceededErrorMsg());
+        return;
+      }
+    }
     this.imageCroppedEvent = event;
   }
 
