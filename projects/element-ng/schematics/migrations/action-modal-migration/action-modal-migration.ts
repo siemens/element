@@ -55,8 +55,13 @@ export const actionModalMigrationRule = (options: { path: string }): Rule => {
       }
 
       const pendingTransformations: CodeTransformation[] = [];
+      const usedIdentifier = new Set<string>();
 
       const visitNodeAndCollectTransformations = (node: ts.Node): void => {
+        if (ts.isImportDeclaration(node)) {
+          return;
+        }
+
         // Collect method call transformations
         if (ts.isCallExpression(node)) {
           const methodTransformation = createActionDialogMethodCallTransformation(node);
@@ -70,12 +75,19 @@ export const actionModalMigrationRule = (options: { path: string }): Rule => {
           const typeTransformation = createActionDialogTypeTransformation(node);
           if (typeTransformation) {
             pendingTransformations.push(typeTransformation);
+            // We remove the usage here. In order to avoid counting it as used identifier, we skip further processing.
+            return;
           }
+        }
+
+        if (ts.isIdentifier(node)) {
+          usedIdentifier.add(node.text);
         }
 
         node.forEachChild(visitNodeAndCollectTransformations);
       };
       sourceFile.forEachChild(visitNodeAndCollectTransformations);
+      pendingTransformations.push(...removeUnusedImports(sourceFile, usedIdentifier));
 
       if (pendingTransformations.length > 0) {
         applyCodeTransformations(tree, filePath, pendingTransformations);
@@ -117,8 +129,7 @@ const createActionDialogMethodCallTransformation = (
 
   return {
     node,
-    newCode,
-    type: 'method-call'
+    newCode
   };
 };
 
@@ -137,8 +148,7 @@ const createActionDialogTypeTransformation = (
 
   return {
     node,
-    newCode: `'${matchingReplacement.new}'`,
-    type: 'type-reference'
+    newCode: `'${matchingReplacement.new}'`
   };
 };
 
@@ -191,4 +201,58 @@ const applyCodeTransformations = (
       recorder.insertLeft(node.getStart(), newCode);
     });
   tree.commitUpdate(recorder);
+};
+
+const removeUnusedImports = (
+  sourceFile: ts.SourceFile,
+  usedIdentifier: Set<string>
+): CodeTransformation[] => {
+  const printer = ts.createPrinter();
+  const importFinder = (node: ts.Node): CodeTransformation | undefined => {
+    if (
+      ts.isImportDeclaration(node) &&
+      ts.isStringLiteral(node.moduleSpecifier) &&
+      /@(siemens|simpl)\/element-ng(\/action-modal)?/.test(node.moduleSpecifier.text) &&
+      node.importClause?.namedBindings &&
+      ts.isNamedImports(node.importClause.namedBindings)
+    ) {
+      const usedBindings = node.importClause.namedBindings.elements.filter(
+        element =>
+          // This script anyway is not capable of handling aliasing imports, so we can ignore them here.
+          usedIdentifier.has(element.name.text) || !ACTION_MODAL_SYMBOLS.includes(element.name.text)
+      );
+
+      if (usedBindings.length === node.importClause.namedBindings.elements.length) {
+        // All bindings are used, no changes needed
+        return undefined;
+      }
+
+      if (usedBindings.length === 0) {
+        // No bindings are used, remove the entire import statement
+        return {
+          node,
+          newCode: ''
+        };
+      }
+
+      // Recreate import statement with only used bindings
+      const newImport = ts.factory.createImportDeclaration(
+        node.modifiers,
+        ts.factory.createImportClause(
+          node.importClause.isTypeOnly,
+          node.importClause.name,
+          ts.factory.createNamedImports(usedBindings)
+        ),
+        node.moduleSpecifier,
+        node.attributes
+      );
+
+      return {
+        node,
+        newCode: printer.printNode(ts.EmitHint.Unspecified, newImport, sourceFile)
+      };
+    }
+    return undefined;
+  };
+  return sourceFile.statements.map(importFinder).filter(transform => transform !== undefined);
 };
