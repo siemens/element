@@ -1,8 +1,9 @@
 import re
 import xml.etree.ElementTree as etree
 from abc import abstractmethod
+from pathlib import Path
 from typing import cast
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlparse
 
 from markdown import Extension
 from markdown.preprocessors import Preprocessor
@@ -96,9 +97,16 @@ class ElementHtmlPreProcessor(Preprocessor):
     pass
 
 class ElementExamplePreProcessor(ElementHtmlPreProcessor):
-  def __init__(self, examples_base, *args, **kwargs):
+  def __init__(self, examples_base, page, *args, **kwargs):
     """Initialize."""
     self.examples_base = examples_base
+    self.page = page
+    url = urlparse(self.examples_base)
+    # If no scheme, we assume we need to build a relative path to the examples
+    if url.scheme == '':
+      segments = self.page.lstrip('/').split('/')
+      base = Path('/'.join(['..' if segment else '' for segment in segments]))
+      self.examples_base = str(base / self.examples_base.lstrip('/'))
     super().__init__('si-docs-component', *args, **kwargs)
 
   def convert_tag(self, line) -> str:
@@ -132,13 +140,19 @@ class ElementDocsExtension(Extension):
   def __init__(self, *args, **kwargs):
     """Initialize."""
     self.config = {
-      'examples_base': ['', 'Base URL for the examples.']
+      'examples_base': ['', 'Base URL for the examples.'],
+      'md_file': ['', 'The markdown file being processed.']
     }
     super().__init__(*args, **kwargs)
 
   def extendMarkdown(self, md):
     """Add Tabbed to Markdown instance."""
-    md.preprocessors.register(ElementExamplePreProcessor(self.config.get('examples_base')[0], md), 'element_example', 10)
+    # Extract current page path
+    current_page = self.config.get('md_file')[0].config._current_page
+    page = ''
+    if hasattr(current_page, 'abs_url'):
+      page = current_page.abs_url
+    md.preprocessors.register(ElementExamplePreProcessor(self.config.get('examples_base')[0], page, md), 'element_example', 10)
     md.treeprocessors.register(ElementTabTreeProcessor(md), 'element_tabs', 10)
 
 
