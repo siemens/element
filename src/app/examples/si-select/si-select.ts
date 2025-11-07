@@ -11,6 +11,7 @@ import {
   SiSelectActionDirective,
   SiSelectActionsDirective,
   SiSelectComponent,
+  SiSelectGroupTemplateDirective,
   SiSelectMultiValueDirective,
   SiSelectOptionTemplateDirective,
   SiSelectSimpleOptionsDirective,
@@ -31,6 +32,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiSelectActionsDirective,
     SiSelectActionDirective,
     SiSelectOptionTemplateDirective,
+    SiSelectGroupTemplateDirective,
     TitleCasePipe,
     TranslateModule
   ],
