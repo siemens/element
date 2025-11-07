@@ -29,7 +29,7 @@ export class SiChartSunburstComponent extends SiChartComponent {
   protected override applyOptions(): void {
     const series = this.series();
     this.actualOptions = {
-      series: series ? (Object.assign({ type: 'sunburst' }, series) as any) : [],
+      series: series ? [{ type: 'sunburst', ...series }] : [],
       tooltip: { show: this.toolTip() || this.tooltip() }
     };
 
