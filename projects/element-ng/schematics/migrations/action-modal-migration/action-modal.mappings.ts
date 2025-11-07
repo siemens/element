@@ -30,7 +30,6 @@ export interface DialogMethodConfig {
 export interface CodeTransformation {
   node: ts.Node;
   newCode: string;
-  type: 'method-call' | 'type-reference';
 }
 
 export const DIALOG_METHOD_CONFIGS: Record<LegacyMethodName, DialogMethodConfig> = {
