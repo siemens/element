@@ -41,7 +41,7 @@ export class SiChartCircleComponent extends SiChartComponent {
         : 0;
     const top = 32 + offset;
     this.series()?.forEach(series => {
-      const s: any = Object.assign({ type: 'pie', top }, series);
+      const s: PieSeriesOption = { type: 'pie', top, ...series };
       optionSeries.push(s);
       if (this.showLegend()) {
         series.data.forEach(data => {

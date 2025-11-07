@@ -123,7 +123,7 @@ export class SiChartGaugeComponent extends SiChartComponent implements OnChanges
     const colors: string[] = this.colors() ?? effectiveOpts.color;
     const hasIndicator = !!this.segments().length;
 
-    let newColors: any[];
+    let newColors: [number, string][];
     if (hasIndicator) {
       newColors = this.segments().map((threshold, index) => {
         const color = colors[index % colors.length];
@@ -146,7 +146,7 @@ export class SiChartGaugeComponent extends SiChartComponent implements OnChanges
     this.refreshSeries();
   }
 
-  private setAxisLineColor(colors: any[], axisLine: any): void {
+  private setAxisLineColor(colors: [number, string][], axisLine: any): void {
     axisLine.lineStyle = axisLine.lineStyle ?? {};
     axisLine.lineStyle.color = colors;
   }
