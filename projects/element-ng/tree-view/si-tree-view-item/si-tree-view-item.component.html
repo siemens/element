@@ -41,7 +41,9 @@
         >
           @if (!templates().length) {
             <ng-content select=":not(si-tree-view-item):not([dragPreview])"
-              ><h5 class="text-truncate">{{ treeItem.label | translate }}</h5></ng-content
+              ><div class="text-truncate" [class.si-h5]="enableSelection() && treeItem.selected">{{
+                treeItem.label | translate
+              }}</div></ng-content
             >
           } @else {
             <div>

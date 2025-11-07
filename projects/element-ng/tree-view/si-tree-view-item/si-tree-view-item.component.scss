@@ -80,10 +80,6 @@
     .si-tree-view-item-end-icons {
       background-color: var(--si-tree-view-item-select-color);
     }
-
-    > .si-tree-view-item > .si-tree-view-item-main > .si-tree-view-item-object-data > h5 {
-      font-weight: variables.$si-font-weight-h5;
-    }
   }
 
   &.si-tree-view-item-not-selectable {
@@ -234,11 +230,6 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
-  }
-
-  > h5 {
-    font-size: var(--si-tree-view-item-object-data-h5-font-size);
-    font-weight: var(--si-tree-view-item-object-data-h5-font-weight);
   }
 }
 
