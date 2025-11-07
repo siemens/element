@@ -503,7 +503,7 @@ describe('SiTreeViewComponent', () => {
       .triggerEventHandler('click', null);
     fixture.detectChanges();
     const item = element.querySelectorAll('.si-tree-view-item')[1];
-    expect(item.querySelector('.si-tree-view-item-object-data h5')?.innerHTML).toContain('Milano');
+    expect(item.querySelector('.si-tree-view-item-object-data div')?.innerHTML).toContain('Milano');
   });
 
   it('item should be selected', () => {

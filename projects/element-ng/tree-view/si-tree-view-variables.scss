@@ -9,8 +9,6 @@ $si-tree-view-item-select-color: variables.$element-base-1-selected;
 $si-tree-view-item-line-height: variables.$si-line-height-body;
 $si-tree-view-item-min-height: 40px;
 $si-tree-view-item-object-data-field-1-color: variables.$element-text-secondary;
-$si-tree-view-item-object-data-h5-font-size: variables.$si-font-size-body;
-$si-tree-view-item-object-data-h5-font-weight: variables.$si-font-weight-normal;
 
 :host {
   --si-tree-view-background: #{$si-tree-view-background};
@@ -23,8 +21,6 @@ $si-tree-view-item-object-data-h5-font-weight: variables.$si-font-weight-normal;
   --si-tree-view-item-line-height: #{$si-tree-view-item-line-height};
   --si-tree-view-item-min-height: #{$si-tree-view-item-min-height};
   --si-tree-view-item-object-data-field-1-color: #{$si-tree-view-item-object-data-field-1-color};
-  --si-tree-view-item-object-data-h5-font-size: #{$si-tree-view-item-object-data-h5-font-size};
-  --si-tree-view-item-object-data-h5-font-weight: #{$si-tree-view-item-object-data-h5-font-weight};
 }
 
 :host-context(.tree-sm) {
