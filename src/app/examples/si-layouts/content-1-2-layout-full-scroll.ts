@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SiChartCircleComponent, themeElement, themeSupport } from '@siemens/charts-ng';
 import {
@@ -50,10 +50,14 @@ themeSupport.setDefault(themeElement);
     SiHeaderLogoDirective
   ],
   templateUrl: './content-1-2-layout-full-scroll.html',
-  providers: [DataService]
+  providers: [DataService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
-  menuItems: NavbarVerticalItem[] = [
+  private readonly logEvent = inject(LOG_EVENT);
+  private readonly dataService = inject(DataService);
+  protected readonly tableConfig = SI_DATATABLE_CONFIG;
+  protected readonly menuItems: NavbarVerticalItem[] = [
     {
       type: 'group',
       label: 'Home',
@@ -76,17 +80,11 @@ export class SampleComponent {
     { type: 'router-link', label: 'Energy & Operations', routerLink: 'energy' },
     { type: 'router-link', label: 'Test Coverage', routerLink: 'coverage' }
   ];
-  logEvent = inject(LOG_EVENT);
 
-  tableConfig = SI_DATATABLE_CONFIG;
-  totalElements = 0;
-  pageNumber = 0;
-
-  rows: CorporateEmployee[] = [];
-
-  isLoading = 0;
-
-  private dataService = inject(DataService);
+  protected readonly totalElements = signal(0);
+  protected readonly pageNumber = signal(0);
+  protected readonly rows = signal<CorporateEmployee[]>([]);
+  protected readonly isLoading = signal(0);
 
   onSelect(event: SelectEvent<CorporateEmployee>): void {
     this.logEvent(event);
@@ -94,20 +92,20 @@ export class SampleComponent {
 
   setPage(pageRequest: PageRequest): void {
     // current page number is determined by last call to setPage
-    this.pageNumber = pageRequest.offset;
+    this.pageNumber.set(pageRequest.offset);
 
     // counter of pages loading
-    this.isLoading++;
+    this.isLoading.update(count => count + 1);
 
     this.dataService.getResults(pageRequest).subscribe(pagedData => {
       // update total count
-      this.totalElements = pagedData.page.totalElements;
+      this.totalElements.set(pagedData.page.totalElements);
 
       // calc starting index
       const start = pagedData.page.pageNumber * pagedData.page.size;
 
       // copy existing data
-      const rows = this.rows.slice();
+      const rows = this.rows().slice();
 
       // insert new rows into new position
       if (rows.length <= start) {
@@ -116,9 +114,9 @@ export class SampleComponent {
       rows.splice(start, pagedData.page.size, ...pagedData.data);
 
       // set rows to our new rows
-      this.rows = rows;
+      this.rows.set(rows);
 
-      this.isLoading--;
+      this.isLoading.update(value => value - 1);
     });
   }
 }
