@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
 import { NgxDatatableModule } from '@siemens/ngx-datatable';
@@ -11,7 +11,8 @@ import { NgxDatatableModule } from '@siemens/ngx-datatable';
   selector: 'app-sample',
   imports: [NgxDatatableModule, SiDatatableModule, SiResizeObserverModule],
   templateUrl: './datatable-footer.html',
-  styleUrl: './datatable.scss'
+  styleUrl: './datatable.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   tableConfig = SI_DATATABLE_CONFIG;

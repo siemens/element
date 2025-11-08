@@ -4,7 +4,7 @@
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { AsyncPipe, CommonModule, JsonPipe } from '@angular/common';
-import { AfterViewInit, Component, inject } from '@angular/core';
+import { AfterViewInit, Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiEmptyStateComponent, SiEmptyStateModule } from '@siemens/element-ng/empty-state';
@@ -46,7 +46,8 @@ import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.s
         <span class="si-skeleton"></span>
       }
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 class OverviewComponent {
   private activatedRoute = inject(ActivatedRoute);

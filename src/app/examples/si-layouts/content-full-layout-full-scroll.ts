@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   SiAccountDetailsComponent,
@@ -47,7 +47,8 @@ import { CorporateEmployee, DataService, Page, PageRequest } from '../datatable/
     SiHeaderLogoDirective
   ],
   templateUrl: './content-full-layout-full-scroll.html',
-  providers: [DataService]
+  providers: [DataService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnInit {
   menuItems: NavbarVerticalItem[] = [

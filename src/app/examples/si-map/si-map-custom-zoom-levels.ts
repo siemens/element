@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, viewChild } from '@angular/core';
+import { Component, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MapPoint, OverlayNativeProperties, SiMapComponent } from '@siemens/maps-ng';
 import { FullScreen } from 'ol/control';
 import { mockPoints } from 'src/app/mocks/points.mock';
@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-sample',
   imports: [SiMapComponent],
   templateUrl: './si-map-custom-zoom-levels.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'h-100 d-flex flex-column p-5' }
 })
 export class SampleComponent {

@@ -2,14 +2,22 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { booleanAttribute, Component, Input, output, OutputEmitterRef } from '@angular/core';
+import {
+  booleanAttribute,
+  Component,
+  Input,
+  output,
+  OutputEmitterRef,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { BackgroundColorVariant } from '@siemens/element-ng/common';
 @Component({
   selector: 'app-filter-settings',
   imports: [SiCardComponent, FormsModule],
-  templateUrl: './si-filter-settings.component.html'
+  templateUrl: './si-filter-settings.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiFilterSettingsComponent {
   @Input() variant: BackgroundColorVariant = 'base-1';

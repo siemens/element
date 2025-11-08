@@ -9,7 +9,7 @@ import {
   transferArrayItem
 } from '@angular/cdk/drag-drop';
 import { CdkListbox, CdkOption } from '@angular/cdk/listbox';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { SiIconModule } from '@siemens/element-ng/icon';
 import { SiMenuModule } from '@siemens/element-ng/menu';
@@ -27,7 +27,8 @@ import { SiMenuModule } from '@siemens/element-ng/menu';
     .card-body:hover {
       cursor: auto;
     }
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   protected cards = [

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MessageAction, SiAiMessageComponent } from '@siemens/element-ng/chat-messages';
 import { getMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
@@ -12,7 +12,8 @@ import { LOG_EVENT } from '@siemens/live-preview';
 @Component({
   selector: 'app-sample',
   imports: [SiAiMessageComponent],
-  templateUrl: './si-ai-message.html'
+  templateUrl: './si-ai-message.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

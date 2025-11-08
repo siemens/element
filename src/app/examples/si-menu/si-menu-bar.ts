@@ -3,13 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { SiMenuModule } from '@siemens/element-ng/menu';
 
 @Component({
   selector: 'app-sample',
   imports: [SiMenuModule, CdkMenuTrigger],
-  templateUrl: './si-menu-bar.html'
+  templateUrl: './si-menu-bar.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   isAwesome = true;

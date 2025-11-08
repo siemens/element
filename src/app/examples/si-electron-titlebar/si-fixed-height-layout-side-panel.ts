@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkPortal, PortalModule } from '@angular/cdk/portal';
-import { Component, inject, OnDestroy, viewChild } from '@angular/core';
+import { Component, inject, OnDestroy, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
 import {
@@ -59,7 +59,8 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiLaunchpadFactoryComponent,
     SiHeaderLogoDirective
   ],
-  templateUrl: './si-fixed-height-layout-side-panel.html'
+  templateUrl: './si-fixed-height-layout-side-panel.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnDestroy {
   // the real function is injected by the previewer
