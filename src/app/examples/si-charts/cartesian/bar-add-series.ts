@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, viewChild } from '@angular/core';
+import { Component, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import {
   CartesianChartSeries,
   ChartXAxis,
@@ -18,7 +18,8 @@ const point = (): number => Math.round(Math.random() * 100);
 @Component({
   selector: 'app-sample',
   imports: [SiChartCartesianComponent, SiResizeObserverDirective],
-  templateUrl: './chart.html'
+  templateUrl: './chart.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent extends ChartBase {
   chartData: ChartData = {

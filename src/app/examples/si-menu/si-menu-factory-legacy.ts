@@ -3,14 +3,15 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkContextMenuTrigger, CdkMenuTrigger } from '@angular/cdk/menu';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiMenuModule } from '@siemens/element-ng/menu';
 
 @Component({
   selector: 'app-sample',
   imports: [SiMenuModule, CdkContextMenuTrigger, CdkMenuTrigger],
-  templateUrl: './si-menu-factory-legacy.html'
+  templateUrl: './si-menu-factory-legacy.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   // eslint-disable-next-line @typescript-eslint/no-deprecated

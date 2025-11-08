@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FieldWrapper } from '@ngx-formly/core';
 import { SiCardComponent } from '@siemens/element-ng/card';
 
@@ -20,6 +20,7 @@ Sample component to test custom type registration in SiFormlyModule
         </p>
       </si-card>
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CustomWrapperComponent extends FieldWrapper {}

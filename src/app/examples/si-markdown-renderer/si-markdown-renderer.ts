@@ -3,13 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { SiMarkdownRendererComponent } from '@siemens/element-ng/markdown-renderer';
 
 @Component({
   selector: 'app-sample',
   imports: [SiMarkdownRendererComponent],
-  templateUrl: './si-markdown-renderer.html'
+  templateUrl: './si-markdown-renderer.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnInit {
   private readonly http = inject(HttpClient);

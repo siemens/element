@@ -4,7 +4,7 @@
  */
 import { CdkTrapFocus } from '@angular/cdk/a11y';
 import { CdkConnectedOverlay, CdkOverlayOrigin } from '@angular/cdk/overlay';
-import { Component, inject, ViewEncapsulation } from '@angular/core';
+import { Component, inject, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { SiShadowRootDirective } from '@siemens/element-ng/shadow-root';
 import { LOG_EVENT } from '@siemens/live-preview';
 
@@ -14,6 +14,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
   standalone: true,
   templateUrl: './si-shadow-root.html',
   styleUrl: 'not-element-styles.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.ShadowDom,
   host: { class: 'p-5' },
   hostDirectives: [SiShadowRootDirective]

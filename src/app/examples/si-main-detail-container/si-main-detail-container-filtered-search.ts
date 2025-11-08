@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { JsonPipe } from '@angular/common';
-import { Component, inject, viewChild } from '@angular/core';
+import { Component, inject, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import {
   ContentActionBarMainItem,
   SiContentActionBarComponent
@@ -37,6 +37,7 @@ import { CorporateEmployee } from '../datatable/data.service';
     SiMainDetailContainerComponent
   ],
   templateUrl: './si-main-detail-container-filtered-search.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'si-layout-fixed-height'
   }

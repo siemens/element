@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
 import { LOG_EVENT } from '@siemens/live-preview';
@@ -15,7 +15,8 @@ import { CorporateEmployee, DataService, PageRequest } from './data.service';
   imports: [NgxDatatableModule, SiResizeObserverModule, SiDatatableModule],
   templateUrl: './datatable-paging-virtual.html',
   styleUrl: './datatable.scss',
-  providers: [DataService]
+  providers: [DataService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

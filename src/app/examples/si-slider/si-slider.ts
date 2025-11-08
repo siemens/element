@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiSliderComponent } from '@siemens/element-ng/slider';
 import { LOG_EVENT } from '@siemens/live-preview';
@@ -11,6 +11,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
   selector: 'app-sample',
   imports: [SiSliderComponent, FormsModule],
   templateUrl: './si-slider.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

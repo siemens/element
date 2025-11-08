@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiPaginationComponent } from '@siemens/element-ng/pagination';
 import { NgxDatatableModule } from '@siemens/ngx-datatable';
@@ -15,7 +15,8 @@ import { CorporateEmployee, DataService, Page, PageRequest } from './data.servic
   imports: [NgxDatatableModule, SiDatatableModule, SiPaginationComponent],
   templateUrl: './datatable-paging.html',
   styleUrl: './datatable.scss',
-  providers: [DataService]
+  providers: [DataService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnDestroy {
   tableConfig = SI_DATATABLE_CONFIG;

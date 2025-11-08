@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { SiTabComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
 import { LOG_EVENT } from '@siemens/live-preview';
 
@@ -20,6 +20,7 @@ interface TabModel {
   selector: 'app-sample',
   imports: [SiTabsetComponent, SiTabComponent],
   templateUrl: './si-tabs-icons.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import {
   CartesianChartSeries,
   SiChartCartesianComponent,
@@ -17,6 +17,7 @@ themeSupport.setDefault(themeElement);
   selector: 'app-sample',
   imports: [SiChartCartesianComponent, SiResizeObserverDirective],
   templateUrl: './si-chart-scatter.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

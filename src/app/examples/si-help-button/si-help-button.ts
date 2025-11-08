@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { SiFormItemComponent } from '@siemens/element-ng/form';
 import { SiHelpButtonComponent } from '@siemens/element-ng/help-button';
@@ -12,6 +12,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
   selector: 'app-sample',
   imports: [SiHelpButtonComponent, SiFormItemComponent, ReactiveFormsModule],
   templateUrl: './si-help-button.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'p-5'
   }

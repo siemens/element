@@ -2,10 +2,11 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-sample',
-  templateUrl: './spacing.html'
+  templateUrl: './spacing.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {}
