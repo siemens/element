@@ -9,7 +9,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  DestroyRef,
   ElementRef,
   inject,
   input,
@@ -131,7 +130,6 @@ export class SiCollapsiblePanelComponent {
   protected isHCollapsible = false;
   protected readonly icons = addIcons({ elementDown2 });
 
-  private readonly destroyRef = inject(DestroyRef);
   private readonly accordionService = inject(SiAccordionService, { optional: true });
   private readonly accordionHCollapseService = inject(SiAccordionHCollapseService, {
     optional: true
@@ -145,7 +143,7 @@ export class SiCollapsiblePanelComponent {
     this.isHCollapsible = !!this.accordionHCollapseService;
     this.accordionService?.toggle$
       .pipe(
-        takeUntilDestroyed(this.destroyRef),
+        takeUntilDestroyed(),
         filter(item => item !== this)
       )
       .subscribe(() => this.openClose(false));

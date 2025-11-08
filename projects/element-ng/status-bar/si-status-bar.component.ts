@@ -8,7 +8,6 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
-  DestroyRef,
   DoCheck,
   ElementRef,
   inject,
@@ -171,15 +170,14 @@ export class SiStatusBarComponent implements DoCheck, OnDestroy, OnChanges {
   private readonly translateService = injectSiTranslateService();
   private readonly resizeObserver = inject(ResizeObserverService);
   private readonly measureService = inject(TextMeasureService);
-  private readonly destroyRef = inject(DestroyRef);
 
   constructor() {
     this.resizeObserver
       .observe(this.element.nativeElement, 100, true)
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(takeUntilDestroyed())
       .subscribe(() => this.resizeHandler());
     this.translateService.translationChange
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(takeUntilDestroyed())
       .subscribe(() => this.resizeHandler());
   }
 

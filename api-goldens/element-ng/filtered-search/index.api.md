@@ -9,7 +9,6 @@ import { BackgroundColorVariant } from '@siemens/element-ng/common';
 import { DatepickerInputConfig } from '@siemens/element-ng/datepicker';
 import { Observable } from 'rxjs';
 import { OnChanges } from '@angular/core';
-import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -64,7 +63,7 @@ export interface SearchCriteria {
 }
 
 // @public (undocumented)
-export class SiFilteredSearchComponent implements OnInit, OnChanges, OnDestroy {
+export class SiFilteredSearchComponent implements OnInit, OnChanges {
     constructor();
     // (undocumented)
     protected autoEditCriteria: boolean;
@@ -108,8 +107,6 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges, OnDestroy {
     readonly maxCriteriaOptions: _angular_core.InputSignal<number>;
     // (undocumented)
     ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    ngOnDestroy(): void;
     // (undocumented)
     ngOnInit(): void;
     readonly onlySelectValue: _angular_core.InputSignalWithTransform<boolean, unknown>;

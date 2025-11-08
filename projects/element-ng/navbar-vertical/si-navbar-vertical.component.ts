@@ -24,7 +24,6 @@ import {
   input,
   model,
   OnChanges,
-  OnDestroy,
   OnInit,
   output,
   signal,
@@ -32,14 +31,13 @@ import {
   viewChild,
   viewChildren
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { MenuItem, SI_UI_STATE_SERVICE } from '@siemens/element-ng/common';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
 import { SiSkipLinkTargetDirective } from '@siemens/element-ng/skip-links';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 import { SiNavbarVerticalDividerComponent } from './si-navbar-vertical-divider.component';
 import { SiNavbarVerticalGroupTriggerDirective } from './si-navbar-vertical-group-trigger.directive';
@@ -143,7 +141,7 @@ export class SiNavbarVerticalItemGuardDirective {
     ])
   ]
 })
-export class SiNavbarVerticalComponent implements OnChanges, OnInit, OnDestroy {
+export class SiNavbarVerticalComponent implements OnChanges, OnInit {
   /**
    * Whether the navbar-vertical is collapsed.
    *
@@ -281,7 +279,6 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit, OnDestroy {
 
   protected readonly smallScreen = signal(false);
   protected readonly uiStateExpandedItems = signal<Record<string, boolean>>({});
-  private destroyer = new Subject<void>();
 
   // Indicates if the user prefers a collapsed navbar. Relevant for resizing.
   private preferCollapse = false;
@@ -289,7 +286,7 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit, OnDestroy {
   constructor() {
     this.breakpointObserver
       .observe(`(max-width: ${BOOTSTRAP_BREAKPOINTS.lgMinimum}px)`)
-      .pipe(takeUntil(this.destroyer))
+      .pipe(takeUntilDestroyed())
       .subscribe(({ matches }) => {
         this.collapsed.set(matches || this.preferCollapse);
         this.smallScreen.set(matches);
@@ -313,11 +310,6 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit, OnDestroy {
         }
       });
     }
-  }
-
-  ngOnDestroy(): void {
-    this.destroyer.next();
-    this.destroyer.complete();
   }
 
   protected toggleCollapse(): void {

@@ -166,7 +166,7 @@ export class SiSidePanelContentComponent implements OnInit {
 
   constructor() {
     const accordionHcollapse = inject(SiAccordionHCollapseService);
-    this.service.isOpen$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(state => {
+    this.service.isOpen$.pipe(takeUntilDestroyed()).subscribe(state => {
       this.isCollapsed.set(!state);
       clearTimeout(this.expandedTimeout);
       this.expandedTimeout = undefined;
@@ -179,9 +179,7 @@ export class SiSidePanelContentComponent implements OnInit {
       }
       accordionHcollapse.hcollapsed.set(!state);
     });
-    accordionHcollapse.open$
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => this.service.open());
+    accordionHcollapse.open$.pipe(takeUntilDestroyed()).subscribe(() => this.service.open());
   }
 
   ngOnInit(): void {
