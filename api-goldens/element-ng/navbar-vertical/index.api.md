@@ -10,7 +10,6 @@ import { IsActiveMatchOptions } from '@angular/router';
 import { MenuItem } from '@siemens/element-ng/common';
 import { NavigationExtras } from '@angular/router';
 import { OnChanges } from '@angular/core';
-import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
 import { SimpleChanges } from '@angular/core';
@@ -81,7 +80,7 @@ export interface NavbarVerticalItemRouterLink extends NavbarVerticalItemBase {
 export type NavbarVerticalSubItem = NavbarVerticalItemRouterLink | NavbarVerticalItemLink | NavbarVerticalItemAction;
 
 // @public (undocumented)
-export class SiNavbarVerticalComponent implements OnChanges, OnInit, OnDestroy {
+export class SiNavbarVerticalComponent implements OnChanges, OnInit {
     constructor();
     // (undocumented)
     protected readonly activatedRoute: ActivatedRoute | null;
@@ -99,8 +98,6 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit, OnDestroy {
     readonly navbarExpandButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     // (undocumented)
     ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    ngOnDestroy(): void;
     // (undocumented)
     ngOnInit(): void;
     // (undocumented)

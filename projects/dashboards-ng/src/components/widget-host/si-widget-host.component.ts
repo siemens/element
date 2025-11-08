@@ -6,13 +6,13 @@ import { AsyncPipe, NgClass, NgTemplateOutlet } from '@angular/common';
 import {
   Component,
   ComponentRef,
+  DestroyRef,
   EnvironmentInjector,
   inject,
   Injector,
   input,
   isSignal,
   OnChanges,
-  OnDestroy,
   OnInit,
   output,
   SimpleChanges,
@@ -20,6 +20,7 @@ import {
   viewChild,
   ViewContainerRef
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
 // We need one import from the main entry.
 // Otherwise, module federation is confused.
@@ -29,8 +30,6 @@ import { ContentActionBarMainItem, ViewType } from '@siemens/element-ng/content-
 import { SiDashboardCardComponent } from '@siemens/element-ng/dashboard';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { t } from '@siemens/element-translate-ng/translate';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 import { WidgetConfig, WidgetConfigEvent, WidgetInstance } from '../../model/widgets.model';
 import { SiGridService } from '../../services/si-grid.service';
@@ -45,13 +44,12 @@ import { setupWidgetInstance } from '../../widget-loader';
     class: 'grid-stack-item'
   }
 })
-export class SiWidgetHostComponent implements OnInit, OnDestroy, OnChanges {
-  private siModal = inject(SiActionDialogService);
-  private gridService = inject(SiGridService);
-  private injector = inject(Injector);
-  private envInjector = inject(EnvironmentInjector);
-
-  private unsubscribe = new Subject<void>();
+export class SiWidgetHostComponent implements OnInit, OnChanges {
+  private readonly siModal = inject(SiActionDialogService);
+  private readonly gridService = inject(SiGridService);
+  private readonly injector = inject(Injector);
+  private readonly envInjector = inject(EnvironmentInjector);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly widgetConfig = input.required<WidgetConfig>();
 
@@ -156,13 +154,8 @@ export class SiWidgetHostComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit(): void {
     this.attachWidgetInstance();
     this.editable$
-      .pipe<boolean>(takeUntil(this.unsubscribe))
+      .pipe<boolean>(takeUntilDestroyed(this.destroyRef))
       .subscribe(editable => this.setupEditable(editable));
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
   }
 
   private attachWidgetInstance(): void {
@@ -182,7 +175,7 @@ export class SiWidgetHostComponent implements OnInit, OnDestroy, OnChanges {
             // on web component, who pushes their configuration through an event after being attached
             // to the DOM.
             this.widgetInstance.configChange
-              .pipe(takeUntil(this.unsubscribe))
+              .pipe(takeUntilDestroyed(this.destroyRef))
               .subscribe(event =>
                 setTimeout(() => this.setupEditable(this.editable$.value, event))
               );

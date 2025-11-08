@@ -7,13 +7,13 @@ import {
   ChangeDetectorRef,
   Component,
   computed,
+  DestroyRef,
   ElementRef,
   inject,
   input,
   LOCALE_ID,
   model,
   OnChanges,
-  OnDestroy,
   OnInit,
   output,
   signal,
@@ -21,6 +21,7 @@ import {
   viewChild,
   viewChildren
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { BackgroundColorVariant, isRTL } from '@siemens/element-ng/common';
 import { addIcons, elementCancel, elementSearch, SiIconComponent } from '@siemens/element-ng/icon';
@@ -32,7 +33,7 @@ import {
   TranslatableString
 } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, Observable, of, Subject, switchMap } from 'rxjs';
-import { debounceTime, map, takeUntil } from 'rxjs/operators';
+import { debounceTime, map } from 'rxjs/operators';
 
 import {
   differenceByName,
@@ -66,7 +67,7 @@ import {
     '[class.dark-background]': "colorVariant() === 'base-0'"
   }
 })
-export class SiFilteredSearchComponent implements OnInit, OnChanges, OnDestroy {
+export class SiFilteredSearchComponent implements OnInit, OnChanges {
   private static readonly criterionRegex = /(.+?):(.*)$/;
 
   /**
@@ -317,10 +318,10 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges, OnDestroy {
   private typeaheadInputChange = new BehaviorSubject<string>('');
   /** Used to debounce the Search emissions */
   private searchEmitQueue = new Subject<SearchCriteria | undefined>();
-  private destroySubscriptions = new Subject<boolean>();
-  private cdRef = inject(ChangeDetectorRef);
-  private translateService = injectSiTranslateService();
-  private locale = inject(LOCALE_ID).toString();
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly cdRef = inject(ChangeDetectorRef);
+  private readonly translateService = injectSiTranslateService();
+  private readonly locale = inject(LOCALE_ID).toString();
   /**
    * The cache is used to control when the interceptDisplayedCriteria event needs to be called.
    * Every time a criteria gain the focus we have to reset the cache to call the interceptor.
@@ -397,13 +398,8 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     this.searchEmitQueue
-      .pipe(debounceTime(this.searchDebounceTime()), takeUntil(this.destroySubscriptions))
+      .pipe(debounceTime(this.searchDebounceTime()), takeUntilDestroyed(this.destroyRef))
       .subscribe(searchCriteria => this.doSearch.emit(searchCriteria!));
-  }
-
-  ngOnDestroy(): void {
-    this.destroySubscriptions.next(true);
-    this.destroySubscriptions.unsubscribe();
   }
 
   private initCriteria(): void {

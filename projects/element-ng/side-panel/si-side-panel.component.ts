@@ -173,7 +173,7 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
     if (this.isBrowser) {
       this.resizeEvent
         .asObservable()
-        .pipe(takeUntilDestroyed(this.destroyRef), debounceTime(this.resizeEventDelay))
+        .pipe(takeUntilDestroyed(), debounceTime(this.resizeEventDelay))
         .subscribe(() => {
           this.openingOrClosing = false;
           this.emitResizeOutputs();

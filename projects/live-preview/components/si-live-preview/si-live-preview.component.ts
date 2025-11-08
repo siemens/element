@@ -7,7 +7,6 @@ import { HttpClient } from '@angular/common/http';
 import {
   AfterViewInit,
   Component,
-  DestroyRef,
   ElementRef,
   HostBinding,
   HostListener,
@@ -44,7 +43,6 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
   private internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
   private self = inject(ElementRef);
   private http = inject(HttpClient);
-  private destroyRef = inject(DestroyRef);
   public localeApi = inject(SiLivePreviewLocaleApi, { optional: true });
 
   readonly templateElem = viewChild.required<ElementRef>('codeTemplate');
@@ -113,7 +111,7 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
   constructor() {
     this.compileSubject
       .pipe(throttleTime(500, undefined, { leading: true, trailing: true }))
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(takeUntilDestroyed())
       .subscribe(template => (this.template = template));
     this.webcomponentsList = this.config.componentLoader.webcomponentsList;
   }

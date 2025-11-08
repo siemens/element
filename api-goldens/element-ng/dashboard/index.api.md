@@ -56,7 +56,7 @@ export class SiDashboardCardComponent extends SiCardComponent implements OnDestr
 }
 
 // @public (undocumented)
-export class SiDashboardComponent implements OnChanges, OnDestroy, AfterViewInit {
+export class SiDashboardComponent implements OnChanges, AfterViewInit {
     constructor();
     // (undocumented)
     protected dashboardFrameEndPadding: number | null;
@@ -71,8 +71,6 @@ export class SiDashboardComponent implements OnChanges, OnDestroy, AfterViewInit
     ngAfterViewInit(): void;
     // (undocumented)
     ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    ngOnDestroy(): void;
     restore(): void;
     readonly sticky: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
