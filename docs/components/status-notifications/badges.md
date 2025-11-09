@@ -75,14 +75,94 @@ Badges can display text or numbers, and may also include an icon. Choose between
 
 ## Code ---
 
-The Badges are implemented using the Bootstrap Badges as a base. In addition to the Bootstrap badges,
-we also provide `badge-dot`and `badge-text` classes to realize the smaller dots, typically placed at
-the side of an icon.
+### Usage
 
-### References
+```ts
+import { SiBadgeComponent } from '@siemens/element-ng/badge';
 
-- **Bootstrap:** [Badges](https://getbootstrap.com/docs/5.1/components/badge/)
+@Component({
+  template:: `<si-badge type="success" icon="element-validation-success">Success</si-badge>`
+  imports: [SiBadgeComponent, ...]
+})
+```
 
-### Example
+### Buttons
+
+Badges can be used inside buttons to provide a counter:
+
+```html
+<!-- Badge inside a button which is hidden for assistive technologies -->
+<button type="button" class="btn btn-primary">
+  Notifications <span class="badge text-bg-secondary" aria-hidden="true">4</span>
+</button>
+```
+
+### Positioned
+
+Use utility classes to modify the `.badge` and easily position it within the corner of a parent element like a link or button.
+
+> **Note:** Ensure the parent container provide enough spacing to visualize the absolute positioned badge.
+
+```html
+<!-- Badge inside a button with descriptive text that is visually hidden -->
+<button type="button" class="btn btn-primary position-relative">
+  Inbox
+  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+    99+
+    <span class="visually-hidden">unread messages</span>
+  </span>
+</button>
+```
+
+### Background colors
+
+To set a badge's background color, use the `.bg-{status token}` utility classes. 
+For a more prominent appearance, add the `-emphasis` postfix to the class name. 
+Below is the full list of available color classes:
+
+| Status class    | Bolder version          |
+|-----------------|-------------------------|
+| `.bg-default`   |                         |
+| `.bg-primary`   |                         |
+| `.bg-secondary` |                         |
+| `.bg-info`      | `.bg-info-emphasis`     |
+| `.bg-success`   | `.bg-success-emphasis`  |
+| `.bg-caution`   |                         |
+| `.bg-warning`   | `.bg-warning-emphasis`  |
+| `.bg-danger`    | `.bg-danger-emphasis`   |
+| `.bg-critical`  | `.bg-critical-emphasis` |
+| `.bg-inverse`   | `.bg-caution-emphasis`  |
+
+### Icons
+
+The `badge-dot` class provides a smaller dot that can be placed at the side of an icon:
+
+```html
+<i role="status" aria-label="notifications" class="icon element-alarm-filled badge-dot"></i>
+```
+
+The `badge-text` class provides the ability to apply a short text at the side of an icon:
+
+```html
+<div role="status" aria-label="More than 99 notifications">
+  <i class="icon element-alarm-filled"></i>
+  <span class="badge-text" aria-hidden="true">99+</span>
+</div>
+```
+
+### Accessibility considerations
+
+Badges can confuse users of screen readers and other assistive technologies because these users only hear the badge's content, not its visual styling. 
+To a screen reader, a badge may sound like a random word or number tacked onto the end of a  sentence, link, or button, which obscures its intended purpose.
+
+Unless the context is clear - you should add extra, descriptive text that is `visually-hidden` but available to screen readers.
+
+### Examples
 
 <si-docs-component example="badges/badges"></si-docs-component>
+
+<si-docs-component example="badges/badges-buttons"></si-docs-component>
+
+<si-docs-api component="SiBadgeComponent"></si-docs-api>
+
+<si-docs-types></si-docs-types>
