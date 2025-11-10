@@ -25,7 +25,7 @@ export class SampleComponent implements OnDestroy {
     showLegend: true,
     liveUpdate: false,
     showDecimalDigit: true,
-    height: 500
+    height: 400
   };
 
   readonly chart = viewChild.required<SiChartGaugeComponent>('chart');
