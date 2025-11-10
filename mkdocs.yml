@@ -143,8 +143,7 @@ nav:
       - Tooltip:                          'components/status-notifications/tooltip.md'
     - Chat & Messages:
       - Chat Input:                       'components/chat-messages/chat-input.md'
-      - User Message:                     'components/chat-messages/user-message.md'
-      - AI Message:                       'components/chat-messages/ai-message.md'
+      - Chat Message:                     'components/chat-messages/chat-message.md'
     - Charts:
       - Overview:                         'components/charts/index.md'
       - Bar Chart:                        'components/charts/bar-chart.md'
