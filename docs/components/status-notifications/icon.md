@@ -9,7 +9,7 @@ See also the [icons chapter](../../fundamentals/icons.md) in the fundamentals.
 ### Usage
 
 ```ts
-import { SiIconComponent } from '@simpl/element-ng/icon';
+import { SiIconComponent } from '@siemens/element-ng/icon';
 
 @Component({
   imports: [SiIconComponent, ...]
