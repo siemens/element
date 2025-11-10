@@ -83,3 +83,21 @@ When the AI cannot complete a task due to a known limitation, it should respond 
 These are not treated as errors and do not require a separate notification.
 
 ![AI errors and limitations](images/ai-errors.png)
+
+## Code ---
+
+Use the chat container with the chat messages to build chat message interfaces.
+
+The **si-chat-container** component is a wrapper component, it has slots for chat messages and an input
+
+The slots are:
+- default (chat messages)
+- `si-avatar/si-icon/img` - For the avatar or icon representing the message sender.
+- `si-chat-input/siChatContainerInput (helper directive)` - For the input (whether default or custom).
+- `si-inline-notification` - Slotted above the input for displaying the status.
+
+<si-docs-component example="si-chat-messages/si-chat-container"></si-docs-component>
+
+<si-docs-api component="SiChatContainerComponent"></si-docs-api>
+
+<si-docs-types></si-docs-types>
