@@ -1,3 +1,16 @@
+# [47.12.0](https://github.com/siemens/element/compare/v47.11.1...v47.12.0) (2025-11-10)
+
+
+### Features
+
+* **datepicker:** support 12 hours clock for date-ranges ([7db5de8](https://github.com/siemens/element/commit/7db5de8cecadfeda6feb5556e16931d843b7b7eb))
+* **native-charts/gauge:** add support for label and value formatter ([05b817a](https://github.com/siemens/element/commit/05b817aa067eab2cd4bf90f0b2a7d4b9935d2f5f))
+
+
+### Bug Fixes
+
+* **charts/gauge:** align with figma specs ([fae41a5](https://github.com/siemens/element/commit/fae41a5c5d07f0c1e19966d873715ac1c8639f8b))
+
 ## [47.11.1](https://github.com/siemens/element/compare/v47.11.0...v47.11.1) (2025-09-29)
 
 
