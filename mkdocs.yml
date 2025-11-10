@@ -53,13 +53,14 @@ nav:
     - Overview:                           'components/index.md'
     - Buttons & menus:
       - Buttons:                          'components/buttons-menus/buttons.md'
+      - Button Group:                     'components/buttons-menus/button-group.md'
+      - Segmented Button:                 'components/buttons-menus/segmented-button.md'
+      - Split buttons:                    'components/buttons-menus/split-button.md'
       - Content Action Bar:               'components/buttons-menus/content-actions.md'
       - Dropdowns:                        'components/buttons-menus/dropdowns.md'
       - Help Button:                      'components/buttons-menus/help-button.md'
       - Links:                            'components/buttons-menus/links.md'
       - Menu:                             'components/buttons-menus/menu.md'
-      - Segmented Button:                 'components/buttons-menus/segmented-button.md'
-      - Split buttons:                    'components/buttons-menus/split-button.md'
     - Dashboards:
       - Overview:                         'components/dashboards/index.md'
       - Dashboard:                        'components/dashboards/dashboard.md'
