@@ -1,0 +1,88 @@
+<div class="si-layout-fixed-height w-100 h-100">
+  <si-chat-container colorVariant="base-0">
+    @for (message of messages(); track message) {
+      @if (message.type === 'user') {
+        <si-user-message
+          [content]="message.content"
+          [actions]="getMessagePrimaryActions(message)"
+          [secondaryActions]="getMessageSecondaryActions(message)"
+          [attachments]="message.attachments ?? []"
+          [contentFormatter]="markdownRenderer"
+        />
+      }
+      @if (message.type === 'ai') {
+        <si-ai-message
+          [content]="message.content"
+          [actions]="getMessagePrimaryActions(message)"
+          [secondaryActions]="getMessageSecondaryActions(message)"
+          [contentFormatter]="markdownRenderer"
+        />
+      }
+      @if (message.type === 'custom') {
+        <si-chat-message alignment="start" actionsPosition="bottom">
+          @if (message.attachments) {
+            <si-attachment-list [attachments]="message.attachments" />
+          }
+          <si-icon class="icon" icon="element-user" />
+          <si-markdown-renderer [text]="message.content" />
+          @for (action of message.actions; track $index) {
+            <button
+              type="button"
+              class="btn btn-ghost btn-circle btn-sm"
+              siChatMessageAction
+              [attr.aria-label]="action.label"
+              (click)="action.action(message, action)"
+            >
+              <si-icon [icon]="action.icon" />
+            </button>
+          }
+        </si-chat-message>
+      }
+    }
+
+    @if (
+      loading() && (messages().length === 0 || messages()[messages().length - 1].type !== 'ai')
+    ) {
+      <si-ai-message content="" [loading]="true" />
+    }
+
+    <si-inline-notification
+      class="mb-6 w-100 overflow-hidden"
+      severity="info"
+      message="AI responses are for demonstration purposes."
+    />
+
+    <si-chat-input
+      class="w-100"
+      accept="image/*,.pdf,.doc,.docx,.txt"
+      placeholder="Enter a command, question or topic..."
+      disclaimer="The content is AI generated. Always verify the information for accuracy."
+      [allowAttachments]="true"
+      [actions]="inputActions"
+      [autoFocus]="true"
+      [attachments]="preAttachedFiles"
+      [maxFileSize]="5242880"
+      [sending]="sending()"
+      [interruptible]="loading() && !sending()"
+      [(value)]="inputValue"
+      (send)="onMessageSent($event)"
+      (interrupt)="onInterrupt()"
+    />
+  </si-chat-container>
+</div>
+
+<ng-template #modalTemplate let-modalRef="modalRef" let-attachment="attachment">
+  <div class="modal-header">
+    <h4 class="modal-title" id="sample-modal-title">{{ attachment.name }}</h4>
+    <button
+      type="button"
+      class="btn btn-circle btn-sm btn-ghost element-cancel"
+      aria-label="Close modal"
+      (click)="modalRef.hide('cancel')"
+    >
+    </button>
+  </div>
+  <div class="modal-body">
+    <span>This is a sample modal to demonstrate attachment preview functionality.</span>
+  </div>
+</ng-template>
