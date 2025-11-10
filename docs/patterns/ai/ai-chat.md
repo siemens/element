@@ -30,8 +30,8 @@ AI chat is useful when users describe tasks in their own words and expect struct
 ![AI chat elements](images/ai-chat-elements.png)
 
 1. [Chat input](../../components/chat-messages/chat-input.md)
-2. [AI message](../../components/chat-messages/ai-message.md)
-3. [User message](../../components/chat-messages/user-message.md)
+2. [Chat message - AI](../../components/chat-messages/chat-message.md)
+3. [Chat message- User](../../components/chat-messages/chat-message.md)
 
 ### Layouts
 
