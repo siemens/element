@@ -67,7 +67,6 @@ export const themeElement = {
     const elementUi2 = getProp(style, '--element-ui-2');
     const elementUi3 = getProp(style, '--element-ui-3');
     const elementUi4 = getProp(style, '--element-ui-4');
-    const elementBase0 = getProp(style, '--element-base-0');
     const elementBase1 = getProp(style, '--element-base-1');
     const elementTextPrimary = getProp(style, '--element-text-primary');
     const elementTextSecondary = getProp(style, '--element-text-secondary');
@@ -535,9 +534,9 @@ export const themeElement = {
         },
 
         gauge: {
-          grey: elementBase0,
+          grey: elementUi4,
           value: elementTextPrimary,
-          unit: elementUi3,
+          unit: elementTextSecondary,
           defaultColor: elementUi0
         }
       }
