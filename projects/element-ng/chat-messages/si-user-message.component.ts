@@ -14,64 +14,22 @@ import { SiChatMessageActionDirective } from './si-chat-message-action.directive
 import { SiChatMessageComponent } from './si-chat-message.component';
 
 /**
- * User message component for displaying user input in conversational interfaces.
+ * User message component for displaying the user's messages in conversational interfaces.
  *
- * The user message component renders user-submitted content in chat interfaces,
+ * The user message component renders user-submitted content in (AI) chat interfaces,
  * supporting text, attachments, and contextual actions. It appears as a text bubble
  * aligned to the right side and supports markdown formatting for rich content.
  *
- * @remarks
- * This component is designed for use in:
- * - AI chat interfaces where user input needs to be displayed
- * - Peer-to-peer conversation interfaces
- * - Conversation histories or chat transcripts
- *
  * The component automatically handles:
- * - Rendering markdown content with syntax highlighting
+ * - Styling for user messages distinct from AI or generic chat messages
+ * - Option to render markdown content, provide via `contentFormatter` input with a markdown renderer function (e.g., from {@link getMarkdownRenderer})
  * - Displaying attachments above the message bubble
- * - Showing primary and secondary actions on hover (desktop) or tap (mobile)
- * - Proper alignment and styling for user messages
- *
- * @example
- * Basic usage with content only:
- * ```html
- * <si-user-message [content]="'Hello, how can I help you?'" />
- * ```
- *
- * @example
- * With actions and attachments:
- * ```typescript
- * import { Component } from '@angular/core';
- * import { SiUserMessageComponent } from '@siemens/element-ng/chat-messages';
- *
- * @Component({
- *   selector: 'app-chat',
- *   imports: [SiUserMessageComponent],
- *   template: `
- *     <si-user-message
- *       [content]="message.text"
- *       [actions]="messageActions"
- *       [secondaryActions]="menuActions"
- *       [attachments]="message.attachments"
- *       [actionParam]="message"
- *     />
- *   `
- * })
- * export class ChatComponent {
- *   messageActions = [
- *     { icon: 'copy', label: 'Copy', action: (id) => this.copyMessage(id) },
- *     { icon: 'edit', label: 'Edit', action: (id) => this.editMessage(id) }
- *   ];
- *
- *   menuActions = [
- *     { label: 'Delete', action: (id) => this.deleteMessage(id) }
- *   ];
- * }
- * ```
+ * - Displaying primary and secondary actions
  *
  * @see {@link SiChatMessageComponent} for the base message wrapper component
- * @see {@link SiAttachmentListComponent} for attachment handling
- * @see {@link SiMarkdownRendererComponent} for markdown rendering
+ * @see {@link SiAiMessageComponent} for the AI message component
+ * @see {@link SiAttachmentListComponent} for the base attachment component
+ * @see {@link getMarkdownRenderer} for markdown formatting support
  *
  * @experimental
  */

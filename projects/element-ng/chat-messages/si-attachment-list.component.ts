@@ -8,7 +8,11 @@ import { SiModalService } from '@siemens/element-ng/modal';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 /**
- * Attachment item interface for file attachments in chat messages.
+ * Attachment item interface for file attachments in chat messages, used by {@link SiAttachmentListComponent} and inside {@link SiUserMessageComponent} as well as {@link SiChatInputComponent}.
+ *
+ * @see {@link SiAttachmentListComponent} for the attachment list component
+ * @see {@link SiUserMessageComponent} for the user message
+ * @see {@link SiChatInputComponent} for the chat input component
  *
  * @experimental
  */
@@ -26,55 +30,17 @@ export interface Attachment {
  * preview and remove functionality. It's designed to work with chat message components
  * to show files that have been uploaded or shared in conversations.
  *
- * @remarks
  * This component provides:
- * - Automatic file type detection with appropriate icons
+ * - A list of pills showing each attachment's name and an icon
  * - Optional preview modal for attachments
  * - Optional remove functionality for editable messages
- * - Flexible alignment (start/end) to match message alignment
- * - Support for various file types (images, videos, audio, documents, archives)
  *
- * The component is typically used within {@link SiUserMessageComponent} or {@link SiAiMessageComponent}
- * to display uploaded files, but can also be used standalone.
- *
- * @example
- * Basic usage with attachments:
- * ```html
- * <si-attachment-list [attachments]="files" />
- * ```
- *
- * @example
- * With remove functionality and custom alignment:
- * ```typescript
- * import { Component } from '@angular/core';
- * import { SiAttachmentListComponent, Attachment } from '@siemens/element-ng/chat-messages';
- *
- * @Component({
- *   selector: 'app-chat',
- *   imports: [SiAttachmentListComponent],
- *   template: `
- *     <si-attachment-list
- *       [attachments]="attachments"
- *       [alignment]="'end'"
- *       [removable]="true"
- *       (remove)="handleRemove($event)"
- *     />
- *   `
- * })
- * export class ChatComponent {
- *   attachments: Attachment[] = [
- *     { id: '1', name: 'report.pdf' },
- *     { id: '2', name: 'image.png', previewTemplate: this.imagePreview }
- *   ];
- *
- *   handleRemove(attachment: Attachment) {
- *     this.attachments = this.attachments.filter(a => a !== attachment);
- *   }
- * }
- * ```
+ * The component is included within {@link SiUserMessageComponent}, {@link SiAiMessageComponent} and {@link SiChatInputComponent} but can also be used inside custom chat messages with {@link SiChatMessageComponent}
  *
  * @see {@link SiUserMessageComponent} for user message display
  * @see {@link SiAiMessageComponent} for AI message display
+ * @see {@link SiChatMessageComponent} for custom chat message display
+ * @see {@link SiChatInputComponent} for chat input with attachment support
  * @see {@link Attachment} for attachment data structure
  *
  * @experimental

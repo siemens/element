@@ -5,8 +5,12 @@
 import type { TranslatableString } from '@siemens/element-translate-ng/translate-types';
 
 /**
- * Actions for messages representing an action with icon, label (for accessibility), and handler.
+ * Actions for messages representing an action with icon, label (for accessibility), and handler, for use within {@link SiAiMessageComponent} and {@link SiUserMessageComponent}.
  * Only the icon will be displayed.
+ *
+ * @see {@link SiAiMessageComponent} for the AI message
+ * @see {@link SiUserMessageComponent} for thee user message
+ *
  * @experimental
  */
 export interface MessageAction {

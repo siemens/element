@@ -23,7 +23,7 @@ export interface Attachment {
     previewTemplate?: TemplateRef<any> | (() => TemplateRef<any>);
 }
 
-// @public (undocumented)
+// @public
 export interface ChatInputAttachment extends Attachment {
     file: File;
     size: number;
@@ -78,6 +78,35 @@ export class SiAttachmentListComponent {
 }
 
 // @public (undocumented)
+export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
+    constructor();
+    // (undocumented)
+    readonly colorVariant: _angular_core.InputSignal<string>;
+    // (undocumented)
+    focus(): void;
+    // (undocumented)
+    ngAfterContentInit(): void;
+    // (undocumented)
+    ngOnDestroy(): void;
+    // (undocumented)
+    readonly noAutoScroll: _angular_core.InputSignalWithTransform<boolean, string | boolean>;
+    // (undocumented)
+    protected onScroll(): void;
+    // (undocumented)
+    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChatContainerComponent, "si-chat-container", never, { "colorVariant": { "alias": "colorVariant"; "required": false; "isSignal": true; }; "noAutoScroll": { "alias": "noAutoScroll"; "required": false; "isSignal": true; }; }, {}, never, ["*", "si-inline-notification", "si-chat-input,[siChatContainerInput]"], true, never>;
+    // (undocumented)
+    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChatContainerComponent, never>;
+}
+
+// @public (undocumented)
+export class SiChatContainerInputDirective {
+    // (undocumented)
+    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiChatContainerInputDirective, "[siChatContainerInput]", never, {}, {}, never, never, true, never>;
+    // (undocumented)
+    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChatContainerInputDirective, never>;
+}
+
+// @public
 export class SiChatInputComponent implements AfterViewInit {
     readonly accept: _angular_core.InputSignal<string | undefined>;
     readonly actionParam: _angular_core.InputSignal<any>;

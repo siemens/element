@@ -6,23 +6,31 @@ import { Component, input } from '@angular/core';
 import { SiResponsiveContainerDirective } from '@siemens/element-ng/resize-observer';
 
 /**
- * Base chat message component that provides the layout structure for conversational interfaces.
+ * Base declarative chat message component that provides the layout structure for chat messages.
  *
  * This component handles the core message layout including avatar positioning, loading states,
- * and action button placement. It serves as the foundation for more specialized message components
+ * and action button as well as attachment list placement. It serves as the foundation for more specialized message components
  * like {@link SiUserMessageComponent} and {@link SiAiMessageComponent}.
  *
- * @remarks
  * The component provides:
  * - Flexible alignment (start/end) for different message types
  * - Avatar/icon slot for message attribution
  * - Loading state with skeleton UI
  * - Action buttons positioned on the side or bottom
+ * - Attachment list display slot
  * - Responsive behavior that adapts to container size
- * - Attachment display slot
  *
- * This is a low-level component typically not used directly. Instead, use the higher-level
- * message components that wrap this component with specific styling and behavior.
+ * This is a low-level component designed for slotting in custom content, it provides slots via content projection:
+ * - Default content: Main message content area (consider using {@link SiMarkdownRendererComponent} for markdown support)
+ * - `si-avatar/si-icon/img` selector: Avatar or icon representing the message sender
+ * - `si-chat-message-action` selector: Action buttons related to the message
+ * - `si-attachment-list` selector: Attachment list component for displaying file attachments
+ *
+ * @see {@link SiUserMessageComponent} for user message display
+ * @see {@link SiAiMessageComponent} for AI message display
+ * @see {@link SiAttachmentListComponent} for attachment list to slot in
+ * @see {@link SiChatMessageActionDirective} for action buttons to slot in
+ * @see {@link SiMarkdownRendererComponent} for markdown content rendering
  *
  * @experimental
  */
