@@ -55,7 +55,7 @@
       columnMode="force"
       selectionType="single"
       [cssClasses]="tableConfig.cssClasses"
-      [rows]="rows"
+      [rows]="rows()"
       [columns]="[
         { name: 'Name', sortable: false },
         { name: 'Role', sortable: false },
@@ -65,10 +65,10 @@
       [footerHeight]="tableConfig.footerHeight"
       [rowHeight]="tableConfig.rowHeightSmall"
       [externalPaging]="true"
-      [count]="page.totalElements"
-      [offset]="page.pageNumber"
-      [limit]="page.size"
-      [ghostLoadingIndicator]="isLoading > 0"
+      [count]="page().totalElements"
+      [offset]="page().pageNumber"
+      [limit]="page().size"
+      [ghostLoadingIndicator]="isLoading() > 0"
       (page)="setPage($event)"
       (siResizeObserver)="updateTableData($event)"
     >
@@ -78,8 +78,8 @@
             class="ms-auto"
             forwardButtonText="forward"
             backButtonText="back"
-            [currentPage]="page.pageNumber + 1"
-            [totalRowCount]="rows.length"
+            [currentPage]="page().pageNumber + 1"
+            [totalRowCount]="rows().length"
             (currentPageChange)="table.onFooterPage({ page: $event })"
           />
         </ng-template>
