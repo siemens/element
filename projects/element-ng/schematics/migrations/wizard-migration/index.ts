@@ -10,7 +10,6 @@ import * as ts from 'typescript';
 import {
   discoverSourceFiles,
   findElement,
-  getImportSpecifiers,
   getInlineTemplates,
   getTemplateUrl
 } from '../../utils/index.js';
@@ -33,17 +32,6 @@ export const wizardMigrationRule = (options: { path: string }): Rule => {
         ts.ScriptTarget.Latest,
         true
       );
-
-      const modulePathToMatch = /@(siemens|simpl)\/element-ng(\/wizard)?/;
-
-      const wizardImports = getImportSpecifiers(sourceFile, modulePathToMatch, [
-        'SiWizardComponent',
-        'SiWizardModule'
-      ]);
-
-      if (!wizardImports?.length) {
-        continue;
-      }
 
       const recorder: UpdateRecorder = tree.beginUpdate(filePath);
 
