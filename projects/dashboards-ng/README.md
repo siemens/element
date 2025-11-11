@@ -89,7 +89,7 @@ the `angular.json` file.
 
 ### Add the dashboard to your application
 
-To add the dashboard to your application, add the `si-flexible-dashboard component
+To add the dashboard to your application, add the `si-flexible-dashboard` component
 to your template. Configure the widget catalog by setting the _widgetCatalog_ input
 property.
 
@@ -182,7 +182,7 @@ Optionally, the widget template may include a `<ng-template/>` to provides a foo
 The Angular component should export the template as the public attribute `footer`.
 
 ```ts
-`@ViewChild('footer', { static: true }) footer?: TemplateRef<unknown>;`;
+@ViewChild('footer', { static: true }) footer?: TemplateRef<unknown>;
 ```
 
 ### Dashboard persistence
