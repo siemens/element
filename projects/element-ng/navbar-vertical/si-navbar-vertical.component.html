@@ -17,15 +17,17 @@
       <div class="mobile-drawer focus-inside navbar-vertical-no-collapse">
         <button
           type="button"
-          class="btn btn-circle btn-sm btn-ghost flip-rtl"
-          [class.element-double-left]="!collapsed()"
-          [class.element-double-right]="collapsed()"
+          class="btn btn-circle btn-sm btn-ghost"
           [attr.aria-label]="
             (collapsed() ? navbarExpandButtonText() : navbarCollapseButtonText()) | translate
           "
           [attr.aria-expanded]="!collapsed()"
           (click)="toggleCollapse()"
         >
+          <si-icon
+            class="flip-rtl"
+            [icon]="collapsed() ? icons.elementDoubleRight : icons.elementDoubleLeft"
+          />
         </button>
       </div>
     </div>
@@ -46,7 +48,7 @@
           [attr.aria-label]="searchPlaceholder() | translate"
           (click)="expandForSearch()"
         >
-          <i class="icon element-search"></i>
+          <si-icon class="icon" [icon]="icons.elementSearch" />
         </button>
       </div>
     }
