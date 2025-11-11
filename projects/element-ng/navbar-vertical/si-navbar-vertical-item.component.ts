@@ -14,6 +14,7 @@ import {
 } from '@angular/core';
 import { RouterLinkActive } from '@angular/router';
 import { MenuItem } from '@siemens/element-ng/common';
+import { addIcons, elementDown2, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLinkDirective } from '@siemens/element-ng/link';
 
 import { SiNavbarVerticalGroupTriggerDirective } from './si-navbar-vertical-group-trigger.directive';
@@ -34,7 +35,7 @@ type NavbarVerticalItemInteractive =
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'a[si-navbar-vertical-item], button[si-navbar-vertical-item]',
-  imports: [NgClass],
+  imports: [NgClass, SiIconComponent],
   templateUrl: './si-navbar-vertical-item.component.html',
   styleUrl: './si-navbar-vertical-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -46,6 +47,7 @@ type NavbarVerticalItemInteractive =
   }
 })
 export class SiNavbarVerticalItemComponent implements OnInit {
+  protected readonly icons = addIcons({ elementDown2 });
   readonly item = input.required<NavbarVerticalItemInteractive | MenuItem>({
     alias: 'si-navbar-vertical-item'
   });
