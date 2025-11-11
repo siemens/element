@@ -106,9 +106,49 @@ import { SiPhotoUploadComponent } from '@siemens/element-ng/photo-upload';
 export class SampleComponent {}
 ```
 
-### Example
-
 <si-docs-component example="si-photo-upload/si-photo-upload" height="600"></si-docs-component>
+
+### Image cropping
+
+To implement custom image cropping — whether in an upload dialog, an image editor, or a photo workflow — you can use the image cropper as a standalone component.
+
+Simply wrap the `<image-cropper>` element from the [ngx-image-cropper](https://github.com/Mawi137/ngx-image-cropper) library with `<si-image-cropper-style>`.
+
+This ensures the component matches Element’s theming while granting you full control over its configuration and behavior.
+
+```ts
+import { Component } from '@angular/core';
+import { SiImageCropperStyleComponent } from '@siemens/element-ng/photo-upload';
+import { ImageCropperComponent, ImageCroppedEvent } from 'ngx-image-cropper';
+
+@Component({
+  selector: 'app-sample',
+  template: `
+    <si-image-cropper-style>
+      <image-cropper
+        format="jpeg"
+        [imageURL]="imageSource"
+        [maintainAspectRatio]="true"
+        [aspectRatio]="1"
+        (imageCropped)="onImageCropped($event)"
+      />
+    </si-image-cropper-style>
+  `,
+  standalone: true,
+  imports: [ImageCropperComponent, SiImageCropperStyleComponent]
+})
+export class SampleComponent {
+  imageSource = 'path/to/your/image.jpg'; // URL to your image
+
+  onImageCropped(event: ImageCroppedEvent) {
+    // Handle the cropped image
+    const croppedImage = event.base64;
+    // Use the cropped image as needed
+  }
+}
+```
+
+<si-docs-component example="si-photo-upload/image-cropping" height="450"></si-docs-component>
 
 <si-docs-api component="SiPhotoUploadComponent"></si-docs-api>
 

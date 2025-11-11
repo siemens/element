@@ -1,0 +1,16 @@
+<div class="card">
+  <div class="card-header">
+    <h5>Image cropper</h5>
+  </div>
+  <div class="card-body">
+    <si-image-cropper-style>
+      <image-cropper
+        format="jpeg"
+        [imageURL]="imageSource"
+        [maintainAspectRatio]="true"
+        [aspectRatio]="1"
+        (imageCropped)="onImageCropped($event)"
+      />
+    </si-image-cropper-style>
+  </div>
+</div>
