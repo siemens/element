@@ -35,6 +35,7 @@ nav:
     - Icons:                              'fundamentals/icons.md'
     - Localization:                       'fundamentals/localization.md'
     - Styles:
+      - Display:                           'fundamentals/styles/display.md'
       - Flex:                              'fundamentals/styles/flex.md'
     - UX Writing:
       - Overview:                           'fundamentals/ux-text-style-guide/index.md'
