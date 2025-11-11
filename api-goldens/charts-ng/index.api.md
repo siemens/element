@@ -19,7 +19,6 @@ import { ElementRef } from '@angular/core';
 import { GaugeSeriesOption } from 'echarts';
 import { GridComponentOption } from 'echarts';
 import { HeatmapSeriesOption } from 'echarts';
-import * as i1 from '@angular/common';
 import { LegendComponentOption } from 'echarts';
 import { LineSeriesOption } from 'echarts';
 import { MarkAreaComponentOption } from 'echarts';
@@ -735,7 +734,7 @@ class SiChartsNgModule {
     // (undocumented)
     static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiChartsNgModule>;
     // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiChartsNgModule, never, [typeof i1.CommonModule, typeof SiChartCartesianComponent, typeof SiChartCircleComponent, typeof SiChartComponent, typeof SiChartGaugeComponent, typeof SiChartLoadingSpinnerComponent, typeof SiChartProgressBarComponent, typeof SiChartProgressComponent, typeof SiChartSankeyComponent, typeof SiChartSunburstComponent, typeof SiCustomLegendComponent], [typeof SiChartCartesianComponent, typeof SiChartCircleComponent, typeof SiChartComponent, typeof SiChartGaugeComponent, typeof SiChartProgressBarComponent, typeof SiChartProgressComponent, typeof SiChartSankeyComponent, typeof SiChartSunburstComponent, typeof SiCustomLegendComponent]>;
+    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiChartsNgModule, never, [typeof SiChartCartesianComponent, typeof SiChartCircleComponent, typeof SiChartComponent, typeof SiChartGaugeComponent, typeof SiChartProgressBarComponent, typeof SiChartProgressComponent, typeof SiChartSankeyComponent, typeof SiChartSunburstComponent, typeof SiCustomLegendComponent], [typeof SiChartCartesianComponent, typeof SiChartCircleComponent, typeof SiChartComponent, typeof SiChartGaugeComponent, typeof SiChartProgressBarComponent, typeof SiChartProgressComponent, typeof SiChartSankeyComponent, typeof SiChartSunburstComponent, typeof SiCustomLegendComponent]>;
 }
 export { SiChartsNgModule }
 export { SiChartsNgModule as SimplChartsNgModule }
