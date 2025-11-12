@@ -15,7 +15,7 @@ import {
   output
 } from '@angular/core';
 import { isRTL } from '@siemens/element-ng/common';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import {
   addDaysInRange,
@@ -51,6 +51,7 @@ import { SiInitialFocusComponent } from './si-initial-focus.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiDaySelectionComponent extends SiInitialFocusComponent {
+  private readonly todayDefaultText = t(() => $localize`:@@SI_DATEPICKER.TODAY:Today`);
   /**
    * Indicate whether the week numbers shall be hidden.
    *
@@ -76,6 +77,7 @@ export class SiDaySelectionComponent extends SiInitialFocusComponent {
   readonly activeMonthChange = output<Date>();
   /** Emits when the user requests a different to show a different view */
   readonly viewChange = output<'year' | 'month'>();
+  protected readonly today = computed(() => this.todayLabel() ?? this.todayDefaultText);
   /** The translated list of week days. */
   protected readonly days = computed(() => getDayStrings(this.locale, this.weekStartDay()));
   /** The week numbers which are shown as row label */

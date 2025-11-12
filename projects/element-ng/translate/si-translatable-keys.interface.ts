@@ -53,6 +53,7 @@ export interface SiTranslatableKeys {
   'SI_DATEPICKER.SECONDS'?: string;
   'SI_DATEPICKER.START_DATE_PLACEHOLDER'?: string;
   'SI_DATEPICKER.START_TIME_LABEL'?: string;
+  'SI_DATEPICKER.TODAY'?: string;
   'SI_DATE_RANGE_FILTER.ADVANCED'?: string;
   'SI_DATE_RANGE_FILTER.AFTER'?: string;
   'SI_DATE_RANGE_FILTER.APPLY'?: string;

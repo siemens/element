@@ -158,6 +158,8 @@ export interface SiTranslatableKeys {
     // (undocumented)
     'SI_DATEPICKER.START_TIME_LABEL'?: string;
     // (undocumented)
+    'SI_DATEPICKER.TODAY'?: string;
+    // (undocumented)
     'SI_DELETE_CONFIRMATION_DIALOG.CANCEL_BTN'?: string;
     // (undocumented)
     'SI_DELETE_CONFIRMATION_DIALOG.DELETE_BTN'?: string;
