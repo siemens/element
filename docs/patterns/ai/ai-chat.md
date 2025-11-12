@@ -99,7 +99,7 @@ The slots are:
 - `si-chat-input/siChatContainerInput (helper directive)` -> For the input (whether default or custom).
 - `si-inline-notification` -> Slotted above the input for displaying the status.
 
-<si-docs-component example="si-chat-messages/si-chat-container"></si-docs-component>
+<si-docs-component example="si-chat-messages/si-chat-container" height="600"></si-docs-component>
 
 <si-docs-api component="SiChatContainerComponent"></si-docs-api>
 
