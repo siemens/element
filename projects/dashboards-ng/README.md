@@ -36,8 +36,7 @@ providers: [
         useFactory: createTranslateLoader,
         deps: [HttpBackend]
       }
-    }),
-    SiTranslateNgxTModule
+    })
   ),
   provideAnimations(),
   provideNgxTranslateForElement(),
