@@ -105,7 +105,7 @@ $default-chart-padding: 32px;
 
 .legend-item {
   cursor: pointer;
-  margin-right: 8px;
+  margin-right: 12px;
   display: flex;
   flex-direction: var(--flex-dir1);
   align-items: center;
@@ -128,7 +128,7 @@ $default-chart-padding: 32px;
 
 .right-legend-circle {
   margin-right: 0;
-  margin-left: 4px;
+  margin-left: 8px;
 }
 
 .legend-text {
