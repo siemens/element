@@ -82,6 +82,10 @@ The text reflows to fit the available space while preserving hierarchy and align
 
 <si-docs-api component="SiUserMessageComponent"></si-docs-api>
 
+<si-docs-component example="si-chat-messages/si-ai-message"></si-docs-component>
+
+<si-docs-api component="SiAiMessageComponent"></si-docs-api>
+
 ### Base chat message
 
 Use these base components to build custom chat message interfaces.
@@ -106,21 +110,3 @@ The slots are:
 ### Markdown renderer
 
 <si-docs-component example="si-markdown-renderer/si-markdown-renderer"></si-docs-component>
-
-<si-docs-api component="SiMarkdownRendererComponent"></si-docs-api>
-
-<si-docs-types></si-docs-types>
-
-<si-docs-component example="si-chat-messages/si-ai-message"></si-docs-component>
-
-<si-docs-api component="SiAiMessageComponent"></si-docs-api>
-
-### Base markdown component
-
-The **si-markdown-renderer** component is used to render markdown content within the AI message.
-
-<si-docs-component example="si-markdown-renderer/si-markdown-renderer"></si-docs-component>
-
-<si-docs-api component="SiMarkdownRendererComponent"></si-docs-api>
-
-<si-docs-types></si-docs-types>
