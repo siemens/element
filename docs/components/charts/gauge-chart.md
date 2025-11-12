@@ -55,7 +55,7 @@ import { SiChartGaugeComponent } from '@siemens/charts-ng';
 })
 ```
 
-<si-docs-component example="si-charts/si-chart-gauge" height="400"></si-docs-component>
+<si-docs-component example="si-charts/gauge/si-chart-gauge" height="400"></si-docs-component>
 
 <si-docs-api component="SiChartGaugeComponent" package="@siemens/charts-ng" hideImplicitlyPublic="true"></si-docs-api>
 

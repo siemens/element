@@ -18,7 +18,7 @@ import { SiChartComponent } from '@siemens/charts-ng';
 })
 ```
 
-<si-docs-component example="si-charts/si-chart-generic" full="true" height="400"></si-docs-component>
+<si-docs-component example="si-charts/generic/si-chart-generic" full="true" height="400"></si-docs-component>
 
 <si-docs-api component="SiChartComponent" package="@siemens/charts-ng" hideImplicitlyPublic="true"></si-docs-api>
 

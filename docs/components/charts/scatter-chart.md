@@ -53,7 +53,7 @@ import { SiChartCartesianComponent } from '@siemens/charts-ng';
 })
 ```
 
-<si-docs-component example="si-charts/si-chart-scatter" height="400"></si-docs-component>
+<si-docs-component example="si-charts/cartesian/si-chart-scatter" height="400"></si-docs-component>
 
 <si-docs-api component="SiChartCartesianComponent" package="@siemens/charts-ng" hideImplicitlyPublic="true"></si-docs-api>
 
