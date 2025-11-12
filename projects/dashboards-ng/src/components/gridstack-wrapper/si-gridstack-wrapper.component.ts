@@ -5,6 +5,7 @@
 import {
   Component,
   ComponentRef,
+  computed,
   ElementRef,
   inject,
   input,
@@ -14,6 +15,7 @@ import {
   OnInit,
   output,
   OutputRefSubscription,
+  signal,
   SimpleChanges,
   viewChild,
   ViewContainerRef
@@ -74,10 +76,15 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges, OnDestroy
 
   private grid!: GridStack;
   private markedForRender: WidgetConfig[] = [];
-  private gridItems: {
-    id: string;
-    component: ComponentRef<SiWidgetHostComponent>;
-  }[] = [];
+  private readonly gridItems = signal<
+    {
+      id: string;
+      component: ComponentRef<SiWidgetHostComponent>;
+    }[]
+  >([]);
+  private readonly gridItemsMap = computed(
+    () => new Map(this.gridItems().map(item => [item.id, item]))
+  );
   private readonly itemIdAttr = 'item-id';
 
   private widgetIdSubscriptionMap = new Map<string, OutputRefSubscription[]>();
@@ -93,15 +100,13 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges, OnDestroy
       if (firstChange) {
         this.markedForRender = currentValue;
       } else {
+        const currentIds = new Set(currentValue.map((item: WidgetConfig) => item.id));
+        const previousIds = new Set(previousValue.map((item: WidgetConfig) => item.id));
         // Get newly added items
-        const toBeAdded = currentValue.filter(
-          (item: WidgetConfig) => !previousValue.find((i: WidgetConfig) => i.id === item.id)
-        );
+        const toBeAdded = currentValue.filter((item: WidgetConfig) => !previousIds.has(item.id));
 
         // Get deleted items
-        const toBeRemoved = previousValue.filter(
-          (item: WidgetConfig) => !currentValue.find((i: WidgetConfig) => i.id === item.id)
-        );
+        const toBeRemoved = previousValue.filter((item: WidgetConfig) => !currentIds.has(item.id));
 
         if (toBeAdded) {
           this.mount(toBeAdded);
@@ -187,12 +192,16 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges, OnDestroy
   }
 
   private updateLayout(widgets: WidgetConfig[]): void {
-    const tmp = widgets.map(w => ({ ...w, w: w.width, h: w.height }));
+    const widgetConfigMap = new Map(widgets.map(w => [w.id, { ...w, w: w.width, h: w.height }]));
+
     if (this.grid) {
       const gridItems = this.grid.getGridItems();
       gridItems.forEach(gridItem => {
-        const config = tmp.find(widget => widget.id === gridItem.getAttribute('item-id'));
-        this.grid.update(gridItem, { ...config });
+        const itemId = gridItem.getAttribute('item-id');
+        const config = widgetConfigMap.get(itemId!);
+        if (config) {
+          this.grid.update(gridItem, config);
+        }
       });
     }
   }
@@ -216,7 +225,7 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges, OnDestroy
     this.widgetIdSubscriptionMap.set(item.id, subscriptions);
     const element = componentRef.location.nativeElement as HTMLElement;
     element.setAttribute(this.itemIdAttr, item.id!);
-    this.gridItems.push({ id: item.id!, component: componentRef });
+    this.gridItems.update(items => [...items, { id: item.id!, component: componentRef }]);
     this.grid.makeWidget(element, {
       w: item.width,
       h: item.height,
@@ -236,9 +245,10 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges, OnDestroy
 
     if (toRemove) {
       this.grid.removeWidget(toRemove);
-      const index = this.gridItems.findIndex(i => i.id === widgetId);
-      this.gridItems[index].component.destroy();
-      this.gridItems.splice(index, 1);
+      const gridItemToRemove = this.gridItemsMap().get(widgetId);
+      gridItemToRemove?.component.destroy();
+      this.gridItemsMap().delete(widgetId);
+      this.gridItems.set(Array.from(this.gridItemsMap().values()));
     }
   }
 
@@ -247,9 +257,10 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges, OnDestroy
    * We have to update instance and run ChangeDetectionRef manually.
    */
   private updateViewComponents(newConfigs: WidgetConfig[]): void {
-    // TODO: lookup by id would fasten the update
+    const gridItemsMap = this.gridItemsMap();
+
     for (const config of newConfigs) {
-      const gridItem = this.gridItems.find(item => item.id === config.id);
+      const gridItem = gridItemsMap.get(config.id);
       if (gridItem) {
         gridItem.component.setInput('widgetConfig', config);
       }
