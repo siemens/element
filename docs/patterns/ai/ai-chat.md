@@ -88,7 +88,9 @@ These are not treated as errors and do not require a separate notification.
 
 Use the chat container with the chat messages to build chat message interfaces.
 
-The **si-chat-container** component is a wrapper component, it has slots for chat messages and an input
+The **si-chat-container** component is a wrapper component, it has slots for
+[chat messages](../../components/chat-messages/chat-message.md) and a
+[chat input](../../components/chat-messages/chat-input.md).
 
 The slots are:
 - default (chat messages)
