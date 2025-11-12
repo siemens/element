@@ -344,17 +344,22 @@ export class SiFileUploaderComponent implements OnChanges {
    * Output which fires whenever new files are added to or removed from the uploader.
    */
   readonly filesChanges = output<UploadFile[]>();
-
+  /** @internal */
   protected readonly icons = addIcons({
     elementCancel,
     elementDelete,
     elementDocument,
     elementRedo
   });
+  /** @internal */
   protected files: ExtUploadFile[] = [];
+  /** @internal */
   protected pending = 0;
+  /** @internal */
   protected uploading = 0;
+  /** @internal */
   protected uploadEnabled = false;
+  /** @internal */
   protected maxFilesReached = false;
 
   private readonly dropZone = viewChild.required<SiFileDropzoneComponent>('dropZone');
@@ -366,7 +371,7 @@ export class SiFileUploaderComponent implements OnChanges {
       this.updateStates();
     }
   }
-
+  /** @internal */
   protected handleFiles(files: UploadFile[]): void {
     if (!files?.length) {
       return;
@@ -415,7 +420,7 @@ export class SiFileUploaderComponent implements OnChanges {
       this.fileUpload(false);
     }
   }
-
+  /** @internal */
   protected removeFile(index: number): void {
     if (index >= 0) {
       this.files.splice(index, 1);
@@ -424,7 +429,7 @@ export class SiFileUploaderComponent implements OnChanges {
       this.updateStates();
     }
   }
-
+  /** @internal */
   protected cancelUpload(file: ExtUploadFile): void {
     if (file.subscription) {
       file.subscription.unsubscribe();
@@ -445,7 +450,7 @@ export class SiFileUploaderComponent implements OnChanges {
       file: file.file
     });
   }
-
+  /** @internal */
   protected retryUpload(file: UploadFile): void {
     file.status = 'added';
     this.doUpload([file], true);

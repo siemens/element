@@ -82,6 +82,7 @@ export class PresetMatchFilterPipe implements PipeTransform {
 export class SiDateRangeFilterComponent implements OnChanges {
   private readonly service = inject(SiDateRangeCalculationService);
   private readonly mediaMatcher = inject(MediaMatcher);
+  /** @internal */
   protected readonly smallScreen = this.mediaMatcher.matchMedia(
     `(max-width: ${BOOTSTRAP_BREAKPOINTS.mdMinimum}px)`
   ).matches;
@@ -299,39 +300,47 @@ export class SiDateRangeFilterComponent implements OnChanges {
 
   /** Base configuration on how the dates should be displayed, parts of it may be overwritten internally. */
   readonly datepickerConfig = input<DatepickerInputConfig>();
-
+  /** @internal */
   protected readonly icons = addIcons({ elementDown2 });
+  /** @internal */
   protected advancedMode = false;
+  /** @internal */
   protected dateRange: DateRange = { start: undefined, end: undefined };
-
+  /** @internal */
   protected point1Now = true;
+  /** @internal */
   protected point2Mode: 'duration' | 'date' = 'duration';
-
+  /** @internal */
   protected point1date = this.getDateNow();
+  /** @internal */
   protected point2date = this.getDateNow();
+  /** @internal */
   protected point2offset = 0;
+  /** @internal */
   protected point2range: 'before' | 'after' | 'within' = 'before';
+  /** @internal */
   protected readonly calculatedRange = computed<ResolvedDateRange>(() =>
     this.resolve(this.range())
   );
+  /** @internal */
   protected readonly pipeFormat = computed<string>(() =>
     this.enableTimeSelection()
       ? (this.datepickerConfig()?.dateTimeFormat ?? 'short')
       : (this.datepickerConfig()?.dateFormat ?? 'shortDate')
   );
-
+  /** @internal */
   protected readonly datepickerConfigInternal = computed<DatepickerConfig>(() => ({
     ...(this.datepickerConfig() ?? {}),
     enableDateRange: false,
     showTime: this.enableTimeSelection(),
     mandatoryTime: this.enableTimeSelection()
   }));
-
+  /** @internal */
   protected readonly dateRangeConfig = computed<DatepickerConfig>(() => ({
     ...(this.datepickerConfig() ?? {}),
     enableDateRange: true
   }));
-
+  /** @internal */
   protected readonly filteredPresetList = computed<DateRangePreset[]>(() => {
     const timeFilter = (item: DateRangePreset): boolean => {
       const timeOnly = item.type === 'custom' ? item.timeOnly : item.offset < ONE_DAY;
@@ -339,13 +348,16 @@ export class SiDateRangeFilterComponent implements OnChanges {
     };
     return (this.presetList() ?? []).filter(timeFilter);
   });
-
+  /** @internal */
   protected readonly focusedDate = computed(() => {
     const date = this.dateRange.end ?? this.dateRange.start;
     return isValid(date) ? date : undefined;
   });
+  /** @internal */
   protected readonly presetFilter = signal('');
+  /** @internal */
   protected readonly presetOpen = signal(false);
+  /** @internal */
   protected readonly inputMode = computed(
     () => this.basicMode() === 'input' || this.enableTimeSelection()
   );
@@ -412,13 +424,13 @@ export class SiDateRangeFilterComponent implements OnChanges {
       skipNormalization
     });
   }
-
+  /** @internal */
   protected updateDateRange(range = this.range()): void {
     const calculatedRange = this.resolve(range);
     this.dateRange.start = calculatedRange.start;
     this.dateRange.end = calculatedRange.end;
   }
-
+  /** @internal */
   protected updateOnModeChange(): void {
     if (this.advancedMode) {
       const calculatedRange = this.resolve(this.range());
@@ -458,7 +470,7 @@ export class SiDateRangeFilterComponent implements OnChanges {
       this.updateFromDateRange();
     }
   }
-
+  /** @internal */
   protected updateFromDateRange(): void {
     const startDate = this.dateRange.start ?? this.getDateNow();
     const endDate = this.dateRange.end ?? this.getDateNow();
@@ -472,7 +484,7 @@ export class SiDateRangeFilterComponent implements OnChanges {
     this.point2Mode = 'date';
     this.point2offset = 0;
   }
-
+  /** @internal */
   protected point1Changed(): void {
     if (this.point1Now) {
       this.range.update(oldRange => ({ ...oldRange, point1: 'now' }));
@@ -484,7 +496,7 @@ export class SiDateRangeFilterComponent implements OnChanges {
       this.range.update(oldRange => ({ ...oldRange, point1: this.point1date ?? new Date(NaN) }));
     }
   }
-
+  /** @internal */
   protected point2Changed(): void {
     if (this.point2Mode === 'date') {
       if (!(this.range().point2 instanceof Date)) {
@@ -516,7 +528,7 @@ export class SiDateRangeFilterComponent implements OnChanges {
       }));
     }
   }
-
+  /** @internal */
   protected selectPresetItem(event: Event, item: DateRangePreset): void {
     const newRange: DateRangeFilter =
       item.type === 'custom'

@@ -117,8 +117,9 @@ export class SiLaunchpadFactoryComponent {
   readonly showLessAppsText = input(t(() => $localize`:@@SI_LAUNCHPAD.SHOW_LESS:Show less`));
 
   readonly favoriteChange = output<FavoriteChangeEvent>();
-
+  /** @internal */
   protected showAllApps = false;
+  /** @internal */
   protected readonly categories = computed(() => {
     const apps = this.apps();
     const favorites = this.favorites();
@@ -137,28 +138,32 @@ export class SiLaunchpadFactoryComponent {
     }
     return categories;
   });
+  /** @internal */
   protected readonly favorites = computed(() =>
     this.apps()
       .flatMap(app => ('apps' in app ? app.apps : (app as App)))
       .filter(app => app.favorite)
   );
+  /** @internal */
   protected readonly hasFavorites = computed(() => this.favorites().length > 0);
+  /** @internal */
   protected readonly icons = addIcons({ elementDown2, elementCancel });
+  /** @internal */
   protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });
   private header = inject(SiApplicationHeaderComponent);
-
+  /** @internal */
   protected closeLaunchpad(): void {
     this.header.closeLaunchpad();
   }
-
+  /** @internal */
   protected toggleFavorite(app: App, favorite: boolean): void {
     this.favoriteChange.emit({ app, favorite });
   }
-
+  /** @internal */
   protected escape(): void {
     this.closeLaunchpad();
   }
-
+  /** @internal */
   protected isCategories(items: App[] | AppCategory[]): items is AppCategory[] {
     return items.some(item => 'apps' in item);
   }

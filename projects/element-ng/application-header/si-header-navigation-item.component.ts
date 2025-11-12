@@ -37,5 +37,6 @@ export class SiHeaderNavigationItemComponent {
     self: true,
     optional: true
   });
+  /** @internal */
   protected readonly icons = addIcons({ elementDown2 });
 }

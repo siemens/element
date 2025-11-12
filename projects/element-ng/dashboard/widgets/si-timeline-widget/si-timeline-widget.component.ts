@@ -72,11 +72,11 @@ export class SiTimelineWidgetComponent
    * Optional accent line
    */
   readonly accentLine = input<AccentLineType>();
-
+  /** @internal */
   protected readonly accentClass = computed(() => {
     const accentLine = this.accentLine();
     return accentLine ? 'accent-' + accentLine : '';
   });
-
+  /** @internal */
   protected readonly icons = addIcons({ elementRight2 });
 }

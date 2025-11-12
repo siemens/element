@@ -80,17 +80,20 @@ export class SiSelectInputComponent<T> {
     SiSelectSelectionStrategy<T>
   );
   private readonly selectOptions = inject<SiSelectOptionsStrategy<T>>(SI_SELECT_OPTIONS_STRATEGY);
+  /** @internal */
   protected readonly selectedRows = this.selectOptions.selectedRows;
+  /** @internal */
   protected readonly labeledBy = computed(() => `${this.baseId()}-aria-label ${this.labelledby()}`);
+  /** @internal */
   protected readonly icons = addIcons({ elementDown2 });
-
+  /** @internal */
   @HostListener('blur')
   protected blur(): void {
     if (!this.open()) {
       this.selectionStrategy.onTouched();
     }
   }
-
+  /** @internal */
   @HostListener('click')
   @HostListener('keydown.arrowDown', ['$event'])
   @HostListener('keydown.alt.arrowDown', ['$event'])

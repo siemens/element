@@ -35,41 +35,16 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
     readonly cropperAspectRatio: _angular_core.InputSignal<number>;
     readonly cropperContainWithinAspectRatio: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly cropperFrameAriaLabel: _angular_core.InputSignal<TranslatableString>;
-    protected cropperImageCropped(event: ImageCroppedEvent): void;
     readonly cropperImageFormat: _angular_core.InputSignal<"png" | "jpeg">;
     readonly cropperMaintainAspectRatio: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly cropperMaxHeight: _angular_core.InputSignal<number>;
     readonly cropperMaxWidth: _angular_core.InputSignal<number>;
     readonly cropperMinHeight: _angular_core.InputSignal<number>;
     readonly cropperMinWidth: _angular_core.InputSignal<number>;
-    protected cropperReady(): void;
-    // (undocumented)
-    protected readonly currentFileSizeKilobytes: _angular_core.WritableSignal<number>;
-    // (undocumented)
-    protected readonly currentFileSizeMegabytes: _angular_core.WritableSignal<number>;
     readonly disabledCropping: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly editButtonText: _angular_core.Signal<TranslatableString>;
-    // (undocumented)
-    protected readonly editPhotoTemplate: _angular_core.Signal<TemplateRef<any>>;
-    // (undocumented)
-    protected readonly fileInput: _angular_core.Signal<ElementRef<any>>;
-    // (undocumented)
-    protected fileUpload(event: Event): void;
-    // (undocumented)
-    protected readonly icons: Record<"elementCancel" | "elementCircleFilled" | "elementStateExclamationMark", string>;
-    // (undocumented)
-    protected readonly imageCropper: _angular_core.Signal<ImageCropperComponent | undefined>;
-    protected imageCropperApplied(): void;
-    // (undocumented)
-    protected imageCropperCanceled(): void;
-    protected readonly imageCropperPhoto: _angular_core.WritableSignal<string | undefined>;
     readonly maxFileSize: _angular_core.InputSignal<number>;
-    // (undocumented)
-    protected readonly maxSizeMb: _angular_core.Signal<number>;
     readonly modalDescription: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly modalHeader: _angular_core.InputSignal<TranslatableString>;
-    protected modalRef?: ModalRef;
     // (undocumented)
     ngOnChanges(changes: SimpleChanges): void;
     // (undocumented)
@@ -77,17 +52,10 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
     readonly photoAltText: _angular_core.InputSignal<TranslatableString>;
     readonly placeholderAltText: _angular_core.InputSignal<TranslatableString>;
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected removePhoto(): void;
     readonly removePhotoText: _angular_core.InputSignal<TranslatableString>;
     readonly roundImage: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    protected readonly sanitizedPhotoUrl: _angular_core.WritableSignal<SafeResourceUrl | undefined>;
-    protected showCroppingDialog(): void;
     readonly sourcePhoto: _angular_core.ModelSignal<string | undefined>;
     readonly sourcePhotoUrl: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    protected readonly titleId: string;
-    protected readonly uploadErrorMessage: _angular_core.WritableSignal<string | undefined>;
     readonly uploadErrorTooBig: _angular_core.InputSignal<TranslatableString>;
     readonly uploadErrorWrongType: _angular_core.InputSignal<TranslatableString>;
     readonly uploadPhotoText: _angular_core.InputSignal<TranslatableString>;

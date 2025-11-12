@@ -151,14 +151,21 @@ export class SiStatusBarComponent implements DoCheck, OnDestroy, OnChanges {
   private readonly theBar = viewChild.required<ElementRef>('thebar');
   private readonly content = viewChild.required<ElementRef>('content');
   private readonly custom = viewChild.required<ElementRef>('custom');
-
+  /** @internal */
   protected readonly responsiveItems = signal<ExtendedStatusBarItem[]>([]);
+  /** @internal */
   protected responsiveMode = 0;
+  /** @internal */
   protected readonly expanded = signal(0);
+  /** @internal */
   protected readonly placeholderHeight = signal(0);
+  /** @internal */
   protected readonly contentHeight = signal<number | undefined>(undefined);
+  /** @internal */
   protected readonly blinkOnOff = signal<boolean | undefined>(undefined);
+  /** @internal */
   protected readonly icons = addIcons({ elementDown2, elementSoundMute, elementSoundOn });
+  /** @internal */
   protected statusId = `__si-status-bar-${idCounter++}`;
 
   private timer: any;
@@ -203,13 +210,13 @@ export class SiStatusBarComponent implements DoCheck, OnDestroy, OnChanges {
   ngOnDestroy(): void {
     this.blinkSubs?.unsubscribe();
   }
-
+  /** @internal */
   protected onItemClicked(item: StatusBarItem): void {
     if (item.action) {
       item.action(item);
     }
   }
-
+  /** @internal */
   protected toggleExpand(): void {
     clearTimeout(this.timer);
     if (!this.expanded()) {
@@ -236,7 +243,7 @@ export class SiStatusBarComponent implements DoCheck, OnDestroy, OnChanges {
       }, 10);
     }
   }
-
+  /** @internal */
   protected resizeHandler(): void {
     const size = this.element.nativeElement.clientWidth;
     const muteWidth = this.muteButton() !== undefined ? SiStatusBarComponent.muteButtonWidth : 0;

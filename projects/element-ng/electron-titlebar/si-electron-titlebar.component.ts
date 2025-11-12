@@ -95,6 +95,6 @@ export class SiElectrontitlebarComponent {
    * ```
    */
   readonly ariaLabelMenu = input(t(() => $localize`:@@SI_ELECTRON_TITLEBAR.MENU:Menu`));
-
+  /** @internal */
   protected readonly icons = addIcons({ elementLeft4, elementRight4, elementOptionsVertical });
 }

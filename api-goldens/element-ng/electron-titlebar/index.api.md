@@ -23,8 +23,6 @@ export class SiElectrontitlebarComponent {
     readonly canGoForward: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly forward: _angular_core.OutputEmitterRef<void>;
     readonly hasFocus: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly icons: Record<"elementLeft4" | "elementRight4" | "elementOptionsVertical", string>;
     readonly menuItems: _angular_core.InputSignal<(MenuItem | MenuItem_2)[]>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiElectrontitlebarComponent, "si-electron-titlebar", never, { "appTitle": { "alias": "appTitle"; "required": true; "isSignal": true; }; "canGoBack": { "alias": "canGoBack"; "required": false; "isSignal": true; }; "canGoForward": { "alias": "canGoForward"; "required": false; "isSignal": true; }; "hasFocus": { "alias": "hasFocus"; "required": false; "isSignal": true; }; "menuItems": { "alias": "menuItems"; "required": false; "isSignal": true; }; "ariaLabelForward": { "alias": "ariaLabelForward"; "required": false; "isSignal": true; }; "ariaLabelBack": { "alias": "ariaLabelBack"; "required": false; "isSignal": true; }; "ariaLabelMenu": { "alias": "ariaLabelMenu"; "required": false; "isSignal": true; }; }, { "forward": "forward"; "back": "back"; }, never, never, true, never>;

@@ -16,33 +16,19 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate';
 // @public (undocumented)
 export class SiCircleStatusComponent implements OnChanges, OnDestroy {
     readonly ariaLabel: _angular_core.InputSignal<TranslatableString | undefined>;
-    // (undocumented)
-    protected readonly autoLabel: _angular_core.Signal<string>;
-    // (undocumented)
-    protected readonly backgroundClass: _angular_core.Signal<string>;
     readonly blink: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly blinkOn: _angular_core.WritableSignal<boolean>;
     readonly blinkPulse: _angular_core.InputSignal<Observable<boolean> | undefined>;
     // @deprecated
     readonly color: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    protected readonly contrastFix: _angular_core.WritableSignal<boolean>;
     readonly eventIcon: _angular_core.InputSignal<string | undefined>;
     readonly eventOut: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly icon: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    protected readonly icons: Record<"elementRight4", string>;
     // (undocumented)
     ngOnChanges(changes: SimpleChanges): void;
     // (undocumented)
     ngOnDestroy(): void;
     readonly size: _angular_core.InputSignal<"regular" | "small">;
     readonly status: _angular_core.InputSignal<EntityStatusType | undefined>;
-    // (undocumented)
-    protected readonly statusIcon: _angular_core.Signal<StatusIcon | undefined>;
-    // (undocumented)
-    protected readonly theAriaLabel: _angular_core.Signal<string>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiCircleStatusComponent, "si-circle-status", never, { "status": { "alias": "status"; "required": false; "isSignal": true; }; "color": { "alias": "color"; "required": false; "isSignal": true; }; "icon": { "alias": "icon"; "required": false; "isSignal": true; }; "size": { "alias": "size"; "required": false; "isSignal": true; }; "eventOut": { "alias": "eventOut"; "required": false; "isSignal": true; }; "eventIcon": { "alias": "eventIcon"; "required": false; "isSignal": true; }; "blink": { "alias": "blink"; "required": false; "isSignal": true; }; "blinkPulse": { "alias": "blinkPulse"; "required": false; "isSignal": true; }; "ariaLabel": { "alias": "ariaLabel"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
     // (undocumented)

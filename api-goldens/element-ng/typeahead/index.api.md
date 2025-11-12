@@ -33,16 +33,6 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
     ngOnChanges(changes: SimpleChanges): void;
     // (undocumented)
     ngOnDestroy(): void;
-    // (undocumented)
-    protected onBlur(): void;
-    // (undocumented)
-    protected onInput(event: Event): void;
-    // (undocumented)
-    protected onKeydownEscape(): void;
-    // (undocumented)
-    protected onKeydownSpace(event: Event): void;
-    // (undocumented)
-    protected static readonly overlayPositions: ConnectionPositionPair[];
     readonly siTypeahead: _angular_core.InputSignal<Typeahead>;
     readonly typeaheadAutocompleteListLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly typeaheadAutoSelectIndex: _angular_core.InputSignalWithTransform<number, unknown>;

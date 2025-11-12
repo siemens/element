@@ -47,9 +47,11 @@ export class SiSortBarComponent implements OnInit {
    * sortCriteria change.
    */
   readonly sortChange = output<HttpParams>();
-
+  /** @internal */
   protected readonly icons = addIcons({ elementSortDown, elementSortUp });
+  /** @internal */
   protected activeSortCriteria: SortCriteria['key'] = '';
+  /** @internal */
   protected sortIsDescending = false;
 
   ngOnInit(): void {
@@ -58,7 +60,7 @@ export class SiSortBarComponent implements OnInit {
       this.setActive(defaultSortCriteria);
     }
   }
-
+  /** @internal */
   protected setActive(key: SortCriteria['key']): void {
     if (this.activeSortCriteria === key) {
       this.sortIsDescending = !this.sortIsDescending;

@@ -173,10 +173,11 @@ export class SiColumnSelectionDialogComponent implements OnInit {
   private readonly modalBodyElement = viewChild.required<ElementRef<HTMLDivElement>>('modalBody');
 
   private tempHeaderData: Column[] = [];
-
+  /** @internal */
   protected readonly modalRef = inject(
     ModalRef<SiColumnSelectionDialogComponent, ColumnSelectionDialogResult>
   );
+  /** @internal */
   protected readonly icons = addIcons({ elementCancel });
 
   protected visibleIds: string[] = [];
@@ -192,17 +193,17 @@ export class SiColumnSelectionDialogComponent implements OnInit {
   get backupColumns(): Column[] {
     return this.tempHeaderData;
   }
-
+  /** @internal */
   protected submitColumnSelection(): void {
     this.modalRef.hide({ type: 'ok', columns: this.columns() });
   }
-
+  /** @internal */
   protected cancelColumnSelection(): void {
     this.columns.set([]);
     this.tempHeaderData.forEach(element => this.columns.update(a => [...a, element]));
     this.modalRef.hide({ type: 'cancel', columns: this.columns() });
   }
-
+  /** @internal */
   protected drop(event: CdkDragDrop<string[]>): void {
     const columns = this.columns();
     if (columns[event.currentIndex].draggable) {
@@ -210,7 +211,7 @@ export class SiColumnSelectionDialogComponent implements OnInit {
       this.emitChange();
     }
   }
-
+  /** @internal */
   protected restoreToDefault(): void {
     this.modalRef.hidden.next({
       type: 'restoreDefault',
@@ -221,7 +222,7 @@ export class SiColumnSelectionDialogComponent implements OnInit {
       }
     });
   }
-
+  /** @internal */
   protected moveDown(index: number, event: Event): void {
     const columns = this.columns();
     const listOptions = this.listOptions();
@@ -264,7 +265,7 @@ export class SiColumnSelectionDialogComponent implements OnInit {
       }
     }
   }
-
+  /** @internal */
   protected moveUp(index: number, event: Event): void {
     const columns = this.columns();
     if (columns[index].draggable) {
@@ -285,11 +286,11 @@ export class SiColumnSelectionDialogComponent implements OnInit {
       }
     }
   }
-
+  /** @internal */
   protected emitChange(): void {
     this.modalRef.hidden.next({ type: 'instant', columns: this.columns() });
   }
-
+  /** @internal */
   protected updateVisibility(): void {
     const value = this.listOptions()
       .filter(option => option.isSelected())

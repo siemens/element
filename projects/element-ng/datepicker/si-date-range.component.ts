@@ -224,8 +224,9 @@ export class SiDateRangeComponent
   private validator!: ValidatorFn;
   private onChange = (val: any): void => {};
   private onTouch = (): void => {};
-
+  /** @internal */
   protected readonly icons = addIcons({ elementCalendar });
+  /** @internal */
   protected readonly disabled = computed(() => this.disabledInput() || this.disabledNgControl());
   private readonly disabledNgControl = signal(false);
   private readonly cdRef = inject(ChangeDetectorRef);
@@ -299,6 +300,7 @@ export class SiDateRangeComponent
   /**
    * Focus out shall close the datepicker except we are moving the focus to the datepicker or one of the input elements.
    * @param event - focus out event with the related target
+   * @internal
    */
   @HostListener('focusout', ['$event'])
   protected onFocusOut(event: FocusEvent): void {
@@ -313,14 +315,17 @@ export class SiDateRangeComponent
     }
   }
 
-  /** Forward date range input changes to datepicker overlay */
+  /**
+   * Forward date range input changes to datepicker overlay
+   * @internal
+   */
   protected onInputChanged(dateRange: DateRange): void {
     this.updateValue(dateRange);
 
     this.onChange(this.value());
     this.siDatepickerRangeChange.emit(this.value());
   }
-
+  /** @internal */
   protected show(): void {
     if (this.readonly() || this.disabled()) {
       return;

@@ -67,14 +67,19 @@ export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDest
   readonly mobileNavigationExpanded = signal(false);
   /** @internal */
   readonly hasNavigation = signal(false);
-
+  /** @internal */
   protected readonly openDropdownCount = signal(0);
+  /** @internal */
   protected readonly launchpadOpen = signal(false);
+  /** @internal */
   protected readonly id = `__si-application-header-${SiApplicationHeaderComponent.idCounter++}`;
+  /** @internal */
   protected toggleNavigation = t(
     () => $localize`:@@SI_APPLICATION_HEADER.TOGGLE_NAVIGATION:Toggle navigation`
   );
+  /** @internal */
   protected injector = inject(Injector);
+  /** @internal */
   protected readonly icons = addIcons({ elementThumbnails, elementMenu });
 
   private readonly navigationToggle = viewChild<ElementRef<HTMLDivElement>>('navigationToggle');
@@ -153,7 +158,7 @@ export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDest
         .subscribe(() => this.closeMobileMenus.next());
     }
   }
-
+  /** @internal */
   protected toggleMobileNavigationExpanded(): void {
     if (this.mobileNavigationExpanded()) {
       this.closeMobileNavigation();
@@ -161,7 +166,7 @@ export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDest
       this.openMobileNavigation();
     }
   }
-
+  /** @internal */
   protected toggleLaunchpad(): void {
     if (this.launchpadOpen()) {
       this.closeLaunchpad();
@@ -169,12 +174,12 @@ export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDest
       this.openLaunchpad();
     }
   }
-
+  /** @internal */
   protected navigationEscapePressed(): void {
     this.closeMobileNavigation();
     this.navigationToggle()?.nativeElement.focus();
   }
-
+  /** @internal */
   protected backdropClicked(): void {
     this.closeMobileMenus.next();
   }

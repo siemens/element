@@ -70,13 +70,13 @@ export class SiPaginationComponent {
   private readonly calculatedTotalPages = computed(
     () => this.totalPages() ?? Math.ceil((this.totalRowCount() ?? 0) / (this.pageSize() ?? 1))
   );
-
+  /** @internal */
   protected readonly prevDisabled = computed(() => this.currentPage() === 1);
-
+  /** @internal */
   protected readonly nextDisabled = computed(
     () => this.currentPage() === this.calculatedTotalPages()
   );
-
+  /** @internal */
   protected readonly pageButtons = computed(() => {
     const pageButtons: { page: number; sep: boolean }[] = [];
     const totalPages = this.calculatedTotalPages();
@@ -113,13 +113,13 @@ export class SiPaginationComponent {
 
     return pageButtons;
   });
-
+  /** @internal */
   protected readonly icons = addIcons({ elementLeft3, elementRight3 });
-
+  /** @internal */
   protected direction(event: Event, delta: number): void {
     this.setPage(event, this.currentPage() + delta);
   }
-
+  /** @internal */
   protected setPage(event: Event, page: number): void {
     (event.currentTarget as HTMLElement).blur();
     this.currentPage.set(page);

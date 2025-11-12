@@ -52,8 +52,9 @@ export class SiHeaderCollapsibleActionsComponent implements OnDestroy {
   readonly mobileExpanded = signal(false);
   /** @internal **/
   readonly badgeCount = signal(0);
-
+  /** @internal */
   protected readonly id = `__si-header-collapsible-actions-${SiHeaderCollapsibleActionsComponent.idCounter++}`;
+  /** @internal */
   protected readonly icons = addIcons({ elementOptionsVertical });
 
   private readonly toggle = viewChild.required<ElementRef<HTMLDivElement>>('toggle');
@@ -66,7 +67,7 @@ export class SiHeaderCollapsibleActionsComponent implements OnDestroy {
     this.closeMobileSub.unsubscribe();
     this.inlineChangeSubscription?.unsubscribe();
   }
-
+  /** @internal */
   protected toggleMobileExpanded(): void {
     if (this.mobileExpanded()) {
       this.closeMobile();
@@ -74,7 +75,7 @@ export class SiHeaderCollapsibleActionsComponent implements OnDestroy {
       this.openMobile();
     }
   }
-
+  /** @internal */
   protected escapePressed(): void {
     this.closeMobile();
     this.toggle().nativeElement.focus();

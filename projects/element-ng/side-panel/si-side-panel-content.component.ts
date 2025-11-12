@@ -144,14 +144,19 @@ export class SiSidePanelContentComponent implements OnInit {
    * Output for search bar input
    */
   readonly searchEvent = output<string>();
-
+  /** @internal */
   protected readonly isCollapsed = signal(false);
+  /** @internal */
   protected readonly isExpanded = signal(true);
+  /** @internal */
   protected readonly enableMobile = computed(() => this.service?.enableMobile() ?? false);
+  /** @internal */
   protected readonly mobileSize = signal(false);
+  /** @internal */
   protected readonly focusable = computed(
     () => !this.mobileSize() || !this.enableMobile() || !this.isCollapsed()
   );
+  /** @internal */
   protected readonly icons = addIcons({ elementDoubleLeft, elementDoubleRight });
   /**
    * The $rpanel-transition-duration in the style is 0.5 seconds.
@@ -190,7 +195,7 @@ export class SiSidePanelContentComponent implements OnInit {
         this.mobileSize.set(matches);
       });
   }
-
+  /** @internal */
   protected toggleSidePanel(event?: MouseEvent): void {
     if (event?.detail !== 0) {
       // Blur except if triggered by keyboard

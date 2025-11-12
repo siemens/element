@@ -198,11 +198,11 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
    * Optional timepicker label.
    */
   readonly timepickerLabel = input<string>();
-
+  /** @internal */
   protected get startDate(): Date | undefined {
     return this.config().enableDateRange ? this.dateRange()?.start : this.date();
   }
-
+  /** @internal */
   protected get endDate(): Date | undefined {
     return this.config().enableDateRange ? this.dateRange()?.end : undefined;
   }
@@ -225,23 +225,24 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
   private readonly defaultEnableTimeText = t(
     () => $localize`:@@SI_DATEPICKER.ENABLED_TIME_TEXT:Consider time`
   );
-
+  /** @internal */
   protected readonly includeTimeLabel = computed(() =>
     this.disabledTime()
       ? (this.config().disabledTimeText ?? this.defaultDisabledTimeText)
       : (this.config().enabledTimeText ?? this.defaultEnableTimeText)
   );
-
+  /** @internal */
   protected get weekStartDay(): WeekStart {
     return this.config().weekStartDay ?? this.localeWeekStart;
   }
-
+  /** @internal */
   protected get hideWeekNumbers(): boolean {
     return this.config().hideWeekNumbers ?? false;
   }
 
   /**
    * The active view
+   * @internal
    */
   protected readonly view = signal<ViewType>('week');
   /**
@@ -257,20 +258,29 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
         return this.daySelection();
     }
   });
-
+  /** @internal */
   protected readonly actualFocusedDate = computed(() => this.focusedDate() ?? today());
+  /** @internal */
   protected readonly requireFocus = signal(this.initialFocus());
-  /** When the user switch from the year or month view via keyboard selection we force the focus. */
+  /**
+   * When the user switch from the year or month view via keyboard selection we force the focus.
+   * @internal
+   */
   protected readonly forceFocus = computed(() => this.requireFocus() || this.initialFocus());
+  /** @internal */
   protected months: string[] = [];
+  /** @internal */
   protected switchId = `__si-datepicker-switch-id-${idCounter++}`;
+  /** @internal */
   protected timepickerId = `__si-datepicker-timepicker-id-${idCounter++}`;
 
   /**
    * Configuration which view shall be shown after year selection,
    * when onlyMonthSelection is enabled the month view is shown otherwise the week view.
+   * @internal
    */
   protected yearViewSwitchTo: 'month' | 'week' = 'week';
+  /** @internal */
   protected monthViewSwitchTo: 'month' | 'week' = 'week';
   private readonly cdRef = inject(ChangeDetectorRef);
   private readonly localeWeekStart: WeekStart;
@@ -278,6 +288,7 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
    * Date object to track and change the time. Keeping time and date
    * in separate objects to not change the date when flipping time.
    * After change, a new date object is created with an adapted time.
+   * @internal
    */
   protected time = new FormControl<Date | undefined>(undefined, {
     validators: [control => this.validateTime(control)],
@@ -631,6 +642,7 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
   /**
    * Handle month/year changes
    * @param selection - the selected month or null of cancelled.
+   * @internal
    */
   protected activeMonthChange(selection: Date | null): void {
     if (selection) {
@@ -650,6 +662,7 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
   /**
    * Handle year changes
    * @param selection - the selected year or null of cancelled.
+   * @internal
    */
   protected activeYearChange(selection: Date | null): void {
     if (selection) {
@@ -666,7 +679,7 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
   focusActiveCell(): void {
     this.activeView()?.focusActiveCell();
   }
-
+  /** @internal */
   protected onActiveHoverChange(event?: Cell): void {
     this.activeHover.set(event);
   }

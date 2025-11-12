@@ -109,16 +109,19 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
    * Output callback event will provide you with search term if search input changes.
    */
   readonly searchChange = output<string>();
-
+  /** @internal */
   protected isInvalid = false;
+  /** @internal */
   protected inFocus = false;
-
+  /** @internal */
   protected onChange = (val: any): void => {};
+  /** @internal */
   protected onTouch = (): void => {};
-
+  /** @internal */
   protected readonly disabled = computed(() => this.disabledInput() || this.disabledNgControl());
-
+  /** @internal */
   protected readonly searchValue = signal('');
+  /** @internal */
   protected readonly icons = addIcons({ elementCancel, elementSearch });
 
   /** @internal */
@@ -187,27 +190,27 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
   focus(): void {
     this.inputRef().nativeElement.focus();
   }
-
+  /** @internal */
   protected onCancelFocus(event: Event): void {
     event.stopPropagation();
   }
-
+  /** @internal */
   protected input(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     if (!this.isProhibitedCharactersUsed(value)) {
       this.debouncer.next(value);
     }
   }
-
+  /** @internal */
   protected onBlur(): void {
     this.inFocus = false;
     this.onTouch();
   }
-
+  /** @internal */
   protected resetForm(): void {
     this.setSearch('');
   }
-
+  /** @internal */
   protected writeSearchValue(value: string): void {
     this.searchValue.set(value);
     this.inputRef().nativeElement.value = value;

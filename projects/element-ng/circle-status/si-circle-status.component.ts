@@ -92,9 +92,11 @@ export class SiCircleStatusComponent implements OnChanges, OnDestroy {
    * Aria label for icon and status combo. Needed for a11y
    */
   readonly ariaLabel = input<TranslatableString>();
-
+  /** @internal */
   protected readonly backgroundClass = computed(() => this.statusIcon()?.background ?? '');
+  /** @internal */
   protected readonly theAriaLabel = computed(() => this.ariaLabel() ?? this.autoLabel());
+  /** @internal */
   protected readonly autoLabel = computed(() => {
     const status = this.status();
     const statusName = status && this.statusIcons[status] ? status : 'none';
@@ -104,13 +106,18 @@ export class SiCircleStatusComponent implements OnChanges, OnDestroy {
       this.status() && this.icon() ? 'in ' : ''
     }status ${statusName}${direction}`;
   });
+  /** @internal */
   protected readonly statusIcon = computed<StatusIcon | undefined>(() => {
     const status = this.status();
     return status ? this.statusIcons[status] : undefined;
   });
+  /** @internal */
   protected readonly blinkOn = signal(false);
+  /** @internal */
   protected readonly contrastFix = signal(false);
+  /** @internal */
   protected readonly icons = addIcons({ elementRight4 });
+  /** @internal */
   private blinkSubs?: Subscription;
 
   private readonly bg = viewChild.required<ElementRef>('bg');

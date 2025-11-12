@@ -309,29 +309,40 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
    * The photo to be displayed and edited (when not readonly).
    */
   readonly croppedPhoto = model<string>();
-
+  /** @internal */
   protected readonly editPhotoTemplate = viewChild.required<TemplateRef<any>>('editPhotoTemplate');
+  /** @internal */
   protected readonly fileInput = viewChild.required<ElementRef<any>>('fileInput');
+  /** @internal */
   protected readonly imageCropper = viewChild<ImageCropperComponent>('imageCropper');
 
-  // used to label the dialog
+  /**
+   * used to label the dialog
+   * @internal
+   */
   protected readonly titleId = `__si-photo-upload-${SiPhotoUploadComponent.idCounter++}`;
 
   /**
    * The trusted photo url string which is used to display the photo.
+   * @internal
    */
   protected readonly sanitizedPhotoUrl = signal<SafeResourceUrl | undefined>(undefined);
 
   /**
    * The appropriate error message displayed to the user. Might be
    * `uploadErrorWrongType` or `uploadErrorTooBig`.
+   * @internal
    */
   protected readonly uploadErrorMessage = signal<string | undefined>(undefined);
+  /** @internal */
   protected readonly editButtonText = computed(() =>
     this.sanitizedPhotoUrl() ? this.changePhotoText() : this.uploadPhotoText()
   );
+  /** @internal */
   protected readonly currentFileSizeKilobytes = signal(-1);
+  /** @internal */
   protected readonly currentFileSizeMegabytes = signal(-1);
+  /** @internal */
   protected readonly maxSizeMb = computed(() => this.maxFileSize() / 1024);
 
   /**
@@ -339,9 +350,10 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
    * reference than `sourcePhoto` to support the cancel after uploading
    * a new photo. While `sourcePhoto` is A and image cropper uploads B,
    * we should not replace `sourcePhoto` A until user presses apply.
+   * @internal
    */
   protected readonly imageCropperPhoto = signal<string | undefined>(undefined);
-
+  /** @internal */
   protected readonly icons = addIcons({
     elementCancel,
     elementCircleFilled,
@@ -349,6 +361,7 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
   });
   /**
    * Reference to the modal displaying the photo to edit.
+   * @internal
    */
   protected modalRef?: ModalRef;
   /**
@@ -403,6 +416,7 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
 
   /**
    * Opens a modal dialog with the cropping component.
+   * @internal
    */
   protected showCroppingDialog(): void {
     if (this.modalRef) {
@@ -431,7 +445,7 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
       this.modalRef = undefined;
     });
   }
-
+  /** @internal */
   protected fileUpload(event: Event): void {
     // Initially reset a possible error message
     this.resetErrorMessage();
@@ -475,7 +489,7 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
     this.setPhoto(this.croppedPhoto());
     this.cropperPosition = position;
   }
-
+  /** @internal */
   protected removePhoto(): void {
     // We emit undefined to notify consumers that the cropped
     // images is removed. This is a kind of special crop event.
@@ -491,6 +505,7 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
    * Invoked when user cropped the photo and pressed apply button.
    * Updates the current photo by the selected cropped photo and
    * closes the modal dialog.
+   * @internal
    */
   protected imageCropperApplied(): void {
     if (this.imageCroppedEvent) {
@@ -502,7 +517,7 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
     }
     this.modalRef?.hide();
   }
-
+  /** @internal */
   protected imageCropperCanceled(): void {
     this.imageCropperPhoto.set(this.sourcePhoto());
     this.modalRef?.hide('cancel');
@@ -512,7 +527,7 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
    * Callback from the image cropper on every mouse drag invoking a cropping.
    *
    * @param event - Event containing the cropped image and the image cropped position.
-   *
+   * @internal
    */
   protected cropperImageCropped(event: ImageCroppedEvent): void {
     this.imageCroppedEvent = event;
@@ -521,6 +536,7 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
   /**
    * Lifecycle hook from the image cropper component. Informs
    * us when initialized and ready.
+   * @internal
    */
   protected cropperReady(): void {
     // When the user opens cropper dialog multiple times we need to

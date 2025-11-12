@@ -35,22 +35,6 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
     readonly collapsible: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly contentResize: _angular_core.OutputEmitterRef<ElementDimensions>;
     readonly enableMobile: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly isCollapsed: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
-    protected readonly isHidden: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
-    protected readonly isLg: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
-    protected readonly isMd: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
-    protected readonly isScrollMode: _angular_core.Signal<boolean>;
-    // (undocumented)
-    protected readonly isSm: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
-    protected readonly isXl: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
-    protected readonly isXs: _angular_core.WritableSignal<boolean>;
     readonly mode: _angular_core.InputSignal<SidePanelMode>;
     // (undocumented)
     ngOnChanges(changes: SimpleChanges): void;
@@ -58,10 +42,6 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
     ngOnDestroy(): void;
     // (undocumented)
     ngOnInit(): void;
-    // (undocumented)
-    protected readonly ready: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
-    protected readonly showTempContent: _angular_core.WritableSignal<boolean>;
     readonly size: _angular_core.InputSignal<SidePanelSize>;
     readonly toggleItemLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     toggleSidePanel(): void;
@@ -77,19 +57,7 @@ export class SiSidePanelContentComponent implements OnInit {
     readonly closeButtonLabel: _angular_core.InputSignal<TranslatableString>;
     // (undocumented)
     readonly collapsible: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly enableMobile: _angular_core.Signal<boolean>;
-    // (undocumented)
-    protected readonly focusable: _angular_core.Signal<boolean>;
     readonly heading: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
-    protected readonly icons: Record<"elementDoubleLeft" | "elementDoubleRight", string>;
-    // (undocumented)
-    protected readonly isCollapsed: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
-    protected readonly isExpanded: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
-    protected readonly mobileSize: _angular_core.WritableSignal<boolean>;
     // (undocumented)
     ngOnInit(): void;
     readonly primaryActions: _angular_core.InputSignal<(MenuItem | ContentActionBarMainItem)[]>;
@@ -100,8 +68,6 @@ export class SiSidePanelContentComponent implements OnInit {
     readonly showMobileDrawerBadge: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly statusActions: _angular_core.InputSignal<StatusItem[]>;
     readonly toggleItemLabel: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
-    protected toggleSidePanel(event?: MouseEvent): void;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSidePanelContentComponent, "si-side-panel-content", never, { "collapsible": { "alias": "collapsible"; "required": false; "isSignal": true; }; "heading": { "alias": "heading"; "required": false; "isSignal": true; }; "primaryActions": { "alias": "primaryActions"; "required": false; "isSignal": true; }; "secondaryActions": { "alias": "secondaryActions"; "required": false; "isSignal": true; }; "statusActions": { "alias": "statusActions"; "required": false; "isSignal": true; }; "searchable": { "alias": "searchable"; "required": false; "isSignal": true; }; "searchPlaceholder": { "alias": "searchPlaceholder"; "required": false; "isSignal": true; }; "closeButtonLabel": { "alias": "closeButtonLabel"; "required": false; "isSignal": true; }; "toggleItemLabel": { "alias": "toggleItemLabel"; "required": false; "isSignal": true; }; "showMobileDrawerBadge": { "alias": "showMobileDrawerBadge"; "required": false; "isSignal": true; }; }, { "searchEvent": "searchEvent"; }, never, ["*"], true, never>;
     // (undocumented)

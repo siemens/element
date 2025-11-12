@@ -49,6 +49,7 @@ import { SiTypeaheadSorting } from './si-typeahead.sorting';
   exportAs: 'si-typeahead'
 })
 export class SiTypeaheadDirective implements OnChanges, OnDestroy {
+  /** @internal */
   protected static readonly overlayPositions: ConnectionPositionPair[] = [
     {
       overlayX: 'start',
@@ -378,14 +379,20 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
     }
   }
 
-  // Clear the current input timeout (if set) and remove the component when the focus of the host is lost.
+  /**
+   * Clear the current input timeout (if set) and remove the component when the focus of the host is lost.
+   * @internal
+   */
   @HostListener('focusout')
   protected onBlur(): void {
     this.clearTimer();
     this.canBeOpen.set(false);
   }
 
-  // Start the input timeout to display the typeahead when the host is focussed or a value is inputted into it.
+  /**
+   * Start the input timeout to display the typeahead when the host is focussed or a value is inputted into it.
+   * @internal
+   */
   @HostListener('focusin', ['$event'])
   @HostListener('input', ['$event'])
   protected onInput(event: Event): void {
@@ -404,7 +411,7 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
       this.canBeOpen.set(true);
     }, this.typeaheadWaitMs());
   }
-
+  /** @internal */
   @HostListener('keydown.escape')
   protected onKeydownEscape(): void {
     if (this.typeaheadCloseOnEsc()) {
@@ -412,7 +419,7 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
       this.canBeOpen.set(false);
     }
   }
-
+  /** @internal */
   @HostListener('keydown.space', ['$event'])
   protected onKeydownSpace(event: Event): void {
     if (this.typeaheadMultiSelect()) {

@@ -41,16 +41,17 @@ export class SiCalendarDirectionButtonComponent {
    * Emit on button click.
    */
   readonly clicked = output();
-
+  /** @internal */
   protected readonly icon = computed(() =>
     this.direction() === 'left' ? this.icons.elementLeft2 : this.icons.elementRight2
   );
+  /** @internal */
   protected readonly buttonClass = computed(() =>
     this.direction() === 'left' ? 'previous-button' : 'next-button'
   );
-
+  /** @internal */
   protected readonly icons = addIcons({ elementLeft2, elementRight2 });
-
+  /** @internal */
   protected onClick(): void {
     this.clicked.emit();
   }

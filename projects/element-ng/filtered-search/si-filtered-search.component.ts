@@ -304,14 +304,20 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
   private readonly scrollContainer = viewChild.required('scrollContainer', { read: ElementRef });
 
   private readonly valueComponents = viewChildren(SiFilteredSearchValueComponent);
-
+  /** @internal */
   protected dataSource: Observable<InternalCriterionDefinition[]>;
+  /** @internal */
   protected autoEditCriteria = false;
-
+  /** @internal */
   protected values: { config: InternalCriterionDefinition; value: CriterionValue }[] = [];
+  /** @internal */
   protected searchValue = '';
-  /** Internal criteria model */
+  /**
+   * Internal criteria model
+   * @internal
+   */
   protected internalCriterionDefinitions: InternalCriterionDefinition[] = [];
+  /** @internal */
   protected readonly icons = addIcons({ elementCancel, elementSearch });
 
   /** Used to trigger a renewed search */
@@ -331,7 +337,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
   // Angular also calls ngOnChanges if we emitted a change and then two-way-databinding writes back our own change.
   // We use this to ensure that we do not write our own change back to the input.
   private lastEmittedSearchCriteria?: SearchCriteria;
-
+  /** @internal */
   protected readonly isStrictOrOnlySelectValue = computed(() => {
     return this.strictValue() || this.onlySelectValue();
   });
@@ -468,7 +474,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     this.typeaheadInputChange.next(this.searchValue);
     this.submit();
   }
-
+  /** @internal */
   protected deleteCriterion(
     criterion: CriterionValue,
     index: number,
@@ -499,13 +505,13 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
       this.submit();
     }
   }
-
+  /** @internal */
   protected submit(): void {
     if (!this.doSearchOnInputChange()) {
       this.doSearch.emit(this.searchCriteria()!);
     }
   }
-
+  /** @internal */
   protected typeaheadOnSelectCriterion(event: TypeaheadOption): void {
     const criterion = event as InternalCriterionDefinition;
 
@@ -520,7 +526,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
       this.typeaheadInputChange.next('');
     }, 0);
   }
-
+  /** @internal */
   protected validateCriterionLabel(criterion: InternalCriterionDefinition): boolean {
     if (!this.strictCriterionOrValue()) {
       return true;
@@ -623,7 +629,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
 
     return [];
   }
-
+  /** @internal */
   protected freeTextFocus(): void {
     // Ensure that the free text input is fully visible in the scroll container
     const scrollDirection = isRTL() ? -1 : 1;
@@ -631,7 +637,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     this.scrollContainer().nativeElement.scrollLeft = position;
     this.typeaheadInputChange.next(this.freeTextInputElement().nativeElement.value);
   }
-
+  /** @internal */
   protected freeTextBackspace(event: Event): void {
     if (!(event.target as HTMLInputElement).value) {
       // edit last criterion if a user presses backspace in empty search input.
@@ -641,7 +647,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
       }
     }
   }
-
+  /** @internal */
   protected freeTextInput(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
 
@@ -679,7 +685,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
       this.typeaheadInputChange.next(value);
     }
   }
-
+  /** @internal */
   protected valueChange(
     value: CriterionValue,
     criterion: { config: InternalCriterionDefinition; value: CriterionValue }
@@ -687,7 +693,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     criterion.value = value;
     this.emitChangeEvent();
   }
-
+  /** @internal */
   protected focusNext(index: number, event: { freeText: string } | void): void {
     const next = this.valueComponents()[index + 1];
     if (next) {

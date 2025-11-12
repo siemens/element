@@ -125,18 +125,18 @@ export class SiFileDropzoneComponent {
    * @defaultValue false
    */
   readonly directoryUpload = input(false, { transform: booleanAttribute });
-
+  /** @internal */
   protected readonly maxFileSizeString = computed(() => {
     const maxFileSize = this.maxFileSize();
     return maxFileSize ? this.fileUploadDirective().fileSizeToString(maxFileSize) : '';
   });
-
+  /** @internal */
   protected readonly icons = addIcons({ elementUpload });
-
+  /** @internal */
   protected dragOver = false;
 
   private readonly fileUploadDirective = viewChild.required(SiFileUploadDirective);
-
+  /** @internal */
   protected dropHandler(event: DragEvent): void {
     event.preventDefault();
     if (this.directoryUpload()) {
@@ -146,21 +146,21 @@ export class SiFileDropzoneComponent {
     }
     this.dragOver = false;
   }
-
+  /** @internal */
   protected dragOverHandler(event: DragEvent): void {
     event.preventDefault();
     event.stopPropagation();
     this.dragOver = true;
   }
-
+  /** @internal */
   protected inputEnterHandler(): void {
     this.fileUploadDirective().triggerClick();
   }
-
+  /** @internal */
   protected onFilesAdded(files: UploadFile[]): void {
     this.filesAdded.emit(files);
   }
-
+  /** @internal */
   protected onFileError(error: FileUploadError): void {
     this.fileError.emit(error);
   }

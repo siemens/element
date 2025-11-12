@@ -92,8 +92,10 @@ export abstract class SiTabBaseDirective implements OnDestroy, FocusableOption {
 
   /** @internal */
   tabId = `${SiTabBaseDirective.tabCounter++}`;
+  /** @internal */
   protected readonly icons = addIcons({ elementCancel });
-  protected tabset = inject(SI_TABSET);
+  /** @internal */
+  protected readonly tabset = inject(SI_TABSET);
   private readonly index = computed(() => this.tabset.tabPanels().indexOf(this));
 
   constructor() {
@@ -115,7 +117,7 @@ export abstract class SiTabBaseDirective implements OnDestroy, FocusableOption {
       this.tabset.removedTabByUser(this.indexBeforeClose, this.active());
     }
   }
-
+  /** @internal */
   protected closeTab(event: Event): void {
     if (this.closable() && !this.disabledTab()) {
       event.stopPropagation();

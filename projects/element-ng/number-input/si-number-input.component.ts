@@ -152,23 +152,32 @@ export class SiNumberInputComponent
    * ```
    */
   readonly errormessageId = input(`${this.id()}-errormessage`);
-
+  /** @internal */
   protected canInc = true;
+  /** @internal */
   protected canDec = true;
+  /** @internal */
   protected readonly disabled = computed(() => this.disabledInput() || this.disabledNgControl());
   private readonly disabledNgControl = signal(false);
+  /** @internal */
   protected onTouched: () => void = () => {};
+  /** @internal */
   protected onChange: (val: any) => void = () => {};
+  /** @internal */
   protected validator: ValidatorFn | null = SiNumberInputComponent.formatValidator;
+  /** @internal */
   protected onValidatorChanged: () => void = () => {};
+  /** @internal */
   protected readonly min = computed(() => {
     const minVal = this.minInput();
     return minVal === undefined || isNaN(minVal) ? undefined : minVal;
   });
+  /** @internal */
   protected readonly max = computed(() => {
     const maxVal = this.maxInput();
     return maxVal === undefined || isNaN(maxVal) ? undefined : maxVal;
   });
+  /** @internal */
   protected readonly icons = addIcons({ elementMinus, elementPlus });
   private internalValue?: number;
   private autoUpdate$ = timer(400, 80);
@@ -223,7 +232,7 @@ export class SiNumberInputComponent
   registerOnValidatorChange?(fn: () => void): void {
     this.onValidatorChanged = fn;
   }
-
+  /** @internal */
   protected modelChanged(): void {
     const value = this.inputElement().nativeElement.value
       ? this.inputElement().nativeElement.valueAsNumber
@@ -233,7 +242,7 @@ export class SiNumberInputComponent
     this.onChange(value);
     this.valueChange.emit(value);
   }
-
+  /** @internal */
   protected autoUpdateStart(event: Event, isIncrement: boolean): void {
     const mouseButton = (event as MouseEvent).button;
     if (mouseButton) {
@@ -247,7 +256,7 @@ export class SiNumberInputComponent
     this.autoUpdateSubs = this.autoUpdate$.subscribe(trigger);
     trigger();
   }
-
+  /** @internal */
   protected autoUpdateStop(): void {
     this.autoUpdateSubs?.unsubscribe();
     this.autoUpdateSubs = undefined;

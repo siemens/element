@@ -47,17 +47,22 @@ export interface SiListWidgetItem {
   }
 })
 export class SiListWidgetItemComponent extends SiWidgetBaseComponent<SiListWidgetItem> {
+  /** @internal */
   protected readonly isLink = computed(() => {
     return typeof this.value()?.label === 'object';
   });
+  /** @internal */
   protected readonly badgeColor = computed(() => {
     return this.value()?.badgeColor ? 'bg-' + this.value()?.badgeColor : 'bg-default';
   });
+  /** @internal */
   protected readonly link = computed(() => {
     return this.value()?.label as Link;
   });
+  /** @internal */
   protected readonly label = computed(() => {
     return this.value()?.label as string;
   });
+  /** @internal */
   protected readonly icons = addIcons({ elementRight2 });
 }

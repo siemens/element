@@ -124,17 +124,25 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
    * Emits whenever the content is resized due to opening and closing or parent resize.
    */
   readonly contentResize = output<ElementDimensions>();
-
+  /** @internal */
   protected readonly isScrollMode = computed(() => this.mode() === 'scroll');
-
+  /** @internal */
   protected readonly isXs = signal(false);
+  /** @internal */
   protected readonly isSm = signal(false);
+  /** @internal */
   protected readonly isMd = signal(true);
+  /** @internal */
   protected readonly isLg = signal(false);
+  /** @internal */
   protected readonly isXl = signal(false);
+  /** @internal */
   protected readonly isCollapsed = signal(false);
+  /** @internal */
   protected readonly ready = signal(false);
+  /** @internal */
   protected readonly isHidden = signal(false);
+  /** @internal */
   protected readonly showTempContent = signal(false);
 
   private readonly panelElement = viewChild.required<ElementRef>('sidePanel');

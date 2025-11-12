@@ -27,10 +27,13 @@ export class SiToastNotificationComponent {
   readonly toast = input.required<SiToast>();
 
   private closeAriaLabelDefault = t(() => $localize`:@@SI_TOAST.CLOSE:Close`);
+  /** @internal */
   protected readonly closeAriaLabel = computed(
     () => this.toast().closeAriaLabel ?? this.closeAriaLabelDefault
   );
+  /** @internal */
   protected readonly icons = addIcons({ elementCancel });
+  /** @internal */
   protected readonly status = computed(() => {
     const toast = this.toast();
     if (toast.state === 'connection') {
@@ -39,15 +42,18 @@ export class SiToastNotificationComponent {
       return Object.keys(this.statusIcons).includes(toast.state) ? toast.state : 'info';
     }
   });
+  /** @internal */
   protected readonly statusColor = computed(() => this.statusIcons[this.status()].color);
+  /** @internal */
   protected readonly toastTimeoutInSeconds = computed(() => {
     const toast = this.toast();
     return toast.timeout ? toast.timeout / 1000 : SI_TOAST_AUTO_HIDE_DELAY / 1000;
   });
+  /** @internal */
   protected readonly animationMode = signal('running');
   readonly paused = output<void>();
   readonly resumed = output<void>();
-
+  /** @internal */
   @HostListener('mouseenter')
   protected onMouseEnter(): void {
     if (!this.toast().disableAutoClose) {
@@ -55,7 +61,7 @@ export class SiToastNotificationComponent {
       this.paused.emit();
     }
   }
-
+  /** @internal */
   @HostListener('mouseleave')
   protected onMouseLeave(): void {
     if (!this.toast().disableAutoClose) {
@@ -63,7 +69,7 @@ export class SiToastNotificationComponent {
       this.resumed.emit();
     }
   }
-
+  /** @internal */
   protected close(): void {
     this.toast().close!();
   }

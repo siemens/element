@@ -187,14 +187,21 @@ export class SiPhoneNumberInputComponent
    * ```
    */
   readonly errormessageId = input(`${this.id()}-errormessage`);
-
+  /** @internal */
   protected readonly phoneInput = viewChild.required<ElementRef<HTMLInputElement>>('phoneInput');
+  /** @internal */
   protected selectedCountry?: CountryInfo;
+  /** @internal */
   protected placeholder = '';
+  /** @internal */
   protected readonly countryFocused = signal(false);
+  /** @internal */
   protected open = false;
+  /** @internal */
   protected overlayWidth = 0;
+  /** @internal */
   protected readonly disabled = computed(() => this.disabledInput() || this.disabledNgControl());
+  /** @internal */
   protected readonly countryList = computed(() => {
     const countries = this.allowedCountries() ?? this.phoneUtil.getSupportedRegions();
     return countries
@@ -205,6 +212,7 @@ export class SiPhoneNumberInputComponent
       }))
       .sort((a: CountryInfo, b: CountryInfo) => a.name.localeCompare(b.name));
   });
+  /** @internal */
   protected readonly icons = addIcons({ elementDown2 });
   private readonly allowedCountries = computed(
     () => this.supportedCountries() ?? this.phoneUtil.getSupportedRegions()
@@ -273,7 +281,7 @@ export class SiPhoneNumberInputComponent
     this.isValidNumber = true;
     return null;
   }
-
+  /** @internal */
   protected input(): void {
     const rawNumber = this.phoneInput().nativeElement.value;
     this.phoneNumber = this.parseNumber(rawNumber);
@@ -297,7 +305,7 @@ export class SiPhoneNumberInputComponent
 
     this.handleChange();
   }
-
+  /** @internal */
   protected blur(): void {
     this.countryFocused.set(false);
     this.onTouched();
@@ -308,26 +316,26 @@ export class SiPhoneNumberInputComponent
       isValid: this.isValidNumber
     });
   }
-
+  /** @internal */
   protected countryInput(num: CountryInfo): void {
     this.selectedCountry = num;
     this.updatePlaceholder();
     this.refreshValueAfterCountryChange();
     this.handleChange();
   }
-
+  /** @internal */
   protected openOverlay(): void {
     if (!this.readonly()) {
       this.open = true;
       this.overlayWidth = this.elementRef.nativeElement.getBoundingClientRect().width + 2; // 2px border
     }
   }
-
+  /** @internal */
   protected overlayDetach(): void {
     this.open = false;
     this.phoneInput().nativeElement.focus();
   }
-
+  /** @internal */
   protected valueProvider(country: CountryInfo): string {
     return `${country.name} +${country.countryCode}`;
   }

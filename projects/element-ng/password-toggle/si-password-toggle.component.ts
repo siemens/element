@@ -47,15 +47,16 @@ export class SiPasswordToggleComponent {
    * ```
    */
   readonly hideLabel = input(t(() => $localize`:@@SI_PASSWORD_TOGGLE.HIDE:hide password`));
-
+  /** @internal */
   protected readonly showPassword = signal<boolean>(false);
+  /** @internal */
   protected readonly icons = addIcons({ elementHide, elementShow });
 
   /** The `type` attribute for the `<input>` ('password' | 'text'). */
   get inputType(): string {
     return this.showPassword() ? 'text' : 'password';
   }
-
+  /** @internal */
   protected toggle(): void {
     this.showPassword.set(!this.showPassword());
     this.typeChange.emit(this.inputType);

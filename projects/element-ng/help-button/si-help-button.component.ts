@@ -44,5 +44,6 @@ import { SiPopoverDirective } from '@siemens/element-ng/popover';
   ]
 })
 export class SiHelpButtonComponent {
+  /** @internal */
   protected icons = addIcons({ elementHelp });
 }
