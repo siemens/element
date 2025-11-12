@@ -18,6 +18,8 @@
 
   .item-title {
     margin-inline-start: map.get(variables.$spacers, 5);
+    // We use a custom line-height here to avoid font clipping vertically in some browsers
+    line-height: 1.3;
   }
 
   .icon {
