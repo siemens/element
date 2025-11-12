@@ -18,6 +18,7 @@
 
   .item-title {
     margin-inline-start: map.get(variables.$spacers, 5);
+    line-height: 18px;
   }
 
   .icon {
