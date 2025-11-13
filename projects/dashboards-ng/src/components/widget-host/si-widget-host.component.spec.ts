@@ -51,7 +51,7 @@ describe('SiWidgetHostComponent', () => {
       SiActionDialogService
     ) as unknown as SiActionDialogMockService;
     gridService = TestBed.inject(SiGridService);
-    gridService.widgetCatalog = [TEST_WIDGET];
+    gridService.widgetCatalog.set([TEST_WIDGET]);
     fixture.componentRef.setInput('widgetConfig', TEST_WIDGET_CONFIG_0);
   });
 
@@ -68,7 +68,7 @@ describe('SiWidgetHostComponent', () => {
   });
 
   it('should not create widget instance without widget', (done: DoneFn) => {
-    gridService.widgetCatalog = [];
+    gridService.widgetCatalog.set([]);
     component.initCompleted.subscribe(_ => {
       expect(component.widgetHost().length).toBe(0);
       done();
