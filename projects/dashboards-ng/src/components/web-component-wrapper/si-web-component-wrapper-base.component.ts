@@ -4,21 +4,19 @@
  */
 import {
   AfterViewInit,
-  Component,
   ElementRef,
   inject,
   Input,
   Renderer2,
   ViewChild,
-  DOCUMENT
+  DOCUMENT,
+  Directive
 } from '@angular/core';
 
 import { WidgetConfig } from '../../model/widgets.model';
 
-@Component({
-  template: ''
-})
-export class SiWebComponentWrapperBaseComponent implements AfterViewInit {
+@Directive()
+export abstract class SiWebComponentWrapperBaseComponent implements AfterViewInit {
   private _config!: WidgetConfig;
   get config(): WidgetConfig {
     return this._config;
