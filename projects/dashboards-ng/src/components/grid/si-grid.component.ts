@@ -210,13 +210,13 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     if (changes.widgetCatalog) {
-      this.gridService.widgetCatalog = this.widgetCatalog();
+      this.gridService.widgetCatalog.set(this.widgetCatalog());
     }
   }
 
   ngOnInit(): void {
     queueMicrotask(() => this.loadAndSubscribeWidgets());
-    this.gridService.widgetCatalog = this.widgetCatalog();
+    this.gridService.widgetCatalog.set(this.widgetCatalog());
   }
 
   ngOnDestroy(): void {

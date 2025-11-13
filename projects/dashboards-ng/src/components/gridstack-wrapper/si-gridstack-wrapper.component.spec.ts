@@ -40,7 +40,7 @@ describe('SiGridstackWrapperComponent', () => {
       providers: [SiActionDialogService, SiGridService]
     }).compileComponents();
     gridService = TestBed.inject(SiGridService);
-    gridService.widgetCatalog = [];
+    gridService.widgetCatalog.set([]);
   });
 
   describe('initialization', () => {
@@ -56,7 +56,7 @@ describe('SiGridstackWrapperComponent', () => {
     it('should mount the grid items', () => {
       fixture = TestBed.createComponent(HostComponent);
       host = fixture.componentInstance;
-      gridService.widgetCatalog = [TEST_WIDGET];
+      gridService.widgetCatalog.set([TEST_WIDGET]);
       host.widgets = TEST_WIDGET_CONFIGS;
       const gridStackWrapper = host.gridStackWrapper();
       spyOn(gridStackWrapper!, 'mount');
@@ -69,7 +69,7 @@ describe('SiGridstackWrapperComponent', () => {
     it('should render grid items', () => {
       fixture = TestBed.createComponent(HostComponent);
       host = fixture.componentInstance;
-      gridService.widgetCatalog = [TEST_WIDGET];
+      gridService.widgetCatalog.set([TEST_WIDGET]);
       host.widgets = [TEST_WIDGET_CONFIG_0, TEST_WIDGET_CONFIG_1];
       fixture.detectChanges();
 
@@ -81,7 +81,7 @@ describe('SiGridstackWrapperComponent', () => {
     beforeEach(() => {
       fixture = TestBed.createComponent(HostComponent);
       host = fixture.componentInstance;
-      gridService.widgetCatalog = [TEST_WIDGET];
+      gridService.widgetCatalog.set([TEST_WIDGET]);
       host.widgets = [TEST_WIDGET_CONFIG_0, TEST_WIDGET_CONFIG_1];
       fixture.detectChanges();
     });
@@ -117,7 +117,7 @@ describe('SiGridstackWrapperComponent', () => {
     it('should return layout of grid items', () => {
       fixture = TestBed.createComponent(HostComponent);
       host = fixture.componentInstance;
-      gridService.widgetCatalog = [TEST_WIDGET];
+      gridService.widgetCatalog.set([TEST_WIDGET]);
       host.widgets = TEST_WIDGET_CONFIGS;
       fixture.detectChanges();
       const layout = host.gridStackWrapper()!.getLayout();
@@ -135,7 +135,7 @@ describe('SiGridstackWrapperComponent', () => {
     it('should return empty array without widgets', () => {
       fixture = TestBed.createComponent(HostComponent);
       host = fixture.componentInstance;
-      gridService.widgetCatalog = [TEST_WIDGET];
+      gridService.widgetCatalog.set([TEST_WIDGET]);
       host.widgets = [];
       fixture.detectChanges();
       const layout = host.gridStackWrapper()!.getLayout();
