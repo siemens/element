@@ -3,15 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component } from '@angular/core';
-import {
-  CartesianChartSeries,
-  SiChartCartesianComponent,
-  themeElement,
-  themeSupport
-} from '@siemens/charts-ng';
+import { CartesianChartSeries, SiChartCartesianComponent } from '@siemens/charts-ng';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
-
-themeSupport.setDefault(themeElement);
 
 @Component({
   selector: 'app-sample',

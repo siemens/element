@@ -6,7 +6,7 @@ import { DoBootstrap, inject, Injector, NgModule } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { SimplChartsNgModule, themeElement, themeSupport } from '@siemens/charts-ng';
+import { SimplChartsNgModule } from '@siemens/charts-ng';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
 import { SiThemeService } from '@siemens/element-ng/theme';
 
@@ -16,7 +16,6 @@ import { ContactWidgetComponent } from './contact-widget/contact-widget.componen
 import { NoteWidgetEditorComponent } from './note-widget-editor/note-widget-editor.component';
 import { NoteWidgetComponent } from './note-widget/note-widget.component';
 
-themeSupport.setDefault(themeElement);
 @NgModule({
   imports: [
     BrowserModule,
