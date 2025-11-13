@@ -10,9 +10,7 @@ import {
   SiChartCartesianComponent,
   SiChartCircleComponent,
   SiChartGaugeComponent,
-  SiChartProgressBarComponent,
-  themeElement,
-  themeSupport
+  SiChartProgressBarComponent
 } from '@siemens/charts-ng';
 import {
   SiApplicationHeaderComponent,
@@ -39,8 +37,6 @@ import { Link } from '@siemens/element-ng/link';
 import { NavbarVerticalItem, SiNavbarVerticalComponent } from '@siemens/element-ng/navbar-vertical';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 import { LOG_EVENT } from '@siemens/live-preview';
-
-themeSupport.setDefault(themeElement);
 
 @Component({
   selector: 'app-sample',
