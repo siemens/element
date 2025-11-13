@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Injectable } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { Widget } from '../model/widgets.model';
@@ -10,7 +10,11 @@ import { Widget } from '../model/widgets.model';
 @Injectable()
 export class SiGridService {
   /** @defaultValue [] */
-  widgetCatalog: Widget[] = [];
+  readonly widgetCatalog = signal<Widget[]>([]);
+
+  private readonly widgetCatalogMap = computed(
+    () => new Map(this.widgetCatalog().map(widget => [widget.id, widget]))
+  );
 
   /**
    * Observable that emits true if si-grid is set to editable.
@@ -21,6 +25,6 @@ export class SiGridService {
   editable$ = new BehaviorSubject<boolean>(false);
 
   getWidget(id: string): Widget | undefined {
-    return this.widgetCatalog.find(widget => widget.id === id);
+    return this.widgetCatalogMap().get(id);
   }
 }
