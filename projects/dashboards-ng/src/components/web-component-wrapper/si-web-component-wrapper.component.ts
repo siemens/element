@@ -15,7 +15,7 @@ import { SiWebComponentWrapperBaseComponent } from './si-web-component-wrapper-b
   templateUrl: './si-web-component-wrapper.component.html'
 })
 export class SiWebComponentWrapperComponent
-  extends SiWebComponentWrapperBaseComponent
+  extends SiWebComponentWrapperBaseComponent<WidgetInstance>
   implements WidgetInstance, AfterViewInit, OnDestroy
 {
   private _editable?: boolean;
@@ -25,8 +25,8 @@ export class SiWebComponentWrapperComponent
 
   @Input() set editable(editable: boolean) {
     this._editable = editable;
-    if (this.webComponentHost.nativeElement.children.length > 0) {
-      this.webComponentHost.nativeElement.children[0].editable = editable;
+    if (this.webComponent) {
+      this.webComponent.editable = editable;
     }
   }
 
