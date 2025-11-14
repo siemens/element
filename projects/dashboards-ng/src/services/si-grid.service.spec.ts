@@ -26,7 +26,7 @@ describe('SiGridService', () => {
     });
 
     it('should return the widget of the id', () => {
-      service.widgetCatalog = [
+      service.widgetCatalog.set([
         {
           id: 'id',
           name: 'widget',
@@ -36,8 +36,8 @@ describe('SiGridService', () => {
             moduleLoader: () => Promise.reject()
           }
         }
-      ];
-      expect(service.getWidget('id')).toBe(service.widgetCatalog[0]);
+      ]);
+      expect(service.getWidget('id')).toBe(service.widgetCatalog()[0]);
     });
   });
 });
