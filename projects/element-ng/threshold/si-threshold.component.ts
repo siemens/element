@@ -179,7 +179,7 @@ export class SiThresholdComponent implements OnChanges {
 
   /** Fired when validation status changes */
   readonly validChange = output<boolean>();
-
+  /** @internal */
   protected readonly colors = computed(() => {
     const colorMap = new Map<unknown, string>();
     for (const opt of this.options()) {
@@ -191,7 +191,7 @@ export class SiThresholdComponent implements OnChanges {
     }
     return this.thresholdSteps().map(ths => colorMap.get(ths.optionValue) ?? '');
   });
-
+  /** @internal */
   protected readonly icons = addIcons({ elementPlus });
   private _valid = true;
   /**
@@ -206,14 +206,14 @@ export class SiThresholdComponent implements OnChanges {
   ngOnChanges(): void {
     this.validate();
   }
-
+  /** @internal */
   protected deleteStep(index: number): void {
     const updated = [...this.thresholdSteps()];
     updated.splice(index, 1);
     this.thresholdSteps.set(updated);
     this.validate();
   }
-
+  /** @internal */
   protected addStep(index: number): void {
     const newStep: ThresholdStep = { ...this.thresholdSteps()[index], value: undefined };
     const updated = [...this.thresholdSteps()];
@@ -222,7 +222,7 @@ export class SiThresholdComponent implements OnChanges {
     this.validate();
     setTimeout(() => this.numberInputs()[index].inputElement().nativeElement.focus());
   }
-
+  /** @internal */
   protected stepChange(): void {
     this.thresholdSteps.set([...this.thresholdSteps()]);
     this.validate();

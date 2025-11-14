@@ -42,6 +42,7 @@ export class SiListWidgetComponent
   extends SiWidgetBaseComponent<SiListWidgetItem[]>
   implements OnChanges
 {
+  /** @internal */
   protected readonly icons = addIcons({ elementRight2, elementSortDown, elementSortUp });
 
   /** List widget heading. */
@@ -163,13 +164,16 @@ export class SiListWidgetComponent
    * Optional accent line
    */
   readonly accentLine = input<AccentLineType>();
-
+  /** @internal */
   protected readonly accentClass = computed(() => {
     const accentLine = this.accentLine();
     return accentLine ? 'accent-' + accentLine : '';
   });
 
-  /** The menu item array used to display the sort button. */
+  /**
+   * The menu item array used to display the sort button.
+   * @internal
+   */
   protected readonly sortAction = computed(() => {
     const sortAction: ContentActionBarMainItem[] = [
       {

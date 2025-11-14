@@ -82,17 +82,9 @@ export type NavbarVerticalSubItem = NavbarVerticalItemRouterLink | NavbarVertica
 // @public (undocumented)
 export class SiNavbarVerticalComponent implements OnChanges, OnInit {
     constructor();
-    // (undocumented)
-    protected readonly activatedRoute: ActivatedRoute | null;
     collapse(): void;
     readonly collapsed: _angular_core.ModelSignal<boolean>;
-    // (undocumented)
-    protected doSearch(event: string): void;
     expand(): void;
-    // (undocumented)
-    protected expandForSearch(): void;
-    // (undocumented)
-    protected isLegacyStyle(item: MenuItem | NavbarVerticalItem): item is MenuItem;
     readonly items: _angular_core.ModelSignal<(MenuItem | NavbarVerticalItem)[]>;
     readonly navbarCollapseButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly navbarExpandButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
@@ -100,25 +92,13 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit {
     ngOnChanges(changes: SimpleChanges): void;
     // (undocumented)
     ngOnInit(): void;
-    // (undocumented)
-    protected readonly ready = true;
-    // (undocumented)
-    protected saveUIState(): void;
     readonly searchable: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly searchEvent: _angular_core.OutputEmitterRef<string>;
-    // (undocumented)
-    protected readonly searchInputDelay = 400;
     readonly searchPlaceholder: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly skipLinkMainContentLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly skipLinkNavigationLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected readonly smallScreen: _angular_core.WritableSignal<boolean>;
     readonly stateId: _angular_core.InputSignal<string | undefined>;
     readonly textOnly: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected toggleCollapse(): void;
-    // (undocumented)
-    protected readonly uiStateExpandedItems: _angular_core.WritableSignal<Record<string, boolean>>;
     readonly visible: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiNavbarVerticalComponent, "si-navbar-vertical", never, { "collapsed": { "alias": "collapsed"; "required": false; "isSignal": true; }; "searchable": { "alias": "searchable"; "required": false; "isSignal": true; }; "searchPlaceholder": { "alias": "searchPlaceholder"; "required": false; "isSignal": true; }; "items": { "alias": "items"; "required": false; "isSignal": true; }; "textOnly": { "alias": "textOnly"; "required": false; "isSignal": true; }; "visible": { "alias": "visible"; "required": false; "isSignal": true; }; "navbarExpandButtonText": { "alias": "navbarExpandButtonText"; "required": false; "isSignal": true; }; "navbarCollapseButtonText": { "alias": "navbarCollapseButtonText"; "required": false; "isSignal": true; }; "stateId": { "alias": "stateId"; "required": false; "isSignal": true; }; "skipLinkNavigationLabel": { "alias": "skipLinkNavigationLabel"; "required": false; "isSignal": true; }; "skipLinkMainContentLabel": { "alias": "skipLinkMainContentLabel"; "required": false; "isSignal": true; }; }, { "collapsed": "collapsedChange"; "items": "itemsChange"; "searchEvent": "searchEvent"; }, never, ["*"], true, never>;

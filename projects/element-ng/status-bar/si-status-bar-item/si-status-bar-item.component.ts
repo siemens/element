@@ -39,14 +39,16 @@ export class SiStatusBarItemComponent {
   readonly clickable = input(false, { transform: booleanAttribute });
 
   private readonly bg = viewChild.required<ElementRef>('bg');
-
+  /** @internal */
   protected readonly contrastFix = computed(() => {
     return !!this.color() && this.blink() && this.calculateContrastFix();
   });
+  /** @internal */
   protected readonly statusIcon = computed(() => {
     const status = this.status();
     return status ? this.statusIcons[status] : undefined;
   });
+  /** @internal */
   protected readonly background = computed(() =>
     this.blink() && this.status() !== 'success' ? (this.statusIcon()?.background ?? '') : ''
   );

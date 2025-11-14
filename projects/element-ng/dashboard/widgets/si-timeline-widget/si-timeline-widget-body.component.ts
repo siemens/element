@@ -31,7 +31,10 @@ export class SiTimelineWidgetBodyComponent extends SiWidgetBaseComponent<SiTimel
    */
   readonly showDescription = input(true);
 
-  /** Used to display the defined number of ghost items */
+  /**
+   * Used to display the defined number of ghost items
+   * @internal
+   */
   protected readonly ghosts = computed(() => {
     return new Array(this.numberOfItems() ?? 4);
   });

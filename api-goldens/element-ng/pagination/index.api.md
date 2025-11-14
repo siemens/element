@@ -11,24 +11,9 @@ import * as _siemens_element_translate_ng_translate_types from '@siemens/element
 export class SiPaginationComponent {
     readonly backButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly currentPage: _angular_core.ModelSignal<number>;
-    // (undocumented)
-    protected direction(event: Event, delta: number): void;
     readonly forwardButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected readonly icons: Record<"elementLeft3" | "elementRight3", string>;
     readonly navAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected readonly nextDisabled: _angular_core.Signal<boolean>;
-    // (undocumented)
-    protected readonly pageButtons: _angular_core.Signal<{
-        page: number;
-        sep: boolean;
-    }[]>;
     readonly pageSize: _angular_core.InputSignal<number | undefined>;
-    // (undocumented)
-    protected readonly prevDisabled: _angular_core.Signal<boolean>;
-    // (undocumented)
-    protected setPage(event: Event, page: number): void;
     readonly totalPages: _angular_core.InputSignal<number | undefined>;
     readonly totalRowCount: _angular_core.InputSignal<number | undefined>;
     // (undocumented)

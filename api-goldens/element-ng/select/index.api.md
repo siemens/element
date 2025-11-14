@@ -67,8 +67,6 @@ export interface SelectOptionSource<TValue> {
 
 // @public (undocumented)
 export class SiSelectActionDirective {
-    // (undocumented)
-    protected close(): void;
     readonly selectActionAutoClose: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiSelectActionDirective, "[siSelectAction]", ["si-select-action"], { "selectActionAutoClose": { "alias": "selectActionAutoClose"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
@@ -105,24 +103,14 @@ export class SiSelectComplexOptionsDirective<T> extends SiSelectOptionsStrategyB
 
 // @public (undocumented)
 export class SiSelectComponent<T> implements OnChanges, AfterContentInit, SiFormItemControl {
-    // (undocumented)
-    protected readonly actionsTemplate: _angular_core.Signal<TemplateRef<any> | undefined>;
     readonly ariaLabel: _angular_core.InputSignal<string | null>;
-    // (undocumented)
-    protected backdropClick(): void;
     close(): void;
     // @deprecated
     readonly dropdownClose: _angular_core.OutputEmitterRef<void>;
     readonly errormessageId: _angular_core.InputSignal<string>;
     readonly filterPlaceholder: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
-    protected readonly groupTemplate: _angular_core.Signal<TemplateRef<{
-        $implicit: SelectGroup<T>;
-    }> | undefined>;
     readonly hasFilter: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly id: _angular_core.InputSignal<string>;
-    // (undocumented)
-    protected readonly isOpen: _angular_core.WritableSignal<boolean>;
     readonly labelledbyInput: _angular_core.InputSignal<string | undefined>;
     // (undocumented)
     ngAfterContentInit(): void;
@@ -131,18 +119,8 @@ export class SiSelectComponent<T> implements OnChanges, AfterContentInit, SiForm
     readonly noResultsFoundLabel: _angular_core.InputSignal<TranslatableString>;
     open(): void;
     readonly openChange: _angular_core.OutputEmitterRef<boolean>;
-    // (undocumented)
-    protected readonly optionTemplate: _angular_core.Signal<TemplateRef<{
-        $implicit: SelectOption<T>;
-    }> | undefined>;
-    // (undocumented)
-    protected overlayWidth: number;
     readonly placeholder: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected rows: readonly SelectItem<T>[];
-    // (undocumented)
-    protected readonly selectionStrategy: SiSelectSelectionStrategy<any, any>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSelectComponent<any>, "si-select", never, { "id": { "alias": "id"; "required": false; "isSignal": true; }; "ariaLabel": { "alias": "ariaLabel"; "required": false; "isSignal": true; }; "labelledbyInput": { "alias": "labelledby"; "required": false; "isSignal": true; }; "filterPlaceholder": { "alias": "filterPlaceholder"; "required": false; "isSignal": true; }; "noResultsFoundLabel": { "alias": "noResultsFoundLabel"; "required": false; "isSignal": true; }; "placeholder": { "alias": "placeholder"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "errormessageId": { "alias": "errormessageId"; "required": false; "isSignal": true; }; "hasFilter": { "alias": "hasFilter"; "required": false; "isSignal": true; }; }, { "dropdownClose": "dropdownClose"; "openChange": "openChange"; }, ["optionTemplate", "groupTemplate", "actionsTemplate"], never, true, never>;
     // (undocumented)
@@ -184,22 +162,10 @@ export class SiSelectLazyOptionsDirective<T> implements SiSelectOptionsStrategy<
 // @public (undocumented)
 export class SiSelectListHasFilterComponent<T> extends SiSelectListBase<T> implements OnInit {
     constructor();
-    // (undocumented)
-    protected readonly filterInput: Signal<ElementRef<HTMLInputElement>>;
     readonly filterPlaceholder: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
-    protected readonly icons: Record<"elementSearch", string>;
-    // (undocumented)
-    protected readonly id: Signal<string>;
-    // (undocumented)
-    protected readonly initIndex: Signal<number>;
-    // (undocumented)
-    protected input(): void;
     // (undocumented)
     ngOnInit(): void;
     readonly noResultsFoundLabel: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
-    protected select(newValue: T): void;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSelectListHasFilterComponent<any>, "si-select-list-has-filter", never, { "filterPlaceholder": { "alias": "filterPlaceholder"; "required": true; "isSignal": true; }; "noResultsFoundLabel": { "alias": "noResultsFoundLabel"; "required": true; "isSignal": true; }; }, {}, never, never, true, never>;
     // (undocumented)
@@ -219,10 +185,6 @@ export class SiSelectModule {
 // @public
 export class SiSelectMultiValueDirective<T> extends SiSelectSelectionStrategy<T, T[]> {
     readonly allowMultiple = true;
-    // (undocumented)
-    protected fromArrayValue(value: T[]): T[];
-    // (undocumented)
-    protected toArrayValue(value: T[] | undefined): T[];
     // (undocumented)
     static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiSelectMultiValueDirective<any>, "si-select[multi]", never, {}, {}, never, never, true, never>;
     // (undocumented)
@@ -254,10 +216,6 @@ export class SiSelectSimpleOptionsDirective<T = string> extends SiSelectOptionsS
 // @public
 export class SiSelectSingleValueDirective<T> extends SiSelectSelectionStrategy<T, T> {
     allowMultiple: boolean;
-    // (undocumented)
-    protected fromArrayValue([value]: readonly T[]): T;
-    // (undocumented)
-    protected toArrayValue(value: T | undefined): readonly T[];
     // (undocumented)
     static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiSelectSingleValueDirective<any>, "si-select:not([multi])", never, {}, {}, never, never, true, never>;
     // (undocumented)

@@ -16,7 +16,9 @@ export abstract class SiHeaderActionItemBase implements OnInit {
     self: true,
     optional: true
   });
+  /** @internal */
   protected collapsibleActions = inject(SiHeaderCollapsibleActionsComponent, { optional: true });
+  /** @internal */
   protected readonly icons = addIcons({ elementDown2 });
 
   private header = inject(SiApplicationHeaderComponent);

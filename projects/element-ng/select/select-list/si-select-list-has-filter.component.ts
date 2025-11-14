@@ -50,10 +50,13 @@ export class SiSelectListHasFilterComponent<T> extends SiSelectListBase<T> imple
   readonly filterPlaceholder = input.required<TranslatableString>();
   /** Label if no item can be found. */
   readonly noResultsFoundLabel = input.required<TranslatableString>();
-
+  /** @internal */
   protected readonly filterInput = viewChild.required<ElementRef<HTMLInputElement>>('filter');
+  /** @internal */
   protected readonly initIndex: Signal<number>;
+  /** @internal */
   protected readonly id = computed(() => `${this.baseId()}-listbox`);
+  /** @internal */
   protected readonly icons = addIcons({ elementSearch });
 
   constructor() {
@@ -76,11 +79,11 @@ export class SiSelectListHasFilterComponent<T> extends SiSelectListBase<T> imple
     this.selectOptions.onFilter!();
     setTimeout(() => this.filterInput().nativeElement.focus());
   }
-
+  /** @internal */
   protected input(): void {
     this.selectOptions.onFilter!(this.filterInput().nativeElement.value);
   }
-
+  /** @internal */
   protected select(newValue: T): void {
     if (this.selectionStrategy.allowMultiple) {
       if (this.selectionStrategy.arrayValue().includes(newValue)) {

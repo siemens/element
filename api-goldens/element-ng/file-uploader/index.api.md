@@ -54,29 +54,13 @@ export class SiFileDropzoneComponent {
     readonly accept: _angular_core.InputSignal<string | undefined>;
     readonly acceptText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly directoryUpload: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected dragOver: boolean;
-    // (undocumented)
-    protected dragOverHandler(event: DragEvent): void;
-    // (undocumented)
-    protected dropHandler(event: DragEvent): void;
     readonly errorTextFileMaxSize: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly errorTextFileType: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly fileError: _angular_core.OutputEmitterRef<FileUploadError>;
     readonly filesAdded: _angular_core.OutputEmitterRef<UploadFile[]>;
-    // (undocumented)
-    protected readonly icons: Record<"elementUpload", string>;
-    // (undocumented)
-    protected inputEnterHandler(): void;
     readonly maxFileSize: _angular_core.InputSignal<number | undefined>;
-    // (undocumented)
-    protected readonly maxFileSizeString: _angular_core.Signal<string>;
     readonly maxFileSizeText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly multiple: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected onFileError(error: FileUploadError): void;
-    // (undocumented)
-    protected onFilesAdded(files: UploadFile[]): void;
     reset(): void;
     readonly uploadDropText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly uploadTextFileSelect: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
@@ -102,8 +86,6 @@ export class SiFileUploadDirective {
     handleItems(items: DataTransferItemList): void;
     readonly maxFileSize: _angular_core.InputSignal<number | undefined>;
     readonly multiple: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected onInputChange(event: Event): void;
     reset(): void;
     triggerClick(): void;
     readonly validFiles: _angular_core.OutputEmitterRef<UploadFile[]>;
@@ -119,40 +101,24 @@ export class SiFileUploaderComponent implements OnChanges {
     readonly acceptText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly autoUpload: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly cancelButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected cancelUpload(file: ExtUploadFile): void;
     readonly clearButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly directoryUpload: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly disableUpload: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly errorTextFileMaxSize: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly errorTextFileType: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly errorUploadFailed: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected files: ExtUploadFile[];
     readonly filesChanges: _angular_core.OutputEmitterRef<UploadFile[]>;
     fileUpload(doRetry?: boolean): void;
-    // (undocumented)
-    protected handleFiles(files: UploadFile[]): void;
-    // (undocumented)
-    protected readonly icons: Record<"elementCancel" | "elementDelete" | "elementDocument" | "elementRedo", string>;
     readonly maxConcurrentUploads: _angular_core.InputSignalWithTransform<number, unknown>;
     readonly maxFiles: _angular_core.InputSignalWithTransform<number, unknown>;
     readonly maxFileSize: _angular_core.InputSignalWithTransform<number | undefined, unknown>;
     readonly maxFileSizeText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected maxFilesReached: boolean;
     readonly maxFilesReachedText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     // (undocumented)
     ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    protected pending: number;
     readonly removeButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected removeFile(index: number): void;
     reset(emit?: boolean): void;
     readonly retries: _angular_core.InputSignalWithTransform<number, unknown>;
-    // (undocumented)
-    protected retryUpload(file: UploadFile): void;
     readonly showHttpError: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly successTextTitle: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly uploadButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
@@ -160,10 +126,6 @@ export class SiFileUploaderComponent implements OnChanges {
     readonly uploadCompleted: _angular_core.OutputEmitterRef<FileUploadResult>;
     readonly uploadConfig: _angular_core.InputSignal<FileUploadConfig>;
     readonly uploadDropText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected uploadEnabled: boolean;
-    // (undocumented)
-    protected uploading: number;
     readonly uploadingText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly uploadTextFileSelect: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     // (undocumented)

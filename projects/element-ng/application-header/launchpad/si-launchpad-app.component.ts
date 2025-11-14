@@ -47,18 +47,18 @@ export class SiLaunchpadAppComponent {
   readonly action = input(false, { transform: booleanAttribute });
   readonly iconUrl = input<string>();
   readonly iconClass = input<string>();
-
+  /** @internal */
   protected readonly icons = addIcons({ elementExport, elementFavorites, elementFavoritesFilled });
 
   private header = inject(SiApplicationHeaderComponent);
-
+  /** @internal */
   @HostListener('keydown.space', ['$event'])
   protected favoriteClicked(event: Event): void {
     event.stopPropagation();
     event.preventDefault();
     this.favorite.update(old => !old);
   }
-
+  /** @internal */
   @HostListener('click') protected click(): void {
     this.header.closeLaunchpad();
   }

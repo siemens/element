@@ -29,7 +29,9 @@ import { SiApplicationHeaderComponent } from './si-application-header.component'
   host: { class: 'header-navigation', role: 'navigation' }
 })
 export class SiHeaderNavigationComponent implements OnDestroy {
+  /** @internal */
   protected header = inject(SiApplicationHeaderComponent);
+  /** @internal */
   protected readonly icons = addIcons({ elementThumbnails });
 
   constructor() {

@@ -70,7 +70,7 @@ export class SiTabLegacyComponent implements OnChanges {
   @HostBinding('id') id = `__si-tab-panel-${SiTabLegacyComponent.idCounter++}`;
   /** @internal */
   @HostBinding('attr.aria-labelledby') tabId = `__si-tab-${SiTabLegacyComponent.idCounter}`;
-
+  /** @internal */
   @HostBinding('attr.hidden')
   protected get isHidden(): boolean | null {
     return !this.active() ? true : null;

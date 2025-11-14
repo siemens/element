@@ -140,11 +140,11 @@ export class SiSliderComponent implements ControlValueAccessor, SiFormItemContro
   /** @defaultValue false */
   // eslint-disable-next-line @angular-eslint/no-input-rename
   readonly disabledInput = input(false, { alias: 'disabled', transform: booleanAttribute });
-
+  /** @internal */
   protected readonly disabled = computed(
     () => this.disabledInput() || this.disabledNgControl() || this.min() === this.max()
   );
-
+  /** @internal */
   protected readonly sliderValue = computed<number>(() => {
     const value = this.value();
     if (typeof value !== 'number') {
@@ -164,7 +164,7 @@ export class SiSliderComponent implements ControlValueAccessor, SiFormItemContro
    * ```
    */
   readonly errormessageId = input(`${this.id()}-errormessage`);
-
+  /** @internal */
   protected readonly indicatorPos = computed(() => {
     const range = this.max() - this.min();
     if (range === 0) {
@@ -173,8 +173,9 @@ export class SiSliderComponent implements ControlValueAccessor, SiFormItemContro
     const indicatorPos = ((this.sliderValue()! - this.min()) * 100) / range;
     return Math.max(Math.min(indicatorPos, 100), 0);
   });
-
+  /** @internal */
   protected readonly icons = addIcons({ elementMinus, elementPlus });
+  /** @internal */
   protected isDragging = false;
 
   private autoUpdate$ = timer(400, 80); // 250
@@ -262,14 +263,14 @@ export class SiSliderComponent implements ControlValueAccessor, SiFormItemContro
     this.onTouchedCallback();
     this.onChangeCallback(this.sliderValue());
   }
-
+  /** @internal */
   @HostListener('pointerdown', ['$event'])
   @HostListener('mousedown', ['$event'])
   @HostListener('touchstart', ['$event'])
   protected handlePointerDown(event: Event): void {
     event.stopPropagation();
   }
-
+  /** @internal */
   protected autoUpdateKeydown(event: KeyboardEvent): void {
     const rtlCorrectedKey = correctKeyRTL(event.key);
 
@@ -279,7 +280,7 @@ export class SiSliderComponent implements ControlValueAccessor, SiFormItemContro
       this.autoUpdateStart(event, true);
     }
   }
-
+  /** @internal */
   protected autoUpdateStart(event: Event, isIncrement: boolean): void {
     event.preventDefault();
 
@@ -289,14 +290,14 @@ export class SiSliderComponent implements ControlValueAccessor, SiFormItemContro
     this.autoUpdateSubs = this.autoUpdate$.subscribe(trigger);
     trigger();
   }
-
+  /** @internal */
   protected autoUpdateStop(): void {
     if (this.autoUpdateSubs) {
       this.autoUpdateSubs.unsubscribe();
       this.autoUpdateSubs = undefined;
     }
   }
-
+  /** @internal */
   protected handleMouseDown(event: MouseEvent): void {
     this.unlistenDragEvents.push(
       listenGlobal('mousemove', moveEvent => this.handleMouseMove(moveEvent))
@@ -308,7 +309,7 @@ export class SiSliderComponent implements ControlValueAccessor, SiFormItemContro
     this.rtl = isRTL();
     this.handleMouseMove(event);
   }
-
+  /** @internal */
   protected handleTouchStart(event: TouchEvent): void {
     if (event.touches.length !== 1) {
       return;

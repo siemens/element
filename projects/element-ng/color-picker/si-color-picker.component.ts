@@ -106,34 +106,37 @@ export class SiColorPickerComponent implements ControlValueAccessor {
   );
   private readonly disabledNgControl = signal(false);
   private readonly numberOfColumns = 4;
+  /** @internal */
   protected readonly disabled = computed(() => this.disabledInput() || this.disabledNgControl());
+  /** @internal */
   protected readonly isOverlayOpen = signal(false);
+  /** @internal */
   protected readonly icons = addIcons({ elementOk });
-
+  /** @internal */
   protected blur(): void {
     if (!this.autoClose()) {
       this.onTouched();
     }
   }
-
+  /** @internal */
   protected arrowDown(index: number, event: Event): void {
     const nextIndex = index + this.numberOfColumns;
     this.focusLabel(nextIndex);
     event.preventDefault();
   }
-
+  /** @internal */
   protected arrowUp(index: number, event: Event): void {
     const prevIndex = index - this.numberOfColumns;
     this.focusLabel(prevIndex);
     event.preventDefault();
   }
-
+  /** @internal */
   protected arrowLeft(index: number, event: Event): void {
     const prevIndex = index + (isRTL() ? 1 : -1);
     this.focusLabel(prevIndex);
     event.preventDefault();
   }
-
+  /** @internal */
   protected arrowRight(index: number, event: Event): void {
     const prevIndex = index + (isRTL() ? -1 : +1);
     this.focusLabel(prevIndex);
@@ -146,12 +149,12 @@ export class SiColorPickerComponent implements ControlValueAccessor {
     const normalizedIndex = (index + totalSwatches) % totalSwatches;
     labels[normalizedIndex].nativeElement.focus();
   }
-
+  /** @internal */
   protected openOverlay(): void {
     this.isOverlayOpen.set(true);
     this.focusSelectedColor();
   }
-
+  /** @internal */
   protected overlayDetach(): void {
     this.isOverlayOpen.set(false);
     setTimeout(() => {
@@ -164,7 +167,7 @@ export class SiColorPickerComponent implements ControlValueAccessor {
       this.selectedSwatchInput()?.nativeElement.focus();
     });
   }
-
+  /** @internal */
   protected selectColor(color: string): void {
     this.color.set(color);
     this.onChange(color!);

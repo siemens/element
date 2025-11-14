@@ -94,15 +94,16 @@ export class SiAboutComponent implements OnInit {
    * Copyright information to be displayed. Alternatively, you can use the {@link SI_COPYRIGHT_DETAILS} global inject.
    */
   readonly copyrightDetails = input<CopyrightDetails>();
-
+  /** @internal */
   protected readonly sanitizedUrl = computed(() => {
     const licenseInfo = this.licenseInfo();
     return licenseInfo.iframe != null
       ? this.sanitizer.bypassSecurityTrustResourceUrl(licenseInfo.iframe)
       : undefined;
   });
-
+  /** @internal */
   protected readonly licenseApi = signal<ApiInfo[]>([]);
+  /** @internal */
   protected readonly icons = addIcons({ elementDocument });
 
   ngOnInit(): void {
@@ -118,7 +119,7 @@ export class SiAboutComponent implements OnInit {
       });
     }
   }
-
+  /** @internal */
   protected toggleLoadLicenseApi(apiInfo: ApiInfo): void {
     const licenseApi = this.licenseApi();
     if (!apiInfo.isOpen && !apiInfo.files) {
@@ -130,7 +131,7 @@ export class SiAboutComponent implements OnInit {
     apiInfo.isOpen = !apiInfo.isOpen;
     this.licenseApi.set([...licenseApi]);
   }
-
+  /** @internal */
   protected toggleLoadLicenseContent(apiInfo: ApiInfo): void {
     const licenseApi = this.licenseApi();
     apiInfo.isOpen = !apiInfo.isOpen;

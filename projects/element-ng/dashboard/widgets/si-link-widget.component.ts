@@ -32,8 +32,8 @@ export class SiLinkWidgetComponent extends SiWidgetBaseComponent<Link[]> {
    * @defaultValue 3
    */
   readonly numberOfLinks = input(3);
-
+  /** @internal */
   protected readonly ghosts = computed(() => new Array(this.numberOfLinks() ?? 3));
-
+  /** @internal */
   protected readonly icons = addIcons({ elementRight2 });
 }

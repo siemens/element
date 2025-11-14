@@ -54,6 +54,7 @@ interface StepItem {
   }
 })
 export class SiWizardComponent {
+  /** @internal */
   protected readonly containerSteps = viewChild<ElementRef<HTMLDivElement>>('containerSteps');
 
   /**
@@ -205,12 +206,17 @@ export class SiWizardComponent {
   get currentStep(): SiWizardStepComponent | undefined {
     return this._currentStep();
   }
-
+  /** @internal */
   @WebComponentContentChildren(SiWizardStepComponent)
   protected readonly steps = contentChildren(SiWizardStepComponent);
+  /** @internal */
   protected readonly visibleSteps = linkedSignal(() => this.calculateVisibleStepCount());
+  /** @internal */
   protected readonly showCompletionPage = signal(false);
-  /** The list of visible steps. */
+  /**
+   * The list of visible steps.
+   * @internal
+   */
   protected readonly activeSteps = computed(() => this.computeVisibleSteps());
 
   private readonly _index = linkedSignal(() => {
@@ -230,6 +236,7 @@ export class SiWizardComponent {
       return undefined;
     }
   });
+  /** @internal */
   protected readonly icons = addIcons({
     elementCancel,
     elementChecked,
@@ -240,7 +247,7 @@ export class SiWizardComponent {
     elementRadioChecked,
     elementWarningFilled
   });
-
+  /** @internal */
   protected canActivate(stepIndex: number): boolean {
     if (stepIndex < 0) {
       return false;
@@ -262,7 +269,7 @@ export class SiWizardComponent {
     }
     return true;
   }
-
+  /** @internal */
   protected activateStep(event: Event, stepIndex: number): void {
     event.preventDefault();
     if (this.canActivate(stepIndex)) {
@@ -274,7 +281,7 @@ export class SiWizardComponent {
       }
     }
   }
-
+  /** @internal */
   protected getStateClass(stepIndex: number): string {
     if (stepIndex === this.index) {
       return 'active';
@@ -287,14 +294,14 @@ export class SiWizardComponent {
     }
     return '';
   }
-
+  /** @internal */
   protected getAriaDisabled(stepIndex: number): string {
     if (!this.canActivate(stepIndex)) {
       return 'true';
     }
     return 'false';
   }
-
+  /** @internal */
   protected getAriaCurrent(stepIndex: number): string {
     if (stepIndex === this.index) {
       return 'step';
@@ -347,7 +354,7 @@ export class SiWizardComponent {
       this.completionAction.emit();
     }
   }
-
+  /** @internal */
   protected getState(step: SiWizardStepComponent, stepIndex: number): string {
     if (step.failed() === true) {
       return this.stepFailedIcon();
@@ -365,7 +372,7 @@ export class SiWizardComponent {
     this._currentStep.set(step);
     this._index.set(this.steps().indexOf(step));
   }
-
+  /** @internal */
   protected updateVisibleSteps(): void {
     const newVisibleSteps = this.calculateVisibleStepCount();
     if (newVisibleSteps !== this.visibleSteps()) {

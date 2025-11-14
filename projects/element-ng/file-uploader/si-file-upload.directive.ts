@@ -122,7 +122,7 @@ export class SiFileUploadDirective {
   private readonly elementRef = inject(ElementRef<HTMLInputElement>);
   private locale = inject(LOCALE_ID).toString();
   private numberFormat = new Intl.NumberFormat(this.locale, { maximumFractionDigits: 2 });
-
+  /** @internal */
   protected onInputChange(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     this.handleFiles(inputElement.files);

@@ -68,6 +68,7 @@ const SCROLL_INCREMENT = 55;
 export class SiTabsetLegacyComponent implements AfterViewInit, OnDestroy {
   /**
    * Contains the current tab components.
+   * @internal
    */
   @WebComponentContentChildren(SiTabLegacyComponent)
   @ContentChildren(SiTabLegacyComponent)
@@ -75,12 +76,16 @@ export class SiTabsetLegacyComponent implements AfterViewInit, OnDestroy {
 
   /**
    * Component variable to indicate if scrolling is necessary or the container is big enough to display all tabs.
+   * @internal
    */
   protected scrollable = false;
-
+  /** @internal */
   protected xPos = 0;
+  /** @internal */
   protected endArrowDisabled = false;
+  /** @internal */
   protected focusedTabIndex?: number;
+  /** @internal */
   protected readonly icons = addIcons({ elementCancel, elementLeft3, elementRight3 });
 
   /**
@@ -178,12 +183,12 @@ export class SiTabsetLegacyComponent implements AfterViewInit, OnDestroy {
   notifyChildrenChanged(): void {
     this.changeDetectorRef.markForCheck();
   }
-
+  /** @internal */
   protected isTabFocusable(index: number): boolean {
     const tab = this.tabPanels.get(index)!;
     return !tab.disabled;
   }
-
+  /** @internal */
   protected focusNext(): void {
     do {
       this.focusedTabIndex = (this.focusedTabIndex ?? 0) + 1;
@@ -193,7 +198,7 @@ export class SiTabsetLegacyComponent implements AfterViewInit, OnDestroy {
     } while (!this.isTabFocusable(this.focusedTabIndex));
     this.tabs().at(this.focusedTabIndex!)!.nativeElement.focus();
   }
-
+  /** @internal */
   protected focusPrevious(): void {
     do {
       this.focusedTabIndex = (this.focusedTabIndex ?? 0) - 1;
@@ -203,7 +208,7 @@ export class SiTabsetLegacyComponent implements AfterViewInit, OnDestroy {
     } while (!this.isTabFocusable(this.focusedTabIndex));
     this.tabs().at(this.focusedTabIndex!)!.nativeElement.focus();
   }
-
+  /** @internal */
   protected resize(): void {
     this.scrollable =
       Math.round(this.tabContainer().nativeElement.offsetWidth) <
@@ -215,6 +220,7 @@ export class SiTabsetLegacyComponent implements AfterViewInit, OnDestroy {
    * Finds the index of the provided tab and sets the index as new selected tab index
    *
    * @param selectedTab - The tab to be selected. This must already be part of the container.
+   * @internal
    */
   protected selectTab(selectedTab: SiTabLegacyComponent): void {
     if (selectedTab?.disabled) {
@@ -246,9 +252,9 @@ export class SiTabsetLegacyComponent implements AfterViewInit, OnDestroy {
       this.selectedTabIndexChange.emit(newTabIndex);
     }
   }
-
   /**
    * Scrolls the tab headers to the end (right in LTR).
+   * @internal
    */
   protected scrollEnd(): void {
     this.scroll(SCROLL_INCREMENT);
@@ -256,6 +262,7 @@ export class SiTabsetLegacyComponent implements AfterViewInit, OnDestroy {
 
   /**
    * Scrolls the tab headers to the start (left in LTR).
+   * @internal
    */
   protected scrollStart(): void {
     this.scroll(-SCROLL_INCREMENT);
@@ -280,7 +287,7 @@ export class SiTabsetLegacyComponent implements AfterViewInit, OnDestroy {
       this.xPos * (isRTL() ? 1 : -1)
     }px)`;
   }
-
+  /** @internal */
   protected mouseScroll(event: WheelEvent): void {
     if (event.deltaY < 0) {
       this.scroll(-SCROLL_INCREMENT);
@@ -302,7 +309,7 @@ export class SiTabsetLegacyComponent implements AfterViewInit, OnDestroy {
   blur(): void {
     this.focusedTabIndex = undefined;
   }
-
+  /** @internal */
   protected closeTab(event: MouseEvent, tab: SiTabLegacyComponent): void {
     event.stopPropagation();
     let targetActiveTab: SiTabLegacyComponent | undefined;

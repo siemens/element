@@ -143,6 +143,6 @@ export class SiTimelineWidgetItemComponent
   readonly ariaLabelDropdown = t(
     () => $localize`:@@SI_DASHBOARD.EXPAND_WIDGET_ACTIONS:Expand actions`
   );
-
+  /** @internal */
   protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });
 }

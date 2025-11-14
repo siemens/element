@@ -10,8 +10,6 @@ import * as i1 from '@siemens/element-ng/popover';
 // @public
 export class SiHelpButtonComponent {
     // (undocumented)
-    protected icons: Record<"elementHelp", string>;
-    // (undocumented)
     static ɵcmp: i0.ɵɵComponentDeclaration<SiHelpButtonComponent, "button[si-help-button]", never, {}, {}, never, ["*"], true, [{ directive: typeof i1.SiPopoverDirective; inputs: { "siPopoverTitle": "siHelpTitle"; "siPopover": "siHelpContent"; "siPopoverContext": "siHelpContext"; "siPopoverPlacement": "siHelpPlacement"; }; outputs: {}; }]>;
     // (undocumented)
     static ɵfac: i0.ɵɵFactoryDeclaration<SiHelpButtonComponent, never>;

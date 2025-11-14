@@ -23,10 +23,6 @@ export type ResultDetailStepState = 'passed' | 'failed' | 'running' | 'not-suppo
 
 // @public (undocumented)
 export class SiResultDetailsListComponent {
-    // (undocumented)
-    protected readonly icons: Record<"elementCircleFilled" | "elementNotChecked" | "elementOutOfService" | "elementStateExclamationMark" | "elementStateTick", string>;
-    // (undocumented)
-    protected readonly stepHasValue: i0.Signal<boolean>;
     readonly steps: i0.InputSignal<ResultDetailStep[]>;
     // (undocumented)
     static ɵcmp: i0.ɵɵComponentDeclaration<SiResultDetailsListComponent, "si-result-details-list", never, { "steps": { "alias": "steps"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;

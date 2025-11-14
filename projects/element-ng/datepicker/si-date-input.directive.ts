@@ -123,23 +123,30 @@ export class SiDateInputDirective
   validatorOnChange = (): void => {};
   /**
    * Date form input validator function, validating text format, min and max value.
+   * @internal
    */
   protected validator = Validators.compose([
     () => this.formatValidator(),
     () => this.minValidator(),
     () => this.maxValidator()
   ])!;
+  /** @internal */
   protected date?: Date;
   /**
    * Emits a new `date` value on input field value changes.
+   * @internal
    */
   protected readonly dateChange = output<Date | undefined>();
   /** @internal */
   public readonly disabled = computed(() => this.disabledInput() || this.disabledNgControl());
+  /** @internal */
   protected onTouched: () => void = () => {};
+  /** @internal */
   protected onModelChange: (value: any) => void = () => {};
+  /** @internal */
   protected readonly dateString = signal('');
   private readonly disabledNgControl = signal(false);
+  /** @internal */
   protected readonly locale = inject(LOCALE_ID).toString();
   private format = '';
 
@@ -218,6 +225,7 @@ export class SiDateInputDirective
 
   /**
    * Handles `input` events on the input element.
+   * @internal
    */
   @HostListener('input', ['$event'])
   protected onInput(event: Event): void {
@@ -232,7 +240,7 @@ export class SiDateInputDirective
       this.dateChange.emit(this.date);
     }
   }
-
+  /** @internal */
   @HostListener('blur', ['$event']) protected onBlur(event: FocusEvent): void {
     this.onTouched();
   }
@@ -247,6 +255,7 @@ export class SiDateInputDirective
   /**
    * Callback when the datepicker changes his value.
    * @param date - updated date
+   * @internal
    */
   protected onDateChanged(date?: Date): void {
     // update input element

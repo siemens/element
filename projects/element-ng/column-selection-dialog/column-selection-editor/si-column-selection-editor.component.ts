@@ -47,18 +47,20 @@ export class SiColumnSelectionEditorComponent {
 
   readonly titleChange = output();
   readonly visibilityChange = output();
-
+  /** @internal */
   protected readonly cdkOption = inject(CdkOption);
+  /** @internal */
   protected editing = false;
   private readonly title = viewChild.required<ElementRef<HTMLInputElement>>('title');
   private readonly elementRef = inject<ElementRef<HTMLDivElement>>(ElementRef);
+  /** @internal */
   protected readonly icons = addIcons({
     elementHide,
     elementMenu,
     elementLock,
     elementShow
   });
-
+  /** @internal */
   @HostListener('keydown.enter', ['$event'])
   protected tryEdit(event: Event): void {
     if (this.column().editable) {
@@ -66,24 +68,24 @@ export class SiColumnSelectionEditorComponent {
       this.startEdit();
     }
   }
-
+  /** @internal */
   protected updateTitle(value: string): void {
     this.column().title = value;
     this.titleChange.emit();
   }
-
+  /** @internal */
   protected startEdit(): void {
     if (this.column().editable) {
       this.editing = true;
       setTimeout(() => this.title().nativeElement.focus());
     }
   }
-
+  /** @internal */
   protected stopEdit(): void {
     this.editing = false;
     this.elementRef.nativeElement.focus();
   }
-
+  /** @internal */
   protected toggleVisibility(): void {
     this.cdkOption.toggle();
     // manually toggling does not emit an event, so we have to fire one

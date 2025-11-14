@@ -75,19 +75,29 @@ export class SiCalendarButtonComponent implements OnInit, AfterContentInit, DoCh
   readonly ariaLabel = input(
     t(() => $localize`:@@SI_DATEPICKER.CALENDAR_TOGGLE_BUTTON:Open calendar`)
   );
-
+  /** @internal */
   protected readonly button = viewChild.required<ElementRef<HTMLButtonElement>>('calendarButton');
-  /** Datepicker input directive instance used to watch for state changes and required to open the calendar. */
+  /**
+   * Datepicker input directive instance used to watch for state changes and required to open the calendar.
+   * @internal
+   */
   protected readonly datepicker = contentChild.required(SiDatepickerDirective);
+  /** @internal */
   protected readonly datepickerOverlay = contentChild.required(SiDatepickerOverlayDirective);
+  /** @internal */
   protected readonly ngControl = contentChild(NgControl);
+  /** @internal */
   protected readonly disabled = signal(false);
+  /** @internal */
   protected readonly icons = addIcons({ elementCalendar });
   private readonly destroyerRef = inject(DestroyRef);
   private readonly focusMonitor = inject(FocusMonitor);
   private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
-  // Add classes here to enable error messages in si-form-item
+  /**
+   * Add classes here to enable error messages in si-form-item
+   * @internal
+   */
   protected readonly showValidationMessages = signal(false);
 
   ngOnInit(): void {
@@ -114,11 +124,11 @@ export class SiCalendarButtonComponent implements OnInit, AfterContentInit, DoCh
     this.datepicker().useExternalTrigger(this.button());
     this.updateState();
   }
-
+  /** @internal */
   protected show(): void {
     this.datepicker().show(true);
   }
-
+  /** @internal */
   private updateState(): void {
     const datepicker = this.datepicker();
     this.disabled.set(datepicker.disabled() || datepicker.readonly());
