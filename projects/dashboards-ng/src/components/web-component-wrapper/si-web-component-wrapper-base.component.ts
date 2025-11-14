@@ -13,12 +13,14 @@ import {
   DOCUMENT
 } from '@angular/core';
 
-import { WidgetConfig } from '../../model/widgets.model';
+import { WidgetConfig, WidgetInstance, WidgetInstanceEditor } from '../../model/widgets.model';
 
 @Component({
   template: ''
 })
-export class SiWebComponentWrapperBaseComponent implements AfterViewInit {
+export class SiWebComponentWrapperBaseComponent<T extends WidgetInstance | WidgetInstanceEditor>
+  implements AfterViewInit
+{
   private _config!: WidgetConfig;
   get config(): WidgetConfig {
     return this._config;
@@ -26,8 +28,8 @@ export class SiWebComponentWrapperBaseComponent implements AfterViewInit {
 
   @Input() set config(config: WidgetConfig) {
     this._config = config;
-    if (this.webComponentHost.nativeElement.children.length > 0) {
-      this.webComponentHost.nativeElement.children[0].config = config;
+    if (this.webComponent) {
+      this.webComponent.config = config;
     }
   }
 
@@ -35,7 +37,7 @@ export class SiWebComponentWrapperBaseComponent implements AfterViewInit {
   @Input() url!: string;
   @ViewChild('webComponentHost', { static: true, read: ElementRef })
   protected webComponentHost!: ElementRef;
-  protected webComponent?: HTMLElement;
+  protected webComponent?: HTMLElement & T;
 
   private renderer2 = inject(Renderer2);
   private document = inject(DOCUMENT);
@@ -48,7 +50,9 @@ export class SiWebComponentWrapperBaseComponent implements AfterViewInit {
     }
 
     this.webComponent = this.renderer2.createElement(this.elementTagName);
-    (this.webComponent as any).config = this.config;
+    if (this.webComponent) {
+      this.webComponent.config = this.config;
+    }
   }
 
   private isScriptLoaded(url: string): boolean {

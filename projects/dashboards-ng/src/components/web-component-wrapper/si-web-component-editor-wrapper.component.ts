@@ -19,7 +19,7 @@ import { SiWebComponentWrapperBaseComponent } from './si-web-component-wrapper-b
   templateUrl: './si-web-component-wrapper.component.html'
 })
 export class SiWebComponentEditorWrapperComponent
-  extends SiWebComponentWrapperBaseComponent
+  extends SiWebComponentWrapperBaseComponent<WidgetInstanceEditor>
   implements WidgetInstanceEditor, WidgetInstanceEditorWizard, AfterViewInit, OnDestroy
 {
   state!: WidgetInstanceEditorWizardState;
