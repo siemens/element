@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { NgClass } from '@angular/common';
-import { Component, computed, inject, input, model, output, ViewChild } from '@angular/core';
+import { Component, computed, inject, input, model, output, viewChild } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiContentActionBarComponent } from '@siemens/element-ng/content-action-bar';
@@ -104,8 +104,7 @@ export class SiDashboardToolbarComponent {
 
   protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });
 
-  @ViewChild(SiResponsiveContainerDirective)
-  protected dashboardToolbarContainer!: SiResponsiveContainerDirective;
+  private readonly dashboardToolbarContainer = viewChild.required(SiResponsiveContainerDirective);
 
   protected readonly showContentActionBar = computed(
     () => this.primaryEditActions()?.length + this.secondaryEditActions()?.length > 3
@@ -136,7 +135,7 @@ export class SiDashboardToolbarComponent {
     return 'label' in item;
   }
 
-  protected showEditButtonLabelDesktop(): boolean {
-    return this.showEditButtonLabel() && !this.dashboardToolbarContainer?.xs();
-  }
+  protected readonly showEditButtonLabelDesktop = computed(() => {
+    return this.showEditButtonLabel() && !this.dashboardToolbarContainer()?.xs();
+  });
 }
