@@ -3,10 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component } from '@angular/core';
-import { SiChartGaugeComponent, themeElement, themeSupport } from '@siemens/charts-ng';
+import { SiChartGaugeComponent } from '@siemens/charts-ng';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
-
-themeSupport.setDefault(themeElement);
 
 @Component({
   selector: 'app-sample',

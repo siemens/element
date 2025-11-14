@@ -4,7 +4,7 @@
  */
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SiChartCircleComponent, themeElement, themeSupport } from '@siemens/charts-ng';
+import { SiChartCircleComponent } from '@siemens/charts-ng';
 import {
   SiAccountDetailsComponent,
   SiApplicationHeaderComponent,
@@ -28,8 +28,6 @@ import { LOG_EVENT } from '@siemens/live-preview';
 import { NgxDatatableModule, SelectEvent } from '@siemens/ngx-datatable';
 
 import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.service';
-
-themeSupport.setDefault(themeElement);
 
 @Component({
   selector: 'app-sample',
