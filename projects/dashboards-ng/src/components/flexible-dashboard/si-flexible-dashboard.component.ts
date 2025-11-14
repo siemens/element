@@ -13,7 +13,6 @@ import {
   OnDestroy,
   OnInit,
   output,
-  OutputRefSubscription,
   signal,
   SimpleChanges,
   Type,
@@ -23,7 +22,7 @@ import {
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiDashboardComponent } from '@siemens/element-ng/dashboard';
 import { t } from '@siemens/element-translate-ng/translate';
-import { BehaviorSubject, combineLatest, of, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, combineLatest, of, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 
 import { Config, SI_DASHBOARD_CONFIGURATION } from '../../model/configuration';
@@ -205,11 +204,9 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
   });
 
   private readonly viewState = signal<ViewState>('dashboard');
-  private subscriptions: Subscription[] = [];
   private widgetStorage = inject(SI_WIDGET_STORE);
   private hideAddWidgetInstanceButton$ = new BehaviorSubject(this.hideAddWidgetInstanceButton());
   private dashboardId$ = new Subject<string | undefined>();
-  private outputRefSubscription: OutputRefSubscription[] = [];
   private readonly toolbar = viewChild.required<SiDashboardToolbarComponent>('toolbar');
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -241,24 +238,10 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
 
   ngOnInit(): void {
     this.setupMenuItems();
-
-    const grid = this.grid();
-    this.outputRefSubscription.push(
-      grid.widgetInstanceEdit.subscribe(widgetConfig => {
-        this.editWidgetInstance(widgetConfig);
-      })
-    );
-    this.outputRefSubscription.push(
-      grid.editable.subscribe(editable => {
-        this.editable.set(editable);
-      })
-    );
   }
 
   ngOnDestroy(): void {
     this.dashboardId$.next(undefined);
-    this.subscriptions?.forEach(sub => sub.unsubscribe());
-    this.outputRefSubscription?.forEach(sub => sub.unsubscribe());
   }
 
   /**
@@ -327,7 +310,7 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
     this.primaryEditActions$.next(next);
   }
 
-  private editWidgetInstance(widgetConfig: WidgetConfig): void {
+  protected editWidgetInstance(widgetConfig: WidgetConfig): void {
     const dashboard = this.dashboard();
     if (dashboard.isExpanded) {
       dashboard.restore();
