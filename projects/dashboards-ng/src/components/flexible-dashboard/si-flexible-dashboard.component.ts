@@ -339,13 +339,10 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
     item: MenuItem | DashboardToolbarItem
   ): MenuItem | DashboardToolbarItem {
     if ('action' in item) {
-      if (!item.action || item.action instanceof String) {
-        return item;
+      if (typeof item.action === 'function') {
+        item.action = item.action.bind(this, this.grid());
       } else {
-        const realAction = item.action as (param?: any) => void | any;
-        item.action = () => {
-          realAction(this.grid());
-        };
+        return item;
       }
     }
     return item;
