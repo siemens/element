@@ -59,16 +59,19 @@ export class SiChartGaugeComponent extends SiChartComponent implements OnChanges
   readonly numberOfDecimals = input<number | undefined>();
   /**
    * Min number of decimals.
+   * Possible values are from 0 to 100.
    * @defaultValue 0
    */
   readonly minNumberOfDecimals = input(0);
   /**
    * Max number of decimals.
+   * Possible values are from 0 to 100.
    * @defaultValue 0
    */
   readonly maxNumberOfDecimals = input(0);
   /**
    * Number of decimals on the axis.
+   * Possible values are from 0 to 100.
    * @defaultValue 0
    */
   readonly axisNumberOfDecimals = input(0);
