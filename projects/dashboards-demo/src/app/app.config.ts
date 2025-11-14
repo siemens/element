@@ -8,10 +8,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withHashLocation } from '@angular/router';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { Config, SI_DASHBOARD_CONFIGURATION, SI_WIDGET_STORE } from '@siemens/dashboards-ng';
-import {
-  provideNgxTranslateForElement,
-  SiTranslateNgxTModule
-} from '@siemens/element-translate-ng/ngx-translate';
+import { provideNgxTranslateForElement } from '@siemens/element-translate-ng/ngx-translate';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 
 import { AppWidgetStorage } from './app-widget-storage';
@@ -40,8 +37,7 @@ export const appConfig: ApplicationConfig = {
           useFactory: createTranslateLoader,
           deps: [HttpBackend]
         }
-      }),
-      SiTranslateNgxTModule
+      })
     ),
     provideAnimations(),
     provideHttpClient(withInterceptorsFromDi()),
