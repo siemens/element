@@ -342,7 +342,7 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
    */
   editWidgetInstance(widgetInstanceConfig: WidgetConfig): void {
     // Need to edit a clone to avoid runtime editing
-    const widgetConfigClone: WidgetConfig = JSON.parse(JSON.stringify(widgetInstanceConfig));
+    const widgetConfigClone = structuredClone(widgetInstanceConfig);
     if (this.emitWidgetInstanceEditEvents()) {
       this.widgetInstanceEdit.emit(widgetConfigClone);
     } else {
