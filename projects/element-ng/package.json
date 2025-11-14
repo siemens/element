@@ -59,6 +59,9 @@
     },
     "google-libphonenumber": {
       "optional": true
+    },
+    "ag-grid-community": {
+      "optional": true
     }
   }
 }
