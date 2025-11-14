@@ -6,8 +6,9 @@
           si-action-card
           type="button"
           class="card-size"
+          selectable
           heading="FS20"
-          (click)="onCardClick('card1')"
+          (selectedChange)="onCardSelect($event, 'card2')"
         >
           <si-icon headerIcon icon="element-fire" class="icon me-3" />
           <div body class="card-body card-text">
@@ -25,8 +26,9 @@
           si-action-card
           type="button"
           class="card-size"
+          selectable
           heading="Overflows"
-          (click)="onCardClick('card2')"
+          (selectedChange)="onCardSelect($event, 'card3')"
         >
           <div body class="card-body card-text overflow-auto" tabindex="0">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec ornare nunc,
@@ -73,9 +75,10 @@
           si-action-card
           type="button"
           class="card-size"
+          selectable
           disabled
           heading="Natural Gas Usage"
-          (click)="onCardClick('card3')"
+          (selectedChange)="onCardSelect($event, 'card1')"
         >
           <p class="card-body card-text" body>
             Some quick example text to build on the card title and make up the bulk of the card's
@@ -92,11 +95,12 @@
           type="button"
           class="card-size"
           heading="Overflows"
+          selectable
           imgSrc="assets/images/beach.jpg"
           imgDir="vertical"
           imgAlt="Beach in Greece"
           imgObjectFit="cover"
-          (click)="onCardClick('card4')"
+          (selectedChange)="onCardSelect($event, 'card4')"
         >
           <div body class="card-body card-text overflow-auto" tabindex="0">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec ornare nunc,
@@ -144,8 +148,9 @@
           si-action-card
           type="button"
           class="card-size accent-caution"
+          selectable
           heading="Caution accent"
-          (click)="onCardClick('card5')"
+          (selectedChange)="onCardSelect($event, 'card5')"
         >
           <p class="card-body card-text" body>
             Some quick example text to build on the card title and make up the bulk of the card's
@@ -159,8 +164,9 @@
           si-action-card
           type="button"
           class="card-size accent-info"
+          selectable
           heading="Info accent"
-          (click)="onCardClick('card6')"
+          (selectedChange)="onCardSelect($event, 'card6')"
         >
           <p class="card-body card-text" body>
             Some quick example text to build on the card title and make up the bulk of the card's
