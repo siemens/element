@@ -140,7 +140,8 @@ const findComponentImportPath = (
       if (symbolName === 'MenuItem' && subPath === 'menu') {
         return '@siemens/element-ng/menu';
       }
-      return ELEMENT_NG_MAPPINGS[symbolName];
+      // Added the OR condition to check in ELEMENT_TRANSLATE_NG_MAPPINGS as well because translation are also part of `@simpl/element-ng` imports
+      return ELEMENT_NG_MAPPINGS[symbolName] || ELEMENT_TRANSLATE_NG_MAPPINGS[symbolName];
     }
     case 'maps-ng':
       return MAPS_NG_MAPPINGS[symbolName];
