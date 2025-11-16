@@ -94,8 +94,7 @@ The **si-chat-container** component is a wrapper component, it has slots for
 
 The slots are:
 
-- default -> chat messages
-- `si-avatar/si-icon/img` -> For the avatar or icon representing the message sender.
+- default -> chat messages or empty state
 - `si-chat-input/siChatContainerInput (helper directive)` -> For the input (whether default or custom).
 - `si-inline-notification` -> Slotted above the input for displaying the status.
 
