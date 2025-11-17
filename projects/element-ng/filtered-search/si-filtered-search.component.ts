@@ -466,7 +466,6 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     this.emitChangeEvent();
     this.allowedCriteriaCache = undefined;
     this.typeaheadInputChange.next(this.searchValue);
-    this.submit();
   }
 
   protected deleteCriterion(
@@ -495,9 +494,6 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
       this.freeTextInputElement().nativeElement.focus();
     }
     this.typeaheadInputChange.next(this.searchValue);
-    if (event?.triggerSearch) {
-      this.submit();
-    }
   }
 
   protected submit(): void {
