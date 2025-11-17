@@ -107,8 +107,9 @@ export const getFirstDayInMonth = (year: number, month: number): Date =>
   new Date(year, month - 1, 1);
 
 /**
- * Gets the week number of the specified date.
- * Week number according to the ISO-8601 standard, weeks starting on Monday.
+ * Returns the ISO-8601 week number for the user's week containing the specified date.
+ * ISO-8601 weeks always start on Monday. When the user's week starts on Sunday or Saturday,
+ * the date is adjusted to find the corresponding ISO week (based on the Thursday rule).
  * The first week of a year is the week that contains the first Thursday of the year (='First 4-day week').
  * The highest week number in a year is either 52 or 53.
  *
@@ -117,15 +118,21 @@ export const getFirstDayInMonth = (year: number, month: number): Date =>
  * @returns The number of the Week
  */
 export const getWeekOfYear = (date: Date, weekStart: WeekStart): number => {
-  // Algorithm rewritten from C# example given at http://en.wikipedia.org/wiki/Talk:ISO_week_date
-  const dayOfWeek = getWeekDayOffset(date, weekStart) + 1;
   const nearestThu = new Date(date);
-  nearestThu.setDate(date.getDate() + (UNITS.thursday - dayOfWeek)); // get nearest Thursday (-3..+3 days)
+  nearestThu.setHours(0, 0, 0, 0);
+  const offset = weekStart === 'monday' ? 0 : weekStart === 'sunday' ? 1 : 2;
+  nearestThu.setDate(nearestThu.getDate() + offset);
+  adjustToThursday(nearestThu);
   const year = nearestThu.getFullYear();
-  const janfirst = getFirstDayInMonth(year, 1);
-  const days = Math.floor(((nearestThu as any) - (janfirst as any)) / UNITS.millisecondsPerDay);
+  const weekOne = new Date(year, 0, 4);
+  adjustToThursday(weekOne);
+  const days = Math.round((nearestThu.getTime() - weekOne.getTime()) / UNITS.millisecondsPerDay);
   const week = 1 + Math.floor(days / UNITS.daysPerWeek); // Count of Thursdays
   return week;
+};
+
+const adjustToThursday = (date: Date): void => {
+  date.setDate(date.getDate() + 3 - ((date.getDay() + 6) % 7));
 };
 
 export const getWeekDayOffset = (date: Date, weekStart: WeekStart): number => {
