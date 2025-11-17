@@ -1,7 +1,6 @@
 # Button group
 
-A **button group** visually connects multiple related buttons into a single, unified control.
-It helps users recognize that the buttons belong to the same context or task area.
+A **button group** visually organizes related buttons into a single, cohesive control, helping users understand that they belong to the same context or task.
 
 ## Usage ---
 
@@ -55,8 +54,7 @@ It supports both single and multi-selection, depending on the context:
   [checkbox](../forms-inputs/checkbox.md) component.
 - When switching between distinct content areas, such as sub-pages, use
   [tabs](../layout-navigation/tabs.md) component.
-- Labels should be nouns or noun phrases that succinctly describe
-the action or choice. Do not wrap the text over multiple lines.
+- Labels should use nouns or concise noun phrases that clearly describe the action or choice. Keep the text on a single line; avoid wrapping.
 
 ## Design ---
 
@@ -75,7 +73,7 @@ The **action button group** and **split button**, inherits the same visual style
 
 Although different hierarchies (e.g., primary, secondary, tertiary, or danger) can technically be
 combined within the same group, this is not recommended.
-**All items should share the same visual style** to maintain cohesion and clarity.
+**All items in a button group should share the same visual style** to ensure cohesion and clarity.
 
 ![Button group do and donts](images/button-group-do-and-donts.png)
 
@@ -95,9 +93,7 @@ Avoid using it in touch contexts (mobile or tablet) where larger tap areas are r
 
 ### Responsive behavior
 
-The button group component has by nature a horizontal layout and can't be
-wrapped or stacked. Therefore, it is recommended to keep the number of items
-low to avoid overflowing on smaller screens.
+The button group component is inherently horizontal and cannot be wrapped or stacked. To prevent overflow on smaller screens, keep the number of items minimal.
 
 Alternatively, actions can be collapsed under a menu or replaced with a [select](../forms-inputs/select.md),
 [radio](../forms-inputs/radio.md), or [checkboxes](../forms-inputs/checkbox.md) component,
