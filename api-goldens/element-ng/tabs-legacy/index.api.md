@@ -30,8 +30,6 @@ export class SiTabLegacyComponent implements OnChanges {
     icon?: string;
     iconAltText?: TranslatableString;
     // (undocumented)
-    protected get isHidden(): boolean | null;
-    // (undocumented)
     static ngAcceptInputType_closable: unknown;
     // (undocumented)
     static ngAcceptInputType_disabled: unknown;
@@ -45,43 +43,18 @@ export class SiTabLegacyComponent implements OnChanges {
 
 // @public @deprecated (undocumented)
 export class SiTabsetLegacyComponent implements AfterViewInit, OnDestroy {
-    // (undocumented)
-    protected closeTab(event: MouseEvent, tab: SiTabLegacyComponent): void;
     readonly deselect: EventEmitter<SiTabDeselectionEvent>;
-    // (undocumented)
-    protected endArrowDisabled: boolean;
-    // (undocumented)
-    protected focusedTabIndex?: number;
-    // (undocumented)
-    protected focusNext(): void;
-    // (undocumented)
-    protected focusPrevious(): void;
-    // (undocumented)
-    protected readonly icons: Record<"elementCancel" | "elementLeft3" | "elementRight3", string>;
-    // (undocumented)
-    protected isTabFocusable(index: number): boolean;
-    // (undocumented)
-    protected mouseScroll(event: WheelEvent): void;
     // (undocumented)
     static ngAcceptInputType_selectDefaultTab: unknown;
     // (undocumented)
     ngAfterViewInit(): void;
     // (undocumented)
     ngOnDestroy(): void;
-    // (undocumented)
-    protected resize(): void;
-    protected scrollable: boolean;
-    protected scrollEnd(): void;
-    protected scrollStart(): void;
     selectDefaultTab: boolean;
     set selectedTabIndex(tabIndex: number);
     get selectedTabIndex(): number;
     readonly selectedTabIndexChange: EventEmitter<number>;
-    protected selectTab(selectedTab: SiTabLegacyComponent): void;
     tabButtonMaxWidth?: number;
-    protected tabPanels: QueryList<SiTabLegacyComponent>;
-    // (undocumented)
-    protected xPos: number;
     // (undocumented)
     static ɵcmp: i0.ɵɵComponentDeclaration<SiTabsetLegacyComponent, "si-tabset-legacy", never, { "selectDefaultTab": { "alias": "selectDefaultTab"; "required": false; }; "selectedTabIndex": { "alias": "selectedTabIndex"; "required": false; }; "tabButtonMaxWidth": { "alias": "tabButtonMaxWidth"; "required": false; }; }, { "selectedTabIndexChange": "selectedTabIndexChange"; "deselect": "deselect"; }, ["tabPanels"], ["*"], true, never>;
     // (undocumented)

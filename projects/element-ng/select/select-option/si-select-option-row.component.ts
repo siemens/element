@@ -32,5 +32,6 @@ export class SiSelectOptionRowComponent {
   readonly optionTemplate = input<TemplateRef<unknown>>();
   /** @defaultValue false */
   readonly selected = input(false, { transform: booleanAttribute });
+  /** @internal */
   protected readonly icons = addIcons({ elementOk });
 }

@@ -82,33 +82,13 @@ export class SiAccountDetailsComponent {
 
 // @public
 export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDestroy {
-    // (undocumented)
-    protected backdropClicked(): void;
     readonly expandBreakpoint: _angular_core.InputSignal<"sm" | "md" | "lg" | "xl" | "xxl" | "never">;
-    // (undocumented)
-    protected readonly icons: Record<"elementThumbnails" | "elementMenu", string>;
-    // (undocumented)
-    protected readonly id: string;
-    // (undocumented)
-    protected injector: Injector;
     // (undocumented)
     readonly launchpad: _angular_core.InputSignal<TemplateRef<void> | undefined>;
     // (undocumented)
     readonly launchpadLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     // (undocumented)
-    protected readonly launchpadOpen: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
-    protected navigationEscapePressed(): void;
-    // (undocumented)
     ngOnDestroy(): void;
-    // (undocumented)
-    protected readonly openDropdownCount: _angular_core.WritableSignal<number>;
-    // (undocumented)
-    protected toggleLaunchpad(): void;
-    // (undocumented)
-    protected toggleMobileNavigationExpanded(): void;
-    // (undocumented)
-    protected toggleNavigation: _siemens_element_translate_ng_translate_types.TranslatableString;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiApplicationHeaderComponent, "si-application-header", never, { "expandBreakpoint": { "alias": "expandBreakpoint"; "required": false; "isSignal": true; }; "launchpad": { "alias": "launchpad"; "required": false; "isSignal": true; }; "launchpadLabel": { "alias": "launchpadLabel"; "required": false; "isSignal": true; }; }, {}, never, ["si-header-brand, element-header-brand", "si-header-navigation, element-header-navigation", "si-header-actions, element-header-actions"], true, never>;
     // (undocumented)
@@ -153,17 +133,9 @@ export class SiHeaderBrandDirective {
 
 // @public
 export class SiHeaderCollapsibleActionsComponent implements OnDestroy {
-    // (undocumented)
-    protected escapePressed(): void;
-    // (undocumented)
-    protected readonly icons: Record<"elementOptionsVertical", string>;
-    // (undocumented)
-    protected readonly id: string;
     readonly mobileToggleLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     // (undocumented)
     ngOnDestroy(): void;
-    // (undocumented)
-    protected toggleMobileExpanded(): void;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiHeaderCollapsibleActionsComponent, "si-header-collapsible-actions", never, { "mobileToggleLabel": { "alias": "mobileToggleLabel"; "required": false; "isSignal": true; }; }, {}, never, ["*"], true, never>;
     // (undocumented)
@@ -173,11 +145,7 @@ export class SiHeaderCollapsibleActionsComponent implements OnDestroy {
 // @public
 export class SiHeaderLogoDirective implements OnInit {
     // (undocumented)
-    protected readonly logoText: _angular_core.WritableSignal<string | undefined>;
-    // (undocumented)
     ngOnInit(): void;
-    // (undocumented)
-    protected updateLogoText(): void;
     // (undocumented)
     static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiHeaderLogoDirective, "si-header-logo, [siHeaderLogo]", never, {}, {}, never, never, true, never>;
     // (undocumented)
@@ -188,10 +156,6 @@ export class SiHeaderLogoDirective implements OnInit {
 export class SiHeaderNavigationComponent implements OnDestroy {
     constructor();
     // (undocumented)
-    protected header: SiApplicationHeaderComponent;
-    // (undocumented)
-    protected readonly icons: Record<"elementThumbnails", string>;
-    // (undocumented)
     ngOnDestroy(): void;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiHeaderNavigationComponent, "si-header-navigation", never, {}, {}, never, ["*"], true, never>;
@@ -201,8 +165,6 @@ export class SiHeaderNavigationComponent implements OnDestroy {
 
 // @public
 export class SiHeaderNavigationItemComponent {
-    // (undocumented)
-    protected readonly icons: Record<"elementDown2", string>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiHeaderNavigationItemComponent, "button[si-header-navigation-item], a[si-header-navigation-item]", never, {}, {}, never, ["*"], true, never>;
     // (undocumented)
@@ -228,36 +190,16 @@ export class SiHeaderSiemensLogoComponent extends SiHeaderLogoDirective {
 
 // @public (undocumented)
 export class SiLaunchpadFactoryComponent {
-    // (undocumented)
-    protected readonly activatedRoute: ActivatedRoute | null;
     readonly apps: _angular_core.InputSignal<App[] | AppCategory[]>;
-    // (undocumented)
-    protected readonly categories: _angular_core.Signal<AppCategory[]>;
-    // (undocumented)
-    protected closeLaunchpad(): void;
     readonly closeText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly enableFavorites: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected escape(): void;
     readonly favoriteAppsText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     // (undocumented)
     readonly favoriteChange: _angular_core.OutputEmitterRef<FavoriteChangeEvent>;
-    // (undocumented)
-    protected readonly favorites: _angular_core.Signal<(_siemens_element_ng_application_header.AppLink | _siemens_element_ng_application_header.AppRouterLink)[]>;
-    // (undocumented)
-    protected readonly hasFavorites: _angular_core.Signal<boolean>;
-    // (undocumented)
-    protected readonly icons: Record<"elementDown2" | "elementCancel", string>;
-    // (undocumented)
-    protected isCategories(items: App[] | AppCategory[]): items is AppCategory[];
-    // (undocumented)
-    protected showAllApps: boolean;
     readonly showLessAppsText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly showMoreAppsText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly subtitleText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly titleText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected toggleFavorite(app: App, favorite: boolean): void;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiLaunchpadFactoryComponent, "si-launchpad-factory", never, { "closeText": { "alias": "closeText"; "required": false; "isSignal": true; }; "titleText": { "alias": "titleText"; "required": false; "isSignal": true; }; "subtitleText": { "alias": "subtitleText"; "required": false; "isSignal": true; }; "apps": { "alias": "apps"; "required": true; "isSignal": true; }; "enableFavorites": { "alias": "enableFavorites"; "required": false; "isSignal": true; }; "favoriteAppsText": { "alias": "favoriteAppsText"; "required": false; "isSignal": true; }; "showMoreAppsText": { "alias": "showMoreAppsText"; "required": false; "isSignal": true; }; "showLessAppsText": { "alias": "showLessAppsText"; "required": false; "isSignal": true; }; }, { "favoriteChange": "favoriteChange"; }, never, never, true, never>;
     // (undocumented)

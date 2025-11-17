@@ -22,6 +22,7 @@ import {
   }
 })
 export class SiHeaderLogoDirective implements OnInit {
+  /** @internal */
   protected readonly logoText = signal<string | undefined>(undefined);
 
   private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
@@ -30,7 +31,7 @@ export class SiHeaderLogoDirective implements OnInit {
   ngOnInit(): void {
     this.updateLogoText();
   }
-
+  /** @internal */
   @HostListener('window:theme-switch')
   protected updateLogoText(): void {
     afterNextRender(

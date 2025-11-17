@@ -37,18 +37,29 @@ import { PositionChange, SI_TOUR_TOKEN, TourAction, TourStepInternal } from './s
   }
 })
 export class SiTourComponent implements OnDestroy {
+  /** @internal */
   protected readonly positionClass = signal('');
+  /** @internal */
   protected readonly arrowPos = signal<OverlayArrowPosition | undefined>(undefined);
+  /** @internal */
   protected readonly step = signal<TourStepInternal | undefined>(undefined);
+  /** @internal */
   protected readonly show = signal(false);
+  /** @internal */
   protected readonly icons = addIcons({ elementCancel });
-  protected tourToken = inject(SI_TOUR_TOKEN);
-
+  /** @internal */
+  protected readonly tourToken = inject(SI_TOUR_TOKEN);
+  /** @internal */
   protected backText = t(() => $localize`:@@SI_TOUR.BACK:Back`);
+  /** @internal */
   protected nextText = t(() => $localize`:@@SI_TOUR.NEXT:Next`);
+  /** @internal */
   protected skipText = t(() => $localize`:@@SI_TOUR.SKIP:Skip tour`);
+  /** @internal */
   protected doneText = t(() => $localize`:@@SI_TOUR.DONE:Done`);
+  /** @internal */
   protected ariaLabelClose = t(() => $localize`:@@SI_TOUR.CLOSE:Close`);
+  /** @internal */
   protected progressText = t(() => $localize`:@@SI_TOUR.PROGRESS: {{step}} of {{total}}`);
 
   private elementRef: ElementRef<HTMLElement> = inject(ElementRef);
@@ -76,12 +87,12 @@ export class SiTourComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
   }
-
+  /** @internal */
   protected action(action: TourAction): void {
     this.prevFocus = this.document.activeElement;
     this.tourToken.control.next(action);
   }
-
+  /** @internal */
   protected ensureFocused(): void {
     // ensure focus is inside si-tour as other element might steal it, e.g. opening a menu
     const element = this.elementRef.nativeElement;
@@ -93,7 +104,7 @@ export class SiTourComponent implements OnDestroy {
       }
     }
   }
-
+  /** @internal */
   @HostListener('window:keydown', ['$event'])
   protected keyListener(event: KeyboardEvent): void {
     switch (event.key) {

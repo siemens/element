@@ -20,7 +20,7 @@ export class SiSelectActionDirective {
    * @defaultValue false
    */
   readonly selectActionAutoClose = input(false, { transform: booleanAttribute });
-
+  /** @internal */
   @HostListener('click')
   protected close(): void {
     if (this.selectActionAutoClose()) {

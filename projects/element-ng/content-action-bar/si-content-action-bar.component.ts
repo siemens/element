@@ -106,7 +106,7 @@ export class SiContentActionBarComponent implements AfterViewInit {
   private readonly menuBarElement = viewChild<CdkMenuBar, ElementRef<HTMLDivElement>>(CdkMenuBar, {
     read: ElementRef
   });
-
+  /** @internal */
   protected readonly mobileActions = computed(() => {
     const primaryActions = this.primaryActions();
     const secondaryActions = this.secondaryActions();
@@ -127,6 +127,7 @@ export class SiContentActionBarComponent implements AfterViewInit {
     }
     return actions;
   });
+  /** @internal */
   protected readonly secondaryActionsInternal = computed(() => {
     let secondaryActions = this.secondaryActions();
     if (this.preventIconsInDropdownMenus()) {
@@ -137,8 +138,11 @@ export class SiContentActionBarComponent implements AfterViewInit {
     }
     return secondaryActions;
   });
+  /** @internal */
   protected readonly icons = addIcons({ elementCancel, elementOptionsVertical });
+  /** @internal */
   protected readonly expanded = linkedSignal(() => this.viewType() === 'expanded');
+  /** @internal */
   protected parentElement?: HTMLElement | null;
 
   private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
@@ -151,23 +155,23 @@ export class SiContentActionBarComponent implements AfterViewInit {
       }
     });
   }
-
+  /** @internal */
   protected expand(): void {
     this.expanded.set(true);
     setTimeout(() => this.menuBarElement()?.nativeElement.focus());
   }
-
+  /** @internal */
   protected collapse(): void {
     this.expanded.set(false);
     setTimeout(() => this.expandElement()?.nativeElement.focus());
   }
-
+  /** @internal */
   protected isNewItemStyle(
     item: MenuItemLegacy | ContentActionBarMainItem
   ): item is ContentActionBarMainItem {
     return 'label' in item;
   }
-
+  /** @internal */
   protected runAction(item: MenuItemAction | MenuItemRadio | MenuItemCheckbox): void {
     if (typeof item.action === 'function') {
       item.action(this.actionParam(), item as any); // typescript cannot level down the item type properly

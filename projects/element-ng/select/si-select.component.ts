@@ -112,19 +112,19 @@ export class SiSelectComponent<T> implements OnChanges, AfterContentInit, SiForm
   readonly dropdownClose = output<void>();
   /** Emits when the dropdown open state changes. */
   readonly openChange = output<boolean>();
-
+  /** @internal */
   protected readonly isOpen = signal(false);
-
+  /** @internal */
   protected readonly optionTemplate = contentChild<
     SiSelectOptionTemplateDirective,
     TemplateRef<{ $implicit: SelectOption<T> }>
   >(SiSelectOptionTemplateDirective, { read: TemplateRef });
-
+  /** @internal */
   protected readonly groupTemplate = contentChild<
     SiSelectGroupTemplateDirective,
     TemplateRef<{ $implicit: SelectGroup<T> }>
   >(SiSelectGroupTemplateDirective, { read: TemplateRef });
-
+  /** @internal */
   protected readonly actionsTemplate = contentChild<SiSelectActionsDirective, TemplateRef<any>>(
     SiSelectActionsDirective,
     { read: TemplateRef }
@@ -150,9 +150,11 @@ export class SiSelectComponent<T> implements OnChanges, AfterContentInit, SiForm
    * ```
    */
   readonly errormessageId = input(`${this.id()}-errormessage`);
-
+  /** @internal */
   protected rows: readonly SelectItem<T>[] = [];
+  /** @internal */
   protected overlayWidth = 0;
+  /** @internal */
   protected readonly selectionStrategy = inject(SiSelectSelectionStrategy<T>);
 
   private backdropClicked = false;
@@ -197,7 +199,7 @@ export class SiSelectComponent<T> implements OnChanges, AfterContentInit, SiForm
     this.dropdownClose.emit();
     this.openChange.emit(false);
   }
-
+  /** @internal */
   protected backdropClick(): void {
     this.backdropClicked = true;
     this.isOpen.set(false);

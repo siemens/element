@@ -257,10 +257,14 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit {
   readonly searchEvent = output<string>();
 
   private readonly searchBar = viewChild.required(SiSearchBarComponent);
+  /** @internal */
   protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });
-  // Is required to prevent the navbar from running the padding animation on creation.
+  /**
+   * Is required to prevent the navbar from running the padding animation on creation.
+   * @internal
+   */
   @HostBinding('class.ready') protected readonly ready = true;
-
+  /** @internal */
   protected readonly searchInputDelay = 400;
 
   private uiStateService = inject(SI_UI_STATE_SERVICE, { optional: true });
@@ -276,8 +280,9 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit {
         ])
       )
   );
-
+  /** @internal */
   protected readonly smallScreen = signal(false);
+  /** @internal */
   protected readonly uiStateExpandedItems = signal<Record<string, boolean>>({});
 
   // Indicates if the user prefers a collapsed navbar. Relevant for resizing.
@@ -311,7 +316,7 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit {
       });
     }
   }
-
+  /** @internal */
   protected toggleCollapse(): void {
     if (this.collapsed()) {
       this.expand();
@@ -338,12 +343,12 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit {
 
     this.saveUIState();
   }
-
+  /** @internal */
   protected expandForSearch(): void {
     this.expand();
     setTimeout(() => this.searchBar().focus());
   }
-
+  /** @internal */
   protected doSearch(event: string): void {
     this.searchEvent.emit(event);
   }
@@ -378,7 +383,7 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit {
     );
     this.collapsed.set(false);
   }
-
+  /** @internal */
   protected saveUIState(): void {
     const stateId = this.stateId();
     if (!this.uiStateService || !stateId) {
@@ -405,7 +410,7 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit {
       this.collapsed.set(true);
     }
   }
-
+  /** @internal */
   protected isLegacyStyle(item: MenuItem | NavbarVerticalItem): item is MenuItem {
     return !('type' in item && item.type !== 'check' && item.type !== 'radio');
   }

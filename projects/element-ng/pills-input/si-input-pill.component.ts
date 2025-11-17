@@ -19,6 +19,6 @@ export class SiInputPillComponent {
 
   /** @defaultValue false */
   readonly hideClose = input(false);
-
+  /** @internal */
   protected readonly icons = addIcons({ elementCancel });
 }

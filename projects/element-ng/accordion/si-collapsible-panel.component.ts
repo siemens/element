@@ -120,14 +120,19 @@ export class SiCollapsiblePanelComponent {
    * The event is emitted before the animation happens.
    */
   readonly panelToggle = output<boolean>();
-
+  /** @internal */
   protected readonly hcollapsed = computed(
     () => this.accordionHCollapseService?.hcollapsed() ?? false
   );
+  /** @internal */
   protected readonly fullHeight = computed(() => this.accordionService?.fullHeight() ?? false);
+  /** @internal */
   protected controlId = '__si-collapsible-' + controlIdCounter++;
+  /** @internal */
   protected headerId = this.controlId + '-header';
+  /** @internal */
   protected isHCollapsible = false;
+  /** @internal */
   protected readonly icons = addIcons({ elementDown2 });
 
   private readonly accordionService = inject(SiAccordionService, { optional: true });
@@ -148,7 +153,7 @@ export class SiCollapsiblePanelComponent {
       )
       .subscribe(() => this.openClose(false));
   }
-
+  /** @internal */
   protected get showHide(): string {
     if (this.enableAnimation && !this.animationsGloballyDisabled) {
       return this.opened() ? 'show' : 'hide';
@@ -173,7 +178,7 @@ export class SiCollapsiblePanelComponent {
       this.lastScrollPos = this.contentRef().nativeElement.scrollTop;
     }
   }
-
+  /** @internal */
   protected doToggle(event?: Event): void {
     if (this.disabled()) {
       return;
@@ -188,7 +193,7 @@ export class SiCollapsiblePanelComponent {
       this.accordionHCollapseService?.open$.next(this);
     }
   }
-
+  /** @internal */
   protected keydown(event: KeyboardEvent): void {
     if (event.key === 'Enter' || event.key === 'Space' || event.key === ' ') {
       this.doToggle(undefined);

@@ -30,9 +30,9 @@ export class SiResultDetailsListComponent {
    * @defaultValue []
    */
   readonly steps = input<ResultDetailStep[]>([]);
-
+  /** @internal */
   protected readonly stepHasValue = computed(() => this.steps().some(item => !!item.value));
-
+  /** @internal */
   protected readonly icons = addIcons({
     elementCircleFilled,
     elementNotChecked,

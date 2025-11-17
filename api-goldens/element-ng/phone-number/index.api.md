@@ -37,60 +37,26 @@ export interface PhoneNumberModel {
 
 // @public (undocumented)
 export class SiPhoneNumberInputComponent implements ControlValueAccessor, Validator, OnChanges, SiFormItemControl {
-    // (undocumented)
-    protected blur(): void;
     readonly country: _angular_core.ModelSignal<string | undefined>;
-    // (undocumented)
-    protected readonly countryFocused: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
-    protected countryInput(num: CountryInfo): void;
-    // (undocumented)
-    protected readonly countryList: _angular_core.Signal<{
-        name: string;
-        countryCode: number;
-        isoCode: string;
-    }[]>;
     readonly defaultCountry: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    protected readonly disabled: _angular_core.Signal<boolean>;
     // (undocumented)
     readonly disabledInput: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly errormessageId: _angular_core.InputSignal<string>;
-    // (undocumented)
-    protected readonly icons: Record<"elementDown2", string>;
     readonly id: _angular_core.InputSignal<string>;
-    // (undocumented)
-    protected input(): void;
     // (undocumented)
     readonly labelledby: _angular_core.InputSignal<string>;
     // (undocumented)
     ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    protected open: boolean;
-    // (undocumented)
-    protected openOverlay(): void;
-    // (undocumented)
-    protected overlayDetach(): void;
-    // (undocumented)
-    protected overlayWidth: number;
-    // (undocumented)
-    protected readonly phoneInput: _angular_core.Signal<ElementRef<HTMLInputElement>>;
     readonly phoneNumberAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected placeholder: string;
     readonly placeholderForSearch: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     // (undocumented)
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     readonly searchNoResultsFoundLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly selectCountryAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected selectedCountry?: CountryInfo;
     readonly supportedCountries: _angular_core.InputSignal<readonly string[] | null | undefined>;
     // (undocumented)
     readonly valueChange: _angular_core.OutputEmitterRef<PhoneDetails>;
-    // (undocumented)
-    protected valueProvider(country: CountryInfo): string;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiPhoneNumberInputComponent, "si-phone-number-input", never, { "id": { "alias": "id"; "required": false; "isSignal": true; }; "country": { "alias": "country"; "required": false; "isSignal": true; }; "defaultCountry": { "alias": "defaultCountry"; "required": false; "isSignal": true; }; "placeholderForSearch": { "alias": "placeholderForSearch"; "required": false; "isSignal": true; }; "searchNoResultsFoundLabel": { "alias": "searchNoResultsFoundLabel"; "required": false; "isSignal": true; }; "selectCountryAriaLabel": { "alias": "selectCountryAriaLabel"; "required": false; "isSignal": true; }; "phoneNumberAriaLabel": { "alias": "phoneNumberAriaLabel"; "required": false; "isSignal": true; }; "supportedCountries": { "alias": "supportedCountries"; "required": false; "isSignal": true; }; "labelledby": { "alias": "labelledby"; "required": false; "isSignal": true; }; "disabledInput": { "alias": "disabled"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "errormessageId": { "alias": "errormessageId"; "required": false; "isSignal": true; }; }, { "country": "countryChange"; "valueChange": "valueChange"; }, never, never, true, never>;
     // (undocumented)

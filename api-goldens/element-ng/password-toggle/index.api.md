@@ -10,15 +10,9 @@ import * as _siemens_element_translate_ng_translate_types from '@siemens/element
 // @public (undocumented)
 export class SiPasswordToggleComponent {
     readonly hideLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected readonly icons: Record<"elementHide" | "elementShow", string>;
     get inputType(): string;
     readonly showLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected readonly showPassword: _angular_core.WritableSignal<boolean>;
     readonly showVisibilityIcon: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    protected toggle(): void;
     readonly typeChange: _angular_core.OutputEmitterRef<string>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiPasswordToggleComponent, "si-password-toggle", never, { "showVisibilityIcon": { "alias": "showVisibilityIcon"; "required": false; "isSignal": true; }; "showLabel": { "alias": "showLabel"; "required": false; "isSignal": true; }; "hideLabel": { "alias": "hideLabel"; "required": false; "isSignal": true; }; }, { "typeChange": "typeChange"; }, never, ["*"], true, never>;

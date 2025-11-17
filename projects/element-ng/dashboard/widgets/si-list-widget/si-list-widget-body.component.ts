@@ -123,10 +123,16 @@ export class SiListWidgetBodyComponent
    */
   readonly numberOfLinks = input(6);
 
-  /** Used to display the defined number of ghost items */
+  /**
+   * Used to display the defined number of ghost items
+   * @internal
+   */
   protected readonly ghosts = computed(() => new Array(this.numberOfLinks() ?? 6));
 
-  /** Holds the list items that are displayed. May be filtered and sorted. */
+  /**
+   * Holds the list items that are displayed. May be filtered and sorted.
+   * @internal
+   */
   protected readonly filteredListWidgetItems = computed(() => {
     const value = this.value();
     const sort = this.sort();
@@ -149,6 +155,6 @@ export class SiListWidgetBodyComponent
 
     return filteredListWidgetItems;
   });
-
+  /** @internal */
   protected readonly searchText = model('');
 }
