@@ -23,7 +23,7 @@
             @for (legendItem of leg.list; track legendItem.name) {
               <div class="legend-item" [class.hidden-legend]="!legendItem.selected">
                 <div
-                  class="me-2 mb-2"
+                  class="me-4 d-flex align-items-center justify-content-center"
                   (click)="legendIconClick(legendItem)"
                   (mouseenter)="legendHoverStartEvent.emit(legendItem)"
                   (mouseleave)="legendHoverEndEvent.emit(legendItem)"
@@ -79,7 +79,10 @@
                 >
                   {{ legendItem.displayName }}
                 </span>
-                <div class="right-legend-circle" (click)="legendIconClick(legendItem)">
+                <div
+                  class="right-legend-circle d-flex align-items-center justify-content-center"
+                  (click)="legendIconClick(legendItem)"
+                >
                   <svg width="12" height="12" xmlns="http://www.w3.org/2000/svg">
                     <path [attr.d]="legendItem.symbol" [attr.fill]="legendItem.color" />
                   </svg>
