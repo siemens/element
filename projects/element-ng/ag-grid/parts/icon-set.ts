@@ -3,15 +3,21 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  elementBeginFilled,
   elementColumnMove,
   elementCopy,
   elementCut,
   elementDocument,
+  elementDown1Filled,
+  elementEndFilled,
   elementExport,
   elementFilter,
+  elementLeft2,
   elementMenu,
+  elementOptionsVertical,
   elementPaste,
   elementPin,
+  elementRight2,
   elementSortDown,
   elementSortUp
 } from '@siemens/element-ng/icon';
@@ -61,7 +67,22 @@ export const elementIconOverrides = iconOverrides({
       svg: elementDocument.split(',')[1]
     },
     'menu-alt': {
-      svg: elementMenu.split(',')[1]
+      svg: elementOptionsVertical.split(',')[1]
+    },
+    'small-down': {
+      svg: elementDown1Filled.split(',')[1]
+    },
+    'first': {
+      svg: elementBeginFilled.split(',')[1]
+    },
+    'last': {
+      svg: elementEndFilled.split(',')[1]
+    },
+    'previous': {
+      svg: elementLeft2.split(',')[1]
+    },
+    'next': {
+      svg: elementRight2.split(',')[1]
     }
   }
 });

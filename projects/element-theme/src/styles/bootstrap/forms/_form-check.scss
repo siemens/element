@@ -228,6 +228,21 @@ $form-check-label-start: $form-check-size + map.get(spacers.$spacers, 4);
   }
 }
 
+.ag-checkbox-input-wrapper {
+  inline-size: $form-check-size !important; // stylelint-disable-line declaration-no-important
+  block-size: $form-check-size !important; // stylelint-disable-line declaration-no-important
+  inset-block-start: 1px !important; // stylelint-disable-line declaration-no-important
+
+  input[type='checkbox'] {
+    @extend %form-check-base;
+    @extend %form-check-checkbox;
+  }
+
+  .ag-body .datatable-checkbox {
+    inset-block-start: 3px !important; // stylelint-disable-line declaration-no-important
+  }
+}
+
 formly-field-multicheckbox {
   input[type='checkbox'] {
     @extend %form-check-base;
