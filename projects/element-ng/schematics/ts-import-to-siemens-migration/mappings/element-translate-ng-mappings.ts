@@ -16,6 +16,6 @@ export const ELEMENT_TRANSLATE_NG_MAPPINGS: { [symbol: string]: string } = {
   'SiTranslateNgxTModule': '@siemens/element-translate-ng/ngx-translate',
   'SiTranslatePipe': '@siemens/element-translate-ng/translate',
   't': '@siemens/element-translate-ng/translate',
-  'TranslatableString': '@siemens/element-translate-ng/translate-types',
+  'TranslatableString': '@siemens/element-translate-ng/translate',
   'TranslationResult': '@siemens/element-translate-ng/translate'
 };

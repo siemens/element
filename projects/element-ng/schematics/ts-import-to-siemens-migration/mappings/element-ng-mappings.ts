@@ -473,6 +473,7 @@ export const ELEMENT_NG_MAPPINGS: { [symbol: string]: string } = {
   'SiLoadingSpinnerModule': '@siemens/element-ng/loading-spinner',
   'SiLocaleConfig': '@siemens/element-ng/localization',
   'SiLocaleId': '@siemens/element-ng/localization',
+  'SiLocaleStore': '@siemens/element-ng/localization',
   'SiLocaleService': '@siemens/element-ng/localization',
   'SiLoginBasicComponent': '@siemens/element-ng/landing-page',
   'SiLoginSingleSignOnComponent': '@siemens/element-ng/landing-page',

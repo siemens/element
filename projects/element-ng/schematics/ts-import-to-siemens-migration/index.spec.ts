@@ -146,6 +146,19 @@ describe('ts-import-to-siemens migration', () => {
     ]);
   });
 
+  it('should migrate translation symbol if imported from `@simpl/element-ng`', async () => {
+    addTestFiles(appTree, {
+      [sourceFile]: [
+        `import { SiTranslatePipe, TranslatableString } from '@simpl/element-ng';`
+      ].join('\n')
+    });
+    const tree = await runner.runSchematic(name, { path: 'projects/app/src' }, appTree);
+    const actual = readLines(tree, sourceFile);
+    expect(actual).toEqual([
+      `import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';`
+    ]);
+  });
+
   it('should throw error if no tsconfig could be found', async () => {
     removeTestFiles(appTree, [
       'projects/app/tsconfig.app.json',

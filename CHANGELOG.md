@@ -1,3 +1,18 @@
+# [48.4.0](https://github.com/siemens/element/compare/v48.3.0...v48.4.0) (2025-11-13)
+
+
+### Features
+
+* **chat-messages:** add chat container ([bb5ef0c](https://github.com/siemens/element/commit/bb5ef0c791ac07bc8fa0f2a803eb1e46bed906c0))
+* **select:** add template context guard for select actions directive ([d16b4b8](https://github.com/siemens/element/commit/d16b4b8ef4c4f2c75d3f34e0e23fd8ec9439464d))
+
+
+### Bug Fixes
+
+* **chat-messages:** auto-collapse smaller left-aligned chat-messages ([52cde0a](https://github.com/siemens/element/commit/52cde0a08d21a7ed08494e7e726b26ef98b3d733))
+* **datepicker:** add translation key for today button default text ([fb082e5](https://github.com/siemens/element/commit/fb082e5341b09202dae08fcf3e5817ccd8dc4457))
+* **schematics:** remove unused imports after action-modal migration ([d79cb07](https://github.com/siemens/element/commit/d79cb07a59165ca99f5eedecdba0688771516268))
+
 # [48.3.0](https://github.com/siemens/element/compare/v48.2.0...v48.3.0) (2025-11-05)
 
 
