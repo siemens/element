@@ -12,6 +12,7 @@ import {
   getDateSameOrBetween,
   getNamedFormat,
   getWeekEndDate,
+  getWeekOfYear,
   getWeekStartDate,
   isSameDate,
   parseDate,
@@ -315,5 +316,20 @@ describe('date time helper', () => {
         });
       });
     });
+  });
+
+  it('getWeekOfYear', () => {
+    expect(getWeekOfYear(new Date(2022, 0, 1), 'saturday')).toBe(1);
+    expect(getWeekOfYear(new Date(2022, 2, 6), 'monday')).toBe(9);
+    expect(getWeekOfYear(new Date(2022, 2, 6), 'sunday')).toBe(10);
+    expect(getWeekOfYear(new Date(2022, 2, 12), 'sunday')).toBe(10);
+    expect(getWeekOfYear(new Date(2022, 11, 26), 'monday')).toBe(52);
+    expect(getWeekOfYear(new Date(2022, 11, 26), 'sunday')).toBe(52);
+    expect(getWeekOfYear(new Date(2023, 0, 1), 'monday')).toBe(52);
+    expect(getWeekOfYear(new Date(2023, 0, 1), 'sunday')).toBe(1);
+    expect(getWeekOfYear(new Date(2023, 0, 4), 'monday')).toBe(1);
+    expect(getWeekOfYear(new Date(2023, 0, 4), 'sunday')).toBe(1);
+    expect(getWeekOfYear(new Date(2025, 2, 31), 'monday')).toBe(14);
+    expect(getWeekOfYear(new Date(2025, 2, 31), 'sunday')).toBe(14);
   });
 });
