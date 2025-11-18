@@ -8,6 +8,11 @@
 .input-wrapper {
   border-color: variables.$element-ui-4;
   background-color: variables.$element-base-input-experimental;
+
+  &.drag-over {
+    border: 1px solid variables.$element-focus-default;
+    box-shadow: 0 0 0 1px variables.$element-focus-default;
+  }
 }
 
 .chat-textarea {

@@ -25,7 +25,7 @@ import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
 import { SiTranslatePipe, TranslatableString, t } from '@siemens/element-translate-ng/translate';
 
 import { MessageAction } from './message-action.model';
-import { SiAttachmentListComponent, Attachment } from './si-attachment-list.component';
+import { Attachment, SiAttachmentListComponent } from './si-attachment-list.component';
 
 /**
  * Attachment item interface for file attachments in chat messages, extension of {@link Attachment} for {@link SiAttachmentListComponent} to use within {@link SiChatInputComponent}.
@@ -88,6 +88,7 @@ export class SiChatInputComponent implements AfterViewInit {
   private static idCounter = 0;
   private readonly textInput = viewChild<ElementRef<HTMLTextAreaElement>>('textInput');
   private readonly projectedContent = viewChild<ElementRef>('projected');
+  private readonly fileUploadDirective = viewChild(SiFileUploadDirective);
 
   /**
    * Current input value
@@ -303,6 +304,8 @@ export class SiChatInputComponent implements AfterViewInit {
     this.showInterruptButton() ? this.interruptButtonLabel() : this.sendButtonLabel()
   );
 
+  protected dragOver = false;
+
   protected get attachmentList(): Attachment[] {
     return this.attachments() as Attachment[];
   }
@@ -348,9 +351,10 @@ export class SiChatInputComponent implements AfterViewInit {
     const validFiles = uploadFiles.filter(uploadFile => uploadFile.status === 'added');
 
     validFiles.forEach(uploadFile => {
+      const size = parseInt(uploadFile.size, 10);
       const attachment: ChatInputAttachment = {
         name: uploadFile.fileName,
-        size: uploadFile.file.size,
+        size: isNaN(size) ? uploadFile.file.size : size,
         type: uploadFile.file.type,
         file: uploadFile.file
       };
@@ -415,6 +419,31 @@ export class SiChatInputComponent implements AfterViewInit {
     if (textarea?.nativeElement) {
       textarea.nativeElement.focus();
     }
+  }
+
+  protected dropHandler(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.dragOver = false;
+
+    if (!this.allowAttachments() || this.disabled()) {
+      return;
+    }
+
+    const directive = this.fileUploadDirective();
+    if (directive && event.dataTransfer?.files) {
+      directive.handleFiles(event.dataTransfer.files);
+    }
+  }
+
+  protected dragOverHandler(event: DragEvent): void {
+    if (!this.allowAttachments() || this.disabled()) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    this.dragOver = true;
   }
 
   private setTextareaHeight(textarea: HTMLTextAreaElement): void {
