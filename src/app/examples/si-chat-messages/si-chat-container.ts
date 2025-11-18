@@ -16,6 +16,7 @@ import {
   SiAttachmentListComponent,
   Attachment
 } from '@siemens/element-ng/chat-messages';
+import { FileUploadError } from '@siemens/element-ng/file-uploader';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
 import {
@@ -23,6 +24,7 @@ import {
   SiMarkdownRendererComponent
 } from '@siemens/element-ng/markdown-renderer';
 import { MenuItem } from '@siemens/element-ng/menu';
+import { SiToastNotificationService } from '@siemens/element-ng/toast-notification';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 interface ChatMessage {
@@ -52,6 +54,7 @@ export class SampleComponent {
   private logEvent = inject(LOG_EVENT);
   private readonly modalTemplate = viewChild<TemplateRef<any>>('modalTemplate');
   private sanitizer = inject(DomSanitizer);
+  private readonly toastService = inject(SiToastNotificationService);
 
   protected markdownRenderer = getMarkdownRenderer(this.sanitizer);
 
@@ -218,6 +221,11 @@ export class SampleComponent {
     this.logEvent('Interrupt clicked');
     this.loading.set(false);
     this.interrupting.set(false);
+  }
+
+  onFileError(error: FileUploadError): void {
+    this.logEvent(`File error: ${error.errorText} - ${error.fileName}`);
+    this.toastService.queueToastNotification('danger', error.errorText, error.fileName);
   }
 
   private simulateAiResponse(userInput: string): void {
