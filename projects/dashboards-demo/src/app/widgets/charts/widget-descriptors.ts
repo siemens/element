@@ -4,7 +4,7 @@
  */
 import { Widget } from '@siemens/dashboards-ng';
 
-const loaderFunction = (name: string): Promise<any> => {
+const loaderFunction = async (name: string): Promise<any> => {
   if (
     name === 'CircleComponent' ||
     name === 'CartesianComponent' ||
@@ -14,7 +14,7 @@ const loaderFunction = (name: string): Promise<any> => {
     name === 'ListWidgetComponent' ||
     name === 'TimelineWidgetComponent'
   ) {
-    return import('../../widgets/charts/index');
+    return import('../../widgets/charts/index').then(m => m[name as keyof typeof m]);
   } else {
     throw new Error(`Unknown component to be loaded ${name}`);
   }
@@ -29,8 +29,7 @@ export const LINE_CHART_DESC: Widget = {
   iconClass: 'element-trend',
   componentFactory: {
     componentName: 'CartesianComponent',
-    moduleName: 'ChartsWidgetModule',
-    moduleLoader: loaderFunction
+    componentLoader: loaderFunction
   },
   defaults: {
     width: 6,
@@ -54,8 +53,7 @@ export const BAR_CHART_DESC: Widget = {
   iconClass: 'element-trend',
   componentFactory: {
     componentName: 'CartesianComponent',
-    moduleName: 'ChartsWidgetModule',
-    moduleLoader: loaderFunction
+    componentLoader: loaderFunction
   },
   defaults: {
     width: 12,
@@ -79,8 +77,7 @@ export const CIRCLE_CHART_DESC: Widget = {
   iconClass: 'element-trend',
   componentFactory: {
     componentName: 'CircleComponent',
-    moduleName: 'ChartsWidgetModule',
-    moduleLoader: loaderFunction
+    componentLoader: loaderFunction
   },
   defaults: {
     width: 4,
@@ -106,8 +103,7 @@ export const GAUGE_CHART_DESC: Widget = {
   iconClass: 'element-trend',
   componentFactory: {
     componentName: 'GaugeComponent',
-    moduleName: 'ChartsWidgetModule',
-    moduleLoader: loaderFunction
+    componentLoader: loaderFunction
   },
   defaults: {
     width: 4,
@@ -132,8 +128,7 @@ export const VALUE_WIDGET: Widget = {
   componentFactory: {
     componentName: 'ValueWidgetComponent',
     editorComponentName: 'ValueWidgetEditorComponent',
-    moduleName: 'ChartsWidgetModule',
-    moduleLoader: loaderFunction
+    componentLoader: loaderFunction
   },
   defaults: {
     width: 4,
@@ -158,8 +153,7 @@ export const LIST_WIDGET: Widget = {
   iconClass: 'element-trend',
   componentFactory: {
     componentName: 'ListWidgetComponent',
-    moduleName: 'ChartsWidgetModule',
-    moduleLoader: loaderFunction
+    componentLoader: loaderFunction
   },
   defaults: {
     width: 4,
@@ -175,8 +169,7 @@ export const TIMELINE_WIDGET: Widget = {
   iconClass: 'element-trend',
   componentFactory: {
     componentName: 'TimelineWidgetComponent',
-    moduleName: 'ChartsWidgetModule',
-    moduleLoader: loaderFunction
+    componentLoader: loaderFunction
   },
   defaults: {
     width: 4,

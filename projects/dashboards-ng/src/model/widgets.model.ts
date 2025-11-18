@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { EventEmitter, InputSignal, OutputEmitterRef, TemplateRef } from '@angular/core';
+import { EventEmitter, InputSignal, OutputEmitterRef, TemplateRef, Type } from '@angular/core';
 import { AccentLineType, MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { ContentActionBarMainItem, ViewType } from '@siemens/element-ng/content-action-bar';
 import { MenuItem } from '@siemens/element-ng/menu';
@@ -56,12 +56,26 @@ type CommonFactoryFields = {
   editorModalClass?: string;
 };
 
-export type WidgetComponentTypeFactory = CommonFactoryFields & {
+type WidgetComponentTypeBaseConfig = {
   factoryType?: 'default';
-  moduleName: string;
-  moduleLoader: (name: string) => Promise<any>;
   [index: string]: any;
 };
+
+/** Use when component is not standalone and part of a module */
+type ModuleOptions = WidgetComponentTypeBaseConfig & {
+  moduleName: string;
+  moduleLoader: (name: string) => Promise<any>;
+  componentLoader?: never;
+};
+
+/** Use when component is standalone */
+type StandaloneOptions = WidgetComponentTypeBaseConfig & {
+  componentLoader: <T = unknown>(componentName: string) => Promise<Type<T>>;
+  moduleName?: never;
+  moduleLoader?: never;
+};
+
+export type WidgetComponentTypeFactory = CommonFactoryFields & (ModuleOptions | StandaloneOptions);
 
 export type FederatedModule = CommonFactoryFields &
   LoadRemoteModuleOptions & {
