@@ -128,6 +128,12 @@ export class SiChatInputComponent implements AfterViewInit {
     protected readonly canSend: _angular_core.Signal<boolean>;
     readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly disclaimer: _angular_core.InputSignal<TranslatableString_2 | undefined>;
+    // (undocumented)
+    protected dragOver: boolean;
+    // (undocumented)
+    protected dragOverHandler(event: DragEvent): void;
+    // (undocumented)
+    protected dropHandler(event: DragEvent): void;
     readonly fileError: _angular_core.OutputEmitterRef<FileUploadError>;
     focus(): void;
     // (undocumented)

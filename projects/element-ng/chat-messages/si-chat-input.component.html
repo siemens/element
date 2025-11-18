@@ -1,4 +1,11 @@
-<div class="input-wrapper border rounded-3 bg-body" (click)="onContainerClick($event)">
+<div
+  class="input-wrapper border rounded-3 bg-body"
+  [class.drag-over]="dragOver"
+  (click)="onContainerClick($event)"
+  (drop)="dropHandler($event)"
+  (dragover)="dragOverHandler($event)"
+  (dragleave)="dragOver = false"
+>
   @if (hasAttachments()) {
     <div class="p-4 pb-0">
       <si-attachment-list
