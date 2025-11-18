@@ -334,7 +334,13 @@ export class SiChatInputComponent implements AfterViewInit {
   protected onKeyDown(event: KeyboardEvent): void {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
-      if (!this.showInterruptButton()) {
+      if (!this.canSend()) {
+        return;
+      }
+      if (this.showInterruptButton()) {
+        this.interrupt.emit();
+        this.onSend();
+      } else {
         this.onSend();
       }
     }

@@ -216,10 +216,14 @@ describe('SiChatInputComponent', () => {
     expect(emittedCount).toBe(0);
   });
 
-  it('should not send on Enter when interruptible is true', () => {
+  it('should interrupt and send on Enter when interruptible is true', () => {
     let emittedCount = 0;
+    let interruptCount = 0;
     component.send.subscribe(() => {
       emittedCount++;
+    });
+    component.interrupt.subscribe(() => {
+      interruptCount++;
     });
 
     component.value.set('Test message');
@@ -231,7 +235,8 @@ describe('SiChatInputComponent', () => {
     spyOn(event, 'preventDefault');
     textarea.nativeElement.dispatchEvent(event);
 
-    expect(emittedCount).toBe(0);
+    expect(emittedCount).toBe(1);
+    expect(interruptCount).toBe(1);
     expect(event.preventDefault).toHaveBeenCalled();
   });
 
