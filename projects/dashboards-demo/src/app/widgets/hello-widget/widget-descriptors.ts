@@ -4,9 +4,9 @@
  */
 import { Widget } from '@siemens/dashboards-ng';
 
-const loaderFunction = (name: string): Promise<any> => {
+const loaderFunction = async (name: string): Promise<any> => {
   if (name === 'HelloWidgetComponent' || name === 'HelloWidgetEditorComponent') {
-    return import('../../widgets/hello-widget/index');
+    return import('./index').then(m => m[name as keyof typeof m]);
   } else {
     throw new Error(`Unknown component to be loaded ${name}`);
   }
@@ -21,8 +21,7 @@ export const HELLO_DESCRIPTOR: Widget = {
     componentName: 'HelloWidgetComponent',
     editorComponentName: 'HelloWidgetEditorComponent',
     editorModalClass: 'modal-sm',
-    moduleName: 'HelloWidgetModule',
-    moduleLoader: loaderFunction
+    componentLoader: loaderFunction
   },
   defaults: {
     width: 4,
