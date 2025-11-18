@@ -109,7 +109,6 @@ documentation.
 
 - [Scatter Chart](charts/scatter-chart.md)
 - [Search Bar](sorting-filtering/search-bar.md)
-- [Segmented Button](buttons-menus/segmented-button.md)
 - [Select](forms-inputs/select.md)
 - [Side Panel](layout-navigation/side-panel.md)
 - [Skeleton](progress-indication/skeleton.md)
@@ -117,7 +116,6 @@ documentation.
 - [Sort Bar](sorting-filtering/sort-bar.md)
 - [Spinner](progress-indication/spinner.md)
 - [Split](layout-navigation/split.md)
-- [Split buttons](buttons-menus/split-button.md)
 - [Status Bar](status-notifications/status-bar.md)
 - [Status Counter](status-notifications/status-counter.md)
 - [Status Toggle](status-notifications/status-toggle.md)
