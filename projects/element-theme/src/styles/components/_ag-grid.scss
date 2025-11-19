@@ -42,3 +42,13 @@
     border-block-end-color: variables.$tooltip-bg;
   }
 }
+
+.ag-header-cell {
+  .ag-header-cell-resize {
+    visibility: hidden;
+  }
+
+  &:hover .ag-header-cell-resize {
+    visibility: visible;
+  }
+}

@@ -13,7 +13,7 @@ import { sampleRowData } from './mock-data';
   selector: 'app-sample',
   imports: [AgGridAngular],
   template: `<ag-grid-angular
-    style="width: 100%; height: 550px;"
+    style="width: 100%; height: 100%;"
     [columnDefs]="colDefs"
     [theme]="theme"
     [defaultColDef]="defaultColDef"
