@@ -20,6 +20,7 @@ import {
   TooltipModule,
   ValidationModule
 } from 'ag-grid-community';
+import { LicenseManager } from 'ag-grid-enterprise';
 
 // TODO: To be decided on default options other than elementTheme
 const ELEMENT_AG_GRID_OPTIONS: GridOptions = {
@@ -43,7 +44,8 @@ const ELEMENT_AG_GRID_DEFAULT_MODULES: Module[] = [
 
 export const provideElementAgGridConfig = (
   modules?: Module[],
-  gridOptions?: GridOptions
+  gridOptions?: GridOptions,
+  licenseKey?: string
 ): EnvironmentProviders => {
   return makeEnvironmentProviders([
     {
@@ -56,6 +58,14 @@ export const provideElementAgGridConfig = (
     {
       provide: 'ag-grid-options',
       useValue: provideGlobalGridOptions({ ...ELEMENT_AG_GRID_OPTIONS, ...gridOptions })
-    }
+    },
+    ...(licenseKey
+      ? [
+          {
+            provide: 'ag-grid-license',
+            useValue: LicenseManager.setLicenseKey(licenseKey)
+          }
+        ]
+      : [])
   ]);
 };
