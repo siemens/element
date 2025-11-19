@@ -62,7 +62,7 @@ In this case, the AI appears as an on-demand assistant without disrupting the wo
 ### Initial screen
 
 Before the first message, show an initial screen to set expectations and explain what the AI can do.
-As soon as the user prompts a message, the initial screen should dissapear.
+As soon as the user prompts a message, the initial screen should disappear.
 
 ![AI initial screen](images/ai-initial-screen.png)
 

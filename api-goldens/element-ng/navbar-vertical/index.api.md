@@ -92,6 +92,8 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit {
     // (undocumented)
     protected expandForSearch(): void;
     // (undocumented)
+    protected readonly icons: Record<"elementSearch" | "elementDoubleLeft" | "elementDoubleRight", string>;
+    // (undocumented)
     protected isLegacyStyle(item: MenuItem | NavbarVerticalItem): item is MenuItem;
     readonly items: _angular_core.ModelSignal<(MenuItem | NavbarVerticalItem)[]>;
     readonly navbarCollapseButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;

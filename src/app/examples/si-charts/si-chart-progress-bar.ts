@@ -3,10 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component } from '@angular/core';
-import { SiChartProgressBarComponent, themeElement, themeSupport } from '@siemens/charts-ng';
+import { SiChartProgressBarComponent } from '@siemens/charts-ng';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
-
-themeSupport.setDefault(themeElement);
 
 @Component({
   selector: 'app-sample',
