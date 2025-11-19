@@ -59,6 +59,12 @@ export class SampleComponent {
     negativeColorToken: 'element-data-10'
   };
 
+  whiskerChart: MicrochartBarSeries = {
+    values: [25, 25, 25, -25, -25, 25, 25, -25, 25, 25, 25],
+    colorToken: 'element-data-3',
+    negativeColorToken: 'element-data-10'
+  };
+
   positiveSeries: MicrochartBarSeries = {
     values: [5, 8, 12, 18, 25, 30, 38, 42, 48, 55, 62, 70],
     colorToken: 'element-data-2'
