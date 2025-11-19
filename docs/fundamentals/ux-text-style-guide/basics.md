@@ -21,14 +21,34 @@ writing errors to avoid when creating industrial products and experiences.
 - Use positive instead of negative framing
 - Avoid using contractions in general
 
-| Dos                                            | Don'ts                                                 |
-| ---------------------------------------------- | ------------------------------------------------------ |
-| their, them, theirs, salesperson               | his, hers, him, salesman                               |
-| Welcome to Building X                          | Hey there!                                             |
-| Welcome Werner von Siemens                     | Hey there!                                             |
-| X appears when detail view has selected events | X doesn't appear if detail view has no selected events |
-| cannot, will not                               | can't, won't                                           |
-| you will, we have                              | you'll, we've                                          |
+<!-- markdownlint-disable MD033 -->
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+#### Do's
+
+- their, them, theirs, salesperson
+- Welcome to Building X
+- Welcome Werner von Siemens
+- X appears when detail view has selected events
+- cannot, will not
+- you will, we have
+
+</div>
+<div class="donts" markdown>
+
+#### Don'ts
+
+- his, hers, him, salesman
+- Hey there!
+- Hey there!
+- X doesn't appear if detail view has no selected events
+- can't, won't
+- you'll, we've
+
+</div>
+</div>
+<!-- markdownlint-enable MD033 -->
 
 ## Length
 
