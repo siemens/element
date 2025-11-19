@@ -1,0 +1,44 @@
+@use '../bootstrap/forms/form-check';
+@use '../bootstrap/forms/form-control';
+@use '../bootstrap/tooltip';
+@use '../bootstrap/variables';
+
+.ag-text-field-input-wrapper {
+  input[type='text'],
+  input[type='number'] {
+    @extend .form-control;
+  }
+}
+
+.ag-checkbox-input-wrapper {
+  inline-size: form-check.$form-check-size !important; // stylelint-disable-line declaration-no-important
+  block-size: form-check.$form-check-size !important; // stylelint-disable-line declaration-no-important
+  inset-block-start: 1px !important; // stylelint-disable-line declaration-no-important
+
+  input[type='checkbox'] {
+    @extend %form-check-base;
+    @extend %form-check-checkbox;
+  }
+
+  .ag-body .datatable-checkbox {
+    inset-block-start: 3px !important; // stylelint-disable-line declaration-no-important
+  }
+}
+
+.ag-tooltip {
+  @extend .tooltip-inner;
+
+  // Tooltip arrow using pseudo-element
+  &::before {
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-color: transparent;
+    pointer-events: none;
+    inset-block-start: 0;
+    inset-inline-start: 20%;
+    transform: translate(-50%, -100%);
+    border-width: 0 calc(variables.$tooltip-arrow-width * 0.5) variables.$tooltip-arrow-height;
+    border-block-end-color: variables.$tooltip-bg;
+  }
+}

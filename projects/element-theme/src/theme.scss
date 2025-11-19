@@ -8,6 +8,7 @@ $_themes: () !default;
 @use 'styles/bootstrap';
 
 // Component extensions
+@use 'styles/components/ag-grid';
 @use 'styles/components/application-header';
 @use 'styles/components/container-grid';
 @use 'styles/components/datatable';

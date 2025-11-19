@@ -3,17 +3,30 @@
  * SPDX-License-Identifier: MIT
  */
 import { bootstrapApplication } from '@angular/platform-browser';
-import { InfiniteRowModelModule, ModuleRegistry, RowDragModule } from 'ag-grid-community';
-import { AllEnterpriseModule, RowGroupingModule } from 'ag-grid-enterprise';
+import {
+  InfiniteRowModelModule,
+  ModuleRegistry,
+  NumberFilterModule,
+  RowDragModule,
+  TextFilterModule,
+  ClientSideRowModelModule,
+  ValidationModule,
+  RowSelectionModule,
+  TooltipModule
+} from 'ag-grid-community';
 
 import { AppComponent } from './app/app.component';
 import { APP_CONFIG } from './app/app.config';
 
 ModuleRegistry.registerModules([
-  AllEnterpriseModule,
   RowDragModule,
-  RowGroupingModule,
-  InfiniteRowModelModule
+  InfiniteRowModelModule,
+  NumberFilterModule,
+  TextFilterModule,
+  ClientSideRowModelModule,
+  RowSelectionModule,
+  TooltipModule,
+  ValidationModule
 ]);
 
 bootstrapApplication(AppComponent, APP_CONFIG).catch(err => console.error(err));

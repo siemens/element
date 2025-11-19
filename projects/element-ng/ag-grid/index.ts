@@ -3,11 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { createTheme } from 'ag-grid-community';
+import { createTheme, iconSetAlpine, Theme } from 'ag-grid-community';
 
 import { elementIconOverrides } from './parts/icon-set';
 
-export const elementTheme = createTheme()
+export const elementTheme: Theme = createTheme()
+  .withPart(iconSetAlpine)
+  .withoutPart('checkboxStyle')
+  .withoutPart('inputStyle')
   .withPart(elementIconOverrides)
   .withParams({
     fontFamily: '"SiemensSans Pro", sans-serif',
@@ -28,6 +31,5 @@ export const elementTheme = createTheme()
     headerFontWeight: '600',
     rowHoverColor: 'var(--element-base-1-hover)',
     menuTextColor: 'var(--element-text-primary)',
-    selectedRowBackgroundColor: 'var(--element-base-1-selected)',
-    borderColor: 'var(--element-ui-4)'
+    selectedRowBackgroundColor: 'var(--element-base-1-selected)'
   });
