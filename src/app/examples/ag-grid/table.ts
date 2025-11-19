@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, OnInit } from '@angular/core';
-import { elementTheme } from '@siemens/element-ng/ag-grid';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef, GridReadyEvent } from 'ag-grid-community';
 
@@ -14,7 +13,6 @@ import { sampleRowData } from './mock-data';
   imports: [AgGridAngular],
   template: `<ag-grid-angular
     style="width: 100%; height: 100%;"
-    [theme]="theme"
     [rowData]="rowData"
     [columnDefs]="colDefs"
     [defaultColDef]="defaultColDef"
@@ -54,8 +52,6 @@ export class SampleComponent implements OnInit {
       resizable: true
     }
   ];
-
-  theme = elementTheme;
 
   ngOnInit(): void {
     document.body.dataset.agThemeMode = 'dark';

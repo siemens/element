@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component } from '@angular/core';
-import { elementTheme } from '@siemens/element-ng/ag-grid';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef, GridReadyEvent, INumberFilterParams } from 'ag-grid-community';
 
@@ -15,7 +14,6 @@ import { sampleRowData } from './mock-data';
   template: `<ag-grid-angular
     style="width: 100%; height: 100%;"
     [columnDefs]="colDefs"
-    [theme]="theme"
     [defaultColDef]="defaultColDef"
     [rowData]="rowData"
     [gridOptions]="{ headerHeight: 48 }"
@@ -56,8 +54,6 @@ export class SampleComponent {
     // minWidth: 150,
     //  filter: true
   };
-
-  theme = elementTheme;
 
   onGridReady(params: GridReadyEvent<any>): void {
     this.rowData = sampleRowData;
