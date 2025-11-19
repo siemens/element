@@ -142,7 +142,7 @@ fit. For example:
   component which internally use HTML5 drag and drop API for this purpose.
 
 - **Configurable dashboard widgets:**
-  We recommned to use our [flexible dashboard](../components/dashboards/flexible-dashboards.md)
+  We recommend to use our [flexible dashboard](../components/dashboards/flexible-dashboards.md)
   which is based on [gridstack](https://gridstackjs.com/).
 
 ### Usage
