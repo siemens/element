@@ -9,8 +9,6 @@ import { elementIconOverrides } from './parts/icon-set';
 
 export const elementTheme: Theme = createTheme()
   .withPart(iconSetAlpine)
-  .withoutPart('checkboxStyle')
-  .withoutPart('inputStyle')
   .withPart(elementIconOverrides)
   .withParams({
     fontFamily: '"SiemensSans Pro", sans-serif',
