@@ -23,6 +23,7 @@ import { take } from 'rxjs/operators';
 
 import { SI_DASHBOARD_CONFIGURATION } from '../../model/configuration';
 import { GridConfig } from '../../model/gridstack.model';
+import { SI_WIDGET_ID_PROVIDER } from '../../model/si-widget-id-provider';
 import { SI_WIDGET_STORE } from '../../model/si-widget-storage';
 import { Widget, WidgetConfig } from '../../model/widgets.model';
 import { SiGridService } from '../../services/si-grid.service';
@@ -31,10 +32,6 @@ import {
   SiGridstackWrapperComponent
 } from '../gridstack-wrapper/si-gridstack-wrapper.component';
 import { SiWidgetInstanceEditorDialogComponent } from '../widget-instance-editor-dialog/si-widget-instance-editor-dialog.component';
-
-export const NEW_WIDGET_PREFIX = 'new-widget-';
-
-let idCounter = 1;
 
 /**
  * The grid component is the actual component on which the widget instances are placed and visualized. You can think of
@@ -52,6 +49,7 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
   private gridService = inject(SiGridService);
   private modalService = inject(SiModalService);
   private widgetStorage = inject(SI_WIDGET_STORE);
+  private widgetIdProvider = inject(SI_WIDGET_ID_PROVIDER);
 
   /**
    * Configuration options for a grid instance. Default is the optional
@@ -250,15 +248,14 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
 
     this.isLoading.next(true);
     this.loadingService.counter.next(1);
-    // Update position information and remove temporary ids
-    const widgets = this.updateWidgetPositions(this.visibleWidgetInstances$.value).map(widget =>
-      widget.id.startsWith(NEW_WIDGET_PREFIX) ? { ...widget, id: undefined } : widget
-    );
-    const toRemove = this.markedForRemoval.filter(
-      widget => !widget.id.startsWith(NEW_WIDGET_PREFIX)
-    );
+    // Update position information
+    const widgets = this.updateWidgetPositions(this.visibleWidgetInstances$.value);
+
+    const transientWidgetIds = new Set(this.transientWidgetInstances.map(w => w.id));
+    const modifiedWidgets = widgets.filter(widget => !transientWidgetIds.has(widget.id));
+    const addedWidgets = widgets.filter(widget => transientWidgetIds.has(widget.id));
     this.widgetStorage
-      .save(widgets, toRemove, this.dashboardId())
+      .save(modifiedWidgets, addedWidgets, this.markedForRemoval, this.dashboardId())
       .pipe(take(1))
       .subscribe({
         next: (value: WidgetConfig[]) => {
@@ -303,7 +300,7 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
    * @param widgetInstanceConfig - The new widget configuration.
    */
   addWidgetInstance(widgetInstanceConfig: Omit<WidgetConfig, 'id'>): void {
-    const id = `${NEW_WIDGET_PREFIX}${idCounter++}`;
+    const id = this.widgetIdProvider.generateWidgetId(widgetInstanceConfig, this.dashboardId());
     const newWidget: WidgetConfig = { ...widgetInstanceConfig, id };
     const nextWidgets = this.updateWidgetPositions([
       ...this.visibleWidgetInstances$.value,
@@ -324,7 +321,9 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
       widget => widget.id === widgetInstanceId
     );
     if (widgetToRemove) {
-      this.markedForRemoval.push(widgetToRemove);
+      if (!this.transientWidgetInstances.some(widget => widget.id === widgetToRemove.id)) {
+        this.markedForRemoval.push(widgetToRemove);
+      }
       let nextWidgets = this.visibleWidgetInstances$.value.filter(
         widget => widget.id !== widgetInstanceId
       );

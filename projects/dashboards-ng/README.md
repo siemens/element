@@ -184,6 +184,53 @@ The Angular component should export the template as the public attribute `footer
 @ViewChild('footer', { static: true }) footer?: TemplateRef<unknown>;
 ```
 
+### Widget instance ID generation
+
+Each widget instance on a dashboard requires a unique ID for identification and persistence. The library
+provides a flexible system for generating these IDs through the `SiWidgetIdProvider` abstract class.
+
+#### Default ID generation
+
+By default, the library uses `SiWidgetDefaultIdProvider`, which generates unique IDs using
+a RFC4122 version 4 UUID (e.g.,`'550e8400-e29b-41d4-a716-446655440000'`). This default implementation
+uses `crypto.randomUUID()` to ensure cryptographically secure uniqueness with 122 bits of entropy.
+
+#### Custom ID generation
+
+To implement custom ID generation logic (e.g., UUID-based, sequential or
+context-aware IDs), create a class that extends `SiWidgetIdProvider` and implement the
+`generateWidgetId` method:
+
+```ts
+import { Injectable } from '@angular/core';
+import { SiWidgetIdProvider } from '@siemens/dashboards-ng';
+
+@Injectable()
+export class CustomWidgetIdProvider extends SiWidgetIdProvider {
+  override generateWidgetId(widget: WidgetConfig, dashboardId?: string): string {
+    // Example: Create a composite ID from dashboard and widget type
+    const prefix = dashboardId ?? 'default';
+    const timestamp = Date.now();
+    return `${prefix}-${widget.widgetId}-${timestamp}`;
+  }
+}
+```
+
+#### Providing a custom ID provider
+
+To use your custom ID provider, register it in your application's providers:
+
+```ts
+// For standalone applications
+providers: [{ provide: SI_WIDGET_ID_PROVIDER, useClass: CustomWidgetIdProvider }];
+
+// For module-based applications
+@NgModule({
+  providers: [{ provide: SI_WIDGET_ID_PROVIDER, useClass: CustomWidgetIdProvider }]
+})
+export class AppModule {}
+```
+
 ### Dashboard persistence
 
 The library persists a dashboard configuration by the default `SiDefaultWidgetStorage` implementation
