@@ -72,7 +72,7 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 export class AppModule { }
 ```
 
-Add `gridstack` CSS files to you application by editing
+Add `gridstack` CSS files to your application by editing
 the `angular.json` file.
 
 ```json
