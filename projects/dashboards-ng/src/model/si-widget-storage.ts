@@ -4,9 +4,10 @@
  */
 import { inject, InjectionToken } from '@angular/core';
 import { MenuItem } from '@siemens/element-ng/common';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, from, Observable } from 'rxjs';
 
 import { DashboardToolbarItem } from './si-dashboard-toolbar.model';
+import { SI_WIDGET_ID_PROVIDER, SiWidgetDefaultIdProvider } from './si-widget-id-provider';
 import { WidgetConfig } from './widgets.model';
 
 /**
@@ -32,15 +33,22 @@ export abstract class SiWidgetStorage {
   abstract load(dashboardId?: string): Observable<WidgetConfig[]>;
 
   /**
-   * Saves the given widget configuration. Existing widgets have a `id`. New widgets have no `id`
+   * Saves the given widget configuration. Existing widgets have a `id`. New widgets have `id`
+   * generated through the `SiWidgetIdProvider.transientWidgetIdResolver` implementation
    * and it is in the responsibility of the implementor to set the ids of the new widgets. In addition,
    * the implementor needs to check if objects that have been available before are missing. These
    * widgets have been removed by the user. As a result of this method, the observables returned
    * by the `load()` method should emit the new widget config objects, before also returning them.
-   * @param widgets - The existing and new widget config objects to be saved.
+   * @param modifiedWidgets - The existing widget config objects to be saved.
+   * @param addedWidgets - The new widget config objects to be saved.
+   * @param removedWidgets - The widget config objects that have been removed.
+   * @param dashboardId - The id of the dashboard if present to allow dashboard specific storage.
+   * @returns An observable that emits the saved widget config objects with their ids.
    */
+
   abstract save(
-    widgets: (WidgetConfig | Omit<WidgetConfig, 'id'>)[],
+    modifiedWidgets: WidgetConfig[],
+    addedWidgets: WidgetConfig[],
     removedWidgets?: WidgetConfig[],
     dashboardId?: string
   ): Observable<WidgetConfig[]>;
@@ -85,6 +93,8 @@ export const DEFAULT_WIDGET_STORAGE_TOKEN = new InjectionToken<Storage>(
  */
 export class SiDefaultWidgetStorage extends SiWidgetStorage {
   storage: Storage;
+  private idProvider = inject(SI_WIDGET_ID_PROVIDER);
+  private defaultIdProvider = inject(SiWidgetDefaultIdProvider);
 
   private map = new Map<string, BehaviorSubject<WidgetConfig[]>>();
   private widgets?: BehaviorSubject<WidgetConfig[]>;
@@ -108,29 +118,46 @@ export class SiDefaultWidgetStorage extends SiWidgetStorage {
   }
 
   save(
-    widgets: (WidgetConfig | Omit<WidgetConfig, 'id'>)[],
+    modifiedWidgets: WidgetConfig[],
+    addedWidgets: WidgetConfig[],
     removedWidgets?: WidgetConfig[],
     dashboardId?: string
   ): Observable<WidgetConfig[]> {
-    const newWidgets = widgets.map(widget => {
-      if ((widget as WidgetConfig).id === undefined) {
-        return { ...widget, id: Math.random().toString(36).substring(2, 9) };
+    const resolvedAddedWidgets = addedWidgets.map(async widget => {
+      const id = this.idProvider.widgetIdResolver(widget, dashboardId);
+      if (typeof id === 'string') {
+        return { ...widget, id };
       } else {
-        return widget as WidgetConfig;
+        const resolvedId = await id
+          .then()
+          .catch(err => this.defaultIdProvider.widgetIdResolver(widget, dashboardId));
+        return { ...widget, id: resolvedId };
       }
     });
+
+    const newWidgets: Promise<WidgetConfig>[] = [
+      ...modifiedWidgets.map(w => Promise.resolve(w)),
+      ...resolvedAddedWidgets
+    ];
     this.update(newWidgets, dashboardId);
-    return of(newWidgets);
+    return from(
+      Promise.all(resolvedAddedWidgets).then(resolved => [...modifiedWidgets, ...resolved])
+    );
   }
 
-  protected update(newConfigs: WidgetConfig[], dashboardId?: string): void {
+  protected update(
+    newConfigs: WidgetConfig[] | Promise<WidgetConfig>[],
+    dashboardId?: string
+  ): void {
     const widgets$ = this.load(dashboardId) as BehaviorSubject<WidgetConfig[]>;
-    widgets$.next(newConfigs);
-    if (!dashboardId) {
-      this.storage.setItem(STORAGE_KEY, JSON.stringify(newConfigs));
-    } else {
-      this.storage.setItem(`${STORAGE_KEY}-${dashboardId}`, JSON.stringify(newConfigs));
-    }
+    Promise.all(newConfigs).then(widgetConfigs => {
+      widgets$.next(widgetConfigs);
+      if (!dashboardId) {
+        this.storage.setItem(STORAGE_KEY, JSON.stringify(widgetConfigs));
+      } else {
+        this.storage.setItem(`${STORAGE_KEY}-${dashboardId}`, JSON.stringify(widgetConfigs));
+      }
+    });
   }
 
   protected loadFromStorage(dashboardId?: string): WidgetConfig[] {
