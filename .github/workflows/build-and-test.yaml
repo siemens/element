@@ -24,7 +24,7 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0 # We need this for commit-lint
       - uses: actions/setup-node@v6
@@ -59,7 +59,7 @@ jobs:
     needs:
       - build
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: lts/krypton
@@ -94,7 +94,7 @@ jobs:
     needs:
       - test
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Download coverage reports
         uses: actions/download-artifact@v6
         with:
@@ -141,7 +141,7 @@ jobs:
     needs:
       - build
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: lts/krypton
@@ -176,7 +176,7 @@ jobs:
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
           apt install git-lfs
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           lfs: true
       - uses: actions/setup-node@v6
@@ -202,7 +202,7 @@ jobs:
     needs: [e2e]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: lts/krypton
@@ -225,7 +225,7 @@ jobs:
       - coverage
       - test
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: astral-sh/setup-uv@v7
       - uses: actions/download-artifact@v6
         with:
