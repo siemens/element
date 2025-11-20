@@ -117,12 +117,15 @@ export class AppWidgetStorage extends SiDefaultWidgetStorage implements SiWidget
   }
 
   override save(
-    widgets: (WidgetConfig | Omit<WidgetConfig, 'id'>)[],
-    removedWidgets?: WidgetConfig[] | undefined,
+    modifiedWidgets: WidgetConfig[],
+    addedWidgets: WidgetConfig[],
+    removedWidgets?: WidgetConfig[],
     dashboardId?: string | undefined
   ): Observable<WidgetConfig[]> {
     const milliseconds = navigator.webdriver ? 0 : Math.random() * 4000;
-    return super.save(widgets, removedWidgets, dashboardId).pipe(delay(milliseconds));
+    return super
+      .save(modifiedWidgets, addedWidgets, removedWidgets, dashboardId)
+      .pipe(delay(milliseconds));
   }
 
   override load(dashboardId?: string | undefined): Observable<WidgetConfig[]> {
