@@ -7,10 +7,16 @@ import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withHashLocation } from '@angular/router';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { Config, SI_DASHBOARD_CONFIGURATION, SI_WIDGET_STORE } from '@siemens/dashboards-ng';
+import {
+  Config,
+  SI_DASHBOARD_CONFIGURATION,
+  SI_WIDGET_ID_PROVIDER,
+  SI_WIDGET_STORE
+} from '@siemens/dashboards-ng';
 import { provideNgxTranslateForElement } from '@siemens/element-translate-ng/ngx-translate';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 
+import { AppWidgetIdProvider } from './app-widget-id-provider';
 import { AppWidgetStorage } from './app-widget-storage';
 import { routes } from './app.routes';
 
@@ -30,6 +36,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withHashLocation()),
     { provide: SI_WIDGET_STORE, useClass: AppWidgetStorage },
     { provide: SI_DASHBOARD_CONFIGURATION, useValue: config },
+    { provide: SI_WIDGET_ID_PROVIDER, useClass: AppWidgetIdProvider },
     importProvidersFrom(
       TranslateModule.forRoot({
         loader: {

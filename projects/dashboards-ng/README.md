@@ -184,6 +184,74 @@ The Angular component should export the template as the public attribute `footer
 @ViewChild('footer', { static: true }) footer?: TemplateRef<unknown>;
 ```
 
+### Widget instance ID generation
+
+Each widget instance on a dashboard requires a unique ID for identification and persistence. The library
+provides a flexible system for generating these IDs through the `SiWidgetIdProvider` abstract class.
+
+#### Default ID generation
+
+By default, the library uses `SiWidgetDefaultIdProvider`, which generates random alphanumeric IDs
+(e.g., `'k3j9x2m'`) for each new widget instance. This default implementation ensures uniqueness
+through randomization but doesn't provide predictable or meaningful IDs.
+
+#### Custom ID generation
+
+To implement custom ID generation logic (e.g., UUID-based, sequential, server-generated, or
+context-aware IDs), create a class that extends `SiWidgetIdProvider` and implement the
+`widgetIdResolver` method:
+
+```ts
+import { Injectable } from '@angular/core';
+import { SiWidgetIdProvider } from '@siemens/dashboards-ng';
+
+@Injectable()
+export class CustomWidgetIdProvider extends SiWidgetIdProvider {
+  override widgetIdResolver(widgetId: string, dashboardId?: string): string | Promise<string> {
+    // Example: Create a composite ID from dashboard and widget type
+    const prefix = dashboardId ?? 'default';
+    const timestamp = Date.now();
+    return `${prefix}-${widgetId}-${timestamp}`;
+  }
+}
+```
+
+For asynchronous ID generation (e.g., fetching from a backend service):
+
+```ts
+import { firstValueFrom } from 'rxjs';
+
+@Injectable()
+export class ServerWidgetIdProvider extends SiWidgetIdProvider {
+  private http = inject(HttpClient);
+
+  override async widgetIdResolver(widgetId: string, dashboardId?: string): Promise<string> {
+    const response = await firstValueFrom(
+      this.http.post<{ id: string }>('/api/widgets/generate-id', { widgetId, dashboardId })
+    );
+    return response.id;
+  }
+}
+```
+
+#### Providing a custom ID provider
+
+To use your custom ID provider, register it in your application's providers:
+
+```ts
+// For standalone applications
+providers: [{ provide: SI_WIDGET_ID_PROVIDER, useClass: CustomWidgetIdProvider }];
+
+// For module-based applications
+@NgModule({
+  providers: [{ provide: SI_WIDGET_ID_PROVIDER, useClass: CustomWidgetIdProvider }]
+})
+export class AppModule {}
+```
+
+Note: If the custom ID provider’s promise rejects, the system automatically falls back
+to the default random ID generation to ensure the widget can still be added to the dashboard.
+
 ### Dashboard persistence
 
 The library persists a dashboard configuration by the default `SiDefaultWidgetStorage` implementation

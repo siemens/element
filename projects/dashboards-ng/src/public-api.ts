@@ -12,6 +12,7 @@ export * from './model/gridstack.model';
 export * from './model/si-widget-storage';
 export * from './model/widgets.model';
 export * from './model/si-dashboard-toolbar.model';
+export * from './model/si-widget-id-provider';
 export * from './widget-loader';
 
 export * from '@siemens/dashboards-ng/translate';

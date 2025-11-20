@@ -4,9 +4,10 @@
  */
 import { inject, InjectionToken } from '@angular/core';
 import { MenuItem } from '@siemens/element-ng/common';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, from, Observable } from 'rxjs';
 
 import { DashboardToolbarItem } from './si-dashboard-toolbar.model';
+import { SI_WIDGET_ID_PROVIDER, SiWidgetDefaultIdProvider } from './si-widget-id-provider';
 import { WidgetConfig } from './widgets.model';
 
 /**
@@ -85,6 +86,8 @@ export const DEFAULT_WIDGET_STORAGE_TOKEN = new InjectionToken<Storage>(
  */
 export class SiDefaultWidgetStorage extends SiWidgetStorage {
   storage: Storage;
+  private idProvider = inject(SI_WIDGET_ID_PROVIDER);
+  private defaultIdProvider = inject(SiWidgetDefaultIdProvider);
 
   private map = new Map<string, BehaviorSubject<WidgetConfig[]>>();
   private widgets?: BehaviorSubject<WidgetConfig[]>;
@@ -112,25 +115,39 @@ export class SiDefaultWidgetStorage extends SiWidgetStorage {
     removedWidgets?: WidgetConfig[],
     dashboardId?: string
   ): Observable<WidgetConfig[]> {
-    const newWidgets = widgets.map(widget => {
+    const newWidgets = widgets.map(async widget => {
       if ((widget as WidgetConfig).id === undefined) {
-        return { ...widget, id: Math.random().toString(36).substring(2, 9) };
+        const id = this.idProvider.widgetIdResolver(widget.widgetId, dashboardId);
+        if (typeof id === 'string') {
+          return { ...widget, id };
+        } else {
+          const resolvedId = await id
+            .then()
+            .catch(err => this.defaultIdProvider.widgetIdResolver(widget.widgetId, dashboardId));
+          return { ...widget, id: resolvedId };
+        }
       } else {
         return widget as WidgetConfig;
       }
     });
+
     this.update(newWidgets, dashboardId);
-    return of(newWidgets);
+    return from(Promise.all(newWidgets));
   }
 
-  protected update(newConfigs: WidgetConfig[], dashboardId?: string): void {
+  protected update(
+    newConfigs: WidgetConfig[] | Promise<WidgetConfig>[],
+    dashboardId?: string
+  ): void {
     const widgets$ = this.load(dashboardId) as BehaviorSubject<WidgetConfig[]>;
-    widgets$.next(newConfigs);
-    if (!dashboardId) {
-      this.storage.setItem(STORAGE_KEY, JSON.stringify(newConfigs));
-    } else {
-      this.storage.setItem(`${STORAGE_KEY}-${dashboardId}`, JSON.stringify(newConfigs));
-    }
+    Promise.all(newConfigs).then(widgetConfigs => {
+      widgets$.next(widgetConfigs);
+      if (!dashboardId) {
+        this.storage.setItem(STORAGE_KEY, JSON.stringify(widgetConfigs));
+      } else {
+        this.storage.setItem(`${STORAGE_KEY}-${dashboardId}`, JSON.stringify(widgetConfigs));
+      }
+    });
   }
 
   protected loadFromStorage(dashboardId?: string): WidgetConfig[] {
