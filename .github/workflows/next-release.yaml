@@ -12,7 +12,7 @@ jobs:
   update-next:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           ref: next # IMPORTANT! We ignore the actual branch. Enforcing the next branch for next releases.
           fetch-depth: 0 # semantic-release needs this
@@ -38,7 +38,7 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           ref: next # IMPORTANT! We ignore the actual branch. Enforcing the next branch for next releases.
           fetch-depth: 0 # semantic-release needs this
