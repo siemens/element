@@ -42,6 +42,12 @@ export class SiMicrochartLineComponent {
    */
   readonly showMarkers = input<boolean>(false);
   /**
+   * Show area under the line
+   *
+   * @defaultValue false
+   */
+  readonly showArea = input<boolean>(false);
+  /**
    * Line width
    *
    * @defaultValue 2
@@ -76,6 +82,24 @@ export class SiMicrochartLineComponent {
     }
     return this.mapToCoordinates(series.values);
   });
+
+  protected readonly areaPath = computed(() => {
+    const series = this.series();
+    if (!series || series.values.length < 2) {
+      return '';
+    }
+    const points = this.mapToCoordinates(series.values);
+
+    const pathParts = [`M ${points[0].x} ${this.height()}`];
+    points.forEach(point => {
+      pathParts.push(`L ${point.x} ${point.y}`);
+    });
+    pathParts.push(`L ${points[points.length - 1].x} ${this.height()} Z`);
+
+    return pathParts.join(' ');
+  });
+
+  protected readonly gradientId = `gradient-line-id`;
 
   private mapToCoordinates(values: number[]): Coordinate[] {
     const max = Math.max(...values);
