@@ -81,12 +81,6 @@
         "axe-html-reporter",
         "mcr.microsoft.com/playwright"
       ]
-    },
-    {
-      description: ["Node LTS gitlab-ci update"],
-      matchPackageNames: ["node"],
-      matchDatasources: ["docker"],
-      enabled: true
     }
   ]
 }
