@@ -35,7 +35,7 @@ import {
   SiLivePreviewModule,
   SiLivePreviewRoutingModule
 } from '@siemens/live-preview';
-import { provideElementAgGridConfig } from 'projects/element-ng/ag-grid/provider';
+import { provideElementTheme } from 'projects/element-ng/ag-grid/provider';
 import { lastValueFrom, Observable, take } from 'rxjs';
 
 import { BundlerTranslateLoader } from './bundler-translate-loader';
@@ -158,6 +158,6 @@ export const APP_CONFIG: ApplicationConfig = {
     provideSiDatatableConfig(),
     provideIconConfig({ disableSvgIcons: false }),
     provideSiUiState(),
-    provideElementAgGridConfig()
+    provideElementTheme()
   ]
 };

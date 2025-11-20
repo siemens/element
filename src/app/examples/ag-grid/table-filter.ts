@@ -15,6 +15,7 @@ import { sampleRowData } from './mock-data';
     style="width: 100%; height: 100%;"
     [columnDefs]="colDefs"
     [defaultColDef]="defaultColDef"
+    [theme]=""
     [rowData]="rowData"
     [gridOptions]="{ headerHeight: 48 }"
     (gridReady)="onGridReady($event)"
