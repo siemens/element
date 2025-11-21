@@ -35,10 +35,6 @@ export interface TourStep extends TourStepCommonOptions {
   /** The element, the step should be attached to on the page. */
   attachTo?: {
     element: string | HTMLElement | (() => string | HTMLElement);
-    /**
-     * @deprecated this has no effect, position is automatic
-     */
-    on?: ModalPosition;
   };
 }
 
@@ -47,21 +43,3 @@ export interface TourOptions {
   /** Default options applied to all tour steps. */
   defaultStepOptions?: TourStepCommonOptions;
 }
-
-/**
- * The position of the modal dialog with respect to the highlighted element.
- * @deprecated this has no effect, position is automatic
- */
-export type ModalPosition =
-  | 'top'
-  | 'top-start'
-  | 'top-end'
-  | 'bottom'
-  | 'bottom-start'
-  | 'bottom-end'
-  | 'right'
-  | 'right-start'
-  | 'right-end'
-  | 'left'
-  | 'left-start'
-  | 'left-end';
