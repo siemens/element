@@ -1,0 +1,73 @@
+<!--[style]="'https://demotiles.maplibre.org/style.json'" -->
+<mgl-map
+  class="h-100"
+  [style]="'https://api.maptiler.com/maps/voyager/style.json?key=6JSx3ZFRWimxd6ixzKAg'"
+  [zoom]="[5]"
+  [center]="[15, 44]"
+  [canvasContextAttributes]="{ preserveDrawingBuffer: true }"
+>
+  <mgl-control mglNavigation />
+  <mgl-image id="marker-icon" url="assets/default-marker-icon.svg" />
+  <mgl-geojson-source
+    id="cluster-source"
+    [data]="geoJson()"
+    [cluster]="true"
+    [clusterMaxZoom]="14"
+    [clusterRadius]="50"
+  />
+  <mgl-layer
+    id="clusters"
+    type="circle"
+    source="cluster-source"
+    [filter]="['has', 'point_count']"
+    [paint]="{
+      'circle-color': {
+        property: 'point_count',
+        type: 'interval',
+        stops: [
+          [0, '#51bbd6'],
+          [100, '#f1f075'],
+          [750, '#f28cb1']
+        ]
+      },
+      'circle-radius': {
+        property: 'point_count',
+        type: 'interval',
+        stops: [
+          [0, 20],
+          [100, 30],
+          [750, 40]
+        ]
+      }
+    }"
+  />
+  <mgl-layer
+    id="cluster-count"
+    type="symbol"
+    source="cluster-source"
+    [filter]="['has', 'point_count']"
+    [layout]="{
+      'text-field': '{point_count_abbreviated}',
+      'text-size': 12
+    }"
+  />
+  <mgl-layer
+    id="unclustered-point"
+    type="symbol"
+    source="cluster-source"
+    [filter]="['!has', 'point_count']"
+    [layout]="{
+      'icon-image': 'marker-icon',
+      'icon-size': 1
+    }"
+  />
+</mgl-map>
+<div class="card mt-5 e2e-ignore">
+  <div class="card-body">
+    <button type="button" class="btn btn-secondary me-4" (click)="refresh()">
+      Refresh points
+    </button>
+    <button type="button" class="btn btn-secondary me-4" (click)="select()">Select point</button>
+    <button type="button" class="btn btn-secondary me-4" (click)="clear()">Clear map</button>
+  </div>
+</div>
