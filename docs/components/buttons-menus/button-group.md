@@ -98,3 +98,124 @@ The button group component is inherently horizontal and cannot be wrapped or sta
 Alternatively, actions can be collapsed under a menu or replaced with a [select](../forms-inputs/select.md),
 [radio](../forms-inputs/radio.md), or [checkboxes](../forms-inputs/checkbox.md) component,
 depending on the interaction type.
+
+## Code ---
+
+Button groups are created using CSS classes. The button group component is CSS-only and does not require any Angular components.
+
+### Usage
+
+Wrap buttons in a `btn-group` container with the appropriate `role` and `aria-label` attributes for accessibility.
+
+```html
+<div class="btn-group" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-primary">Left</button>
+  <button type="button" class="btn btn-primary">Middle</button>
+  <button type="button" class="btn btn-primary">Right</button>
+</div>
+```
+
+### Basic action button groups
+
+<si-docs-component example="buttons/button-groups" height="400"></si-docs-component>
+
+### Button group sizes
+
+Button groups support three sizes: small (`btn-group-sm`), default, and large (`btn-group-lg`).
+
+```html
+<!-- Large group -->
+<div class="btn-group btn-group-lg" role="group" aria-label="Large group">
+  <button type="button" class="btn btn-lg btn-primary">Large</button>
+  <button type="button" class="btn btn-lg btn-primary">Group</button>
+</div>
+
+<!-- Default group -->
+<div class="btn-group" role="group" aria-label="Default group">
+  <button type="button" class="btn btn-primary">Default</button>
+  <button type="button" class="btn btn-primary">Group</button>
+</div>
+
+<!-- Small group -->
+<div class="btn-group btn-group-sm" role="group" aria-label="Small group">
+  <button type="button" class="btn btn-sm btn-primary">Small</button>
+  <button type="button" class="btn btn-sm btn-primary">Group</button>
+</div>
+```
+
+### Icon-only buttons
+
+For icon-only button groups, use the `btn-icon` class along with appropriate `aria-label` attributes.
+
+```html
+<div class="btn-group" role="group" aria-label="Icon button group">
+  <button type="button" class="btn btn-icon btn-primary" aria-label="Edit">
+    <i class="icon element-edit"></i>
+  </button>
+  <button type="button" class="btn btn-icon btn-primary" aria-label="Copy">
+    <i class="icon element-copy"></i>
+  </button>
+  <button type="button" class="btn btn-icon btn-primary" aria-label="Delete">
+    <i class="icon element-delete"></i>
+  </button>
+</div>
+```
+
+### Split button
+
+A split button combines a primary action with a dropdown menu of related options.
+
+<si-docs-component example="buttons/split-button" height="300"></si-docs-component>
+
+```html
+<div class="btn-group" role="group" aria-label="Split button">
+  <button type="button" class="btn btn-primary">
+    <i class="icon element-download"></i>
+    Download
+  </button>
+  <button
+    type="button"
+    class="btn btn-primary btn-icon dropdown-toggle"
+    aria-label="Dropdown toggle"
+    [cdkMenuTriggerFor]="dropdownMenu"
+  >
+    <i class="dropdown-caret icon element-down-2"></i>
+  </button>
+</div>
+```
+
+### Selection button
+
+For selection-based button groups that represent different states or views, use radio buttons or checkboxes with button styling.
+
+<si-docs-component example="buttons/selection-buttons" height="350"></si-docs-component>
+
+**Single-select:**
+
+```html
+<div class="btn-group" role="group" aria-label="View selection">
+  <input type="radio" class="btn-check" name="view" id="view-all" checked />
+  <label class="btn" for="view-all">All</label>
+
+  <input type="radio" class="btn-check" name="view" id="view-read" />
+  <label class="btn" for="view-read">Read</label>
+
+  <input type="radio" class="btn-check" name="view" id="view-unread" />
+  <label class="btn" for="view-unread">Unread</label>
+</div>
+```
+
+**Multi-select:**
+
+```html
+<div class="btn-group" role="group" aria-label="Filter options">
+  <input type="checkbox" class="btn-check" id="filter-temp" />
+  <label class="btn" for="filter-temp">Temperature</label>
+
+  <input type="checkbox" class="btn-check" id="filter-pressure" />
+  <label class="btn" for="filter-pressure">Pressure</label>
+
+  <input type="checkbox" class="btn-check" id="filter-voltage" />
+  <label class="btn" for="filter-voltage">Voltage</label>
+</div>
+```
