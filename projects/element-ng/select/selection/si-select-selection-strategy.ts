@@ -8,10 +8,11 @@ import {
   Directive,
   inject,
   input,
-  Input,
+  OnChanges,
   output,
   signal,
-  Signal
+  Signal,
+  SimpleChanges
 } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 
@@ -28,7 +29,9 @@ import {
     '[class.disabled]': 'disabled()'
   }
 })
-export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> implements ControlValueAccessor {
+export abstract class SiSelectSelectionStrategy<T, IV = T | T[]>
+  implements ControlValueAccessor, OnChanges
+{
   /**
    * Whether the select input is disabled.
    *
@@ -39,10 +42,9 @@ export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> implements Cont
 
   /**
    * The selected value(s).
+   * @defaultValue undefined
    */
-  @Input() set value(value: IV | undefined) {
-    this.updateFromInput(this.toArrayValue(value));
-  }
+  readonly value = input<IV | undefined>(undefined);
 
   /** Emitted when the selection is changed */
   readonly valueChange = output<IV>();
@@ -71,6 +73,13 @@ export abstract class SiSelectSelectionStrategy<T, IV = T | T[]> implements Cont
   protected onChange: (_: any) => void = () => {};
   private readonly disabledNgControl = signal(false);
   private readonly selectOptions = inject<SiSelectOptionsStrategy<T>>(SI_SELECT_OPTIONS_STRATEGY);
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.value) {
+      // Don't use effect here to avoid cyclic calls
+      this.updateFromInput(this.toArrayValue(changes.value.currentValue));
+    }
+  }
 
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
