@@ -7,7 +7,7 @@ indicators such as metrics, trends and other insights.
 ## Usage ---
 
 The purpose of a dashboard is helping users to monitor, measure and analyze
-relevant data from different sources in a *at-a-glance* fashion.
+relevant data from different sources in a _at-a-glance_ fashion.
 
 They provide a quick and easy way to track performance metrics and identify
 areas for improvement, enabling users to make informed decisions based on
@@ -32,7 +32,7 @@ information that need to be displayed.
   most recent information.
 - Use consistent units throughout the dashboard to ensure that the data is
   easily comparable among itself.
-- Use either *global* (affecting all widgets) or *local* (affecting only one
+- Use either _global_ (affecting all widgets) or _local_ (affecting only one
   widget) filters, not both simultaneously.
 
 ## Design ---

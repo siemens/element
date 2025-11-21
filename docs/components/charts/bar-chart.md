@@ -1,7 +1,7 @@
 # Bar chart
 
 Shows the differences or similarities between values. Bar chart data answers the
-question of "*how many?*" in each category.
+question of "_how many?_" in each category.
 
 ## Usage ---
 
@@ -52,6 +52,7 @@ understand what relationship each part has with the total amount.
 ### Usage
 
 ??? info "Required Packages"
+
     - [echarts](https://www.npmjs.com/package/echarts)
 
 ```ts

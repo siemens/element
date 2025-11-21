@@ -23,7 +23,7 @@ to meet multiple goals:
 - **Legal information** Necessary legal artifacts must be provided to the user.
 - **Market Communication** (MarCom): The landing page must provide a (visual)
   bridge to the marketing material of a product.
-- **DevOps information**  The landing page shall inform about any product
+- **DevOps information** The landing page shall inform about any product
   usage interruptive events as planned maintenance activities.
 
 Covering those need solely for large screen might lead to overloaded content.
@@ -31,7 +31,7 @@ The design is therefore done using the **mobile first** approach.
 
 ![Landing page](images/landing-page.png)
 
-> 1. Brand logo, 2. Language selector, 3. Marketing image, 4. Product info, 5.
+> \1. Brand logo, 2. Language selector, 3. Marketing image, 4. Product info, 5.
 > Marketing claim (Optional), 6. Functional UI elements, 7. Registration
 > (Optional), 8. Additional legal info, 9. Footer with version (optional), copyright and legal links
 
@@ -39,7 +39,7 @@ The design is therefore done using the **mobile first** approach.
 
 #### Two-step login
 
-The *two step login* pattern should be used by default.
+The _two step login_ pattern should be used by default.
 
 ![Landing page - Login 2 steps](images/landing-page-login-2-step.png)
 
@@ -47,14 +47,14 @@ The user interaction is done in the following 2 steps:
 
 1. **User name:** The user name has to be provided for selecting the correct next
    step based on the account type.
-     - Company OpenID is registered (e.g. `@example.com`): The user is forwarded
-       to the company OpenID environment (e.g. `ExampleORG`).
-     - User name is registered as personal OpenID: The user is forwarded ot the
-       registered (fallback) OpenID environment.
-     - Role based or LDAP account: The UI shows a password sign-in step.
-     - The user can register a new account (optional).
+   - Company OpenID is registered (e.g. `@example.com`): The user is forwarded
+     to the company OpenID environment (e.g. `ExampleORG`).
+   - User name is registered as personal OpenID: The user is forwarded ot the
+     registered (fallback) OpenID environment.
+   - Role based or LDAP account: The UI shows a password sign-in step.
+   - The user can register a new account (optional).
 2. **Password** or **PKI card:** User provides his credentials according the
-   guidance on the second step. The screen supports the "*Forgot password*" use
+   guidance on the second step. The screen supports the "_Forgot password_" use
    case.
 
 **Important:** Users should not be informed, if a user name does not exists, if
@@ -81,7 +81,7 @@ message must be along the lines of `Wrong credentials`.
 
 ![Landing page - Login 1 step notifications](images/landing-page-login-1-step-notifications.png)
 
-The *two step login* pattern should be used to provide an uniform experience.
+The _two step login_ pattern should be used to provide an uniform experience.
 
 #### Button forwarding login (deprecated)
 
@@ -89,7 +89,7 @@ The single button approach works for a single OpenID Connect provider only.
 
 ![Landing page - Button (deprecated)](images/landing-page-login-button.png)
 
-The *two step login* pattern should be used to provide an uniform experience.
+The _two step login_ pattern should be used to provide an uniform experience.
 This enables support for multiple OpenID Connect providers, LDAP and Role Based
 accounts within the same product.
 
@@ -174,6 +174,7 @@ A custom background image needs to meet some basic criteria to make sure it look
   (the cwebp tool can be downloaded [here](https://developers.google.com/speed/webp/download))
 
 !!! tip "Testing Required"
+
     Every image is different and testing of all popular screen sizes is crucial.
 
 <si-docs-component example="si-landing-page/si-landing-page-custom" height="500"></si-docs-component>

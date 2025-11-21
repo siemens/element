@@ -26,9 +26,9 @@ An info page consists of the following elements:
 
 1. **Image**: The image can be an icon, status icon, or illustration that is semantically associated with the current view. The icon's color should reflect the severity of the message.
 2. **Title**: A short and concise title to explain the topic. A simple wording should be used.
-3. **Copy text**: A more detailed explanation, outlining the reasoning for it and how a user can resolve it (*optional*).
-4. **Instructions**: A detailed instruction on how a user can resolve it, or explanation on what to do next (*optional*).
-5. **Actions**: Allows the user to take actions to resolve the issue (*optional*).
+3. **Copy text**: A more detailed explanation, outlining the reasoning for it and how a user can resolve it (_optional_).
+4. **Instructions**: A detailed instruction on how a user can resolve it, or explanation on what to do next (_optional_).
+5. **Actions**: Allows the user to take actions to resolve the issue (_optional_).
 
 ## Code ---
 

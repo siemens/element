@@ -23,7 +23,7 @@ size.
 
 - Respect the typographic scale order for consistent and hierarchical design.
 - Consider the purpose and context of the text when selecting a type style.
-Headings, subheadings, and body text each serve distinct functions and should be chosen accordingly.
+  Headings, subheadings, and body text each serve distinct functions and should be chosen accordingly.
 - Combine font weight, size, and color to establish hierarchy, utilizing lighter colors
   or smaller font sizes to de-emphasize secondary content.
 - Avoid style changes like bold and italic in the middle of a paragraph.
@@ -42,13 +42,13 @@ Body text is used for the main content, often following a heading or as part of 
 
 ![Body fonts usage](images/typography-body-usage.png)
 
-| Style      | Font size | Line height | Font weight  |
-|------------|-----------|-------------|--------------|
-| `body-lg`  | 16 px     | 20 px       | 400 / Roman  |
-| `body`     | 14 px     | 16 px       | 400 / Roman  |
-| `caption`  | 12 px     | 16 px       | 400 / Roman  |
+| Style     | Font size | Line height | Font weight |
+| --------- | --------- | ----------- | ----------- |
+| `body-lg` | 16 px     | 20 px       | 400 / Roman |
+| `body`    | 14 px     | 16 px       | 400 / Roman |
+| `caption` | 12 px     | 16 px       | 400 / Roman |
 
-All body styles are also available in **bold** and *italic*.
+All body styles are also available in **bold** and _italic_.
 Bold is used to add emphasis or draw attention to key information, and is also applied in specific
 UI elements, such as button labels, or highlighted values in tables and lists.
 
@@ -66,7 +66,7 @@ They are defined semantically from `h1` to `h6`.
 - `h5/h6` share the same visual style, used for smaller content blocks like cards or tertiary titles.
 
 | Style     | Font size | Line height | Font weight     |
-|-----------|-----------|-------------|-----------------|
+| --------- | --------- | ----------- | --------------- |
 | `h1-bold` | 30 px     | 36 px       | 700 / Bold      |
 | `h1`      | 30 px     | 36 px       | 400 / Roman     |
 | `h2`      | 20 px     | 24 px       | 600 / Semi Bold |
@@ -107,12 +107,12 @@ They should be used sparingly to maintain clarity.
 
 ![Display fonts usage](images/typography-display-usage.png)
 
-| Style         | Font size | Line height | Font weight     |
-|---------------|-----------|-------------|-----------------|
-| `display-xl`  | 56 px     | 72 px       | 400 / Roman     |
-| `display-lg`  | 48 px     | 64 px       | 400 / Roman     |
-| `display-bold`| 40 px     | 52 px       | 700 / Bold      |
-| `display`     | 40 px     | 52 px       | 400 / Roman     |
+| Style          | Font size | Line height | Font weight |
+| -------------- | --------- | ----------- | ----------- |
+| `display-xl`   | 56 px     | 72 px       | 400 / Roman |
+| `display-lg`   | 48 px     | 64 px       | 400 / Roman |
+| `display-bold` | 40 px     | 52 px       | 700 / Bold  |
+| `display`      | 40 px     | 52 px       | 400 / Roman |
 
 ### Using the bounding box
 
@@ -156,8 +156,8 @@ Implementation of typography is done via [Bootstrap's typography system](https:/
 Most scenarios allow you to use the HTML semantic (e.g. `h1`, `p`) directly, all the required
 styles are set by default.
 
-In case you can't use the HTML semantic (*e.g. apply a text style to a non*
-*associated HTML tag*) or you have to use a type style without matching
+In case you can't use the HTML semantic (_e.g. apply a text style to a non_
+_associated HTML tag_) or you have to use a type style without matching
 semantic, you can use the `.si-` text classes.
 
 <si-docs-component example="typography/type-styles" height="300"></si-docs-component>
@@ -174,7 +174,7 @@ mapped to the related Bootstrap classes.
 All font-sizes, line-heights and font-weights are specified as SASS
 variables, which can be used if required. The variables come in the form of
 `$si-font-size-[name]`, `$si-line-height-[name]`, `$si-font-weight-[name]` and
-are defined in [_typography.scss](https://github.com/siemens/element/tree/main/projects/element-theme/src/styles/variables/_typography.scss).
+are defined in [\_typography.scss](https://github.com/siemens/element/tree/main/projects/element-theme/src/styles/variables/_typography.scss).
 
 ```scss
 @use '@siemens/element-theme/src/styles/variables';
@@ -212,7 +212,7 @@ color: variables.$element-status-danger-contrast;
 background-color: variables.$element-status-danger;
 ```
 
-See [_semantic-tokens](https://github.com/siemens/element/tree/main/projects/element-theme/src/styles/variables/_semantic-tokens.scss).
+See [\_semantic-tokens](https://github.com/siemens/element/tree/main/projects/element-theme/src/styles/variables/_semantic-tokens.scss).
 
 ### Bootstrap typography utilities
 

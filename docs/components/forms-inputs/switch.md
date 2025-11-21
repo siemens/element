@@ -45,7 +45,7 @@ A checkbox is turned into a switch by applying the `form-switch` class to the `s
 
 ```html
 <si-form-item label="Switch" class="form-switch">
-  <input type="checkbox" class="form-check-input" [formControl]="control">
+  <input type="checkbox" class="form-check-input" [formControl]="control" />
 </si-form-item>
 ```
 
@@ -60,10 +60,10 @@ It will ensure a correct layout and apply the necessary accessibility attributes
 ```html
 <si-form-fieldset label="Group">
   <si-form-item label="Option 1" class="form-switch">
-    <input type="checkbox" class="form-check-input" [formControl]="control1">
+    <input type="checkbox" class="form-check-input" [formControl]="control1" />
   </si-form-item>
   <si-form-item label="Option 2">
-    <input type="checkbox" class="form-check-input" [formControl]="control2">
+    <input type="checkbox" class="form-check-input" [formControl]="control2" />
   </si-form-item>
 </si-form-fieldset>
 ```
@@ -74,10 +74,10 @@ To display them inline, apply the `form-check-inline` class to the `si-form-item
 ```html
 <si-form-fieldset label="Group Inline">
   <si-form-item label="Option 1" class="form-check-inline form-switch">
-    <input type="checkbox" class="form-check-input" [formControl]="control1">
+    <input type="checkbox" class="form-check-input" [formControl]="control1" />
   </si-form-item>
   <si-form-item label="Option 2" class="form-check-inline form-switch">
-    <input type="checkbox" class="form-check-input" [formControl]="control2">
+    <input type="checkbox" class="form-check-input" [formControl]="control2" />
   </si-form-item>
 </si-form-fieldset>
 ```
@@ -89,7 +89,7 @@ a switch with native HTML elements only:
 
 ```html
 <div class="form-check form-switch">
-  <input type="checkbox" id="check-id" class="form-check-input">
+  <input type="checkbox" id="check-id" class="form-check-input" />
   <label for="check-id" class="form-check-label">Switch</label>
 </div>
 ```

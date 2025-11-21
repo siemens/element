@@ -12,10 +12,10 @@ An empty state component consists of the following elements:
 
 1. **Icon**: The object icon associated with the current view.
 1. **Title**: A short and concise title to describe the state. A simple wording
-  should be used (e.g. `No devices`) and full sentences shall be avoided.
+   should be used (e.g. `No devices`) and full sentences shall be avoided.
 1. **Text**: A more detailed explanation of the state, outlining the reasoning
-  for it and how a user can resolve it (*optional*).
-1. **Actions**: Allows the user to take actions to resolve the issue (*optional*).
+   for it and how a user can resolve it (_optional_).
+1. **Actions**: Allows the user to take actions to resolve the issue (_optional_).
 
 ## Code ---
 

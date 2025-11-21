@@ -1,6 +1,7 @@
 # About
 
 [//]: # (This (including the ":") is needed for search because "about" is a stopword.)
+
 <!-- markdownlint-disable MD033-->
 <h2 style="display: none">About:</h2>
 <!-- markdownlint-emable MD033-->
@@ -55,33 +56,31 @@ The JSON based API supported by the about dialog is
 structured into three levels of endpoints:
 
 1. **Endpoint:** `/api/licenses/`
-    - **MIME Type**: `application/json`
-    - **Description**: Top-level index listing all subsystems
-    - **Result**:
-      ```json
-      [
-          { "name": "OS", "href": "/api/licenses/os/"},
-          { "name": "Dummy", "href": "/api/licenses/Dummy/"}
-      ]
-      ```
+   - **MIME Type**: `application/json`
+   - **Description**: Top-level index listing all subsystems
+   - **Result**:
+     ```json
+     [
+       { "name": "OS", "href": "/api/licenses/os/" },
+       { "name": "Dummy", "href": "/api/licenses/Dummy/" }
+     ]
+     ```
 
 2. **Endpoint:** `/api/licenses/<subsystem>`
-    - **MIME Type**: `application/json`
-    - **Description**: Subsystem-level index listing all components
-    - **Result**:
-      ```json
-      [
-          { "name": "boost 1.66", "href": "/api/licenses/os/boost_1.66.copyright"}
-      ]
-      ```
+   - **MIME Type**: `application/json`
+   - **Description**: Subsystem-level index listing all components
+   - **Result**:
+     ```json
+     [{ "name": "boost 1.66", "href": "/api/licenses/os/boost_1.66.copyright" }]
+     ```
 
 3. **Endpoint:** `/api/licenses/<subsystem>/<component>`
-    - **MIME Type**: `text/plain`
-    - **Description**: Literal content of the component’s copyright or acknowledgement file
-    - **Result**:
-      ```text
-      Boost copyright text
-      ```
+   - **MIME Type**: `text/plain`
+   - **Description**: Literal content of the component’s copyright or acknowledgement file
+   - **Result**:
+     ```text
+     Boost copyright text
+     ```
 
 ### License Text
 
@@ -92,7 +91,7 @@ plain text.
 
 ### License Introduction Text and API
 
-If your application requires showing a disclaimer in addition to the component 
+If your application requires showing a disclaimer in addition to the component
 licenses provided via API, you can combine the parameters `licenseInfo.text` and `licenseInfo.api`.
 
 <si-docs-component example="si-about/si-about-text-api" height="500"></si-docs-component>

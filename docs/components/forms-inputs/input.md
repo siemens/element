@@ -44,7 +44,7 @@ It supports different types of input formats like **text**, **number**, **passwo
 Precise labeling helps users understand what information to enter.
 
 - Keep labels short and clear (should not be wider than the input field).
-- A required field will be marked with an ***-asterisk**.
+- A required field will be marked with an **\*-asterisk**.
 - Labels can be placed above or left to the input.
 
 ![Input label](images/input-usage-label.png)
@@ -138,7 +138,7 @@ to the input field and specify the requirements which have to be fulfilled for a
 Utilize the output callback event [`(passwordStrengthChanged)`](./input.md#SiPasswordStrengthDirective_o) to get the current password strength.
 
 ```html
- <si-password-strength>
+<si-password-strength>
   <input
     id="password"
     type="password"

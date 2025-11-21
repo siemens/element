@@ -155,11 +155,11 @@ export const routes: Route[] = [
     path: 'test/sub-test',
     data: {
       /*
-      * In this scenario the automatic calculation of the route is broken because
-      * test/sub-test is handled as one UrlSegment. Therefore, only one breadcrumb
-      * link would be rendered. Providing the links manually solves this problem.
-      * It is not possible to define wildcards in the link names here.
-      */
+       * In this scenario the automatic calculation of the route is broken because
+       * test/sub-test is handled as one UrlSegment. Therefore, only one breadcrumb
+       * link would be rendered. Providing the links manually solves this problem.
+       * It is not possible to define wildcards in the link names here.
+       */
       siBreadcrumb: [
         { title: 'Test', link: '/test' },
         { title: 'Sub-Test', link: '/test/sub-test' }
@@ -201,12 +201,11 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class CustomBreadcrumbResolverService extends SiBreadcrumbDefaultResolverService {
-
   resolve(route: ActivatedRouteSnapshot): BreadcrumbItem[] | Observable<BreadcrumbItem[]> {
-    return super.resolve(route)
+    return super
+      .resolve(route)
       .map((link: BreadcrumbItem) => ({ ...link, title: rewriteName(link.name) }));
   }
-
 }
 ```
 

@@ -42,6 +42,7 @@ be your best choice.
 ### Usage
 
 ??? info "Required Packages"
+
     - [echarts](https://www.npmjs.com/package/echarts)
 
 ```ts

@@ -23,7 +23,7 @@ The **layout anatomy** describes the building blocks, areas and spacing of a pag
   that is related to the main content of a page and is specifically tailored to the current context or task.
 
 Each of these elements is **optional**, with the exception of the horizontal navigation which is a mandatory feature.
-Only use elements that are really needed. E.g. a vertical navigation with only one item does not make sense.  
+Only use elements that are really needed. E.g. a vertical navigation with only one item does not make sense.
 
 ### Horizontal spacing
 

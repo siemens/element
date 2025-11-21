@@ -22,12 +22,11 @@ which apply styles only when the viewport meets defined criteria.
 These breakpoints align with container widths in multiples of 12 and cover the most common device ranges,
 providing a consistent and flexible foundation for responsive design.
 
-| Class infix | Device target | Dimensions | Common use cases |
-|-------------|--------------|------------|------------------|
-| *None*      | Phones       | <576px     | Base styles for all devices (mobile-first) |
-| `sm`        | Large phones, small tablets | ≥576px | Landscape phones, small tablets |
-| `md`        | Tablets      | ≥768px     | Tablets, small laptops |
-| `lg`        | Small desktops | ≥992px   | Standard desktop monitors |
-| `xl`        | Large desktops | ≥1200px  | Large screens, high-res monitors |
-| `xxl`       | Extra large screens | ≥1400px | 4K displays, ultra-wide monitors |
-
+| Class infix | Device target               | Dimensions | Common use cases                           |
+| ----------- | --------------------------- | ---------- | ------------------------------------------ |
+| _None_      | Phones                      | <576px     | Base styles for all devices (mobile-first) |
+| `sm`        | Large phones, small tablets | ≥576px     | Landscape phones, small tablets            |
+| `md`        | Tablets                     | ≥768px     | Tablets, small laptops                     |
+| `lg`        | Small desktops              | ≥992px     | Standard desktop monitors                  |
+| `xl`        | Large desktops              | ≥1200px    | Large screens, high-res monitors           |
+| `xxl`       | Extra large screens         | ≥1400px    | 4K displays, ultra-wide monitors           |

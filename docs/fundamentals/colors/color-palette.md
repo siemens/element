@@ -8,14 +8,14 @@
 > that is not part of the Siemens branding. The default theme is not
 > documented.
 
-*Element* includes a variety of solid colors and gradients to ensure a
+_Element_ includes a variety of solid colors and gradients to ensure a
 consistent look is carried through any application.
 
-Seven color families comprise the complete theme. The *Deep Blue / Gray* family is most
+Seven color families comprise the complete theme. The _Deep Blue / Gray_ family is most
 prevalent, making use of subtle shades for content organization.
 
-The *Teal* family serves as the brand and primary action color. Other contextual
-colors include *Success*, *Warning* and *Danger*.
+The _Teal_ family serves as the brand and primary action color. Other contextual
+colors include _Success_, _Warning_ and _Danger_.
 
 Only colors from these families should be used for design and implementation
 work.
@@ -30,7 +30,7 @@ used as values for color tokens.
 ## Deep blue / gray
 
 | Sample                                                       | Color Variable               | Color Code |
-|--------------------------------------------------------------|------------------------------|------------|
+| ------------------------------------------------------------ | ---------------------------- | ---------- |
 | <si-docs-color style="background: #FFFFFF;"></si-docs-color> | `$siemens-white`             | `#FFFFFF`  |
 | <si-docs-color style="background: #ebebee;"></si-docs-color> | `$siemens-deep-blue-50`      | `#EBEBEE`  |
 | <si-docs-color style="background: #e5e5e9;"></si-docs-color> | `$siemens-deep-blue-100`     | `#E5E5E9`  |
@@ -56,7 +56,7 @@ used as values for color tokens.
 ## Interactive
 
 | Sample                                                       | Color Variable                    | Color Code |
-|--------------------------------------------------------------|-----------------------------------|------------|
+| ------------------------------------------------------------ | --------------------------------- | ---------- |
 | <si-docs-color style="background: #e0f1f4;"></si-docs-color> | `$siemens-interactive-blue-100`   | `#E0F1F4`  |
 | <si-docs-color style="background: #73bac9;"></si-docs-color> | `$siemens-interactive-blue-300`   | `#73BAC9`  |
 | <si-docs-color style="background: #006B80;"></si-docs-color> | `$siemens-interactive-blue-500`   | `#006B80`  |
@@ -74,7 +74,7 @@ used as values for color tokens.
 ## Blue
 
 | Sample                                                       | Color Variable      | Color Code |
-|--------------------------------------------------------------|---------------------|------------|
+| ------------------------------------------------------------ | ------------------- | ---------- |
 | <si-docs-color style="background: #D2E2F7;"></si-docs-color> | `$siemens-blue-100` | `#D2E2F7`  |
 | <si-docs-color style="background: #81ADEB;"></si-docs-color> | `$siemens-blue-300` | `#81ADEB`  |
 | <si-docs-color style="background: #206ED9;"></si-docs-color> | `$siemens-blue-500` | `#206ED9`  |
@@ -84,7 +84,7 @@ used as values for color tokens.
 ## Green
 
 | Sample                                                       | Color Variable       | Color Code |
-|--------------------------------------------------------------|----------------------|------------|
+| ------------------------------------------------------------ | -------------------- | ---------- |
 | <si-docs-color style="background: #C1F2D6;"></si-docs-color> | `$siemens-green-100` | `#C1F2D6`  |
 | <si-docs-color style="background: #72E6A3;"></si-docs-color> | `$siemens-green-300` | `#72E6A3`  |
 | <si-docs-color style="background: #28BF66;"></si-docs-color> | `$siemens-green-500` | `#28BF66`  |
@@ -94,7 +94,7 @@ used as values for color tokens.
 ## Yellow
 
 | Sample                                                       | Color Variable        | Color Code |
-|--------------------------------------------------------------|-----------------------|------------|
+| ------------------------------------------------------------ | --------------------- | ---------- |
 | <si-docs-color style="background: #fff2ba;"></si-docs-color> | `$siemens-yellow-100` | `#FFF2BA`  |
 | <si-docs-color style="background: #ffd732;"></si-docs-color> | `$siemens-yellow-300` | `#FFD732`  |
 | <si-docs-color style="background: #edbf00;"></si-docs-color> | `$siemens-yellow-500` | `#EDBF00`  |
@@ -104,7 +104,7 @@ used as values for color tokens.
 ## Orange
 
 | Sample                                                       | Color Variable        | Color Code |
-|--------------------------------------------------------------|-----------------------|------------|
+| ------------------------------------------------------------ | --------------------- | ---------- |
 | <si-docs-color style="background: #fee1cc;"></si-docs-color> | `$siemens-orange-100` | `#FEE1CC`  |
 | <si-docs-color style="background: #ffba4a;"></si-docs-color> | `$siemens-orange-300` | `#FFBA4A`  |
 | <si-docs-color style="background: #ff9000;"></si-docs-color> | `$siemens-orange-500` | `#FF9000`  |
@@ -114,7 +114,7 @@ used as values for color tokens.
 ## Red
 
 | Sample                                                       | Color Variable     | Color Code |
-|--------------------------------------------------------------|--------------------|------------|
+| ------------------------------------------------------------ | ------------------ | ---------- |
 | <si-docs-color style="background: #fcccd7;"></si-docs-color> | `$siemens-red-100` | `#FCCCD7`  |
 | <si-docs-color style="background: #fe8389;"></si-docs-color> | `$siemens-red-300` | `#FE8389`  |
 | <si-docs-color style="background: #d72339;"></si-docs-color> | `$siemens-red-500` | `#D72339`  |
@@ -128,7 +128,7 @@ semantic color scheme. Those gradients are only used for special use cases and
 hence should not be used in other places.
 
 | Sample                                                                                                         | Color Variable                       | Color Code                                                                                  |
-|----------------------------------------------------------------------------------------------------------------|--------------------------------------|---------------------------------------------------------------------------------------------|
+| -------------------------------------------------------------------------------------------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------- |
 | <si-docs-color style="background: linear-gradient(114.59deg, #00ffb9 15.81%, #00cccc 84.42%)"></si-docs-color> | `$siemens-gradient-bold-dynamic`     | `linear-gradient(114.59deg, $siemens-bold-green 15.81%, $siemens-interactive-coral 84.42%)` |
 | <si-docs-color style="background: linear-gradient(180deg, #00ffb9 15.81%, #00cccc 84.42%)"></si-docs-color>    | `$siemens-gradient-bold-dynamic-90`  | `linear-gradient(180deg, $siemens-bold-green 15.81%, $siemens-interactive-coral 84.42%)`    |
 | <si-docs-color style="background: linear-gradient(180deg, #000028, #009999)"></si-docs-color>                  | `$siemens-gradient-deep-blue-petrol` | `linear-gradient(180deg, $siemens-deep-blue, $siemens-petrol)`                              |

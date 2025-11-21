@@ -26,7 +26,7 @@ Place them within a container that can use a background of `None`, `Base-0`, or 
 
 ![Summary chip construction](images/summary-chip-usage-construction.png)
 
-> 1. Category icon or composite icon (optional),  2. Label (optional),  3. Value (optional)
+> 1. Category icon or composite icon (optional), 2. Label (optional), 3. Value (optional)
 
 The summary chip can hold an icon or a composite icon representing a state.
 The icon must be self-explanatory since there is no label.

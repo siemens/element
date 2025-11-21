@@ -86,7 +86,7 @@ is a wrapper around a form control element that renders the associated label.
 
 ```html
 <si-form-item label="My form item">
-  <input [formControl]="angularControl" class="form-control">
+  <input [formControl]="angularControl" class="form-control" />
 </si-form-item>
 ```
 
@@ -106,7 +106,7 @@ setting form control states and feedback messages explicitly in the template:
 
 ```html
 <si-form-item label="Warning item">
-  <input class="form-control is-warning">
+  <input class="form-control is-warning" />
   <span class="warning-feedback">Attention, this is a Warning!</span>
 </si-form-item>
 ```
@@ -132,20 +132,19 @@ This enables applications to adjust existing messages and add new ones for custo
 For a standalone app:
 
 ```ts
-import {ApplicationConfig} from "@angular/core";
-import {provideFormValidationErrorMapper} from "@siemens/element-ng/form";
+import { ApplicationConfig } from '@angular/core';
+import { provideFormValidationErrorMapper } from '@siemens/element-ng/form';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideFormValidationErrorMapper(
-      {
-        maxlength: 'MY.CUSTOM.ERROR.MESSAGE.KEY', // when using ngx-translate one has access to the validation result as parameters (requiredLength and actualLength in this case)
-        minlength: ({ requiredLength }) => `This field must be at least ${requriredLength} characters long`,
-        myCustomError: ({ myCustomErrorResult }) => `My custom error message: ${myCustomErrorResult}`,
-      }
-    )
+    provideFormValidationErrorMapper({
+      maxlength: 'MY.CUSTOM.ERROR.MESSAGE.KEY', // when using ngx-translate one has access to the validation result as parameters (requiredLength and actualLength in this case)
+      minlength: ({ requiredLength }) =>
+        `This field must be at least ${requriredLength} characters long`,
+      myCustomError: ({ myCustomErrorResult }) => `My custom error message: ${myCustomErrorResult}`
+    })
   ]
-}
+};
 ```
 
 or for a module base app:
@@ -191,18 +190,18 @@ This is often required for radio inputs, but works for every other type as well.
 ```html
 <si-form-fieldset label="Radion options">
   <si-form-item label="Radio option A">
-    <input type="radio" class="form-check-input">
+    <input type="radio" class="form-check-input" />
   </si-form-item>
   <si-form-item label="Radio option B">
-    <input type="radio" class="form-check-input">
+    <input type="radio" class="form-check-input" />
   </si-form-item>
 </si-form-fieldset>
 ```
 
 ### Context help
 
-To provide contextual help within form items, use the `SiHelpButtonComponent`. 
-Add the `si-help-button` directive to a button placed inside the form item. 
+To provide contextual help within form items, use the `SiHelpButtonComponent`.
+Add the `si-help-button` directive to a button placed inside the form item.
 This allows you to display additional information or guidance related to the input field.
 
 ```html
@@ -214,7 +213,7 @@ This allows you to display additional information or guidance related to the inp
     siHelpContent="The context help description"
   >
   </button>
-  <input class="form-control" >
+  <input class="form-control" />
 </si-form-item>
 ```
 
@@ -228,7 +227,7 @@ import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/for
 import { Component } from '@angular/core';
 
 @Component({
-  providers: [{ provide: SI_FORM_ITEM_CONTROL, useExisting: CustomControlComponent}]
+  providers: [{ provide: SI_FORM_ITEM_CONTROL, useExisting: CustomControlComponent }]
 })
 export class CustomControlComponent implements SiFormItemControl {
   // Provide an automatically generated ID.
@@ -236,7 +235,6 @@ export class CustomControlComponent implements SiFormItemControl {
   // assign this ID to that element. Otherwise assign it to the host element.
   private static idCounter = 0;
   readonly id = `__app-custom-control-${CustomControlComponent.idCounter++}`;
-
 
   // Set this only if the custom-control is NOT an input, textarea or select.
   // It is required as the [for] attribute of an label only works for native inputs.
@@ -260,14 +258,14 @@ The example below shows how to create a wrapped input with an action icon:
 
 ```html
 <div class="form-control">
-  <input class="my-inner-input">
+  <input class="my-inner-input" />
   <i class="my-action-icon element-arrow-down icon"></i>
 </div>
 ```
 
 ```scss
 .form-control {
-  --si-action-icon-offset: 24px // size of my-action-icon
+  --si-action-icon-offset: 24px; // size of my-action-icon
 }
 
 .my-inner-input {
@@ -305,7 +303,7 @@ Internally, a form item is basically structured like this:
 ```html
 <div>
   <label class="form-label" for="input">Label</label>
-  <input class="form-control" id="input">
+  <input class="form-control" id="input" />
 </div>
 ```
 
@@ -313,7 +311,7 @@ For checkboxes and radios, it uses `form-check` instead of the `form-control` cl
 
 ```html
 <div class="form-check">
-  <input class="form-check-input" id="input" type="checkbox|radio">
+  <input class="form-check-input" id="input" type="checkbox|radio" />
   <label class="form-check-label" for="input">Label</label>
 </div>
 ```
@@ -325,7 +323,7 @@ or if the state is set manually by applying a class like `.is-invalid`.
 ```html
 <div>
   <label class="form-label" for="input">Label</label>
-  <input class="form-control is-invalid" id="input">
+  <input class="form-control is-invalid" id="input" />
   <div class="invalid-feedback">Invalid feedback</div>
 </div>
 ```

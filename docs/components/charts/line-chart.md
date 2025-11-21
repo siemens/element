@@ -53,6 +53,7 @@ discern the intermittent pattern of the trend.
 ### Usage
 
 ??? info "Required Packages"
+
     - [echarts](https://www.npmjs.com/package/echarts)
 
 ```ts

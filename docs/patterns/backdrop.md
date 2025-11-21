@@ -20,6 +20,6 @@ parts of it.
 
 ### Best practices
 
-- Allow to *tap outside* to give the user a way to escape.
+- Allow to _tap outside_ to give the user a way to escape.
 - Do not use the pattern backdrop to show error, success, or warning messages.
   Keep them on the page.

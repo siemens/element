@@ -18,7 +18,7 @@ Each notification typically consists of the following elements:
 1. **Heading:** A concise phrase that quickly conveys what happened.
 1. **Description:** Provides details if needed.
 1. **Primary action:** The main action related to the notification.
-    It can be a single button or a menu with multiple options.
+   It can be a single button or a menu with multiple options.
 1. **Quick actions:** Allows users to take quick action, such as dismissing or responding.
 
 Except for the notification title and timestamp, all elements are optional.
@@ -28,7 +28,7 @@ Except for the notification title and timestamp, all elements are optional.
 The notification indicators reflect the state or condition of the notification, helping users understand its relevance.
 
 - When differentiation is needed, **severity-based indicators** provide a clear response hierarchy.
-Each severity level is paired with a color and icon to ensure consistency.
+  Each severity level is paired with a color and icon to ensure consistency.
 
 - If needed, a [circle status](./circle-status.md) or [avatars](./avatar.md) can be used to provide further context.
 
