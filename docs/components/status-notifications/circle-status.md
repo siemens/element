@@ -1,6 +1,6 @@
 # Circle status
 
-*Circle status* indicates states on a table or list.
+_Circle status_ indicates states on a table or list.
 
 ## Usage ---
 
@@ -65,6 +65,7 @@ While any icon can be assigned, ensure it adds meaningful context.
 ## Code ---
 
 !!! info "No news are good news"
+
     The component does not implement the status `success`. Reason being a status
     should only be used when something has happened.
 

@@ -113,10 +113,10 @@ component.
 
 ```html
 <si-card
-    [heading]="'Heading'"
-    [primaryActions]="primaryActions"
-    [secondaryActions]="secondaryActions"
-  >
+  [heading]="'Heading'"
+  [primaryActions]="primaryActions"
+  [secondaryActions]="secondaryActions"
+>
   <div class="card-body" body>
     <span class="si-value-widget-value">Value</span>
     <span class="si-value-widget-unit">Unit</span>

@@ -1,4 +1,3 @@
-
 # Status Counter
 
 The **status counter** component (formerly **icon status**) represents a customizable icon with a counter.
@@ -16,6 +15,7 @@ import { SiStatusCounterComponent } from '@siemens/element-ng/status-counter';
 ```
 
 !!! info "Stacked icons"
+
     When using stacked icons we recommend using the composite icons to create harmonious icons.
 
 <si-docs-component base="si-status-counter" height="600">

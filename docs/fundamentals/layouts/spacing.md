@@ -51,7 +51,7 @@ be used for font size related values as they provide better accessibility.
 > Note: Px to rem conversion is based on 1rem = 16px
 
 | **Token**  | **px** | **rem** | **CSS utility class**  |
-|------------|--------|---------|------------------------|
+| ---------- | ------ | ------- | ---------------------- |
 | spacing-1  | 2      | 0.125   | `{property}{sides}-1`  |
 | spacing-2  | 4      | 0.25    | `{property}{sides}-2`  |
 | spacing-3  | 6      | 0.375   | `{property}{sides}-3`  |
@@ -84,7 +84,7 @@ We encourage designing with rhythm and contrast to achieve clear visual hierarch
 
 ![Margin vs. padding](images/spacing-padding-margin.png)
 
-> 1. Margin, 2. Border (part of padding),  3. Padding
+> \1. Margin, 2. Border (part of padding), 3. Padding
 
 Embedding border to padding is standard on all component implementations. The
 following CSS code is enabling this behavior.
@@ -98,12 +98,12 @@ box-sizing: border-box;
 The classes are named using the format `{property}{sides}-{size}` for `xs` and
 `{property}{sides}-{breakpoint}-{size}` for `sm`, `md`, `lg`, and `xl`.
 
-Where *property* is one of:
+Where _property_ is one of:
 
 - `m` - for classes that set `margin`
 - `p` - for classes that set `padding`
 
-Where *sides* is one of:
+Where _sides_ is one of:
 
 - `t` - for classes that set `margin-top` or `padding-top`
 - `b` - for classes that set `margin-bottom` or `padding-bottom`

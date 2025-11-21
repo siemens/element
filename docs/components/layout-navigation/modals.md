@@ -70,28 +70,30 @@ To display a modal dialog in any component, you need to follow these steps:
   takes either the component or template you want to display in the modal.
 
 ```ts
-import {viewChild} from "@angular/core";
+import { viewChild } from '@angular/core';
 
 @Component({
   template: `
     <ng-template #sampleModal>
-     <div class="modal-header">
-      <h4 class="modal-title">Modal</h4>
-      <button
-        type="button"
-        class="btn btn-circle btn-sm btn-ghost element-cancel"
-        aria-label="Close modal"
-        (click)="modalRef.hide('cancel')"
-      ></button>
-    </div>
-    <div class="modal-body">
-      <span>This is the body.</span>
-    </div>
-    <div class="modal-footer">
-      <span>This is the footer.</span>
-      <button type="button" class="btn btn-secondary" (click)="modalRef.hide('close')">Close</button>
-    </div>
-  </ng-template>     
+      <div class="modal-header">
+        <h4 class="modal-title">Modal</h4>
+        <button
+          type="button"
+          class="btn btn-circle btn-sm btn-ghost element-cancel"
+          aria-label="Close modal"
+          (click)="modalRef.hide('cancel')"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <span>This is the body.</span>
+      </div>
+      <div class="modal-footer">
+        <span>This is the footer.</span>
+        <button type="button" class="btn btn-secondary" (click)="modalRef.hide('close')"
+          >Close</button
+        >
+      </div>
+    </ng-template>
   `
 })
 export class SampleComponent {
@@ -99,9 +101,10 @@ export class SampleComponent {
   private modal = viewChild.required<TemplateRef<void>>('sampleModal');
   private modalRef?: SiModalRef;
 
-
   openModal(): void {
-    this.modalRef = this.modalService.show(template, { /* Options go here. */});
+    this.modalRef = this.modalService.show(template, {
+      /* Options go here. */
+    });
   }
 }
 ```

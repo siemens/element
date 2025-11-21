@@ -1,5 +1,7 @@
 <!-- markdownlint-disable MD041-->
+
 [![AI Banner](images/ai-element-ix-blog.svg)](get-started/element-mcp.md)
+
 <!-- markdownlint-enable MD041-->
 
 Discover the new Siemens Design Language MCP Server — your gateway to machine-readable
@@ -36,7 +38,7 @@ Our Figma library contains all designed components, styles, and blueprints
 ready for app design.
 
 - The Figma library is maintained within the Siemens AG Global account.
-- Siemens employees can use the self-service to obtain a Figma license. For 
+- Siemens employees can use the self-service to obtain a Figma license. For
   guest access please contact us.
 - The Figma library contains Siemens specific brand elements and is only
   accessible to Siemens employees and business partners.

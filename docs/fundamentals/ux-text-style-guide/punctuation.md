@@ -68,13 +68,13 @@ Use internalization libraries to reuse common standards if applicable.
 - Hyphen for ranges: 10-40%
 - Numbers: Use No. as an abbreviation for number, no spacing between abbreviated No. and number: No.8
 
-| Dos                      | Don'ts                  |
-|--------------------------|-------------------------|
-| 30 mm                    | 30 mms                  |
-| 10 oz                    | 10 oz.                  |
-| 10-40%                   | 10–40%                  |
-| No.7                     | #7                      |
-| Number 7                 | Num 7                   |
+| Dos      | Don'ts |
+| -------- | ------ |
+| 30 mm    | 30 mms |
+| 10 oz    | 10 oz. |
+| 10-40%   | 10–40% |
+| No.7     | #7     |
+| Number 7 | Num 7  |
 
 ## Spacing
 
@@ -86,7 +86,7 @@ Use internalization libraries to reuse common standards if applicable.
 - Add a space before unit of measurement
 
 | Dos              | Don'ts          |
-|------------------|-----------------|
+| ---------------- | --------------- |
 | 50%              | 50 %            |
 | 11am             | 11 am           |
 | Tuesday: no data | Tuesday:no data |

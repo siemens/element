@@ -20,9 +20,9 @@ that only those parts will reflect the applied filters.
 ### Best practices
 
 - Use one filter pill per filter category.
-    - If only one option is selected, show the value (e.g. `Munich`).
-    - If more than one option is selected, show the criteria name in plural with
-      a counter (e.g. `7 cities`).
+  - If only one option is selected, show the value (e.g. `Munich`).
+  - If more than one option is selected, show the criteria name in plural with
+    a counter (e.g. `7 cities`).
 - Don't use a filter bar if you need to provide inline filter editing
   functionality. Use the [filtered search component](filtered-search.md)
   instead.
@@ -40,9 +40,9 @@ that only those parts will reflect the applied filters.
 ### Interaction states
 
 As the filter bar does not have a representation on its own, all interaction
-states correspond to the *filter pills* and the *reset button*.
+states correspond to the _filter pills_ and the _reset button_.
 
-The *filter pills* container color should always be in contrast with its
+The _filter pills_ container color should always be in contrast with its
 surrounding background. Use `base-0` or `base-1` according to that.
 
 The filter bar can be hidden completely, if no filter is applied.

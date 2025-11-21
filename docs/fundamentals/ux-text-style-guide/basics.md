@@ -22,7 +22,7 @@ writing errors to avoid when creating industrial products and experiences.
 - Avoid using contractions in general
 
 | Dos                                            | Don'ts                                                 |
-|------------------------------------------------|--------------------------------------------------------|
+| ---------------------------------------------- | ------------------------------------------------------ |
 | their, them, theirs, salesperson               | his, hers, him, salesman                               |
 | Welcome to Building X                          | Hey there!                                             |
 | Welcome Werner von Siemens                     | Hey there!                                             |
@@ -47,7 +47,7 @@ writing errors to avoid when creating industrial products and experiences.
 - Capitalize named app functions and UI elements: Go to Settings, Allocate users in User management, Press OK
 
 | Dos                                                        | Don'ts                                                     |
-| -----------------------------------------------------------|------------------------------------------------------------|
+| ---------------------------------------------------------- | ---------------------------------------------------------- |
 | Go to Settings                                             | Go To Settings                                             |
 | Press OK                                                   | Press Ok                                                   |
 | Log in                                                     | LOG IN                                                     |
@@ -58,8 +58,9 @@ writing errors to avoid when creating industrial products and experiences.
 The following table contains frequently discovered UX writing mistakes.
 
 <!-- markdownlint-disable MD033 -->
+
 | Dos                                                                       | Don'ts                  |
-| --------------------------------------------------------------------------|-------------------------|
+| ------------------------------------------------------------------------- | ----------------------- |
 | time zone                                                                 | timezone                |
 | log file                                                                  | logfile                 |
 | log in (as an action)                                                     | login                   |
@@ -73,4 +74,5 @@ The following table contains frequently discovered UX writing mistakes.
 | Siemens has                                                               | Siemens have            |
 | 34 million / 35 billion                                                   | 34 / 35                 |
 | 34 million                                                                | 34 millions             |
+
 <!-- markdownlint-enable MD033 -->

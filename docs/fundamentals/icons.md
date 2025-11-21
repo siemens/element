@@ -5,6 +5,7 @@
 **Icons** are graphical representations that symbolize objects, functions, processes, or concepts.
 
 !!! info "Element icons are not open source"
+
     The Element icons have not (yet) been open-sourced and are only available to
     Siemens employees. Without access to the Element icon library, the icons
     shown in the documentation and the examples are likely not available to you.
@@ -18,7 +19,7 @@ If the necessity or clarity of an icon is uncertain, it is better to omit it.
 
 ![Icons](images/icons.png)
 
-Visit the [*Common Actions*](../fundamentals/ux-text-style-guide/frequent-app-functions.md/#common-actions) for further
+Visit the [_Common Actions_](../fundamentals/ux-text-style-guide/frequent-app-functions.md/#common-actions) for further
 definitions of a common icon usage.
 
 ### When to use icons

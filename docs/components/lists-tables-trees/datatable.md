@@ -182,7 +182,9 @@ Check out the [full documentation](https://siemens-com.gitbook.io/ngx-datatable/
 for more information!
 
 <!-- markdownlint-disable MD044-->
+
 ??? info "Required Packages"
+
     - [@siemens/ngx-datatable](https://www.npmjs.com/package/@siemens/ngx-datatable)
 
 ```ts
@@ -253,7 +255,7 @@ in your stylesheet:
 
 - Use `class="table-element"` on `<ngx-datatable>`.
 - Use the [pagination](../layout-navigation/pagination.md) component as custom
-footer template with `ngx-datatable-footer` and map inputs and outputs.
+  footer template with `ngx-datatable-footer` and map inputs and outputs.
 
 <si-docs-component example="datatable/datatable" height="750"></si-docs-component>
 
@@ -356,10 +358,7 @@ directive. If you use `siResizeObserver` directive ensure that you have imported
 `SiResizeObserverDirective` in your standalone component or module.
 
 ```html
-<ngx-datatable
-  (siResizeObserver)="resizeTable()"
-  ...
-></ngx-datatable>
+<ngx-datatable (siResizeObserver)="resizeTable()" ...></ngx-datatable>
 ```
 
 ### Bootstrap Table

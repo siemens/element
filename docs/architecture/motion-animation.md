@@ -12,7 +12,7 @@ animations:
 ## Automatically via CSS media query
 
 Animations are automatically configured if the user has set a preference for reduced motion
-in the system configuration, i.e.  when the CSS media query `@media (prefers-reduced-motion)`
+in the system configuration, i.e. when the CSS media query `@media (prefers-reduced-motion)`
 matches.
 
 These settings are done on an operating system level.

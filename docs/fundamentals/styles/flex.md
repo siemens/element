@@ -43,13 +43,13 @@ Available options include `start`, `end`, `center`, `baseline`, and `stretch` (t
 
 <si-docs-component example="flex/flex-align-items" height="150"></si-docs-component>
 
-| Class  | Responsive variation |
-|--------|----------------------|
-| `.align-items-start` | `.align-items-{breakpoint}-start` |
-| `.align-items-end` | `.align-items-{breakpoint}-end` |
-| `.align-items-center` | `.align-items-{breakpoint}-center` |
+| Class                   | Responsive variation                 |
+| ----------------------- | ------------------------------------ |
+| `.align-items-start`    | `.align-items-{breakpoint}-start`    |
+| `.align-items-end`      | `.align-items-{breakpoint}-end`      |
+| `.align-items-center`   | `.align-items-{breakpoint}-center`   |
 | `.align-items-baseline` | `.align-items-{breakpoint}-baseline` |
-| `.align-items-stretch` | `.align-items-{breakpoint}-stretch` |
+| `.align-items-stretch`  | `.align-items-{breakpoint}-stretch`  |
 
 ## Align self
 
@@ -134,13 +134,13 @@ These utilities are most effective when the container has wrapping enabled (`fle
 
 <si-docs-component example="flex/flex-align-content" height="200"></si-docs-component>
 
-| Class  | Responsive variation |
-|--------|----------------------|
-| `.align-content-start` | `.align-content-{breakpoint}-start` |
-| `.align-content-end` | `.align-content-{breakpoint}-end` |
-| `.align-content-center` | `.align-content-{breakpoint}-center` |
+| Class                    | Responsive variation                  |
+| ------------------------ | ------------------------------------- |
+| `.align-content-start`   | `.align-content-{breakpoint}-start`   |
+| `.align-content-end`     | `.align-content-{breakpoint}-end`     |
+| `.align-content-center`  | `.align-content-{breakpoint}-center`  |
 | `.align-content-between` | `.align-content-{breakpoint}-between` |
-| `.align-content-around` | `.align-content-{breakpoint}-around` |
+| `.align-content-around`  | `.align-content-{breakpoint}-around`  |
 | `.align-content-stretch` | `.align-content-{breakpoint}-stretch` |
 
 ## Fill
@@ -157,8 +157,8 @@ Apply the `.flex-fill` class to multiple sibling elements within a flex containe
 
 <si-docs-component example="flex/flex-fill" height="150"></si-docs-component>
 
-| Class  | Responsive variation |
-|--------|----------------------|
+| Class        | Responsive variation      |
+| ------------ | ------------------------- |
 | `.flex-fill` | `.flex-{breakpoint}-fill` |
 
 ## Direction
@@ -201,11 +201,11 @@ Use `.flex-column` to set a vertical direction, or `.flex-column-reverse` to sta
 </div>
 ```
 
-| Class  | Responsive variation |
-|--------|----------------------|
-| `.flex-row` | `.flex-{breakpoint}-row` |
-| `.flex-row-reverse` | `.flex-{breakpoint}-row-reverse` |
-| `.flex-column` | `.flex-{breakpoint}-column` |
+| Class                  | Responsive variation                |
+| ---------------------- | ----------------------------------- |
+| `.flex-row`            | `.flex-{breakpoint}-row`            |
+| `.flex-row-reverse`    | `.flex-{breakpoint}-row-reverse`    |
+| `.flex-column`         | `.flex-{breakpoint}-column`         |
 | `.flex-column-reverse` | `.flex-{breakpoint}-column-reverse` |
 
 <si-docs-component example="flex/flex-direction" height="100"></si-docs-component>
@@ -234,10 +234,10 @@ This makes more space available for the first flex item, which uses `.w-100` to 
 </div>
 ```
 
-| Class  | Responsive variation |
-|--------|----------------------|
-| `.flex-{grow|shrink}-0` | `.flex-{breakpoint}-{grow|shrink}-0` |
-| `.flex-{grow|shrink}-1` | `.flex-{breakpoint}-{grow|shrink}-1` |
+| Class                    | Responsive variation                  |
+| ------------------------ | ------------------------------------- |
+| `.flex-{grow\|shrink}-0` | `.flex-{breakpoint}-{grow\|shrink}-0` |
+| `.flex-{grow\|shrink}-1` | `.flex-{breakpoint}-{grow\|shrink}-1` |
 
 ## Justify content
 
@@ -255,14 +255,14 @@ These classes let you align items to the start, end, center, or distribute them 
 
 <si-docs-component example="flex/flex-justify-content" height="150"></si-docs-component>
 
-| Class  | Responsive variation |
-|--------|----------------------|
-| `.justify-content-start` | `.justify-content-{breakpoint}-start` |
-| `.justify-content-end` | `.justify-content-{breakpoint}-end` |
-| `.justify-content-center` | `.justify-content-{breakpoint}-center` |
+| Class                      | Responsive variation                    |
+| -------------------------- | --------------------------------------- |
+| `.justify-content-start`   | `.justify-content-{breakpoint}-start`   |
+| `.justify-content-end`     | `.justify-content-{breakpoint}-end`     |
+| `.justify-content-center`  | `.justify-content-{breakpoint}-center`  |
 | `.justify-content-between` | `.justify-content-{breakpoint}-between` |
-| `.justify-content-around` | `.justify-content-{breakpoint}-around` |
-| `.justify-content-evenly` | `.justify-content-{breakpoint}-evenly` |
+| `.justify-content-around`  | `.justify-content-{breakpoint}-around`  |
+| `.justify-content-evenly`  | `.justify-content-{breakpoint}-evenly`  |
 
 ## Order
 
@@ -281,8 +281,8 @@ For more granular control, you can assign integer values from 0 to 5; if you nee
 
 <si-docs-component example="flex/flex-order" height="150"></si-docs-component>
 
-| Class  | Responsive variation |
-|--------|----------------------|
+| Class      | Responsive variation    |
+| ---------- | ----------------------- |
 | `.order-0` | `.order-{breakpoint}-0` |
 | `.order-1` | `.order-{breakpoint}-1` |
 | `.order-2` | `.order-{breakpoint}-2` |
@@ -292,10 +292,10 @@ For more granular control, you can assign integer values from 0 to 5; if you nee
 
 You can also use responsive `.order-first` and `.order-last` classes to move an element to the start (`order: -1`) or end (`order: 6`) of the flex container at specific breakpoints.
 
-| Class  | Responsive variation |
-|--------|----------------------|
+| Class          | Responsive variation        |
+| -------------- | --------------------------- |
 | `.order-first` | `.order-{breakpoint}-first` |
-| `.order-last` | `.order-{breakpoint}-last` |
+| `.order-last`  | `.order-{breakpoint}-last`  |
 
 ## Wrap
 
@@ -304,27 +304,21 @@ Apply `.flex-wrap` to allow items to move onto multiple lines as needed, prevent
 Use `.flex-wrap-reverse` to wrap items onto multiple lines in the reverse direction, which can be useful for specific layout requirements.
 
 ```html
-<div class="d-flex flex-nowrap">
-  ...
-</div>
+<div class="d-flex flex-nowrap"> ... </div>
 ```
 
 ```html
-<div class="d-flex flex-wrap">
-  ...
-</div>
+<div class="d-flex flex-wrap"> ... </div>
 ```
 
 ```html
-<div class="d-flex flex-wrap-reverse">
-  ...
-</div>
+<div class="d-flex flex-wrap-reverse"> ... </div>
 ```
 
 <si-docs-component example="flex/flex-wrap" height="150"></si-docs-component>
 
-| Class  | Responsive variation |
-|--------|----------------------|
-| `.flex-nowrap` | `.flex-{breakpoint}-nowrap` |
-| `.flex-wrap` | `.flex-{breakpoint}-wrap` |
+| Class                | Responsive variation              |
+| -------------------- | --------------------------------- |
+| `.flex-nowrap`       | `.flex-{breakpoint}-nowrap`       |
+| `.flex-wrap`         | `.flex-{breakpoint}-wrap`         |
 | `.flex-wrap-reverse` | `.flex-{breakpoint}-wrap-reverse` |

@@ -22,7 +22,7 @@ A card is a content container to display important and useful information, e.g. 
 Every card contains the following elements:
 
 1. Title: The title may either be static, dynamically adapted based on the content or user defined.
-By dragging the title bar, a user can move the card to another position.
+   By dragging the title bar, a user can move the card to another position.
 2. Content action (Optional): A click on the icon opens the content action menu.
 3. Content area: Cards may also contain multiple types of content (e.g. a graph and an infobox).
 

@@ -23,8 +23,9 @@
 - Avoid using `error` or `warning`, as these words are superfluous in most cases
 
 <!-- markdownlint-disable MD013 MD033 -->
+
 | Dos                                                                                        | Don'ts                                                                                                                       |
-|--------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|
+| ------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
 | Form incomplete: Fill in all mandatory fields                                              | What did you do!?                                                                                                            |
 | _(Input field validation)_ Invalid email address                                           | The email address you entered does not match the required format. Please enter your email address using the standard format. |
 | Failed to delete device. Device still in use                                               | You have failed to delete the device.                                                                                        |
@@ -37,6 +38,7 @@
 | _(Skip title)_                                                                             | _(Title)_ Input error                                                                                                        |
 | _(Input field validation)_ Max. 30 characters                                              | _(Explanation)_ Input error detected.                                                                                        |
 | _(Skip action)_                                                                            | _(Action)_ Try again.                                                                                                        |
+
 <!-- markdownlint-enable MD013 MD033 -->
 
 ## Warning messages
@@ -44,7 +46,7 @@
 - A warning message alerts users of a condition that may cause a problem in the future
 
 | Dos                                                    |
-|--------------------------------------------------------|
+| ------------------------------------------------------ |
 | Title: Unsaved documents                               |
 | Explanation: Save all documents before leaving the app |
 | Action: Save all _(button)_                            |
@@ -56,7 +58,7 @@
 - Avoid using `information` as a title, as it does not provide an additional value to the user
 
 | Dos                         | Don'ts                                    |
-|-----------------------------|-------------------------------------------|
+| --------------------------- | ----------------------------------------- |
 | Access point 2 connected    | Access point connection failed. Try again |
 | Changes saved automatically | No rows to show                           |
 | Email sent                  | Email sent successfully                   |

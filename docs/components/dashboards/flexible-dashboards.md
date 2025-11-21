@@ -35,13 +35,13 @@ configuration.
 
 > 1. Title (optional), 2. Dashboard options (optional), 3. Content area 4. Edit mode button
 
-The *dashboard options* area on top of the widgets can be used for actions such
+The _dashboard options_ area on top of the widgets can be used for actions such
 as filtering, which affect the whole dashboard.
 
 ### Edit mode
 
 In **edit mode**, users can customize the dashboard to fit their specific needs.
-The *dashboard options* area is replaced by *editing options* that allow users
+The _dashboard options_ area is replaced by _editing options_ that allow users
 to add widgets and perform other actions.
 
 ![Flexible dashboard edit](images/flexible-dashboard-edit.png)

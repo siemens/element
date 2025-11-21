@@ -38,6 +38,7 @@ Interaction states are identical to the [normal buttons](buttons.md).
 ## Code ---
 
 !!! warning "Dropdown menu"
+
     If the overlay should show a contextual menu, please use the [menu component](menu.md).
     It already implements specific keyboard interactions and aria roles that are needed for a _dropdown menu_.
 

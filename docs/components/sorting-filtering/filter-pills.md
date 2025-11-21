@@ -17,10 +17,10 @@ with the [filter bar](filter-bar.md) and [filtered search component](filtered-se
   understandable. E.g. `Last year` does not need the key `Time range`.
 - Use 2 filter pills for value ranges (e.g. `From 1.1.2021` and `To 31.7.2021`).
 - If they're not used for value ranges, use only one filter pill per category.
-    - Show the selected value if only one option is selected (e.g.
-      `City of owner: Munich`).
-    - Show the criteria name in plural with a counter if more than one option is
-      selected (e.g. `Cities of owner: 7 cities`).
+  - Show the selected value if only one option is selected (e.g.
+    `City of owner: Munich`).
+  - Show the criteria name in plural with a counter if more than one option is
+    selected (e.g. `Cities of owner: 7 cities`).
 
 ## Design ---
 
@@ -28,7 +28,7 @@ with the [filter bar](filter-bar.md) and [filtered search component](filtered-se
 
 ![Filter pills - Elements](images/filter-pills-elements.png)
 
-> 1. Key (optional), 2. Operator (optional), 3. Value, 4. Remove button
+> \1. Key (optional), 2. Operator (optional), 3. Value, 4. Remove button
 > (optional)
 
 ### Filter anatomy
@@ -45,7 +45,7 @@ Filter pills are composed of three different elements:
 
 - **Key:** Targeted property or category.
 - **Value:** Specific value of the property you are looking for.
-- **Operator:** The intended relation between *Key* and *Value* (e.g. `=`, `>`,
+- **Operator:** The intended relation between _Key_ and _Value_ (e.g. `=`, `>`,
   `<`).
 
 Combine the elements according to the required complexity.

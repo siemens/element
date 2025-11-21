@@ -35,14 +35,14 @@ A tree view consists of the following elements:
 ![Tree view elements](images/tree-view-usage-construction.png)
 
 1. Expand/collapse icon
-2. Node icon *(optional)*
+2. Node icon _(optional)_
 3. Label
-4. Badge *(optional)*
-5. Indicator *(optional)*
+4. Badge _(optional)_
+5. Indicator _(optional)_
 6. Node: Hover state
 7. Node: Selected state
-8. Checkbox and/or option box per node *(optional)*
-9. Options menu (e.g. additional commands) *(optional)*
+8. Checkbox and/or option box per node _(optional)_
+9. Options menu (e.g. additional commands) _(optional)_
 
 ### Item representation
 
@@ -67,7 +67,7 @@ The tree view component has the following features:
 - Checkbox and/or option box per node.
 - Virtualization support: Input properties allow to set the page size and the
   number of pages to be virtualized. Current limitation is roughly half a
-  million of tree items. This is due to some *strange* behavior with flex
+  million of tree items. This is due to some _strange_ behavior with flex
   containers.
 - Grouped list support.
 - Support of templating, if templates are present.
@@ -213,7 +213,7 @@ items as root elements or as children of an existing tree item:
 
 ```typescript
 @Component({
-  selector: "app-sample",
+  selector: 'app-sample',
   template: `
     <button type="button" class="btn btn-primary" (click)="addItemToRoot()">
       Add item to Root
@@ -231,17 +231,17 @@ export class SampleComponent {
   @ViewChild(SiTreeViewComponent, { static: true })
   private treeViewComponent!: SiTreeViewComponent;
   private count = 0;
-  protected items: TreeItem[] = [{ label: "Company1" }];
+  protected items: TreeItem[] = [{ label: 'Company1' }];
 
   protected addItemToRoot() {
     this.treeViewComponent.addChildItems([
-      { label: `new root item ${++this.count}`, state: "leaf" }
+      { label: `new root item ${++this.count}`, state: 'leaf' }
     ]);
   }
 
   protected addItemToCompany1() {
     this.treeViewComponent.addChildItems(
-      [{ label: `new root item ${++this.count}`, state: "leaf" }],
+      [{ label: `new root item ${++this.count}`, state: 'leaf' }],
       this.items[0]
     );
   }

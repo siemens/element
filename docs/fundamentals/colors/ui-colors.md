@@ -47,7 +47,7 @@ UI colors are used on structural properties and icons and provide good contrast
 when used over any background.
 
 | Value light                                                  | Value dark                                                   | Token                 | Use                              | Associated color - light        | Associated color - dark      |
-|--------------------------------------------------------------|--------------------------------------------------------------|-----------------------|----------------------------------|---------------------------------|------------------------------|
+| ------------------------------------------------------------ | ------------------------------------------------------------ | --------------------- | -------------------------------- | ------------------------------- | ---------------------------- |
 | <si-docs-color style="background: #006B80;"></si-docs-color> | <si-docs-color style="background: #00cccc;"></si-docs-color> | `$element-ui-0`       | Logo, selected (active) elements | `$siemens-interactive-blue-500` | `$siemens-interactive-coral` |
 | <si-docs-color style="background: #005159;"></si-docs-color> | <si-docs-color style="background: #00ffb9;"></si-docs-color> | `$element-ui-0-hover` | Selected/active (ui-0) + hover   | `$siemens-teal`                 | `$siemens-bold-green`        |
 | <si-docs-color style="background: #000028;"></si-docs-color> | <si-docs-color style="background: #FFFFFF;"></si-docs-color> | `$element-ui-1`       | Primary icons                    | `$siemens-deep-blue-900`        | `$siemens-white`             |
@@ -62,7 +62,7 @@ when used over any background.
 Base colors are used as backgrounds of containers.
 
 | Value light                                                    | Value dark                                                     | Token                         | Use                                                       | Associated color - light         | Associated color - dark      |
-|----------------------------------------------------------------|----------------------------------------------------------------|-------------------------------|-----------------------------------------------------------|----------------------------------|------------------------------|
+| -------------------------------------------------------------- | -------------------------------------------------------------- | ----------------------------- | --------------------------------------------------------- | -------------------------------- | ---------------------------- |
 | <si-docs-color style="background: #f3f3f0;"></si-docs-color>   | <si-docs-color style="background: #000028;"></si-docs-color>   | `$element-base-0`             | Page background                                           | `$siemens-light-sand`            | `$siemens-deep-blue-900`     |
 | <si-docs-color style="background: #ffffff;"></si-docs-color>   | <si-docs-color style="background: #23233c;"></si-docs-color>   | `$element-base-1`             | Header, navigation, card, table, tree, menu background    | `$siemens-white`                 | `$siemens-deep-blue-800`     |
 | <si-docs-color style="background: #e9e9e5;"></si-docs-color>   | <si-docs-color style="background: #333353;"></si-docs-color>   | `$element-base-1-hover`       | Hover on base-1 backgrounds, like table, tree, or menu    | `$siemens-sand`                  | `$siemens-deep-blue-750`     |
@@ -83,33 +83,33 @@ Base colors are used as backgrounds of containers.
 
 Action colors are used to indicate actions that users can perform.
 
-| Value light                                                    | Value dark                                                     | Token                                     | Use                            | Associated color - light                   | Associated color - dark                 |
-|----------------------------------------------------------------|----------------------------------------------------------------|-------------------------------------------|--------------------------------|--------------------------------------------|-----------------------------------------|
-| <si-docs-color style="background: #006B80;"></si-docs-color>   | <si-docs-color style="background: #00cccc;"></si-docs-color>   | `$element-action-primary`                 | Primary interaction            | `$siemens-interactive-blue-500`            | `$siemens-interactive-coral`            |
-| <si-docs-color style="background: #004545;"></si-docs-color>   | <si-docs-color style="background: #00ffb9;"></si-docs-color>   | `$element-action-primary-hover`           | Primary action on hover        | `$siemens-teal`                            | `$siemens-bold-green`                   |
-| <si-docs-color style="background: #FFFFFF;"></si-docs-color>   | <si-docs-color style="background: #000028;"></si-docs-color>   | `$element-action-primary-text`            | Primary text color             | `$siemens-white`                           | `$siemens-deep-blue-900`                |
-| <si-docs-color style="background: #FFFFFF00;"></si-docs-color> | <si-docs-color style="background: #FFFFFF00;"></si-docs-color> | `$element-action-secondary`               | Secondary interaction          | `transparent`                              | `transparent`                           |
-| <si-docs-color style="background: #c2ffee;"></si-docs-color>   | <si-docs-color style="background: #001f39;"></si-docs-color>   | `$element-action-secondary-hover`         | Secondary interaction on hover | `$siemens-light-bold-green`                | `$siemens-dark-bold-green`              |
-| <si-docs-color style="background: #006B80;"></si-docs-color>   | <si-docs-color style="background: #00cccc;"></si-docs-color>   | `$element-action-secondary-text`          | Secondary text color           | `$siemens-interactive-blue-500`            | `$siemens-interactive-coral`            |
-| <si-docs-color style="background: #005159;"></si-docs-color>   | <si-docs-color style="background: #00ffb9;"></si-docs-color>   | `$element-action-secondary-text-hover`    | Secondary text hover color     | `$siemens-teal`                            | `$siemens-bold-green`                   |
-| <si-docs-color style="background: #006B80;"></si-docs-color>   | <si-docs-color style="background: #00cccc;"></si-docs-color>   | `$element-action-secondary-border`        | Secondary border color         | `$siemens-interactive-blue-500`            | `$siemens-interactive-coral`            |
-| <si-docs-color style="background: #005159;"></si-docs-color>   | <si-docs-color style="background: #00ffb9;"></si-docs-color>   | `$element-action-secondary-border-hover`  | Secondary border hover color   | `$siemens-teal`                            | `$siemens-bold-green`                   |
-| <si-docs-color style="background: #8C3A00;"></si-docs-color>   | <si-docs-color style="background: #ff9000;"></si-docs-color>   | `$element-action-secondary-warning`       | Secondary warning text/border  | `$siemens-orange-900`                      | `$siemens-orange-500`                   |
-| <si-docs-color style="background: #d72339;"></si-docs-color>   | <si-docs-color style="background: #fe8389;"></si-docs-color>   | `$element-action-secondary-danger`        | Secondary danger text/border   | `$siemens-red-500`                         | `$siemens-red-300`                      |
-| <si-docs-color style="background: #c75300"></si-docs-color>    | <si-docs-color style="background: #ff9000;"></si-docs-color>   | `$element-action-warning`                 | Warning                        | `$siemens-orange-700`                      | `$siemens-orange-500`                   |
-| <si-docs-color style="background: #8C3A00;"></si-docs-color>   | <si-docs-color style="background: #c75300;"></si-docs-color>   | `$element-action-warning-hover`           | Warning action on hover        | `$siemens-orange-900`                      | `$siemens-orange-700`                   |
-| <si-docs-color style="background: #FFFFFF;"></si-docs-color>   | <si-docs-color style="background: #000028;"></si-docs-color>   | `$element-action-warning-text`            | Warning text color             | `$siemens-white`                           | `$siemens-deep-blue-900`                |
-| <si-docs-color style="background: #d72339;"></si-docs-color>   | <si-docs-color style="background: #d72339;"></si-docs-color>   | `$element-action-danger`                  | Danger                         | `$siemens-red-500`                         | `$siemens-red-500`                      |
-| <si-docs-color style="background: #A60823;"></si-docs-color>   | <si-docs-color style="background: #a60823;"></si-docs-color>   | `$element-action-danger-hover`            | Danger action on hover         | `$siemens-red-700`                         | `$siemens-red-700`                      |
-| <si-docs-color style="background: #FFFFFF;"></si-docs-color>   | <si-docs-color style="background: #FFFFFF;"></si-docs-color>   | `$element-action-danger-text`             | Danger text color              | `$siemens-white`                           | `$siemens-white`                        |
-| <si-docs-color style="background: #199fff;"></si-docs-color>   | <si-docs-color style="background: #199fff;"></si-docs-color>   | `$element-focus-default`                  | Default focus shadow color     | `$siemens-focus`                           | `$siemens-focus`                        |
+| Value light                                                    | Value dark                                                     | Token                                    | Use                            | Associated color - light        | Associated color - dark      |
+| -------------------------------------------------------------- | -------------------------------------------------------------- | ---------------------------------------- | ------------------------------ | ------------------------------- | ---------------------------- |
+| <si-docs-color style="background: #006B80;"></si-docs-color>   | <si-docs-color style="background: #00cccc;"></si-docs-color>   | `$element-action-primary`                | Primary interaction            | `$siemens-interactive-blue-500` | `$siemens-interactive-coral` |
+| <si-docs-color style="background: #004545;"></si-docs-color>   | <si-docs-color style="background: #00ffb9;"></si-docs-color>   | `$element-action-primary-hover`          | Primary action on hover        | `$siemens-teal`                 | `$siemens-bold-green`        |
+| <si-docs-color style="background: #FFFFFF;"></si-docs-color>   | <si-docs-color style="background: #000028;"></si-docs-color>   | `$element-action-primary-text`           | Primary text color             | `$siemens-white`                | `$siemens-deep-blue-900`     |
+| <si-docs-color style="background: #FFFFFF00;"></si-docs-color> | <si-docs-color style="background: #FFFFFF00;"></si-docs-color> | `$element-action-secondary`              | Secondary interaction          | `transparent`                   | `transparent`                |
+| <si-docs-color style="background: #c2ffee;"></si-docs-color>   | <si-docs-color style="background: #001f39;"></si-docs-color>   | `$element-action-secondary-hover`        | Secondary interaction on hover | `$siemens-light-bold-green`     | `$siemens-dark-bold-green`   |
+| <si-docs-color style="background: #006B80;"></si-docs-color>   | <si-docs-color style="background: #00cccc;"></si-docs-color>   | `$element-action-secondary-text`         | Secondary text color           | `$siemens-interactive-blue-500` | `$siemens-interactive-coral` |
+| <si-docs-color style="background: #005159;"></si-docs-color>   | <si-docs-color style="background: #00ffb9;"></si-docs-color>   | `$element-action-secondary-text-hover`   | Secondary text hover color     | `$siemens-teal`                 | `$siemens-bold-green`        |
+| <si-docs-color style="background: #006B80;"></si-docs-color>   | <si-docs-color style="background: #00cccc;"></si-docs-color>   | `$element-action-secondary-border`       | Secondary border color         | `$siemens-interactive-blue-500` | `$siemens-interactive-coral` |
+| <si-docs-color style="background: #005159;"></si-docs-color>   | <si-docs-color style="background: #00ffb9;"></si-docs-color>   | `$element-action-secondary-border-hover` | Secondary border hover color   | `$siemens-teal`                 | `$siemens-bold-green`        |
+| <si-docs-color style="background: #8C3A00;"></si-docs-color>   | <si-docs-color style="background: #ff9000;"></si-docs-color>   | `$element-action-secondary-warning`      | Secondary warning text/border  | `$siemens-orange-900`           | `$siemens-orange-500`        |
+| <si-docs-color style="background: #d72339;"></si-docs-color>   | <si-docs-color style="background: #fe8389;"></si-docs-color>   | `$element-action-secondary-danger`       | Secondary danger text/border   | `$siemens-red-500`              | `$siemens-red-300`           |
+| <si-docs-color style="background: #c75300"></si-docs-color>    | <si-docs-color style="background: #ff9000;"></si-docs-color>   | `$element-action-warning`                | Warning                        | `$siemens-orange-700`           | `$siemens-orange-500`        |
+| <si-docs-color style="background: #8C3A00;"></si-docs-color>   | <si-docs-color style="background: #c75300;"></si-docs-color>   | `$element-action-warning-hover`          | Warning action on hover        | `$siemens-orange-900`           | `$siemens-orange-700`        |
+| <si-docs-color style="background: #FFFFFF;"></si-docs-color>   | <si-docs-color style="background: #000028;"></si-docs-color>   | `$element-action-warning-text`           | Warning text color             | `$siemens-white`                | `$siemens-deep-blue-900`     |
+| <si-docs-color style="background: #d72339;"></si-docs-color>   | <si-docs-color style="background: #d72339;"></si-docs-color>   | `$element-action-danger`                 | Danger                         | `$siemens-red-500`              | `$siemens-red-500`           |
+| <si-docs-color style="background: #A60823;"></si-docs-color>   | <si-docs-color style="background: #a60823;"></si-docs-color>   | `$element-action-danger-hover`           | Danger action on hover         | `$siemens-red-700`              | `$siemens-red-700`           |
+| <si-docs-color style="background: #FFFFFF;"></si-docs-color>   | <si-docs-color style="background: #FFFFFF;"></si-docs-color>   | `$element-action-danger-text`            | Danger text color              | `$siemens-white`                | `$siemens-white`             |
+| <si-docs-color style="background: #199fff;"></si-docs-color>   | <si-docs-color style="background: #199fff;"></si-docs-color>   | `$element-focus-default`                 | Default focus shadow color     | `$siemens-focus`                | `$siemens-focus`             |
 
 ### Text
 
 Similarly, categories for typography colors are also defined in this system.
 
 | Value light                                                  | Value dark                                                   | Token                       | Use           | Associated color - light        | Associated color - dark      |
-|--------------------------------------------------------------|--------------------------------------------------------------|-----------------------------|---------------|---------------------------------|------------------------------|
+| ------------------------------------------------------------ | ------------------------------------------------------------ | --------------------------- | ------------- | ------------------------------- | ---------------------------- |
 | <si-docs-color style="background: #000028;"></si-docs-color> | <si-docs-color style="background: #ffffff;"></si-docs-color> | `$element-text-primary`     | Primary       | `$siemens-deep-blue-900`        | `$siemens-white`             |
 | <si-docs-color style="background: #4c4c68;"></si-docs-color> | <si-docs-color style="background: #b3b3be;"></si-docs-color> | `$element-text-secondary`   | Secondary     | `$siemens-deep-blue-700`        | `$siemens-deep-blue-300`     |
 | <si-docs-color style="background: #7d8099;"></si-docs-color> | <si-docs-color style="background: #66667e;"></si-docs-color> | `$element-text-disabled`    | Disabled      | `$siemens-deep-blue-500`        | `$siemens-deep-blue-600`     |
@@ -128,7 +128,7 @@ Status colors are used to describe and/or report on the status of different
 things.
 
 | Value light                                                  | Value dark                                                   | Token                                  | Use                                           | Associated color - light   | Associated color - dark    |
-|--------------------------------------------------------------|--------------------------------------------------------------|----------------------------------------|-----------------------------------------------|----------------------------|----------------------------|
+| ------------------------------------------------------------ | ------------------------------------------------------------ | -------------------------------------- | --------------------------------------------- | -------------------------- | -------------------------- |
 | <si-docs-color style="background: #206ED9;"></si-docs-color> | <si-docs-color style="background: #206ED9;"></si-docs-color> | `$element-status-information`          | Informational                                 | `$siemens-blue-500`        | `$siemens-blue-500`        |
 | <si-docs-color style="background: #FFFFFF;"></si-docs-color> | <si-docs-color style="background: #FFFFFF;"></si-docs-color> | `$element-status-information-contrast` | Information contrast for e.g. composite icons | `$siemens-white`           | `$siemens-white`           |
 | <si-docs-color style="background: #1C703F;"></si-docs-color> | <si-docs-color style="background: #28BF66;"></si-docs-color> | `$element-status-success`              | Success                                       | `$siemens-green-700`       | `$siemens-green-500`       |
@@ -154,7 +154,7 @@ si-docs-color {
 ## Code ---
 
 Colors can be consumed within applications either by semantic color
-(*e.g. `$element-ui-0`*) or design system color (*e.g. `$siemens-interactive-blue-500`*). It is
+(_e.g. `$element-ui-0`_) or design system color (_e.g. `$siemens-interactive-blue-500`_). It is
 recommended to use semantic colors whenever possible to reduce the impact on
 an application if the color system is getting updated. Use design system colors
 if a design specification specifically demands it.
@@ -169,7 +169,7 @@ utility classes.
 
 Element extends the Bootstrap color utils with additional classes for Element
 specific colors. These classes are defined in the
-[_utilities](https://github.com/siemens/element/tree/main/projects/element-theme/src/styles/bootstrap/_utilities.scss) file.
+[\_utilities](https://github.com/siemens/element/tree/main/projects/element-theme/src/styles/bootstrap/_utilities.scss) file.
 
 Using contextual colors within SASS stylesheets is also possible by importing
 the Element Theme variables.

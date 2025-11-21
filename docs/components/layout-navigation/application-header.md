@@ -21,9 +21,10 @@ The application header consists of the following elements:
 
 ![Application header](images/application-header-usage-construction.png)
 
-> (1) Brand-logo,  (2) Application name, (3) Primary navigation items (up to four), (4) Tool bar, (5) Launchpad selector
+> (1) Brand-logo, (2) Application name, (3) Primary navigation items (up to four), (4) Tool bar, (5) Launchpad selector
 
 !!! info "Launchpad"
+
     The application header supports a launchpad that can be opened via (5) launchpad selector.
     It allows a user to switch between different application contexts.
     See the [launchpad documentation](launchpad.md) for more information.
@@ -44,9 +45,9 @@ The user menu is based on the [menu container](../buttons-menus/menu.md).
 ![Menu - help](images/application-header-usage-menu-help.png)
 
 1. Help (optional)
-2. Additional information for providing help to the user *(optional)*
-3. Link to the *About* page *(mandatory)*
-4. Link to the *Corporate Information* page *(mandatory)*
+2. Additional information for providing help to the user _(optional)_
+3. Link to the _About_ page _(mandatory)_
+4. Link to the _Corporate Information_ page _(mandatory)_
 
 **Note:**
 
@@ -64,9 +65,9 @@ The user menu is based on the [menu container](../buttons-menus/menu.md).
 
 1. User name (readable)
 2. Technical username (typically the email address)
-3. Company *(deprecated)*
+3. Company _(deprecated)_
 4. Role
-5. Company Switcher *(deprecated)*
+5. Company Switcher _(deprecated)_
 6. Profile / user-specific settings
 7. Sign out
 
@@ -98,6 +99,7 @@ The header has three main sections which can be placed inside the `si-applicatio
 ```
 
 !!! info "Launchpad"
+
     The application header also supports a launchpad.
     See the [launchpad documentation](launchpad.md) for more information.
 
@@ -150,7 +152,7 @@ Header navigation items can have header-dropdowns containing subitems.
 <si-application-header>
   ...
   <si-header-navigation>
-    <button 
+    <button
       si-header-navigation-item
       [siHeaderDropdownTriggerFor]="dropdown"
       routerLinkActive="active"
@@ -180,10 +182,9 @@ Actions are typically buttons that open a header-dropdown.
 <si-application-header>
   ...
   <si-header-actions>
-    <button 
-      si-header-action-item
-      icon="element-help"
-      [siHeaderDropdownTriggerFor]="help">Help</button>
+    <button si-header-action-item icon="element-help" [siHeaderDropdownTriggerFor]="help">
+      Help
+    </button>
   </si-header-actions>
 </si-application-header>
 
@@ -220,12 +221,12 @@ deprecated `si-primary-navbar`.
 
   <ng-template #account>
     <si-header-dropdown>
-        <si-account-details
-          name="Lars Vegas"
-          email="lars.vegas@siemens.com"
-          company="Siemens AG"
-          userRole="Admin"
-        />
+      <si-account-details
+        name="Lars Vegas"
+        email="lars.vegas@siemens.com"
+        company="Siemens AG"
+        userRole="Admin"
+      />
       <div class="dropdown-divider"></div>
       <button
         si-header-dropdown-item
@@ -238,6 +239,7 @@ deprecated `si-primary-navbar`.
       ...
     </si-header-dropdown>
   </ng-template>
+</si-application-header>
 ```
 
 #### Selection menu (Tenant switch)
@@ -249,11 +251,9 @@ Only use this once per application.
 <si-application-header>
   ...
   <si-header-actions>
-    <button
-      si-header-selection-item
-      type="button"
-      [siHeaderDropdownTriggerFor]="..."
-    >{{currentTenant}}</button>
+    <button si-header-selection-item type="button" [siHeaderDropdownTriggerFor]="...">
+      {{currentTenant}}
+    </button>
   </si-header-actions>
 </si-application-header>
 ```

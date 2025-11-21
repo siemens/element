@@ -9,6 +9,7 @@ which allows to generate forms from JSON data.
 ### Usage
 
 ??? info "Required Packages"
+
     - [@ngx-formly/core](https://www.npmjs.com/package/@ngx-formly/core)
     - [@ngx-formly/bootstrap](https://www.npmjs.com/package/@ngx-formly/bootstrap)
 

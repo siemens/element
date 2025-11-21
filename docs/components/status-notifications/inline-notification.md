@@ -35,9 +35,9 @@ examples of layouts are form, right pane, banner etc.
 ![Inline notification specification](images/inline-notification-usage-construction.png)
 
 1. **Icon:** Informs users about the severity of a notification.
-2. **Title:** Gives users a quick overview of the notification (*optional*).
+2. **Title:** Gives users a quick overview of the notification (_optional_).
 3. **Body Content:** Provides additional details of the notification.
-4. **Action Button:** Area to take actions like canceling or resolving a notification (*optional*).
+4. **Action Button:** Area to take actions like canceling or resolving a notification (_optional_).
 
 ### Title and body content
 

@@ -18,7 +18,7 @@ The **search bar** allows users to quickly find content using free text.
 - Don't use wildcard encoding for more complex search statements.
 - Consider adding other search capabilities according to project needs (e.g. use
   quotes to search for exact matches).
-- The placement of the *Search Bar* depends on the layout of the viewport. See
+- The placement of the _Search Bar_ depends on the layout of the viewport. See
   the [list-details](../layout-navigation/list-details.md)
   for placement guidance. See [data table](../lists-tables-trees/datatable.md)
   for search placement within a data table.
@@ -46,7 +46,7 @@ actual search term.
 
 Input `[debounceTime]` is the wait time in `ms` for the search bar to notify
 changes after a user stops typing. (Type: `number`, Default value: `400`).
-  
+
 Input `[showIcon]` defines if a search icon is displayed (false by default).
 
 ### Usage
