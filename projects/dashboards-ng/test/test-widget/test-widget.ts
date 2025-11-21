@@ -12,6 +12,16 @@ const loaderFunction = (name: string): Promise<any> => {
   }
 };
 
+const loaderFunctionStandalone = async (name: string): Promise<any> => {
+  if (name === 'TestWidgetComponent' || name === 'TestWidgetEditorComponent') {
+    return import('projects/dashboards-ng/test/test-widget/index').then(
+      m => m[name as keyof typeof m]
+    );
+  } else {
+    throw new Error(`Unknown component to be loaded ${name}`);
+  }
+};
+
 export const TEST_WIDGET: Widget = {
   name: 'Test Widget',
   id: '@siemens/dashboards-ng/TestWidgetComponent',
@@ -22,6 +32,25 @@ export const TEST_WIDGET: Widget = {
     editorComponentName: 'TestWidgetEditorComponent',
     moduleName: 'TestWidgetModule',
     moduleLoader: loaderFunction
+  },
+  defaults: {
+    width: 4,
+    height: 2
+  },
+  payload: {
+    message: 'Test Widgets!'
+  }
+};
+
+export const TEST_WIDGET_STANDALONE: Widget = {
+  name: 'Test Widget',
+  id: '@siemens/dashboards-ng/TestWidgetComponent',
+  iconClass: 'element-report',
+  description: 'A dummy widget for testing.',
+  componentFactory: {
+    componentName: 'TestWidgetComponent',
+    editorComponentName: 'TestWidgetEditorComponent',
+    componentLoader: loaderFunctionStandalone
   },
   defaults: {
     width: 4,

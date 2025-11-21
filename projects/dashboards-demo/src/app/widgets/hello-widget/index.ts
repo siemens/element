@@ -4,4 +4,3 @@
  */
 export * from './hello-widget.component';
 export * from './hello-widget-editor.component';
-export * from './hello-widget.module';
