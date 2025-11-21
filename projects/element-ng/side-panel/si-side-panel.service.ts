@@ -29,6 +29,16 @@ export class SiSidePanelService {
   private tempContentClosed?: Subject<void>;
   /** @internal */
   readonly enableMobile = signal(false);
+
+  /** @internal */
+  readonly collapsible = signal(false);
+
+  private fullscreenSubject = new BehaviorSubject<boolean>(false);
+  /**
+   * Emits when fullscreen overlay mode is toggled.
+   */
+  readonly isFullscreen$ = this.fullscreenSubject.asObservable();
+
   /** Set or update displayed content. */
   setSidePanelContent(portal: Portal<any> | undefined): void {
     this.contentSubject.next(portal);
@@ -57,6 +67,21 @@ export class SiSidePanelService {
   /** Indicate is side panel open. */
   isOpen(): boolean {
     return this.openSubject.value;
+  }
+
+  /** Toggle fullscreen overlay mode. */
+  toggleFullscreen(): void {
+    this.fullscreenSubject.next(!this.fullscreenSubject.value);
+  }
+
+  /** Set fullscreen overlay mode. */
+  setFullscreen(fullscreen: boolean): void {
+    this.fullscreenSubject.next(fullscreen);
+  }
+
+  /** Indicate if side panel is in fullscreen overlay mode. */
+  isFullscreen(): boolean {
+    return this.fullscreenSubject.value;
   }
 
   /**
