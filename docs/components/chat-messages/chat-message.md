@@ -93,6 +93,7 @@ Use these base components to build custom chat message interfaces.
 The **si-chat-message** component is a wrapper component, it has slots for different parts of a chat message.
 
 The slots are:
+
 - `si-attachment-list/si-badge` - For displaying attachments related to the message.
 - `si-avatar/si-icon/img` - For the avatar or icon representing the message sender.
 - `siChatMessageAction (helper directive)` - For actions related to the message.
@@ -112,5 +113,13 @@ The slots are:
 <si-docs-component example="si-markdown-renderer/si-markdown-renderer"></si-docs-component>
 
 <si-docs-api component="SiMarkdownRendererComponent"></si-docs-api>
+
+## Tool Message Component
+
+The **si-tool-message** component is a similar to the AI message component, but it includes a tool icon instead of an AI icon and is used to display tool calls and their results.
+
+<si-docs-component example="si-chat-messages/si-tool-message"></si-docs-component>
+
+<si-docs-api component="SiToolMessageComponent"></si-docs-api>
 
 <si-docs-types></si-docs-types>

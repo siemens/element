@@ -17,6 +17,9 @@ export interface SiTranslatableKeys {
   'SI_CHANGE_PASSWORD.CONFIRM_PASSWORD'?: string;
   'SI_CHANGE_PASSWORD.NEW_PASSWORD'?: string;
   'SI_CHANGE_PASSWORD.PASSWORD_POLICY'?: string;
+  'SI_CHAT_CONTAINER.EMPTY_STATE_DESCRIPTION'?: string;
+  'SI_CHAT_CONTAINER.EMPTY_STATE_TITLE'?: string;
+  'SI_CHAT_CONTAINER.SECONDARY_ACTIONS'?: string;
   'SI_CHAT_INPUT.ATTACH_FILE'?: string;
   'SI_CHAT_INPUT.INTERRUPT'?: string;
   'SI_CHAT_INPUT.LABEL'?: string;
@@ -211,6 +214,8 @@ export interface SiTranslatableKeys {
   'SI_THRESHOLD.INPUT_LABEL'?: string;
   'SI_THRESHOLD.STATUS'?: string;
   'SI_TOAST.CLOSE'?: string;
+  'SI_TOOL_MESSAGE.INPUT_ARGUMENTS'?: string;
+  'SI_TOOL_MESSAGE.OUTPUT'?: string;
   'SI_TOUR.BACK'?: string;
   'SI_TOUR.CLOSE'?: string;
   'SI_TOUR.DONE'?: string;

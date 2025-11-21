@@ -8,8 +8,10 @@ import {
   MessageAction,
   ChatInputAttachment
 } from '@siemens/element-ng/chat-messages';
+import { FileUploadError } from '@siemens/element-ng/file-uploader';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { MenuItemAction } from '@siemens/element-ng/menu';
+import { SiToastNotificationService } from '@siemens/element-ng/toast-notification';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
@@ -19,6 +21,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);
+  private readonly toastService = inject(SiToastNotificationService);
 
   readonly inputValue = signal('');
   readonly sending = signal(false);
@@ -77,8 +80,9 @@ export class SampleComponent {
     }, 2000);
   }
 
-  onFileError(error: any): void {
+  onFileError(error: FileUploadError): void {
     this.logEvent(`File error: ${error.errorText} - ${error.fileName}`);
+    this.toastService.queueToastNotification('danger', error.errorText, error.fileName);
   }
 
   onInterrupt(): void {

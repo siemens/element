@@ -12,7 +12,10 @@ import {
   input,
   model,
   output,
-  viewChild
+  viewChild,
+  signal,
+  Signal,
+  effect
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -24,8 +27,8 @@ import { SiIconComponent } from '@siemens/element-ng/icon';
 import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
 import { SiTranslatePipe, TranslatableString, t } from '@siemens/element-translate-ng/translate';
 
-import { MessageAction } from './message-action.model';
-import { SiAttachmentListComponent, Attachment } from './si-attachment-list.component';
+import { Attachment, MessageAction } from './chat-message.model';
+import { SiAttachmentListComponent } from './si-attachment-list.component';
 
 /**
  * Attachment item interface for file attachments in chat messages, extension of {@link Attachment} for {@link SiAttachmentListComponent} to use within {@link SiChatInputComponent}.
@@ -35,7 +38,8 @@ import { SiAttachmentListComponent, Attachment } from './si-attachment-list.comp
  * @see {@link Attachment} for base attachment interface
  * @see {@link SiAttachmentListComponent} for the attachment list component
  * @see {@link SiChatInputComponent} for the chat input component
- * @see {@link SiChatContainerComponent} for the chat container component
+ * @see {@link SiChatContainerComponent} for the base chat container component where this can be used
+ * @see {@link SiChatContainerComponent} for the AI chat container where this needs to be used
  *
  * @experimental
  */
@@ -62,6 +66,7 @@ export interface ChatInputAttachment extends Attachment {
  * - Displaying primary and secondary actions.
  *
  * Additionally to the inputs and outputs documented here, the component supports content projection via the following slots:
+ *
  * - Default content: Custom action buttons to display inline, prefer using the `actions` input for buttons, can be used in addition.
  * - `siChatInputDisclaimer` selector: Custom disclaimer content to display below the input area, prefer using the `disclaimer` input for simple text disclaimers.
  *
@@ -88,6 +93,26 @@ export class SiChatInputComponent implements AfterViewInit {
   private static idCounter = 0;
   private readonly textInput = viewChild<ElementRef<HTMLTextAreaElement>>('textInput');
   private readonly projectedContent = viewChild<ElementRef>('projected');
+  private readonly fileUploadDirective = viewChild(SiFileUploadDirective);
+
+  private readonly registeredSending = signal<Signal<boolean> | null>(null);
+  private readonly registeredInterruptible = signal<Signal<boolean> | null>(null);
+
+  constructor() {
+    effect(() => {
+      const sendingSignal = this.registeredSending();
+      if (sendingSignal) {
+        this.sending.set(sendingSignal());
+      }
+    });
+
+    effect(() => {
+      const interruptibleSignal = this.registeredInterruptible();
+      if (interruptibleSignal) {
+        this.interruptible.set(interruptibleSignal());
+      }
+    });
+  }
 
   /**
    * Current input value
@@ -117,7 +142,7 @@ export class SiChatInputComponent implements AfterViewInit {
    * Whether a message is currently being sent, also prevent the sending of new ones while still allowing the user to type
    * @defaultValue false
    */
-  readonly sending = input(false, { transform: booleanAttribute });
+  readonly sending = model(false);
 
   /**
    * Whether the input supports interrupting ongoing operations. When active,
@@ -125,7 +150,7 @@ export class SiChatInputComponent implements AfterViewInit {
    * If sending is true, the interrupt button will be disabled.
    * @defaultValue false
    */
-  readonly interruptible = input(false, { transform: booleanAttribute });
+  readonly interruptible = model(false);
 
   /**
    * Maximum number of characters allowed
@@ -303,6 +328,8 @@ export class SiChatInputComponent implements AfterViewInit {
     this.showInterruptButton() ? this.interruptButtonLabel() : this.sendButtonLabel()
   );
 
+  protected dragOver = false;
+
   protected get attachmentList(): Attachment[] {
     return this.attachments() as Attachment[];
   }
@@ -334,7 +361,13 @@ export class SiChatInputComponent implements AfterViewInit {
   protected onKeyDown(event: KeyboardEvent): void {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
-      if (!this.showInterruptButton()) {
+      if (!this.canSend()) {
+        return;
+      }
+      if (this.showInterruptButton()) {
+        this.interrupt.emit();
+        this.onSend();
+      } else {
         this.onSend();
       }
     }
@@ -344,9 +377,10 @@ export class SiChatInputComponent implements AfterViewInit {
     const validFiles = uploadFiles.filter(uploadFile => uploadFile.status === 'added');
 
     validFiles.forEach(uploadFile => {
+      const size = parseInt(uploadFile.size, 10);
       const attachment: ChatInputAttachment = {
         name: uploadFile.fileName,
-        size: uploadFile.file.size,
+        size: isNaN(size) ? uploadFile.file.size : size,
         type: uploadFile.file.type,
         file: uploadFile.file
       };
@@ -363,6 +397,11 @@ export class SiChatInputComponent implements AfterViewInit {
     this.attachments.update(current => {
       return current.filter(a => a !== attachment);
     });
+  }
+
+  public registerStates(sending: Signal<boolean>, interruptible: Signal<boolean>): void {
+    this.registeredSending.set(sending);
+    this.registeredInterruptible.set(interruptible);
   }
 
   protected onContainerClick(event: Event): void {
@@ -411,6 +450,31 @@ export class SiChatInputComponent implements AfterViewInit {
     if (textarea?.nativeElement) {
       textarea.nativeElement.focus();
     }
+  }
+
+  protected dropHandler(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.dragOver = false;
+
+    if (!this.allowAttachments() || this.disabled()) {
+      return;
+    }
+
+    const directive = this.fileUploadDirective();
+    if (directive && event.dataTransfer?.files) {
+      directive.handleFiles(event.dataTransfer.files);
+    }
+  }
+
+  protected dragOverHandler(event: DragEvent): void {
+    if (!this.allowAttachments() || this.disabled()) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    this.dragOver = true;
   }
 
   private setTextareaHeight(textarea: HTMLTextAreaElement): void {

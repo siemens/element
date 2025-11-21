@@ -2,61 +2,29 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, signal, TemplateRef, viewChild } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Component, inject, signal, TemplateRef, viewChild, WritableSignal } from '@angular/core';
 import {
-  SiChatContainerComponent,
-  SiAiMessageComponent,
-  SiUserMessageComponent,
-  SiChatInputComponent,
-  SiChatMessageComponent,
+  AiChatMessage,
+  ChatMessage,
   ChatInputAttachment,
   MessageAction,
-  SiChatMessageActionDirective,
-  SiAttachmentListComponent,
-  Attachment
+  SiAiChatContainerComponent,
+  SiChatInputComponent,
+  UserChatMessage
 } from '@siemens/element-ng/chat-messages';
 import { FileUploadError } from '@siemens/element-ng/file-uploader';
-import { SiIconComponent } from '@siemens/element-ng/icon';
-import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
-import {
-  getMarkdownRenderer,
-  SiMarkdownRendererComponent
-} from '@siemens/element-ng/markdown-renderer';
-import { MenuItem } from '@siemens/element-ng/menu';
 import { SiToastNotificationService } from '@siemens/element-ng/toast-notification';
 import { LOG_EVENT } from '@siemens/live-preview';
 
-interface ChatMessage {
-  type: 'user' | 'ai' | 'custom';
-  content: string;
-  attachments?: Attachment[];
-  actions?: MessageAction[];
-}
-
 @Component({
   selector: 'app-sample',
-  imports: [
-    SiChatContainerComponent,
-    SiAiMessageComponent,
-    SiUserMessageComponent,
-    SiInlineNotificationComponent,
-    SiChatInputComponent,
-    SiChatMessageComponent,
-    SiIconComponent,
-    SiMarkdownRendererComponent,
-    SiChatMessageActionDirective,
-    SiAttachmentListComponent
-  ],
-  templateUrl: './si-chat-container.html'
+  imports: [SiAiChatContainerComponent, SiChatInputComponent],
+  templateUrl: './si-ai-chat-container.html'
 })
 export class SampleComponent {
   private logEvent = inject(LOG_EVENT);
   private readonly modalTemplate = viewChild<TemplateRef<any>>('modalTemplate');
-  private sanitizer = inject(DomSanitizer);
   private readonly toastService = inject(SiToastNotificationService);
-
-  protected markdownRenderer = getMarkdownRenderer(this.sanitizer);
 
   readonly preAttachedFiles: ChatInputAttachment[] = [
     {
@@ -78,8 +46,8 @@ export class SampleComponent {
       type: 'user',
       content: `Can you help me analyze these files?
 
-  I'm having trouble understanding the data structure
-  and need assistance with the implementation.`,
+I'm having trouble understanding the data structure
+and need assistance with the implementation.`,
       attachments: [
         {
           name: 'data-analysis.py',
@@ -94,7 +62,7 @@ export class SampleComponent {
         {
           label: 'Copy message',
           icon: 'element-export',
-          action: (message: ChatMessage) =>
+          action: (message: UserChatMessage) =>
             this.logEvent(`Copy user message ${message.content.slice(0, 20)}...`)
         }
       ]
@@ -103,27 +71,27 @@ export class SampleComponent {
       type: 'ai',
       content: `I'd be happy to help you analyze your files! I can see you've shared a Python script and a CSV dataset.
 
-  Let me examine the structure and provide guidance.`,
+Let me examine the structure and provide guidance.`,
       actions: [
         {
           label: 'Good response',
           icon: 'element-plus',
-          action: (_message: ChatMessage) => this.logEvent('Thumbs up for AI message')
+          action: (_message: AiChatMessage) => this.logEvent('Thumbs up for AI message')
         },
         {
           label: 'Copy response',
           icon: 'element-export',
-          action: (_message: ChatMessage) => this.logEvent('Copy AI message')
+          action: (_message: AiChatMessage) => this.logEvent('Copy AI message')
         },
         {
           label: 'Retry response',
           icon: 'element-refresh',
-          action: (_message: ChatMessage) => this.logEvent('Retry AI message')
+          action: (_message: AiChatMessage) => this.logEvent('Retry AI message')
         },
         {
           label: 'Bookmark',
           icon: 'element-bookmark',
-          action: (_message: ChatMessage) => this.logEvent('Bookmark AI message')
+          action: (_message: AiChatMessage) => this.logEvent('Bookmark AI message')
         }
       ]
     },
@@ -135,7 +103,7 @@ export class SampleComponent {
         {
           label: 'Copy message',
           icon: 'element-export',
-          action: (_message: ChatMessage) =>
+          action: (_message: UserChatMessage) =>
             this.logEvent(`Copy user message ${_message.content.slice(0, 20)}...`)
         }
       ]
@@ -170,13 +138,13 @@ export class SampleComponent {
     {
       label: 'Copy message',
       icon: 'element-export',
-      action: (_message: ChatMessage) =>
+      action: (_message: UserChatMessage) =>
         this.logEvent(`Copy user message ${_message.content.slice(0, 20)}...`)
     },
     {
       label: 'Delete message',
       icon: 'element-delete',
-      action: (_message: ChatMessage) =>
+      action: (_message: UserChatMessage) =>
         this.logEvent(`Delete user message ${_message.content.slice(0, 20)}...`)
     }
   ];
@@ -185,36 +153,18 @@ export class SampleComponent {
     {
       label: 'Good response',
       icon: 'element-plus',
-      action: (_message: ChatMessage) => this.logEvent('Thumbs up for AI message')
+      action: (_message: AiChatMessage) => this.logEvent('Thumbs up for AI message')
     },
     {
       label: 'Copy response',
       icon: 'element-export',
-      action: (_message: ChatMessage) => this.logEvent('Copy AI message')
+      action: (_message: AiChatMessage) => this.logEvent('Copy AI message')
     }
   ];
 
   onMessageSent(event: { content: string; attachments: ChatInputAttachment[] }): void {
     this.logEvent(`Message sent: "${event.content}" with ${event.attachments.length} attachments`);
-    this.messages.update(current => [
-      ...current,
-      {
-        type: 'user',
-        content: event.content,
-        actions: [
-          {
-            label: 'Copy message',
-            icon: 'element-export',
-            action: () => this.logEvent('Copy user message')
-          }
-        ],
-        attachments: event.attachments.map(att => ({
-          name: att.name,
-          previewTemplate: () => this.modalTemplate()!
-        }))
-      }
-    ]);
-    this.simulateAiResponse(event.content);
+    this.addMessage(this.messages, event);
   }
 
   onInterrupt(): void {
@@ -228,7 +178,49 @@ export class SampleComponent {
     this.toastService.queueToastNotification('danger', error.errorText, error.fileName);
   }
 
-  private simulateAiResponse(userInput: string): void {
+  toggleLoading(): void {
+    this.loading.update(current => !current);
+  }
+
+  toggleSending(): void {
+    this.sending.update(current => !current);
+  }
+
+  toggleDisabled(): void {
+    this.disabled.update(current => !current);
+  }
+
+  toggleDisableInterrupt(): void {
+    this.disableInterrupt.update(current => !current);
+  }
+
+  toggleInterrupting(): void {
+    this.interrupting.update(current => !current);
+  }
+
+  private addMessage(
+    messagesSignal: WritableSignal<ChatMessage[]>,
+    event: { content: string; attachments: ChatInputAttachment[] }
+  ): void {
+    const userMessage: ChatMessage = {
+      type: 'user',
+      content: event.content,
+      attachments: event.attachments.map(att => ({
+        ...att,
+        previewTemplate: this.modalTemplate()
+      })),
+      actions: this.userActions
+    };
+
+    messagesSignal.update((current: ChatMessage[]) => [...current, userMessage]);
+    this.simulateAiResponse(event.content, event.attachments, messagesSignal);
+  }
+
+  simulateAiResponse(
+    userInput: string,
+    attachments: ChatInputAttachment[],
+    messagesSignal: any
+  ): void {
     this.sending.set(true);
 
     setTimeout(() => {
@@ -238,60 +230,16 @@ export class SampleComponent {
       setTimeout(() => {
         const response = `Thanks for your message: "${userInput}". I can help with that!`;
 
-        this.messages.update(current => [
+        messagesSignal.update((current: ChatMessage[]) => [
           ...current,
           {
             type: 'ai',
             content: response,
-            actions: [
-              {
-                label: 'Good response',
-                icon: 'element-plus',
-                action: () => this.logEvent('Thumbs up for AI message')
-              },
-              {
-                label: 'Copy response',
-                icon: 'element-export',
-                action: () => this.logEvent('Copy AI message')
-              }
-            ]
+            actions: this.aiActions
           }
         ]);
         this.loading.set(false);
       }, 2000);
     }, 1000);
-  }
-
-  private getMessageActions(message: ChatMessage): {
-    primary: MessageAction[];
-    secondary: MenuItem[];
-  } {
-    const actions = message.actions ?? [];
-    let primary: MessageAction[] = [];
-    let secondary: MenuItem[] = [];
-
-    const primaryActions = actions.slice(0, 3);
-    const secondaryActions = actions.slice(3);
-
-    primary = primaryActions;
-    secondary = secondaryActions.map(
-      action =>
-        ({
-          ...action,
-          action: action.action as unknown as (actionParam: any, source: MenuItem) => void,
-          type: 'action'
-        }) as MenuItem
-    );
-
-    const result = { primary, secondary };
-    return result;
-  }
-
-  protected getMessagePrimaryActions(message: ChatMessage): MessageAction[] {
-    return this.getMessageActions(message).primary;
-  }
-
-  protected getMessageSecondaryActions(message: ChatMessage): MenuItem[] {
-    return this.getMessageActions(message).secondary;
   }
 }
