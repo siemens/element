@@ -262,12 +262,12 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
     catalogRef.setInput('searchPlaceholder', this.searchPlaceholder());
     catalogRef.instance.widgetCatalog = this.widgetCatalog();
 
-    const subscription = catalogRef.instance.closed.subscribe(widgetConfig => {
+    const subscription = catalogRef.instance.closed.subscribe(async widgetConfig => {
       subscription.unsubscribe();
       this.viewState.set('dashboard');
       this.catalogHost().clear();
       if (widgetConfig) {
-        this.grid().addWidgetInstance(widgetConfig);
+        await this.grid().addWidgetInstance(widgetConfig);
       }
     });
   }

@@ -79,8 +79,9 @@ export class GridComponent {
   readonly emitWidgetInstanceEditEvents = input(false);
   readonly editable = model(false);
   readonly widgetInstanceEdit = output<WidgetConfig>();
-  addWidgetInstance(item: Omit<WidgetConfig, 'id'>): void {
+  addWidgetInstance(item: Omit<WidgetConfig, 'id'>): Promise<void> {
     widgetConfig = item;
+    return Promise.resolve();
   }
   edit(): void {}
   cancel(): void {}
