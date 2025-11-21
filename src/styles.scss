@@ -1,5 +1,7 @@
 @charset "UTF-8";
 @use 'sass:map';
+// MapLibre GL CSS
+@use 'maplibre-gl/dist/maplibre-gl.css';
 
 @use '@siemens/element-ng/element-ng';
 @use '@siemens/element-theme/src/styles/variables/spacers';

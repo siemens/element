@@ -4,6 +4,7 @@
     "outDir": "./out-tsc/app",
     "noUnusedLocals": false,
     "useDefineForClassFields": true,
+    "skipLibCheck": true,
     "types": ["@siemens/element-translate-ng/localize-types"]
   },
   "include": ["**/*.ts"],

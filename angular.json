@@ -29,6 +29,11 @@
                 "output": "assets/images"
               },
               {
+                "glob": "*",
+                "input": "projects/element-ng/assets/map",
+                "output": "assets/map"
+              },
+              {
                 "glob": "**/*",
                 "input": "src/assets/",
                 "ignore": ["**/i18n/*.json", "**/i18n/"],
