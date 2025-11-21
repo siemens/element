@@ -1,4 +1,1 @@
-- heading "Display Extra Large" [level=1]
-- heading "Display Large" [level=1]
-- heading "Display Bold" [level=1]
-- heading "Display" [level=1]
+- text: .si-display-xl Display Extra Large .si-display-lg Display Large .si-display-bold Display Bold .si-display Display
