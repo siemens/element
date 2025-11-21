@@ -136,10 +136,12 @@ Inside it different child template components are used to assign the content to 
 in the list-details layout and enable the correct responsive styling, the `<si-list-pane>` and `<si-details-pane>`.
 
 Inside the `<si-list-pane>` the following child components can be used:
+
 - `<si-list-pane-header>`: Header of the list pane, typically containing search and actions.
 - `<si-list-pane-body>`: Body of the list pane, typically containing the list or table.
 
 Inside the `<si-details-pane>` the following child components can be used:
+
 - `<si-details-pane-header>`: Header of the details pane, typically containing the title and actions.
 - `<si-details-pane-body>`: Body of the details pane, typically containing the details content.
 - `<si-details-pane-footer>`: Footer of the details pane, typically containing save and cancel actions.

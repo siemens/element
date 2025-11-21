@@ -93,6 +93,7 @@ Use these base components to build custom chat message interfaces.
 The **si-chat-message** component is a wrapper component, it has slots for different parts of a chat message.
 
 The slots are:
+
 - `si-attachment-list/si-badge` - For displaying attachments related to the message.
 - `si-avatar/si-icon/img` - For the avatar or icon representing the message sender.
 - `siChatMessageAction (helper directive)` - For actions related to the message.

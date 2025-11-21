@@ -82,9 +82,7 @@ definitions.
 For example, create `_theme-oem.scss` with this:
 
 ```scss
-$theme-oem: (
-  // definitions, see above
-);
+$theme-oem: (// definitions, see above);
 ```
 
 Then, to include this theme and build it as the default, change the main style sheets:
@@ -92,8 +90,11 @@ Then, to include this theme and build it as the default, change the main style s
 ```scss
 // first configure the element-theme by not building the 'siemens-brand' theme
 @use '@siemens/element-theme/src/theme' with (
-  $element-theme-default: 'oem', // the default is 'siemens-brand';
-  $element-themes: ('oem'), // themes to build.
+  $element-theme-default: 'oem',
+  // the default is 'siemens-brand';
+  $element-themes: (
+      'oem'
+    ) // themes to build.
 );
 @use '@siemens/element-ng/element-ng';
 
@@ -115,13 +116,9 @@ the class `theme-oem` to the `<html>` tag.
 If both a light and a dark mode version are desired, defines two maps, e.g.
 
 ```scss
-$theme-oem-light: (
-  // light mode and shared definitions
-);
+$theme-oem-light: (// light mode and shared definitions);
 
-$theme-oem-dark: (
-  // dark mode definitions
-);
+$theme-oem-dark: (// dark mode definitions);
 ```
 
 Then, use `themes.make-theme()` like this:
@@ -132,7 +129,7 @@ Then, use `themes.make-theme()` like this:
 ```
 
 !!! warning "Important info"
-    The required keys in the map might change in future versions of Element, so forward compatibility is not guaranteed.
-    Topic like usability and accessibility and not guaranteed that way so please always involve UX when using this feature.
+The required keys in the map might change in future versions of Element, so forward compatibility is not guaranteed.
+Topic like usability and accessibility and not guaranteed that way so please always involve UX when using this feature.
 
 <si-docs-types></si-docs-types>

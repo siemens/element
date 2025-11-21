@@ -37,8 +37,8 @@ multiple options from a group of options.
 
 - Avoid using the segmented button component to offer actions, such as adding,
   removing, or editing content.
-- Avoid crowding the control with too many segments, optimally *2* or *3* items
-  but not more than *5*.
+- Avoid crowding the control with too many segments, optimally _2_ or _3_ items
+  but not more than _5_.
 - Try to size the content within each view similarly, so that users don’t
   encounter pages that are significantly different in each section.
 

@@ -79,7 +79,7 @@ If space is limited, ensure the legend is accessible elsewhere for users to unde
 For information that needs detailed explanation, use [popovers](../status-notifications/popover.md), which are triggered explicitly and can hold more content.
 
 | Component         | Tooltip                                            | Popover                                                  |
-|-------------------|----------------------------------------------------|----------------------------------------------------------|
+| ----------------- | -------------------------------------------------- | -------------------------------------------------------- |
 | **Purpose**       | Provides supplementary, non-essential information. | Displays contextual information or interactive elements. |
 | **Interaction**   | Appears on **hover**.                              | Opens on **selection**.                                  |
 | **Dismissal**     | Disappears when the cursor moves away.             | Requires user interaction to close.                      |

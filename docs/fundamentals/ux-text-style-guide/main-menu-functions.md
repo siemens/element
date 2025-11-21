@@ -3,7 +3,7 @@
 ## Welcome page
 
 | Dos                | Don'ts                              |
-|--------------------|-------------------------------------|
+| ------------------ | ----------------------------------- |
 | User name or email |                                     |
 | Log in / Sign up   | Sign in / Sign up                   |
 | Log in             | Login (as it is a noun, not a verb) |
@@ -12,7 +12,7 @@
 ## User management
 
 | Dos                                                     | Don'ts                                      |
-|---------------------------------------------------------|---------------------------------------------|
+| ------------------------------------------------------- | ------------------------------------------- |
 | Username                                                |                                             |
 | Profile / User profile                                  |                                             |
 | Account / My account                                    |                                             |
@@ -40,33 +40,33 @@
 
 ## License status
 
-| Dos                           | Don'ts                        |
-|-------------------------------|-------------------------------|
-| License                       | licence                       |
-| License start / License end   |                               |
-| Purchased licenses            |                               |
-| License type                  |                               |
-| Activated licenses            |                               |
-| Used licenses                 |                               |
-| Expired licenses              |                               |
+| Dos                         | Don'ts  |
+| --------------------------- | ------- |
+| License                     | licence |
+| License start / License end |         |
+| Purchased licenses          |         |
+| License type                |         |
+| Activated licenses          |         |
+| Used licenses               |         |
+| Expired licenses            |         |
 
 ## Subscription status
 
-| Dos                                | Don'ts                        |
-|------------------------------------|-------------------------------|
-| Subscription                       | License                       |
-| Activate subscription              |                               |
-| Deactivate subscription            |                               |
-| Available subscriptions            |                               |
-| Subscription type                  |                               |
-| Active subscriptions               |                               |
-| Subscription expires on `{{date}}` |                               |
-| Expired subscriptions              |                               |
+| Dos                                | Don'ts  |
+| ---------------------------------- | ------- |
+| Subscription                       | License |
+| Activate subscription              |         |
+| Deactivate subscription            |         |
+| Available subscriptions            |         |
+| Subscription type                  |         |
+| Active subscriptions               |         |
+| Subscription expires on `{{date}}` |         |
+| Expired subscriptions              |         |
 
 ## Service & Support
 
 | Dos                                     | Don'ts        |
-|-----------------------------------------|---------------|
+| --------------------------------------- | ------------- |
 | Contact support: <support@mail.com>     |               |
 | Feedback: What do you think of our app? |               |
 | Manual                                  | Documentation |
@@ -75,12 +75,12 @@
 
 ## Workspace
 
-| Dos                           | Don'ts                        |
-|-------------------------------|-------------------------------|
-| Application status            |                               |
-| KPI settings                  | KPI's settings                |
-| KPI settings                  | KPIS settings                 |
-| KPIs                          | KPI's                         |
+| Dos                | Don'ts         |
+| ------------------ | -------------- |
+| Application status |                |
+| KPI settings       | KPI's settings |
+| KPI settings       | KPIS settings  |
+| KPIs               | KPI's          |
 
 ## Resetting
 

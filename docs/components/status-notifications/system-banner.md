@@ -47,7 +47,7 @@ import { SiSystemBannerComponent } from '@siemens/element-ng/system-banner';
 ```
 
 ```html
-<si-system-banner message="This is an information" [status]="'info'"/>
+<si-system-banner message="This is an information" [status]="'info'" />
 ```
 
 ## Displaying a system banner above the application header
@@ -56,7 +56,7 @@ To display a system banner above the [application header](../layout-navigation/a
 the following CSS classes must be applied:
 
 - add `has-system-banner` on wrapper `div` which also contains `has-application-header`
-or `has-navbar-fixed-top`
+  or `has-navbar-fixed-top`
 - add `fixed-top` on `si-system-banner`
 
 <si-docs-component example="si-layouts/anatomy" height="500"></si-docs-component>

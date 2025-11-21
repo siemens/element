@@ -11,7 +11,7 @@ related to the main content of a page.
 ![Side panel](images/side-panel.png)
 
 The panel takes the full application height and a fixed width. There are two
-pre-defined widths to choose from, either *regular* (`390px`) or *wide*
+pre-defined widths to choose from, either _regular_ (`390px`) or _wide_
 (`500px`).
 
 ### When to use
@@ -60,21 +60,21 @@ is not restricted to these cases.
 
 ### Modes
 
-The side panel can be either *closeable* (the panel is completely hidden) or
-*collapsible* (still visible with summary information) according to the
+The side panel can be either _closeable_ (the panel is completely hidden) or
+_collapsible_ (still visible with summary information) according to the
 application/project use-case.
 
-- Use a *closeable* side panel if the content has no direct relation to the
+- Use a _closeable_ side panel if the content has no direct relation to the
   items within the main content area. Closeable side panels are typically opened
   by selecting an entry within the horizontal navigation.
-- Use a *collapsible* side panel if the content changes based on the selection
+- Use a _collapsible_ side panel if the content changes based on the selection
   made within the main content area.
 
 ![Side panel collapsible](images/side-panel-expanded-collapsed.png)
 
-A side panel can be configured to use either *over-mode* or *scroll-mode*.
-In *over-mode*, the panel overlaps the main content area, while in
-*scroll-mode*, the panel pushes the main content area away.
+A side panel can be configured to use either _over-mode_ or _scroll-mode_.
+In _over-mode_, the panel overlaps the main content area, while in
+_scroll-mode_, the panel pushes the main content area away.
 
 ![Side panel modes](images/side-panel-modes.png)
 

@@ -88,7 +88,7 @@ pill.
 Assume you are searching for a person of a specific company and location.
 Company and location are criteria with possible options like Siemens, Maximago
 or Munich, Zug, etc. You can define possible search criteria by providing these
-criteria with the input `[criteria]` as one object.  On pressing return, the
+criteria with the input `[criteria]` as one object. On pressing return, the
 `(doSearch)` output callback event will provide you with an object describing
 the selected criteria and the additional string, the user entered.
 
@@ -103,8 +103,9 @@ activated, the callback sets the selected option (the value itself or the
 object.
 
 <!-- markdownlint-disable MD051 -->
+
 For more advanced use cases, custom comparison operators (e.g. `>` or `!=`)
-can be used besides of the standard *equal* operator, while also restricting
+can be used besides of the standard _equal_ operator, while also restricting
 the input to match a certain data type (e.g. `string` or `integer`). See the
 [custom operators example](#filtered-search-custom-operators) for details.
 

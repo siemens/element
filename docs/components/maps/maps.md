@@ -31,8 +31,8 @@ information.
   displayed, using a map for representation might not be required, since it
   doesn't provide any additional benefit to the user. Using a textual
   representation to display a location's address is more efficient.
-- Try to limit the number of map actions, like *zoom* and *find my location* to
-  *5*.
+- Try to limit the number of map actions, like _zoom_ and _find my location_ to
+  _5_.
 
 ## Design ---
 
@@ -44,8 +44,8 @@ information.
 
 ### Location representation
 
-A *Map pin* is used to represent a single location.
-If needed, *Map pins* can also be used to represent different status.
+A _Map pin_ is used to represent a single location.
+If needed, _Map pins_ can also be used to represent different status.
 Avoid mixing the
 [Status color palette](https://element.siemens.io/fundamentals/colors/ui-colors/#status)
 with the default color.
@@ -54,7 +54,7 @@ with the default color.
 
 Locations are clustered together and represented by a donut chart when
 geographically close, allowing an efficient visualization of the locations and
-their status. When zoomed in, they are displayed as individual *Map pins* to provide
+their status. When zoomed in, they are displayed as individual _Map pins_ to provide
 a more accurate view.
 
 The number represents the amount of locations that are grouped in that chart. The
@@ -64,7 +64,7 @@ size of each slice indicates the relative quantity of locations in a specific st
 
 ## Code ---
 
-The *Element-Map* component uses the [OpenLayers](https://openlayers.org/)
+The _Element-Map_ component uses the [OpenLayers](https://openlayers.org/)
 library. OpenLayers is a high-performance, feature-rich library for creating
 interactive geographical maps. It can display map tiles, vector data and markers
 loaded from a wide range of sources.
@@ -84,6 +84,7 @@ objects.
 ### Usage
 
 ??? info "Required Packages"
+
     - [ol](https://www.npmjs.com/package/ol)
     - [ol-ext](https://www.npmjs.com/package/ol-ext)
     - [ol-mapbox-style](https://www.npmjs.com/package/ol-mapbox-style)
@@ -95,7 +96,7 @@ npm install --save @siemens/maps-ng
 npm install --save ol ol-ext ol-mapbox-style
 ```
 
-Add library assets and CommonJs dependencies in your *angular.json* under the build options
+Add library assets and CommonJs dependencies in your _angular.json_ under the build options
 
 ```json
 {
@@ -131,7 +132,7 @@ Import the OpenLayers styles into your main global stylesheet:
 @use 'ol/ol.css';
 ```
 
-Add the library to the list of *imports* in your Angular *AppModule* like this:
+Add the library to the list of _imports_ in your Angular _AppModule_ like this:
 
 ```ts
 // [...]
@@ -149,7 +150,7 @@ import { SiMapsNgModule } from '@siemens/maps-ng';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
 ```
 
 And lastly, define a MapTiler key:
@@ -177,6 +178,7 @@ A custom color palette can be defined with following code:
 ```
 
 !!! warning "Accessibility of custom colors"
+
     The usage of Element color definitions is strongly recommended to fulfill accessibility standards.
     Involve your UX specialist when using custom colors to ensure accessibility,
     especially important are appropriate contrasts for different themes.
@@ -307,11 +309,11 @@ A user can customize the tooltip width via `maxLabelLength` see snippet below:
 
 #### Methods
 
-Name        | Type                                  | Description
-------------|---------------------------------------|----------------------------------------------------------------------------
-**clear**   | `clear() => void`                     | Remove all points from map.
-**refresh** | `refresh(points: MapPoint[]) => void` | Updates the map with new set of points provided in argument.
-**select**  | `select(point: MapPoint) => void`     | Zoom in the provided point and display popover with additional information.
+| Name        | Type                                  | Description                                                                 |
+| ----------- | ------------------------------------- | --------------------------------------------------------------------------- |
+| **clear**   | `clear() => void`                     | Remove all points from map.                                                 |
+| **refresh** | `refresh(points: MapPoint[]) => void` | Updates the map with new set of points provided in argument.                |
+| **select**  | `select(point: MapPoint) => void`     | Zoom in the provided point and display popover with additional information. |
 
 ### MapTiler API key
 
@@ -325,7 +327,7 @@ is not something Element offers for all of Siemens.
 
 ### Testing
 
-When running automated tests of your application, you should make sure to *not* load the
+When running automated tests of your application, you should make sure to _not_ load the
 map tiles. This drastically reduces the amount of map requests to maptiler that are limited
 in our contract. And for testing you want to test your map functionality and not the map data.
 

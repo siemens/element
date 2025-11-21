@@ -27,12 +27,12 @@ Circle shapes are used in multiple places like lists, notifications, and avatars
 
 ### Tokens
 
-Token               | Radius
---------------------|--------
-`$element-radius-0` | `0px`
-`$element-radius-1` | `2px`
-`$element-radius-2` | `4px`
-`$element-radius-3` | `8px`
+| Token               | Radius |
+| ------------------- | ------ |
+| `$element-radius-0` | `0px`  |
+| `$element-radius-1` | `2px`  |
+| `$element-radius-2` | `4px`  |
+| `$element-radius-3` | `8px`  |
 
 Radius is set for all 4 sides unless specified otherwise.
 
@@ -41,7 +41,7 @@ Radius is set for all 4 sides unless specified otherwise.
 All Element shape variants are accessible as `rounded-` CSS utility classes.
 
 Besides that, the full range of [Bootstrap's border utilities](https://getbootstrap.com/docs/5.1/utilities/borders/#border-radius)
-can be used. Since `rounded-2` is the default shape for *Element*, it is also
+can be used. Since `rounded-2` is the default shape for _Element_, it is also
 mapped to Bootstrap's shorthand `rounded` CSS class, as well as all side utility
 classes.
 

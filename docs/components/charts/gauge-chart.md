@@ -44,6 +44,7 @@ to indicate where the data point(s) falls over a particular range.
 ### Usage
 
 ??? info "Required Packages"
+
     - [echarts](https://www.npmjs.com/package/echarts)
 
 ```ts

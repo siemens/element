@@ -7,6 +7,7 @@ A generic chart with full support for [ECharts options](https://echarts.apache.o
 ### Usage
 
 ??? info "Required Packages"
+
     - [echarts](https://www.npmjs.com/package/echarts)
 
 ```ts

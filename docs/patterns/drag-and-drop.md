@@ -129,7 +129,7 @@ Alternatively, implement these interactions using keyboard shortcuts, such as
 shortcuts either through visually hidden text, or by announcing the shortcuts
 within the corresponding context menu items.
 
-*Note: Applications will have to implement these accessibility alternatives based on their use case. Element does not provide them by default.*
+_Note: Applications will have to implement these accessibility alternatives based on their use case. Element does not provide them by default._
 
 ## Code ---
 

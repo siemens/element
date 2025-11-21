@@ -71,7 +71,7 @@ import { SiTimelineWidgetComponent } from '@siemens/element-ng/dashboard';
   :
   imports: [SiTimelineWidgetComponent],
   standalone: true
-}) 
+})
 ```
 
 <si-docs-component example="si-dashboard/si-timeline-widget" height="620"></si-docs-component>

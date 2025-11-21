@@ -36,7 +36,7 @@ take longer to load, such as tables, lists, and images.
 - Only show skeleton placeholders for a few seconds, hiding them once components
   and content populate the page.
 - Avoid using it for action components (e.g. buttons, checkboxes, toggles).
-- Avoid using skeleton placeholders to represent components that *contain* other
+- Avoid using skeleton placeholders to represent components that _contain_ other
   components such as cards, accordions, and other layout elements.
 - Map the skeleton placeholders to the expected size and shape of the data that
   will be replacing it once loaded.
@@ -69,7 +69,7 @@ the layout and structure effectively.
 Shape skeletons represent placeholders for graphic elements such as icons,
 avatars, and images.
 
-To cover all possible graphic elements, *shape skeletons* can be either
+To cover all possible graphic elements, _shape skeletons_ can be either
 **circular** or **rectangular**. Ensure that their size matches one of the
 graphic elements they are representing.
 
@@ -77,7 +77,7 @@ graphic elements they are representing.
 
 ### Animation
 
-The skeleton placeholder uses a *shimmering* animation to provide a visual cue
+The skeleton placeholder uses a _shimmering_ animation to provide a visual cue
 that content is being loaded. This effect is created by a gradient moving from
 left to right (in RTL languages, the gradient direction should be inverted),
 which helps to make the experience feel faster and more seamless.
