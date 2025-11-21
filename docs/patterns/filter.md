@@ -45,14 +45,14 @@ to display the specific filters that are applied. This is an optional feature,
 intended for situations where the current filter selection is not easily visible
 elsewhere.
 
-To indicate the total count of active filters, use the `information` type 
+To indicate the total count of active filters, use the `information` type
 [badge](../components/status-notifications/badges.md) component.
 
 ### Best practices
 
 - Always make it clear which filters are active.
 - Organize filters by understanding and aligning with user priorities.
-- If a category has more than *7-10* options, consider ways to group filters or
+- If a category has more than _7-10_ options, consider ways to group filters or
   use a `Show more` type of functionality.
 - If there are many filter options, consider adding a search functionality
   within the filter itself. For multiple filter categories, either add a search
@@ -76,7 +76,7 @@ access. They can be placed above specific parts of the page, making it clear
 that only those items will reflect the filter input. It's best suited for simple
 filter types.
 
-Use the [select, advanced select*](../components/forms-inputs/select.md), and
+Use the [select, advanced select\*](../components/forms-inputs/select.md), and
 [input button](../components/buttons-menus/buttons.md) for this
 filter type.
 
@@ -84,7 +84,7 @@ filter type.
 
 > 1. Filters, 2. Filtered data/content
 
-It's generally acceptable to show around *7-10* options at once. If there are
+It's generally acceptable to show around _7-10_ options at once. If there are
 more options than this, consider adding a search functionality.
 
 ![Filter - inline examples](images/filter-inline-examples.png)
@@ -111,11 +111,11 @@ page, allowing users to access filters without leaving the main content.
 ![Filter - side panel](images/filter-side-panel.png)
 
 > 1. Filter button, 2. Applied filters, 3. Filtered data/content, 4. Side panel
-> with filters
+>    with filters
 
 ### Advanced filtering
 
-For complex searches, use a [modal](../components/layout-navigation/modals.md) or separate page to display filters—this helps users stay focused while refining results. 
+For complex searches, use a [modal](../components/layout-navigation/modals.md) or separate page to display filters—this helps users stay focused while refining results.
 If many categories are present, they're arranged in columns of equal width.
 Users can scroll through the area for more options, and if the columns exceed
 the available horizontal space, they can be stacked.
@@ -123,7 +123,7 @@ the available horizontal space, they can be stacked.
 ![Filter - modal](images/filter-advanced.png)
 
 > 1. Filter button, 2. Applied filters, 3. Content to be filtered, 4. Modal with
-> filters
+>    filters
 
 #### Responsive behavior
 

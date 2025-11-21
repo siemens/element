@@ -80,13 +80,11 @@ The launchpad (`si-launchpad-factory`) ist part of the [application header](appl
 Wrap it inside a `ng-template` and provide the template to the `si-application-header` component.
 
 ```html
-<si-application-header [launchpad]="launchpad">
-  ...
-</si-application-header>
+<si-application-header [launchpad]="launchpad"> ... </si-application-header>
 
-  <ng-template #launchpad>
-    <si-launchpad-factory [apps]="myAppsOrCategories" />
-  </ng-template>
+<ng-template #launchpad>
+  <si-launchpad-factory [apps]="myAppsOrCategories" />
+</ng-template>
 ```
 
 ### Example

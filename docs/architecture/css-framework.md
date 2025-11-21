@@ -33,7 +33,7 @@ dependency with the release of Element v46.
 All Bootstrap classes and stylings that are still relevant have been copied to
 the folder [bootstrap](https://github.com/siemens/element/blob/main/projects/element-theme/src/styles/bootstrap/)
 and adapted to our needs. We move files out of the bootstrap folder, when changes and
-rewrite are drastically and the resulting files are related to bootstrap any more. 
+rewrite are drastically and the resulting files are related to bootstrap any more.
 
 ## Upgrading from older Element versions before v46
 

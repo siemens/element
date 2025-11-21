@@ -54,7 +54,7 @@ In this case, the AI appears as an on-demand assistant without disrupting the wo
 [side panel](../../components/layout-navigation/side-panel.md).
 
 - When the AI feature is globally accessible, the side panel can be triggered from the
-[application header](../../components/layout-navigation/application-header.md), ensuring consistent entry across all screens.
+  [application header](../../components/layout-navigation/application-header.md), ensuring consistent entry across all screens.
 - For contextual use, place the trigger near the related feature or content.
 
 ![AI chat in side panel](images/ai-chat-side-panel.png)
@@ -69,7 +69,7 @@ As soon as the user prompts a message, the initial screen should disappear.
 1. AI icon
 1. Salutation: A brief, welcoming message that sets a conversational tone.
 1. Prompt categories (optional): When suggestions exceed a manageable number, group them by topic or function using
-  [summary chips](../../components/status-notifications/summary-chip.md)
+   [summary chips](../../components/status-notifications/summary-chip.md)
 1. Prompt suggestions (optional): Curated prompts or example questions that reflect common or relevant actions.
 1. [Chat input](../../components/chat-messages/chat-input.md)
 

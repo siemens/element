@@ -132,7 +132,7 @@ No need to apply `routerLinkActive`, this is done automatically.
 <si-tabset-legacy>
   <a si-tab-legacy heading="Tab 1" routerLink="./tab-1"></a>
   <a si-tab-legacy heading="Tab 2" routerLink="./tab-2"></a>
-  
+
   <router-outlet />
 </si-tabset-legacy>
 ```
@@ -144,13 +144,9 @@ import { SiTabsetLegacyComponent, SiTabLegacyComponent } from '@siemens/element-
 
 @Component({
   templateUrl: './my-component.html',
-  imports: [
-    SiTabsetLegacyComponent,
-    SiTabLegacyComponent,
-    RouterLink
-  ]
+  imports: [SiTabsetLegacyComponent, SiTabLegacyComponent, RouterLink]
 })
-export class MyComponent { }
+export class MyComponent {}
 ```
 
 A corresponding route definition looks like this:
@@ -161,8 +157,8 @@ import { Route } from '@angular/router';
 export const routes: Routes = [
   { path: '', redirectTo: 'tab-1', pathMatch: 'full' }, // Select the first tab by default
   { path: 'tab-1', component: Tab1Component },
-  { path: 'tab-2', component: Tab2Component },
-]
+  { path: 'tab-2', component: Tab2Component }
+];
 ```
 
 ### Tabs with plain components
@@ -187,17 +183,14 @@ import { SiTabsetLegacyComponent, SiTabLegacyComponent } from '@siemens/element-
 
 @Component({
   templateUrl: './my-component.html',
-  imports: [
-    SiTabsetLegacyComponent,
-    SiTabLegacyComponent
-  ]
+  imports: [SiTabsetLegacyComponent, SiTabLegacyComponent]
 })
-export class MyComponent { }
+export class MyComponent {}
 ```
 
 By default, no tab is active until the user clicks one.
 You can set the `active` property to `true` on one of the tabs to make it active by default.
-Ensure that only one tab has the `active` property set to `true`. 
+Ensure that only one tab has the `active` property set to `true`.
 Otherwise, the behavior is undefined.
 
 ### Closable tabs
@@ -208,7 +201,13 @@ A tab that can be closed must be explicitly marked as closable by setting the `c
 ```html
 <si-tabset-legacy>
   @if(showTab1) {
-    <a si-tab-legacy heading="Tab 1" routerLink="./tab-1" closable (closeTriggered)="removeTab1()"></a>
+  <a
+    si-tab-legacy
+    heading="Tab 1"
+    routerLink="./tab-1"
+    closable
+    (closeTriggered)="removeTab1()"
+  ></a>
   }
 </si-tabset-legacy>
 ```
@@ -220,11 +219,7 @@ import { SiTabsetLegacyComponent, SiTabLegacyComponent } from '@siemens/element-
 
 @Component({
   templateUrl: './my-component.html',
-  imports: [
-    SiTabsetLegacyComponent,
-    SiTabLegacyComponent,
-    RouterLink
-  ]
+  imports: [SiTabsetLegacyComponent, SiTabLegacyComponent, RouterLink]
 })
 export class MyComponent {
   showTab1 = true;

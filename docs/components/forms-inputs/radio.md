@@ -17,7 +17,7 @@ selection, e.g. in forms, modals, side panel, settings and more.
   simplest operation to the most complex one or least to most risk.
 - Options should be comprehensive and clearly distinct.
 - Radio buttons should always have exactly one option pre-selected. Select the
-  safest and most secure option (*e.g. to prevent data loss*).
+  safest and most secure option (_e.g. to prevent data loss_).
 - If users need to be able to skip any selection, provide a radio button for
   this choice labeled as "None".
 - Avoid nesting radio buttons with other radio buttons or checkboxes. Keep all
@@ -54,7 +54,7 @@ Like checkboxes, they are styled using the `form-check-input` class.
 
 ```html
 <si-form-item label="Radio button">
-  <input type="radio" class="form-check-input" [formControl]="control">
+  <input type="radio" class="form-check-input" [formControl]="control" />
 </si-form-item>
 ```
 
@@ -69,10 +69,10 @@ It will ensure a correct layout and apply the necessary accessibility attributes
 ```html
 <si-form-fieldset label="Group">
   <si-form-item label="Option 1">
-    <input type="radio" class="form-check-input" [formControl]="control1">
+    <input type="radio" class="form-check-input" [formControl]="control1" />
   </si-form-item>
   <si-form-item label="Option 2">
-    <input type="radio" class="form-check-input" [formControl]="control2">
+    <input type="radio" class="form-check-input" [formControl]="control2" />
   </si-form-item>
 </si-form-fieldset>
 ```
@@ -83,10 +83,10 @@ To display them inline, apply the `form-check-inline` class to the `si-form-item
 ```html
 <si-form-fieldset label="Group Inline">
   <si-form-item label="Option 1" class="form-check-inline">
-    <input type="radio" class="form-check-input" [formControl]="control1">
+    <input type="radio" class="form-check-input" [formControl]="control1" />
   </si-form-item>
   <si-form-item label="Option 2" class="form-check-inline">
-    <input type="radio" class="form-check-input" [formControl]="control2">
+    <input type="radio" class="form-check-input" [formControl]="control2" />
   </si-form-item>
 </si-form-fieldset>
 ```
@@ -98,7 +98,7 @@ a radio button with native HTML elements only:
 
 ```html
 <div class="form-check">
-  <input type="radio" id="check-id" class="form-check-input">
+  <input type="radio" id="check-id" class="form-check-input" />
   <label for="check-id" class="form-check-label">Radio button</label>
 </div>
 ```

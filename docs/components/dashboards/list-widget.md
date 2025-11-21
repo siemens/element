@@ -84,7 +84,7 @@ Add the empty state component by content projection with the `empty-state` slot.
 
 ```html
 <si-list-widget search [heading]="'Heading'" [value]="items">
-    <si-empty-state empty-state [icon]="'element-info'" [heading]="'No buildings found.'" />
+  <si-empty-state empty-state [icon]="'element-info'" [heading]="'No buildings found.'" />
 </si-list-widget>
 ```
 

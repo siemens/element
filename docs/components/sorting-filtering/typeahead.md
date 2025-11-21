@@ -25,7 +25,7 @@ where users need to input text and select options from a list.
 
 ![Typeahead elements](images/typeahead-elements.png)
 
-> 1. Active suggestion item, 2. Suggestion item
+> \1. Active suggestion item, 2. Suggestion item
 
 ## Code ---
 
@@ -87,9 +87,9 @@ The options are as follows:
 - `no` does not require all of the tokens to match.
 - `once` requires all of the tokens to be found at least once.
 - `separately` requires all of the tokens to be found at least once where there is not an overlapping different result. (default)
-- `independently` requires all of the  tokens to be found at least once
-where there is not an overlapping or adjacent different result.
-(`independently` also slightly changes sorting behavior in the same way.)
+- `independently` requires all of the tokens to be found at least once
+  where there is not an overlapping or adjacent different result.
+  (`independently` also slightly changes sorting behavior in the same way.)
 
 <si-docs-component example="si-typeahead/si-typeahead-tokenized" height="300"></si-docs-component>
 

@@ -23,7 +23,7 @@ Instead of navigating between pages, users click a “Load more” button at the
 
 ![Pagination](images/pagination-usage-construction.png)
 
-> 1. Navigation arrows, 2. Current page,  3. "More" indicator
+> 1. Navigation arrows, 2. Current page, 3. "More" indicator
 
 ### Number of pages
 

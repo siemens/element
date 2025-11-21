@@ -13,13 +13,15 @@
 - Only use ‘OK’ as an option if you cannot find an appropriate verb
 
 <!-- markdownlint-disable MD033 -->
+
 | Dos                                              | Don'ts                                         |
-|--------------------------------------------------|------------------------------------------------|
+| ------------------------------------------------ | ---------------------------------------------- |
 | Title: Add user<br>Buttons: Cancel, Add          | Title: Add user<br>Buttons: Cancel, OK         |
 | Title: Delete file<br>Buttons: Cancel, Delete    | Title: Are you sure<br>Buttons: Cancel, Delete |
 | Title: Edit details<br>Buttons: Cancel, Save     | Title: Edit details<br>Buttons: Cancel, Edit   |
 | Title: Unsaved changes<br>Buttons: Cancel, Save  | Title: Unsaved changes<br>Buttons: No, Yes     |
 | Title: Delete devices<br>Buttons: Cancel, Delete | Title: Delete items<br>Buttons: Cancel, Delete |
+
 <!-- markdownlint-enable MD033 -->
 
 ## Primary and secondary actions
@@ -28,7 +30,7 @@
 - Primary actions can either be positive (Send, Save) or negative (Delete)
 
 | Dos          | Don'ts       |
-|-- -----------|--------------|
+| ------------ | ------------ |
 | Cancel, Save | Save, Cancel |
 
 ## Clear content
@@ -41,10 +43,12 @@
 - Only use ‘this action’ in disclaimers
 
 <!-- markdownlint-disable MD033 -->
-| Dos                                             | Don'ts                                                                 |
-|-------------------------------------------------|------------------------------------------------------------------------|
-| Delete Wittelsbacherplatz München?              | Do you really want to delete Wittelsbacherplatz München?               |
-| Delete Wittelsbacherplatz München?              | Delete Building?                                                       |
-| Delete Wittelsbacherplatz München?              | Delete Wittelsbacherplatz München?<br><br>This action cannot be undone |
-| Delete Wittelsbacherplatz München?              | Delete Wittelsbacherplatz München permanently?                         |
+
+| Dos                                | Don'ts                                                                 |
+| ---------------------------------- | ---------------------------------------------------------------------- |
+| Delete Wittelsbacherplatz München? | Do you really want to delete Wittelsbacherplatz München?               |
+| Delete Wittelsbacherplatz München? | Delete Building?                                                       |
+| Delete Wittelsbacherplatz München? | Delete Wittelsbacherplatz München?<br><br>This action cannot be undone |
+| Delete Wittelsbacherplatz München? | Delete Wittelsbacherplatz München permanently?                         |
+
 <!-- markdownlint-enable MD033 -->

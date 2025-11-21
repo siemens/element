@@ -53,7 +53,7 @@ associated with each event category.
 ### Variants
 
 If required, the status bar can be configured in a
-*reduced height*/*compact mode*.
+_reduced height_/_compact mode_.
 
 ![Status bar sizes](images/status-bar-sizes.png)
 
@@ -73,7 +73,7 @@ regardless of the available screen size.
 ### Pulsating state (optional)
 
 To steer a user's attention to new and unhandled events in the status bar, the
-status items support a *blinking* feature, which fades the background opacity.
+status items support a _blinking_ feature, which fades the background opacity.
 
 ![Status bar blinking](images/status-bar-blink.png)
 

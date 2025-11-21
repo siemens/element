@@ -54,7 +54,7 @@ provides fundamental information users need while navigating the page.
 - If a description or subtitle is needed, the use the text style `Body 2` with a
   `text-secondary` color. The vertical space between the title and subtitle must
   be `8px`.
-- The vertical space between the *Page Title* and the next element must be
+- The vertical space between the _Page Title_ and the next element must be
   `24px`.
 
 Page header must always be left aligned in relation to the rest of the content
@@ -80,9 +80,9 @@ They are responsive and will automatically reserve space for the vertical-navbar
 and the side-panel.
 
 - `.si-layout-header` is a container class around the title, subtitle and actions
-    - `.si-layout-title`, must be `h2`
-    - `.si-layout-subtitle`, should be `p`
-    - `.si-layout-actions`, defines the area for buttons or the content action bar
+  - `.si-layout-title`, must be `h2`
+  - `.si-layout-subtitle`, should be `p`
+  - `.si-layout-actions`, defines the area for buttons or the content action bar
 
 If you have a toolbar, add 16px bottom margin to the content be for example adding the
 utility class `.mb-6`.

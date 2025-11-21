@@ -23,9 +23,10 @@ nvm install lts    # NVM for Windows
 ```
 
 !!! info "Supported Node.js Versions"
+
     Element supports **all active LTS versions** of Node.js and therefore
     recommends installing the latest available LTS version. While the newest
-    Node.js version *might* also work, some open-source dependencies could lack
+    Node.js version _might_ also work, some open-source dependencies could lack
     support for it. For more information, see the
     [Node.js release schedule](https://github.com/nodejs/Release#release-schedule).
 
@@ -77,7 +78,7 @@ Answer the following questions as desired. Note: We are not yet
 - `@siemens/element-ng` provides the components
 - `@siemens/element-theme` provides global styles
 - `@siemens/element-translate-ng` provides a facade for different translation
-   libraries (or none), including `ngx-translate` and `@angular/localize`
+  libraries (or none), including `ngx-translate` and `@angular/localize`
 - `@angular/cdk` for support from the Angular component development kit
 - `@angular/animations` for better animations (an option to skip animations is available)
 
@@ -115,7 +116,7 @@ Provide animations support and enable SVG icon usage in the `app.config.ts`:
 import {
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
-  provideZoneChangeDetection,
+  provideZoneChangeDetection
 } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
@@ -129,8 +130,8 @@ export const appConfig: ApplicationConfig = {
     provideIconConfig({ disableSvgIcons: false }),
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
-  ],
+    provideRouter(routes)
+  ]
 };
 ```
 
@@ -181,12 +182,12 @@ import {
   SiHeaderAccountItemComponent,
   SiHeaderActionsDirective,
   SiHeaderBrandDirective,
-  SiHeaderLogoDirective,
+  SiHeaderLogoDirective
 } from '@siemens/element-ng/application-header';
 import {
   SiHeaderDropdownComponent,
   SiHeaderDropdownItemComponent,
-  SiHeaderDropdownTriggerDirective,
+  SiHeaderDropdownTriggerDirective
 } from '@siemens/element-ng/header-dropdown';
 
 @Component({
@@ -200,10 +201,10 @@ import {
     SiHeaderLogoDirective,
     SiHeaderAccountItemComponent,
     SiHeaderActionsDirective,
-    RouterLink,
+    RouterLink
   ],
   templateUrl: './app.html',
-  styleUrl: './app.scss',
+  styleUrl: './app.scss'
 })
 export class App {}
 ```

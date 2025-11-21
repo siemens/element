@@ -1,4 +1,5 @@
 <!-- markdownlint-disable-file MD024 -->
+
 # Badges
 
 Badges act as visual aids notifying about a status of an object.
@@ -62,7 +63,7 @@ Badges can display text or numbers, and may also include an icon. Choose between
 ### Color variations - table
 
 | Badges    | Status        | Fill Color                  | Text Style | Text Color                  |
-|-----------|---------------|-----------------------------|------------|-----------------------------|
+| --------- | ------------- | --------------------------- | ---------- | --------------------------- |
 | Default   | Default       | `$element-base-0`           | `Title 2`  | `$element-text-primary`     |
 | Secondary | Secondary     | `$element-ui-3`             | `Title 2`  | `$element-text-primary`     |
 | Inverse   | Inverse       | `$element-ui-1`             | `Title 2`  | `$element-text-inverse`     |

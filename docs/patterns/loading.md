@@ -19,8 +19,8 @@ Loading indicators should be used based on the expected duration of the process:
   to show that the process is ongoing but the duration is uncertain.
 - **3 .. 10 seconds:** Use a determinate indicator, like a [progress bar](../components/progress-indication/progress-bar.md), to inform the user about the status of the loading process.
 - **> 10 seconds**: Perform process at the backend and allow the user to continue working.
-Provide a status on the affected entity (e.g., "Scanning network…") and notify the user when the process is completed
-(e.g., [toast notification](../components/status-notifications/toast-notification.md)).
+  Provide a status on the affected entity (e.g., "Scanning network…") and notify the user when the process is completed
+  (e.g., [toast notification](../components/status-notifications/toast-notification.md)).
 
 ### When to use
 

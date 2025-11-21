@@ -75,7 +75,7 @@ where a regular button would be too bulky.
 #### Rectangular buttons
 
 | Property           | Value        | Comment                                                 |
-| -------------------|--------------|---------------------------------------------------------|
+| ------------------ | ------------ | ------------------------------------------------------- |
 | Padding left/right | `$spacing-l` |                                                         |
 | Padding top/bottom | `$spacing-s` |                                                         |
 | Spacing(margin)    | `$spacing-l` | Spacing between buttons and other components/containers |
@@ -86,13 +86,13 @@ where a regular button would be too bulky.
 - **Large**
 
 | Property     | Value | Comment |
-| -------------|-------|---------|
+| ------------ | ----- | ------- |
 | height/width | 40px  |         |
 
 - **Small**
 
 | Property     | Value | Comment |
-| -------------|-------|---------|
+| ------------ | ----- | ------- |
 | height/width | 32px  |         |
 
 ### Button placement

@@ -46,7 +46,7 @@ import { SiIp6InputDirective } from '@siemens/element-ng/ip-input';
 
 @Component({
   template: `
-    <si-form-item label="IPv6 address"> 
+    <si-form-item label="IPv6 address">
       <input type="text" class="form-control" siIpV6 />
     </si-form-item>`,
   imports: [SiFormItemComponent, SiIp6InputDirective, ...]

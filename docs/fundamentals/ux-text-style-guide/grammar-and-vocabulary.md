@@ -6,21 +6,23 @@
 - Use present participle tense with an ellipsis (…) at the end to describe an ongoing progress
 - Only use simple verb forms in the past or future when necessary
 
-| Dos                       | Don'ts                                           |
-|---------------------------|--------------------------------------------------|
-| click, browse, upload     | clicking, being clicked, was clicking            |
-| file loads, file loaded   | file is going to be loaded, file has been loaded |
+| Dos                     | Don'ts                                           |
+| ----------------------- | ------------------------------------------------ |
+| click, browse, upload   | clicking, being clicked, was clicking            |
+| file loads, file loaded | file is going to be loaded, file has been loaded |
 
 ## Active voice
 
 <!-- markdownlint-disable MD033 -->
+
 | Dos                                                     | Don'ts                                 |
-|---------------------------------------------------------|----------------------------------------|
+| ------------------------------------------------------- | -------------------------------------- |
 | Configuration file opens<br>Opening configuration file… | The configuration file is opened.      |
 | Admin provides read-only access                         | Read-only access is provided by Admin. |
 | Measure performance                                     | Performance is measured.               |
 | Click Submit                                            | Submit is clicked by user.             |
 | Calculate the data<br>Calculating the data…             | The data is calculated by application. |
+
 <!-- markdownlint-enable MD033 -->
 
 ## UI terminology
@@ -29,10 +31,10 @@
 - Touchscreen gestures: tap, drag, flick, touch and hold, double-tap, swipe, pinch, spread
 - Basic terminology: checkbox, drop-down, field, icon, menu, link, radio button, window
 
-| Dos                              | Don'ts                                 |
-|----------------------------------|----------------------------------------|
-| click                            | press                                  |
-| hover                            | mouse over                             |
+| Dos   | Don'ts     |
+| ----- | ---------- |
+| click | press      |
+| hover | mouse over |
 
 ## Idioms and phrasal verbs
 
@@ -40,12 +42,12 @@
 - Avoid idiomatic expressions
 - Avoid cultural references
 
-| Dos                              | Don'ts                          |
-|----------------------------------|---------------------------------|
-| remove                           | get rid of                      |
-| calculate                        | add up                          |
-| retrieve data                    | fetch data                      |
-| mobile device                    | Apple, Android, iOS, smartphone |
+| Dos           | Don'ts                          |
+| ------------- | ------------------------------- |
+| remove        | get rid of                      |
+| calculate     | add up                          |
+| retrieve data | fetch data                      |
+| mobile device | Apple, Android, iOS, smartphone |
 
 ## Jargon, buzz words and terms
 
@@ -62,7 +64,7 @@
 - Never make up your own acronyms: <https://www.acronymfinder.com>
 
 | Dos                                 | Don'ts                             |
-|-------------------------------------|------------------------------------|
+| ----------------------------------- | ---------------------------------- |
 | light emitting diodes (LEDs)        | Light Emitting Diodes (LEDS)       |
 | APS                                 | A.P.S.                             |
 | EU                                  | E.U.                               |
@@ -78,10 +80,12 @@
 - Avoid the adjectives last, latest and recent if the verb relates to a time stamp (e.g., column header).
 
 <!-- markdownlint-disable MD033 -->
-| Dos                            | Don'ts                             |
-|--------------------------------|------------------------------------|
-| Latest update                  | Last update                        |
-| Latest summary                 | Last summary                       |
-| Recent events                  | Last events                        |
-| Saved<br>01.Jan 2025 08:32 am  | Last saved<br>01.Jan 2025 08:32 am |
+
+| Dos                           | Don'ts                             |
+| ----------------------------- | ---------------------------------- |
+| Latest update                 | Last update                        |
+| Latest summary                | Last summary                       |
+| Recent events                 | Last events                        |
+| Saved<br>01.Jan 2025 08:32 am | Last saved<br>01.Jan 2025 08:32 am |
+
 <!-- markdownlint-enable MD033 -->

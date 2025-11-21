@@ -9,8 +9,8 @@ CHANGELOG.md
 api-goldens
 
 # Formatting is broken
-docs
 mkdocs.yml
+docs/**/dynamic-forms.md
 
 # Ignore test files in schematics
 **/schematics/**/files/**

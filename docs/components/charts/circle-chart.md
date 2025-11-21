@@ -35,7 +35,7 @@ display the data.
 
 - Use pie charts sparingly.
 - Don't plot more than five categories on the same circle chart. If needed,
-  consider merging small slices into a single *other* slice.
+  consider merging small slices into a single _other_ slice.
 - Don't use multiple circle charts to make comparisons between them.
 - Consider the order of the categories, audiences will likely read the chart
   clockwise.
@@ -55,6 +55,7 @@ display the data.
 ### Usage
 
 ??? info "Required Packages"
+
     - [echarts](https://www.npmjs.com/package/echarts)
 
 ```ts

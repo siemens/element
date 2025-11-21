@@ -21,7 +21,7 @@ dialog by clicking the upload link within the drop zone.
 
 ![File uploader elements](images/file-uploader-elements.png)
 
-> 1. File selector/drop zone, 2. File upload progress, 3. Cancel file upload
+> \1. File selector/drop zone, 2. File upload progress, 3. Cancel file upload
 > button, 4. Upload issue feedback, 5. Upload successful icon , 6. Retry
 > button, 7. Delete file button, 8. Actions (optional)
 

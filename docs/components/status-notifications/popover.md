@@ -54,7 +54,7 @@ Popovers provide more comprehensive contextual information or functionality.
 They open upon **user selection**.
 
 | Component         | Tooltip                                            | Popover                                                  |
-|-------------------|----------------------------------------------------|----------------------------------------------------------|
+| ----------------- | -------------------------------------------------- | -------------------------------------------------------- |
 | **Purpose**       | Provides supplementary, non-essential information. | Displays contextual information or interactive elements. |
 | **Interaction**   | Appears on **hover**.                              | Opens on **selection**.                                  |
 | **Dismissal**     | Disappears when the cursor moves away.             | Requires user interaction to close.                      |
@@ -73,9 +73,11 @@ The trigger button must have a descriptive label, such as `More information abou
 Do not provide generic labels like `more` or `here` as users may tab through the page without reading the context.
 
 Use the `siPopover` directive to create a popover trigger.
- 
+
 ```html
-<button siPopover="..." type="button" class="btn btn-secondary">More information about component xyz</button>
+<button siPopover="..." type="button" class="btn btn-secondary">
+  More information about component xyz
+</button>
 ```
 
 ### Popover content
@@ -88,33 +90,39 @@ The content can be provided in the following ways:
 
 - using the inputs `siPopover` and `siPopoverTitle`
   ```html
-  <button 
-    siPopover="Details Lorem ipsum ..." 
-    siPopoverTitle="Component xyz" 
-    type="button" class="btn btn-secondary"
+  <button
+    siPopover="Details Lorem ipsum ..."
+    siPopoverTitle="Component xyz"
+    type="button"
+    class="btn btn-secondary"
   >
-      More information about component xyz
+    More information about component xyz
   </button>
   ```
 - using a template
   ```html
-  <button siPopover="popoverContent" type="button" class="btn btn-secondary">More information about component xyz</button>
+  <button siPopover="popoverContent" type="button" class="btn btn-secondary">
+    More information about component xyz
+  </button>
   <ng-template #popoverContent>
     <si-popover-title>Component xyz</si-popover-title>
-    <si-popover-body>
-      Details Lorem ipsum ...
-    </si-popover-body>
+    <si-popover-body> Details Lorem ipsum ... </si-popover-body>
   </ng-template>
   ```
 - using a template and the title input
   ```html
-  <button siPopover="popoverContent" siPopoverTitle="Component xyz" type="button" class="btn btn-secondary">More information about component xyz</button>
+  <button
+    siPopover="popoverContent"
+    siPopoverTitle="Component xyz"
+    type="button"
+    class="btn btn-secondary"
+    >More information about component xyz</button
+  >
   <ng-template #popoverContent>
     <!-- If siPopoverTitle is set, the content must NOT be wrapped in a si-popover-body element. -->
     Details Lorem ipsum ...
   </ng-template>
   ```
-  
 
 ### Usage
 

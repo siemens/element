@@ -48,8 +48,8 @@ The image mask can be set to a square or rounded shape according to the layout.
 
 ### Validation
 
- If the user tries to upload a file that exceeds the allowed limit, the component
- will not upload the new image and will display an error message.
+If the user tries to upload a file that exceeds the allowed limit, the component
+will not upload the new image and will display an error message.
 
 ![Photo upload validation](images/photo-upload-validation.png)
 
@@ -65,6 +65,7 @@ your project, before you can make use of the photo upload component.
 Import the `SiPhotoUploadComponent` in your standalone component that shall provide a photo upload.
 
 ??? info "Required Packages"
+
     - [ngx-image-cropper](https://www.npmjs.com/package/ngx-image-cropper)
     The currently supported dependency versions can be found in the [package.json of the demo app](https://github.com/siemens/element/blob/main/package.json).
 
@@ -99,7 +100,8 @@ import { SiPhotoUploadComponent } from '@siemens/element-ng/photo-upload';
   template: `<si-photo-upload />`,
   standalone: true,
   imports: [SiPhotoUploadComponent],
-  styles: 'si-photo-upload { --si-photo-upload-photo-width: 300px; --si-photo-upload-photo-height: 300px; }'
+  styles:
+    'si-photo-upload { --si-photo-upload-photo-width: 300px; --si-photo-upload-photo-height: 300px; }'
 })
 export class SampleComponent {}
 ```
