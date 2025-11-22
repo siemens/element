@@ -10,4 +10,5 @@ export type Imports = Map<string, string[]>;
 export type Migrations = {
   imports: Imports;
   toRemoveImports: ts.ImportDeclaration[];
+  hasSimplElementNgModuleImport: boolean;
 };
