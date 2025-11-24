@@ -4,9 +4,9 @@
  */
 import { Component, input } from '@angular/core';
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
+import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
 
 import { SunburstSeriesOption } from '../../shared/echarts.model';
-import { SiChartLoadingSpinnerComponent } from '../si-chart-loading-spinner/si-chart-loading-spinner.component';
 import { SiChartComponent } from '../si-chart/si-chart.component';
 
 @Component({
