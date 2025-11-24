@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, input } from '@angular/core';
+import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 
 import { SankeySeriesOption } from '../../shared/echarts.model';
 import { SiChartLoadingSpinnerComponent } from '../si-chart-loading-spinner/si-chart-loading-spinner.component';
 import { SiChartComponent } from '../si-chart/si-chart.component';
-import { SiCustomLegendComponent } from '../si-custom-legend/si-custom-legend.component';
 
 @Component({
   selector: 'si-chart-sankey',
