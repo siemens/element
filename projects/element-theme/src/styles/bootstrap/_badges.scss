@@ -127,7 +127,8 @@
   .icon {
     font-size: 20px;
     margin-inline-start: -4px;
-    margin-block-start: -2px;
+    vertical-align: top;
+    padding-block: map.get(spacers.$spacers, 1);
   }
 }
 
