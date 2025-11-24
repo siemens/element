@@ -543,6 +543,8 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
 
     if (this.isPM() && hour !== 12) {
       hour += 12;
+    } else if (this.use12HourClock() && !this.isPM() && hour === 12) {
+      hour = 0;
     }
 
     if (!date) {

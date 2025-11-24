@@ -9,8 +9,10 @@ import {
   signal
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SiDatepickerDirective } from '@siemens/element-ng/datepicker';
+import { By } from '@angular/platform-browser';
+import { DatepickerInputConfig, SiDatepickerDirective } from '@siemens/element-ng/datepicker';
 
+import { CalendarTestHelper, enterValue } from './components/test-helper.spec';
 import { SiCalendarButtonComponent } from './si-calendar-button.component';
 
 @Component({
@@ -21,6 +23,7 @@ import { SiCalendarButtonComponent } from './si-calendar-button.component';
         class="form-control"
         type="text"
         siDatepicker
+        [siDatepickerConfig]="config()"
         [disabled]="disabled()"
         [readonly]="readonly()"
       />
@@ -29,6 +32,7 @@ import { SiCalendarButtonComponent } from './si-calendar-button.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class WrapperComponent {
+  readonly config = signal<DatepickerInputConfig>({});
   readonly disabled = signal(false);
   readonly readonly = signal(false);
 }
@@ -39,7 +43,15 @@ describe('SiCalendarButtonComponent', () => {
   let component: WrapperComponent;
   let fixture: ComponentFixture<WrapperComponent>;
 
-  beforeEach(() => {
+  /** Update datepicker configuration */
+  const updateConfig = async (c: DatepickerInputConfig): Promise<void> => {
+    component.config.set(c);
+    fixture.detectChanges();
+    await fixture.whenStable();
+  };
+
+  beforeEach(async () => {
+    jasmine.clock().mockDate(new Date('2023-12-31'));
     TestBed.configureTestingModule({
       imports: [WrapperComponent],
       providers: [provideZonelessChangeDetection()]
@@ -106,5 +118,35 @@ describe('SiCalendarButtonComponent', () => {
     button.click();
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('si-datepicker-overlay')).toBeFalsy();
+  });
+
+  it('should update time to 12:30 AM', async () => {
+    // Ensure that the current selected meridian is taken over to the datepicker input.
+    // Internally the timepicker adjust the date object hours based on the meridian selection.
+    const enabledTimeText = 'Consider Time';
+    await updateConfig({
+      ...component.config(),
+      enabledTimeText,
+      showTime: true,
+      showMinutes: true,
+      dateTimeFormat: 'MM/dd/yyyy hh:mm a'
+    });
+    calendarToggleButton().click();
+    fixture.detectChanges();
+
+    const datepicker = document.querySelector<HTMLElement>('si-datepicker')!;
+    const helper = new CalendarTestHelper(datepicker);
+    enterValue(helper.getTimeInputHours(), '12');
+    enterValue(helper.getTimeInputMinutes(), '30');
+    const meridian = helper.getMeridian();
+    expect(meridian?.value).toBe('am');
+    helper.getTimeInputMinutes().dispatchEvent(new Event('blur'));
+
+    helper.getEnabledCellWithText('20')?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const input = fixture.debugElement.query(By.css('input[siDatepicker]')).nativeElement;
+    expect(input.value).toBe('12/20/2023 12:30 AM');
   });
 });
