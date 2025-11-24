@@ -1,3 +1,27 @@
+# [48.5.0](https://github.com/siemens/element/compare/v48.4.0...v48.5.0) (2025-11-24)
+
+
+### Features
+
+* **schematics:** add mappings for native charts components and module ([fe9fea5](https://github.com/siemens/element/commit/fe9fea58974e0765e4b18df7f53363509c23bd23))
+
+
+### Bug Fixes
+
+* **application-header:** truncate heading if needed in collapsed mode ([32f270a](https://github.com/siemens/element/commit/32f270a354fa662b8353197945d46ac409849e38))
+* **charts/custom-legend:** align symbol spacing with design specs ([778b889](https://github.com/siemens/element/commit/778b8895c0ee9a1d62cc8740a436c2fdda097339))
+* **chat-messages:** allow dragging on files to chat-input ([40019e0](https://github.com/siemens/element/commit/40019e09a00215be26d43d24bdc5be53cf35f85c))
+* **chat-messages:** allow interrupting with enter ([19112a6](https://github.com/siemens/element/commit/19112a60600fd78f335392c4ac50428774ffb8f5))
+* **loading-spinner:** slow down animation isof stopping for reduced-motion ([0c8371c](https://github.com/siemens/element/commit/0c8371c19b8fca74f1690fea453f49feeb3460c7))
+* **schematics:** add support for SimplElementNgModule imports and update mappings ([5260687](https://github.com/siemens/element/commit/5260687a91b75b417fa3fd435135e5a303818462))
+* **schematics:** add translation mapping in element-ng case and update mappings ([8b9df33](https://github.com/siemens/element/commit/8b9df33ac1a41e18a5c0d57e35dbf9c95964ff69))
+* **schematics:** update path imports for cross-platform compatibility and update mapping file ([2e7a2dc](https://github.com/siemens/element/commit/2e7a2dc8b46644ef85a91a3cbf3c67acb53c1a67))
+
+
+### Performance Improvements
+
+* **dashboards-ng:** optimize lookups ([fb3da90](https://github.com/siemens/element/commit/fb3da90e917cfb41a6f6b6bab0142a97bdd93466))
+
 # [48.4.0](https://github.com/siemens/element/compare/v48.3.0...v48.4.0) (2025-11-13)
 
 
