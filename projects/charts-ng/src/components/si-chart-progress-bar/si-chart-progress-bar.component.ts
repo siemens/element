@@ -4,10 +4,10 @@
  */
 import { Component, input } from '@angular/core';
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
+import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
 
 import { echarts } from '../../shared/echarts.custom';
 import { BarSeriesOption } from '../../shared/echarts.model';
-import { SiChartLoadingSpinnerComponent } from '../si-chart-loading-spinner/si-chart-loading-spinner.component';
 import { SiChartComponent } from '../si-chart/si-chart.component';
 import { ChartXAxis, ChartYAxis } from '../si-chart/si-chart.interfaces';
 import { ProgressBarChartSeries, ProgressBarValueUpdate } from './si-chart-progress-bar.interface';

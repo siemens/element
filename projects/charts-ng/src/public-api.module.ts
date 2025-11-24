@@ -4,6 +4,7 @@
  */
 import { NgModule } from '@angular/core';
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
+import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
 
 import { SiChartCartesianComponent } from './components/si-chart-cartesian/si-chart-cartesian.component';
 import { SiChartCircleComponent } from './components/si-chart-circle/si-chart-circle.component';
@@ -31,6 +32,7 @@ import { SiChartComponent } from './components/si-chart/si-chart.component';
     SiChartCircleComponent,
     SiChartComponent,
     SiChartGaugeComponent,
+    SiChartLoadingSpinnerComponent,
     SiChartProgressBarComponent,
     SiChartProgressComponent,
     SiChartSankeyComponent,
