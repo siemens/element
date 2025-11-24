@@ -3,16 +3,15 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, input, OnChanges, SimpleChanges } from '@angular/core';
-import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
-import { CustomLegend, CustomLegendProps } from '@siemens/charts-ng/custom-legend';
+import {
+  CustomLegend,
+  CustomLegendProps,
+  SiCustomLegendComponent
+} from '@siemens/charts-ng/custom-legend';
+import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
 
 import { echarts } from '../../shared/echarts.custom';
-import {
-  GridComponentOption,
-  LegendComponentOption,
-  TooltipComponentOption
-} from '../../shared/echarts.model';
-import { SiChartLoadingSpinnerComponent } from '../si-chart-loading-spinner/si-chart-loading-spinner.component';
+import { LegendComponentOption, TooltipComponentOption } from '../../shared/echarts.model';
 import { SiChartComponent } from '../si-chart/si-chart.component';
 import {
   ChartXAxis,
