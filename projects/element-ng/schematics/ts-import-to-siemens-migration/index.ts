@@ -2,7 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Tree, SchematicContext, Rule, chain } from '@angular-devkit/schematics';
+import { Tree, SchematicContext, Rule, chain, UpdateRecorder } from '@angular-devkit/schematics';
+import { getDecoratorMetadata, getMetadataField } from '@schematics/angular/utility/ast-utils';
 import * as ts from 'typescript';
 
 import { getImportNodes, getSymbols, discoverSourceFiles } from '../utils/index.js';
@@ -11,7 +12,8 @@ import {
   DASHBOARDS_NG_MAPPINGS,
   ELEMENT_NG_MAPPINGS,
   ELEMENT_TRANSLATE_NG_MAPPINGS,
-  MAPS_NG_MAPPINGS
+  MAPS_NG_MAPPINGS,
+  SIMPL_ELEMENT_NG_MODULES
 } from './mappings/index.js';
 import { Migrations } from './model.js';
 
@@ -45,9 +47,13 @@ export const tsImportMigrationRule = (_options: { path: string }): Rule => {
 
     for (const filePath of sourceFiles) {
       const migrations = collectMigrationImports(filePath, tree, context);
-      const { imports, toRemoveImports } = migrations;
+      const { imports, toRemoveImports, hasSimplElementNgModuleImport } = migrations;
 
-      if (imports.size === 0 && toRemoveImports.length === 0) {
+      if (
+        imports.size === 0 &&
+        toRemoveImports.length === 0 &&
+        hasSimplElementNgModuleImport === false
+      ) {
         continue;
       }
 
@@ -59,6 +65,22 @@ export const tsImportMigrationRule = (_options: { path: string }): Rule => {
   };
 };
 
+/**
+ * Adds a symbol to the imports map, avoiding duplicates
+ */
+const addSymbolToImports = (
+  imports: Map<string, string[]>,
+  importPath: string,
+  symbolName: string
+): void => {
+  const existingSymbols = imports.get(importPath);
+  if (!existingSymbols) {
+    imports.set(importPath, [symbolName]);
+  } else if (!existingSymbols.includes(symbolName)) {
+    existingSymbols.push(symbolName);
+  }
+};
+
 const collectMigrationImports = (
   filePath: string,
   tree: Tree,
@@ -66,9 +88,14 @@ const collectMigrationImports = (
 ): Migrations => {
   const content = tree.read(filePath);
   const imports = new Map<string, string[]>();
+  let hasSimplElementNgModuleImport = false;
 
   if (!content) {
-    return { imports, toRemoveImports: [] };
+    return {
+      imports,
+      toRemoveImports: [],
+      hasSimplElementNgModuleImport
+    };
   }
 
   const simplImports = getImportNodes(filePath, content.toString(), '@simpl/');
@@ -77,55 +104,194 @@ const collectMigrationImports = (
   for (const node of simplImports) {
     const symbols = getSymbols(node);
     const importPath = node.moduleSpecifier.getText().replace(/['"]/g, '');
-    let toRemove = false;
+    let shouldRemoveImport = false;
     for (const symbol of symbols) {
       const symbolName = symbol.name.getText();
-      const newImportPath = findComponentImportPath(symbolName, importPath);
-      if (!newImportPath) {
-        continue;
-      }
 
-      toRemove = true;
-      const migration = imports.get(newImportPath);
-      if (!migration) {
-        imports.set(newImportPath, [symbolName]);
+      if (symbolName === 'SimplElementNgModule') {
+        hasSimplElementNgModuleImport = true;
+
+        for (const moduleName of SIMPL_ELEMENT_NG_MODULES) {
+          const newImportPath = findComponentImportPath(moduleName, '@simpl/element-ng');
+          if (!newImportPath) {
+            continue;
+          }
+          shouldRemoveImport = true;
+          addSymbolToImports(imports, newImportPath, moduleName);
+        }
       } else {
-        migration.push(symbolName);
+        const newImportPath = findComponentImportPath(symbolName, importPath);
+        if (!newImportPath) {
+          continue;
+        }
+
+        shouldRemoveImport = true;
+        addSymbolToImports(imports, newImportPath, symbolName);
       }
     }
 
-    if (toRemove) {
+    if (shouldRemoveImport) {
       toRemoveImports.push(node);
     }
   }
 
-  return { imports, toRemoveImports };
+  return { imports, toRemoveImports, hasSimplElementNgModuleImport };
 };
 
 const rewriteImportsInFile = (filePath: string, migrations: Migrations): Rule => {
   return (tree: Tree): Tree => {
     const recorder = tree.beginUpdate(filePath);
-    const start = migrations.toRemoveImports.at(0)?.getFullStart() ?? 0;
+    const insertPosition = migrations.toRemoveImports.at(0)?.getFullStart() ?? 0;
 
-    // Remove old imports
-    for (const importDecl of migrations.toRemoveImports) {
-      recorder.remove(importDecl.getFullStart(), importDecl.getFullWidth());
+    const content = tree.read(filePath);
+    if (!content) {
+      return tree;
     }
 
-    // Add new imports
-    const importPaths = Array.from(migrations.imports.keys()).sort((a, b) => a.localeCompare(b));
+    const sourceFile = ts.createSourceFile(
+      filePath,
+      content.toString(),
+      ts.ScriptTarget.Latest,
+      true
+    );
 
-    for (const path of importPaths) {
-      const symbols = migrations.imports.get(path)!;
-      recorder.insertLeft(
-        start,
-        `\nimport { ${symbols.sort((a, b) => a.localeCompare(b)).join(', ')} } from '${path}';`
-      );
+    // Remove old imports
+    removeOldImports(recorder, migrations.toRemoveImports);
+
+    // Add new imports
+    addNewImports(recorder, migrations.imports, insertPosition, sourceFile);
+
+    // Update NgModule/Component imports array if needed
+    if (migrations.hasSimplElementNgModuleImport) {
+      updateDecoratorImports(recorder, sourceFile);
     }
 
     tree.commitUpdate(recorder);
     return tree;
   };
+};
+
+const updateDecoratorImports = (recorder: UpdateRecorder, sourceFile: ts.SourceFile): void => {
+  const decoratorNames = ['NgModule', 'Component'];
+  let decoratorNode: ts.Node | undefined;
+
+  // Try to find NgModule or Component decorator
+  for (const decoratorName of decoratorNames) {
+    const nodes = getDecoratorMetadata(sourceFile, decoratorName, '@angular/core');
+    if (nodes.length > 0) {
+      decoratorNode = nodes[0];
+      break;
+    }
+  }
+
+  if (!decoratorNode || !ts.isObjectLiteralExpression(decoratorNode)) {
+    return;
+  }
+
+  const matchingProperties = getMetadataField(decoratorNode, 'imports');
+  const importsAssignment = matchingProperties[0];
+
+  if (
+    !ts.isPropertyAssignment(importsAssignment) ||
+    !ts.isArrayLiteralExpression(importsAssignment.initializer)
+  ) {
+    return;
+  }
+
+  const elements = importsAssignment.initializer.elements;
+
+  // Filter out SimplElementNgModule and get existing modules
+  const existingModules = elements
+    .filter(e => e.getText() !== 'SimplElementNgModule')
+    .map(e => e.getText());
+
+  const existingModulesSet = new Set(existingModules);
+
+  // Only add modules that don't already exist
+  const newModulesToAdd = SIMPL_ELEMENT_NG_MODULES.filter(m => !existingModulesSet.has(m));
+
+  // Combine existing (without SimplElementNgModule) + new modules
+  const allModules = [...existingModules, ...newModulesToAdd];
+
+  // Remove existing imports array
+  recorder.remove(importsAssignment.getFullStart(), importsAssignment.getFullWidth());
+
+  // Create and insert the updated property assignment
+
+  const printer = ts.createPrinter();
+  const newNode = ts.factory.createArrayLiteralExpression(
+    allModules.map(m => ts.factory.createIdentifier(m)),
+    true
+  );
+
+  const newProperty = ts.factory.updatePropertyAssignment(
+    importsAssignment,
+    importsAssignment.name,
+    newNode
+  );
+
+  const propertyText = printer.printNode(ts.EmitHint.Unspecified, newProperty, sourceFile);
+  // Had to add extra indentation to align properly
+  recorder.insertLeft(importsAssignment.getStart(), `\n  ` + propertyText);
+};
+
+/**
+ * Removes old import declarations from the file
+ */
+const removeOldImports = (
+  recorder: UpdateRecorder,
+  toRemoveImports: ts.ImportDeclaration[]
+): void => {
+  for (const importDecl of toRemoveImports) {
+    recorder.remove(importDecl.getFullStart(), importDecl.getFullWidth());
+  }
+};
+
+/**
+ * Adds new import declarations to the file
+ */
+const addNewImports = (
+  recorder: UpdateRecorder,
+  imports: Map<string, string[]>,
+  insertPosition: number,
+  sourceFile: ts.SourceFile
+): void => {
+  const sortedImportPaths = Array.from(imports.keys()).sort((a, b) => a.localeCompare(b));
+
+  const printer = ts.createPrinter();
+  let counter = 0;
+  for (const path of sortedImportPaths) {
+    const symbols = imports.get(path)!;
+    const sortedSymbols = symbols.sort((a, b) => a.localeCompare(b));
+    const importDeclaration = createImportDeclaration(path, sortedSymbols);
+    const importStatement = printer.printNode(
+      ts.EmitHint.Unspecified,
+      importDeclaration,
+      sourceFile
+    );
+    const prefix = insertPosition === 0 && counter === 0 ? '' : '\n';
+    recorder.insertLeft(insertPosition, `${prefix}${importStatement}`);
+    counter++;
+  }
+};
+
+/**
+ * Creates import declarations using TypeScript AST
+ */
+const createImportDeclaration = (importPath: string, symbols: string[]): ts.ImportDeclaration => {
+  return ts.factory.createImportDeclaration(
+    undefined,
+    ts.factory.createImportClause(
+      false,
+      undefined,
+      ts.factory.createNamedImports(
+        symbols.map(symbol =>
+          ts.factory.createImportSpecifier(false, undefined, ts.factory.createIdentifier(symbol))
+        )
+      )
+    ),
+    ts.factory.createStringLiteral(importPath, true)
+  );
 };
 
 const findComponentImportPath = (
