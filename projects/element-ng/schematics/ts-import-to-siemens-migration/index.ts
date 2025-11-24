@@ -13,6 +13,7 @@ import {
   ELEMENT_NG_MAPPINGS,
   ELEMENT_TRANSLATE_NG_MAPPINGS,
   MAPS_NG_MAPPINGS,
+  NATIVE_CHARTS_NG_MAPPINGS,
   SIMPL_ELEMENT_NG_MODULES
 } from './mappings/index.js';
 import { Migrations } from './model.js';
@@ -315,6 +316,8 @@ const findComponentImportPath = (
       return DASHBOARDS_NG_MAPPINGS[symbolName];
     case 'charts-ng':
       return CHARTS_NG_MAPPINGS[symbolName];
+    case 'native-charts-ng':
+      return NATIVE_CHARTS_NG_MAPPINGS[symbolName];
     case 'element-translate-ng':
       return ELEMENT_TRANSLATE_NG_MAPPINGS[symbolName];
     default:
