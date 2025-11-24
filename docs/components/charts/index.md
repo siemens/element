@@ -110,7 +110,7 @@ no theme is provided, the element theme will be loaded by default.
 The desired default theme can be loaded anywhere in your project like this:
 
 ```typescript
-import { themeSupport } from '@siemens/charts-ng';
+import { themeSupport } from '@siemens/charts-ng/common';
 import { themeNameA } from 'your/theme-a';
 import { themeNameB } from 'your/theme-b';
 

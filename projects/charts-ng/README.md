@@ -35,6 +35,21 @@ import { SiChartsNgModule } from '@siemens/charts-ng';
 export class AppModule {}
 ```
 
+Starting with v49, Element Charts uses separate entry points for each component.
+Import components directly from their specific entry points:
+
+```ts
+import { SiChartCartesianComponent } from '@siemens/charts-ng/cartesian';
+import { SiChartCircleComponent } from '@siemens/charts-ng/circle';
+import { SiChartGaugeComponent } from '@siemens/charts-ng/gauge';
+// ... and other components
+
+@Component({
+  imports: [SiChartCartesianComponent, ...]
+})
+export class AppComponent {}
+```
+
 ### Running unit tests
 
 Run `npm run charts:test` to perform the unit tests via [Karma](https://karma-runner.github.io).

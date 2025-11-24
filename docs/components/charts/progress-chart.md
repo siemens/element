@@ -60,7 +60,7 @@ The chart can be configured to be a **360° circle** or an **arc**.
     - [echarts](https://www.npmjs.com/package/echarts)
 
 ```ts
-import { SiChartProgressComponent } from '@siemens/charts-ng';
+import { SiChartProgressComponent } from '@siemens/charts-ng/progress';
 
 @Component({
   imports: [SiChartProgressComponent, ...]

@@ -4,15 +4,17 @@
  */
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, viewChild } from '@angular/core';
 import {
-  AxisPointerEvent,
   CartesianChartData,
   CartesianChartSeries,
+  SiChartCartesianComponent
+} from '@siemens/charts-ng/cartesian';
+import {
+  AxisPointerEvent,
   ChartXAxis,
   ChartYAxis,
   DataZoomEvent,
-  DataZoomRange,
-  SiChartCartesianComponent
-} from '@siemens/charts-ng';
+  DataZoomRange
+} from '@siemens/charts-ng/common';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 
 const ONE_HOUR = 1000 * 60 * 60;

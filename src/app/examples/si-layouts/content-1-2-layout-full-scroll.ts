@@ -4,7 +4,7 @@
  */
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SiChartCircleComponent } from '@siemens/charts-ng';
+import { SiChartCircleComponent } from '@siemens/charts-ng/circle';
 import {
   SiAccountDetailsComponent,
   SiApplicationHeaderComponent,

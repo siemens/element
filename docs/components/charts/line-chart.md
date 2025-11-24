@@ -57,7 +57,7 @@ discern the intermittent pattern of the trend.
     - [echarts](https://www.npmjs.com/package/echarts)
 
 ```ts
-import { SiChartCartesianComponent } from '@siemens/charts-ng';
+import { SiChartCartesianComponent } from '@siemens/charts-ng/cartesian';
 
 @Component({
   imports: [SiChartCartesianComponent, ...]

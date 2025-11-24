@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, HostListener } from '@angular/core';
-import { EChartOption, SiChartComponent } from '@siemens/charts-ng';
+import { SiChartComponent } from '@siemens/charts-ng/chart';
+import { EChartOption } from '@siemens/charts-ng/common';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 
 @Component({

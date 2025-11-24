@@ -239,7 +239,7 @@
     "charts-ng": {
       "projectType": "library",
       "root": "projects/charts-ng",
-      "sourceRoot": "projects/charts-ng/src",
+      "sourceRoot": "projects/charts-ng",
       "prefix": "si",
       "architect": {
         "build": {
