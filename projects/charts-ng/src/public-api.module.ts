@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { NgModule } from '@angular/core';
+import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 
 import { SiChartCartesianComponent } from './components/si-chart-cartesian/si-chart-cartesian.component';
 import { SiChartCircleComponent } from './components/si-chart-circle/si-chart-circle.component';
@@ -12,7 +13,6 @@ import { SiChartProgressComponent } from './components/si-chart-progress/si-char
 import { SiChartSankeyComponent } from './components/si-chart-sankey/si-chart-sankey.component';
 import { SiChartSunburstComponent } from './components/si-chart-sunburst/si-chart-sunburst.component';
 import { SiChartComponent } from './components/si-chart/si-chart.component';
-import { SiCustomLegendComponent } from './components/si-custom-legend/si-custom-legend.component';
 
 @NgModule({
   imports: [

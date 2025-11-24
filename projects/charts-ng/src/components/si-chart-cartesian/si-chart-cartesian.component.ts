@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, input, OnChanges, SimpleChanges } from '@angular/core';
+import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
+import { CustomLegend, CustomLegendProps } from '@siemens/charts-ng/custom-legend';
 
 import { echarts } from '../../shared/echarts.custom';
 import {
@@ -18,8 +20,6 @@ import {
   DataZoomRange,
   SeriesUpdate
 } from '../si-chart/si-chart.interfaces';
-import { SiCustomLegendComponent } from '../si-custom-legend/si-custom-legend.component';
-import { CustomLegend, CustomLegendProps } from '../si-custom-legend/si-custom-legend.interface';
 import {
   CartesianChartData,
   CartesianChartSeries,
