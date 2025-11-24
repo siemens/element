@@ -4,7 +4,7 @@
  */
 import { normalize } from '@angular-devkit/core';
 import { SchematicsException, Tree } from '@angular-devkit/schematics';
-import { isAbsolute } from 'path';
+import { isAbsolute } from 'path/posix';
 import ts from 'typescript';
 
 import { ComponentNamesInstruction } from '../migrations/data/component-names.js';

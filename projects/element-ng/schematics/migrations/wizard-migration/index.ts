@@ -4,7 +4,7 @@
  */
 
 import { Rule, SchematicContext, Tree, UpdateRecorder } from '@angular-devkit/schematics';
-import { join, dirname } from 'path';
+import { join, dirname } from 'path/posix';
 import * as ts from 'typescript';
 
 import {

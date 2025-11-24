@@ -5,7 +5,7 @@
 
 import { normalize } from '@angular-devkit/core';
 import { DirEntry, Tree } from '@angular-devkit/schematics';
-import { relative } from 'path';
+import { relative } from 'path/posix';
 
 export class SchematicsFileSystem {
   private readonly basePath = normalize(process.cwd());

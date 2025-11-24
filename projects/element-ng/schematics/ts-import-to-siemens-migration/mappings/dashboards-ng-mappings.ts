@@ -49,5 +49,6 @@ export const DASHBOARDS_NG_MAPPINGS: { [symbol: string]: string } = {
   'WidgetInstanceEditorWizard': '@siemens/dashboards-ng',
   'WidgetInstanceEditorWizardState': '@siemens/dashboards-ng',
   'WidgetPositionConfig': '@siemens/dashboards-ng',
-  'SimplDashboardsNgModule': '@siemens/dashboards-ng'
+  'SimplDashboardsNgModule': '@siemens/dashboards-ng',
+  'SiWidgetStorage': '@siemens/dashboards-ng'
 };
