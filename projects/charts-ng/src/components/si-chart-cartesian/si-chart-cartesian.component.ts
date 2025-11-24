@@ -5,7 +5,11 @@
 import { Component, input, OnChanges, SimpleChanges } from '@angular/core';
 
 import { echarts } from '../../shared/echarts.custom';
-import { LegendComponentOption, TooltipComponentOption } from '../../shared/echarts.model';
+import {
+  GridComponentOption,
+  LegendComponentOption,
+  TooltipComponentOption
+} from '../../shared/echarts.model';
 import { SiChartLoadingSpinnerComponent } from '../si-chart-loading-spinner/si-chart-loading-spinner.component';
 import { SiChartComponent } from '../si-chart/si-chart.component';
 import {
@@ -338,11 +342,11 @@ export class SiChartCartesianComponent extends SiChartComponent implements OnCha
     return !!seriesValue?.some(series => 'symbol' in series && series.symbol !== 'circle');
   }
 
-  private getGrid(): any {
+  private getGrid(): GridComponentOption | GridComponentOption[] {
     const subChartGrids = this.subChartGrids();
     if (subChartGrids) {
       subChartGrids.forEach(g => (g.containLabel = false));
-      return subChartGrids;
+      return subChartGrids as GridComponentOption[];
     }
     return {};
   }

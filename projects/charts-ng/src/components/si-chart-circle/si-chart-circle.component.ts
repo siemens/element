@@ -8,7 +8,7 @@ import { PieSeriesOption } from '../../shared/echarts.model';
 import { SiChartLoadingSpinnerComponent } from '../si-chart-loading-spinner/si-chart-loading-spinner.component';
 import { SiChartComponent } from '../si-chart/si-chart.component';
 import { SiCustomLegendComponent } from '../si-custom-legend/si-custom-legend.component';
-import { CircleChartSeries, CircleValueUpdate } from './si-chart-circle.interface';
+import { CircleChartData, CircleChartSeries, CircleValueUpdate } from './si-chart-circle.interface';
 
 @Component({
   selector: 'si-chart-circle',
@@ -63,7 +63,7 @@ export class SiChartCircleComponent extends SiChartComponent {
   changeSingleValue(index: number, valueIndex: number, value: number): void {
     const optionSeries = this.actualOptions.series as PieSeriesOption[];
     const series = optionSeries[index].data!;
-    (series[valueIndex] as any).value = value;
+    (series[valueIndex] as CircleChartData).value = value;
     this.updateEChart();
   }
 
@@ -77,7 +77,7 @@ export class SiChartCircleComponent extends SiChartComponent {
       if (!currentSeries) {
         return;
       }
-      (currentSeries[update.valueIndex] as any).value = update.value;
+      (currentSeries[update.valueIndex] as CircleChartData).value = update.value;
     });
 
     this.updateEChart();
