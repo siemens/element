@@ -21,6 +21,12 @@ import {
   viewChild,
   viewChildren
 } from '@angular/core';
+import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
+import {
+  CustomLegend,
+  CustomLegendItem,
+  CustomLegendProps
+} from '@siemens/charts-ng/custom-legend';
 
 import { echarts } from '../../shared/echarts.custom';
 import {
@@ -31,12 +37,6 @@ import {
 } from '../../shared/echarts.model';
 import { themeSupport } from '../../shared/theme-support';
 import { SiChartLoadingSpinnerComponent } from '../si-chart-loading-spinner/si-chart-loading-spinner.component';
-import { SiCustomLegendComponent } from '../si-custom-legend/si-custom-legend.component';
-import {
-  CustomLegend,
-  CustomLegendItem,
-  CustomLegendProps
-} from '../si-custom-legend/si-custom-legend.interface';
 import {
   AxisPointerEvent,
   CustomLegendMultiLineInfo,

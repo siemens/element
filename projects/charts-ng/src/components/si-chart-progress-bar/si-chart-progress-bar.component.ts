@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, input } from '@angular/core';
+import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 
 import { echarts } from '../../shared/echarts.custom';
 import { BarSeriesOption } from '../../shared/echarts.model';
 import { SiChartLoadingSpinnerComponent } from '../si-chart-loading-spinner/si-chart-loading-spinner.component';
 import { SiChartComponent } from '../si-chart/si-chart.component';
 import { ChartXAxis, ChartYAxis } from '../si-chart/si-chart.interfaces';
-import { SiCustomLegendComponent } from '../si-custom-legend/si-custom-legend.component';
 import { ProgressBarChartSeries, ProgressBarValueUpdate } from './si-chart-progress-bar.interface';
 
 @Component({
