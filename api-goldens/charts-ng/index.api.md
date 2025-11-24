@@ -10,6 +10,9 @@ import { AxisPointerComponentOption } from 'echarts';
 import { BarSeriesOption } from 'echarts';
 import { BrushComponentOption } from 'echarts';
 import { CandlestickSeriesOption } from 'echarts';
+import { CustomLegend } from '@siemens/charts-ng/custom-legend';
+import { CustomLegendItem } from '@siemens/charts-ng/custom-legend';
+import { CustomLegendProps } from '@siemens/charts-ng/custom-legend';
 import { CustomSeriesOption } from 'echarts';
 import { DatasetComponentOption } from 'echarts';
 import { DataZoomComponentOption } from 'echarts';
@@ -19,6 +22,9 @@ import { ElementRef } from '@angular/core';
 import { GaugeSeriesOption } from 'echarts';
 import { GridComponentOption } from 'echarts';
 import { HeatmapSeriesOption } from 'echarts';
+import * as i1 from '@angular/common';
+import * as i11 from '@siemens/charts-ng/custom-legend';
+import * as i6 from '@siemens/charts-ng/loading-spinner';
 import { LegendComponentOption } from 'echarts';
 import { LineSeriesOption } from 'echarts';
 import { MarkAreaComponentOption } from 'echarts';
@@ -31,6 +37,7 @@ import { PieSeriesOption } from 'echarts';
 import { PolarComponentOption } from 'echarts';
 import { SankeySeriesOption } from 'echarts';
 import { ScatterSeriesOption } from 'echarts';
+import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 import { SimpleChanges } from '@angular/core';
 import { SingleAxisComponentOption } from 'echarts';
 import { SunburstSeriesOption } from 'echarts';
@@ -139,60 +146,11 @@ export interface CircleValueUpdate {
 }
 
 // @public (undocumented)
-export interface CustomLegend {
-    // (undocumented)
-    customLegends: [
-        {
-        list: CustomLegendItem[];
-        unit?: string;
-    },
-        {
-        list: CustomLegendItem[];
-        unit?: string;
-    }
-    ];
-    // (undocumented)
-    gridIndex?: number;
-    // (undocumented)
-    legendAxis: string;
-    // (undocumented)
-    top?: number | string;
-}
-
-// @public (undocumented)
-export interface CustomLegendItem {
-    // (undocumented)
-    alternativeNaming?: boolean;
-    // (undocumented)
-    color?: string;
-    // (undocumented)
-    displayName?: string;
-    // (undocumented)
-    name: string;
-    // (undocumented)
-    selected: boolean;
-    // (undocumented)
-    symbol?: string;
-    // (undocumented)
-    tooltip?: string;
-}
-
-// @public (undocumented)
 export interface CustomLegendMultiLineInfo {
     // (undocumented)
     customLegendId: number;
     // (undocumented)
     isCustomLegendMultilined: boolean;
-}
-
-// @public (undocumented)
-export interface CustomLegendProps {
-    // (undocumented)
-    displayName?: string;
-    // (undocumented)
-    tooltip?: string;
-    // (undocumented)
-    unit?: string;
 }
 
 export { CustomSeriesOption }
@@ -734,7 +692,7 @@ class SiChartsNgModule {
     // (undocumented)
     static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiChartsNgModule>;
     // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiChartsNgModule, never, [typeof SiChartCartesianComponent, typeof SiChartCircleComponent, typeof SiChartComponent, typeof SiChartGaugeComponent, typeof SiChartProgressBarComponent, typeof SiChartProgressComponent, typeof SiChartSankeyComponent, typeof SiChartSunburstComponent, typeof SiCustomLegendComponent], [typeof SiChartCartesianComponent, typeof SiChartCircleComponent, typeof SiChartComponent, typeof SiChartGaugeComponent, typeof SiChartProgressBarComponent, typeof SiChartProgressComponent, typeof SiChartSankeyComponent, typeof SiChartSunburstComponent, typeof SiCustomLegendComponent]>;
+    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiChartsNgModule, never, [typeof i1.CommonModule, typeof SiChartCartesianComponent, typeof SiChartCircleComponent, typeof SiChartComponent, typeof SiChartGaugeComponent, typeof i6.SiChartLoadingSpinnerComponent, typeof SiChartProgressBarComponent, typeof SiChartProgressComponent, typeof SiChartSankeyComponent, typeof SiChartSunburstComponent, typeof i11.SiCustomLegendComponent], [typeof SiChartCartesianComponent, typeof SiChartCircleComponent, typeof SiChartComponent, typeof SiChartGaugeComponent, typeof i6.SiChartLoadingSpinnerComponent, typeof SiChartProgressBarComponent, typeof SiChartProgressComponent, typeof SiChartSankeyComponent, typeof SiChartSunburstComponent, typeof i11.SiCustomLegendComponent]>;
 }
 export { SiChartsNgModule }
 export { SiChartsNgModule as SimplChartsNgModule }
@@ -752,29 +710,6 @@ export class SiChartSunburstComponent extends SiChartComponent {
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChartSunburstComponent, "si-chart-sunburst", never, { "series": { "alias": "series"; "required": false; "isSignal": true; }; "toolTip": { "alias": "toolTip"; "required": false; "isSignal": true; }; "tooltip": { "alias": "tooltip"; "required": false; "isSignal": true; }; }, {}, never, ["[slot=timeRangeBar]"], true, never>;
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChartSunburstComponent, never>;
-}
-
-// @public (undocumented)
-export class SiCustomLegendComponent {
-    // (undocumented)
-    readonly customLegend: _angular_core.InputSignal<CustomLegend | undefined>;
-    // (undocumented)
-    protected legendClick(legend: CustomLegendItem): void;
-    readonly legendClickEvent: _angular_core.OutputEmitterRef<CustomLegendItem>;
-    readonly legendHoverEndEvent: _angular_core.OutputEmitterRef<CustomLegendItem>;
-    readonly legendHoverStartEvent: _angular_core.OutputEmitterRef<CustomLegendItem>;
-    // (undocumented)
-    protected legendIconClick(legend: CustomLegendItem): void;
-    readonly legendIconClickEvent: _angular_core.OutputEmitterRef<CustomLegendItem>;
-    readonly subTitle: _angular_core.InputSignal<string | undefined>;
-    readonly subTitleColor: _angular_core.InputSignal<string | undefined>;
-    readonly textColor: _angular_core.InputSignal<string | undefined>;
-    readonly title: _angular_core.InputSignal<string | undefined>;
-    readonly titleColor: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiCustomLegendComponent, "si-custom-legend", never, { "customLegend": { "alias": "customLegend"; "required": false; "isSignal": true; }; "title": { "alias": "title"; "required": false; "isSignal": true; }; "subTitle": { "alias": "subTitle"; "required": false; "isSignal": true; }; "titleColor": { "alias": "titleColor"; "required": false; "isSignal": true; }; "subTitleColor": { "alias": "subTitleColor"; "required": false; "isSignal": true; }; "textColor": { "alias": "textColor"; "required": false; "isSignal": true; }; }, { "legendIconClickEvent": "legendIconClickEvent"; "legendClickEvent": "legendClickEvent"; "legendHoverStartEvent": "legendHoverStartEvent"; "legendHoverEndEvent": "legendHoverEndEvent"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiCustomLegendComponent, never>;
 }
 
 // @public (undocumented)
@@ -1644,6 +1579,10 @@ export type XAxisPosition = 'top' | 'bottom';
 
 // @public (undocumented)
 export type YAxisPosition = 'left' | 'right';
+
+
+export * from "@siemens/charts-ng/custom-legend";
+export * from "@siemens/charts-ng/loading-spinner";
 
 // (No @packageDocumentation comment for this package)
 
