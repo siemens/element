@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CartesianChartSeries, SiChartCartesianComponent } from '@siemens/charts-ng';
+import { CartesianChartSeries, SiChartCartesianComponent } from '@siemens/charts-ng/cartesian';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 
 @Component({

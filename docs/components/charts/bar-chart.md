@@ -56,7 +56,7 @@ understand what relationship each part has with the total amount.
     - [echarts](https://www.npmjs.com/package/echarts)
 
 ```ts
-import { SiChartCartesianComponent } from '@siemens/charts-ng';
+import { SiChartCartesianComponent } from '@siemens/charts-ng/cartesian';
 
 @Component({
   imports: [SiChartCartesianComponent, ...]

@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, OnDestroy, viewChild } from '@angular/core';
-import { ProgressChartSeries, SiChartProgressBarComponent } from '@siemens/charts-ng';
+import {
+  ProgressBarChartSeries,
+  SiChartProgressBarComponent
+} from '@siemens/charts-ng/progress-bar';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 import { interval, Subscription } from 'rxjs';
 
@@ -39,7 +42,7 @@ export class SampleComponent implements OnDestroy {
         name: 'Value 5',
         percent: 100
       }
-    ] as ProgressChartSeries[],
+    ] as ProgressBarChartSeries[],
     showLegend: true,
     liveUpdate: false
   };

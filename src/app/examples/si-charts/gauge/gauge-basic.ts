@@ -4,7 +4,7 @@
  */
 import { ChangeDetectionStrategy, Component, OnDestroy, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SiChartGaugeComponent } from '@siemens/charts-ng';
+import { SiChartGaugeComponent } from '@siemens/charts-ng/gauge';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 import { interval, Subscription } from 'rxjs';
 

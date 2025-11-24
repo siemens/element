@@ -46,7 +46,7 @@ be your best choice.
     - [echarts](https://www.npmjs.com/package/echarts)
 
 ```ts
-import { SiChartCartesianComponent } from '@siemens/charts-ng';
+import { SiChartCartesianComponent } from '@siemens/charts-ng/cartesian';
 
 @Component({
   imports: [SiChartCartesianComponent, ...]

@@ -6,10 +6,9 @@ import { ChangeDetectionStrategy, Component, OnDestroy, viewChild } from '@angul
 import {
   CartesianChartData,
   CartesianChartSeries,
-  ChartXAxis,
-  ChartYAxis,
   SiChartCartesianComponent
-} from '@siemens/charts-ng';
+} from '@siemens/charts-ng/cartesian';
+import { ChartXAxis, ChartYAxis } from '@siemens/charts-ng/common';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 import { interval, Subscription } from 'rxjs';
 
