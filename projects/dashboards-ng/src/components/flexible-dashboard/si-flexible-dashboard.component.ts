@@ -8,11 +8,13 @@ import {
   computed,
   inject,
   input,
+  inputBinding,
   model,
   OnChanges,
   OnDestroy,
   OnInit,
   output,
+  outputBinding,
   signal,
   SimpleChanges,
   Type,
@@ -258,18 +260,19 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
     }
     this.viewState.set('catalog');
     const componentType = this.widgetCatalogComponent() ?? SiWidgetCatalogComponent;
-    const catalogRef = this.catalogHost().createComponent<SiWidgetCatalogComponent>(componentType);
-    catalogRef.setInput('searchPlaceholder', this.searchPlaceholder());
-    catalogRef.instance.widgetCatalog = this.widgetCatalog();
-
-    const subscription = catalogRef.instance.closed.subscribe(widgetConfig => {
-      subscription.unsubscribe();
-      this.viewState.set('dashboard');
-      this.catalogHost().clear();
-      if (widgetConfig) {
-        this.grid().addWidgetInstance(widgetConfig);
-      }
+    const catalogRef = this.catalogHost().createComponent<SiWidgetCatalogComponent>(componentType, {
+      bindings: [
+        inputBinding('searchPlaceholder', this.searchPlaceholder),
+        outputBinding<Omit<WidgetConfig, 'id'> | undefined>('closed', widgetConfig => {
+          this.viewState.set('dashboard');
+          this.catalogHost().clear();
+          if (widgetConfig) {
+            this.grid().addWidgetInstance(widgetConfig);
+          }
+        })
+      ]
     });
+    catalogRef.instance.widgetCatalog = this.widgetCatalog();
   }
 
   protected onModified(event: boolean): void {
@@ -321,17 +324,18 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
       widgetInstanceEditorDialogComponent ?? SiWidgetInstanceEditorDialogComponent;
 
     this.viewState.set('editor');
-    const catalogRef =
-      this.catalogHost().createComponent<SiWidgetInstanceEditorDialogComponent>(componentType);
-    catalogRef.setInput('widgetConfig', widgetConfig);
-    catalogRef.setInput('widget', widget);
-    const subscription = catalogRef.instance.closed.subscribe(editedWidgetConfig => {
-      subscription.unsubscribe();
-      this.viewState.set('dashboard');
-      this.catalogHost().clear();
-      if (editedWidgetConfig) {
-        this.grid().updateWidgetInstance(editedWidgetConfig);
-      }
+    this.catalogHost().createComponent<SiWidgetInstanceEditorDialogComponent>(componentType, {
+      bindings: [
+        inputBinding('widgetConfig', () => widgetConfig),
+        inputBinding('widget', () => widget),
+        outputBinding<WidgetConfig | undefined>('closed', editedWidgetConfig => {
+          this.viewState.set('dashboard');
+          this.catalogHost().clear();
+          if (editedWidgetConfig) {
+            this.grid().updateWidgetInstance(editedWidgetConfig);
+          }
+        })
+      ]
     });
   }
 
