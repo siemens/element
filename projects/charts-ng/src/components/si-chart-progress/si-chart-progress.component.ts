@@ -3,33 +3,23 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, input } from '@angular/core';
+import { SiChartComponent } from '@siemens/charts-ng/chart';
+import { echarts } from '@siemens/charts-ng/common';
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
 import { PieSeriesOption } from 'echarts';
+import { PieChart } from 'echarts/charts';
+import { TitleComponent, TooltipComponent } from 'echarts/components';
 
-import { SiChartComponent } from '../si-chart/si-chart.component';
 import { ProgressChartSeries, ProgressValueUpdate } from './si-chart-progress.interface';
 
-// Modular ECharts imports - only load what Progress needs
-import { echarts } from '@siemens/charts-ng/common';
-import { PieChart } from 'echarts/charts';
-import {
-  TitleComponent,
-  TooltipComponent,
-} from 'echarts/components';
-
-// Register only the components needed for Progress charts
-echarts.use([
-  PieChart,
-  TitleComponent,
-  TooltipComponent,
-]);
+echarts.use([PieChart, TitleComponent, TooltipComponent]);
 
 @Component({
   selector: 'si-chart-progress',
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
-  templateUrl: '../si-chart/si-chart.component.html',
-  styleUrl: '../si-chart/si-chart.component.scss'
+  templateUrl: '../../../chart/si-chart.component.html',
+  styleUrl: '../../../chart/si-chart.component.scss'
 })
 export class SiChartProgressComponent extends SiChartComponent {
   /** The series for the chart. */

@@ -3,36 +3,22 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, input } from '@angular/core';
+import { SiChartComponent, ChartXAxis, ChartYAxis } from '@siemens/charts-ng/chart';
+import { echarts, BarSeriesOption } from '@siemens/charts-ng/common';
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
+import { BarChart } from 'echarts/charts';
+import { TitleComponent, TooltipComponent, GridComponent } from 'echarts/components';
 
-import { echarts } from '@siemens/charts-ng/common';
-import { BarSeriesOption } from '@siemens/charts-ng/common';
-import { SiChartComponent } from '../si-chart/si-chart.component';
-import { ChartXAxis, ChartYAxis } from '../si-chart/si-chart.interfaces';
 import { ProgressBarChartSeries, ProgressBarValueUpdate } from './si-chart-progress-bar.interface';
 
-// Modular ECharts imports - only load what ProgressBar needs
-import { BarChart } from 'echarts/charts';
-import {
-  TitleComponent,
-  TooltipComponent,
-  GridComponent,
-} from 'echarts/components';
-
-// Register only the components needed for ProgressBar charts
-echarts.use([
-  BarChart,
-  TitleComponent,
-  TooltipComponent,
-  GridComponent,
-]);
+echarts.use([BarChart, TitleComponent, TooltipComponent, GridComponent]);
 
 @Component({
   selector: 'si-chart-progress-bar',
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
-  templateUrl: '../si-chart/si-chart.component.html',
-  styleUrl: '../si-chart/si-chart.component.scss'
+  templateUrl: '../../../chart/si-chart.component.html',
+  styleUrl: '../../../chart/si-chart.component.scss'
 })
 export class SiChartProgressBarComponent extends SiChartComponent {
   /** The series for the chart. */

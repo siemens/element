@@ -22,6 +22,14 @@ import {
   viewChildren
 } from '@angular/core';
 import {
+  echarts,
+  DataZoomComponentOption,
+  EChartOption,
+  EChartSeries,
+  GridComponentOption,
+  themeSupport
+} from '@siemens/charts-ng/common';
+import {
   CustomLegend,
   CustomLegendItem,
   CustomLegendProps,
@@ -29,14 +37,6 @@ import {
 } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
 
-import { echarts } from '@siemens/charts-ng/common';
-import {
-  DataZoomComponentOption,
-  EChartOption,
-  EChartSeries,
-  GridComponentOption
-} from '@siemens/charts-ng/common';
-import { themeSupport } from '@siemens/charts-ng/common';
 import {
   AxisPointerEvent,
   CustomLegendMultiLineInfo,

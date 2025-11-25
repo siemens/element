@@ -4,35 +4,20 @@
  */
 import { Component, input, OnChanges, SimpleChanges } from '@angular/core';
 import {
+  SiChartComponent,
+  ChartXAxis,
+  ChartYAxis,
+  DataZoomRange,
+  SeriesUpdate
+} from '@siemens/charts-ng/chart';
+import { echarts, LegendComponentOption, TooltipComponentOption } from '@siemens/charts-ng/common';
+import {
   CustomLegend,
   CustomLegendProps,
   SiCustomLegendComponent
 } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
-
-import { echarts } from '@siemens/charts-ng/common';
-import { LegendComponentOption, TooltipComponentOption } from '@siemens/charts-ng/common';
-import { SiChartComponent } from '../si-chart/si-chart.component';
-import {
-  ChartXAxis,
-  ChartYAxis,
-  DataZoomRange,
-  SeriesUpdate
-} from '../si-chart/si-chart.interfaces';
-import {
-  CartesianChartData,
-  CartesianChartSeries,
-  SubchartGrid
-} from './si-chart-cartesian.interfaces';
-
-// Modular ECharts imports - only load what Cartesian charts need
-import {
-  BarChart,
-  LineChart,
-  ScatterChart,
-  CandlestickChart,
-  HeatmapChart,
-} from 'echarts/charts';
+import { BarChart, LineChart, ScatterChart, CandlestickChart, HeatmapChart } from 'echarts/charts';
 import {
   TitleComponent,
   TooltipComponent,
@@ -45,10 +30,15 @@ import {
   MarkAreaComponent,
   MarkLineComponent,
   MarkPointComponent,
-  AxisPointerComponent,
+  AxisPointerComponent
 } from 'echarts/components';
 
-// Register all components needed for Cartesian charts (Bar, Line, Scatter, Candlestick, Heatmap)
+import {
+  CartesianChartData,
+  CartesianChartSeries,
+  SubchartGrid
+} from './si-chart-cartesian.interfaces';
+
 echarts.use([
   BarChart,
   LineChart,
@@ -66,14 +56,14 @@ echarts.use([
   MarkAreaComponent,
   MarkLineComponent,
   MarkPointComponent,
-  AxisPointerComponent,
+  AxisPointerComponent
 ]);
 
 @Component({
   selector: 'si-chart-cartesian',
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
-  templateUrl: '../si-chart/si-chart.component.html',
-  styleUrl: '../si-chart/si-chart.component.scss'
+  templateUrl: '../../../chart/si-chart.component.html',
+  styleUrl: '../../../chart/si-chart.component.scss'
 })
 export class SiChartCartesianComponent extends SiChartComponent implements OnChanges {
   /** The series for the chart. */

@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { SiSeriesOption } from '@siemens/charts-ng/chart';
 import {
   BarSeriesOption,
   CandlestickSeriesOption,
@@ -12,7 +13,6 @@ import {
   MarkPointComponentOption,
   ScatterSeriesOption
 } from '@siemens/charts-ng/common';
-import { SiSeriesOption } from '../si-chart/si-chart.interfaces';
 
 export type LineStepType = 'start' | 'middle' | 'end';
 export type LineType = 'solid' | 'dashed' | 'dotted';

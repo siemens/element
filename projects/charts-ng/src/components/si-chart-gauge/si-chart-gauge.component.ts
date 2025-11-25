@@ -13,33 +13,22 @@ import {
   SimpleChange,
   SimpleChanges
 } from '@angular/core';
+import { SiChartComponent } from '@siemens/charts-ng/chart';
+import { GaugeSeriesOption, echarts } from '@siemens/charts-ng/common';
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
+import { GaugeChart } from 'echarts/charts';
+import { TitleComponent, TooltipComponent } from 'echarts/components';
 
-import { GaugeSeriesOption } from '@siemens/charts-ng/common';
-import { SiChartComponent } from '../si-chart/si-chart.component';
 import { GaugeChartSeries } from './si-chart-gauge.interface';
 
-// Modular ECharts imports - only load what Gauge needs
-import { echarts } from '@siemens/charts-ng/common';
-import { GaugeChart } from 'echarts/charts';
-import {
-  TitleComponent,
-  TooltipComponent,
-} from 'echarts/components';
-
-// Register only the components needed for Gauge charts
-echarts.use([
-  GaugeChart,
-  TitleComponent,
-  TooltipComponent,
-]);
+echarts.use([GaugeChart, TitleComponent, TooltipComponent]);
 
 @Component({
   selector: 'si-chart-gauge',
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
-  templateUrl: '../si-chart/si-chart.component.html',
-  styleUrl: '../si-chart/si-chart.component.scss'
+  templateUrl: '../../../chart/si-chart.component.html',
+  styleUrl: '../../../chart/si-chart.component.scss'
 })
 export class SiChartGaugeComponent extends SiChartComponent implements OnChanges {
   /** @defaultValue 0 */
