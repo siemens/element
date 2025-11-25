@@ -109,6 +109,9 @@
             },
             "local": {
               "buildTarget": "element-examples:build:local"
+            },
+            "local-maps": {
+              "buildTarget": "element-examples:build:local-maps"
             }
           }
         },
