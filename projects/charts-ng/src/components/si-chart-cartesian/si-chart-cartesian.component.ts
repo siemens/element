@@ -10,8 +10,8 @@ import {
 } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
 
-import { echarts } from '../../shared/echarts.custom';
-import { LegendComponentOption, TooltipComponentOption } from '../../shared/echarts.model';
+import { echarts } from '@siemens/charts-ng/common';
+import { LegendComponentOption, TooltipComponentOption } from '@siemens/charts-ng/common';
 import { SiChartComponent } from '../si-chart/si-chart.component';
 import {
   ChartXAxis,
@@ -24,6 +24,50 @@ import {
   CartesianChartSeries,
   SubchartGrid
 } from './si-chart-cartesian.interfaces';
+
+// Modular ECharts imports - only load what Cartesian charts need
+import {
+  BarChart,
+  LineChart,
+  ScatterChart,
+  CandlestickChart,
+  HeatmapChart,
+} from 'echarts/charts';
+import {
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+  GridComponent,
+  DataZoomComponent,
+  VisualMapComponent,
+  ToolboxComponent,
+  BrushComponent,
+  MarkAreaComponent,
+  MarkLineComponent,
+  MarkPointComponent,
+  AxisPointerComponent,
+} from 'echarts/components';
+
+// Register all components needed for Cartesian charts (Bar, Line, Scatter, Candlestick, Heatmap)
+echarts.use([
+  BarChart,
+  LineChart,
+  ScatterChart,
+  CandlestickChart,
+  HeatmapChart,
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+  GridComponent,
+  DataZoomComponent,
+  VisualMapComponent,
+  ToolboxComponent,
+  BrushComponent,
+  MarkAreaComponent,
+  MarkLineComponent,
+  MarkPointComponent,
+  AxisPointerComponent,
+]);
 
 @Component({
   selector: 'si-chart-cartesian',

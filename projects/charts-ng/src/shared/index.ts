@@ -1,8 +1,7 @@
 /**
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
+ * 
+ * @deprecated This file is deprecated. Please import from '@siemens/charts-ng/common' instead.
  */
-export * from './echarts.custom';
-export * from './echarts.model';
-export * from './theme-support';
-export * from './themes/element';
+export * from '@siemens/charts-ng/common';

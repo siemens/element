@@ -29,14 +29,14 @@ import {
 } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
 
-import { echarts } from '../../shared/echarts.custom';
+import { echarts } from '@siemens/charts-ng/common';
 import {
   DataZoomComponentOption,
   EChartOption,
   EChartSeries,
   GridComponentOption
-} from '../../shared/echarts.model';
-import { themeSupport } from '../../shared/theme-support';
+} from '@siemens/charts-ng/common';
+import { themeSupport } from '@siemens/charts-ng/common';
 import {
   AxisPointerEvent,
   CustomLegendMultiLineInfo,

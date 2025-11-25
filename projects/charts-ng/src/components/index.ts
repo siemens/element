@@ -8,6 +8,7 @@ export * from './si-chart-circle/index';
 export * from './si-chart-gauge/index';
 export * from './si-chart-progress/index';
 export * from './si-chart-progress-bar/index';
+export * from '@siemens/charts-ng/common';
 export * from '@siemens/charts-ng/custom-legend';
 export * from '@siemens/charts-ng/loading-spinner';
 export * from './si-chart-sankey/index';

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { themeElement } from '../shared/themes/element';
+import { themeElement } from './themes/element';
 
 export const themeSupport = {
   _defaultTheme: themeElement,

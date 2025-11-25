@@ -10,6 +10,21 @@ import { PieSeriesOption } from 'echarts';
 import { SiChartComponent } from '../si-chart/si-chart.component';
 import { ProgressChartSeries, ProgressValueUpdate } from './si-chart-progress.interface';
 
+// Modular ECharts imports - only load what Progress needs
+import { echarts } from '@siemens/charts-ng/common';
+import { PieChart } from 'echarts/charts';
+import {
+  TitleComponent,
+  TooltipComponent,
+} from 'echarts/components';
+
+// Register only the components needed for Progress charts
+echarts.use([
+  PieChart,
+  TitleComponent,
+  TooltipComponent,
+]);
+
 @Component({
   selector: 'si-chart-progress',
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],

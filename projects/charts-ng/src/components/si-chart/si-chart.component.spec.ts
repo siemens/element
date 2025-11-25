@@ -5,8 +5,8 @@
 import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { echarts } from '../../shared/echarts.custom';
-import { EChartOption } from '../../shared/echarts.model';
+import { echarts } from '@siemens/charts-ng/common';
+import { EChartOption } from '@siemens/charts-ng/common';
 import { SiChartComponent } from './si-chart.component';
 
 @Component({

@@ -16,9 +16,24 @@ import {
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
 
-import { GaugeSeriesOption } from '../../shared/echarts.model';
+import { GaugeSeriesOption } from '@siemens/charts-ng/common';
 import { SiChartComponent } from '../si-chart/si-chart.component';
 import { GaugeChartSeries } from './si-chart-gauge.interface';
+
+// Modular ECharts imports - only load what Gauge needs
+import { echarts } from '@siemens/charts-ng/common';
+import { GaugeChart } from 'echarts/charts';
+import {
+  TitleComponent,
+  TooltipComponent,
+} from 'echarts/components';
+
+// Register only the components needed for Gauge charts
+echarts.use([
+  GaugeChart,
+  TitleComponent,
+  TooltipComponent,
+]);
 
 @Component({
   selector: 'si-chart-gauge',

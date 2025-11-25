@@ -6,11 +6,27 @@ import { Component, input } from '@angular/core';
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
 
-import { echarts } from '../../shared/echarts.custom';
-import { BarSeriesOption } from '../../shared/echarts.model';
+import { echarts } from '@siemens/charts-ng/common';
+import { BarSeriesOption } from '@siemens/charts-ng/common';
 import { SiChartComponent } from '../si-chart/si-chart.component';
 import { ChartXAxis, ChartYAxis } from '../si-chart/si-chart.interfaces';
 import { ProgressBarChartSeries, ProgressBarValueUpdate } from './si-chart-progress-bar.interface';
+
+// Modular ECharts imports - only load what ProgressBar needs
+import { BarChart } from 'echarts/charts';
+import {
+  TitleComponent,
+  TooltipComponent,
+  GridComponent,
+} from 'echarts/components';
+
+// Register only the components needed for ProgressBar charts
+echarts.use([
+  BarChart,
+  TitleComponent,
+  TooltipComponent,
+  GridComponent,
+]);
 
 @Component({
   selector: 'si-chart-progress-bar',

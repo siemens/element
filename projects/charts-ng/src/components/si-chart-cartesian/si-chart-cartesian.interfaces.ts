@@ -11,7 +11,7 @@ import {
   MarkLineComponentOption,
   MarkPointComponentOption,
   ScatterSeriesOption
-} from '../../shared/echarts.model';
+} from '@siemens/charts-ng/common';
 import { SiSeriesOption } from '../si-chart/si-chart.interfaces';
 
 export type LineStepType = 'start' | 'middle' | 'end';
