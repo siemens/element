@@ -10,9 +10,9 @@ import {
   viewChild
 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-
+import { ChartXAxis, ChartYAxis } from '@siemens/charts-ng/chart';
 import { EChartOption } from '@siemens/charts-ng/common';
-import { ChartXAxis, ChartYAxis } from '../si-chart/si-chart.interfaces';
+
 import { SiChartCartesianComponent } from './si-chart-cartesian.component';
 import { CartesianChartSeries } from './si-chart-cartesian.interfaces';
 

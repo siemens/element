@@ -3,34 +3,20 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, input } from '@angular/core';
+import { SiChartComponent } from '@siemens/charts-ng/chart';
+import { SankeySeriesOption, echarts } from '@siemens/charts-ng/common';
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
-
-import { SankeySeriesOption } from '@siemens/charts-ng/common';
-import { SiChartComponent } from '../si-chart/si-chart.component';
-
-// Modular ECharts imports - only load what Sankey needs
-import { echarts } from '@siemens/charts-ng/common';
 import { SankeyChart } from 'echarts/charts';
-import {
-  TitleComponent,
-  TooltipComponent,
-  GridComponent,
-} from 'echarts/components';
+import { TitleComponent, TooltipComponent, GridComponent } from 'echarts/components';
 
-// Register only the components needed for Sankey charts
-echarts.use([
-  SankeyChart,
-  TitleComponent,
-  TooltipComponent,
-  GridComponent,
-]);
+echarts.use([SankeyChart, TitleComponent, TooltipComponent, GridComponent]);
 
 @Component({
   selector: 'si-chart-sankey',
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
-  templateUrl: '../si-chart/si-chart.component.html',
-  styleUrl: '../si-chart/si-chart.component.scss'
+  templateUrl: '../chart/si-chart.component.html',
+  styleUrl: '../chart/si-chart.component.scss'
 })
 export class SiChartSankeyComponent extends SiChartComponent {
   /** The series for the chart. */

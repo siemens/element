@@ -5,6 +5,5 @@
 // Public API Surface
 
 export * from './components/index';
-export * from './shared/index';
 
 export * from './public-api.module';
