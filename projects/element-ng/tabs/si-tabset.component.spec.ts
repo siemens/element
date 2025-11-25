@@ -148,7 +148,6 @@ describe('SiTabset', () => {
     testComponent = fixture.componentInstance;
     loader = TestbedHarnessEnvironment.loader(fixture);
     tabsetHarness = await loader.getHarness(SiTabsetHarness);
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000;
   });
 
   beforeEach(() => jasmine.clock().install());

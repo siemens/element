@@ -131,9 +131,12 @@ describe('SiFileDropzoneComponent', () => {
           })
         })
       },
-      add: () => null,
+      add: (...args: any[]): DataTransferItem | null => null,
       clear: () => {},
-      remove: () => false
+      remove: (index: number) => false,
+      [Symbol.iterator]: (): ArrayIterator<DataTransferItem> => {
+        throw new Error('Function not implemented.');
+      }
     };
   };
 

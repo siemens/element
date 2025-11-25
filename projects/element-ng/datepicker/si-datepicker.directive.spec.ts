@@ -168,7 +168,9 @@ describe('SiDatepickerDirective', () => {
       await updateConfig({ showTime: true, showSeconds: true });
       await changeDate(getTestDate());
       fixture.detectChanges();
-      expect(component.siDatePicker().nativeElement.value).toBe('3/12/2022, 5:30:20 AM');
+      // The whitespace character between time and meridian changed with angular 21
+      // see https://github.com/angular/angular/issues/65707
+      expect(component.siDatePicker().nativeElement.value).toBe('3/12/2022, 5:30:20 AM');
     });
 
     it('should close overlay on click', async () => {
