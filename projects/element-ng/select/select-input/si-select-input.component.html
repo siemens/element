@@ -7,7 +7,7 @@
   [id]="baseId() + '-content'"
   [siAutoCollapsableList]="selectionStrategy.allowMultiple"
 >
-  @for (activeOption of selectedRows(); track activeOption) {
+  @for (activeOption of selectedRows(); track $index) {
     @if (activeOption) {
       <si-select-option
         siAutoCollapsableListItem
