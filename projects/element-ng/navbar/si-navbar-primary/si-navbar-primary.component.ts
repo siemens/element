@@ -296,13 +296,15 @@ export class SiNavbarPrimaryComponent implements OnChanges, HeaderWithDropdowns 
         const allAppsLink = this.allAppsLink();
         if (allAppsLink && this.newAppItems.length) {
           const lastCategory = this.newAppItems.at(-1)!;
-          lastCategory.apps.push({
-            name: allAppsLink.title!,
-            iconClass: allAppsLink.icon ?? 'element-plus',
-            href: allAppsLink.href!,
-            target: allAppsLink.target,
-            _noFavorite: true // this should not show up in public API, but we need it for now.
-          } as App);
+          if ('apps' in lastCategory) {
+            lastCategory.apps.push({
+              name: allAppsLink.title!,
+              iconClass: allAppsLink.icon ?? 'element-plus',
+              href: allAppsLink.href!,
+              target: allAppsLink.target,
+              _noFavorite: true // this should not show up in public API, but we need it for now.
+            } as App);
+          }
         }
       } else if (appItems) {
         this.newAppItems = this.convertApps(appItems!);

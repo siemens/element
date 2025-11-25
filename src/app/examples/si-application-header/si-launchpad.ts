@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+/* eslint-disable @typescript-eslint/no-deprecated */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
@@ -25,6 +26,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   apps: App[] = [
     {
       name: 'Assets',

@@ -23,50 +23,47 @@
           }
           <div class="mt-4 d-flex flex-wrap gap-4">
             @for (app of category.apps; track app) {
-              @switch (app.type) {
-                @case ('router-link') {
-                  <a
-                    si-launchpad-app
-                    routerLinkActive="active"
-                    [routerLinkActiveOptions]="app.activeMatchOptions ?? { exact: false }"
-                    [enableFavoriteToggle]="enableFavorites() && !$any(app)._noFavorite"
-                    [external]="app.external"
-                    [iconUrl]="app.iconUrl"
-                    [iconClass]="app.iconClass"
-                    [favorite]="!!app.favorite"
-                    [routerLink]="app.routerLink"
-                    [queryParams]="app.extras?.queryParams"
-                    [queryParamsHandling]="app.extras?.queryParamsHandling"
-                    [fragment]="app.extras?.fragment"
-                    [state]="app.extras?.state"
-                    [relativeTo]="app.extras?.relativeTo ?? this.activatedRoute"
-                    [preserveFragment]="app.extras?.preserveFragment"
-                    [skipLocationChange]="app.extras?.skipLocationChange"
-                    [replaceUrl]="app.extras?.replaceUrl"
-                    (favoriteChange)="toggleFavorite(app, $event)"
-                  >
-                    <span app-name>{{ app.name | translate }}</span>
-                    <span app-systemName>{{ app.systemName | translate }}</span>
-                  </a>
-                }
-                @default {
-                  <!--fallback for existing apps that do not have a type defined -->
-                  <a
-                    si-launchpad-app
-                    [enableFavoriteToggle]="enableFavorites() && !$any(app)._noFavorite"
-                    [favorite]="!!app.favorite"
-                    [href]="app.href"
-                    [target]="app.target ?? ''"
-                    [active]="app.active"
-                    [external]="app.external"
-                    [iconUrl]="app.iconUrl"
-                    [iconClass]="app.iconClass"
-                    (favoriteChange)="toggleFavorite(app, $event)"
-                  >
-                    <span app-name>{{ app.name | translate }}</span>
-                    <span app-systemName>{{ app.systemName | translate }}</span>
-                  </a>
-                }
+              @if (app.type === 'router-link') {
+                <a
+                  si-launchpad-app
+                  routerLinkActive="active"
+                  [routerLinkActiveOptions]="app.activeMatchOptions ?? { exact: false }"
+                  [enableFavoriteToggle]="enableFavorites() && !$any(app)._noFavorite"
+                  [external]="app.external"
+                  [iconUrl]="app.iconUrl"
+                  [iconClass]="app.iconClass"
+                  [favorite]="!!app.favorite"
+                  [routerLink]="app.routerLink"
+                  [queryParams]="app.extras?.queryParams"
+                  [queryParamsHandling]="app.extras?.queryParamsHandling"
+                  [fragment]="app.extras?.fragment"
+                  [state]="app.extras?.state"
+                  [relativeTo]="app.extras?.relativeTo ?? this.activatedRoute"
+                  [preserveFragment]="app.extras?.preserveFragment"
+                  [skipLocationChange]="app.extras?.skipLocationChange"
+                  [replaceUrl]="app.extras?.replaceUrl"
+                  (favoriteChange)="toggleFavorite(app, $event)"
+                >
+                  <span app-name>{{ app.name | translate }}</span>
+                  <span app-systemName>{{ app.systemName | translate }}</span>
+                </a>
+              } @else {
+                <!--fallback for existing apps that do not have a type defined -->
+                <a
+                  si-launchpad-app
+                  [enableFavoriteToggle]="enableFavorites() && !$any(app)._noFavorite"
+                  [favorite]="!!app.favorite"
+                  [href]="app.href"
+                  [target]="app.target ?? ''"
+                  [active]="app.active"
+                  [external]="app.external"
+                  [iconUrl]="app.iconUrl"
+                  [iconClass]="app.iconClass"
+                  (favoriteChange)="toggleFavorite(app, $event)"
+                >
+                  <span app-name>{{ app.name | translate }}</span>
+                  <span app-systemName>{{ app.systemName | translate }}</span>
+                </a>
               }
             }
           </div>
