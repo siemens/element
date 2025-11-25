@@ -1140,7 +1140,7 @@ export class SiMapComponent implements AfterViewInit, OnChanges, OnDestroy, Afte
         mapPoints: feature.getProperties() as MapPointMetaData
       });
       if (extraProperties) {
-        feature.getProperties().click(extraProperties);
+        feature.getProperties().click?.(extraProperties);
       }
     } else if (this.geoJson()) {
       const coordinates = event.coordinate;
