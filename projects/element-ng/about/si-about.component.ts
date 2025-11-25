@@ -6,6 +6,7 @@ import { NgTemplateOutlet } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   computed,
   inject,
@@ -104,6 +105,7 @@ export class SiAboutComponent implements OnInit {
 
   protected readonly licenseApi = signal<ApiInfo[]>([]);
   protected readonly icons = addIcons({ elementDocument });
+  private cdRef = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
     const licenseInfo = this.licenseInfo();
@@ -115,6 +117,7 @@ export class SiAboutComponent implements OnInit {
           this.licenseApi.set([...data]);
           this.toggleLoadLicenseApi(this.licenseApi()[0]);
         }
+        this.cdRef.markForCheck();
       });
     }
   }
@@ -125,6 +128,7 @@ export class SiAboutComponent implements OnInit {
       this.http.get<ApiInfo[]>(apiInfo.href, { responseType: 'json' }).subscribe(files => {
         apiInfo.files = files;
         this.licenseApi.set([...licenseApi]);
+        this.cdRef.markForCheck();
       });
     }
     apiInfo.isOpen = !apiInfo.isOpen;
@@ -138,6 +142,7 @@ export class SiAboutComponent implements OnInit {
       this.http.get(apiInfo.href, { responseType: 'text' }).subscribe((content: string) => {
         apiInfo.content = content;
         this.licenseApi.set([...licenseApi]);
+        this.cdRef.markForCheck();
       });
     }
   }
