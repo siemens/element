@@ -246,6 +246,7 @@ export class SampleComponent {
     }
   ];
 
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   updateFavorite({ app, favorite }: { app: App; favorite: boolean }): void {
     app.favorite = favorite;
     this.categories = [...this.categories];

@@ -65,6 +65,7 @@ export class SampleComponent implements AfterViewInit, OnDestroy {
     { title: 'Information', status: 'info', value: 37 }
   ];
 
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   appItems: App[] = [
     { name: 'Account', iconClass: 'element-account', href: './account-app' },
     { name: 'Asset', iconClass: 'element-floor', href: './asset-app' },

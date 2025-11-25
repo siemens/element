@@ -50,4 +50,30 @@ export interface AppBase {
   external?: boolean;
 }
 
-export type App = AppLink | AppRouterLink;
+export type App = {
+  type?: 'link' | 'router-link';
+  /** Name of the app */
+  name?: TranslatableString;
+  /** Name of the related system. */
+  systemName?: TranslatableString;
+  /** Icon of the app. */
+  iconUrl?: string;
+  /** CSS class to apply, which should render the icon. Typically, "element-*". */
+  iconClass?: string;
+  /** Whether the app is marked as favorite.  */
+  favorite?: boolean;
+  /** Whether the app should be marked as external. */
+  external?: boolean;
+  /** URL destination of the app. */
+  href?: string;
+  /** Value for the anchor target attribute. */
+  target?: string;
+  /** Whether the app is the currently running app. */
+  active?: boolean;
+  /** Link for the angular router. Accepts the same values as {@link https://angular.dev/api/router/RouterLink}. */
+  routerLink?: string | any[];
+  /** Navigation extras that are passed to the {@link https://angular.dev/api/router/NavigationExtras}. */
+  extras?: NavigationExtras;
+  /** Active match options for routerLinkActive {@link https://angular.dev/api/router/IsActiveMatchOptions}.*/
+  activeMatchOptions?: { exact: boolean } | IsActiveMatchOptions;
+};

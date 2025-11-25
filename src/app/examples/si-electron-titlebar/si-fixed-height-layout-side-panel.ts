@@ -96,6 +96,7 @@ export class SampleComponent implements OnDestroy {
   readonly helpPanel = viewChild.required('helpPanel', { read: CdkPortal });
   readonly layoutPanel = viewChild.required('layoutPanel', { read: CdkPortal });
 
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   appItems: App[] = [
     {
       name: 'Assets',
