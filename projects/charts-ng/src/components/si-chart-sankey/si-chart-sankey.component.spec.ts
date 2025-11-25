@@ -5,7 +5,7 @@
 import { Component, provideZonelessChangeDetection, SimpleChange, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { SankeySeriesOption } from '../../shared/echarts.model';
+import { SankeySeriesOption } from '@siemens/charts-ng/common';
 import { SiChartSankeyComponent } from './si-chart-sankey.component';
 
 @Component({
