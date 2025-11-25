@@ -51,7 +51,7 @@ messages.json
 __pycache__
 
 # Environment variables
-/src/environments/environment.local.ts
+/src/environments/environment.local*
 
 # System Files
 .DS_Store
