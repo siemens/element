@@ -3,32 +3,20 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, input } from '@angular/core';
+import { SiChartComponent } from '@siemens/charts-ng/chart';
+import { SunburstSeriesOption, echarts } from '@siemens/charts-ng/common';
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
-
-import { SunburstSeriesOption } from '@siemens/charts-ng/common';
-import { SiChartComponent } from '../si-chart/si-chart.component';
-
-// Modular ECharts imports - only load what Sunburst needs
-import { echarts } from '@siemens/charts-ng/common';
 import { SunburstChart } from 'echarts/charts';
-import {
-  TitleComponent,
-  TooltipComponent,
-} from 'echarts/components';
+import { TitleComponent, TooltipComponent } from 'echarts/components';
 
-// Register only the components needed for Sunburst charts
-echarts.use([
-  SunburstChart,
-  TitleComponent,
-  TooltipComponent,
-]);
+echarts.use([SunburstChart, TitleComponent, TooltipComponent]);
 
 @Component({
   selector: 'si-chart-sunburst',
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
-  templateUrl: '../si-chart/si-chart.component.html',
-  styleUrl: '../si-chart/si-chart.component.scss'
+  templateUrl: '../chart/si-chart.component.html',
+  styleUrl: '../chart/si-chart.component.scss'
 })
 export class SiChartSunburstComponent extends SiChartComponent {
   /** The series for the chart. */

@@ -9,9 +9,8 @@ import {
   viewChild
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { echarts, EChartOption } from '@siemens/charts-ng/common';
 
-import { echarts } from '@siemens/charts-ng/common';
-import { EChartOption } from '@siemens/charts-ng/common';
 import { SiChartComponent } from './si-chart.component';
 
 @Component({

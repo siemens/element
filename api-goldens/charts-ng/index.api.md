@@ -4,75 +4,37 @@
 
 ```ts
 
-import { AfterViewInit } from '@angular/core';
 import * as _angular_core from '@angular/core';
-import { AxisPointerComponentOption } from 'echarts';
-import { BarSeriesOption } from 'echarts';
-import { BrushComponentOption } from 'echarts';
-import { CandlestickSeriesOption } from 'echarts';
-import { CustomLegend } from '@siemens/charts-ng/custom-legend';
-import { CustomLegendItem } from '@siemens/charts-ng/custom-legend';
-import { CustomLegendProps } from '@siemens/charts-ng/custom-legend';
-import { CustomSeriesOption } from 'echarts';
-import { DatasetComponentOption } from 'echarts';
-import { DataZoomComponentOption } from 'echarts';
-import * as echarts$1 from 'echarts';
-import * as echarts_2 from 'echarts/core';
-import { ElementRef } from '@angular/core';
-import { GaugeSeriesOption } from 'echarts';
-import { GridComponentOption } from 'echarts';
-import { HeatmapSeriesOption } from 'echarts';
+import { BarSeriesOption } from '@siemens/charts-ng/common';
+import { CandlestickSeriesOption } from '@siemens/charts-ng/common';
+import { ChartXAxis } from '@siemens/charts-ng/chart';
+import { ChartYAxis } from '@siemens/charts-ng/chart';
+import { DataZoomRange } from '@siemens/charts-ng/chart';
+import * as echarts_2 from 'echarts';
+import { HeatmapSeriesOption } from '@siemens/charts-ng/common';
 import * as i1 from '@angular/common';
+import * as i10 from '@siemens/charts-ng/sunburst';
 import * as i11 from '@siemens/charts-ng/custom-legend';
+import * as i4 from '@siemens/charts-ng/chart';
 import * as i6 from '@siemens/charts-ng/loading-spinner';
-import { LegendComponentOption } from 'echarts';
-import { LineSeriesOption } from 'echarts';
-import { MarkAreaComponentOption } from 'echarts';
-import { MarkLineComponentOption } from 'echarts';
-import { MarkPointComponentOption } from 'echarts';
+import * as i9 from '@siemens/charts-ng/sankey';
+import { LineSeriesOption } from '@siemens/charts-ng/common';
+import { MarkAreaComponentOption } from '@siemens/charts-ng/common';
+import { MarkLineComponentOption } from '@siemens/charts-ng/common';
+import { MarkPointComponentOption } from '@siemens/charts-ng/common';
 import { OnChanges } from '@angular/core';
-import { OnDestroy } from '@angular/core';
-import { OnInit } from '@angular/core';
 import { PieSeriesOption } from 'echarts';
-import { PolarComponentOption } from 'echarts';
-import { SankeySeriesOption } from 'echarts';
-import { ScatterSeriesOption } from 'echarts';
-import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
+import { ScatterSeriesOption } from '@siemens/charts-ng/common';
+import { SeriesUpdate } from '@siemens/charts-ng/chart';
+import { SiChartComponent } from '@siemens/charts-ng/chart';
 import { SimpleChanges } from '@angular/core';
-import { SingleAxisComponentOption } from 'echarts';
-import { SunburstSeriesOption } from 'echarts';
-import { TitleComponentOption } from 'echarts';
-import { ToolboxComponentOption } from 'echarts';
-import { TooltipComponentOption } from 'echarts';
-import { VisualMapComponentOption } from 'echarts';
-
-// @public (undocumented)
-export type AxisData = (string | number | any)[];
-
-export { AxisPointerComponentOption }
-
-// @public (undocumented)
-export interface AxisPointerEvent {
-    // (undocumented)
-    dataIndex?: number;
-    // (undocumented)
-    seriesIndex?: number;
-}
-
-// @public (undocumented)
-export type AxisType = 'value' | 'category' | 'time' | 'log';
+import { SiSeriesOption } from '@siemens/charts-ng/chart';
 
 // @public (undocumented)
 export type BarSeriesData = NonNullable<BarSeriesOption['data']>;
 
-export { BarSeriesOption }
-
-export { BrushComponentOption }
-
 // @public (undocumented)
 export type CandlestickSeriesData = NonNullable<CandlestickSeriesOption['data']>;
-
-export { CandlestickSeriesOption }
 
 // @public (undocumented)
 export type CartesianChartData = NonNullable<CartesianDataNullable>;
@@ -82,24 +44,6 @@ export type CartesianChartSeries = SiBarSeriesOption | SiLineSeriesOption | SiHe
 
 // @public (undocumented)
 export type CartesianDataNullable = LineSeriesData | BarSeriesData | HeatmapSeriesData | ScatterSeriesData | CandlestickSeriesData | never;
-
-// @public (undocumented)
-export interface ChartXAxis extends ChartAxis {
-    // (undocumented)
-    [key: string]: any;
-    // (undocumented)
-    position?: XAxisPosition;
-}
-
-// @public (undocumented)
-export interface ChartYAxis extends ChartAxis {
-    // (undocumented)
-    [key: string]: any;
-    // (undocumented)
-    position?: YAxisPosition;
-    // (undocumented)
-    scale?: boolean;
-}
 
 // @public
 export interface CircleChartData {
@@ -146,77 +90,6 @@ export interface CircleValueUpdate {
 }
 
 // @public (undocumented)
-export interface CustomLegendMultiLineInfo {
-    // (undocumented)
-    customLegendId: number;
-    // (undocumented)
-    isCustomLegendMultilined: boolean;
-}
-
-export { CustomSeriesOption }
-
-export { DatasetComponentOption }
-
-export { DataZoomComponentOption }
-
-// @public (undocumented)
-export interface DataZoomEvent {
-    // (undocumented)
-    autoZoomUpdate?: boolean;
-    // (undocumented)
-    rangeEnd: any;
-    // (undocumented)
-    rangeStart: any;
-    // (undocumented)
-    rangeType: AxisType;
-    // (undocumented)
-    requested?: DataZoomRange;
-    // (undocumented)
-    source?: string;
-    // (undocumented)
-    width?: number;
-}
-
-// @public (undocumented)
-export interface DataZoomRange {
-    // (undocumented)
-    end?: any;
-    // (undocumented)
-    endValue?: any;
-    // (undocumented)
-    start?: any;
-    // (undocumented)
-    startValue?: any;
-    // (undocumented)
-    visibleWidth?: any;
-}
-
-// @public (undocumented)
-export interface EChartOption {
-    // (undocumented)
-    [key: string]: any;
-    // (undocumented)
-    dataZoom?: DataZoomComponentOption[];
-    // (undocumented)
-    grid?: GridComponentOption | GridComponentOption[];
-    // (undocumented)
-    legend?: LegendComponentOption[];
-    // (undocumented)
-    series?: EChartSeries;
-}
-
-export { echarts_2 as echarts }
-
-// @public (undocumented)
-export type EChartSeries = EChartSeriesOption[];
-
-// @public
-export type EChartSeriesOption = BarSeriesOption | CandlestickSeriesOption | CustomSeriesOption | GaugeSeriesOption | HeatmapSeriesOption | LineSeriesOption | PieSeriesOption | ScatterSeriesOption | SankeySeriesOption | SunburstSeriesOption | never;
-
-// @public (undocumented)
-export type FilterMode = 'none' | 'filter' | 'weakFilter' | 'empty';
-
-// @public (undocumented)
 export interface GaugeChartSeries {
     // (undocumented)
     data: any[];
@@ -226,58 +99,11 @@ export interface GaugeChartSeries {
     min: number;
 }
 
-export { GaugeSeriesOption }
-
-export { GridComponentOption }
-
-// @public (undocumented)
-export interface GridRectCoordinate {
-    // (undocumented)
-    containerHeight: number;
-    // (undocumented)
-    containerWidth: number;
-    // (undocumented)
-    height: number;
-    // (undocumented)
-    width: number;
-    // (undocumented)
-    x: number;
-    // (undocumented)
-    y: number;
-}
-
 // @public (undocumented)
 export type HeatmapSeriesData = NonNullable<HeatmapSeriesOption['data']>;
 
-export { HeatmapSeriesOption }
-
-export { LegendComponentOption }
-
-// @public (undocumented)
-export interface LegendItem {
-    // (undocumented)
-    color?: string;
-    // (undocumented)
-    dataIndex: number;
-    // (undocumented)
-    itemName: string;
-    // (undocumented)
-    selected?: boolean;
-}
-
-// @public (undocumented)
-export interface LineColor {
-    // (undocumented)
-    [key: string]: {
-        color: string;
-        index: number;
-    };
-}
-
 // @public (undocumented)
 export type LineSeriesData = NonNullable<LineSeriesOption['data']>;
-
-export { LineSeriesOption }
 
 // @public
 export type LineStepType = 'start' | 'middle' | 'end';
@@ -285,24 +111,14 @@ export type LineStepType = 'start' | 'middle' | 'end';
 // @public (undocumented)
 export type LineType = 'solid' | 'dashed' | 'dotted';
 
-export { MarkAreaComponentOption }
-
 // @public (undocumented)
 export type MarkAreaData = NonNullable<MarkAreaComponentOption['data']>;
-
-export { MarkLineComponentOption }
 
 // @public (undocumented)
 export type MarkLineData = NonNullable<MarkLineComponentOption['data']>;
 
-export { MarkPointComponentOption }
-
 // @public (undocumented)
 export type MarkPointData = NonNullable<MarkPointComponentOption['data']>;
-
-export { PieSeriesOption }
-
-export { PolarComponentOption }
 
 // @public (undocumented)
 export interface ProgressBarChartSeries {
@@ -336,32 +152,8 @@ export interface ProgressValueUpdate {
     seriesIndex: number;
 }
 
-export { SankeySeriesOption }
-
 // @public (undocumented)
 export type ScatterSeriesData = NonNullable<Exclude<ScatterSeriesOption['data'], ArrayLike<number>>>;
-
-export { ScatterSeriesOption }
-
-// @public (undocumented)
-export interface SelectedLegendItem {
-    // (undocumented)
-    legendItemName: string;
-}
-
-// @public (undocumented)
-export interface SeriesSelectionState {
-    // (undocumented)
-    [key: string]: boolean;
-}
-
-// @public (undocumented)
-export interface SeriesUpdate<SeriesType> {
-    // (undocumented)
-    data: SeriesType;
-    // (undocumented)
-    index: number;
-}
 
 // @public (undocumented)
 type SiBarSeriesOption = BarSeriesOption & SiSeriesOption;
@@ -399,7 +191,7 @@ export class SiChartCartesianComponent extends SiChartComponent implements OnCha
     readonly stacked: _angular_core.InputSignal<boolean>;
     // (undocumented)
     readonly subChartGrids: _angular_core.InputSignal<SubchartGrid[] | undefined>;
-    readonly tooltipFormatter: _angular_core.InputSignal<string | echarts$1.TooltipComponentFormatterCallback<echarts$1.TooltipComponentFormatterCallbackParams> | undefined>;
+    readonly tooltipFormatter: _angular_core.InputSignal<string | echarts_2.TooltipComponentFormatterCallback<echarts_2.TooltipComponentFormatterCallbackParams> | undefined>;
     readonly xAxis: _angular_core.InputSignal<ChartXAxis | ChartXAxis[] | undefined>;
     readonly yAxis: _angular_core.InputSignal<ChartYAxis | ChartYAxis[] | undefined>;
     readonly zoomMode: _angular_core.InputSignal<boolean | undefined>;
@@ -422,168 +214,6 @@ export class SiChartCircleComponent extends SiChartComponent {
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChartCircleComponent, "si-chart-circle", never, { "series": { "alias": "series"; "required": false; "isSignal": true; }; }, {}, never, ["[slot=timeRangeBar]"], true, never>;
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChartCircleComponent, never>;
-}
-
-// @public (undocumented)
-export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDestroy {
-    // (undocumented)
-    protected activeTheme: any;
-    protected actualOptions: EChartOption;
-    // (undocumented)
-    protected addDataInternal(series: SeriesUpdate<any>[]): void;
-    readonly additionalOptions: _angular_core.InputSignal<EChartOption | undefined>;
-    // (undocumented)
-    protected addLegendItem(name: string, visible?: boolean | null, index?: number, gridIndex?: number, customLegendProp?: CustomLegendProps, seriesSymbol?: string): void;
-    // (undocumented)
-    protected afterChartInit(skipZoom?: boolean): void;
-    // (undocumented)
-    protected afterChartResize(): void;
-    // (undocumented)
-    protected applyCustomLegendPosition(): void;
-    // (undocumented)
-    protected applyDataZoom(): void;
-    // (undocumented)
-    protected applyOptions(): void;
-    // (undocumented)
-    protected applyStyles(): void;
-    // (undocumented)
-    protected applyTitles(): void;
-    readonly autoZoomSeriesIndex: _angular_core.InputSignal<number>;
-    // (undocumented)
-    protected autoZoomUpdate: boolean;
-    readonly axisPointer: _angular_core.InputSignal<string | boolean | undefined>;
-    // (undocumented)
-    protected readonly backgroundColor: _angular_core.WritableSignal<string>;
-    // (undocumented)
-    protected readonly chartContainer: _angular_core.Signal<ElementRef<any> | undefined>;
-    readonly chartContainerWrapper: _angular_core.Signal<ElementRef<any>>;
-    readonly chartGridResized: _angular_core.OutputEmitterRef<GridRectCoordinate>;
-    readonly chartSeriesClick: _angular_core.OutputEmitterRef<LegendItem>;
-    // (undocumented)
-    protected readonly containerHeight: _angular_core.WritableSignal<number | null>;
-    // (undocumented)
-    protected curHeight: number;
-    // (undocumented)
-    protected curWidth: number;
-    // (undocumented)
-    protected customLegend: CustomLegend[];
-    readonly customLegendAction: _angular_core.InputSignal<boolean | undefined>;
-    readonly customLegendMultiLineInfoEvent: _angular_core.OutputEmitterRef<CustomLegendMultiLineInfo[]>;
-    readonly dataZoom: _angular_core.OutputEmitterRef<DataZoomEvent>;
-    readonly dataZoomFilterMode: _angular_core.InputSignal<FilterMode>;
-    readonly dataZoomMaxValueSpan: _angular_core.InputSignal<number | undefined>;
-    readonly dataZoomMinValueSpan: _angular_core.InputSignal<number | undefined>;
-    readonly dataZoomRange: _angular_core.InputSignal<DataZoomRange | undefined>;
-    dispatchEChartAction(action: echarts_2.Payload): void;
-    readonly eChartContainerHeight: _angular_core.InputSignal<string | null | undefined>;
-    readonly externalXAxisFormatter: _angular_core.InputSignal<((value: any, visibleRange: number) => string) | undefined>;
-    readonly externalZoomSlider: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    protected readonly externalZoomSliderContainer: _angular_core.Signal<ElementRef<any> | undefined>;
-    // (undocumented)
-    protected extZoomSliderOptions: EChartOption;
-    protected fetchSeriesColors(colorsToBeUSed?: any): void;
-    getOptionNoClone(): any;
-    getSeriesColorBySeriesName(seriesName: string): string | undefined;
-    // (undocumented)
-    protected getThemeCustomValue(props: string[], defaultValue: any): any;
-    // (undocumented)
-    protected getThemeValue(props: string[], defaultValue: any, ns?: string): any;
-    // (undocumented)
-    protected getValidXAxis(): Set<number> | undefined;
-    getVisibleRange(): DataZoomEvent | undefined;
-    protected handleClickOnChart(event: any, toggleVisibility: boolean): void;
-    // (undocumented)
-    protected handleLegendClick(legend: CustomLegendItem): void;
-    // (undocumented)
-    protected handleLegendHover(legend: CustomLegendItem, start: boolean): void;
-    // (undocumented)
-    protected handleSelectionChanged(event: any): void;
-    protected handleSelectionChangedCustom(event: any): void;
-    // (undocumented)
-    protected hasData(): boolean;
-    // (undocumented)
-    protected hasDataZoom(): boolean;
-    // (undocumented)
-    protected readonly inProgress: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
-    protected internalGetModel(): any;
-    readonly maxEntries: _angular_core.InputSignal<number>;
-    // (undocumented)
-    ngAfterViewInit(skipZoom?: boolean): void;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
-    readonly options: _angular_core.InputSignal<EChartOption | undefined>;
-    readonly palette: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    protected parsePercent(percent: string | number, all: number): number;
-    readonly pointer: _angular_core.OutputEmitterRef<AxisPointerEvent>;
-    refreshSeries(isLive?: boolean, dzToSet?: DataZoomRange): void;
-    readonly renderer: _angular_core.InputSignal<"canvas" | "svg">;
-    resetChart(): void;
-    resize(): void;
-    readonly selectedItem: _angular_core.InputSignal<SelectedLegendItem>;
-    readonly selectionChanged: _angular_core.OutputEmitterRef<any>;
-    protected selectSeries(element: any, emit: boolean, seriesDataIndex: number): any;
-    setTimeRange(range: number): void;
-    // (undocumented)
-    protected setZoomMode(): void;
-    // (undocumented)
-    protected readonly shapePaths: Record<string, string>;
-    readonly showCustomLegend: _angular_core.InputSignal<boolean>;
-    readonly showLegend: _angular_core.ModelSignal<boolean>;
-    // @deprecated
-    readonly showTimeRangeBar: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    protected readonly siCustomLegend: _angular_core.Signal<readonly SiCustomLegendComponent[]>;
-    startProgressIndication(): void;
-    stopProgressIndication(): void;
-    protected styleSelectedSeries(seriesName: string, emit: boolean, seriesDataIndex: number): any;
-    readonly subTitle: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    protected readonly subTitleColor: _angular_core.WritableSignal<string>;
-    // (undocumented)
-    protected readonly textColor: _angular_core.WritableSignal<string>;
-    readonly theme: _angular_core.InputSignal<any>;
-    // (undocumented)
-    protected themeChanged(): void;
-    readonly themeCustomization: _angular_core.InputSignal<any>;
-    // (undocumented)
-    protected readonly timeBarBottom: _angular_core.WritableSignal<number>;
-    // (undocumented)
-    protected readonly timeBarHeight: _angular_core.WritableSignal<number>;
-    // (undocumented)
-    protected readonly timeBarLeft: _angular_core.WritableSignal<number>;
-    // (undocumented)
-    protected readonly timeBarRight: _angular_core.WritableSignal<number>;
-    readonly timeRangeChange: _angular_core.OutputEmitterRef<number>;
-    readonly title: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    protected readonly titleColor: _angular_core.WritableSignal<string>;
-    toggleSeriesVisibility(name: string, visible: boolean): void;
-    protected unselectSeries(element: any, emit: boolean, seriesDataIndex: number): {
-        color: any;
-        series: (EChartSeries | undefined)[];
-    };
-    // (undocumented)
-    protected updateAxisAndDataZoom(inOptions?: EChartOption): boolean;
-    // (undocumented)
-    protected updateEChart(force?: boolean, options?: EChartOption): void;
-    readonly visibleEntries: _angular_core.ModelSignal<number>;
-    readonly visibleRange: _angular_core.ModelSignal<number>;
-    readonly zoomInside: _angular_core.InputSignal<boolean>;
-    readonly zoomSlider: _angular_core.InputSignal<boolean>;
-    readonly zoomSliderBrush: _angular_core.InputSignal<boolean>;
-    readonly zoomSliderRealtime: _angular_core.InputSignal<boolean>;
-    readonly zoomSliderShadow: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChartComponent, "si-chart", never, { "options": { "alias": "options"; "required": false; "isSignal": true; }; "additionalOptions": { "alias": "additionalOptions"; "required": false; "isSignal": true; }; "title": { "alias": "title"; "required": false; "isSignal": true; }; "subTitle": { "alias": "subTitle"; "required": false; "isSignal": true; }; "showLegend": { "alias": "showLegend"; "required": false; "isSignal": true; }; "showCustomLegend": { "alias": "showCustomLegend"; "required": false; "isSignal": true; }; "renderer": { "alias": "renderer"; "required": false; "isSignal": true; }; "zoomSlider": { "alias": "zoomSlider"; "required": false; "isSignal": true; }; "zoomSliderShadow": { "alias": "zoomSliderShadow"; "required": false; "isSignal": true; }; "zoomSliderRealtime": { "alias": "zoomSliderRealtime"; "required": false; "isSignal": true; }; "zoomSliderBrush": { "alias": "zoomSliderBrush"; "required": false; "isSignal": true; }; "zoomInside": { "alias": "zoomInside"; "required": false; "isSignal": true; }; "maxEntries": { "alias": "maxEntries"; "required": false; "isSignal": true; }; "visibleEntries": { "alias": "visibleEntries"; "required": false; "isSignal": true; }; "visibleRange": { "alias": "visibleRange"; "required": false; "isSignal": true; }; "autoZoomSeriesIndex": { "alias": "autoZoomSeriesIndex"; "required": false; "isSignal": true; }; "theme": { "alias": "theme"; "required": false; "isSignal": true; }; "themeCustomization": { "alias": "themeCustomization"; "required": false; "isSignal": true; }; "palette": { "alias": "palette"; "required": false; "isSignal": true; }; "axisPointer": { "alias": "axisPointer"; "required": false; "isSignal": true; }; "dataZoomRange": { "alias": "dataZoomRange"; "required": false; "isSignal": true; }; "dataZoomMinValueSpan": { "alias": "dataZoomMinValueSpan"; "required": false; "isSignal": true; }; "dataZoomMaxValueSpan": { "alias": "dataZoomMaxValueSpan"; "required": false; "isSignal": true; }; "dataZoomFilterMode": { "alias": "dataZoomFilterMode"; "required": false; "isSignal": true; }; "customLegendAction": { "alias": "customLegendAction"; "required": false; "isSignal": true; }; "selectedItem": { "alias": "selectedItem"; "required": false; "isSignal": true; }; "eChartContainerHeight": { "alias": "eChartContainerHeight"; "required": false; "isSignal": true; }; "externalZoomSlider": { "alias": "externalZoomSlider"; "required": false; "isSignal": true; }; "externalXAxisFormatter": { "alias": "externalXAxisFormatter"; "required": false; "isSignal": true; }; "showTimeRangeBar": { "alias": "showTimeRangeBar"; "required": false; "isSignal": true; }; }, { "showLegend": "showLegendChange"; "visibleEntries": "visibleEntriesChange"; "visibleRange": "visibleRangeChange"; "dataZoom": "dataZoom"; "pointer": "pointer"; "selectionChanged": "selectionChanged"; "chartSeriesClick": "chartSeriesClick"; "chartGridResized": "chartGridResized"; "customLegendMultiLineInfoEvent": "customLegendMultiLineInfoEvent"; "timeRangeChange": "timeRangeChange"; }, never, ["[slot=timeRangeBar]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChartComponent, never>;
 }
 
 // @public (undocumented)
@@ -671,46 +301,16 @@ export class SiChartProgressComponent extends SiChartComponent {
 }
 
 // @public (undocumented)
-export class SiChartSankeyComponent extends SiChartComponent {
-    // (undocumented)
-    protected applyOptions(): void;
-    readonly series: _angular_core.InputSignal<SankeySeriesOption | undefined>;
-    // @deprecated (undocumented)
-    readonly toolTip: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    readonly tooltip: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChartSankeyComponent, "si-chart-sankey", never, { "series": { "alias": "series"; "required": false; "isSignal": true; }; "toolTip": { "alias": "toolTip"; "required": false; "isSignal": true; }; "tooltip": { "alias": "tooltip"; "required": false; "isSignal": true; }; }, {}, never, ["[slot=timeRangeBar]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChartSankeyComponent, never>;
-}
-
-// @public (undocumented)
 class SiChartsNgModule {
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChartsNgModule, never>;
     // (undocumented)
     static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiChartsNgModule>;
     // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiChartsNgModule, never, [typeof i1.CommonModule, typeof SiChartCartesianComponent, typeof SiChartCircleComponent, typeof SiChartComponent, typeof SiChartGaugeComponent, typeof i6.SiChartLoadingSpinnerComponent, typeof SiChartProgressBarComponent, typeof SiChartProgressComponent, typeof SiChartSankeyComponent, typeof SiChartSunburstComponent, typeof i11.SiCustomLegendComponent], [typeof SiChartCartesianComponent, typeof SiChartCircleComponent, typeof SiChartComponent, typeof SiChartGaugeComponent, typeof i6.SiChartLoadingSpinnerComponent, typeof SiChartProgressBarComponent, typeof SiChartProgressComponent, typeof SiChartSankeyComponent, typeof SiChartSunburstComponent, typeof i11.SiCustomLegendComponent]>;
+    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiChartsNgModule, never, [typeof i1.CommonModule, typeof SiChartCartesianComponent, typeof SiChartCircleComponent, typeof i4.SiChartComponent, typeof SiChartGaugeComponent, typeof i6.SiChartLoadingSpinnerComponent, typeof SiChartProgressBarComponent, typeof SiChartProgressComponent, typeof i9.SiChartSankeyComponent, typeof i10.SiChartSunburstComponent, typeof i11.SiCustomLegendComponent], [typeof SiChartCartesianComponent, typeof SiChartCircleComponent, typeof i4.SiChartComponent, typeof SiChartGaugeComponent, typeof i6.SiChartLoadingSpinnerComponent, typeof SiChartProgressBarComponent, typeof SiChartProgressComponent, typeof i9.SiChartSankeyComponent, typeof i10.SiChartSunburstComponent, typeof i11.SiCustomLegendComponent]>;
 }
 export { SiChartsNgModule }
 export { SiChartsNgModule as SimplChartsNgModule }
-
-// @public (undocumented)
-export class SiChartSunburstComponent extends SiChartComponent {
-    // (undocumented)
-    protected applyOptions(): void;
-    readonly series: _angular_core.InputSignal<SunburstSeriesOption | undefined>;
-    // @deprecated (undocumented)
-    readonly toolTip: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    readonly tooltip: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChartSunburstComponent, "si-chart-sunburst", never, { "series": { "alias": "series"; "required": false; "isSignal": true; }; "toolTip": { "alias": "toolTip"; "required": false; "isSignal": true; }; "tooltip": { "alias": "tooltip"; "required": false; "isSignal": true; }; }, {}, never, ["[slot=timeRangeBar]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChartSunburstComponent, never>;
-}
 
 // @public (undocumented)
 type SiHeatmapSeriesOption = HeatmapSeriesOption & SiSeriesOption;
@@ -725,24 +325,10 @@ interface SiLineSeriesOption extends LineSeriesOption, SiSeriesOption {
 export { SiLineSeriesOption }
 export { SiLineSeriesOption as SimplLineSeriesOption }
 
-export { SingleAxisComponentOption }
-
 // @public (undocumented)
 type SiScatterSeriesOption = ScatterSeriesOption & SiSeriesOption;
 export { SiScatterSeriesOption }
 export { SiScatterSeriesOption as SimplScatterSeriesOption }
-
-// @public (undocumented)
-interface SiSeriesOption {
-    // (undocumented)
-    customLegendToolTip?: string;
-    // (undocumented)
-    displayName?: string;
-    // (undocumented)
-    visible?: boolean;
-}
-export { SiSeriesOption }
-export { SiSeriesOption as SimplSeriesOption }
 
 // @public (undocumented)
 export interface SubchartGrid {
@@ -762,831 +348,13 @@ export interface SubchartGrid {
     top?: number | string;
 }
 
-export { SunburstSeriesOption }
 
-// @public (undocumented)
-export const themeElement: {
-    name: string;
-    style: () => {
-        textStyle: {
-            fontFamily: string | undefined;
-        };
-        richInheritPlainLabel: boolean;
-        color: string[];
-        gradientColor: string[];
-        backgroundColor: string;
-        animationDuration: number;
-        title: {
-            left: number;
-            top: number;
-            padding: number[];
-            textStyle: {
-                fontFamily: string | undefined;
-                lineHeight: number;
-                fontSize: number;
-                color: string;
-            };
-            subtextStyle: {
-                fontFamily: string | undefined;
-                lineHeight: number;
-                fontSize: number;
-                color: string;
-            };
-        };
-        legend: {
-            backgroundColor: string;
-            inactiveColor: string;
-            left: string;
-            right: number;
-            top: number;
-            itemGap: number;
-            textStyle: {
-                fontFamily: string | undefined;
-                color: string;
-                lineHeight: number;
-                fontSize: number;
-            };
-            icon: string;
-            pageTextStyle: {
-                color: string;
-            };
-            itemStyle: {
-                borderWidth: number;
-                itemGap: number;
-            };
-        };
-        tooltip: {
-            borderWidth: number;
-            backgroundColor: string;
-            textStyle: {
-                fontFamily: string | undefined;
-                color: string;
-                fontWeight: number;
-            };
-            padding: number[];
-            axisPointer: {
-                crossStyle: {
-                    color: string;
-                    width: number;
-                };
-            };
-            formatter: (p: object | object[]) => string;
-        };
-        axisPointer: {
-            label: {
-                fontFamily: string | undefined;
-                color: string;
-                backgroundColor: string;
-                lineHeight: number;
-                fontSize: number;
-            };
-            lineStyle: {
-                color: string;
-                width: number;
-            };
-            handle: {
-                color: string;
-                margin: number;
-            };
-        };
-        grid: {
-            top: number;
-            left: number;
-            right: number;
-            bottom: number;
-            containLabel: boolean;
-        };
-        valueAxis: {
-            nameTextStyle: {
-                fontFamily: string | undefined;
-                color: string;
-            };
-            axisLine: {
-                show: boolean;
-                lineStyle: {
-                    color: string;
-                };
-            };
-            axisLabel: {
-                fontFamily: string | undefined;
-                color: string;
-                lineHeight: number;
-                fontSize: number;
-                hideOverlap: boolean;
-            };
-            axisTick: {
-                alignWithLabel: boolean;
-            };
-            splitLine: {
-                lineStyle: {
-                    color: string;
-                };
-            };
-        };
-        timeAxis: {
-            inverse: boolean;
-            nameTextStyle: {
-                fontFamily: string | undefined;
-                color: string;
-            };
-            axisLine: {
-                show: boolean;
-                lineStyle: {
-                    color: string;
-                };
-            };
-            axisLabel: {
-                fontFamily: string | undefined;
-                color: string;
-                lineHeight: number;
-                fontSize: number;
-                hideOverlap: boolean;
-            };
-            axisTick: {
-                show: boolean;
-                alignWithLabel: boolean;
-            };
-            splitLine: {
-                lineStyle: {
-                    color: string;
-                };
-            };
-        };
-        categoryAxis: {
-            inverse: boolean;
-            nameTextStyle: {
-                fontFamily: string | undefined;
-                color: string;
-            };
-            axisLine: {
-                show: boolean;
-                lineStyle: {
-                    color: string;
-                };
-            };
-            axisLabel: {
-                fontFamily: string | undefined;
-                color: string;
-                lineHeight: number;
-                fontSize: number;
-                hideOverlap: boolean;
-            };
-            axisTick: {
-                show: boolean;
-                alignWithLabel: boolean;
-            };
-            splitLine: {
-                lineStyle: {
-                    color: string;
-                };
-            };
-        };
-        dataZoom: {
-            textStyle: {
-                fontFamily: string | undefined;
-                color: string;
-                lineHeight: number;
-                fontSize: number;
-            };
-            borderColor: string;
-            fillerColor: string;
-            handleIcon: string;
-            handleStyle: {
-                color: string;
-                borderColor: string;
-            };
-            moveHandleStyle: {
-                color: string;
-                opacity: number;
-            };
-            brushStyle: {
-                color: string;
-            };
-            dataBackground: {
-                areaStyle: {
-                    color: string;
-                };
-                lineStyle: {
-                    color: string;
-                };
-            };
-            selectedDataBackground: {
-                areaStyle: {
-                    color: string;
-                    opacity: number;
-                };
-                lineStyle: {
-                    color: string;
-                };
-            };
-            emphasis: {
-                moveHandleStyle: {
-                    color: string;
-                    opacity: number;
-                };
-                handleStyle: {
-                    color: string;
-                    borderColor: string;
-                };
-            };
-        };
-        toolbox: {
-            feature: {
-                dataZoom: {
-                    brushStyle: {
-                        color: string;
-                    };
-                };
-            };
-        };
-        graph: {
-            color: string[];
-        };
-        bar: {
-            barGap: number;
-            label: {
-                fontFamily: string | undefined;
-                color: string;
-                fontSize: number;
-            };
-        };
-        line: {
-            areaStyle: {
-                opacity: number;
-            };
-            symbol: string;
-            symbolSize: number;
-        };
-        pie: {
-            radius: (string | number)[];
-            label: {
-                distanceToLabelLine: number;
-                fontFamily: string | undefined;
-                formatter: string;
-                color: string;
-                lineHeight: number;
-                fontSize: number;
-            };
-            labelLine: {
-                length: number;
-                length2: number;
-                lineStyle: {
-                    color: string;
-                };
-            };
-            itemStyle: {
-                borderWidth: number;
-                borderColor: string;
-            };
-        };
-        candlestick: {
-            itemStyle: {
-                color: string;
-                color0: string;
-                borderColor: string;
-                borderColor0: string;
-            };
-        };
-        gauge: {
-            detail: {
-                color: string;
-                rich: {
-                    value: {
-                        color: string;
-                    };
-                    unit: {
-                        color: string;
-                    };
-                };
-            };
-            axisLabel: {
-                fontFamily: string | undefined;
-                color: string;
-            };
-            axisTick: {
-                lineStyle: {
-                    color: string;
-                };
-            };
-            splitLine: {
-                lineStyle: {
-                    color: string;
-                };
-            };
-        };
-        sankey: {
-            label: {
-                fontFamily: string | undefined;
-                textBorderColor: string;
-                color: string;
-            };
-        };
-        sunburst: {
-            label: {
-                fontFamily: string | undefined;
-                textBorderColor: string;
-                color: string;
-            };
-        };
-        simpl: {
-            colorPalettes: {
-                default: string[];
-            };
-            dataZoom: {
-                options: {
-                    height: number;
-                    bottom: number;
-                };
-                grid: {
-                    bottom: number;
-                };
-            };
-            timeRangeBar: {
-                height: number;
-            };
-            externalZoomSlider: {
-                grid: {
-                    bottom: number;
-                };
-            };
-            legendLeft: {
-                left: number;
-                width: string;
-            };
-            legendRight: {
-                right: number;
-                width: string;
-            };
-            noTitle: {
-                grid: {
-                    top: number;
-                };
-                legend: {
-                    top: number;
-                };
-            };
-            subTitle: {
-                grid: {
-                    top: number;
-                };
-                legend: {
-                    top: number;
-                };
-            };
-            customLegend: {
-                grid: {
-                    top: number;
-                };
-            };
-            progress: {
-                itemWidth: number;
-                itemGap: number;
-                grey: string;
-            };
-            progressBar: {
-                labelColor: string;
-                itemWidth: number;
-                grid: {
-                    left: number;
-                    right: number;
-                    containLabel: boolean;
-                };
-            };
-            gauge: {
-                grey: string;
-                value: string;
-                unit: string;
-                defaultColor: string;
-            };
-        };
-    };
-};
-
-// @public (undocumented)
-export const themeSupport: {
-    _defaultTheme: {
-        name: string;
-        style: () => {
-            textStyle: {
-                fontFamily: string | undefined;
-            };
-            richInheritPlainLabel: boolean;
-            color: string[];
-            gradientColor: string[];
-            backgroundColor: string;
-            animationDuration: number;
-            title: {
-                left: number;
-                top: number;
-                padding: number[];
-                textStyle: {
-                    fontFamily: string | undefined;
-                    lineHeight: number;
-                    fontSize: number;
-                    color: string;
-                };
-                subtextStyle: {
-                    fontFamily: string | undefined;
-                    lineHeight: number;
-                    fontSize: number;
-                    color: string;
-                };
-            };
-            legend: {
-                backgroundColor: string;
-                inactiveColor: string;
-                left: string;
-                right: number;
-                top: number;
-                itemGap: number;
-                textStyle: {
-                    fontFamily: string | undefined;
-                    color: string;
-                    lineHeight: number;
-                    fontSize: number;
-                };
-                icon: string;
-                pageTextStyle: {
-                    color: string;
-                };
-                itemStyle: {
-                    borderWidth: number;
-                    itemGap: number;
-                };
-            };
-            tooltip: {
-                borderWidth: number;
-                backgroundColor: string;
-                textStyle: {
-                    fontFamily: string | undefined;
-                    color: string;
-                    fontWeight: number;
-                };
-                padding: number[];
-                axisPointer: {
-                    crossStyle: {
-                        color: string;
-                        width: number;
-                    };
-                };
-                formatter: (p: object | object[]) => string;
-            };
-            axisPointer: {
-                label: {
-                    fontFamily: string | undefined;
-                    color: string;
-                    backgroundColor: string;
-                    lineHeight: number;
-                    fontSize: number;
-                };
-                lineStyle: {
-                    color: string;
-                    width: number;
-                };
-                handle: {
-                    color: string;
-                    margin: number;
-                };
-            };
-            grid: {
-                top: number;
-                left: number;
-                right: number;
-                bottom: number;
-                containLabel: boolean;
-            };
-            valueAxis: {
-                nameTextStyle: {
-                    fontFamily: string | undefined;
-                    color: string;
-                };
-                axisLine: {
-                    show: boolean;
-                    lineStyle: {
-                        color: string;
-                    };
-                };
-                axisLabel: {
-                    fontFamily: string | undefined;
-                    color: string;
-                    lineHeight: number;
-                    fontSize: number;
-                    hideOverlap: boolean;
-                };
-                axisTick: {
-                    alignWithLabel: boolean;
-                };
-                splitLine: {
-                    lineStyle: {
-                        color: string;
-                    };
-                };
-            };
-            timeAxis: {
-                inverse: boolean;
-                nameTextStyle: {
-                    fontFamily: string | undefined;
-                    color: string;
-                };
-                axisLine: {
-                    show: boolean;
-                    lineStyle: {
-                        color: string;
-                    };
-                };
-                axisLabel: {
-                    fontFamily: string | undefined;
-                    color: string;
-                    lineHeight: number;
-                    fontSize: number;
-                    hideOverlap: boolean;
-                };
-                axisTick: {
-                    show: boolean;
-                    alignWithLabel: boolean;
-                };
-                splitLine: {
-                    lineStyle: {
-                        color: string;
-                    };
-                };
-            };
-            categoryAxis: {
-                inverse: boolean;
-                nameTextStyle: {
-                    fontFamily: string | undefined;
-                    color: string;
-                };
-                axisLine: {
-                    show: boolean;
-                    lineStyle: {
-                        color: string;
-                    };
-                };
-                axisLabel: {
-                    fontFamily: string | undefined;
-                    color: string;
-                    lineHeight: number;
-                    fontSize: number;
-                    hideOverlap: boolean;
-                };
-                axisTick: {
-                    show: boolean;
-                    alignWithLabel: boolean;
-                };
-                splitLine: {
-                    lineStyle: {
-                        color: string;
-                    };
-                };
-            };
-            dataZoom: {
-                textStyle: {
-                    fontFamily: string | undefined;
-                    color: string;
-                    lineHeight: number;
-                    fontSize: number;
-                };
-                borderColor: string;
-                fillerColor: string;
-                handleIcon: string;
-                handleStyle: {
-                    color: string;
-                    borderColor: string;
-                };
-                moveHandleStyle: {
-                    color: string;
-                    opacity: number;
-                };
-                brushStyle: {
-                    color: string;
-                };
-                dataBackground: {
-                    areaStyle: {
-                        color: string;
-                    };
-                    lineStyle: {
-                        color: string;
-                    };
-                };
-                selectedDataBackground: {
-                    areaStyle: {
-                        color: string;
-                        opacity: number;
-                    };
-                    lineStyle: {
-                        color: string;
-                    };
-                };
-                emphasis: {
-                    moveHandleStyle: {
-                        color: string;
-                        opacity: number;
-                    };
-                    handleStyle: {
-                        color: string;
-                        borderColor: string;
-                    };
-                };
-            };
-            toolbox: {
-                feature: {
-                    dataZoom: {
-                        brushStyle: {
-                            color: string;
-                        };
-                    };
-                };
-            };
-            graph: {
-                color: string[];
-            };
-            bar: {
-                barGap: number;
-                label: {
-                    fontFamily: string | undefined;
-                    color: string;
-                    fontSize: number;
-                };
-            };
-            line: {
-                areaStyle: {
-                    opacity: number;
-                };
-                symbol: string;
-                symbolSize: number;
-            };
-            pie: {
-                radius: (string | number)[];
-                label: {
-                    distanceToLabelLine: number;
-                    fontFamily: string | undefined;
-                    formatter: string;
-                    color: string;
-                    lineHeight: number;
-                    fontSize: number;
-                };
-                labelLine: {
-                    length: number;
-                    length2: number;
-                    lineStyle: {
-                        color: string;
-                    };
-                };
-                itemStyle: {
-                    borderWidth: number;
-                    borderColor: string;
-                };
-            };
-            candlestick: {
-                itemStyle: {
-                    color: string;
-                    color0: string;
-                    borderColor: string;
-                    borderColor0: string;
-                };
-            };
-            gauge: {
-                detail: {
-                    color: string;
-                    rich: {
-                        value: {
-                            color: string;
-                        };
-                        unit: {
-                            color: string;
-                        };
-                    };
-                };
-                axisLabel: {
-                    fontFamily: string | undefined;
-                    color: string;
-                };
-                axisTick: {
-                    lineStyle: {
-                        color: string;
-                    };
-                };
-                splitLine: {
-                    lineStyle: {
-                        color: string;
-                    };
-                };
-            };
-            sankey: {
-                label: {
-                    fontFamily: string | undefined;
-                    textBorderColor: string;
-                    color: string;
-                };
-            };
-            sunburst: {
-                label: {
-                    fontFamily: string | undefined;
-                    textBorderColor: string;
-                    color: string;
-                };
-            };
-            simpl: {
-                colorPalettes: {
-                    default: string[];
-                };
-                dataZoom: {
-                    options: {
-                        height: number;
-                        bottom: number;
-                    };
-                    grid: {
-                        bottom: number;
-                    };
-                };
-                timeRangeBar: {
-                    height: number;
-                };
-                externalZoomSlider: {
-                    grid: {
-                        bottom: number;
-                    };
-                };
-                legendLeft: {
-                    left: number;
-                    width: string;
-                };
-                legendRight: {
-                    right: number;
-                    width: string;
-                };
-                noTitle: {
-                    grid: {
-                        top: number;
-                    };
-                    legend: {
-                        top: number;
-                    };
-                };
-                subTitle: {
-                    grid: {
-                        top: number;
-                    };
-                    legend: {
-                        top: number;
-                    };
-                };
-                customLegend: {
-                    grid: {
-                        top: number;
-                    };
-                };
-                progress: {
-                    itemWidth: number;
-                    itemGap: number;
-                    grey: string;
-                };
-                progressBar: {
-                    labelColor: string;
-                    itemWidth: number;
-                    grid: {
-                        left: number;
-                        right: number;
-                        containLabel: boolean;
-                    };
-                };
-                gauge: {
-                    grey: string;
-                    value: string;
-                    unit: string;
-                    defaultColor: string;
-                };
-            };
-        };
-    };
-    _themes: {
-        [key: string]: any;
-    };
-    registerTheme(theme: any): void;
-    getThemeNames(): string[];
-    getThemeByName(name: string): any;
-    setDefault(theme: any): void;
-    getDefault(): any;
-};
-
-export { TitleComponentOption }
-
-export { ToolboxComponentOption }
-
-export { TooltipComponentOption }
-
-export { VisualMapComponentOption }
-
-// @public (undocumented)
-export type XAxisPosition = 'top' | 'bottom';
-
-// @public (undocumented)
-export type YAxisPosition = 'left' | 'right';
-
-
+export * from "@siemens/charts-ng/chart";
+export * from "@siemens/charts-ng/common";
 export * from "@siemens/charts-ng/custom-legend";
 export * from "@siemens/charts-ng/loading-spinner";
+export * from "@siemens/charts-ng/sankey";
+export * from "@siemens/charts-ng/sunburst";
 
 // (No @packageDocumentation comment for this package)
 
