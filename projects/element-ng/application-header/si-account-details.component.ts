@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { TranslatePipe } from '@ngx-translate/core';
+import { SiTranslatePipe } from '@siemens/element-translate-ng';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-account-details',
-  imports: [TranslatePipe],
+  imports: [SiTranslatePipe],
   template: `
     <div class="mx-5">
       <div class="si-h5">{{ name() }}</div>
