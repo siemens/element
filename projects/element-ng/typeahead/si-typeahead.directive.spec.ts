@@ -101,7 +101,6 @@ describe('SiTypeaheadDirective', () => {
     wrapperElement = fixture.nativeElement;
     loader = TestbedHarnessEnvironment.loader(fixture);
     rootLoader = TestbedHarnessEnvironment.documentRootLoader(fixture);
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000000;
   });
 
   it('should create typeahead list on focus', async () => {

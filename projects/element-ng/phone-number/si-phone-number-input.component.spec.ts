@@ -13,7 +13,7 @@ import { PhoneDetails, SiPhoneNumberInputComponent } from '.';
 import { SiSelectFilterListHarness } from '../select/testing/si-select-filter-list.harness';
 
 @Component({
-  imports: [SiPhoneNumberInputComponent, CommonModule, ReactiveFormsModule],
+  imports: [SiPhoneNumberInputComponent, ReactiveFormsModule],
   template: `
     <form [formGroup]="form">
       <si-phone-number-input

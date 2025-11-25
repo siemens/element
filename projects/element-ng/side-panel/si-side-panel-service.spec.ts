@@ -11,7 +11,7 @@ import { SiSidePanelService } from './si-side-panel.service';
 
 @Component({
   selector: 'si-mock-component',
-  imports: [CommonModule, PortalModule],
+  imports: [PortalModule],
   template: `<ng-template #helpPanel cdkPortal>
       <h3>Help Panel</h3>
     </ng-template>

@@ -14,6 +14,7 @@ import {
   Injectable,
   LOCALE_ID,
   provideAppInitializer,
+  provideZoneChangeDetection,
   ɵLocaleDataIndex
 } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -107,6 +108,7 @@ export const appInitializerFactory =
 
 export const APP_CONFIG: ApplicationConfig = {
   providers: [
+    provideZoneChangeDetection(),
     importProvidersFrom(
       // Npm dependencies
       TranslateModule.forRoot({

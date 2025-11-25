@@ -35,12 +35,16 @@ describe('date time helper', () => {
 
   it('should correctly get custom format', () => {
     const format = getNamedFormat('en', 'short');
-    expect(format).toEqual('M/d/yy, h:mm a');
+    // The whitespace character between time and meridian changed with angular 21
+    // see https://github.com/angular/angular/issues/65707
+    expect(format).toEqual('M/d/yy, h:mm a');
   });
 
   it('should correctly get custom format with mediumTime', () => {
     const format = getNamedFormat('en', 'medium');
-    expect(format).toEqual('M/d/yy, h:mm:ss a');
+    // The whitespace character between time and meridian changed with angular 21
+    // see https://github.com/angular/angular/issues/65707
+    expect(format).toEqual('M/d/yy, h:mm:ss a');
   });
 
   it('should correctly parse date time', () => {

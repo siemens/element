@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { CommonModule } from '@angular/common';
 import { Component, effect, inject, input, ElementRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -14,7 +13,6 @@ import { getMarkdownRenderer } from './markdown-renderer';
  */
 @Component({
   selector: 'si-markdown-renderer',
-  imports: [CommonModule],
   template: ``
 })
 export class SiMarkdownRendererComponent {

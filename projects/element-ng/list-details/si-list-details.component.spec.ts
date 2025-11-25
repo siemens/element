@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule, provideNoopAnimations } from '@angular/platform-browser/animations';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, RouterLink, RouterOutlet } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { of, Subject } from 'rxjs';
@@ -163,8 +163,9 @@ describe('ListDetailsComponent', () => {
       });
 
       await TestBed.configureTestingModule({
-        imports: [WrapperComponent, NoopAnimationsModule],
+        imports: [WrapperComponent],
         providers: [
+          provideNoopAnimations(),
           {
             provide: ResizeObserverService,
             useValue: resizeSpy
@@ -421,7 +422,7 @@ describe('ListDetailsComponent', () => {
         SiDetailsPaneComponent
       ],
       template: `
-        <si-list-details>
+        <si-list-details class="vh-100">
           <si-list-pane />
           <si-details-pane>
             <router-outlet />
@@ -476,6 +477,8 @@ describe('ListDetailsComponent', () => {
       expect(debugElement.query(By.css('.list-details')).classes['details-active']).toBeTrue();
       debugElement.query(By.css('.si-details-header-back')).nativeElement.click();
       routerHarness.detectChanges();
+      await routerHarness.fixture.whenStable();
+      // A second whenStable is needed here because of the animation delay
       await routerHarness.fixture.whenStable();
       expect(debugElement.query(By.css('si-empty'))).toBeTruthy();
       expect(debugElement.query(By.css('.list-details')).classes['details-active']).toBeFalsy();
