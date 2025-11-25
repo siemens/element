@@ -2,12 +2,11 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, input, viewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { Component, input, provideZonelessChangeDetection, signal, viewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
 
-import { runOnPushChangeDetection } from '../test-helpers/change-detection.helper';
 import { SiWizardStepComponent, SiWizardComponent as TestComponent } from './index';
 
 @Component({
@@ -17,13 +16,13 @@ import { SiWizardStepComponent, SiWizardComponent as TestComponent } from './ind
       #wizard
       [hasCancel]="hasCancel"
       [hideNavigation]="!hasNavigation"
-      [inlineNavigation]="inlineNavigation"
+      [inlineNavigation]="inlineNavigation()"
       [verticalLayout]="verticalLayout()"
       [showVerticalDivider]="showVerticalDivider()"
       [verticalMinSize]="verticalMinSize()"
       [verticalMaxSize]="verticalMaxSize()"
     >
-      @for (step of steps; track step) {
+      @for (step of steps(); track step) {
         <si-wizard-step [heading]="step" />
       }
     </si-wizard>
@@ -36,10 +35,10 @@ import { SiWizardStepComponent, SiWizardComponent as TestComponent } from './ind
   `
 })
 class TestHostComponent {
-  steps!: string[];
+  readonly steps = signal<string[]>([]);
   hasCancel = false;
   hasNavigation = true;
-  inlineNavigation = true;
+  readonly inlineNavigation = input(true);
   readonly showVerticalDivider = input(false);
   readonly verticalLayout = input(false);
   readonly verticalMinSize = input<string>();
@@ -51,7 +50,7 @@ class TestHostComponent {
   }
 
   generateSteps(amount: number): void {
-    this.steps = new Array(amount).fill(1).map((value, index) => `Step ${index + 1}`);
+    this.steps.set(new Array(amount).fill(1).map((value, index) => `Step ${index + 1}`));
   }
 }
 
@@ -63,34 +62,33 @@ describe('SiWizardComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
+      // eslint-disable-next-line @angular-eslint/no-developer-preview
+      providers: [provideZonelessChangeDetection()],
       imports: [SiResizeObserverModule, TestHostComponent]
     })
   );
 
-  beforeEach(fakeAsync(() => {
+  beforeEach(async () => {
     fixture = TestBed.createComponent(TestHostComponent);
     hostComponent = fixture.componentInstance;
     component = fixture.componentInstance.wizard();
     element = fixture.nativeElement.querySelector('si-wizard');
     fixture.detectChanges();
-
-    flush();
-    tick();
+    await fixture.whenStable();
     fixture.detectChanges();
-    tick();
-  }));
-
-  it('stepCount should match number of steps', () => {
-    expect(component.stepCount).toBe(hostComponent.steps.length);
   });
 
-  it('should center activated step', () => {
+  it('stepCount should match number of steps', () => {
+    expect(component.stepCount).toBe(hostComponent.steps().length);
+  });
+
+  it('should center activated step', async () => {
     fixture.componentInstance.generateSteps(10);
-    fixture.detectChanges();
+    await fixture.whenStable();
     // Activate last step
     const steps = fixture.debugElement.queryAll(By.css('.step a'));
     steps.at(-1)?.nativeElement.click();
-    fixture.detectChanges();
+    await fixture.whenStable();
     // Check that the middle step is active
     const updatedSteps = fixture.debugElement.queryAll(By.css('.step a'));
     const middleStep = updatedSteps.at(updatedSteps.length / 2);
@@ -109,7 +107,7 @@ describe('SiWizardComponent', () => {
       expect(steps.length).toBe(3);
       for (let i = 0; i < steps.length; i++) {
         expect(steps[i].querySelector('.title')!.textContent).toEqual(
-          fixture.componentInstance.steps[i]
+          fixture.componentInstance.steps()[i]
         );
       }
     });
@@ -132,9 +130,9 @@ describe('SiWizardComponent', () => {
   });
 
   describe('when next button is clicked', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       element.querySelector<HTMLElement>('.next')!.click();
-      fixture.detectChanges();
+      await fixture.whenStable();
     });
 
     it('should show back and next buttons', () => {
@@ -158,9 +156,9 @@ describe('SiWizardComponent', () => {
     });
 
     describe('when back button is clicked', () => {
-      beforeEach(() => {
+      beforeEach(async () => {
         element.querySelector<HTMLElement>('.back')!.click();
-        fixture.detectChanges();
+        await fixture.whenStable();
       });
 
       it('should show next button', () => {
@@ -184,24 +182,24 @@ describe('SiWizardComponent', () => {
       });
     });
 
-    it('should reset index if current item is removed', () => {
-      fixture.componentInstance.steps = ['Other Step'];
-      fixture.detectChanges();
+    it('should reset index if current item is removed', async () => {
+      fixture.componentInstance.steps.set(['Other Step']);
+      await fixture.whenStable();
       expect(element.querySelector('.back.invisible')).toBeTruthy();
       expect(element.querySelector('a.active .title')?.textContent).toBe('Other Step');
     });
 
-    it('should update the index if an item was moved', () => {
-      fixture.componentInstance.steps = ['other step', 'and another', 'Step 2'];
-      fixture.detectChanges();
+    it('should update the index if an item was moved', async () => {
+      fixture.componentInstance.steps.set(['other step', 'and another', 'Step 2']);
+      await fixture.whenStable();
       expect(element.querySelector('a.active .title')?.textContent).toBe('Step 2');
     });
 
     describe('when current step is the last one', () => {
-      beforeEach(() => {
+      beforeEach(async () => {
         const steps = element.querySelectorAll<HTMLElement>('.step a');
         steps[steps.length - 1].click();
-        fixture.detectChanges();
+        await fixture.whenStable();
       });
 
       it('should show save and back button', () => {
@@ -240,26 +238,24 @@ describe('SiWizardComponent', () => {
 
     it('should contain cancel button', () => {
       fixture.componentInstance.hasCancel = true;
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(element.querySelectorAll('[aria-label="Cancel"]')).toHaveSize(1);
     });
   });
 
-  it('should calculate visible items', fakeAsync(() => {
+  it('should calculate visible items', () => {
     fixture.componentInstance.generateSteps(10);
-    fixture.detectChanges();
-    tick();
     fixture.detectChanges();
     expect(element.querySelectorAll('.container-steps .step').length).toBe(7);
     element.querySelector<HTMLElement>('.next')!.click();
-    tick();
-    fixture.detectChanges();
-  }));
+  });
 
   describe('without navigation button', () => {
-    beforeEach(async () => {
+    beforeEach(() => {
       hostComponent.hasNavigation = false;
-      await runOnPushChangeDetection(fixture);
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
     });
 
     it('should not show navigation buttons', () => {
@@ -270,6 +266,7 @@ describe('SiWizardComponent', () => {
     it('should go to next step without navigation buttons', () => {
       component.next();
       expect(component.index).toBe(1);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(element.querySelector('.wizard-btn-container .back')).toBeFalsy();
       expect(element.querySelector('.wizard-btn-container .next')).toBeFalsy();
@@ -279,11 +276,13 @@ describe('SiWizardComponent', () => {
       // Move step 2
       component.next();
       expect(component.index).toBe(1);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
       // Move back
       component.back();
       expect(component.index).toBe(0);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(element.querySelector('.wizard-btn-container .back')).toBeFalsy();
       expect(element.querySelector('.wizard-btn-container .next')).toBeFalsy();
@@ -292,70 +291,68 @@ describe('SiWizardComponent', () => {
 
   describe('navigation buttons in footer', () => {
     it('should not show navigation buttons inline if inlineNavigation is false', async () => {
-      hostComponent.inlineNavigation = false;
-      await runOnPushChangeDetection(fixture);
+      fixture.componentRef.setInput('inlineNavigation', false);
+      await fixture.whenStable();
       expect(element.querySelector('.container-wizard .wizard-btn-container .next')).toBeFalsy();
     });
 
     it('should show navigation buttons inline if inlineNavigation is true', async () => {
-      hostComponent.inlineNavigation = true;
-      await runOnPushChangeDetection(fixture);
+      fixture.componentRef.setInput('inlineNavigation', true);
+      await fixture.whenStable();
       expect(element.querySelector('.container-wizard .wizard-btn-container .next')).toBeTruthy();
     });
   });
 
   describe('steps with lazy loading', () => {
-    it('should render steps if they are loaded lazily', fakeAsync(() => {
-      fixture.componentInstance.steps = [];
+    it('should render steps if they are loaded lazily', async () => {
+      fixture.componentInstance.steps.set([]);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       const steps = element.querySelectorAll('.step');
       expect(steps.length).toBe(0);
-      setTimeout(() => {
-        fixture.componentInstance.generateSteps(3);
-        fixture.detectChanges();
-      }, 100);
-      tick(100);
+      await new Promise(resolve => setTimeout(resolve, 100));
+      fixture.componentInstance.generateSteps(3);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      fixture.whenStable().then(() => {
-        const updatedSteps = element.querySelectorAll('.step');
-        expect(updatedSteps.length).toBe(3);
-      });
-    }));
+      const updatedSteps = element.querySelectorAll('.step');
+      expect(updatedSteps.length).toBe(3);
+    });
   });
 
   describe('use vertical layout', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       fixture.componentRef.setInput('verticalLayout', true);
+      await fixture.whenStable();
     });
 
-    it('should use verticalMinSize for step container min-inline-size', () => {
+    it('should use verticalMinSize for step container min-inline-size', async () => {
       fixture.componentRef.setInput('verticalMinSize', '100px');
-      fixture.detectChanges();
+      await fixture.whenStable();
       const container = fixture.debugElement.query(By.css('.container-steps.vertical'));
       const styles = getComputedStyle(container.nativeElement);
       expect(styles.minInlineSize).toBe('100px');
     });
 
-    it('should use verticalMaxSize for step container max-inline-size', () => {
+    it('should use verticalMaxSize for step container max-inline-size', async () => {
       fixture.componentRef.setInput('verticalMaxSize', '100px');
-      fixture.detectChanges();
+      await fixture.whenStable();
       const container = fixture.debugElement.query(By.css('.container-steps.vertical'));
       const styles = getComputedStyle(container.nativeElement);
       expect(styles.maxInlineSize).toBe('100px');
     });
 
-    it('should have divider to visually separate content and steps when showVerticalDivider is set to true', () => {
+    it('should have divider to visually separate content and steps when showVerticalDivider is set to true', async () => {
       fixture.componentRef.setInput('showVerticalDivider', true);
-      fixture.detectChanges();
+      await fixture.whenStable();
       const container = fixture.debugElement.query(By.css('.vertical-divider'));
       expect(container).toBeTruthy();
       const styles = getComputedStyle(container.nativeElement);
       expect(styles.borderRight).toBeTruthy();
     });
 
-    it('should not have divider when showVerticalDivider is set to false', () => {
+    it('should not have divider when showVerticalDivider is set to false', async () => {
       fixture.componentRef.setInput('showVerticalDivider', false);
-      fixture.detectChanges();
+      await fixture.whenStable();
       const container = fixture.debugElement.query(By.css('.vertical-divider'));
       expect(container).toBeFalsy();
     });
