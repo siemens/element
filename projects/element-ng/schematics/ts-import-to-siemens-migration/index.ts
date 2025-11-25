@@ -189,51 +189,59 @@ const updateDecoratorImports = (recorder: UpdateRecorder, sourceFile: ts.SourceF
     return;
   }
 
-  const matchingProperties = getMetadataField(decoratorNode, 'imports');
-  const importsAssignment = matchingProperties[0];
+  for (const metaDataField of ['imports', 'exports']) {
+    const matchingProperties = getMetadataField(decoratorNode, metaDataField);
+    const propertyAssignment = matchingProperties[0];
 
-  if (
-    !ts.isPropertyAssignment(importsAssignment) ||
-    !ts.isArrayLiteralExpression(importsAssignment.initializer)
-  ) {
-    return;
+    if (
+      !propertyAssignment ||
+      !ts.isPropertyAssignment(propertyAssignment) ||
+      !ts.isArrayLiteralExpression(propertyAssignment.initializer)
+    ) {
+      continue;
+    }
+
+    const elements = propertyAssignment.initializer.elements;
+
+    if (elements.find(e => e.getText() === 'SimplElementNgModule') === undefined) {
+      // No SimplElementNgModule found, nothing to do
+      continue;
+    }
+
+    // Filter out SimplElementNgModule and get existing modules
+    const existingModules = elements
+      .filter(e => e.getText() !== 'SimplElementNgModule')
+      .map(e => e.getText());
+
+    const existingModulesSet = new Set(existingModules);
+
+    // Only add modules that don't already exist
+    const newModulesToAdd = SIMPL_ELEMENT_NG_MODULES.filter(m => !existingModulesSet.has(m));
+
+    // Combine existing (without SimplElementNgModule) + new modules
+    const allModules = [...existingModules, ...newModulesToAdd];
+
+    // Remove existing imports array
+    recorder.remove(propertyAssignment.getFullStart(), propertyAssignment.getFullWidth());
+
+    // Create and insert the updated property assignment
+
+    const printer = ts.createPrinter();
+    const newNode = ts.factory.createArrayLiteralExpression(
+      allModules.map(m => ts.factory.createIdentifier(m)),
+      true
+    );
+
+    const newProperty = ts.factory.updatePropertyAssignment(
+      propertyAssignment,
+      propertyAssignment.name,
+      newNode
+    );
+
+    const propertyText = printer.printNode(ts.EmitHint.Unspecified, newProperty, sourceFile);
+    // Had to add extra indentation to align properly
+    recorder.insertLeft(propertyAssignment.getStart(), `\n  ` + propertyText);
   }
-
-  const elements = importsAssignment.initializer.elements;
-
-  // Filter out SimplElementNgModule and get existing modules
-  const existingModules = elements
-    .filter(e => e.getText() !== 'SimplElementNgModule')
-    .map(e => e.getText());
-
-  const existingModulesSet = new Set(existingModules);
-
-  // Only add modules that don't already exist
-  const newModulesToAdd = SIMPL_ELEMENT_NG_MODULES.filter(m => !existingModulesSet.has(m));
-
-  // Combine existing (without SimplElementNgModule) + new modules
-  const allModules = [...existingModules, ...newModulesToAdd];
-
-  // Remove existing imports array
-  recorder.remove(importsAssignment.getFullStart(), importsAssignment.getFullWidth());
-
-  // Create and insert the updated property assignment
-
-  const printer = ts.createPrinter();
-  const newNode = ts.factory.createArrayLiteralExpression(
-    allModules.map(m => ts.factory.createIdentifier(m)),
-    true
-  );
-
-  const newProperty = ts.factory.updatePropertyAssignment(
-    importsAssignment,
-    importsAssignment.name,
-    newNode
-  );
-
-  const propertyText = printer.printNode(ts.EmitHint.Unspecified, newProperty, sourceFile);
-  // Had to add extra indentation to align properly
-  recorder.insertLeft(importsAssignment.getStart(), `\n  ` + propertyText);
 };
 
 /**
