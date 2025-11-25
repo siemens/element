@@ -6,8 +6,23 @@ import { Component, input } from '@angular/core';
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
 
-import { SunburstSeriesOption } from '../../shared/echarts.model';
+import { SunburstSeriesOption } from '@siemens/charts-ng/common';
 import { SiChartComponent } from '../si-chart/si-chart.component';
+
+// Modular ECharts imports - only load what Sunburst needs
+import { echarts } from '@siemens/charts-ng/common';
+import { SunburstChart } from 'echarts/charts';
+import {
+  TitleComponent,
+  TooltipComponent,
+} from 'echarts/components';
+
+// Register only the components needed for Sunburst charts
+echarts.use([
+  SunburstChart,
+  TitleComponent,
+  TooltipComponent,
+]);
 
 @Component({
   selector: 'si-chart-sunburst',

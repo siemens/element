@@ -5,7 +5,7 @@
 import { Component, provideZonelessChangeDetection, SimpleChange, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { SunburstSeriesOption } from '../../shared/echarts.model';
+import { SunburstSeriesOption } from '@siemens/charts-ng/common';
 import { SiChartSunburstComponent } from './si-chart-sunburst.component';
 
 @Component({

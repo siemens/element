@@ -6,9 +6,26 @@ import { Component, input } from '@angular/core';
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
 
-import { PieSeriesOption } from '../../shared/echarts.model';
+import { PieSeriesOption } from '@siemens/charts-ng/common';
 import { SiChartComponent } from '../si-chart/si-chart.component';
 import { CircleChartSeries, CircleValueUpdate } from './si-chart-circle.interface';
+
+// Modular ECharts imports - only load what Circle (Pie) needs
+import { echarts } from '@siemens/charts-ng/common';
+import { PieChart } from 'echarts/charts';
+import {
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+} from 'echarts/components';
+
+// Register only the components needed for Circle/Pie charts
+echarts.use([
+  PieChart,
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+]);
 
 @Component({
   selector: 'si-chart-circle',

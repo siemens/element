@@ -6,8 +6,25 @@ import { Component, input } from '@angular/core';
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
 
-import { SankeySeriesOption } from '../../shared/echarts.model';
+import { SankeySeriesOption } from '@siemens/charts-ng/common';
 import { SiChartComponent } from '../si-chart/si-chart.component';
+
+// Modular ECharts imports - only load what Sankey needs
+import { echarts } from '@siemens/charts-ng/common';
+import { SankeyChart } from 'echarts/charts';
+import {
+  TitleComponent,
+  TooltipComponent,
+  GridComponent,
+} from 'echarts/components';
+
+// Register only the components needed for Sankey charts
+echarts.use([
+  SankeyChart,
+  TitleComponent,
+  TooltipComponent,
+  GridComponent,
+]);
 
 @Component({
   selector: 'si-chart-sankey',
