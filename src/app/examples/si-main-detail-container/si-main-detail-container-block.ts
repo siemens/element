@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import {
   ContentActionBarMainItem,
   SiContentActionBarComponent
@@ -36,6 +36,7 @@ import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.s
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);
   private dataService = inject(DataService);
+  private cdRef = inject(ChangeDetectorRef);
 
   /**
    * Main detail container
@@ -150,6 +151,7 @@ export class SampleComponent {
       this.rows = rows;
 
       this.isLoading--;
+      this.cdRef.markForCheck();
     });
   }
 
