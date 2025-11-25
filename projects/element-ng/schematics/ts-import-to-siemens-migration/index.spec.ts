@@ -243,4 +243,12 @@ describe('ts-import-to-siemens migration', () => {
   it('should migrate imports correctly if there are multiple imports of the symbol', async () => {
     await checkTemplateMigration(['component.simpl-element-ng-module-multiple-imports.ts']);
   });
+
+  it('should migrate exports from SimplElementNgModule in module', async () => {
+    await checkTemplateMigration(['module.export.simpl-element-ng-module.ts']);
+  });
+
+  it('should not add SimplElementNgModule in module if they are not imported or exported', async () => {
+    await checkTemplateMigration(['module.no-import-simpl-element-ng-module.ts']);
+  });
 });
