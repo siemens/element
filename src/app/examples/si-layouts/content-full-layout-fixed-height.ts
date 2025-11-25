@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   SiAccountDetailsComponent,
@@ -80,6 +80,7 @@ export class SampleComponent implements OnInit {
   isLoading = 0;
 
   private dataService = inject(DataService);
+  private cdRef = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
     // timeout needed to work in the iFrame in the docs
@@ -112,6 +113,7 @@ export class SampleComponent implements OnInit {
           this.page = pagedData.page;
           this.rows = pagedData.data;
         }
+        this.cdRef.markForCheck();
       });
     }
   }

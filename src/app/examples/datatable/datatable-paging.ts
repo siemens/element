@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy } from '@angular/core';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiPaginationComponent } from '@siemens/element-ng/pagination';
 import { NgxDatatableModule } from '@siemens/ngx-datatable';
@@ -27,6 +27,7 @@ export class SampleComponent implements OnDestroy {
   subscription?: Subscription;
 
   private dataService = inject(DataService);
+  private cdRef = inject(ChangeDetectorRef);
 
   constructor() {
     this.page.size = 10;
@@ -43,6 +44,7 @@ export class SampleComponent implements OnDestroy {
       this.page = pagedData.page;
       this.rows = pagedData.data;
       this.isLoading = false;
+      this.cdRef.markForCheck();
     });
   }
 }

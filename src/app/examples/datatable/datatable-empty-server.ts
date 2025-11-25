@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 import { NgxDatatableModule } from '@siemens/ngx-datatable';
@@ -23,6 +23,7 @@ export class SampleComponent {
   isLoading = 0;
 
   private dataService = inject(DataService);
+  private cdRef = inject(ChangeDetectorRef);
 
   constructor() {
     this.fetchData({ offset: 0, pageSize: 50 });
@@ -33,6 +34,7 @@ export class SampleComponent {
     this.dataService.getEmptyResults(pageRequest).subscribe(data => {
       this.rows = data.data;
       this.isLoading--;
+      this.cdRef.markForCheck();
     });
   }
 }
