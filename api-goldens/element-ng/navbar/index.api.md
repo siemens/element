@@ -18,7 +18,7 @@ import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import * as rxjs from 'rxjs';
 import { SiApplicationHeaderComponent } from '@siemens/element-ng/application-header';
-import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
+import * as _siemens_element_translate_ng from '@siemens/element-translate-ng';
 import { SiHeaderCollapsibleActionsComponent } from '@siemens/element-ng/application-header';
 import { SiHeaderDropdownTriggerDirective } from '@siemens/element-ng/header-dropdown';
 import { SimpleChanges } from '@angular/core';
@@ -95,14 +95,14 @@ export class SiNavbarPrimaryComponent implements OnChanges, HeaderWithDropdowns 
     readonly appItemFavoriteChanged: _angular_core.OutputEmitterRef<[AppItem, boolean]>;
     readonly appItems: _angular_core.InputSignal<AppItem[] | undefined>;
     readonly appItemsFavorites: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly appSwitcherSubTitle: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly appSwitcherTitle: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly appSwitcherSubTitle: _angular_core.InputSignal<_siemens_element_translate_ng.TranslatableString>;
+    readonly appSwitcherTitle: _angular_core.InputSignal<_siemens_element_translate_ng.TranslatableString>;
     readonly appTitle: _angular_core.InputSignal<string | undefined>;
     readonly ariaLabelMainMenu: _angular_core.InputSignal<string>;
     readonly ariaLabelSecondaryMenu: _angular_core.InputSignal<string>;
-    readonly closeAppSwitcherText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly defaultAppsTitle: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly favoriteAppsTitle: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly closeAppSwitcherText: _angular_core.InputSignal<_siemens_element_translate_ng.TranslatableString>;
+    readonly defaultAppsTitle: _angular_core.InputSignal<_siemens_element_translate_ng.TranslatableString>;
+    readonly favoriteAppsTitle: _angular_core.InputSignal<_siemens_element_translate_ng.TranslatableString>;
     readonly focusOnLoad: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly home: _angular_core.InputSignal<Link | undefined>;
     readonly logoUrl: _angular_core.InputSignal<string | undefined>;
@@ -111,11 +111,11 @@ export class SiNavbarPrimaryComponent implements OnChanges, HeaderWithDropdowns 
     protected newAppItems?: App[] | AppCategory[];
     // (undocumented)
     protected onFavoriteChange({ app, favorite }: FavoriteChangeEvent): void;
-    readonly openAppSwitcherText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly openAppSwitcherText: _angular_core.InputSignal<_siemens_element_translate_ng.TranslatableString>;
     readonly primaryItems: _angular_core.InputSignal<MenuItem[]>;
-    readonly showLessAppsTitle: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly showMoreAppsTitle: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly toggleNavigationText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly showLessAppsTitle: _angular_core.InputSignal<_siemens_element_translate_ng.TranslatableString>;
+    readonly showMoreAppsTitle: _angular_core.InputSignal<_siemens_element_translate_ng.TranslatableString>;
+    readonly toggleNavigationText: _angular_core.InputSignal<_siemens_element_translate_ng.TranslatableString>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiNavbarPrimaryComponent, "si-navbar-primary", never, { "primaryItems": { "alias": "primaryItems"; "required": false; "isSignal": true; }; "accountItems": { "alias": "accountItems"; "required": false; "isSignal": true; }; "account": { "alias": "account"; "required": false; "isSignal": true; }; "logoUrl": { "alias": "logoUrl"; "required": false; "isSignal": true; }; "appTitle": { "alias": "appTitle"; "required": false; "isSignal": true; }; "home": { "alias": "home"; "required": false; "isSignal": true; }; "appSwitcherTitle": { "alias": "appSwitcherTitle"; "required": false; "isSignal": true; }; "appSwitcherSubTitle": { "alias": "appSwitcherSubTitle"; "required": false; "isSignal": true; }; "favoriteAppsTitle": { "alias": "favoriteAppsTitle"; "required": false; "isSignal": true; }; "defaultAppsTitle": { "alias": "defaultAppsTitle"; "required": false; "isSignal": true; }; "showMoreAppsTitle": { "alias": "showMoreAppsTitle"; "required": false; "isSignal": true; }; "showLessAppsTitle": { "alias": "showLessAppsTitle"; "required": false; "isSignal": true; }; "appItems": { "alias": "appItems"; "required": false; "isSignal": true; }; "appCategoryItems": { "alias": "appCategoryItems"; "required": false; "isSignal": true; }; "appItemsFavorites": { "alias": "appItemsFavorites"; "required": false; "isSignal": true; }; "allAppsLink": { "alias": "allAppsLink"; "required": false; "isSignal": true; }; "focusOnLoad": { "alias": "focusOnLoad"; "required": false; "isSignal": true; }; "navAriaLabel": { "alias": "navAriaLabel"; "required": false; "isSignal": true; }; "closeAppSwitcherText": { "alias": "closeAppSwitcherText"; "required": false; "isSignal": true; }; "openAppSwitcherText": { "alias": "openAppSwitcherText"; "required": false; "isSignal": true; }; "toggleNavigationText": { "alias": "toggleNavigationText"; "required": false; "isSignal": true; }; "ariaLabelMainMenu": { "alias": "ariaLabelMainMenu"; "required": false; "isSignal": true; }; "ariaLabelSecondaryMenu": { "alias": "ariaLabelSecondaryMenu"; "required": false; "isSignal": true; }; }, { "appItemFavoriteChanged": "appItemFavoriteChanged"; }, never, ["*", "si-navbar-item[quickAction], element-navbar-item[quickAction='true']"], true, never>;
     // (undocumented)
