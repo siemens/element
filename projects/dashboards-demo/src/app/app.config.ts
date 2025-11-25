@@ -3,7 +3,11 @@
  * SPDX-License-Identifier: MIT
  */
 import { HttpBackend, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import {
+  ApplicationConfig,
+  importProvidersFrom,
+  provideZonelessChangeDetection
+} from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withHashLocation } from '@angular/router';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -27,6 +31,8 @@ const config: Config = {
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    // eslint-disable-next-line @angular-eslint/no-developer-preview
+    provideZonelessChangeDetection(),
     provideRouter(routes, withHashLocation()),
     { provide: SI_WIDGET_STORE, useClass: AppWidgetStorage },
     { provide: SI_DASHBOARD_CONFIGURATION, useValue: config },

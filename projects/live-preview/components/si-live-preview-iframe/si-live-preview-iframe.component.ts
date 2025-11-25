@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  ChangeDetectorRef,
   Component,
   DestroyRef,
   ElementRef,
@@ -68,6 +69,7 @@ export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
   private internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
   private ngZone = inject(NgZone);
   private destroyRef = inject(DestroyRef);
+  private cdRef = inject(ChangeDetectorRef);
 
   @HostBinding('class.is-mobile') protected isMobile = this.internalConfig.isMobile;
 
@@ -176,6 +178,7 @@ export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
         this.localeChange.emit(event.data.message);
         break;
     }
+    this.cdRef.detectChanges();
   }
 
   toggleTheme(): void {
