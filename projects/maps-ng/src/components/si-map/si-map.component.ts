@@ -23,7 +23,11 @@ import {
   Type,
   viewChild
 } from '@angular/core';
-import { SiNoTranslateService, SiTranslateServiceBuilder, t } from '@siemens/element-translate-ng';
+import {
+  SiNoTranslateService,
+  SiTranslateServiceBuilder,
+  t
+} from '@siemens/element-translate-ng/translate';
 import { apply as applyMapboxStyle } from 'ol-mapbox-style';
 import Control from 'ol/control/Control';
 import { defaults as defaultControls } from 'ol/control/defaults';

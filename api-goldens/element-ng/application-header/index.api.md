@@ -15,7 +15,7 @@ import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import * as rxjs from 'rxjs';
 import * as _siemens_element_ng_application_header from '@siemens/element-ng/application-header';
-import * as _siemens_element_translate_ng from '@siemens/element-translate-ng';
+import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
 import { SiHeaderDropdownTriggerDirective } from '@siemens/element-ng/header-dropdown';
 import { SimpleChanges } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -94,7 +94,7 @@ export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDest
     // (undocumented)
     readonly launchpad: _angular_core.InputSignal<TemplateRef<void> | undefined>;
     // (undocumented)
-    readonly launchpadLabel: _angular_core.InputSignal<_siemens_element_translate_ng.TranslatableString>;
+    readonly launchpadLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     // (undocumented)
     protected readonly launchpadOpen: _angular_core.WritableSignal<boolean>;
     // (undocumented)
@@ -108,7 +108,7 @@ export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDest
     // (undocumented)
     protected toggleMobileNavigationExpanded(): void;
     // (undocumented)
-    protected toggleNavigation: _siemens_element_translate_ng.TranslatableString;
+    protected toggleNavigation: _siemens_element_translate_ng_translate_types.TranslatableString;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiApplicationHeaderComponent, "si-application-header", never, { "expandBreakpoint": { "alias": "expandBreakpoint"; "required": false; "isSignal": true; }; "launchpad": { "alias": "launchpad"; "required": false; "isSignal": true; }; "launchpadLabel": { "alias": "launchpadLabel"; "required": false; "isSignal": true; }; }, {}, never, ["si-header-brand, element-header-brand", "si-header-navigation, element-header-navigation", "si-header-actions, element-header-actions"], true, never>;
     // (undocumented)
@@ -159,7 +159,7 @@ export class SiHeaderCollapsibleActionsComponent implements OnDestroy {
     protected readonly icons: Record<"elementOptionsVertical", string>;
     // (undocumented)
     protected readonly id: string;
-    readonly mobileToggleLabel: _angular_core.InputSignal<_siemens_element_translate_ng.TranslatableString>;
+    readonly mobileToggleLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     // (undocumented)
     ngOnDestroy(): void;
     // (undocumented)
@@ -235,11 +235,11 @@ export class SiLaunchpadFactoryComponent {
     protected readonly categories: _angular_core.Signal<AppCategory[]>;
     // (undocumented)
     protected closeLaunchpad(): void;
-    readonly closeText: _angular_core.InputSignal<_siemens_element_translate_ng.TranslatableString>;
+    readonly closeText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly enableFavorites: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     protected escape(): void;
-    readonly favoriteAppsText: _angular_core.InputSignal<_siemens_element_translate_ng.TranslatableString>;
+    readonly favoriteAppsText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     // (undocumented)
     readonly favoriteChange: _angular_core.OutputEmitterRef<FavoriteChangeEvent>;
     // (undocumented)
@@ -252,10 +252,10 @@ export class SiLaunchpadFactoryComponent {
     protected isCategories(items: App[] | AppCategory[]): items is AppCategory[];
     // (undocumented)
     protected showAllApps: boolean;
-    readonly showLessAppsText: _angular_core.InputSignal<_siemens_element_translate_ng.TranslatableString>;
-    readonly showMoreAppsText: _angular_core.InputSignal<_siemens_element_translate_ng.TranslatableString>;
-    readonly subtitleText: _angular_core.InputSignal<_siemens_element_translate_ng.TranslatableString>;
-    readonly titleText: _angular_core.InputSignal<_siemens_element_translate_ng.TranslatableString>;
+    readonly showLessAppsText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly showMoreAppsText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly subtitleText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly titleText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     // (undocumented)
     protected toggleFavorite(app: App, favorite: boolean): void;
     // (undocumented)

@@ -15,7 +15,7 @@ import {
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiMarkdownRendererComponent } from '@siemens/element-ng/markdown-renderer';
 import { MenuItemAction, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
-import { SiTranslatePipe } from '@siemens/element-translate-ng';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
