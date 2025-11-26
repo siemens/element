@@ -25,7 +25,7 @@ import {
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { SiAutocompleteDirective } from '@siemens/element-ng/autocomplete';
-import { t } from '@siemens/element-translate-ng/translate';
+import { t, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { isObservable, ReplaySubject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -223,6 +223,16 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
    * @defaultValue false
    */
   readonly typeaheadFullWidth = input(false, { transform: booleanAttribute });
+
+  /**
+   * This option will be shown at the end of the typeahead.
+   * Use it to allow users to create new options on the fly.
+   *
+   * Use the `{{ query }}` parameter in translation values to include the current text from the input.
+   *
+   * @experimental
+   */
+  readonly typeaheadCreateOption = input<TranslatableString>();
   /**
    * Emits an Event when the input field is changed.
    */
@@ -242,6 +252,14 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
 
   /** Emits whenever the typeahead overlay is opened or closed. */
   readonly typeaheadOpenChange = output<boolean>();
+
+  /**
+   * Emits when the create option is selected.
+   * It will emit the current search query.
+   *
+   * @experimental
+   */
+  readonly typeaheadOnCreateOption = output<string>();
 
   /** @internal */
   readonly foundMatches = computed(() =>
@@ -344,8 +362,12 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
   constructor() {
     effect(() => {
       // The value needs to fulfil the minimum length requirement set.
-      if (this.canBeOpen() && this.query().length >= this.typeaheadMinLength()) {
-        const matches = this.foundMatches();
+      const matches = this.foundMatches();
+      if (
+        this.canBeOpen() &&
+        this.query().length >= this.typeaheadMinLength() &&
+        (matches.length || (this.typeaheadCreateOption() && this.query().length))
+      ) {
         const escapedQuery = this.escapeRegex(this.query());
         const equalsExp = new RegExp(`^${escapedQuery}$`, 'i');
         const fullMatches = matches.filter(
@@ -354,7 +376,7 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
         if (fullMatches.length > 0) {
           this.typeaheadOnFullMatch.emit(fullMatches[0]);
         }
-        if (matches.length) {
+        if (matches.length || this.typeaheadCreateOption()) {
           this.loadComponent();
         } else {
           this.removeComponent();
@@ -486,6 +508,19 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
    */
   private getOptionField(option: TypeaheadOption, field: string): string | undefined {
     return typeof option !== 'object' ? undefined : option[field];
+  }
+
+  /** @internal */
+  createOption(): void {
+    this.typeaheadOnCreateOption.emit(this.query());
+    this.clearTimer();
+    if (!this.typeaheadMultiSelect() && this.typeaheadClearValueOnSelect()) {
+      const inputElement =
+        this.elementRef.nativeElement.querySelector('input')! ?? this.elementRef.nativeElement;
+      inputElement.value = '';
+      inputElement.dispatchEvent(new Event('input'));
+    }
+    this.canBeOpen.set(false);
   }
 
   // Select a match, either gets called due to a enter keypress or from the component due to a click.

@@ -10,9 +10,9 @@ import * as i1 from '@siemens/element-ng/autocomplete';
 import { Observable } from 'rxjs';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
-import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
 import { SimpleChanges } from '@angular/core';
 import { TemplateRef } from '@angular/core';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public
 export interface MatchSegment {
@@ -44,15 +44,17 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
     // (undocumented)
     protected static readonly overlayPositions: ConnectionPositionPair[];
     readonly siTypeahead: _angular_core.InputSignal<Typeahead>;
-    readonly typeaheadAutocompleteListLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly typeaheadAutocompleteListLabel: _angular_core.InputSignal<TranslatableString>;
     readonly typeaheadAutoSelectIndex: _angular_core.InputSignalWithTransform<number, unknown>;
     readonly typeaheadClearValueOnSelect: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly typeaheadCloseOnEsc: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly typeaheadCreateOption: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly typeaheadFullWidth: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly typeaheadItemTemplate: _angular_core.InputSignal<TemplateRef<TypeaheadOptionItemContext> | undefined>;
     readonly typeaheadMatchAllTokens: _angular_core.InputSignal<"no" | "once" | "separately" | "independently">;
     readonly typeaheadMinLength: _angular_core.InputSignal<number>;
     readonly typeaheadMultiSelect: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly typeaheadOnCreateOption: _angular_core.OutputEmitterRef<string>;
     readonly typeaheadOnFullMatch: _angular_core.OutputEmitterRef<TypeaheadMatch>;
     readonly typeaheadOnInput: _angular_core.OutputEmitterRef<string>;
     readonly typeaheadOnSelect: _angular_core.OutputEmitterRef<TypeaheadMatch>;
@@ -68,7 +70,7 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
     readonly typeaheadTokenize: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly typeaheadWaitMs: _angular_core.InputSignal<number>;
     // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiTypeaheadDirective, "[siTypeahead]", ["si-typeahead"], { "siTypeahead": { "alias": "siTypeahead"; "required": true; "isSignal": true; }; "typeaheadProcess": { "alias": "typeaheadProcess"; "required": false; "isSignal": true; }; "typeaheadScrollable": { "alias": "typeaheadScrollable"; "required": false; "isSignal": true; }; "typeaheadOptionsInScrollableView": { "alias": "typeaheadOptionsInScrollableView"; "required": false; "isSignal": true; }; "typeaheadOptionsLimit": { "alias": "typeaheadOptionsLimit"; "required": false; "isSignal": true; }; "typeaheadScrollableAdditionalHeight": { "alias": "typeaheadScrollableAdditionalHeight"; "required": false; "isSignal": true; }; "typeaheadAutoSelectIndex": { "alias": "typeaheadAutoSelectIndex"; "required": false; "isSignal": true; }; "typeaheadCloseOnEsc": { "alias": "typeaheadCloseOnEsc"; "required": false; "isSignal": true; }; "typeaheadClearValueOnSelect": { "alias": "typeaheadClearValueOnSelect"; "required": false; "isSignal": true; }; "typeaheadWaitMs": { "alias": "typeaheadWaitMs"; "required": false; "isSignal": true; }; "typeaheadMinLength": { "alias": "typeaheadMinLength"; "required": false; "isSignal": true; }; "typeaheadOptionField": { "alias": "typeaheadOptionField"; "required": false; "isSignal": true; }; "typeaheadMultiSelect": { "alias": "typeaheadMultiSelect"; "required": false; "isSignal": true; }; "typeaheadTokenize": { "alias": "typeaheadTokenize"; "required": false; "isSignal": true; }; "typeaheadMatchAllTokens": { "alias": "typeaheadMatchAllTokens"; "required": false; "isSignal": true; }; "typeaheadItemTemplate": { "alias": "typeaheadItemTemplate"; "required": false; "isSignal": true; }; "typeaheadSkipSortingMatches": { "alias": "typeaheadSkipSortingMatches"; "required": false; "isSignal": true; }; "typeaheadAutocompleteListLabel": { "alias": "typeaheadAutocompleteListLabel"; "required": false; "isSignal": true; }; "typeaheadFullWidth": { "alias": "typeaheadFullWidth"; "required": false; "isSignal": true; }; }, { "typeaheadOnInput": "typeaheadOnInput"; "typeaheadOnSelect": "typeaheadOnSelect"; "typeaheadOnFullMatch": "typeaheadOnFullMatch"; "typeaheadOpenChange": "typeaheadOpenChange"; }, never, never, true, [{ directive: typeof i1.SiAutocompleteDirective; inputs: {}; outputs: {}; }]>;
+    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiTypeaheadDirective, "[siTypeahead]", ["si-typeahead"], { "siTypeahead": { "alias": "siTypeahead"; "required": true; "isSignal": true; }; "typeaheadProcess": { "alias": "typeaheadProcess"; "required": false; "isSignal": true; }; "typeaheadScrollable": { "alias": "typeaheadScrollable"; "required": false; "isSignal": true; }; "typeaheadOptionsInScrollableView": { "alias": "typeaheadOptionsInScrollableView"; "required": false; "isSignal": true; }; "typeaheadOptionsLimit": { "alias": "typeaheadOptionsLimit"; "required": false; "isSignal": true; }; "typeaheadScrollableAdditionalHeight": { "alias": "typeaheadScrollableAdditionalHeight"; "required": false; "isSignal": true; }; "typeaheadAutoSelectIndex": { "alias": "typeaheadAutoSelectIndex"; "required": false; "isSignal": true; }; "typeaheadCloseOnEsc": { "alias": "typeaheadCloseOnEsc"; "required": false; "isSignal": true; }; "typeaheadClearValueOnSelect": { "alias": "typeaheadClearValueOnSelect"; "required": false; "isSignal": true; }; "typeaheadWaitMs": { "alias": "typeaheadWaitMs"; "required": false; "isSignal": true; }; "typeaheadMinLength": { "alias": "typeaheadMinLength"; "required": false; "isSignal": true; }; "typeaheadOptionField": { "alias": "typeaheadOptionField"; "required": false; "isSignal": true; }; "typeaheadMultiSelect": { "alias": "typeaheadMultiSelect"; "required": false; "isSignal": true; }; "typeaheadTokenize": { "alias": "typeaheadTokenize"; "required": false; "isSignal": true; }; "typeaheadMatchAllTokens": { "alias": "typeaheadMatchAllTokens"; "required": false; "isSignal": true; }; "typeaheadItemTemplate": { "alias": "typeaheadItemTemplate"; "required": false; "isSignal": true; }; "typeaheadSkipSortingMatches": { "alias": "typeaheadSkipSortingMatches"; "required": false; "isSignal": true; }; "typeaheadAutocompleteListLabel": { "alias": "typeaheadAutocompleteListLabel"; "required": false; "isSignal": true; }; "typeaheadFullWidth": { "alias": "typeaheadFullWidth"; "required": false; "isSignal": true; }; "typeaheadCreateOption": { "alias": "typeaheadCreateOption"; "required": false; "isSignal": true; }; }, { "typeaheadOnInput": "typeaheadOnInput"; "typeaheadOnSelect": "typeaheadOnSelect"; "typeaheadOnFullMatch": "typeaheadOnFullMatch"; "typeaheadOpenChange": "typeaheadOpenChange"; "typeaheadOnCreateOption": "typeaheadOnCreateOption"; }, never, never, true, [{ directive: typeof i1.SiAutocompleteDirective; inputs: {}; outputs: {}; }]>;
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiTypeaheadDirective, never>;
 }
