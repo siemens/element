@@ -370,6 +370,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
         return this.translateService.translateAsync(criteria.map(c => c.label)).pipe(
           map(translations => {
             criteria.forEach(c => (c.translatedLabel = translations[c.label] ?? c.label ?? c.name));
+            this.cdRef.markForCheck();
             return criteria;
           })
         );
