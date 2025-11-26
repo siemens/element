@@ -39,6 +39,12 @@ describe('scss-import-to-siemens migration', () => {
     expect(actual).not.toContain(`@use '@simpl/element-theme/src/theme';`);
   });
 
+  it(`should not modify node_modules files';`, async () => {
+    const originalContent = [`// Import theme`, `@use '@simpl/element-theme/src/theme';`];
+    const actual = await runFileMigration('node_modules/package/styles.scss', originalContent);
+    expect(actual).toEqual(originalContent);
+  });
+
   it(`should remove global styles @use '@simpl/element-theme/...`, async () => {
     const originalContent = [
       `// Import theme`,
