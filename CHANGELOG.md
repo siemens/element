@@ -1,3 +1,13 @@
+## [48.5.1](https://github.com/siemens/element/compare/v48.5.0...v48.5.1) (2025-11-26)
+
+
+### Bug Fixes
+
+* **application-header:** replace ngx-translate dependency with element translate pipe ([8a8022c](https://github.com/siemens/element/commit/8a8022c577a07cc550d04988635fb4dd57837d4e))
+* **badges:** prevent misaligned icons ([452db9a](https://github.com/siemens/element/commit/452db9a2989819078555fff45d5f1144eb30478e))
+* **datepicker:** fix incorrect week numbers ([c84fceb](https://github.com/siemens/element/commit/c84fcebefa21242a8771de4d77eb0ca23a9f79af))
+* **schematics:** add symbols in exports as well for NgModule ([ac2fd82](https://github.com/siemens/element/commit/ac2fd82ed756a846a98e9146c049861e2b9c872e))
+
 # [48.5.0](https://github.com/siemens/element/compare/v48.4.0...v48.5.0) (2025-11-24)
 
 
