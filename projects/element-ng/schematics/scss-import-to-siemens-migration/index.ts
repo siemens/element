@@ -60,6 +60,10 @@ export const scssMigrationRule = (_options: { path: string }): Rule => {
 
     const scssFiles = await discoverSourceFiles(tree, context, _options.path, '.scss');
     for (const filePath of scssFiles) {
+      if (filePath.match(/node_modules/)) {
+        continue;
+      }
+
       const content = tree.readText(filePath);
       if (
         content.includes(STYLE_REPLACEMENTS[0].replace) ||
