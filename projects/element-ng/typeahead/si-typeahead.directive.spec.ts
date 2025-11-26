@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { BehaviorSubject, of } from 'rxjs';
 
 import { SiTypeaheadDirective, Typeahead, TypeaheadMatch, TypeaheadOptionItemContext } from '.';
+import { runOnPushChangeDetection } from '../test-helpers';
 import { SiTypeaheadInputHarness } from './testing/si-typeahead-input.harness';
 import { SiTypeaheadHarness } from './testing/si-typeahead.harness';
 
@@ -40,9 +41,11 @@ const testItems = ['test', 'item'];
       [typeaheadItemTemplate]="itemTemplate"
       [typeaheadSkipSortingMatches]="typeaheadSkipSortingMatches"
       [typeaheadClearValueOnSelect]="typeaheadClearValueOnSelect"
+      [typeaheadCreateOption]="createOption"
       (typeaheadOnFullMatch)="onFullMatch($event)"
       (typeaheadOnSelect)="onSelect($event)"
       (ngModelChange)="onModelChange($event)"
+      (typeaheadOnCreateOption)="onCreateOption($event)"
     />
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -63,6 +66,7 @@ class WrapperComponent {
   itemTemplate!: TemplateRef<TypeaheadOptionItemContext>;
   typeaheadSkipSortingMatches = false;
   typeaheadClearValueOnSelect = false;
+  createOption: string | undefined = undefined;
 
   readonly template = viewChild.required('testTemplate', {
     read: TemplateRef<TypeaheadOptionItemContext>
@@ -71,6 +75,7 @@ class WrapperComponent {
   onFullMatch = ($event: TypeaheadMatch): void => {};
   onSelect = ($event: TypeaheadMatch): void => {};
   onModelChange = ($event: string): void => {};
+  onCreateOption = ($event: string): void => {};
 }
 
 describe('SiTypeaheadDirective', () => {
@@ -563,5 +568,23 @@ describe('SiTypeaheadDirective', () => {
     // Updating the items should not bring back typeahead overlay.
     items.next(['value']);
     expect(await input.getItems()).toBeFalsy();
+  });
+
+  it('should trigger the create option', async () => {
+    wrapperComponent.createOption = 'Create {{query}}';
+    const createSpy = spyOn(wrapperComponent, 'onCreateOption');
+    const selectSpy = spyOn(wrapperComponent, 'onSelect');
+
+    await runOnPushChangeDetection(fixture);
+
+    const input = await loader.getHarness(SiTypeaheadInputHarness);
+    await input.focus();
+    await input.typeText('Success');
+    const items = await input.getItems();
+    expect(items).toContain('Create Success');
+    await input.select({ text: 'Create Success' });
+    expect(createSpy).toHaveBeenCalledWith('Success');
+    expect(selectSpy).not.toHaveBeenCalled();
+    expect(await input.getItems()).toBeNull();
   });
 });
