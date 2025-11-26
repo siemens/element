@@ -1,3 +1,12 @@
+## [48.5.2](https://github.com/siemens/element/compare/v48.5.1...v48.5.2) (2025-11-26)
+
+
+### Bug Fixes
+
+* **map:** avoid TypeError when clicking point without handler ([b8f36b4](https://github.com/siemens/element/commit/b8f36b4a08a4a08e65f13a0ede586afb713602f8))
+* **schematics:** scss migration should not modify node_modules ([e521c20](https://github.com/siemens/element/commit/e521c20d4e28e6546551f614cc3a081128b3e4bf))
+* **translate-ng:** prevent unwanted import of ngx-translate ([d8a636c](https://github.com/siemens/element/commit/d8a636ca064d61ef1e5d651163787a277a49891a))
+
 ## [48.5.1](https://github.com/siemens/element/compare/v48.5.0...v48.5.1) (2025-11-26)
 
 
