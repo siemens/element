@@ -74,7 +74,12 @@ export const tsConfig = defineConfig({
           {
             name: '@ngx-translate/core',
             importNames: ['TranslatePipe'],
-            message: 'Use `SiTranslatePipe` from `@siemens/element-translate-ng` instead.'
+            message: 'Use `SiTranslatePipe` from `@siemens/element-translate-ng/translate` instead.'
+          },
+          {
+            name: '@siemens/element-translate-ng',
+            message:
+              'Always use a dedicated secondary entrypoint, e.g. `@siemens/element-translate-ng/translate`.'
           }
         ]
       }
