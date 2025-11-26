@@ -6,6 +6,7 @@ import { ConnectionPositionPair, Overlay, OverlayRef } from '@angular/cdk/overla
 import { ComponentPortal } from '@angular/cdk/portal';
 import {
   booleanAttribute,
+  ChangeDetectorRef,
   ComponentRef,
   computed,
   Directive,
@@ -269,6 +270,7 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
   private matchSorter = new SiTypeaheadSorting();
 
   private overlayRef?: OverlayRef;
+  private cdRef = inject(ChangeDetectorRef);
 
   /**
    * Indicates that the typeahead can be potentially open.
@@ -402,6 +404,7 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
       this.query.set(value);
       this.typeaheadOnInput.emit(value ?? '');
       this.canBeOpen.set(true);
+      this.cdRef.markForCheck();
     }, this.typeaheadWaitMs());
   }
 

@@ -81,5 +81,5 @@ export class SampleComponent {
     'West Virginia',
     'Wisconsin',
     'Wyoming'
-  ]).pipe(delay(1000));
+  ]).pipe(delay(10000));
 }
