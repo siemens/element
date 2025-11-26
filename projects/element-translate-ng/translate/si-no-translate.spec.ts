@@ -4,6 +4,7 @@
  */
 import { TestBed } from '@angular/core/testing';
 
+import { bypassTranslation } from './si-bypass-translate';
 import { injectSiTranslateService } from './si-translate.inject';
 import { getBrowserLanguage, SiTranslateService } from './si-translate.service';
 
@@ -35,6 +36,11 @@ describe('SiNoTranslate', () => {
 
   it('should translate sync', () => {
     expect(service.translateSync('VALUE-3')).toBe('VALUE-3');
+  });
+
+  it('should bypass translation value', () => {
+    const result = service.translateSync(bypassTranslation('KEY-1'));
+    expect(result).toBe('KEY-1');
   });
 
   it('should return language code from different browser locales', () => {
