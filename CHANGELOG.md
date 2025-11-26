@@ -1,3 +1,19 @@
+## [47.12.1](https://github.com/siemens/element/compare/v47.12.0...v47.12.1) (2025-11-26)
+
+
+### Bug Fixes
+
+* **application-header:** deprecate `App` interface ([7f9aa73](https://github.com/siemens/element/commit/7f9aa7381ae7e741fc53dc4943b476813485b069))
+* **loading-spinner:** slow down animation isof stopping for reduced-motion ([bef5284](https://github.com/siemens/element/commit/bef528425d07c5afced52dc3bdd1e42fdf5f568f))
+* **map:** avoid TypeError when clicking point without handler ([13f7f01](https://github.com/siemens/element/commit/13f7f016db0f186c4b1f5155ca415a874ccf199a))
+
+
+### DEPRECATIONS
+
+* **application-header:** Deprecate `App` interface.
+  
+  No longer extend from the `App` interface, instead use either `AppLink` or `AppRouterLink`.
+
 # [47.12.0](https://github.com/siemens/element/compare/v47.11.1...v47.12.0) (2025-11-10)
 
 
