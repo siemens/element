@@ -91,7 +91,11 @@ export class SiTypeaheadComponent implements AfterViewInit {
   }
 
   // Gets called when a match is selected by clicking on it.
-  protected selectMatch(match: TypeaheadMatch): void {
-    this.parent.selectMatch(match);
+  protected selectMatch(match: TypeaheadMatch | undefined): void {
+    if (match) {
+      this.parent.selectMatch(match);
+    } else {
+      this.parent.createOption();
+    }
   }
 }
