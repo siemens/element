@@ -13,7 +13,10 @@ copyright: '&copy; Siemens 2016-2025'
 strict: true
 
 nav:
-  - Home:                                 'README.md'
+  - Home:
+    - Overview:                           'README.md'
+    - Get started:                        'get-started/quickstart.md'
+    - Build with AI:                      'get-started/element-mcp.md'
   - Fundamentals:
     - Typography:                         'fundamentals/typography.md'
     - Colors:
