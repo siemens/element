@@ -10,7 +10,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
 @Component({
   selector: 'app-sample',
   imports: [SiActionCardComponent, SiIconModule],
-  templateUrl: './si-action-card.html',
+  templateUrl: './si-action-card-selectable.html',
   styles: `
     .card-size {
       height: 250px;
@@ -19,7 +19,11 @@ import { LOG_EVENT } from '@siemens/live-preview';
 })
 export class SampleComponent {
   private log = inject(LOG_EVENT);
-  protected onCardClick(cardId: string): void {
-    this.log('Card clicked:', cardId);
+  protected onCardSelect(state: boolean, cardId: string): void {
+    if (state) {
+      this.log('Card selected:', cardId);
+    } else {
+      this.log('Card deselected:', cardId);
+    }
   }
 }

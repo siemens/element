@@ -5,7 +5,7 @@
 import { expect, test } from '../../support/test-helpers';
 
 test.describe('si-action-card', () => {
-  const example = 'si-card/si-action-card';
+  const example = 'si-card/si-action-card-selectable';
 
   test(example, async ({ page, si }) => {
     await si.visitExample(example, false);
