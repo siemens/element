@@ -18,7 +18,7 @@ export class SiMicrochartLineComponent {
     // (undocumented)
     protected readonly areaPath: _angular_core.Signal<string>;
     // (undocumented)
-    protected readonly gradientId = "gradient-line-id";
+    protected readonly gradientId: string;
     // (undocumented)
     readonly height: _angular_core.InputSignal<number>;
     readonly lineWidth: _angular_core.InputSignal<number>;

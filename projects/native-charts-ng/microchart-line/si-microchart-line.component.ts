@@ -100,7 +100,8 @@ export class SiMicrochartLineComponent {
     return path;
   });
 
-  protected readonly gradientId = `gradient-line-id`;
+  private static instanceCounter = 0;
+  protected readonly gradientId = `gradient-line-${SiMicrochartLineComponent.instanceCounter++}`;
 
   private mapToCoordinates(values: number[]): Coordinate[] {
     const max = Math.max(...values);
