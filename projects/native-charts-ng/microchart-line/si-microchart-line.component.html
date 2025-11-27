@@ -1,4 +1,17 @@
 <svg [attr.width]="width()" [attr.height]="height()" [attr.viewBox]="viewBox()">
+  @if (showArea()) {
+    <defs>
+      <linearGradient x1="0%" y1="0%" x2="0%" y2="100%" [attr.id]="gradientId">
+        <stop [attr.stop-color]="'var(--' + series().colorToken + ')'" />
+        <stop
+          offset="1"
+          stop-opacity="0"
+          [attr.stop-color]="'var(--' + series().colorToken + ')'"
+        />
+      </linearGradient>
+    </defs>
+    <path stroke="none" [attr.d]="areaPath()" [attr.fill]="'url(#' + gradientId + ')'" />
+  }
   <path
     fill="none"
     [attr.d]="path()"
