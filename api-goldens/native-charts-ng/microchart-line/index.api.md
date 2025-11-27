@@ -16,6 +16,10 @@ export interface MicrochartLineSeries {
 // @public (undocumented)
 export class SiMicrochartLineComponent {
     // (undocumented)
+    protected readonly areaPath: _angular_core.Signal<string>;
+    // (undocumented)
+    protected readonly gradientId = "gradient-line-id";
+    // (undocumented)
     readonly height: _angular_core.InputSignal<number>;
     readonly lineWidth: _angular_core.InputSignal<number>;
     readonly markerColor: _angular_core.InputSignal<string | undefined>;
@@ -26,13 +30,14 @@ export class SiMicrochartLineComponent {
     // (undocumented)
     protected readonly path: _angular_core.Signal<string>;
     readonly series: _angular_core.InputSignal<MicrochartLineSeries>;
+    readonly showArea: _angular_core.InputSignal<boolean>;
     readonly showMarkers: _angular_core.InputSignal<boolean>;
     // (undocumented)
     protected readonly viewBox: _angular_core.Signal<string>;
     // (undocumented)
     readonly width: _angular_core.InputSignal<number>;
     // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiMicrochartLineComponent, "si-microchart-line", never, { "series": { "alias": "series"; "required": true; "isSignal": true; }; "width": { "alias": "width"; "required": false; "isSignal": true; }; "height": { "alias": "height"; "required": false; "isSignal": true; }; "showMarkers": { "alias": "showMarkers"; "required": false; "isSignal": true; }; "lineWidth": { "alias": "lineWidth"; "required": false; "isSignal": true; }; "markerColor": { "alias": "markerColor"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
+    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiMicrochartLineComponent, "si-microchart-line", never, { "series": { "alias": "series"; "required": true; "isSignal": true; }; "width": { "alias": "width"; "required": false; "isSignal": true; }; "height": { "alias": "height"; "required": false; "isSignal": true; }; "showMarkers": { "alias": "showMarkers"; "required": false; "isSignal": true; }; "showArea": { "alias": "showArea"; "required": false; "isSignal": true; }; "lineWidth": { "alias": "lineWidth"; "required": false; "isSignal": true; }; "markerColor": { "alias": "markerColor"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiMicrochartLineComponent, never>;
 }
