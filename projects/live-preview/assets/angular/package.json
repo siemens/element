@@ -1,0 +1,52 @@
+{
+  "name": "element-example",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^20.1.0",
+    "@angular/common": "^20.1.0",
+    "@angular/compiler": "^20.1.0",
+    "@angular/core": "^20.1.0",
+    "@angular/forms": "^20.1.0",
+    "@angular/platform-browser": "^20.1.0",
+    "@angular/router": "^20.1.0",
+    "@ngx-formly/bootstrap": "6.3.12",
+    "@ngx-formly/core": "6.3.12",
+    "@ngx-translate/core": "16.0.4",
+    "@siemens/charts-ng": "48.3.0",
+    "@siemens/dashboards-ng": "48.3.0",
+    "@siemens/element-ng": "48.3.0",
+    "@siemens/element-theme": "48.3.0",
+    "@siemens/element-translate-ng": "48.3.0",
+    "@siemens/live-preview": "48.3.0",
+    "@siemens/maps-ng": "48.3.0",
+    "@siemens/ngx-datatable": "24.3.3",
+    "echarts": "6.0.0",
+    "ol": "10.6.0",
+    "ol-ext": "^4.0.26",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^20.3.9",
+    "@angular/cdk": "^20.2.12",
+    "@angular/cli": "^20.3.9",
+    "@angular/compiler-cli": "^20.3.9",
+    "@types/jasmine": "~5.1.0",
+    "jasmine-core": "~5.8.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "typescript": "~5.8.2"
+  }
+}
