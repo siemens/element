@@ -1,3 +1,11 @@
+<!-- markdownlint-disable MD041-->
+![AI Banner](images/ai-element-ix-blog.svg)
+<!-- markdownlint-enable MD041-->
+
+Discover the new Siemens Design Language MCP Server — your gateway to machine-readable
+Siemens Design Language assets and standards. Streamline your workflow and boost productivity.
+Learn more in the technical documentation [Build with AI](get-started/element-mcp.md).
+
 # Siemens Element Design System
 
 Siemens Element is a design system of the smart infrastructure domain
@@ -6,8 +14,6 @@ components, design tools and resources, human interface guidelines, and
 a vibrant community of contributors.
 
 ![Moodboard components dark](images/mood-components-dark.png)
-
-![Moodboard components Light](images/mood-components-light.png)
 
 ## Angular components
 
