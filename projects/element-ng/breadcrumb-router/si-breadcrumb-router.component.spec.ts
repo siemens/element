@@ -2,12 +2,13 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, ElementRef, viewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from '@angular/core/testing';
+import { Component, ElementRef, provideZonelessChangeDetection, viewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, RouterModule, RouterOutlet, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { BreadcrumbItem } from '@siemens/element-ng/breadcrumb';
 
+import { runOnPushChangeDetection } from '../test-helpers';
 import {
   SI_BREADCRUMB_RESOLVER_SERVICE,
   SiBreadcrumbRouterComponent as TestComponent
@@ -71,7 +72,7 @@ describe('SiBreadcrumbRouterComponent', () => {
     }
   ];
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         TestComponent,
@@ -83,10 +84,11 @@ describe('SiBreadcrumbRouterComponent', () => {
         {
           provide: SI_BREADCRUMB_RESOLVER_SERVICE,
           useClass: SiBreadcrumbDefaultResolverService
-        }
+        },
+        provideZonelessChangeDetection()
       ]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WrapperComponent);
@@ -96,65 +98,55 @@ describe('SiBreadcrumbRouterComponent', () => {
     router = TestBed.inject(Router);
   });
 
-  it('should display route items using breadcrumb resolver', fakeAsync(() => {
-    fixture.ngZone!.run(() => {
-      router.navigateByUrl('/');
+  it('should display route items using breadcrumb resolver', async () => {
+    router.navigateByUrl('/');
 
-      fixture.detectChanges();
-      flush();
-      fixture.detectChanges();
+    await runOnPushChangeDetection(fixture);
 
-      expect(
-        (element.querySelector('.breadcrumb .item') as HTMLElement).querySelector('.icon')
-      ).not.toBeNull();
-      expect(
-        (element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).querySelector('.icon')
-      ).toBeNull();
-      expect((element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).innerText).toBe(
-        routes[0].children![0].data?.title
-      );
-    });
-  }));
+    expect(
+      (element.querySelector('.breadcrumb .item') as HTMLElement).querySelector('.icon')
+    ).not.toBeNull();
+    expect(
+      (element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).querySelector('.icon')
+    ).toBeNull();
+    expect((element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).innerText).toBe(
+      routes[0].children![0].data?.title
+    );
+  });
 
-  it('should change on route change using breadcrumb resolver', fakeAsync(() => {
-    fixture.ngZone!.run(() => {
-      router.navigateByUrl('/');
+  it('should change on route change using breadcrumb resolver', async () => {
+    router.navigateByUrl('/');
 
-      fixture.detectChanges();
-      flush();
-      fixture.detectChanges();
+    await runOnPushChangeDetection(fixture);
 
-      expect(
-        (element.querySelector('.breadcrumb .item') as HTMLElement).querySelector('.icon')
-      ).not.toBeNull();
-      expect(
-        (element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).querySelector('.icon')
-      ).toBeNull();
-      expect((element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).innerText).toBe(
-        routes[0].children![0].data?.title
-      );
+    expect(
+      (element.querySelector('.breadcrumb .item') as HTMLElement).querySelector('.icon')
+    ).not.toBeNull();
+    expect(
+      (element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).querySelector('.icon')
+    ).toBeNull();
+    expect((element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).innerText).toBe(
+      routes[0].children![0].data?.title
+    );
 
-      router.navigate(['child']);
+    router.navigate(['child']);
 
-      fixture.detectChanges();
-      flush();
-      fixture.detectChanges();
+    await runOnPushChangeDetection(fixture);
 
-      expect(
-        (element.querySelector('.breadcrumb .item') as HTMLElement).querySelector('.icon')
-      ).not.toBeNull();
-      expect(
-        (element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).querySelector('.icon')
-      ).toBeNull();
-      expect(
-        (element.querySelectorAll('.breadcrumb .item')[2] as HTMLElement).querySelector('.icon')
-      ).toBeNull();
-      expect((element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).innerText).toBe(
-        routes[0].children![1].data?.title
-      );
-      expect((element.querySelectorAll('.breadcrumb .item')[2] as HTMLElement).innerText).toBe(
-        routes[0].children![1].children![0].data?.title
-      );
-    });
-  }));
+    expect(
+      (element.querySelector('.breadcrumb .item') as HTMLElement).querySelector('.icon')
+    ).not.toBeNull();
+    expect(
+      (element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).querySelector('.icon')
+    ).toBeNull();
+    expect(
+      (element.querySelectorAll('.breadcrumb .item')[2] as HTMLElement).querySelector('.icon')
+    ).toBeNull();
+    expect((element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).innerText).toBe(
+      routes[0].children![1].data?.title
+    );
+    expect((element.querySelectorAll('.breadcrumb .item')[2] as HTMLElement).innerText).toBe(
+      routes[0].children![1].children![0].data?.title
+    );
+  });
 });

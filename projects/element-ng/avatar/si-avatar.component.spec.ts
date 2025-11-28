@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { Component, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EntityStatusType } from '@siemens/element-ng/common';
 
 import { SiAvatarComponent } from './index';
@@ -38,7 +38,8 @@ describe('SiAvatarComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [SiAvatarComponent, TestHostComponent]
+      imports: [SiAvatarComponent, TestHostComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents()
   );
 
@@ -49,78 +50,71 @@ describe('SiAvatarComponent', () => {
     element = fixture.nativeElement.querySelector('si-avatar');
   });
 
-  it('should show image', fakeAsync(() => {
+  it('should show image', () => {
     host.imageUrl = 'testImageUrl';
     fixture.detectChanges();
-    tick();
 
     const img = element.querySelector('img');
     expect(img).toBeTruthy();
     expect(img?.alt).toBe('Test');
-  }));
+  });
 
-  it('should show icon', fakeAsync(() => {
+  it('should show icon', () => {
     host.icon = 'element-user';
     fixture.detectChanges();
-    tick();
 
     const el = element.querySelector<HTMLElement>('.element-user');
     expect(el).toBeTruthy();
     expect(el?.title).toBe('Test');
-  }));
+  });
 
-  it('should show initials', fakeAsync(() => {
+  it('should show initials', () => {
     host.initials = 'JD';
     fixture.detectChanges();
-    tick();
 
     const div = element.querySelector<HTMLElement>('.initials');
     expect(div).toBeTruthy();
     expect(div?.innerText).toBe('JD');
     expect(div?.title).toBe('Test');
-  }));
+  });
 
-  it('should show status icon', fakeAsync(() => {
+  it('should show status icon', () => {
     host.initials = 'JD';
     host.status = 'success';
     fixture.detectChanges();
-    tick();
 
     expect(element.querySelector('.indicator')).toBeTruthy();
-  }));
+  });
 
-  it('should show different color', fakeAsync(() => {
+  it('should show different color', () => {
     host.initials = 'JD';
     host.color = 14;
     fixture.detectChanges();
-    tick();
 
     expect(element.style.getPropertyValue('--background')).toBe('var(--element-data-14)');
-  }));
+  });
 
-  it('should wrap data colors', fakeAsync(() => {
+  it('should wrap data colors', () => {
     host.initials = 'JD';
     host.color = 21;
     fixture.detectChanges();
-    tick();
 
     expect(element.style.getPropertyValue('--background')).toBe('var(--element-data-4)');
-  }));
+  });
 
-  it('should set color automatically', fakeAsync(() => {
+  it('should set color automatically', () => {
     host.initials = 'JD';
     host.autoColor = true;
     fixture.detectChanges();
-    tick();
 
     expect(element.style.getPropertyValue('--background')).toBe('var(--element-data-4)');
 
     host.initials = 'DJ';
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
-    tick();
 
     expect(element.style.getPropertyValue('--background')).toBe('var(--element-data-10)');
-  }));
+  });
 
   describe('auto-calculated initials', () => {
     it('should support account with first and last name', () => {

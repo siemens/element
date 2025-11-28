@@ -2,8 +2,13 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, ComponentRef, SimpleChange } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  ChangeDetectionStrategy,
+  ComponentRef,
+  provideZonelessChangeDetection,
+  SimpleChange
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiCircleStatusComponent, SiCircleStatusComponent as TestComponent } from './index';
 
@@ -18,7 +23,8 @@ describe('SiCircleStatusComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [TestComponent]
+      imports: [TestComponent],
+      providers: [provideZonelessChangeDetection()]
     })
       // because of https://github.com/angular/angular/issues/12313
       .overrideComponent(SiCircleStatusComponent, {
@@ -67,7 +73,7 @@ describe('SiCircleStatusComponent', () => {
     checkAriaLabel('icon description');
   });
 
-  it('set blink to true', fakeAsync(() => {
+  it('set blink to true', async () => {
     componentRef.setInput('blink', true);
     componentRef.setInput('status', 'info');
     component.ngOnChanges({
@@ -77,17 +83,17 @@ describe('SiCircleStatusComponent', () => {
     fixture.detectChanges();
     const statusIndication = element.querySelector('.status-indication .bg') as HTMLElement;
     expect(statusIndication.classList.contains('pulse')).toBeFalse();
-    tick(4 * 1400);
+    await new Promise(r => setTimeout(r, 1400));
     fixture.detectChanges();
     expect(statusIndication.classList.contains('pulse')).toBeTrue();
     component.ngOnDestroy();
-  }));
+  });
 
-  it('should show event out indication', fakeAsync(() => {
+  it('should show event out indication', () => {
     componentRef.setInput('eventOut', true);
     fixture.detectChanges();
 
     const outElement = element.querySelector('.event-out');
     expect(outElement).toBeTruthy();
-  }));
+  });
 });

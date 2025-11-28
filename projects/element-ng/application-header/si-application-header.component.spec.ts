@@ -5,7 +5,12 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, Component, Injectable } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Injectable,
+  provideZonelessChangeDetection
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   SiHeaderDropdownComponent,
@@ -97,7 +102,8 @@ describe('SiApplicationHeaderComponent', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [TestHostComponent]
+        imports: [TestHostComponent],
+        providers: [provideZonelessChangeDetection()]
       });
     });
 

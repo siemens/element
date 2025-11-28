@@ -2,7 +2,11 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, ComponentRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ComponentRef,
+  provideZonelessChangeDetection
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ModalRef } from '@siemens/element-ng/modal';
 
@@ -72,7 +76,7 @@ describe('ColumnDialogComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ModalRef]
+      providers: [ModalRef, provideZonelessChangeDetection()]
     })
       .overrideComponent(SiColumnSelectionDialogComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default }
@@ -268,7 +272,10 @@ describe('ColumnDialogComponent', () => {
       'si-column-selection-editor input.form-control'
     )!;
     expect(inputField).toBeTruthy();
+    // Wait for setTimeout in startEdit() to complete
+    await new Promise(resolve => setTimeout(resolve, 100));
     inputField.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    await fixture.whenStable();
     expect(
       document.querySelector<HTMLInputElement>('si-column-selection-editor input.form-control')
     ).toBeFalsy();
