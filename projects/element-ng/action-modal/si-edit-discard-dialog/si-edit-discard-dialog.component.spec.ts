@@ -2,7 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ModalRef } from '@siemens/element-ng/modal';
 
 import { SiEditDiscardDialogComponent } from './si-edit-discard-dialog.component';
@@ -13,13 +14,13 @@ describe('SiEditDiscardDialogComponent', () => {
   let element: HTMLElement;
   let modalRef: ModalRef<any, any>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [SiEditDiscardDialogComponent],
-      providers: [ModalRef]
+      providers: [ModalRef, provideZonelessChangeDetection()]
     }).compileComponents();
     modalRef = TestBed.inject(ModalRef);
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SiEditDiscardDialogComponent);

@@ -2,8 +2,14 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  provideZonelessChangeDetection,
+  signal,
+  viewChild
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { SiAccordionComponent } from './si-accordion.component';
@@ -30,11 +36,12 @@ describe('SiAccordion', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let element: HTMLElement;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, TestHostComponent]
+      imports: [NoopAnimationsModule, TestHostComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
@@ -75,19 +82,17 @@ describe('SiAccordion', () => {
     checkExpanded(true, false, false);
   });
 
-  it('expands a panel and closes others', fakeAsync(() => {
+  it('expands a panel and closes others', () => {
     fixture.detectChanges();
 
     // open second panel
     clickOnHeader(1);
-    flush();
     fixture.detectChanges();
     checkExpanded(false, true, false);
 
     // close second panel
     clickOnHeader(1);
-    flush();
     fixture.detectChanges();
     checkExpanded(false, false, false);
-  }));
+  });
 });

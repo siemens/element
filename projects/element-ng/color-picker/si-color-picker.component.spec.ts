@@ -2,7 +2,13 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, ComponentRef, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ComponentRef,
+  provideZonelessChangeDetection,
+  viewChild
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
@@ -21,7 +27,8 @@ class FormHostComponent {
 describe('SiColorPickerComponent', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [TestComponent, FormHostComponent]
+      imports: [TestComponent, FormHostComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents()
   );
 

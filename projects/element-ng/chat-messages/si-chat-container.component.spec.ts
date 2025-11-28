@@ -2,10 +2,11 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { DebugElement, Component } from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { DebugElement, Component, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+import { runOnPushChangeDetection } from '../test-helpers';
 import { SiChatContainerComponent } from './si-chat-container.component';
 
 @Component({
@@ -28,7 +29,8 @@ describe('SiChatContainerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SiChatContainerComponent]
+      imports: [SiChatContainerComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(SiChatContainerComponent);
@@ -114,15 +116,16 @@ describe('SiChatContainerComponent', () => {
     expect(debugElement.nativeElement.classList.contains('w-100')).toBe(true);
   });
 
-  it('should handle scroll events', fakeAsync(() => {
+  it('should handle scroll events', async () => {
     const messagesContainer = debugElement.query(By.css('.messages-container'));
     expect(messagesContainer).toBeTruthy();
 
     messagesContainer.nativeElement.dispatchEvent(new Event('scroll'));
-    tick();
+
+    await runOnPushChangeDetection(fixture);
 
     expect(component).toBeTruthy();
-  }));
+  });
 
   it('should project content into input area', () => {
     const hostFixture = TestBed.createComponent(TestHostComponent);
