@@ -252,6 +252,27 @@ Check your previous MCP retrieval logs (if enabled / not disabled).
 npx @siemens/element-mcp log
 ```
 
+### Use within WSL (Windows Subsystem for Linux)
+
+If you're using WSL, you need to configure the LLM token using environment variables instead of the
+system keychain. Before running any commands, add the following to a `.env` file in the project root
+(if you're using project installation):
+
+```
+SDL_MCP_TOKEN_ENV=true
+OPENAI_API_KEY=<your-key-here>
+```
+
+Make sure the `.env` file is in your `.gitignore` and can't be committed.
+
+Alternatively, or if you're using global installation, add these to your shell profile
+(`~/.zprofile` or `~/.bash_profile`):
+
+```bash
+export SDL_MCP_TOKEN_ENV=true
+export OPENAI_API_KEY=<your-key-here>
+```
+
 ### Connection Issues
 
 - Verify that the MCP server is running (it should start automatically)

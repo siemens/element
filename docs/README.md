@@ -1,5 +1,5 @@
 <!-- markdownlint-disable MD041-->
-![AI Banner](images/ai-element-ix-blog.svg)
+[![AI Banner](images/ai-element-ix-blog.svg)](get-started/element-mcp.md)
 <!-- markdownlint-enable MD041-->
 
 Discover the new Siemens Design Language MCP Server — your gateway to machine-readable
