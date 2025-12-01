@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 import { computed, Directive, input, OnChanges } from '@angular/core';
-import { buildTrackByIdentity } from '@siemens/element-ng/common';
 
 import { SelectGroup, SelectOption } from '../si-select.types';
 import { SI_SELECT_OPTIONS_STRATEGY } from './si-select-options-strategy';
@@ -32,16 +31,6 @@ export class SiSelectComplexOptionsDirective<T>
 {
   /** Options to be shown in select dropdown. */
   readonly complexOptions = input<T[] | Record<string, T[]> | null>();
-
-  /**
-   * @deprecated Property has no effect and can be removed.
-   *
-   * @defaultValue
-   * ```
-   * buildTrackByIdentity<T>()
-   * ```
-   */
-  readonly trackBy = input(buildTrackByIdentity<T>());
 
   /**
    * By default, values are check on equality by reference. Override to customize the behavior.
