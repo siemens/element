@@ -207,6 +207,7 @@ theme:
     - navigation.tabs
     - page.toc
     - content.action.edit
+    - content.code.copy
 
 extra_javascript:
   - '//w3.siemens.com/ote/ote_config.js'
