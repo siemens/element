@@ -53,11 +53,6 @@ export class SiChartGaugeComponent extends SiChartComponent implements OnChanges
    */
   readonly valueFormatter = input<(val: number) => string>();
   /**
-   * Sets the number of decimals.
-   * @deprecated Use `minNumberOfDecimals` and `maxNumberOfDecimals` instead.
-   * @defaultValue undefined */
-  readonly numberOfDecimals = input<number | undefined>();
-  /**
    * Min number of decimals.
    * Possible values are from 0 to 100.
    * @defaultValue 0
@@ -91,17 +86,11 @@ export class SiChartGaugeComponent extends SiChartComponent implements OnChanges
   readonly colors = input<string[]>();
 
   private readonly locale = inject(LOCALE_ID).toString();
-  private readonly actualMinNumberOfDecimals = computed(
-    () => this.numberOfDecimals() ?? this.minNumberOfDecimals()
-  );
-  private readonly actualMaxNumberOfDecimals = computed(
-    () => this.numberOfDecimals() ?? this.maxNumberOfDecimals()
-  );
   private readonly numberFormat = computed(() => {
-    const minDecimals = this.actualMinNumberOfDecimals();
+    const minDecimals = this.minNumberOfDecimals();
     return new Intl.NumberFormat(this.locale, {
       minimumFractionDigits: minDecimals,
-      maximumFractionDigits: Math.max(minDecimals, this.actualMaxNumberOfDecimals())
+      maximumFractionDigits: Math.max(minDecimals, this.maxNumberOfDecimals())
     });
   });
 
