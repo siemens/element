@@ -66,7 +66,7 @@ Answer the following questions as desired. Note: We are not yet
 [Zoneless](https://angular.dev/guide/zoneless).
 
 ```sh
-✔ Which stylesheet format would you like to use? Sass (SCSS)     [ https://sass-lang.com/documentation/syntax#scss                ]
+✔ Which stylesheet format would you like to use? Sass (SCSS)     [ https://sass-lang.com/documentation/syntax#scss ]
 ✔ Do you want to enable Server-Side Rendering (SSR) and Static Site Generation (SSG/Prerendering)? No
 ✔ Do you want to create a 'zoneless' application without zone.js? No
 ✔ Which AI tools do you want to configure with Angular best practices? https://angular.dev/ai/develop-with-ai None
