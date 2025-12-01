@@ -25,8 +25,3 @@ export const SI_DASHBOARD_CONFIGURATION = new InjectionToken<Config>(
     factory: () => ({ grid: { gridStackOptions: DEFAULT_GRIDSTACK_OPTIONS } })
   }
 );
-
-/**
- * @deprecated Use SI_DASHBOARD_CONFIGURATION instead.
- */
-export const CONFIG_TOKEN = SI_DASHBOARD_CONFIGURATION;
