@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Injectable } from '@angular/core';
+import { Injectable, provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import {
@@ -30,7 +30,10 @@ describe('SiUIStateService', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        providers: [provideSiUiState({ store: SynchronousMockStore })]
+        providers: [
+          provideSiUiState({ store: SynchronousMockStore }),
+          provideZonelessChangeDetection()
+        ]
       }).compileComponents();
       service = TestBed.inject(SI_UI_STATE_SERVICE);
     });

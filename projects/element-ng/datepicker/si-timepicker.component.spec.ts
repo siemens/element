@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, signal, viewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { Component, provideZonelessChangeDetection, signal, viewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { SiTimepickerComponent as TestComponent } from './index';
@@ -67,7 +67,8 @@ describe('SiTimepickerComponent', () => {
 
     beforeEach(async () => {
       await TestBed.configureTestingModule({
-        imports: [TestComponent]
+        imports: [TestComponent],
+        providers: [provideZonelessChangeDetection()]
       }).compileComponents();
       fixture = TestBed.createComponent(TestComponent);
       element = fixture.nativeElement;
@@ -93,16 +94,17 @@ describe('SiTimepickerComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should display seconds and milliseconds input', fakeAsync(() => {
+    it('should display seconds and milliseconds input', () => {
       component.showSeconds.set(true);
       component.showMilliseconds.set(true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
       expect(getHours().value).toEqual('');
       expect(getMinutes().value).toEqual('');
       expect(getSeconds().value).toEqual('');
       expect(getMilliseconds().value).toEqual('');
-    }));
+    });
 
     it('should display time components in input elements', () => {
       component.showSeconds.set(true);
@@ -116,33 +118,37 @@ describe('SiTimepickerComponent', () => {
       expect(getMilliseconds().value).toEqual('000');
     });
 
-    it('should display time in 24 hours mode with date object input', fakeAsync(() => {
+    it('should display time in 24 hours mode with date object input', () => {
       component.showSeconds.set(true);
       component.showMilliseconds.set(true);
       component.showMeridian.set(false);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       component.time.setValue(new Date('2022-01-12 16:23:59.435'));
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
       expect(getHours().value).toEqual('16');
       expect(getMinutes().value).toEqual('23');
       expect(getSeconds().value).toEqual('59');
       expect(getMilliseconds().value).toEqual('435');
-    }));
+    });
 
-    it('should display time in 24 hours mode with string object input', fakeAsync(() => {
+    it('should display time in 24 hours mode with string object input', () => {
       component.showSeconds.set(true);
       component.showMilliseconds.set(true);
       component.showMeridian.set(false);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       component.time.setValue('2022-01-12 16:23:59.435');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
       expect(getHours().value).toEqual('16');
       expect(getMinutes().value).toEqual('23');
       expect(getSeconds().value).toEqual('59');
       expect(getMilliseconds().value).toEqual('435');
-    }));
+    });
 
     it('should remove time components when setting undefined time', () => {
       component.time.setValue('2022-01-12 16:23:59.435');
@@ -275,14 +281,16 @@ describe('SiTimepickerComponent', () => {
       });
     });
 
-    it('should disable component', fakeAsync(() => {
+    it('should disable component', () => {
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       component.time.setValue('2021-01-12 18:23:58.435');
       component.disabled.set(true);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(getHours().disabled).toBeTruthy();
       expect(getMinutes().disabled).toBeTruthy();
-    }));
+    });
 
     it('should toggle meridian', () => {
       component.time.setValue('2021-01-12 18:23:58.435');

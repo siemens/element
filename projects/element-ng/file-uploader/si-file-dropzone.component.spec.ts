@@ -2,8 +2,14 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  provideZonelessChangeDetection,
+  signal,
+  viewChild
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { SiFileDropzoneComponent, UploadFile } from './index';
@@ -48,7 +54,8 @@ describe('SiFileDropzoneComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), TestHostComponent]
+      imports: [TranslateModule.forRoot(), TestHostComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestHostComponent);
@@ -292,7 +299,7 @@ describe('SiFileDropzoneComponent', () => {
     expect(files[0].status).toBe('added');
   });
 
-  it('should display max allowed file size with abbreviation', fakeAsync(() => {
+  it('should display max allowed file size with abbreviation', () => {
     component.maxFileSize.set(1_572_864); // 1.5mb
     fixture.detectChanges();
     expect(element.querySelector('.allowed')!.innerHTML).toContain('1.5MB');
@@ -301,7 +308,7 @@ describe('SiFileDropzoneComponent', () => {
     fixture.detectChanges();
 
     expect(element.querySelector('.allowed')!.innerHTML).toContain('1.5GB');
-  }));
+  });
 
   it('should allow directory upload when using drag and drop', () => {
     component.directoryUpload = true;

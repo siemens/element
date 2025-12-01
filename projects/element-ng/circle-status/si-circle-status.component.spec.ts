@@ -73,7 +73,8 @@ describe('SiCircleStatusComponent', () => {
     checkAriaLabel('icon description');
   });
 
-  it('set blink to true', async () => {
+  it('set blink to true', () => {
+    jasmine.clock().install();
     componentRef.setInput('blink', true);
     componentRef.setInput('status', 'info');
     component.ngOnChanges({
@@ -83,10 +84,12 @@ describe('SiCircleStatusComponent', () => {
     fixture.detectChanges();
     const statusIndication = element.querySelector('.status-indication .bg') as HTMLElement;
     expect(statusIndication.classList.contains('pulse')).toBeFalse();
-    await new Promise(r => setTimeout(r, 1400));
+    jasmine.clock().tick(4 * 1400);
+
     fixture.detectChanges();
     expect(statusIndication.classList.contains('pulse')).toBeTrue();
     component.ngOnDestroy();
+    jasmine.clock().uninstall();
   });
 
   it('should show event out indication', () => {
