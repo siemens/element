@@ -4,7 +4,7 @@
  */
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import {
   addDays,
@@ -16,6 +16,7 @@ import {
   isSameYear,
   daysInMonth
 } from '../date-time-helper';
+import { runOnPushChangeDetection } from './../../test-helpers/change-detection.helper';
 import { SiDaySelectionComponent as TestComponent } from './si-day-selection.component';
 import { CalendarTestHelper, generateKeyEvent } from './test-helper.spec';
 
@@ -153,13 +154,13 @@ describe('SiDaySelectionComponent', () => {
       expect(selectedElement.innerHTML.trim()).toBe('25');
     });
 
-    it('does not show selected date if in different month', fakeAsync(() => {
+    it('does not show selected date if in different month', async () => {
       wrapperComponent.startDate.set(new Date('2022-05-15'));
-      fixture.detectChanges();
+      await runOnPushChangeDetection(fixture);
 
       const selectedElement = element.querySelector('.selected');
       expect(selectedElement).toBeNull();
-    }));
+    });
 
     it('select cell on cell clicked', () => {
       selectDate(31);
@@ -194,21 +195,19 @@ describe('SiDaySelectionComponent', () => {
     });
 
     ['PageUp', 'PageDown'].forEach(key => {
-      it(`should emit activeMonthChange on ${key} press`, fakeAsync(() => {
+      it(`should emit activeMonthChange on ${key} press`, async () => {
         helper.getCalendarBody().dispatchEvent(generateKeyEvent('PageDown'));
-        fixture.detectChanges();
-        flush();
+        await fixture.whenStable();
         expect(wrapperComponent.activeMonth).toBeTruthy();
-      }));
+      });
     });
 
     ['Previous Month', 'Next Month'].forEach(label => {
-      it(`should emit activeMonthChange on button '${label}' click`, fakeAsync(() => {
+      it(`should emit activeMonthChange on button '${label}' click`, async () => {
         element.querySelector<HTMLButtonElement>(`button[aria-label="${label}"]`)!.click();
-        fixture.detectChanges();
-        flush();
+        await fixture.whenStable();
         expect(wrapperComponent.activeMonth).toBeTruthy();
-      }));
+      });
     });
 
     it('should emit viewChange when clicking on month', () => {
@@ -326,14 +325,14 @@ describe('SiDaySelectionComponent', () => {
         });
       });
 
-      it('should set aria-current to today', fakeAsync(() => {
+      it('should set aria-current to today', async () => {
         wrapperComponent.focusedDate.set(getToday());
-        fixture.detectChanges();
+        await runOnPushChangeDetection(fixture);
 
         const actual = helper.queryAsArray('[aria-current]');
         expect(actual.length).toBe(1);
         expect(actual[0].getAttribute('aria-current')).toBe('date');
-      }));
+      });
     });
 
     describe('calendar body navigation', () => {

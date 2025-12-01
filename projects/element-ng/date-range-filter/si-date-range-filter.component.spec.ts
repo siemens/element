@@ -4,8 +4,14 @@
  */
 import { MediaMatcher } from '@angular/cdk/layout';
 import { formatDate } from '@angular/common';
-import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  provideZonelessChangeDetection,
+  viewChild
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestScheduler } from 'rxjs/testing';
 
 import { DateRangeFilter, DateRangePreset, SiDateRangeFilterComponent } from './index';
 
@@ -79,18 +85,11 @@ describe('SiDateRangeFilterComponent', () => {
     el.dispatchEvent(new Event('input'));
   };
 
-  const updateView = (): void => {
-    // twice because of si-number-input
-    fixture.detectChanges();
-    flush();
-    fixture.detectChanges();
-    flush();
-  };
-
   beforeEach(() =>
     TestBed.configureTestingModule({
       imports: [TestHostComponent],
       providers: [
+        provideZonelessChangeDetection(),
         {
           provide: MediaMatcher,
           useValue: {
@@ -120,8 +119,8 @@ describe('SiDateRangeFilterComponent', () => {
     element = fixture.nativeElement;
   });
 
-  it('pre-selects matching offset, shows range "before"', fakeAsync(() => {
-    updateView();
+  it('pre-selects matching offset, shows range "before"', async () => {
+    await fixture.whenStable();
 
     const to = new Date();
     const from = new Date(to.getTime() - 2 * ONE_DAY);
@@ -130,11 +129,11 @@ describe('SiDateRangeFilterComponent', () => {
     expect(rangeInputValue()).toBe(2);
     expect(rangeSelectContent()).toBe('Days');
     expect(preview()).toEqual(rangeText(from, to));
-  }));
+  });
 
-  it('pre-selects matching offset, shows range "after"', fakeAsync(() => {
+  it('pre-selects matching offset, shows range "after"', async () => {
     component.range.range = 'after';
-    updateView();
+    await fixture.whenStable();
 
     const from = new Date();
     const to = new Date(from.getTime() + 2 * ONE_DAY);
@@ -144,9 +143,9 @@ describe('SiDateRangeFilterComponent', () => {
     expect(rangeSelectContent()).toBe('Days');
     expect(preview()).toEqual(rangeText(from, to));
     expect(element.querySelector('input[name=point2range][value=after]:checked')).toBeTruthy();
-  }));
+  });
 
-  it('pre-selects with two dates', fakeAsync(() => {
+  it('pre-selects with two dates', async () => {
     const from = new Date('2023-05-13');
     const to = new Date('2023-08-14');
 
@@ -155,20 +154,20 @@ describe('SiDateRangeFilterComponent', () => {
       point2: to
     };
 
-    updateView();
+    await fixture.whenStable();
 
     expect(preview()).toEqual(rangeText(from, to));
     expect(advancedMode()).toBeFalse();
     expect(date2string(component.range.point1 as Date)).toEqual(date2string(from));
     expect(date2string(component.range.point2 as Date)).toEqual(date2string(to));
     expect(component.range.range).toBeUndefined();
-  }));
+  });
 
-  it('shows range for "after"', fakeAsync(() => {
-    updateView();
+  it('shows range for "after"', async () => {
+    await fixture.whenStable();
 
     element.querySelectorAll<HTMLElement>('.range-type label')[1]?.click();
-    updateView();
+    await fixture.whenStable();
 
     const from = new Date();
     const to = new Date(from.getTime() + 2 * ONE_DAY);
@@ -178,13 +177,13 @@ describe('SiDateRangeFilterComponent', () => {
     expect(component.range.point1).toEqual('now');
     expect(component.range.point2).toEqual(2 * ONE_DAY);
     expect(component.range.range).toEqual('after');
-  }));
+  });
 
-  it('shows range for "within"', fakeAsync(() => {
-    updateView();
+  it('shows range for "within"', async () => {
+    await fixture.whenStable();
 
     element.querySelectorAll<HTMLElement>('.range-type label')[2]?.click();
-    updateView();
+    await fixture.whenStable();
 
     const now = new Date();
     const from = new Date(now.getTime() - 2 * ONE_DAY);
@@ -195,21 +194,22 @@ describe('SiDateRangeFilterComponent', () => {
     expect(component.range.point1).toEqual('now');
     expect(component.range.point2).toEqual(2 * ONE_DAY);
     expect(component.range.range).toEqual('within');
-  }));
+  });
 
-  it('allows selecting two dates', fakeAsync(() => {
+  it('allows selecting two dates', async () => {
+    jasmine.clock().install();
     component.inputMode = true;
-    updateView();
+    await fixture.whenStable();
     toggleMode();
-    updateView();
+    await fixture.whenStable();
 
     element.querySelector<HTMLElement>('input.form-check-input[type=checkbox]')?.click();
-    updateView();
+    await fixture.whenStable();
 
     dateInput('point1', '05/13/2023');
     dateInput('point2', '08/14/2023');
-    tick(200);
-    fixture.detectChanges();
+    jasmine.clock().tick(200);
+    await fixture.whenStable();
 
     const from = new Date('2023-05-13');
     const to = new Date('2023-08-14');
@@ -218,17 +218,18 @@ describe('SiDateRangeFilterComponent', () => {
     expect(date2string(component.range.point1 as Date)).toEqual(date2string(from));
     expect(date2string(component.range.point2 as Date)).toEqual(date2string(to));
     expect(component.range.range).toBeUndefined();
-  }));
+    jasmine.clock().uninstall();
+  });
 
-  it('allows selecting presets', fakeAsync(() => {
-    updateView();
+  it('allows selecting presets', async () => {
+    await fixture.whenStable();
 
     // select 'after' to test for 'before' afterwards
     element.querySelectorAll<HTMLElement>('.range-type label')[1]?.click();
-    updateView();
+    await fixture.whenStable();
 
     presetList()[1]?.click();
-    updateView();
+    await fixture.whenStable();
 
     expect(rangeInputValue()).toBe(1);
     expect(rangeSelectContent()).toBe('Weeks');
@@ -238,12 +239,12 @@ describe('SiDateRangeFilterComponent', () => {
 
     const activeButton = element.querySelector('.range-type input:checked + span');
     expect(activeButton?.textContent).toContain('Before');
-  }));
+  });
 
-  it('switches from advanced to simple mode with calendar', fakeAsync(() => {
-    updateView();
+  it('switches from advanced to simple mode with calendar', async () => {
+    await fixture.whenStable();
     toggleMode();
-    updateView();
+    await fixture.whenStable();
 
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -252,13 +253,13 @@ describe('SiDateRangeFilterComponent', () => {
     expect(component.range.point1).toEqual(twoDaysAgo);
     expect(component.range.point2).toEqual(today);
     expect(component.range.range).toBeUndefined();
-  }));
+  });
 
-  it('switches from advanced to simple mode with inputs', fakeAsync(() => {
+  it('switches from advanced to simple mode with inputs', async () => {
     component.inputMode = true;
-    updateView();
+    await fixture.whenStable();
     toggleMode();
-    updateView();
+    await fixture.whenStable();
 
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -267,18 +268,18 @@ describe('SiDateRangeFilterComponent', () => {
     expect(component.range.point1).toEqual('now');
     expect(component.range.point2).toEqual(twoDaysAgo);
     expect(component.range.range).toBeUndefined();
-  }));
+  });
 
-  it('allows selecting presets in simple mode', fakeAsync(() => {
+  it('allows selecting presets in simple mode', async () => {
     component.range = {
       point1: new Date('2023-05-13'),
       point2: new Date('2023-08-14')
     };
 
-    updateView();
+    await fixture.whenStable();
 
     presetList()[1]?.click();
-    updateView();
+    await fixture.whenStable();
 
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -287,19 +288,19 @@ describe('SiDateRangeFilterComponent', () => {
     expect(component.range.point1).toEqual(oneWeekAgo);
     expect(component.range.point2).toEqual(today);
     expect(component.range.range).toBeUndefined();
-  }));
+  });
 
-  it('selecting presets in input mode keeps now', fakeAsync(() => {
+  it('selecting presets in input mode keeps now', async () => {
     component.inputMode = true;
     component.range = {
       point1: new Date('2023-05-13'),
       point2: new Date('2023-08-14')
     };
 
-    updateView();
+    await fixture.whenStable();
 
     presetList()[1]?.click();
-    updateView();
+    await fixture.whenStable();
 
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -312,58 +313,64 @@ describe('SiDateRangeFilterComponent', () => {
     // also test that 'now' is disabled again
     const presets = presetList();
     presets[presets.length - 1]?.click();
-    updateView();
+    await fixture.whenStable();
 
     const range = getRangePastMonth();
 
     expect(component.range.point1).toEqual(range.point1);
     expect(component.range.point2).toEqual(range.point2);
     expect(component.range.range).toBeUndefined();
-  }));
+  });
 
-  it('allows presets with custom calculation', fakeAsync(() => {
+  it('allows presets with custom calculation', async () => {
     component.range = {
       point1: new Date('2023-05-13'),
       point2: new Date('2023-08-14')
     };
 
-    updateView();
+    await fixture.whenStable();
 
     const presets = presetList();
     presets[presets.length - 1]?.click();
-    updateView();
+    await fixture.whenStable();
 
     const range = getRangePastMonth();
 
     expect(component.range.point1).toEqual(range.point1);
     expect(component.range.point2).toEqual(range.point2);
     expect(component.range.range).toBeUndefined();
-  }));
+  });
 
-  it('allows filtering presets', fakeAsync(() => {
-    updateView();
+  it('allows filtering presets', async () => {
+    await fixture.whenStable();
 
-    const searchInput = element.querySelector<HTMLInputElement>('si-search-bar input')!;
-    searchInput.value = '30';
-    searchInput.dispatchEvent(new Event('input'));
-    tick(400); // debounce time in search bar
-    updateView();
+    const testScheduler = new TestScheduler((actual, expected) => {
+      expect(actual).toEqual(expected);
+    });
 
-    expect(document.querySelector('.preset-select')).toBeTruthy();
-    const presets = presetList();
-    expect(presets.length).toBe(1);
-  }));
+    testScheduler.run(({ flush }) => {
+      const searchInput = element.querySelector<HTMLInputElement>('si-search-bar input')!;
+      searchInput.value = '30';
+      searchInput.dispatchEvent(new Event('input'));
+      flush();
+      fixture.detectChanges();
 
-  it('hides the preset list when no presets given', fakeAsync(() => {
+      expect(document.querySelector('.preset-select')).toBeTruthy();
+      const presets = presetList();
+      expect(presets.length).toBe(1);
+    });
+  });
+
+  it('hides the preset list when no presets given', async () => {
     component.presetList = undefined;
-    updateView();
+    await fixture.whenStable();
 
     expect(document.querySelector('.preset-select')).toBeFalsy();
-  }));
+  });
 
-  it('handles time selection', fakeAsync(() => {
+  it('handles time selection', async () => {
     component.enableTimeSelection = true;
-    updateView();
+    await fixture.whenStable();
 
     const to = new Date();
     const from = new Date(to.getTime() - 2 * ONE_DAY);
@@ -371,5 +378,5 @@ describe('SiDateRangeFilterComponent', () => {
     expect(rangeInputValue()).toBe(2);
     expect(rangeSelectContent()).toBe('Days');
     expect(preview()).toEqual(rangeText(from, to, true));
-  }));
+  });
 });

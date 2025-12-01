@@ -4,8 +4,14 @@
  */
 import { HttpErrorResponse, HttpHeaders, provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { ChangeDetectionStrategy, Component, SimpleChange, viewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  provideZonelessChangeDetection,
+  SimpleChange,
+  viewChild
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { runOnPushChangeDetection } from '../test-helpers/change-detection.helper';
 import { FileUploadResult, SiFileUploaderComponent, UploadFile } from './index';
@@ -82,7 +88,7 @@ describe('SiFileUploaderComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [TestHostComponent],
-      providers: [provideHttpClient(), provideHttpClientTesting()]
+      providers: [provideHttpClient(), provideHttpClientTesting(), provideZonelessChangeDetection()]
     });
     httpMock = TestBed.inject(HttpTestingController);
   });
@@ -155,17 +161,17 @@ describe('SiFileUploaderComponent', () => {
     expect(files.length).toBe(2);
   });
 
-  it('should provide option to remove selected file', fakeAsync(() => {
+  it('should provide option to remove selected file', async () => {
     component.accept = '.png';
     handleFiles(createFileList(['first.png', 'second.png']));
 
     expect(getFiles().length).toBe(2);
     deleteButton().click();
-    tick();
+    await fixture.whenStable();
     fixture.detectChanges();
 
     expect(getFiles().length).toBe(1);
-  }));
+  });
 
   it('should allow one to define accepted mime types', () => {
     component.accept = 'image/*';
@@ -284,7 +290,7 @@ describe('SiFileUploaderComponent', () => {
     expect(getUploadButton().disabled).toBeTruthy();
   });
 
-  it('should emit filesChanges when files are added or removed', fakeAsync(() => {
+  it('should emit filesChanges when files are added or removed', async () => {
     component.accept = '.png';
 
     const fileUploader = component.fileUploader();
@@ -299,7 +305,7 @@ describe('SiFileUploaderComponent', () => {
 
     deleteButton().click();
 
-    tick();
+    await fixture.whenStable();
     fixture.detectChanges();
 
     expect(fileUploader.filesChanges.emit).toHaveBeenCalledWith([
@@ -308,11 +314,11 @@ describe('SiFileUploaderComponent', () => {
 
     deleteButton().click();
 
-    tick();
+    await fixture.whenStable();
     fixture.detectChanges();
 
     expect(fileUploader.filesChanges.emit).toHaveBeenCalledWith([]);
-  }));
+  });
 
   it('should disabled upload button and not upload when disabled', () => {
     component.disableUpload = true;
@@ -418,9 +424,12 @@ describe('SiFileUploaderComponent', () => {
     expect(req.request.body.get('test2')).toBe('another test value');
   });
 
-  it('should auto-upload', fakeAsync(() => {
+  it('should auto-upload', () => {
+    jasmine.clock().install();
     let result: FileUploadResult | undefined;
     component.autoUpload = true;
+    fixture.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
     component.fileUploader().uploadCompleted.subscribe(res => (result = res));
 
     handleFiles(createFileList(['matching.fmwr']));
@@ -431,7 +440,8 @@ describe('SiFileUploaderComponent', () => {
     req.flush(attachment);
     httpMock.verify();
 
-    flush();
+    // There is 4500 ms timeout in fadeOut
+    jasmine.clock().tick(4500);
     fixture.detectChanges();
 
     expect(result).toBeDefined();
@@ -440,9 +450,10 @@ describe('SiFileUploaderComponent', () => {
     expect(result!.response?.status).toBe(200);
 
     expect(getFiles().length).toBe(0);
-  }));
+    jasmine.clock().uninstall();
+  });
 
-  it('should allow re-uploading file', fakeAsync(() => {
+  it('should allow re-uploading file', async () => {
     handleFiles(createFileList(['matching.fmwr']));
     triggerUpload();
 
@@ -452,18 +463,18 @@ describe('SiFileUploaderComponent', () => {
     req.flush(attachment);
     httpMock.verify();
 
-    flush();
+    await fixture.whenStable();
     fixture.detectChanges();
 
     expect(getUploadButton().disabled).toBeTruthy();
 
     handleFiles(createFileList(['matching.fmwr']));
-    flush();
+    await fixture.whenStable();
     fixture.detectChanges();
 
     expect(getFiles().length).toBe(1);
     expect(getUploadButton().disabled).toBeFalsy();
-  }));
+  });
 
   it('should retry and emit error response', (done: DoneFn) => {
     component.fileUploader().uploadCompleted.subscribe(result => {
@@ -507,7 +518,8 @@ describe('SiFileUploaderComponent', () => {
     expect(getUploadButton().disabled).toBeFalsy();
   });
 
-  it('should be possible to retry a failed upload', fakeAsync(() => {
+  it('should be possible to retry a failed upload', () => {
+    jasmine.clock().install();
     component.errorUploadFailed = 'failed';
     handleFiles(createFileList(['matching.fmwr']));
 
@@ -517,8 +529,8 @@ describe('SiFileUploaderComponent', () => {
     const req = httpMock.expectOne('/api/attachments');
     req.flush({}, { status: 400, statusText: 'FAILED' });
 
-    tick(100);
-    flush();
+    jasmine.clock().tick(100);
+
     fixture.detectChanges();
 
     expect(element.querySelector('.error.text-danger')!.innerHTML).toContain('failed');
@@ -529,7 +541,6 @@ describe('SiFileUploaderComponent', () => {
     fixture.detectChanges();
 
     expect(element.querySelector('span[aria-label="Upload completed"]')).toBeDefined();
-
-    flush();
-  }));
+    jasmine.clock().uninstall();
+  });
 });

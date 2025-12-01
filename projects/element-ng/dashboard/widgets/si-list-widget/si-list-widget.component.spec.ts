@@ -2,9 +2,10 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
+import { TestScheduler } from 'rxjs/testing';
 
 import { SortOrder } from './si-list-widget-body.component';
 import { SiListWidgetItem } from './si-list-widget-item.component';
@@ -33,12 +34,18 @@ describe('SiListWidgetComponent', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let component: TestHostComponent;
   let element: HTMLElement;
+  let testScheduler: TestScheduler;
 
-  beforeEach(() =>
+  beforeEach(() => {
+    testScheduler = new TestScheduler((actual, expected) => {
+      expect(actual).toEqual(expected);
+    });
+
     TestBed.configureTestingModule({
-      imports: [TestHostComponent]
-    })
-  );
+      imports: [TestHostComponent],
+      providers: [provideZonelessChangeDetection()]
+    });
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
@@ -148,72 +155,76 @@ describe('SiListWidgetComponent', () => {
     expect(items.item(0).textContent).toContain('item_1');
   });
 
-  it('should support search', fakeAsync(() => {
-    component.items = [
-      { label: { title: 'item_1' } },
-      { label: { title: 'item_2' } },
-      { label: 'item_2' },
-      { label: 'item_3' }
-    ];
-    fixture.detectChanges();
+  it('should support search', () => {
+    testScheduler.run(({ flush }) => {
+      component.items = [
+        { label: { title: 'item_1' } },
+        { label: { title: 'item_2' } },
+        { label: 'item_2' },
+        { label: 'item_3' }
+      ];
+      fixture.detectChanges();
 
-    // No search as default
-    expect(element.querySelector('si-search-bar')).toBeNull();
+      // No search as default
+      expect(element.querySelector('si-search-bar')).toBeNull();
 
-    // Show the search bar
-    component.search = true;
-    runOnPushChangeDetection(fixture);
-    const searchBar = element.querySelector('si-search-bar');
-    expect(searchBar).not.toBeNull();
+      // Show the search bar
+      component.search = true;
+      runOnPushChangeDetection(fixture);
+      const searchBar = element.querySelector('si-search-bar');
+      expect(searchBar).not.toBeNull();
 
-    // Enter text in the search input and search
-    const searchBarInput = element.querySelector('input');
-    searchBarInput!.value = 'item_3';
-    searchBarInput!.dispatchEvent(new Event('input'));
-    tick(500);
-    runOnPushChangeDetection(fixture);
+      // Enter text in the search input and search
+      const searchBarInput = element.querySelector('input');
+      searchBarInput!.value = 'item_3';
+      searchBarInput!.dispatchEvent(new Event('input'));
+      flush();
+      runOnPushChangeDetection(fixture);
 
-    let items = element.querySelectorAll('si-list-widget-item');
-    expect(items.length).toBe(1);
-    expect(items.item(0).textContent).not.toContain('item_1');
-    expect(items.item(0).textContent).toContain('item_3');
+      let items = element.querySelectorAll('si-list-widget-item');
+      expect(items.length).toBe(1);
+      expect(items.item(0).textContent).not.toContain('item_1');
+      expect(items.item(0).textContent).toContain('item_3');
 
-    // Clear search again
-    searchBarInput!.value = '';
-    searchBarInput!.dispatchEvent(new Event('input'));
-    tick(500);
-    runOnPushChangeDetection(fixture);
+      // Clear search again
+      searchBarInput!.value = '';
+      searchBarInput!.dispatchEvent(new Event('input'));
+      flush();
+      runOnPushChangeDetection(fixture);
 
-    items = element.querySelectorAll('si-list-widget-item');
-    expect(items.length).toBe(4);
-  }));
+      items = element.querySelectorAll('si-list-widget-item');
+      expect(items.length).toBe(4);
+    });
+  });
 
-  it('should not fail when searching without value', fakeAsync(() => {
-    component.search = true;
-    runOnPushChangeDetection(fixture);
+  it('should not fail when searching without value', () => {
+    testScheduler.run(({ flush }) => {
+      component.search = true;
+      runOnPushChangeDetection(fixture);
 
-    // Should show 6 skeletons
-    expect(element.querySelector('.si-link-widget-skeleton')).toBeDefined();
+      // Should show 6 skeletons
+      expect(element.querySelector('.si-link-widget-skeleton')).toBeDefined();
 
-    // Enter text in the search input and search
-    const searchBarInput = element.querySelector('input');
-    searchBarInput!.value = 'item_3';
-    searchBarInput!.dispatchEvent(new Event('input'));
-    tick(500);
-    runOnPushChangeDetection(fixture);
+      // Enter text in the search input and search
+      const searchBarInput = element.querySelector('input');
+      searchBarInput!.value = 'item_3';
+      searchBarInput!.dispatchEvent(new Event('input'));
+      flush();
+      runOnPushChangeDetection(fixture);
 
-    // Should show 6 skeletons after search
-    let items = element.querySelectorAll('.si-link-widget-skeleton');
-    expect(items.length).toBe(6);
+      // Should show 6 skeletons after search
+      let items = element.querySelectorAll('.si-link-widget-skeleton');
+      expect(items.length).toBe(6);
 
-    // Clear search again
-    searchBarInput!.value = '';
-    searchBarInput!.dispatchEvent(new Event('input'));
-    tick(500);
-    runOnPushChangeDetection(fixture);
+      // Clear search again
+      searchBarInput!.value = '';
+      searchBarInput!.dispatchEvent(new Event('input'));
+      flush();
+      runOnPushChangeDetection(fixture);
 
-    // Should still show 6 skeletons after clearing search
-    items = element.querySelectorAll('si-list-widget-item');
-    expect(items.length).toBe(6);
-  }));
+      // Should still show 6 skeletons after clearing search
+      items = element.querySelectorAll('si-list-widget-item');
+      expect(items.length).toBe(6);
+    });
+  });
 });

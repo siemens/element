@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CopyrightDetails, SI_COPYRIGHT_DETAILS } from '@siemens/element-ng/copyright-notice';
 
@@ -30,7 +30,8 @@ describe('SiCopyrightNoticeComponent', () => {
             startYear: 2012,
             lastUpdateYear: 2019
           }
-        }
+        },
+        provideZonelessChangeDetection()
       ]
     }).compileComponents();
 

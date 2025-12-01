@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { DatePipe } from '@angular/common';
+import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import {
@@ -27,7 +28,7 @@ describe('date time helper', () => {
   let dtPipe: DatePipe;
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [DatePipe]
+      providers: [DatePipe, provideZonelessChangeDetection()]
     });
     dtPipe = TestBed.inject(DatePipe);
   });

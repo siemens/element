@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { TextMeasureService as TestService } from './text-measure.service';
@@ -11,7 +12,7 @@ describe('TextMeasureService', () => {
   let div: HTMLElement | undefined;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ providers: [TestService] });
+    TestBed.configureTestingModule({ providers: [TestService, provideZonelessChangeDetection()] });
     service = TestBed.inject(TestService);
   });
 

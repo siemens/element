@@ -2,8 +2,13 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  provideZonelessChangeDetection,
+  signal
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SiDatepickerDirective } from '@siemens/element-ng/datepicker';
 
 import { SiCalendarButtonComponent } from './si-calendar-button.component';
@@ -36,7 +41,8 @@ describe('SiCalendarButtonComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [WrapperComponent]
+      imports: [WrapperComponent],
+      providers: [provideZonelessChangeDetection()]
     });
     fixture = TestBed.createComponent(WrapperComponent);
     component = fixture.componentInstance;
@@ -63,14 +69,16 @@ describe('SiCalendarButtonComponent', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  it('should mark as touched if button is blurred', fakeAsync(() => {
+  it('should mark as touched if button is blurred', () => {
+    jasmine.clock().install();
     const touchSpy = spyOn(SiDatepickerDirective.prototype, 'touch');
     const button = calendarToggleButton();
     button.focus();
     button.blur();
-    tick();
+    jasmine.clock().tick(0);
     expect(touchSpy).toHaveBeenCalled();
-  }));
+    jasmine.clock().uninstall();
+  });
 
   it('should use default aria label', () => {
     expect(calendarToggleButton().getAttribute('aria-label')).toBe('Open calendar');
