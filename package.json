@@ -175,11 +175,11 @@
     "stylelint-use-logical-spec": "5.0.1",
     "tsx": "4.21.0",
     "typescript": "5.8.3",
-    "typescript-eslint": "8.48.0"
+    "typescript-eslint": "8.48.1"
   },
   "optionalDependencies": {
     "@simpl/brand": "2.2.1",
     "@simpl/docs-composer": "11.16.6",
-    "@simpl/element-icons": "1.32.0"
+    "@simpl/element-icons": "1.33.0"
   }
 }
