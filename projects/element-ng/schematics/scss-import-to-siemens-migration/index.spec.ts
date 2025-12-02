@@ -39,6 +39,18 @@ describe('scss-import-to-siemens migration', () => {
     expect(actual).not.toContain(`@use '@simpl/element-theme/src/theme';`);
   });
 
+  it(`should remove global style @use '@simpl/element-ng/simpl-element-ng'`, async () => {
+    const originalContent = [`// Import theme`, `@use '@simpl/element-ng/simpl-element-ng';`];
+    const actual = await runFileMigration(globalStyle, originalContent);
+    expect(actual).not.toContain(`@use '@simpl/element-ng/simpl-element-ng';`);
+  });
+
+  it(`should remove global style @use "@simpl/element-ng/simpl-element-ng" if in double quotes`, async () => {
+    const originalContent = [`// Import theme`, `@use "@simpl/element-ng/simpl-element-ng";`];
+    const actual = await runFileMigration(globalStyle, originalContent);
+    expect(actual).not.toContain(`@use "@simpl/element-ng/simpl-element-ng";`);
+  });
+
   it(`should not modify node_modules files';`, async () => {
     const originalContent = [`// Import theme`, `@use '@simpl/element-theme/src/theme';`];
     const actual = await runFileMigration('node_modules/package/styles.scss', originalContent);
@@ -70,6 +82,7 @@ describe('scss-import-to-siemens migration', () => {
       `@use '@simpl/element-icons/dist/style/simpl-element-icons';`
     ];
     const expected = [
+      `// Use Element theme`,
       `@use '@siemens/element-theme/src/theme' with (`,
       `  $element-theme-default: 'siemens-brand',`,
       `  $element-themes: (`,
@@ -77,12 +90,15 @@ describe('scss-import-to-siemens migration', () => {
       `    'element'`,
       `  )`,
       `);`,
+      `// Use Element components`,
       `@use '@siemens/element-ng/element-ng';`,
+      `// Actually build the siemens-brand theme`,
       `@use '@siemens/element-theme/src/styles/themes';`,
       `@use '@simpl/brand/dist/element-theme-siemens-brand-light' as brand-light;`,
       `@use '@simpl/brand/dist/element-theme-siemens-brand-dark' as brand-dark;`,
       `@include themes.make-theme(brand-light.$tokens, 'siemens-brand');`,
       `@include themes.make-theme(brand-dark.$tokens, 'siemens-brand', true);`,
+      `// Load Siemens fonts`,
       `@use '@simpl/brand/assets/fonts/styles/siemens-sans';`,
       `// Load Element icons`,
       `@use '@simpl/element-icons/dist/style/simpl-element-icons';`
