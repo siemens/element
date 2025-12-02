@@ -38,7 +38,7 @@ export class SiSummaryChipComponent {
   /** The label. */
   readonly label = input.required<TranslatableString>();
   /** Value to display. */
-  readonly value = input.required<TranslatableString>();
+  readonly value = input<TranslatableString>();
   /**
    * Selected state, will change when clicked.
    * @defaultValue false
@@ -50,7 +50,7 @@ export class SiSummaryChipComponent {
    */
   readonly disabled = input(false, { transform: booleanAttribute });
   /**
-   * Whether to hide the label. The label will still be used for screen-readers.
+   * Whether to hide the label. Only takes effect when both {@link icon} and {@link value} are provided. The label will still be used for screen-readers.
    * @defaultValue false
    */
   readonly hideLabel = input(false, { transform: booleanAttribute });
