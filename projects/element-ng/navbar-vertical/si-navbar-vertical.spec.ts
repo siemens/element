@@ -5,8 +5,8 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, Injectable } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import { Component, Injectable, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter, Router } from '@angular/router';
 import {
@@ -84,10 +84,11 @@ describe('SiNavbarVertical', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let harnessLoader: HarnessLoader;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [SiNavbarVerticalComponent, NoopAnimationsModule, TestHostComponent],
       providers: [
+        provideZonelessChangeDetection(),
         provideSiUiState({ store: SynchronousMockStore }),
         provideRouter([
           {
@@ -105,7 +106,7 @@ describe('SiNavbarVertical', () => {
         { provide: BreakpointObserver, useExisting: BreakpointObserverMock }
       ]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(async () => {
     fixture = TestBed.createComponent(TestHostComponent);
@@ -119,6 +120,7 @@ describe('SiNavbarVertical', () => {
 
     it('should expand/collapse navbar with click', async () => {
       component.collapsed = true;
+      fixture.changeDetectorRef.markForCheck();
       expect(await harness.isCollapsed()).toBeTrue();
       await harness.toggleCollapse();
       expect(await harness.isExpanded()).toBeTrue();
@@ -129,6 +131,7 @@ describe('SiNavbarVertical', () => {
     it('should expand on search button click with textonly false', async () => {
       component.textOnly = false;
       component.collapsed = true;
+      fixture.changeDetectorRef.markForCheck();
       await harness.clickSearch();
       expect(await harness.isExpanded()).toBeTrue();
     });
@@ -153,6 +156,7 @@ describe('SiNavbarVertical', () => {
     it('should keep consumer provided collapsed state', async () => {
       const breakpointObserver = TestBed.inject(BreakpointObserverMock);
       component.collapsed = true;
+      fixture.changeDetectorRef.markForCheck();
       breakpointObserver.isSmall.next(false);
       fixture.detectChanges();
       breakpointObserver.isSmall.next(true);
@@ -164,22 +168,27 @@ describe('SiNavbarVertical', () => {
     it('should open flyout menu', async () => {
       component.collapsed = true;
       component.items = [{ 'type': 'group', 'children': [], 'label': 'item-1' }];
+      fixture.changeDetectorRef.markForCheck();
       const item = await harness.findItemByLabel('item-1');
       await item.click();
+      await fixture.whenStable();
       expect(await item.isFlyout()).toBeTrue();
       document.body.click();
+      await fixture.whenStable();
       expect(await item.isFlyout()).toBeFalse();
     });
 
-    it('should emit search event', fakeAsync(async () => {
+    it('should emit search event', async () => {
       component.collapsed = true;
+      fixture.changeDetectorRef.markForCheck();
       await harness.toggleCollapse();
 
       const spySearch = spyOn(component, 'searchEvent');
       await harness.search('test');
-      tick(400);
+      // cannot use jasmine.clock here
+      await new Promise(resolve => setTimeout(resolve, 400));
       expect(spySearch).toHaveBeenCalledOnceWith('test');
-    }));
+    });
 
     it('should support navigation', async () => {
       component.items = [
@@ -197,6 +206,7 @@ describe('SiNavbarVertical', () => {
           label: 'item1'
         }
       ];
+      fixture.changeDetectorRef.markForCheck();
 
       const item = await harness.findItemByLabel('item1');
       await item.click();
@@ -230,6 +240,7 @@ describe('SiNavbarVertical', () => {
           title: 'item1'
         }
       ];
+      fixture.changeDetectorRef.markForCheck();
 
       const [link, toggle] = await harness.findItems();
       await link.click();

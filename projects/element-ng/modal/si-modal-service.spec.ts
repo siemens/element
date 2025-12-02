@@ -2,8 +2,15 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ApplicationRef, Component, input, TemplateRef, viewChild } from '@angular/core';
-import { fakeAsync, flush, TestBed } from '@angular/core/testing';
+import {
+  ApplicationRef,
+  Component,
+  input,
+  provideZonelessChangeDetection,
+  TemplateRef,
+  viewChild
+} from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 
 import { SiModalService } from './si-modal.service';
 
@@ -31,12 +38,18 @@ describe('SiModalService', () => {
   let appRef!: ApplicationRef;
 
   beforeEach(() => {
+    jasmine.clock().install();
     TestBed.configureTestingModule({
-      imports: [DialogComponent, DialogTemplateComponent]
+      imports: [DialogComponent, DialogTemplateComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
 
     service = TestBed.inject(SiModalService);
     appRef = TestBed.inject(ApplicationRef);
+  });
+
+  afterEach(() => {
+    jasmine.clock().uninstall();
   });
 
   describe('with template', () => {
@@ -48,12 +61,11 @@ describe('SiModalService', () => {
       templateRef = comp.componentInstance.templateRef();
     });
 
-    it('shows and hides the dialog', fakeAsync(() => {
+    it('shows and hides the dialog', () => {
       const modalRef = service.show(templateRef, {});
       const bodyStyle = getComputedStyle(document.body);
 
       appRef.tick();
-      flush();
 
       const modal = document.querySelector('si-modal');
       expect(modal).toBeTruthy();
@@ -61,39 +73,35 @@ describe('SiModalService', () => {
       expect(bodyStyle.overflow).toBe('hidden');
 
       modalRef.hide();
-
+      jasmine.clock().tick(500);
       appRef.tick();
-      flush();
 
       expect(document.querySelector('si-modal')).toBeFalsy();
       expect(bodyStyle.overflow).not.toBe('hidden');
-    }));
+    });
   });
 
   describe('with component', () => {
-    it('shows and hides the dialog', fakeAsync(() => {
+    it('shows and hides the dialog', () => {
       const modalRef = service.show(DialogComponent, {});
 
       appRef.tick();
-      flush();
 
       const modal = document.querySelector('si-modal');
       expect(modal).toBeTruthy();
       expect(modal?.innerHTML).toContain('test component');
 
       modalRef.hide();
-
+      jasmine.clock().tick(500);
       appRef.tick();
-      flush();
 
       expect(document.querySelector('si-modal')).toBeFalsy();
-    }));
+    });
 
-    it('set input using setInputs', fakeAsync(() => {
+    it('set input using setInputs', () => {
       const modalRef = service.show(DialogComponent, { inputValues: { inputProp: 'input value' } });
 
       appRef.tick();
-      flush();
 
       const modal = document.querySelector('si-modal');
       expect(modal).toBeTruthy();
@@ -102,24 +110,23 @@ describe('SiModalService', () => {
       appRef.tick();
       expect(modal?.innerHTML).toContain('new input value');
       modalRef.hide();
+      jasmine.clock().tick(500);
       appRef.tick();
-      flush();
-    }));
+    });
 
-    it('set input using initialState', fakeAsync(() => {
+    it('set input using initialState', () => {
       const modalRef = service.show(DialogComponent, {
         initialState: { normalProp: 'prop value' }
       });
 
       appRef.tick();
-      flush();
 
       const modal = document.querySelector('si-modal');
       expect(modal).toBeTruthy();
       expect(modal?.innerHTML).toContain('prop value');
       modalRef.hide();
+      jasmine.clock().tick(500);
       appRef.tick();
-      flush();
-    }));
+    });
   });
 });
