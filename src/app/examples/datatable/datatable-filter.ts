@@ -22,6 +22,7 @@ export class SampleComponent {
   tableConfig = SI_DATATABLE_CONFIG;
 
   rows: CorporateEmployee[] = [].constructor(5);
+  offset = 0;
   temp: CorporateEmployee[] = [];
   isLoading = 0;
 
@@ -50,6 +51,6 @@ export class SampleComponent {
     this.rows = temp;
 
     // Whenever the filter changes, always go back to the first page
-    this.table().offset = 0;
+    this.offset = 0;
   }
 }

@@ -22,7 +22,7 @@
     [offset]="pageNumber"
     [datatableInteractionAutoSelect]="true"
     (page)="setPage($event)"
-    (select)="onSelect($event)"
+    (selectedChange)="onSelect($event)"
     (siResizeObserver)="table.recalculate()"
   />
 </div>
