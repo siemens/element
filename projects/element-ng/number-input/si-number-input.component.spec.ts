@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { CommonModule } from '@angular/common';
-import { Component, inject, viewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { Component, inject, provideZonelessChangeDetection, viewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SiNumberInputComponent } from './si-number-input.component';
@@ -60,7 +60,7 @@ describe('SiNumberInputComponent', () => {
     const button = element.querySelector(target);
     button!.dispatchEvent(new MouseEvent('mousedown'));
     if (ticks) {
-      tick(ticks);
+      jasmine.clock().tick(ticks);
     }
     button!.dispatchEvent(new MouseEvent('mouseup'));
   };
@@ -72,6 +72,14 @@ describe('SiNumberInputComponent', () => {
   const numberValue = (): number | undefined =>
     element.querySelector<HTMLInputElement>('input')?.valueAsNumber;
 
+  beforeEach(() => {
+    jasmine.clock().install();
+  });
+
+  afterEach(() => {
+    jasmine.clock().uninstall();
+  });
+
   beforeEach(() =>
     TestBed.configureTestingModule({
       imports: [
@@ -82,7 +90,8 @@ describe('SiNumberInputComponent', () => {
         FormHostComponent,
         HostComponent,
         AttributeComponent
-      ]
+      ],
+      providers: [provideZonelessChangeDetection()]
     })
   );
 
@@ -96,128 +105,118 @@ describe('SiNumberInputComponent', () => {
       element = fixture.nativeElement;
     });
 
-    it('should support short press increments', fakeAsync(() => {
+    it('should support short press increments', () => {
       component.value = 50;
       fixture.detectChanges();
-      tick();
       const spy = spyOn(component, 'valueChange');
 
       fakeClick('.inc');
       expect(spy).toHaveBeenCalledWith(51);
-    }));
+    });
 
-    it('should increment with step precision', fakeAsync(() => {
+    it('should increment with step precision', () => {
       // without adjustments in component: 2.2 + 0.1 = 2.3000000000000003
       component.step = 0.1;
       component.value = 2.2;
       fixture.detectChanges();
-      tick();
 
       fakeClick('.inc');
       expect(component.value).toBe(2.3);
-    }));
+    });
 
-    it('should support long press increments', fakeAsync(() => {
+    it('should support long press increments', () => {
       component.value = 50;
       fixture.detectChanges();
-      tick();
       const spy = spyOn(component, 'valueChange');
 
       fakeClick('.inc', 2500);
       expect(spy.calls.count()).toBeGreaterThan(8);
       expect(spy.calls.mostRecent().args).toBeGreaterThan(55);
-    }));
+    });
 
-    it('should support short press decrements', fakeAsync(() => {
+    it('should support short press decrements', () => {
       component.value = 50;
       fixture.detectChanges();
-      tick();
       const spy = spyOn(component, 'valueChange');
 
       fakeClick('.dec');
       expect(spy).toHaveBeenCalledWith(49);
-    }));
+    });
 
-    it('should decrement with step precision', fakeAsync(() => {
+    it('should decrement with step precision', () => {
       // without adjustments in component: 5.9 - 0.1 = 5.800000000000001
       component.step = 0.1;
       component.value = 5.9;
       fixture.detectChanges();
-      tick();
 
       fakeClick('.dec');
       expect(component.value).toBe(5.8);
-    }));
+    });
 
-    it('should support long press decrements', fakeAsync(() => {
+    it('should support long press decrements', () => {
       fixture.detectChanges();
-      tick();
       const spy = spyOn(component, 'valueChange');
 
       fakeClick('.dec', 2500);
       expect(spy.calls.count()).toBeGreaterThan(8);
       expect(spy.calls.mostRecent().args[0]).toBeLessThan(45);
-    }));
+    });
 
-    it('should not go beyond upper limit', fakeAsync(() => {
+    it('should not go beyond upper limit', () => {
       component.value = 200;
       fixture.detectChanges();
-      tick();
 
       expect(incButton()?.disabled).toBeTruthy();
-    }));
+    });
 
-    it('should support upper custom limit', fakeAsync(() => {
+    it('should support upper custom limit', () => {
       component.max = 200;
       component.value = 150;
       fixture.detectChanges();
-      tick();
       const spy = spyOn(component, 'valueChange');
 
       fakeClick('.inc');
       expect(spy).toHaveBeenCalledWith(151);
-    }));
+    });
 
-    it('should not allow to decrement when lower limit is reached', fakeAsync(() => {
+    it('should not allow to decrement when lower limit is reached', () => {
       component.value = -10;
       fixture.detectChanges();
-      tick();
 
       expect(decButton()?.disabled).toBeTruthy();
-    }));
+    });
 
-    it('should support lower custom limit', fakeAsync(() => {
+    it('should support lower custom limit', () => {
       component.min = -200;
       component.value = -150;
       fixture.detectChanges();
-      tick();
       const spy = spyOn(component, 'valueChange');
 
       expect(decButton()?.disabled).toBeFalsy();
       fakeClick('.dec');
       expect(spy).toHaveBeenCalledWith(-151);
-    }));
+    });
 
-    it('should update value and min correctly', fakeAsync(() => {
+    it('should update value and min correctly', () => {
       fixture.detectChanges();
 
       component.min = 10;
       component.value = 10;
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      tick();
       expect(decButton()?.disabled).toBeTruthy();
       expect(numberValue()).toBe(10);
-    }));
+    });
 
-    it('should display placeholder text', fakeAsync(() => {
+    it('should display placeholder text', () => {
       fixture.detectChanges();
 
       component.placeholder = 'Placeholder';
       component.value = undefined;
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      tick();
       expect(element.querySelector('input')!.placeholder).toBe('Placeholder');
-    }));
+    });
   });
 
   describe('as form control', () => {
@@ -230,38 +229,37 @@ describe('SiNumberInputComponent', () => {
       element = fixture.nativeElement;
     });
 
-    it('should set the initial value', fakeAsync(() => {
+    it('should set the initial value', () => {
       fixture.detectChanges();
-      flush();
       expect(numberValue()).toBe(10);
-    }));
+    });
 
-    it('marks component as touched', fakeAsync(() => {
+    it('marks component as touched', () => {
       fixture.detectChanges();
 
       fakeClick('.dec');
-      flush();
 
       expect(component.form.controls.input.touched).toBeTrue();
-    }));
+    });
 
-    it('updates the value in the form', fakeAsync(() => {
+    it('updates the value in the form', () => {
       fixture.detectChanges();
 
       fakeClick('.dec');
-      flush();
 
       expect(component.form.controls.input.value).toBe(9);
-    }));
+    });
 
     it('should invalidate with max', () => {
       component.form.controls.input.setValue(2);
       component.max = 1;
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
       expect(component.form.controls.input.errors).toEqual({ max: { max: 1, actual: 2 } });
 
       component.max = 2;
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
       expect(component.form.controls.input.errors).toBeNull();
@@ -270,11 +268,13 @@ describe('SiNumberInputComponent', () => {
     it('should invalidate with min', () => {
       component.form.controls.input.setValue(-1);
       component.min = 0;
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
       expect(component.form.controls.input.errors).toEqual({ min: { min: 0, actual: -1 } });
 
       component.min = -1;
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
       expect(component.form.controls.input.errors).toBeNull();
@@ -320,14 +320,14 @@ describe('SiNumberInputComponent', () => {
       element = fixture.nativeElement;
     });
 
-    it('should set max attribute', fakeAsync(() => {
+    it('should set max attribute', () => {
       fixture.detectChanges();
       expect(component.siNumberInput().inputElement().nativeElement?.getAttribute('max')).toBe(
         '100'
       );
-    }));
+    });
 
-    it('should ignore min if it is not a number', fakeAsync(() => {
+    it('should ignore min if it is not a number', () => {
       fixture.detectChanges();
       expect(
         component.siNumberInput().inputElement().nativeElement?.getAttribute('min')
@@ -335,6 +335,6 @@ describe('SiNumberInputComponent', () => {
       expect(component.siNumberInput().inputElement().nativeElement?.getAttribute('max')).toBe(
         '100'
       );
-    }));
+    });
   });
 });

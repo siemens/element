@@ -8,9 +8,10 @@ import {
   Component,
   DebugElement,
   inject,
+  provideZonelessChangeDetection,
   viewChild
 } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
 
@@ -102,7 +103,8 @@ describe('MainDetailContainerComponent', () => {
         {
           provide: ResizeObserverService,
           useValue: resizeSpy
-        }
+        },
+        provideZonelessChangeDetection()
       ]
     }).compileComponents();
 
@@ -113,6 +115,12 @@ describe('MainDetailContainerComponent', () => {
     fixture.detectChanges();
     doAnimationSpy = spyOn<any>(component.mainDetail(), 'doAnimation').and.callThrough();
     resizeObserver.next({ width: 800, height: 500 });
+
+    jasmine.clock().install();
+  });
+
+  afterEach(() => {
+    jasmine.clock().uninstall();
   });
 
   it('should not contain si-split when #resizableParts is false', () => {
@@ -165,23 +173,24 @@ describe('MainDetailContainerComponent', () => {
       expect(htmlElement.querySelector('si-main-detail-container')?.classList).toContain('animate');
     });
 
-    it('should remove a class indicating to animate the view change after a timeout', fakeAsync(() => {
+    it('should remove a class indicating to animate the view change after a timeout', () => {
       // prepare
       component.detailsActive = true;
       component.cdRef.markForCheck();
       fixture.detectChanges();
       // act
-      tick(animationDurationMilliseconds);
+      jasmine.clock().tick(animationDurationMilliseconds);
       fixture.detectChanges();
       // flush timeout
-      flush();
+      jasmine.clock().tick(0);
+      fixture.detectChanges();
       // expect
       expect(doAnimationSpy).toHaveBeenCalledWith(true);
       expect(htmlElement.querySelector('si-main-detail-container')?.classList).not.toContain(
         'animate'
       );
       expect(htmlElement.classList.contains('animate')).toBeFalse();
-    }));
+    });
   });
 
   describe('responsive behaviour', () => {
@@ -225,45 +234,48 @@ describe('MainDetailContainerComponent', () => {
       expect(getMainDetailContainer()).toBeTruthy();
     });
 
-    it('should only have the main pane in view on small screens when details are inactive', fakeAsync(() => {
+    it('should only have the main pane in view on small screens when details are inactive', () => {
       // prepare
       resizeObserver.next({ width: component.largeLayoutBreakpoint - 1, height: 500 });
       component.detailsActive = false;
       // act
-      tick(animationDurationMilliseconds);
+      jasmine.clock().tick(animationDurationMilliseconds);
       fixture.detectChanges();
       const detailContainer = getDetailContainer();
       // flush timeout
-      flush();
+      jasmine.clock().tick(0);
+      fixture.detectChanges();
       // expect
       expect(getInViewport(detailContainer)).toBeFalse();
-    }));
+    });
 
-    it('should set inert attribute to prevent focus hidden details when details are inactive', fakeAsync(() => {
+    it('should set inert attribute to prevent focus hidden details when details are inactive', () => {
       // prepare
       resizeObserver.next({ width: component.largeLayoutBreakpoint - 1, height: 500 });
       component.detailsActive = false;
       // act
-      tick(animationDurationMilliseconds);
+      jasmine.clock().tick(animationDurationMilliseconds);
       fixture.detectChanges();
       // flush timeout
-      flush();
+      jasmine.clock().tick(0);
+      fixture.detectChanges();
       // expect
       expect(debugElement.query(By.css('.detail-container[inert]'))).toBeTruthy();
-    }));
+    });
 
-    it('should not set inert attribute when details are active', fakeAsync(() => {
+    it('should not set inert attribute when details are active', () => {
       // prepare
       resizeObserver.next({ width: component.largeLayoutBreakpoint - 1, height: 500 });
       component.detailsActive = true;
       // act
-      tick(animationDurationMilliseconds);
+      jasmine.clock().tick(animationDurationMilliseconds);
       fixture.detectChanges();
       // flush timeout
-      flush();
+      jasmine.clock().tick(0);
+      fixture.detectChanges();
       // expect
       expect(debugElement.query(By.css('.detail-container :not([inert])'))).toBeTruthy();
-    }));
+    });
   });
 
   describe('not large size', () => {
@@ -289,17 +301,18 @@ describe('MainDetailContainerComponent', () => {
       expect(htmlElement.querySelector('button')).toBeFalsy();
     });
 
-    it('should only have the detail pane in view on small screens when details are active', fakeAsync(() => {
+    it('should only have the detail pane in view on small screens when details are active', () => {
       // prepare
       component.detailsActive = true;
       // act
-      tick(animationDurationMilliseconds);
+      jasmine.clock().tick(animationDurationMilliseconds);
       fixture.detectChanges();
       const mainContainer = getMainContainer();
       // flush timeout
-      flush();
+      jasmine.clock().tick(0);
+      fixture.detectChanges();
       // expect
       expect(getInViewport(mainContainer)).toBeFalse();
-    }));
+    });
   });
 });

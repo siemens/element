@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, input } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { Component, input, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
 import { SiPasswordToggleModule } from './si-password-toggle.module';
@@ -26,7 +26,8 @@ describe('SiPasswordToggleComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule, SiPasswordToggleModule, TestHostComponent]
+      imports: [FormsModule, SiPasswordToggleModule, TestHostComponent],
+      providers: [provideZonelessChangeDetection()]
     });
   });
 
@@ -36,7 +37,7 @@ describe('SiPasswordToggleComponent', () => {
     element = fixture.nativeElement;
   });
 
-  it('should show the icon, toggle', fakeAsync(() => {
+  it('should show the icon, toggle', () => {
     fixture.detectChanges();
 
     const icon = element.querySelector('button')!;
@@ -47,11 +48,11 @@ describe('SiPasswordToggleComponent', () => {
     expect(element.querySelector<HTMLElement>('input')?.getAttribute('type')).toBe('password');
 
     element.querySelector('button')?.click();
-    tick();
+
     fixture.detectChanges();
 
     expect(element.querySelector<HTMLElement>('input')?.getAttribute('type')).toBe('text');
-  }));
+  });
 
   it('should hide the icon when disabled', () => {
     fixture.componentRef.setInput('showVisibilityIcon', false);

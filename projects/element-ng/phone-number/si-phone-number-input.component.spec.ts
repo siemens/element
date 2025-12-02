@@ -4,8 +4,8 @@
  */
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { Component, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
@@ -70,7 +70,8 @@ describe('SiPhoneNumberInputComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SiPhoneNumberInputComponent, CommonModule, ReactiveFormsModule, WrapperComponent]
+      imports: [SiPhoneNumberInputComponent, CommonModule, ReactiveFormsModule, WrapperComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
   });
 
@@ -157,7 +158,7 @@ describe('SiPhoneNumberInputComponent', () => {
     expect(component.form.controls.workPhone.value).toEqual('+49 30 123456');
   });
 
-  it('should update the country code and phone number on setting it from the form control', fakeAsync(() => {
+  it('should update the country code and phone number on setting it from the form control', () => {
     fixture.componentInstance.form.controls.workPhone.setValue('+911234567890');
     fixture.detectChanges();
     const displaySelectedCountry = element.querySelector(
@@ -165,9 +166,9 @@ describe('SiPhoneNumberInputComponent', () => {
     ) as HTMLElement;
     expect(displaySelectedCountry.textContent).toContain('+91');
     expect(inputElement.value).toEqual('1234 567 890');
-  }));
+  });
 
-  it('should remove input value on form-control reset', fakeAsync(() => {
+  it('should remove input value on form-control reset', () => {
     component.form.controls.workPhone.setValue('+911234567890');
     fixture.detectChanges();
 
@@ -175,9 +176,9 @@ describe('SiPhoneNumberInputComponent', () => {
     component.form.reset();
     fixture.detectChanges();
     expect(inputElement.value).toEqual('');
-  }));
+  });
 
-  it('should set selected country to defaultCountry on form-control reset', fakeAsync(() => {
+  it('should set selected country to defaultCountry on form-control reset', () => {
     component.defaultCountry = 'CH';
     component.form.controls.workPhone.setValue('+911234567890');
     fixture.detectChanges();
@@ -189,7 +190,7 @@ describe('SiPhoneNumberInputComponent', () => {
     component.form.reset();
     fixture.detectChanges();
     expect(countryButton.textContent).toContain('+41');
-  }));
+  });
 
   it('should update both the country code and phone number when manually entering a valid country code and phone number in the input', () => {
     typePhoneNumber('+911234567890');
@@ -222,6 +223,7 @@ describe('SiPhoneNumberInputComponent', () => {
 
   it('should reflect initialCountry changes after view init', () => {
     component.country = 'US';
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
 
     const countryCode = element.querySelector<HTMLElement>('span.si-body');
@@ -230,6 +232,7 @@ describe('SiPhoneNumberInputComponent', () => {
 
   it('should reflect country when not part of supportedCountries', () => {
     component.country = 'AU';
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
 
     const countryCode = element.querySelector<HTMLElement>('span.si-body');
@@ -254,6 +257,7 @@ describe('SiPhoneNumberInputComponent', () => {
   it('should not show error when the supportedCountries list change after country selection', () => {
     // The country is pre initialized and we are changing the supported country list
     component.supportedCountries = null;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
 
     typePhoneNumber('211111111');
@@ -296,6 +300,7 @@ describe('SiPhoneNumberInputComponent', () => {
 
     beforeEach(async () => {
       component.readonly = '';
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       await fixture.whenStable();
       phoneInput = element.querySelector<HTMLElement>('si-phone-number-input')!;
