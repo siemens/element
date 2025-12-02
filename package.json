@@ -134,7 +134,7 @@
     "@siemens/commitlint-config": "2.4.0",
     "@siemens/eslint-config-angular": "2.4.0",
     "@siemens/eslint-plugin-defaultvalue": "2.4.0",
-    "@siemens/prettier-config": "2.4.0",
+    "@siemens/prettier-config": "3.0.0",
     "@siemens/stylelint-config-scss": "2.4.0",
     "@types/geojson": "7946.0.16",
     "@types/google-libphonenumber": "7.4.30",
