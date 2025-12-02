@@ -21,6 +21,7 @@
     [rowHeight]="tableConfig.rowHeightSmall"
     [footerHeight]="0"
     [ghostLoadingIndicator]="isLoading > 0"
+    [(offset)]="offset"
   >
     <si-empty-state empty-content icon="element-users" heading="No users to display" />
   </ngx-datatable>

@@ -27,8 +27,8 @@ import { SI_DATATABLE_CONFIG, SiDatatableModule } from '.';
       [count]="rows.length"
       [virtualization]="virtualization"
       [scrollbarV]="true"
-      [selected]="selected"
       [datatableInteractionAutoSelect]="datatableInteractionAutoSelect"
+      [(selected)]="selected"
     />
   `
 })

@@ -10,10 +10,19 @@ import {
   HostListener,
   inject,
   input,
+  isSignal,
   OnDestroy,
-  OnInit
+  OnInit,
+  Signal
 } from '@angular/core';
 import { DatatableComponent } from '@siemens/ngx-datatable';
+
+const unwrapSignalOrValue = <T>(valueOrSignal: T | Signal<T>): T => {
+  if (isSignal(valueOrSignal)) {
+    return valueOrSignal();
+  }
+  return valueOrSignal;
+};
 
 @Directive({
   selector: 'ngx-datatable[siDatatableInteraction]',
@@ -42,7 +51,7 @@ export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
   protected onKeydown(event: KeyboardEvent): void {
     if (event.key === 'ArrowDown') {
       const first =
-        this.table.selectionType === 'cell'
+        unwrapSignalOrValue(this.table.selectionType) === 'cell'
           ? this.element.querySelector(
               '.datatable-row-wrapper > .datatable-body-row .datatable-body-cell'
             )
@@ -53,7 +62,7 @@ export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
       }
     } else if (event.key === 'ArrowUp') {
       const last =
-        this.table.selectionType === 'cell'
+        unwrapSignalOrValue(this.table.selectionType) === 'cell'
           ? this.element.querySelector(
               '.datatable-row-wrapper:last-child > .datatable-body-row .datatable-body-cell'
             )
@@ -85,7 +94,7 @@ export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
     clearTimeout(this.autoSelectTimeout);
     // Re-select on every element
 
-    const selectionType = this.table.selectionType;
+    const selectionType = unwrapSignalOrValue(this.table.selectionType);
     if (
       !this.isMousedown &&
       this.datatableInteractionAutoSelect() &&
@@ -101,7 +110,7 @@ export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
         rowOrCell.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', keyCode: 13 }));
       }, 100);
     }
-    if (this.table.virtualization) {
+    if (unwrapSignalOrValue(this.table.virtualization)) {
       if (this.tableBody) {
         const lastList =
           selectionType === 'cell'

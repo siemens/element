@@ -6,7 +6,7 @@ import { Component, inject } from '@angular/core';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
 import { LOG_EVENT } from '@siemens/live-preview';
-import { NgxDatatableModule, SelectEvent } from '@siemens/ngx-datatable';
+import { NgxDatatableModule } from '@siemens/ngx-datatable';
 
 import { CorporateEmployee, DataService, PageRequest } from './data.service';
 
@@ -30,7 +30,7 @@ export class SampleComponent {
 
   private dataService = inject(DataService);
 
-  onSelect(event: SelectEvent<CorporateEmployee>): void {
+  onSelect(event: CorporateEmployee[]): void {
     this.logEvent(event);
   }
 
