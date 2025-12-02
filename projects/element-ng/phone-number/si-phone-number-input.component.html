@@ -32,7 +32,7 @@
     <span
       class="fi"
       aria-hidden="true"
-      [ngClass]="'fi-' + (selectedCountry?.isoCode?.toLowerCase() ?? 'xx')"
+      [ngClass]="'fi-' + ((selectedCountry?.isoCode | lowercase) ?? 'xx')"
     ></span>
     @if (selectedCountry) {
       <span class="si-body ms-4" [id]="id() + '-value'">
