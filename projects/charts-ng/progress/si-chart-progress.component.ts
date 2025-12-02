@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, input } from '@angular/core';
-import { SiChartComponent } from '@siemens/charts-ng/chart';
-import { echarts } from '@siemens/charts-ng/common';
+import { SiChartBaseComponent, echarts } from '@siemens/charts-ng/common';
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
 import { PieSeriesOption } from 'echarts';
@@ -18,10 +17,10 @@ echarts.use([PieChart, TitleComponent, TooltipComponent]);
 @Component({
   selector: 'si-chart-progress',
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
-  templateUrl: '../../../chart/si-chart.component.html',
-  styleUrl: '../../../chart/si-chart.component.scss'
+  templateUrl: '../common/si-chart-base.component.html',
+  styleUrl: '../common/si-chart-base.component.scss'
 })
-export class SiChartProgressComponent extends SiChartComponent {
+export class SiChartProgressComponent extends SiChartBaseComponent {
   /** The series for the chart. */
   readonly series = input<ProgressChartSeries[]>();
 

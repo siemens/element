@@ -3,17 +3,15 @@
  * SPDX-License-Identifier: MIT
  */
 import { NgModule } from '@angular/core';
+import { SiChartCartesianComponent } from '@siemens/charts-ng/cartesian';
 import { SiChartComponent } from '@siemens/charts-ng/chart';
+import { SiChartCircleComponent } from '@siemens/charts-ng/circle';
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
-import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
+import { SiChartGaugeComponent } from '@siemens/charts-ng/gauge';
+import { SiChartProgressComponent } from '@siemens/charts-ng/progress';
+import { SiChartProgressBarComponent } from '@siemens/charts-ng/progress-bar';
 import { SiChartSankeyComponent } from '@siemens/charts-ng/sankey';
 import { SiChartSunburstComponent } from '@siemens/charts-ng/sunburst';
-
-import { SiChartCartesianComponent } from './components/si-chart-cartesian/si-chart-cartesian.component';
-import { SiChartCircleComponent } from './components/si-chart-circle/si-chart-circle.component';
-import { SiChartGaugeComponent } from './components/si-chart-gauge/si-chart-gauge.component';
-import { SiChartProgressBarComponent } from './components/si-chart-progress-bar/si-chart-progress-bar.component';
-import { SiChartProgressComponent } from './components/si-chart-progress/si-chart-progress.component';
 
 @NgModule({
   imports: [
@@ -32,7 +30,6 @@ import { SiChartProgressComponent } from './components/si-chart-progress/si-char
     SiChartCircleComponent,
     SiChartComponent,
     SiChartGaugeComponent,
-    SiChartLoadingSpinnerComponent,
     SiChartProgressBarComponent,
     SiChartProgressComponent,
     SiChartSankeyComponent,

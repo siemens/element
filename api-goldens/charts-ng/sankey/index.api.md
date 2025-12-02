@@ -6,10 +6,10 @@
 
 import * as _angular_core from '@angular/core';
 import { SankeySeriesOption } from '@siemens/charts-ng/common';
-import { SiChartComponent } from '@siemens/charts-ng/chart';
+import { SiChartBaseComponent } from '@siemens/charts-ng/common';
 
 // @public (undocumented)
-export class SiChartSankeyComponent extends SiChartComponent {
+export class SiChartSankeyComponent extends SiChartBaseComponent {
     // (undocumented)
     protected applyOptions(): void;
     readonly series: _angular_core.InputSignal<SankeySeriesOption | undefined>;
