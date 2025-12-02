@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 export const STYLE_REPLACEMENTS = [
+  // Single quotes
   {
     replace: `@import '@simpl/element-theme/`,
     new: `@import '@siemens/element-theme/`
@@ -10,12 +11,24 @@ export const STYLE_REPLACEMENTS = [
   {
     replace: `@use '@simpl/element-theme/`,
     new: `@use '@siemens/element-theme/`
+  },
+  // Double quotes
+  {
+    replace: `@import "@simpl/element-theme/`,
+    new: `@import "@siemens/element-theme/`
+  },
+  {
+    replace: `@use "@simpl/element-theme/`,
+    new: `@use "@siemens/element-theme/`
   }
 ];
 // Apply theme styles if not already present
 export const THEME_STYLE_ENTRIES = [
+  { insert: `// Load Siemens fonts` },
   { insert: `@use '@simpl/brand/assets/fonts/styles/siemens-sans';` },
+  { insert: `// Load Element icons` },
   { insert: `@use '@simpl/element-icons/dist/style/simpl-element-icons';` },
+  { insert: `// Use Element theme` },
   {
     insert: `@use '@siemens/element-theme/src/theme' with (
   $element-theme-default: 'siemens-brand',
@@ -24,9 +37,11 @@ export const THEME_STYLE_ENTRIES = [
     'element'
   )
 );`,
-    pattern: /@use '@siemens\/element-theme\/src\/theme' with \(([\s\S]*?)\);/g
+    pattern: /@use ['"]@siemens\/element-theme\/src\/theme['"] with \(([\s\S]*?)\);/g
   },
+  { insert: `// Use Element components` },
   { insert: `@use '@siemens/element-ng/element-ng';` },
+  { insert: `// Actually build the siemens-brand theme` },
   { insert: `@use '@siemens/element-theme/src/styles/themes';` },
   { insert: `@use '@simpl/brand/dist/element-theme-siemens-brand-light' as brand-light;` },
   { insert: `@use '@simpl/brand/dist/element-theme-siemens-brand-dark' as brand-dark;` },
@@ -41,7 +56,8 @@ export const THEME_STYLE_ENTRIES = [
 ];
 
 export const SCSS_USE_PATTERNS = [
-  /@use '@simpl\/element-theme\/src\/theme' with \(([\s\S]*?)\);/g,
-  /@use '@simpl\/element-ng\/simpl-element-ng' with \(([\s\S]*?)\);/g,
-  /@use '@simpl\/element-theme\/src\/theme';/g
+  /@use ['"]@simpl\/element-theme\/src\/theme['"] with \(([\s\S]*?)\);/g,
+  /@use ['"]@simpl\/element-ng\/simpl-element-ng['"] with \(([\s\S]*?)\);/g,
+  /@use ['"]@simpl\/element-theme\/src\/theme['"];/g,
+  /@use ['"]@simpl\/element-ng\/simpl-element-ng['"];/g
 ];
