@@ -35,6 +35,7 @@ describe('SiSummaryChipComponent', () => {
   });
 
   it('should hide label when requested', () => {
+    componentRef.setInput('icon', 'element-not-checked');
     componentRef.setInput('hideLabel', 'true');
     fixture.detectChanges();
 
