@@ -306,10 +306,10 @@ jobs:
       - uses: marocchino/sticky-pull-request-comment@v2
         with:
           message: |
-            [Documentation](https://simpl-element-preview.s3-eu-west-1.amazonaws.com/pr-${{ github.event.pull_request.number }}/pages/index.html).
-            [Examples](https://simpl-element-preview.s3-eu-west-1.amazonaws.com/pr-${{ github.event.pull_request.number }}/pages/element-examples/index.html).
-            [Playwright report](https://simpl-element-preview.s3-eu-west-1.amazonaws.com/pr-${{ github.event.pull_request.number }}/playwright-report/index.html).
+            [Documentation](https://d33c9dcnqinn2a.cloudfront.net/pr-${{ github.event.pull_request.number }}/pages/).
+            [Examples](https://d33c9dcnqinn2a.cloudfront.net/pr-${{ github.event.pull_request.number }}/pages/element-examples/).
+            [Playwright report](https://d33c9dcnqinn2a.cloudfront.net/pr-${{ github.event.pull_request.number }}/playwright-report/).
 
             **Coverage Reports:**
-            - [element-ng](https://simpl-element-preview.s3-eu-west-1.amazonaws.com/pr-${{ github.event.pull_request.number }}/pages/coverage/element-ng/index.html)
-            - [element-translate-ng](https://simpl-element-preview.s3-eu-west-1.amazonaws.com/pr-${{ github.event.pull_request.number }}/pages/coverage/element-translate-ng/index.html)
+            - [element-ng](https://d33c9dcnqinn2a.cloudfront.net/pr-${{ github.event.pull_request.number }}/pages/coverage/element-ng/)
+            - [element-translate-ng](https://d33c9dcnqinn2a.cloudfront.net/pr-${{ github.event.pull_request.number }}/pages/coverage/element-translate-ng/)
