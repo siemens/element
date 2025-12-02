@@ -13,8 +13,7 @@ import {
   SimpleChange,
   SimpleChanges
 } from '@angular/core';
-import { SiChartComponent } from '@siemens/charts-ng/chart';
-import { GaugeSeriesOption, echarts } from '@siemens/charts-ng/common';
+import { SiChartBaseComponent, GaugeSeriesOption, echarts } from '@siemens/charts-ng/common';
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
 import { GaugeChart } from 'echarts/charts';
@@ -27,10 +26,10 @@ echarts.use([GaugeChart, TitleComponent, TooltipComponent]);
 @Component({
   selector: 'si-chart-gauge',
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
-  templateUrl: '../../../chart/si-chart.component.html',
-  styleUrl: '../../../chart/si-chart.component.scss'
+  templateUrl: '../common/si-chart-base.component.html',
+  styleUrl: '../common/si-chart-base.component.scss'
 })
-export class SiChartGaugeComponent extends SiChartComponent implements OnChanges {
+export class SiChartGaugeComponent extends SiChartBaseComponent implements OnChanges {
   /** @defaultValue 0 */
   readonly minValue = input(0);
   /** @defaultValue 100 */

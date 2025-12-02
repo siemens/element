@@ -6,18 +6,18 @@ import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { echarts, EChartOption } from '@siemens/charts-ng/common';
 
-import { SiChartComponent } from './si-chart.component';
+import { SiChartBaseComponent } from './si-chart-base.component';
 
 @Component({
-  imports: [SiChartComponent],
-  template: `<si-chart style="inline-size: 300px; block-size: 300px" [options]="options" />`,
+  imports: [SiChartBaseComponent],
+  template: `<si-chart-base style="inline-size: 300px; block-size: 300px" [options]="options" />`,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
-  readonly chartComponent = viewChild.required(SiChartComponent);
+  readonly chartComponent = viewChild.required(SiChartBaseComponent);
   options!: EChartOption;
 }
-describe('SiChart', () => {
+describe('SiChartBase', () => {
   let component: TestHostComponent;
   let fixture: ComponentFixture<TestHostComponent>;
 

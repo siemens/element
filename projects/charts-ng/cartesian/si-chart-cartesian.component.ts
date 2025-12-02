@@ -4,13 +4,16 @@
  */
 import { Component, input, OnChanges, SimpleChanges } from '@angular/core';
 import {
-  SiChartComponent,
+  echarts,
+  GridComponentOption,
+  LegendComponentOption,
+  TooltipComponentOption,
+  SiChartBaseComponent,
   ChartXAxis,
   ChartYAxis,
   DataZoomRange,
   SeriesUpdate
-} from '@siemens/charts-ng/chart';
-import { echarts, LegendComponentOption, TooltipComponentOption } from '@siemens/charts-ng/common';
+} from '@siemens/charts-ng/common';
 import {
   CustomLegend,
   CustomLegendProps,
@@ -62,10 +65,10 @@ echarts.use([
 @Component({
   selector: 'si-chart-cartesian',
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
-  templateUrl: '../../../chart/si-chart.component.html',
-  styleUrl: '../../../chart/si-chart.component.scss'
+  templateUrl: '../common/si-chart-base.component.html',
+  styleUrl: '../common/si-chart-base.component.scss'
 })
-export class SiChartCartesianComponent extends SiChartComponent implements OnChanges {
+export class SiChartCartesianComponent extends SiChartBaseComponent implements OnChanges {
   /** The series for the chart. */
   readonly series = input<CartesianChartSeries[]>();
   readonly subChartGrids = input<SubchartGrid[]>();

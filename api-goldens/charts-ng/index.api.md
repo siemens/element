@@ -4,355 +4,39 @@
 
 ```ts
 
-import * as _angular_core from '@angular/core';
-import { BarSeriesOption } from '@siemens/charts-ng/common';
-import { CandlestickSeriesOption } from '@siemens/charts-ng/common';
-import { ChartXAxis } from '@siemens/charts-ng/chart';
-import { ChartYAxis } from '@siemens/charts-ng/chart';
-import { DataZoomRange } from '@siemens/charts-ng/chart';
-import * as echarts_2 from 'echarts';
-import { HeatmapSeriesOption } from '@siemens/charts-ng/common';
-import * as i1 from '@angular/common';
-import * as i10 from '@siemens/charts-ng/sunburst';
-import * as i11 from '@siemens/charts-ng/custom-legend';
-import * as i4 from '@siemens/charts-ng/chart';
-import * as i6 from '@siemens/charts-ng/loading-spinner';
-import * as i9 from '@siemens/charts-ng/sankey';
-import { LineSeriesOption } from '@siemens/charts-ng/common';
-import { MarkAreaComponentOption } from '@siemens/charts-ng/common';
-import { MarkLineComponentOption } from '@siemens/charts-ng/common';
-import { MarkPointComponentOption } from '@siemens/charts-ng/common';
-import { OnChanges } from '@angular/core';
-import { PieSeriesOption } from 'echarts';
-import { ScatterSeriesOption } from '@siemens/charts-ng/common';
-import { SeriesUpdate } from '@siemens/charts-ng/chart';
-import { SiChartComponent } from '@siemens/charts-ng/chart';
-import { SimpleChanges } from '@angular/core';
-import { SiSeriesOption } from '@siemens/charts-ng/chart';
-
-// @public (undocumented)
-export type BarSeriesData = NonNullable<BarSeriesOption['data']>;
-
-// @public (undocumented)
-export type CandlestickSeriesData = NonNullable<CandlestickSeriesOption['data']>;
-
-// @public (undocumented)
-export type CartesianChartData = NonNullable<CartesianDataNullable>;
-
-// @public (undocumented)
-export type CartesianChartSeries = SiBarSeriesOption | SiLineSeriesOption | SiHeatmapSeriesOption | SiScatterSeriesOption | SiCandlestickSeriesOption | never;
-
-// @public (undocumented)
-export type CartesianDataNullable = LineSeriesData | BarSeriesData | HeatmapSeriesData | ScatterSeriesData | CandlestickSeriesData | never;
-
-// @public
-export interface CircleChartData {
-    // (undocumented)
-    itemStyle?: {
-        color?: string;
-        [key: string]: any;
-    };
-    // (undocumented)
-    label?: {
-        color?: string;
-        [key: string]: any;
-    };
-    // (undocumented)
-    name?: string;
-    // (undocumented)
-    value: number;
-}
-
-// @public (undocumented)
-export interface CircleChartSeries {
-    // (undocumented)
-    data: CircleChartData[];
-    endAngle?: number;
-    // (undocumented)
-    label?: {
-        formatter?: NonNullable<PieSeriesOption['label']>['formatter'];
-    };
-    // (undocumented)
-    name: string;
-    // (undocumented)
-    radius?: string[];
-    startAngle?: number;
-}
-
-// @public (undocumented)
-export interface CircleValueUpdate {
-    // (undocumented)
-    seriesIndex: number;
-    // (undocumented)
-    value: number;
-    // (undocumented)
-    valueIndex: number;
-}
-
-// @public (undocumented)
-export interface GaugeChartSeries {
-    // (undocumented)
-    data: any[];
-    // (undocumented)
-    max: number;
-    // (undocumented)
-    min: number;
-}
-
-// @public (undocumented)
-export type HeatmapSeriesData = NonNullable<HeatmapSeriesOption['data']>;
-
-// @public (undocumented)
-export type LineSeriesData = NonNullable<LineSeriesOption['data']>;
-
-// @public
-export type LineStepType = 'start' | 'middle' | 'end';
-
-// @public (undocumented)
-export type LineType = 'solid' | 'dashed' | 'dotted';
-
-// @public (undocumented)
-export type MarkAreaData = NonNullable<MarkAreaComponentOption['data']>;
-
-// @public (undocumented)
-export type MarkLineData = NonNullable<MarkLineComponentOption['data']>;
-
-// @public (undocumented)
-export type MarkPointData = NonNullable<MarkPointComponentOption['data']>;
-
-// @public (undocumented)
-export interface ProgressBarChartSeries {
-    // (undocumented)
-    name: string;
-    // (undocumented)
-    percent: number;
-}
-
-// @public (undocumented)
-export interface ProgressBarValueUpdate {
-    // (undocumented)
-    value: number;
-    // (undocumented)
-    valueIndex: number;
-}
-
-// @public (undocumented)
-export interface ProgressChartSeries {
-    // (undocumented)
-    name: string;
-    // (undocumented)
-    percent: number;
-}
-
-// @public (undocumented)
-export interface ProgressValueUpdate {
-    // (undocumented)
-    percent: number;
-    // (undocumented)
-    seriesIndex: number;
-}
-
-// @public (undocumented)
-export type ScatterSeriesData = NonNullable<Exclude<ScatterSeriesOption['data'], ArrayLike<number>>>;
-
-// @public (undocumented)
-type SiBarSeriesOption = BarSeriesOption & SiSeriesOption;
-export { SiBarSeriesOption }
-export { SiBarSeriesOption as SimplBarSeriesOption }
-
-// @public (undocumented)
-type SiCandlestickSeriesOption = CandlestickSeriesOption & SiSeriesOption;
-export { SiCandlestickSeriesOption }
-export { SiCandlestickSeriesOption as SimplCandlestickSeriesOption }
-
-// @public (undocumented)
-export class SiChartCartesianComponent extends SiChartComponent implements OnChanges {
-    addData(index: number, data: CartesianChartData): void;
-    addDataMulti(series: SeriesUpdate<CartesianChartData>[]): void;
-    // (undocumented)
-    protected afterChartInit(skipZoom?: boolean): void;
-    // (undocumented)
-    protected applyOptions(): void;
-    getSeriesMarker(seriesName: string): string;
-    getSeriesMarkerSvg(seriesName: string): string;
-    // (undocumented)
-    protected getValidXAxis(): Set<number>;
-    // (undocumented)
-    protected handleSelectionChanged(event: any): void;
-    // (undocumented)
-    protected hasData(): boolean;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    refreshSeries(isLive?: boolean, dzToSet?: DataZoomRange): void;
-    readonly series: _angular_core.InputSignal<CartesianChartSeries[] | undefined>;
-    // (undocumented)
-    protected setZoomMode(): void;
-    readonly stacked: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    readonly subChartGrids: _angular_core.InputSignal<SubchartGrid[] | undefined>;
-    readonly tooltipFormatter: _angular_core.InputSignal<string | echarts_2.TooltipComponentFormatterCallback<echarts_2.TooltipComponentFormatterCallbackParams> | undefined>;
-    readonly xAxis: _angular_core.InputSignal<ChartXAxis | ChartXAxis[] | undefined>;
-    readonly yAxis: _angular_core.InputSignal<ChartYAxis | ChartYAxis[] | undefined>;
-    readonly zoomMode: _angular_core.InputSignal<boolean | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChartCartesianComponent, "si-chart-cartesian", never, { "series": { "alias": "series"; "required": false; "isSignal": true; }; "subChartGrids": { "alias": "subChartGrids"; "required": false; "isSignal": true; }; "yAxis": { "alias": "yAxis"; "required": false; "isSignal": true; }; "xAxis": { "alias": "xAxis"; "required": false; "isSignal": true; }; "tooltipFormatter": { "alias": "tooltipFormatter"; "required": false; "isSignal": true; }; "stacked": { "alias": "stacked"; "required": false; "isSignal": true; }; "zoomMode": { "alias": "zoomMode"; "required": false; "isSignal": true; }; }, {}, never, ["[slot=timeRangeBar]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChartCartesianComponent, never>;
-}
-
-// @public (undocumented)
-export class SiChartCircleComponent extends SiChartComponent {
-    // (undocumented)
-    protected applyDataZoom(): void;
-    // (undocumented)
-    protected applyOptions(): void;
-    changeMultiValues(updateValues: CircleValueUpdate[]): void;
-    changeSingleValue(index: number, valueIndex: number, value: number): void;
-    readonly series: _angular_core.InputSignal<CircleChartSeries[] | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChartCircleComponent, "si-chart-circle", never, { "series": { "alias": "series"; "required": false; "isSignal": true; }; }, {}, never, ["[slot=timeRangeBar]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChartCircleComponent, never>;
-}
-
-// @public (undocumented)
-export class SiChartGaugeComponent extends SiChartComponent implements OnChanges {
-    // (undocumented)
-    protected afterChartInit(): void;
-    // (undocumented)
-    protected afterChartResize(): void;
-    // (undocumented)
-    protected applyDataZoom(): void;
-    // (undocumented)
-    protected applyOptions(): void;
-    readonly axisNumberOfDecimals: _angular_core.InputSignal<number>;
-    readonly colors: _angular_core.InputSignal<string[] | undefined>;
-    // (undocumented)
-    readonly hideAxisLabels: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly labelFormatter: _angular_core.InputSignal<((val: number) => string) | undefined>;
-    readonly maxNumberOfDecimals: _angular_core.InputSignal<number>;
-    // (undocumented)
-    readonly maxValue: _angular_core.InputSignal<number>;
-    readonly minNumberOfDecimals: _angular_core.InputSignal<number>;
-    // (undocumented)
-    readonly minValue: _angular_core.InputSignal<number>;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // @deprecated
-    readonly numberOfDecimals: _angular_core.InputSignal<number | undefined>;
-    // (undocumented)
-    readonly responsiveSplitSteps: _angular_core.InputSignal<boolean>;
-    readonly segments: _angular_core.InputSignal<number[]>;
-    setValue(value: number): void;
-    // (undocumented)
-    readonly splitSteps: _angular_core.InputSignal<number | undefined>;
-    // (undocumented)
-    readonly unit: _angular_core.InputSignal<string>;
-    // (undocumented)
-    readonly unitsOnSplit: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    readonly value: _angular_core.InputSignal<number>;
-    readonly valueFormatter: _angular_core.InputSignal<((val: number) => string) | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChartGaugeComponent, "si-chart-gauge", never, { "minValue": { "alias": "minValue"; "required": false; "isSignal": true; }; "maxValue": { "alias": "maxValue"; "required": false; "isSignal": true; }; "value": { "alias": "value"; "required": false; "isSignal": true; }; "splitSteps": { "alias": "splitSteps"; "required": false; "isSignal": true; }; "responsiveSplitSteps": { "alias": "responsiveSplitSteps"; "required": false; "isSignal": true; }; "unit": { "alias": "unit"; "required": false; "isSignal": true; }; "unitsOnSplit": { "alias": "unitsOnSplit"; "required": false; "isSignal": true; }; "labelFormatter": { "alias": "labelFormatter"; "required": false; "isSignal": true; }; "valueFormatter": { "alias": "valueFormatter"; "required": false; "isSignal": true; }; "numberOfDecimals": { "alias": "numberOfDecimals"; "required": false; "isSignal": true; }; "minNumberOfDecimals": { "alias": "minNumberOfDecimals"; "required": false; "isSignal": true; }; "maxNumberOfDecimals": { "alias": "maxNumberOfDecimals"; "required": false; "isSignal": true; }; "axisNumberOfDecimals": { "alias": "axisNumberOfDecimals"; "required": false; "isSignal": true; }; "hideAxisLabels": { "alias": "hideAxisLabels"; "required": false; "isSignal": true; }; "segments": { "alias": "segments"; "required": false; "isSignal": true; }; "colors": { "alias": "colors"; "required": false; "isSignal": true; }; }, {}, never, ["[slot=timeRangeBar]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChartGaugeComponent, never>;
-}
-
-// @public (undocumented)
-export class SiChartProgressBarComponent extends SiChartComponent {
-    // (undocumented)
-    protected applyDataZoom(): void;
-    // (undocumented)
-    protected applyOptions(): void;
-    changeMultiValues(updateValues: ProgressBarValueUpdate[]): void;
-    changeSingleValue(valueIndex: number, value: number): void;
-    readonly labelPosition: _angular_core.InputSignal<string | undefined>;
-    readonly series: _angular_core.InputSignal<ProgressBarChartSeries[] | undefined>;
-    // (undocumented)
-    protected themeChanged(): void;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChartProgressBarComponent, "si-chart-progress-bar", never, { "series": { "alias": "series"; "required": false; "isSignal": true; }; "labelPosition": { "alias": "labelPosition"; "required": false; "isSignal": true; }; }, {}, never, ["[slot=timeRangeBar]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChartProgressBarComponent, never>;
-}
-
-// @public (undocumented)
-export class SiChartProgressComponent extends SiChartComponent {
-    // (undocumented)
-    protected afterChartInit(): void;
-    // (undocumented)
-    protected applyDataZoom(): void;
-    // (undocumented)
-    protected applyOptions(): void;
-    changeMultiValues(updateValues: ProgressValueUpdate[]): void;
-    changeSingleValue(index: number, percent: number): void;
-    readonly dataAngle: _angular_core.InputSignal<number>;
-    // (undocumented)
-    protected handleSelectionChanged(event: any): void;
-    readonly series: _angular_core.InputSignal<ProgressChartSeries[] | undefined>;
-    // (undocumented)
-    protected themeChanged(): void;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChartProgressComponent, "si-chart-progress", never, { "series": { "alias": "series"; "required": false; "isSignal": true; }; "dataAngle": { "alias": "dataAngle"; "required": false; "isSignal": true; }; }, {}, never, ["[slot=timeRangeBar]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChartProgressComponent, never>;
-}
+import * as i0 from '@angular/core';
+import * as i1 from '@siemens/charts-ng/cartesian';
+import * as i2 from '@siemens/charts-ng/circle';
+import * as i3 from '@siemens/charts-ng/chart';
+import * as i4 from '@siemens/charts-ng/gauge';
+import * as i5 from '@siemens/charts-ng/progress-bar';
+import * as i6 from '@siemens/charts-ng/progress';
+import * as i7 from '@siemens/charts-ng/sankey';
+import * as i8 from '@siemens/charts-ng/sunburst';
+import * as i9 from '@siemens/charts-ng/custom-legend';
 
 // @public (undocumented)
 class SiChartsNgModule {
     // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChartsNgModule, never>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<SiChartsNgModule, never>;
     // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiChartsNgModule>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<SiChartsNgModule>;
     // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiChartsNgModule, never, [typeof i1.CommonModule, typeof SiChartCartesianComponent, typeof SiChartCircleComponent, typeof i4.SiChartComponent, typeof SiChartGaugeComponent, typeof i6.SiChartLoadingSpinnerComponent, typeof SiChartProgressBarComponent, typeof SiChartProgressComponent, typeof i9.SiChartSankeyComponent, typeof i10.SiChartSunburstComponent, typeof i11.SiCustomLegendComponent], [typeof SiChartCartesianComponent, typeof SiChartCircleComponent, typeof i4.SiChartComponent, typeof SiChartGaugeComponent, typeof i6.SiChartLoadingSpinnerComponent, typeof SiChartProgressBarComponent, typeof SiChartProgressComponent, typeof i9.SiChartSankeyComponent, typeof i10.SiChartSunburstComponent, typeof i11.SiCustomLegendComponent]>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<SiChartsNgModule, never, [typeof i1.SiChartCartesianComponent, typeof i2.SiChartCircleComponent, typeof i3.SiChartComponent, typeof i4.SiChartGaugeComponent, typeof i5.SiChartProgressBarComponent, typeof i6.SiChartProgressComponent, typeof i7.SiChartSankeyComponent, typeof i8.SiChartSunburstComponent, typeof i9.SiCustomLegendComponent], [typeof i1.SiChartCartesianComponent, typeof i2.SiChartCircleComponent, typeof i3.SiChartComponent, typeof i4.SiChartGaugeComponent, typeof i5.SiChartProgressBarComponent, typeof i6.SiChartProgressComponent, typeof i7.SiChartSankeyComponent, typeof i8.SiChartSunburstComponent, typeof i9.SiCustomLegendComponent]>;
 }
 export { SiChartsNgModule }
 export { SiChartsNgModule as SimplChartsNgModule }
 
-// @public (undocumented)
-type SiHeatmapSeriesOption = HeatmapSeriesOption & SiSeriesOption;
-export { SiHeatmapSeriesOption }
-export { SiHeatmapSeriesOption as SimplHeatmapSeriesOption }
 
-// @public (undocumented)
-interface SiLineSeriesOption extends LineSeriesOption, SiSeriesOption {
-    // (undocumented)
-    area?: boolean;
-}
-export { SiLineSeriesOption }
-export { SiLineSeriesOption as SimplLineSeriesOption }
-
-// @public (undocumented)
-type SiScatterSeriesOption = ScatterSeriesOption & SiSeriesOption;
-export { SiScatterSeriesOption }
-export { SiScatterSeriesOption as SimplScatterSeriesOption }
-
-// @public (undocumented)
-export interface SubchartGrid {
-    // (undocumented)
-    bottom?: number | string;
-    // (undocumented)
-    categoryId?: string;
-    // (undocumented)
-    containLabel?: boolean;
-    // (undocumented)
-    height?: number | string;
-    // (undocumented)
-    left?: number | string;
-    // (undocumented)
-    right?: number | string;
-    // (undocumented)
-    top?: number | string;
-}
-
-
+export * from "@siemens/charts-ng/cartesian";
 export * from "@siemens/charts-ng/chart";
+export * from "@siemens/charts-ng/circle";
 export * from "@siemens/charts-ng/common";
 export * from "@siemens/charts-ng/custom-legend";
+export * from "@siemens/charts-ng/gauge";
 export * from "@siemens/charts-ng/loading-spinner";
+export * from "@siemens/charts-ng/progress";
+export * from "@siemens/charts-ng/progress-bar";
 export * from "@siemens/charts-ng/sankey";
 export * from "@siemens/charts-ng/sunburst";
 

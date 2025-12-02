@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, input } from '@angular/core';
-import { SiChartComponent } from '@siemens/charts-ng/chart';
-import { SunburstSeriesOption, echarts } from '@siemens/charts-ng/common';
+import { SiChartBaseComponent, SunburstSeriesOption, echarts } from '@siemens/charts-ng/common';
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
 import { SunburstChart } from 'echarts/charts';
@@ -15,10 +14,10 @@ echarts.use([SunburstChart, TitleComponent, TooltipComponent]);
 @Component({
   selector: 'si-chart-sunburst',
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
-  templateUrl: '../chart/si-chart.component.html',
-  styleUrl: '../chart/si-chart.component.scss'
+  templateUrl: '../common/si-chart-base.component.html',
+  styleUrl: '../common/si-chart-base.component.scss'
 })
-export class SiChartSunburstComponent extends SiChartComponent {
+export class SiChartSunburstComponent extends SiChartBaseComponent {
   /** The series for the chart. */
   readonly series = input<SunburstSeriesOption>();
   /**

@@ -3,8 +3,13 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, input } from '@angular/core';
-import { SiChartComponent, ChartXAxis, ChartYAxis } from '@siemens/charts-ng/chart';
-import { echarts, BarSeriesOption } from '@siemens/charts-ng/common';
+import {
+  SiChartBaseComponent,
+  echarts,
+  BarSeriesOption,
+  ChartXAxis,
+  ChartYAxis
+} from '@siemens/charts-ng/common';
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
 import { BarChart } from 'echarts/charts';
@@ -17,10 +22,10 @@ echarts.use([BarChart, TitleComponent, TooltipComponent, GridComponent]);
 @Component({
   selector: 'si-chart-progress-bar',
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
-  templateUrl: '../../../chart/si-chart.component.html',
-  styleUrl: '../../../chart/si-chart.component.scss'
+  templateUrl: '../common/si-chart-base.component.html',
+  styleUrl: '../common/si-chart-base.component.scss'
 })
-export class SiChartProgressBarComponent extends SiChartComponent {
+export class SiChartProgressBarComponent extends SiChartBaseComponent {
   /** The series for the chart. */
   readonly series = input<ProgressBarChartSeries[]>();
   /** Used to display the label in inline or above the progress-bar. */
