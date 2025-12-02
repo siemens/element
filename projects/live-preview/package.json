@@ -1,7 +1,7 @@
 {
   "name": "@siemens/live-preview",
   "description": "Element live preview for web",
-  "version": "48.5.2",
+  "version": "48.6.0",
   "license": "MIT",
   "type": "module",
   "repository": {

@@ -1,3 +1,20 @@
+# [48.6.0](https://github.com/siemens/element/compare/v48.5.2...v48.6.0) (2025-12-02)
+
+
+### Features
+
+* **datatable:** support @siemens/ngx-datatable@25 ([c89d4f6](https://github.com/siemens/element/commit/c89d4f64a66356cf0edd335b6ec984a18a6d2837))
+* **microchart-line:** add area support ([de15e4d](https://github.com/siemens/element/commit/de15e4d92351760c796481e868715ce2bcf3b8bd))
+
+
+### Bug Fixes
+
+* **icon:** don't use hardcoded id on svg ([8b0792f](https://github.com/siemens/element/commit/8b0792f2f148852a208e368c5e93d8f8e4f6f45d))
+* **microchart-line:** fix gradient ID not unique ([0a1ceb0](https://github.com/siemens/element/commit/0a1ceb0e399c6d7a96086d21e1b9d922da27e69f))
+* **schematics:** ignore dot files and node_modules in directory traversal ([b97e4ce](https://github.com/siemens/element/commit/b97e4ce08b9bfbfe1a21389d8b76911ace468cee))
+* **schematics:** remove simpl-element-ng token from scss files and support single and double quotes ([8500e73](https://github.com/siemens/element/commit/8500e73332402a437c88313c2ce8cf3660bd0115))
+* **summary-chip:** make value attribute optional ([ea69015](https://github.com/siemens/element/commit/ea6901550d7666715cd54b4ce1fec07268a3b3b2))
+
 ## [48.5.2](https://github.com/siemens/element/compare/v48.5.1...v48.5.2) (2025-11-26)
 
 
