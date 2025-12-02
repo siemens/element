@@ -23,9 +23,9 @@ import { JSONSchema7 } from 'json-schema';
   standalone: false,
   templateUrl: './si-formly.component.html'
 })
-export class SiFormlyComponent<TControl extends { [K in keyof TControl]: AbstractControl }>
-  implements OnInit
-{
+export class SiFormlyComponent<
+  TControl extends { [K in keyof TControl]: AbstractControl }
+> implements OnInit {
   /**
    * Formly main container to provide modelChange subscriptions.
    */
