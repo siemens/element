@@ -3,24 +3,23 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, input } from '@angular/core';
-import { SiChartComponent } from '@siemens/charts-ng/chart';
-import { PieSeriesOption, echarts } from '@siemens/charts-ng/common';
+import { SiChartBaseComponent, PieSeriesOption, echarts } from '@siemens/charts-ng/common';
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
 import { PieChart } from 'echarts/charts';
 import { TitleComponent, TooltipComponent, LegendComponent } from 'echarts/components';
 
-import { CircleChartSeries, CircleValueUpdate } from './si-chart-circle.interface';
+import { CircleChartData, CircleChartSeries, CircleValueUpdate } from './si-chart-circle.interface';
 
 echarts.use([PieChart, TitleComponent, TooltipComponent, LegendComponent]);
 
 @Component({
   selector: 'si-chart-circle',
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
-  templateUrl: '../../../chart/si-chart.component.html',
-  styleUrl: '../../../chart/si-chart.component.scss'
+  templateUrl: '../common/si-chart-base.component.html',
+  styleUrl: '../common/si-chart-base.component.scss'
 })
-export class SiChartCircleComponent extends SiChartComponent {
+export class SiChartCircleComponent extends SiChartBaseComponent {
   /** The series for the chart. */
   readonly series = input<CircleChartSeries[]>();
 

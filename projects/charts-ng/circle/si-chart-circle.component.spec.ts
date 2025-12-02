@@ -5,8 +5,8 @@
 import { Component, provideZonelessChangeDetection, SimpleChange, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { CircleChartSeries } from '../si-chart-circle/si-chart-circle.interface';
 import { SiChartCircleComponent } from './si-chart-circle.component';
+import { CircleChartSeries } from './si-chart-circle.interface';
 
 @Component({
   imports: [SiChartCircleComponent],

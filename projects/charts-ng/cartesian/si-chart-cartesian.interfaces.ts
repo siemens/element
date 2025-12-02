@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { SiSeriesOption } from '@siemens/charts-ng/chart';
 import {
   BarSeriesOption,
   CandlestickSeriesOption,
@@ -11,7 +10,8 @@ import {
   MarkAreaComponentOption,
   MarkLineComponentOption,
   MarkPointComponentOption,
-  ScatterSeriesOption
+  ScatterSeriesOption,
+  SiSeriesOption
 } from '@siemens/charts-ng/common';
 
 export type LineStepType = 'start' | 'middle' | 'end';

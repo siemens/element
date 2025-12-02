@@ -5,11 +5,11 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
-import { SiChartComponent } from '@siemens/charts-ng/chart';
+import { SiChartBaseComponent } from '@siemens/charts-ng/common';
 import { SunburstSeriesOption } from '@siemens/charts-ng/common';
 
 // @public (undocumented)
-export class SiChartSunburstComponent extends SiChartComponent {
+export class SiChartSunburstComponent extends SiChartBaseComponent {
     // (undocumented)
     protected applyOptions(): void;
     readonly series: _angular_core.InputSignal<SunburstSeriesOption | undefined>;
