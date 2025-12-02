@@ -115,24 +115,32 @@ const loadAndAttachComponent = <T>(
 ): Observable<ComponentRef<T>> => {
   const result = new Subject<ComponentRef<T>>();
   if (factory[componentName]) {
-    factory.moduleLoader(factory[componentName]!).then(
-      module => {
-        const ngModuleRef = createNgModule(module[factory.moduleName], envInjector);
+    const loader = factory.moduleLoader ?? factory.componentLoader;
+    loader(factory[componentName]!).then(
+      moduleOrComponent => {
+        const ngModuleRef = factory.moduleName
+          ? createNgModule(moduleOrComponent[factory.moduleName], envInjector)
+          : undefined;
         const componentKey = factory[componentName];
         if (!componentKey) {
           throw new Error(`Component configuration for ${componentName} is undefined.`);
         }
-        const componentType = module[componentKey];
+        // when moduleName is provided, the component is exported from the module
+        const componentType = factory.moduleName
+          ? moduleOrComponent[componentKey]
+          : moduleOrComponent;
         const widgetInstanceRef = host.createComponent<T>(componentType, { injector, ngModuleRef });
         result.next(widgetInstanceRef);
         result.complete();
       },
       rejection => {
+        let errorMsg = `Loading widget component ${factory[componentName]} failed`;
+        if (factory.moduleName) {
+          errorMsg = `Loading widget module ${factory.moduleName} failed`;
+        }
         const msg = rejection
-          ? `Loading widget module ${factory.moduleName} failed with ${JSON.stringify(
-              rejection.toString()
-            )}`
-          : `Loading widget module ${factory.moduleName} failed`;
+          ? `${errorMsg} with ${JSON.stringify(rejection.toString())}`
+          : `${errorMsg}`;
         result.error(msg);
         result.complete();
       }
