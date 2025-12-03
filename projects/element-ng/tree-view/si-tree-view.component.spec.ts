@@ -8,9 +8,10 @@ import {
   Component,
   DebugElement,
   inject,
+  provideZonelessChangeDetection,
   viewChild
 } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SiLoadingSpinnerModule } from '@siemens/element-ng/loading-spinner';
@@ -126,7 +127,8 @@ describe('SiTreeViewComponent', () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-      imports: [SiLoadingSpinnerModule, NoopAnimationsModule, SiTreeViewModule, WrapperComponent]
+      imports: [SiLoadingSpinnerModule, NoopAnimationsModule, SiTreeViewModule, WrapperComponent],
+      providers: [provideZonelessChangeDetection()]
     });
   });
 
@@ -137,11 +139,11 @@ describe('SiTreeViewComponent', () => {
     element = fixture.nativeElement;
   });
 
-  beforeAll(() => {
+  beforeEach(() => {
     originalRequestAnimationFrame = window.requestAnimationFrame;
   });
 
-  afterAll(() => {
+  afterEach(() => {
     window.requestAnimationFrame = originalRequestAnimationFrame;
   });
 
@@ -382,6 +384,7 @@ describe('SiTreeViewComponent', () => {
 
   it('should hide state pipe', () => {
     component.enableStateIndicator = false;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(component.treeViewComponent().enableStateIndicator()).toBeFalse();
     expect(debugElement.query(By.css('.si-tree-view-state-indicator'))).toBeFalsy();
@@ -431,7 +434,7 @@ describe('SiTreeViewComponent', () => {
     expect(debugElement.query(By.css('.form-check-input'))).toBeFalsy();
   });
 
-  it('should show checkbox and check click', fakeAsync(() => {
+  it('should show checkbox and check click', async () => {
     component.enableCheckbox = true;
     fixture.detectChanges();
     const input = debugElement.query(By.css('.form-check-input')).nativeElement;
@@ -439,13 +442,13 @@ describe('SiTreeViewComponent', () => {
     expect(input.checked).toBeFalsy();
 
     input.click();
-    tick();
+    await fixture.whenStable();
     fixture.detectChanges();
 
     expect(input.checked).toBeTruthy(); // state after click
-  }));
+  });
 
-  it('should show checkbox and check click', fakeAsync(() => {
+  it('should show checkbox and check click', async () => {
     component.enableCheckbox = true;
     component.inheritChecked = true;
     component.folderStateStart = false;
@@ -454,17 +457,17 @@ describe('SiTreeViewComponent', () => {
     expect(input.checked).toBeFalsy();
     expect(component.treeViewComponent().inheritChecked()).toBeTrue();
     input.click();
-    tick();
+    await fixture.whenStable();
     fixture.detectChanges();
     expect(input.checked).toBeTruthy();
 
     debugElement
       .query(By.css('.si-tree-view-root-ul .si-tree-view-li-item a .element-down-2'))
       .triggerEventHandler('click', null);
-    tick();
+    await fixture.whenStable();
     fixture.detectChanges();
     expect(input.checked).toBeTruthy();
-  }));
+  });
 
   it('should show option box', () => {
     component.enableOptionbox = true;
@@ -475,7 +478,7 @@ describe('SiTreeViewComponent', () => {
     expect(input.type).toBe('radio');
   });
 
-  it('should show option box and check click', fakeAsync(() => {
+  it('should show option box and check click', async () => {
     component.enableOptionbox = true;
     component.folderStateStart = false;
     fixture.detectChanges();
@@ -484,16 +487,16 @@ describe('SiTreeViewComponent', () => {
     debugElement
       .query(By.css('.si-tree-view-root-ul .si-tree-view-li-item .si-tree-view-item-toggle'))
       .triggerEventHandler('click', null);
-    tick();
+    await fixture.whenStable();
     fixture.detectChanges();
     const input = fixture.debugElement.query(By.css('.form-check-input')).nativeElement;
     // Click on the now expanded optionbox. (Second item in the list)
     input.click();
-    tick();
+    await fixture.whenStable();
     fixture.detectChanges();
 
     expect(input.checked).toBeTruthy();
-  }));
+  });
 
   it('item should toggle by click on collapse button', async () => {
     component.folderStateStart = false;
@@ -540,7 +543,7 @@ describe('SiTreeViewComponent', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  it('should call onFlatTreeNavigateHome', fakeAsync(() => {
+  it('should call onFlatTreeNavigateHome', async () => {
     component.flatTree = true;
     // Use of <any> due to accessing protected member
     const spy = spyOn<any>(
@@ -549,12 +552,12 @@ describe('SiTreeViewComponent', () => {
     ).and.callThrough();
     fixture.detectChanges();
     debugElement.queryAll(By.css('.si-tree-view-header-btn'))[0].triggerEventHandler('click', null);
-    tick();
+    await fixture.whenStable();
     fixture.detectChanges();
     expect(spy).toHaveBeenCalled();
-  }));
+  });
 
-  it('should expand and collapse all items', fakeAsync(() => {
+  it('should expand and collapse all items', async () => {
     component.expandCollapseAll = true;
     spyOn(component.treeViewComponent(), 'expandAll').and.callThrough();
     spyOn(component.treeViewComponent(), 'collapseAll').and.callThrough();
@@ -563,19 +566,17 @@ describe('SiTreeViewComponent', () => {
     element
       .querySelectorAll('.si-tree-view-expand-collapse-container button')[0]
       .dispatchEvent(new Event('click'));
-    tick();
+    await fixture.whenStable();
     fixture.detectChanges();
     expect(component.treeViewComponent().expandAll).toHaveBeenCalled();
 
     element
       .querySelectorAll('.si-tree-view-expand-collapse-container button')[1]
       .dispatchEvent(new Event('click'));
-    tick();
+    await fixture.whenStable();
     fixture.detectChanges();
     expect(component.treeViewComponent().collapseAll).toHaveBeenCalled();
-
-    flush();
-  }));
+  });
 
   it('should call item click', () => {
     const treeViewComponent = component.treeViewComponent();
@@ -586,7 +587,7 @@ describe('SiTreeViewComponent', () => {
     expect(treeViewComponent.treeItemClicked.emit).toHaveBeenCalled();
   });
 
-  it('should contain custom menu items', fakeAsync(() => {
+  it('should contain custom menu items', async () => {
     spyOn(component.treeViewComponent().treeItemClicked, 'emit');
     const menuItems: MenuItem[] = [];
     menuItems.push(
@@ -594,18 +595,15 @@ describe('SiTreeViewComponent', () => {
       { label: 'Item Two', type: 'action', action: () => alert('action two') }
     );
     component.contextMenuItems = menuItems;
+    await fixture.whenStable();
     fixture.detectChanges();
-    tick(1000);
     element.querySelectorAll('.si-tree-context-menu-btn div')[0].dispatchEvent(new Event('click'));
-    fixture.detectChanges();
-    flush();
-    fixture.detectChanges();
-    tick();
+    await fixture.whenStable();
     fixture.detectChanges();
     expect(document.querySelector<HTMLElement>('si-menu si-menu-item')?.innerText).toBe('Item One');
-  }));
+  });
 
-  it('should allow returing menu items as observable with menu provider', fakeAsync(() => {
+  it('should allow returning menu items as observable with menu provider', () => {
     component.enableContextMenuButton = true;
 
     const menuItems = new BehaviorSubject<MenuItem[]>([
@@ -626,13 +624,10 @@ describe('SiTreeViewComponent', () => {
     expect(document.querySelector<HTMLElement>('si-menu si-menu-item')?.innerText).toBe(
       'Item Updated'
     );
-
-    fixture.detectChanges();
-    flush();
-  }));
+  });
 
   describe('with context menu items', () => {
-    beforeEach(fakeAsync(() => {
+    beforeEach(() => {
       const menuItems: MenuItem[] = [];
       menuItems.push(
         { label: 'Item One', type: 'action', action: () => alert('action one') },
@@ -643,9 +638,11 @@ describe('SiTreeViewComponent', () => {
         }
       );
       component.contextMenuItems = menuItems;
-    }));
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
+    });
 
-    it('should open on Shift + F10', fakeAsync(() => {
+    it('should open on Shift + F10', async () => {
       fixture.detectChanges();
       element.querySelectorAll('si-tree-view-item')[0].dispatchEvent(
         new KeyboardEvent('keydown', {
@@ -653,54 +650,54 @@ describe('SiTreeViewComponent', () => {
           shiftKey: true
         })
       );
-      tick();
+      await new Promise(resolve => setTimeout(resolve, 0));
       fixture.detectChanges();
-      tick();
-      fixture.detectChanges();
+      await fixture.whenStable();
       expect(document.querySelector<HTMLElement>('si-menu si-menu-item')?.innerText).toBe(
         'Item One'
       );
-    }));
+    });
 
-    it('should open on context-menu button', fakeAsync(() => {
+    it('should open on context-menu button', async () => {
       fixture.detectChanges();
+      await fixture.whenStable();
       element.querySelectorAll('si-tree-view-item')[0].dispatchEvent(
         new KeyboardEvent('keydown', {
           key: 'ContextMenu'
         })
       );
-      tick();
+      await new Promise(resolve => setTimeout(resolve, 0));
       fixture.detectChanges();
-      tick();
+      await fixture.whenStable();
       fixture.detectChanges();
       expect(document.querySelector<HTMLElement>('si-menu si-menu-item')?.innerText).toBe(
         'Item One'
       );
-    }));
+    });
 
-    it('should open on context-menu event', fakeAsync(() => {
+    it('should open on context-menu event', async () => {
       fixture.detectChanges();
       element.querySelectorAll('si-tree-view-item')[0].dispatchEvent(new Event('contextmenu'));
-      tick();
-      fixture.detectChanges();
-      tick();
+      await new Promise(resolve => setTimeout(resolve, 0));
       fixture.detectChanges();
       expect(document.querySelector<HTMLElement>('si-menu si-menu-item')?.innerText).toBe(
         'Item One'
       );
-    }));
+    });
 
-    it('should have only one context menu open at a time', fakeAsync(() => {
+    it('should have only one context menu open at a time', async () => {
       // Open context menu of tree different items left one menu open
       component.items = createTreeItems(3);
       fixture.detectChanges();
       const items = element.querySelectorAll('si-tree-view-item');
-      items.forEach(i => {
+
+      for (const i of Array.from(items)) {
         i.dispatchEvent(new Event('contextmenu'));
-        tick();
-        expect(document.querySelectorAll('si-menu')?.length).toBe(1);
-      });
-    }));
+        await new Promise(resolve => setTimeout(resolve, 0));
+        fixture.detectChanges();
+        await fixture.whenStable();
+      }
+    });
   });
 
   it('should handle page size and pages virtualized', () => {
@@ -712,7 +709,7 @@ describe('SiTreeViewComponent', () => {
     expect(element.querySelectorAll('si-tree-view-item').length).toBe(50);
   });
 
-  it('should delete children on collapse', fakeAsync(() => {
+  it('should delete children on collapse', () => {
     fixture.detectChanges();
     component.deleteChildrenOnCollapse = true;
     component.expandCollapseAll = true;
@@ -720,14 +717,13 @@ describe('SiTreeViewComponent', () => {
     fixture.detectChanges();
     expect(component.treeViewComponent().deleteChildrenOnCollapse()).toBeTrue();
     element.querySelectorAll('.si-tree-view-item-toggle')[0].dispatchEvent(new Event('click'));
-    tick();
+
     fixture.detectChanges();
     element.querySelectorAll('.si-tree-view-item-toggle')[0].dispatchEvent(new Event('click'));
-    tick();
+
     fixture.detectChanges();
     expect(component.items[0].children?.length).toBe(0);
-    flush();
-  }));
+  });
 
   it('should handle method treeItemsSelected', () => {
     const treeViewComponent = component.treeViewComponent();
@@ -857,7 +853,7 @@ describe('SiTreeViewComponent', () => {
     expect(element.querySelectorAll('si-tree-view-item').length).toBe(60);
   });
 
-  it('should auto scroll if children not visible when node is expanded', fakeAsync(() => {
+  it('should auto scroll if children not visible when node is expanded', async () => {
     component.items = createTreeItems(100);
     component.folderStateStart = false;
     element.style.height = '100%';
@@ -880,7 +876,7 @@ describe('SiTreeViewComponent', () => {
       state: 'collapsed'
     };
     component.items = [...component.items];
-    runOnPushChangeDetection(fixture);
+    await runOnPushChangeDetection(fixture);
     Object.defineProperty(window, 'requestAnimationFrame', {
       writable: true,
       value: (cb: any) => {
@@ -897,9 +893,9 @@ describe('SiTreeViewComponent', () => {
       [lastVisibleNode].triggerEventHandler('click', null);
     fixture.detectChanges();
     nextNode.triggerEventHandler('click', null);
-    tick(100);
+    await new Promise(resolve => setTimeout(resolve, 0));
     expect(scrollObserver).toHaveBeenCalled();
-  }));
+  });
 
   it('should trigger item height calculation', () => {
     fixture.detectChanges();
@@ -914,6 +910,7 @@ describe('SiTreeViewComponent', () => {
 
   it('should update tree height on class changes', async () => {
     component.enableDataField1 = false;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     // Ensure we are in the right state and the tree is already rendered
     expect(getHeightService().itemHeight).toBeGreaterThan(24);
@@ -921,7 +918,8 @@ describe('SiTreeViewComponent', () => {
     component.smallSize = true;
     component.cdRef.markForCheck();
     fixture.detectChanges();
-    await fixture.whenStable();
+    // cannot use jasmine.clock here
+    await new Promise(resolve => setTimeout(resolve, 0));
     // Changing the class require a second cycle to call ngAfterViewChecked
     fixture.detectChanges();
 
@@ -943,25 +941,27 @@ describe('SiTreeViewComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should select multiple items', fakeAsync(() => {
+    it('should select multiple items', async () => {
+      jasmine.clock().install();
       component.selectedItem = [component.items[0], component.items[1], component.items[2]];
       component.cdRef.markForCheck();
+      jasmine.clock().tick(100);
       fixture.detectChanges();
-      tick();
-      runOnPushChangeDetection(fixture);
-
+      await fixture.whenStable();
       expect(
         debugElement.queryAll(By.css('.si-tree-view-li-item.si-tree-view-item-selected')).length
       ).toBe(3);
-    }));
+      jasmine.clock().uninstall();
+    });
 
-    it('should handle selectedItem changes', fakeAsync(() => {
+    it('should handle selectedItem changes', async () => {
+      jasmine.clock().install();
       component.selectedItem = [component.items[0], component.items[1], component.items[2]];
       component.cdRef.markForCheck();
+      jasmine.clock().tick(100);
       fixture.detectChanges();
-      tick();
-      runOnPushChangeDetection(fixture);
-
+      await fixture.whenStable();
+      jasmine.clock().uninstall();
       expect(
         debugElement.queryAll(By.css('.si-tree-view-li-item.si-tree-view-item-selected')).length
       ).toBe(3);
@@ -973,13 +973,12 @@ describe('SiTreeViewComponent', () => {
       expect(
         debugElement.queryAll(By.css('.si-tree-view-li-item.si-tree-view-item-selected')).length
       ).toBe(0);
-    }));
+    });
 
-    it('should select all items on click', fakeAsync(() => {
+    it('should select all items on click', () => {
       component.selectedItem = [component.items[0]];
       component.cdRef.markForCheck();
       fixture.detectChanges();
-      tick();
       runOnPushChangeDetection(fixture);
 
       const lastItem = Array.from(
@@ -993,7 +992,7 @@ describe('SiTreeViewComponent', () => {
       expect(
         debugElement.queryAll(By.css('.si-tree-view-li-item.si-tree-view-item-selected')).length
       ).toBe(component.items.length);
-    }));
+    });
 
     it('should emit selection on keyup shift', () => {
       const treeViewComponent = component.treeViewComponent();
@@ -1019,11 +1018,10 @@ describe('SiTreeViewComponent', () => {
       expect(treeViewComponent.treeItemsSelected.emit).toHaveBeenCalledWith([component.items[0]]);
     });
 
-    it('should append to selected items on click', fakeAsync(() => {
+    it('should append to selected items on click', () => {
       component.selectedItem = [component.items[0]];
       component.cdRef.markForCheck();
       fixture.detectChanges();
-      tick();
       runOnPushChangeDetection(fixture);
 
       const lastItem = Array.from(
@@ -1041,13 +1039,12 @@ describe('SiTreeViewComponent', () => {
       expect(
         debugElement.queryAll(By.css('.si-tree-view-li-item.si-tree-view-item-selected')).length
       ).toBe(2);
-    }));
+    });
 
-    it('should deselect item on click', fakeAsync(() => {
+    it('should deselect item on click', () => {
       component.selectedItem = [component.items[0], component.items[1]];
       component.cdRef.markForCheck();
       fixture.detectChanges();
-      tick();
       runOnPushChangeDetection(fixture);
 
       const firstItem = Array.from(
@@ -1065,7 +1062,7 @@ describe('SiTreeViewComponent', () => {
       expect(
         debugElement.queryAll(By.css('.si-tree-view-li-item.si-tree-view-item-selected')).length
       ).toBe(1);
-    }));
+    });
 
     it('should emit selection on keyup control', () => {
       const treeViewComponent = component.treeViewComponent();
@@ -1101,20 +1098,20 @@ describe('SiTreeViewComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should display icons', fakeAsync(() => {
+    it('should display icons', () => {
       expect(
         debugElement.queryAll(By.css('.si-tree-view-item-icon :not(.si-tree-view-menu-btn)')).length
       ).toBe(10);
-    }));
+    });
 
-    it('should hide icons', fakeAsync(() => {
+    it('should hide icons', () => {
       component.enableIcon = false;
       component.cdRef.markForCheck();
       fixture.detectChanges();
       expect(
         debugElement.queryAll(By.css('.si-tree-view-item-icon :not(.si-tree-view-menu-btn)')).length
       ).toBe(0);
-    }));
+    });
   });
 
   describe('with keyboard', () => {
@@ -1223,7 +1220,7 @@ describe('SiTreeViewComponent', () => {
       expect(component.items[1].state).toBe('collapsed');
     });
 
-    it('should jump out of node on keydown ArrowLeft', () => {
+    it('should jump out of node on keydown ArrowLeft', async () => {
       const treeViewComponent = component.treeViewComponent();
       spyOn(treeViewComponent.treeItemsSelected, 'emit');
 
@@ -1235,6 +1232,8 @@ describe('SiTreeViewComponent', () => {
         })
       );
       fixture.detectChanges();
+      await runOnPushChangeDetection(fixture);
+      await fixture.whenStable();
 
       const childItem = Array.from(element.querySelectorAll<HTMLElement>('si-tree-view-item')).at(
         1
@@ -1246,6 +1245,8 @@ describe('SiTreeViewComponent', () => {
         })
       );
       fixture.detectChanges();
+      await runOnPushChangeDetection(fixture);
+      await fixture.whenStable();
 
       document.activeElement?.closest('si-tree-view-item')?.dispatchEvent(
         new KeyboardEvent('keydown', {
@@ -1254,6 +1255,8 @@ describe('SiTreeViewComponent', () => {
         })
       );
       fixture.detectChanges();
+      await runOnPushChangeDetection(fixture);
+      await fixture.whenStable();
 
       expect(treeViewComponent.treeItemsSelected.emit).toHaveBeenCalledWith([component.items[0]]);
     });
@@ -1348,7 +1351,7 @@ describe('SiTreeViewComponent', () => {
         fixture.detectChanges();
       });
 
-      it('should jump into node on keydown ArrowRight', fakeAsync(() => {
+      it('should jump into node on keydown ArrowRight', async () => {
         const treeViewComponent = component.treeViewComponent();
         spyOn(treeViewComponent.treeItemsSelected, 'emit');
 
@@ -1360,9 +1363,9 @@ describe('SiTreeViewComponent', () => {
             bubbles: true
           })
         );
+        // cannot use jasmine.clock here
+        await new Promise(resolve => setTimeout(resolve, 0));
         fixture.detectChanges();
-
-        tick();
 
         document.activeElement?.dispatchEvent(
           new KeyboardEvent('keydown', {
@@ -1370,14 +1373,16 @@ describe('SiTreeViewComponent', () => {
             bubbles: true
           })
         );
+        // cannot use jasmine.clock here
+        await new Promise(resolve => setTimeout(resolve, 0));
         fixture.detectChanges();
 
         expect(treeViewComponent.treeItemsSelected.emit).toHaveBeenCalledWith([
           component.items[0].children![0]
         ]);
-      }));
+      });
 
-      it('should jump out of node on keydown ArrowLeft', fakeAsync(() => {
+      it('should jump out of node on keydown ArrowLeft', async () => {
         const treeViewComponent = component.treeViewComponent();
         spyOn(treeViewComponent.treeItemsSelected, 'emit');
 
@@ -1388,9 +1393,9 @@ describe('SiTreeViewComponent', () => {
             bubbles: true
           })
         );
+        // cannot use jasmine.clock here
+        await new Promise(resolve => setTimeout(resolve, 0));
         fixture.detectChanges();
-
-        tick();
 
         document.activeElement?.dispatchEvent(
           new KeyboardEvent('keydown', {
@@ -1398,9 +1403,9 @@ describe('SiTreeViewComponent', () => {
             bubbles: true
           })
         );
+        // cannot use jasmine.clock here
+        await new Promise(resolve => setTimeout(resolve, 0));
         fixture.detectChanges();
-
-        tick();
 
         document.activeElement?.closest('si-tree-view-item')?.dispatchEvent(
           new KeyboardEvent('keydown', {
@@ -1408,10 +1413,12 @@ describe('SiTreeViewComponent', () => {
             bubbles: true
           })
         );
+        // cannot use jasmine.clock here
+        await new Promise(resolve => setTimeout(resolve, 0));
         fixture.detectChanges();
 
         expect(treeViewComponent.treeItemsSelected.emit).toHaveBeenCalledWith([component.items[0]]);
-      }));
+      });
     });
   });
 
@@ -1558,13 +1565,12 @@ describe('SiTreeViewComponent', () => {
       component.style = 'display: none';
     });
 
-    it('should not update pageSize when item height is 0', fakeAsync(() => {
+    it('should not update pageSize when item height is 0', () => {
       const oldPageSize = component.treeViewComponent().pageSize();
       fixture.detectChanges();
       const tree = element.querySelector<HTMLElement>('si-tree-view')!;
       tree.style.height = '100px';
-      flush();
       expect(component.treeViewComponent().pageSize()).toBe(oldPageSize);
-    }));
+    });
   });
 });
