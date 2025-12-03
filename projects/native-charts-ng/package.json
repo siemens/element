@@ -18,8 +18,8 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@angular/common": "20",
-    "@angular/core": "20"
+    "@angular/common": "20 - 21",
+    "@angular/core": "20 - 21"
   },
   "exports": {
     "./docs.json": {
