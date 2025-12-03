@@ -11,10 +11,11 @@ import {
   OnInit,
   output,
   OutputEmitterRef,
+  provideZonelessChangeDetection,
   SimpleChange,
   Type
 } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiLoadingSpinnerModule } from '@siemens/element-ng/loading-spinner';
 import { Observable, of } from 'rxjs';
@@ -117,7 +118,8 @@ describe('SiFlexibleDashboardComponent', () => {
       await TestBed.configureTestingModule({
         providers: [
           { provide: SI_WIDGET_STORE, useClass: TestWidgetStorage },
-          { provide: SI_DASHBOARD_CONFIGURATION, useValue: {} }
+          { provide: SI_DASHBOARD_CONFIGURATION, useValue: {} },
+          provideZonelessChangeDetection()
         ],
         imports: [SiFlexibleDashboardComponent],
         schemas: [NO_ERRORS_SCHEMA]
@@ -167,16 +169,19 @@ describe('SiFlexibleDashboardComponent', () => {
       expect(component.primaryEditActions$.value.length).toBe(1);
     });
 
-    it('showWidgetCatalog() should show a widget catalog and add the widget config added to the grid', fakeAsync(() => {
+    it('showWidgetCatalog() should show a widget catalog and add the widget config added to the grid', async () => {
+      jasmine.clock().install();
       fixture.componentRef.setInput('widgetCatalogComponent', SiWidgetCatalogMockComponent);
       fixture.detectChanges();
       component.showWidgetCatalog();
       fixture.detectChanges();
       SiWidgetCatalogMockComponent.staticClosed?.emit({ widgetId: 'widgetId' });
-      tick(200);
+      jasmine.clock().tick(200);
+      await fixture.whenStable();
       expect(widgetConfig).toBeDefined();
       expect(widgetConfig.widgetId).toEqual('widgetId');
-    }));
+      jasmine.clock().uninstall();
+    });
 
     it('addWidgetAction action shall call showWidgetCatalog()', () => {
       const spy = spyOn(component, 'showWidgetCatalog').and.callThrough();

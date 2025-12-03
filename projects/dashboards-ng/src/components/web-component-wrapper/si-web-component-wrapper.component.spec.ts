@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   DeleteConfirmationDialogResult,
@@ -30,7 +30,8 @@ describe('SiWidgetHostComponent', () => {
       imports: [SiWebComponentWrapperComponent],
       providers: [
         { provide: SiActionDialogService, useClass: SiActionDialogMockService },
-        SiGridService
+        SiGridService,
+        provideZonelessChangeDetection()
       ],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();

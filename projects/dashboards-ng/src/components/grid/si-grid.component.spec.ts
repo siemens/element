@@ -2,8 +2,15 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, OnInit, output, OutputEmitterRef, SimpleChange } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  Component,
+  OnInit,
+  output,
+  OutputEmitterRef,
+  provideZonelessChangeDetection,
+  SimpleChange
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
 import { SiLoadingSpinnerModule } from '@siemens/element-ng/loading-spinner';
@@ -50,6 +57,7 @@ describe('SiGridComponent', () => {
       providers: [
         { provide: SiWidgetStorage, useClass: SiDefaultWidgetStorage },
         { provide: SI_DASHBOARD_CONFIGURATION, useValue: {} },
+        provideZonelessChangeDetection(),
         SiActionDialogService
       ]
     })
@@ -109,18 +117,19 @@ describe('SiGridComponent', () => {
       expect(spy).toHaveBeenCalled();
     });
 
-    it('should remove temporary ids of widget config', fakeAsync(() => {
+    it('should remove temporary ids of widget config', async () => {
       component.ngOnChanges({ dashboardId: new SimpleChange(undefined, undefined, true) });
       component.edit();
-      tick();
+      await fixture.whenStable();
+
       const spy = spyOn(widgetStorage, 'save').and.callThrough();
       component.addWidgetInstance({ widgetId: 'id' });
       component.addWidgetInstance({ widgetId: 'id' });
       component.save();
-      tick();
+      await fixture.whenStable();
       expect(component.visibleWidgetInstances$.value.length).toBe(2);
       component.edit();
-      tick();
+      await fixture.whenStable();
       component.removeWidgetInstance(component.visibleWidgetInstances$.value[0].id);
       component.addWidgetInstance({ widgetId: 'id' });
 
@@ -132,12 +141,11 @@ describe('SiGridComponent', () => {
       expect(preSaveWidgets[1].id.startsWith(NEW_WIDGET_PREFIX)).toBeTrue();
 
       component.save();
-      tick();
       const widgets = component.visibleWidgetInstances$.value;
       expect(widgets[0].id.startsWith(NEW_WIDGET_PREFIX)).toBeFalse();
       expect(widgets[1].id.startsWith(NEW_WIDGET_PREFIX)).toBeFalse();
       expect(spy).toHaveBeenCalled();
-    }));
+    });
   });
 
   it('should call edit() on setting editable to true', () => {
@@ -186,7 +194,8 @@ describe('SiGridComponent', () => {
   });
 
   describe('#editWidgetInstance()', () => {
-    it('shall open the editor and update the visible widgets with the edited configuration', fakeAsync(() => {
+    it('shall open the editor and update the visible widgets with the edited configuration', async () => {
+      jasmine.clock().install();
       fixture.componentRef.setInput('widgetCatalog', [TEST_WIDGET]);
       fixture.detectChanges();
       component.addWidgetInstance({ widgetId: TEST_WIDGET.id });
@@ -200,17 +209,19 @@ describe('SiGridComponent', () => {
       component.editWidgetInstance(widgetConfig);
       const editedWidgetConfig: WidgetConfig = { ...widgetConfig, minHeight: 2 };
       SiWidgetEditorDialogMockComponent.staticClosed?.emit(editedWidgetConfig);
-      tick(200);
+      jasmine.clock().tick(200);
+      fixture.detectChanges();
       expect(component.visibleWidgetInstances$.value[0].minHeight).toBe(2);
-    }));
+      jasmine.clock().uninstall();
+    });
 
-    it('shall emit an edit event if #emitWidgetInstanceEditEvents is set to true', fakeAsync(() => {
+    it('shall emit an edit event if #emitWidgetInstanceEditEvents is set to true', async () => {
       fixture.componentRef.setInput('widgetCatalog', [TEST_WIDGET]);
       fixture.detectChanges();
-      tick();
+      await fixture.whenStable();
       component.addWidgetInstance({ widgetId: TEST_WIDGET.id });
       component.save();
-      tick();
+      await fixture.whenStable();
       const widgetConfig = component.visibleWidgetInstances$.value[0];
       fixture.componentRef.setInput(
         'widgetInstanceEditorDialogComponent',
@@ -221,7 +232,7 @@ describe('SiGridComponent', () => {
       const spy = spyOn(component.widgetInstanceEdit, 'emit').and.callThrough();
       component.editWidgetInstance(widgetConfig);
       expect(spy).toHaveBeenCalledWith(widgetConfig);
-    }));
+    });
   });
 
   it('#handleGridEvent() shall update visible widgets and mark grid as modified', (done: DoneFn) => {
@@ -238,16 +249,16 @@ describe('SiGridComponent', () => {
       .triggerEventHandler('gridEvent', { event: { type: 'added' } });
   });
 
-  it('should load widgets when dashboardId changes', fakeAsync(() => {
+  it('should load widgets when dashboardId changes', async () => {
     const widgetConfig: WidgetConfig = { id: 'myId', widgetId: 'myWidgetId' };
     const myDashboardId = 'myDashboardId';
     fixture.componentRef.setInput('dashboardId', myDashboardId);
     widgetStorage.save([widgetConfig], [], myDashboardId);
 
     component.ngOnChanges({ dashboardId: new SimpleChange(undefined, myDashboardId, false) });
-    tick();
+    await fixture.whenStable();
 
     expect(component.visibleWidgetInstances$.value[0].id).toBe('myId');
     expect(component.visibleWidgetInstances$.value[0].widgetId).toBe('myWidgetId');
-  }));
+  });
 });
