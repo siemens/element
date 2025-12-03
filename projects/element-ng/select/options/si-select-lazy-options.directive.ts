@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Directive, input, OnDestroy, signal } from '@angular/core';
+import { ChangeDetectorRef, Directive, inject, input, OnDestroy, signal } from '@angular/core';
 import { of, Subject, switchMap } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 
@@ -38,6 +38,7 @@ export class SiSelectLazyOptionsDirective<T> implements SiSelectOptionsStrategy<
 
   private valueChange = new Subject<void>();
   private filterChange = new Subject<string | undefined>();
+  private cdRef = inject(ChangeDetectorRef);
 
   constructor() {
     this.filterChange
@@ -59,6 +60,7 @@ export class SiSelectLazyOptionsDirective<T> implements SiSelectOptionsStrategy<
       .subscribe(rows => {
         this.loading.set(false);
         this.rows.set(rows);
+        this.cdRef.markForCheck();
       });
   }
 
@@ -95,7 +97,10 @@ export class SiSelectLazyOptionsDirective<T> implements SiSelectOptionsStrategy<
       optionSource
         .getOptionsForValues(value)
         .pipe(takeUntil(this.valueChange))
-        .subscribe(selectedOptions => this.selectedRows.set(selectedOptions));
+        .subscribe(selectedOptions => {
+          this.selectedRows.set(selectedOptions);
+          this.cdRef.markForCheck();
+        });
     }
   }
 

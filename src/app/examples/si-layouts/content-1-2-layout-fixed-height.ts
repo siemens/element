@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SiChartCircleComponent } from '@siemens/charts-ng';
 import {
@@ -85,6 +85,7 @@ export class SampleComponent {
   isLoading = 0;
 
   private dataService = inject(DataService);
+  private cdRef = inject(ChangeDetectorRef);
 
   onSelect(event: CorporateEmployee[]): void {
     this.logEvent(event);
@@ -117,6 +118,7 @@ export class SampleComponent {
       this.rows = rows;
 
       this.isLoading--;
+      this.cdRef.markForCheck();
     });
   }
 }

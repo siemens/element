@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, OnDestroy, viewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy, viewChild } from '@angular/core';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 import { DatatableComponent, NgxDatatableModule } from '@siemens/ngx-datatable';
@@ -29,6 +29,7 @@ export class SampleComponent implements OnDestroy {
 
   private subscription?: Subscription;
   private dataService = inject(DataService);
+  private cdRef = inject(ChangeDetectorRef);
 
   constructor() {
     this.fetchData({ offset: 0, pageSize: 50 });
@@ -53,6 +54,7 @@ export class SampleComponent implements OnDestroy {
     this.subscription = this.dataService.getResults(pageRequest).subscribe(data => {
       this.rows = data.data;
       this.isLoading = false;
+      this.cdRef.markForCheck();
     });
   }
 

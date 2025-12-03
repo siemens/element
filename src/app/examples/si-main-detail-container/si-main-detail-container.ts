@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CommonModule } from '@angular/common';
-import { Component, inject, viewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, viewChild } from '@angular/core';
 import {
   ContentActionBarMainItem,
   SiContentActionBarComponent
@@ -95,6 +95,7 @@ export class SampleComponent {
     }
   ];
   private readonly table = viewChild.required(DatatableComponent);
+  private cdRef = inject(ChangeDetectorRef);
 
   datatableOnSelect(items: CorporateEmployee[]): void {
     this.selectedEntities = [...items];
@@ -153,6 +154,7 @@ export class SampleComponent {
       this.rows = rows;
 
       this.isLoading--;
+      this.cdRef.markForCheck();
     });
   }
 

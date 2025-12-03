@@ -5,6 +5,7 @@
 import { ComponentPortal, DomPortalOutlet } from '@angular/cdk/portal';
 import {
   booleanAttribute,
+  ChangeDetectorRef,
   computed,
   Directive,
   ElementRef,
@@ -73,6 +74,7 @@ export class SiLoadingSpinnerDirective implements OnInit, OnChanges, OnDestroy {
       ]
     })
   );
+  private cdRef = inject(ChangeDetectorRef);
 
   // this makes sure the spinner only displays with a delay of 500ms and stays for 500ms so
   // that it doesn't flicker
@@ -104,6 +106,7 @@ export class SiLoadingSpinnerDirective implements OnInit, OnChanges, OnDestroy {
       } else if (this.compPortal.isAttached) {
         this.compPortal.detach();
       }
+      this.cdRef.markForCheck();
     });
   }
 
