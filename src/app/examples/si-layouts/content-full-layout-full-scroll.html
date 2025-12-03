@@ -55,7 +55,7 @@
       columnMode="force"
       selectionType="single"
       [cssClasses]="tableConfig.cssClasses"
-      [rows]="rows"
+      [rows]="tableData.value().data"
       [columns]="[
         { name: 'Name', sortable: false },
         { name: 'Role', sortable: false },
@@ -65,12 +65,11 @@
       [footerHeight]="tableConfig.footerHeight"
       [rowHeight]="tableConfig.rowHeightSmall"
       [externalPaging]="true"
-      [count]="page.totalElements"
-      [offset]="page.pageNumber"
-      [limit]="page.size"
-      [ghostLoadingIndicator]="isLoading > 0"
+      [count]="tableData.value().page.size"
+      [offset]="tableData.value().page.pageNumber"
+      [ghostLoadingIndicator]="tableData.isLoading()"
       (page)="setPage($event)"
-      (siResizeObserver)="updateTableData($event)"
+      (siResizeObserver)="table.recalculate()"
     >
       <ngx-datatable-footer>
         <ng-template ngx-datatable-footer-template>
