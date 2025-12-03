@@ -2,7 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { inject, TestBed, waitForAsync } from '@angular/core/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { inject, TestBed } from '@angular/core/testing';
 
 import { SiTreeViewItemHeightService } from './si-tree-view-item-height.service';
 import { SiTreeViewVirtualizationService } from './si-tree-view-virtualization.service';
@@ -90,11 +91,16 @@ export const main = (): void => {
   ];
 
   describe('ListVirtualizationService', () => {
-    beforeEach(waitForAsync(() => {
-      TestBed.configureTestingModule({
-        providers: [SiTreeViewService, SiTreeViewItemHeightService, SiTreeViewVirtualizationService]
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
+        providers: [
+          SiTreeViewService,
+          SiTreeViewItemHeightService,
+          SiTreeViewVirtualizationService,
+          provideZonelessChangeDetection()
+        ]
       }).compileComponents();
-    }));
+    });
 
     it('should create ListVirtualizationService', inject(
       [SiTreeViewVirtualizationService, SiTreeViewService, SiTreeViewItemHeightService],

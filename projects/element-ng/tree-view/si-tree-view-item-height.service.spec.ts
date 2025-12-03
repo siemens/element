@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { provideZonelessChangeDetection } from '@angular/core';
 import { inject, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SiTreeViewItemHeightService } from './si-tree-view-item-height.service';
@@ -11,7 +12,11 @@ export const main = (): void => {
   describe('SiTreeViewItemHeightService', () => {
     beforeEach(waitForAsync(() => {
       TestBed.configureTestingModule({
-        providers: [SiTreeViewService, SiTreeViewItemHeightService]
+        providers: [
+          SiTreeViewService,
+          SiTreeViewItemHeightService,
+          provideZonelessChangeDetection()
+        ]
       }).compileComponents();
     }));
 
