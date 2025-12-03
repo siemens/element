@@ -4,8 +4,8 @@
  */
 import { HarnessLoader, parallel } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SelectOption, SelectOptionLegacy } from '@siemens/element-ng/select';
 import { SiSelectHarness } from '@siemens/element-ng/select/testing';
@@ -96,11 +96,12 @@ describe('SiThresholdComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [TestHostComponent]
+      imports: [TestHostComponent],
+      providers: [provideZonelessChangeDetection()]
     })
   );
 
-  beforeEach(fakeAsync(() => {
+  beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
     loader = TestbedHarnessEnvironment.loader(fixture);
     component = fixture.componentInstance;
@@ -115,9 +116,7 @@ describe('SiThresholdComponent', () => {
       { value: 30, optionValue: 'poor' }
     ];
     fixture.detectChanges();
-    tick();
-    fixture.detectChanges();
-  }));
+  });
 
   it('should create component', () => {
     expect(component).toBeTruthy();
@@ -167,17 +166,17 @@ describe('SiThresholdComponent', () => {
     expect(element.querySelectorAll<HTMLElement>('.ths-step').length).toBe(4);
   });
 
-  it('should prevent to add/remove steps when disabled', () => {
+  it('should prevent to add/remove steps when disabled', async () => {
     component.canAddRemoveSteps = false;
-    runOnPushChangeDetection(fixture);
+    await runOnPushChangeDetection(fixture);
 
     expect(element.querySelectorAll<HTMLElement>('[aria-label="Add step"]').length).toBe(0);
     expect(element.querySelectorAll<HTMLElement>('[aria-label="Delete step"]').length).toBe(0);
   });
 
-  it('should limit max. number of steps', () => {
+  it('should limit max. number of steps', async () => {
     component.maxSteps = 5;
-    runOnPushChangeDetection(fixture);
+    await runOnPushChangeDetection(fixture);
     const add2 = element.querySelectorAll<HTMLButtonElement>('[aria-label="Add step"]')[1];
     expect(add2.disabled).toBeTruthy();
   });
@@ -212,9 +211,9 @@ describe('SiThresholdComponent', () => {
     ]);
   });
 
-  it('should change threshold options to readonly', () => {
+  it('should change threshold options to readonly', async () => {
     component.readonlyConditions = true;
-    runOnPushChangeDetection(fixture);
+    await runOnPushChangeDetection(fixture);
     const readonlyOptions = fixture.debugElement.queryAll(By.css('si-readonly-threshold-option'));
     expect(readonlyOptions).toHaveSize(component.thresholdSteps.length);
     component.thresholdSteps.forEach((step, index) => {
@@ -227,14 +226,14 @@ describe('SiThresholdComponent', () => {
     });
   });
 
-  it('should still support legacy options', () => {
+  it('should still support legacy options', async () => {
     component.options = [
       { title: 'Good', id: 'good' },
       { title: 'Average', id: 'average' },
       { title: 'Poor', id: 'poor' }
     ];
     component.readonly = true;
-    runOnPushChangeDetection(fixture);
+    await runOnPushChangeDetection(fixture);
     const readonlyOptions = fixture.debugElement
       .queryAll(By.css('si-readonly-threshold-option span'))
       .map(option => option.nativeElement.innerText);

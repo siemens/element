@@ -3,15 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkDragDrop, CdkDropList, DragDropModule } from '@angular/cdk/drag-drop';
-import { ChangeDetectionStrategy, Component, DebugElement, viewChild } from '@angular/core';
 import {
-  ComponentFixture,
-  discardPeriodicTasks,
-  fakeAsync,
-  flush,
-  TestBed,
-  tick
-} from '@angular/core/testing';
+  ChangeDetectionStrategy,
+  Component,
+  DebugElement,
+  provideZonelessChangeDetection,
+  viewChild
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 import {
@@ -128,7 +127,8 @@ describe('SiTreeViewComponentWithDragDrop', () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-      imports: [SiTreeViewModule, DragDropModule, WrapperComponent]
+      imports: [SiTreeViewModule, DragDropModule, WrapperComponent],
+      providers: [provideZonelessChangeDetection()]
     });
   });
 
@@ -153,9 +153,9 @@ describe('SiTreeViewComponentWithDragDrop', () => {
         .nativeElement.textContent
     ).toBe('Company4');
   });
-  it('moves tree items within tree', fakeAsync(() => {
+  it('moves tree items within tree', async () => {
     fixture.detectChanges();
-    runOnPushChangeDetection(fixture);
+    await runOnPushChangeDetection(fixture);
     expect(fixture.componentInstance.items[0].label).toBe('Company1');
     debugElement.query(By.css('si-tree-view')).triggerEventHandler('cdkDropListDropped', {
       currentIndex: 1,
@@ -165,13 +165,11 @@ describe('SiTreeViewComponentWithDragDrop', () => {
     });
     fixture.detectChanges();
     expect(fixture.componentInstance.items[0].label).toBe('Company2');
-    flush();
-    discardPeriodicTasks();
-  }));
+  });
 
-  it('does not move tree item if current and previous index are same', fakeAsync(() => {
+  it('does not move tree item if current and previous index are same', async () => {
     fixture.detectChanges();
-    runOnPushChangeDetection(fixture);
+    await runOnPushChangeDetection(fixture);
     expect(fixture.componentInstance.items[0].label).toBe('Company1');
     debugElement.query(By.css('si-tree-view')).triggerEventHandler('cdkDropListDropped', {
       currentIndex: 0,
@@ -181,13 +179,11 @@ describe('SiTreeViewComponentWithDragDrop', () => {
     });
     fixture.detectChanges();
     expect(fixture.componentInstance.items[0].label).toBe('Company1');
-    flush();
-    discardPeriodicTasks();
-  }));
+  });
 
-  it('moves tree item from one tree to another and removes from source tree', fakeAsync(() => {
+  it('moves tree item from one tree to another and removes from source tree', async () => {
     fixture.detectChanges();
-    runOnPushChangeDetection(fixture);
+    await runOnPushChangeDetection(fixture);
     expect(fixture.componentInstance.items[0].label).toBe('Company1');
     debugElement.query(By.css('si-tree-view')).triggerEventHandler('cdkDropListDropped', {
       currentIndex: 2,
@@ -197,9 +193,7 @@ describe('SiTreeViewComponentWithDragDrop', () => {
     });
     fixture.detectChanges();
     expect(fixture.componentInstance.items[0].label).toBe('Company2');
-    flush();
-    discardPeriodicTasks();
-  }));
+  });
 
   it('renders the updated tree when item is modified', () => {
     fixture.detectChanges();
@@ -255,10 +249,9 @@ describe('SiTreeViewComponentWithDragDrop', () => {
     expect(fixture.componentInstance.items).toEqual(treeItems);
   });
 
-  it('should update index of tree items when item is moved', fakeAsync(() => {
+  it('should update index of tree items when item is moved', async () => {
+    await fixture.whenStable();
     fixture.detectChanges();
-    tick();
-    runOnPushChangeDetection(fixture);
     expect(
       debugElement.query(By.css('si-tree-view-item .si-tree-view-item-object-data div'))
         .nativeElement.textContent
@@ -277,7 +270,5 @@ describe('SiTreeViewComponentWithDragDrop', () => {
         .nativeElement.textContent
     ).toBe('Company2');
     expect(debugElement.query(By.css('si-tree-view-item')).nativeElement.tabIndex).toBe(0);
-    flush();
-    discardPeriodicTasks();
-  }));
+  });
 });

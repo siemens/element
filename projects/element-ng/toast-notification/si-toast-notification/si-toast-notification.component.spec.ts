@@ -2,8 +2,13 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  provideZonelessChangeDetection,
+  viewChild
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { STATUS_ICON } from '@siemens/element-ng/common';
 import { Subject } from 'rxjs';
@@ -31,11 +36,12 @@ describe('SiToastNotificationComponent', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let element: HTMLElement;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, SiToastNotificationComponent, TestHostComponent]
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [NoopAnimationsModule, SiToastNotificationComponent, TestHostComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);

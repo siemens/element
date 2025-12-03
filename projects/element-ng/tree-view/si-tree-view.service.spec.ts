@@ -2,17 +2,18 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { inject, TestBed, waitForAsync } from '@angular/core/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { inject, TestBed } from '@angular/core/testing';
 
 import { SiTreeViewService } from './si-tree-view.service';
 
 export const main = (): void => {
   describe('SiTreeViewService', () => {
-    beforeEach(waitForAsync(() => {
-      TestBed.configureTestingModule({
-        providers: [SiTreeViewService]
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
+        providers: [SiTreeViewService, provideZonelessChangeDetection()]
       }).compileComponents();
-    }));
+    });
 
     it('should create SiTreeViewService', inject(
       [SiTreeViewService],

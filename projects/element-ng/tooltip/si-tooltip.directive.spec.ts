@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from '@angular/core/testing';
+import { Component, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiTooltipModule } from './si-tooltip.module';
 
@@ -28,36 +28,41 @@ describe('SiTooltipDirective', () => {
       triggers: '' | 'focus' = '';
     }
 
-    beforeEach(waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [SiTooltipModule, TestHostComponent]
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
+        imports: [SiTooltipModule, TestHostComponent],
+        providers: [provideZonelessChangeDetection()]
       }).compileComponents();
-    }));
+    });
 
     beforeEach(() => {
+      jasmine.clock().install();
       fixture = TestBed.createComponent(TestHostComponent);
       component = fixture.componentInstance;
       button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
       fixture.detectChanges();
     });
 
-    it('should open on focus', fakeAsync(() => {
-      fixture.detectChanges();
+    afterEach(() => {
+      jasmine.clock().uninstall();
+    });
 
+    it('should open on focus', () => {
       button.dispatchEvent(new Event('focus'));
-      flush();
+      jasmine.clock().tick(500);
 
       expect(document.querySelector('.tooltip')).toBeTruthy();
       expect(document.querySelector('.tooltip')?.innerHTML).toContain('test tooltip');
 
       button.dispatchEvent(new Event('focusout'));
-      flush();
+      jasmine.clock().tick(500);
 
       expect(document.querySelector('.tooltip')).toBeFalsy();
-    }));
+    });
 
     it('should not show tooltip when disabled', () => {
       component.isDisabled = true;
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
       button.dispatchEvent(new Event('focus'));
@@ -74,6 +79,7 @@ describe('SiTooltipDirective', () => {
 
     it('should not show tooltip on mouse over with focus trigger', () => {
       component.triggers = 'focus';
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
       ['mouseenter', 'mouseleave'].forEach(e => {
@@ -98,35 +104,45 @@ describe('SiTooltipDirective', () => {
       tooltipContext = {};
     }
 
-    beforeEach(waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [TestHostComponent]
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
+        imports: [TestHostComponent],
+        providers: [provideZonelessChangeDetection()]
       }).compileComponents();
-    }));
+    });
 
     beforeEach(() => {
+      jasmine.clock().install();
       fixture = TestBed.createComponent(TestHostComponent);
       button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
       fixture.detectChanges();
     });
 
+    afterEach(() => {
+      jasmine.clock().uninstall();
+    });
+
     it('should render the template', async () => {
-      fixture.detectChanges();
       button.dispatchEvent(new Event('focus'));
+      jasmine.clock().tick(500);
       await fixture.whenStable();
       expect(document.querySelector('.tooltip')?.innerHTML).toContain('Template content');
       button.dispatchEvent(new Event('focusout'));
+      jasmine.clock().tick(500);
       await fixture.whenStable();
       expect(document.querySelector('.tooltip')).toBeFalsy();
     });
 
     it('should render the template with context', async () => {
       fixture.componentInstance.tooltipContext = { tooltip: 'test' };
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       button.dispatchEvent(new Event('focus'));
+      jasmine.clock().tick(500);
       await fixture.whenStable();
       expect(document.querySelector('.tooltip')?.innerHTML).toContain('Template content test');
       button.dispatchEvent(new Event('focusout'));
+      jasmine.clock().tick(500);
       await fixture.whenStable();
       expect(document.querySelector('.tooltip')).toBeFalsy();
     });

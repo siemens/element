@@ -2,7 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 
 import { SiToastNotificationService } from './si-toast-notification.service';
 
@@ -11,7 +12,7 @@ describe('SiToastNotificationService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [SiToastNotificationService]
+      providers: [SiToastNotificationService, provideZonelessChangeDetection()]
     });
   });
 
@@ -50,7 +51,7 @@ describe('SiToastNotificationService', () => {
     expect(toast.hidden?.next).toHaveBeenCalled();
   });
 
-  it('should queue a maximum of three toasts', fakeAsync(() => {
+  it('should queue a maximum of three toasts', () => {
     service.queueToastNotification('success', 'Toast 1', 'Message 1');
     service.queueToastNotification('success', 'Toast 2', 'Message 2');
     service.queueToastNotification('success', 'Toast 3', 'Message 3');
@@ -58,24 +59,27 @@ describe('SiToastNotificationService', () => {
 
     expect(service.activeToasts.length).toBe(3);
     expect(service.activeToasts[0].message).toBe('Message 2'); // first one is dropped
-    flush();
-  }));
+  });
 
-  it('automatically closes toast after a while', fakeAsync(() => {
+  it('automatically closes toast after a while', () => {
+    jasmine.clock().install();
     service.queueToastNotification('success', 'Toast 1', 'Message 1');
     expect(service.activeToasts.length).toBe(1);
 
-    tick(6000);
+    jasmine.clock().tick(6000);
 
     expect(service.activeToasts.length).toBe(0);
-  }));
+    jasmine.clock().uninstall();
+  });
 
-  it('should respect the disableAutoClose flag', fakeAsync(() => {
+  it('should respect the disableAutoClose flag', () => {
+    jasmine.clock().install();
     service.queueToastNotification('success', 'Toast 1', 'Message 1', true);
     expect(service.activeToasts.length).toBe(1);
 
-    tick(6000);
+    jasmine.clock().tick(6000);
 
     expect(service.activeToasts.length).toBe(1);
-  }));
+    jasmine.clock().uninstall();
+  });
 });
