@@ -3,8 +3,15 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkPortal, PortalModule } from '@angular/cdk/portal';
-import { ChangeDetectionStrategy, Component, signal, SimpleChange, viewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  provideZonelessChangeDetection,
+  signal,
+  SimpleChange,
+  viewChild
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Subject } from 'rxjs';
 
 import { ElementDimensions, ResizeObserverService } from '../resize-observer';
@@ -46,21 +53,22 @@ describe('SiSidePanelComponent', () => {
   let service: SiSidePanelService;
   const resizeObserver = new Subject<ElementDimensions>();
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(async () => {
     const resizeSpy = jasmine.createSpyObj('ResizeObserverService', ['observe']);
     resizeSpy.observe.and.callFake((e: Element, t: number, i: boolean, im?: boolean) => {
       return resizeObserver;
     });
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       imports: [SiSidePanelModule, PortalModule, TestHostComponent],
       providers: [
         {
           provide: ResizeObserverService,
           useValue: resizeSpy
-        }
+        },
+        provideZonelessChangeDetection()
       ]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
@@ -70,17 +78,22 @@ describe('SiSidePanelComponent', () => {
     service = TestBed.inject(SiSidePanelService);
   });
 
+  afterAll(() => {
+    jasmine.clock().uninstall();
+  });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should collapse', fakeAsync(() => {
+  it('should collapse', () => {
+    jasmine.clock().install();
     component.mode = 'scroll';
     fixture.detectChanges();
 
     service.open();
 
-    tick();
+    jasmine.clock().tick(0);
     fixture.detectChanges();
 
     const sidePanelElement = element.querySelector('si-side-panel');
@@ -88,11 +101,11 @@ describe('SiSidePanelComponent', () => {
 
     service.close();
 
-    tick(500);
+    jasmine.clock().tick(500);
     fixture.detectChanges();
 
     expect(sidePanelElement!.classList).toContain('rpanel-collapsed');
-  }));
+  });
 
   it('resize should not trigger contentResize output', () => {
     const spy = spyOn(component, 'contentResize').and.callThrough();

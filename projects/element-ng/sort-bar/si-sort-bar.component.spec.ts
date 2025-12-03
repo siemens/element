@@ -3,7 +3,12 @@
  * SPDX-License-Identifier: MIT
  */
 import { HttpParams } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  provideZonelessChangeDetection,
+  viewChild
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiSortBarComponent } from './si-sort-bar.component';
@@ -47,7 +52,8 @@ describe('SiSortBarComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [TestHostComponent]
+      imports: [TestHostComponent],
+      providers: [provideZonelessChangeDetection()]
     })
   );
 

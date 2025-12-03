@@ -4,8 +4,8 @@
  */
 import { CdkPortal, PortalModule } from '@angular/cdk/portal';
 import { CommonModule } from '@angular/common';
-import { Component, viewChild } from '@angular/core';
-import { fakeAsync, TestBed } from '@angular/core/testing';
+import { Component, provideZonelessChangeDetection, viewChild } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 
 import { SiSidePanelService } from './si-side-panel.service';
 
@@ -26,7 +26,7 @@ describe('SiSidePanelService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [CommonModule, PortalModule, MockComponent],
-      providers: [SiSidePanelService]
+      providers: [SiSidePanelService, provideZonelessChangeDetection()]
     }).compileComponents();
   });
 
@@ -39,11 +39,11 @@ describe('SiSidePanelService', () => {
     service.content$.subscribe(content => expect(content).toBeUndefined());
   });
 
-  it('should toggle content', fakeAsync(() => {
+  it('should toggle content', () => {
     service.open();
     expect(service.isOpen()).toBeTrue();
 
     service.toggle();
     expect(service.isOpen()).toBeFalse();
-  }));
+  });
 });

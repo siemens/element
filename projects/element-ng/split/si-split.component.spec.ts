@@ -7,10 +7,11 @@ import {
   Component,
   ElementRef,
   Injectable,
+  provideZonelessChangeDetection,
   TemplateRef,
   viewChild
 } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideSiUiState, SI_UI_STATE_SERVICE, UIStateStorage } from '@siemens/element-ng/common';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 
@@ -347,27 +348,29 @@ describe('SiSplitComponent', () => {
   };
 
   const setup = (useStateService = false): void => {
-    const providers = useStateService ? [provideSiUiState({ store: SynchronousMockStore })] : [];
-    beforeEach(waitForAsync(() => {
-      TestBed.configureTestingModule({
+    const providers = useStateService
+      ? [provideSiUiState({ store: SynchronousMockStore }), provideZonelessChangeDetection()]
+      : [provideZonelessChangeDetection()];
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
         imports: [SiSplitModule, WrapperComponent],
         providers
       }).compileComponents();
-    }));
+    });
   };
 
   describe('using ui state service', () => {
     describe('without SiUIStateService', () => {
       setup();
 
-      beforeEach(waitForAsync(() => {
+      beforeEach(() => {
         fixture = TestBed.createComponent(WrapperComponent);
         fixture.detectChanges();
         wrapperComponent = fixture.componentInstance;
         element = fixture.nativeElement;
         wrapperComponent.split().sizes = [20, 60, 20];
         fixture.detectChanges();
-      }));
+      });
 
       it('should create and set inputs', () => {
         expect(wrapperComponent).toBeTruthy();
@@ -387,14 +390,14 @@ describe('SiSplitComponent', () => {
       setup(true);
 
       describe('but no persisted state', () => {
-        beforeEach(waitForAsync(() => {
+        beforeEach(() => {
           fixture = TestBed.createComponent(WrapperComponent);
           fixture.detectChanges();
           wrapperComponent = fixture.componentInstance;
           element = fixture.nativeElement;
           wrapperComponent.split().sizes = [20, 60, 20];
           fixture.detectChanges();
-        }));
+        });
 
         it('should create with ui state service', () => {
           expect(wrapperComponent).toBeTruthy();
@@ -410,6 +413,8 @@ describe('SiSplitComponent', () => {
         });
 
         it('should save ui state ', async () => {
+          // cannot use jasmine.clock here
+          await new Promise(resolve => setTimeout(resolve));
           wrapperComponent.splitPart().toggleCollapse();
           const uiStateMock =
             await TestBed.inject(SI_UI_STATE_SERVICE).load<Record<string, any>>('split-test');
@@ -439,6 +444,8 @@ describe('SiSplitComponent', () => {
         });
 
         it('should load and configure split parts', async () => {
+          // cannot use jasmine.clock here
+          await new Promise(resolve => setTimeout(resolve));
           await fixture.whenStable();
           expect(wrapperComponent.measureSize1()).toBeCloseTo(200, 0);
           expect(wrapperComponent.measureSize2()).toBeCloseTo(200, 0);
@@ -451,7 +458,7 @@ describe('SiSplitComponent', () => {
 
   describe('independent of ui state service', () => {
     setup();
-    beforeEach(waitForAsync(() => {
+    beforeEach(() => {
       fixture = TestBed.createComponent(WrapperComponent);
       wrapperComponent = fixture.componentInstance;
       component = wrapperComponent.splitElement();
@@ -464,7 +471,7 @@ describe('SiSplitComponent', () => {
       partElement3 = partComponent3.nativeElement;
       getSplitGuttersElements = index =>
         element.querySelectorAll<HTMLElement>('.si-split-gutter').item(index)!;
-    }));
+    });
 
     describe('in horizontal orientation', () => {
       it('should display with set sizes and gutter size', async () => {
