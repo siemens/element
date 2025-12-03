@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, viewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from '@angular/core/testing';
+import { Component, provideZonelessChangeDetection, viewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiPopoverLegacyDirective } from './si-popover-legacy.directive';
 
@@ -23,33 +23,34 @@ describe('SiPopoverDirective', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let wrapperComponent: TestHostComponent;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent]
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [TestHostComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
     wrapperComponent = fixture.componentInstance;
   });
 
-  it('should open on click', fakeAsync(() => {
+  it('should open on click', async () => {
     fixture.detectChanges();
 
     fixture.nativeElement.querySelector('button').click();
-    flush();
+    await fixture.whenStable();
 
     expect(document.querySelector('.popover')).toBeTruthy();
     expect(document.querySelector('.popover')?.innerHTML).toContain('test popover content');
 
     fixture.nativeElement.querySelector('button').click();
-    flush();
+    await fixture.whenStable();
 
     expect(document.querySelector('.popover')).toBeFalsy();
-  }));
+  });
 
-  it('should close when move focus outside', fakeAsync(() => {
+  it('should close when move focus outside', async () => {
     wrapperComponent.triggers = 'focus';
     fixture.detectChanges();
 
@@ -57,6 +58,7 @@ describe('SiPopoverDirective', () => {
     const focusEvent = new Event('focus', { bubbles: true });
     button.dispatchEvent(focusEvent);
 
+    await fixture.whenStable();
     expect(document.querySelector('.popover')).toBeTruthy();
     expect(document.querySelector('.popover')?.innerHTML).toContain('test popover content');
 
@@ -65,8 +67,7 @@ describe('SiPopoverDirective', () => {
 
     fixture.detectChanges();
     expect(document.querySelector('.popover')).toBeFalsy();
-    flush();
-  }));
+  });
 
   it('should not emit hidden event if popover overlay is closed', () => {
     const hiddenSpy = spyOn(wrapperComponent.popoverOverlay()!.hidden, 'emit').and.callThrough();

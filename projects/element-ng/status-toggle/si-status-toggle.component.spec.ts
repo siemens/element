@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, viewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { Component, provideZonelessChangeDetection, viewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { SiStatusToggleComponent } from './si-status-toggle.component';
@@ -115,7 +115,8 @@ describe('SiStatusToggleComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HostComponent, FormHostComponent]
+      imports: [HostComponent, FormHostComponent],
+      providers: [provideZonelessChangeDetection()]
     });
   });
 
@@ -149,32 +150,26 @@ describe('SiStatusToggleComponent', () => {
     });
 
     if ('TouchEvent' in window) {
-      it('should emit clicked button value with touch', fakeAsync(() => {
+      it('should emit clicked button value with touch', () => {
         fixture.detectChanges();
-        tick();
 
         spyOn(component.toggle().itemClick, 'emit');
 
         touchClick(fixture, element.querySelectorAll<HTMLElement>('.status-toggle-item')[1], true);
-        tick();
-
         expect(component.toggle().value()).toEqual('B');
         expect(component.toggle().itemClick.emit).toHaveBeenCalledWith('B');
-      }));
+      });
     }
 
-    it('should emit clicked button value with mouse', fakeAsync(() => {
+    it('should emit clicked button value with mouse', () => {
       fixture.detectChanges();
-      tick();
 
       spyOn(component.toggle().itemClick, 'emit');
 
       touchClick(fixture, element.querySelectorAll<HTMLElement>('.status-toggle-item')[1], false);
-      tick();
-
       expect(component.toggle().value()).toEqual('B');
       expect(component.toggle().itemClick.emit).toHaveBeenCalledWith('B');
-    }));
+    });
   });
 
   describe('as form control', () => {
@@ -192,14 +187,13 @@ describe('SiStatusToggleComponent', () => {
       expect(component.toggle().value()).toBe('A');
     });
 
-    it('updates the value in the form', fakeAsync(() => {
+    it('updates the value in the form', () => {
       fixture.detectChanges();
 
       touchClick(fixture, element.querySelectorAll<HTMLElement>('.status-toggle-item')[1], false);
-      tick();
 
       expect(component.formControl.value).toBe('B');
-    }));
+    });
 
     it('sets the disabled state', () => {
       component.formControl.disable();

@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, viewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from '@angular/core/testing';
+import { Component, provideZonelessChangeDetection, viewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiPopoverDirective } from './si-popover.directive';
 
@@ -39,22 +39,23 @@ describe('SiPopoverNextDirective', () => {
   let fixture: ComponentFixture<HostComponent>;
   let wrapperComponent: HostComponent;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [HostComponent, CustomTemplateHostComponent]
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [HostComponent, CustomTemplateHostComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HostComponent);
     wrapperComponent = fixture.componentInstance;
   });
 
-  it('should open/close on click', fakeAsync(() => {
+  it('should open/close on click', async () => {
     fixture.detectChanges();
 
     fixture.nativeElement.querySelector('button').click();
-    flush();
+    await fixture.whenStable();
 
     const popover = document.querySelector('.popover')!;
     expect(popover).toBeTruthy();
@@ -62,10 +63,10 @@ describe('SiPopoverNextDirective', () => {
 
     // Closes on button click
     fixture.nativeElement.querySelector('button').click();
-    flush();
+    await fixture.whenStable();
 
     expect(document.querySelector('.popover')).toBeFalsy();
-  }));
+  });
 
   it('should not emit hidden event if popover overlay is closed', () => {
     const hiddenSpy = spyOn(
@@ -76,84 +77,82 @@ describe('SiPopoverNextDirective', () => {
     expect(hiddenSpy).not.toHaveBeenCalled();
   });
 
-  it('should close on ESC press', fakeAsync(() => {
+  it('should close on ESC press', async () => {
     fixture.detectChanges();
 
     fixture.nativeElement.querySelector('button').click();
-    flush();
-
+    await fixture.whenStable();
     const popover = document.querySelector('.popover')!;
     expect(popover).toBeTruthy();
     expect(popover.innerHTML).toContain('test popover content');
 
     popover.dispatchEvent(generateKeyEvent('Escape'));
-    flush();
+    await fixture.whenStable();
 
     expect(document.querySelector('.popover')).toBeFalsy();
-  }));
+  });
 
-  it('should close on outside click', fakeAsync(() => {
+  it('should close on outside click', async () => {
     fixture.detectChanges();
 
     fixture.nativeElement.querySelector('button').click();
-    flush();
-
+    await fixture.whenStable();
     const popover = document.querySelector('.popover')!;
     expect(popover).toBeTruthy();
     expect(popover.innerHTML).toContain('test popover content');
 
     document.body.click();
-    flush();
+    await fixture.whenStable();
 
     expect(document.querySelector('.popover')).toBeFalsy();
-  }));
+  });
 
-  it('should not close if click starts on the popover', fakeAsync(() => {
+  it('should not close if click starts on the popover', async () => {
     fixture.detectChanges();
 
     fixture.nativeElement.querySelector('button').click();
-    flush();
-
+    await fixture.whenStable();
     const popover = document.querySelector('.popover')!;
     expect(popover).toBeTruthy();
     expect(popover.innerHTML).toContain('test popover content');
 
     popover.dispatchEvent(new MouseEvent('pointerdown', { bubbles: true, cancelable: true }));
     document.body.dispatchEvent(new MouseEvent('pointerup', { bubbles: true, cancelable: true }));
-    flush();
+    await fixture.whenStable();
 
     expect(document.querySelector('.popover')).toBeTruthy();
-  }));
+  });
 
-  it('should not close if click ends on the popover', fakeAsync(() => {
+  it('should not close if click ends on the popover', async () => {
     fixture.detectChanges();
 
     fixture.nativeElement.querySelector('button').click();
-    flush();
-
+    await fixture.whenStable();
     const popover = document.querySelector('.popover')!;
     expect(popover).toBeTruthy();
     expect(popover.innerHTML).toContain('test popover content');
 
     document.body.dispatchEvent(new MouseEvent('pointerdown', { bubbles: true, cancelable: true }));
     popover.dispatchEvent(new MouseEvent('pointerup', { bubbles: true, cancelable: true }));
-    flush();
+    await fixture.whenStable();
 
     expect(document.querySelector('.popover')).toBeTruthy();
-  }));
+  });
 
-  it('should focus on the popover wrapper', fakeAsync(() => {
+  it('should focus on the popover wrapper', async () => {
     fixture.detectChanges();
 
     fixture.nativeElement.querySelector('button').click();
-    flush();
+    await fixture.whenStable();
 
     const popover = document.querySelector('.popover')!;
     expect(popover).toBeTruthy();
     expect(popover.innerHTML).toContain('test popover content');
 
+    await new Promise(r => setTimeout(r, 10)); // wait for focus to settle
+
     expect(document.activeElement).toBe(document.querySelector('.popover'));
-  }));
+  });
 });
 
 describe('with custom template', () => {
@@ -163,15 +162,16 @@ describe('with custom template', () => {
     fixture = TestBed.createComponent(CustomTemplateHostComponent);
   });
 
-  it('should focus on the first interactive element', fakeAsync(() => {
+  it('should focus on the first interactive element', async () => {
     fixture.detectChanges();
 
     fixture.nativeElement.querySelector('button').click();
-    flush();
-
+    await fixture.whenStable();
     const popover = document.querySelector('.popover')!;
     expect(popover).toBeTruthy();
 
+    await new Promise(r => setTimeout(r, 10)); // wait for focus to settle
+
     expect(document.activeElement).toBe(document.querySelector('#input-1'));
-  }));
+  });
 });
