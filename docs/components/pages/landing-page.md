@@ -49,7 +49,7 @@ The user interaction is done in the following 2 steps:
    step based on the account type.
    - Company OpenID is registered (e.g. `@example.com`): The user is forwarded
      to the company OpenID environment (e.g. `ExampleORG`).
-   - User name is registered as personal OpenID: The user is forwarded ot the
+   - User name is registered as personal OpenID: The user is forwarded to the
      registered (fallback) OpenID environment.
    - Role based or LDAP account: The UI shows a password sign-in step.
    - The user can register a new account (optional).
