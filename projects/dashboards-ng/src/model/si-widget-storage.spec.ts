@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { SiDefaultWidgetStorage } from './si-widget-storage';
@@ -11,7 +12,7 @@ describe('SiDefaultWidgetStorage', () => {
 
   beforeEach(() => {
     widgetStorage = TestBed.configureTestingModule({
-      providers: [SiDefaultWidgetStorage]
+      providers: [SiDefaultWidgetStorage, provideZonelessChangeDetection()]
     }).inject(SiDefaultWidgetStorage);
   });
 

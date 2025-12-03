@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { DebugElement } from '@angular/core';
+import { DebugElement, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ModalRef } from '@siemens/element-ng/modal';
@@ -25,7 +25,7 @@ describe('SiWidgetInstanceEditorDialogComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TestingModule, SiWidgetInstanceEditorDialogComponent],
-      providers: [{ provide: ModalRef, useValue: new ModalRef() }]
+      providers: [{ provide: ModalRef, useValue: new ModalRef() }, provideZonelessChangeDetection()]
     }).compileComponents();
   });
 

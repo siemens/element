@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CommonModule } from '@angular/common';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserModule } from '@angular/platform-browser';
 import {
@@ -38,7 +38,8 @@ describe('SiWidgetHostComponent', () => {
       imports: [BrowserModule, CommonModule, TestingModule, SiWidgetHostComponent],
       providers: [
         { provide: SiActionDialogService, useClass: SiActionDialogMockService },
-        SiGridService
+        SiGridService,
+        provideZonelessChangeDetection()
       ],
       schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();

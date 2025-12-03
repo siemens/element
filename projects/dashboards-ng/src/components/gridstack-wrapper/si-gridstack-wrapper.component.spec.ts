@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Component, viewChild } from '@angular/core';
+import { Component, provideZonelessChangeDetection, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
@@ -37,7 +37,7 @@ describe('SiGridstackWrapperComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HostComponent],
-      providers: [SiActionDialogService, SiGridService]
+      providers: [SiActionDialogService, SiGridService, provideZonelessChangeDetection()]
     }).compileComponents();
     gridService = TestBed.inject(SiGridService);
     gridService.widgetCatalog.set([]);
@@ -91,6 +91,7 @@ describe('SiGridstackWrapperComponent', () => {
 
       const gridStackWrapper = host.gridStackWrapper();
       spyOn(gridStackWrapper!, 'mount');
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
       expect(gridStackWrapper!.mount).toHaveBeenCalled();
@@ -100,12 +101,14 @@ describe('SiGridstackWrapperComponent', () => {
     it('should unmount removed grid items', () => {
       host.widgets = [TEST_WIDGET_CONFIG_1];
       spyOn(host.gridStackWrapper()!, 'unmount').and.callThrough();
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
       expect(host.gridStackWrapper()!.unmount).toHaveBeenCalled();
       expect(host.gridStackWrapper()!.unmount).toHaveBeenCalledWith([TEST_WIDGET_CONFIG_0]);
 
       host.widgets = [];
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
       expect(host.gridStackWrapper()!.unmount).toHaveBeenCalled();
