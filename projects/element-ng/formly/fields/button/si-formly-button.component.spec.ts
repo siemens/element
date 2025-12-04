@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormRecord, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -63,7 +63,8 @@ describe('formly button type', () => {
         }),
         SiFormlyButtonComponent,
         FormlyTestComponent
-      ]
+      ],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
   });
 
@@ -229,7 +230,7 @@ describe('formly button type', () => {
       spy = jasmine.createSpy();
     });
 
-    it('should trigger the clickListener function', fakeAsync(() => {
+    it('should trigger the clickListener function', () => {
       component.fields = [
         {
           key: 'btn',
@@ -243,9 +244,9 @@ describe('formly button type', () => {
 
       fixture.debugElement.query(By.css('button')).nativeElement.click();
       expect(spy).toHaveBeenCalled();
-    }));
+    });
 
-    it('should trigger the clickListener function with custom params', fakeAsync(() => {
+    it('should trigger the clickListener function with custom params', () => {
       component.fields = [
         {
           key: 'btn',
@@ -260,9 +261,9 @@ describe('formly button type', () => {
 
       fixture.debugElement.query(By.css('button')).nativeElement.click();
       expect(spy).toHaveBeenCalledWith('foo', 42);
-    }));
+    });
 
-    it('should trigger the clickListener function by expression', fakeAsync(() => {
+    it('should trigger the clickListener function by expression', () => {
       component.options = {
         formState: {
           click: () => spy()
@@ -281,9 +282,9 @@ describe('formly button type', () => {
 
       fixture.debugElement.query(By.css('button')).nativeElement.click();
       expect(spy).toHaveBeenCalled();
-    }));
+    });
 
-    it('should trigger the clickListener function with custom params', fakeAsync(() => {
+    it('should trigger the clickListener function with custom params', () => {
       component.options = {
         formState: {
           click: (f: string, s: number) => spy(f, s)
@@ -303,9 +304,9 @@ describe('formly button type', () => {
 
       fixture.debugElement.query(By.css('button')).nativeElement.click();
       expect(spy).toHaveBeenCalledWith('foo', 42);
-    }));
+    });
 
-    it('should trigger the clickListener function with string param', fakeAsync(() => {
+    it('should trigger the clickListener function with string param', () => {
       component.options = {
         formState: {
           click: (f: string) => spy(f)
@@ -325,9 +326,9 @@ describe('formly button type', () => {
 
       fixture.debugElement.query(By.css('button')).nativeElement.click();
       expect(spy).toHaveBeenCalledWith('foo');
-    }));
+    });
 
-    it('should trigger the clickListener function with custom params', fakeAsync(() => {
+    it('should trigger the clickListener function with custom params', () => {
       spyOn(console, 'warn');
       spy.and.throwError('error');
       component.fields = [
@@ -347,7 +348,7 @@ describe('formly button type', () => {
         'Error while executing dyn ui button "btn" direct click listener.',
         new Error('error')
       );
-    }));
+    });
 
     it('should log warning when click listener raised exception', () => {
       spyOn(console, 'warn');
