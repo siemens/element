@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormRecord, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -57,7 +57,8 @@ describe('formly number type', () => {
         }),
         SiFormlyNumberComponent,
         FormlyTestComponent
-      ]
+      ],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
   });
 
@@ -65,7 +66,8 @@ describe('formly number type', () => {
     fixture = TestBed.createComponent(FormlyTestComponent);
   });
 
-  it('should display the number input based on props provided', fakeAsync(() => {
+  it('should display the number input based on props provided', async () => {
+    jasmine.clock().install();
     const componentInstance = fixture.componentInstance;
 
     componentInstance.model = {
@@ -86,10 +88,12 @@ describe('formly number type', () => {
 
     inputField.nativeElement.value = 2000;
     inputField.nativeElement.dispatchEvent(new Event('input'));
-    fixture.detectChanges();
-    tick(200);
 
+    jasmine.clock().tick(200);
+    fixture.detectChanges();
+    await fixture.whenStable();
     // Assert if input change reflects the model
     expect(componentInstance.model.cost).toBe(2000);
-  }));
+    jasmine.clock().uninstall();
+  });
 });

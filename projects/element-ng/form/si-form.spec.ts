@@ -4,7 +4,7 @@
  */
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   FormControl,
@@ -88,7 +88,8 @@ describe('SiForm', () => {
         imports: [
           TestHostComponent,
           SiFormModule.withConfiguration({ validationErrorMapper: { required: 'required' } })
-        ]
+        ],
+        providers: [provideZonelessChangeDetection()]
       }).compileComponents();
     });
 
@@ -169,7 +170,8 @@ describe('SiForm', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [TestHostComponent]
+        imports: [TestHostComponent],
+        providers: [provideZonelessChangeDetection()]
       }).compileComponents();
     });
 
@@ -195,6 +197,8 @@ describe('SiForm', () => {
 
     it('should update required indicator', async () => {
       fixture.componentInstance.form.controls.input.setValidators([]);
+      fixture.changeDetectorRef.markForCheck();
+      await fixture.whenStable();
       const field = await loader.getHarness(SiFormItemHarness.with({ label: 'Input' }));
       expect(await field.isRequired()).toBeFalse();
     });
@@ -221,7 +225,8 @@ describe('SiForm', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [TestHostComponent]
+        imports: [TestHostComponent],
+        providers: [provideZonelessChangeDetection()]
       }).compileComponents();
     });
 
@@ -238,6 +243,8 @@ describe('SiForm', () => {
       const field = await loader.getHarness(SiFormItemHarness.with({ label: 'Input' }));
       expect(await field.isRequired()).toBeTrue();
       fixture.componentInstance.required = false;
+      fixture.changeDetectorRef.markForCheck();
+      await fixture.whenStable();
       expect(await field.isRequired()).toBeFalse();
     });
   });
@@ -268,7 +275,8 @@ describe('SiForm', () => {
         providers: [
           provideFormValidationErrorMapper({
             email: emailMapperSpy
-          })
+          }),
+          provideZonelessChangeDetection()
         ]
       }).compileComponents();
       fixture = TestBed.createComponent(TestHostComponent);

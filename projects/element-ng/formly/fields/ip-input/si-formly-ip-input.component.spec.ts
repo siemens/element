@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormRecord, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
@@ -44,7 +44,8 @@ describe('formly ip', () => {
         }),
         SiFormlyIpInputComponent,
         FormlyTestComponent
-      ]
+      ],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
     fixture = TestBed.createComponent(FormlyTestComponent);
   });
@@ -65,7 +66,7 @@ describe('formly ip', () => {
     expect(inputField.nativeElement.value).toEqual('192.168.0.1');
   });
 
-  it('should display IPv4 address with CIDR notation - as data value', fakeAsync(() => {
+  it('should display IPv4 address with CIDR notation - as data value', () => {
     const componentInstance = fixture.componentInstance;
     componentInstance.fields = [
       {
@@ -82,7 +83,7 @@ describe('formly ip', () => {
     fixture.detectChanges();
     const inputField = fixture.debugElement.query(By.css('input'));
     expect(inputField.nativeElement.value).toEqual('192.168.0.1/32');
-  }));
+  });
 
   it('should display IPv6 address - as data value', () => {
     const componentInstance = fixture.componentInstance;
@@ -100,7 +101,7 @@ describe('formly ip', () => {
     expect(inputField.nativeElement.value).toEqual('2001:DB8::8:800:200C:417A');
   });
 
-  it('should display IPv6 address with CIDR notation - as data value', fakeAsync(() => {
+  it('should display IPv6 address with CIDR notation - as data value', () => {
     const componentInstance = fixture.componentInstance;
     componentInstance.fields = [
       {
@@ -117,5 +118,5 @@ describe('formly ip', () => {
     fixture.detectChanges();
     const inputField = fixture.debugElement.query(By.css('input'));
     expect(inputField.nativeElement.value).toEqual('2001:DB8::8:800:200C:417A/128');
-  }));
+  });
 });

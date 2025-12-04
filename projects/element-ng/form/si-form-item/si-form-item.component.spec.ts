@@ -2,8 +2,14 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  provideZonelessChangeDetection,
+  signal,
+  viewChild
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiFormItemComponent } from './si-form-item.component';
 
@@ -29,11 +35,12 @@ describe('SiFormItemComponent', () => {
     return fixture.nativeElement.querySelector('label');
   };
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent]
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [TestHostComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
@@ -41,10 +48,10 @@ describe('SiFormItemComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', fakeAsync(() => {
+  it('should create', () => {
     expect(component).toBeDefined();
     expect(getLabel()).toBeDefined();
-  }));
+  });
 
   it('should display the bound label value', () => {
     component.label.set('Testlabel');
