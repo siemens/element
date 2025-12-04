@@ -189,7 +189,6 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/element-translate-ng/tsconfig.spec.json",
             "karmaConfig": "projects/element-translate-ng/karma.conf.cjs",
             "stylePreprocessorOptions": {

@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { SiNoTranslateService } from './si-no-translate.service';
@@ -12,13 +13,20 @@ import { SiTranslateService } from './si-translate.service';
 describe('SiTranslatable', () => {
   let service: SiTranslatableService;
 
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [provideZonelessChangeDetection()]
+    });
+  });
+
   describe('with SiTranslateService', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         providers: [
           { provide: SiTranslateService, useClass: SiNoTranslateService },
           { provide: SI_TRANSLATABLE_VALUES, useValue: { KEY1: 'value1' }, multi: true },
-          { provide: SI_TRANSLATABLE_VALUES, useValue: { KEY2: 'value2' }, multi: true }
+          { provide: SI_TRANSLATABLE_VALUES, useValue: { KEY2: 'value2' }, multi: true },
+          provideZonelessChangeDetection()
         ]
       });
       service = TestBed.inject(SiTranslatableService);
