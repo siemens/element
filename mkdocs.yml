@@ -209,6 +209,9 @@ theme:
     - content.action.edit
     - content.code.copy
 
+extra_css:
+  - '_src/dos-and-donts.css'
+
 extra_javascript:
   - '//w3.siemens.com/ote/ote_config.js'
   - '//w3.siemens.com/ote/sinet/ote.js'
