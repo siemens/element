@@ -2,8 +2,13 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  provideZonelessChangeDetection,
+  viewChild
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { echarts } from '../../shared/echarts.custom';
 import { EChartOption } from '../../shared/echarts.model';
@@ -22,11 +27,12 @@ describe('SiChart', () => {
   let component: TestHostComponent;
   let fixture: ComponentFixture<TestHostComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent]
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [TestHostComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
@@ -34,9 +40,9 @@ describe('SiChart', () => {
   });
 
   describe('initialization', () => {
-    it('should create the chart component', waitForAsync(() => {
+    it('should create the chart component', () => {
       expect(component).toBeTruthy();
-    }));
+    });
   });
 
   describe('data handling', () => {
