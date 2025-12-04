@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { SiTranslateService } from '@siemens/element-ng/translate';
@@ -18,7 +19,10 @@ describe('Formly translations', () => {
     mockTranslationService = jasmine.createSpyObj<SiTranslateService>(['translateAsync']);
     mockTranslationService.translateAsync.and.returnValue(of('translated'));
     TestBed.configureTestingModule({
-      providers: [provideMockTranslateServiceBuilder(() => mockTranslationService)]
+      providers: [
+        provideMockTranslateServiceBuilder(() => mockTranslationService),
+        provideZonelessChangeDetection()
+      ]
     });
     extension = TestBed.runInInjectionContext(() => new SiFormlyTranslateExtension());
   });

@@ -2,8 +2,13 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  provideZonelessChangeDetection,
+  viewChild
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormGroup, FormRecord, ReactiveFormsModule } from '@angular/forms';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
 import { FormlyFieldConfig } from '@ngx-formly/core';
@@ -44,8 +49,8 @@ describe('ElementFormComponent', () => {
   let fixture: ComponentFixture<WrapperComponent>;
   let element: HTMLElement;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, FormlyBootstrapModule, SiFormlyModule, WrapperComponent],
       providers: [
         provideMockTranslateServiceBuilder(
@@ -56,10 +61,11 @@ describe('ElementFormComponent', () => {
               translateAsync: (key: string, params: Record<string, any>) =>
                 of(`translated=>${key}-${JSON.stringify(params)}`)
             }) as SiTranslateService
-        )
+        ),
+        provideZonelessChangeDetection()
       ]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(async () => {
     fixture = TestBed.createComponent(WrapperComponent);
