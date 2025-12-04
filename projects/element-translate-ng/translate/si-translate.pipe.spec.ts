@@ -7,7 +7,8 @@ import {
   ChangeDetectorRef,
   Component,
   inject,
-  Injectable
+  Injectable,
+  provideZonelessChangeDetection
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { injectSiTranslateService, t } from '@siemens/element-translate-ng/translate';
@@ -88,7 +89,8 @@ describe('SiTranslatePipe', () => {
       TestBed.configureTestingModule({
         imports: [TestComponent],
         providers: [
-          provideMockTranslateServiceBuilder(injector => injector.get(SiAsyncTranslateService))
+          provideMockTranslateServiceBuilder(injector => injector.get(SiAsyncTranslateService)),
+          provideZonelessChangeDetection()
         ]
       }).compileComponents();
     });
@@ -141,7 +143,8 @@ describe('SiTranslatePipe', () => {
                 translate: (key: string, params: Record<string, any>) =>
                   `translated=>${key}-${JSON.stringify(params)}`
               }) as SiTranslateService
-          )
+          ),
+          provideZonelessChangeDetection()
         ]
       }).compileComponents();
     });
@@ -177,7 +180,8 @@ describe('SiTranslatePipe', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [TestComponent]
+        imports: [TestComponent],
+        providers: [provideZonelessChangeDetection()]
       }).compileComponents();
     });
 
