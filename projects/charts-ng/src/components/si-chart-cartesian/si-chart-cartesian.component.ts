@@ -184,7 +184,8 @@ export class SiChartCartesianComponent extends SiChartComponent implements OnCha
         }
       ],
       tooltip: {
-        trigger: 'axis'
+        trigger: 'axis',
+        confine: true
       }
     };
     const tooltipFormatter = this.tooltipFormatter();
