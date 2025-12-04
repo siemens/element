@@ -124,4 +124,14 @@
     overflow-wrap: break-word;
     word-break: break-word;
   }
+
+  img {
+    max-inline-size: 100%;
+    max-block-size: 400px;
+    block-size: auto;
+    inline-size: auto;
+    object-fit: contain;
+    display: block;
+    margin-block: map.get(variables.$spacers, 4);
+  }
 }
