@@ -57,7 +57,7 @@ Selection methods can be explicit or implicit.
 Use it for more complex choices that need clear user acknowledgment or for batch actions.
 
 **Implicit selection** allows users to select a row by simply interacting with it.
-Is possible to use `shift` or `command` (on macOS) to enable multi-selection.
+It is possible to use `shift` or `command` (on macOS) to enable multi-selection.
 Use it for simpler, more intuitive interactions, such as viewing details in a
 [side panel](../layout-navigation/side-panel.md) or navigating to a new screen
 
