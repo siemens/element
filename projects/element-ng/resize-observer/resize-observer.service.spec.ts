@@ -2,8 +2,14 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, ElementRef, signal, viewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import {
+  Component,
+  ElementRef,
+  provideZonelessChangeDetection,
+  signal,
+  viewChild
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Subscription } from 'rxjs';
 
 import {
@@ -49,38 +55,38 @@ describe('ResizeObserverService', () => {
     fixture.detectChanges();
   };
 
-  beforeEach(fakeAsync(() => {
+  beforeEach(() => {
     mockResizeObserver();
     TestBed.configureTestingModule({
-      imports: [TestHostComponent]
+      imports: [TestHostComponent],
+      providers: [provideZonelessChangeDetection()]
     });
     service = TestBed.inject(ResizeObserverService);
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    tick();
 
     spy = jasmine.createSpy();
-  }));
+  });
 
   afterEach(() => {
     subscription?.unsubscribe();
     restoreResizeObserver();
   });
 
-  it('emits initial size event when asked', waitForAsync(async () => {
+  it('emits initial size event when asked', async () => {
     subscribe(true);
     await timeout(10);
     expect(spy).toHaveBeenCalledWith(jasmine.objectContaining({ width: 100, height: 100 }));
-  }));
+  });
 
-  it('emits no initial size event when not asked', waitForAsync(async () => {
+  it('emits no initial size event when not asked', async () => {
     subscribe(false);
     await timeout(10);
     expect(spy).not.toHaveBeenCalled();
-  }));
+  });
 
-  it('emits on width change', waitForAsync(async () => {
+  it('emits on width change', async () => {
     subscribe(false);
     detectSizeChange(200, 100);
 
@@ -93,9 +99,9 @@ describe('ResizeObserverService', () => {
       await timeout(150);
       expect(spy).toHaveBeenCalledWith(jasmine.objectContaining({ width: 200, height: 100 }));
     }
-  }));
+  });
 
-  it('emits on height change', waitForAsync(async () => {
+  it('emits on height change', async () => {
     subscribe(false);
     detectSizeChange(100, 200);
 
@@ -108,9 +114,9 @@ describe('ResizeObserverService', () => {
       await timeout(150);
       expect(spy).toHaveBeenCalledWith(jasmine.objectContaining({ width: 100, height: 200 }));
     }
-  }));
+  });
 
-  it('can handle multiple subscriptions on same element', waitForAsync(async () => {
+  it('can handle multiple subscriptions on same element', async () => {
     subscribe(true);
 
     // Skip test when browser is not focussed to prevent failures.
@@ -132,5 +138,5 @@ describe('ResizeObserverService', () => {
 
       subs2.unsubscribe();
     }
-  }));
+  });
 });
