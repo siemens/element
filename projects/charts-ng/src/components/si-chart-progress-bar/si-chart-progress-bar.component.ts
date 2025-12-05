@@ -35,7 +35,7 @@ export class SiChartProgressBarComponent extends SiChartComponent {
     }
   };
 
-  private formatter = new Intl.NumberFormat(undefined, { maximumFractionDigits: 1 });
+  private readonly formatter = new Intl.NumberFormat(undefined, { maximumFractionDigits: 1 });
   private labelPositionOption: BarSeriesOption['label'];
   private labelPositionOptionForValue: BarSeriesOption['label'];
 
