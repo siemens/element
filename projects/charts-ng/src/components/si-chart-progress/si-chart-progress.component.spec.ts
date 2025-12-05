@@ -2,7 +2,13 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, SimpleChange, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  provideZonelessChangeDetection,
+  SimpleChange,
+  viewChild
+} from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { SiChartProgressComponent } from './si-chart-progress.component';
@@ -29,7 +35,8 @@ class TestHostComponent {
 describe('SiChartProgressComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [TestHostComponent]
+      imports: [TestHostComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
   });
 
