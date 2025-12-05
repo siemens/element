@@ -1,9 +1,13 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "./tsconfig.lib.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/spec",
-    "types": ["jasmine", "@siemens/element-translate-ng/localize-types"]
+    "types": ["vitest/globals", "@siemens/element-translate-ng/localize-types"]
   },
   "exclude": ["**/schematics/"],
-  "include": ["**/*.spec.ts", "**/*.d.ts"]
+  "include": ["**/*.spec.ts", "**/*.d.ts"],
+  "angularCompilerOptions": {
+    "strictTemplates": false,
+    "strictNullChecks": false
+  }
 }

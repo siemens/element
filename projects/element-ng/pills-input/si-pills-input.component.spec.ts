@@ -5,6 +5,7 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import { SiPillsInputModule } from './si-pills-input.module';
 
@@ -113,7 +114,9 @@ describe('SiPillsInputComponent', () => {
       componentElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'arrowLeft' }));
       fixture.detectChanges();
       flush();
-      expect(componentElement.querySelectorAll('si-input-pill')[1]).toHaveClass('active');
+      expect(
+        componentElement.querySelectorAll('si-input-pill')[1].classList.contains('active')
+      ).toBe(true);
 
       componentElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'backspace' }));
       fixture.detectChanges();

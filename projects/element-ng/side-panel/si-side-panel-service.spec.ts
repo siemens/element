@@ -6,12 +6,13 @@ import { CdkPortal, PortalModule } from '@angular/cdk/portal';
 import { CommonModule } from '@angular/common';
 import { Component, provideZonelessChangeDetection, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import { SiSidePanelService } from './si-side-panel.service';
 
 @Component({
   selector: 'si-mock-component',
-  imports: [CommonModule, PortalModule],
+  imports: [PortalModule],
   template: `<ng-template #helpPanel cdkPortal>
       <h3>Help Panel</h3>
     </ng-template>
@@ -41,9 +42,9 @@ describe('SiSidePanelService', () => {
 
   it('should toggle content', () => {
     service.open();
-    expect(service.isOpen()).toBeTrue();
+    expect(service.isOpen()).toBe(true);
 
     service.toggle();
-    expect(service.isOpen()).toBeFalse();
+    expect(service.isOpen()).toBe(false);
   });
 });

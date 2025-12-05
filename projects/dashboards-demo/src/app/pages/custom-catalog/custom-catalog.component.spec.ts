@@ -6,7 +6,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CustomCatalogPageComponent } from './custom-catalog.component';
 
-xdescribe('DashboardPageComponent', () => {
+describe.skip('DashboardPageComponent', () => {
   let component: CustomCatalogPageComponent;
   let fixture: ComponentFixture<CustomCatalogPageComponent>;
 

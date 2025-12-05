@@ -2,10 +2,10 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { CommonModule } from '@angular/common';
 import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
 
 import { SiSearchBarComponent } from './index';
 
@@ -16,7 +16,7 @@ describe('SiSearchBarComponent', () => {
     input!.dispatchEvent(new Event('input'));
   };
 
-  const getParameterFromSpy = (spy: any): string => (spy as jasmine.Spy).calls.mostRecent().args[0];
+  const getParameterFromSpy = (spy: any): string => vi.mocked(spy as Mock).mock!.lastCall![0];
 
   describe('as form control', () => {
     let fixture: ComponentFixture<TestComponent>;
@@ -25,7 +25,7 @@ describe('SiSearchBarComponent', () => {
     let element: HTMLElement;
 
     @Component({
-      imports: [CommonModule, ReactiveFormsModule, SiSearchBarComponent],
+      imports: [ReactiveFormsModule, SiSearchBarComponent],
       template: `<si-search-bar
         [placeholder]="placeholder"
         [showIcon]="true"
@@ -54,7 +54,7 @@ describe('SiSearchBarComponent', () => {
     });
 
     it('should reset search when clicking cancel button', fakeAsync(() => {
-      spyOn(component.searchChange, 'emit');
+      vi.spyOn(component.searchChange, 'emit');
       testComponent.search.setValue('Test1234$');
       fixture.detectChanges();
       element.querySelector<HTMLElement>('button')!.click();
@@ -63,7 +63,7 @@ describe('SiSearchBarComponent', () => {
     }));
 
     it('should trigger the change event on input', fakeAsync(() => {
-      spyOn(component.searchChange, 'emit');
+      vi.spyOn(component.searchChange, 'emit');
       fixture.detectChanges();
       fakeInput('Test1234$', element);
       tick(1000);
@@ -72,7 +72,7 @@ describe('SiSearchBarComponent', () => {
 
     it('should trigger the initial change event just once per value', fakeAsync(() => {
       fixture.detectChanges();
-      spyOn(component.searchChange, 'emit');
+      vi.spyOn(component.searchChange, 'emit');
       fakeInput('CodeTest1234$', element);
       fixture.detectChanges();
       tick(400);
@@ -80,7 +80,7 @@ describe('SiSearchBarComponent', () => {
     }));
 
     it('should not prohibit characters by default', fakeAsync(() => {
-      spyOn(component.searchChange, 'emit');
+      vi.spyOn(component.searchChange, 'emit');
       fixture.detectChanges();
       fakeInput('Test1234$', element);
       tick(1000);
@@ -88,7 +88,7 @@ describe('SiSearchBarComponent', () => {
     }));
 
     it('should not prohibit characters if string is empty', fakeAsync(() => {
-      spyOn(component.searchChange, 'emit');
+      vi.spyOn(component.searchChange, 'emit');
       testComponent.prohibitedCharacters = '1234$';
       fixture.detectChanges();
       fakeInput('', element);
@@ -97,7 +97,7 @@ describe('SiSearchBarComponent', () => {
     }));
 
     it('should not prohibit characters if string is valid', fakeAsync(() => {
-      spyOn(component.searchChange, 'emit');
+      vi.spyOn(component.searchChange, 'emit');
       testComponent.prohibitedCharacters = '1234$';
       fixture.detectChanges();
       fakeInput('Test', element);
@@ -106,7 +106,7 @@ describe('SiSearchBarComponent', () => {
     }));
 
     it('should prohibit characters if string is not valid', fakeAsync(() => {
-      spyOn(component.searchChange, 'emit');
+      vi.spyOn(component.searchChange, 'emit');
       testComponent.prohibitedCharacters = '1234$';
       fixture.detectChanges();
       fakeInput('Test1234$', element);
@@ -124,7 +124,7 @@ describe('SiSearchBarComponent', () => {
     });
 
     it('should not emit values when changed via form control', () => {
-      spyOn(component.searchChange, 'emit');
+      vi.spyOn(component.searchChange, 'emit');
       fixture.componentInstance.search = new FormControl('Initial Value');
       fixture.detectChanges();
       expect(element.querySelector('input')!.value).toBe('Initial Value');
@@ -143,7 +143,7 @@ describe('SiSearchBarComponent', () => {
     let element: HTMLElement;
 
     @Component({
-      imports: [CommonModule, SiSearchBarComponent],
+      imports: [SiSearchBarComponent],
       template: `<si-search-bar [value]="value" [disabled]="disabled" />`
     })
     class TestComponent {
@@ -160,7 +160,7 @@ describe('SiSearchBarComponent', () => {
     });
 
     it('should not emit values when changed via value input', () => {
-      spyOn(component.searchChange, 'emit');
+      vi.spyOn(component.searchChange, 'emit');
       testComponent.value = 'Initial Value';
       fixture.detectChanges();
       expect(element.querySelector('input')!.value).toBe('Initial Value');

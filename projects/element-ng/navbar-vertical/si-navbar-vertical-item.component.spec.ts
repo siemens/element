@@ -4,6 +4,7 @@
  */
 import { Component, provideZonelessChangeDetection, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { SiNavbarVerticalItemComponent } from './si-navbar-vertical-item.component';
 import { NavbarVerticalItemLink } from './si-navbar-vertical.model';
@@ -27,7 +28,7 @@ describe('SiNavbarVerticalItemComponent', () => {
 
   const mockNavbar = {
     collapsed: signal(false),
-    itemTriggered: jasmine.createSpy('itemTriggered')
+    itemTriggered: vi.fn()
   };
 
   beforeEach(async () => {

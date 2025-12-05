@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SiDatepickerDirective } from '@siemens/element-ng/datepicker';
+import { expect, it, vi } from 'vitest';
 
 import { SiCalendarButtonComponent } from './si-calendar-button.component';
 
@@ -63,21 +64,21 @@ describe('SiCalendarButtonComponent', () => {
     const overlay = document.querySelector('si-datepicker-overlay');
     expect(overlay).toBeTruthy();
 
-    const spy = spyOn(button, 'focus');
+    const spy = vi.spyOn(button, 'focus');
     overlay?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     fixture.detectChanges();
     expect(spy).toHaveBeenCalled();
   });
 
   it('should mark as touched if button is blurred', () => {
-    jasmine.clock().install();
-    const touchSpy = spyOn(SiDatepickerDirective.prototype, 'touch');
+    vi.useFakeTimers();
+    const touchSpy = vi.spyOn(SiDatepickerDirective.prototype, 'touch');
     const button = calendarToggleButton();
     button.focus();
     button.blur();
-    jasmine.clock().tick(0);
+    vi.advanceTimersByTime(0);
     expect(touchSpy).toHaveBeenCalled();
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should use default aria label', () => {

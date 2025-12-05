@@ -7,6 +7,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import {
   DatepickerInputConfig,
@@ -77,10 +78,10 @@ describe('SiDateRangeComponent', () => {
 
   it('should mark input touched when on datepicker backdrop click', () => {
     openCalendarButton()!.click();
-    expect(fixture.componentInstance.dateRange.touched).toBeFalse();
+    expect(fixture.componentInstance.dateRange.touched).toBe(false);
 
     backdropClick(fixture);
-    expect(fixture.componentInstance.dateRange.touched).toBeTrue();
+    expect(fixture.componentInstance.dateRange.touched).toBe(true);
   });
 
   it('should mark input as touched once the focused is moved outside', async () => {
@@ -90,7 +91,7 @@ describe('SiDateRangeComponent', () => {
     await inputs.at(0)?.focus();
     await inputs.at(1)?.focus();
     await calendarButton.focus();
-    expect(fixture.componentInstance.dateRange.touched).toBeFalse();
+    expect(fixture.componentInstance.dateRange.touched).toBe(false);
     await calendarButton.blur();
     expect(fixture.componentInstance.dateRange.touched).toBeTruthy();
   });
@@ -128,7 +129,7 @@ describe('SiDateRangeComponent', () => {
     helper.getOpenMonthViewLink().click();
     helper.getEnabledCellWithText('December')!.dispatchEvent(new Event('mouseover'));
 
-    expect(helper.queryAsArray('.range-hover')).toHaveSize(9);
+    expect(helper.queryAsArray('.range-hover')).toHaveLength(9);
   });
 
   it('should preview month range with second calendar', async () => {
@@ -153,7 +154,7 @@ describe('SiDateRangeComponent', () => {
       document.querySelectorAll<HTMLElement>('si-datepicker')[1]
     );
     helper.getEnabledCellWithText('December')!.dispatchEvent(new Event('mouseover'));
-    expect(Array.from(document.querySelectorAll<HTMLElement>('.range-hover'))).toHaveSize(21);
+    expect(Array.from(document.querySelectorAll<HTMLElement>('.range-hover'))).toHaveLength(21);
   });
 
   it('should not overlap month view with enableTwoMonthDateRange when pressing previous year button', async () => {
@@ -183,7 +184,7 @@ describe('SiDateRangeComponent', () => {
   });
 
   it('should output correct month range on keyboard input', async () => {
-    const spy = spyOn(fixture.componentInstance, 'rangeChanged');
+    const spy = vi.spyOn(fixture.componentInstance, 'rangeChanged');
     component.siDatepickerConfig.set({
       enableDateRange: true,
       enableTwoMonthDateRange: true,
@@ -195,9 +196,9 @@ describe('SiDateRangeComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const dateRange = spy.calls.mostRecent().args[0];
-    expect(dateRange.end).toBeNull();
-    expect(dateRange.start).toEqual(new Date(2023, 4, 1));
+    const dateRange = vi.mocked(spy).mock?.lastCall?.[0];
+    expect(dateRange?.end).toBeNull();
+    expect(dateRange?.start).toEqual(new Date(2023, 4, 1));
   });
 
   it('should show meridian when time format is 12h', async () => {

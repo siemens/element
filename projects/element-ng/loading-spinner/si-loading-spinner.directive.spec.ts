@@ -14,6 +14,7 @@ import {
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { SiLoadingSpinnerModule } from './si-loading-spinner.module';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 @Component({
   imports: [SiLoadingSpinnerModule],
@@ -54,7 +55,7 @@ describe('SiLoadingSpinnerDirective', () => {
     fixture.detectChanges();
     tick(initialDelay - 10);
     fixture.detectChanges();
-    expect(isLoading()).toBeFalse();
+    expect(isLoading()).toBe(false);
     discardPeriodicTasks();
   }));
 
@@ -62,7 +63,7 @@ describe('SiLoadingSpinnerDirective', () => {
     fixture.detectChanges();
     tick(initialDelay);
     fixture.detectChanges();
-    expect(isLoading()).toBeTrue();
+    expect(isLoading()).toBe(true);
     discardPeriodicTasks();
   }));
 
@@ -70,21 +71,21 @@ describe('SiLoadingSpinnerDirective', () => {
     fixture.detectChanges();
     tick(initialDelay - 10);
     fixture.detectChanges();
-    expect(isLoading()).toBeFalse();
+    expect(isLoading()).toBe(false);
 
     fixture.componentInstance.loading = false;
     fixture.detectChanges();
     tick(600);
     fixture.detectChanges();
 
-    expect(isLoading()).toBeFalse();
+    expect(isLoading()).toBe(false);
   }));
 
   it('should show and hide spinner', fakeAsync(() => {
     fixture.detectChanges();
     tick(initialDelay);
     fixture.detectChanges();
-    expect(isLoading()).toBeTrue();
+    expect(isLoading()).toBe(true);
 
     fixture.componentInstance.loading = false;
     fixture.detectChanges();
@@ -94,6 +95,6 @@ describe('SiLoadingSpinnerDirective', () => {
     tick();
     fixture.detectChanges();
 
-    expect(isLoading()).toBeFalse();
+    expect(isLoading()).toBe(false);
   }));
 });

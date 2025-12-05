@@ -11,6 +11,7 @@ import {
   tick,
   waitForAsync
 } from '@angular/core/testing';
+import { afterEach, beforeEach, describe, expect, it, type Mock } from 'vitest';
 
 import { ElementDimensions } from './index';
 import {
@@ -46,7 +47,7 @@ class TestHostComponent {
 describe('SiResizeObserverDirective', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let component: TestHostComponent;
-  let spy: jasmine.Spy<(dim: ElementDimensions) => void>;
+  let spy: Mock;
 
   const detectSizeChange = (inlineSize: number = 100, blockSize: number = 100): void => {
     component.width.set(inlineSize);
@@ -64,7 +65,7 @@ describe('SiResizeObserverDirective', () => {
     });
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
-    spy = spyOn(component, 'resizeHandler');
+    spy = vi.spyOn(component, 'resizeHandler');
     fixture.detectChanges();
     tick();
   }));
@@ -79,7 +80,7 @@ describe('SiResizeObserverDirective', () => {
 
   it('emits on width change', fakeAsync(() => {
     // not interested in the initial event
-    spy.calls.reset();
+    spy.mockClear();
     detectSizeChange(200, 100);
 
     // with throttling, this shouldn't fire just yet
@@ -92,7 +93,7 @@ describe('SiResizeObserverDirective', () => {
 
   it('emits on height change', fakeAsync(() => {
     // not interested in the initial event
-    spy.calls.reset();
+    spy.mockClear();
 
     detectSizeChange(100, 200);
 
@@ -108,7 +109,7 @@ describe('SiResizeObserverDirective', () => {
 describe('SiResizeObserverDirective with emitInitial=false', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let component: TestHostComponent;
-  let spy: jasmine.Spy<(dim: ElementDimensions) => void>;
+  let spy: Mock;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -121,7 +122,7 @@ describe('SiResizeObserverDirective with emitInitial=false', () => {
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     component.emitInitial = false;
-    spy = spyOn(component, 'resizeHandler');
+    spy = vi.spyOn(component, 'resizeHandler');
     fixture.detectChanges();
     tick();
   }));

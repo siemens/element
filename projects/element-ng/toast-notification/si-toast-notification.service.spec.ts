@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { SiToastNotificationService } from './si-toast-notification.service';
 
@@ -41,7 +42,7 @@ describe('SiToastNotificationService', () => {
       'Success!',
       'A successful event has occurred.'
     );
-    spyOn(toast.hidden!, 'next');
+    vi.spyOn(toast.hidden!, 'next');
     expect(service.activeToasts.length).toBe(1);
 
     toast.close!();

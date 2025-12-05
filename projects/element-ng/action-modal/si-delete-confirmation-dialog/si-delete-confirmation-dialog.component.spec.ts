@@ -5,6 +5,7 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ModalRef } from '@siemens/element-ng/modal';
+import { vi } from 'vitest';
 
 import { SiDeleteConfirmationDialogComponent } from './si-delete-confirmation-dialog.component';
 
@@ -35,14 +36,14 @@ describe('SiDeleteConfirmationDialogComponent', () => {
 
   it('should emit result on delete', () => {
     expect(component).toBeTruthy();
-    spyOn(modalRef, 'hide');
+    vi.spyOn(modalRef, 'hide');
     element.querySelector<HTMLElement>('.btn-danger')?.click();
     expect(modalRef.hide).toHaveBeenCalledWith('delete');
   });
 
   it('should emit result on cancel', () => {
     expect(component).toBeTruthy();
-    spyOn(modalRef, 'hide');
+    vi.spyOn(modalRef, 'hide');
     element.querySelector<HTMLElement>('.btn-secondary')?.click();
     expect(modalRef.hide).toHaveBeenCalledWith('cancel');
   });

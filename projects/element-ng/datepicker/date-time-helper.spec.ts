@@ -5,6 +5,7 @@
 import { DatePipe } from '@angular/common';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { describe, expect, it } from 'vitest';
 
 import {
   addDays,
@@ -35,12 +36,16 @@ describe('date time helper', () => {
 
   it('should correctly get custom format', () => {
     const format = getNamedFormat('en', 'short');
-    expect(format).toEqual('M/d/yy, h:mm a');
+    // The whitespace character between time and meridian changed with angular 21
+    // see https://github.com/angular/angular/issues/65707
+    expect(format).toEqual('M/d/yy, h:mm a');
   });
 
   it('should correctly get custom format with mediumTime', () => {
     const format = getNamedFormat('en', 'medium');
-    expect(format).toEqual('M/d/yy, h:mm:ss a');
+    // The whitespace character between time and meridian changed with angular 21
+    // see https://github.com/angular/angular/issues/65707
+    expect(format).toEqual('M/d/yy, h:mm:ss a');
   });
 
   it('should correctly parse date time', () => {
@@ -119,7 +124,7 @@ describe('date time helper', () => {
     it('should not be the same object', () => {
       const input = new Date(Date.UTC(year, 0, 5));
       const actual = addDays(input, 0);
-      expect(isSameDate(input, actual)).toBeTrue();
+      expect(isSameDate(input, actual)).toBe(true);
     });
   });
 
@@ -180,7 +185,7 @@ describe('date time helper', () => {
     it('should create new Date', () => {
       const actual = getWeekStartDate(input, 'monday');
 
-      expect(input == actual).not.toBeTrue();
+      expect(input == actual).not.toBe(true);
     });
 
     it('should be monday', () => {
@@ -218,7 +223,7 @@ describe('date time helper', () => {
     it('should create new Date', () => {
       const actual = getWeekEndDate(input, 'monday');
 
-      expect(input == actual).not.toBeTrue();
+      expect(input == actual).not.toBe(true);
     });
 
     it('should be sunday', () => {

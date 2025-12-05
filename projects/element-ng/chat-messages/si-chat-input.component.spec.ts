@@ -7,6 +7,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { FileUploadError, UploadFile } from '@siemens/element-ng/file-uploader';
+import { vi } from 'vitest';
 
 import { MessageAction } from './message-action.model';
 import {
@@ -210,7 +211,7 @@ describe('SiChatInputComponent', () => {
 
     const textarea = debugElement.query(By.css('textarea'));
     const event = new KeyboardEvent('keydown', { key: 'Enter', shiftKey: true });
-    spyOn(event, 'preventDefault');
+    vi.spyOn(event, 'preventDefault');
     textarea.nativeElement.dispatchEvent(event);
 
     expect(emittedCount).toBe(0);
@@ -232,7 +233,7 @@ describe('SiChatInputComponent', () => {
 
     const textarea = debugElement.query(By.css('textarea'));
     const event = new KeyboardEvent('keydown', { key: 'Enter', shiftKey: false });
-    spyOn(event, 'preventDefault');
+    vi.spyOn(event, 'preventDefault');
     textarea.nativeElement.dispatchEvent(event);
 
     expect(emittedCount).toBe(1);

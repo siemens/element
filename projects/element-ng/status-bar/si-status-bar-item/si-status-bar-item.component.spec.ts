@@ -4,7 +4,9 @@
  */
 import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ExtendedStatusType } from '@siemens/element-ng/common';
 import { SiIconModule } from '@siemens/element-ng/icon';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import { SiStatusBarItemComponent } from './si-status-bar-item.component';
 
@@ -22,7 +24,7 @@ import { SiStatusBarItemComponent } from './si-status-bar-item.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
-  status?: string;
+  status?: ExtendedStatusType;
   value!: string | number;
   heading!: string;
   color?: string;

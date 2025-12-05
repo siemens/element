@@ -4,6 +4,7 @@
  */
 import { Component, provideZonelessChangeDetection, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { SiPopoverDirective } from './si-popover.directive';
 
@@ -69,10 +70,7 @@ describe('SiPopoverNextDirective', () => {
   });
 
   it('should not emit hidden event if popover overlay is closed', () => {
-    const hiddenSpy = spyOn(
-      wrapperComponent.popoverOverlay()!.visibilityChange,
-      'emit'
-    ).and.callThrough();
+    const hiddenSpy = vi.spyOn(wrapperComponent.popoverOverlay()!.visibilityChange, 'emit');
     wrapperComponent.popoverOverlay()?.hide();
     expect(hiddenSpy).not.toHaveBeenCalled();
   });

@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Subject } from 'rxjs';
+import { afterAll, beforeEach, expect, it, vi } from 'vitest';
 
 import { ElementDimensions, ResizeObserverService } from '../resize-observer';
 import { SiSidePanelComponent } from './si-side-panel.component';
@@ -54,8 +55,10 @@ describe('SiSidePanelComponent', () => {
   const resizeObserver = new Subject<ElementDimensions>();
 
   beforeEach(async () => {
-    const resizeSpy = jasmine.createSpyObj('ResizeObserverService', ['observe']);
-    resizeSpy.observe.and.callFake((e: Element, t: number, i: boolean, im?: boolean) => {
+    const resizeSpy = {
+      observe: vi.fn()
+    };
+    resizeSpy.observe.mockImplementation((e: Element, t: number, i: boolean, im?: boolean) => {
       return resizeObserver;
     });
     await TestBed.configureTestingModule({
@@ -79,7 +82,7 @@ describe('SiSidePanelComponent', () => {
   });
 
   afterAll(() => {
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should create', () => {
@@ -87,13 +90,13 @@ describe('SiSidePanelComponent', () => {
   });
 
   it('should collapse', () => {
-    jasmine.clock().install();
+    vi.useFakeTimers();
     component.mode = 'scroll';
     fixture.detectChanges();
 
     service.open();
 
-    jasmine.clock().tick(0);
+    vi.advanceTimersByTime(0);
     fixture.detectChanges();
 
     const sidePanelElement = element.querySelector('si-side-panel');
@@ -101,14 +104,14 @@ describe('SiSidePanelComponent', () => {
 
     service.close();
 
-    jasmine.clock().tick(500);
+    vi.advanceTimersByTime(500);
     fixture.detectChanges();
 
     expect(sidePanelElement!.classList).toContain('rpanel-collapsed');
   });
 
   it('resize should not trigger contentResize output', () => {
-    const spy = spyOn(component, 'contentResize').and.callThrough();
+    const spy = vi.spyOn(component, 'contentResize');
     component.collapsed.set(false);
     fixture.detectChanges();
     resizeObserver.next({ width: 104, height: 104 });
@@ -117,7 +120,7 @@ describe('SiSidePanelComponent', () => {
   });
 
   it('resize should trigger contentResize output', () => {
-    const spy = spyOn(component, 'contentResize').and.callThrough();
+    const spy = vi.spyOn(component, 'contentResize');
     component.collapsed.set(true);
     fixture.detectChanges();
     resizeObserver.next({ width: 104, height: 104 });
@@ -126,7 +129,7 @@ describe('SiSidePanelComponent', () => {
   });
 
   it('should call service close on collapsed', () => {
-    const spy = spyOn(service, 'close');
+    const spy = vi.spyOn(service, 'close');
     component.collapsed.set(true);
     fixture.detectChanges();
 
@@ -134,7 +137,7 @@ describe('SiSidePanelComponent', () => {
   });
 
   it('should call service open when not collapsed', () => {
-    const spy = spyOn(service, 'open');
+    const spy = vi.spyOn(service, 'open');
     component.collapsed.set(false);
     component.sidePanel().ngOnChanges({
       collapsed: new SimpleChange(null, component.collapsed, false)
@@ -147,7 +150,7 @@ describe('SiSidePanelComponent', () => {
     it('should call service toggle when collapsible', () => {
       component.collapsible.set(true);
       fixture.detectChanges();
-      const spy = spyOn(service, 'toggle');
+      const spy = vi.spyOn(service, 'toggle');
 
       component.sidePanel().toggleSidePanel();
       expect(spy).toHaveBeenCalled();
@@ -155,7 +158,7 @@ describe('SiSidePanelComponent', () => {
 
     it('should call service close when not collapsible', () => {
       component.collapsible.set(false);
-      const spy = spyOn(service, 'close');
+      const spy = vi.spyOn(service, 'close');
 
       component.sidePanel().toggleSidePanel();
       expect(spy).toHaveBeenCalled();
@@ -181,7 +184,7 @@ describe('SiSidePanelComponent', () => {
       const title = element.querySelector<HTMLDivElement>('p.si-h5');
       expect(title!.innerText).toBe('side-panel');
       const innerElements = Array.from(element.querySelectorAll<HTMLDivElement>('div.inner'));
-      expect(innerElements).toHaveSize(2);
+      expect(innerElements).toHaveLength(2);
       // Ensure temp content is visible
       expect(innerElements.at(1)?.classList).not.toContain('d-none');
       const content = element.querySelector<HTMLDivElement>('div.dynamic-content');
@@ -195,7 +198,7 @@ describe('SiSidePanelComponent', () => {
       fixture.detectChanges();
 
       const innerElements = Array.from(element.querySelectorAll<HTMLDivElement>('div.inner'));
-      expect(innerElements).toHaveSize(2);
+      expect(innerElements).toHaveLength(2);
       // Ensure temp content is hidden
       expect(innerElements.at(1)?.classList).toContain('d-none');
     });
