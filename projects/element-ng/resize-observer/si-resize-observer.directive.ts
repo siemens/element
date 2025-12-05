@@ -4,15 +4,15 @@
  */
 import {
   booleanAttribute,
+  DestroyRef,
   Directive,
   ElementRef,
   inject,
   input,
-  OnDestroy,
   OnInit,
   output
 } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { ElementDimensions, ResizeObserverService } from './resize-observer.service';
 
@@ -29,24 +29,21 @@ import { ElementDimensions, ResizeObserverService } from './resize-observer.serv
 @Directive({
   selector: '[siResizeObserver]'
 })
-export class SiResizeObserverDirective implements OnInit, OnDestroy {
+export class SiResizeObserverDirective implements OnInit {
   /** @defaultValue 100 */
   readonly resizeThrottle = input(100);
   /** @defaultValue true */
   readonly emitInitial = input(true, { transform: booleanAttribute });
   readonly siResizeObserver = output<ElementDimensions>();
 
-  private subs?: Subscription;
+  private destroyRef = inject(DestroyRef);
   private element = inject(ElementRef);
   private service = inject(ResizeObserverService);
 
   ngOnInit(): void {
-    this.subs = this.service
+    this.service
       .observe(this.element.nativeElement, this.resizeThrottle(), this.emitInitial())
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(value => this.siResizeObserver.emit(value));
-  }
-
-  ngOnDestroy(): void {
-    this.subs?.unsubscribe();
   }
 }

@@ -6,7 +6,6 @@
 
 import * as _angular_core from '@angular/core';
 import { Observable } from 'rxjs';
-import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 
 // @public (undocumented)
@@ -47,11 +46,9 @@ export class ResizeObserverService {
 }
 
 // @public
-export class SiResizeObserverDirective implements OnInit, OnDestroy {
+export class SiResizeObserverDirective implements OnInit {
     // (undocumented)
     readonly emitInitial: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    ngOnDestroy(): void;
     // (undocumented)
     ngOnInit(): void;
     // (undocumented)
@@ -75,7 +72,7 @@ export class SiResizeObserverModule {
 }
 
 // @public
-export class SiResponsiveContainerDirective implements OnInit, OnDestroy {
+export class SiResponsiveContainerDirective implements OnInit {
     // (undocumented)
     readonly breakpoints: _angular_core.InputSignal<Breakpoints | undefined>;
     // @deprecated (undocumented)
@@ -94,8 +91,6 @@ export class SiResponsiveContainerDirective implements OnInit, OnDestroy {
     readonly lg: _angular_core.WritableSignal<boolean>;
     // (undocumented)
     readonly md: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
-    ngOnDestroy(): void;
     // (undocumented)
     ngOnInit(): void;
     // (undocumented)
