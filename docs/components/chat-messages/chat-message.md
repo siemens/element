@@ -110,6 +110,8 @@ The slots are:
 
 ### Markdown renderer
 
+> **Note:** The markdown renderer is currently experimental and may undergo changes in future releases.
+
 <si-docs-component example="si-markdown-renderer/si-markdown-renderer"></si-docs-component>
 
 <si-docs-api component="SiMarkdownRendererComponent"></si-docs-api>
