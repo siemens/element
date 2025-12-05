@@ -17,6 +17,7 @@ import { SiLoadingSpinnerModule } from '@siemens/element-ng/loading-spinner';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { MenuItemsProvider, SiTreeViewModule } from '@siemens/element-ng/tree-view';
 import { BehaviorSubject } from 'rxjs';
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { runOnPushChangeDetection } from '../test-helpers';
 import { SiTreeViewItemHeightService } from './si-tree-view-item-height.service';
@@ -93,7 +94,7 @@ class WrapperComponent {
   enableDataField2 = false;
   enableContextMenuButton = true;
   compactMode = false;
-  contextMenuItems?: MenuItem[] | MenuItemsProvider = [
+  contextMenuItems: MenuItem[] | MenuItemsProvider = [
     { label: 'Item One', type: 'action', action: () => alert('action one') }
   ];
   enableStateIndicator = true;
@@ -102,8 +103,8 @@ class WrapperComponent {
   inheritChecked = true;
   enableOptionbox = false;
   expandOnClick = false;
-  pageSize?: number = 10;
-  pagesVirtualized?: number = 6;
+  pageSize = 10;
+  pagesVirtualized = 6;
   horizontalScrolling = false;
   deleteChildrenOnCollapse = false;
   expandCollapseAll = false;
@@ -165,7 +166,7 @@ describe('SiTreeViewComponent', () => {
   it('should contain folder state start', () => {
     component.folderStateStart = true;
     fixture.detectChanges();
-    expect(component.treeViewComponent().folderStateStart()).toBeTrue();
+    expect(component.treeViewComponent().folderStateStart()).toBe(true);
     expect(
       debugElement.query(By.css('.si-tree-view-root-ul .si-tree-view-li-item a .element-down-2'))
     ).toBeFalsy();
@@ -344,7 +345,7 @@ describe('SiTreeViewComponent', () => {
   it('should show dataField1', () => {
     component.enableDataField1 = true;
     fixture.detectChanges();
-    expect(component.treeViewComponent().enableDataField1()).toBeTrue();
+    expect(component.treeViewComponent().enableDataField1()).toBe(true);
     expect(debugElement.query(By.css('.si-tree-view-item-object-data-field-1'))).toBeTruthy();
     expect(element.querySelector('.si-tree-view-item-object-data-field-1')!.innerHTML).toContain(
       'Root1DataField1'
@@ -354,7 +355,7 @@ describe('SiTreeViewComponent', () => {
   it('should show dataField2', () => {
     component.enableDataField2 = true;
     fixture.detectChanges();
-    expect(component.treeViewComponent().enableDataField2()).toBeTrue();
+    expect(component.treeViewComponent().enableDataField2()).toBe(true);
     expect(debugElement.query(By.css('.si-tree-view-item-object-data-field-2'))).toBeTruthy();
     expect(element.querySelector('.si-tree-view-item-object-data-field-2')!.innerHTML).toContain(
       'Root1DataField2'
@@ -364,7 +365,7 @@ describe('SiTreeViewComponent', () => {
   it('should hide menu button', () => {
     component.enableContextMenuButton = false;
     fixture.detectChanges();
-    expect(component.treeViewComponent().enableContextMenuButton()).toBeFalse();
+    expect(component.treeViewComponent().enableContextMenuButton()).toBe(false);
     expect(
       debugElement.query(By.css('.si-tree-view-menu-btn.element-options-vertical'))
     ).toBeFalsy();
@@ -374,7 +375,7 @@ describe('SiTreeViewComponent', () => {
     component.contextMenuItems = [{ label: 'Title', type: 'action', action: () => {} }];
     component.enableContextMenuButton = true;
     fixture.detectChanges();
-    expect(component.treeViewComponent().enableContextMenuButton()).toBeTrue();
+    expect(component.treeViewComponent().enableContextMenuButton()).toBe(true);
     expect(
       debugElement.query(By.css('.si-tree-view-menu-btn.element-options-vertical'))
     ).toBeTruthy();
@@ -383,14 +384,14 @@ describe('SiTreeViewComponent', () => {
   it('should hide state pipe', () => {
     component.enableStateIndicator = false;
     fixture.detectChanges();
-    expect(component.treeViewComponent().enableStateIndicator()).toBeFalse();
+    expect(component.treeViewComponent().enableStateIndicator()).toBe(false);
     expect(debugElement.query(By.css('.si-tree-view-state-indicator'))).toBeFalsy();
   });
 
   it('should show state pipe', () => {
     component.enableStateIndicator = true;
     fixture.detectChanges();
-    expect(component.treeViewComponent().enableStateIndicator()).toBeTrue();
+    expect(component.treeViewComponent().enableStateIndicator()).toBe(true);
     expect(debugElement.query(By.css('.si-tree-view-state-indicator'))).toBeTruthy();
     expect(
       debugElement.query(By.css('.si-tree-view-state-indicator')).styles['background-color']
@@ -435,7 +436,7 @@ describe('SiTreeViewComponent', () => {
     component.enableCheckbox = true;
     fixture.detectChanges();
     const input = debugElement.query(By.css('.form-check-input')).nativeElement;
-    expect(component.treeViewComponent().enableCheckbox()).toBeTrue();
+    expect(component.treeViewComponent().enableCheckbox()).toBe(true);
     expect(input.checked).toBeFalsy();
 
     input.click();
@@ -452,7 +453,7 @@ describe('SiTreeViewComponent', () => {
     fixture.detectChanges();
     const input = debugElement.query(By.css('.form-check-input')).nativeElement;
     expect(input.checked).toBeFalsy();
-    expect(component.treeViewComponent().inheritChecked()).toBeTrue();
+    expect(component.treeViewComponent().inheritChecked()).toBe(true);
     input.click();
     tick();
     fixture.detectChanges();
@@ -470,7 +471,7 @@ describe('SiTreeViewComponent', () => {
     component.enableOptionbox = true;
     fixture.detectChanges();
     const input = fixture.debugElement.query(By.css('.form-check-input')).nativeElement;
-    expect(component.treeViewComponent().enableOptionbox()).toBeTrue();
+    expect(component.treeViewComponent().enableOptionbox()).toBe(true);
     expect(input.checked).toBeFalsy();
     expect(input.type).toBe('radio');
   });
@@ -516,13 +517,13 @@ describe('SiTreeViewComponent', () => {
   });
 
   it('should return folderStateStart true as default', () => {
-    expect(component.folderStateStart).toBeTrue();
+    expect(component.folderStateStart).toBe(true);
   });
 
   it('should call onFlatTreeNavigateUp', () => {
     component.flatTree = true;
     // Use of <any> due to accessing protected member
-    const spy = spyOn<any>(component.treeViewComponent(), 'onFlatTreeNavigateUp').and.callThrough();
+    const spy = vi.spyOn<any, any>(component.treeViewComponent(), 'onFlatTreeNavigateUp');
     fixture.detectChanges();
     expect(debugElement.queryAll(By.css('.si-tree-view-item-toggle')).length).toBeGreaterThan(0);
     debugElement
@@ -543,10 +544,7 @@ describe('SiTreeViewComponent', () => {
   it('should call onFlatTreeNavigateHome', fakeAsync(() => {
     component.flatTree = true;
     // Use of <any> due to accessing protected member
-    const spy = spyOn<any>(
-      component.treeViewComponent(),
-      'onFlatTreeNavigateHome'
-    ).and.callThrough();
+    const spy = vi.spyOn<any, any>(component.treeViewComponent(), 'onFlatTreeNavigateHome');
     fixture.detectChanges();
     debugElement.queryAll(By.css('.si-tree-view-header-btn'))[0].triggerEventHandler('click', null);
     tick();
@@ -556,8 +554,8 @@ describe('SiTreeViewComponent', () => {
 
   it('should expand and collapse all items', fakeAsync(() => {
     component.expandCollapseAll = true;
-    spyOn(component.treeViewComponent(), 'expandAll').and.callThrough();
-    spyOn(component.treeViewComponent(), 'collapseAll').and.callThrough();
+    vi.spyOn(component.treeViewComponent(), 'expandAll');
+    vi.spyOn(component.treeViewComponent(), 'collapseAll');
 
     fixture.detectChanges();
     element
@@ -579,7 +577,7 @@ describe('SiTreeViewComponent', () => {
 
   it('should call item click', () => {
     const treeViewComponent = component.treeViewComponent();
-    spyOn(treeViewComponent.treeItemClicked, 'emit');
+    vi.spyOn(treeViewComponent.treeItemClicked, 'emit');
     fixture.detectChanges();
     element.querySelectorAll('.si-tree-view-item-main')[0].dispatchEvent(new Event('click'));
     fixture.detectChanges();
@@ -587,7 +585,7 @@ describe('SiTreeViewComponent', () => {
   });
 
   it('should contain custom menu items', fakeAsync(() => {
-    spyOn(component.treeViewComponent().treeItemClicked, 'emit');
+    vi.spyOn(component.treeViewComponent().treeItemClicked, 'emit');
     const menuItems: MenuItem[] = [];
     menuItems.push(
       { label: 'Item One', type: 'action', action: () => alert('action one') },
@@ -718,7 +716,7 @@ describe('SiTreeViewComponent', () => {
     component.expandCollapseAll = true;
     component.cdRef.markForCheck();
     fixture.detectChanges();
-    expect(component.treeViewComponent().deleteChildrenOnCollapse()).toBeTrue();
+    expect(component.treeViewComponent().deleteChildrenOnCollapse()).toBe(true);
     element.querySelectorAll('.si-tree-view-item-toggle')[0].dispatchEvent(new Event('click'));
     tick();
     fixture.detectChanges();
@@ -731,7 +729,7 @@ describe('SiTreeViewComponent', () => {
 
   it('should handle method treeItemsSelected', () => {
     const treeViewComponent = component.treeViewComponent();
-    spyOn(treeViewComponent.treeItemsSelected, 'emit');
+    vi.spyOn(treeViewComponent.treeItemsSelected, 'emit');
     component.enableSelection = true;
     fixture.detectChanges();
     element.querySelectorAll('.si-tree-view-item-main')[0].dispatchEvent(new Event('click'));
@@ -778,7 +776,7 @@ describe('SiTreeViewComponent', () => {
         children: []
       }
     ];
-    spyOn(component, 'loadChildren').and.callThrough();
+    vi.spyOn(component, 'loadChildren');
     fixture.detectChanges();
     element.querySelector('.si-tree-view-item-toggle')?.dispatchEvent(new Event('click'));
     fixture.detectChanges();
@@ -792,7 +790,7 @@ describe('SiTreeViewComponent', () => {
         children: []
       }
     ];
-    spyOn(component, 'loadChildren').and.callFake((e: LoadChildrenEventArgs) =>
+    vi.spyOn(component, 'loadChildren').mockImplementation((e: LoadChildrenEventArgs) =>
       e.callback(e.treeItem, [{ label: 'loaded child' }])
     );
     fixture.detectChanges();
@@ -812,7 +810,7 @@ describe('SiTreeViewComponent', () => {
     ];
 
     const treeViewComponent = component.treeViewComponent();
-    spyOn(treeViewComponent, 'expandTreeItem');
+    vi.spyOn(treeViewComponent, 'expandTreeItem');
     fixture.detectChanges();
 
     treeViewComponent.showTreeItem(component.items[0].children[0].children[0].children[0]);
@@ -848,7 +846,7 @@ describe('SiTreeViewComponent', () => {
     element.querySelector('.si-tree-view')?.scroll(0, 5000);
     element.querySelector('.si-tree-view')?.dispatchEvent(new Event('scroll'));
     runOnPushChangeDetection(fixture);
-    expect(component.treeViewComponent().groupedList()).toBeTrue();
+    expect(component.treeViewComponent().groupedList()).toBe(true);
     expect(element.querySelectorAll('si-tree-view-item').length).toBe(60);
 
     element.querySelector('.si-tree-view')?.scroll(0, 0);
@@ -888,7 +886,7 @@ describe('SiTreeViewComponent', () => {
         return 0;
       }
     });
-    const scrollObserver = spyOn(window, 'IntersectionObserver').and.callThrough();
+    const scrollObserver = vi.spyOn(window, 'IntersectionObserver');
     const nextNode = debugElement.queryAll(By.css('.si-tree-view-item-toggle'))[
       lastVisibleNode + 1
     ];
@@ -906,7 +904,7 @@ describe('SiTreeViewComponent', () => {
 
     expect(component.treeViewComponent().compactMode()).toBeFalsy();
     component.compactMode = true;
-    const spy = spyOn(getHeightService(), 'updateItemHeight').and.callThrough();
+    const spy = vi.spyOn(getHeightService(), 'updateItemHeight');
     component.cdRef.markForCheck();
     fixture.detectChanges();
     expect(spy).toHaveBeenCalled();
@@ -997,7 +995,7 @@ describe('SiTreeViewComponent', () => {
 
     it('should emit selection on keyup shift', () => {
       const treeViewComponent = component.treeViewComponent();
-      spyOn(treeViewComponent.treeItemsSelected, 'emit');
+      vi.spyOn(treeViewComponent.treeItemsSelected, 'emit');
       const firstItem = Array.from(
         element.querySelectorAll<HTMLElement>('.si-tree-view-item-main')
       ).at(0)!;
@@ -1069,7 +1067,7 @@ describe('SiTreeViewComponent', () => {
 
     it('should emit selection on keyup control', () => {
       const treeViewComponent = component.treeViewComponent();
-      spyOn(treeViewComponent.treeItemsSelected, 'emit');
+      vi.spyOn(treeViewComponent.treeItemsSelected, 'emit');
       const firstItem = Array.from(
         element.querySelectorAll<HTMLElement>('.si-tree-view-item-main')
       ).at(0)!;
@@ -1092,7 +1090,7 @@ describe('SiTreeViewComponent', () => {
   });
 
   it('default should be enableIcon', () => {
-    expect(component.treeViewComponent().enableIcon()).toBeTrue();
+    expect(component.treeViewComponent().enableIcon()).toBe(true);
   });
 
   describe('with icons', () => {
@@ -1128,8 +1126,8 @@ describe('SiTreeViewComponent', () => {
 
     it('should emit second item as clicked and selected on enter', () => {
       const treeViewComponent = component.treeViewComponent();
-      spyOn(treeViewComponent.treeItemClicked, 'emit');
-      spyOn(treeViewComponent.treeItemsSelected, 'emit');
+      vi.spyOn(treeViewComponent.treeItemClicked, 'emit');
+      vi.spyOn(treeViewComponent.treeItemsSelected, 'emit');
 
       const secondItem = Array.from(element.querySelectorAll<HTMLElement>('si-tree-view-item')).at(
         1
@@ -1148,8 +1146,8 @@ describe('SiTreeViewComponent', () => {
 
     it('should expand node on keydown ArrowRight', () => {
       const treeViewComponent = component.treeViewComponent();
-      spyOn(treeViewComponent.treeItemFolderClicked, 'emit');
-      spyOn(treeViewComponent.treeItemFolderStateChanged, 'emit');
+      vi.spyOn(treeViewComponent.treeItemFolderClicked, 'emit');
+      vi.spyOn(treeViewComponent.treeItemFolderStateChanged, 'emit');
 
       const secondItem = Array.from(element.querySelectorAll<HTMLElement>('si-tree-view-item')).at(
         1
@@ -1169,7 +1167,7 @@ describe('SiTreeViewComponent', () => {
 
     it('should jump into expanded node on keydown ArrowRight', () => {
       const treeViewComponent = component.treeViewComponent();
-      spyOn(treeViewComponent.treeItemsSelected, 'emit');
+      vi.spyOn(treeViewComponent.treeItemsSelected, 'emit');
 
       const firstItem = element.querySelector<HTMLElement>('si-tree-view-item')!;
 
@@ -1204,8 +1202,8 @@ describe('SiTreeViewComponent', () => {
 
     it('should collapse node on keydown ArrowLeft', () => {
       const treeViewComponent = component.treeViewComponent();
-      spyOn(treeViewComponent.treeItemFolderClicked, 'emit');
-      spyOn(treeViewComponent.treeItemFolderStateChanged, 'emit');
+      vi.spyOn(treeViewComponent.treeItemFolderClicked, 'emit');
+      vi.spyOn(treeViewComponent.treeItemFolderStateChanged, 'emit');
 
       const secondItem = Array.from(element.querySelectorAll<HTMLElement>('si-tree-view-item')).at(
         2
@@ -1225,7 +1223,7 @@ describe('SiTreeViewComponent', () => {
 
     it('should jump out of node on keydown ArrowLeft', () => {
       const treeViewComponent = component.treeViewComponent();
-      spyOn(treeViewComponent.treeItemsSelected, 'emit');
+      vi.spyOn(treeViewComponent.treeItemsSelected, 'emit');
 
       const firstItem = element.querySelector<HTMLElement>('si-tree-view-item')!;
       firstItem.dispatchEvent(
@@ -1267,7 +1265,7 @@ describe('SiTreeViewComponent', () => {
 
       it('should emit checkbox clicked on keydown Space', () => {
         const treeViewComponent = component.treeViewComponent();
-        spyOn(treeViewComponent.treeItemCheckboxClicked, 'emit');
+        vi.spyOn(treeViewComponent.treeItemCheckboxClicked, 'emit');
 
         const childItemTest3 = Array.from(
           element.querySelectorAll<HTMLElement>('si-tree-view-item')
@@ -1324,7 +1322,7 @@ describe('SiTreeViewComponent', () => {
 
       it('should emit checkbox clicked on keydown Space', () => {
         const treeViewComponent = component.treeViewComponent();
-        spyOn(treeViewComponent.treeItemCheckboxClicked, 'emit');
+        vi.spyOn(treeViewComponent.treeItemCheckboxClicked, 'emit');
 
         const childItemTest3 = Array.from(
           element.querySelectorAll<HTMLElement>('si-tree-view-item')
@@ -1350,7 +1348,7 @@ describe('SiTreeViewComponent', () => {
 
       it('should jump into node on keydown ArrowRight', fakeAsync(() => {
         const treeViewComponent = component.treeViewComponent();
-        spyOn(treeViewComponent.treeItemsSelected, 'emit');
+        vi.spyOn(treeViewComponent.treeItemsSelected, 'emit');
 
         const firstItem = element.querySelector<HTMLElement>('si-tree-view-item')!;
 
@@ -1379,7 +1377,7 @@ describe('SiTreeViewComponent', () => {
 
       it('should jump out of node on keydown ArrowLeft', fakeAsync(() => {
         const treeViewComponent = component.treeViewComponent();
-        spyOn(treeViewComponent.treeItemsSelected, 'emit');
+        vi.spyOn(treeViewComponent.treeItemsSelected, 'emit');
 
         const firstItem = element.querySelector<HTMLElement>('si-tree-view-item')!;
         firstItem.dispatchEvent(
@@ -1429,7 +1427,7 @@ describe('SiTreeViewComponent', () => {
       fixture.detectChanges();
 
       const items = Array.from(element.querySelectorAll<HTMLElement>('si-tree-view-item'));
-      expect(items).toHaveSize(4);
+      expect(items).toHaveLength(4);
       expect(items.at(-1)?.innerText.trim()).toContain('new root');
     });
 
@@ -1447,7 +1445,7 @@ describe('SiTreeViewComponent', () => {
       fixture.detectChanges();
 
       const items = Array.from(element.querySelectorAll<HTMLElement>('si-tree-view-item'));
-      expect(items).toHaveSize(6);
+      expect(items).toHaveLength(6);
       expect(items.at(-2)?.innerText.trim()).toContain('dynamic child 1');
       expect(items.at(-1)?.innerText.trim()).toContain('dynamic child 2');
     });
@@ -1468,7 +1466,7 @@ describe('SiTreeViewComponent', () => {
       fixture.detectChanges();
 
       const items = Array.from(element.querySelectorAll<HTMLElement>('si-tree-view-item'));
-      expect(items).toHaveSize(6);
+      expect(items).toHaveLength(6);
       expect(items.at(-3)?.innerText.trim()).toContain('extra node');
       expect(items.at(-2)?.innerText.trim()).toContain('dynamic child 1');
       expect(items.at(-1)?.innerText.trim()).toContain('dynamic child 2');
@@ -1489,7 +1487,7 @@ describe('SiTreeViewComponent', () => {
 
     it('should expand item', () => {
       const treeViewComponent = component.treeViewComponent();
-      spyOn(treeViewComponent.treeItemFolderStateChanged, 'emit');
+      vi.spyOn(treeViewComponent.treeItemFolderStateChanged, 'emit');
 
       const collapsedItem = Array.from(
         element.querySelectorAll<HTMLElement>('si-tree-view-item .si-tree-view-item-main')
@@ -1503,7 +1501,7 @@ describe('SiTreeViewComponent', () => {
 
     it('should collapse node', () => {
       const treeViewComponent = component.treeViewComponent();
-      spyOn(treeViewComponent.treeItemFolderStateChanged, 'emit');
+      vi.spyOn(treeViewComponent.treeItemFolderStateChanged, 'emit');
 
       const expandedItem = Array.from(
         element.querySelectorAll<HTMLElement>('si-tree-view-item .si-tree-view-item-main')
@@ -1521,7 +1519,7 @@ describe('SiTreeViewComponent', () => {
 
     it('should not toggle state when not selectable', () => {
       const treeViewComponent = component.treeViewComponent();
-      spyOn(treeViewComponent.treeItemFolderStateChanged, 'emit');
+      vi.spyOn(treeViewComponent.treeItemFolderStateChanged, 'emit');
 
       const collapsedNotSelectableItem = Array.from(
         element.querySelectorAll<HTMLElement>(
@@ -1540,7 +1538,7 @@ describe('SiTreeViewComponent', () => {
       component.cdRef.markForCheck();
       fixture.detectChanges();
       const treeViewComponent = component.treeViewComponent();
-      spyOn(treeViewComponent.treeItemFolderStateChanged, 'emit');
+      vi.spyOn(treeViewComponent.treeItemFolderStateChanged, 'emit');
 
       const collapsedItem = Array.from(
         element.querySelectorAll<HTMLElement>('si-tree-view-item .si-tree-view-item-main')

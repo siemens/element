@@ -132,36 +132,23 @@
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
-          "options": {
-            "tsConfig": "projects/element-ng/tsconfig.lib.json",
-            "project": "projects/element-ng/ng-package.json"
-          }
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/element-ng/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/element-ng/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
+            "browsers": ["chromium"],
+            "coverage": true,
             "tsConfig": "projects/element-ng/tsconfig.spec.json",
-            "karmaConfig": "projects/element-ng/karma.conf.cjs",
-            "exclude": ["projects/element-ng/schematics/**"],
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "projects/element-ng/assets/images",
-                "output": "assets"
-              }
-            ],
-            "stylePreprocessorOptions": {
-              "includePaths": ["node_modules/"]
-            },
-            "styles": [
-              "projects/element-theme/src/theme.scss",
-              "projects/element-ng/test-styles.scss"
-            ],
-            "codeCoverageExclude": [
-              "projects/element-ng/**/*.module.ts",
-              "projects/element-ng/**/testing/**/*.ts"
-            ]
+            "exclude": ["projects/element-ng/schematics/**"]
           }
         },
         "lint": {
@@ -187,18 +174,11 @@
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
-            "tsConfig": "projects/element-translate-ng/tsconfig.spec.json",
-            "karmaConfig": "projects/element-translate-ng/karma.conf.cjs",
-            "stylePreprocessorOptions": {
-              "includePaths": ["node_modules/"]
-            },
-            "codeCoverageExclude": [
-              "projects/element-translate-ng/**/*.module.ts",
-              "projects/element-translate-ng/**/testing/**/*.ts"
-            ]
+            "browsers": ["chromium"],
+            "coverage": true,
+            "tsConfig": "projects/element-translate-ng/tsconfig.spec.json"
           }
         },
         "lint": {
@@ -252,12 +232,11 @@
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
-            "tsConfig": "projects/charts-ng/tsconfig.spec.json",
-            "karmaConfig": "projects/charts-ng/karma.conf.cjs",
-            "codeCoverageExclude": ["projects/charts-ng/src/**/*.module.ts"]
+            "browsers": ["chromium"],
+            "coverage": true,
+            "tsConfig": "projects/charts-ng/tsconfig.spec.json"
           }
         },
         "lint": {
@@ -283,12 +262,11 @@
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
-            "tsConfig": "projects/native-charts-ng/tsconfig.spec.json",
-            "karmaConfig": "projects/native-charts-ng/karma.conf.cjs",
-            "codeCoverageExclude": ["projects/native-charts-ng/src/**/*.module.ts"]
+            "browsers": ["chromium"],
+            "coverage": true,
+            "tsConfig": "projects/native-charts-ng/tsconfig.spec.json"
           }
         },
         "lint": {
@@ -317,12 +295,11 @@
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
-            "tsConfig": "projects/maps-ng/tsconfig.spec.json",
-            "karmaConfig": "projects/maps-ng/karma.conf.cjs",
-            "codeCoverageExclude": ["projects/maps-ng/src/**/*.module.ts"]
+            "browsers": ["chromium"],
+            "coverage": true,
+            "tsConfig": "projects/maps-ng/tsconfig.spec.json"
           }
         },
         "lint": {
@@ -348,15 +325,11 @@
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
-            "tsConfig": "projects/dashboards-ng/tsconfig.spec.json",
-            "karmaConfig": "projects/dashboards-ng/karma.conf.cjs",
-            "codeCoverageExclude": ["projects/dashboards-ng/src/**/*.module.ts"]
+            "browsers": ["chromium"],
+            "coverage": true,
+            "tsConfig": "projects/dashboards-ng/tsconfig.spec.json"
           }
         },
         "lint": {
@@ -475,28 +448,11 @@
           "defaultConfiguration": "development"
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
-            "tsConfig": "projects/dashboards-demo/tsconfig.spec.json",
-            "karmaConfig": "projects/dashboards-demo/karma.conf.cjs",
-            "assets": [
-              "projects/dashboards-demo/src/assets",
-              "projects/dashboards-demo/src/favicon.png",
-              {
-                "glob": "*",
-                "input": "projects/dashboards-ng/assets/i18n",
-                "output": "assets/i18n/dashboards-ng/"
-              }
-            ],
-            "stylePreprocessorOptions": {
-              "includePaths": ["node_modules/"]
-            },
-            "styles": ["projects/dashboards-demo/src/styles.scss"],
-            "scripts": []
+            "browsers": ["chromium"],
+            "coverage": true,
+            "tsConfig": "projects/dashboards-demo/tsconfig.spec.json"
           }
         },
         "lint": {
@@ -577,18 +533,11 @@
           "defaultConfiguration": "development"
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
-            "tsConfig": "projects/dashboards-demo/webcomponents/tsconfig.spec.json",
-            "karmaConfig": "projects/dashboards-demo/webcomponents/karma.conf.cjs",
-            "inlineStyleLanguage": "scss",
-            "assets": [],
-            "styles": ["projects/dashboards-demo/webcomponents/src/styles.scss"],
-            "scripts": []
+            "browsers": ["chromium"],
+            "coverage": true,
+            "tsConfig": "projects/dashboards-demo/webcomponents/tsconfig.spec.json"
           }
         },
         "lint": {

@@ -5,6 +5,7 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { NgxDatatableModule } from '@siemens/ngx-datatable';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '.';
 
@@ -269,7 +270,7 @@ describe('SiDatatableInteractionDirective', () => {
 
     // Skip test when browser is not focussed to prevent failures.
     if (document.hasFocus()) {
-      expect(wrapperComponent.selected).toHaveSize(0);
+      expect(wrapperComponent.selected).toHaveLength(0);
 
       const row = getTableElement().querySelector(
         '.datatable-row-wrapper > .datatable-body-row'
@@ -294,7 +295,7 @@ describe('SiDatatableInteractionDirective', () => {
 
     // Skip test when browser is not focussed to prevent failures.
     if (document.hasFocus()) {
-      expect(wrapperComponent.selected).toHaveSize(0);
+      expect(wrapperComponent.selected).toHaveLength(0);
 
       const table = getTableElement();
 
@@ -307,7 +308,7 @@ describe('SiDatatableInteractionDirective', () => {
 
       refresh();
 
-      expect(wrapperComponent.selected).toHaveSize(0);
+      expect(wrapperComponent.selected).toHaveLength(0);
 
       table.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
 

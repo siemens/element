@@ -52,7 +52,7 @@
           si-menu-item
           [disabled]="tab.disabledTab()"
           [icon]="tab.icon()"
-          [routerLink]="tab.routerLink?.urlTree"
+          [routerLink]="tab.routerLink.urlTree"
           (triggered)="tab.selectTab(true)"
         >
           <ng-container [ngTemplateOutlet]="badgeTemplate" [ngTemplateOutletContext]="{ tab }" />

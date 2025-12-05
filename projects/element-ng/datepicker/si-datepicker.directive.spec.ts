@@ -7,6 +7,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ChangeDetectionStrategy, Component, ElementRef, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, NgControl } from '@angular/forms';
+import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
 
 import { backdropClick, CalendarTestHelper, generateKeyEvent } from './components/test-helper.spec';
 import { SiDatepickerOverlayDirective } from './si-datepicker-overlay.directive';
@@ -17,7 +18,7 @@ import { SiDatepickerDirectiveComponentHarness } from './testing/si-datepicker.d
 import { SiDatepickerComponentHarness } from './testing/si-datepicker.harness';
 
 export type Spied<T> = {
-  [Method in keyof T]: jasmine.Spy;
+  [Method in keyof T]: Mock;
 };
 
 @Component({
@@ -199,10 +200,10 @@ describe('SiDatepickerDirective', () => {
     });
 
     it('should disable time when switch of Consider Time', async () => {
-      const disabledTime$ = spyOn(
+      const disabledTime$ = vi.spyOn(
         component.siDatePickerDirective().siDatepickerDisabledTime,
         'emit'
-      ).and.callThrough();
+      );
 
       const helper = new CalendarTestHelper(
         document.querySelector('si-datepicker-overlay') as HTMLElement
@@ -210,9 +211,9 @@ describe('SiDatepickerDirective', () => {
       const considerTime = helper.getConsiderTimeSwitch();
       considerTime!.dispatchEvent(new Event('change'));
 
-      expect(helper.getTimeInputHours().disabled).toBeTrue();
-      expect(helper.getTimeInputMinutes().disabled).toBeTrue();
-      expect(helper.getTimeInputSeconds().disabled).toBeTrue();
+      expect(helper.getTimeInputHours().disabled).toBe(true);
+      expect(helper.getTimeInputMinutes().disabled).toBe(true);
+      expect(helper.getTimeInputSeconds().disabled).toBe(true);
       expect(disabledTime$).toHaveBeenCalledWith(true);
     });
   });

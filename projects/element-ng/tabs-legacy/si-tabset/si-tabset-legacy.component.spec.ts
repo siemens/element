@@ -5,6 +5,7 @@
 import { Component, DebugElement, viewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { expect, it, vi } from 'vitest';
 
 import { SiTabsLegacyModule } from '../si-tabs-legacy.module';
 import { SiTabsetLegacyComponent } from './si-tabset-legacy.component';
@@ -32,9 +33,20 @@ import { SiTabsetLegacyComponent } from './si-tabset-legacy.component';
 })
 class TestComponent {
   tabButtonMaxWidth?: number;
-  protected tabsObject: { heading: string; closable?: boolean }[] = [];
+  protected tabsObject: {
+    heading: string;
+    closable?: boolean;
+  }[] = [];
 
-  set tabs(value: ({ heading: string; closable?: true } | string)[]) {
+  set tabs(
+    value: (
+      | {
+          heading: string;
+          closable?: true;
+        }
+      | string
+    )[]
+  ) {
     this.tabsObject = value.map(tab => {
       if (typeof tab === 'string') {
         return { heading: tab };
@@ -117,9 +129,9 @@ describe('SiTabset', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(getActive(0)).toBeTrue();
-    expect(getActive(1)).toBeFalse();
-    expect(getActive(2)).toBeFalse();
+    expect(getActive(0)).toBe(true);
+    expect(getActive(1)).toBe(false);
+    expect(getActive(2)).toBe(false);
     expect(getLength()).toEqual(3);
   });
 
@@ -162,7 +174,7 @@ describe('SiTabset', () => {
   }));
 
   it('should should emit selectedTabIndexChange event', fakeAsync(() => {
-    spyOn(component.selectedTabIndexChange, 'emit');
+    vi.spyOn(component.selectedTabIndexChange, 'emit');
     testComponent.tabs = ['1', '2', '3'];
     fixture.detectChanges();
     tick();
@@ -175,7 +187,7 @@ describe('SiTabset', () => {
   it('should scroll', () => {
     testComponent.tabs = ['Tab 1 name extender', 'Tab 1 name extender', 'Tab 1 name extender'];
     fixture.detectChanges();
-    const preventDefault = jasmine.createSpy('preventDefault');
+    const preventDefault = vi.fn();
 
     fixture.debugElement
       .query(By.css('.tab-container-buttonbar'))
@@ -255,12 +267,12 @@ describe('SiTabset', () => {
   it('should emit tab close event for closable tab and preserve active tab', async () => {
     testComponent.tabs = ['1', '2', { heading: '3', closable: true }, '4'];
     fixture.detectChanges();
-    const closeSpy = spyOn(testComponent, 'closeTriggered').and.callThrough();
+    const closeSpy = vi.spyOn(testComponent, 'closeTriggered');
     getElement(3).nativeElement.click();
     getElement(2).query(By.css('.element-cancel')).nativeElement.click();
     fixture.detectChanges();
     await fixture.whenStable();
-    expect(closeSpy).toHaveBeenCalledWith(jasmine.objectContaining({ heading: '3' }));
+    expect(closeSpy).toHaveBeenCalledWith(expect.objectContaining({ heading: '3' }));
     expect(getElement(2).nativeElement).toBe(document.activeElement);
     focusPrevious();
     expect(getElement(1).nativeElement).toBe(document.activeElement);
@@ -269,12 +281,12 @@ describe('SiTabset', () => {
   it('should emit tab close event for closable tab and select next tab as active', async () => {
     testComponent.tabs = ['1', '2', { heading: '3', closable: true }, '4'];
     fixture.detectChanges();
-    const closeSpy = spyOn(testComponent, 'closeTriggered').and.callThrough();
+    const closeSpy = vi.spyOn(testComponent, 'closeTriggered');
     getElement(2).nativeElement.click();
     getElement(2).query(By.css('.element-cancel')).nativeElement.click();
     fixture.detectChanges();
     await fixture.whenStable();
-    expect(closeSpy).toHaveBeenCalledWith(jasmine.objectContaining({ heading: '3' }));
+    expect(closeSpy).toHaveBeenCalledWith(expect.objectContaining({ heading: '3' }));
     expect(getElement(2).nativeElement).toBe(document.activeElement);
     focusPrevious();
     expect(getElement(1).nativeElement).toBe(document.activeElement);

@@ -72,13 +72,12 @@ describe('SiWidgetCatalogComponent', () => {
       expect(addButtons.length).toBe(1);
     });
 
-    it('should create and emit widget config from selected', (done: DoneFn) => {
+    it('should create and emit widget config from selected', async () => {
       component.widgetCatalog = [createTestingWidget('Hello', 'id-1234')];
       fixture.detectChanges();
 
       component.closed.subscribe(widgetConfig => {
         expect(widgetConfig?.widgetId).toBe('id-1234');
-        done();
       });
       buttonsByName('Add')[0].nativeElement.click();
       fixture.detectChanges();
@@ -245,12 +244,11 @@ describe('SiWidgetCatalogComponent', () => {
     });
   });
 
-  it('Cancel button shall emit undefined on closed', (done: DoneFn) => {
+  it('Cancel button shall emit undefined on closed', async () => {
     fixture.detectChanges();
 
     component.closed.subscribe(wd => {
       expect(wd).toBeUndefined();
-      done();
     });
     buttonsByName('Cancel')[0].nativeElement.click();
   });

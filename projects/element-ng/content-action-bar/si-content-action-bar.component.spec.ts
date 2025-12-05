@@ -9,6 +9,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 import { MenuItem } from '@siemens/element-ng/menu';
+import { vi } from 'vitest';
 
 import { SiContentActionBarComponent } from './si-content-action-bar.component';
 import { ContentActionBarMainItem, ViewType } from './si-content-action-bar.model';
@@ -30,10 +31,14 @@ import { SiContentActionBarHarness } from './testing/si-content-action-bar.harne
   `
 })
 class TestComponent {
-  @Input() primaryActions: ContentActionBarMainItem[] = [];
-  @Input() secondaryActions: MenuItem[] = [];
-  @Input() viewType: ViewType = 'expanded';
-  @Input({ transform: booleanAttribute }) preventIconsInDropdownMenus = false;
+  @Input()
+  primaryActions: ContentActionBarMainItem[] = [];
+  @Input()
+  secondaryActions: MenuItem[] = [];
+  @Input()
+  viewType: ViewType = 'expanded';
+  @Input({ transform: booleanAttribute })
+  preventIconsInDropdownMenus = false;
 }
 
 describe('SiContentActionBarComponent', () => {
@@ -109,9 +114,9 @@ describe('SiContentActionBarComponent', () => {
       }
     ];
 
-    expect(await harness.isPrimaryExpanded()).toBeFalse();
+    expect(await harness.isPrimaryExpanded()).toBe(false);
     await harness.togglePrimary();
-    expect(await harness.isPrimaryExpanded()).toBeTrue();
+    expect(await harness.isPrimaryExpanded()).toBe(true);
   });
 
   it('should disable menu item by disabled attribute', async () => {
@@ -120,11 +125,11 @@ describe('SiContentActionBarComponent', () => {
       { type: 'action', label: 'Item', disabled: true, action: () => {} }
     ];
 
-    expect(await harness.getPrimaryAction('Item').then(item => item.isDisabled())).toBeTrue();
+    expect(await harness.getPrimaryAction('Item').then(item => item.isDisabled())).toBe(true);
   });
 
   it('should call action on item click', async () => {
-    const actionSpy = jasmine.createSpy('clickSpy');
+    const actionSpy = vi.fn();
     component.viewType = 'expanded';
     component.primaryActions = [{ type: 'action', label: 'Item', action: actionSpy }];
 
@@ -141,7 +146,7 @@ describe('SiContentActionBarComponent', () => {
 
       expect(
         await harness.getPrimaryAction('primaryItem').then(item => item.hasIcon('element-user'))
-      ).toBeTrue();
+      ).toBe(true);
     });
 
     it('should show primary action icon in in menu', async () => {
@@ -156,7 +161,7 @@ describe('SiContentActionBarComponent', () => {
           .getMobileMenu()
           .then(menu => menu.getItem('primaryItem'))
           .then(item => item.hasIcon('element-user'))
-      ).toBeTrue();
+      ).toBe(true);
     });
 
     it('should not show primary action icon in menus with mobile view', async () => {
@@ -172,7 +177,7 @@ describe('SiContentActionBarComponent', () => {
           .getMobileMenu()
           .then(menu => menu.getItem('primaryItem'))
           .then(item => item.hasIcon('element-user'))
-      ).toBeFalse();
+      ).toBe(false);
     });
 
     it('should show secondary action icon in menu with expanded view', async () => {
@@ -190,7 +195,7 @@ describe('SiContentActionBarComponent', () => {
           .getSecondaryMenu()
           .then(menu => menu.getItem('secondaryItem'))
           .then(item => item.hasIcon('element-copy'))
-      ).toBeTrue();
+      ).toBe(true);
     });
 
     it('should not show secondary action icon in menus with expanded view', async () => {
@@ -209,7 +214,7 @@ describe('SiContentActionBarComponent', () => {
           .getMobileMenu()
           .then(menu => menu.getItem('secondaryItem'))
           .then(item => item.hasIcon('element-copy'))
-      ).toBeFalse();
+      ).toBe(false);
     });
   });
 
@@ -217,8 +222,8 @@ describe('SiContentActionBarComponent', () => {
     component.primaryActions = [
       { type: 'action', label: 'primaryItem', icon: 'element-user', action: () => {} }
     ];
-    expect(await harness.isMobile()).toBeFalse();
+    expect(await harness.isMobile()).toBe(false);
     component.primaryActions = [];
-    expect(await harness.isMobile()).toBeTrue();
+    expect(await harness.isMobile()).toBe(true);
   });
 });

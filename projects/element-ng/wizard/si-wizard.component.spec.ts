@@ -6,6 +6,7 @@ import { Component, input, viewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { runOnPushChangeDetection } from '../test-helpers/change-detection.helper';
 import { SiWizardStepComponent, SiWizardComponent as TestComponent } from './index';
@@ -115,8 +116,12 @@ describe('SiWizardComponent', () => {
     });
 
     it('should only show next button', () => {
-      expect(element.querySelector('.wizard-btn-container .back')).toHaveClass('invisible');
-      expect(element.querySelector('.wizard-btn-container .next')).not.toHaveClass('invisible');
+      expect(
+        element.querySelector('.wizard-btn-container .back')?.classList.contains('invisible')
+      ).toBe(true);
+      expect(
+        element.querySelector('.wizard-btn-container .next')?.classList.contains('invisible')
+      ).toBe(false);
     });
 
     it('active step should have aria-current set on first step', () => {
@@ -138,8 +143,12 @@ describe('SiWizardComponent', () => {
     });
 
     it('should show back and next buttons', () => {
-      expect(element.querySelector('.wizard-btn-container .back')).not.toHaveClass('invisible');
-      expect(element.querySelector('.wizard-btn-container .next')).not.toHaveClass('invisible');
+      expect(
+        element.querySelector('.wizard-btn-container .back')?.classList.contains('invisible')
+      ).toBe(false);
+      expect(
+        element.querySelector('.wizard-btn-container .next')?.classList.contains('invisible')
+      ).toBe(false);
     });
 
     it('should hide save button', () => {
@@ -164,12 +173,16 @@ describe('SiWizardComponent', () => {
       });
 
       it('should show next button', () => {
-        expect(element.querySelector('.wizard-btn-container .next')).not.toHaveClass('invisible');
+        expect(
+          element.querySelector('.wizard-btn-container .next')?.classList.contains('invisible')
+        ).toBe(false);
       });
 
       it('should hide save and back button', () => {
         expect(element.querySelector('.btn.save')).toBeFalsy();
-        expect(element.querySelector('.wizard-btn-container .back')).toHaveClass('invisible');
+        expect(
+          element.querySelector('.wizard-btn-container .back')?.classList.contains('invisible')
+        ).toBe(true);
       });
 
       it('active step should have aria-current back to first step', () => {
@@ -206,15 +219,19 @@ describe('SiWizardComponent', () => {
 
       it('should show save and back button', () => {
         expect(element.querySelector('.btn.save')).toBeTruthy();
-        expect(element.querySelector('.wizard-btn-container .back')).not.toHaveClass('invisible');
+        expect(
+          element.querySelector('.wizard-btn-container .back')?.classList.contains('invisible')
+        ).toBe(false);
       });
 
       it('should hide next button', () => {
-        expect(element.querySelector('.wizard-btn-container .next')).toHaveClass('invisible');
+        expect(
+          element.querySelector('.wizard-btn-container .next')?.classList.contains('invisible')
+        ).toBe(true);
       });
 
       it('should output on click of save button', () => {
-        spyOn(component.completionAction, 'emit');
+        vi.spyOn(component.completionAction, 'emit');
         element.querySelector<HTMLElement>('.btn.save')!.click();
         expect(component.completionAction.emit).toHaveBeenCalled();
       });
@@ -235,13 +252,13 @@ describe('SiWizardComponent', () => {
   describe('cancel button', () => {
     it('should not contain cancel button', () => {
       fixture.detectChanges();
-      expect(element.querySelectorAll('[aria-label="Cancel"]')).toHaveSize(0);
+      expect(element.querySelectorAll('[aria-label="Cancel"]')).toHaveLength(0);
     });
 
     it('should contain cancel button', () => {
       fixture.componentInstance.hasCancel = true;
       fixture.detectChanges();
-      expect(element.querySelectorAll('[aria-label="Cancel"]')).toHaveSize(1);
+      expect(element.querySelectorAll('[aria-label="Cancel"]')).toHaveLength(1);
     });
   });
 

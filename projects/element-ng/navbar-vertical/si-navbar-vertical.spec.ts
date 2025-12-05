@@ -18,6 +18,7 @@ import {
 } from '@siemens/element-ng/common';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import { NavbarVerticalItem, SiNavbarVerticalComponent } from './index';
 import { SiNavbarVerticalHarness } from './testing/si-navbar-vertical.harness';
@@ -121,11 +122,11 @@ describe('SiNavbarVertical', () => {
     it('should expand/collapse navbar with click', async () => {
       component.collapsed = true;
       fixture.changeDetectorRef.markForCheck();
-      expect(await harness.isCollapsed()).toBeTrue();
+      expect(await harness.isCollapsed()).toBe(true);
       await harness.toggleCollapse();
-      expect(await harness.isExpanded()).toBeTrue();
+      expect(await harness.isExpanded()).toBe(true);
       await harness.toggleCollapse();
-      expect(await harness.isCollapsed()).toBeTrue();
+      expect(await harness.isCollapsed()).toBe(true);
     });
 
     it('should expand on search button click with textonly false', async () => {
@@ -133,24 +134,24 @@ describe('SiNavbarVertical', () => {
       component.collapsed = true;
       fixture.changeDetectorRef.markForCheck();
       await harness.clickSearch();
-      expect(await harness.isExpanded()).toBeTrue();
+      expect(await harness.isExpanded()).toBe(true);
     });
 
     it('should keep collapsed state during resize', async () => {
       const breakpointObserver = TestBed.inject(BreakpointObserverMock);
       await harness.toggleCollapse();
-      expect(await harness.isCollapsed()).toBeTrue();
+      expect(await harness.isCollapsed()).toBe(true);
       breakpointObserver.isSmall.next(true);
-      expect(await harness.isCollapsed()).toBeTrue();
+      expect(await harness.isCollapsed()).toBe(true);
       breakpointObserver.isSmall.next(false);
-      expect(await harness.isCollapsed()).toBeTrue();
+      expect(await harness.isCollapsed()).toBe(true);
 
       await harness.toggleCollapse();
-      expect(await harness.isExpanded()).toBeTrue();
+      expect(await harness.isExpanded()).toBe(true);
       breakpointObserver.isSmall.next(true);
-      expect(await harness.isCollapsed()).toBeTrue();
+      expect(await harness.isCollapsed()).toBe(true);
       breakpointObserver.isSmall.next(false);
-      expect(await harness.isExpanded()).toBeTrue();
+      expect(await harness.isExpanded()).toBe(true);
     });
 
     it('should keep consumer provided collapsed state', async () => {
@@ -160,9 +161,9 @@ describe('SiNavbarVertical', () => {
       breakpointObserver.isSmall.next(false);
       fixture.detectChanges();
       breakpointObserver.isSmall.next(true);
-      expect(await harness.isCollapsed()).toBeTrue();
+      expect(await harness.isCollapsed()).toBe(true);
       breakpointObserver.isSmall.next(false);
-      expect(await harness.isCollapsed()).toBeTrue();
+      expect(await harness.isCollapsed()).toBe(true);
     });
 
     it('should open flyout menu', async () => {
@@ -172,10 +173,10 @@ describe('SiNavbarVertical', () => {
       const item = await harness.findItemByLabel('item-1');
       await item.click();
       await fixture.whenStable();
-      expect(await item.isFlyout()).toBeTrue();
+      expect(await item.isFlyout()).toBe(true);
       document.body.click();
       await fixture.whenStable();
-      expect(await item.isFlyout()).toBeFalse();
+      expect(await item.isFlyout()).toBe(false);
     });
 
     it('should emit search event', async () => {
@@ -183,11 +184,12 @@ describe('SiNavbarVertical', () => {
       fixture.changeDetectorRef.markForCheck();
       await harness.toggleCollapse();
 
-      const spySearch = spyOn(component, 'searchEvent');
+      const spySearch = vi.spyOn(component, 'searchEvent');
       await harness.search('test');
       // cannot use jasmine.clock here
       await new Promise(resolve => setTimeout(resolve, 400));
-      expect(spySearch).toHaveBeenCalledOnceWith('test');
+      expect(spySearch).toHaveBeenCalledTimes(1);
+      expect(spySearch).toHaveBeenCalledWith('test');
     });
 
     it('should support navigation', async () => {
@@ -211,22 +213,22 @@ describe('SiNavbarVertical', () => {
       const item = await harness.findItemByLabel('item1');
       await item.click();
       let [subItem1, subItem2] = await item.getChildren();
-      expect(await subItem1.isActive()).toBeFalse();
-      expect(await subItem2.isActive()).toBeFalse();
-      expect(await item.isActive()).toBeFalse();
+      expect(await subItem1.isActive()).toBe(false);
+      expect(await subItem2.isActive()).toBe(false);
+      expect(await item.isActive()).toBe(false);
       await subItem1.click();
       [subItem1, subItem2] = await item.getChildren();
-      expect(await subItem1.isActive()).toBeTrue();
-      expect(await subItem2.isActive()).toBeFalse();
+      expect(await subItem1.isActive()).toBe(true);
+      expect(await subItem2.isActive()).toBe(false);
       await TestBed.inject(Router).navigate(['/item-1/sub-item-1/sub-path']);
       fixture.detectChanges();
-      expect(await subItem1.isActive()).toBeFalse();
+      expect(await subItem1.isActive()).toBe(false);
 
       await TestBed.inject(Router).navigate(['/item-1/sub-item-2/sub-path']);
       fixture.detectChanges();
       [subItem1, subItem2] = await item.getChildren();
-      expect(await subItem1.isActive()).toBeFalse();
-      expect(await subItem2.isActive()).toBeTrue();
+      expect(await subItem1.isActive()).toBe(false);
+      expect(await subItem2.isActive()).toBe(true);
     });
 
     it('should support navigation legacy item', async () => {
@@ -244,23 +246,23 @@ describe('SiNavbarVertical', () => {
 
       const [link, toggle] = await harness.findItems();
       await link.click();
-      expect(await toggle.isActive()).toBeTrue();
-      expect(await link.isActive()).toBeTrue();
+      expect(await toggle.isActive()).toBe(true);
+      expect(await link.isActive()).toBe(true);
 
       await toggle.click();
       let [subItem1, subItem2] = await toggle.getChildren();
-      expect(await subItem1.isActive()).toBeFalse();
-      expect(await subItem2.isActive()).toBeFalse();
+      expect(await subItem1.isActive()).toBe(false);
+      expect(await subItem2.isActive()).toBe(false);
       await subItem1.click();
       [subItem1, subItem2] = await toggle.getChildren();
-      expect(await subItem1.isActive()).toBeTrue();
-      expect(await subItem2.isActive()).toBeFalse();
+      expect(await subItem1.isActive()).toBe(true);
+      expect(await subItem2.isActive()).toBe(false);
 
       await TestBed.inject(Router).navigate(['/item-1/sub-item-2/sub-path']);
       fixture.detectChanges();
       [subItem1, subItem2] = await toggle.getChildren();
-      expect(await subItem1.isActive()).toBeFalse();
-      expect(await subItem2.isActive()).toBeTrue();
+      expect(await subItem1.isActive()).toBe(false);
+      expect(await subItem2.isActive()).toBe(true);
     });
   });
 
@@ -284,9 +286,9 @@ describe('SiNavbarVertical', () => {
       const harness = await harnessLoader.getHarness(SiNavbarVerticalHarness);
       const [item1, item2] = await harness.findItems();
       expect(await item1.getLabel()).toEqual('item1');
-      expect(await item1.isExpanded()).toBeTrue();
+      expect(await item1.isExpanded()).toBe(true);
       expect(await item2.getLabel()).toEqual('item2');
-      expect(await item2.isExpanded()).toBeFalse();
+      expect(await item2.isExpanded()).toBe(false);
     });
 
     it('should save ui-state', async () => {
@@ -298,7 +300,7 @@ describe('SiNavbarVertical', () => {
       const harness = await harnessLoader.getHarness(SiNavbarVerticalHarness);
       await harness.findItemByLabel('item2').then(item => item.click());
       const state = await uiStateService.load<any>(component.stateId!);
-      expect(state!.expandedItems.item2).toBeTrue();
+      expect(state!.expandedItems.item2).toBe(true);
     });
 
     it('should load/save UI State for new items style', async () => {
@@ -309,8 +311,8 @@ describe('SiNavbarVertical', () => {
 
       const harness = await harnessLoader.getHarness(SiNavbarVerticalHarness);
       const [item1, item2] = await harness.findItems();
-      expect(await item1.isExpanded()).toBeTrue();
-      expect(await item2.isExpanded()).toBeFalse();
+      expect(await item1.isExpanded()).toBe(true);
+      expect(await item2.isExpanded()).toBe(false);
 
       await item2.click();
       await item1.click();
@@ -321,7 +323,7 @@ describe('SiNavbarVertical', () => {
     it('should restore collapsed state', async () => {
       await uiStateService.save(component.stateId!, { preferCollapse: true });
       const harness = await harnessLoader.getHarness(SiNavbarVerticalHarness);
-      expect(await harness.isCollapsed()).toBeTrue();
+      expect(await harness.isCollapsed()).toBe(true);
     });
 
     it('should not restore expanded state on small screen', async () => {
@@ -330,7 +332,7 @@ describe('SiNavbarVertical', () => {
       await uiStateService.save(component.stateId!, { preferCollapse: false });
       const harness = await harnessLoader.getHarness(SiNavbarVerticalHarness);
       breakpointObserver.isSmall.next(true);
-      expect(await harness.isCollapsed()).toBeTrue();
+      expect(await harness.isCollapsed()).toBe(true);
     });
   });
 });

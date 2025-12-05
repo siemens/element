@@ -15,6 +15,7 @@ import {
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Observable, of } from 'rxjs';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { SiSelectMultiValueDirective } from '../selection/si-select-multi-value.directive';
 import { SiSelectComponent } from '../si-select.component';
@@ -22,8 +23,6 @@ import { SelectItem, SelectOption } from '../si-select.types';
 import { SiSelectHarness } from '../testing/si-select.harness';
 import { SiSelectLazyOptionsDirective } from './si-select-lazy-options.directive';
 import { SelectOptionSource } from './si-select-option.source';
-
-import createSpy = jasmine.createSpy;
 
 describe('SelectLazyOptionsDirective', () => {
   @Component({
@@ -71,10 +70,9 @@ describe('SelectLazyOptionsDirective', () => {
   });
 
   it('should search for values', fakeAsync(async () => {
-    component.optionSource.getOptionsForSearch = createSpy(
-      'getOptionsForSearch',
-      (search: string): Observable<SelectItem<string>[]> => of(['result'].map(valueToOption))
-    ).and.callThrough();
+    vi.spyOn(component.optionSource, 'getOptionsForSearch').mockReturnValue(
+      of(['result'].map(valueToOption))
+    );
 
     const harness = await loader.getHarness(SiSelectHarness);
     await harness.open();

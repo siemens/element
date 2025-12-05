@@ -5,6 +5,7 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ModalRef } from '@siemens/element-ng/modal';
+import { vi } from 'vitest';
 
 import { SiConfirmationDialogComponent } from './si-confirmation-dialog.component';
 
@@ -35,14 +36,14 @@ describe('SiConfirmationDialogComponent', () => {
 
   it('should emit result on confirm', () => {
     expect(component).toBeTruthy();
-    spyOn(modalRef, 'hide');
+    vi.spyOn(modalRef, 'hide');
     element.querySelector<HTMLElement>('.btn-primary')?.click();
     expect(modalRef.hide).toHaveBeenCalledWith('confirm');
   });
 
   it('should emit result on decline', () => {
     expect(component).toBeTruthy();
-    spyOn(modalRef, 'hide');
+    vi.spyOn(modalRef, 'hide');
     element.querySelector<HTMLElement>('.btn-secondary')?.click();
     expect(modalRef.hide).toHaveBeenCalledWith('decline');
   });

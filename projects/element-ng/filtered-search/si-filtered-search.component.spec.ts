@@ -21,6 +21,7 @@ import {
   SiTranslateService
 } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, of } from 'rxjs';
+import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
 
 import {
   DisplayedCriteriaEventArgs,
@@ -167,7 +168,7 @@ describe('SiFilteredSearchComponent', () => {
     });
 
     it('should delete current criterion and edit last one', async () => {
-      const spy = spyOn(component, 'doSearch');
+      const spy = vi.spyOn(component, 'doSearch');
       component.searchCriteria.set({
         criteria: [
           { name: 'foo', value: 'bar' },
@@ -186,7 +187,7 @@ describe('SiFilteredSearchComponent', () => {
       await criteria[1].clickClearButton();
 
       criteria = await loader.getAllHarnesses(SiFilteredSearchCriterionHarness);
-      expect(criteria).toHaveSize(1);
+      expect(criteria).toHaveLength(1);
       expect(await criteria[0].label()).toEqual('foo');
       expect(await (await criteria[0].value())?.text()).toEqual('bar');
       expect(spy).toHaveBeenCalledWith({
@@ -197,12 +198,12 @@ describe('SiFilteredSearchComponent', () => {
 
     it('should reset searchCriteria and publish related events', async () => {
       component.searchCriteria.set({ criteria: [{ name: 'foo', value: 'bar' }], value: 'value' });
-      spyOn(component, 'doSearch');
+      vi.spyOn(component, 'doSearch');
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
-      expect(await filteredSearch.getCriteria()).toHaveSize(1);
+      expect(await filteredSearch.getCriteria()).toHaveLength(1);
       await filteredSearch.clickClearButton();
-      expect(await filteredSearch.getCriteria()).toHaveSize(0);
+      expect(await filteredSearch.getCriteria()).toHaveLength(0);
       expect(await filteredSearch.freeTextSearch().then(freeText => freeText.getValue())).toEqual(
         ''
       );
@@ -228,20 +229,20 @@ describe('SiFilteredSearchComponent', () => {
 
     it('should clear criterion when clicked', async () => {
       const criteria = await loader.getAllHarnesses(SiFilteredSearchCriterionHarness);
-      expect(criteria).toHaveSize(1);
+      expect(criteria).toHaveLength(1);
       await criteria[0].clickClearButton();
-      expect(await loader.getAllHarnesses(SiFilteredSearchCriterionHarness)).toHaveSize(0);
+      expect(await loader.getAllHarnesses(SiFilteredSearchCriterionHarness)).toHaveLength(0);
     });
 
     it('should clear input value if clear is pressed while criterion is active', async () => {
       // Having an option used to be responsible for preventing the criterion text to be cleared.
       component.criteria.set([{ name: 'foo', options: [{ value: 'bar', label: 'Bar' }] }]);
       const criteria = await loader.getAllHarnesses(SiFilteredSearchCriterionHarness);
-      expect(criteria).toHaveSize(1);
+      expect(criteria).toHaveLength(1);
       await criteria[0].clickLabel();
       expect(await criteria[0].value().then(value => value?.getValue())).toBe('Bar');
       await criteria[0].clickClearButton();
-      expect(criteria).toHaveSize(1);
+      expect(criteria).toHaveLength(1);
       expect(await criteria[0].value().then(value => value?.getValue())).toBe('');
       const harness = await loader.getHarness(SiFilteredSearchHarness);
       await harness.freeTextSearch().then(search => search.focus());
@@ -252,7 +253,7 @@ describe('SiFilteredSearchComponent', () => {
   describe('with lazy loaded category values', () => {
     beforeEach(() => {
       component.lazyLoadingDebounceTime = 0;
-      component.lazyCriterionProvider = jasmine.createSpy().and.returnValue(
+      component.lazyCriterionProvider = vi.fn().mockReturnValue(
         of([
           { name: 'foo', label: 'Foo', options: ['foo1', 'bar1'] },
           { name: 'bar', label: 'Bar' },
@@ -269,11 +270,11 @@ describe('SiFilteredSearchComponent', () => {
     });
 
     it('should invoke lazy loading provider on free text search focus', async () => {
-      const spy = jasmine.createSpy().and.returnValue(of([{ name: 'foo' }]));
+      const spy = vi.fn().mockReturnValue(of([{ name: 'foo' }]));
       component.lazyCriterionProvider = spy;
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
-      spy.calls.reset();
+      spy.mockClear();
 
       for (const times of [1, 2, 3]) {
         await freeTextSearch.focus();
@@ -283,7 +284,7 @@ describe('SiFilteredSearchComponent', () => {
     });
 
     it('should invoke lazy loading provider with free text value on focus', async () => {
-      const spy = jasmine.createSpy().and.returnValue(of([{ name: 'foo' }]));
+      const spy = vi.fn().mockReturnValue(of([{ name: 'foo' }]));
       component.lazyCriterionProvider = spy;
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
@@ -293,7 +294,7 @@ describe('SiFilteredSearchComponent', () => {
         'Fo',
         component.filteredSearch().searchCriteria()
       );
-      spy.calls.reset();
+      spy.mockClear();
       await freeTextSearch.blur();
       await freeTextSearch.focus();
       expect(component.lazyCriterionProvider).toHaveBeenCalledWith(
@@ -308,7 +309,7 @@ describe('SiFilteredSearchComponent', () => {
       await freeTextSearch.focus();
       await freeTextSearch.typeText('Fo');
       const items = await freeTextSearch.getItems();
-      expect(items).toHaveSize(1);
+      expect(items).toHaveLength(1);
     });
 
     it('should invoke lazy loading provider with parameter', async () => {
@@ -332,11 +333,11 @@ describe('SiFilteredSearchComponent', () => {
       await criteriaValue?.click();
       await criteriaValue?.focus();
       const items = await criteriaValue?.getItemLabels();
-      expect(items).toHaveSize(2);
+      expect(items).toHaveLength(2);
     });
 
     it('should display criterion label in input', async () => {
-      component.logEvent = jasmine.createSpy().and.callFake(searchCriteria => {
+      component.logEvent = vi.fn().mockImplementation(searchCriteria => {
         component.searchCriteria = searchCriteria;
       });
 
@@ -350,7 +351,7 @@ describe('SiFilteredSearchComponent', () => {
       const criterionValue = await criterion?.value();
       await criterionValue?.focus();
       await criterionValue?.select({ text: 'first' });
-      expect(await freeTextSearch.isFocused()).toBeTrue();
+      expect(await freeTextSearch.isFocused()).toBe(true);
 
       await criterionValue?.click();
       expect(await criterionValue?.getValue()).toEqual('first');
@@ -399,7 +400,7 @@ describe('SiFilteredSearchComponent', () => {
         { name: 'foo', label: 'Foo' },
         { name: 'bar', label: 'Bar' }
       ]);
-      component.lazyValueProvider = jasmine.createSpy().and.returnValue(of(['Foo', 'Bar']));
+      component.lazyValueProvider = vi.fn().mockReturnValue(of(['Foo', 'Bar']));
       component.searchCriteria.set({
         criteria: [{ name: 'foo', value: 'Foo' }],
         value: ''
@@ -478,7 +479,7 @@ describe('SiFilteredSearchComponent', () => {
         { name: 'foo', label: 'Foo' },
         { name: 'bar', label: 'Bar' }
       ]);
-      component.lazyValueProvider = jasmine.createSpy().and.returnValue(
+      component.lazyValueProvider = vi.fn().mockReturnValue(
         of([
           { value: 'fO', label: 'Foo' },
           { value: 'BR', label: 'Bar' }
@@ -501,7 +502,7 @@ describe('SiFilteredSearchComponent', () => {
 
       expect(component.lazyValueProvider).toHaveBeenCalledWith('foo', '');
 
-      const spy = spyOn(component, 'doSearch');
+      const spy = vi.spyOn(component, 'doSearch');
       await criteriaValue?.select({ text: 'Foo' });
 
       expect(spy).toHaveBeenCalledWith({
@@ -601,14 +602,14 @@ describe('SiFilteredSearchComponent', () => {
       await criterionValue?.click();
       await criterionValue?.sendKeys(TestKey.ENTER);
       const operator2 = await criteria[1].operator();
-      expect(await operator2!.hasFocs()).toBeTrue();
+      expect(await operator2!.hasFocs()).toBe(true);
       await operator2!.sendKeys(TestKey.ENTER);
       const value2 = await criteria[1].value();
-      expect(await value2!.hasFocs()).toBeTrue();
+      expect(await value2!.hasFocs()).toBe(true);
       await value2!.sendKeys(TestKey.ENTER);
       expect(
         await filteredSearch.freeTextSearch().then(freeTextSearch => freeTextSearch.isFocused())
-      ).toBeTrue();
+      ).toBe(true);
     });
 
     it('should be able to enter date with keyboard', async () => {
@@ -658,10 +659,10 @@ describe('SiFilteredSearchComponent', () => {
       await datepicker!.next();
       await datepicker!.selectCell({ text: '13' });
       await criterionValue.sendKeys(TestKey.ESCAPE);
-      expect(await criterionValue.isEditable()).toBeTrue();
+      expect(await criterionValue.isEditable()).toBe(true);
       expect(await criterionValue.getValue()).toBe('9/13/1999');
       await criterionValue.blur();
-      expect(await criterionValue.isEditable()).toBeFalse();
+      expect(await criterionValue.isEditable()).toBe(false);
       expect(await criterionValue.text()).toBe('9/13/1999');
     });
   });
@@ -677,7 +678,7 @@ describe('SiFilteredSearchComponent', () => {
   });
 
   it('should trigger search when button is pressed', async () => {
-    const spy = spyOn(component, 'doSearch');
+    const spy = vi.spyOn(component, 'doSearch');
     const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
     const freeTextSearch = await filteredSearch.freeTextSearch();
     await freeTextSearch.focus();
@@ -687,7 +688,7 @@ describe('SiFilteredSearchComponent', () => {
   });
 
   it('should trigger search if enter is pressed with no open typeahead', async () => {
-    const spy = spyOn(component, 'doSearch');
+    const spy = vi.spyOn(component, 'doSearch');
     const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
     const freeTextSearch = await filteredSearch.freeTextSearch();
     await freeTextSearch.focus();
@@ -699,18 +700,18 @@ describe('SiFilteredSearchComponent', () => {
 
   it('should trigger search if no value is selected', async () => {
     component.criteria.set([{ name: 'company', label: 'Company', options: ['Foo', 'Bar'] }]);
-    const spy = spyOn(component, 'doSearch');
+    const spy = vi.spyOn(component, 'doSearch');
     const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
     const freeTextSearch = await filteredSearch.freeTextSearch();
     await freeTextSearch.focus();
-    expect(await freeTextSearch.getItems()).toHaveSize(1);
+    expect(await freeTextSearch.getItems()).toHaveLength(1);
     await freeTextSearch.sendKeys(TestKey.ENTER);
     expect(spy).toHaveBeenCalledWith({ criteria: [], value: '' });
   });
 
   it('should not trigger search if enter is pressed on input with value', async () => {
     component.criteria.set([{ name: 'company', label: 'Company', options: ['Foo', 'Bar'] }]);
-    const spy = spyOn(component, 'doSearch');
+    const spy = vi.spyOn(component, 'doSearch');
     const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
     const freeTextSearch = await filteredSearch.freeTextSearch();
     await freeTextSearch.focus();
@@ -833,7 +834,7 @@ describe('SiFilteredSearchComponent', () => {
     await criterionValue?.click();
     await criterionValue?.focus();
     const items = (await criterionValue?.getItems()) ?? [];
-    expect(items).toHaveSize(3);
+    expect(items).toHaveLength(3);
     const icons = await parallel(() => items?.map(async i => await i.icon()));
     expect(await icons[0]?.hasClass('element-ok-filled')).toBeTruthy();
     expect(await icons[1]?.hasClass('element-cancel-filled')).toBeTruthy();
@@ -864,7 +865,7 @@ describe('SiFilteredSearchComponent', () => {
 
     const criteria = Array.from(element.querySelectorAll('.criteria'));
     const heights = criteria.map(c => c.getBoundingClientRect().height);
-    expect(new Set(heights)).toHaveSize(1);
+    expect(new Set(heights)).toHaveLength(1);
   });
 
   describe('multi select scenarios', () => {
@@ -942,7 +943,7 @@ describe('SiFilteredSearchComponent', () => {
           ]
         }
       ]);
-      spyOn(component, 'doSearch');
+      vi.spyOn(component, 'doSearch');
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
@@ -1001,13 +1002,13 @@ describe('SiFilteredSearchComponent', () => {
       const criterion = (await filteredSearch.getCriteria()).at(0)!;
       await criterion.clickLabel();
       const criterionValue = (await criterion.value())!;
-      expect(await criterionValue.getItems({ isSelected: false })).toHaveSize(2);
+      expect(await criterionValue.getItems({ isSelected: false })).toHaveLength(2);
       await criterion.clickClearButton();
-      expect(await criterionValue.hasFocs()).toBeTrue();
-      expect(await criterionValue.getItems({ isSelected: false })).toHaveSize(4);
+      expect(await criterionValue.hasFocs()).toBe(true);
+      expect(await criterionValue.getItems({ isSelected: false })).toHaveLength(4);
 
       expect(component.filteredSearch().searchCriteria()).toEqual({
-        criteria: [jasmine.objectContaining({ name: 'location', value: [] })],
+        criteria: [expect.objectContaining({ name: 'location', value: [] })],
         value: ''
       });
     });
@@ -1035,7 +1036,7 @@ describe('SiFilteredSearchComponent', () => {
       await criteriaValue?.sendKeys(' ');
 
       expect(component.filteredSearch().searchCriteria()).toEqual({
-        criteria: [jasmine.objectContaining({ name: 'location', value: ['Munich'] })],
+        criteria: [expect.objectContaining({ name: 'location', value: ['Munich'] })],
         value: ''
       });
     });
@@ -1065,7 +1066,7 @@ describe('SiFilteredSearchComponent', () => {
 
       expect(component.searchCriteria()).toEqual({
         criteria: [
-          jasmine.objectContaining({ name: 'location', value: ['Munich', 'Zug', 'Karlsruhe'] })
+          expect.objectContaining({ name: 'location', value: ['Munich', 'Zug', 'Karlsruhe'] })
         ],
         value: ''
       });
@@ -1107,7 +1108,7 @@ describe('SiFilteredSearchComponent', () => {
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const criteria = await filteredSearch.getCriteria();
-      expect(criteria).toHaveSize(1);
+      expect(criteria).toHaveLength(1);
       const criterion = criteria[0];
       expect(await criterion.label()).toBe('location');
       expect(await (await criterion.value())?.text()).toBe('Munich');
@@ -1149,7 +1150,7 @@ describe('SiFilteredSearchComponent', () => {
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const invalidCriteria = await filteredSearch.getCriteria({ isValid: false });
-      expect(invalidCriteria).toHaveSize(1);
+      expect(invalidCriteria).toHaveLength(1);
       const invalidCriteriaLabels = await parallel(() =>
         invalidCriteria.map(async v => await v.label())
       );
@@ -1236,7 +1237,7 @@ describe('SiFilteredSearchComponent', () => {
         criteria: [],
         value: 'Max'
       });
-      spyOn(component, 'searchCriteriaChange');
+      vi.spyOn(component, 'searchCriteriaChange');
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
@@ -1294,7 +1295,7 @@ describe('SiFilteredSearchComponent', () => {
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const criteria = await filteredSearch.getCriteria();
-      expect(criteria).toHaveSize(2);
+      expect(criteria).toHaveLength(2);
       expect(await criteria[0].label()).toBe('Location');
       expect(await (await criteria[0].value())?.text()).toBe('Munich');
       expect(await criteria[1].label()).toBe('company');
@@ -1315,7 +1316,7 @@ describe('SiFilteredSearchComponent', () => {
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const criteria = await filteredSearch.getCriteria();
-      expect(criteria).toHaveSize(2);
+      expect(criteria).toHaveLength(2);
       expect(await criteria[0].label()).toBe('Location');
       expect(await (await criteria[0].value())?.text()).toBe('Munich');
       expect(await criteria[1].label()).toBe('company');
@@ -1340,7 +1341,7 @@ describe('SiFilteredSearchComponent', () => {
     });
 
     it('should emit values while typing in the free text area', async () => {
-      spyOn(component, 'doSearch');
+      vi.spyOn(component, 'doSearch');
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
@@ -1356,7 +1357,7 @@ describe('SiFilteredSearchComponent', () => {
         criteria: [{ name: 'location', value: 'Munich' }],
         value: 'Max'
       });
-      spyOn(component, 'doSearch');
+      vi.spyOn(component, 'doSearch');
 
       // Make second input field appear
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
@@ -1378,7 +1379,7 @@ describe('SiFilteredSearchComponent', () => {
         criteria: [{ name: 'location', value: 'Munich' }],
         value: 'Max'
       });
-      spyOn(component, 'doSearch');
+      vi.spyOn(component, 'doSearch');
 
       // Make second input field appear
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
@@ -1408,14 +1409,14 @@ describe('SiFilteredSearchComponent', () => {
         criteria: [{ name: 'highLimit', operator: '>' }],
         value: 'Max'
       });
-      spyOn(component, 'doSearch');
+      vi.spyOn(component, 'doSearch');
 
       const criteria = await loader.getAllHarnesses(SiFilteredSearchCriterionHarness);
       await criteria[0].clickLabel();
       const operator = await criteria[0].operator();
       await operator?.clearText();
       await operator?.select({ text: '<' });
-      expect(await criteria[0].value().then(value => value?.hasFocs())).toBeTrue();
+      expect(await criteria[0].value().then(value => value?.hasFocs())).toBe(true);
 
       expect(component.doSearch).toHaveBeenCalledWith({
         criteria: [
@@ -1430,7 +1431,7 @@ describe('SiFilteredSearchComponent', () => {
     });
 
     it('should not emit on submit', async () => {
-      spyOn(component, 'doSearch');
+      vi.spyOn(component, 'doSearch');
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       await filteredSearch.clickSearchButton();
       expect(component.doSearch).not.toHaveBeenCalled();
@@ -1438,7 +1439,7 @@ describe('SiFilteredSearchComponent', () => {
   });
 
   it('should not emit values while typing in the free text area', async () => {
-    spyOn(component, 'doSearch');
+    vi.spyOn(component, 'doSearch');
 
     const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
     const freeTextSearch = await filteredSearch.freeTextSearch();
@@ -1486,7 +1487,7 @@ describe('SiFilteredSearchComponent', () => {
     const freeTextSearch = await filteredSearch.freeTextSearch();
     await freeTextSearch.focus();
     const items = await freeTextSearch.getItems();
-    expect(items).toHaveSize(24);
+    expect(items).toHaveLength(24);
   });
 
   it('should restrict typeahead on criteria based on input.', async () => {
@@ -1507,12 +1508,12 @@ describe('SiFilteredSearchComponent', () => {
     const freeTextSearch = await filteredSearch.freeTextSearch();
     await freeTextSearch.focus();
     const items = await freeTextSearch.getItems();
-    expect(items).toHaveSize(10);
+    expect(items).toHaveLength(10);
   });
 
   it('should allow setting a custom value after an value option was selected', async () => {
     component.criteria.set([{ name: 'country', options: ['Germany'] }]);
-    const spy = spyOn(component, 'doSearch');
+    const spy = vi.spyOn(component, 'doSearch');
     const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
     const freeText = await filteredSearch.freeTextSearch();
     await freeText.focus();
@@ -1584,7 +1585,7 @@ describe('SiFilteredSearchComponent', () => {
       const operator = await criteria[0].operator();
       await operator?.focus();
       const activeItem = await operator?.getItemLabels({ isActive: true });
-      expect(activeItem).toHaveSize(1);
+      expect(activeItem).toHaveLength(1);
       // Make sure the operator that is given as input is pre-selected
       expect(await activeItem![0]).toBe('≤');
     });
@@ -1623,7 +1624,7 @@ describe('SiFilteredSearchComponent', () => {
       await criteriaValue?.sendKeys(';');
       expect(
         await filteredSearch.freeTextSearch().then(freeTextSearch => freeTextSearch.isFocused())
-      ).toBeTrue();
+      ).toBe(true);
     });
 
     it('should focus value field after keyboard Enter (operator field)', async () => {
@@ -1648,7 +1649,7 @@ describe('SiFilteredSearchComponent', () => {
       await operator?.focus();
       // Skip test when browser is not focussed to prevent failures.
       await operator?.sendKeys(TestKey.ENTER);
-      expect(await criteria[0].value().then(value => value?.hasFocs())).toBeTrue();
+      expect(await criteria[0].value().then(value => value?.hasFocs())).toBe(true);
     });
 
     it('should focus operator if backspace pressed in empty criterion value', async () => {
@@ -1671,7 +1672,7 @@ describe('SiFilteredSearchComponent', () => {
       await value!.click();
       await value!.setValue('');
       await value!.sendKeys(TestKey.BACKSPACE);
-      expect(await criteria[0].operator().then(operator => operator?.hasFocs())).toBeTrue();
+      expect(await criteria[0].operator().then(operator => operator?.hasFocs())).toBe(true);
     });
 
     it('should delete criterion if backspace pressed in empty criterion value without operator', async () => {
@@ -1688,16 +1689,16 @@ describe('SiFilteredSearchComponent', () => {
         .then(criteria => criteria[0].value());
       await value!.click();
       await value!.sendKeys(TestKey.BACKSPACE);
-      expect(await filteredSearch.getCriteria()).toHaveSize(1);
+      expect(await filteredSearch.getCriteria()).toHaveLength(1);
       const value2 = await filteredSearch
         .getCriteria({ labelText: 'second' })
         .then(criteria => criteria[0].value());
-      expect(await value2!.hasFocs()).toBeTrue();
+      expect(await value2!.hasFocs()).toBe(true);
       await value2!.sendKeys(TestKey.BACKSPACE);
       expect(
         await filteredSearch.freeTextSearch().then(freeTextSearch => freeTextSearch.isFocused())
-      ).toBeTrue();
-      expect(await filteredSearch.getCriteria()).toHaveSize(0);
+      ).toBe(true);
+      expect(await filteredSearch.getCriteria()).toHaveLength(0);
     });
 
     it('should delete criterion if backspace pressed in empty criterion operator', async () => {
@@ -1720,7 +1721,7 @@ describe('SiFilteredSearchComponent', () => {
       await operator!.click();
       await operator!.setValue('');
       await operator!.sendKeys(TestKey.BACKSPACE);
-      expect(await filteredSearch.getCriteria()).toHaveSize(0);
+      expect(await filteredSearch.getCriteria()).toHaveLength(0);
     });
 
     it('should focus criteria value if backspace pressed in empty free search', async () => {
@@ -1735,14 +1736,14 @@ describe('SiFilteredSearchComponent', () => {
       await freeTextSearch.sendKeys(TestKey.BACKSPACE);
       const criteria = await filteredSearch.getCriteria({ labelText: 'location' });
       await new Promise(resolve => setTimeout(resolve, 0));
-      expect(await criteria[0].value().then(value => value?.hasFocs())).toBeTrue();
+      expect(await criteria[0].value().then(value => value?.hasFocs())).toBe(true);
     });
 
     it('should match criterion label after keyboard colon was pressed', async () => {
       component.exclusiveCriteria = true;
       component.doSearchOnInputChange = true;
       component.criteria.set([{ name: 'test', label: 'Location', options: [] }]);
-      spyOn(component, 'doSearch');
+      vi.spyOn(component, 'doSearch');
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
@@ -1758,7 +1759,7 @@ describe('SiFilteredSearchComponent', () => {
     it('should match criterion option after keyboard semicolon was pressed', async () => {
       component.doSearchOnInputChange = true;
       component.criteria.set([{ name: 'test', label: 'Location', options: [] }]);
-      spyOn(component, 'doSearch');
+      vi.spyOn(component, 'doSearch');
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
@@ -1779,13 +1780,13 @@ describe('SiFilteredSearchComponent', () => {
     it('should ignore colon if disabled', async () => {
       component.criteria.set([{ name: 'test', label: 'Location', options: ['Hannover'] }]);
       component.disableSelectionByColonAndSemicolon = true;
-      const spy = spyOn(component, 'doSearch');
+      const spy = vi.spyOn(component, 'doSearch');
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
       await freeTextSearch.focus();
       await freeTextSearch.sendKeys('location:');
       expect(spy).not.toHaveBeenCalled();
-      expect(await filteredSearch.getCriteria()).toHaveSize(0);
+      expect(await filteredSearch.getCriteria()).toHaveLength(0);
     });
 
     it('should ignore semicolon if disabled', async () => {
@@ -1795,7 +1796,7 @@ describe('SiFilteredSearchComponent', () => {
       const freeTextSearch = await filteredSearch.freeTextSearch();
       await freeTextSearch.focus();
       await freeTextSearch.select({ text: 'Location' });
-      const spy = spyOn(component, 'doSearch');
+      const spy = vi.spyOn(component, 'doSearch');
       await filteredSearch
         .getCriteria()
         .then(criteria => criteria[0].value())
@@ -1816,7 +1817,7 @@ describe('SiFilteredSearchComponent', () => {
         criteria: [{ name: 'location', value: 'Munich' }],
         value: 'Max'
       });
-      spyOn(component, 'doSearch');
+      vi.spyOn(component, 'doSearch');
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
@@ -1847,7 +1848,7 @@ describe('SiFilteredSearchComponent', () => {
         value: 'Max'
       });
       component.onlySelectValue = true;
-      spyOn(component, 'doSearch');
+      vi.spyOn(component, 'doSearch');
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
@@ -1905,7 +1906,7 @@ describe('SiFilteredSearchComponent', () => {
         criteria: [{ name: 'country', value: 'Switzerland' }],
         value: 'Max'
       });
-      spyOn(component, 'doSearch');
+      vi.spyOn(component, 'doSearch');
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
@@ -1913,7 +1914,7 @@ describe('SiFilteredSearchComponent', () => {
       await freeTextSearch.sendKeys(':');
 
       expect(component.doSearch).toHaveBeenCalledWith({
-        criteria: jasmine.arrayContaining([{ name: 'country', value: 'CH' }]),
+        criteria: expect.arrayContaining([{ name: 'country', value: 'CH' }]),
         value: ''
       });
     });
@@ -1935,7 +1936,7 @@ describe('SiFilteredSearchComponent', () => {
         criteria: [{ name: 'country', value: 'Switzerland' }],
         value: 'Max'
       });
-      spyOn(component, 'doSearch');
+      vi.spyOn(component, 'doSearch');
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
@@ -1943,7 +1944,7 @@ describe('SiFilteredSearchComponent', () => {
       await freeTextSearch.sendKeys(':');
 
       expect(component.doSearch).toHaveBeenCalledWith({
-        criteria: jasmine.arrayContaining([{ name: 'country', value: 'Switzerland' }]),
+        criteria: expect.arrayContaining([{ name: 'country', value: 'Switzerland' }]),
         value: ''
       });
     });
@@ -1963,7 +1964,7 @@ describe('SiFilteredSearchComponent', () => {
         criteria: [{ name: 'country', value: 'Switzerland' }],
         value: 'Max'
       });
-      spyOn(component, 'doSearch');
+      vi.spyOn(component, 'doSearch');
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
@@ -1971,7 +1972,7 @@ describe('SiFilteredSearchComponent', () => {
       await freeTextSearch.sendKeys(':');
 
       expect(component.doSearch).toHaveBeenCalledWith({
-        criteria: jasmine.arrayContaining([{ name: 'country', value: 'Switzerland' }]),
+        criteria: expect.arrayContaining([{ name: 'country', value: 'Switzerland' }]),
         value: ''
       });
     });
@@ -1994,7 +1995,7 @@ describe('SiFilteredSearchComponent', () => {
         criteria: [{ name: 'country', value: 'Switzerland_Overrride' }],
         value: 'Max'
       });
-      spyOn(component, 'doSearch');
+      vi.spyOn(component, 'doSearch');
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
@@ -2002,7 +2003,7 @@ describe('SiFilteredSearchComponent', () => {
       await freeTextSearch.sendKeys(':');
 
       expect(component.doSearch).toHaveBeenCalledWith({
-        criteria: jasmine.arrayContaining([{ name: 'country', value: 'Switzerland_Overrride' }]),
+        criteria: expect.arrayContaining([{ name: 'country', value: 'Switzerland_Overrride' }]),
         value: ''
       });
     });
@@ -2026,7 +2027,7 @@ describe('SiFilteredSearchComponent', () => {
         criteria: [{ name: 'country', value: ['Switzerland', 'Germany'] }],
         value: 'Max'
       });
-      spyOn(component, 'doSearch');
+      vi.spyOn(component, 'doSearch');
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
@@ -2035,7 +2036,7 @@ describe('SiFilteredSearchComponent', () => {
       expect(component.doSearch).toHaveBeenCalledWith({
         criteria: [
           { name: 'country', value: ['DE', 'CH'] },
-          jasmine.objectContaining({ name: 'Max', value: '' })
+          expect.objectContaining({ name: 'Max', value: '' })
         ],
         value: ''
       });
@@ -2055,14 +2056,14 @@ describe('SiFilteredSearchComponent', () => {
     });
 
     it('should contain actual search and criteria list ', async () => {
-      const spy = spyOn(component, 'showCriteria').and.callThrough();
+      const spy = vi.spyOn(component, 'showCriteria');
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
       await freeTextSearch.focus();
 
       expect(spy).toHaveBeenCalledWith(
-        jasmine.objectContaining({
+        expect.objectContaining({
           criteria: ['foo', 'bar'],
           searchCriteria: {
             criteria: [{ name: 'foo', value: 'Foo' }],
@@ -2073,7 +2074,7 @@ describe('SiFilteredSearchComponent', () => {
     });
 
     it('should not emit interceptDisplayedCriteria when maxCriteria exceeded', async () => {
-      const spy = spyOn(component, 'showCriteria').and.callThrough();
+      const spy = vi.spyOn(component, 'showCriteria');
       component.maxCriteria = 1;
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
@@ -2084,7 +2085,7 @@ describe('SiFilteredSearchComponent', () => {
     });
 
     it('should not display criteria when interceptDisplayedCriteria pass an empty array', async () => {
-      spyOn(component, 'showCriteria').and.callFake(e => {
+      vi.spyOn(component, 'showCriteria').mockImplementation(e => {
         e.allow([]);
       });
 
@@ -2096,9 +2097,9 @@ describe('SiFilteredSearchComponent', () => {
     });
 
     describe('with only one foo criterion', () => {
-      let spy: jasmine.Spy;
+      let spy: Mock;
       beforeEach(() => {
-        spy = spyOn(component, 'showCriteria').and.callFake(e => {
+        spy = vi.spyOn(component, 'showCriteria').mockImplementation(e => {
           if (e.searchCriteria.criteria.find(c => c.name === 'foo')) {
             e.allow(['bar']);
           } else {
@@ -2216,12 +2217,12 @@ describe('SiFilteredSearchComponent - With translation', () => {
   it('should update criterion option on translate', async () => {
     const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
     const validCriteria = await filteredSearch.getCriteria({ isValid: true });
-    expect(validCriteria).toHaveSize(2);
+    expect(validCriteria).toHaveLength(2);
     const values = await parallel(() =>
       validCriteria.map(async v => await (await v.value())?.text())
     );
     expect(values).toEqual(['translated(GermanyKey)', 'translated(SwitzerlandKey)']);
-    const spy = spyOn(component, 'doSearch');
+    const spy = vi.spyOn(component, 'doSearch');
     component.doSearchOnInputChange = true;
     const deOption = validCriteria[0];
     await deOption.clickLabel();
@@ -2316,7 +2317,7 @@ describe('SiFilteredSearchComponent - With translation', () => {
       criteria: [{ name: 'date', value: '' }],
       value: ''
     });
-    const spy = spyOn(component, 'doSearch');
+    const spy = vi.spyOn(component, 'doSearch');
     const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
     const criteria = await filteredSearch.getCriteria();
     const value = await criteria[0].value();
@@ -2331,7 +2332,7 @@ describe('SiFilteredSearchComponent - With translation', () => {
         {
           name: 'date',
           value: '',
-          dateValue: jasmine.anything() // should be invalid date, but there is no matcher for that
+          dateValue: expect.anything() // should be invalid date, but there is no matcher for that
         }
       ],
       value: ''
@@ -2343,9 +2344,9 @@ describe('SiFilteredSearchComponent - With translation', () => {
     const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
     const freeTextSearch = await filteredSearch.freeTextSearch();
     await freeTextSearch.focus();
-    expect(await freeTextSearch.getItems({ isActive: true })).toHaveSize(0);
+    expect(await freeTextSearch.getItems({ isActive: true })).toHaveLength(0);
     await freeTextSearch.typeText('C');
-    expect(await freeTextSearch.getItems({ isActive: true })).toHaveSize(1);
+    expect(await freeTextSearch.getItems({ isActive: true })).toHaveLength(1);
   });
 
   it('should not remove criterion if no value is entered', async () => {
@@ -2356,12 +2357,12 @@ describe('SiFilteredSearchComponent - With translation', () => {
     await freeTextSearch.focus();
     await freeTextSearch.sendKeys('key:');
     const criteriaText = await filteredSearch.getCriteria();
-    expect(criteriaText).toHaveSize(1);
+    expect(criteriaText).toHaveLength(1);
     await criteriaText
       .at(0)!
       .value()
       .then(value => value!.blur());
-    expect(await filteredSearch.getCriteria()).toHaveSize(1);
+    expect(await filteredSearch.getCriteria()).toHaveLength(1);
     await freeTextSearch.focus();
     await freeTextSearch.clearText();
     await freeTextSearch.select({ text: 'translated(Date)' });
@@ -2372,7 +2373,7 @@ describe('SiFilteredSearchComponent - With translation', () => {
       .value()
       .then(value => value!.blur());
     // Dates have a default, so they should not get removed
-    expect(await filteredSearch.getCriteria({ labelText: 'translated(Date)' })).toHaveSize(1);
+    expect(await filteredSearch.getCriteria({ labelText: 'translated(Date)' })).toHaveLength(1);
   });
 
   it('should work with strict value', async () => {

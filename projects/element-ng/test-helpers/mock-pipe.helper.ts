@@ -1,4 +1,5 @@
 import { Pipe } from '@angular/core';
+import { vi } from 'vitest';
 
 /**
  * Create a new pipe with name for tests.
@@ -17,7 +18,7 @@ import { Pipe } from '@angular/core';
  */
 export function mockPipe(
   options: Pipe,
-  transformCall: (value: any, ...args: any[]) => any = jasmine.createSpy()
+  transformCall: (value: any, ...args: any[]) => any = vi.fn()
 ): Pipe {
   const metadata: Pipe = {
     name: options.name

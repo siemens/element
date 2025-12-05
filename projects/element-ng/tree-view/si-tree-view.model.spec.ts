@@ -2,6 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { describe, expect, it } from 'vitest';
+
 import { CheckboxState, TreeItem } from './si-tree-view.model';
 import { boxClicked, selectItemsBetween } from './si-tree-view.utils';
 
@@ -155,6 +157,6 @@ describe('TreeItem and tree-helpers', () => {
     selectItemsBetween(treeRoot, treeRoot[0], treeRoot[1]);
 
     expect(treeRoot[0].selected).toBeFalsy();
-    expect(treeRoot[1].selected).toBeTrue();
+    expect(treeRoot[1].selected).toBe(true);
   });
 });

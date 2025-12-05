@@ -6,6 +6,7 @@ import { DOWN_ARROW, ENTER, UP_ARROW } from '@angular/cdk/keycodes';
 import { Component, ErrorHandler } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { vi } from 'vitest';
 
 import { SiAutocompleteListboxDirective } from './si-autocomplete-listbox.directive';
 import { SiAutocompleteOptionDirective } from './si-autocomplete-option.directive';
@@ -100,8 +101,8 @@ describe('SiAutocompleteDirective', () => {
     testComponent.showList = true;
     testComponent.hasValues = false;
     fixture.detectChanges();
-    const spy = spyOn(testComponent, 'submitted');
-    const spyError = spyOn(ErrorHandler.prototype, 'handleError').and.callThrough();
+    const spy = vi.spyOn(testComponent, 'submitted');
+    const spyError = vi.spyOn(ErrorHandler.prototype, 'handleError');
 
     await fixture.whenStable();
     const input = fixture.debugElement.query(By.css('input'));
@@ -124,7 +125,7 @@ describe('SiAutocompleteDirective', () => {
       fixture.debugElement
         .queryAll(By.directive(SiAutocompleteOptionDirective))
         .filter(option => option.classes.active)
-    ).toHaveSize(0);
+    ).toHaveLength(0);
     testComponent.defaultIndex = 0;
     fixture.detectChanges();
     await fixture.whenStable();
@@ -132,7 +133,7 @@ describe('SiAutocompleteDirective', () => {
       fixture.debugElement
         .queryAll(By.directive(SiAutocompleteOptionDirective))
         .filter(option => option.classes.active)
-    ).toHaveSize(1);
+    ).toHaveLength(1);
     testComponent.defaultIndex = 1;
     fixture.detectChanges();
     await fixture.whenStable();

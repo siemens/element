@@ -33,7 +33,7 @@ describe('SiDateRangeCalculationService', () => {
     };
 
     const resolved = service.resolveDateRangeFilter(filter);
-    expect(resolved.valid).toBeTrue();
+    expect(resolved.valid).toBe(true);
     compareDates(resolved.start, new Date('2023-07-08'));
     compareDates(resolved.end, new Date('2023-07-15'));
   });
@@ -48,7 +48,7 @@ describe('SiDateRangeCalculationService', () => {
     const start = new Date(end.getTime() - 7 * ONE_DAY);
 
     const resolved = service.resolveDateRangeFilter(filter);
-    expect(resolved.valid).toBeTrue();
+    expect(resolved.valid).toBe(true);
     compareDates(resolved.start, start);
     compareDates(resolved.end, end);
   });
@@ -63,7 +63,7 @@ describe('SiDateRangeCalculationService', () => {
     const start = new Date('2023-05-07');
 
     const resolved = service.resolveDateRangeFilter(filter);
-    expect(resolved.valid).toBeTrue();
+    expect(resolved.valid).toBe(true);
     compareDates(resolved.start, start);
     compareDates(resolved.end, end);
   });
@@ -76,7 +76,7 @@ describe('SiDateRangeCalculationService', () => {
     };
 
     const resolved = service.resolveDateRangeFilter(filter);
-    expect(resolved.valid).toBeTrue();
+    expect(resolved.valid).toBe(true);
     compareDates(resolved.start, new Date('2023-07-15'));
     compareDates(resolved.end, new Date('2023-07-22'));
   });
@@ -89,7 +89,7 @@ describe('SiDateRangeCalculationService', () => {
     };
 
     const resolved = service.resolveDateRangeFilter(filter);
-    expect(resolved.valid).toBeTrue();
+    expect(resolved.valid).toBe(true);
     compareDates(resolved.start, new Date('2023-07-08'));
     compareDates(resolved.end, new Date('2023-07-22'));
   });
@@ -101,7 +101,7 @@ describe('SiDateRangeCalculationService', () => {
     };
 
     const resolved = service.resolveDateRangeFilter(filter);
-    expect(resolved.valid).toBeTrue();
+    expect(resolved.valid).toBe(true);
     compareDates(resolved.start, new Date('2023-06-17'));
     compareDates(resolved.end, new Date('2023-07-15'));
   });

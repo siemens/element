@@ -22,6 +22,7 @@ import {
   transferTreeItem,
   TreeItem
 } from '@siemens/element-ng/tree-view';
+import { expect, it, vi } from 'vitest';
 
 @Component({
   imports: [SiTreeViewModule, DragDropModule],
@@ -219,7 +220,7 @@ describe('SiTreeViewComponentWithDragDrop', () => {
   });
 
   it('shall not move item into its own child', () => {
-    spyOn(console, 'error');
+    vi.spyOn(console, 'error');
     fixture.componentInstance.items[0].state = 'expanded';
     fixture.detectChanges();
     runOnPushChangeDetection(fixture);

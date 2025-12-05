@@ -9,6 +9,7 @@ import { Link } from '@siemens/element-ng/link';
 import { SiTranslateService } from '@siemens/element-ng/translate';
 import { provideMockTranslateServiceBuilder } from '@siemens/element-translate-ng/translate';
 import { of } from 'rxjs';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import { SiInlineNotificationComponent } from './index';
 
@@ -30,7 +31,9 @@ class TestHostComponent {
   heading = '';
   message = '';
   action!: Link;
-  translationParams!: { [key: string]: any };
+  translationParams!: {
+    [key: string]: any;
+  };
 }
 
 describe('SiInlineNotificationComponent', () => {

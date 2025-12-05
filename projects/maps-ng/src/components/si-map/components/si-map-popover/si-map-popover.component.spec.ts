@@ -4,6 +4,7 @@
  */
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { MapPointMetaData } from '../../models';
 import { SiMapPopoverComponent } from './si-map-popover.component';
@@ -41,14 +42,14 @@ describe('SiMapPopoverComponent', () => {
     };
 
     it('custom popover component if defined', () => {
-      spyOn<any>(component, 'renderCustomComponent');
+      vi.spyOn<any, any>(component, 'renderCustomComponent');
       component.render({ component: MockCustomPopoverComponent, mapPoints });
       // eslint-disable-next-line
       expect(component['renderCustomComponent']).toHaveBeenCalled();
     });
 
     it('default popover component otherwise', () => {
-      spyOn<any>(component, 'renderDefault');
+      vi.spyOn<any, any>(component, 'renderDefault');
       component.render({ component: undefined, mapPoints });
       // eslint-disable-next-line
       expect(component['renderDefault']).toHaveBeenCalled();

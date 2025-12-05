@@ -14,6 +14,7 @@ import {
   waitForAsync
 } from '@angular/core/testing';
 import { provideRouter, RouterLink, RouterOutlet } from '@angular/router';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 import {
   MockResizeObserver,
@@ -57,7 +58,12 @@ class TestComponent {
   readonly tabButtonMaxWidth = signal<number | undefined>(undefined);
   readonly wrapperWidth = signal(200);
   protected readonly tabsObject = signal<
-    { heading: string; closable?: boolean; active?: boolean }[]
+    {
+      heading: string;
+      closable?: boolean;
+      active?: boolean;
+      canActivate?: () => boolean;
+    }[]
   >([]);
 
   set tabs(
@@ -118,10 +124,23 @@ class TestRoutingComponent {
   readonly tabButtonMaxWidth = signal<number | undefined>(undefined);
   readonly wrapperWidth = signal(200);
   protected readonly tabsObject = signal<
-    { heading: string; closable?: boolean; routerLinkUrl?: string }[]
+    {
+      heading: string;
+      closable?: boolean;
+      routerLinkUrl?: string;
+    }[]
   >([]);
 
-  set tabs(value: ({ heading: string; closable?: true; routerLinkUrl?: string } | string)[]) {
+  set tabs(
+    value: (
+      | {
+          heading: string;
+          closable?: true;
+          routerLinkUrl?: string;
+        }
+      | string
+    )[]
+  ) {
     this.tabsObject.set(
       value.map(tab => {
         if (typeof tab === 'string') {
@@ -180,9 +199,9 @@ describe('SiTabset', () => {
   it('should be possible to add a few tabs to the tabComponent', async () => {
     testComponent.tabs = [{ heading: '1', active: true }, '2', '3'];
     fixture.detectChanges();
-    expect(await tabsetHarness.isTabItemActive(0)).toBeTrue();
-    expect(await tabsetHarness.isTabItemActive(1)).toBeFalse();
-    expect(await tabsetHarness.isTabItemActive(2)).toBeFalse();
+    expect(await tabsetHarness.isTabItemActive(0)).toBe(true);
+    expect(await tabsetHarness.isTabItemActive(1)).toBe(false);
+    expect(await tabsetHarness.isTabItemActive(2)).toBe(false);
     expect(await tabsetHarness.getTabItemsLength()).toEqual(3);
   });
 
@@ -253,7 +272,7 @@ describe('SiTabset', () => {
     ];
     testComponent.wrapperWidth.set(300);
     fixture.detectChanges();
-    expect(await tabsetHarness.isTabVisible(3)).toBeFalse();
+    expect(await tabsetHarness.isTabVisible(3)).toBe(false);
     expect(await tabsetHarness.getOptionsMenuButton()).toBeDefined();
     testComponent.wrapperWidth.set(500);
     detectSizeChange();
@@ -261,7 +280,7 @@ describe('SiTabset', () => {
     tick(10);
     flush();
     expect(await tabsetHarness.getOptionsMenuButton()).toBeNull();
-    expect(await tabsetHarness.isTabVisible(3)).toBeTrue();
+    expect(await tabsetHarness.isTabVisible(3)).toBe(true);
   }));
 
   it('should always scroll active tab into view', fakeAsync(async () => {
@@ -279,23 +298,23 @@ describe('SiTabset', () => {
     testComponent.wrapperWidth.set(300);
     fixture.detectChanges();
     expect(await tabsetHarness.getOptionsMenuButton()).toBeDefined();
-    expect(await tabsetHarness.isTabVisible(6)).toBeTrue();
-    expect(await tabsetHarness.isTabVisible(0)).toBeFalse();
+    expect(await tabsetHarness.isTabVisible(6)).toBe(true);
+    expect(await tabsetHarness.isTabVisible(0)).toBe(false);
 
     tabs[0].active = true;
     tabs[6].active = false;
     fixture.detectChanges();
-    expect(await tabsetHarness.isTabVisible(0)).toBeTrue();
-    expect(await tabsetHarness.isTabVisible(6)).toBeFalse();
+    expect(await tabsetHarness.isTabVisible(0)).toBe(true);
+    expect(await tabsetHarness.isTabVisible(6)).toBe(false);
   }));
 
   it('should emit tab close event for closable tab and preserve active tab', async () => {
     testComponent.tabs = ['1', '2', { heading: '3', closable: true }, '4'];
     fixture.detectChanges();
-    const closeSpy = spyOn(testComponent, 'closeTriggered').and.callThrough();
+    const closeSpy = vi.spyOn(testComponent, 'closeTriggered');
     await (await tabsetHarness.getTabItemButtonAt(3)).click();
     await (await tabsetHarness.getCloseButtonForTabAt(0)).click();
-    expect(closeSpy).toHaveBeenCalledWith(jasmine.objectContaining({ heading: '3' }));
+    expect(closeSpy).toHaveBeenCalledWith(expect.objectContaining({ heading: '3' }));
     expect(await (await tabsetHarness.getTabItemButtonAt(2)).getAttribute('tabindex')).toBe('0');
     await (await tabsetHarness.getTabItemButtonAt(2)).focus();
     await tabsetHarness.pressArrowLeft();
@@ -346,7 +365,7 @@ describe('SiTabset', () => {
     testComponent.tabs = [];
     fixture.detectChanges();
     testComponent.tabs = ['1', { heading: '2', active: true }, '3'];
-    expect(await tabsetHarness.isTabFocussable(1)).toBeTrue();
+    expect(await tabsetHarness.isTabFocussable(1)).toBe(true);
   });
 
   it('should not change active if canDeactivate returns false', async () => {
@@ -355,18 +374,18 @@ describe('SiTabset', () => {
       { heading: '2', closable: true, canDeactivate: () => false }
     ];
     fixture.detectChanges();
-    expect(await tabsetHarness.isTabItemActive(0)).toBeTrue();
-    expect(await tabsetHarness.isTabItemActive(1)).toBeFalse();
+    expect(await tabsetHarness.isTabItemActive(0)).toBe(true);
+    expect(await tabsetHarness.isTabItemActive(1)).toBe(false);
 
     (await tabsetHarness.getTabItemButtonAt(1)).click();
     fixture.detectChanges();
-    expect(await tabsetHarness.isTabItemActive(0)).toBeFalse();
-    expect(await tabsetHarness.isTabItemActive(1)).toBeTrue();
+    expect(await tabsetHarness.isTabItemActive(0)).toBe(false);
+    expect(await tabsetHarness.isTabItemActive(1)).toBe(true);
 
     (await tabsetHarness.getTabItemButtonAt(0)).click();
     fixture.detectChanges();
-    expect(await tabsetHarness.isTabItemActive(0)).toBeFalse();
-    expect(await tabsetHarness.isTabItemActive(1)).toBeTrue();
+    expect(await tabsetHarness.isTabItemActive(0)).toBe(false);
+    expect(await tabsetHarness.isTabItemActive(1)).toBe(true);
   });
 
   it('should not change active if canActivate returns false', async () => {
@@ -375,13 +394,13 @@ describe('SiTabset', () => {
       { heading: '2', closable: true, canActivate: () => false }
     ];
     fixture.detectChanges();
-    expect(await tabsetHarness.isTabItemActive(0)).toBeTrue();
-    expect(await tabsetHarness.isTabItemActive(1)).toBeFalse();
+    expect(await tabsetHarness.isTabItemActive(0)).toBe(true);
+    expect(await tabsetHarness.isTabItemActive(1)).toBe(false);
 
     (await tabsetHarness.getTabItemButtonAt(1)).click();
     fixture.detectChanges();
-    expect(await tabsetHarness.isTabItemActive(0)).toBeTrue();
-    expect(await tabsetHarness.isTabItemActive(1)).toBeFalse();
+    expect(await tabsetHarness.isTabItemActive(0)).toBe(true);
+    expect(await tabsetHarness.isTabItemActive(1)).toBe(false);
   });
 });
 

@@ -13,9 +13,10 @@ import {
 import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { provideRouter, RouterLink, RouterOutlet } from '@angular/router';
+import { provideRouter, RouterOutlet } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { of, Subject } from 'rxjs';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import {
   BOOTSTRAP_BREAKPOINTS,
@@ -155,10 +156,12 @@ describe('ListDetailsComponent', () => {
     };
 
     const resizeObserver = new Subject<ElementDimensions>();
-    const resizeSpy = jasmine.createSpyObj('ResizeObserverService', ['observe']);
+    const resizeSpy = {
+      observe: vi.fn()
+    };
 
     beforeEach(async () => {
-      resizeSpy.observe.and.callFake((e: Element, t: number, i: boolean, im?: boolean) => {
+      resizeSpy.observe.mockImplementation((e: Element, t: number, i: boolean, im?: boolean) => {
         return resizeObserver;
       });
 
@@ -210,7 +213,7 @@ describe('ListDetailsComponent', () => {
       const backButton = htmlElement.querySelector('si-details-pane button')!;
       backButton.dispatchEvent(new Event('click'));
       fixture.detectChanges();
-      expect(component.detailsActive).toBeFalse();
+      expect(component.detailsActive).toBe(false);
     }));
 
     it('should add host .expanded class when crossing expandBreakpoint', () => {
@@ -248,7 +251,7 @@ describe('ListDetailsComponent', () => {
       it('should change hasLargeSize to true when crossing above breakpoint', fakeAsync(() => {
         flush();
         fixture.detectChanges();
-        expect(component.listDetails.hasLargeSize()).toBeTrue();
+        expect(component.listDetails.hasLargeSize()).toBe(true);
       }));
 
       it('should change hasLargeSize to false when dropping below breakpoint', fakeAsync(() => {
@@ -257,7 +260,7 @@ describe('ListDetailsComponent', () => {
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
         flush();
         fixture.detectChanges();
-        expect(component.listDetails.hasLargeSize()).toBeFalse();
+        expect(component.listDetails.hasLargeSize()).toBe(false);
       }));
     });
 
@@ -273,15 +276,15 @@ describe('ListDetailsComponent', () => {
         flush();
         fixture.detectChanges();
 
-        expect(getInViewport(getDetailsPane().firstElementChild as HTMLElement)).toBeTrue();
+        expect(getInViewport(getDetailsPane().firstElementChild as HTMLElement)).toBe(true);
 
         const backBtn = htmlElement.querySelector('si-details-pane button')!;
         backBtn.dispatchEvent(new Event('click'));
         fixture.detectChanges();
         flush();
 
-        expect(component.detailsActive).toBeFalse();
-        expect(getInViewport(getListPane().firstElementChild as HTMLElement)).toBeTrue();
+        expect(component.detailsActive).toBe(false);
+        expect(getInViewport(getListPane().firstElementChild as HTMLElement)).toBe(true);
       }));
 
       it('should switch between split and static layouts as size & disableResizing change', fakeAsync(() => {
@@ -311,14 +314,14 @@ describe('ListDetailsComponent', () => {
         component.detailsActive = false;
         fixture.detectChanges();
         flush();
-        expect(getInViewport(getListPane().firstElementChild as HTMLElement)).toBeTrue();
-        expect(getInViewport(getDetailsPane().firstElementChild as HTMLElement)).toBeTrue();
+        expect(getInViewport(getListPane().firstElementChild as HTMLElement)).toBe(true);
+        expect(getInViewport(getDetailsPane().firstElementChild as HTMLElement)).toBe(true);
 
         component.detailsActive = true;
         fixture.detectChanges();
         flush();
-        expect(getInViewport(getListPane().firstElementChild as HTMLElement)).toBeTrue();
-        expect(getInViewport(getDetailsPane().firstElementChild as HTMLElement)).toBeTrue();
+        expect(getInViewport(getListPane().firstElementChild as HTMLElement)).toBe(true);
+        expect(getInViewport(getDetailsPane().firstElementChild as HTMLElement)).toBe(true);
       }));
     });
 
@@ -355,7 +358,7 @@ describe('ListDetailsComponent', () => {
         component.detailsActive = false;
         fixture.detectChanges();
         flush();
-        expect(getInViewport(getDetailsPane().firstElementChild as HTMLElement)).toBeFalse();
+        expect(getInViewport(getDetailsPane().firstElementChild as HTMLElement)).toBe(false);
       }));
 
       it('should set inert attribute to prevent focus on hidden details when details are inactive on small screens', fakeAsync(() => {
@@ -380,7 +383,7 @@ describe('ListDetailsComponent', () => {
         fixture.detectChanges();
         htmlElement.querySelector('button')?.click();
         fixture.detectChanges();
-        expect(component.detailsActive).toBeFalse();
+        expect(component.detailsActive).toBe(false);
       });
 
       it('should not show details back button when hideBackButton is true', () => {
@@ -395,7 +398,7 @@ describe('ListDetailsComponent', () => {
         component.detailsActive = true;
         fixture.detectChanges();
         flush();
-        expect(getInViewport(getListPane().firstElementChild as HTMLElement)).toBeFalse();
+        expect(getInViewport(getListPane().firstElementChild as HTMLElement)).toBe(false);
       }));
     });
   });
@@ -414,13 +417,7 @@ describe('ListDetailsComponent', () => {
     class EmptyComponent {}
 
     @Component({
-      imports: [
-        SiListDetailsComponent,
-        SiListPaneComponent,
-        RouterLink,
-        RouterOutlet,
-        SiDetailsPaneComponent
-      ],
+      imports: [SiListDetailsComponent, SiListPaneComponent, RouterOutlet, SiDetailsPaneComponent],
       template: `
         <si-list-details class="vh-100">
           <si-list-pane />
@@ -462,7 +459,7 @@ describe('ListDetailsComponent', () => {
     });
 
     it('should navigate back and forward in mobile mode by clicking', async () => {
-      spyOn(ResizeObserverService.prototype, 'observe').and.returnValue(
+      vi.spyOn(ResizeObserverService.prototype, 'observe').mockReturnValue(
         of({ width: 100, height: 100 })
       );
       routerHarness = await RouterTestingHarness.create('/list');
@@ -474,7 +471,7 @@ describe('ListDetailsComponent', () => {
       await routerHarness.navigateByUrl('/list/details');
       routerHarness.detectChanges();
       expect(debugElement.query(By.css('si-details-pane-body'))).toBeTruthy();
-      expect(debugElement.query(By.css('.list-details')).classes['details-active']).toBeTrue();
+      expect(debugElement.query(By.css('.list-details')).classes['details-active']).toBe(true);
       debugElement.query(By.css('.si-details-header-back')).nativeElement.click();
       routerHarness.detectChanges();
       await routerHarness.fixture.whenStable();
@@ -485,7 +482,7 @@ describe('ListDetailsComponent', () => {
     });
 
     it('should navigate back and forward in mobile mode by navigation', async () => {
-      spyOn(ResizeObserverService.prototype, 'observe').and.returnValue(
+      vi.spyOn(ResizeObserverService.prototype, 'observe').mockReturnValue(
         of({ width: 100, height: 100 })
       );
       routerHarness = await RouterTestingHarness.create('/list');
@@ -497,7 +494,7 @@ describe('ListDetailsComponent', () => {
       await routerHarness.navigateByUrl('/list/details');
       routerHarness.detectChanges();
       expect(debugElement.query(By.css('si-details-pane-body'))).toBeTruthy();
-      expect(debugElement.query(By.css('.list-details')).classes['details-active']).toBeTrue();
+      expect(debugElement.query(By.css('.list-details')).classes['details-active']).toBe(true);
       await routerHarness.navigateByUrl('/list');
       routerHarness.detectChanges();
       await routerHarness.fixture.whenStable();
