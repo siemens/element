@@ -4,8 +4,6 @@
 
 Many applications share common actions and associated icons. For example for actions triggered by buttons, action links or menu entries.
 
-<!-- markdownlint-disable MD013 MD033 -->
-
 | Action    | Icon                                          | Description                                                                                                                                                                                                                                  |
 | --------- | --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Create    | <i class="icon-large element-plus"></i>       | Creates a new object or entity, which gets persisted on completion. For example, create a new user account. Use `Duplicate` when a user wants to start using an existing similar object.                                                     |
@@ -24,8 +22,6 @@ Many applications share common actions and associated icons. For example for act
 | Refresh   | <i class="icon-large element-refresh"></i>    | Reloads a view of an object, list, or data set.                                                                                                                                                                                              |
 | Close     | <i class="icon-large element-cancel"></i>     | Exits the current context (without saving) ([see Modals](../../components/layout-navigation/modals.md)).                                                                                                                                     |
 
-<!-- markdownlint-enable MD013 MD033 -->
-
 ### Best practices for actions
 
 - Assign the most important or likely action to the [primary button](../../components/buttons-menus/buttons.md), but use only one per screen
@@ -42,94 +38,191 @@ Many applications share common actions and associated icons. For example for act
 - Add goes hand in hand with Remove, it usually means it can be restored
 - Do not use Delete and Remove as synonym
 
-| Dos                                                    | Don'ts                             |
-| ------------------------------------------------------ | ---------------------------------- |
-| Create a chart and delete a chart                      | Create a chart and remove it       |
-| Add a sensor to a chart and remove a sensor from chart | Add a sensor and delete the sensor |
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+#### Do's
+
+- Create a chart and delete a chart
+- Add a sensor to a chart and remove a sensor from chart
+
+</div>
+<div class="donts" markdown>
+
+#### Don'ts
+
+- Create a chart and remove it
+- Add a sensor and delete the sensor
+
+</div>
+</div>
 
 ## Overview
 
-| Dos       |
-| --------- |
-| Dashboard |
-| Overview  |
-| Cockpit   |
-| Home      |
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
 
-| Don'ts        |
-| ------------- |
-| Console       |
-| Dash          |
-| Control panel |
+#### Do's
+
+- Dashboard
+- Overview
+- Cockpit
+- Home
+
+</div>
+<div class="donts" markdown>
+
+#### Don'ts
+
+- Console
+- Dash
+- Control panel
+
+</div>
+</div>
 
 ## Analytics
 
-| Dos               |
-| ----------------- |
-| Analysis          |
-| Analysis          |
-| Anomaly detection |
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
 
-| Don'ts      |
-| ----------- |
-| Assessment  |
-| Examination |
+#### Do's
+
+- Analysis
+- Analysis
+- Anomaly detection
+
+</div>
+<div class="donts" markdown>
+
+#### Don'ts
+
+- Assessment
+- Examination
+
+</div>
+</div>
 
 ## Detail view
 
-| Dos            | Don'ts    |
-| -------------- | --------- |
-| Details        | Facts     |
-| Details        | Specifics |
-| Device details |           |
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+#### Do's
+
+- Details
+- Details
+- Device details
+
+</div>
+<div class="donts" markdown>
+
+#### Don'ts
+
+- Facts
+- Specifics
+
+</div>
+</div>
 
 ### Device properties
 
-| Dos               |
-| ----------------- |
-| Product name      |
-| Tag               |
-| Manufacturer      |
-| Type              |
-| State             |
-| Article number    |
-| Serial number     |
-| Installation date |
-| HW version        |
-| FW version        |
-| SW version        |
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+#### Do's
+
+- Product name
+- Tag
+- Manufacturer
+- Type
+- State
+- Article number
+- Serial number
+- Installation date
+- HW version
+- FW version
+- SW version
+
+</div>
+</div>
 
 ## Upload
 
-| Dos                               | Don'ts                       |
-| --------------------------------- | ---------------------------- |
-| Drag a file here or select a file | Drag and drop here or browse |
-| Drag files here or select files   |                              |
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+#### Do's
+
+- Drag a file here or select a file
+- Drag files here or select files
+
+</div>
+<div class="donts" markdown>
+
+#### Don'ts
+
+- Drag and drop here or browse
+
+</div>
+</div>
 
 ## Comments
 
-| Dos                       | Don'ts          |
-| ------------------------- | --------------- |
-| Write comment             | Write a comment |
-| Write comment and approve |                 |
-| Write comment and reject  |                 |
-| Write your comments here  |                 |
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+#### Do's
+
+- Write comment
+- Write comment and approve
+- Write comment and reject
+- Write your comments here
+
+</div>
+<div class="donts" markdown>
+
+#### Don'ts
+
+- Write a comment
+
+</div>
+</div>
 
 ## Grid and list actions
 
-| Dos          | Don'ts |
-| ------------ | ------ |
-| Group        |        |
-| Sort         |        |
-| Filter       |        |
-| Edit columns |        |
-| Search by XY |        |
+<div class="dos" markdown>
+
+#### Do's
+
+- Group
+- Sort
+- Filter
+- Edit columns
+- Search by XY
+
+</div>
 
 ## Notifications
 
-| Dos                     | Don'ts  |
-| ----------------------- | ------- |
-| Events                  | Error   |
-| Notifications           | Issue   |
-| Anomalies               | Problem |
-| Notify me when X occurs |         |
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+#### Do's
+
+- Events
+- Notifications
+- Anomalies
+- Notify me when X occurs
+
+</div>
+<div class="donts" markdown>
+
+#### Don'ts
+
+- Error
+- Issue
+- Problem
+
+</div>
+</div>
