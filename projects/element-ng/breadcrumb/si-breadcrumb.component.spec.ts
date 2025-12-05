@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from '@angular/core/testing';
+import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router, RouterModule, Routes } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -70,16 +70,17 @@ describe('SiBreadcrumbComponent', () => {
     }
   ];
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterModule.forRoot(routes),
         SiTranslateNgxTModule,
         TranslateModule.forRoot(),
         WrapperComponent
-      ]
+      ],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     mockResizeObserver();
@@ -90,7 +91,16 @@ describe('SiBreadcrumbComponent', () => {
     router = TestBed.inject(Router);
   });
 
+  beforeEach(() => jasmine.clock().install());
+  afterEach(() => jasmine.clock().uninstall());
+
   afterEach(() => restoreResizeObserver());
+
+  const tick = async (ms = 100): Promise<void> => {
+    jasmine.clock().tick(ms);
+    fixture.detectChanges();
+    await fixture.whenStable();
+  };
 
   it('should contain items', () => {
     wrapperComponent.items = [
@@ -197,21 +207,20 @@ describe('SiBreadcrumbComponent', () => {
     expect(breadcrumb.innerHTML).not.toContain('Level 2');
   });
 
-  it('should dynamically resize', fakeAsync(() => {
+  it('should dynamically resize', async () => {
     const testSizes = [500, 1000, 620, 380, 330, 150];
 
     wrapperComponent.items = TEST_ITEMS;
 
-    testSizes.forEach((size, i) => {
+    for (const [i, size] of testSizes.entries()) {
       wrapperElement.style.width = size + 'px';
 
-      if (i === 0) {
-        fixture.detectChanges();
-      } else {
+      await tick();
+      if (i !== 0) {
         MockResizeObserver.triggerResize({});
       }
-      flush();
-      fixture.detectChanges();
+
+      await tick();
 
       const breadcrumb = element.querySelector('.breadcrumb')!;
       const computedStyle = getComputedStyle(breadcrumb);
@@ -227,8 +236,8 @@ describe('SiBreadcrumbComponent', () => {
       });
 
       expect(currentWidth).toBeLessThan(maxWidth);
-    });
-  }));
+    }
+  });
 
   it('should add a dropdown if it is too wide', () => {
     wrapperElement.style.width = '500px';

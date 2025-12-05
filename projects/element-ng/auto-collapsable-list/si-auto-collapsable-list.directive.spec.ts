@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, signal, viewChildren } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { Component, provideZonelessChangeDetection, signal, viewChildren } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import {
   MockResizeObserver,
@@ -80,54 +80,71 @@ describe('SiAutoCollapsableListDirective', () => {
       element => element.style.visibility
     );
 
-  const detectSizeChange = (opts?: { width?: number; containerWidth?: number }): void => {
+  const detectSizeChange = async (opts?: {
+    width?: number;
+    containerWidth?: number;
+  }): Promise<void> => {
     if (opts?.width !== undefined) {
       component.width.set(opts.width);
     }
     if (opts?.containerWidth !== undefined) {
       component.containerWidth.set(opts.containerWidth);
     }
+    await tick();
     fixture.detectChanges();
-    tick();
+
     MockResizeObserver.triggerResize({});
-    fixture.detectChanges();
+
+    await tick();
+  };
+
+  const tick = async (ms = 100): Promise<void> => {
+    jasmine.clock().tick(ms);
+    await fixture.whenStable();
   };
 
   beforeEach(async () => {
     mockResizeObserver();
     await TestBed.configureTestingModule({
-      imports: [SiAutoCollapsableListModule, TestComponent]
+      imports: [SiAutoCollapsableListModule, TestComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
     fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;
     hostElement = fixture.nativeElement;
   });
 
-  afterEach(() => restoreResizeObserver());
+  beforeEach(() => jasmine.clock().install());
 
-  it('should not flicker on initial render', fakeAsync(() => {
+  afterEach(() => {
+    restoreResizeObserver();
+    jasmine.clock().uninstall();
+  });
+
+  it('should not flicker on initial render', async () => {
     fixture.detectChanges();
     hostElement
       .querySelectorAll<HTMLElement>('[siAutoCollapsableListItem]')
       .forEach(element => expect(element.style.visibility).toBe('hidden'));
-    tick();
+
+    await tick();
     fixture.detectChanges();
     hostElement
       .querySelectorAll<HTMLElement>('[siAutoCollapsableListItem]')
       .forEach(element => expect(element.style.visibility).toBe('visible'));
     component.items().forEach(item => expect(item.canBeVisible()).toBe(true));
-  }));
+  });
 
-  it('should collapse and expand items on container size changes', fakeAsync(() => {
+  it('should collapse and expand items on container size changes', async () => {
     fixture.detectChanges();
     // Skip test when browser is not focussed to prevent failures.
     if (document.hasFocus()) {
-      detectSizeChange({ width: 300 });
+      await detectSizeChange({ width: 300 });
       expect(readVisibilityStates()).toEqual(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
       expect(
         hostElement.querySelector<HTMLElement>('[siAutoCollapsableListOverflowItem]')!.innerText
       ).toBe('Overflown Items: 3');
-      detectSizeChange({ width: 600 });
+      await detectSizeChange({ width: 600 });
       expect(readVisibilityStates()).toEqual([
         'visible',
         'visible',
@@ -140,26 +157,26 @@ describe('SiAutoCollapsableListDirective', () => {
           .visibility
       ).toBe('hidden');
     }
-  }));
+  });
 
-  it('should respect additional content', fakeAsync(() => {
+  it('should respect additional content', async () => {
     fixture.detectChanges();
     // Skip test when browser is not focussed to prevent failures.
     if (document.hasFocus()) {
-      detectSizeChange();
+      await detectSizeChange();
       component.showAdditionalContent = true;
-      detectSizeChange({ width: 300 });
+      await detectSizeChange({ width: 300 });
       expect(readVisibilityStates()).toEqual(['visible', 'hidden', 'hidden', 'hidden', 'hidden']);
     }
-  }));
+  });
 
-  it('should react to item changes', fakeAsync(() => {
+  it('should react to item changes', async () => {
     fixture.detectChanges();
     // Skip test when browser is not focussed to prevent failures.
     if (document.hasFocus()) {
-      detectSizeChange();
+      await detectSizeChange();
       component.moreItems.push(100, 100);
-      detectSizeChange({ width: 700 });
+      await detectSizeChange({ width: 700 });
       expect(readVisibilityStates()).toEqual([
         'visible',
         'visible',
@@ -170,7 +187,8 @@ describe('SiAutoCollapsableListDirective', () => {
         'visible'
       ]);
       component.moreItems[0] = 0;
-      detectSizeChange();
+      fixture.changeDetectorRef.markForCheck();
+      await detectSizeChange();
       expect(readVisibilityStates()).toEqual([
         'visible',
         'visible',
@@ -181,40 +199,45 @@ describe('SiAutoCollapsableListDirective', () => {
         'visible'
       ]);
     }
-  }));
+  });
 
-  it('should react to disabled changes', fakeAsync(() => {
-    detectSizeChange({ width: 300 });
+  it('should react to disabled changes', async () => {
+    await detectSizeChange({ width: 300 });
     expect(readVisibilityStates()).toEqual(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
     component.disabled = true;
-    detectSizeChange();
+    fixture.changeDetectorRef.markForCheck();
+    await detectSizeChange();
     expect(readVisibilityStates()).toEqual(['visible', 'visible', 'visible', 'visible', 'visible']);
     component.disabled = false;
-    detectSizeChange();
+    fixture.changeDetectorRef.markForCheck();
+    await detectSizeChange();
     expect(readVisibilityStates()).toEqual(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
-  }));
+  });
 
-  it('should react to list reset', fakeAsync(() => {
-    detectSizeChange({ width: 300 });
+  it('should react to list reset', async () => {
+    await detectSizeChange({ width: 300 });
     expect(readVisibilityStates()).toEqual(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
     expect(
       hostElement.querySelector<HTMLElement>('[siAutoCollapsableListOverflowItem]')!.innerText
     ).toBe('Overflown Items: 3');
 
     component.renderItems = false;
-    detectSizeChange();
+    fixture.changeDetectorRef.markForCheck();
+    await detectSizeChange();
     expect(readVisibilityStates()).toEqual([]);
     expect(
       hostElement.querySelector<HTMLElement>('[siAutoCollapsableListOverflowItem]')!.innerText
     ).toBe('');
-  }));
+  });
 
-  it('should show new items if disabled', fakeAsync(() => {
+  it('should show new items if disabled', async () => {
     component.disabled = true;
-    detectSizeChange();
+    fixture.changeDetectorRef.markForCheck();
+    await detectSizeChange();
     expect(readVisibilityStates()).toEqual(['visible', 'visible', 'visible', 'visible', 'visible']);
     component.moreItems = [800];
-    detectSizeChange();
+    fixture.changeDetectorRef.markForCheck();
+    await detectSizeChange();
     expect(readVisibilityStates()).toEqual([
       'visible',
       'visible',
@@ -223,21 +246,23 @@ describe('SiAutoCollapsableListDirective', () => {
       'visible',
       'visible'
     ]);
-  }));
+  });
 
-  it('should hide forced hide item', fakeAsync(() => {
+  it('should hide forced hide item', async () => {
     component.forceHideSecondItem = true;
-    detectSizeChange();
+    fixture.changeDetectorRef.markForCheck();
+    await detectSizeChange();
     expect(readVisibilityStates()).toEqual(['visible', 'hidden', 'visible', 'visible', 'visible']);
-    detectSizeChange({ width: 300 });
+    await detectSizeChange({ width: 300 });
     expect(readVisibilityStates()).toEqual(['visible', 'hidden', 'hidden', 'hidden', 'hidden']);
-  }));
+  });
 
-  it('should use host width', fakeAsync(() => {
-    detectSizeChange({ width: 300 });
+  it('should use host width', async () => {
+    await detectSizeChange({ width: 300 });
     expect(readVisibilityStates()).toEqual(['visible', 'visible', 'hidden', 'hidden', 'hidden']);
     component.useContainerElement = true;
-    detectSizeChange();
+    fixture.changeDetectorRef.markForCheck();
+    await detectSizeChange();
     expect(readVisibilityStates()).toEqual(['visible', 'visible', 'visible', 'visible', 'visible']);
-  }));
+  });
 });
