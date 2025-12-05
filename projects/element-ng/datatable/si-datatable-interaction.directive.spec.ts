@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { Component, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NgxDatatableModule } from '@siemens/ngx-datatable';
 
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '.';
@@ -88,31 +88,29 @@ describe('SiDatatableInteractionDirective', () => {
   let wrapperComponent: WrapperComponent;
   let wrapperElement: HTMLElement;
 
-  const refresh = (): void => {
+  beforeEach(() => jasmine.clock().install());
+  afterEach(() => jasmine.clock().uninstall());
+
+  const refresh = async (): Promise<void> => {
+    jasmine.clock().tick(10000);
     fixture.detectChanges();
-    tick(10000);
-    fixture.detectChanges();
-    tick(10000);
-    fixture.detectChanges();
-    tick(10000);
-    fixture.detectChanges();
-    flush();
+    await fixture.whenStable();
   };
 
-  const keypress = (key: string, keyCode?: number): void => {
+  const keypress = async (key: string, keyCode?: number): Promise<void> => {
     document.activeElement?.dispatchEvent(new KeyboardEvent('keydown', { key, keyCode }));
-    refresh();
+    await refresh();
   };
 
-  const arrowDown = (times = 1): void => {
+  const arrowDown = async (times = 1): Promise<void> => {
     for (let i = 0; i < times; i++) {
-      keypress('ArrowDown', 40);
+      await keypress('ArrowDown', 40);
     }
   };
 
-  const arrowUp = (times = 1): void => {
+  const arrowUp = async (times = 1): Promise<void> => {
     for (let i = 0; i < times; i++) {
-      keypress('ArrowUp', 38);
+      await keypress('ArrowUp', 38);
     }
   };
 
@@ -124,7 +122,8 @@ describe('SiDatatableInteractionDirective', () => {
         SiDatatableModule,
         NgxDatatableModule.forRoot(SI_DATATABLE_CONFIG),
         WrapperComponent
-      ]
+      ],
+      providers: [provideZonelessChangeDetection()]
     })
   );
 
@@ -134,8 +133,8 @@ describe('SiDatatableInteractionDirective', () => {
     wrapperElement = fixture.nativeElement;
   });
 
-  it('should navigate into table using arrow keys', fakeAsync(() => {
-    refresh();
+  it('should navigate into table using arrow keys', async () => {
+    await refresh();
 
     // Skip test when browser is not focussed to prevent failures.
     if (document.hasFocus()) {
@@ -143,7 +142,7 @@ describe('SiDatatableInteractionDirective', () => {
 
       expect(document.activeElement).toBe(getTableElement());
 
-      arrowDown();
+      await arrowDown();
 
       expect(document.activeElement).toBe(
         getTableElement().querySelector('.datatable-row-wrapper > .datatable-body-row')
@@ -153,17 +152,17 @@ describe('SiDatatableInteractionDirective', () => {
 
       expect(document.activeElement).toBe(getTableElement());
 
-      arrowUp();
+      await arrowUp();
 
       expect(document.activeElement).toBe(
         getTableElement().querySelector('.datatable-row-wrapper:last-child > .datatable-body-row')
       );
     }
-  }));
+  });
 
-  it('should navigate into and inside arrow keys when using virtualization', fakeAsync(() => {
+  it('should navigate into and inside arrow keys when using virtualization', async () => {
     wrapperComponent.virtualization = true;
-    refresh();
+    await refresh();
 
     // Skip test when browser is not focussed to prevent failures.
     if (document.hasFocus()) {
@@ -171,17 +170,17 @@ describe('SiDatatableInteractionDirective', () => {
 
       expect(document.activeElement).toBe(getTableElement());
 
-      arrowDown();
+      await arrowDown();
 
       expect(document.activeElement).toBe(
         getTableElement().querySelector('.datatable-row-wrapper > .datatable-body-row')
       );
 
-      arrowDown(8);
+      await arrowDown(8);
 
       const scrollTopBeforeDown = getTableElement().querySelector('.datatable-body')!.scrollTop;
 
-      arrowDown();
+      await arrowDown();
 
       expect(getTableElement().querySelector('.datatable-body')!.scrollTop).not.toBe(
         scrollTopBeforeDown
@@ -191,28 +190,28 @@ describe('SiDatatableInteractionDirective', () => {
 
       expect(document.activeElement).toBe(getTableElement());
 
-      arrowUp();
+      await arrowUp();
 
       expect(document.activeElement).toBe(
         getTableElement().querySelector('.datatable-row-wrapper:last-child > .datatable-body-row')
       );
 
-      arrowUp(7);
+      await arrowUp(7);
 
       const scrollTopBeforeUp = getTableElement().querySelector('.datatable-body')!.scrollTop;
 
-      arrowUp();
+      await arrowUp();
 
       expect(getTableElement().querySelector('.datatable-body')!.scrollTop).not.toBe(
         scrollTopBeforeUp
       );
     }
-  }));
+  });
 
-  it('should navigate into and inside table using arrow keys when using virtualization and cell selection', fakeAsync(() => {
+  it('should navigate into and inside table using arrow keys when using virtualization and cell selection', async () => {
     wrapperComponent.selectionType = 'cell';
     wrapperComponent.virtualization = true;
-    refresh();
+    await refresh();
 
     // Skip test when browser is not focussed to prevent failures.
     if (document.hasFocus()) {
@@ -220,7 +219,7 @@ describe('SiDatatableInteractionDirective', () => {
 
       expect(document.activeElement).toBe(getTableElement());
 
-      arrowDown();
+      await arrowDown();
 
       expect(document.activeElement).toBe(
         getTableElement().querySelector(
@@ -228,11 +227,11 @@ describe('SiDatatableInteractionDirective', () => {
         )
       );
 
-      arrowDown(8);
+      await arrowDown(8);
 
       const scrollTopBeforeDown = getTableElement().querySelector('.datatable-body')!.scrollTop;
 
-      arrowDown();
+      await arrowDown();
 
       expect(getTableElement().querySelector('.datatable-body')!.scrollTop).not.toBe(
         scrollTopBeforeDown
@@ -242,7 +241,7 @@ describe('SiDatatableInteractionDirective', () => {
 
       expect(document.activeElement).toBe(getTableElement());
 
-      arrowUp();
+      await arrowUp();
 
       expect(document.activeElement).toBe(
         getTableElement().querySelector(
@@ -250,22 +249,22 @@ describe('SiDatatableInteractionDirective', () => {
         )
       );
 
-      arrowUp(7);
+      await arrowUp(7);
 
       const scrollTopBeforeUp = getTableElement().querySelector('.datatable-body')!.scrollTop;
 
-      arrowUp();
+      await arrowUp();
 
       expect(getTableElement().querySelector('.datatable-body')!.scrollTop).not.toBe(
         scrollTopBeforeUp
       );
     }
-  }));
+  });
 
-  it('should auto select on focus when enabled', fakeAsync(() => {
+  it('should auto select on focus when enabled', async () => {
     wrapperComponent.selectionType = 'single';
     wrapperComponent.datatableInteractionAutoSelect = true;
-    refresh();
+    await refresh();
 
     // Skip test when browser is not focussed to prevent failures.
     if (document.hasFocus()) {
@@ -276,7 +275,7 @@ describe('SiDatatableInteractionDirective', () => {
       ) as HTMLElement;
       row.dispatchEvent(new Event('focusin', { bubbles: true }));
 
-      refresh();
+      await refresh();
 
       expect(wrapperComponent.selected).toContain({
         id: 1,
@@ -285,12 +284,12 @@ describe('SiDatatableInteractionDirective', () => {
         age: 50
       });
     }
-  }));
+  });
 
-  it('should not auto select on mouse click when enabled', fakeAsync(() => {
+  it('should not auto select on mouse click when enabled', async () => {
     wrapperComponent.selectionType = 'single';
     wrapperComponent.datatableInteractionAutoSelect = true;
-    refresh();
+    await refresh();
 
     // Skip test when browser is not focussed to prevent failures.
     if (document.hasFocus()) {
@@ -300,20 +299,24 @@ describe('SiDatatableInteractionDirective', () => {
 
       table.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
 
+      await refresh();
+
       const row = table.querySelector(
         '.datatable-row-wrapper > .datatable-body-row'
       ) as HTMLElement;
       row.dispatchEvent(new Event('focusin', { bubbles: true }));
 
-      refresh();
+      await refresh();
 
       expect(wrapperComponent.selected).toHaveSize(0);
 
       table.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
 
+      await refresh();
+
       row.dispatchEvent(new Event('focusin', { bubbles: true }));
 
-      refresh();
+      await refresh();
 
       expect(wrapperComponent.selected).toContain({
         id: 1,
@@ -322,5 +325,5 @@ describe('SiDatatableInteractionDirective', () => {
         age: 50
       });
     }
-  }));
+  });
 });
