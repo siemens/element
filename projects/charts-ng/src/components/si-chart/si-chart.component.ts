@@ -280,6 +280,7 @@ export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDes
   private requestedDataZoom?: DataZoomRange;
   private measureCanvas?: CanvasRenderingContext2D;
   private readonly cdRef = inject(ChangeDetectorRef);
+  private readonly ngZone = inject(NgZone);
 
   protected curWidth = 0;
   protected curHeight = 0;
@@ -309,13 +310,13 @@ export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDes
     series: [{ type: 'line', showSymbol: false, lineStyle: { opacity: 0 }, data: [] }]
   };
 
-  private echartMouseDown = (): void => this.handleChartMouseDown();
-  private echartMouseUp = (event: MouseEvent): void => this.handleChartMouseUp(event);
+  private readonly echartMouseDown = (): void => this.handleChartMouseDown();
+  private readonly echartMouseUp = (event: MouseEvent): void => this.handleChartMouseUp(event);
 
-  private echartExtSliderMouseDown = (): void => this.handleExtChartMouseDown();
-  private echartExtSliderMouseUp = (event: MouseEvent): void => this.handleExtChartMouseUp(event);
+  private readonly echartExtSliderMouseDown = (): void => this.handleExtChartMouseDown();
+  private readonly echartExtSliderMouseUp = (event: MouseEvent): void =>
+    this.handleExtChartMouseUp(event);
 
-  private readonly ngZone = inject(NgZone);
   protected readonly shapePaths: Record<string, string> = {
     circle: 'M6 0A6 6 0 1 1 6 12A6 6 0 1 1 6 0Z',
     rect: 'M0 0H12V12H0Z',
