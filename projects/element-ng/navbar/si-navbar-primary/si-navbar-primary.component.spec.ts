@@ -18,6 +18,7 @@ import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 
 import { SiNavbarPrimaryComponent, SiNavbarPrimaryComponent as TestComponent } from '.';
 import { AppItem, AppItemCategory } from './si-navbar-primary.model';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 const appItems: AppItem[] = [{ title: 'Account', icon: 'element-account', link: '/account' }];
 const categorizedAppItems: AppItemCategory[] = [
@@ -34,7 +35,8 @@ const categorizedAppItems: AppItemCategory[] = [
 })
 export class TestHostComponent {
   readonly component = viewChild.required(TestComponent);
-  @HostBinding('class.mobile') fakeMobile = false;
+  @HostBinding('class.mobile')
+  fakeMobile = false;
   appItems?: AppItem[];
   categorizedAppItems?: AppItemCategory[];
 }
@@ -60,7 +62,7 @@ describe('SiNavbarPrimaryComponent', () => {
   });
 
   it('should not render the launchpad trigger without app items', async () => {
-    expect(await harness.hasLaunchpad()).toBeFalse();
+    expect(await harness.hasLaunchpad()).toBe(false);
   });
 
   it('should render render launchpad with categories', async () => {

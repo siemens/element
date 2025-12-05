@@ -13,6 +13,7 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
+import { beforeEach, describe, expect, it, type Mock } from 'vitest';
 
 import { SiFormFieldsetComponent } from './form-fieldset/si-form-fieldset.component';
 import { SiFormContainerComponent } from './si-form-container/si-form-container.component';
@@ -140,11 +141,11 @@ describe('SiForm', () => {
     it('should only have a required indicator on the fieldset', async () => {
       fixture.componentInstance.form.markAllAsTouched();
       const field1 = await loader.getHarness(SiFormItemHarness.with({ label: 'Radio-1' }));
-      expect(await field1.isRequired()).toBeFalse();
+      expect(await field1.isRequired()).toBe(false);
       const field2 = await loader.getHarness(SiFormItemHarness.with({ label: 'Radio-2' }));
-      expect(await field2.isRequired()).toBeFalse();
+      expect(await field2.isRequired()).toBe(false);
       const fieldset = await loader.getHarness(SiFormFieldsetHarness.with('Fieldset-RADIO'));
-      expect(await fieldset.isRequired()).toBeTrue();
+      expect(await fieldset.isRequired()).toBe(true);
     });
   });
 
@@ -192,7 +193,7 @@ describe('SiForm', () => {
 
     it('should have a required indicator', async () => {
       const field = await loader.getHarness(SiFormItemHarness.with({ label: 'Input' }));
-      expect(await field.isRequired()).toBeTrue();
+      expect(await field.isRequired()).toBe(true);
     });
 
     it('should update required indicator', async () => {
@@ -200,7 +201,7 @@ describe('SiForm', () => {
       fixture.changeDetectorRef.markForCheck();
       await fixture.whenStable();
       const field = await loader.getHarness(SiFormItemHarness.with({ label: 'Input' }));
-      expect(await field.isRequired()).toBeFalse();
+      expect(await field.isRequired()).toBe(false);
     });
   });
 
@@ -241,11 +242,11 @@ describe('SiForm', () => {
 
     it('should update required indicator', async () => {
       const field = await loader.getHarness(SiFormItemHarness.with({ label: 'Input' }));
-      expect(await field.isRequired()).toBeTrue();
+      expect(await field.isRequired()).toBe(true);
       fixture.componentInstance.required = false;
       fixture.changeDetectorRef.markForCheck();
       await fixture.whenStable();
-      expect(await field.isRequired()).toBeFalse();
+      expect(await field.isRequired()).toBe(false);
     });
   });
 
@@ -264,12 +265,10 @@ describe('SiForm', () => {
     }
     let fixture: ComponentFixture<TestHostComponent>;
     let loader: HarnessLoader;
-    let emailMapperSpy: jasmine.Spy<any>;
+    let emailMapperSpy: Mock;
 
     beforeEach(async () => {
-      emailMapperSpy = jasmine
-        .createSpy('email', (error: any) => 'email-' + error)
-        .and.callThrough();
+      emailMapperSpy = vi.fn((error: any) => 'email-' + error);
       await TestBed.configureTestingModule({
         imports: [TestHostComponent],
         providers: [

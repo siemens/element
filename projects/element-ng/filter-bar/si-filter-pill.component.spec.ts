@@ -4,6 +4,7 @@
  */
 import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { Filter } from './filter';
 import { SiFilterPillComponent } from './index';
@@ -55,7 +56,7 @@ describe('SiFilterPillComponent', () => {
       title: 'Last Name',
       description: 'Your Last Name'
     };
-    const spyEvent = spyOn(component, 'deleteFilters');
+    const spyEvent = vi.spyOn(component, 'deleteFilters');
     fixture.detectChanges();
     element.querySelector<HTMLElement>('[aria-label="Remove"]')?.click();
     fixture.detectChanges();

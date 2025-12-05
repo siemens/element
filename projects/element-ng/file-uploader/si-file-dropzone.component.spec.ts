@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
 
 import { SiFileDropzoneComponent, UploadFile } from './index';
 
@@ -46,7 +47,7 @@ describe('SiFileDropzoneComponent', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let component: TestHostComponent;
   let element: HTMLElement;
-  let eventSpy: jasmine.Spy<(value?: UploadFile[]) => void>;
+  let eventSpy: Mock;
 
   const dropFiles = (dataTransfer: DataTransfer): void => {
     element.querySelector('.drag-and-drop')?.dispatchEvent(new DragEvent('drop', { dataTransfer }));
@@ -61,7 +62,7 @@ describe('SiFileDropzoneComponent', () => {
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
-    eventSpy = spyOn(component.fileDropzone().filesAdded, 'emit');
+    eventSpy = vi.spyOn(component.fileDropzone().filesAdded, 'emit');
   });
 
   const createFileList = (files: string[], type?: string[]): DataTransfer => {
@@ -76,7 +77,7 @@ describe('SiFileDropzoneComponent', () => {
     return dt;
   };
 
-  const getFiles = (): UploadFile[] => eventSpy.calls.first().args[0]!;
+  const getFiles = (): UploadFile[] => vi.mocked(eventSpy).mock!.calls![0][0]!;
 
   const createDirectoryItemsWithFiles = (): DataTransferItemList => {
     return {
@@ -187,7 +188,7 @@ describe('SiFileDropzoneComponent', () => {
     const dateTransfer = createFileListWithFileSizeOf1200Bytes(['first.png', 'second.PNG']);
 
     const dataTransfer = new DataTransfer();
-    spyOnProperty(dataTransfer, 'files').and.returnValue(dateTransfer.files);
+    vi.spyOn(dataTransfer, 'files', 'get').mockReturnValue(dateTransfer.files);
     dndElement.dispatchEvent(new DragEvent('drop', { dataTransfer }));
     fixture.detectChanges();
 
@@ -303,7 +304,7 @@ describe('SiFileDropzoneComponent', () => {
   });
 
   it('should display max allowed file size with abbreviation', () => {
-    component.maxFileSize.set(1_572_864); // 1.5mb
+    component.maxFileSize.set(15_72_864); // 1.5mb
     fixture.detectChanges();
     expect(element.querySelector('.allowed')!.innerHTML).toContain('1.5MB');
 

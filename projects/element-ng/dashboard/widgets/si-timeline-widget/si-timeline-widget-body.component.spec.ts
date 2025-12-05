@@ -4,6 +4,7 @@
  */
 import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import { SiTimelineWidgetBodyComponent } from './si-timeline-widget-body.component';
 import { SiTimelineWidgetItem } from './si-timeline-widget-item.component';

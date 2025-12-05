@@ -5,6 +5,7 @@
 import { CdkPortal, PortalModule } from '@angular/cdk/portal';
 import { Component, provideZonelessChangeDetection, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import { SiSidePanelService } from './si-side-panel.service';
 
@@ -40,9 +41,9 @@ describe('SiSidePanelService', () => {
 
   it('should toggle content', () => {
     service.open();
-    expect(service.isOpen()).toBeTrue();
+    expect(service.isOpen()).toBe(true);
 
     service.toggle();
-    expect(service.isOpen()).toBeFalse();
+    expect(service.isOpen()).toBe(false);
   });
 });

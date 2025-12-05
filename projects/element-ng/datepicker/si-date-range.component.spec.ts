@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import {
   DatepickerInputConfig,
@@ -70,12 +71,11 @@ describe('SiDateRangeComponent', () => {
   });
 
   beforeEach(() => {
-    jasmine.clock().install();
-    jasmine.clock().mockDate();
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should create', () => {
@@ -95,11 +95,11 @@ describe('SiDateRangeComponent', () => {
 
   it('should mark input touched when on datepicker backdrop click', async () => {
     openCalendarButton()!.click();
-    jasmine.clock().tick(0);
+    vi.advanceTimersByTime(0);
     await fixture.whenStable();
-    expect(fixture.componentInstance.dateRange.touched).toBeFalse();
+    expect(fixture.componentInstance.dateRange.touched).toBe(false);
     await backdropClick(fixture);
-    expect(fixture.componentInstance.dateRange.touched).toBeTrue();
+    expect(fixture.componentInstance.dateRange.touched).toBe(true);
   });
 
   it('should mark input as touched once the focused is moved outside', async () => {
@@ -109,9 +109,9 @@ describe('SiDateRangeComponent', () => {
     await inputs.at(0)?.focus();
     await inputs.at(1)?.focus();
     await calendarButton.focus();
-    jasmine.clock().tick(1000);
+    vi.advanceTimersByTime(1000);
     await fixture.whenStable();
-    expect(fixture.componentInstance.dateRange.touched).toBeFalse();
+    expect(fixture.componentInstance.dateRange.touched).toBe(false);
     await calendarButton.blur();
     expect(fixture.componentInstance.dateRange.touched).toBeTruthy();
   });
@@ -129,7 +129,7 @@ describe('SiDateRangeComponent', () => {
       helper.getEnabledCellWithText('1')!.click();
       helper.getEnabledCellWithText('3')!.click();
       await fixture.whenStable();
-      jasmine.clock().tick(0);
+      vi.advanceTimersByTime(0);
       await fixture.whenStable();
       expect(document.querySelector('si-datepicker-overlay')).toBeFalsy();
     });
@@ -145,19 +145,19 @@ describe('SiDateRangeComponent', () => {
     // - April to December should be highlighted
     fixture.componentInstance.dateRange.setValue({ start: new Date(2023, 2, 1), end: undefined });
     openCalendarButton().click();
-    jasmine.clock().tick(1000);
+    vi.advanceTimersByTime(1000);
     // In case the small screen media query match we need to wait for the dialog animation
     await fixture.whenStable();
 
     const helper = new CalendarTestHelper(document.querySelector('si-datepicker-overlay')!);
     helper.getOpenMonthViewLink().click();
-    jasmine.clock().tick(1000);
+    vi.advanceTimersByTime(1000);
     await fixture.whenStable();
     helper.getEnabledCellWithText('December')!.dispatchEvent(new Event('mouseover'));
     await fixture.whenStable();
-    jasmine.clock().tick(100);
+    vi.advanceTimersByTime(100);
     await fixture.whenStable();
-    expect(helper.queryAsArray('.range-hover')).toHaveSize(9);
+    expect(helper.queryAsArray('.range-hover')).toHaveLength(9);
   });
 
   it('should preview month range with second calendar', async () => {
@@ -175,7 +175,7 @@ describe('SiDateRangeComponent', () => {
     });
     fixture.componentInstance.dateRange.setValue({ start: new Date(2023, 2, 1), end: undefined });
     openCalendarButton().click();
-    jasmine.clock().tick(1000);
+    vi.advanceTimersByTime(1000);
     // In case the small screen media query match we need to wait for the dialog animation
     await fixture.whenStable();
 
@@ -184,7 +184,7 @@ describe('SiDateRangeComponent', () => {
     );
     helper.getEnabledCellWithText('December')!.dispatchEvent(new Event('mouseover'));
     await fixture.whenStable();
-    expect(Array.from(document.querySelectorAll<HTMLElement>('.range-hover'))).toHaveSize(21);
+    expect(Array.from(document.querySelectorAll<HTMLElement>('.range-hover'))).toHaveLength(21);
   });
 
   it('should not overlap month view with enableTwoMonthDateRange when pressing previous year button', async () => {
@@ -205,7 +205,7 @@ describe('SiDateRangeComponent', () => {
       end: new Date(2023, 3, 1)
     });
     openCalendarButton().click();
-    jasmine.clock().tick(1000);
+    vi.advanceTimersByTime(1000);
     await fixture.whenStable();
 
     const calendars = document.querySelectorAll<HTMLElement>('si-datepicker');
@@ -217,7 +217,7 @@ describe('SiDateRangeComponent', () => {
   });
 
   it('should output correct month range on keyboard input', async () => {
-    const spy = spyOn(fixture.componentInstance, 'rangeChanged');
+    const spy = vi.spyOn(fixture.componentInstance, 'rangeChanged');
     component.siDatepickerConfig.set({
       enableDateRange: true,
       enableTwoMonthDateRange: true,
@@ -229,9 +229,9 @@ describe('SiDateRangeComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const dateRange = spy.calls.mostRecent().args[0];
-    expect(dateRange.end).toBeNull();
-    expect(dateRange.start).toEqual(new Date(2023, 4, 1));
+    const dateRange = vi.mocked(spy).mock?.lastCall?.[0];
+    expect(dateRange?.end).toBeNull();
+    expect(dateRange?.start).toEqual(new Date(2023, 4, 1));
   });
 
   it('should show meridian when time format is 12h', async () => {

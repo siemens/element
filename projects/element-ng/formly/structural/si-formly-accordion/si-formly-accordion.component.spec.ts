@@ -9,6 +9,7 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { SiFormlyModule } from '@siemens/element-ng/formly';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 @Component({
   selector: 'si-formly-test',
@@ -127,7 +128,7 @@ describe('formly accordion type', () => {
 
     // check if default is open
     if (fieldGroups) {
-      expect(fieldGroups[0].props?.opened).toBeTrue();
+      expect(fieldGroups[0].props?.opened).toBe(true);
     }
 
     clickOnHeader(1, fixture.nativeElement);
@@ -135,8 +136,8 @@ describe('formly accordion type', () => {
 
     // check if property changes when clicking on panel
     if (fieldGroups) {
-      expect(fieldGroups[0].props?.opened).toBeFalse();
-      expect(fieldGroups[1].props?.opened).toBeTrue();
+      expect(fieldGroups[0].props?.opened).toBe(false);
+      expect(fieldGroups[1].props?.opened).toBe(true);
     }
   });
 });

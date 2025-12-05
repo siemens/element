@@ -5,6 +5,7 @@
 import { CommonModule } from '@angular/common';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import { SiPaginationComponent as TestComponent } from '.';
 
@@ -91,24 +92,24 @@ describe('SiPaginationComponent', () => {
 
     let buttons = getNavButtons();
 
-    expect(buttons.item(0).disabled).toBeTrue();
-    expect(buttons.item(1).disabled).toBeFalse();
+    expect(buttons.item(0).disabled).toBe(true);
+    expect(buttons.item(1).disabled).toBe(false);
     expect(getCurrentItem().innerHTML).toContain('1');
 
     (buttons.item(1) as HTMLElement).click();
     fixture.detectChanges();
 
     buttons = getNavButtons();
-    expect(buttons.item(0).disabled).toBeFalse();
-    expect(buttons.item(1).disabled).toBeFalse();
+    expect(buttons.item(0).disabled).toBe(false);
+    expect(buttons.item(1).disabled).toBe(false);
     expect(getCurrentItem().innerHTML).toContain('2');
 
     (buttons.item(1) as HTMLElement).click();
     fixture.detectChanges();
 
     buttons = getNavButtons();
-    expect(buttons.item(0).disabled).toBeFalse();
-    expect(buttons.item(1).disabled).toBeTrue();
+    expect(buttons.item(0).disabled).toBe(false);
+    expect(buttons.item(1).disabled).toBe(true);
     expect(getCurrentItem().innerHTML).toContain('3');
   });
 });

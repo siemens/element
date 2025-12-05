@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, NgControl } from '@angular/forms';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { dispatchEvents, enterValue } from './components/test-helper.spec';
 import { SiDateInputDirective } from './si-date-input.directive';
@@ -116,8 +117,8 @@ describe('SiDateInputDirective', () => {
   });
 
   it('should consider minDate criteria with time', async () => {
-    jasmine.clock().install();
-    spyOn(component.siDateInputDirective(), 'validate').and.callThrough();
+    vi.useFakeTimers();
+    vi.spyOn(component.siDateInputDirective(), 'validate');
     component.date = new Date('2020-03-12T13:13:13');
     updateConfig({
       showTime: true,
@@ -126,19 +127,19 @@ describe('SiDateInputDirective', () => {
     });
     dispatchEvents(dateInput(), ['focus', 'change']);
 
-    jasmine.clock().tick(1);
+    vi.advanceTimersByTime(1);
     await fixture.whenStable();
 
     expect(component.validation().errors?.minDate).toEqual({
       actual: component.date,
       min: component.config().minDate
     });
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should consider minDate criteria only date', async () => {
-    jasmine.clock().install();
-    spyOn(component.siDateInputDirective(), 'validate').and.callThrough();
+    vi.useFakeTimers();
+    vi.spyOn(component.siDateInputDirective(), 'validate');
     component.date = new Date('2020-03-12');
     updateConfig({
       showTime: true,
@@ -147,19 +148,19 @@ describe('SiDateInputDirective', () => {
     });
     dispatchEvents(dateInput(), ['focus', 'change']);
 
-    jasmine.clock().tick(1);
+    vi.advanceTimersByTime(1);
     await fixture.whenStable();
 
     expect(component.validation().errors?.minDate).toEqual({
       actual: component.date,
       min: component.config().minDate
     });
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should consider maxDate criteria with time', async () => {
-    jasmine.clock().install();
-    spyOn(component.siDateInputDirective(), 'validate').and.callThrough();
+    vi.useFakeTimers();
+    vi.spyOn(component.siDateInputDirective(), 'validate');
     component.date = new Date('2024-03-12T13:13:13');
     updateConfig({
       showTime: true,
@@ -168,18 +169,18 @@ describe('SiDateInputDirective', () => {
     });
     dispatchEvents(dateInput(), ['focus', 'change']);
 
-    jasmine.clock().tick(1);
+    vi.advanceTimersByTime(1);
     await fixture.whenStable();
     expect(component.validation().errors?.maxDate).toEqual({
       actual: component.date,
       max: component.config().maxDate
     });
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should consider maxDate criteria only date', async () => {
-    jasmine.clock().install();
-    spyOn(component.siDateInputDirective(), 'validate').and.callThrough();
+    vi.useFakeTimers();
+    vi.spyOn(component.siDateInputDirective(), 'validate');
     component.date = new Date('2024-03-12');
     updateConfig({
       showTime: true,
@@ -188,13 +189,13 @@ describe('SiDateInputDirective', () => {
     });
     dispatchEvents(dateInput(), ['focus', 'change']);
 
-    jasmine.clock().tick(1);
+    vi.advanceTimersByTime(1);
     await fixture.whenStable();
     expect(component.validation().errors?.maxDate).toEqual({
       actual: component.date,
       max: component.config().maxDate
     });
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should disable input element when setting disabled property to true', () => {
@@ -208,12 +209,12 @@ describe('SiDateInputDirective', () => {
 
   it('should trigger modelChange with undefined when input is blank string', async () => {
     // In case user remove the date string this should be reflected in the datepicker
-    const spy = spyOn<any>(component.siDateInputDirective(), 'onModelChange').and.callThrough();
+    const spy = vi.spyOn<any, any>(component.siDateInputDirective(), 'onModelChange');
     enterValue(dateInput(), '   ');
 
     fixture.detectChanges();
     await fixture.whenStable();
-    expect((spy.calls.mostRecent().args[0]! as Date).getTime()).toBeNaN();
+    expect((vi.mocked(spy).mock!.lastCall![0]! as Date).getTime()).toBeNaN();
   });
 
   it('should update displayed value when config changes', async () => {

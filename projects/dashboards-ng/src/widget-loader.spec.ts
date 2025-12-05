@@ -8,7 +8,7 @@ import { WidgetComponentTypeFactory } from './model/widgets.model';
 import { SetupComponentFn, setupWidgetInstance, widgetFactoryRegistry } from './widget-loader';
 
 describe('widget-loader', () => {
-  it('should return error on wrong component configuration', (done: DoneFn) => {
+  it('should return error on wrong component configuration', async () => {
     const brokenComponentFactory = {
       componentXName: 'TestWidgetComponent',
       editorComponentName: 'TestWidgetEditorComponent',
@@ -25,7 +25,6 @@ describe('widget-loader', () => {
         expect(error).toBe(
           'Provided component factory has no componentName component configuration'
         );
-        done();
       }
     });
   });
@@ -33,13 +32,13 @@ describe('widget-loader', () => {
 
 describe('widgetFactoryRegistry', () => {
   it('#hasFactoryFn() should return false for a not existing factory function', () => {
-    expect(widgetFactoryRegistry.hasFactoryFn('nothing')).toBeFalse();
+    expect(widgetFactoryRegistry.hasFactoryFn('nothing')).toBe(false);
   });
 
   it('#register() should add a factory function to the registry', () => {
     const factoryFn = {} as SetupComponentFn;
     widgetFactoryRegistry.register('my-function', factoryFn);
-    expect(widgetFactoryRegistry.hasFactoryFn('my-function')).toBeTrue();
+    expect(widgetFactoryRegistry.hasFactoryFn('my-function')).toBe(true);
     expect(widgetFactoryRegistry.getFactoryFn('my-function')).toBe(factoryFn);
   });
 });

@@ -231,7 +231,7 @@ describe('SiAboutComponent', () => {
 
       await fixture.whenStable();
       const actual = getLicenseFiles();
-      expect(actual).toHaveSize(1);
+      expect(actual).toHaveLength(1);
       expect(actual.at(0)?.textContent).toContain('Component 1');
     });
 
@@ -245,7 +245,7 @@ describe('SiAboutComponent', () => {
       toggleCollapsePanel();
       httpMock.expectNone('/module1.json');
 
-      expect(getLicenseFiles()).toHaveSize(0);
+      expect(getLicenseFiles()).toHaveLength(0);
     });
 
     it('should fetch license content', async () => {

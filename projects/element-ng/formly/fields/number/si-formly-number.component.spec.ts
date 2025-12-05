@@ -67,7 +67,7 @@ describe('formly number type', () => {
   });
 
   it('should display the number input based on props provided', async () => {
-    jasmine.clock().install();
+    vi.useFakeTimers();
     const componentInstance = fixture.componentInstance;
 
     componentInstance.model = {
@@ -89,11 +89,11 @@ describe('formly number type', () => {
     inputField.nativeElement.value = 2000;
     inputField.nativeElement.dispatchEvent(new Event('input'));
 
-    jasmine.clock().tick(200);
+    vi.advanceTimersByTime(200);
     fixture.detectChanges();
     await fixture.whenStable();
     // Assert if input change reflects the model
     expect(componentInstance.model.cost).toBe(2000);
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 });

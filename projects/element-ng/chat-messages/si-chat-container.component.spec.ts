@@ -5,6 +5,7 @@
 import { DebugElement, Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { vi } from 'vitest';
 
 import { runOnPushChangeDetection } from '../test-helpers';
 import { SiChatContainerComponent } from './si-chat-container.component';
@@ -142,7 +143,7 @@ describe('SiChatContainerComponent', () => {
   });
 
   it('should cleanup observers on destroy', () => {
-    const ngOnDestroySpy = spyOn(component, 'ngOnDestroy').and.callThrough();
+    const ngOnDestroySpy = vi.spyOn(component, 'ngOnDestroy');
     component.ngOnDestroy();
     expect(ngOnDestroySpy).toHaveBeenCalled();
   });
@@ -150,7 +151,7 @@ describe('SiChatContainerComponent', () => {
   it('should call ngAfterContentInit', () => {
     const newFixture = TestBed.createComponent(SiChatContainerComponent);
     const newComponent = newFixture.componentInstance;
-    const ngAfterContentInitSpy = spyOn(newComponent, 'ngAfterContentInit').and.callThrough();
+    const ngAfterContentInitSpy = vi.spyOn(newComponent, 'ngAfterContentInit');
     newComponent.ngAfterContentInit();
     expect(ngAfterContentInitSpy).toHaveBeenCalled();
   });

@@ -10,6 +10,7 @@ import { getMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
 import { MessageAction } from './message-action.model';
 import { Attachment } from './si-attachment-list.component';
 import { SiUserMessageComponent as TestComponent } from './si-user-message.component';
+import { vi } from 'vitest';
 
 describe('SiUserMessageComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
@@ -128,7 +129,7 @@ describe('SiUserMessageComponent', () => {
   });
 
   it('should call action with actionParam', () => {
-    const actionSpy = jasmine.createSpy('action');
+    const actionSpy = vi.fn();
     const actions: MessageAction[] = [
       {
         label: 'Edit',

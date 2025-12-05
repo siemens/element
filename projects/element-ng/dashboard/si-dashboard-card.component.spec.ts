@@ -173,10 +173,10 @@ describe('SiDashboardCardComponent', () => {
   it('expand and restore on by expand() and restore() api', () => {
     component.card().expand();
     fixture.detectChanges();
-    expect(component.card().isExpanded()).toBeTrue();
+    expect(component.card().isExpanded()).toBe(true);
     component.card().restore();
     fixture.detectChanges();
-    expect(component.card().isExpanded()).toBeFalse();
+    expect(component.card().isExpanded()).toBe(false);
   });
 
   it('expand and restore on click', () => {
@@ -184,10 +184,10 @@ describe('SiDashboardCardComponent', () => {
     fixture.detectChanges();
     (element.querySelector('si-content-action-bar .dropdown-item') as HTMLElement).click();
     fixture.detectChanges();
-    expect(component.card().isExpanded()).toBeTrue();
+    expect(component.card().isExpanded()).toBe(true);
     (element.querySelector('si-content-action-bar .dropdown-item') as HTMLElement).click();
     fixture.detectChanges();
-    expect(component.card().isExpanded()).toBeFalse();
+    expect(component.card().isExpanded()).toBe(false);
   });
 
   it('expand and restore on click with one primary action', () => {
@@ -197,10 +197,10 @@ describe('SiDashboardCardComponent', () => {
     // Second element in content action bar is our expand actions
     (element.querySelectorAll('si-content-action-bar .dropdown-item')[1] as HTMLElement).click();
     fixture.detectChanges();
-    expect(component.card().isExpanded()).toBeTrue();
+    expect(component.card().isExpanded()).toBe(true);
     (element.querySelectorAll('si-content-action-bar .dropdown-item')[1] as HTMLElement).click();
     fixture.detectChanges();
-    expect(component.card().isExpanded()).toBeFalse();
+    expect(component.card().isExpanded()).toBe(false);
   });
 
   it('expand and restore on click with one secondary action', () => {
@@ -209,9 +209,9 @@ describe('SiDashboardCardComponent', () => {
     fixture.detectChanges();
     (element.querySelector('si-content-action-bar .dropdown-item') as HTMLElement).click();
     fixture.detectChanges();
-    expect(component.card().isExpanded()).toBeTrue();
+    expect(component.card().isExpanded()).toBe(true);
     (element.querySelector('si-content-action-bar .dropdown-item') as HTMLElement).click();
     fixture.detectChanges();
-    expect(component.card().isExpanded()).toBeFalse();
+    expect(component.card().isExpanded()).toBe(false);
   });
 });

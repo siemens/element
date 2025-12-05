@@ -14,6 +14,7 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideSiUiState, SI_UI_STATE_SERVICE, UIStateStorage } from '@siemens/element-ng/common';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import { Action, CollapseTo, PartState, Scale, SiSplitModule, SplitOrientation } from './index';
 import { SiSplitPartComponent } from './si-split-part.component';
@@ -420,9 +421,9 @@ describe('SiSplitComponent', () => {
             await TestBed.inject(SI_UI_STATE_SERVICE).load<Record<string, any>>('split-test');
 
           expect(uiStateMock).toBeDefined();
-          expect(uiStateMock!.one.expanded).toBeFalse();
-          expect(uiStateMock!.two.expanded).toBeTrue();
-          expect(uiStateMock!.three.expanded).toBeTrue();
+          expect(uiStateMock!.one.expanded).toBe(false);
+          expect(uiStateMock!.two.expanded).toBe(true);
+          expect(uiStateMock!.three.expanded).toBe(true);
         });
       });
 

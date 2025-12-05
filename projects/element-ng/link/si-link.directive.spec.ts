@@ -17,6 +17,7 @@ import {
   SiTranslateService
 } from '@siemens/element-translate-ng/translate';
 import { of } from 'rxjs';
+import { vi } from 'vitest';
 
 import { Link, LinkAction } from './link.model';
 import { SiLinkActionService } from './si-link-action.service';
@@ -154,7 +155,7 @@ describe('SiLinkDirective', () => {
   });
 
   it('updates active class on isActive change', async () => {
-    const changeSpy = spyOn(component, 'activeChange');
+    const changeSpy = vi.spyOn(component, 'activeChange');
     component.link = { action: () => {} };
     component.cdRef.markForCheck();
     fixture.detectChanges();

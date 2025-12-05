@@ -17,6 +17,7 @@ import { SiTranslateService } from '@siemens/element-ng/translate';
 import { provideMockTranslateServiceBuilder } from '@siemens/element-translate-ng/translate';
 import { JSONSchema7 } from 'json-schema';
 import { of } from 'rxjs';
+import { beforeEach, expect, it, vi } from 'vitest';
 
 import { SiFormlyComponent } from './si-formly.component';
 import { SiFormlyModule } from './si-formly.module';
@@ -71,7 +72,7 @@ describe('ElementFormComponent', () => {
     fixture = TestBed.createComponent(WrapperComponent);
     wrapperComponent = fixture.componentInstance;
     element = fixture.nativeElement;
-    spyOn(wrapperComponent, 'formChanged');
+    vi.spyOn(wrapperComponent, 'formChanged');
     fixture.detectChanges();
     component = wrapperComponent.formly();
   });

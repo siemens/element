@@ -172,6 +172,44 @@
         }
       }
     },
+    "element-ng-test": {
+      "projectType": "application",
+      "root": "projects/element-ng",
+      "sourceRoot": "projects/element-ng",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "projects/element-ng/src/main.ts",
+            "tsConfig": "projects/element-ng-/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "aot": false,
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/element-ng/assets/images",
+                "output": "assets"
+              }
+            ],
+            "styles": [
+              "projects/element-theme/src/theme.scss",
+              "projects/element-ng/test-styles.scss"
+            ]
+          },
+          "configurations": {
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test"
+        }
+      }
+    },
     "element-translate-ng": {
       "projectType": "library",
       "root": "projects/element-translate-ng",

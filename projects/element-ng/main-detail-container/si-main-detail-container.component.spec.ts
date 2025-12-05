@@ -14,6 +14,7 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Subject } from 'rxjs';
+import { afterEach, beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
 
 import {
   BOOTSTRAP_BREAKPOINTS,
@@ -68,7 +69,7 @@ describe('MainDetailContainerComponent', () => {
   let debugElement: DebugElement;
   let htmlElement: HTMLElement;
 
-  let doAnimationSpy: jasmine.Spy;
+  let doAnimationSpy: Mock<any>;
   const getSiSplit = (): HTMLElement => htmlElement.querySelector('si-split') as HTMLElement;
   const getMainDetailContainer = (): HTMLElement =>
     htmlElement.querySelector('.main-detail-container') as HTMLElement;
@@ -90,10 +91,12 @@ describe('MainDetailContainerComponent', () => {
 
   const animationDurationMilliseconds = 500;
   const resizeObserver = new Subject<ElementDimensions>();
-  const resizeSpy = jasmine.createSpyObj('ResizeObserverService', ['observe']);
+  const resizeSpy = {
+    observe: vi.fn()
+  };
 
   beforeEach(async () => {
-    resizeSpy.observe.and.callFake((e: Element, t: number, i: boolean, im?: boolean) => {
+    resizeSpy.observe.mockImplementation((e: Element, t: number, i: boolean, im?: boolean) => {
       return resizeObserver;
     });
 
@@ -113,14 +116,14 @@ describe('MainDetailContainerComponent', () => {
     debugElement = fixture.debugElement;
     htmlElement = debugElement.nativeElement;
     fixture.detectChanges();
-    doAnimationSpy = spyOn<any>(component.mainDetail(), 'doAnimation').and.callThrough();
+    doAnimationSpy = vi.spyOn<any, any>(component.mainDetail(), 'doAnimation');
     resizeObserver.next({ width: 800, height: 500 });
 
-    jasmine.clock().install();
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should not contain si-split when #resizableParts is false', () => {
@@ -132,7 +135,7 @@ describe('MainDetailContainerComponent', () => {
     fixture.detectChanges();
 
     expect(htmlElement.querySelector('si-split')).toBeTruthy();
-    expect(htmlElement.querySelectorAll('si-split-part')).toHaveSize(2);
+    expect(htmlElement.querySelectorAll('si-split-part')).toHaveLength(2);
   });
 
   it('should hide the heading component when heading input text is empty', () => {
@@ -179,17 +182,17 @@ describe('MainDetailContainerComponent', () => {
       component.cdRef.markForCheck();
       fixture.detectChanges();
       // act
-      jasmine.clock().tick(animationDurationMilliseconds);
+      vi.advanceTimersByTime(animationDurationMilliseconds);
       fixture.detectChanges();
       // flush timeout
-      jasmine.clock().tick(0);
+      vi.advanceTimersByTime(0);
       fixture.detectChanges();
       // expect
       expect(doAnimationSpy).toHaveBeenCalledWith(true);
       expect(htmlElement.querySelector('si-main-detail-container')?.classList).not.toContain(
         'animate'
       );
-      expect(htmlElement.classList.contains('animate')).toBeFalse();
+      expect(htmlElement.classList.contains('animate')).toBe(false);
     });
   });
 
@@ -239,14 +242,14 @@ describe('MainDetailContainerComponent', () => {
       resizeObserver.next({ width: component.largeLayoutBreakpoint - 1, height: 500 });
       component.detailsActive = false;
       // act
-      jasmine.clock().tick(animationDurationMilliseconds);
+      vi.advanceTimersByTime(animationDurationMilliseconds);
       fixture.detectChanges();
       const detailContainer = getDetailContainer();
       // flush timeout
-      jasmine.clock().tick(0);
+      vi.advanceTimersByTime(0);
       fixture.detectChanges();
       // expect
-      expect(getInViewport(detailContainer)).toBeFalse();
+      expect(getInViewport(detailContainer)).toBe(false);
     });
 
     it('should set inert attribute to prevent focus hidden details when details are inactive', () => {
@@ -254,10 +257,10 @@ describe('MainDetailContainerComponent', () => {
       resizeObserver.next({ width: component.largeLayoutBreakpoint - 1, height: 500 });
       component.detailsActive = false;
       // act
-      jasmine.clock().tick(animationDurationMilliseconds);
+      vi.advanceTimersByTime(animationDurationMilliseconds);
       fixture.detectChanges();
       // flush timeout
-      jasmine.clock().tick(0);
+      vi.advanceTimersByTime(0);
       fixture.detectChanges();
       // expect
       expect(debugElement.query(By.css('.detail-container[inert]'))).toBeTruthy();
@@ -268,10 +271,10 @@ describe('MainDetailContainerComponent', () => {
       resizeObserver.next({ width: component.largeLayoutBreakpoint - 1, height: 500 });
       component.detailsActive = true;
       // act
-      jasmine.clock().tick(animationDurationMilliseconds);
+      vi.advanceTimersByTime(animationDurationMilliseconds);
       fixture.detectChanges();
       // flush timeout
-      jasmine.clock().tick(0);
+      vi.advanceTimersByTime(0);
       fixture.detectChanges();
       // expect
       expect(debugElement.query(By.css('.detail-container :not([inert])'))).toBeTruthy();
@@ -291,7 +294,7 @@ describe('MainDetailContainerComponent', () => {
       htmlElement.querySelector('button')?.click();
       fixture.detectChanges();
       // expect
-      expect(component.detailsActive).toBeFalse();
+      expect(component.detailsActive).toBe(false);
     });
 
     it('should not show details back button', () => {
@@ -305,14 +308,14 @@ describe('MainDetailContainerComponent', () => {
       // prepare
       component.detailsActive = true;
       // act
-      jasmine.clock().tick(animationDurationMilliseconds);
+      vi.advanceTimersByTime(animationDurationMilliseconds);
       fixture.detectChanges();
       const mainContainer = getMainContainer();
       // flush timeout
-      jasmine.clock().tick(0);
+      vi.advanceTimersByTime(0);
       fixture.detectChanges();
       // expect
-      expect(getInViewport(mainContainer)).toBeFalse();
+      expect(getInViewport(mainContainer)).toBe(false);
     });
   });
 });

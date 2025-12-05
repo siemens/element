@@ -5,6 +5,7 @@
 import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import {
   SiNotificationItemComponent,
@@ -97,7 +98,7 @@ describe('SiNotificationItemComponent', () => {
 
   it('should link with the router link', () => {
     const router = TestBed.inject(Router);
-    spyOn(router, 'navigateByUrl');
+    vi.spyOn(router, 'navigateByUrl');
     component.itemLink = { type: 'router-link', routerLink: '/test' };
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();

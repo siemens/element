@@ -4,6 +4,7 @@
  */
 import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { vi } from 'vitest';
 
 import { BlinkService } from './blink.service';
 
@@ -11,13 +12,13 @@ describe('BlinkService', () => {
   let service!: BlinkService;
 
   beforeEach(() => {
-    jasmine.clock().install();
+    vi.useFakeTimers();
     TestBed.configureTestingModule({ providers: [BlinkService, provideZonelessChangeDetection()] });
     service = TestBed.inject(BlinkService);
   });
 
   afterEach(() => {
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('triggers on/off pulses', () => {
@@ -31,7 +32,7 @@ describe('BlinkService', () => {
       }
     });
 
-    jasmine.clock().tick(4 * 1400);
+    vi.advanceTimersByTime(4 * 1400);
 
     subs.unsubscribe();
 
@@ -44,11 +45,11 @@ describe('BlinkService', () => {
     let counter2 = 0;
     const subs1 = service.pulse$.subscribe(() => counter1++);
 
-    jasmine.clock().tick(500);
+    vi.advanceTimersByTime(500);
     counter1 = 0; // value not interesting
     const subs2 = service.pulse$.subscribe(() => counter2++);
 
-    jasmine.clock().tick(4 * 1400);
+    vi.advanceTimersByTime(4 * 1400);
 
     expect(counter1).toBe(counter2);
 
@@ -60,18 +61,18 @@ describe('BlinkService', () => {
     let counter = 0;
     const subs = service.pulse$.subscribe(() => counter++);
 
-    jasmine.clock().tick(100);
+    vi.advanceTimersByTime(100);
     expect(counter).toBe(1); // 1 startup
 
     service.pause();
-    expect(service.isPaused()).toBeTrue();
+    expect(service.isPaused()).toBe(true);
 
-    jasmine.clock().tick(4 * 1400);
+    vi.advanceTimersByTime(4 * 1400);
     expect(counter).toBe(2); // 2 because an "off" is forced
 
     service.resume();
 
-    jasmine.clock().tick(4 * 1400);
+    vi.advanceTimersByTime(4 * 1400);
 
     expect(counter).toBe(7); // 7: the two initial from above, 1 startup, 4 ticks
 

@@ -36,7 +36,7 @@ describe('SiTooltipDirective', () => {
     });
 
     beforeEach(() => {
-      jasmine.clock().install();
+      vi.useFakeTimers();
       fixture = TestBed.createComponent(TestHostComponent);
       component = fixture.componentInstance;
       button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
@@ -44,18 +44,18 @@ describe('SiTooltipDirective', () => {
     });
 
     afterEach(() => {
-      jasmine.clock().uninstall();
+      vi.useRealTimers();
     });
 
     it('should open on focus', () => {
       button.dispatchEvent(new Event('focus'));
-      jasmine.clock().tick(500);
+      vi.advanceTimersByTime(500);
 
       expect(document.querySelector('.tooltip')).toBeTruthy();
       expect(document.querySelector('.tooltip')?.innerHTML).toContain('test tooltip');
 
       button.dispatchEvent(new Event('focusout'));
-      jasmine.clock().tick(500);
+      vi.advanceTimersByTime(500);
 
       expect(document.querySelector('.tooltip')).toBeFalsy();
     });
@@ -112,23 +112,23 @@ describe('SiTooltipDirective', () => {
     });
 
     beforeEach(() => {
-      jasmine.clock().install();
+      vi.useFakeTimers();
       fixture = TestBed.createComponent(TestHostComponent);
       button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
       fixture.detectChanges();
     });
 
     afterEach(() => {
-      jasmine.clock().uninstall();
+      vi.useRealTimers();
     });
 
     it('should render the template', async () => {
       button.dispatchEvent(new Event('focus'));
-      jasmine.clock().tick(500);
+      vi.advanceTimersByTime(500);
       await fixture.whenStable();
       expect(document.querySelector('.tooltip')?.innerHTML).toContain('Template content');
       button.dispatchEvent(new Event('focusout'));
-      jasmine.clock().tick(500);
+      vi.advanceTimersByTime(500);
       await fixture.whenStable();
       expect(document.querySelector('.tooltip')).toBeFalsy();
     });
@@ -138,11 +138,11 @@ describe('SiTooltipDirective', () => {
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       button.dispatchEvent(new Event('focus'));
-      jasmine.clock().tick(500);
+      vi.advanceTimersByTime(500);
       await fixture.whenStable();
       expect(document.querySelector('.tooltip')?.innerHTML).toContain('Template content test');
       button.dispatchEvent(new Event('focusout'));
-      jasmine.clock().tick(500);
+      vi.advanceTimersByTime(500);
       await fixture.whenStable();
       expect(document.querySelector('.tooltip')).toBeFalsy();
     });

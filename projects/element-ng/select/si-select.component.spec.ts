@@ -9,6 +9,7 @@ import { Component, provideZonelessChangeDetection, viewChild } from '@angular/c
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SiSelectHarness } from '@siemens/element-ng/select/testing';
+import { describe, expect, it, vi } from 'vitest';
 
 import { SelectOption, SelectOptionLegacy, SiSelectComponent, SiSelectModule } from './index';
 import { SiSelectSelectionStrategy } from './selection/si-select-selection-strategy';
@@ -355,7 +356,7 @@ describe('SiSelectComponent', () => {
         fixture.detectChanges();
         await selectHarness.open();
         const item = await selectHarness.getList().then(list => list!.getItemByText('c'));
-        expect(await item.isActive()).toBeTrue();
+        expect(await item.isActive()).toBe(true);
       });
     });
   });
@@ -457,7 +458,7 @@ describe('SiSelectComponent', () => {
 
     it('sets the disabled state', async () => {
       component.form.disable();
-      expect(component.valueDirective().disabled()).toBeTrue();
+      expect(component.valueDirective().disabled()).toBe(true);
       expect(await selectHarness.getTabindex()).toBe('-1');
     });
   });
@@ -564,7 +565,7 @@ describe('SiSelectComponent', () => {
   });
 
   it('should throw an error when using filter and option template without valueProvider', () => {
-    spyOn(console, 'error');
+    vi.spyOn(console, 'error');
     TestBed.configureTestingModule({
       imports: [WithFilterInvalidTestComponent],
       providers: [provideZonelessChangeDetection()]
@@ -598,7 +599,7 @@ describe('SiSelectComponent', () => {
     });
 
     it('should close drop down on custom action click', async () => {
-      spyOn(component, 'actionClick');
+      vi.spyOn(component, 'actionClick');
 
       await selectHarness.clickActionByText({ text: 'close' });
       expect(await selectHarness.getList()).toBeNull();
@@ -606,7 +607,7 @@ describe('SiSelectComponent', () => {
     });
 
     it("shouldn't close drop down on custom action click", async () => {
-      spyOn(component, 'actionClick');
+      vi.spyOn(component, 'actionClick');
       await selectHarness.clickActionByText({ text: 'nothing' });
       expect(await selectHarness.getList()).toBeTruthy();
       expect(component.actionClick).toHaveBeenCalled();

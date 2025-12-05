@@ -9,6 +9,7 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
 import { SiDatepickerModule } from '@siemens/element-ng/datepicker';
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { SiFormlyDateTimeComponent } from './si-formly-datetime.component';
 
@@ -37,19 +38,17 @@ describe('formly datetime-type', () => {
 
   beforeAll(() => {
     // Seems to be installed somewhere else...
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   beforeEach(() => {
-    jasmine.clock().install();
+    vi.useFakeTimers();
     date = new Date(startDate);
-    jasmine.clock().mockDate(date);
+    vi.setSystemTime(date);
     const d = new Date();
 
     const pad = (n: number): string => (n > 9 ? `${n}` : `0${n}`);
-    startDateInputVal = `2021-08-${d.getDate()} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(
-      d.getSeconds()
-    )}`;
+    startDateInputVal = `2021-08-${d.getDate()} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
 
     TestBed.configureTestingModule({
       imports: [
@@ -76,7 +75,7 @@ describe('formly datetime-type', () => {
   });
 
   afterEach(() => {
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should have a timezoned display value - as short value', () => {
@@ -123,7 +122,7 @@ describe('formly datetime-type', () => {
     const inputField = fixture.debugElement.query(By.css('input'));
     inputField.nativeElement.value = startDateInputVal;
     inputField.nativeElement.dispatchEvent(new Event('input'));
-    jasmine.clock().tick(200);
+    vi.advanceTimersByTime(200);
     fixture.detectChanges();
     await fixture.whenStable();
     expect(componentInstance.model.name).toEqual(new Date(startDateUTCShort));
@@ -177,7 +176,7 @@ describe('formly datetime-type', () => {
     inputField.nativeElement.value = startDateInputVal;
     inputField.nativeElement.dispatchEvent(new Event('input'));
 
-    jasmine.clock().tick(200);
+    vi.advanceTimersByTime(200);
     fixture.detectChanges();
     await fixture.whenStable();
     expect(componentInstance.model.name).toEqual(new Date(startDateUTCSLong));
@@ -230,7 +229,7 @@ describe('formly datetime-type', () => {
     inputField.nativeElement.value = startDateInputVal;
     inputField.nativeElement.dispatchEvent(new Event('input'));
 
-    jasmine.clock().tick(200);
+    vi.advanceTimersByTime(200);
     fixture.detectChanges();
     await fixture.whenStable();
 

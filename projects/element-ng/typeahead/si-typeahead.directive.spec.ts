@@ -15,6 +15,7 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { BehaviorSubject, of } from 'rxjs';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { SiTypeaheadDirective, Typeahead, TypeaheadMatch, TypeaheadOptionItemContext } from '.';
 import { SiTypeaheadInputHarness } from './testing/si-typeahead-input.harness';
@@ -67,7 +68,7 @@ class WrapperComponent {
   minLength = 1;
   optionField = 'name';
   tokenize = true;
-  matchAllTokens = 'separately';
+  matchAllTokens: 'no' | 'once' | 'separately' | 'independently' = 'separately';
   itemTemplate!: TemplateRef<TypeaheadOptionItemContext>;
   typeaheadSkipSortingMatches = false;
   typeaheadClearValueOnSelect = false;
@@ -114,11 +115,11 @@ describe('SiTypeaheadDirective', () => {
     rootLoader = TestbedHarnessEnvironment.documentRootLoader(fixture);
   });
 
-  beforeAll(() => jasmine.clock().install());
-  afterAll(() => jasmine.clock().uninstall());
+  beforeAll(() => vi.useFakeTimers());
+  afterAll(() => vi.useRealTimers());
 
   const tick = async (ms = 0): Promise<void> => {
-    jasmine.clock().tick(ms);
+    vi.advanceTimersByTime(ms);
     fixture.detectChanges();
     await fixture.whenStable();
   };
@@ -360,7 +361,7 @@ describe('SiTypeaheadDirective', () => {
 
   it('should use emit on full match', async () => {
     wrapperComponent.items = testList;
-    wrapperComponent.onFullMatch = jasmine.createSpy();
+    wrapperComponent.onFullMatch = vi.fn();
 
     await (await loader.getHarness(SiTypeaheadInputHarness)).typeText('so');
     await tick(0);
@@ -369,7 +370,7 @@ describe('SiTypeaheadDirective', () => {
 
   it('should not use emit on partial match', async () => {
     wrapperComponent.items = testList;
-    wrapperComponent.onFullMatch = jasmine.createSpy();
+    wrapperComponent.onFullMatch = vi.fn();
 
     await (await loader.getHarness(SiTypeaheadInputHarness)).typeText('s');
     await tick(0);
@@ -378,7 +379,7 @@ describe('SiTypeaheadDirective', () => {
 
   it('should use emit on select', async () => {
     wrapperComponent.minLength = 0;
-    wrapperComponent.onSelect = jasmine.createSpy();
+    wrapperComponent.onSelect = vi.fn();
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
@@ -391,18 +392,18 @@ describe('SiTypeaheadDirective', () => {
     wrapperComponent.minLength = 0;
     wrapperComponent.waitMs = 333;
 
-    spyOn(window, 'setTimeout');
+    vi.spyOn(window, 'setTimeout');
 
     await (await loader.getHarness(SiTypeaheadInputHarness)).focus();
 
     await tick(wrapperComponent.waitMs);
 
-    expect(setTimeout).toHaveBeenCalledWith(jasmine.any(Function), 333);
+    expect(setTimeout).toHaveBeenCalledWith(expect.any(Function), 333);
   });
 
   it('should properly select item on click', async () => {
     wrapperComponent.minLength = 0;
-    wrapperComponent.onModelChange = jasmine.createSpy();
+    wrapperComponent.onModelChange = vi.fn();
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
@@ -440,7 +441,7 @@ describe('SiTypeaheadDirective', () => {
   it('should properly select item with arrow down and enter', async () => {
     wrapperComponent.items = testList;
     wrapperComponent.minLength = 0;
-    wrapperComponent.onModelChange = jasmine.createSpy();
+    wrapperComponent.onModelChange = vi.fn();
 
     fixture.detectChanges();
 
@@ -467,7 +468,7 @@ describe('SiTypeaheadDirective', () => {
 
   it('should not select any item when selecting the first item is disabled', async () => {
     wrapperComponent.minLength = 0;
-    wrapperComponent.onModelChange = jasmine.createSpy();
+    wrapperComponent.onModelChange = vi.fn();
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
@@ -635,8 +636,8 @@ describe('SiTypeaheadDirective', () => {
 
   it('should trigger the create option', async () => {
     wrapperComponent.createOption = 'Create {{query}}';
-    const createSpy = spyOn(wrapperComponent, 'onCreateOption');
-    const selectSpy = spyOn(wrapperComponent, 'onSelect');
+    const createSpy = vi.spyOn(wrapperComponent, 'onCreateOption');
+    const selectSpy = vi.spyOn(wrapperComponent, 'onSelect');
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();

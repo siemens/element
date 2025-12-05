@@ -13,6 +13,7 @@ import {
   injectSiTranslateService,
   provideMockTranslateServiceBuilder
 } from '@siemens/element-translate-ng/translate';
+import { beforeEach, describe, expect, it, vi, type Mock } from 'vitest';
 
 import { SiFormlyButtonComponent } from './si-formly-button.component';
 
@@ -35,11 +36,11 @@ class FormlyTestComponent {
 
 describe('formly button type', () => {
   let fixture: ComponentFixture<FormlyTestComponent>;
-  let translateSpy: jasmine.Spy<(value: any, ...args: any[]) => any>;
+  let translateSpy: Mock;
   let component: FormlyTestComponent;
 
   beforeEach(async () => {
-    translateSpy = jasmine.createSpy().and.callFake((value: any) => value);
+    translateSpy = vi.fn().mockImplementation((value: any) => value);
     TestBed.overrideComponent(SiFormlyButtonComponent, {
       add: {
         providers: [
@@ -106,7 +107,7 @@ describe('formly button type', () => {
   });
 
   it('should show a translated label', () => {
-    translateSpy.and.returnValue('iam a teapot');
+    translateSpy.mockReturnValue('iam a teapot');
     component.fields = [
       {
         key: 'btn',
@@ -225,9 +226,9 @@ describe('formly button type', () => {
   });
 
   describe('with button click', () => {
-    let spy: jasmine.Spy<jasmine.Func>;
+    let spy: Mock;
     beforeEach(() => {
-      spy = jasmine.createSpy();
+      spy = vi.fn();
     });
 
     it('should trigger the clickListener function', () => {
@@ -329,8 +330,10 @@ describe('formly button type', () => {
     });
 
     it('should trigger the clickListener function with custom params', () => {
-      spyOn(console, 'warn');
-      spy.and.throwError('error');
+      vi.spyOn(console, 'warn');
+      spy.mockImplementation(() => {
+        throw new Error('error');
+      });
       component.fields = [
         {
           key: 'btn',
@@ -351,8 +354,10 @@ describe('formly button type', () => {
     });
 
     it('should log warning when click listener raised exception', () => {
-      spyOn(console, 'warn');
-      spy.and.throwError('error');
+      vi.spyOn(console, 'warn');
+      spy.mockImplementation(() => {
+        throw new Error('error');
+      });
       component.options = {
         formState: {
           click: () => spy()
@@ -378,8 +383,10 @@ describe('formly button type', () => {
     });
 
     it('should log warning when click listener is not a function', () => {
-      spyOn(console, 'warn');
-      spy.and.throwError('error');
+      vi.spyOn(console, 'warn');
+      spy.mockImplementation(() => {
+        throw new Error('error');
+      });
       component.options = {
         formState: {
           click: 'invalid'

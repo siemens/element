@@ -5,6 +5,7 @@
 import { ComponentRef, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { SiInfoPageComponent as TestComponent } from '.';
 
@@ -42,7 +43,7 @@ describe('SiInfoPageComponent', () => {
 
   it('should invoke navigation on button press', () => {
     const router = TestBed.inject(Router);
-    spyOn(router, 'navigateByUrl');
+    vi.spyOn(router, 'navigateByUrl');
     component.setInput('titleText', 'Title');
     component.setInput('link', { title: 'Go home', link: '/home' });
     fixture.detectChanges();

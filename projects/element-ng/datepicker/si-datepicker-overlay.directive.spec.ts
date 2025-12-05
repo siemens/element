@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
+import { describe, expect, it, vi } from 'vitest';
 
 import { generateKeyEvent } from './components/test-helper.spec';
 import { SiDateInputDirective } from './si-date-input.directive';
@@ -110,7 +111,7 @@ describe('SiDatepickerOverlayDirective', () => {
   });
 
   it('should emit datepicker close', async () => {
-    const close$ = spyOn(component.datepickerOverlay.siDatepickerClose, 'emit').and.callThrough();
+    const close$ = vi.spyOn(component.datepickerOverlay.siDatepickerClose, 'emit');
     await show();
     await close();
     expect(component.datepickerOverlay.isShown()).toBeFalsy();
@@ -129,7 +130,7 @@ describe('SiDatepickerOverlayDirective', () => {
 
   describe('with escape', async () => {
     it('should emit escape', async () => {
-      spyOn(component, 'escape');
+      vi.spyOn(component, 'escape');
       await show();
       expect(component.datepickerOverlay.isShown()).toBeTruthy();
       const picker = document.querySelector('si-datepicker');

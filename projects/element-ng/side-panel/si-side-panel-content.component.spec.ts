@@ -4,6 +4,7 @@
  */
 import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { SiSidePanelModule } from './si-side-panel.module';
 import { SiSidePanelService } from './si-side-panel.service';
@@ -41,7 +42,7 @@ describe('SiSidePanelContentComponent', () => {
   });
 
   it('should toggle side panel on click', () => {
-    spyOn(sidePanelService, 'toggle');
+    vi.spyOn(sidePanelService, 'toggle');
     const toggleBtnEl: HTMLElement | null = element.querySelector('.collapse-toggle button');
     toggleBtnEl?.click();
     fixture.detectChanges();

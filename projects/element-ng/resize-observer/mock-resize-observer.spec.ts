@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { vi } from 'vitest';
 
 let resizeObserver: ResizeObserver;
 export interface ResizeOptions {
@@ -33,17 +34,17 @@ export class MockResizeObserver {
     MockResizeObserver.instance = this;
   }
 
-  disconnect = jasmine.createSpy('disconnect').and.callFake(() => (this.observed = []));
+  disconnect = vi.fn().mockImplementation(() => (this.observed = []));
 
-  observe = jasmine
-    .createSpy('observe')
-    .and.callFake((target: Element, options?: ResizeObserverOptions) =>
+  observe = vi
+    .fn()
+    .mockImplementation((target: Element, options?: ResizeObserverOptions) =>
       this.observed.push([target, options])
     );
 
-  unobserve = jasmine
-    .createSpy('unobserve')
-    .and.callFake(
+  unobserve = vi
+    .fn()
+    .mockImplementation(
       (target: Element) => (this.observed = this.observed.filter(x => x[0] !== target))
     );
 
