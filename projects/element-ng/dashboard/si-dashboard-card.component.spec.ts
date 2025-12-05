@@ -2,7 +2,12 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  provideZonelessChangeDetection,
+  viewChild
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
@@ -36,7 +41,8 @@ describe('SiDashboardCardComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [RouterModule, NoopAnimationsModule, TestHostComponent]
+      imports: [RouterModule, NoopAnimationsModule, TestHostComponent],
+      providers: [provideZonelessChangeDetection()]
     })
   );
 
