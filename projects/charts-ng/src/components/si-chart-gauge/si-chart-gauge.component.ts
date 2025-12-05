@@ -225,7 +225,7 @@ export class SiChartGaugeComponent extends SiChartComponent implements OnChanges
     return value;
   }
 
-  private axisLabelFormatter = (value: any): string => {
+  private readonly axisLabelFormatter = (value: any): string => {
     const formatted = this.axisNumberFormat().format(Number(value));
     return this.unitsOnSplit() ? `${formatted} ${this.unit()}` : formatted;
   };
