@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormRecord, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -66,7 +66,8 @@ describe('formly datetime-type', () => {
         }),
         SiFormlyDateTimeComponent,
         FormlyTestComponent
-      ]
+      ],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
   });
 
@@ -100,7 +101,7 @@ describe('formly datetime-type', () => {
     expect(new Date(inputField.nativeElement.value)).toEqual(new Date(startDateInputVal));
   });
 
-  it('should handle time zone and result into value as short value', fakeAsync(() => {
+  it('should handle time zone and result into value as short value', async () => {
     const componentInstance = fixture.componentInstance;
     componentInstance.fields = [
       {
@@ -122,10 +123,11 @@ describe('formly datetime-type', () => {
     const inputField = fixture.debugElement.query(By.css('input'));
     inputField.nativeElement.value = startDateInputVal;
     inputField.nativeElement.dispatchEvent(new Event('input'));
+    jasmine.clock().tick(200);
     fixture.detectChanges();
-    tick(200);
+    await fixture.whenStable();
     expect(componentInstance.model.name).toEqual(new Date(startDateUTCShort));
-  }));
+  });
 
   it('should have a timezoned display value - as long value', () => {
     const componentInstance = fixture.componentInstance;
@@ -151,7 +153,7 @@ describe('formly datetime-type', () => {
     expect(new Date(inputField.nativeElement.value)).toEqual(new Date(startDateInputVal));
   });
 
-  it('should handle time zone and result into value as long value', fakeAsync(() => {
+  it('should handle time zone and result into value as long value', async () => {
     const componentInstance = fixture.componentInstance;
     componentInstance.fields = [
       {
@@ -175,10 +177,11 @@ describe('formly datetime-type', () => {
     inputField.nativeElement.value = startDateInputVal;
     inputField.nativeElement.dispatchEvent(new Event('input'));
 
+    jasmine.clock().tick(200);
     fixture.detectChanges();
-    tick(200);
+    await fixture.whenStable();
     expect(componentInstance.model.name).toEqual(new Date(startDateUTCSLong));
-  }));
+  });
 
   it('should have a timezoned display value - as data value', () => {
     const componentInstance = fixture.componentInstance;
@@ -204,7 +207,7 @@ describe('formly datetime-type', () => {
     expect(inputField.nativeElement.value).toEqual(startDateInputVal);
   });
 
-  it('should handle time zone and result into value as date', fakeAsync(() => {
+  it('should handle time zone and result into value as date', async () => {
     const componentInstance = fixture.componentInstance;
     componentInstance.fields = [
       {
@@ -226,11 +229,13 @@ describe('formly datetime-type', () => {
     const inputField = fixture.debugElement.query(By.css('input'));
     inputField.nativeElement.value = startDateInputVal;
     inputField.nativeElement.dispatchEvent(new Event('input'));
+
+    jasmine.clock().tick(200);
     fixture.detectChanges();
-    tick(200);
+    await fixture.whenStable();
 
     expect(componentInstance.model.name.getTime()).toEqual(date.getTime());
-  }));
+  });
 
   it('should have calendar-button', async () => {
     const componentInstance = fixture.componentInstance;

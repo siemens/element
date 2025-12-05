@@ -7,9 +7,10 @@ import {
   ChangeDetectorRef,
   Component,
   inject,
+  provideZonelessChangeDetection,
   viewChild
 } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   SiFormContainerComponent,
@@ -71,17 +72,18 @@ describe('SiFormContainerComponent', () => {
     let fixture: ComponentFixture<TestHostComponent>;
     let formContainer: SiFormContainerComponent<TestForm>;
 
-    beforeEach(waitForAsync(() => {
-      TestBed.configureTestingModule({
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
         imports: [
           ReactiveFormsModule,
           SiFormModule.withConfiguration({
             validationErrorMapper: { minlength: 'custom-length-message' }
           }),
           TestHostComponent
-        ]
+        ],
+        providers: [provideZonelessChangeDetection()]
       }).compileComponents();
-    }));
+    });
 
     beforeEach(() => {
       fixture = TestBed.createComponent(TestHostComponent);
@@ -165,11 +167,12 @@ describe('SiFormContainerComponent', () => {
   describe('with nested form containers', () => {
     let fixture: ComponentFixture<TestHostWithNestingComponent>;
 
-    beforeEach(waitForAsync(() => {
-      TestBed.configureTestingModule({
-        imports: [TestHostWithNestingComponent]
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
+        imports: [TestHostWithNestingComponent],
+        providers: [provideZonelessChangeDetection()]
       }).compileComponents();
-    }));
+    });
 
     beforeEach(() => {
       fixture = TestBed.createComponent(TestHostWithNestingComponent);
