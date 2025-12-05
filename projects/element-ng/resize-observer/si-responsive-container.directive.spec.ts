@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, signal } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
+import { Component, provideZonelessChangeDetection, signal } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiResponsiveContainerDirective } from './index';
 import {
@@ -37,31 +37,35 @@ describe('SiResponsiveContainerDirective', () => {
   beforeEach(() => {
     mockResizeObserver();
     TestBed.configureTestingModule({
-      imports: [TestHostComponent]
+      imports: [TestHostComponent],
+      providers: [provideZonelessChangeDetection()]
     });
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
-    fixture.detectChanges();
   });
 
   afterEach(() => restoreResizeObserver());
 
   const testSize = async (size: number, clazz: string): Promise<void> => {
+    jasmine.clock().install();
     component.width.set(size);
     fixture.detectChanges();
     MockResizeObserver.triggerResize({});
-    flush();
+
+    jasmine.clock().tick(100);
     fixture.detectChanges();
+    await fixture.whenStable();
 
     expect(element.querySelector<HTMLElement>('div')!.className).toBe(clazz);
+    jasmine.clock().uninstall();
   };
 
-  it('sets correct si-container-* class', fakeAsync(() => {
-    testSize(100, 'si-container-xs');
-    testSize(580, 'si-container-sm');
-    testSize(780, 'si-container-md');
-    testSize(1000, 'si-container-lg');
-    testSize(1200, 'si-container-xl');
-  }));
+  it('sets correct si-container-* class', async () => {
+    await testSize(100, 'si-container-xs');
+    await testSize(580, 'si-container-sm');
+    await testSize(780, 'si-container-md');
+    await testSize(1000, 'si-container-lg');
+    await testSize(1200, 'si-container-xl');
+  });
 });

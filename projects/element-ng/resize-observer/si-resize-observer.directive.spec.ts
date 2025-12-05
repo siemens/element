@@ -2,15 +2,14 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, ElementRef, signal, viewChild } from '@angular/core';
 import {
-  ComponentFixture,
-  fakeAsync,
-  flush,
-  TestBed,
-  tick,
-  waitForAsync
-} from '@angular/core/testing';
+  Component,
+  ElementRef,
+  provideZonelessChangeDetection,
+  signal,
+  viewChild
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ElementDimensions } from './index';
 import {
@@ -54,55 +53,61 @@ describe('SiResizeObserverDirective', () => {
     fixture.detectChanges();
     MockResizeObserver.triggerResize({});
     fixture.detectChanges();
-    tick();
   };
 
-  beforeEach(fakeAsync(() => {
+  beforeEach(() => {
     mockResizeObserver();
     TestBed.configureTestingModule({
-      imports: [TestHostComponent]
+      imports: [TestHostComponent],
+      providers: [provideZonelessChangeDetection()]
     });
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     spy = spyOn(component, 'resizeHandler');
-    fixture.detectChanges();
-    tick();
-  }));
+  });
+
+  beforeEach(() => jasmine.clock().install());
 
   afterEach(() => {
     restoreResizeObserver();
+    jasmine.clock().uninstall();
   });
 
-  it('emits initial size event', fakeAsync(() => {
+  it('emits initial size event', async () => {
+    fixture.detectChanges();
+    jasmine.clock().tick(100);
+    await fixture.whenStable();
     expect(component.resizeHandler).toHaveBeenCalledWith({ width: 100, height: 100 });
-  }));
+  });
 
-  it('emits on width change', fakeAsync(() => {
+  it('emits on width change', async () => {
     // not interested in the initial event
     spy.calls.reset();
     detectSizeChange(200, 100);
 
-    // with throttling, this shouldn't fire just yet
-    tick(10);
     expect(component.resizeHandler).not.toHaveBeenCalled();
 
-    flush();
-    expect(component.resizeHandler).toHaveBeenCalledWith({ width: 200, height: 100 });
-  }));
+    jasmine.clock().tick(100);
+    fixture.detectChanges();
+    await fixture.whenStable();
 
-  it('emits on height change', fakeAsync(() => {
+    expect(component.resizeHandler).toHaveBeenCalledWith({ width: 200, height: 100 });
+  });
+
+  it('emits on height change', async () => {
     // not interested in the initial event
     spy.calls.reset();
 
     detectSizeChange(100, 200);
 
-    // with throttling, this shouldn't fire just yet
-    tick(10);
     expect(component.resizeHandler).not.toHaveBeenCalled();
 
-    flush();
+    jasmine.clock().tick(100);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
     expect(component.resizeHandler).toHaveBeenCalledWith({ width: 100, height: 200 });
-  }));
+  });
 });
 
 describe('SiResizeObserverDirective with emitInitial=false', () => {
@@ -110,23 +115,22 @@ describe('SiResizeObserverDirective with emitInitial=false', () => {
   let component: TestHostComponent;
   let spy: jasmine.Spy<(dim: ElementDimensions) => void>;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [TestHostComponent],
-      providers: []
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
-  }));
+  });
 
-  beforeEach(fakeAsync(() => {
+  beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     component.emitInitial = false;
     spy = spyOn(component, 'resizeHandler');
     fixture.detectChanges();
-    tick();
-  }));
+  });
 
-  it('does not emit initial size event', fakeAsync(() => {
+  it('does not emit initial size event', () => {
     expect(spy).not.toHaveBeenCalled();
-  }));
+  });
 });
