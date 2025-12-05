@@ -12,26 +12,52 @@
 - Avoid using ‘Yes’ and ‘No’ as buttons, but instead use suitable verbs to make the action directly understandable
 - Only use ‘OK’ as an option if you cannot find an appropriate verb
 
-<!-- markdownlint-disable MD033 -->
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
 
-| Dos                                              | Don'ts                                         |
-| ------------------------------------------------ | ---------------------------------------------- |
-| Title: Add user<br>Buttons: Cancel, Add          | Title: Add user<br>Buttons: Cancel, OK         |
-| Title: Delete file<br>Buttons: Cancel, Delete    | Title: Are you sure<br>Buttons: Cancel, Delete |
-| Title: Edit details<br>Buttons: Cancel, Save     | Title: Edit details<br>Buttons: Cancel, Edit   |
-| Title: Unsaved changes<br>Buttons: Cancel, Save  | Title: Unsaved changes<br>Buttons: No, Yes     |
-| Title: Delete devices<br>Buttons: Cancel, Delete | Title: Delete items<br>Buttons: Cancel, Delete |
+#### Do's
 
-<!-- markdownlint-enable MD033 -->
+- Title: Add user<br>Buttons: Cancel, Add
+- Title: Delete file<br>Buttons: Cancel, Delete
+- Title: Edit details<br>Buttons: Cancel, Save
+- Title: Unsaved changes<br>Buttons: Cancel, Save
+- Title: Delete devices<br>Buttons: Cancel, Delete
+
+</div>
+<div class="donts" markdown>
+
+#### Don'ts
+
+- Title: Add user<br>Buttons: Cancel, OK
+- Title: Are you sure<br>Buttons: Cancel, Delete
+- Title: Edit details<br>Buttons: Cancel, Edit
+- Title: Unsaved changes<br>Buttons: No, Yes
+- Title: Delete items<br>Buttons: Cancel, Delete
+
+</div>
+</div>
 
 ## Primary and secondary actions
 
 - Primary on the right, secondary left (Cancel, OK) not (OK, Cancel)
 - Primary actions can either be positive (Send, Save) or negative (Delete)
 
-| Dos          | Don'ts       |
-| ------------ | ------------ |
-| Cancel, Save | Save, Cancel |
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+#### Do's
+
+- Cancel, Save
+
+</div>
+<div class="donts" markdown>
+
+#### Don'ts
+
+- Save, Cancel
+
+</div>
+</div>
 
 ## Clear content
 
@@ -42,13 +68,25 @@
 - Check whether a disclaimer can be prevented by a different interaction
 - Only use ‘this action’ in disclaimers
 
-<!-- markdownlint-disable MD033 -->
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
 
-| Dos                                | Don'ts                                                                 |
-| ---------------------------------- | ---------------------------------------------------------------------- |
-| Delete Wittelsbacherplatz München? | Do you really want to delete Wittelsbacherplatz München?               |
-| Delete Wittelsbacherplatz München? | Delete Building?                                                       |
-| Delete Wittelsbacherplatz München? | Delete Wittelsbacherplatz München?<br><br>This action cannot be undone |
-| Delete Wittelsbacherplatz München? | Delete Wittelsbacherplatz München permanently?                         |
+#### Do's
 
-<!-- markdownlint-enable MD033 -->
+- Delete Wittelsbacherplatz München?
+- Delete Wittelsbacherplatz München?
+- Delete Wittelsbacherplatz München?
+- Delete Wittelsbacherplatz München?
+
+</div>
+<div class="donts" markdown>
+
+#### Don'ts
+
+- Do you really want to delete Wittelsbacherplatz München?
+- Delete Building?
+- Delete Wittelsbacherplatz München?<br><br>This action cannot be undone
+- Delete Wittelsbacherplatz München permanently?
+
+</div>
+</div>
