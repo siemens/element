@@ -79,10 +79,7 @@ classes such size and color can be used. The CSS class `icon` applies the defaul
 icon size.
 
 There is also a specific [si-icon](../components/status-notifications/icon.md)
-component, which can be used to show icons. It includes a fallback alternative
-text to make icons more accessible.
-
-Some symbols require overlapping of two icons, which is also supported by the
-[si-icon](../components/status-notifications/icon.md) component.
+component, which can be used to show icons. It supports stacking of icons to build
+compositions and also supports SVG-based icons.
 
 <si-docs-component example="icons/icons"></si-docs-component>
