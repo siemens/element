@@ -68,13 +68,30 @@ Use internalization libraries to reuse common standards if applicable.
 - Hyphen for ranges: 10-40%
 - Numbers: Use No. as an abbreviation for number, no spacing between abbreviated No. and number: No.8
 
-| Dos      | Don'ts |
-| -------- | ------ |
-| 30 mm    | 30 mms |
-| 10 oz    | 10 oz. |
-| 10-40%   | 10–40% |
-| No.7     | #7     |
-| Number 7 | Num 7  |
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+#### Do's
+
+- 30 mm
+- 10 oz
+- 10-40%
+- No.7
+- Number 7
+
+</div>
+<div class="donts" markdown>
+
+#### Don'ts
+
+- 30 mms
+- 10 oz.
+- 10–40%
+- \#7
+- Num 7
+
+</div>
+</div>
 
 ## Spacing
 
@@ -85,12 +102,28 @@ Use internalization libraries to reuse common standards if applicable.
 - No space before and after hyphens and em dashes
 - Add a space before unit of measurement
 
-| Dos              | Don'ts          |
-| ---------------- | --------------- |
-| 50%              | 50 %            |
-| 11am             | 11 am           |
-| Tuesday: no data | Tuesday:no data |
-| Calculating…     | Calculating …   |
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+#### Do's
+
+- 50%
+- 11am
+- Tuesday: no data
+- Calculating…
+
+</div>
+<div class="donts" markdown>
+
+#### Don'ts
+
+- 50 %
+- 11 am
+- Tuesday:no data
+- Calculating …
+
+</div>
+</div>
 
 ## Lists
 

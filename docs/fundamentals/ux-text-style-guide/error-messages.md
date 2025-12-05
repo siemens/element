@@ -22,34 +22,60 @@
 - An error message alerts user of a problem that exists and must be addressed
 - Avoid using `error` or `warning`, as these words are superfluous in most cases
 
-<!-- markdownlint-disable MD013 MD033 -->
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
 
-| Dos                                                                                        | Don'ts                                                                                                                       |
-| ------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
-| Form incomplete: Fill in all mandatory fields                                              | What did you do!?                                                                                                            |
-| _(Input field validation)_ Invalid email address                                           | The email address you entered does not match the required format. Please enter your email address using the standard format. |
-| Failed to delete device. Device still in use                                               | You have failed to delete the device.                                                                                        |
-| Insufficient access rights: No access rights to delete {{fileName}}. Contact administrator | Permission error: To carry out this task, you need more permissions. Contact admin to change permissions.                    |
-| Page not found: Check address                                                              | Error 404                                                                                                                    |
-| _(Input field validation)_ Max. 255<br>_(Input field validation)_ Min. 0                   | Value out of range.                                                                                                          |
-| No Internet connection: Check connection and try again                                     | System error: You’re offline. Check your connection and try again.                                                           |
-| Failed to upload file: Check source file and try again                                     | File error: We cannot upload this file. Try uploading again.                                                                 |
-| File not found: Check if file is moved                                                     | File not found.                                                                                                              |
-| _(Skip title)_                                                                             | _(Title)_ Input error                                                                                                        |
-| _(Input field validation)_ Max. 30 characters                                              | _(Explanation)_ Input error detected.                                                                                        |
-| _(Skip action)_                                                                            | _(Action)_ Try again.                                                                                                        |
+#### Do's
 
-<!-- markdownlint-enable MD013 MD033 -->
+- Form incomplete: Fill in all mandatory fields
+- _(Input field validation)_ Invalid email address
+- Failed to delete device. Device still in use
+- Insufficient access rights: No access rights to delete {{fileName}}. Contact administrator
+- Page not found: Check address
+- _(Input field validation)_ Max. 255<br>_(Input field validation)_ Min. 0
+- No Internet connection: Check connection and try again
+- Failed to upload file: Check source file and try again
+- File not found: Check if file is moved
+- _(Skip title)_
+- _(Input field validation)_ Max. 30 characters
+- _(Skip action)_
+
+</div>
+<div class="donts" markdown>
+
+#### Don'ts
+
+- What did you do!?
+- The email address you entered does not match the required format. Please enter your email address using the standard format.
+- You have failed to delete the device.
+- Permission error: To carry out this task, you need more permissions. Contact admin to change permissions.
+- Error 404
+- Value out of range.
+- System error: You're offline. Check your connection and try again.
+- File error: We cannot upload this file. Try uploading again.
+- File not found.
+- _(Title)_ Input error
+- _(Explanation)_ Input error detected.
+- _(Action)_ Try again.
+
+</div>
+</div>
 
 ## Warning messages
 
 - A warning message alerts users of a condition that may cause a problem in the future
 
-| Dos                                                    |
-| ------------------------------------------------------ |
-| Title: Unsaved documents                               |
-| Explanation: Save all documents before leaving the app |
-| Action: Save all _(button)_                            |
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+#### Do's
+
+- Title: Unsaved documents
+- Explanation: Save all documents before leaving the app
+- Action: Save all _(button)_
+
+</div>
+</div>
 
 ## Notifications
 
@@ -57,8 +83,23 @@
 - Avoid using `success`, `successful`, or `successfully`, as these words are superfluous in most cases
 - Avoid using `information` as a title, as it does not provide an additional value to the user
 
-| Dos                         | Don'ts                                    |
-| --------------------------- | ----------------------------------------- |
-| Access point 2 connected    | Access point connection failed. Try again |
-| Changes saved automatically | No rows to show                           |
-| Email sent                  | Email sent successfully                   |
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+#### Do's
+
+- Access point 2 connected
+- Changes saved automatically
+- Email sent
+
+</div>
+<div class="donts" markdown>
+
+#### Don'ts
+
+- Access point connection failed. Try again
+- No rows to show
+- Email sent successfully
+
+</div>
+</div>
