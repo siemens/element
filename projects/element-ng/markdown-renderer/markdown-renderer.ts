@@ -17,7 +17,13 @@ export interface MarkdownRendererOptions {
    */
   copyCodeButton?: TranslatableString;
   /**
-   * Optional translate sync function of a service instance for translating the copy button label.
+   * Provide this to enable the table CSV download button functionality.
+   * Download button label for table CSV export (will be translated internally if translateService is provided).
+   * @defaultValue undefined
+   */
+  downloadTableButton?: TranslatableString;
+  /**
+   * Optional translate sync function of a service instance for translating the copy button label and download button label.
    * @defaultValue undefined
    */
   translateSync?: SiTranslateService['translateSync'];
@@ -44,6 +50,9 @@ export const getMarkdownRenderer = (
     const div = document.createElement('div');
     div.className = 'markdown-content text-break';
 
+    // Map to store original table cell content: tableIndex -> rowIndex -> columnIndex -> original text
+    const tableCellData = new Map<number, Map<number, Map<number, string>>>();
+
     if (!text) {
       return div;
     }
@@ -61,11 +70,27 @@ export const getMarkdownRenderer = (
     let html = sanitizedInput.replace(new RegExp(newlinePlaceholder, 'g'), '\n');
 
     // Process tables first
+    let tableIndex = -1;
+    const rowIndexMap = new Map<number, number>();
+
     html = html
       // Remove table separator lines first
       .replace(/^\|\s*[-:]+.*\|\s*$/gm, '')
       // Process table rows
       .replace(/^\|(.+)\|\s*$/gm, (_match, htmlContent) => {
+        // Track which table we're in (increment on first row of each table)
+        const isFirstRow = rowIndexMap.get(tableIndex) === undefined;
+        if (isFirstRow) {
+          tableIndex++;
+          rowIndexMap.set(tableIndex, 0);
+          tableCellData.set(tableIndex, new Map());
+        }
+
+        const currentRowIndex = rowIndexMap.get(tableIndex)!;
+        const tableData = tableCellData.get(tableIndex)!;
+        tableData.set(currentRowIndex, new Map());
+        const rowData = tableData.get(currentRowIndex)!;
+
         // Handle escaped pipes by temporarily replacing them
         const escapedPipePlaceholder = `--ESCAPED-PIPE-${Math.random().toString(36).substring(2, 15)}--`;
         const contentWithPlaceholders = htmlContent.replace(/\\\|/g, escapedPipePlaceholder);
@@ -103,17 +128,54 @@ export const getMarkdownRenderer = (
           return preProcessedCell;
         });
 
-        // Recursively process cell content for markdown formatting
-        const processedCells = cellsWithNewlines.map((cell: string) => {
-          return transformMarkdownText(cell, false, sanitizer);
+        // Recursively process cell content for markdown formatting and store original data
+        const processedCells = cellsWithNewlines.map((cell: string, index: number) => {
+          const formattedContent = transformMarkdownText(cell, false, sanitizer, options);
+          // Store original cell text in the map
+          rowData.set(index, cells[index]);
+          return formattedContent;
         });
+
+        // Increment row index for next row
+        rowIndexMap.set(tableIndex, currentRowIndex + 1);
 
         return `<tr>${processedCells.map((cell: string) => `<td>${cell}</td>`).join('')}</tr>`;
       })
       // Wrap table rows in table elements
-      .replace(/(<tr>.*?<\/tr>)/gs, '<table class="table table-hover">$1</table>')
+      .replace(
+        /(<tr>.*?<\/tr>)/gs,
+        (() => {
+          let currentTableWrapIndex = -1;
+
+          const translatedLabel =
+            options?.downloadTableButton && options?.translateSync
+              ? options.translateSync(options.downloadTableButton)
+              : options?.downloadTableButton
+                ? String(options.downloadTableButton)
+                : undefined;
+          const buttonLabel = translatedLabel
+            ?.replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+
+          return (match: string) => {
+            currentTableWrapIndex++;
+            const tableId = `table-${Math.random().toString(36).substring(2, 15)}`;
+
+            const downloadTableCsvButton = buttonLabel
+              ? `<button type="button" class="btn btn-circle btn-sm btn-tertiary element-download download-table-btn" data-table-id="${tableId}" data-table-index="${currentTableWrapIndex}" aria-label="${buttonLabel}"></button>`
+              : '';
+
+            return `<div class="table-wrapper">${downloadTableCsvButton}<table class="table table-hover" id="${tableId}">${match}</table></div>`;
+          };
+        })()
+      )
       // Remove duplicate table tags
-      .replace(/<\/table>\s*<table class="table table-hover">/g, '');
+      .replace(
+        /<\/table><\/div>\s*<div class="table-wrapper"><button[^>]*><\/button><table class="table table-hover"[^>]*>/g,
+        ''
+      );
 
     html = transformMarkdownText(html, true, sanitizer, options);
 
@@ -139,6 +201,58 @@ export const getMarkdownRenderer = (
           // Clipboard API may fail if not in a secure context or permissions denied
           console.warn('Failed to copy code to clipboard');
         });
+      });
+    });
+
+    // Add download functionality to tables (CSV export)
+    div.querySelectorAll('.download-table-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        const button = e.target as HTMLButtonElement;
+        const tableId = button.getAttribute('data-table-id');
+        const tableIndexStr = button.getAttribute('data-table-index');
+        if (!tableId || tableIndexStr === null) {
+          return;
+        }
+
+        const tableElement = div.querySelector(`#${tableId}`) as HTMLTableElement;
+        if (!tableElement) {
+          return;
+        }
+
+        const currentTableIndex = parseInt(tableIndexStr, 10);
+        const tableData = tableCellData.get(currentTableIndex);
+
+        // Convert table to CSV
+        const rows = Array.from(tableElement.querySelectorAll('tr'));
+        const csv = rows
+          .map((row, rowIndex) => {
+            const cells = Array.from(row.querySelectorAll('td, th'));
+            return cells
+              .map((cell, columnIndex) => {
+                // Use original text from map, fallback to textContent
+                const cellText =
+                  tableData?.get(rowIndex)?.get(columnIndex) ?? cell.textContent ?? '';
+                // Escape quotes and wrap in quotes if contains comma, quote, or newline
+                if (cellText.includes(',') || cellText.includes('"') || cellText.includes('\n')) {
+                  return `"${cellText.replace(/"/g, '""')}"`;
+                }
+                return cellText;
+              })
+              .join(',');
+          })
+          .join('\n');
+
+        // Create and trigger download
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', 'table.csv');
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
       });
     });
     return div;
