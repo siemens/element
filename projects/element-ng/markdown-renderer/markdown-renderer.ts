@@ -273,6 +273,11 @@ const transformMarkdownText = (
   const escapedUnderscorePlaceholder = `--UNDERSCORE-${Math.random().toString(36).substring(2, 15)}--`;
 
   // Apply markdown transformations to the sanitized content
+
+  // Add temporary closing backticks at the end to handle incomplete code blocks during streaming
+  const tempClosingMarker = `\n\`\`\`--TEMP-CLOSE--\n`;
+  html = html + tempClosingMarker;
+
   html = html
     // Multiline code blocks ```code``` with placeholder
     .replace(/```[^\n]*\n?([\s\S]*?)\n?```/g, (match, content) => {
@@ -303,7 +308,12 @@ const transformMarkdownText = (
       const codePlaceholder = `--CODE-BLOCK-${Math.random().toString(36).substring(2, 15)}--`;
       codeSectionPlaceholderMap.set(codePlaceholder, code);
       return codePlaceholder;
-    })
+    });
+
+  // Remove temporary closing marker if it's still there (wasn't part of a code block)
+  html = html.replace(tempClosingMarker, '').replace(/--TEMP-CLOSE--/g, '');
+
+  html = html
 
     // Inline code `text`
     .replace(/`(.*?)`/g, (match, content) => {
