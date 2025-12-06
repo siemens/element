@@ -1,0 +1,20 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  ::ng-deep {
+    .maplibregl-map {
+        font: unset;
+        font-size: 12px;
+        line-height: 20px;
+    }
+
+    .maplibregl-ctrl-attrib-button,
+    .maplibregl-ctrl-group button {
+      &:focus {
+        @include variables.make-outline-focus();
+      }
+    }
+
+  }
+}
+
