@@ -22,6 +22,7 @@ export class SampleComponent {
 
   protected markdownRenderer = getMarkdownRenderer(this.sanitizer, {
     copyCodeButton: 'Copy',
+    downloadTableButton: 'Download CSV',
     translateSync: this.translate.translateSync.bind(this.translate)
   });
 
