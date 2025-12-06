@@ -4,6 +4,36 @@
  */
 import { SecurityContext } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import type {
+  SiTranslateService,
+  TranslatableString
+} from '@siemens/element-translate-ng/translate';
+
+export interface MarkdownRendererOptions {
+  /**
+   * Provide this to enable the copy code button functionality.
+   * Label for the copy code button (will be translated internally if translateService is provided).
+   * @defaultValue undefined
+   */
+  copyCodeButton?: TranslatableString;
+  /**
+   * Provide this to enable the table CSV download button functionality.
+   * Download button label for table CSV export (will be translated internally if translateService is provided).
+   * @defaultValue undefined
+   */
+  downloadTableButton?: TranslatableString;
+  /**
+   * Optional syntax highlighter function.
+   * Receives code content and optional language, returns attributes/classes to add to the code element.
+   * Example: `(code, lang) => 'class="hljs language-' + (lang ?? 'plaintext') + '"'`
+   */
+  syntaxHighlighter?: (code: string, language?: string) => string;
+  /**
+   * Optional translate sync function of a service instance for translating the copy button label and download button label.
+   * @defaultValue undefined
+   */
+  translateSync?: SiTranslateService['translateSync'];
+}
 
 /**
  * Returns a markdown renderer function which_
@@ -15,12 +45,19 @@ import { DomSanitizer } from '@angular/platform-browser';
  *
  * @experimental
  * @param sanitizer - Angular DomSanitizer instance
+ * @param options - Optional configuration for the markdown renderer
  * @returns A function taking the markdown text to transform and returning a DOM div element containing the formatted HTML
  */
-export const getMarkdownRenderer = (sanitizer: DomSanitizer): ((text: string) => Node) => {
+export const getMarkdownRenderer = (
+  sanitizer: DomSanitizer,
+  options?: MarkdownRendererOptions
+): ((text: string) => Node) => {
   return (text: string): Node => {
     const div = document.createElement('div');
     div.className = 'markdown-content text-break';
+
+    // Map to store original table cell content: tableIndex -> rowIndex -> columnIndex -> original text
+    const tableCellData = new Map<number, Map<number, Map<number, string>>>();
 
     if (!text) {
       return div;
@@ -39,11 +76,27 @@ export const getMarkdownRenderer = (sanitizer: DomSanitizer): ((text: string) =>
     let html = sanitizedInput.replace(new RegExp(newlinePlaceholder, 'g'), '\n');
 
     // Process tables first
+    let tableIndex = -1;
+    const rowIndexMap = new Map<number, number>();
+
     html = html
       // Remove table separator lines first
       .replace(/^\|\s*[-:]+.*\|\s*$/gm, '')
       // Process table rows
       .replace(/^\|(.+)\|\s*$/gm, (_match, htmlContent) => {
+        // Track which table we're in (increment on first row of each table)
+        const isFirstRow = rowIndexMap.get(tableIndex) === undefined;
+        if (isFirstRow) {
+          tableIndex++;
+          rowIndexMap.set(tableIndex, 0);
+          tableCellData.set(tableIndex, new Map());
+        }
+
+        const currentRowIndex = rowIndexMap.get(tableIndex)!;
+        const tableData = tableCellData.get(tableIndex)!;
+        tableData.set(currentRowIndex, new Map());
+        const rowData = tableData.get(currentRowIndex)!;
+
         // Handle escaped pipes by temporarily replacing them
         const escapedPipePlaceholder = `--ESCAPED-PIPE-${Math.random().toString(36).substring(2, 15)}--`;
         const contentWithPlaceholders = htmlContent.replace(/\\\|/g, escapedPipePlaceholder);
@@ -81,21 +134,128 @@ export const getMarkdownRenderer = (sanitizer: DomSanitizer): ((text: string) =>
           return preProcessedCell;
         });
 
-        // Recursively process cell content for markdown formatting
-        const processedCells = cellsWithNewlines.map((cell: string) => {
-          return transformMarkdownText(cell, false, sanitizer);
+        // Recursively process cell content for markdown formatting and store original data
+        const processedCells = cellsWithNewlines.map((cell: string, index: number) => {
+          const formattedContent = transformMarkdownText(cell, false, sanitizer, options);
+          // Store original cell text in the map
+          rowData.set(index, cells[index]);
+          return formattedContent;
         });
+
+        // Increment row index for next row
+        rowIndexMap.set(tableIndex, currentRowIndex + 1);
 
         return `<tr>${processedCells.map((cell: string) => `<td>${cell}</td>`).join('')}</tr>`;
       })
       // Wrap table rows in table elements
-      .replace(/(<tr>.*?<\/tr>)/gs, '<table class="table table-hover">$1</table>')
-      // Remove duplicate table tags
-      .replace(/<\/table>\s*<table class="table table-hover">/g, '');
+      .replace(
+        /(<tr>.*?<\/tr>)/gs,
+        (() => {
+          let currentTableWrapIndex = -1;
 
-    html = transformMarkdownText(html, true, sanitizer);
+          const translatedLabel =
+            options?.downloadTableButton && options?.translateSync
+              ? options.translateSync(options.downloadTableButton)
+              : options?.downloadTableButton
+                ? String(options.downloadTableButton)
+                : undefined;
+          const buttonLabel = translatedLabel?.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+          const downloadTableCsvButton = buttonLabel
+            ? `<button type="button" class="btn btn-circle btn-sm btn-tertiary element-download download-table-btn" data-table-id="\${tableId}" data-table-index="\${currentTableWrapIndex}" aria-label="\${buttonLabel}"></button>`
+            : '';
+
+          return (match: string) => {
+            currentTableWrapIndex++;
+            const tableId = `table-${Math.random().toString(36).substring(2, 15)}`;
+
+            return `<div class="table-wrapper">${downloadTableCsvButton}<table class="table table-hover" id="${tableId}">${match}</table></div>`;
+          };
+        })()
+      )
+      // Remove duplicate table tags
+      .replace(
+        /<\/table><\/div>\s*<div class="table-wrapper"><button[^>]*><\/button><table class="table table-hover"[^>]*>/g,
+        ''
+      );
+
+    html = transformMarkdownText(html, true, sanitizer, options);
 
     div.innerHTML = html;
+
+    // Add copy functionality to code blocks
+    div.querySelectorAll('.copy-code-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        const button = e.target as HTMLButtonElement;
+        const codeId = button.getAttribute('data-code-id');
+        if (!codeId) {
+          return;
+        }
+
+        const codeElement = div.querySelector(`#${codeId}`);
+        if (!codeElement) {
+          return;
+        }
+
+        const code = codeElement.textContent ?? '';
+
+        navigator.clipboard.writeText(code).catch(() => {
+          // Silently fail
+        });
+      });
+    });
+
+    // Add download functionality to tables (CSV export)
+    div.querySelectorAll('.download-table-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        const button = e.target as HTMLButtonElement;
+        const tableId = button.getAttribute('data-table-id');
+        const tableIndexStr = button.getAttribute('data-table-index');
+        if (!tableId || tableIndexStr === null) {
+          return;
+        }
+
+        const tableElement = div.querySelector(`#${tableId}`) as HTMLTableElement;
+        if (!tableElement) {
+          return;
+        }
+
+        const currentTableIndex = parseInt(tableIndexStr, 10);
+        const tableData = tableCellData.get(currentTableIndex);
+
+        // Convert table to CSV
+        const rows = Array.from(tableElement.querySelectorAll('tr'));
+        const csv = rows
+          .map((row, rowIndex) => {
+            const cells = Array.from(row.querySelectorAll('td, th'));
+            return cells
+              .map((cell, columnIndex) => {
+                // Use original text from map, fallback to textContent
+                const cellText =
+                  tableData?.get(rowIndex)?.get(columnIndex) ?? cell.textContent ?? '';
+                // Escape quotes and wrap in quotes if contains comma, quote, or newline
+                if (cellText.includes(',') || cellText.includes('"') || cellText.includes('\n')) {
+                  return `"${cellText.replace(/"/g, '""')}"`;
+                }
+                return cellText;
+              })
+              .join(',');
+          })
+          .join('\n');
+
+        // Create and trigger download
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', 'table.csv');
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      });
+    });
     return div;
   };
 };
@@ -103,7 +263,8 @@ export const getMarkdownRenderer = (sanitizer: DomSanitizer): ((text: string) =>
 const transformMarkdownText = (
   html: string,
   keepAdditionalNewlines = true,
-  sanitizer: DomSanitizer
+  sanitizer: DomSanitizer,
+  options?: MarkdownRendererOptions
 ): string => {
   // Generate a random placeholder for inner code blocks to prevent markdown processing inside them
   const innerCodeQuotePlaceholder = `--INNER-CODE-${Math.random().toString(36).substring(2, 15)}--`;
@@ -113,15 +274,50 @@ const transformMarkdownText = (
   const escapedUnderscorePlaceholder = `--UNDERSCORE-${Math.random().toString(36).substring(2, 15)}--`;
 
   // Apply markdown transformations to the sanitized content
+
+  // Add temporary closing backticks at the end to handle incomplete code blocks during streaming
+  const tempClosingMarker = `\n\`\`\`--TEMP-CLOSE--\n`;
+  html = html + tempClosingMarker;
+
   html = html
     // Multiline code blocks ```code``` with placeholder
-    .replace(/```[^\n]*\n?([\s\S]*?)\n?```/g, (match, content) => {
+    .replace(/```([^\n]*)\n?([\s\S]*?)\n?```/g, (match, language, content) => {
       // Escape HTML special characters in code blocks (not for security, but for correct display) and preserve inner backticks
-      const code = `<pre><code>${content.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/`/g, innerCodeQuotePlaceholder)}</code></pre>`;
+      const escapedCode = content
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/`/g, innerCodeQuotePlaceholder);
+
+      const codeId = `code-${Math.random().toString(36).substring(2, 15)}`;
+
+      // Apply syntax highlighting if highlighter is provided
+      const codeAttributes = options?.syntaxHighlighter
+        ? options.syntaxHighlighter(content, language.trim() ?? undefined).replace(/>/g, '&gt;')
+        : language.trim()
+          ? `class="language-${language.trim().replace(/>/g, '&gt;').replace(/"/g, '&quot;')}"`
+          : '';
+
+      const translatedLabel =
+        options?.copyCodeButton && options?.translateSync
+          ? options.translateSync(options.copyCodeButton)
+          : options?.copyCodeButton
+            ? String(options.copyCodeButton)
+            : undefined;
+      const buttonLabel = translatedLabel?.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const codeCopyButton = buttonLabel
+        ? `<button type="button" class="btn btn-circle btn-sm btn-tertiary element-copy copy-code-btn" data-code-id="${codeId}" aria-label="${buttonLabel}"></button><code id="${codeId}">${escapedCode}`
+        : '';
+
+      const code = `<pre>${codeCopyButton}<code ${codeAttributes} id="${codeId}">${escapedCode}</code></pre>`;
       const codePlaceholder = `--CODE-BLOCK-${Math.random().toString(36).substring(2, 15)}--`;
       codeSectionPlaceholderMap.set(codePlaceholder, code);
       return codePlaceholder;
-    })
+    });
+
+  // Remove temporary closing marker if it's still there (wasn't part of a code block)
+  html = html.replace(tempClosingMarker, '').replace(/--TEMP-CLOSE--\n$/, '');
+
+  html = html
 
     // Inline code `text`
     .replace(/`(.*?)`/g, (match, content) => {

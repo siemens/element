@@ -1,4 +1,4 @@
-# AI Assistant Response
+# Sample Markdown Content
 
 Here's a **comprehensive example** of markdown content with various formatting options.
 
@@ -44,6 +44,9 @@ Here are the key features:
 - Bullet point lists
 - Blockquote support
 
+* Or in the alternate format
+* Another bullet point
+
 This paragraph appears after the list to show proper spacing.
 
 ## Ordered Lists
@@ -69,6 +72,12 @@ Another paragraph between the lists.
 2. Second ordered item
 
 Final paragraph to show proper spacing.
+
+## Images
+
+Images can be included as follows:
+
+![Building Image](./assets/images/building-1.webp)
 
 ## Tables
 

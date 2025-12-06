@@ -5,8 +5,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, effect, inject, input, ElementRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { injectSiTranslateService, t } from '@siemens/element-translate-ng/translate';
 
-import { getMarkdownRenderer } from './markdown-renderer';
+import { getMarkdownRenderer, type MarkdownRendererOptions } from './markdown-renderer';
 
 /**
  * Component to display markdown text, uses the {@link getMarkdownRenderer} function internally, relies on `markdown-content` theme class.
@@ -20,7 +21,7 @@ import { getMarkdownRenderer } from './markdown-renderer';
 export class SiMarkdownRendererComponent {
   private sanitizer = inject(DomSanitizer);
   private hostElement = inject(ElementRef<HTMLElement>);
-  private markdownRenderer = getMarkdownRenderer(this.sanitizer);
+  private translateService = injectSiTranslateService();
 
   /**
    * The markdown text to transform and display
@@ -28,13 +29,65 @@ export class SiMarkdownRendererComponent {
    */
   readonly text = input<string>('');
 
+  /**
+   * Do not display the copy code button.
+   * @defaultValue false
+   */
+  readonly disableCopyButton = input<boolean>(false);
+
+  /**
+   * Do not display the download CSV button for tables.
+   * @defaultValue false
+   */
+  readonly disableDownloadButton = input<boolean>(false);
+
+  /**
+   * Optional syntax highlighter function for code blocks.
+   * Returns attributes/classes to add to the code element.
+   * Example: `(code, lang) => 'class="hljs language-' + (lang ?? 'plaintext') + '"'`
+   * @defaultValue undefined
+   */
+  readonly syntaxHighlighter = input<((code: string, language?: string) => string) | undefined>(
+    undefined
+  );
+
+  /**
+   * Label for the copy button.
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_MARKDOWN_RENDERER.COPY:Copy`)
+   * ```
+   */
+  readonly copyButtonLabel = input(t(() => $localize`:@@SI_MARKDOWN_RENDERER.COPY:Copy`));
+
+  /**
+   * Label for the download CSV button.
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_MARKDOWN_RENDERER.DOWNLOAD:Download CSV`)
+   * ```
+   */
+  readonly downloadButtonLabel = input(
+    t(() => $localize`:@@SI_MARKDOWN_RENDERER.DOWNLOAD:Download CSV`)
+  );
+
   constructor() {
     effect(() => {
       const contentValue = this.text();
       const containerEl = this.hostElement.nativeElement;
+      const highlighterFn = this.syntaxHighlighter();
+
+      const options: MarkdownRendererOptions | undefined = {
+        copyCodeButton: !this.disableCopyButton() ? this.copyButtonLabel() : undefined,
+        downloadTableButton: !this.disableDownloadButton() ? this.downloadButtonLabel() : undefined,
+        syntaxHighlighter: highlighterFn,
+        translateSync: this.translateService.translateSync.bind(this.translateService)
+      };
+
+      const markdownRenderer = getMarkdownRenderer(this.sanitizer, options);
 
       if (containerEl) {
-        const formattedNode = this.markdownRenderer(contentValue);
+        const formattedNode = markdownRenderer(contentValue);
         containerEl.innerHTML = '';
         containerEl.appendChild(formattedNode);
       }

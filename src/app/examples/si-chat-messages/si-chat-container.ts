@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, signal, TemplateRef, viewChild } from '@angular/core';
+import { Component, inject, NgZone, signal, TemplateRef, viewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import {
   SiChatContainerComponent,
@@ -25,7 +25,9 @@ import {
 } from '@siemens/element-ng/markdown-renderer';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { SiToastNotificationService } from '@siemens/element-ng/toast-notification';
+import { injectSiTranslateService } from '@siemens/element-translate-ng/translate';
 import { LOG_EVENT } from '@siemens/live-preview';
+import hljs from 'highlight.js';
 
 interface ChatMessage {
   type: 'user' | 'ai' | 'custom';
@@ -55,8 +57,28 @@ export class SampleComponent {
   private readonly modalTemplate = viewChild<TemplateRef<any>>('modalTemplate');
   private sanitizer = inject(DomSanitizer);
   private readonly toastService = inject(SiToastNotificationService);
+  private translate = injectSiTranslateService();
+  private readonly zone = inject(NgZone);
 
-  protected markdownRenderer = getMarkdownRenderer(this.sanitizer);
+  protected markdownRenderer = getMarkdownRenderer(this.sanitizer, {
+    copyCodeButton: 'Copy',
+    downloadTableButton: 'Download CSV',
+    translateSync: this.translate.translateSync.bind(this.translate),
+    syntaxHighlighter: (code: string, language?: string): string => {
+      // Optional: Syntax highlighting with highlight.js
+      // This function returns classes for the code element. Libraries like highlight.js
+      // can then be used to apply syntax highlighting based on these classes.
+      // Call hljs.highlightAll() after rendering to activate highlighting.
+      // Element provides a built-in theme that adapts to light/dark mode.
+      // Alternatively, you can import a highlight.js theme in your global styles, e.g.:
+      // @import 'highlight.js/styles/github-dark.css';
+      if (language && hljs.getLanguage(language)) {
+        this.zone.runOutsideAngular(() => setTimeout(() => hljs.highlightAll()));
+        return `class="hljs language-${language}"`;
+      }
+      return 'class="hljs"';
+    }
+  });
 
   readonly preAttachedFiles: ChatInputAttachment[] = [
     {
@@ -92,10 +114,10 @@ export class SampleComponent {
       ],
       actions: [
         {
-          label: 'Copy message',
+          label: 'Export message',
           icon: 'element-export',
           action: (message: ChatMessage) =>
-            this.logEvent(`Copy user message ${message.content.slice(0, 20)}...`)
+            this.logEvent(`Export user message ${message.content.slice(0, 20)}...`)
         }
       ]
     },
@@ -106,14 +128,14 @@ export class SampleComponent {
   Let me examine the structure and provide guidance.`,
       actions: [
         {
-          label: 'Good response',
+          label: 'Add to list',
           icon: 'element-plus',
-          action: (_message: ChatMessage) => this.logEvent('Thumbs up for AI message')
+          action: (_message: ChatMessage) => this.logEvent('Add AI message to list')
         },
         {
-          label: 'Copy response',
+          label: 'Export response',
           icon: 'element-export',
-          action: (_message: ChatMessage) => this.logEvent('Copy AI message')
+          action: (_message: ChatMessage) => this.logEvent('Export AI message')
         },
         {
           label: 'Retry response',
@@ -133,10 +155,10 @@ export class SampleComponent {
         'Perfect! What should I focus on first\n\nI also want to make sure the performance is optimized for large datasets since this will be used in production with potentially millions of rows?',
       actions: [
         {
-          label: 'Copy message',
+          label: 'Export message',
           icon: 'element-export',
           action: (_message: ChatMessage) =>
-            this.logEvent(`Copy user message ${_message.content.slice(0, 20)}...`)
+            this.logEvent(`Export user message ${_message.content.slice(0, 20)}...`)
         }
       ]
     },
@@ -155,23 +177,23 @@ export class SampleComponent {
 
   inputActions: MessageAction[] = [
     {
-      label: 'Text formatting',
+      label: 'Format text',
       icon: 'element-brush',
-      action: () => this.logEvent('Text formatting clicked')
+      action: () => this.logEvent('Format text clicked')
     },
     {
-      label: 'Message templates',
+      label: 'Use template',
       icon: 'element-template',
-      action: () => this.logEvent('Templates clicked')
+      action: () => this.logEvent('Use template clicked')
     }
   ];
 
   userActions: MessageAction[] = [
     {
-      label: 'Copy message',
+      label: 'Export message',
       icon: 'element-export',
       action: (_message: ChatMessage) =>
-        this.logEvent(`Copy user message ${_message.content.slice(0, 20)}...`)
+        this.logEvent(`Export user message ${_message.content.slice(0, 20)}...`)
     },
     {
       label: 'Delete message',
@@ -183,14 +205,14 @@ export class SampleComponent {
 
   aiActions: MessageAction[] = [
     {
-      label: 'Good response',
+      label: 'Add to list',
       icon: 'element-plus',
-      action: (_message: ChatMessage) => this.logEvent('Thumbs up for AI message')
+      action: (_message: ChatMessage) => this.logEvent('Add AI message to list')
     },
     {
-      label: 'Copy response',
+      label: 'Export response',
       icon: 'element-export',
-      action: (_message: ChatMessage) => this.logEvent('Copy AI message')
+      action: (_message: ChatMessage) => this.logEvent('Export AI message')
     }
   ];
 
@@ -203,9 +225,9 @@ export class SampleComponent {
         content: event.content,
         actions: [
           {
-            label: 'Copy message',
+            label: 'Export message',
             icon: 'element-export',
-            action: () => this.logEvent('Copy user message')
+            action: () => this.logEvent('Export user message')
           }
         ],
         attachments: event.attachments.map(att => ({
@@ -245,14 +267,14 @@ export class SampleComponent {
             content: response,
             actions: [
               {
-                label: 'Good response',
+                label: 'Add to list',
                 icon: 'element-plus',
-                action: () => this.logEvent('Thumbs up for AI message')
+                action: () => this.logEvent('Add AI message to list')
               },
               {
-                label: 'Copy response',
+                label: 'Export response',
                 icon: 'element-export',
-                action: () => this.logEvent('Copy AI message')
+                action: () => this.logEvent('Export AI message')
               }
             ]
           }

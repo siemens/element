@@ -4,20 +4,34 @@
 
 ```ts
 
+import * as _angular_core from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import * as i0 from '@angular/core';
+import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
+import { SiTranslateService } from '@siemens/element-translate-ng/translate';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public
-export const getMarkdownRenderer: (sanitizer: DomSanitizer) => ((text: string) => Node);
+export const getMarkdownRenderer: (sanitizer: DomSanitizer, options?: MarkdownRendererOptions) => ((text: string) => Node);
+
+// @public (undocumented)
+export interface MarkdownRendererOptions {
+    copyCodeButton?: TranslatableString;
+    downloadTableButton?: TranslatableString;
+    syntaxHighlighter?: (code: string, language?: string) => string;
+    translateSync?: SiTranslateService['translateSync'];
+}
 
 // @public
 export class SiMarkdownRendererComponent {
     constructor();
-    readonly text: i0.InputSignal<string>;
+    readonly copyButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly downloadButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly syntaxHighlighter: _angular_core.InputSignal<((code: string, language?: string) => string) | undefined>;
+    readonly text: _angular_core.InputSignal<string>;
     // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<SiMarkdownRendererComponent, "si-markdown-renderer", never, { "text": { "alias": "text"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
+    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiMarkdownRendererComponent, "si-markdown-renderer", never, { "text": { "alias": "text"; "required": false; "isSignal": true; }; "syntaxHighlighter": { "alias": "syntaxHighlighter"; "required": false; "isSignal": true; }; "copyButtonLabel": { "alias": "copyButtonLabel"; "required": false; "isSignal": true; }; "downloadButtonLabel": { "alias": "downloadButtonLabel"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
     // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiMarkdownRendererComponent, never>;
+    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiMarkdownRendererComponent, never>;
 }
 
 // (No @packageDocumentation comment for this package)
