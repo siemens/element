@@ -2,6 +2,8 @@
 
 @use '../variables';
 
+@use './markdown-hljs-theme';
+
 .markdown-content {
   max-inline-size: 100%;
   min-inline-size: 0;
