@@ -61,13 +61,32 @@ export const getMarkdownRenderer = (
     const newlinePlaceholder = `--NEWLINE-${Math.random().toString(36).substring(2, 15)}--`;
 
     // Replace newlines with placeholder before sanitization
-    const valueWithPlaceholders = text.replace(/\n/g, newlinePlaceholder);
+    let valueWithPlaceholders = text.replace(/\n/g, newlinePlaceholder);
+
+    // Replace code blocks with placeholders to preserve them during sanitization
+    const codeBlockPlaceholderMap = new Map<string, string>();
+    valueWithPlaceholders = valueWithPlaceholders
+      // Preserve code blocks by replacing them with placeholders
+      .replace(/```([\s\S]*?)```/g, match => {
+        const codePlaceholder = `--CODE-BLOCK-${Math.random().toString(36).substring(2, 15)}--`;
+        codeBlockPlaceholderMap.set(codePlaceholder, match);
+        return codePlaceholder;
+      });
 
     // Sanitize the input using Angular's HTML sanitizer
     const sanitizedInput = sanitizer.sanitize(SecurityContext.HTML, valueWithPlaceholders) ?? '';
 
     // Restore newlines from placeholder for markdown processing.
     let html = sanitizedInput.replace(new RegExp(newlinePlaceholder, 'g'), '\n');
+
+    // Restore code blocks from placeholders
+    codeBlockPlaceholderMap.forEach((codeBlock, placeholder) => {
+      // In the blocks, restore newlines from placeholder for markdown processing.
+      html = html.replace(
+        new RegExp(placeholder, 'g'),
+        codeBlock.replace(new RegExp(newlinePlaceholder, 'g'), '\n')
+      );
+    });
 
     // Process tables first
     let tableIndex = -1;
@@ -289,6 +308,9 @@ const transformMarkdownText = (
 
       const codeId = `code-${Math.random().toString(36).substring(2, 15)}`;
 
+      // Apply sanitization to the final code content
+      const codeBlockContent = sanitizer.sanitize(SecurityContext.HTML, escapedCode);
+
       const translatedLabel =
         options?.copyCodeButton && options?.translateSync
           ? options.translateSync(options.copyCodeButton)
@@ -304,7 +326,7 @@ const transformMarkdownText = (
         ? `<button type="button" class="btn btn-circle btn-sm btn-tertiary element-copy copy-code-btn" data-code-id="${codeId}" aria-label="${buttonLabel}"></button>`
         : '';
 
-      const code = `<div class="code-wrapper">${codeCopyButton}<pre><code id="${codeId}">${escapedCode}</code></pre></div>`;
+      const code = `<div class="code-wrapper">${codeCopyButton}<pre><code id="${codeId}">${codeBlockContent}</code></pre></div>`;
       const codePlaceholder = `--CODE-BLOCK-${Math.random().toString(36).substring(2, 15)}--`;
       codeSectionPlaceholderMap.set(codePlaceholder, code);
       return codePlaceholder;
