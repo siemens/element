@@ -1,10 +1,9 @@
-<!--[style]="'https://demotiles.maplibre.org/style.json'" -->
 <mgl-map
   class="h-100"
   [style]="mapStyle()"
-  [zoom]="[5]"
   [center]="[15, 44]"
   [canvasContextAttributes]="{ preserveDrawingBuffer: true }"
+  [zoom]="[5]"
   (styleImageMissing)="getImage($event)"
   (mapError)="onError($event)"
 >
@@ -37,7 +36,6 @@
       />
     </ng-template>
   </mgl-markers-for-clusters>
-
   @if (selectedCluster(); as selectedClusterValue) {
     <!-- eslint-disable-next-line @angular-eslint/template/no-any -->
     <mgl-popup [feature]="$any(selectedClusterValue)" [offset]="20" [closeButton]="false">

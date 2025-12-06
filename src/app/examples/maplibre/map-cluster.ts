@@ -70,6 +70,7 @@ const buildGeoJSON = (points: MapPoint[]): GeoJSON.GeoJSON => {
     MarkerIconComponent
   ],
   templateUrl: './map-cluster.html',
+  styleUrl: './map-cluster.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'h-100 d-flex flex-column p-5',
@@ -80,8 +81,7 @@ export class SampleComponent {
   protected readonly map = viewChild.required(MapComponent);
   protected readonly logEvent = inject(LOG_EVENT);
   protected readonly geoJson = signal(buildGeoJSON(mockPoints));
-  protected readonly mapTilerApiKey = environment.maptilerKey;
-  protected readonly mapStyle = signal(styleJson(this.mapTilerApiKey));
+  protected readonly mapStyle = signal(styleJson(environment.maptilerKey));
   readonly selectedCluster = signal<{
     geometry: GeoJSON.Point;
     properties: any;
@@ -119,11 +119,15 @@ export class SampleComponent {
   }
 
   protected onError(event: ErrorEvent & EventData): void {
-    this.logEvent('map error', event.error);
+    if (event.error.message) {
+      this.logEvent('map error', event.error.message);
+    } else {
+      this.logEvent('map error', event.error);
+    }
   }
 
   protected changeTheme(event: Event): void {
-    this.mapStyle.set(styleJson(this.mapTilerApiKey, (event as CustomEvent).detail.dark));
+    this.mapStyle.set(styleJson(environment.maptilerKey, (event as CustomEvent).detail.dark));
   }
 
   toString(value: any): string {
