@@ -34,6 +34,12 @@ export class SiMarkdownRendererComponent {
   readonly disableCopyButton = input<boolean>(false);
 
   /**
+   * Do not display the download CSV button for tables.
+   * @defaultValue false
+   */
+  readonly disableDownloadButton = input<boolean>(false);
+
+  /**
    * Label for the copy button.
    * @defaultValue
    * ```
@@ -42,6 +48,17 @@ export class SiMarkdownRendererComponent {
    */
   readonly copyButtonLabel = input(t(() => $localize`:@@SI_MARKDOWN_RENDERER.COPY:Copy`));
 
+  /**
+   * Label for the download CSV button.
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_MARKDOWN_RENDERER.DOWNLOAD:Download CSV`)
+   * ```
+   */
+  readonly downloadButtonLabel = input(
+    t(() => $localize`:@@SI_MARKDOWN_RENDERER.DOWNLOAD:Download CSV`)
+  );
+
   constructor() {
     effect(() => {
       const contentValue = this.text();
@@ -49,6 +66,7 @@ export class SiMarkdownRendererComponent {
 
       const options: MarkdownRendererOptions | undefined = {
         copyCodeButton: !this.disableCopyButton() ? this.copyButtonLabel() : undefined,
+        downloadTableButton: !this.disableDownloadButton() ? this.downloadButtonLabel() : undefined,
         translateSync: this.translateService.translateSync.bind(this.translateService)
       };
 
