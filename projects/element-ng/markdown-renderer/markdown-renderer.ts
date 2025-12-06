@@ -4,6 +4,24 @@
  */
 import { SecurityContext } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import type {
+  SiTranslateService,
+  TranslatableString
+} from '@siemens/element-translate-ng/translate';
+
+export interface MarkdownRendererOptions {
+  /**
+   * Provide this to enable the copy code button functionality.
+   * Label for the copy code button (will be translated internally if translateService is provided).
+   * @defaultValue undefined
+   */
+  copyCodeButton?: TranslatableString;
+  /**
+   * Optional translate sync function of a service instance for translating the copy button label.
+   * @defaultValue undefined
+   */
+  translateSync?: SiTranslateService['translateSync'];
+}
 
 /**
  * Returns a markdown renderer function which_
@@ -15,9 +33,13 @@ import { DomSanitizer } from '@angular/platform-browser';
  *
  * @experimental
  * @param sanitizer - Angular DomSanitizer instance
+ * @param options - Optional configuration for the markdown renderer
  * @returns A function taking the markdown text to transform and returning a DOM div element containing the formatted HTML
  */
-export const getMarkdownRenderer = (sanitizer: DomSanitizer): ((text: string) => Node) => {
+export const getMarkdownRenderer = (
+  sanitizer: DomSanitizer,
+  options?: MarkdownRendererOptions
+): ((text: string) => Node) => {
   return (text: string): Node => {
     const div = document.createElement('div');
     div.className = 'markdown-content text-break';
@@ -93,9 +115,32 @@ export const getMarkdownRenderer = (sanitizer: DomSanitizer): ((text: string) =>
       // Remove duplicate table tags
       .replace(/<\/table>\s*<table class="table table-hover">/g, '');
 
-    html = transformMarkdownText(html, true, sanitizer);
+    html = transformMarkdownText(html, true, sanitizer, options);
 
     div.innerHTML = html;
+
+    // Add copy functionality to code blocks
+    div.querySelectorAll('.copy-code-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        const button = e.target as HTMLButtonElement;
+        const codeId = button.getAttribute('data-code-id');
+        if (!codeId) {
+          return;
+        }
+
+        const codeElement = div.querySelector(`#${codeId}`);
+        if (!codeElement) {
+          return;
+        }
+
+        const code = codeElement.textContent ?? '';
+
+        navigator.clipboard.writeText(code).catch(() => {
+          // Clipboard API may fail if not in a secure context or permissions denied
+          console.warn('Failed to copy code to clipboard');
+        });
+      });
+    });
     return div;
   };
 };
@@ -103,7 +148,8 @@ export const getMarkdownRenderer = (sanitizer: DomSanitizer): ((text: string) =>
 const transformMarkdownText = (
   html: string,
   keepAdditionalNewlines = true,
-  sanitizer: DomSanitizer
+  sanitizer: DomSanitizer,
+  options?: MarkdownRendererOptions
 ): string => {
   // Generate a random placeholder for inner code blocks to prevent markdown processing inside them
   const innerCodeQuotePlaceholder = `--INNER-CODE-${Math.random().toString(36).substring(2, 15)}--`;
@@ -117,7 +163,29 @@ const transformMarkdownText = (
     // Multiline code blocks ```code``` with placeholder
     .replace(/```[^\n]*\n?([\s\S]*?)\n?```/g, (match, content) => {
       // Escape HTML special characters in code blocks (not for security, but for correct display) and preserve inner backticks
-      const code = `<pre><code>${content.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/`/g, innerCodeQuotePlaceholder)}</code></pre>`;
+      const escapedCode = content
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/`/g, innerCodeQuotePlaceholder);
+
+      const codeId = `code-${Math.random().toString(36).substring(2, 15)}`;
+
+      const translatedLabel =
+        options?.copyCodeButton && options?.translateSync
+          ? options.translateSync(options.copyCodeButton)
+          : options?.copyCodeButton
+            ? String(options.copyCodeButton)
+            : undefined;
+      const buttonLabel = translatedLabel
+        ?.replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+      const codeCopyButton = buttonLabel
+        ? `<button type="button" class="btn btn-circle btn-sm btn-tertiary element-copy copy-code-btn" data-code-id="${codeId}" aria-label="${buttonLabel}"></button>`
+        : '';
+
+      const code = `<div class="code-wrapper">${codeCopyButton}<pre><code id="${codeId}">${escapedCode}</code></pre></div>`;
       const codePlaceholder = `--CODE-BLOCK-${Math.random().toString(36).substring(2, 15)}--`;
       codeSectionPlaceholderMap.set(codePlaceholder, code);
       return codePlaceholder;
