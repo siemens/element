@@ -24,6 +24,7 @@ export class SampleComponent {
 
   protected markdownRenderer = getMarkdownRenderer(this.sanitizer, {
     copyCodeButton: 'SI_MARKDOWN_RENDERER.COPY',
+    downloadTableButton: 'SI_MARKDOWN_RENDERER.DOWNLOAD',
     translateSync: this.translate.translateSync.bind(this.translate)
   });
 
