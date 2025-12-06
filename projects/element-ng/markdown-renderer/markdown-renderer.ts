@@ -23,6 +23,12 @@ export interface MarkdownRendererOptions {
    */
   downloadTableButton?: TranslatableString;
   /**
+   * Optional syntax highlighter function.
+   * Receives code content and optional language, returns attributes/classes to add to the code element.
+   * Example: `(code, lang) => 'class="hljs language-' + (lang ?? 'plaintext') + '"'`
+   */
+  syntaxHighlighter?: (code: string, language?: string) => string;
+  /**
    * Optional translate sync function of a service instance for translating the copy button label and download button label.
    * @defaultValue undefined
    */
@@ -275,7 +281,7 @@ const transformMarkdownText = (
 
   html = html
     // Multiline code blocks ```code``` with placeholder
-    .replace(/```[^\n]*\n?([\s\S]*?)\n?```/g, (match, content) => {
+    .replace(/```([^\n]*)\n?([\s\S]*?)\n?```/g, (match, language, content) => {
       // Escape HTML special characters in code blocks (not for security, but for correct display) and preserve inner backticks
       const escapedCode = content
         .replace(/</g, '&lt;')
@@ -283,6 +289,13 @@ const transformMarkdownText = (
         .replace(/`/g, innerCodeQuotePlaceholder);
 
       const codeId = `code-${Math.random().toString(36).substring(2, 15)}`;
+
+      // Apply syntax highlighting if highlighter is provided
+      const codeAttributes = options?.syntaxHighlighter
+        ? options.syntaxHighlighter(content, language.trim() ?? undefined).replace(/>/g, '&gt;')
+        : language.trim()
+          ? `class="language-${language.trim().replace(/>/g, '&gt;').replace(/"/g, '&quot;')}"`
+          : '';
 
       const translatedLabel =
         options?.copyCodeButton && options?.translateSync
@@ -295,7 +308,7 @@ const transformMarkdownText = (
         ? `<button type="button" class="btn btn-circle btn-sm btn-tertiary element-copy copy-code-btn" data-code-id="${codeId}" aria-label="${buttonLabel}"></button><code id="${codeId}">${escapedCode}`
         : '';
 
-      const code = `<pre>${codeCopyButton}<code id="${codeId}">${escapedCode}</code></pre>`;
+      const code = `<pre>${codeCopyButton}<code ${codeAttributes} id="${codeId}">${escapedCode}</code></pre>`;
       const codePlaceholder = `--CODE-BLOCK-${Math.random().toString(36).substring(2, 15)}--`;
       codeSectionPlaceholderMap.set(codePlaceholder, code);
       return codePlaceholder;

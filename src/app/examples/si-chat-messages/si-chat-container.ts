@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, signal, TemplateRef, viewChild } from '@angular/core';
+import { Component, inject, NgZone, signal, TemplateRef, viewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import {
   SiChatContainerComponent,
@@ -27,6 +27,7 @@ import { MenuItem } from '@siemens/element-ng/menu';
 import { SiToastNotificationService } from '@siemens/element-ng/toast-notification';
 import { injectSiTranslateService } from '@siemens/element-translate-ng/translate';
 import { LOG_EVENT } from '@siemens/live-preview';
+import hljs from 'highlight.js';
 
 interface ChatMessage {
   type: 'user' | 'ai' | 'custom';
@@ -57,11 +58,26 @@ export class SampleComponent {
   private sanitizer = inject(DomSanitizer);
   private readonly toastService = inject(SiToastNotificationService);
   private translate = injectSiTranslateService();
+  private readonly zone = inject(NgZone);
 
   protected markdownRenderer = getMarkdownRenderer(this.sanitizer, {
     copyCodeButton: 'Copy',
     downloadTableButton: 'Download CSV',
-    translateSync: this.translate.translateSync.bind(this.translate)
+    translateSync: this.translate.translateSync.bind(this.translate),
+    syntaxHighlighter: (code: string, language?: string): string => {
+      // Optional: Syntax highlighting with highlight.js
+      // This function returns classes for the code element. Libraries like highlight.js
+      // can then be used to apply syntax highlighting based on these classes.
+      // Call hljs.highlightAll() after rendering to activate highlighting.
+      // Element provides a built-in theme that adapts to light/dark mode.
+      // Alternatively, you can import a highlight.js theme in your global styles, e.g.:
+      // @import 'highlight.js/styles/github-dark.css';
+      if (language && hljs.getLanguage(language)) {
+        this.zone.runOutsideAngular(() => setTimeout(() => hljs.highlightAll()));
+        return `class="hljs language-${language}"`;
+      }
+      return 'class="hljs"';
+    }
   });
 
   readonly preAttachedFiles: ChatInputAttachment[] = [

@@ -42,6 +42,16 @@ export class SiMarkdownRendererComponent {
   readonly disableDownloadButton = input<boolean>(false);
 
   /**
+   * Optional syntax highlighter function for code blocks.
+   * Returns attributes/classes to add to the code element.
+   * Example: `(code, lang) => 'class="hljs language-' + (lang ?? 'plaintext') + '"'`
+   * @defaultValue undefined
+   */
+  readonly syntaxHighlighter = input<((code: string, language?: string) => string) | undefined>(
+    undefined
+  );
+
+  /**
    * Label for the copy button.
    * @defaultValue
    * ```
@@ -65,10 +75,12 @@ export class SiMarkdownRendererComponent {
     effect(() => {
       const contentValue = this.text();
       const containerEl = this.hostElement.nativeElement;
+      const highlighterFn = this.syntaxHighlighter();
 
       const options: MarkdownRendererOptions | undefined = {
         copyCodeButton: !this.disableCopyButton() ? this.copyButtonLabel() : undefined,
         downloadTableButton: !this.disableDownloadButton() ? this.downloadButtonLabel() : undefined,
+        syntaxHighlighter: highlighterFn,
         translateSync: this.translateService.translateSync.bind(this.translateService)
       };
 
