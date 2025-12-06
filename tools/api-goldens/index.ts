@@ -8,12 +8,7 @@ import * as path from 'path';
 import { main } from './index_npm_packages';
 
 const packages = [
-  'charts-ng',
-  'element-ng',
-  'element-translate-ng',
-  'live-preview',
-  'native-charts-ng',
-  'dashboards-ng'
+  'element-ng'
 ];
 
 (async () => {
