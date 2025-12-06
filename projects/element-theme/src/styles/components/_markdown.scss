@@ -1,6 +1,6 @@
-@use '../variables';
-
 @use 'sass:map';
+
+@use '../variables';
 
 .markdown-content {
   max-inline-size: 100%;
@@ -43,6 +43,12 @@
     overflow-wrap: break-word;
   }
 
+  .code-wrapper {
+    position: relative;
+    inline-size: max-content;
+    max-inline-size: 100%;
+  }
+
   pre {
     background-color: variables.$element-ui-4;
     padding-block: map.get(variables.$spacers, 4);
@@ -64,6 +70,16 @@
     p {
       margin-block: 0;
     }
+  }
+
+  .copy-code-btn {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+    border-start-start-radius: 0;
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+    z-index: 1;
   }
 
   em {

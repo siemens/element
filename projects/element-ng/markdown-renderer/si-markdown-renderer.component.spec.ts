@@ -122,7 +122,12 @@ const example = "code block";
     expect(innerHTML).toContain('<strong>bold</strong>');
     expect(innerHTML).toContain('<em>italic</em>');
     expect(innerHTML).toContain('<code>code</code>');
-    expect(innerHTML).toContain('<pre><code>');
+    const codeWrapper = markdownDiv.querySelector('.code-wrapper')!;
+    expect(codeWrapper).toBeTruthy();
+    expect(codeWrapper.querySelector('button.copy-code-btn')).toBeTruthy();
+    const preElement = codeWrapper.querySelector('pre')!;
+    expect(preElement).toBeTruthy();
+    expect(preElement.querySelector('code')).toBeTruthy();
     expect(innerHTML).toContain('<li>First item</li>');
   });
 
