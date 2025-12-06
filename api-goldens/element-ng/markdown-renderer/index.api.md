@@ -4,16 +4,27 @@
 
 ```ts
 
+import * as _angular_core from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import * as i0 from '@angular/core';
+import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
+import { SiTranslateService } from '@siemens/element-translate-ng/translate';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public
-export const getMarkdownRenderer: (sanitizer: DomSanitizer) => ((text: string) => Node);
+export const getMarkdownRenderer: (sanitizer: DomSanitizer, options?: MarkdownRendererOptions) => ((text: string) => Node);
+
+// @public (undocumented)
+export interface MarkdownRendererOptions {
+    copyCodeButton?: TranslatableString;
+    translateSync?: SiTranslateService['translateSync'];
+}
 
 // @public
 export class SiMarkdownRendererComponent {
     constructor();
-    readonly text: i0.InputSignal<string>;
+    readonly copyButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly disableCopyButton: _angular_core.InputSignal<boolean>;
+    readonly text: _angular_core.InputSignal<string>;
 }
 
 // (No @packageDocumentation comment for this package)
