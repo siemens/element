@@ -23,6 +23,14 @@ export interface MarkdownRendererOptions {
    */
   downloadTableButton?: TranslatableString;
   /**
+   * Optional syntax highlighter function.
+   * Receives code content and optional language, returns an HTML content string to display inside of the code block or undefined to use default rendering.
+   * The returned code is sanitized before insertion.
+   * Make sure that the required styles/scripts for the syntax highlighter are included in your application.
+   * @defaultValue undefined
+   */
+  syntaxHighlighter?: (code: string, language?: string) => string | undefined;
+  /**
    * Optional translate sync function of a service instance for translating the copy button label and download button label.
    * @defaultValue undefined
    */
@@ -299,7 +307,7 @@ const transformMarkdownText = (
 
   html = html
     // Multiline code blocks ```code``` with placeholder
-    .replace(/```[^\n]*\n?([\s\S]*?)\n?```/g, (match, content) => {
+    .replace(/```([^\n]*)\n?([\s\S]*?)\n?```/g, (match, language, content) => {
       // Escape HTML special characters in code blocks (not for security, but for correct display) and preserve inner backticks
       const escapedCode = content
         .replace(/</g, '&lt;')
@@ -308,8 +316,17 @@ const transformMarkdownText = (
 
       const codeId = `code-${Math.random().toString(36).substring(2, 15)}`;
 
+      // Apply syntax highlighting if highlighter is provided
+      const highlightedCode = options?.syntaxHighlighter
+        ? // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+          options.syntaxHighlighter(content, language?.trim() || undefined)
+        : undefined;
+
       // Apply sanitization to the final code content
-      const codeBlockContent = sanitizer.sanitize(SecurityContext.HTML, escapedCode);
+      const codeBlockContent = sanitizer.sanitize(
+        SecurityContext.HTML,
+        highlightedCode ?? escapedCode
+      );
 
       const translatedLabel =
         options?.copyCodeButton && options?.translateSync

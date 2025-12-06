@@ -1,0 +1,142 @@
+@use '../variables';
+
+// stylelint-disable selector-class-pattern
+
+// Custom highlight.js theme using Element Design System tokens
+// Automatically adapts to light and dark themes
+// Token mapping:
+// 1. Default and text: element-text-primary
+// 2. Keywords: element-data-purple-2
+// 3. Operators: element-data-plum-2
+// 4. Variables: element-data-6
+// 5. Functions: element-text-caution
+// 6. Strings: element-text-warning
+// 7. Numbers: element-text-success
+// 8. Constants: element-data-13
+// 9. Comments: element-data-green-3
+// 10. Punctuation: element-data-17
+// 11. Tags: element-data-5
+// 12. Types: element-data-4
+// 13. Invalid: element-data-10
+
+.markdown-content {
+  // 1. Default and text
+  .hljs {
+    color: variables.$element-text-primary;
+  }
+
+  // 2. Keywords
+  .hljs-keyword,
+  .hljs-literal {
+    color: variables.$element-data-purple-2;
+  }
+
+  // 3. Special keywords and operators
+  .hljs-operator {
+    color: variables.$element-data-plum-2;
+  }
+
+  // 4. Variables
+  .hljs-variable,
+  .hljs-variable.language_,
+  .hljs-variable.constant_,
+  .hljs-params,
+  .hljs-property {
+    color: variables.$element-data-6;
+  }
+
+  // 5. Functions and methods
+  .hljs-title,
+  .hljs-title.function_,
+  .hljs-title.function_.invoke__,
+  .hljs-built_in {
+    color: variables.$element-text-caution;
+  }
+
+  // 6. Strings
+  .hljs-string,
+  .hljs-regexp,
+  .hljs-char.escape_,
+  .hljs-subst,
+  .hljs-doctag {
+    color: variables.$element-text-warning;
+  }
+
+  // 7. Numbers
+  .hljs-number {
+    color: variables.$element-text-success;
+  }
+
+  // 8. Constants and enums
+  .hljs-symbol,
+  .hljs-bullet {
+    color: variables.$element-data-13;
+  }
+
+  // 9. Comments
+  .hljs-comment,
+  .hljs-quote {
+    color: variables.$element-data-green-3;
+  }
+
+  // 10. Brackets/punctuation
+  .hljs-punctuation {
+    color: variables.$element-data-17;
+  }
+
+  // 11. Tags (HTML/XML)
+  .hljs-tag,
+  .hljs-name,
+  .hljs-attr,
+  .hljs-attribute,
+  .hljs-selector-tag,
+  .hljs-selector-id,
+  .hljs-selector-class,
+  .hljs-selector-attr,
+  .hljs-selector-pseudo,
+  .hljs-meta,
+  .hljs-meta.keyword_,
+  .hljs-template-tag,
+  .hljs-template-variable {
+    color: variables.$element-data-5;
+  }
+
+  // 12. Types declaration and references
+  .hljs-type,
+  .hljs-title.class_,
+  .hljs-title.class_.inherited__,
+  .hljs-section {
+    color: variables.$element-data-4;
+  }
+
+  // 13. Invalid
+  .hljs-deletion {
+    color: variables.$element-data-10;
+  }
+
+  // Additions in diffs (use comment green)
+  .hljs-addition {
+    color: variables.$element-data-green-3;
+  }
+
+  // Emphasis
+  .hljs-emphasis {
+    font-style: italic;
+  }
+
+  // Strong emphasis
+  .hljs-strong {
+    font-weight: variables.$si-font-weight-semibold;
+  }
+
+  // Code blocks and formulas
+  .hljs-code,
+  .hljs-formula {
+    color: variables.$element-text-primary;
+  }
+
+  // Links
+  .hljs-link {
+    color: variables.$element-text-warning;
+  }
+}
