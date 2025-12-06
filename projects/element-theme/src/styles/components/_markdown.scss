@@ -105,11 +105,31 @@
     margin-block-end: 0 !important;
   }
 
-  table {
+  .table-wrapper {
+    position: relative;
     inline-size: max-content;
     max-inline-size: 100%;
     // stylelint-disable-next-line declaration-no-important
     margin-block-start: map.get(variables.$spacers, 6) !important;
+    // stylelint-disable-next-line declaration-no-important
+    margin-block-end: 0 !important;
+  }
+
+  .download-table-btn {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+    border-start-start-radius: 0;
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+    z-index: 1;
+  }
+
+  table {
+    inline-size: max-content;
+    max-inline-size: 100%;
+    // stylelint-disable-next-line declaration-no-important
+    margin-block-start: 0 !important;
     // stylelint-disable-next-line declaration-no-important
     margin-block-end: 0 !important;
     overflow: auto;

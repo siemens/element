@@ -16,6 +16,7 @@ export const getMarkdownRenderer: (sanitizer: DomSanitizer, options?: MarkdownRe
 // @public (undocumented)
 export interface MarkdownRendererOptions {
     copyCodeButton?: TranslatableString;
+    downloadTableButton?: TranslatableString;
     translateSync?: SiTranslateService['translateSync'];
 }
 
@@ -24,9 +25,11 @@ export class SiMarkdownRendererComponent {
     constructor();
     readonly copyButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly disableCopyButton: _angular_core.InputSignal<boolean>;
+    readonly disableDownloadButton: _angular_core.InputSignal<boolean>;
+    readonly downloadButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly text: _angular_core.InputSignal<string>;
     // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiMarkdownRendererComponent, "si-markdown-renderer", never, { "text": { "alias": "text"; "required": false; "isSignal": true; }; "disableCopyButton": { "alias": "disableCopyButton"; "required": false; "isSignal": true; }; "copyButtonLabel": { "alias": "copyButtonLabel"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
+    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiMarkdownRendererComponent, "si-markdown-renderer", never, { "text": { "alias": "text"; "required": false; "isSignal": true; }; "disableCopyButton": { "alias": "disableCopyButton"; "required": false; "isSignal": true; }; "disableDownloadButton": { "alias": "disableDownloadButton"; "required": false; "isSignal": true; }; "syntaxHighlighter": { "alias": "syntaxHighlighter"; "required": false; "isSignal": true; }; "copyButtonLabel": { "alias": "copyButtonLabel"; "required": false; "isSignal": true; }; "downloadButtonLabel": { "alias": "downloadButtonLabel"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiMarkdownRendererComponent, never>;
 }
