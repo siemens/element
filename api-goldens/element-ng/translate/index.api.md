@@ -38,6 +38,12 @@ export interface SiTranslatableKeys {
     // (undocumented)
     'SI_CHANGE_PASSWORD.PASSWORD_POLICY'?: string;
     // (undocumented)
+    'SI_CHAT_CONTAINER.EMPTY_STATE_DESCRIPTION'?: string;
+    // (undocumented)
+    'SI_CHAT_CONTAINER.EMPTY_STATE_TITLE'?: string;
+    // (undocumented)
+    'SI_CHAT_CONTAINER.SECONDARY_ACTIONS'?: string;
+    // (undocumented)
     'SI_CHAT_INPUT.ATTACH_FILE'?: string;
     // (undocumented)
     'SI_CHAT_INPUT.INTERRUPT'?: string;
@@ -425,6 +431,10 @@ export interface SiTranslatableKeys {
     'SI_THRESHOLD.STATUS'?: string;
     // (undocumented)
     'SI_TOAST.CLOSE'?: string;
+    // (undocumented)
+    'SI_TOOL_MESSAGE.INPUT_ARGUMENTS'?: string;
+    // (undocumented)
+    'SI_TOOL_MESSAGE.OUTPUT'?: string;
     // (undocumented)
     'SI_TOUR.BACK'?: string;
     // (undocumented)
