@@ -16,6 +16,7 @@ export const getMarkdownRenderer: (sanitizer: DomSanitizer, options?: MarkdownRe
 // @public (undocumented)
 export interface MarkdownRendererOptions {
     copyCodeButton?: TranslatableString;
+    downloadTableButton?: TranslatableString;
     translateSync?: SiTranslateService['translateSync'];
 }
 
@@ -24,6 +25,8 @@ export class SiMarkdownRendererComponent {
     constructor();
     readonly copyButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly disableCopyButton: _angular_core.InputSignal<boolean>;
+    readonly disableDownloadButton: _angular_core.InputSignal<boolean>;
+    readonly downloadButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly text: _angular_core.InputSignal<string>;
 }
 
