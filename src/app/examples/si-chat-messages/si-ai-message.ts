@@ -8,6 +8,7 @@ import { MessageAction, SiAiMessageComponent } from '@siemens/element-ng/chat-me
 import { getMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
 import { MenuItemAction } from '@siemens/element-ng/menu';
 import { LOG_EVENT } from '@siemens/live-preview';
+import { injectSiTranslateService } from 'projects/element-translate-ng/translate';
 
 @Component({
   selector: 'app-sample',
@@ -17,8 +18,12 @@ import { LOG_EVENT } from '@siemens/live-preview';
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);
   private sanitizer = inject(DomSanitizer);
+  private translate = injectSiTranslateService();
 
-  protected markdownRenderer = getMarkdownRenderer(this.sanitizer);
+  protected markdownRenderer = getMarkdownRenderer(this.sanitizer, {
+    copyCodeButton: 'Copy',
+    translateSync: this.translate.translateSync.bind(this.translate)
+  });
 
   content = `Here's a **simple response** with basic formatting.
 
