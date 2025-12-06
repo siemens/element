@@ -1,5 +1,5 @@
-- heading "AI Assistant Response" [level=2]:
-  - strong: AI Assistant Response
+- heading "Sample Markdown Content" [level=2]:
+  - strong: Sample Markdown Content
 - paragraph:
   - text: Here's a
   - strong: comprehensive example
@@ -11,6 +11,7 @@
   - code: console.log('Hello World')
   - text: "or multi-line code blocks:"
 - paragraph
+- button "Copy"
 - code: "function calculateSum(a, b) { return a + b; } const result = calculateSum(5, 3); console.log(`Result: ${result}`);"
 - paragraph
 - heading "Formatting Options" [level=2]
@@ -33,7 +34,7 @@
     - /url: https://element.siemens.io
   - text: for more information, as well as local links like
   - link "Internal Page":
-    - /url: "/#/internal-page"
+    - /url: /#/internal-page
   - text: .
 - paragraph:
   - text: "Links are also automatically detected:"
@@ -47,6 +48,8 @@
   - listitem: Inline code highlighting
   - listitem: Bullet point lists
   - listitem: Blockquote support
+  - listitem: Or in the alternate format
+  - listitem: Another bullet point
 - paragraph: This paragraph appears after the list to show proper spacing.
 - heading "Ordered Lists" [level=2]
 - paragraph: "Step-by-step instructions:"
@@ -65,9 +68,14 @@
   - listitem: First ordered item
   - listitem: Second ordered item
 - paragraph: Final paragraph to show proper spacing.
+- heading "Images" [level=2]
+- paragraph: "Images can be included as follows:"
+- paragraph:
+  - img "Building Image"
 - heading "Tables" [level=2]
 - paragraph: "Tables are also supported:"
 - paragraph
+- button "Download CSV"
 - table:
   - rowgroup:
     - row "Feature Examples Status Notes":
