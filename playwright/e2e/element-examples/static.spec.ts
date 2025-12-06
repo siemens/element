@@ -116,3 +116,4 @@ test('si-chat-messages/si-chat-message', ({ si }) => si.static());
 test('si-chat-messages/si-attachment-list', ({ si }) => si.static());
 test('si-chat-messages/si-chat-input', ({ si }) => si.static());
 test('si-chat-messages/si-chat-container', ({ si }) => si.static());
+test('si-chat-messages/si-ai-chat-container', ({ si }) => si.static());
