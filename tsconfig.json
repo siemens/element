@@ -2,7 +2,6 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "esModuleInterop": true,
     "declaration": false,
@@ -35,12 +34,92 @@
       "@siemens/maps-ng/*": ["projects/maps-ng/*/index.ts"]
     }
   },
-  "exclude": ["dist/**", "testing/**/*.ts"],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "typeCheckHostBindings": true,
     "strictTemplates": true,
     "strictNullChecks": true
-  }
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./src/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/element-ng/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/element-ng/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/element-ng/tsconfig.schematics.json"
+    },
+    {
+      "path": "./projects/element-ng/tsconfig.schematics.spec.json"
+    },
+    {
+      "path": "./projects/element-ng/tsconfig.docs.json"
+    },
+    {
+      "path": "./projects/element-translate-ng/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/element-translate-ng/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/charts-ng/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/charts-ng/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/native-charts-ng/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/native-charts-ng/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/native-charts-ng/tsconfig.docs.json"
+    },
+    {
+      "path": "./projects/live-preview/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/dashboards-ng/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/dashboards-ng/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/dashboards-ng/tsconfig.docs.json"
+    },
+    {
+      "path": "./projects/maps-ng/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/maps-ng/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/dashboards-demo/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/dashboards-demo/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/dashboards-demo/mfe/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/dashboards-demo/mfe/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/dashboards-demo/webcomponents/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/dashboards-demo/webcomponents/tsconfig.spec.json"
+    },
+    {
+      "path": "./playwright/tsconfig.json"
+    }
+  ]
 }

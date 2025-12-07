@@ -15,7 +15,7 @@ export const tsConfig = defineConfig({
   files: ['**/*.ts'],
   languageOptions: {
     parserOptions: {
-      project: ['tsconfig.json'],
+      project: ['src/tsconfig.app.json'],
       tsconfigRootDir: __dirname
     }
   },
