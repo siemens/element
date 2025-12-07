@@ -32,7 +32,7 @@
     "lint:commit": "commitlint --from=origin/main",
     "lint:scss": "stylelint **.scss",
     "lint:ng": "ng lint",
-    "lint:playwright:eslint": "eslint playwright",
+    "lint:playwright:eslint": "eslint -c playwright/eslint.config.js playwright",
     "build:examples": "ng build",
     "build:examples:prod": "ng build --configuration production",
     "build:examples:aot": "ng build --configuration aot",

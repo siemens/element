@@ -14,5 +14,6 @@
     "enableResourceInlining": true,
     "compilationMode": "partial"
   },
-  "exclude": ["**/*.spec.ts", "**/test-helpers/", "**/schematics/"]
+  "include": ["./**/*.ts"],
+  "exclude": ["**/*.spec.ts", "**/test-helpers/", "**/schematics/", "./docs.ts"]
 }
