@@ -18,6 +18,15 @@ import { SiTabComponent } from './si-tab.component';
 import { SiTabsetComponent } from './si-tabset.component';
 import { SiTabsetHarness } from './testing/si-tabset.harness';
 
+interface TabData {
+  heading: string;
+  closable?: true;
+  routerLinkUrl?: string;
+  active?: boolean;
+  canDeactivate?: () => boolean;
+  canActivate?: () => boolean;
+}
+
 @Component({
   selector: 'si-tab-route',
   template: `Content by routing`
@@ -49,23 +58,9 @@ class SiTabRouteComponent {}
 class TestComponent {
   readonly tabButtonMaxWidth = signal<number | undefined>(undefined);
   readonly wrapperWidth = signal(200);
-  protected readonly tabsObject = signal<
-    { heading: string; closable?: boolean; active?: boolean }[]
-  >([]);
+  protected readonly tabsObject = signal<TabData[]>([]);
 
-  set tabs(
-    value: (
-      | {
-          heading: string;
-          closable?: true;
-          routerLinkUrl?: string;
-          active?: boolean;
-          canDeactivate?: () => boolean;
-          canActivate?: () => boolean;
-        }
-      | string
-    )[]
-  ) {
+  set tabs(value: (TabData | string)[]) {
     this.tabsObject.set(
       value.map(tab => {
         if (typeof tab === 'string') {
