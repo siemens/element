@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TestScheduler } from 'rxjs/testing';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { DateRangeFilter, DateRangePreset, SiDateRangeFilterComponent } from './index';
 

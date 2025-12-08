@@ -19,6 +19,7 @@ import {
 } from '@siemens/element-ng/header-dropdown';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import { SiLaunchpadFactoryComponent } from './launchpad/si-launchpad-factory.component';
 import { SiApplicationHeaderComponent } from './si-application-header.component';

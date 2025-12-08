@@ -61,6 +61,9 @@ Thumbs.db
 /playwright/results/
 /playwright/.cache/
 
+# Vitest
+__screenshots__/
+
 # these are from LFS and are re-added automatically.
 # In this .gitignore because husky recreates its own .gitignore after `yarn install`
 /.husky/post-checkout

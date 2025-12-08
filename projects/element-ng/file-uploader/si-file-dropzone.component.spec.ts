@@ -77,7 +77,7 @@ describe('SiFileDropzoneComponent', () => {
     return dt;
   };
 
-  const getFiles = (): UploadFile[] => vi.mocked(eventSpy).mock!.calls![0].args![0]!;
+  const getFiles = (): UploadFile[] => vi.mocked(eventSpy).mock!.calls![0][0]!;
 
   const createDirectoryItemsWithFiles = (): DataTransferItemList => {
     return {
@@ -138,7 +138,7 @@ describe('SiFileDropzoneComponent', () => {
       [Symbol.iterator]: (): ArrayIterator<DataTransferItem> => {
         throw new Error('Function not implemented.');
       }
-    };
+    } as DataTransferItemList;
   };
 
   it('should contain set upload text to file selecting', () => {

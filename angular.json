@@ -160,6 +160,43 @@
         }
       }
     },
+    "element-ng-testing": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/element-ng",
+      "sourceRoot": "projects/element-ng",
+      "prefix": "si",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "tsConfig": "projects/element-ng/tsconfig.lib.json",
+            "inlineStyleLanguage": "scss",
+            "polyfills": ["zone.js", "zone.js/testing"]
+          },
+          "configurations": {
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "coverage": true,
+            "tsConfig": "projects/element-ng/tsconfig.spec.json",
+            "exclude": ["projects/element-ng/schematics/**"]
+          }
+        }
+      }
+    },
     "element-translate-ng": {
       "projectType": "library",
       "root": "projects/element-translate-ng",
