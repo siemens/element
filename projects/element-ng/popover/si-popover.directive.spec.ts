@@ -140,6 +140,7 @@ describe('SiPopoverNextDirective', () => {
   });
 
   it('should focus on the popover wrapper', async () => {
+    jasmine.clock().install();
     fixture.detectChanges();
 
     fixture.nativeElement.querySelector('button').click();
@@ -149,9 +150,12 @@ describe('SiPopoverNextDirective', () => {
     expect(popover).toBeTruthy();
     expect(popover.innerHTML).toContain('test popover content');
 
-    await new Promise(r => setTimeout(r, 10)); // wait for focus to settle
+    jasmine.clock().tick(10);
+    await fixture.whenStable();
 
     expect(document.activeElement).toBe(document.querySelector('.popover'));
+
+    jasmine.clock().uninstall();
   });
 });
 
