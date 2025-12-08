@@ -72,14 +72,14 @@ class SiUIStateService {
    * This can be used to migrate state objects.
    */
   save<TState>(stateId: string, state: TState, version = 0): Promise<void> {
-    return (
+    return Promise.resolve(
       this.storage.save(
         stateId,
         JSON.stringify({
           version,
           state
         })
-      ) ?? Promise.resolve()
+      )
     );
   }
 

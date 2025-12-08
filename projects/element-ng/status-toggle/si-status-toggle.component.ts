@@ -188,7 +188,7 @@ export class SiStatusToggleComponent implements ControlValueAccessor, OnInit, On
 
   private getX(event: Event): number {
     const clientX =
-      (event as MouseEvent).clientX ?? (event as TouchEvent).changedTouches[0]?.clientX ?? '';
+      (event as MouseEvent).clientX ?? (event as TouchEvent).changedTouches[0]?.clientX ?? 0;
     return clientX - this.boundingX;
   }
 

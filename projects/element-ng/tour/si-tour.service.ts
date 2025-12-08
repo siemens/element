@@ -275,7 +275,7 @@ export class SiTourService {
       )
         .pipe(
           throttleTime(20, undefined, { trailing: true }),
-          map(() => undefined),
+          map((): undefined => undefined),
           tap(() => {
             if (!this.isElementVisible(anchorElement?.nativeElement)) {
               // repositions to center if anchor disappears
