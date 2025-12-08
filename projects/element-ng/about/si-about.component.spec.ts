@@ -4,7 +4,7 @@
  */
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Link } from '@siemens/element-ng/link';
@@ -62,7 +62,12 @@ describe('SiAboutComponent', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
       imports: [TestHostComponent],
-      providers: [provideHttpClient(), provideNoopAnimations(), provideHttpClientTesting()]
+      providers: [
+        provideHttpClient(),
+        provideNoopAnimations(),
+        provideHttpClientTesting(),
+        provideZonelessChangeDetection()
+      ]
     })
   );
 
@@ -213,7 +218,7 @@ describe('SiAboutComponent', () => {
       }
     });
 
-    it('should fetch module license if only one module exists', () => {
+    it('should fetch module license if only one module exists', async () => {
       const components = [{ name: 'Component 1', href: '/component1.txt' }];
       httpMock.expectOne('/licenses.json').flush([{ name: 'Module 1', href: '/module1.json' }]);
 
@@ -223,6 +228,8 @@ describe('SiAboutComponent', () => {
       fixture.detectChanges();
 
       toggleCollapsePanel();
+
+      await fixture.whenStable();
       const actual = getLicenseFiles();
       expect(actual).toHaveSize(1);
       expect(actual.at(0)?.textContent).toContain('Component 1');
@@ -241,7 +248,7 @@ describe('SiAboutComponent', () => {
       expect(getLicenseFiles()).toHaveSize(0);
     });
 
-    it('should fetch license content', () => {
+    it('should fetch license content', async () => {
       const content = 'License Data';
 
       httpMock
@@ -252,7 +259,9 @@ describe('SiAboutComponent', () => {
       fixture.detectChanges();
 
       toggleCollapsePanel();
+      await fixture.whenStable();
       toggleCollapsePanel(getLicenseFiles().at(0));
+      await fixture.whenStable();
 
       const req = httpMock.expectOne('/component1.txt');
       req.flush(content);
@@ -262,7 +271,7 @@ describe('SiAboutComponent', () => {
       expect(element.querySelector('.license-api-file-content')?.textContent).toEqual(content);
     });
 
-    it('should not fetch license content if already loaded', () => {
+    it('should not fetch license content if already loaded', async () => {
       httpMock.expectOne('/licenses.json').flush([
         {
           name: 'Module',
@@ -273,7 +282,9 @@ describe('SiAboutComponent', () => {
       fixture.detectChanges();
 
       toggleCollapsePanel();
+      await fixture.whenStable();
       toggleCollapsePanel(getLicenseFiles().at(0));
+      await fixture.whenStable();
 
       httpMock.expectNone('/component1.txt');
       expect(element.querySelector('.license-api-file-content')?.textContent).toEqual('License');

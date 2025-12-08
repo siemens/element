@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SiTranslateNgxTModule } from '@siemens/element-translate-ng/ngx-translate';
@@ -38,7 +39,7 @@ describe('SiLocaleService', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [SiTranslateNgxTModule, TranslateModule.forRoot()],
-        providers: []
+        providers: [provideZonelessChangeDetection()]
       });
       service = TestBed.inject(SiLocaleService);
     });
@@ -80,7 +81,7 @@ describe('SiLocaleService', () => {
 
     TestBed.configureTestingModule({
       imports: [SiTranslateNgxTModule, TranslateModule.forRoot()],
-      providers: [{ provide: SI_LOCALE_CONFIG, useValue: config }]
+      providers: [{ provide: SI_LOCALE_CONFIG, useValue: config }, provideZonelessChangeDetection()]
     });
     service = TestBed.inject(SiLocaleService);
     expect(service.config.defaultLocale).toBe('fr');
@@ -91,7 +92,7 @@ describe('SiLocaleService', () => {
 
     TestBed.configureTestingModule({
       imports: [SiTranslateNgxTModule, TranslateModule.forRoot()],
-      providers: [{ provide: SI_LOCALE_CONFIG, useValue: config }]
+      providers: [{ provide: SI_LOCALE_CONFIG, useValue: config }, provideZonelessChangeDetection()]
     });
     service = TestBed.inject(SiLocaleService);
     expect(service.config.defaultLocale).toBe('en');
@@ -104,7 +105,7 @@ describe('SiLocaleService', () => {
 
     TestBed.configureTestingModule({
       imports: [SiTranslateNgxTModule, TranslateModule.forRoot()],
-      providers: [{ provide: SI_LOCALE_CONFIG, useValue: config }]
+      providers: [{ provide: SI_LOCALE_CONFIG, useValue: config }, provideZonelessChangeDetection()]
     });
     service = TestBed.inject(SiLocaleService);
     expect(service.config.availableLocales![0]).toBe('en');
@@ -117,7 +118,7 @@ describe('SiLocaleService', () => {
 
     TestBed.configureTestingModule({
       imports: [SiTranslateNgxTModule, TranslateModule.forRoot()],
-      providers: [{ provide: SI_LOCALE_CONFIG, useValue: config }]
+      providers: [{ provide: SI_LOCALE_CONFIG, useValue: config }, provideZonelessChangeDetection()]
     });
     service = TestBed.inject(SiLocaleService);
     const translate = TestBed.inject(TranslateService);
@@ -134,7 +135,7 @@ describe('SiLocaleService', () => {
 
     TestBed.configureTestingModule({
       imports: [SiTranslateNgxTModule, TranslateModule.forRoot()],
-      providers: [{ provide: SI_LOCALE_CONFIG, useValue: config }]
+      providers: [{ provide: SI_LOCALE_CONFIG, useValue: config }, provideZonelessChangeDetection()]
     });
     service = TestBed.inject(SiLocaleService);
     const translate = TestBed.inject(TranslateService);
@@ -150,7 +151,7 @@ describe('SiLocaleService', () => {
 
     TestBed.configureTestingModule({
       imports: [SiTranslateNgxTModule, TranslateModule.forRoot()],
-      providers: [{ provide: SI_LOCALE_CONFIG, useValue: config }]
+      providers: [{ provide: SI_LOCALE_CONFIG, useValue: config }, provideZonelessChangeDetection()]
     });
     service = TestBed.inject(SiLocaleService);
     expect(service.locale$.value).toBe('en');
@@ -165,7 +166,7 @@ describe('SiLocaleService', () => {
 
     TestBed.configureTestingModule({
       imports: [SiTranslateNgxTModule, TranslateModule.forRoot()],
-      providers: [{ provide: SI_LOCALE_CONFIG, useValue: config }]
+      providers: [{ provide: SI_LOCALE_CONFIG, useValue: config }, provideZonelessChangeDetection()]
     });
     service = TestBed.inject(SiLocaleService);
     expect(service.hasLocale('de')).toBeTrue();
@@ -191,7 +192,8 @@ describe('SiLocaleService', () => {
         imports: [SiTranslateNgxTModule, TranslateModule.forRoot()],
         providers: [
           { provide: SI_LOCALE_CONFIG, useValue: config },
-          { provide: SiLocaleStore, useClass: NoLocaleStore }
+          { provide: SiLocaleStore, useClass: NoLocaleStore },
+          provideZonelessChangeDetection()
         ]
       });
 
@@ -255,7 +257,8 @@ describe('SiLocaleService', () => {
       imports: [SiTranslateNgxTModule, TranslateModule.forRoot()],
       providers: [
         { provide: SI_LOCALE_CONFIG, useValue: config },
-        { provide: SiLocaleStore, useClass: DeLocaleStore }
+        { provide: SiLocaleStore, useClass: DeLocaleStore },
+        provideZonelessChangeDetection()
       ]
     });
     service = TestBed.inject(SiLocaleService);
@@ -272,7 +275,8 @@ describe('SiLocaleService', () => {
       imports: [SiTranslateNgxTModule, TranslateModule.forRoot()],
       providers: [
         { provide: SI_LOCALE_CONFIG, useValue: config },
-        { provide: SiLocaleStore, useClass: DeLocaleStore }
+        { provide: SiLocaleStore, useClass: DeLocaleStore },
+        provideZonelessChangeDetection()
       ]
     });
     service = TestBed.inject(SiLocaleService);
@@ -297,7 +301,8 @@ describe('SiLocaleService', () => {
       imports: [SiTranslateNgxTModule, TranslateModule.forRoot()],
       providers: [
         { provide: SI_LOCALE_CONFIG, useValue: config },
-        { provide: SiLocaleStore, useClass: DeLocaleStore }
+        { provide: SiLocaleStore, useClass: DeLocaleStore },
+        provideZonelessChangeDetection()
       ]
     });
     service = TestBed.inject(SiLocaleService);

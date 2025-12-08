@@ -8,9 +8,10 @@ import {
   Component,
   DebugElement,
   inject,
+  provideZonelessChangeDetection,
   ViewChild
 } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule, provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, RouterLink, RouterOutlet } from '@angular/router';
@@ -168,7 +169,8 @@ describe('ListDetailsComponent', () => {
           {
             provide: ResizeObserverService,
             useValue: resizeSpy
-          }
+          },
+          provideZonelessChangeDetection()
         ]
       }).compileComponents();
 
@@ -180,11 +182,15 @@ describe('ListDetailsComponent', () => {
       resizeObserver.next({ width: 800, height: 500 });
     });
 
-    it('should change listWidth when split sizes change', fakeAsync(() => {
+    it('should change listWidth when split sizes change', async () => {
+      jasmine.clock().install();
       component.disableResizing = false;
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      flush();
-      fixture.detectChanges();
+      await fixture.whenStable();
+      jasmine.clock().tick(100);
+      await fixture.whenStable();
+      jasmine.clock().uninstall();
       // drag si-split > .si-split-gutter 25% to the left
       const split = htmlElement.querySelector('si-split')!;
       const splitHandle = split.querySelector('.si-split-gutter') as HTMLElement;
@@ -195,22 +201,21 @@ describe('ListDetailsComponent', () => {
       const listWidth = component.listDetails.listWidth();
       drag(splitHandle, x, y, x - 0.25 * splitBox.width, y);
       fixture.detectChanges();
-      flush();
-      fixture.detectChanges();
+      await fixture.whenStable();
       expect(component.listDetails.listWidth()).not.toBe(listWidth);
-    }));
+    });
 
-    it('should unset detailsActive when back button is clicked', fakeAsync(() => {
+    it('should unset detailsActive when back button is clicked', async () => {
       component.detailsActive = true;
       resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
       fixture.detectChanges();
-      flush();
+      await fixture.whenStable();
       fixture.detectChanges();
       const backButton = htmlElement.querySelector('si-details-pane button')!;
       backButton.dispatchEvent(new Event('click'));
       fixture.detectChanges();
       expect(component.detailsActive).toBeFalse();
-    }));
+    });
 
     it('should add host .expanded class when crossing expandBreakpoint', () => {
       fixture.detectChanges();
@@ -219,57 +224,57 @@ describe('ListDetailsComponent', () => {
     });
 
     describe('animation state', () => {
-      it('should be "collapsed" when detailsInactive & small', fakeAsync(() => {
+      it('should be "collapsed" when detailsInactive & small', async () => {
         component.detailsActive = false;
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
-        flush();
+        await fixture.whenStable();
         fixture.detectChanges();
         expect(component.listDetails.detailsExpandedAnimation()).toBe('collapsed');
-      }));
+      });
 
-      it('should be "expanded" when detailsActive & small', fakeAsync(() => {
+      it('should be "expanded" when detailsActive & small', async () => {
         component.detailsActive = true;
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
-        flush();
+        await fixture.whenStable();
         fixture.detectChanges();
         expect(component.listDetails.detailsExpandedAnimation()).toBe('expanded');
-      }));
+      });
 
-      it('should be "disabled" when in large mode regardless of detailsActive', fakeAsync(() => {
+      it('should be "disabled" when in large mode regardless of detailsActive', async () => {
         component.detailsActive = true;
-        flush();
+        await fixture.whenStable();
         fixture.detectChanges();
         expect(component.listDetails.detailsExpandedAnimation()).toBe('disabled');
-      }));
+      });
     });
 
     describe('hasLargeSize changes', () => {
-      it('should change hasLargeSize to true when crossing above breakpoint', fakeAsync(() => {
-        flush();
+      it('should change hasLargeSize to true when crossing above breakpoint', async () => {
+        await fixture.whenStable();
         fixture.detectChanges();
         expect(component.listDetails.hasLargeSize()).toBeTrue();
-      }));
+      });
 
-      it('should change hasLargeSize to false when dropping below breakpoint', fakeAsync(() => {
-        flush();
+      it('should change hasLargeSize to false when dropping below breakpoint', async () => {
+        await fixture.whenStable();
         fixture.detectChanges();
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
-        flush();
+        await fixture.whenStable();
         fixture.detectChanges();
         expect(component.listDetails.hasLargeSize()).toBeFalse();
-      }));
+      });
     });
 
     describe('interactivity', () => {
-      it('should open details and then go back via the back-button click', fakeAsync(() => {
+      it('should open details and then go back via the back-button click', async () => {
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
         fixture.detectChanges();
-        flush();
+        await fixture.whenStable();
 
         component.detailsActive = true;
         component.cdRef.markForCheck();
         fixture.detectChanges();
-        flush();
+        await fixture.whenStable();
         fixture.detectChanges();
 
         expect(getInViewport(getDetailsPane().firstElementChild as HTMLElement)).toBeTrue();
@@ -277,48 +282,48 @@ describe('ListDetailsComponent', () => {
         const backBtn = htmlElement.querySelector('si-details-pane button')!;
         backBtn.dispatchEvent(new Event('click'));
         fixture.detectChanges();
-        flush();
+        await fixture.whenStable();
 
         expect(component.detailsActive).toBeFalse();
         expect(getInViewport(getListPane().firstElementChild as HTMLElement)).toBeTrue();
-      }));
+      });
 
-      it('should switch between split and static layouts as size & disableResizing change', fakeAsync(() => {
+      it('should switch between split and static layouts as size & disableResizing change', async () => {
         component.disableResizing = false;
         fixture.detectChanges();
-        flush();
+        await fixture.whenStable();
         expect(getSiSplit()).toBeTruthy();
         expect(getListDetails()).toBeFalsy();
 
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
         fixture.detectChanges();
-        flush();
+        await fixture.whenStable();
         expect(getSiSplit()).toBeFalsy();
         expect(getListDetails()).toBeTruthy();
 
         component.disableResizing = true;
         fixture.detectChanges();
-        flush();
+        await fixture.whenStable();
         expect(getSiSplit()).toBeFalsy();
         expect(getListDetails()).toBeTruthy();
-      }));
+      });
 
-      it('should keep both panes visible on large screens regardless of detailsActive', fakeAsync(() => {
+      it('should keep both panes visible on large screens regardless of detailsActive', async () => {
         fixture.detectChanges();
-        flush();
+        await fixture.whenStable();
 
         component.detailsActive = false;
         fixture.detectChanges();
-        flush();
+        await fixture.whenStable();
         expect(getInViewport(getListPane().firstElementChild as HTMLElement)).toBeTrue();
         expect(getInViewport(getDetailsPane().firstElementChild as HTMLElement)).toBeTrue();
 
         component.detailsActive = true;
         fixture.detectChanges();
-        flush();
+        await fixture.whenStable();
         expect(getInViewport(getListPane().firstElementChild as HTMLElement)).toBeTrue();
         expect(getInViewport(getDetailsPane().firstElementChild as HTMLElement)).toBeTrue();
-      }));
+      });
     });
 
     describe('responsive behaviour', () => {
@@ -349,29 +354,29 @@ describe('ListDetailsComponent', () => {
         expect(getListDetails()).toBeTruthy();
       });
 
-      it('should only have the list pane in view on small screens when details are inactive', fakeAsync(() => {
+      it('should only have the list pane in view on small screens when details are inactive', async () => {
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
         component.detailsActive = false;
         fixture.detectChanges();
-        flush();
+        await fixture.whenStable();
         expect(getInViewport(getDetailsPane().firstElementChild as HTMLElement)).toBeFalse();
-      }));
+      });
 
-      it('should set inert attribute to prevent focus on hidden details when details are inactive on small screens', fakeAsync(() => {
+      it('should set inert attribute to prevent focus on hidden details when details are inactive on small screens', async () => {
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
         component.detailsActive = false;
         fixture.detectChanges();
-        flush();
+        await fixture.whenStable();
         expect(debugElement.query(By.css('si-details-pane[inert]'))).toBeTruthy();
-      }));
+      });
 
-      it('should not set inert attribute when details are active on small screens', fakeAsync(() => {
+      it('should not set inert attribute when details are active on small screens', async () => {
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
         component.detailsActive = true;
         fixture.detectChanges();
-        flush();
+        await fixture.whenStable();
         expect(debugElement.query(By.css('si-details-pane:not([inert])'))).toBeTruthy();
-      }));
+      });
 
       it('should unset detailsActive when details back button was clicked on small screens', () => {
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
@@ -389,13 +394,13 @@ describe('ListDetailsComponent', () => {
         expect(htmlElement.querySelector('button')).toBeFalsy();
       });
 
-      it('should only have the details pane in view on small screens when details are active', fakeAsync(() => {
+      it('should only have the details pane in view on small screens when details are active', async () => {
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
         component.detailsActive = true;
         fixture.detectChanges();
-        flush();
+        await fixture.whenStable();
         expect(getInViewport(getListPane().firstElementChild as HTMLElement)).toBeFalse();
-      }));
+      });
     });
   });
 
@@ -455,7 +460,8 @@ describe('ListDetailsComponent', () => {
                 }
               ]
             }
-          ])
+          ]),
+          provideZonelessChangeDetection()
         ]
       });
     });
@@ -477,6 +483,8 @@ describe('ListDetailsComponent', () => {
       debugElement.query(By.css('.si-details-header-back')).nativeElement.click();
       routerHarness.detectChanges();
       await routerHarness.fixture.whenStable();
+      // cannot use jasmine.clock here
+      await new Promise(resolve => setTimeout(resolve, 10));
       expect(debugElement.query(By.css('si-empty'))).toBeTruthy();
       expect(debugElement.query(By.css('.list-details')).classes['details-active']).toBeFalsy();
     });
