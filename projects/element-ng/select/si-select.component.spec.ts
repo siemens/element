@@ -5,7 +5,7 @@
 import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { CommonModule } from '@angular/common';
-import { Component, viewChild } from '@angular/core';
+import { Component, provideZonelessChangeDetection, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SiSelectHarness } from '@siemens/element-ng/select/testing';
@@ -169,7 +169,8 @@ describe('SiSelectComponent', () => {
 
     beforeEach(async () => {
       TestBed.configureTestingModule({
-        imports: [SiSelectModule, TestHostComponent]
+        imports: [SiSelectModule, TestHostComponent],
+        providers: [provideZonelessChangeDetection()]
       });
 
       const typedFixture = TestBed.createComponent(TestHostComponent);
@@ -200,6 +201,8 @@ describe('SiSelectComponent', () => {
 
     it('should not open dropdown on enter when disabled', async () => {
       hostComponent.disabled = true;
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
 
       await selectHarness.open('enter');
       expect(await selectHarness.getList()).toBeNull();
@@ -207,6 +210,8 @@ describe('SiSelectComponent', () => {
 
     it('should not open dropdown on click (while disabled)', async () => {
       hostComponent.disabled = true;
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
 
       await selectHarness.open('enter');
       expect(await selectHarness.getList()).toBeNull();
@@ -214,13 +219,16 @@ describe('SiSelectComponent', () => {
 
     it('should not allow focus (while disabled)', async () => {
       hostComponent.disabled = true;
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
 
       expect(await selectHarness.getTabindex()).toBe('-1');
     });
 
     it('should not open dropdown on enter when readonly', async () => {
       hostComponent.readonly = true;
-
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
       expect(await selectHarness.getTabindex()).toBe('0');
 
       await selectHarness.open('enter');
@@ -229,13 +237,16 @@ describe('SiSelectComponent', () => {
 
     it('should not open dropdown on click (while readonly)', async () => {
       hostComponent.readonly = true;
-
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
       await selectHarness.open('click');
       expect(await selectHarness.getList()).toBeNull();
     });
 
     it('should not open dropdown on space (while readonly)', async () => {
       hostComponent.readonly = true;
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
 
       await selectHarness.open('space');
       expect(await selectHarness.getList()).toBeNull();
@@ -292,6 +303,8 @@ describe('SiSelectComponent', () => {
 
     it('should allow undefined options', async () => {
       hostComponent.options = undefined;
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
       await selectHarness.open();
       const list = await selectHarness.getList()!;
       expect(list).toBeTruthy();
@@ -309,6 +322,8 @@ describe('SiSelectComponent', () => {
           { id: 'ab', title: 'ab' }
         ];
         hostComponent.value = 'a';
+        fixture.changeDetectorRef.markForCheck();
+        fixture.detectChanges();
         selectHarness = await TestbedHarnessEnvironment.loader(fixture).getHarness(SiSelectHarness);
       });
 
@@ -336,6 +351,8 @@ describe('SiSelectComponent', () => {
 
       it('should focus first selected element', async () => {
         hostComponent.value = 'c';
+        fixture.changeDetectorRef.markForCheck();
+        fixture.detectChanges();
         await selectHarness.open();
         const item = await selectHarness.getList().then(list => list!.getItemByText('c'));
         expect(await item.isActive()).toBeTrue();
@@ -348,7 +365,8 @@ describe('SiSelectComponent', () => {
 
     beforeEach(async () => {
       TestBed.configureTestingModule({
-        imports: [SiSelectModule, TestHostNumberComponent]
+        imports: [SiSelectModule, TestHostNumberComponent],
+        providers: [provideZonelessChangeDetection()]
       });
 
       const typedFixture = TestBed.createComponent(TestHostNumberComponent);
@@ -402,7 +420,14 @@ describe('SiSelectComponent', () => {
 
     beforeEach(async () => {
       TestBed.configureTestingModule({
-        imports: [CommonModule, FormsModule, ReactiveFormsModule, SiSelectModule, FormHostComponent]
+        imports: [
+          CommonModule,
+          FormsModule,
+          ReactiveFormsModule,
+          SiSelectModule,
+          FormHostComponent
+        ],
+        providers: [provideZonelessChangeDetection()]
       });
 
       const typedFixture = TestBed.createComponent(FormHostComponent);
@@ -442,7 +467,8 @@ describe('SiSelectComponent', () => {
 
     beforeEach(async () => {
       TestBed.configureTestingModule({
-        imports: [SiSelectModule, TestHostMultiComponent]
+        imports: [SiSelectModule, TestHostMultiComponent],
+        providers: [provideZonelessChangeDetection()]
       });
 
       const typedFixture = TestBed.createComponent(TestHostMultiComponent);
@@ -466,6 +492,8 @@ describe('SiSelectComponent', () => {
 
     it('should display placeholder text when no options are selected/provided', async () => {
       hostComponent.options = undefined;
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
       await selectHarness.open();
       const list = await selectHarness.getList()!;
       expect(list).toBeTruthy();
@@ -480,6 +508,12 @@ describe('SiSelectComponent', () => {
       await selectHarness.clickItemsByText(
         OPTIONS_LIST.filter(i => !initialSelection?.includes(i.id)).map(i => i.title)
       );
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      // cannot use jasmine.clock here
+      await new Promise(resolve => setTimeout(resolve, 100));
 
       expect(await selectHarness.getOverflowCount()).toBe(3);
     });
@@ -488,6 +522,9 @@ describe('SiSelectComponent', () => {
       hostComponent.hasFilter = true;
       hostComponent.options = { x: ['a', 'b', 'c', 'y'], xy: ['d', 'ab'] };
       hostComponent.values = ['a', 'ab'];
+
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
 
       await selectHarness.open('click');
       await selectHarness.getList().then(list => list!.sendKeys('y'));
@@ -502,6 +539,8 @@ describe('SiSelectComponent', () => {
 
     it('should allow undefined options', async () => {
       hostComponent.options = undefined;
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
       await selectHarness.open();
       const list = await selectHarness.getList()!;
       expect(list).toBeTruthy();
@@ -514,6 +553,9 @@ describe('SiSelectComponent', () => {
       await selectHarness.clickItemsByText('Good');
       expect(await selectHarness.getSelectedTexts()).toEqual(['Good', 'Average']);
       hostComponent.options = { group: ['GOOD', 'aveRAGE', 'poor'] };
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
+
       expect(await selectHarness.getSelectedTexts()).toEqual(['GOOD', 'AveRAGE']);
       // Options were changed after the selection, so si-select does not emit any changes.
       // It should only emit if the user changes something.
@@ -523,12 +565,17 @@ describe('SiSelectComponent', () => {
 
   it('should throw an error when using filter and option template without valueProvider', () => {
     spyOn(console, 'error');
-    TestBed.configureTestingModule({ imports: [WithFilterInvalidTestComponent] });
+    TestBed.configureTestingModule({
+      imports: [WithFilterInvalidTestComponent],
+      providers: [provideZonelessChangeDetection()]
+    });
     const typedFixture = TestBed.createComponent(WithFilterInvalidTestComponent);
     typedFixture.detectChanges();
     typedFixture.componentInstance.hasFilter = false;
+    typedFixture.changeDetectorRef.markForCheck();
     typedFixture.detectChanges();
     typedFixture.componentInstance.hasFilter = true;
+    typedFixture.changeDetectorRef.markForCheck();
     typedFixture.detectChanges();
     expect(console.error).toHaveBeenCalledTimes(3);
     expect(console.error).toHaveBeenCalledWith(

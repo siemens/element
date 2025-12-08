@@ -4,14 +4,8 @@
  */
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component } from '@angular/core';
-import {
-  ComponentFixture,
-  discardPeriodicTasks,
-  fakeAsync,
-  TestBed,
-  tick
-} from '@angular/core/testing';
+import { Component, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Observable, of } from 'rxjs';
@@ -56,7 +50,7 @@ describe('SelectLazyOptionsDirective', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [TestHostComponent],
-      providers: [provideNoopAnimations()]
+      providers: [provideNoopAnimations(), provideZonelessChangeDetection()]
     });
     fixture = TestBed.createComponent(TestHostComponent);
     loader = TestbedHarnessEnvironment.loader(fixture);
@@ -70,7 +64,7 @@ describe('SelectLazyOptionsDirective', () => {
     expect(await harness.getSelectedTexts()).toEqual(['label: value']);
   });
 
-  it('should search for values', fakeAsync(async () => {
+  it('should search for values', async () => {
     component.optionSource.getOptionsForSearch = createSpy(
       'getOptionsForSearch',
       (search: string): Observable<SelectItem<string>[]> => of(['result'].map(valueToOption))
@@ -78,15 +72,19 @@ describe('SelectLazyOptionsDirective', () => {
 
     const harness = await loader.getHarness(SiSelectHarness);
     await harness.open();
+    // cannot jasmine.clock for debounceTime, so use real wait
+    await new Promise(resolve => setTimeout(resolve, 200));
     const list = (await harness.getList())!;
+
     await list.sendKeys('search');
     expect(component.optionSource.getOptionsForSearch).not.toHaveBeenCalled();
-    tick(100);
+    await new Promise(resolve => setTimeout(resolve, 100));
+
     expect(component.optionSource.getOptionsForSearch).toHaveBeenCalled();
     expect(await list.getAllItemTexts()).toEqual(['label: result']);
-  }));
+  });
 
-  it('should use known values if possible to render selected values', fakeAsync(async () => {
+  it('should use known values if possible to render selected values', async () => {
     component.optionSource.getOptionsForSearch = (
       search: string
     ): Observable<SelectItem<string>[]> =>
@@ -96,9 +94,14 @@ describe('SelectLazyOptionsDirective', () => {
 
     const harness = await loader.getHarness(SiSelectHarness);
     await harness.open();
+
+    // cannot jasmine.clock for debounceTime, so use real wait
+    await new Promise(resolve => setTimeout(resolve, 200));
     const list = (await harness.getList())!;
     await list.sendKeys('result');
-    tick(100);
+
+    await new Promise(resolve => setTimeout(resolve, 100));
+
     await list.getItemByText('label: result-2').then(item => item.click());
     await list.getItemByText('label: result-0').then(item => item.click());
     expect(await harness.getSelectedTexts()).toEqual([
@@ -106,14 +109,14 @@ describe('SelectLazyOptionsDirective', () => {
       'label: result-1',
       'label: result-2'
     ]);
-    discardPeriodicTasks();
-  }));
+  });
 
   it('should show selected values if getAll is not implemented', async () => {
     component.control.setValue(['value-0', 'value-1']);
 
     const harness = await loader.getHarness(SiSelectHarness);
     await harness.open();
+    await new Promise(resolve => setTimeout(resolve, 200));
     const list = (await harness.getList())!;
     expect(await list.getAllItemTexts()).toEqual(['label: value-0', 'label: value-1']);
   });
@@ -124,7 +127,12 @@ describe('SelectLazyOptionsDirective', () => {
     component.control.setValue(['value-1']);
 
     const harness = await loader.getHarness(SiSelectHarness);
+
     await harness.open();
+
+    await new Promise(resolve => setTimeout(resolve, 200));
+    await fixture.whenStable();
+
     const list = (await harness.getList())!;
     expect(await list.getAllItemTexts()).toEqual([
       'label: value-0',
