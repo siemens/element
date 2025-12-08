@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ComponentRef } from '@angular/core';
+import { ComponentRef, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -59,7 +59,8 @@ describe(`SiPhotoUploadComponent`, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SiPhotoUploadComponent]
+      imports: [SiPhotoUploadComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(SiPhotoUploadComponent);
@@ -139,12 +140,13 @@ describe(`SiPhotoUploadComponent`, () => {
     mockFileReader(redPng);
 
     fixture.debugElement.query(By.css('button'))!.nativeElement.click();
-
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     await fixture.whenStable();
-
     const modal = document.querySelector('si-modal');
     expect(modal).toBeTruthy();
+    // cannot use jasmine.clock here
+    await new Promise(resolve => setTimeout(resolve, 100)); // Allow cropping lib to process
     expect(modal?.querySelector('img')).toBeTruthy();
   });
 
@@ -164,6 +166,9 @@ describe(`SiPhotoUploadComponent`, () => {
 
     fixture.detectChanges();
     await fixture.whenStable();
+
+    // cannot use jasmine.clock here
+    await new Promise(resolve => setTimeout(resolve, 100)); // Allow cropping lib to process
 
     getButton(document.querySelector('si-modal')!, 'Apply').click();
     fixture.detectChanges();
