@@ -60,21 +60,22 @@ describe('SiWidgetHostComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should instantiate and attach widget instance', (done: DoneFn) => {
-    component.initCompleted.subscribe(_ => {
-      expect(component.widgetHost().length).toBe(1);
-      done();
-    });
+  it('should instantiate and attach widget instance', async () => {
     fixture.detectChanges();
+    jasmine.clock().install();
+    jasmine.clock().tick(0);
+    await fixture.whenStable();
+    expect(component.widgetHost().length).toBe(1);
+    jasmine.clock().uninstall();
   });
 
-  it('should not create widget instance without widget', (done: DoneFn) => {
+  it('should not create widget instance without widget', async () => {
     gridService.widgetCatalog.set([]);
-    component.initCompleted.subscribe(_ => {
-      expect(component.widgetHost().length).toBe(0);
-      done();
-    });
-    fixture.detectChanges();
+    jasmine.clock().install();
+    jasmine.clock().tick(0);
+    await fixture.whenStable();
+    expect(component.widgetHost().length).toBe(0);
+    jasmine.clock().uninstall();
   });
 
   it('#editAction should call onEdit', () => {
@@ -118,34 +119,35 @@ describe('SiWidgetHostComponent', () => {
   });
 
   describe('#setupEditable()', () => {
-    it('should setup default edit actions with widgets edit actions', (done: DoneFn) => {
-      component.initCompleted.subscribe(_ => {
-        expect(component.primaryActions.length).toBe(0);
-
-        component.setupEditable(true);
-        expect(component.primaryActions.length).toBe(3);
-        expect((component.primaryActions[0] as MenuItem).title).toBe('Hello User');
-        expect(component.primaryActions[1]).toBe(component.editAction);
-        expect(component.primaryActions[2]).toBe(component.removeAction);
-        expect(component.widgetInstance!.editable).toBeTrue();
-        done();
-      });
+    it('should setup default edit actions with widgets edit actions', async () => {
+      jasmine.clock().install();
+      jasmine.clock().tick(0);
+      await fixture.whenStable();
+      expect(component.primaryActions.length).toBe(0);
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
+      component.setupEditable(true);
+      expect(component.primaryActions.length).toBe(3);
+      expect((component.primaryActions[0] as MenuItem).title).toBe('Hello User');
+      expect(component.primaryActions[1]).toBe(component.editAction);
+      expect(component.primaryActions[2]).toBe(component.removeAction);
+      expect(component.widgetInstance!.editable).toBeTrue();
+      jasmine.clock().uninstall();
     });
 
-    it('should setup default edit actions without widgets edit actions', (done: DoneFn) => {
-      component.initCompleted.subscribe(_ => {
-        component.widgetInstance!.primaryEditActions = undefined;
-        expect(component.primaryActions.length).toBe(0);
+    it('should setup default edit actions without widgets edit actions', async () => {
+      jasmine.clock().install();
+      jasmine.clock().tick(0);
+      await fixture.whenStable();
+      component.widgetInstance!.primaryEditActions = undefined;
+      expect(component.primaryActions.length).toBe(0);
 
-        component.setupEditable(true);
-        expect(component.primaryActions.length).toBe(2);
-        expect(component.primaryActions[0]).toBe(component.editAction);
-        expect(component.primaryActions[1]).toBe(component.removeAction);
-        expect(component.widgetInstance!.editable).toBeTrue();
-        done();
-      });
-      fixture.detectChanges();
+      component.setupEditable(true);
+      expect(component.primaryActions.length).toBe(2);
+      expect(component.primaryActions[0]).toBe(component.editAction);
+      expect(component.primaryActions[1]).toBe(component.removeAction);
+      expect(component.widgetInstance!.editable).toBeTrue();
+      jasmine.clock().uninstall();
     });
   });
 });
