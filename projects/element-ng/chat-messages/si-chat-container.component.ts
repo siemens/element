@@ -50,6 +50,8 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
 
   private isUserAtBottom = true;
   private scrollTimeout: ReturnType<typeof setTimeout> | undefined;
+  private lastScrollTime = 0;
+  private pendingScroll = false;
   private resizeObserver: ResizeObserver | undefined;
   private contentObserver: MutationObserver | undefined;
 
@@ -107,13 +109,28 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
   }
 
   private debouncedScrollToBottom(): void {
+    const now = Date.now();
+    const timeSinceLastScroll = now - this.lastScrollTime;
+
+    if (timeSinceLastScroll >= 1) {
+      this.lastScrollTime = now;
+      this.scrollToBottom();
+      this.pendingScroll = false;
+    } else {
+      this.pendingScroll = true;
+    }
+
     if (this.scrollTimeout) {
       clearTimeout(this.scrollTimeout);
     }
 
     this.scrollTimeout = setTimeout(() => {
-      this.scrollToBottom();
-    }, 100);
+      if (this.pendingScroll) {
+        this.lastScrollTime = Date.now();
+        this.scrollToBottom();
+        this.pendingScroll = false;
+      }
+    }, 1);
   }
 
   private setupResizeObserver(): void {
