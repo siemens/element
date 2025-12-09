@@ -7,9 +7,9 @@ import { SiChartBaseComponent, SankeySeriesOption, echarts } from '@siemens/char
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
 import { SankeyChart } from 'echarts/charts';
-import { TitleComponent, TooltipComponent, GridComponent } from 'echarts/components';
+import { GridComponent } from 'echarts/components';
 
-echarts.use([SankeyChart, TitleComponent, TooltipComponent, GridComponent]);
+echarts.use([SankeyChart, GridComponent]);
 
 @Component({
   selector: 'si-chart-sankey',

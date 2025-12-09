@@ -17,11 +17,10 @@ import { SiChartBaseComponent, GaugeSeriesOption, echarts } from '@siemens/chart
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
 import { GaugeChart } from 'echarts/charts';
-import { TitleComponent, TooltipComponent } from 'echarts/components';
 
 import { GaugeChartSeries } from './si-chart-gauge.interface';
 
-echarts.use([GaugeChart, TitleComponent, TooltipComponent]);
+echarts.use([GaugeChart]);
 
 @Component({
   selector: 'si-chart-gauge',
