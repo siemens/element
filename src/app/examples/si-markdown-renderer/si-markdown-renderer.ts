@@ -5,6 +5,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { SiMarkdownRendererComponent } from '@siemens/element-ng/markdown-renderer';
+import hljs from 'highlight.js';
 
 @Component({
   selector: 'app-sample',
@@ -14,6 +15,22 @@ import { SiMarkdownRendererComponent } from '@siemens/element-ng/markdown-render
 export class SampleComponent implements OnInit {
   private readonly http = inject(HttpClient);
   readonly markdownText = signal<string>('');
+
+  // Optional: Syntax highlighting with highlight.js
+  // This function returns highlighted HTML markup for the code content.
+  // The returned HTML is sanitized before insertion.
+  // Element provides a built-in highlight.js theme that adapts to light/dark mode.
+  // Make sure to include highlight.js as a dependency.
+  readonly syntaxHighlighter = (code: string, language?: string): string | undefined => {
+    if (language && hljs.getLanguage(language)) {
+      try {
+        return hljs.highlight(code, { language }).value;
+      } catch {
+        // If highlighting fails, fall back to no highlighting
+      }
+    }
+    return undefined;
+  };
 
   ngOnInit(): void {
     this.http.get('assets/sample-markdown.md', { responseType: 'text' }).subscribe(text => {
