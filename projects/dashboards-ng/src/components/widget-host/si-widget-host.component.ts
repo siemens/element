@@ -55,7 +55,6 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
 
   readonly remove = output<string>();
   readonly edit = output<WidgetConfig>();
-  readonly initCompleted = output<void>();
 
   readonly card = viewChild.required<SiDashboardCardComponent>('card');
 
@@ -187,14 +186,11 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
           }
           this.widgetInstanceFooter = this.widgetInstance.footer;
           this.setupEditable(this.gridService.editable$.value);
-
-          this.initCompleted.emit();
         },
         error: error => console.error('Error: ', error)
       });
     } else {
       console.error(`Cannot find widget with id ${this.widgetConfig().widgetId}`);
-      this.initCompleted.emit();
     }
   }
 

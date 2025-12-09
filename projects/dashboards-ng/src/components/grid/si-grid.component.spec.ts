@@ -219,7 +219,7 @@ describe('SiGridComponent', () => {
       fixture.componentRef.setInput('widgetCatalog', [TEST_WIDGET]);
       fixture.detectChanges();
       await fixture.whenStable();
-      component.addWidgetInstance({ widgetId: TEST_WIDGET.id });
+      component.addWidgetInstance({ widgetId: TEST_WIDGET.id, payload: TEST_WIDGET.payload });
       component.save();
       await fixture.whenStable();
       const widgetConfig = component.visibleWidgetInstances$.value[0];

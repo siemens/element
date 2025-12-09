@@ -3,10 +3,12 @@
  * SPDX-License-Identifier: MIT
  */
 import { Widget, WidgetConfig } from '@siemens/dashboards-ng';
+import * as testWidgetModule from 'projects/dashboards-ng/test/test-widget/index';
 
 const loaderFunction = (name: string): Promise<any> => {
   if (name === 'TestWidgetComponent' || name === 'TestWidgetEditorComponent') {
-    return import('projects/dashboards-ng/test/test-widget/index');
+    // immediately resolve so we don't have to deal with timers in tests
+    return Promise.resolve(testWidgetModule);
   } else {
     throw new Error(`Unknown component to be loaded ${name}`);
   }
