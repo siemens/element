@@ -38,6 +38,12 @@ export interface SiTranslatableKeys {
     // (undocumented)
     'SI_CHANGE_PASSWORD.PASSWORD_POLICY'?: string;
     // (undocumented)
+    'SI_CHAT_CONTAINER.EMPTY_STATE_DESCRIPTION'?: string;
+    // (undocumented)
+    'SI_CHAT_CONTAINER.EMPTY_STATE_TITLE'?: string;
+    // (undocumented)
+    'SI_CHAT_CONTAINER.SECONDARY_ACTIONS'?: string;
+    // (undocumented)
     'SI_CHAT_INPUT.ATTACH_FILE'?: string;
     // (undocumented)
     'SI_CHAT_INPUT.INTERRUPT'?: string;
@@ -331,6 +337,10 @@ export interface SiTranslatableKeys {
     'SI_LOGIN_SINGLE-SIGN-ON.LOGIN_SIGN_UP'?: string;
     // (undocumented)
     'SI_MAIN_DETAIL_CONTAINER.BACK'?: string;
+    // (undocumented)
+    'SI_MARKDOWN_RENDERER.COPY'?: string;
+    // (undocumented)
+    'SI_MARKDOWN_RENDERER.DOWNLOAD'?: string;
     // (undocumented)
     'SI_NAVBAR.OPEN_LAUNCHPAD'?: string;
     // (undocumented)
