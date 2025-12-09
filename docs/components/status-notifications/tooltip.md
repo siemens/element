@@ -13,7 +13,7 @@ Since tooltips are temporary and generally not accessible on touch devices,
 ![Tooltip](images/tooltip.png)
 
 Tooltips are applied to controls that rely solely on an icon, such as [icon buttons](../buttons-menus/buttons.md),
-[icon-only tabs](../layout-navigation/tabs.md), and collapsed versions of [vertical navigation](../layout-navigation/vertical-navigation.md) and the [side panel](../layout-navigation/side-panel.md).
+[icon-only tabs](../layout-navigation/tabs.md), [application header](../layout-navigation/application-header.md) and collapsed versions of [vertical navigation](../layout-navigation/vertical-navigation.md) and the [side panel](../layout-navigation/side-panel.md).
 
 They may also reveal truncated text **only when the element is focusable**, for example a
 [tree node](../lists-tables-trees/tree-view.md).
