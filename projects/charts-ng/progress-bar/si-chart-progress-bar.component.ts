@@ -13,11 +13,11 @@ import {
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
 import { BarChart } from 'echarts/charts';
-import { TitleComponent, TooltipComponent, GridComponent } from 'echarts/components';
+import { GridComponent } from 'echarts/components';
 
 import { ProgressBarChartSeries, ProgressBarValueUpdate } from './si-chart-progress-bar.interface';
 
-echarts.use([BarChart, TitleComponent, TooltipComponent, GridComponent]);
+echarts.use([BarChart, GridComponent]);
 
 @Component({
   selector: 'si-chart-progress-bar',

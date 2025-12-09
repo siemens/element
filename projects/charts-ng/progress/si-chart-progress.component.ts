@@ -8,11 +8,10 @@ import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
 import { PieSeriesOption } from 'echarts';
 import { PieChart } from 'echarts/charts';
-import { TitleComponent, TooltipComponent } from 'echarts/components';
 
 import { ProgressChartSeries, ProgressValueUpdate } from './si-chart-progress.interface';
 
-echarts.use([PieChart, TitleComponent, TooltipComponent]);
+echarts.use([PieChart]);
 
 @Component({
   selector: 'si-chart-progress',

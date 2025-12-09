@@ -7,9 +7,8 @@ import { SiChartBaseComponent, SunburstSeriesOption, echarts } from '@siemens/ch
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
 import { SunburstChart } from 'echarts/charts';
-import { TitleComponent, TooltipComponent } from 'echarts/components';
 
-echarts.use([SunburstChart, TitleComponent, TooltipComponent]);
+echarts.use([SunburstChart]);
 
 @Component({
   selector: 'si-chart-sunburst',

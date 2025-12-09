@@ -18,8 +18,6 @@ import {
   SunburstChart
 } from 'echarts/charts';
 import {
-  TitleComponent,
-  TooltipComponent,
   LegendComponent,
   GridComponent,
   DataZoomComponent,
@@ -42,8 +40,6 @@ echarts.use([
   GaugeChart,
   SankeyChart,
   SunburstChart,
-  TitleComponent,
-  TooltipComponent,
   LegendComponent,
   GridComponent,
   DataZoomComponent,

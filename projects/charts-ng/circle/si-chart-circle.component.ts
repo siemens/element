@@ -7,11 +7,11 @@ import { SiChartBaseComponent, PieSeriesOption, echarts } from '@siemens/charts-
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
 import { PieChart } from 'echarts/charts';
-import { TitleComponent, TooltipComponent, LegendComponent } from 'echarts/components';
+import { LegendComponent } from 'echarts/components';
 
 import { CircleChartData, CircleChartSeries, CircleValueUpdate } from './si-chart-circle.interface';
 
-echarts.use([PieChart, TitleComponent, TooltipComponent, LegendComponent]);
+echarts.use([PieChart, LegendComponent]);
 
 @Component({
   selector: 'si-chart-circle',

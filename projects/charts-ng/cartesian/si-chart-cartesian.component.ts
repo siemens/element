@@ -22,8 +22,6 @@ import {
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
 import { BarChart, LineChart, ScatterChart, CandlestickChart, HeatmapChart } from 'echarts/charts';
 import {
-  TitleComponent,
-  TooltipComponent,
   LegendComponent,
   GridComponent,
   DataZoomComponent,
@@ -48,8 +46,6 @@ echarts.use([
   ScatterChart,
   CandlestickChart,
   HeatmapChart,
-  TitleComponent,
-  TooltipComponent,
   LegendComponent,
   GridComponent,
   DataZoomComponent,
