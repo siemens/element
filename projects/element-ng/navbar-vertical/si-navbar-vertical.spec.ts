@@ -186,7 +186,8 @@ describe('SiNavbarVertical', () => {
       const spySearch = spyOn(component, 'searchEvent');
       await harness.search('test');
       // cannot use jasmine.clock here
-      await new Promise(resolve => setTimeout(resolve, 400));
+      // 400 is the debounceTime and +1 to ensure the timer is executed
+      await new Promise(resolve => setTimeout(resolve, 400 + 1));
       expect(spySearch).toHaveBeenCalledOnceWith('test');
     });
 
