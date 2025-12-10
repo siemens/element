@@ -120,6 +120,7 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
   private internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
   private activatedRoute = inject(ActivatedRoute);
   private defaultRoutes = this.activatedRoute.routeConfig?.children ?? [];
+  private cdRef = inject(ChangeDetectorRef);
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.exampleUrl?.currentValue) {
@@ -162,7 +163,10 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
     this.hasRenderingError = hasError;
     this.logRenderingError.emit(msg);
     if (hasError) {
-      setTimeout(() => this.setInProgress(false));
+      setTimeout(() => {
+        this.setInProgress(false);
+        this.cdRef.markForCheck();
+      });
     }
   }
 
@@ -184,13 +188,19 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
           this.componentTsSampleModule = m.SampleModule;
           this.compileWhenReady();
           if (!this.componentTsSampleComponent && !this.template) {
-            setTimeout(() => this.setInProgress(false));
+            setTimeout(() => {
+              this.setInProgress(false);
+              this.cdRef.markForCheck();
+            });
           }
         })
         .catch(e => {
           this.componentTs = undefined;
           this.logRenderingError.emit(e ? e.toString() : 'Failed loading TS');
-          setTimeout(() => this.setInProgress(false));
+          setTimeout(() => {
+            this.setInProgress(false);
+            this.cdRef.markForCheck();
+          });
         });
     } else {
       // set the dummy component
@@ -301,10 +311,6 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
       private container!: ViewContainerRef;
       private childRouteBackup: Routes | undefined;
 
-      constructor() {
-        this.changeDetector.detach();
-      }
-
       logEvent(...msg: any[]): void {
         self.logMessage.emit(self.stringifyLog(msg));
       }
@@ -316,7 +322,10 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
         try {
           this.changeDetector.detectChanges();
         } catch (error: any) {
-          setTimeout(() => this.handleError(error));
+          setTimeout(() => {
+            this.handleError(error);
+            this.changeDetector.markForCheck();
+          });
         }
       }
 
@@ -333,7 +342,10 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
           // cannot use router.resetConfig here as it destroys the components on child route navigations
           route.children = [...exampleRoutes];
         }
-        queueMicrotask(() => self.setInProgress(false));
+        queueMicrotask(() => {
+          self.setInProgress(false);
+          self.cdRef.markForCheck();
+        });
       }
 
       ngOnDestroy(): void {

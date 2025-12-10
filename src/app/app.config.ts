@@ -14,7 +14,7 @@ import {
   Injectable,
   LOCALE_ID,
   provideAppInitializer,
-  provideZoneChangeDetection,
+  provideZonelessChangeDetection,
   ɵLocaleDataIndex
 } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -161,6 +161,6 @@ export const APP_CONFIG: ApplicationConfig = {
     provideIconConfig({ disableSvgIcons: false }),
     provideSiUiState(),
     provideSiAgGridConfig(),
-    provideZoneChangeDetection()
+    provideZonelessChangeDetection()
   ]
 };
