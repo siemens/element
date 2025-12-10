@@ -83,8 +83,6 @@ export class SiSelectActionsDirective {
 export class SiSelectComponent<T> implements SiFormItemControl {
     readonly ariaLabel: _angular_core.InputSignal<string | null>;
     close(): void;
-    // @deprecated
-    readonly dropdownClose: _angular_core.OutputEmitterRef<void>;
     readonly errormessageId: _angular_core.InputSignal<string>;
     readonly filterPlaceholder: _angular_core.InputSignal<TranslatableString>;
     readonly hasFilter: _angular_core.InputSignalWithTransform<boolean, unknown>;
