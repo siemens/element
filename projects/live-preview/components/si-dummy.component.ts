@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -12,8 +12,12 @@ import { ActivatedRoute } from '@angular/router';
 export class SiDummyComponent {
   path = '';
   activeRoute = inject(ActivatedRoute);
+  private cdRef = inject(ChangeDetectorRef);
 
   constructor() {
-    this.activeRoute.url.subscribe(url => (this.path = url.toString()));
+    this.activeRoute.url.subscribe(url => {
+      this.path = url.toString();
+      this.cdRef.markForCheck();
+    });
   }
 }

@@ -17,7 +17,6 @@
             },
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": ["zone.js"],
             "tsConfig": "src/tsconfig.app.json",
             "aot": false,
             "assets": [
