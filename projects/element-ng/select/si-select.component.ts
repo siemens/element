@@ -105,11 +105,6 @@ export class SiSelectComponent<T> implements OnChanges, AfterContentInit, SiForm
    */
   readonly readonly = input(false, { transform: booleanAttribute });
 
-  /**
-   * Emits on selection dropdown close.
-   * @deprecated Use {@link openChange} instead.
-   */
-  readonly dropdownClose = output<void>();
   /** Emits when the dropdown open state changes. */
   readonly openChange = output<boolean>();
 
@@ -194,7 +189,6 @@ export class SiSelectComponent<T> implements OnChanges, AfterContentInit, SiForm
       this.backdropClicked = false;
       this.selectionStrategy.onTouched();
     }
-    this.dropdownClose.emit();
     this.openChange.emit(false);
   }
 
