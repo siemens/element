@@ -1,3 +1,18 @@
+# [48.7.0](https://github.com/siemens/element/compare/v48.6.0...v48.7.0) (2025-12-10)
+
+
+### Features
+
+* **chat-messages:** allow asterisk lists and simple images for markdown renderer ([7559fce](https://github.com/siemens/element/commit/7559fce7528406ce7692bbdee978cb1f0832d101))
+* **typeahead:** introduce experimental create option ([a2b2ae9](https://github.com/siemens/element/commit/a2b2ae903639c946eb3e9d83735c16c0b0caf2cd))
+
+
+### Bug Fixes
+
+* **charts/cartesian:** confine tooltip for cartesian ([f3dc55f](https://github.com/siemens/element/commit/f3dc55f0c5045d9f90445ceb4889d4ea3dd28c9f))
+* **datatable:** support compatibility with datatable v22 ([bedc4ec](https://github.com/siemens/element/commit/bedc4ec9290a2845846f873d5cfa0ecda070ac1b))
+* **loading-spinner:** should work in zoneless environment ([09b6530](https://github.com/siemens/element/commit/09b6530ed87a3077ce785888dfd2bbcaf415b1b8))
+
 # [48.6.0](https://github.com/siemens/element/compare/v48.5.2...v48.6.0) (2025-12-02)
 
 
