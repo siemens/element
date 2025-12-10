@@ -119,6 +119,7 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
   private config = inject(SI_LIVE_PREVIEW_CONFIG);
   private internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
   private activatedRoute = inject(ActivatedRoute);
+  private cdRef = inject(ChangeDetectorRef);
   private defaultRoutes = this.activatedRoute.routeConfig?.children ?? [];
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -184,13 +185,19 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
           this.componentTsSampleModule = m.SampleModule;
           this.compileWhenReady();
           if (!this.componentTsSampleComponent && !this.template) {
-            setTimeout(() => this.setInProgress(false));
+            setTimeout(() => {
+              this.setInProgress(false);
+              this.cdRef.markForCheck();
+            });
           }
         })
         .catch(e => {
           this.componentTs = undefined;
           this.logRenderingError.emit(e ? e.toString() : 'Failed loading TS');
-          setTimeout(() => this.setInProgress(false));
+          setTimeout(() => {
+            this.setInProgress(false);
+            this.cdRef.markForCheck();
+          });
         });
     } else {
       // set the dummy component
@@ -333,7 +340,10 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
           // cannot use router.resetConfig here as it destroys the components on child route navigations
           route.children = [...exampleRoutes];
         }
-        queueMicrotask(() => self.setInProgress(false));
+        queueMicrotask(() => {
+          self.setInProgress(false);
+          self.cdRef.markForCheck();
+        });
       }
 
       ngOnDestroy(): void {
@@ -363,6 +373,7 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
         // eslint-disable-next-line @angular-eslint/prefer-standalone
         standalone: false,
         template: '<ion-app><app-sample #container class="ion-page"></app-sample></ion-app>',
+        //changeDetection: ChangeDetectionStrategy.OnPush,
         jit: true
       })
       class RuntimeComponent extends AbstractRuntimeComponent {}

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, OnDestroy, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, viewChild } from '@angular/core';
 import { ProgressChartSeries, SiChartProgressComponent } from '@siemens/charts-ng';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 import { interval, Subscription } from 'rxjs';
@@ -10,7 +10,8 @@ import { interval, Subscription } from 'rxjs';
 @Component({
   selector: 'app-sample',
   imports: [SiChartProgressComponent, SiResizeObserverDirective],
-  templateUrl: './chart.html'
+  templateUrl: './chart.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnDestroy {
   chartData = {

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, HostBinding, inject, viewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, HostBinding, inject, viewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { setDeviceMode, setDirectionRtl } from '../../helpers/utils';
@@ -31,6 +31,7 @@ export class SiExampleViewerComponent {
   private internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
   private themeApi = inject(SiLivePreviewThemeApi, { optional: true });
   private localeApi = inject(SiLivePreviewLocaleApi, { optional: true });
+  private cdRef = inject(ChangeDetectorRef);
 
   readonly renderer = viewChild.required<SiLivePreviewRendererComponent>('renderer');
 
@@ -58,8 +59,14 @@ export class SiExampleViewerComponent {
   activeTabIndex = 0;
 
   constructor() {
-    this.route.params.subscribe(params => (this.mode = params.mode ?? 'editor'));
-    this.route.queryParams.subscribe(params => this.handleQueryParams(params));
+    this.route.params.subscribe(params => {
+      this.mode = params.mode ?? 'editor';
+      this.cdRef.markForCheck();
+    });
+    this.route.queryParams.subscribe(params => {
+      this.handleQueryParams(params);
+      this.cdRef.markForCheck();
+    });
   }
 
   private handleQueryParams(params: Params): void {

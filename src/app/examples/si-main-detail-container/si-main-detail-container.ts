@@ -3,7 +3,13 @@
  * SPDX-License-Identifier: MIT
  */
 import { CommonModule } from '@angular/common';
-import { Component, inject, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  viewChild
+} from '@angular/core';
 import {
   ContentActionBarMainItem,
   SiContentActionBarComponent
@@ -32,6 +38,7 @@ import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.s
   templateUrl: './si-main-detail-container.html',
   styleUrl: './si-main-detail-container.scss',
   providers: [DataService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'si-layout-fixed-height'
   }
@@ -39,6 +46,7 @@ import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.s
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);
   private dataService = inject(DataService);
+  private cdRef = inject(ChangeDetectorRef);
 
   /**
    * Main detail container
@@ -153,6 +161,7 @@ export class SampleComponent {
       this.rows = rows;
 
       this.isLoading--;
+      this.cdRef.markForCheck();
     });
   }
 

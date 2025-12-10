@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, OnDestroy, OnInit, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, viewChild } from '@angular/core';
 import {
   AxisPointerEvent,
   CartesianChartData,
@@ -61,7 +61,8 @@ const mulberry32 = (seed: number) => () => {
   selector: 'app-sample',
   imports: [SiChartCartesianComponent, SiResizeObserverDirective],
   templateUrl: './interactive.html',
-  styleUrl: './interactive.scss'
+  styleUrl: './interactive.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnInit, OnDestroy {
   readonly trendChart = viewChild.required<SiChartCartesianComponent>('trendChart');
