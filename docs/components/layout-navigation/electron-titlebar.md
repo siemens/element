@@ -1,6 +1,6 @@
 # Electron titlebar
 
-This is a titlebar which is used in electron applications. The titlebar will be positioned above the primary navbar and provide forward/backward functionality as well as zoom and custom functions.
+This is a titlebar which is used in electron applications. The titlebar will be positioned above the application header and provide forward/backward functionality as well as zoom and custom functions.
 
 ## Usage ---
 
@@ -30,9 +30,8 @@ import { SiElectrontitlebarComponent } from '@siemens/element-ng/electron-titleb
 
 The titlebar should be aligned on top of all components.
 But when adding the `si-electron-titlebar` to your
-application, it will no be aligned above every component
-by default. Instead it will be hidden behind an overlapping
-component e.g. the `si-navbar-primary`.
+application, it will not be aligned above every component
+by default. Instead it will be hidden behind overlapping components.
 
 In order for correct rendering and padding with the titlebar,
 you should add the `in-electron` CSS class to the `body` element.

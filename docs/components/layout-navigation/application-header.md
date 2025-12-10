@@ -203,8 +203,6 @@ Header action menus should be placed outside the `si-application-header` to keep
 The application header provides a special action item for the user account menu showing
 the initials or the profile picture.
 The code below demonstrates how to use custom content next to standard dropdown items.
-Adopt this in your application to create an account menu similar to the one in the
-deprecated `si-primary-navbar`.
 
 ```html
 <si-application-header>
