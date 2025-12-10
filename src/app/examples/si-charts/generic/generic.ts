@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, HostListener } from '@angular/core';
-import { EChartOption, SiChartComponent } from '@siemens/charts-ng';
+import { EChartOption, SiChartComponent, ToolboxComponentOption } from '@siemens/charts-ng';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 
 @Component({
@@ -14,7 +14,12 @@ import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 export class SampleComponent {
   chartColors: EChartOption = this.createChartColors();
 
+  toolboxOptions: ToolboxComponentOption = {
+    show: true
+  };
+
   chartData: EChartOption = {
+    toolbox: this.toolboxOptions,
     title: {
       text: 'Generic chart'
     },
@@ -31,6 +36,7 @@ export class SampleComponent {
       },
       {
         right: '20',
+        top: 50,
         data: ['Evaporation', 'Precipitation']
       }
     ],
@@ -67,11 +73,13 @@ export class SampleComponent {
       {
         name: 'Evaporation',
         type: 'bar',
+        yAxisIndex: 1,
         data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
       },
       {
         name: 'Precipitation',
         type: 'bar',
+        yAxisIndex: 1,
         data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
       },
       {
