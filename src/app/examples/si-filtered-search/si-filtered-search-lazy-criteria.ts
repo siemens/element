@@ -85,7 +85,7 @@ export class SampleComponent {
         this.filteredSearch.criteria.forEach((criterion: CriterionDefinition) => {
           if (
             criterion.label?.toLocaleLowerCase().includes(typed) &&
-            !searchCriteria?.criteria.some(element => element.label === criterion.label)
+            !searchCriteria?.criteria.some(element => element.name === criterion.name)
           ) {
             filteredCategories.push(criterion);
           }
