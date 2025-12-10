@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { AsyncPipe } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
@@ -34,6 +34,7 @@ export class SiExampleOverviewComponent implements OnInit, OnDestroy {
   private title = inject(Title);
   private config = inject(SI_LIVE_PREVIEW_CONFIG);
   private internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
+  private cdRef = inject(ChangeDetectorRef);
   private componentList: string[] = [];
   private darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
   private mediaQueryListener = (): void => this.toggleDark(this.darkMediaQuery.matches);
@@ -116,15 +117,11 @@ export class SiExampleOverviewComponent implements OnInit, OnDestroy {
     this.isCollapsed = !this.isCollapsed;
     localStorage.setItem('si-live-preview-examples-collapsed', this.isCollapsed.toString());
 
-    if (this.isCollapsed) {
-      this.showContent = false;
-      setTimeout(() => window.dispatchEvent(new Event('resize')), 500);
-    } else {
-      setTimeout(() => {
-        this.showContent = true;
-        window.dispatchEvent(new Event('resize'));
-      }, 500);
-    }
+    setTimeout(() => {
+      this.showContent = !this.isCollapsed;
+      window.dispatchEvent(new Event('resize'));
+      this.cdRef.markForCheck();
+    }, 500);
   }
 
   resetSearchBar(): void {
