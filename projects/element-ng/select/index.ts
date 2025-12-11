@@ -5,7 +5,6 @@
 export * from './si-select.component';
 export * from './options/si-select-lazy-options.directive';
 export * from './options/si-select-simple-options.directive';
-export * from './options/si-select-complex-options.directive';
 export * from './options/si-select-option.source';
 export * from './selection/si-select-single-value.directive';
 export * from './selection/si-select-multi-value.directive';

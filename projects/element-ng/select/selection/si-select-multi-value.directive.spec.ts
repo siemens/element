@@ -17,7 +17,7 @@ import { SiSelectHarness } from '../testing/si-select.harness';
     <si-select
       multi
       style="width: 200px"
-      [complexOptions]="options"
+      [options]="options"
       [formControl]="control"
       (valueChange)="valueChange($event)"
     />

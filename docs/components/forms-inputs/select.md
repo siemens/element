@@ -350,6 +350,4 @@ The following demonstrates how to add a "Create" button within the dropdown acti
 
 <si-docs-api directive="SiSelectSimpleOptionsDirective" heading="Simple options (via SiSelectSimpleOptionsDirective)"></si-docs-api>
 
-<si-docs-api directive="SiSelectComplexOptionsDirective" heading="Complex options (via SiSelectComplexOptionsDirective)"></si-docs-api>
-
 <si-docs-types></si-docs-types>

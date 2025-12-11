@@ -98,7 +98,7 @@ class TestHostNumberComponent {
       multi
       inputId="test-select"
       placeholder="Select an option"
-      [complexOptions]="options"
+      [options]="options"
       [valueProvider]="valueProvider"
       [optionEqualCheckFn]="optionEqualCheckFn"
       [disabled]="disabled"
@@ -125,7 +125,7 @@ class TestHostMultiComponent {
 
 @Component({
   imports: [SiSelectModule],
-  template: ` <si-select [hasFilter]="hasFilter" [complexOptions]="[]">
+  template: ` <si-select [hasFilter]="hasFilter" [options]="[]">
     <ng-template let-option siSelectOptionTemplate>{{ option }}</ng-template>
   </si-select>`
 })

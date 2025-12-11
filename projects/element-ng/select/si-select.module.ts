@@ -4,7 +4,6 @@
  */
 import { NgModule } from '@angular/core';
 
-import { SiSelectComplexOptionsDirective } from './options/si-select-complex-options.directive';
 import { SiSelectSimpleOptionsDirective } from './options/si-select-simple-options.directive';
 import { SiSelectMultiValueDirective } from './selection/si-select-multi-value.directive';
 import { SiSelectSingleValueDirective } from './selection/si-select-single-value.directive';
@@ -18,7 +17,6 @@ import { SiSelectComponent } from './si-select.component';
   imports: [
     SiSelectActionDirective,
     SiSelectActionsDirective,
-    SiSelectComplexOptionsDirective,
     SiSelectComponent,
     SiSelectGroupTemplateDirective,
     SiSelectMultiValueDirective,
@@ -29,7 +27,6 @@ import { SiSelectComponent } from './si-select.component';
   exports: [
     SiSelectActionDirective,
     SiSelectActionsDirective,
-    SiSelectComplexOptionsDirective,
     SiSelectComponent,
     SiSelectGroupTemplateDirective,
     SiSelectMultiValueDirective,
