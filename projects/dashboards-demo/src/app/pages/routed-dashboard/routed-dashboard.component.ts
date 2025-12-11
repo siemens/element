@@ -2,13 +2,27 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
-import { SiFlexibleDashboardComponent, Widget } from '@siemens/dashboards-ng';
+import {
+  DashboardToolbarItem,
+  SI_WIDGET_STORE,
+  SiFlexibleDashboardComponent,
+  Widget
+} from '@siemens/dashboards-ng';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 
 import { environment } from '../../../environments/environment';
 import { AppStateService } from '../../app-state.service';
+import { AppWidgetStorage } from '../../app-widget-storage';
 import { DashboardFiltersComponent } from '../../components/dashboard-filters/dashboard-filters.component';
 import {
   BAR_CHART_DESC,
@@ -56,9 +70,44 @@ export class RoutedDashboardPageComponent implements OnInit {
   appStateService = inject(AppStateService);
   private route = inject(ActivatedRoute);
 
+  protected readonly primaryActions = signal<DashboardToolbarItem[]>([]);
+  protected readonly secondaryActions = signal<DashboardToolbarItem[]>([]);
+  private widgetStore = inject<AppWidgetStorage>(SI_WIDGET_STORE);
+  private destroyRef = inject(DestroyRef);
+
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(params => {
       this.dashboardId = params.get('id') ?? undefined;
+
+      this.primaryActions.set([
+        {
+          type: 'action',
+          label: `Dashboard ${this.dashboardId}`,
+          action: grid => alert(`This message is only for the Demo Dashboard ${this.dashboardId}`)
+        }
+      ]);
+      if (this.dashboardId === '1') {
+        this.secondaryActions.set([
+          {
+            type: 'action',
+            label: 'Secondary Action',
+            action: grid => alert('Action located in the secondary menu items!')
+          }
+        ]);
+      } else {
+        this.secondaryActions.set([
+          {
+            type: 'action',
+            label: 'TOOLBAR.RESTORE_DEFAULTS',
+            action: () => this.widgetStore.restoreDefaults(this.dashboardId)
+          },
+          {
+            type: 'action',
+            label: 'TOOLBAR.SAVE_AS_DEFAULTS',
+            action: grid => this.widgetStore.saveAsDefaults(grid)
+          }
+        ]);
+      }
     });
   }
 }

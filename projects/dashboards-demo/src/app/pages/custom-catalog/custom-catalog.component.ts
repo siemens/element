@@ -3,10 +3,17 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { SiFlexibleDashboardComponent, Widget } from '@siemens/dashboards-ng';
+import {
+  DashboardToolbarItem,
+  SI_WIDGET_STORE,
+  SiFlexibleDashboardComponent,
+  SiGridComponent,
+  Widget
+} from '@siemens/dashboards-ng';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 
 import { AppStateService } from '../../app-state.service';
+import { AppWidgetStorage } from '../../app-widget-storage';
 import { CustomWidgetCatalogComponent } from '../../components/widget-catalog/custom-widget-catalog.component';
 import { HELLO_DESCRIPTOR } from '../../widgets/hello-widget/widget-descriptors';
 
@@ -27,6 +34,29 @@ export class CustomCatalogPageComponent {
   widgetCatalog: Widget[] = [HELLO_DESCRIPTOR];
   emptyIcon = 'element-dashboard';
   emptyText = EMPTY_TEXT;
+
+  protected secondaryMenuItems: DashboardToolbarItem[] = [
+    {
+      type: 'action',
+      label: 'TOOLBAR.RESTORE_DEFAULTS',
+      action: (grid: SiGridComponent) => this.widgetStore.restoreDefaults('custom-library')
+    },
+    {
+      type: 'action',
+      label: 'TOOLBAR.SAVE_AS_DEFAULTS',
+      action: (grid: SiGridComponent) => this.widgetStore.saveAsDefaults(grid)
+    }
+  ];
+  protected primaryMenuItems: DashboardToolbarItem[] = [
+    {
+      type: 'action',
+      label: 'Custom Action',
+      action: (grid: SiGridComponent) =>
+        alert(`Grid has ${grid.visibleWidgetInstances$.value.length} widgets!`)
+    }
+  ];
+
+  private widgetStore = inject<AppWidgetStorage>(SI_WIDGET_STORE);
 
   onEditableChange(editable: boolean): void {
     this.emptyText = editable ? EMPTY_TEXT_EDIT : EMPTY_TEXT;
