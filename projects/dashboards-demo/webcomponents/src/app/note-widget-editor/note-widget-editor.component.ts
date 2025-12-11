@@ -4,7 +4,7 @@
  */
 import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { WidgetConfig, WidgetInstanceEditor } from '@siemens/dashboards-ng';
+import { WidgetConfig, WidgetConfigStatus, WidgetInstanceEditor } from '@siemens/dashboards-ng';
 
 @Component({
   selector: 'app-note-widget-editor',
@@ -13,7 +13,7 @@ import { WidgetConfig, WidgetInstanceEditor } from '@siemens/dashboards-ng';
 })
 export class NoteWidgetEditorComponent implements WidgetInstanceEditor, OnInit {
   @Input() config!: WidgetConfig | Omit<WidgetConfig, 'id'>;
-  readonly statusChanges = new EventEmitter<Partial<WidgetConfig>>();
+  readonly statusChanges = new EventEmitter<Partial<WidgetConfigStatus>>();
 
   protected heading = '';
   protected message = '';

@@ -169,7 +169,6 @@ export class SiWidgetInstanceEditorDialogComponent implements OnInit, OnDestroy 
         this.subscriptions.push(
           this.widgetInstanceEditor.configChange.subscribe(config => {
             if (!hasStatusChangesEmitter) {
-              this.invalidConfig.set(!!config.invalid);
               this.widgetConfigModified.set(true);
             }
           }) as Subscription
