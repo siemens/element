@@ -7,7 +7,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { SelectOption, SelectOptionLegacy } from '@siemens/element-ng/select';
+import { SelectOption } from '@siemens/element-ng/select';
 import { SiSelectHarness } from '@siemens/element-ng/select/testing';
 
 import { runOnPushChangeDetection } from '../test-helpers/change-detection.helper';
@@ -37,7 +37,7 @@ import { SiThresholdComponent, ThresholdStep } from './index';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestHostComponent {
-  options!: SelectOption<string>[] | SelectOptionLegacy[];
+  options!: SelectOption<string>[];
   thresholdSteps!: ThresholdStep[];
   canAddRemoveSteps = true;
   maxSteps!: number;
@@ -226,11 +226,11 @@ describe('SiThresholdComponent', () => {
     });
   });
 
-  it('should still support legacy options', async () => {
+  it('should display readonly options correctly', async () => {
     component.options = [
-      { title: 'Good', id: 'good' },
-      { title: 'Average', id: 'average' },
-      { title: 'Poor', id: 'poor' }
+      { type: 'option', value: 'good', label: 'Good' },
+      { type: 'option', value: 'average', label: 'Average' },
+      { type: 'option', value: 'poor', label: 'Poor' }
     ];
     component.readonly = true;
     await runOnPushChangeDetection(fixture);

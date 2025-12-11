@@ -46,16 +46,6 @@ export interface SelectOption<T> {
     value: T;
 }
 
-// @public @deprecated (undocumented)
-export interface SelectOptionLegacy {
-    color?: string;
-    disabled?: boolean;
-    icon?: string;
-    id: string;
-    title: TranslatableString;
-    type?: undefined;
-}
-
 // @public
 export interface SelectOptionSource<TValue> {
     compareOptions?(a: SelectOption<TValue>, b: SelectOption<TValue>): number;
@@ -241,7 +231,7 @@ export class SiSelectSimpleOptionsDirective<T = string> extends SiSelectOptionsS
     readonly allRows: _angular_core.Signal<SelectItem<T>[]>;
     // (undocumented)
     ngOnChanges(): void;
-    readonly options: _angular_core.InputSignal<(SelectOptionLegacy | SelectItem<T>)[] | null | undefined>;
+    readonly options: _angular_core.InputSignal<SelectItem<T>[] | null | undefined>;
     readonly optionsEqual: _angular_core.InputSignal<(a: T, b: T) => boolean>;
     // (undocumented)
     static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiSelectSimpleOptionsDirective<any>, "si-select[options]", never, { "options": { "alias": "options"; "required": false; "isSignal": true; }; "optionsEqual": { "alias": "optionEqualCheckFn"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
