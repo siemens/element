@@ -23,6 +23,7 @@ import {
 } from '@siemens/element-ng/content-action-bar';
 import {
   addIcons,
+  elementCancel,
   elementDoubleLeft,
   elementDoubleRight,
   SiIconComponent
@@ -152,7 +153,7 @@ export class SiSidePanelContentComponent implements OnInit {
   protected readonly focusable = computed(
     () => !this.mobileSize() || !this.enableMobile() || !this.isCollapsed()
   );
-  protected readonly icons = addIcons({ elementDoubleLeft, elementDoubleRight });
+  protected readonly icons = addIcons({ elementCancel, elementDoubleLeft, elementDoubleRight });
   /**
    * The $rpanel-transition-duration in the style is 0.5 seconds.
    * For the animation we need to wait until the resize is done.

@@ -51,6 +51,8 @@ export class SiDetailsPaneHeaderComponent {
     // (undocumented)
     protected get hasLargeSize(): Signal<boolean>;
     readonly hideBackButton: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    // (undocumented)
+    protected readonly icons: Record<"elementBack", string>;
     readonly title: _angular_core.InputSignal<TranslatableString | undefined>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiDetailsPaneHeaderComponent, "si-details-pane-header", never, { "title": { "alias": "title"; "required": false; "isSignal": true; }; "hideBackButton": { "alias": "hideBackButton"; "required": false; "isSignal": true; }; "backButtonText": { "alias": "backButtonText"; "required": false; "isSignal": true; }; "backButtonUrl": { "alias": "backButtonUrl"; "required": false; "isSignal": true; }; }, {}, never, ["*"], true, never>;

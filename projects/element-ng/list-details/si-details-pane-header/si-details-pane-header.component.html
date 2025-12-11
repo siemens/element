@@ -6,13 +6,10 @@
         type="button"
         class="si-details-header-back nav-link focus-inside px-6"
         (click)="backClicked()"
-        ><span
-          class="pe-2 d-inline-block position-relative element-back icon"
-          role="img"
-          aria-hidden="true"
-        ></span
-        >{{ backButtonText() | translate }}</button
       >
+        <si-icon class="pe-2 d-inline-block position-relative icon" [icon]="icons.elementBack" />
+        {{ backButtonText() | translate }}
+      </button>
     }
     @if (title()) {
       <span class="si-details-header-title si-body px-6">{{ title() | translate }}</span>

@@ -5,10 +5,12 @@
         @if (canAddRemoveSteps() && !readonly() && !readonlyConditions()) {
           <button
             type="button"
-            class="btn btn-circle btn-sm btn-ghost element-delete m-4"
+            class="btn btn-circle btn-sm btn-ghost m-4"
             [attr.aria-label]="deleteAriaLabel() | translate"
             (click)="deleteStep($index)"
-          ></button>
+          >
+            <si-icon [icon]="icons.elementDelete" />
+          </button>
         }
         @if (!canAddRemoveSteps() || readonly() || readonlyConditions()) {
           <div class="py-4 my-4">&#8203;</div>

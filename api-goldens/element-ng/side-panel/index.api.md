@@ -83,7 +83,7 @@ export class SiSidePanelContentComponent implements OnInit {
     protected readonly focusable: _angular_core.Signal<boolean>;
     readonly heading: _angular_core.InputSignal<TranslatableString>;
     // (undocumented)
-    protected readonly icons: Record<"elementDoubleLeft" | "elementDoubleRight", string>;
+    protected readonly icons: Record<"elementCancel" | "elementDoubleLeft" | "elementDoubleRight", string>;
     // (undocumented)
     protected readonly isCollapsed: _angular_core.WritableSignal<boolean>;
     // (undocumented)

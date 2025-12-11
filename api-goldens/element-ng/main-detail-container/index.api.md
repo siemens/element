@@ -28,6 +28,8 @@ export class SiMainDetailContainerComponent implements OnInit, OnChanges, OnDest
     readonly hasLargeSizeChange: _angular_core.OutputEmitterRef<boolean>;
     readonly heading: _angular_core.InputSignal<TranslatableString>;
     readonly hideBackButton: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    // (undocumented)
+    protected readonly icons: Record<"elementBack", string>;
     readonly largeLayoutBreakpoint: _angular_core.InputSignal<number>;
     readonly mainContainerClass: _angular_core.InputSignal<string>;
     readonly mainContainerWidth: _angular_core.ModelSignal<number | "default">;

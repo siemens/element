@@ -23,7 +23,7 @@ export class SiThresholdComponent implements OnChanges {
     protected deleteStep(index: number): void;
     readonly horizontalLayout: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
-    protected readonly icons: Record<"elementPlus", string>;
+    protected readonly icons: Record<"elementPlus" | "elementDelete", string>;
     readonly inputAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly maxSteps: _angular_core.InputSignal<number>;
     readonly maxValue: _angular_core.InputSignal<number>;
