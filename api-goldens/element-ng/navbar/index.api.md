@@ -55,6 +55,8 @@ export class SiNavbarItemComponent implements OnInit, DoCheck, OnDestroy {
     protected click(): void;
     // (undocumented)
     readonly dropdownTrigger: _angular_core.Signal<SiHeaderDropdownTriggerDirective | undefined>;
+    // (undocumented)
+    protected readonly icons: Record<"elementDown2", string>;
     readonly item: _angular_core.InputSignal<MenuItem>;
     // (undocumented)
     protected navbar: SiNavbarPrimaryComponent;

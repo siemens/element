@@ -34,6 +34,8 @@ export class SiHeaderDropdownItemComponent {
     readonly icon: _angular_core.InputSignal<string | undefined>;
     readonly iconBadge: _angular_core.InputSignal<string | number | undefined>;
     // (undocumented)
+    protected readonly icons: Record<"elementDown2" | "elementOk" | "elementRecordFilled", string>;
+    // (undocumented)
     protected readonly navbar: _siemens_element_ng_header_dropdown.HeaderWithDropdowns | null;
     // (undocumented)
     protected readonly ownTrigger: SiHeaderDropdownTriggerDirective | null;

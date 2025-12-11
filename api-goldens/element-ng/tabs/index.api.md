@@ -50,6 +50,8 @@ export class SiTabLinkComponent extends SiTabBaseDirective {
 export class SiTabsetComponent {
     constructor();
     // (undocumented)
+    protected readonly icons: Record<"elementOptions", string>;
+    // (undocumented)
     protected keydown(event: KeyboardEvent): void;
     // (undocumented)
     protected resizeContainer(width: number, scrollWidth: number): void;

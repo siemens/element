@@ -8,7 +8,7 @@
     (click)="click()"
   >
     <ng-container *ngTemplateOutlet="itemContent" />
-    <div class="element-down-2 dropdown-caret" aria-hidden="true"></div>
+    <si-icon class="dropdown-caret" [icon]="icons.elementDown2" />
   </button>
 } @else {
   <a

@@ -124,7 +124,7 @@ describe('SiNotificationItemComponent', () => {
       ]
     };
     fixture.detectChanges();
-    expect(element.querySelector('button.element-options-vertical')).toBeTruthy();
+    expect(element.querySelector('button si-icon')).toBeTruthy();
   });
 
   it('should display the primary action action-button', () => {

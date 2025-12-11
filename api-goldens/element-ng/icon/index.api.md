@@ -26,6 +26,9 @@ export const elementAlarmFilled = "data:image/svg+xml;utf8,<svg xmlns='http://ww
 export const elementAlarmTick = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M427.72 116.64 279.19 277.47l-73.9-73.9a12 12 0 0 0-17 17l82.73 82.73a12 12 0 0 0 8.48 3.51h.24a12 12 0 0 0 8.58-3.86l157-170a12 12 0 0 0-17.63-16.28Z'/></svg>";
 
 // @public (undocumented)
+export const elementBack = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M391 244H150.09l78.51-78.51a12 12 0 1 0-17-17l-98.09 98.09a12 12 0 0 0 0 18.78l98.09 98.09a12 12 0 1 0 17-17L150.09 268H391a12 12 0 0 0 0-24Z'/></svg>";
+
+// @public (undocumented)
 export const elementBreadcrumbRoot = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='m300.35 157.77 1.72 1.44 88 88a12.43 12.43 0 0 1 1.44 15.86l-1.44 1.72-88 88a12.43 12.43 0 0 1-19-15.86l1.44-1.72 79.2-79.21-79.21-79.21a12.43 12.43 0 0 1-1.44-15.86l1.44-1.72a12.44 12.44 0 0 1 15.85-1.44Z'/><path d='M186.29 364h-56a12 12 0 0 1-12-12V160a12 12 0 0 1 12-12h56a12 12 0 0 1 8.48 3.51l96 96a12 12 0 0 1 0 17l-96 96a12 12 0 0 1-8.48 3.49Zm-44-24h39l84-84-84-84h-39Z'/></svg>";
 
 // @public (undocumented)
@@ -99,6 +102,9 @@ export const elementOctagonFilled = "data:image/svg+xml;utf8,<svg xmlns='http://
 
 // @public (undocumented)
 export const elementOk = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='m379.51 156.76-173 173-74-74a12 12 0 1 0-17 17l82.5 82.5a12 12 0 0 0 17 0l181.5-181.5a12 12 0 0 0-17-17Z'/></svg>";
+
+// @public (undocumented)
+export const elementOptions = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M256 284a28 28 0 1 1 28-28 28 28 0 0 1-28 28ZM368 284a28 28 0 1 1 28-28 28 28 0 0 1-28 28ZM144 284a28 28 0 1 1 28-28 28 28 0 0 1-28 28Z'/></svg>";
 
 // @public (undocumented)
 export const elementOptionsVertical = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M284 256a28 28 0 1 1-28-28 28 28 0 0 1 28 28ZM284 144a28 28 0 1 1-28-28 28 28 0 0 1 28 28ZM284 368a28 28 0 1 1-28-28 28 28 0 0 1 28 28Z'/></svg>";

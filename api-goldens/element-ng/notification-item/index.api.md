@@ -98,6 +98,8 @@ export class SiNotificationItemComponent {
     protected readonly activatedRoute: ActivatedRoute | null;
     readonly description: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly heading: _angular_core.InputSignal<TranslatableString>;
+    // (undocumented)
+    protected readonly icons: Record<"elementOptionsVertical", string>;
     readonly itemLink: _angular_core.InputSignal<NotificationItemRouterLink | NotificationItemLink | undefined>;
     readonly primaryAction: _angular_core.InputSignal<NotificationItemPrimaryAction | undefined>;
     readonly quickActions: _angular_core.InputSignal<NotificationItemQuickAction[] | undefined>;

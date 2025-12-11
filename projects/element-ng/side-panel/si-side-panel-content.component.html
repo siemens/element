@@ -11,11 +11,13 @@
   }
   <button
     type="button"
-    class="close-button btn btn-circle btn-sm btn-ghost element-cancel me-4"
+    class="close-button btn btn-circle btn-sm btn-ghost me-4"
     [attr.aria-label]="closeButtonLabel() | translate"
     [tabindex]="focusable() ? '0' : '-1'"
     (click)="toggleSidePanel($event)"
-  ></button>
+  >
+    <si-icon [icon]="icons.elementCancel" />
+  </button>
   <div class="collapse-toggle">
     <button
       type="button"

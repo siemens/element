@@ -17,6 +17,7 @@ import {
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { isRTL } from '@siemens/element-ng/common';
+import { addIcons, elementOptions, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiMenuDirective, SiMenuItemComponent } from '@siemens/element-ng/menu';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
 
@@ -38,7 +39,8 @@ import { SI_TABSET } from './si-tabs-tokens';
     NgTemplateOutlet,
     SiResizeObserverModule,
     RouterLink,
-    SiTabBadgeComponent
+    SiTabBadgeComponent,
+    SiIconComponent
   ],
   templateUrl: './si-tabset.component.html',
   styleUrl: './si-tabset.component.scss',
@@ -51,6 +53,8 @@ import { SI_TABSET } from './si-tabs-tokens';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiTabsetComponent {
+  protected readonly icons = addIcons({ elementOptions });
+
   /** @internal */
   readonly activeTab = computed(() => this.tabPanels().find(tab => tab.active()));
 

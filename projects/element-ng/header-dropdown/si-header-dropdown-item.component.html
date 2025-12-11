@@ -12,12 +12,12 @@
     <span class="mx-0 me-1 ms-2 badge" [ngClass]="'bg-' + badgeColor()">{{ badge() }}</span>
   }
   @if (checked() === 'check') {
-    <div class="element-ok icon" aria-hidden="true"></div>
+    <si-icon [icon]="icons.elementOk" />
   }
   @if (checked() === 'radio') {
-    <div class="element-record-filled icon-small me-2" aria-hidden="true"></div>
+    <si-icon class="icon-small me-2" [icon]="icons.elementRecordFilled" />
   }
   @if (ownTrigger) {
-    <span class="element-down-2 dropdown-caret m-0 ps-0" aria-hidden="true"></span>
+    <si-icon class="dropdown-caret m-0 ps-0" [icon]="icons.elementDown2" />
   }
 </div>

@@ -149,10 +149,12 @@
 <ng-template #menu let-action>
   <button
     type="button"
-    class="btn btn-ghost btn-circle btn-sm element-options-vertical"
+    class="btn btn-ghost btn-circle btn-sm"
     [attr.aria-label]="heading() + ' dropdown'"
     [cdkMenuTriggerFor]="actionMenu"
-  ></button>
+  >
+    <si-icon [icon]="icons.elementOptionsVertical" />
+  </button>
 
   <ng-template #actionMenu>
     <si-menu-factory [items]="action.menuItems" />
