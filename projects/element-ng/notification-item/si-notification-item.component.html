@@ -113,7 +113,7 @@
     [attr.aria-label]="action.ariaLabel"
     (click)="action.action(action)"
   >
-    <i [ngClass]="'icon ' + action.icon"></i>
+    <si-icon class="icon" [icon]="action.icon" />
   </button>
 </ng-template>
 
@@ -131,7 +131,7 @@
     [replaceUrl]="action.extras?.replaceUrl"
     [attr.aria-label]="action.ariaLabel"
   >
-    <i class="icon" [ngClass]="action.icon"></i>
+    <si-icon class="icon" [icon]="action.icon" />
   </a>
 </ng-template>
 
@@ -142,7 +142,7 @@
     [target]="action.target"
     [attr.aria-label]="action.ariaLabel"
   >
-    <i class="icon" [ngClass]="action.icon"></i>
+    <si-icon class="icon" [icon]="action.icon" />
   </a>
 </ng-template>
 
