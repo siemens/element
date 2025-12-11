@@ -7,7 +7,12 @@ import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withHashLocation } from '@angular/router';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { Config, SI_DASHBOARD_CONFIGURATION, SI_WIDGET_STORE } from '@siemens/dashboards-ng';
+import {
+  Config,
+  provideDashboardToolbarItems,
+  SI_DASHBOARD_CONFIGURATION,
+  SI_WIDGET_STORE
+} from '@siemens/dashboards-ng';
 import { provideNgxTranslateForElement } from '@siemens/element-translate-ng/ngx-translate';
 import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 
@@ -41,6 +46,11 @@ export const appConfig: ApplicationConfig = {
     ),
     provideAnimations(),
     provideHttpClient(withInterceptorsFromDi()),
-    provideNgxTranslateForElement()
+    provideNgxTranslateForElement(),
+    provideDashboardToolbarItems({
+      // provide common toolbar action items here
+      primary: [],
+      secondary: []
+    })
   ]
 };
