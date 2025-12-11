@@ -13,6 +13,6 @@ export * from './model/si-widget-storage';
 export * from './model/widgets.model';
 export * from './model/si-dashboard-toolbar.model';
 export * from './widget-loader';
+export * from './public-api.module';
 
 export * from '@siemens/dashboards-ng/translate';
-export * from './public-api.module';
