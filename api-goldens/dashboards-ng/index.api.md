@@ -26,6 +26,7 @@ import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { OutputEmitterRef } from '@angular/core';
+import { Provider } from '@angular/core';
 import { SiDashboardComponent } from '@siemens/element-ng/dashboard';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SimpleChanges } from '@angular/core';
@@ -134,6 +135,12 @@ export type LoadRemoteModuleScriptOptions = {
 export type ObjectFit = 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
 
 // @public
+export const provideDashboardToolbarItems: (toolbarItems?: {
+    primary?: DashboardToolbarItem[];
+    secondary?: DashboardToolbarItem[];
+}) => Provider;
+
+// @public
 export type SetupComponentFn = <T>(factory: WidgetComponentFactory, componentName: string, host: ViewContainerRef, injector: Injector, envInjector: EnvironmentInjector) => Observable<ComponentRef<T>>;
 
 // @public (undocumented)
@@ -144,6 +151,12 @@ export const setupWidgetInstance: (widgetComponentFactory: WidgetComponentFactor
 
 // @public
 export const SI_DASHBOARD_CONFIGURATION: InjectionToken<Config>;
+
+// @public
+export const SI_DASHBOARD_TOOLBAR_ITEMS: InjectionToken<{
+    primary: DashboardToolbarItem[];
+    secondary: DashboardToolbarItem[];
+}>;
 
 // @public
 export const SI_WIDGET_ID_PROVIDER: InjectionToken<SiWidgetIdProvider>;
@@ -188,8 +201,10 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
     readonly isModified: _angular_core.OutputEmitterRef<boolean>;
     readonly pageTitle: _angular_core.Signal<string | undefined>;
     readonly primaryEditActions$: BehaviorSubject<(MenuItem | DashboardToolbarItem)[]>;
+    readonly primaryEditActions: _angular_core.InputSignal<DashboardToolbarItem[]>;
     readonly searchPlaceholder: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly secondaryEditActions$: BehaviorSubject<(MenuItem | DashboardToolbarItem)[]>;
+    readonly secondaryEditActions: _angular_core.InputSignal<DashboardToolbarItem[]>;
     readonly showEditButtonLabel: _angular_core.InputSignal<boolean>;
     showWidgetCatalog(): void;
     readonly widgetCatalog: _angular_core.InputSignal<Widget[]>;
@@ -247,6 +262,7 @@ export class SiWidgetInstanceEditorDialogComponent implements OnInit, OnDestroy 
 
 // @public
 export abstract class SiWidgetStorage {
+    // @deprecated
     getToolbarMenuItems?: (dashboardId?: string) => {
         primary: Observable<(MenuItem | DashboardToolbarItem)[]>;
         secondary: Observable<(MenuItem | DashboardToolbarItem)[]>;

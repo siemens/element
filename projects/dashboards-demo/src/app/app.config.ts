@@ -8,6 +8,7 @@ import { provideRouter, withHashLocation } from '@angular/router';
 import { TranslateLoader, provideTranslateService } from '@ngx-translate/core';
 import {
   Config,
+  provideDashboardToolbarItems,
   SI_DASHBOARD_CONFIGURATION,
   SI_WIDGET_ID_PROVIDER,
   SI_WIDGET_STORE
@@ -48,6 +49,11 @@ export const appConfig: ApplicationConfig = {
       }
     }),
     provideHttpClient(withInterceptorsFromDi()),
-    provideNgxTranslateForElement()
+    provideNgxTranslateForElement(),
+    provideDashboardToolbarItems({
+      // provide common toolbar action items here
+      primary: [],
+      secondary: []
+    })
   ]
 };
