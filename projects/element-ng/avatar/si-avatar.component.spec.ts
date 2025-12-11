@@ -63,7 +63,7 @@ describe('SiAvatarComponent', () => {
     host.icon = 'element-user';
     fixture.detectChanges();
 
-    const el = element.querySelector<HTMLElement>('.element-user');
+    const el = element.querySelector<HTMLElement>('si-icon');
     expect(el).toBeTruthy();
     expect(el?.title).toBe('Test');
   });

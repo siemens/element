@@ -8,7 +8,7 @@
 - textbox "Text input*": lorem ipsum
 - text: Icon input
 - textbox "Icon input": Input with icon for additional information tooltip
-- text:  Number input
+- text: Number input
 - spinbutton "Number input"
 - text: Password input*
 - textbox "Password input*"
@@ -25,10 +25,14 @@
   - code: SiDatePickerInputConfig
 - paragraph: The fields are displaying their model value in local time zone
 - text: Date
-- textbox "Date": /1\/1\/\d+/
+- textbox "Date":
+  - /placeholder: ""
+  - text: /1\/1\/\d+/
 - button "Open calendar"
 - text: Datetime*
-- textbox "Datetime*": /8\/\d+\/\d+, 5:\d+:\d+ AM/
+- textbox "Datetime*":
+  - /placeholder: Enter a date
+  - text: /8\/\d+\/\d+, 5:\d+:\d+ AM/
 - button "Open calendar"
 - text: Daterange
 - group:
@@ -42,10 +46,18 @@
 - paragraph: The fields are displaying their model value in local time zone
 - text: Time
 - group:
-  - textbox "Hours"
-  - textbox "Minutes"
-  - textbox "Seconds"
-  - textbox "Milliseconds"
+  - textbox "Hours":
+    - /placeholder: hh
+    - text: ""
+  - textbox "Minutes":
+    - /placeholder: mm
+    - text: ""
+  - textbox "Seconds":
+    - /placeholder: ss
+    - text: ""
+  - textbox "Milliseconds":
+    - /placeholder: ms
+    - text: ""
   - combobox "Period":
     - option "AM" [selected]
     - option "PM"
@@ -58,12 +70,18 @@
 - text: "Checkbox #2"
 - separator
 - group "Multi-Checkbox":
+  - text: ""
   - 'checkbox "Option #1" [checked]'
+  - text: ""
   - 'checkbox "Option #2"'
+  - text: ""
   - 'checkbox "Option #3" [checked]'
+  - text: ""
   - 'checkbox "Option #4"'
+  - text: ""
 - separator
 - group "Radio":
+  - text: ""
   - 'radio "Option #1"'
   - text: "Option #1"
   - 'radio "Option #2"'
@@ -85,13 +103,21 @@
   - option "Helsinki"
 - separator
 - text: IPv4 Address*
-- textbox "IPv4 Address*"
+- textbox "IPv4 Address*":
+  - /placeholder: Enter a IPv4 address
+  - text: ""
 - text: IPv4 Address with CIDR*
-- textbox "IPv4 Address with CIDR*"
+- textbox "IPv4 Address with CIDR*":
+  - /placeholder: Enter a IPv4 address with subnet mask
+  - text: ""
 - text: IPv6 Address*
-- textbox "IPv6 Address*": /\d+:0db8:85a3:\d+:\d+:8a2e:\d+:\d+/
+- textbox "IPv6 Address*":
+  - /placeholder: Enter a IPv6 address
+  - text: /\d+:0db8:85a3:\d+:\d+:8a2e:\d+:\d+/
 - text: IPv6 CIDR Address*
-- textbox "IPv6 CIDR Address*": /\d+:0db8:85a3:\d+:\d+:8a2e:\d+:\d+\/\d+/
+- textbox "IPv6 CIDR Address*":
+  - /placeholder: Enter a IPv6 address
+  - text: /\d+:0db8:85a3:\d+:\d+:8a2e:\d+:\d+\/\d+/
 - separator
 - heading "Buttons" [level=2]
 - button "Button function handler"

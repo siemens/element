@@ -24,7 +24,10 @@
 }
 
 <ng-template #itemContent>
-  <div class="icon" aria-hidden="true" [ngClass]="item().icon"></div>
+  @let icon = item().icon;
+  @if (icon) {
+    <si-icon class="icon" [icon]="icon" />
+  }
   @if (item().badge) {
     <div class="badge-text">{{ item().badge }}</div>
   }

@@ -1,7 +1,8 @@
-@if (item().icon) {
-  <i class="icon me-n2" aria-hidden="true" [ngClass]="[item().icon]"></i>
+@let icon = item().icon;
+@if (icon) {
+  <si-icon class="icon me-n2" [icon]="icon" />
 }
-@if (item().icon && formattedBadge()) {
+@if (icon && formattedBadge()) {
   <div class="w-100 h-100 position-absolute">
     <span class="badge-text">{{ formattedBadge() }}</span>
   </div>
