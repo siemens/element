@@ -50,6 +50,12 @@ describe('SiSvgIconComponent', () => {
         expect(fixture.debugElement.query(By.css('.element-user'))).toBeTruthy();
       });
 
+      it('should use original kebabCase icon as icon font', () => {
+        component.icon.set('element-co2-outdoor');
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('.element-co2-outdoor'))).toBeTruthy();
+      });
+
       describe('with icon from registry', () => {
         beforeEach(() => {
           component.icon.set('element-2-svg');
