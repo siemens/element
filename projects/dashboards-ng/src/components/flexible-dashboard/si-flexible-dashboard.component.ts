@@ -27,7 +27,11 @@ import { t } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, combineLatest, of, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 
-import { Config, SI_DASHBOARD_CONFIGURATION } from '../../model/configuration';
+import {
+  Config,
+  SI_DASHBOARD_CONFIGURATION,
+  SI_DASHBOARD_TOOLBAR_ITEMS
+} from '../../model/configuration';
 import { DashboardToolbarItem } from '../../model/si-dashboard-toolbar.model';
 import { SI_WIDGET_STORE } from '../../model/si-widget-storage';
 import { Widget, WidgetConfig } from '../../model/widgets.model';
@@ -140,6 +144,18 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
   );
 
   /**
+   * Primary action menu items shown in the edit mode of the dashboard.
+   * @defaultValue []
+   */
+  readonly primaryEditActions = input<DashboardToolbarItem[]>([]);
+
+  /**
+   * Secondary action menu items shown in the edit mode of the dashboard.
+   * @defaultValue []
+   */
+  readonly secondaryEditActions = input<DashboardToolbarItem[]>([]);
+
+  /**
    * The grid component is the actual container for the widgets.
    */
   readonly grid = viewChild.required<SiGridComponent>('grid');
@@ -210,6 +226,10 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
   private hideAddWidgetInstanceButton$ = new BehaviorSubject(this.hideAddWidgetInstanceButton());
   private dashboardId$ = new Subject<string | undefined>();
   private readonly toolbar = viewChild.required<SiDashboardToolbarComponent>('toolbar');
+  private readonly globalEditActions = inject(SI_DASHBOARD_TOOLBAR_ITEMS, { optional: true }) ?? {
+    primary: [],
+    secondary: []
+  };
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.dashboardId) {
@@ -281,16 +301,25 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
   }
 
   private setupMenuItems(): void {
-    const primaryMenuItems = this.widgetStorage.getToolbarMenuItems
-      ? this.widgetStorage.getToolbarMenuItems(this.dashboardId()).primary
-      : of([]);
+    const primaryEditActions = [...this.primaryEditActions(), ...this.globalEditActions.primary];
+    const secondaryEditActions = [
+      ...this.secondaryEditActions(),
+      ...this.globalEditActions.secondary
+    ];
+    const primaryMenuItems = primaryEditActions.length
+      ? of(primaryEditActions)
+      : this.widgetStorage.getToolbarMenuItems
+        ? this.widgetStorage.getToolbarMenuItems(this.dashboardId()).primary
+        : of([]);
     combineLatest([primaryMenuItems, this.hideAddWidgetInstanceButton$])
       .pipe(takeUntil(this.dashboardId$))
       .subscribe(([items, hideAddButton]) => this.setupPrimaryMenuItems(items, hideAddButton));
 
-    const secondaryMenuItems = this.widgetStorage.getToolbarMenuItems
-      ? this.widgetStorage.getToolbarMenuItems(this.dashboardId()).secondary
-      : undefined;
+    const secondaryMenuItems = secondaryEditActions.length
+      ? of(secondaryEditActions)
+      : this.widgetStorage.getToolbarMenuItems
+        ? this.widgetStorage.getToolbarMenuItems(this.dashboardId()).secondary
+        : undefined;
 
     if (secondaryMenuItems) {
       secondaryMenuItems

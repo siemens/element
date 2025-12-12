@@ -4,6 +4,8 @@
   dashboardId="custom-library"
   [widgetCatalogComponent]="customWidgetCatalogComponent"
   [widgetCatalog]="widgetCatalog"
+  [primaryEditActions]="primaryMenuItems"
+  [secondaryEditActions]="secondaryMenuItems"
   (editableChange)="onEditableChange($event)"
   (isModified)="appStateService.editable$.next($event)"
 >
