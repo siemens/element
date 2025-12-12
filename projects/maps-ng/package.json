@@ -20,7 +20,7 @@
   "peerDependencies": {
     "@angular/common": "20",
     "@angular/core": "20",
-    "ol": "~10.6.0",
+    "ol": "~10.6.0 || ~10.7.0",
     "ol-ext": "^4.0.24",
     "ol-mapbox-style": "^13.1.0"
   },
