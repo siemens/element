@@ -40,6 +40,7 @@ nav:
     - Styles:
       - Display:                           'fundamentals/styles/display.md'
       - Flex:                              'fundamentals/styles/flex.md'
+      - Z-Index:                           'fundamentals/styles/z-index.md'
     - UX Writing:
       - Overview:                           'fundamentals/ux-text-style-guide/index.md'
       - Basics:                             'fundamentals/ux-text-style-guide/basics.md'
