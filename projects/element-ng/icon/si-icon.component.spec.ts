@@ -109,6 +109,9 @@ describe('SiSvgIconComponent', () => {
 
     describe('with disabled svg icons', () => {
       beforeEach(async () => {
+        TestBed.configureTestingModule({
+          providers: [provideZonelessChangeDetection()]
+        }).compileComponents();
         fixture = TestBed.createComponent(TestHostComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -165,6 +168,9 @@ describe('SiSvgIconComponent', () => {
     let component: TestHostComponent;
     let iconService: IconService;
     beforeEach(() => {
+      TestBed.configureTestingModule({
+        providers: [provideZonelessChangeDetection()]
+      }).compileComponents();
       fixture = TestBed.createComponent(TestHostComponent);
       component = fixture.componentInstance;
       iconService = TestBed.inject(IconService);

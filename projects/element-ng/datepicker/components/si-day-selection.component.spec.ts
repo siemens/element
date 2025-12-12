@@ -3,7 +3,12 @@
  * SPDX-License-Identifier: MIT
  */
 import { DatePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  provideZonelessChangeDetection,
+  signal
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import {
@@ -131,6 +136,12 @@ describe('SiDaySelectionComponent', () => {
       ?.dispatchEvent(new Event('mouseover', { bubbles: true }));
     fixture.detectChanges();
   };
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [provideZonelessChangeDetection()]
+    }).compileComponents();
+  });
 
   describe('When Single Select View', () => {
     let wrapperComponent: SingleSelectComponent;

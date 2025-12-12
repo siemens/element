@@ -88,6 +88,9 @@ describe('SiTimepickerComponent', () => {
     let component: WrapperComponent;
 
     beforeEach(() => {
+      TestBed.configureTestingModule({
+        providers: [provideZonelessChangeDetection()]
+      }).compileComponents();
       fixture = TestBed.createComponent(WrapperComponent);
       component = fixture.componentInstance;
       element = fixture.nativeElement;

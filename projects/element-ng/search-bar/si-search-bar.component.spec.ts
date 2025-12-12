@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CommonModule } from '@angular/common';
-import { Component, viewChild } from '@angular/core';
+import { Component, provideZonelessChangeDetection, viewChild } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
@@ -41,6 +41,9 @@ describe('SiSearchBarComponent', () => {
     }
 
     beforeEach(() => {
+      TestBed.configureTestingModule({
+        providers: [provideZonelessChangeDetection()]
+      }).compileComponents();
       fixture = TestBed.createComponent(TestComponent);
       testComponent = fixture.componentInstance;
       component = fixture.componentInstance.searchBar();
@@ -153,6 +156,10 @@ describe('SiSearchBarComponent', () => {
     }
 
     beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [TestComponent],
+        providers: [provideZonelessChangeDetection()]
+      }).compileComponents();
       fixture = TestBed.createComponent(TestComponent);
       testComponent = fixture.componentInstance;
       component = fixture.componentInstance.searchBar();
@@ -162,11 +169,13 @@ describe('SiSearchBarComponent', () => {
     it('should not emit values when changed via value input', () => {
       spyOn(component.searchChange, 'emit');
       testComponent.value = 'Initial Value';
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(element.querySelector('input')!.value).toBe('Initial Value');
       expect(component.searchChange.emit).not.toHaveBeenCalled();
 
       testComponent.value = 'Updated Value';
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(element.querySelector('input')!.value).toBe('Updated Value');
       expect(component.searchChange.emit).not.toHaveBeenCalled();
@@ -174,9 +183,11 @@ describe('SiSearchBarComponent', () => {
 
     it('should support disabled input', () => {
       testComponent.disabled = true;
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(element.querySelector('input')!.disabled).toBe(true);
       testComponent.disabled = false;
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(element.querySelector('input')!.disabled).toBe(false);
     });

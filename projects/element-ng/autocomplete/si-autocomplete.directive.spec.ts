@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { DOWN_ARROW, ENTER, UP_ARROW } from '@angular/cdk/keycodes';
-import { Component, ErrorHandler } from '@angular/core';
+import { Component, ErrorHandler, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -46,6 +46,9 @@ describe('SiAutocompleteDirective', () => {
   let fixture: ComponentFixture<TestHostComponent>;
 
   beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [provideZonelessChangeDetection()]
+    }).compileComponents();
     fixture = TestBed.createComponent(TestHostComponent);
     testComponent = fixture.componentInstance;
   });
@@ -118,22 +121,28 @@ describe('SiAutocompleteDirective', () => {
   it('should select an element if default index was changed and none was selected', async () => {
     testComponent.defaultIndex = -1;
     testComponent.showList = true;
-    // needed to detect changes triggered by queueMicrotask
-    fixture.autoDetectChanges(true);
+    fixture.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
+
     expect(
       fixture.debugElement
         .queryAll(By.directive(SiAutocompleteOptionDirective))
         .filter(option => option.classes.active)
     ).toHaveSize(0);
     testComponent.defaultIndex = 0;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     await fixture.whenStable();
+
+    // cannot use mock timer here
+    await new Promise(resolve => setTimeout(resolve, 0));
     expect(
       fixture.debugElement
         .queryAll(By.directive(SiAutocompleteOptionDirective))
         .filter(option => option.classes.active)
     ).toHaveSize(1);
     testComponent.defaultIndex = 1;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     await fixture.whenStable();
     expect(

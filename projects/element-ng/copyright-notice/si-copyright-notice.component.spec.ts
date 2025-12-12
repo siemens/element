@@ -84,7 +84,7 @@ describe('SiCopyrightNoticeComponentWithInput', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [WrapperWithInputComponent]
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(WrapperWithInputComponent);
