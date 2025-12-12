@@ -49,27 +49,24 @@ The data table is available in different row sizes: default, small, extra-small.
 
 ![Row density](images/table-density.png)
 
-### Read only tables
+### Row selection
 
-Use it for displaying information only, with no user interaction needed.
-For most cases, **read-only rows should not have a hover effect**, but it could
-be enabled if the application has only read-only, very data-dense tables.
-
-![Read only table](images/table-read-only.png)
-
-### Selectable tables
-
-They allow users to select individual rows.
-Selection methods can be implicit or explicit.
-
-**Implicit selection** allows users to select a row by simply interacting with it.
-Use it for simpler, more intuitive interactions, such as viewing details in a
-[side panel](../layout-navigation/side-panel.md) or navigating to a new screen.
+Selection methods can be explicit or implicit.
 
 **Explicit selection** uses checkboxes or radio buttons.
-Use it for more complex choices that need clear user acknowledgment or for batch actions in the case of multi-selection.
+Use it for more complex choices that need clear user acknowledgment or for batch actions.
+
+**Implicit selection** allows users to select a row by simply interacting with it.
+It is possible to use `shift` or `command` (on macOS) to enable multi-selection.
+Use it for simpler, more intuitive interactions, such as viewing details in a
+[side panel](../layout-navigation/side-panel.md) or navigating to a new screen
 
 ![Selectable table](images/table-selectable.png)
+
+When selection is not required, do not apply a hover effect to rows.
+Allow interaction only within specific cell elements, such as buttons or menus.
+
+![Read only table](images/table-read-only.png)
 
 ### Placement
 
