@@ -9,6 +9,7 @@ import * as _angular_core from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { ElementRef } from '@angular/core';
 import { OnChanges } from '@angular/core';
+import { SelectOption } from '@siemens/element-ng/select';
 import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
 import { SiFormItemControl } from '@siemens/element-ng/form';
 import { SimpleChanges } from '@angular/core';
@@ -45,11 +46,7 @@ export class SiPhoneNumberInputComponent implements ControlValueAccessor, Valida
     // (undocumented)
     protected countryInput(num: CountryInfo): void;
     // (undocumented)
-    protected readonly countryList: _angular_core.Signal<{
-        name: string;
-        countryCode: number;
-        isoCode: string;
-    }[]>;
+    protected readonly countryList: _angular_core.Signal<SelectOption<CountryInfo>[]>;
     readonly defaultCountry: _angular_core.InputSignal<string | undefined>;
     // (undocumented)
     protected readonly disabled: _angular_core.Signal<boolean>;
@@ -89,8 +86,6 @@ export class SiPhoneNumberInputComponent implements ControlValueAccessor, Valida
     readonly supportedCountries: _angular_core.InputSignal<readonly string[] | null | undefined>;
     // (undocumented)
     readonly valueChange: _angular_core.OutputEmitterRef<PhoneDetails>;
-    // (undocumented)
-    protected valueProvider(country: CountryInfo): string;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiPhoneNumberInputComponent, "si-phone-number-input", never, { "id": { "alias": "id"; "required": false; "isSignal": true; }; "country": { "alias": "country"; "required": false; "isSignal": true; }; "defaultCountry": { "alias": "defaultCountry"; "required": false; "isSignal": true; }; "placeholderForSearch": { "alias": "placeholderForSearch"; "required": false; "isSignal": true; }; "searchNoResultsFoundLabel": { "alias": "searchNoResultsFoundLabel"; "required": false; "isSignal": true; }; "selectCountryAriaLabel": { "alias": "selectCountryAriaLabel"; "required": false; "isSignal": true; }; "phoneNumberAriaLabel": { "alias": "phoneNumberAriaLabel"; "required": false; "isSignal": true; }; "supportedCountries": { "alias": "supportedCountries"; "required": false; "isSignal": true; }; "labelledby": { "alias": "labelledby"; "required": false; "isSignal": true; }; "disabledInput": { "alias": "disabled"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "errormessageId": { "alias": "errormessageId"; "required": false; "isSignal": true; }; }, { "country": "countryChange"; "valueChange": "valueChange"; }, never, never, true, never>;
     // (undocumented)
