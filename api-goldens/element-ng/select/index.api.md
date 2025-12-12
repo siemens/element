@@ -94,11 +94,9 @@ export class SiSelectComplexOptionsDirective<T> extends SiSelectOptionsStrategyB
     // (undocumented)
     ngOnChanges(): void;
     readonly optionsEqual: _angular_core.InputSignal<(a: T, b: T) => boolean>;
-    // @deprecated (undocumented)
-    readonly trackBy: _angular_core.InputSignal<_angular_core.TrackByFunction<T>>;
     readonly valueProvider: _angular_core.InputSignal<((dropdownOption: T) => string | undefined) | undefined>;
     // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiSelectComplexOptionsDirective<any>, "si-select[complexOptions]", never, { "complexOptions": { "alias": "complexOptions"; "required": false; "isSignal": true; }; "trackBy": { "alias": "trackBy"; "required": false; "isSignal": true; }; "optionsEqual": { "alias": "optionEqualCheckFn"; "required": false; "isSignal": true; }; "valueProvider": { "alias": "valueProvider"; "required": false; "isSignal": true; }; "groupProvider": { "alias": "groupProvider"; "required": false; "isSignal": true; }; "disabledProvider": { "alias": "disabledProvider"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
+    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiSelectComplexOptionsDirective<any>, "si-select[complexOptions]", never, { "complexOptions": { "alias": "complexOptions"; "required": false; "isSignal": true; }; "optionsEqual": { "alias": "optionEqualCheckFn"; "required": false; "isSignal": true; }; "valueProvider": { "alias": "valueProvider"; "required": false; "isSignal": true; }; "groupProvider": { "alias": "groupProvider"; "required": false; "isSignal": true; }; "disabledProvider": { "alias": "disabledProvider"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSelectComplexOptionsDirective<any>, never>;
 }
