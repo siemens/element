@@ -17,7 +17,7 @@
             },
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": [],
             "tsConfig": "src/tsconfig.app.json",
             "aot": false,
             "assets": [
@@ -140,7 +140,7 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
+            "polyfills": [],
             "tsConfig": "projects/element-ng/tsconfig.spec.json",
             "karmaConfig": "projects/element-ng/karma.conf.cjs",
             "exclude": ["projects/element-ng/schematics/**"],
@@ -253,7 +253,7 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
+            "polyfills": [],
             "tsConfig": "projects/charts-ng/tsconfig.spec.json",
             "karmaConfig": "projects/charts-ng/karma.conf.cjs",
             "codeCoverageExclude": ["projects/charts-ng/src/**/*.module.ts"]
@@ -284,7 +284,7 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
+            "polyfills": [],
             "tsConfig": "projects/native-charts-ng/tsconfig.spec.json",
             "karmaConfig": "projects/native-charts-ng/karma.conf.cjs",
             "codeCoverageExclude": ["projects/native-charts-ng/src/**/*.module.ts"]
@@ -318,7 +318,7 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
+            "polyfills": [],
             "tsConfig": "projects/maps-ng/tsconfig.spec.json",
             "karmaConfig": "projects/maps-ng/karma.conf.cjs",
             "codeCoverageExclude": ["projects/maps-ng/src/**/*.module.ts"]
@@ -350,7 +350,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "builderMode": "browser",
-            "polyfills": ["zone.js", "zone.js/testing"],
+            "polyfills": [],
             "tsConfig": "projects/dashboards-ng/tsconfig.spec.json",
             "karmaConfig": "projects/dashboards-ng/karma.conf.cjs",
             "codeCoverageExclude": ["projects/dashboards-ng/src/**/*.module.ts"]
@@ -385,7 +385,7 @@
             "outputPath": "dist/dashboards-demo",
             "index": "projects/dashboards-demo/src/index.html",
             "main": "projects/dashboards-demo/src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": [],
             "tsConfig": "projects/dashboards-demo/tsconfig.app.json",
             "aot": true,
             "assets": [
@@ -475,7 +475,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "builderMode": "application",
-            "polyfills": ["zone.js", "zone.js/testing"],
+            "polyfills": [],
             "tsConfig": "projects/dashboards-demo/tsconfig.spec.json",
             "karmaConfig": "projects/dashboards-demo/karma.conf.cjs",
             "assets": [
@@ -523,7 +523,7 @@
             "outputPath": "dist/dashboards-demo-webcomponents",
             "index": "projects/dashboards-demo/webcomponents/src/index.html",
             "main": "projects/dashboards-demo/webcomponents/src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": [],
             "tsConfig": "projects/dashboards-demo/webcomponents/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [],
@@ -575,7 +575,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "builderMode": "application",
-            "polyfills": ["zone.js", "zone.js/testing"],
+            "polyfills": [],
             "tsConfig": "projects/dashboards-demo/webcomponents/tsconfig.spec.json",
             "karmaConfig": "projects/dashboards-demo/webcomponents/karma.conf.cjs",
             "inlineStyleLanguage": "scss",
@@ -613,7 +613,7 @@
             "outputPath": "dist/dashboards-demo/mfe",
             "index": "projects/dashboards-demo/mfe/src/index.html",
             "main": "projects/dashboards-demo/mfe/src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": [],
             "tsConfig": "projects/dashboards-demo/mfe/tsconfig.app.json",
             "aot": true,
             "assets": [

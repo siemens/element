@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { computed, DestroyRef, Directive, inject, input } from '@angular/core';
+import { ChangeDetectorRef, computed, DestroyRef, Directive, inject, input } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { injectSiTranslateService } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, Observable, of, switchMap } from 'rxjs';
@@ -54,6 +54,8 @@ export abstract class SiFilteredSearchOptionValueBase extends SiFilteredSearchVa
     );
   });
 
+  private cdRef = inject(ChangeDetectorRef);
+
   protected buildOptions(): Observable<TypeaheadOptionCriterion[]> | undefined {
     let optionsStream: Observable<OptionCriterion[]> | undefined;
     if (this.lazyValueProvider()) {
@@ -82,12 +84,13 @@ export abstract class SiFilteredSearchOptionValueBase extends SiFilteredSearchVa
       switchMap(options => {
         const keys: string[] = options.map(option => option.label!).filter(label => !!label);
         return this.translateService.translateAsync(keys).pipe(
-          map(translations =>
-            options.map(option => ({
+          map(translations => {
+            this.cdRef.markForCheck();
+            return options.map(option => ({
               ...option,
               translatedLabel: translations[option.label!] ?? option.label ?? option.value
-            }))
-          )
+            }));
+          })
         );
       })
     );
@@ -98,7 +101,10 @@ export abstract class SiFilteredSearchOptionValueBase extends SiFilteredSearchVa
       // resolve options for initial values
       this.options()!
         .pipe(first())
-        .subscribe(options => this.processTypeaheadOptions(options));
+        .subscribe(options => {
+          this.cdRef.markForCheck();
+          this.processTypeaheadOptions(options);
+        });
     }
   }
 

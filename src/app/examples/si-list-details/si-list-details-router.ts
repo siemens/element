@@ -4,7 +4,7 @@
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { AsyncPipe, CommonModule, JsonPipe } from '@angular/common';
-import { AfterViewInit, Component, inject } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiEmptyStateComponent, SiEmptyStateModule } from '@siemens/element-ng/empty-state';
@@ -207,6 +207,7 @@ export class SampleComponent implements AfterViewInit {
 
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
+  private cdRef = inject(ChangeDetectorRef);
 
   ngAfterViewInit(): void {
     this.router
@@ -272,6 +273,7 @@ export class SampleComponent implements AfterViewInit {
       this.rows = rows;
 
       this.isLoading--;
+      this.cdRef.markForCheck();
     });
   }
 }
