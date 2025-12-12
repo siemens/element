@@ -49,7 +49,6 @@ import { SiThresholdModule } from '@siemens/element-ng/threshold';
 import { SiTooltipModule } from '@siemens/element-ng/tooltip';
 import { SiTreeViewModule } from '@siemens/element-ng/tree-view';
 import { SiTypeaheadModule } from '@siemens/element-ng/typeahead';
-import { SiUnauthorizedPageModule } from '@siemens/element-ng/unauthorized-page';
 import { SiWizardModule } from '@siemens/element-ng/wizard';
 import { TranslateModule } from '@ngx-translate/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -108,7 +107,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     SiTooltipModule,
     SiTreeViewModule,
     SiTypeaheadModule,
-    SiUnauthorizedPageModule,
     SiWizardModule
 ],
   exports: [
@@ -163,7 +161,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     SiTooltipModule,
     SiTreeViewModule,
     SiTypeaheadModule,
-    SiUnauthorizedPageModule,
     SiWizardModule
 ]
 })
