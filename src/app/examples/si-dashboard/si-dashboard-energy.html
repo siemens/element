@@ -1,0 +1,232 @@
+<!-- Energy Dashboard Layout -->
+<div class="dashboard-container">
+  <!-- Page Header -->
+  <div class="dashboard-header mb-4">
+    <h1 class="mb-2">Energy Management Dashboard</h1>
+    <p class="text-muted">Real-time monitoring and optimization for enterprise facilities</p>
+  </div>
+
+  <!-- Content Action Bar -->
+  <si-content-action-bar [mainActions]="[
+    { type: 'action', text: 'Refresh', action: () => onRefresh(), icon: 'reload' },
+    { type: 'action', text: 'Optimize', action: () => onOptimize(), icon: 'settings' },
+    { type: 'action', text: 'Download Report', action: () => onDownloadReport(), icon: 'download' }
+  ]"></si-content-action-bar>
+
+  <!-- Main Content Area -->
+  <div class="dashboard-content">
+    <!-- KPI Cards Section -->
+    <div class="kpi-section">
+      <div class="row gx-3 gy-3">
+        <!-- Total Energy Consumption Card -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <si-card class="kpi-card">
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <div>
+                  <p class="text-muted small">Total Energy Consumption</p>
+                  <h3 class="mb-0">{{ totalEnergyConsumption() | number }}
+                    <span class="unit">kWh</span>
+                  </h3>
+                </div>
+                <span class="badge bg-success">↓ 8%</span>
+              </div>
+              <small class="text-muted">vs. last month</small>
+            </div>
+          </si-card>
+        </div>
+
+        <!-- Total Cost Card -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <si-card class="kpi-card">
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <div>
+                  <p class="text-muted small">Monthly Cost</p>
+                  <h3 class="mb-0">${{ totalCost() | number }}
+                    <span class="unit">USD</span>
+                  </h3>
+                </div>
+                <span class="badge bg-info">⚡</span>
+              </div>
+              <small class="text-muted">Estimated billing</small>
+            </div>
+          </si-card>
+        </div>
+
+        <!-- Carbon Reduction Card -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <si-card class="kpi-card">
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <div>
+                  <p class="text-muted small">Carbon Reduction</p>
+                  <h3 class="mb-0">{{ carbonReduction() }}
+                    <span class="unit">%</span>
+                  </h3>
+                </div>
+                <span class="badge bg-success">↑ Improved</span>
+              </div>
+              <small class="text-muted">vs. last month</small>
+            </div>
+          </si-card>
+        </div>
+      </div>
+    </div>
+
+    <!-- Energy Sources Section -->
+    <div class="energy-sources-section mt-5">
+      <h4 class="mb-4">Energy Sources Breakdown</h4>
+      <div class="row gx-3 gy-3">
+        <div *ngFor="let source of energySources()" class="col-12 col-md-6 col-lg-4">
+          <si-card>
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">{{ source.name }}</h5>
+                <si-circle-status [status]="source.status" size="xs"></si-circle-status>
+              </div>
+
+              <!-- Energy consumption -->
+              <div class="mb-3">
+                <div class="d-flex justify-content-between mb-2">
+                  <span class="small">Energy Usage</span>
+                  <strong>{{ source.consumption | number }} {{ source.unit }}</strong>
+                </div>
+                <div class="progress">
+                  <div
+                    class="progress-bar"
+                    [class.bg-success]="source.status === 'success'"
+                    [class.bg-warning]="source.status === 'warning'"
+                    [class.bg-danger]="source.status === 'danger'"
+                    [style.width.%]="source.percentage"
+                  ></div>
+                </div>
+                <small class="text-muted">{{ source.percentage }}% of total</small>
+              </div>
+            </div>
+          </si-card>
+        </div>
+      </div>
+    </div>
+
+    <!-- Buildings Performance Section -->
+    <div class="buildings-section mt-5">
+      <h4 class="mb-4">Facility Performance Overview</h4>
+
+      <!-- Alerts Section -->
+      <si-inline-notification
+        *ngIf="recentAlerts().length > 0"
+        type="info"
+        class="mb-4"
+      >
+        <strong>{{ recentAlerts().length }} Recent Alerts</strong> - Check building status below
+      </si-inline-notification>
+
+      <!-- Buildings Grid -->
+      <div class="row gx-3 gy-3">
+        <div *ngFor="let building of buildings()" class="col-12 col-lg-6 col-xl-4">
+          <si-card class="building-card h-100">
+            <div class="card-body p-4">
+              <!-- Building Header -->
+              <div class="d-flex justify-content-between align-items-start mb-4">
+                <div class="flex-grow-1">
+                  <h5 class="mb-1">{{ building.name }}</h5>
+                </div>
+                <si-circle-status [status]="building.status" size="sm"></si-circle-status>
+              </div>
+
+              <!-- Energy Usage -->
+              <div class="metric mb-3">
+                <div class="d-flex justify-content-between mb-2">
+                  <span class="small">Energy Usage</span>
+                  <strong>{{ building.energyUsage }} kWh</strong>
+                </div>
+              </div>
+
+              <!-- Carbon Footprint -->
+              <div class="metric mb-3">
+                <div class="d-flex justify-content-between mb-2">
+                  <span class="small">Carbon Footprint</span>
+                  <strong>{{ building.carbonFootprint }} kg CO₂</strong>
+                </div>
+              </div>
+
+              <!-- Efficiency Score -->
+              <div class="metric mb-4">
+                <div class="d-flex justify-content-between mb-2">
+                  <span class="small">Energy Efficiency</span>
+                  <strong>{{ building.efficiency }}%</strong>
+                </div>
+                <div class="progress" style="height: 6px;">
+                  <div
+                    class="progress-bar"
+                    [class.bg-success]="getStatusType(building.efficiency) === 'success'"
+                    [class.bg-warning]="getStatusType(building.efficiency) === 'warning'"
+                    [class.bg-danger]="getStatusType(building.efficiency) === 'danger'"
+                    [style.width.%]="building.efficiency"
+                  ></div>
+                </div>
+              </div>
+
+              <!-- Status Badge -->
+              <div>
+                <span
+                  class="badge"
+                  [class.bg-success]="building.status === 'success'"
+                  [class.bg-warning]="building.status === 'warning'"
+                  [class.bg-danger]="building.status === 'danger'"
+                >
+                  {{ getStatusLabel(building.efficiency) }}
+                </span>
+              </div>
+
+              <!-- Action Button -->
+              <button
+                class="btn btn-sm btn-link mt-3"
+                (click)="onViewDetails(building)"
+              >
+                View Details →
+              </button>
+            </div>
+          </si-card>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Activity Section -->
+    <div class="activity-section mt-5 mb-5">
+      <h4 class="mb-4">Recent Activity & Alerts</h4>
+
+      <si-card *ngIf="recentAlerts().length > 0; else emptyState">
+        <div class="card-body p-0">
+          <div class="list-group list-group-flush">
+            <div
+              *ngFor="let alert of recentAlerts()"
+              class="list-group-item d-flex justify-content-between align-items-start p-3"
+            >
+              <div class="flex-grow-1">
+                <p class="mb-1">{{ alert.message }}</p>
+                <small class="text-muted">{{ alert.time }}</small>
+              </div>
+              <span
+                class="badge"
+                [class.bg-success]="alert.type === 'success'"
+                [class.bg-warning]="alert.type === 'warning'"
+                [class.bg-info]="alert.type === 'info'"
+              >
+                {{ alert.type }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </si-card>
+
+      <ng-template #emptyState>
+        <si-empty-state
+          title="No Recent Alerts"
+          description="Your energy systems are operating normally"
+        ></si-empty-state>
+      </ng-template>
+    </div>
+  </div>
+</div>
