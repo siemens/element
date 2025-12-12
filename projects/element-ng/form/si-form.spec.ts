@@ -310,6 +310,9 @@ describe('SiForm', () => {
     let loader: HarnessLoader;
 
     beforeEach(() => {
+      TestBed.configureTestingModule({
+        providers: [provideZonelessChangeDetection()]
+      }).compileComponents();
       fixture = TestBed.createComponent(TestHostComponent);
       loader = TestbedHarnessEnvironment.loader(fixture);
     });

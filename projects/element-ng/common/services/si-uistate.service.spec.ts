@@ -61,7 +61,10 @@ describe('SiUIStateService', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        providers: [provideSiUiState({ store: AsynchronousMockStore })]
+        providers: [
+          provideSiUiState({ store: AsynchronousMockStore }),
+          provideZonelessChangeDetection()
+        ]
       }).compileComponents();
       service = TestBed.inject(SI_UI_STATE_SERVICE);
     });

@@ -587,6 +587,9 @@ describe('SiSelectComponent', () => {
     let component: TestHostCustomActionComponent;
 
     beforeEach(async () => {
+      TestBed.configureTestingModule({
+        providers: [provideZonelessChangeDetection()]
+      }).compileComponents();
       const typedFixture = TestBed.createComponent(TestHostCustomActionComponent);
       fixture = typedFixture;
       loader = TestbedHarnessEnvironment.loader(fixture);

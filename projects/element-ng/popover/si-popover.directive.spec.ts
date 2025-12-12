@@ -163,6 +163,9 @@ describe('with custom template', () => {
   let fixture: ComponentFixture<CustomTemplateHostComponent>;
 
   beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [provideZonelessChangeDetection()]
+    }).compileComponents();
     fixture = TestBed.createComponent(CustomTemplateHostComponent);
   });
 

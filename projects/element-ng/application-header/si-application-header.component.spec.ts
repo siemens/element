@@ -102,7 +102,6 @@ describe('SiApplicationHeaderComponent', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [TestHostComponent],
         providers: [provideZonelessChangeDetection()]
       });
     });
@@ -219,7 +218,7 @@ describe('SiApplicationHeaderComponent', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [TestHostComponent]
+        providers: [provideZonelessChangeDetection()]
       });
     });
 
@@ -305,8 +304,10 @@ describe('SiApplicationHeaderComponent', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [TestHostComponent],
-        providers: [{ provide: BreakpointObserver, useExisting: BreakpointObserverMock }]
+        providers: [
+          { provide: BreakpointObserver, useExisting: BreakpointObserverMock },
+          provideZonelessChangeDetection()
+        ]
       });
     });
 
@@ -355,7 +356,7 @@ describe('SiApplicationHeaderComponent', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [TestHostComponent]
+        providers: [provideZonelessChangeDetection()]
       });
     });
 

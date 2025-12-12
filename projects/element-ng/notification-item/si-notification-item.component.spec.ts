@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -55,6 +55,9 @@ describe('SiNotificationItemComponent', () => {
   let element: HTMLElement;
 
   beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [provideZonelessChangeDetection()]
+    }).compileComponents();
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
@@ -71,12 +74,14 @@ describe('SiNotificationItemComponent', () => {
 
   it('should display the description', () => {
     component.description = 'Description';
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(element.querySelectorAll('span.si-body')[1].innerHTML).toContain('Description');
   });
 
   it('should display the unread state', () => {
     component.unread = true;
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(element.querySelector('span.si-h5')).not.toBeTruthy();
     expect(element.querySelector('span.si-h5-bold')).toBeTruthy();
@@ -85,6 +90,7 @@ describe('SiNotificationItemComponent', () => {
 
   it('should link with the item link', () => {
     component.itemLink = { type: 'link', href: '/test' };
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(element.querySelector('a')?.getAttribute('href')).toBe('/test');
   });
@@ -93,6 +99,7 @@ describe('SiNotificationItemComponent', () => {
     const router = TestBed.inject(Router);
     spyOn(router, 'navigateByUrl');
     component.itemLink = { type: 'router-link', routerLink: '/test' };
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
 
     element.querySelector<HTMLElement>('a')?.click();
@@ -110,6 +117,7 @@ describe('SiNotificationItemComponent', () => {
       { type: 'link', href: '/test', ariaLabel: 'Link', icon: 'element-plant' },
       { type: 'router-link', routerLink: '/test', ariaLabel: 'Router Link', icon: 'element-plant' }
     ];
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(element.querySelectorAll('button').length).toBe(1);
     expect(element.querySelectorAll('a').length).toBe(2);
@@ -123,6 +131,7 @@ describe('SiNotificationItemComponent', () => {
         { type: 'action', label: 'Action 2', action: () => {} }
       ]
     };
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(element.querySelector('button si-icon')).toBeTruthy();
   });
@@ -133,6 +142,7 @@ describe('SiNotificationItemComponent', () => {
       label: 'Action',
       action: () => {}
     };
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(element.querySelector('button')?.textContent).toContain('Action');
   });
