@@ -43,7 +43,6 @@ import {
 } from './si-filtered-search-helper';
 import { SiFilteredSearchValueComponent } from './si-filtered-search-value.component';
 import {
-  Criterion,
   CriterionDefinition,
   CriterionValue,
   DisplayedCriteriaEventArgs,
@@ -94,7 +93,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
       (
         typed: string,
         searchCriteria?: SearchCriteria
-      ) => Observable<Criterion[] | CriterionDefinition[]>
+      ) => Observable<CriterionDefinition[]>
     >();
   /**
    * In many cases, your application defines the criteria, but the values need
@@ -109,14 +108,6 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
    * @defaultValue false
    */
   readonly disabled = input(false, { transform: booleanAttribute });
-  /**
-   * Do not allow changes. Search can still be triggered.
-   *
-   * @deprecated Use {@link disabled} instead.
-   *
-   * @defaultValue false
-   */
-  readonly readonly = input(false, { transform: booleanAttribute });
   /**
    * Limit criteria to the predefined ones.
    *
@@ -184,7 +175,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
    *
    * @defaultValue []
    */
-  readonly criteria = input<Criterion[] | CriterionDefinition[]>([]);
+  readonly criteria = input<CriterionDefinition[]>([]);
   /**
    * Opt-in to search for each criterion only once.
    *
@@ -340,7 +331,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     return this.strictCriterion() || this.isStrictOrOnlySelectValue();
   });
 
-  private readonly lazyLoadedCriteria = signal<Criterion[] | CriterionDefinition[] | undefined>(
+  private readonly lazyLoadedCriteria = signal<CriterionDefinition[] | undefined>(
     undefined
   );
   private readonly loadedCriteria = computed(() => {
@@ -352,7 +343,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     }
   });
 
-  private readonly isReadOnly = computed(() => this.readonly() || this.disabled());
+  private readonly isReadOnly = computed(() => this.disabled());
 
   constructor() {
     this.dataSource = this.typeaheadInputChange.pipe(
