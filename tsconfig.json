@@ -104,19 +104,10 @@
       "path": "./projects/dashboards-demo/tsconfig.app.json"
     },
     {
-      "path": "./projects/dashboards-demo/tsconfig.spec.json"
-    },
-    {
       "path": "./projects/dashboards-demo/mfe/tsconfig.app.json"
     },
     {
-      "path": "./projects/dashboards-demo/mfe/tsconfig.spec.json"
-    },
-    {
       "path": "./projects/dashboards-demo/webcomponents/tsconfig.app.json"
-    },
-    {
-      "path": "./projects/dashboards-demo/webcomponents/tsconfig.spec.json"
     },
     {
       "path": "./playwright/tsconfig.json"

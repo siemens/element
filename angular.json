@@ -471,29 +471,6 @@
           },
           "defaultConfiguration": "development"
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "builderMode": "application",
-            "polyfills": ["zone.js", "zone.js/testing"],
-            "tsConfig": "projects/dashboards-demo/tsconfig.spec.json",
-            "karmaConfig": "projects/dashboards-demo/karma.conf.cjs",
-            "assets": [
-              "projects/dashboards-demo/src/assets",
-              "projects/dashboards-demo/src/favicon.png",
-              {
-                "glob": "*",
-                "input": "projects/dashboards-ng/assets/i18n",
-                "output": "assets/i18n/dashboards-ng/"
-              }
-            ],
-            "stylePreprocessorOptions": {
-              "includePaths": ["node_modules/"]
-            },
-            "styles": ["projects/dashboards-demo/src/styles.scss"],
-            "scripts": []
-          }
-        },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
@@ -570,19 +547,6 @@
             }
           },
           "defaultConfiguration": "development"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "builderMode": "application",
-            "polyfills": ["zone.js", "zone.js/testing"],
-            "tsConfig": "projects/dashboards-demo/webcomponents/tsconfig.spec.json",
-            "karmaConfig": "projects/dashboards-demo/webcomponents/karma.conf.cjs",
-            "inlineStyleLanguage": "scss",
-            "assets": [],
-            "styles": ["projects/dashboards-demo/webcomponents/src/styles.scss"],
-            "scripts": []
-          }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
