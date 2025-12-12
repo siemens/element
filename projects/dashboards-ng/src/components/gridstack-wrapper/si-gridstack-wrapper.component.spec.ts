@@ -66,12 +66,15 @@ describe('SiGridstackWrapperComponent', () => {
       expect(gridStackWrapper!.mount).toHaveBeenCalledWith(TEST_WIDGET_CONFIGS);
     });
 
-    it('should render grid items', () => {
+    it('should render grid items', async () => {
       fixture = TestBed.createComponent(HostComponent);
       host = fixture.componentInstance;
       gridService.widgetCatalog.set([TEST_WIDGET]);
       host.widgets = [TEST_WIDGET_CONFIG_0, TEST_WIDGET_CONFIG_1];
       fixture.detectChanges();
+
+      // to avoid injector destroyed error
+      await new Promise(resolve => setTimeout(resolve, 0));
 
       expect(fixture.debugElement.queryAll(By.css('si-widget-host')).length).toBe(2);
     });
@@ -86,7 +89,7 @@ describe('SiGridstackWrapperComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should mount newly added grid items', () => {
+    it('should mount newly added grid items', async () => {
       host.widgets = [...host.widgets, TEST_WIDGET_CONFIG_2];
 
       const gridStackWrapper = host.gridStackWrapper();
@@ -94,11 +97,14 @@ describe('SiGridstackWrapperComponent', () => {
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
+      // to avoid injector destroyed error
+      await new Promise(resolve => setTimeout(resolve, 0));
+
       expect(gridStackWrapper!.mount).toHaveBeenCalled();
       expect(gridStackWrapper!.mount).toHaveBeenCalledWith([TEST_WIDGET_CONFIG_2]);
     });
 
-    it('should unmount removed grid items', () => {
+    it('should unmount removed grid items', async () => {
       host.widgets = [TEST_WIDGET_CONFIG_1];
       spyOn(host.gridStackWrapper()!, 'unmount').and.callThrough();
       fixture.changeDetectorRef.markForCheck();
@@ -111,18 +117,23 @@ describe('SiGridstackWrapperComponent', () => {
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
+      // to avoid injector destroyed error
+      await new Promise(resolve => setTimeout(resolve, 0));
+
       expect(host.gridStackWrapper()!.unmount).toHaveBeenCalled();
       expect(host.gridStackWrapper()!.unmount).toHaveBeenCalledWith([TEST_WIDGET_CONFIG_1]);
     });
   });
 
   describe('#getLayout()', () => {
-    it('should return layout of grid items', () => {
+    it('should return layout of grid items', async () => {
       fixture = TestBed.createComponent(HostComponent);
       host = fixture.componentInstance;
       gridService.widgetCatalog.set([TEST_WIDGET]);
       host.widgets = TEST_WIDGET_CONFIGS;
       fixture.detectChanges();
+      // to avoid injector destroyed error
+      await new Promise(resolve => setTimeout(resolve, 0));
       const layout = host.gridStackWrapper()!.getLayout();
       expect(layout).toBeDefined();
       expect(layout.length).toBe(TEST_WIDGET_CONFIGS.length);
