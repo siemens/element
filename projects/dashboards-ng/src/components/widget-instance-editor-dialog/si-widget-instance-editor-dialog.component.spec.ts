@@ -34,7 +34,7 @@ describe('SiWidgetInstanceEditorDialogComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('should create', () => {
+  it('should create', async () => {
     expect(component).toBeTruthy();
     fixture.componentRef.setInput('widget', TEST_WIDGET);
     fixture.componentRef.setInput('widgetConfig', {
@@ -42,6 +42,8 @@ describe('SiWidgetInstanceEditorDialogComponent', () => {
       id: 'testId'
     });
     fixture.detectChanges();
+    // to avoid injector destroyed error
+    await new Promise(resolve => setTimeout(resolve, 0));
     expect(component.widgetConfig()).toBeDefined();
     expect(component.widget()).toBeDefined();
   });
