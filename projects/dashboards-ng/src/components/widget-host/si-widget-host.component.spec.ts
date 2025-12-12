@@ -78,8 +78,12 @@ describe('SiWidgetHostComponent', () => {
     jasmine.clock().uninstall();
   });
 
-  it('#editAction should call onEdit', () => {
+  it('#editAction should call onEdit', async () => {
     fixture.detectChanges();
+    jasmine.clock().install();
+    jasmine.clock().tick(0);
+    await fixture.whenStable();
+    jasmine.clock().uninstall();
     const spy = spyOn(component, 'onEdit');
     ((component.editAction as MenuItemAction).action! as (param?: any) => void)();
 
@@ -96,8 +100,12 @@ describe('SiWidgetHostComponent', () => {
     component.onEdit();
   });
 
-  it('#removeAction should call onRemove', () => {
+  it('#removeAction should call onRemove', async () => {
     fixture.detectChanges();
+    jasmine.clock().install();
+    jasmine.clock().tick(0);
+    await fixture.whenStable();
+    jasmine.clock().uninstall();
     const spy = spyOn(component, 'onRemove');
     ((component.removeAction as MenuItemAction).action! as (param?: any) => void)();
 
