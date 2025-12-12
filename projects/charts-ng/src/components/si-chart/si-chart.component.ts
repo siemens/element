@@ -588,23 +588,24 @@ export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDes
   @HostListener('window:theme-switch')
   resetChart(): void {
     this.applyTheme();
+    this.chart.setTheme(this.activeTheme);
 
-    if (!this.actualOptions) {
-      // this can happen if the SiThemeService fires the theme switch when the chart is not
-      // yet completely initialized
-      return;
-    }
-
-    this.disposeChart();
+    // Since color palette is set thorugh options, it needs to be set again.
     this.applyPalette();
-    const addOpts = this.additionalOptions();
-    if (addOpts?.palette) {
-      echarts.util.merge(this.actualOptions.palette, addOpts.palette, true);
-    }
     this.themeChanged();
     this.applyStyles();
     this.applyTitles();
-    this.ngAfterViewInit(true); // eslint-disable-line @angular-eslint/no-lifecycle-call
+
+    setTimeout(() => {
+      this.applyColorsToCustomLegends();
+    });
+    this.chart.setOption(this.actualOptions, true);
+
+    if (this.externalZoomSlider()) {
+      this.extZoomSliderChart.setTheme(this.activeTheme);
+      this.extZoomSliderChart.setOption(this.extZoomSliderOptions);
+    }
+    this.afterChartInit(true);
     this.cdRef.markForCheck();
   }
 
