@@ -6,6 +6,7 @@ import { KeyValuePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   HostBinding,
@@ -107,12 +108,16 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
   private jsLoaded = false;
   private delayClearTimer: any;
   private webcomponentsList: string[] = [];
+  private cdRef = inject(ChangeDetectorRef);
 
   constructor() {
     this.compileSubject
       .pipe(throttleTime(500, undefined, { leading: true, trailing: true }))
       .pipe(takeUntilDestroyed())
-      .subscribe(template => (this.template = template));
+      .subscribe(template => {
+        this.template = template;
+        this.cdRef.markForCheck();
+      });
     this.webcomponentsList = this.config.componentLoader.webcomponentsList;
   }
 
@@ -452,6 +457,7 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
       this.inProgressCounter--;
     }
     this.inProgress = !!this.inProgressCounter;
+    this.cdRef.markForCheck();
   }
 
   logClear(delayed = false): void {
@@ -489,7 +495,10 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
 
   private showCopiedLabel(): void {
     this.showCopied = true;
-    setTimeout(() => (this.showCopied = false), 1500);
+    setTimeout(() => {
+      this.showCopied = false;
+      this.cdRef.markForCheck();
+    }, 1500);
   }
 
   toggleFullscreen(exampleOnly = false): void {
@@ -518,12 +527,14 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
 
     if (this.editorCollapsed) {
       this.showEditor = false;
+      this.cdRef.markForCheck();
       setTimeout(() => window.dispatchEvent(new Event('resize')), 500);
     } else {
       setTimeout(() => {
         this.showEditor = true;
         this.newMsgs = false;
         window.dispatchEvent(new Event('resize'));
+        this.cdRef.markForCheck();
       }, 500);
     }
   }
