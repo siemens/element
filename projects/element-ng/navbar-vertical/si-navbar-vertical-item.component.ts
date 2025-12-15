@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -17,6 +17,7 @@ import { MenuItem } from '@siemens/element-ng/common';
 import { addIcons, elementDown2, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLinkDirective } from '@siemens/element-ng/link';
 
+import { SiTooltipDirective } from '../tooltip';
 import { SiNavbarVerticalGroupTriggerDirective } from './si-navbar-vertical-group-trigger.directive';
 import {
   NavbarVerticalItemAction,
@@ -35,7 +36,7 @@ type NavbarVerticalItemInteractive =
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'a[si-navbar-vertical-item], button[si-navbar-vertical-item]',
-  imports: [NgClass, SiIconComponent],
+  imports: [NgClass, SiIconComponent, SiTooltipDirective, NgTemplateOutlet],
   templateUrl: './si-navbar-vertical-item.component.html',
   styleUrl: './si-navbar-vertical-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
