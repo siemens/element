@@ -4,7 +4,14 @@
  */
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, Component, ElementRef, signal, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  provideZonelessChangeDetection,
+  signal,
+  viewChild
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, NgControl } from '@angular/forms';
 
@@ -83,6 +90,9 @@ describe('SiDatepickerDirective', () => {
   const getTestDate = (): Date => new Date('2022-03-12T05:30:20');
 
   beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [provideZonelessChangeDetection()]
+    });
     fixture = TestBed.createComponent(WrapperComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
@@ -122,18 +132,21 @@ describe('SiDatepickerDirective', () => {
 
   describe('with datepicker visible', () => {
     beforeEach(async () => {
+      fixture.detectChanges();
       getInput().focus();
-
       expect(document.querySelector('si-datepicker-overlay')).toBeDefined();
     });
 
     it('should hide datepicker on focus out', async () => {
+      fixture.detectChanges();
       getInput().blur();
+      await fixture.whenStable();
 
       expect(document.querySelector('si-datepicker-overlay')).toBeNull();
     });
 
     it('should handle date change', async () => {
+      await fixture.whenStable();
       const helper = new CalendarTestHelper(
         document.querySelector('si-day-selection') as HTMLElement
       );
@@ -159,14 +172,18 @@ describe('SiDatepickerDirective', () => {
     });
 
     it('should close overlay on click', async () => {
-      backdropClick(fixture);
+      fixture.detectChanges();
+      await backdropClick(fixture);
       expect(document.querySelector('si-datepicker-overlay')).toBeNull();
     });
 
     it('should toggle close and open overlay on two click', async () => {
-      backdropClick(fixture);
+      fixture.detectChanges();
+      await backdropClick(fixture);
       expect(document.querySelector('si-datepicker-overlay')).toBeNull();
+      await fixture.whenStable();
       getInput().click();
+      await fixture.whenStable();
       expect(document.querySelector('si-datepicker-overlay')).toBeTruthy();
     });
 
@@ -197,6 +214,7 @@ describe('SiDatepickerDirective', () => {
     });
 
     it('should disable time when switch of Consider Time', async () => {
+      fixture.detectChanges();
       const disabledTime$ = spyOn(
         component.siDatePickerDirective().siDatepickerDisabledTime,
         'emit'
@@ -205,8 +223,10 @@ describe('SiDatepickerDirective', () => {
       const helper = new CalendarTestHelper(
         document.querySelector('si-datepicker-overlay') as HTMLElement
       );
+      await fixture.whenStable();
       const considerTime = helper.getConsiderTimeSwitch();
       considerTime!.dispatchEvent(new Event('change'));
+      await fixture.whenStable();
 
       expect(helper.getTimeInputHours().disabled).toBeTrue();
       expect(helper.getTimeInputMinutes().disabled).toBeTrue();
@@ -225,22 +245,33 @@ describe('SiDatepickerDirective', () => {
     });
 
     it('should close after selection via click', async () => {
+      fixture.detectChanges();
       getInput().focus();
+      await fixture.whenStable();
       const picker = await rootLoader.getHarness(SiDatepickerComponentHarness);
+      jasmine.clock().install();
       await picker.selectCell({ text: '1' });
+      jasmine.clock().tick(1000);
+      await fixture.whenStable();
 
       expect(document.querySelector('si-datepicker-overlay')).toBeFalsy();
+      jasmine.clock().uninstall();
     });
 
     it('should close when switch of Consider Time', async () => {
+      fixture.detectChanges();
       await updateConfig({
         showTime: true
       });
       getInput().focus();
+      await fixture.whenStable();
       const picker = await rootLoader.getHarness(SiDatepickerComponentHarness);
+      jasmine.clock().install();
       await (await picker.considerTimeSwitch()).toggle();
-
+      jasmine.clock().tick(1000);
+      await fixture.whenStable();
       expect(document.querySelector('si-datepicker-overlay')).toBeFalsy();
+      jasmine.clock().uninstall();
     });
   });
 });
