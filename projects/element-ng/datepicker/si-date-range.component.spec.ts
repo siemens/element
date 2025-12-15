@@ -4,7 +4,13 @@
  */
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  provideZonelessChangeDetection,
+  signal,
+  viewChild
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -52,6 +58,9 @@ describe('SiDateRangeComponent', () => {
     element.querySelector<HTMLElement>('[aria-label="Open calendar"]')!;
 
   beforeEach(async () => {
+    TestBed.configureTestingModule({
+      providers: [provideZonelessChangeDetection()]
+    }).compileComponents();
     fixture = TestBed.createComponent(WrapperComponent);
     component = fixture.componentInstance.siDateRangeComponent();
     element = fixture.nativeElement;
@@ -75,24 +84,31 @@ describe('SiDateRangeComponent', () => {
     expect(document.querySelector('si-datepicker-overlay')).toBeTruthy();
   });
 
-  it('should mark input touched when on datepicker backdrop click', () => {
+  it('should mark input touched when on datepicker backdrop click', async () => {
+    jasmine.clock().install();
     openCalendarButton()!.click();
+    jasmine.clock().tick(0);
+    await fixture.whenStable();
     expect(fixture.componentInstance.dateRange.touched).toBeFalse();
-
-    backdropClick(fixture);
+    await backdropClick(fixture);
     expect(fixture.componentInstance.dateRange.touched).toBeTrue();
+    jasmine.clock().uninstall();
   });
 
   it('should mark input as touched once the focused is moved outside', async () => {
+    jasmine.clock().install();
     const rangeHarness = await loader.getHarness(SiDateRangeComponentHarness);
     const inputs = await rangeHarness.getInputs();
     const calendarButton = await rangeHarness.getCalendarButton();
     await inputs.at(0)?.focus();
     await inputs.at(1)?.focus();
     await calendarButton.focus();
+    jasmine.clock().tick(1000);
+    await fixture.whenStable();
     expect(fixture.componentInstance.dateRange.touched).toBeFalse();
     await calendarButton.blur();
     expect(fixture.componentInstance.dateRange.touched).toBeTruthy();
+    jasmine.clock().uninstall();
   });
 
   describe('with autoClose', () => {
@@ -103,10 +119,13 @@ describe('SiDateRangeComponent', () => {
     });
 
     it('should close after range selection via click', async () => {
+      await fixture.whenStable();
       const helper = new CalendarTestHelper(document.querySelector('si-datepicker-overlay')!);
       helper.getEnabledCellWithText('1')!.click();
       helper.getEnabledCellWithText('3')!.click();
       await fixture.whenStable();
+      // cannot use mock timer here.
+      await new Promise(resolve => setTimeout(resolve, 0));
       expect(document.querySelector('si-datepicker-overlay')).toBeFalsy();
     });
   });
@@ -119,19 +138,27 @@ describe('SiDateRangeComponent', () => {
     // - Hovering over a December
     // Then:
     // - April to December should be highlighted
+    jasmine.clock().install();
     fixture.componentInstance.dateRange.setValue({ start: new Date(2023, 2, 1), end: undefined });
     openCalendarButton().click();
+    jasmine.clock().tick(1000);
     // In case the small screen media query match we need to wait for the dialog animation
     await fixture.whenStable();
 
     const helper = new CalendarTestHelper(document.querySelector('si-datepicker-overlay')!);
     helper.getOpenMonthViewLink().click();
+    jasmine.clock().tick(1000);
+    await fixture.whenStable();
+    jasmine.clock().uninstall();
     helper.getEnabledCellWithText('December')!.dispatchEvent(new Event('mouseover'));
-
+    await fixture.whenStable();
+    // to avoid flakiness we wait a bit here
+    await new Promise(resolve => setTimeout(resolve, 100));
     expect(helper.queryAsArray('.range-hover')).toHaveSize(9);
   });
 
   it('should preview month range with second calendar', async () => {
+    jasmine.clock().install();
     // Given:
     // - Start date selected 01.03.2023
     // - Month view opened
@@ -146,17 +173,21 @@ describe('SiDateRangeComponent', () => {
     });
     fixture.componentInstance.dateRange.setValue({ start: new Date(2023, 2, 1), end: undefined });
     openCalendarButton().click();
+    jasmine.clock().tick(1000);
     // In case the small screen media query match we need to wait for the dialog animation
     await fixture.whenStable();
+    jasmine.clock().uninstall();
 
     const helper = new CalendarTestHelper(
       document.querySelectorAll<HTMLElement>('si-datepicker')[1]
     );
     helper.getEnabledCellWithText('December')!.dispatchEvent(new Event('mouseover'));
+    await fixture.whenStable();
     expect(Array.from(document.querySelectorAll<HTMLElement>('.range-hover'))).toHaveSize(21);
   });
 
   it('should not overlap month view with enableTwoMonthDateRange when pressing previous year button', async () => {
+    jasmine.clock().install();
     // Given:
     // - config enableTwoMonthDateRange = true and onlyMonthSelection = true
     // - Selected range 03/2023 - 04/2024
@@ -174,11 +205,15 @@ describe('SiDateRangeComponent', () => {
       end: new Date(2023, 3, 1)
     });
     openCalendarButton().click();
+    jasmine.clock().tick(1000);
+    await fixture.whenStable();
+    jasmine.clock().uninstall();
 
     const calendars = document.querySelectorAll<HTMLElement>('si-datepicker');
     const firstCalendar = new CalendarTestHelper(calendars[0]);
     const secondCalendar = new CalendarTestHelper(calendars[1]);
     secondCalendar.getPreviousButton()!.click();
+    await fixture.whenStable();
     expect(firstCalendar.getOpenYearViewLink().textContent).toContain('2022');
   });
 
@@ -246,6 +281,9 @@ describe('SiDateRangeComponent within form', () => {
     element.querySelector<HTMLElement>('[aria-label="Open calendar"]')!;
 
   beforeEach(async () => {
+    TestBed.configureTestingModule({
+      providers: [provideZonelessChangeDetection()]
+    }).compileComponents();
     fixture = TestBed.createComponent(FormWrapperComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
