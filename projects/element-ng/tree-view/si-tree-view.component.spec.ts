@@ -141,9 +141,12 @@ describe('SiTreeViewComponent', () => {
 
   beforeEach(() => {
     originalRequestAnimationFrame = window.requestAnimationFrame;
+    jasmine.clock().install();
+    jasmine.clock().mockDate();
   });
 
   afterEach(() => {
+    jasmine.clock().uninstall();
     window.requestAnimationFrame = originalRequestAnimationFrame;
   });
 
@@ -650,7 +653,8 @@ describe('SiTreeViewComponent', () => {
           shiftKey: true
         })
       );
-      await new Promise(resolve => setTimeout(resolve, 0));
+      jasmine.clock().tick(0);
+      await fixture.whenStable();
       fixture.detectChanges();
       await fixture.whenStable();
       expect(document.querySelector<HTMLElement>('si-menu si-menu-item')?.innerText).toBe(
@@ -666,7 +670,7 @@ describe('SiTreeViewComponent', () => {
           key: 'ContextMenu'
         })
       );
-      await new Promise(resolve => setTimeout(resolve, 0));
+      jasmine.clock().tick(0);
       fixture.detectChanges();
       await fixture.whenStable();
       fixture.detectChanges();
@@ -678,8 +682,9 @@ describe('SiTreeViewComponent', () => {
     it('should open on context-menu event', async () => {
       fixture.detectChanges();
       element.querySelectorAll('si-tree-view-item')[0].dispatchEvent(new Event('contextmenu'));
-      await new Promise(resolve => setTimeout(resolve, 0));
+      jasmine.clock().tick(0);
       fixture.detectChanges();
+      await fixture.whenStable();
       expect(document.querySelector<HTMLElement>('si-menu si-menu-item')?.innerText).toBe(
         'Item One'
       );
@@ -693,7 +698,7 @@ describe('SiTreeViewComponent', () => {
 
       for (const i of Array.from(items)) {
         i.dispatchEvent(new Event('contextmenu'));
-        await new Promise(resolve => setTimeout(resolve, 0));
+        jasmine.clock().tick(0);
         fixture.detectChanges();
         await fixture.whenStable();
       }
@@ -893,7 +898,8 @@ describe('SiTreeViewComponent', () => {
       [lastVisibleNode].triggerEventHandler('click', null);
     fixture.detectChanges();
     nextNode.triggerEventHandler('click', null);
-    await new Promise(resolve => setTimeout(resolve, 0));
+    jasmine.clock().tick(0);
+    await fixture.whenStable();
     expect(scrollObserver).toHaveBeenCalled();
   });
 
@@ -918,10 +924,12 @@ describe('SiTreeViewComponent', () => {
     component.smallSize = true;
     component.cdRef.markForCheck();
     fixture.detectChanges();
-    // cannot use jasmine.clock here
-    await new Promise(resolve => setTimeout(resolve, 0));
+    jasmine.clock().uninstall();
+    // cannot use mock timer here
+    await new Promise(r => setTimeout(r, 0));
     // Changing the class require a second cycle to call ngAfterViewChecked
     fixture.detectChanges();
+    await fixture.whenStable();
 
     expect(getHeightService().itemHeight).toBe(24);
   });
@@ -942,7 +950,6 @@ describe('SiTreeViewComponent', () => {
     });
 
     it('should select multiple items', async () => {
-      jasmine.clock().install();
       component.selectedItem = [component.items[0], component.items[1], component.items[2]];
       component.cdRef.markForCheck();
       jasmine.clock().tick(100);
@@ -951,17 +958,14 @@ describe('SiTreeViewComponent', () => {
       expect(
         debugElement.queryAll(By.css('.si-tree-view-li-item.si-tree-view-item-selected')).length
       ).toBe(3);
-      jasmine.clock().uninstall();
     });
 
     it('should handle selectedItem changes', async () => {
-      jasmine.clock().install();
       component.selectedItem = [component.items[0], component.items[1], component.items[2]];
       component.cdRef.markForCheck();
       jasmine.clock().tick(100);
       fixture.detectChanges();
       await fixture.whenStable();
-      jasmine.clock().uninstall();
       expect(
         debugElement.queryAll(By.css('.si-tree-view-li-item.si-tree-view-item-selected')).length
       ).toBe(3);
@@ -1363,9 +1367,9 @@ describe('SiTreeViewComponent', () => {
             bubbles: true
           })
         );
-        // cannot use jasmine.clock here
-        await new Promise(resolve => setTimeout(resolve, 0));
+        jasmine.clock().tick(0);
         fixture.detectChanges();
+        await fixture.whenStable();
 
         document.activeElement?.dispatchEvent(
           new KeyboardEvent('keydown', {
@@ -1373,9 +1377,9 @@ describe('SiTreeViewComponent', () => {
             bubbles: true
           })
         );
-        // cannot use jasmine.clock here
-        await new Promise(resolve => setTimeout(resolve, 0));
+        jasmine.clock().tick(0);
         fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(treeViewComponent.treeItemsSelected.emit).toHaveBeenCalledWith([
           component.items[0].children![0]
@@ -1393,9 +1397,9 @@ describe('SiTreeViewComponent', () => {
             bubbles: true
           })
         );
-        // cannot use jasmine.clock here
-        await new Promise(resolve => setTimeout(resolve, 0));
+        jasmine.clock().tick(0);
         fixture.detectChanges();
+        await fixture.whenStable();
 
         document.activeElement?.dispatchEvent(
           new KeyboardEvent('keydown', {
@@ -1403,9 +1407,9 @@ describe('SiTreeViewComponent', () => {
             bubbles: true
           })
         );
-        // cannot use jasmine.clock here
-        await new Promise(resolve => setTimeout(resolve, 0));
+        jasmine.clock().tick(0);
         fixture.detectChanges();
+        await fixture.whenStable();
 
         document.activeElement?.closest('si-tree-view-item')?.dispatchEvent(
           new KeyboardEvent('keydown', {
@@ -1413,9 +1417,9 @@ describe('SiTreeViewComponent', () => {
             bubbles: true
           })
         );
-        // cannot use jasmine.clock here
-        await new Promise(resolve => setTimeout(resolve, 0));
+        jasmine.clock().tick(0);
         fixture.detectChanges();
+        await fixture.whenStable();
 
         expect(treeViewComponent.treeItemsSelected.emit).toHaveBeenCalledWith([component.items[0]]);
       });

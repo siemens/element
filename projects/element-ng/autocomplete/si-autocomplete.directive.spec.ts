@@ -53,6 +53,15 @@ describe('SiAutocompleteDirective', () => {
     testComponent = fixture.componentInstance;
   });
 
+  beforeEach(() => {
+    jasmine.clock().install();
+    jasmine.clock().mockDate();
+  });
+
+  afterEach(() => {
+    jasmine.clock().uninstall();
+  });
+
   it('should be navigable', async () => {
     const input = fixture.debugElement.query(By.css('input'));
     expect(Object.keys(input.attributes)).not.toContain('ariaActiveDescendant');
@@ -134,8 +143,8 @@ describe('SiAutocompleteDirective', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    // cannot use mock timer here
-    await new Promise(resolve => setTimeout(resolve, 0));
+    jasmine.clock().tick(0);
+    await fixture.whenStable();
     expect(
       fixture.debugElement
         .queryAll(By.directive(SiAutocompleteOptionDirective))

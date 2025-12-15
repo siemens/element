@@ -118,6 +118,15 @@ describe('SiNavbarVertical', () => {
     let harness: SiNavbarVerticalHarness;
     beforeEach(async () => (harness = await harnessLoader.getHarness(SiNavbarVerticalHarness)));
 
+    beforeEach(() => {
+      jasmine.clock().install();
+      jasmine.clock().mockDate();
+    });
+
+    afterEach(() => {
+      jasmine.clock().uninstall();
+    });
+
     it('should expand/collapse navbar with click', async () => {
       component.collapsed = true;
       fixture.changeDetectorRef.markForCheck();
@@ -185,9 +194,8 @@ describe('SiNavbarVertical', () => {
 
       const spySearch = spyOn(component, 'searchEvent');
       await harness.search('test');
-      // cannot use jasmine.clock here
-      // 400 is the debounceTime and +1 to ensure the timer is executed
-      await new Promise(resolve => setTimeout(resolve, 400 + 1));
+      jasmine.clock().tick(400);
+      await fixture.whenStable();
       expect(spySearch).toHaveBeenCalledOnceWith('test');
     });
 

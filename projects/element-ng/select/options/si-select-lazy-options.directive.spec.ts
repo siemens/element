@@ -57,6 +57,15 @@ describe('SelectLazyOptionsDirective', () => {
     component = fixture.componentInstance;
   });
 
+  beforeEach(() => {
+    jasmine.clock().install();
+    jasmine.clock().mockDate();
+  });
+
+  afterEach(() => {
+    jasmine.clock().uninstall();
+  });
+
   it('should render initial value', async () => {
     component.control.setValue(['value']);
 
@@ -72,13 +81,14 @@ describe('SelectLazyOptionsDirective', () => {
 
     const harness = await loader.getHarness(SiSelectHarness);
     await harness.open();
-    // cannot jasmine.clock for debounceTime, so use real wait
-    await new Promise(resolve => setTimeout(resolve, 200));
+    jasmine.clock().tick(200);
+    await fixture.whenStable();
     const list = (await harness.getList())!;
 
     await list.sendKeys('search');
     expect(component.optionSource.getOptionsForSearch).not.toHaveBeenCalled();
-    await new Promise(resolve => setTimeout(resolve, 100));
+    jasmine.clock().tick(200);
+    await fixture.whenStable();
 
     expect(component.optionSource.getOptionsForSearch).toHaveBeenCalled();
     expect(await list.getAllItemTexts()).toEqual(['label: result']);
@@ -95,12 +105,14 @@ describe('SelectLazyOptionsDirective', () => {
     const harness = await loader.getHarness(SiSelectHarness);
     await harness.open();
 
-    // cannot jasmine.clock for debounceTime, so use real wait
-    await new Promise(resolve => setTimeout(resolve, 200));
+    jasmine.clock().tick(200);
+    await fixture.whenStable();
+
     const list = (await harness.getList())!;
     await list.sendKeys('result');
 
-    await new Promise(resolve => setTimeout(resolve, 100));
+    jasmine.clock().tick(200);
+    await fixture.whenStable();
 
     await list.getItemByText('label: result-2').then(item => item.click());
     await list.getItemByText('label: result-0').then(item => item.click());
@@ -116,7 +128,8 @@ describe('SelectLazyOptionsDirective', () => {
 
     const harness = await loader.getHarness(SiSelectHarness);
     await harness.open();
-    await new Promise(resolve => setTimeout(resolve, 200));
+    jasmine.clock().tick(200);
+    await fixture.whenStable();
     const list = (await harness.getList())!;
     expect(await list.getAllItemTexts()).toEqual(['label: value-0', 'label: value-1']);
   });
@@ -130,7 +143,7 @@ describe('SelectLazyOptionsDirective', () => {
 
     await harness.open();
 
-    await new Promise(resolve => setTimeout(resolve, 200));
+    jasmine.clock().tick(200);
     await fixture.whenStable();
 
     const list = (await harness.getList())!;

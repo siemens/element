@@ -69,6 +69,15 @@ describe('SiDateRangeComponent', () => {
     await fixture.whenStable();
   });
 
+  beforeEach(() => {
+    jasmine.clock().install();
+    jasmine.clock().mockDate();
+  });
+
+  afterEach(() => {
+    jasmine.clock().uninstall();
+  });
+
   it('should create', () => {
     component.siDatepickerConfig.set({
       dateFormat: 'dd-MM-yyyy'
@@ -85,18 +94,15 @@ describe('SiDateRangeComponent', () => {
   });
 
   it('should mark input touched when on datepicker backdrop click', async () => {
-    jasmine.clock().install();
     openCalendarButton()!.click();
     jasmine.clock().tick(0);
     await fixture.whenStable();
     expect(fixture.componentInstance.dateRange.touched).toBeFalse();
     await backdropClick(fixture);
     expect(fixture.componentInstance.dateRange.touched).toBeTrue();
-    jasmine.clock().uninstall();
   });
 
   it('should mark input as touched once the focused is moved outside', async () => {
-    jasmine.clock().install();
     const rangeHarness = await loader.getHarness(SiDateRangeComponentHarness);
     const inputs = await rangeHarness.getInputs();
     const calendarButton = await rangeHarness.getCalendarButton();
@@ -108,7 +114,6 @@ describe('SiDateRangeComponent', () => {
     expect(fixture.componentInstance.dateRange.touched).toBeFalse();
     await calendarButton.blur();
     expect(fixture.componentInstance.dateRange.touched).toBeTruthy();
-    jasmine.clock().uninstall();
   });
 
   describe('with autoClose', () => {
@@ -124,8 +129,8 @@ describe('SiDateRangeComponent', () => {
       helper.getEnabledCellWithText('1')!.click();
       helper.getEnabledCellWithText('3')!.click();
       await fixture.whenStable();
-      // cannot use mock timer here.
-      await new Promise(resolve => setTimeout(resolve, 0));
+      jasmine.clock().tick(0);
+      await fixture.whenStable();
       expect(document.querySelector('si-datepicker-overlay')).toBeFalsy();
     });
   });
@@ -138,7 +143,6 @@ describe('SiDateRangeComponent', () => {
     // - Hovering over a December
     // Then:
     // - April to December should be highlighted
-    jasmine.clock().install();
     fixture.componentInstance.dateRange.setValue({ start: new Date(2023, 2, 1), end: undefined });
     openCalendarButton().click();
     jasmine.clock().tick(1000);
@@ -149,16 +153,14 @@ describe('SiDateRangeComponent', () => {
     helper.getOpenMonthViewLink().click();
     jasmine.clock().tick(1000);
     await fixture.whenStable();
-    jasmine.clock().uninstall();
     helper.getEnabledCellWithText('December')!.dispatchEvent(new Event('mouseover'));
     await fixture.whenStable();
-    // to avoid flakiness we wait a bit here
-    await new Promise(resolve => setTimeout(resolve, 100));
+    jasmine.clock().tick(100);
+    await fixture.whenStable();
     expect(helper.queryAsArray('.range-hover')).toHaveSize(9);
   });
 
   it('should preview month range with second calendar', async () => {
-    jasmine.clock().install();
     // Given:
     // - Start date selected 01.03.2023
     // - Month view opened
@@ -176,7 +178,6 @@ describe('SiDateRangeComponent', () => {
     jasmine.clock().tick(1000);
     // In case the small screen media query match we need to wait for the dialog animation
     await fixture.whenStable();
-    jasmine.clock().uninstall();
 
     const helper = new CalendarTestHelper(
       document.querySelectorAll<HTMLElement>('si-datepicker')[1]
@@ -187,7 +188,6 @@ describe('SiDateRangeComponent', () => {
   });
 
   it('should not overlap month view with enableTwoMonthDateRange when pressing previous year button', async () => {
-    jasmine.clock().install();
     // Given:
     // - config enableTwoMonthDateRange = true and onlyMonthSelection = true
     // - Selected range 03/2023 - 04/2024
@@ -207,7 +207,6 @@ describe('SiDateRangeComponent', () => {
     openCalendarButton().click();
     jasmine.clock().tick(1000);
     await fixture.whenStable();
-    jasmine.clock().uninstall();
 
     const calendars = document.querySelectorAll<HTMLElement>('si-datepicker');
     const firstCalendar = new CalendarTestHelper(calendars[0]);
