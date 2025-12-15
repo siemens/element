@@ -253,7 +253,6 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/charts-ng/tsconfig.spec.json",
             "karmaConfig": "projects/charts-ng/karma.conf.cjs",
             "codeCoverageExclude": ["projects/charts-ng/src/**/*.module.ts"]
@@ -284,7 +283,6 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/native-charts-ng/tsconfig.spec.json",
             "karmaConfig": "projects/native-charts-ng/karma.conf.cjs",
             "codeCoverageExclude": ["projects/native-charts-ng/src/**/*.module.ts"]
@@ -318,7 +316,6 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/maps-ng/tsconfig.spec.json",
             "karmaConfig": "projects/maps-ng/karma.conf.cjs",
             "codeCoverageExclude": ["projects/maps-ng/src/**/*.module.ts"]
@@ -350,7 +347,6 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "builderMode": "browser",
-            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/dashboards-ng/tsconfig.spec.json",
             "karmaConfig": "projects/dashboards-ng/karma.conf.cjs",
             "codeCoverageExclude": ["projects/dashboards-ng/src/**/*.module.ts"]
