@@ -466,6 +466,15 @@ describe('ListDetailsComponent', () => {
       });
     });
 
+    beforeEach(() => {
+      jasmine.clock().install();
+      jasmine.clock().mockDate();
+    });
+
+    afterEach(() => {
+      jasmine.clock().uninstall();
+    });
+
     it('should navigate back and forward in mobile mode by clicking', async () => {
       spyOn(ResizeObserverService.prototype, 'observe').and.returnValue(
         of({ width: 100, height: 100 })
@@ -483,8 +492,8 @@ describe('ListDetailsComponent', () => {
       debugElement.query(By.css('.si-details-header-back')).nativeElement.click();
       routerHarness.detectChanges();
       await routerHarness.fixture.whenStable();
-      // cannot use jasmine.clock here
-      await new Promise(resolve => setTimeout(resolve, 10));
+      jasmine.clock().tick(10);
+      await routerHarness.fixture.whenStable();
       expect(debugElement.query(By.css('si-empty'))).toBeTruthy();
       expect(debugElement.query(By.css('.list-details')).classes['details-active']).toBeFalsy();
     });
