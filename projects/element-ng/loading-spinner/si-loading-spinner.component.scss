@@ -36,13 +36,13 @@ svg {
 }
 
 path {
-  --spinner-speed: calc(0.2s - 0.1s * var(--element-animations-enabled, 1));
+  --__si-spinner-speed: calc(0.2s - 0.1s * var(--element-animations-enabled, 1));
   fill: var(--loading-spinner-color, variables.$element-ui-2);
   animation: spinner-fade calc(2s - 1s * var(--element-animations-enabled, 1)) infinite linear;
 
   @for $i from 0 through 9 {
     &:nth-child(#{$i + 1}) {
-      animation-delay: calc($i * var(--spinner-speed));
+      animation-delay: calc($i * var(--__si-spinner-speed));
       opacity: 1 - $i * 0.1;
     }
   }

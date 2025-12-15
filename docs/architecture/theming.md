@@ -49,6 +49,16 @@ and follow these few steps:
 - In some cases using the `$element-ui-*` tokens will fail, e.g. for things
   like `background-color: rgba($element-ui-4, 0.5)`.
 
+## Component customization
+
+Some components offer customization via CSS variables. Also many components use CSS variables
+internally that are not meant for users to override. To distinguish between the two:
+
+- Variables starting with the prefix `--si-` are public and meant for customization
+- Variables starting with the prefix `--__si-` are private/internal. Do not override.
+
+> **Note:** Not all components follow this naming scheme yet. If in doubt, ask.
+
 ## Custom themes
 
 The SiThemeService is responsible for all theming topics.

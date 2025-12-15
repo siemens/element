@@ -3,15 +3,15 @@
 @use '@siemens/element-theme/src/styles/variables';
 
 :host {
-  --animation-duration: #{variables.element-transition-duration(0.25s)};
-  --animation-delay: calc(var(--animation-duration) / 2);
+  --__si-animation-duration: #{variables.element-transition-duration(0.25s)};
+  --__si-animation-delay: calc(var(--__si-animation-duration) / 2);
 }
 
 .login-basic-second-step--container,
 .login-basic-next-button--container {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows var(--animation-duration) ease;
+  transition: grid-template-rows var(--__si-animation-duration) ease;
 
   &.active {
     grid-template-rows: 1fr;
@@ -32,8 +32,8 @@
 .toggle-content-transition {
   min-block-size: 0;
   transition:
-    opacity var(--animation-duration) var(--animation-delay) ease-in,
-    transform var(--animation-duration) var(--animation-delay) ease-out;
+    opacity var(--__si-animation-duration) var(--__si-animation-delay) ease-in,
+    transform var(--__si-animation-duration) var(--__si-animation-delay) ease-out;
   visibility: hidden;
   opacity: 0;
 }
@@ -47,5 +47,5 @@
   @extend .toggle-content-transition;
   margin-block-start: 0;
   transform: translateY(map.get(variables.$spacers, 3));
-  transition: margin var(--animation-duration) ease;
+  transition: margin var(--__si-animation-duration) ease;
 }

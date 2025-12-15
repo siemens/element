@@ -75,7 +75,7 @@ describe('SiToastNotificationComponent', () => {
     spyOn(component.siToastComponent().paused, 'emit');
     spyOn(component.siToastComponent().resumed, 'emit');
 
-    expect(timerBar?.style.getPropertyValue('--toast-timer-duration')).toBe(
+    expect(timerBar?.style.getPropertyValue('--__si-toast-timer-duration')).toBe(
       SI_TOAST_AUTO_HIDE_DELAY / 1000 + 's'
     );
     element.querySelector('si-toast-notification')?.dispatchEvent(new MouseEvent('mouseenter'));
@@ -83,12 +83,12 @@ describe('SiToastNotificationComponent', () => {
 
     expect(component.siToastComponent().paused.emit).toHaveBeenCalledTimes(1);
 
-    expect(timerBar?.style.getPropertyValue('--play-state')).toBe('paused');
+    expect(timerBar?.style.getPropertyValue('--__si-play-state')).toBe('paused');
 
     element.querySelector('si-toast-notification')?.dispatchEvent(new MouseEvent('mouseleave'));
     fixture.detectChanges();
 
     expect(component.siToastComponent().resumed.emit).toHaveBeenCalledTimes(1);
-    expect(timerBar?.style.getPropertyValue('--play-state')).toBe('running');
+    expect(timerBar?.style.getPropertyValue('--__si-play-state')).toBe('running');
   });
 });

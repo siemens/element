@@ -74,8 +74,8 @@ $toast-timer-height: 2px;
 }
 
 .si-toast-timer-bar {
-  animation: si-toast-auto-close-animation var(--toast-timer-duration, 4s) linear forwards;
-  animation-play-state: var(--play-state, running);
+  animation: si-toast-auto-close-animation var(--__si-toast-timer-duration, 4s) linear forwards;
+  animation-play-state: var(--__si-play-state, running);
   @extend %si-toast-bottom-bar;
   background-color: all-variables.$element-ui-0;
 }

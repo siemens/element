@@ -5,8 +5,8 @@
   @if (autoClose) {
     <div
       class="si-toast-timer-bar"
-      [style.--play-state]="animationMode()"
-      [style.--toast-timer-duration.s]="toastTimeoutInSeconds()"
+      [style.--__si-play-state]="animationMode()"
+      [style.--__si-toast-timer-duration.s]="toastTimeoutInSeconds()"
     ></div>
   }
   <div class="bar" [ngClass]="statusColor()"></div>

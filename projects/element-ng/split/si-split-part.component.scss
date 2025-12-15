@@ -76,25 +76,25 @@ $header-height: 40px;
   }
 
   :host-context(.vertical) > :host & {
-    --orientation-rotate: rotate(90deg);
+    --__si-orientation-rotate: rotate(90deg);
   }
 
   :host-context(.horizontal) > :host & {
     @include all-variables.rtl {
-      --orientation-rtl: scaleX(-1);
+      --__si-orientation-rtl: scaleX(-1);
     }
   }
 
   :host(.is-collapsed) & {
-    --collapse-rotate: rotate(180deg);
+    --__si-collapse-rotate: rotate(180deg);
   }
 
   :host(.collapse-start) & {
-    --collapse-direction: rotate(180deg);
+    --__si-collapse-direction: rotate(180deg);
   }
 
   .collapse-icon {
-    transform: var(--orientation-rotate, rotate(0)) var(--collapse-rotate, rotate(0))
-      var(--collapse-direction, rotate(0)) var(--orientation-rtl, scaleX(1));
+    transform: var(--__si-orientation-rotate, rotate(0)) var(--__si-collapse-rotate, rotate(0))
+      var(--__si-collapse-direction, rotate(0)) var(--__si-orientation-rtl, scaleX(1));
   }
 }
