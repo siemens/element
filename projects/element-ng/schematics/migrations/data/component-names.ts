@@ -85,5 +85,9 @@ export const COMPONENT_NAMES_MIGRATION: ComponentNamesInstruction[] = [
       { replace: 'SiPopoverNextModule', replaceWith: 'SiPopoverModule' }
     ],
     toModule: '@siemens/element-ng/popover'
+  },
+  {
+    module: /@(siemens|simpl)\/dashboards-ng/,
+    symbolRenamings: [{ replace: 'CONFIG_TOKEN', replaceWith: 'SI_DASHBOARD_CONFIGURATION' }]
   }
 ];
