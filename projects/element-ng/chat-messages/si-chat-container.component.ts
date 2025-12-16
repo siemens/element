@@ -80,7 +80,7 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
   }
 
   ngAfterContentInit(): void {
-    this.scrollToBottom();
+    this.scrollToBottomDuringStreaming();
   }
 
   ngOnDestroy(): void {
@@ -95,7 +95,7 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
     }
   }
 
-  private scrollToBottom(): void {
+  private scrollToBottomDuringStreaming(): void {
     if (this.noAutoScroll() || !this.isUserAtBottom) {
       return;
     }
@@ -115,7 +115,7 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
 
     if (timeSinceLastScroll >= this.scrollDebounceMs) {
       this.lastScrollTime = now;
-      this.scrollToBottom();
+      this.scrollToBottomDuringStreaming();
       this.pendingScroll = false;
     } else {
       this.pendingScroll = true;
@@ -128,7 +128,7 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
     this.scrollTimeout = setTimeout(() => {
       if (this.pendingScroll) {
         this.lastScrollTime = Date.now();
-        this.scrollToBottom();
+        this.scrollToBottomDuringStreaming();
         this.pendingScroll = false;
       }
     }, this.scrollDebounceMs);
@@ -186,6 +186,15 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
 
   protected onScroll(): void {
     this.checkIfUserAtBottom();
+  }
+
+  /**
+   * Scrolls to the bottom of the messages container immediately.
+   * This method forces a scroll even if the user has scrolled up.
+   */
+  public scrollToBottom(): void {
+    this.isUserAtBottom = true;
+    this.scrollToBottomDuringStreaming();
   }
 
   /**
