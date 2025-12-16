@@ -9,6 +9,7 @@ import { fromEvent } from 'rxjs';
 import { setDeviceMode, setDirectionRtl } from '../../helpers/utils';
 import {
   SI_LIVE_PREVIEW_CONFIG,
+  SI_LIVE_PREVIEW_ENABLE_JIT,
   SI_LIVE_PREVIEW_INTERNALS
 } from '../../interfaces/live-preview-config';
 import {
@@ -16,6 +17,7 @@ import {
   SiLivePreviewThemeApi,
   ThemeType
 } from '../../interfaces/si-live-preview.api';
+import { SiLivePreviewJitRendererComponent } from '../si-live-preview-renderer/si-live-preview-jit-renderer.component';
 import { SiLivePreviewRendererComponent } from '../si-live-preview-renderer/si-live-preview-renderer.component';
 import { SiLivePreviewWebComponentService } from '../si-live-preview-renderer/webcomponent/si-live-webcomponent.service';
 
@@ -23,12 +25,14 @@ const filterTargets = ['_self', '_top', '_parent', ''];
 
 @Component({
   selector: 'si-live-preview-wrapper',
-  imports: [SiLivePreviewRendererComponent],
+  imports: [SiLivePreviewRendererComponent, SiLivePreviewJitRendererComponent],
   templateUrl: './si-live-preview-wrapper.component.html',
-  styles: 'si-live-preview-renderer { flex: 1;}'
+  styles: 'si-live-preview-renderer, si-live-preview-jit-renderer { flex: 1;}'
 })
 export class SiLivePreviewWrapperComponent {
-  readonly renderer = viewChild.required<SiLivePreviewRendererComponent>('renderer');
+  readonly renderer = viewChild.required<
+    SiLivePreviewRendererComponent | SiLivePreviewJitRendererComponent
+  >('renderer');
   readonly webcomponentRenderer = viewChild.required<ElementRef>('webcomponentRenderer');
 
   exampleUrl!: string;
@@ -50,6 +54,7 @@ export class SiLivePreviewWrapperComponent {
   private internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
   private ngZone = inject(NgZone);
   private webcomponentService = inject(SiLivePreviewWebComponentService, { optional: true });
+  protected enableJitMode = inject(SI_LIVE_PREVIEW_ENABLE_JIT);
 
   constructor() {
     this.themeApi

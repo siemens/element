@@ -25,6 +25,7 @@ import { retry, throttleTime, timeout } from 'rxjs/operators';
 
 import {
   SI_LIVE_PREVIEW_CONFIG,
+  SI_LIVE_PREVIEW_ENABLE_JIT,
   SI_LIVE_PREVIEW_INTERNALS
 } from '../../interfaces/live-preview-config';
 import 'prismjs/components/prism-typescript';
@@ -44,6 +45,7 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
   private self = inject(ElementRef);
   private http = inject(HttpClient);
   public localeApi = inject(SiLivePreviewLocaleApi, { optional: true });
+  protected enableJitMode = inject(SI_LIVE_PREVIEW_ENABLE_JIT);
 
   readonly templateElem = viewChild.required<ElementRef>('codeTemplate');
   readonly typescriptElem = viewChild.required<ElementRef>('codeTypescript');
@@ -159,7 +161,8 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
       defaultTheme: false,
       handleSelfClosingCharacters: false,
       handleTabs: false,
-      ariaLabelledby: 'templateEditorTab'
+      ariaLabelledby: 'templateEditorTab',
+      readonly: !this.enableJitMode
     });
 
     this.flaskTypescript = new CodeFlask(this.typescriptElem().nativeElement, {
