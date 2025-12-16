@@ -1,0 +1,23 @@
+@if (!active()) {
+  <div
+    class="criterion-value-text focus-inside px-4"
+    [tabindex]="disabled() ? -1 : 0"
+    (keydown.enter)="editValue.emit()"
+    (click)="editValue.emit()"
+  >
+    {{ criterionValue().value }}
+  </div>
+} @else {
+  <input
+    #freeTextInput
+    type="text"
+    class="px-4 py-0 border-0 focus-inside"
+    [attr.aria-label]="searchLabel() | translate"
+    [disabled]="disabled()"
+    [value]="criterionValue().value"
+    (input)="freeTextValueChange($event)"
+    (keydown.backspace)="valueBackspace()"
+    (keydown.enter)="valueEnter()"
+    (blur)="active.set(false)"
+  />
+}
