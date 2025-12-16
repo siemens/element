@@ -1,6 +1,6 @@
 <div class="si-layout-fixed-height w-100 h-100">
-  <si-chat-container colorVariant="base-0">
-    @for (message of messages(); track message) {
+  <si-chat-container #chatContainer colorVariant="base-0">
+    @for (message of messages(); track $index) {
       @if (message.type === 'user') {
         <si-user-message
           [content]="message.content"

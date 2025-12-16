@@ -306,6 +306,10 @@ export class SampleComponent {
       }
     ]);
     this.simulateAiResponse(event.content);
+
+    setTimeout(() => {
+      this.chatContainer()?.scrollToBottom();
+    }, 0);
   }
 
   onInterrupt(): void {
