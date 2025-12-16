@@ -201,3 +201,43 @@ describe('SiSidePanelComponent', () => {
     });
   });
 });
+
+@Component({
+  imports: [SiSidePanelModule],
+  template: `<si-side-panel [collapsed]="true">
+    <si-side-panel-content heading="Title">
+      <div>Test</div>
+    </si-side-panel-content>
+  </si-side-panel> `,
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+class TestWrapperComponent {}
+describe('SiSidePanelComponent without markForChecks', () => {
+  let fixture: ComponentFixture<TestWrapperComponent>;
+  let element: HTMLElement;
+  let service: SiSidePanelService;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      providers: [provideZonelessChangeDetection()]
+    }).compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(TestWrapperComponent);
+    fixture.detectChanges();
+    element = fixture.nativeElement;
+    service = TestBed.inject(SiSidePanelService);
+  });
+
+  it('should open without doing explicit detect changes', async () => {
+    jasmine.clock().install();
+    service.open();
+    jasmine.clock().tick(500);
+    await fixture.whenStable();
+    const sidePanelContent = element.querySelector('si-side-panel-content');
+
+    expect(sidePanelContent!.classList).toContain('expanded');
+    jasmine.clock().uninstall();
+  });
+});
