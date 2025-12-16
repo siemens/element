@@ -79,4 +79,18 @@ test.describe('filtered search', () => {
     await page.getByLabel('Disabled').check();
     await si.runVisualAndA11yTests();
   });
+
+  test('should create free text pill', async ({ si, page }) => {
+    await si.visitExample('si-filtered-search/si-filtered-search-playground');
+    await page.getByRole('checkbox', { name: 'Disable free text pills' }).setChecked(false);
+    // FS lacks a11y features. One of the problems is that all inputs are labeled as search. The last one will always be the free text search.
+    const freeTextSearch = page.getByLabel('search', { exact: true }).last();
+    await freeTextSearch.focus();
+    await page.keyboard.type('my free text');
+    await expect(page.getByRole('option', { name: /Create option/ })).toBeInViewport();
+    await si.runVisualAndA11yTests('freetext-typeahead-open');
+    // Select the "Create option" item
+    await page.getByRole('option', { name: /Create option/ }).click();
+    await si.runVisualAndA11yTests('freetext-selected');
+  });
 });

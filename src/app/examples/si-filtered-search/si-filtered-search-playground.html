@@ -64,6 +64,7 @@
         ]"
         [searchCriteria]="searchCriteria"
         [disableFreeTextSearch]="configForm.value.disableFreeTextSearch!"
+        [disableFreeTextPills]="configForm.value.disableFreeTextPills"
         [strictCriterion]="configForm.value.strictCriterion!"
         [strictValue]="configForm.value.strictValue!"
         [exclusiveCriteria]="configForm.value.exclusiveCriteria!"
@@ -129,6 +130,15 @@
           <div class="col-sm-3">
             <si-form-item label="Exclusive criteria">
               <input type="checkbox" class="form-check-input" formControlName="exclusiveCriteria" />
+            </si-form-item>
+          </div>
+          <div class="col-sm-3">
+            <si-form-item label="Disable free text pills">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                formControlName="disableFreeTextPills"
+              />
             </si-form-item>
           </div>
         </div>

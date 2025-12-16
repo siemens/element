@@ -224,6 +224,8 @@ export interface SiTranslatableKeys {
     // (undocumented)
     'SI_FILTERED_SEARCH.CLEAR'?: string;
     // (undocumented)
+    'SI_FILTERED_SEARCH.CREATE_PILL'?: string;
+    // (undocumented)
     'SI_FILTERED_SEARCH.ITEM_COUNT'?: string;
     // (undocumented)
     'SI_FILTERED_SEARCH.SEARCH'?: string;

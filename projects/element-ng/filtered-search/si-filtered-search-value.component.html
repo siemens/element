@@ -6,9 +6,11 @@
   [class.invalid-criterion]="invalidCriterion()"
   (cdkFocusChange)="focusChange($event)"
 >
-  <div class="pill pill-interactive criterion-label si-h5" (click)="edit()">
-    {{ definition().label | translate }}
-  </div>
+  @if (value().type !== 'free-text') {
+    <div class="pill pill-interactive criterion-label si-h5" (click)="edit()">
+      {{ definition().label | translate }}
+    </div>
+  }
   @if (definition().operators?.length) {
     <div class="pill pill-interactive px-0 criterion-operator-section">
       <!-- criterion operator input -->

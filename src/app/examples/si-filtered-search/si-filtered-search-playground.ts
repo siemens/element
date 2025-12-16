@@ -37,6 +37,7 @@ export class SampleComponent implements OnInit {
     optionsInScrollableView: new FormControl(10, { nonNullable: true }),
     maxCriteria: new FormControl(4, { nonNullable: true }),
     maxCriteriaOptions: new FormControl(20, { nonNullable: true }),
+    disableFreeTextPills: new FormControl(true, { nonNullable: true }),
     searchCriteriaText: new FormControl<string>(
       '{ "criteria": [{"name":"location", "value":"Munich"}], "value": "" }',
       { nonNullable: true, updateOn: 'blur' }

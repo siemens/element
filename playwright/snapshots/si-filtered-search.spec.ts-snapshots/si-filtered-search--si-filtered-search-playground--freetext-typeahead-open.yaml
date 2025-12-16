@@ -1,8 +1,6 @@
-- text: Filtered Search Location Hannover
+- text: Filtered Search Location Munich
 - button "clear"
-- text: Building House
-- button "clear"
-- combobox "search"
+- combobox "search" [expanded]: my free text
 - button "clear"
 - button "Submit search"
 - text: Control panel
@@ -14,15 +12,15 @@
 - text: Search on input
 - checkbox "Disable free text search"
 - text: Disable free text search
-- checkbox "Only predefined criteria" [checked]
+- checkbox "Only predefined criteria"
 - text: Only predefined criteria
-- checkbox "Only predefined criterion options" [checked]
+- checkbox "Only predefined criterion options"
 - text: Only predefined criterion options
 - checkbox "Only predefined criterion options and prevent typing"
 - text: Only predefined criterion options and prevent typing
 - checkbox "Exclusive criteria"
 - text: Exclusive criteria
-- checkbox "Disable free text pills" [checked]
+- checkbox "Disable free text pills"
 - text: Disable free text pills Search debounce time
 - spinbutton "Search debounce time"
 - text: Number of visible options
@@ -35,3 +33,5 @@
 - textbox "Search criteria input":
   - /placeholder: "Enter and assign search criteria as JSON e.g. { \"criterias\": [], \"value\": \"test\" }"
   - text: "{ \"criteria\": [{\"name\":\"location\", \"value\":\"Munich\"}], \"value\": \"\" }"
+- listbox "Suggestions":
+  - option "Create option \"my free text\""

@@ -39,6 +39,7 @@ import { SiFilteredSearchHarness } from './testing/si-filtered-search.harness';
     searchLabel="search"
     [disabled]="disabled"
     [disableFreeTextSearch]="disableFreeTextSearch"
+    [disableFreeTextPills]="disableFreeTextPills"
     [readonly]="readonly"
     [placeholder]="placeholder"
     [lazyLoadingDebounceTime]="lazyLoadingDebounceTime"
@@ -65,6 +66,7 @@ class TestHostComponent {
   readonly filteredSearch = viewChild.required(SiFilteredSearchComponent);
   disabled!: boolean;
   disableFreeTextSearch = false;
+  disableFreeTextPills = true;
   readonly!: boolean;
   placeholder = '';
 
@@ -2529,5 +2531,50 @@ describe('SiFilteredSearchComponent - With translation', () => {
       criteriaValid.map(criterion => criterion.value().then(value => value!.text()))
     );
     expect(validValues).toEqual(['translated(GermanyKey)']);
+  });
+
+  describe('with free text pills enabled', () => {
+    it('should add free text pills via user interaction', async () => {
+      component.disableFreeTextPills = false;
+      component.searchCriteria.set({
+        value: '',
+        criteria: [
+          { name: '__si-filtered-search-free-text', value: 'initial pill', type: 'freetext' }
+        ]
+      });
+      await runOnPushChangeDetection(fixture);
+
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      const freeTextSearch = await filteredSearch.freeTextSearch();
+
+      // Verify initial pill exists
+      let criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(1);
+      const value = await criteria[0].value();
+      expect(await value?.text()).toBe('initial pill');
+
+      // Add another free text pill by typing and selecting the "Create option" item
+      await freeTextSearch.focus();
+      await freeTextSearch.typeText('new pill text');
+      await tick();
+
+      // Select the "Create option" item (should be the first item when text is typed)
+      const items = await freeTextSearch.getItems();
+      expect(items).not.toBeNull();
+      expect(items!.length).toBeGreaterThan(0);
+
+      // The create option should be available with pattern: "Create option "{{query}}" translated"
+      await freeTextSearch.select({ text: 'SI_FILTERED_SEARCH.CREATE_PILL translated' });
+      await tick();
+
+      // Verify both pills exist
+      criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(2);
+
+      const values = await parallel(() =>
+        criteria.map(criterion => criterion.value().then(criteriaValue => criteriaValue!.text()))
+      );
+      expect(values).toEqual(['initial pill', 'new pill text']);
+    });
   });
 });

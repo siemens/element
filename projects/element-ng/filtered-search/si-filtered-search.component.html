@@ -37,6 +37,7 @@
     [typeaheadScrollable]="true"
     [typeaheadOptionsInScrollableView]="optionsInScrollableView()"
     [typeaheadAutoSelectIndex]="searchValue ? 0 : -1"
+    [typeaheadCreateOption]="disableFreeTextPills() ? undefined : createFreeTextPillLabel()"
     [readonly]="readonly()"
     [disabled]="disabled()"
     [placeholder]="placeholder()"
@@ -47,6 +48,7 @@
     (keydown.backspace)="freeTextBackspace($event)"
     (keydown.enter)="submit()"
     (typeaheadOnSelect)="typeaheadOnSelectCriterion($event.option)"
+    (typeaheadOnCreateOption)="createFreeTextPill($event)"
   />
 </div>
 <!-- clear all searchCriteria -->

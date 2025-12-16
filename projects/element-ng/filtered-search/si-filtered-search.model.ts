@@ -27,6 +27,12 @@ export interface CriterionValue {
   value?: string | string[];
   /** If the criterion was defined as date or date-time this field will contain the value das js Date. */
   dateValue?: Date;
+  /**
+   * Indicates the type of the value.
+   *
+   * @experimental
+   */
+  type?: 'free-text';
 }
 
 /**
