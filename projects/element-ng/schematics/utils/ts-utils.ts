@@ -285,3 +285,72 @@ export function* renameIdentifier({
     }
   }
 }
+
+interface ImportRemovalChange {
+  start: number;
+  width: number;
+  newImportDeclaration?: ts.ImportDeclaration;
+}
+
+/**
+ * Removes specified symbol imports from import declarations matching the given module pattern.
+ */
+export const removeImportSymbols = ({
+  sourceFile,
+  modulePattern,
+  symbolNames
+}: {
+  sourceFile: ts.SourceFile;
+  modulePattern: RegExp;
+  symbolNames: string[];
+}): ImportRemovalChange[] => {
+  const changes: ImportRemovalChange[] = [];
+
+  for (const node of sourceFile.statements) {
+    if (
+      !ts.isImportDeclaration(node) ||
+      !ts.isStringLiteral(node.moduleSpecifier) ||
+      !modulePattern.test(node.moduleSpecifier.text)
+    ) {
+      continue;
+    }
+
+    const namedBindings = node.importClause?.namedBindings;
+    if (!namedBindings || !ts.isNamedImports(namedBindings)) {
+      continue;
+    }
+
+    // Filter out the symbols to be removed
+    const remainingElements = namedBindings.elements.filter(
+      element => !symbolNames.includes(element.name.text)
+    );
+
+    // If all symbols were removed, remove the entire import
+    if (remainingElements.length === 0) {
+      changes.push({
+        start: node.getFullStart(),
+        width: node.getFullWidth()
+      });
+    } else if (remainingElements.length < namedBindings.elements.length) {
+      // Some symbols removed, update the import
+      const newImport = ts.factory.createImportDeclaration(
+        node.modifiers,
+        ts.factory.createImportClause(
+          node.importClause.isTypeOnly,
+          node.importClause.name,
+          ts.factory.createNamedImports(remainingElements)
+        ),
+        node.moduleSpecifier,
+        node.attributes
+      );
+
+      changes.push({
+        start: node.getStart(),
+        width: node.getWidth(),
+        newImportDeclaration: newImport
+      });
+    }
+  }
+
+  return changes;
+};
