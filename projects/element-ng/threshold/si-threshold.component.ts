@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { addIcons, elementDelete, elementPlus, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
 import {
+  isSelectOption,
   SelectOption,
   SelectOptionLegacy,
   SiSelectComponent,
@@ -183,7 +184,7 @@ export class SiThresholdComponent implements OnChanges {
   protected readonly colors = computed(() => {
     const colorMap = new Map<unknown, string>();
     for (const opt of this.options()) {
-      if (opt.type === 'option') {
+      if (isSelectOption(opt)) {
         colorMap.set(opt.value, opt.iconColor ?? '');
       } else if (!opt.type) {
         colorMap.set(opt.id, opt.color ?? '');
