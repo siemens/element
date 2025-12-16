@@ -63,6 +63,7 @@ interface ChatMessage {
 export class SampleComponent {
   private logEvent = inject(LOG_EVENT);
   private readonly modalTemplate = viewChild<TemplateRef<any>>('modalTemplate');
+  private readonly chatContainer = viewChild<SiChatContainerComponent>('chatContainer');
   private sanitizer = inject(DomSanitizer);
   private readonly toastService = inject(SiToastNotificationService);
   private translate = injectSiTranslateService();
@@ -245,6 +246,10 @@ export class SampleComponent {
       }
     ]);
     this.simulateAiResponse(event.content);
+
+    setTimeout(() => {
+      this.chatContainer()?.scrollToBottom();
+    }, 0);
   }
 
   onInterrupt(): void {
