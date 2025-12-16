@@ -64,8 +64,8 @@
     <si-datepicker
       [config]="dateRangeConfig()"
       [focusedDate]="focusedDate()"
-      [(dateRange)]="dateRange"
-      (dateRangeChange)="updateFromDateRange()"
+      [dateRange]="dateRange()"
+      (dateRangeChange)="updateFromDateRange($event)"
     />
   }
 

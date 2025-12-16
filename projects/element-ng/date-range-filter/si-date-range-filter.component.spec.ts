@@ -11,6 +11,7 @@ import {
   viewChild
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { TestScheduler } from 'rxjs/testing';
 
 import { DateRangeFilter, DateRangePreset, SiDateRangeFilterComponent } from './index';
@@ -275,10 +276,11 @@ describe('SiDateRangeFilterComponent', () => {
       point1: new Date('2023-05-13'),
       point2: new Date('2023-08-14')
     };
-
+    fixture.detectChanges();
     await fixture.whenStable();
 
     presetList()[1]?.click();
+    fixture.detectChanges();
     await fixture.whenStable();
 
     const now = new Date();
@@ -288,6 +290,11 @@ describe('SiDateRangeFilterComponent', () => {
     expect(component.range.point1).toEqual(oneWeekAgo);
     expect(component.range.point2).toEqual(today);
     expect(component.range.range).toBeUndefined();
+    expect(
+      fixture.debugElement.query(
+        By.css(`button.si-calendar-date-cell[aria-label="${oneWeekAgo.toDateString()}"]`)
+      )
+    ).toBeTruthy();
   });
 
   it('selecting presets in input mode keeps now', async () => {
