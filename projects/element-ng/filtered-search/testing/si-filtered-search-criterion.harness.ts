@@ -22,6 +22,7 @@ export interface SiFilteredSearchHarnessFilters extends BaseHarnessFilters {
   labelText?: string | RegExp;
   isValid?: boolean;
   isValidValue?: boolean;
+  valueText?: string | RegExp;
 }
 
 export class SiFilteredSearchCriterionHarness extends ComponentHarness {
@@ -59,7 +60,15 @@ export class SiFilteredSearchCriterionHarness extends ComponentHarness {
         'isValidValue',
         filters.isValidValue,
         async (harness, isValidValue) => (await harness.isValidValue()) === isValidValue
-      );
+      )
+      .addOption('valueText', filters.valueText, async (harness, text) => {
+        const valueElement = await harness.value();
+        if (!valueElement) {
+          return false;
+        }
+        const value = await valueElement.text();
+        return HarnessPredicate.stringMatches(Promise.resolve(value), text);
+      });
   }
 
   /** Reads the current label text */

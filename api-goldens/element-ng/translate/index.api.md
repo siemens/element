@@ -228,6 +228,8 @@ export interface SiTranslatableKeys {
     // (undocumented)
     'SI_FILTERED_SEARCH.SEARCH'?: string;
     // (undocumented)
+    'SI_FILTERED_SEARCH.SEARCH_FOR_FREE_TEXT'?: string;
+    // (undocumented)
     'SI_FILTERED_SEARCH.SUBMIT_BUTTON'?: string;
     // (undocumented)
     'SI_FORM_CONTAINER.ERROR.DATE_FORMAT'?: string;
