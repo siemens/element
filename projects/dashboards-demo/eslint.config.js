@@ -8,10 +8,7 @@ export default defineConfig(
     ignores: ['**/environments/environment.prod.ts'],
     languageOptions: {
       parserOptions: {
-        project: [
-          'projects/dashboards-demo/tsconfig.app.json',
-          'projects/dashboards-demo/tsconfig.spec.json'
-        ]
+        project: ['projects/dashboards-demo/tsconfig.app.json']
       }
     },
     rules: {
