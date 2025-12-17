@@ -13,8 +13,9 @@ export const elementColorScheme = (): Part =>
     feature: 'colorScheme',
     params: {
       // size:
-      cellFontFamily: '"SiemensSans Pro VF", sans-serif',
-      fontFamily: '"SiemensSans Pro VF", sans-serif',
+      cellFontFamily: 'var(--element-body-font-family)',
+      fontFamily: 'var(--element-body-font-family)',
+      fontSize: '14px',
       headerFontWeight: '600',
       // Standard sizes
       rowHeight: '42px',
