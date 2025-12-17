@@ -14,7 +14,7 @@ $input-max-width: 45px;
   // When individual fields are invalid, they will show their own validation styling instead.
   &.ng-touched.ng-invalid:not(:has(.ng-touched.ng-invalid)) {
     .form-control {
-      --border-color: var(--element-status-danger);
+      --border-color: #{variables.$element-status-danger};
     }
   }
 }

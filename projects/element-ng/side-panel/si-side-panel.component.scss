@@ -7,10 +7,10 @@ $rpanel-overlay-bg: rgba(0, 0, 0, 0.4);
 $rpanel-collapsed-width: 48px;
 
 :host {
-  --rpanel-collapsed-padding: 0;
-  --rpanel-size: #{$rpanel-width-regular};
+  --__si-rpanel-collapsed-padding: 0;
+  --__si-rpanel-size: #{$rpanel-width-regular};
   display: block;
-  padding-inline-end: var(--rpanel-size);
+  padding-inline-end: var(--__si-rpanel-size);
 
   &.ready {
     transition: padding-inline-end $rpanel-transition-duration;
@@ -22,16 +22,16 @@ $rpanel-collapsed-width: 48px;
 
   .side-panel,
   .side-panel > .inner {
-    inline-size: var(--rpanel-size);
+    inline-size: var(--__si-rpanel-size);
   }
 
   &.collapsible,
   &.collapsible-temp {
-    --rpanel-collapsed-width: #{$rpanel-collapsed-width};
+    --__si-rpanel-collapsed-width: #{$rpanel-collapsed-width};
   }
 
   &.rpanel-size--wide {
-    --rpanel-size: #{$rpanel-width-wide};
+    --__si-rpanel-size: #{$rpanel-width-wide};
   }
 
   &.rpanel-resize-sm,
@@ -39,7 +39,7 @@ $rpanel-collapsed-width: 48px;
   &.rpanel-resize-lg,
   &.rpanel-resize-xl {
     &.rpanel-mode--over {
-      padding-inline-end: var(--rpanel-collapsed-width);
+      padding-inline-end: var(--__si-rpanel-collapsed-width);
 
       &:not(.rpanel-collapsed) .side-panel {
         box-shadow: all-variables.$element-elevation-2;
@@ -49,14 +49,14 @@ $rpanel-collapsed-width: 48px;
 
   &.rpanel-resize-lg {
     &.rpanel-mode--scroll.rpanel-size--wide {
-      padding-inline-end: var(--rpanel-collapsed-width);
+      padding-inline-end: var(--__si-rpanel-collapsed-width);
     }
   }
 
   &.rpanel-resize-sm,
   &.rpanel-resize-md {
     &.rpanel-mode--scroll {
-      padding-inline-end: var(--rpanel-collapsed-width);
+      padding-inline-end: var(--__si-rpanel-collapsed-width);
 
       &:not(.rpanel-collapsed) .side-panel {
         box-shadow: all-variables.$element-elevation-2;
@@ -67,7 +67,7 @@ $rpanel-collapsed-width: 48px;
   &.rpanel-resize-xs {
     &.rpanel-mode--over,
     &.rpanel-mode--scroll {
-      padding-inline-end: var(--rpanel-collapsed-width);
+      padding-inline-end: var(--__si-rpanel-collapsed-width);
     }
 
     .side-panel {
@@ -87,7 +87,7 @@ $rpanel-collapsed-width: 48px;
   }
 
   &.rpanel-collapsed {
-    padding-inline-end: var(--rpanel-collapsed-width);
+    padding-inline-end: var(--__si-rpanel-collapsed-width);
 
     &:not(.collapsible) {
       .side-panel {
@@ -98,7 +98,7 @@ $rpanel-collapsed-width: 48px;
 
     &.collapsible {
       .side-panel {
-        inline-size: var(--rpanel-collapsed-width);
+        inline-size: var(--__si-rpanel-collapsed-width);
         overflow: hidden;
       }
     }

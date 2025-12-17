@@ -3,7 +3,7 @@
 }
 
 .textarea-grow-wrap::after {
-  content: var(--content-grow);
+  content: var(--__si-content-grow);
   white-space: pre-wrap;
   visibility: hidden;
   margin-block: 3px;
