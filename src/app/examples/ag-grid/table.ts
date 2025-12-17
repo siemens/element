@@ -32,7 +32,7 @@ export class SampleComponent implements OnInit {
 
   defaultColDef: ColDef = {
     flex: 1,
-    suppressHeaderMenuButton: true
+    suppressHeaderMenuButton: false
   };
 
   // Column Definitions: Defines the columns to be displayed.

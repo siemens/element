@@ -15,8 +15,8 @@ import { sampleRowData } from './mock-data';
     style="width: 100%; height: 100%;"
     [columnDefs]="colDefs"
     [defaultColDef]="defaultColDef"
-    [theme]=""
     [rowData]="rowData"
+    [rowDragManaged]="true"
     [gridOptions]="{ headerHeight: 48 }"
     (gridReady)="onGridReady($event)"
   /> `,
@@ -30,9 +30,9 @@ export class SampleComponent {
 
   // Column Definitions: Defines the columns to be displayed.
   colDefs: ColDef[] = [
-    { field: 'id', headerName: 'ID', flex: 0.25 },
+    { field: 'id', headerName: 'ID', flex: 0.25, rowDrag: true },
     { field: 'make', filter: true, floatingFilter: true },
-    { field: 'model' },
+    { field: 'model', filter: 'agSetColumnFilter' },
     {
       field: 'price',
       filter: true,
@@ -51,9 +51,8 @@ export class SampleComponent {
 
   defaultColDef: ColDef = {
     flex: 1,
-    suppressHeaderMenuButton: true
     // minWidth: 150,
-    //  filter: true
+    filter: true
   };
 
   onGridReady(params: GridReadyEvent<any>): void {

@@ -5,3 +5,4 @@
 export * from './checkbox-style-part';
 export * from './element-color-scheme-part';
 export * from './icon-overrides-part';
+export * from './radio-style-part';
