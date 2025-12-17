@@ -13,7 +13,6 @@ export const elementColorScheme = (): Part =>
     feature: 'colorScheme',
     params: {
       // size:
-      buttonFontWeight: '600',
       cellFontFamily: '"SiemensSans Pro VF", sans-serif',
       fontFamily: '"SiemensSans Pro VF", sans-serif',
       headerFontWeight: '600',
@@ -22,7 +21,6 @@ export const elementColorScheme = (): Part =>
       headerHeight: '48px',
       spacing: '8px',
 
-      // colors:
       accentColor: 'var(--element-focus-default)',
       advancedFilterBuilderButtonBarBorder: 'var(--element-ui-4)',
       advancedFilterBuilderJoinPillColor: 'var(--element-base-danger)',
@@ -31,6 +29,9 @@ export const elementColorScheme = (): Part =>
       advancedFilterBuilderValuePillColor: 'var(--element-base-information)',
       backgroundColor: 'var(--element-base-1)',
       borderColor: 'var(--element-ui-4)',
+
+      // Button styles
+      buttonFontWeight: '600',
       buttonActiveBackgroundColor: 'var(--element-base-1-selected)',
       buttonActiveTextColor: 'var(--element-text-primary)',
       buttonBackgroundColor: 'var(--element-action-secondary)',
@@ -39,12 +40,45 @@ export const elementColorScheme = (): Part =>
       buttonHoverBackgroundColor: 'var(--element-base-1-hover)',
       buttonHoverTextColor: 'var(--element-text-primary)',
       buttonTextColor: 'var(--element-text-primary)',
+      buttonActiveBorder: {
+        color: 'var(--element-ui-3)'
+      },
       buttonBorder: {
         color: 'var(--element-ui-3)'
       },
+      buttonDisabledBorder: {
+        color: 'var(--element-ui-4)'
+      },
+      buttonHoverBorder: {
+        color: 'var(--element-ui-3)'
+      },
+
       columnDropCellTextColor: 'var(--element-text-primary)',
       cellTextColor: 'var(--element-text-primary)',
-
+      cellEditingBorder: {
+        color: 'var(--element-action-primary)'
+      },
+      columnDropCellBorder: {
+        color: 'var(--element-action-secondary)'
+      },
+      // columnBorder: {
+      //   color: 'var(--element-ui-4)'
+      // },
+      footerRowBorder: {
+        color: 'var(--element-ui-4)'
+      },
+      dragAndDropImageBorder: {
+        color: 'var(--element-ui-4)'
+      },
+      dialogBorder: {
+        color: 'var(--element-ui-4)'
+      },
+      headerRowBorder: {
+        color: 'var(--element-ui-4)'
+      },
+      headerColumnBorder: {
+        color: 'var(--element-action-secondary)'
+      },
       // checkbox styles
       checkboxIndeterminateShapeColor: 'var(--element-base-1)',
       checkboxBorderWidth: '1px',
@@ -90,7 +124,17 @@ export const elementColorScheme = (): Part =>
       },
       inputBorderRadius: '2px',
       invalidColor: 'var(--element-status-danger)',
+      menuBorder: {
+        color: 'var(--element-ui-4)'
+      },
+      pinnedColumnBorder: {
+        color: 'var(--element-action-secondary)'
+      },
+      rowBorder: {
+        color: 'var(--element-ui-4)'
+      },
 
+      // icon styles
       iconColor: 'var(--element-text-primary)',
       iconButtonActiveBackgroundColor: 'var(--element-base-1-selected)',
       iconButtonActiveColor: 'var(--element-action-primary-hover)',
@@ -99,6 +143,7 @@ export const elementColorScheme = (): Part =>
       iconButtonColor: 'var(--element-text-primary)',
       iconButtonHoverBackgroundColor: 'var(--element-base-1-hover)',
       iconButtonHoverColor: 'var(--element-text-primary)',
+
       menuBackgroundColor: 'var(--element-base-1)',
       oddRowBackgroundColor: 'var(--element-base-1)',
       pinnedRowBackgroundColor: 'var(--element-base-1-selected)',
@@ -110,19 +155,26 @@ export const elementColorScheme = (): Part =>
       rowLoadingSkeletonEffectColor: 'var(--element-base-1)',
       sideBarBackgroundColor: 'var(--element-base-1)',
       subtleTextColor: 'var(--element-text-secondary)',
+
+      // side button styles
+      sideButtonBackgroundColor: 'var(--element-text-secondary)',
       sideButtonHoverBackgroundColor: 'var(--element-base-1-hover)',
       sideButtonSelectedBackgroundColor: 'var(--element-base-1-selected)',
       sideButtonSelectedBorder: 'var(--element-action-secondary-border)',
       sideButtonSelectedUnderlineColor: 'var(--element-base-1-selected)',
+      sideButtonBarBackgroundColor: 'var(--element-base-1)',
+
       selectedRowBackgroundColor: 'var(--element-base-1-selected)',
       statusBarValueColor: 'var(--element-text-primary)',
       statusBarLabelColor: 'var(--element-text-primary)',
       tabSelectedTextColor: 'var(--element-action-primary)',
       tabSelectedUnderlineColor: 'var(--element-action-secondary)',
+
+      // toggle button styles
       toggleButtonSwitchBackgroundColor: 'var(--element-base-1)',
       toggleButtonOffBackgroundColor: 'var(--element-ui-2)',
       toggleButtonOnBackgroundColor: 'var(--element-ui-0)',
-      tooltipBackgroundColor: 'var(--element-base-1)',
+
       tabBackgroundColor: '#ffffff · 0%',
       tabBarBackgroundColor: 'var(--element-base-1)',
       tabHoverBackgroundColor: '#ffffff · 0%',
@@ -130,8 +182,25 @@ export const elementColorScheme = (): Part =>
       valueChangeDeltaUpColor: 'var(--element-status-success)',
       valueChangeDeltaDownColor: 'var(--element-status-danger)',
       headerColumnResizeHandleColor: 'var(--element-action-secondary)',
+      sidePanelBorder: {
+        color: 'var(--element-ui-4)'
+      },
+      selectCellBorder: {
+        color: 'var(--element-ui-4)'
+      },
+
+      tabBarBorder: {
+        color: '#181D1F · 15%'
+      },
+
+      //tooltip styles
+      tooltipBackgroundColor: 'var(--element-base-1)',
+      tooltipBorder: {
+        color: 'var(--element-action-secondary)'
+      },
 
       //chart colors
-      chartMenuLabelColor: 'var(--element-text-primary)'
+      chartMenuLabelColor: 'var(--element-text-primary)',
+      focusShadow: false
     } satisfies Partial<ThemeDefaultParams>
   });

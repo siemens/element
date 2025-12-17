@@ -13,8 +13,6 @@ export const radioStyle: Part = createPart({
   border-radius: 50%;
   width: 16px;
   height: 16px;
-  box-shadow: none;
-  filter: none;
 }
 
 .ag-radio-button-input-wrapper:hover {
@@ -46,7 +44,6 @@ export const radioStyle: Part = createPart({
   border-color: var(--element-ui-3);
   background-color: var(--element-ui-5);
   opacity: 1;
-  filter: none;
 }
 
 .ag-radio-button-input-wrapper.ag-checked.ag-disabled {
@@ -55,12 +52,6 @@ export const radioStyle: Part = createPart({
 
 .ag-radio-button-input-wrapper.ag-checked.ag-disabled::after {
   background-color: var(--element-ui-3);
-}
-
-.ag-radio-button-input-wrapper:focus-within,
-.ag-radio-button-input-wrapper:focus {
-  box-shadow: none;
-  outline: none;
 }
 `
 });
