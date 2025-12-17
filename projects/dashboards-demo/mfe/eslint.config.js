@@ -7,10 +7,7 @@ export default defineConfig(
     files: ['**/*.ts'],
     languageOptions: {
       parserOptions: {
-        project: [
-          'projects/dashboards-demo/mfe/tsconfig.app.json',
-          'projects/dashboards-demo/mfe/tsconfig.spec.json'
-        ]
+        project: ['projects/dashboards-demo/mfe/tsconfig.app.json']
       }
     }
   },
