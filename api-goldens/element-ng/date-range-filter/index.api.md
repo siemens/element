@@ -104,7 +104,7 @@ export class SiDateRangeFilterComponent implements OnChanges {
     protected readonly datepickerConfigInternal: _angular_core.Signal<DatepickerConfig>;
     readonly datePlaceholder: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     // (undocumented)
-    protected dateRange: DateRange;
+    protected readonly dateRange: _angular_core.WritableSignal<DateRange>;
     // (undocumented)
     protected readonly dateRangeConfig: _angular_core.Signal<DatepickerConfig>;
     readonly enableTimeSelection: _angular_core.InputSignalWithTransform<boolean, unknown>;
@@ -163,7 +163,7 @@ export class SiDateRangeFilterComponent implements OnChanges {
     // (undocumented)
     protected updateDateRange(range?: DateRangeFilter): void;
     // (undocumented)
-    protected updateFromDateRange(): void;
+    protected updateFromDateRange(dateRange?: DateRange): void;
     // (undocumented)
     protected updateOnModeChange(): void;
     readonly valueLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
