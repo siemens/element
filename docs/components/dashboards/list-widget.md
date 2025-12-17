@@ -5,7 +5,7 @@ offering users a shortcut to view and access key information directly.
 
 ## Usage ---
 
-The List Dashboard Widget is used for presenting lists in a compact format, allowing users to scan
+The list dashboard widget is used for presenting lists in a compact format, allowing users to scan
 and interact with items quickly. It optionally allows search and sorting. It can include:
 
 - Brief descriptions to provide context.

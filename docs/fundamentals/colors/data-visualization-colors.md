@@ -11,7 +11,7 @@
 _Element_ defines additional colors for data visualization that provide design opportunities beyond
 the [standard colors](color-palette.md).
 
-!!! warning "Usage of Additional Colors"
+!!! warning "Usage of additional colors"
 
     The additional colors shall only be used for data visualization
     (e.g. charts) and not in any other UI context.
