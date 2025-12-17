@@ -1,4 +1,4 @@
-# UI State
+# UI state
 
 > UI state, app state or domain data are big terms, and we do not want to implement our own state management.
 > For client side state management we recommend Flux / Redux / NgRx based state management frameworks

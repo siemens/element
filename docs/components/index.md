@@ -1,4 +1,4 @@
-# Element Components
+# Element components
 
 The [Siemens Element library](https://github.com/siemens/element)
 provides a rich set of reusable components. For each component you'll find the
