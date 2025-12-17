@@ -9,6 +9,6 @@ import { checkboxStyle, elementColorScheme, elementIconOverrides } from './parts
 
 export const elementTheme: Theme = themeAlpine
   .withPart(iconSetAlpine)
-  // .withPart(checkboxStyle)
+  .withPart(checkboxStyle)
   .withPart(elementIconOverrides)
   .withPart(elementColorScheme);
