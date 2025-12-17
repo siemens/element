@@ -185,3 +185,72 @@ To have visible example code, run the example application first.
 # Serve the documentation locally run
 npm run docs:serve
 ```
+
+### General writing style guide
+
+To ensure clarity and consistency, follow these writing style guidelines:
+
+- Use concise, straightforward language.
+- Avoid jargon unless necessary. If using technical terms, provide a brief explanation.
+- Tailor the tone to be professional yet approachable, with a focus on helping users find the information they're looking for.
+
+#### Capitalization and formatting
+
+Element uses sentence case for all text. This means:
+
+- Capitalize only the first word of a sentence or phrase.
+- Names (e.g., Siemens, Switzerland, Element) and acronyms (e.g., FAQ, API) must always be capitalized.
+- Avoid unnecessary capitalization for emphasis or decoration.
+- Component names are also written in sentence case and should not be capitalized.
+
+Use bullet points for lists, but avoid excessive nesting.
+
+#### Chapter structure
+
+Each chapter must include:
+
+- Introduction: A brief overview of the component purpose.
+- Usage section:
+  - **What it does:** Explain the component's functionality, role, and variations.
+  - **When to use:** Outline ideal scenarios and when it’s not suitable.
+  - **Best practices:** Provide actionable tips for effective and accessible usage.
+- Design section: Highlight key design elements, visuals, and behavior across states.
+- Code section: Include implementation examples, API references, and integration tips.
+
+### Code section
+
+To improve the user experience, mention all relevant components, directives, services, pipes and types
+inline using the tags instead of linking them.
+Components (and their types) can be documented by re-exporting them in `docs.ts`.
+
+To enhance the docs with live examples and API specs, use these tags in the Markdown files:
+
+- `<si-docs-component example="si-example-1/si-example-1"></si-docs-component>`  
+  The path in the example is relative from the example base url and only
+  requires the subfolder and example name.
+- `<si-docs-api component="SiExampleComponent"></si-docs-api>`
+  To show the input parameters, output parameters and public attributes of your component, enter the class
+  name in the `component` attribute.
+- `<si-docs-api directive="SiExampleDirective"></si-docs-api>`  
+  To show the input parameters, output parameters and public attributes of your directive, enter the class
+  name in the `directive` attribute.
+- `<si-docs-api injectable="SiExampleService"></si-docs-api>`  
+  To show the public attributes of your service, enter the class
+  name in the `injectable` attribute.
+- `<si-docs-type name="SiExampleInterface"></si-docs-type>`  
+  To show the attributes of your interface or class, enter the type
+  name in the `name` attribute.
+- `<si-docs-types></si-docs-types>`  
+  To show the types of the input and output parameters of your component,
+  only works in combination with the `si-docs-api` tag.
+  Includes the types for all components and directives documented in the same
+  file. Can therefore only be used once per file.
+  It should always be used to get better types documentation resolution.
+
+### Ignoring
+
+To not parse the extension syntax, just add `DOCS-COMPOSER-IGNORE` somewhere in the file (as a markdown comment so it doesn't get rendered):
+
+```md
+[//]: # 'DOCS-COMPOSER-IGNORE'
+```
