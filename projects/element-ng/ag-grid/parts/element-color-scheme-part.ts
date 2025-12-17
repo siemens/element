@@ -39,9 +39,24 @@ export const elementColorScheme = (): Part =>
       buttonHoverBackgroundColor: 'var(--element-base-1-hover)',
       buttonHoverTextColor: 'var(--element-text-primary)',
       buttonTextColor: 'var(--element-text-primary)',
+      buttonBorder: {
+        color: 'var(--element-ui-3)'
+      },
       columnDropCellTextColor: 'var(--element-text-primary)',
-      checkboxIndeterminateShapeColor: 'var(--element-base-1)',
       cellTextColor: 'var(--element-text-primary)',
+      checkboxIndeterminateShapeColor: 'var(--element-base-1)',
+      checkboxBorderWidth: '1px',
+      checkboxBorderRadius: '2px',
+      checkboxCheckedShapeImage: {
+        url: 'data:image/svg+xml;base64,PHN2ZyBpZD0iSWNvbiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiI+CiAgPHRpdGxlPm9rPC90aXRsZT4KICA8cGF0aCBkPSJNMzc5LjUxLDE1Ni43NmwtMTczLDE3My03NC03NGExMiwxMiwwLDEsMC0xNywxN2w4Mi41LDgyLjVhMTIsMTIsMCwwLDAsMTcsMGwxODEuNS0xODEuNWExMiwxMiwwLDAsMC0xNy0xN1oiLz4KPC9zdmc+Cg=='
+      },
+      checkboxUncheckedBackgroundColor: 'var(--element-base-1)',
+      checkboxUncheckedBorderColor: 'var(--element-ui-1)',
+      checkboxCheckedBackgroundColor: 'var(--element-action-primary)',
+      checkboxCheckedBorderColor: 'var(--element-action-primary)',
+      checkboxIndeterminateBackgroundColor: 'var(--element-action-primary)',
+      checkboxIndeterminateBorderColor: 'var(--element-action-primary)',
+      checkboxCheckedShapeColor: 'var(--element-action-primary-text)',
       columnHoverColor: 'var(--element-base-1-hover)',
       columnDropCellBackgroundColor: 'var(--element-base-1)',
       columnDropCellDragHandleColor: 'var(--element-text-primary)',
@@ -50,14 +65,28 @@ export const elementColorScheme = (): Part =>
       dragAndDropImageBackgroundColor: 'var(--element-base-1)',
       headerCellHoverBackgroundColor: 'var(--element-base-1-hover)',
       headerBackgroundColor: 'var(--element-base-1)',
-      iconColor: 'var(--element-text-primary)',
+      // input styles
       inputBackgroundColor: 'var(--element-base-1)',
       inputDisabledBackgroundColor: 'var(--element-base-1)',
-      inputDisabledBorder: 'var(--element-ui-3)',
+      inputDisabledBorder: {
+        color: 'var(--element-ui-3)'
+      },
       inputTextColor: 'var(--element-text-primary)',
       inputIconColor: 'var(--element-ui-1)',
       inputDisabledTextColor: 'var(--element-text-disabled)',
+      inputBorder: {
+        color: 'var(--element-ui-2)'
+      },
+      inputFocusBorder: {
+        color: 'var(--element-ui-2)'
+      },
+      inputFocusShadow: false,
+      inputInvalidBorder: {
+        color: 'var(--element-status-danger)'
+      },
+      inputBorderRadius: '2px',
       invalidColor: 'var(--element-status-danger)',
+      iconColor: 'var(--element-text-primary)',
       iconButtonActiveBackgroundColor: 'var(--element-base-1-selected)',
       iconButtonActiveColor: 'var(--element-action-primary-hover)',
       iconButtonActiveIndicatorColor: 'var(--element-action-primary-hover)',
@@ -96,6 +125,7 @@ export const elementColorScheme = (): Part =>
       valueChangeDeltaUpColor: 'var(--element-status-success)',
       valueChangeDeltaDownColor: 'var(--element-status-danger)',
       headerColumnResizeHandleColor: 'var(--element-action-secondary)',
+      iconSize: '20px',
 
       //chart colors
       chartMenuLabelColor: 'var(--element-text-primary)'
