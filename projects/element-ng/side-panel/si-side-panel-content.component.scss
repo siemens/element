@@ -7,7 +7,6 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: map.get(all-variables.$spacers, 5);
 }
 
 :host-context(.collapsible) {
@@ -24,13 +23,12 @@
   }
 
   :host.collapsed {
-    gap: 0;
-
     .auto-hide {
       display: none;
     }
 
     .rpanel-wrapper {
+      padding-block-start: 0;
       gap: 0;
       inline-size: var(--rpanel-collapsed-width);
     }
@@ -78,6 +76,10 @@
 
 .rpanel-header {
   justify-content: space-between;
+}
+
+.rpanel-wrapper {
+  padding-block-start: map.get(all-variables.$spacers, 5);
 }
 
 .rpanel-wrapper,
