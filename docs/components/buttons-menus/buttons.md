@@ -32,17 +32,24 @@ Buttons can be primary, secondary, or tertiary, regardless of their semantic mea
 
 ### Types
 
-Buttons can include text, a combination of text and icon, or be icon-only..
+Buttons support three content types:
+
+- Text only
+- Text with icon
+- Icon-only
 
 <si-docs-component example="buttons/buttoncategories" editor="false" height="150"></si-docs-component>
 
-When using icon-only buttons, the shape adapts based on context:
+Icon-only buttons adapt their shape based on layout constraints and visual context.
 
-- Circular: Used in unconstrained spaces or for standalone icon actions (e.g., toolbars, overlays)
-- Square: Used when alignment or container structure requires edge-to-edge consistency (e.g., grid layouts)
+**Circular buttons** are used when the button is placed inside a circular container (e.g., pills) or in unconstrained,
+free-form contexts for standalone actions (e.g., overlays, floating controls).
+The circular shape signals a self-contained action and visually separates it from structured layouts.
 
-Icon buttons also support a ghost style, which is visually subtle and blends into the interface.
-Ghost icon buttons are suited for low-priority or optional actions, signaling availability without drawing attention.
+**Square buttons** are used in structured layouts where consistent alignment is required (e.g., inputs, tables, cards).
+The rectangular shape anchors the action to the surrounding layout and scales better when multiple actions are placed side by side.
+
+![Button icon](images/button-icon.png)
 
 ### Button link
 
