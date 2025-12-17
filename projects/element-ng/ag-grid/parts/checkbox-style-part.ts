@@ -3,18 +3,18 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { CheckboxStyleParams, createPart, type Part } from 'ag-grid-community';
+import { createPart, type Part } from 'ag-grid-community';
 
-export const checkboxStyle: Part = createPart<CheckboxStyleParams>({
+export const checkboxStyle: Part = createPart({
   feature: 'checkboxStyle',
   css: `
     .ag-checkbox-input-wrapper {
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      inline-size: 16px !important;
-      block-size: 16px !important;
-      inset-block-start: 1px !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      inline-size: 16px;
+      block-size: 16px;
+      inset-block-start: 1px;
     }
 
     .ag-checkbox-input-wrapper input[type='checkbox'] {
@@ -22,20 +22,20 @@ export const checkboxStyle: Part = createPart<CheckboxStyleParams>({
       -webkit-appearance: none;
       -moz-appearance: none;
       position: relative;
-      display: block !important;
-      inline-size: 16px !important;
-      block-size: 16px !important;
-      margin: 0 !important;
-      border: 1px solid var(--element-ui-1) !important;
-      border-radius: var(--element-button-radius) !important;
-      background-color: var(--element-ui-5) !important;
+      display: block;
+      inline-size: 16px;
+      block-size: 16px;
+      margin: 0;
+      border: 1px solid var(--element-ui-1);
+      border-radius: var(--element-button-radius);
+      background-color: var(--element-ui-5);
       flex-shrink: 0;
       cursor: pointer;
     }
 
     .ag-checkbox-input-wrapper input[type='checkbox']:hover {
-      border-color: var(--element-action-secondary-border-hover) !important;
-      background-color: var(--element-action-secondary-hover) !important;
+      border-color: var(--element-action-secondary-border-hover);
+      background: var(--element-action-secondary-hover);
     }
 
     .ag-checkbox-input-wrapper input[type='checkbox']::after {
@@ -51,18 +51,22 @@ export const checkboxStyle: Part = createPart<CheckboxStyleParams>({
     }
 
     .ag-checkbox-input-wrapper input[type='checkbox']:checked {
-      background-color: var(--element-ui-0) !important;
-      border-color: var(--element-ui-0) !important;
+      background-color: var(--element-ui-0);
+      border-color: var(--element-ui-0);
     }
 
     .ag-checkbox-input-wrapper input[type='checkbox']:checked:hover {
-      background-color: var(--element-ui-0-hover) !important;
-      border-color: var(--element-ui-0-hover) !important;
+      background-color: var(--element-ui-0-hover);
+      border-color: var(--element-ui-0-hover);
     }
 
     .ag-checkbox-input-wrapper input[type='checkbox']:checked::after {
       background-color: var(--element-text-inverse);
       opacity: 1;
+    }
+
+    .ag-checkbox-input-wrapper input[type='checkbox']:indeterminate {
+      border-color: var(--element-ui-0);
     }
 
     .ag-checkbox-input-wrapper input[type='checkbox']:indeterminate::after {
@@ -75,13 +79,18 @@ export const checkboxStyle: Part = createPart<CheckboxStyleParams>({
       inset-block-start: 6px;
     }
 
+    .ag-checkbox-input-wrapper input[type='checkbox']:indeterminate:hover {
+      border-color: var(--element-ui-0-hover);
+    }
+
     .ag-checkbox-input-wrapper input[type='checkbox']:indeterminate:hover::after {
       background-color: var(--element-ui-0-hover);
     }
 
     .ag-checkbox-input-wrapper input[type='checkbox']:disabled {
       cursor: not-allowed;
-      opacity: 0.5;
+      border-color: var(--element-ui-3);
+      background-color: var(--element-ui-5);
     }
 
     .ag-checkbox-input-wrapper input[type='checkbox']:checked:disabled {
