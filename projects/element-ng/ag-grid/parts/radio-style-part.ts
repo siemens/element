@@ -10,9 +10,6 @@ export const radioStyle: Part = createPart({
   .ag-radio-button-input-wrapper {
   background-color: var(--element-ui-5);
   border: 1px solid var(--element-ui-1);
-  border-radius: 50%;
-  width: 16px;
-  height: 16px;
 }
 
 .ag-radio-button-input-wrapper:hover {
