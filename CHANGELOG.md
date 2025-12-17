@@ -1,3 +1,20 @@
+# [48.8.0](https://github.com/siemens/element/compare/v48.7.0...v48.8.0) (2025-12-17)
+
+
+### Features
+
+* **side-panel:** add extended size option ([199e451](https://github.com/siemens/element/commit/199e4515dfa7bc6d0416eb212f2ad81b21f6d3f5))
+* **side-panel:** enhance navigation with router-link and link support ([3f8679a](https://github.com/siemens/element/commit/3f8679ace83c3c2af64fc9641d4262a4d99ac254))
+* **side-panel:** implement fullscreen overlay and navigation modes ([526773f](https://github.com/siemens/element/commit/526773f8208ae566f7efc8b17f79d61d98580612))
+
+
+### Bug Fixes
+
+* **date-range-filter:** update datepicker date-range on preset selection ([70433ae](https://github.com/siemens/element/commit/70433ae6d531a5f0e50fec9859146750238a651a))
+* **datepicker:** convert 12 AM to 0 hours for 12-hour clock ([1f2eb16](https://github.com/siemens/element/commit/1f2eb16405e20d07609c01c984e8be04bdbe1e00))
+* **icon:** render font icons when name contains kebab-case with numbers ([8684c7f](https://github.com/siemens/element/commit/8684c7f25d0bf9e53065ab346248da662fc1f672))
+* **password-toggle:** hide MS Edge built-in reveal toggle icon ([fdba859](https://github.com/siemens/element/commit/fdba859c7531725c8c0b175baa744c1307c9c697))
+
 # [48.7.0](https://github.com/siemens/element/compare/v48.6.0...v48.7.0) (2025-12-10)
 
 
