@@ -61,7 +61,7 @@ a toast notification:
 - The `SiToastNotificationService` has a method called `showToastNotification`.
   Call this method, and pass the previously created `SiToast` as the argument.
 
-!!! note "Toast Notification Drawer"
+!!! note "Toast notification drawer"
 
     It is not needed anymore to insert the `si-toast-notification-drawer`
     manually into a main template as this is now automatically appended to the

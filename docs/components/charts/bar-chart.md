@@ -63,11 +63,11 @@ import { SiChartCartesianComponent } from '@siemens/charts-ng/cartesian';
 })
 ```
 
-### Simple Bar Chart
+### Simple bar chart
 
 <si-docs-component example="si-charts/cartesian/si-chart-bar" height="400"></si-docs-component>
 
-### Stacked Bar Chart
+### Stacked bar chart
 
 The same component can also be used in a stacked configuration.
 

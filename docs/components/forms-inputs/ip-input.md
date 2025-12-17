@@ -1,4 +1,4 @@
-# IP Input
+# IP input
 
 ## Usage ---
 

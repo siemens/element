@@ -1,4 +1,4 @@
-# UX Writing Overview
+# UX writing overview
 
 The writing style guide provides support for content designers, writers, designers and developers at Siemens.
 These are the guidelines we use as Siemens to create consistent and clear products within industrial contexts

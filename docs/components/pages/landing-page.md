@@ -173,7 +173,7 @@ A custom background image needs to meet some basic criteria to make sure it look
 - The image should be in WebP format and optimized for web: `cwebp -q 80 input.jpg -o image.webp`
   (the cwebp tool can be downloaded [here](https://developers.google.com/speed/webp/download))
 
-!!! tip "Testing Required"
+!!! tip "Testing required"
 
     Every image is different and testing of all popular screen sizes is crucial.
 

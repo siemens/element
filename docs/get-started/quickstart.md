@@ -1,4 +1,4 @@
-# Getting Started
+# Getting started
 
 This chapter helps you set up the development tools and shows you how to add
 Element components to a new Angular application.
@@ -22,7 +22,7 @@ nvm install --lts  # Linux & Mac
 nvm install lts    # NVM for Windows
 ```
 
-!!! info "Supported Node.js Versions"
+!!! info "Supported Node.js versions"
 
     Element supports **all active LTS versions** of Node.js and therefore
     recommends installing the latest available LTS version. While the newest

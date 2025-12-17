@@ -1,6 +1,6 @@
 # Color picker
 
-The **Color picker** is an input element for selecting a color from a set of predefined swatches.
+The **color picker** is an input element for selecting a color from a set of predefined swatches.
 
 ## Usage ---
 
