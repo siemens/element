@@ -30,7 +30,7 @@ export class SampleComponent {
 
   // Column Definitions: Defines the columns to be displayed.
   colDefs: ColDef[] = [
-    { field: 'id', headerName: 'ID', flex: 0.25, rowDrag: true },
+    { field: 'id', headerName: 'ID', rowDrag: true },
     { field: 'make', filter: true, floatingFilter: true },
     { field: 'model', filter: 'agSetColumnFilter' },
     {

@@ -126,9 +126,7 @@ export const elementColorScheme: Part = createPart({
     },
     inputBorderRadius: '2px',
     invalidColor: 'var(--element-status-danger)',
-    menuBorder: {
-      color: 'var(--element-ui-4)'
-    },
+
     pinnedColumnBorder: {
       color: 'var(--element-action-secondary)'
     },
@@ -146,7 +144,14 @@ export const elementColorScheme: Part = createPart({
     iconButtonHoverBackgroundColor: 'var(--element-base-1-hover)',
     iconButtonHoverColor: 'var(--element-text-primary)',
 
+    // menu styles
+    menuBorder: {
+      color: 'var(--element-ui-4)'
+    },
+    menuShadow: false,
     menuBackgroundColor: 'var(--element-base-1)',
+    chartMenuLabelColor: 'var(--element-text-primary)',
+
     oddRowBackgroundColor: 'var(--element-base-1)',
     pinnedRowBackgroundColor: 'var(--element-base-1-selected)',
     rowHoverColor: 'var(--element-base-1-hover)',
@@ -172,9 +177,12 @@ export const elementColorScheme: Part = createPart({
     tabSelectedTextColor: 'var(--element-action-primary)',
     tabSelectedUnderlineColor: 'var(--element-action-secondary)',
 
-    // toggle button styles
-    toggleButtonSwitchBackgroundColor: 'var(--element-base-1)',
-    toggleButtonOffBackgroundColor: 'var(--element-ui-2)',
+    // Toggle button styles - matching Element switch design
+    toggleButtonWidth: '40px',
+    toggleButtonHeight: '20px',
+    toggleButtonSwitchInset: '4px',
+    toggleButtonSwitchBackgroundColor: 'var(--element-ui-2)',
+    toggleButtonOffBackgroundColor: 'var(--element-ui-4)',
     toggleButtonOnBackgroundColor: 'var(--element-ui-0)',
 
     tabBackgroundColor: 'rgba(255, 255, 255, 0)',
@@ -200,9 +208,6 @@ export const elementColorScheme: Part = createPart({
     tooltipBorder: {
       color: 'var(--element-action-secondary)'
     },
-
-    // Chart colors
-    chartMenuLabelColor: 'var(--element-text-primary)',
     focusShadow: false
   } satisfies Partial<ThemeDefaultParams>
 });
