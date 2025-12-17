@@ -89,7 +89,7 @@ plain text.
 
 <si-docs-component example="si-about/si-about-text" height="500"></si-docs-component>
 
-### License Introduction Text and API
+### License introduction text and API
 
 If your application requires showing a disclaimer in addition to the component
 licenses provided via API, you can combine the parameters `licenseInfo.text` and `licenseInfo.api`.

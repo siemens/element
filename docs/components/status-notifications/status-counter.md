@@ -1,4 +1,4 @@
-# Status Counter
+# Status counter
 
 The **status counter** component (formerly **icon status**) represents a customizable icon with a counter.
 
