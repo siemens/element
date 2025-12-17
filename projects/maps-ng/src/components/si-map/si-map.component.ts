@@ -444,11 +444,6 @@ export class SiMapComponent implements AfterViewInit, OnChanges, OnDestroy, Afte
     this.setTheme(dark, this.maptilerKey());
   }
 
-  /**
-   * @deprecated has no effect and will be removed in v48
-   */
-  onResize(): void {}
-
   private removePixelRatioListener = (): void => {};
 
   private readonly updatePixelRatio = (): void => {
