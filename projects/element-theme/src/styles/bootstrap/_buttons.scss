@@ -64,14 +64,6 @@ button {
     margin-block: -#{map.get(spacers.$spacers, 2)};
     margin-inline: -#{map.get(spacers.$spacers, 2)} #{map.get(spacers.$spacers, 2)};
   }
-
-  &.btn-icon {
-    padding-inline: calc(#{map.get(spacers.$spacers, 2)} - var(--btn-border-width, 0px));
-
-    .icon {
-      margin-inline: 0;
-    }
-  }
 }
 
 .btn:not(:is(.btn-circle, .btn-link, .btn-close, .btn-icon)) {
@@ -156,15 +148,28 @@ button {
   }
 }
 
-// Circle Buttons
+// Icon buttons with circle variant
 // --------------
-:is(.btn-circle, .btn-close) {
-  padding: 0 !important; // stylelint-disable-line declaration-no-important
-  border-radius: 50%;
+.btn:is(.btn-circle, .btn-icon, .btn-close) {
+  display: inline-flex;
+  padding: 0;
   flex-shrink: 0;
+
+  .icon {
+    margin-inline: 0;
+  }
+}
+
+.btn-icon {
+  border-radius: semantic-tokens.$element-button-radius;
 }
 
 .btn-circle {
+  border-radius: 50%;
+}
+
+.btn-circle,
+.btn-icon {
   &,
   &.btn-lg {
     @include button-circle-size($btn-circle-size-default, $btn-circle-font-size-default);
@@ -185,11 +190,17 @@ button {
 }
 
 .btn-circle.btn-ghost,
+.btn-icon.btn-ghost,
 .btn-close {
   --btn-bg: transparent;
   --btn-bg-hover: #{semantic-tokens.$element-action-secondary-hover};
   --btn-color: #{semantic-tokens.$element-ui-2};
   --btn-color-hover: #{semantic-tokens.$element-ui-1};
+}
+
+.btn-close.btn-tertiary {
+  --btn-color: #{semantic-tokens.$element-action-secondary-text};
+  --btn-color-hover: #{semantic-tokens.$element-action-secondary-text-hover};
 }
 
 .btn-lg {
@@ -211,7 +222,6 @@ button {
   &::before {
     content: '\002715';
     font-size: 1rem;
-    margin-block-start: 2px;
   }
 
   > * {
