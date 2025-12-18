@@ -18,8 +18,8 @@
   },
   "type": "module",
   "peerDependencies": {
-    "@angular/common": "20",
-    "@angular/core": "20",
+    "@angular/common": "20 - 21",
+    "@angular/core": "20 - 21",
     "echarts": "^6.0.0"
   },
   "exports": {
