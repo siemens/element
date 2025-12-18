@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { CommonModule } from '@angular/common';
 import { Component, inject, provideZonelessChangeDetection, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -10,7 +9,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SiNumberInputComponent } from './si-number-input.component';
 
 @Component({
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, SiNumberInputComponent],
+  imports: [FormsModule, ReactiveFormsModule, SiNumberInputComponent],
   template: `<si-number-input
     #input
     [min]="min"
@@ -32,7 +31,7 @@ class HostComponent {
 }
 
 @Component({
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, SiNumberInputComponent],
+  imports: [FormsModule, ReactiveFormsModule, SiNumberInputComponent],
   template: `<form [formGroup]="form">
     <si-number-input #input formControlName="input" [required]="required" [min]="min" [max]="max" />
   </form>`
@@ -46,7 +45,7 @@ class FormHostComponent {
 }
 
 @Component({
-  imports: [CommonModule, SiNumberInputComponent],
+  imports: [SiNumberInputComponent],
   template: ` <si-number-input min="some text" max="100" />`
 })
 class AttributeComponent {
@@ -83,7 +82,6 @@ describe('SiNumberInputComponent', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
       imports: [
-        CommonModule,
         FormsModule,
         ReactiveFormsModule,
         SiNumberInputComponent,
