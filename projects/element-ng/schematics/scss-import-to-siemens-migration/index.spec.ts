@@ -94,12 +94,12 @@ describe('scss-import-to-siemens migration', () => {
       `@use '@siemens/element-ng/element-ng';`,
       `// Actually build the siemens-brand theme`,
       `@use '@siemens/element-theme/src/styles/themes';`,
-      `@use '@simpl/brand/dist/element-theme-siemens-brand-light' as brand-light;`,
-      `@use '@simpl/brand/dist/element-theme-siemens-brand-dark' as brand-dark;`,
+      `@use '@linus/brand/dist/element-theme-siemens-brand-light' as brand-light;`,
+      `@use '@linus/brand/dist/element-theme-siemens-brand-dark' as brand-dark;`,
       `@include themes.make-theme(brand-light.$tokens, 'siemens-brand');`,
       `@include themes.make-theme(brand-dark.$tokens, 'siemens-brand', true);`,
       `// Load Siemens fonts`,
-      `@use '@simpl/brand/assets/fonts/styles/siemens-sans';`,
+      `@use '@linus/brand/assets/fonts/styles/siemens-sans';`,
       `// Load Element icons`,
       `@use '@simpl/element-icons/dist/style/simpl-element-icons';`
     ];
@@ -110,7 +110,7 @@ describe('scss-import-to-siemens migration', () => {
   it(`shouldn't touch global theme styles`, async () => {
     const originalContent = [
       `// Load Siemens fonts`,
-      `@use '@simpl/brand/assets/fonts/styles/siemens-sans';`,
+      `@use '@linus/brand/assets/fonts/styles/siemens-sans';`,
       `// Load Element icons`,
       `@use '@simpl/element-icons/dist/style/simpl-element-icons';`,
       `// Use Element theme`,
@@ -125,8 +125,8 @@ describe('scss-import-to-siemens migration', () => {
       `@use '@siemens/element-ng/element-ng';`,
       `// Actually build the siemens-brand theme`,
       `@use '@siemens/element-theme/src/styles/themes';`,
-      `@use '@simpl/brand/dist/element-theme-siemens-brand-light' as brand-light;`,
-      `@use '@simpl/brand/dist/element-theme-siemens-brand-dark' as brand-dark;`,
+      `@use '@linus/brand/dist/element-theme-siemens-brand-light' as brand-light;`,
+      `@use '@linus/brand/dist/element-theme-siemens-brand-dark' as brand-dark;`,
       `@include themes.make-theme(brand-light.$tokens, 'siemens-brand');`,
       `@include themes.make-theme(brand-dark.$tokens, 'siemens-brand', true);`,
       `// Load Element icons`,
