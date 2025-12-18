@@ -2,6 +2,26 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import {
+  elementBusy,
+  elementDown2,
+  elementDownload,
+  elementFilter,
+  elementLeft2,
+  elementLink,
+  elementLinkBroken,
+  elementMinus,
+  elementOk,
+  elementOutOfService,
+  elementPaste,
+  elementPin,
+  elementPinch,
+  elementPlus,
+  elementRight2,
+  elementSortUp,
+  elementUp2,
+  elementZoom
+} from '@siemens/element-ng/icon';
 import { iconOverrides } from 'ag-grid-community';
 
 /**
@@ -25,6 +45,70 @@ export const elementIconOverrides = iconOverrides({
   type: 'image',
   mask: true,
   icons: createIconMap({
-    // TODO: Add element icons override as needed
+    aggregation: '',
+    arrows: '',
+    asc: '',
+    cancel: '',
+    chart: '',
+    'chevron-down': '',
+    'chevron-left': '',
+    'chevron-right': '',
+    'chevron-up': '',
+    'color-picker': '',
+    'column-arrow': '',
+    columns: '',
+    contracted: '',
+    copy: '',
+    cross: '',
+    csv: '',
+    cut: '',
+    desc: '',
+    down: elementDown2,
+    edit: '',
+    excel: '',
+    expanded: '',
+    'eye-slash': '',
+    eye: '',
+    filter: elementFilter,
+    'filter-add': '',
+    first: '',
+    group: '',
+    last: '',
+    left: '',
+    linked: elementLink,
+    loading: elementBusy,
+    maximize: elementZoom,
+    menu: '',
+    'menu-alt': '',
+    minimize: elementPinch,
+    minus: '',
+    next: '',
+    none: '',
+    'not-allowed': elementOutOfService,
+    paste: elementPaste,
+    pin: elementPin,
+    'pinned-bottom': '',
+    'pinned-top': '',
+    pivot: '',
+    plus: elementPlus,
+    previous: '',
+    right: '',
+    save: elementDownload,
+    'small-down': elementDown2,
+    'small-left': elementLeft2,
+    'small-right': elementRight2,
+    'small-up': elementUp2,
+    tick: elementOk,
+    'tree-closed': elementRight2,
+    'tree-indeterminate': elementMinus,
+    'tree-open': elementDown2,
+    'un-pin': '',
+    unlinked: elementLinkBroken,
+    up: elementSortUp,
+    grip: '',
+    settings: ''
+    // star
+    //clear
+    //gripper
   })
 });
