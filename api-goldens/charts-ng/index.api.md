@@ -1085,6 +1085,7 @@ export const themeElement: {
         pie: {
             radius: (string | number)[];
             label: {
+                distanceToLabelLine: number;
                 fontFamily: string | undefined;
                 formatter: string;
                 color: string;
@@ -1092,6 +1093,7 @@ export const themeElement: {
                 fontSize: number;
             };
             labelLine: {
+                length: number;
                 length2: number;
                 lineStyle: {
                     color: string;
@@ -1482,6 +1484,7 @@ export const themeSupport: {
             pie: {
                 radius: (string | number)[];
                 label: {
+                    distanceToLabelLine: number;
                     fontFamily: string | undefined;
                     formatter: string;
                     color: string;
@@ -1489,6 +1492,7 @@ export const themeSupport: {
                     fontSize: number;
                 };
                 labelLine: {
+                    length: number;
                     length2: number;
                     lineStyle: {
                         color: string;
