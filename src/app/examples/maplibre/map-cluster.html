@@ -9,6 +9,8 @@
   (styleImageMissing)="getImage($event)"
   (mapError)="onError($event)"
 >
+  <mgl-control mglFullscreen />
+  <mgl-control mglScale unit="metric" position="top-right" />
   <mgl-control mglAttribution position="bottom-left" />
   <mgl-control mglNavigation position="bottom-right" />
   <mgl-control mglGeolocate position="bottom-right" (geolocate)="onGeolocate($event)" />

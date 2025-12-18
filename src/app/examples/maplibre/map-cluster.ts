@@ -8,6 +8,7 @@ import {
   ClusterPointDirective,
   ControlComponent,
   EventData,
+  FullscreenControlDirective,
   GeoJSONSourceComponent,
   GeolocateControlDirective,
   MapComponent,
@@ -16,7 +17,8 @@ import {
   NavigationControlDirective,
   PointDirective,
   PopupComponent,
-  Position
+  Position,
+  ScaleControlDirective
 } from '@maplibre/ngx-maplibre-gl';
 import {
   observeStyleJson,
@@ -36,15 +38,17 @@ import { buildGeoJSON } from './geo-json-utils';
     AttributionControlDirective,
     ClusterPointDirective,
     ControlComponent,
+    DonutChartGroupingComponent,
+    FullscreenControlDirective,
     GeoJSONSourceComponent,
     GeolocateControlDirective,
-    DonutChartGroupingComponent,
     MapComponent,
     MarkerComponent,
     MarkersForClustersComponent,
     NavigationControlDirective,
     PointDirective,
     PopupComponent,
+    ScaleControlDirective,
     SiMarkerIconComponent
   ],
   templateUrl: './map-cluster.html',
