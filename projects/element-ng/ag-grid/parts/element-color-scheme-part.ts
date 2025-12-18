@@ -18,6 +18,7 @@ export const elementColorScheme: Part = createPart({
     fontFamily: 'var(--element-body-font-family)',
     fontSize: '14px',
     headerFontWeight: '600',
+
     // Standard sizes
     rowHeight: '42px',
     headerHeight: '48px',
@@ -63,9 +64,9 @@ export const elementColorScheme: Part = createPart({
     columnDropCellBorder: {
       color: 'var(--element-action-secondary)'
     },
-    // columnBorder: {
-    //   color: 'var(--element-ui-4)'
-    // },
+    columnBorder: {
+      color: 'var(--element-action-secondary)'
+    },
     footerRowBorder: {
       color: 'var(--element-ui-4)'
     },
@@ -127,9 +128,6 @@ export const elementColorScheme: Part = createPart({
     inputBorderRadius: '2px',
     invalidColor: 'var(--element-status-danger)',
 
-    pinnedColumnBorder: {
-      color: 'var(--element-action-secondary)'
-    },
     rowBorder: {
       color: 'var(--element-ui-4)'
     },
@@ -152,8 +150,15 @@ export const elementColorScheme: Part = createPart({
     menuBackgroundColor: 'var(--element-base-1)',
     chartMenuLabelColor: 'var(--element-text-primary)',
 
+    // pinning styles
+    pinnedColumnBorder: {
+      color: 'var(--element-base-1-selected)'
+    },
+    pinnedRowBorder: {
+      color: 'var(--element-base-1-selected)'
+    },
+
     oddRowBackgroundColor: 'var(--element-base-1)',
-    pinnedRowBackgroundColor: 'var(--element-base-1-selected)',
     rowHoverColor: 'var(--element-base-1-hover)',
     rangeSelectionBackgroundColor: 'var(--element-base-1-selected)',
     rangeHeaderHighlightColor: 'var(--element-base-1)',
@@ -174,8 +179,6 @@ export const elementColorScheme: Part = createPart({
     selectedRowBackgroundColor: 'var(--element-base-1-selected)',
     statusBarValueColor: 'var(--element-text-primary)',
     statusBarLabelColor: 'var(--element-text-primary)',
-    tabSelectedTextColor: 'var(--element-action-primary)',
-    tabSelectedUnderlineColor: 'var(--element-action-secondary)',
 
     // Toggle button styles - matching Element switch design
     toggleButtonWidth: '40px',
@@ -185,13 +188,10 @@ export const elementColorScheme: Part = createPart({
     toggleButtonOffBackgroundColor: 'var(--element-ui-4)',
     toggleButtonOnBackgroundColor: 'var(--element-ui-0)',
 
-    tabBackgroundColor: 'rgba(255, 255, 255, 0)',
-    tabBarBackgroundColor: 'var(--element-base-1)',
-    tabHoverBackgroundColor: 'rgba(255, 255, 255, 0)',
     valueChangeValueHighlightBackgroundColor: 'var(--element-base-1-selected)',
     valueChangeDeltaUpColor: 'var(--element-status-success)',
     valueChangeDeltaDownColor: 'var(--element-status-danger)',
-    headerColumnResizeHandleColor: 'var(--element-action-secondary)',
+    headerColumnResizeHandleColor: 'var(--element-ui-4)',
     sidePanelBorder: {
       color: 'var(--element-ui-4)'
     },
@@ -199,15 +199,23 @@ export const elementColorScheme: Part = createPart({
       color: 'var(--element-ui-4)'
     },
 
-    tabBarBorder: {
-      color: 'rgba(24, 29, 31, 0.15)'
+    // Tooltip styles
+    tooltipBackgroundColor: 'var(--element-base-translucent-2)',
+    tooltipTextColor: 'var(--element-text-inverse)',
+    tooltipBorder: {
+      width: '0'
     },
 
-    // Tooltip styles
-    tooltipBackgroundColor: 'var(--element-base-1)',
-    tooltipBorder: {
-      color: 'var(--element-action-secondary)'
+    // tab styles
+    tabSelectedTextColor: 'var(--element-action-primary)',
+    tabSelectedUnderlineColor: 'var(--element-action-secondary)',
+    tabBackgroundColor: 'var(--element-action-secondary)',
+    tabBarBackgroundColor: 'var(--element-base-1)',
+    tabBarBorder: {
+      color: 'var(--element-ui-4)'
     },
+    tabHoverBackgroundColor: 'var(--element-action-secondary)',
+
     focusShadow: false
   } satisfies Partial<ThemeDefaultParams>
 });
