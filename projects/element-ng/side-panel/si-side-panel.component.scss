@@ -2,9 +2,21 @@
 
 $rpanel-width-regular: 390px;
 $rpanel-width-wide: 500px;
+$rpanel-width-extended-md: 480px;
+$rpanel-width-extended-xl: 640px;
+$rpanel-width-extended-xxl: 720px;
+$rpanel-width-extended-xxxl: 912px;
 $rpanel-transition-duration: all-variables.$element-default-transition-duration;
 $rpanel-overlay-bg: rgba(0, 0, 0, 0.4);
 $rpanel-collapsed-width: 48px;
+
+@mixin rpanel-over-mode {
+  padding-inline-end: var(--rpanel-collapsed-width);
+
+  &:not(.rpanel-collapsed) .side-panel {
+    box-shadow: all-variables.$element-elevation-2;
+  }
+}
 
 :host {
   --rpanel-collapsed-padding: 0;
@@ -15,14 +27,17 @@ $rpanel-collapsed-width: 48px;
   &.ready {
     transition: padding-inline-end $rpanel-transition-duration;
 
-    .side-panel {
-      transition: inline-size $rpanel-transition-duration;
+    .side-panel,
+    .side-panel > .inner {
+      transition:
+        inline-size $rpanel-transition-duration,
+        box-shadow $rpanel-transition-duration;
     }
   }
 
   .side-panel,
   .side-panel > .inner {
-    inline-size: var(--rpanel-size);
+    inline-size: var(--rpanel-width-fullscreen, var(--rpanel-size));
   }
 
   &.collapsible,
@@ -34,37 +49,83 @@ $rpanel-collapsed-width: 48px;
     --rpanel-size: #{$rpanel-width-wide};
   }
 
+  &.rpanel-size--extended {
+    --rpanel-size: 100%;
+  }
+
+  &.rpanel-fullscreen-overlay {
+    --rpanel-width-fullscreen: 100vw;
+  }
+
   &.rpanel-resize-sm,
   &.rpanel-resize-md,
   &.rpanel-resize-lg,
-  &.rpanel-resize-xl {
+  &.rpanel-resize-xl,
+  &.rpanel-resize-xxl,
+  &.rpanel-resize-xxxl {
     &.rpanel-mode--over {
-      padding-inline-end: var(--rpanel-collapsed-width);
+      @include rpanel-over-mode;
+    }
+  }
 
-      &:not(.rpanel-collapsed) .side-panel {
-        box-shadow: all-variables.$element-elevation-2;
-      }
+  &.rpanel-resize-md {
+    &.rpanel-mode--scroll.rpanel-size--extended {
+      @include rpanel-over-mode;
+    }
+
+    &.rpanel-size--extended {
+      --rpanel-size: #{$rpanel-width-extended-md};
     }
   }
 
   &.rpanel-resize-lg {
     &.rpanel-mode--scroll.rpanel-size--wide {
-      padding-inline-end: var(--rpanel-collapsed-width);
+      @include rpanel-over-mode;
+    }
+
+    &.rpanel-mode--scroll.rpanel-size--extended {
+      @include rpanel-over-mode;
+    }
+
+    &.rpanel-size--extended {
+      --rpanel-size: #{$rpanel-width-extended-md};
+    }
+  }
+
+  &.rpanel-resize-xl {
+    &.rpanel-size--extended {
+      --rpanel-size: #{$rpanel-width-extended-xl};
+    }
+  }
+
+  &.rpanel-resize-xxl {
+    &.rpanel-size--extended {
+      --rpanel-size: #{$rpanel-width-extended-xxl};
+    }
+  }
+
+  &.rpanel-resize-xxxl {
+    &.rpanel-size--extended {
+      --rpanel-size: #{$rpanel-width-extended-xxxl};
     }
   }
 
   &.rpanel-resize-sm,
   &.rpanel-resize-md {
     &.rpanel-mode--scroll {
-      padding-inline-end: var(--rpanel-collapsed-width);
+      @include rpanel-over-mode;
+    }
+  }
 
-      &:not(.rpanel-collapsed) .side-panel {
-        box-shadow: all-variables.$element-elevation-2;
-      }
+  &.rpanel-resize-sm {
+    &.rpanel-size--extended {
+      --fullscreen-button-display: none;
     }
   }
 
   &.rpanel-resize-xs {
+    --fullscreen-button-display: none;
+
     &.rpanel-mode--over,
     &.rpanel-mode--scroll {
       padding-inline-end: var(--rpanel-collapsed-width);
@@ -75,6 +136,10 @@ $rpanel-collapsed-width: 48px;
     }
 
     &:not(.rpanel-collapsed) {
+      .side-panel {
+        box-shadow: all-variables.$element-elevation-2;
+      }
+
       .side-panel,
       .side-panel > .inner {
         inline-size: 100%;
