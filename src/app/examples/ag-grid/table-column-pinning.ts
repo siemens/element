@@ -4,7 +4,7 @@
  */
 import { Component, OnInit } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
-import { ColDef, GridReadyEvent, ITooltipParams } from 'ag-grid-community';
+import { ColDef, GridReadyEvent } from 'ag-grid-community';
 
 import { sampleRowData } from './mock-data';
 
@@ -17,9 +17,6 @@ import { sampleRowData } from './mock-data';
     [columnDefs]="colDefs"
     [defaultColDef]="defaultColDef"
     [pagination]="true"
-    [rowSelection]="{
-      mode: 'multiRow'
-    }"
     (gridReady)="onGridReady($event)"
   />`,
   host: {
@@ -38,32 +35,11 @@ export class SampleComponent implements OnInit {
   // Column Definitions: Defines the columns to be displayed.
   colDefs: ColDef[] = [
     { field: 'id', headerName: 'ID' },
-    {
-      field: 'make',
-      filter: true,
-      headerTooltip: 'Tooltip for Make Column Header',
-      tooltipValueGetter: (p: ITooltipParams) =>
-        'This is a dynamic tooltip using the value of ' + p.value
-    },
-    { field: 'model', headerTooltip: 'Tooltip for Model Column Header' },
-    {
-      field: 'price',
-      valueFormatter: params => {
-        return '$' + params.value.toLocaleString();
-      },
-      headerTooltip: 'Tooltip for Price Column Header',
-      tooltipValueGetter: (p: ITooltipParams) =>
-        'This is a dynamic tooltip using the value of ' + p.value
-    },
-    {
-      field: 'dateOfManufacture',
-      headerTooltip: 'Tooltip for Date of manufacture Column Header',
-      headerName: 'Date of Manufacture'
-    },
-    {
-      field: 'action',
-      resizable: true
-    }
+    { field: 'make', pinned: 'left' },
+    { field: 'model' },
+    { field: 'price' },
+    { field: 'dateOfManufacture', pinned: 'right' },
+    { field: 'action' }
   ];
 
   ngOnInit(): void {
