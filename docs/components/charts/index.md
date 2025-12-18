@@ -93,6 +93,13 @@ If needed, use a [select](../forms-inputs/select.md) component to allow the
 user to switch between different data sets or representations within the same
 chart.
 
+#### Toolbox actions
+
+ECharts provides [toolbox](https://echarts.apache.org/en/option.html#toolbox) actions and other built-in interactions for charts.
+However, to maintain consistency with the Element design system, **please do NOT
+use the ECharts toolbox**. Instead, build custom interactions using the Element
+[si-menu-bar](../buttons-menus/menu.md) component.
+
 ## Theming ---
 
 There is no support for CSS styling. Element Charts uses EChart themes with
