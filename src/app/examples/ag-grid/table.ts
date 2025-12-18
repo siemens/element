@@ -71,6 +71,6 @@ export class SampleComponent implements OnInit {
   }
 
   onGridReady(params: GridReadyEvent<any>): void {
-    this.rowData = sampleRowData;
+    this.rowData = [sampleRowData, sampleRowData, sampleRowData].flat();
   }
 }

@@ -8,4 +8,5 @@ export * from './icon-overrides-part';
 export * from './pagination-style-part';
 export * from './pinning-style-part';
 export * from './radio-style-part';
+export * from './skeleton-style-part';
 export * from './toggle-style-part';
