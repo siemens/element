@@ -9,6 +9,7 @@ import {
   checkboxStyle,
   elementColorScheme,
   elementIconOverrides,
+  paginationStyle,
   pinningStyle,
   radioStyle,
   toggleStyle
@@ -19,6 +20,7 @@ export const elementTheme: Theme = themeAlpine
   .withPart(checkboxStyle)
   .withPart(radioStyle)
   .withPart(toggleStyle)
+  .withPart(paginationStyle)
   .withPart(pinningStyle)
   .withPart(elementIconOverrides)
   .withPart(elementColorScheme);
