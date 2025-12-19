@@ -1,0 +1,40 @@
+/**
+ * Copyright (c) Siemens 2016 - 2025
+ * SPDX-License-Identifier: MIT
+ */
+
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+.welcome-header {
+  max-inline-size: 720px;
+  overflow-x: visible;
+  position: relative;
+}
+
+:host-context(.si-container-md, .si-container-lg, .si-container-xl, .si-container-xxl)
+  .welcome-header::before {
+  position: absolute;
+  content: '';
+  inset-inline-start: -104px;
+  inset-block-start: 0;
+  inline-size: 168px;
+  block-size: 168px;
+  background-image: variables.$element-ai-key-visual;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.prompt-suggestions {
+  max-inline-size: 720px;
+}
+
+:host {
+  inline-size: 100%;
+
+  ::ng-deep button[si-action-card] {
+    background-color: variables.$element-base-input-experimental;
+  }
+}
