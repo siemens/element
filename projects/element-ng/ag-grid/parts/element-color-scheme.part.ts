@@ -70,9 +70,7 @@ export const elementColorScheme: Part = createPart({
     footerRowBorder: {
       color: 'var(--element-ui-4)'
     },
-    dragAndDropImageBorder: {
-      color: 'var(--element-ui-4)'
-    },
+
     dialogBorder: {
       color: 'var(--element-ui-4)'
     },
@@ -101,8 +99,7 @@ export const elementColorScheme: Part = createPart({
     columnDropCellBackgroundColor: 'var(--element-base-1)',
     columnDropCellDragHandleColor: 'var(--element-text-primary)',
     foregroundColor: 'var(--element-text-primary)',
-    dragHandleColor: 'var(--element-text-primary)',
-    dragAndDropImageBackgroundColor: 'var(--element-base-1)',
+
     headerCellHoverBackgroundColor: 'var(--element-base-1-hover)',
     headerBackgroundColor: 'var(--element-base-1)',
 
@@ -146,7 +143,8 @@ export const elementColorScheme: Part = createPart({
     menuBorder: {
       width: '0px'
     },
-    menuShadow: '0 0 8px var(--element-box-shadow-color-1), 0 8px 8px var(--element-box-shadow-color-2)',
+    menuShadow:
+      '0 0 8px var(--element-box-shadow-color-1), 0 8px 8px var(--element-box-shadow-color-2)',
     menuBackgroundColor: 'var(--element-base-1)',
     chartMenuLabelColor: 'var(--element-text-primary)',
 
@@ -157,6 +155,15 @@ export const elementColorScheme: Part = createPart({
     pinnedRowBorder: {
       color: 'var(--element-base-1-selected)'
     },
+
+    //drag and drop styles
+    dragHandleColor: 'var(--element-text-primary)',
+    dragAndDropImageBackgroundColor: 'var(--element-base-3)',
+    dragAndDropImageBorder: {
+      width: '0px'
+    },
+    dragAndDropImageShadow:
+      '0 0 8px var(--element-box-shadow-color-1), 0 8px 8px var(--element-box-shadow-color-2)',
 
     oddRowBackgroundColor: 'var(--element-base-1)',
     rowHoverColor: 'var(--element-base-1-hover)',
