@@ -16,6 +16,8 @@ import {
   toggleStyle
 } from './parts';
 
+export * from './ag-date-input.component';
+
 export const elementTheme: Theme = themeAlpine
   .withPart(iconSetAlpine)
   .withPart(checkboxStyle)
