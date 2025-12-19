@@ -27,7 +27,8 @@ import {
   ViewContainerRef,
   viewChild,
   ViewChild,
-  output
+  output,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { ɵDomRendererFactory2 as DomRendererFactory2 } from '@angular/platform-browser';
 import { ActivatedRoute, Routes } from '@angular/router';
@@ -58,13 +59,15 @@ const getCircularReplacer = (): ((_key: any, value: any | null) => any) => {
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'app-sample',
   template: '',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   jit: true
 })
 export class DummyAppSampleComponent {}
 
 @Component({
   selector: 'si-live-preview-renderer',
-  template: '<div #renderedExample></div><div #react id="app"></div>'
+  template: '<div #renderedExample></div><div #react id="app"></div>',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
   readonly renderedExample = viewChild.required('renderedExample', { read: ViewContainerRef });
@@ -299,6 +302,7 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
       // eslint-disable-next-line @angular-eslint/prefer-standalone
       standalone: false,
       template: '',
+      changeDetection: ChangeDetectionStrategy.OnPush,
       jit: true
     })
     class AbstractRuntimeComponent implements DoCheck, AfterViewInit, OnDestroy {
@@ -307,10 +311,6 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
       @ViewChild('container', { read: ViewContainerRef })
       private container!: ViewContainerRef;
       private childRouteBackup: Routes | undefined;
-
-      constructor() {
-        this.changeDetector.detach();
-      }
 
       logEvent(...msg: any[]): void {
         self.logMessage.emit(self.stringifyLog(msg));
@@ -373,7 +373,7 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
         // eslint-disable-next-line @angular-eslint/prefer-standalone
         standalone: false,
         template: '<ion-app><app-sample #container class="ion-page"></app-sample></ion-app>',
-        //changeDetection: ChangeDetectionStrategy.OnPush,
+        changeDetection: ChangeDetectionStrategy.OnPush,
         jit: true
       })
       class RuntimeComponent extends AbstractRuntimeComponent {}
@@ -386,6 +386,7 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
       // eslint-disable-next-line @angular-eslint/prefer-standalone
       standalone: false,
       template: '<app-sample #container></app-sample>',
+      changeDetection: ChangeDetectionStrategy.OnPush,
       jit: true
     })
     class RuntimeComponent extends AbstractRuntimeComponent {}

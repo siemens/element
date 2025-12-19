@@ -73,6 +73,7 @@ export class SiExampleOverviewComponent implements OnInit, OnDestroy {
     this.route.queryParams.subscribe(search => {
       this.makeTree(search.q);
       this.searchControl.setValue(search.q);
+      this.cdRef.markForCheck();
     });
 
     this.searchControl.valueChanges

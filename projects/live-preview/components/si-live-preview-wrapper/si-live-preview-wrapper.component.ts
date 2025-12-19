@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ElementRef,
@@ -33,7 +34,8 @@ const filterTargets = ['_self', '_top', '_parent', ''];
   selector: 'si-live-preview-wrapper',
   imports: [SiLivePreviewRendererComponent],
   templateUrl: './si-live-preview-wrapper.component.html',
-  styles: 'si-live-preview-renderer { flex: 1;}'
+  styles: 'si-live-preview-renderer { flex: 1;}',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiLivePreviewWrapperComponent {
   readonly renderer = viewChild.required<SiLivePreviewRendererComponent>('renderer');
