@@ -35,25 +35,28 @@ export const elementColorScheme: Part = createPart({
 
     // Button styles
     buttonFontWeight: '600',
-    buttonActiveBackgroundColor: 'var(--element-base-1-selected)',
-    buttonActiveTextColor: 'var(--element-text-primary)',
+
+    buttonActiveBackgroundColor: 'var(--element-action-secondary-hover)',
+    buttonActiveBorder: {
+      color: 'var(--element-action-secondary-hover)'
+    },
+    buttonActiveTextColor: 'var(--element-action-secondary-text-hover)',
     buttonBackgroundColor: 'var(--element-action-secondary)',
+    buttonBorder: {
+      color: 'var(--element-action-secondary-border)'
+    },
+    buttonTextColor: 'var(--element-action-secondary-text)',
+
+    buttonHoverBackgroundColor: 'var(--element-action-secondary-hover)',
+    buttonHoverBorder: {
+      color: 'var(--element-action-secondary-border-hover)'
+    },
+    buttonHoverTextColor: 'var(--element-action-secondary-text-hover)',
+
     buttonDisabledBackgroundColor: 'var(--element-action-secondary)',
     buttonDisabledTextColor: 'var(--element-text-disabled)',
-    buttonHoverBackgroundColor: 'var(--element-base-1-hover)',
-    buttonHoverTextColor: 'var(--element-text-primary)',
-    buttonTextColor: 'var(--element-text-primary)',
-    buttonActiveBorder: {
-      color: 'var(--element-ui-3)'
-    },
-    buttonBorder: {
-      color: 'var(--element-ui-3)'
-    },
     buttonDisabledBorder: {
       color: 'var(--element-ui-4)'
-    },
-    buttonHoverBorder: {
-      color: 'var(--element-ui-3)'
     },
 
     columnDropCellTextColor: 'var(--element-text-primary)',
