@@ -8,12 +8,16 @@ import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/elem
 import {
   SiApplicationHeaderComponent,
   SiHeaderBrandDirective,
-  SiHeaderLogoDirective
+  SiHeaderLogoDirective,
+  SiHeaderActionsDirective,
+  SiHeaderActionItemComponent
 } from '@siemens/element-ng/application-header';
 import { ElementDimensions } from '@siemens/element-ng/resize-observer';
 import {
   SidePanelMode,
   SidePanelSize,
+  SidePanelDisplayMode,
+  SidePanelNavigateConfig,
   SiSidePanelComponent,
   SiSidePanelContentComponent
 } from '@siemens/element-ng/side-panel';
@@ -29,7 +33,9 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiAccordionComponent,
     SiCollapsiblePanelComponent,
     SiApplicationHeaderComponent,
-    SiHeaderLogoDirective
+    SiHeaderLogoDirective,
+    SiHeaderActionsDirective,
+    SiHeaderActionItemComponent
   ],
   templateUrl: './si-side-panel.html',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -38,6 +44,14 @@ export class SampleComponent {
   collapsed = true;
   mode: SidePanelMode = 'scroll';
   size: SidePanelSize = 'regular';
+  displayMode: SidePanelDisplayMode = 'overlay';
+
+  navigateConfig: SidePanelNavigateConfig = {
+    type: 'link',
+    label: 'Side panel link',
+    target: '_self',
+    href: 'https://element.siemens.io'
+  };
 
   logEvent = inject(LOG_EVENT);
 
@@ -50,7 +64,13 @@ export class SampleComponent {
   }
 
   changeSize(): void {
-    this.size = this.size === 'regular' ? 'wide' : 'regular';
+    if (this.size === 'regular') {
+      this.size = 'wide';
+    } else if (this.size === 'wide') {
+      this.size = 'extended';
+    } else {
+      this.size = 'regular';
+    }
   }
 
   contentResize(dim: ElementDimensions): void {

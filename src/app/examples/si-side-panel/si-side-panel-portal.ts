@@ -9,11 +9,15 @@ import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/elem
 import {
   SiApplicationHeaderComponent,
   SiHeaderBrandDirective,
-  SiHeaderLogoDirective
+  SiHeaderLogoDirective,
+  SiHeaderActionsDirective,
+  SiHeaderActionItemComponent
 } from '@siemens/element-ng/application-header';
 import {
   SidePanelMode,
   SidePanelSize,
+  SidePanelDisplayMode,
+  SidePanelNavigateConfig,
   SiSidePanelComponent,
   SiSidePanelContentComponent,
   SiSidePanelService
@@ -30,7 +34,9 @@ import {
     RouterLink,
     SiApplicationHeaderComponent,
     SiHeaderBrandDirective,
-    SiHeaderLogoDirective
+    SiHeaderLogoDirective,
+    SiHeaderActionsDirective,
+    SiHeaderActionItemComponent
   ],
   templateUrl: './si-side-panel-portal.html',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -38,6 +44,14 @@ import {
 export class SampleComponent implements OnDestroy {
   mode: SidePanelMode = 'scroll';
   size: SidePanelSize = 'regular';
+  displayMode: SidePanelDisplayMode = 'overlay';
+
+  navigateConfig: SidePanelNavigateConfig = {
+    type: 'link',
+    label: 'Side panel link',
+    target: '_self',
+    href: 'https://element.siemens.io'
+  };
 
   readonly content1 = viewChild.required('content1', { read: CdkPortal });
   readonly content2 = viewChild.required('content2', { read: CdkPortal });
@@ -53,7 +67,13 @@ export class SampleComponent implements OnDestroy {
   }
 
   changeSize(): void {
-    this.size = this.size === 'regular' ? 'wide' : 'regular';
+    if (this.size === 'regular') {
+      this.size = 'wide';
+    } else if (this.size === 'wide') {
+      this.size = 'extended';
+    } else {
+      this.size = 'regular';
+    }
   }
 
   toggle(): void {

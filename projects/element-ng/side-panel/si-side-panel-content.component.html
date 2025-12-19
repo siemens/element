@@ -9,28 +9,85 @@
       [toggleItemLabel]="toggleItemLabel()"
     />
   }
-  <button
-    type="button"
-    class="close-button btn btn-circle btn-sm btn-ghost me-4"
-    [attr.aria-label]="closeButtonLabel() | translate"
-    [tabindex]="focusable() ? '0' : '-1'"
-    (click)="toggleSidePanel($event)"
-  >
-    <si-icon [icon]="icons.elementCancel" />
-  </button>
-  <div class="collapse-toggle">
+  <div class="d-flex">
+    @let navigateConfig = this.navigateConfig();
+    @if (displayMode() === 'navigate' && navigateConfig) {
+      @if (navigateConfig.type === 'router-link') {
+        <a
+          class="btn btn-circle btn-sm btn-ghost auto-hide"
+          [class.ms-4]="collapsible()"
+          [class.mx-4]="!collapsible() || service.isTemporaryOpen()"
+          [routerLink]="navigateConfig.routerLink"
+          [queryParams]="navigateConfig.extras?.queryParams"
+          [queryParamsHandling]="navigateConfig.extras?.queryParamsHandling"
+          [fragment]="navigateConfig.extras?.fragment"
+          [state]="navigateConfig.extras?.state"
+          [relativeTo]="navigateConfig.extras?.relativeTo ?? activatedRoute"
+          [preserveFragment]="navigateConfig.extras?.preserveFragment"
+          [skipLocationChange]="navigateConfig.extras?.skipLocationChange"
+          [replaceUrl]="navigateConfig.extras?.replaceUrl"
+          [attr.aria-label]="navigateConfig.label | translate"
+        >
+          <si-icon class="icon" icon="element-export" />
+          <span class="visually-hidden">
+            {{ navigateConfig.label | translate }}
+          </span></a
+        >
+      } @else if (navigateConfig.type === 'link') {
+        <a
+          class="btn btn-circle btn-sm btn-ghost auto-hide"
+          [class.ms-4]="collapsible()"
+          [class.mx-4]="!collapsible()"
+          [href]="navigateConfig.href"
+          [target]="navigateConfig.target"
+          [attr.rel]="navigateConfig.target === '_blank' ? 'noopener noreferrer' : null"
+          [attr.aria-label]="navigateConfig.label | translate"
+        >
+          <si-icon class="icon" icon="element-export" />
+          <span class="visually-hidden">
+            {{ navigateConfig.label | translate }}
+          </span></a
+        >
+      }
+    }
+    @if (displayMode() === 'overlay') {
+      <button
+        type="button"
+        class="fullscreen-button btn btn-circle btn-sm btn-ghost auto-hide"
+        [class.ms-4]="collapsible()"
+        [class.mx-4]="!collapsible() || service.isTemporaryOpen()"
+        [attr.aria-label]="
+          (isFullscreen() ? exitFullscreenLabel() : enterFullscreenLabel()) | translate
+        "
+        [tabindex]="focusable() ? '0' : '-1'"
+        (click)="toggleFullscreen()"
+      >
+        <si-icon [icon]="isFullscreen() ? 'element-pinch' : 'element-zoom'" />
+      </button>
+    }
     <button
       type="button"
-      class="side-panel-collapse-toggle btn btn-circle btn-sm btn-ghost mx-4"
-      [attr.aria-label]="toggleItemLabel() | translate"
+      class="close-button btn btn-circle btn-sm btn-ghost me-4"
+      [attr.aria-label]="closeButtonLabel() | translate"
+      [tabindex]="focusable() ? '0' : '-1'"
       (click)="toggleSidePanel($event)"
     >
-      <si-icon
-        class="flip-rtl"
-        [class.badge-dot]="showMobileDrawerBadge()"
-        [icon]="isCollapsed() ? icons.elementDoubleLeft : icons.elementDoubleRight"
-      />
+      <si-icon [icon]="icons.elementCancel" />
     </button>
+    <div class="collapse-toggle">
+      <button
+        type="button"
+        class="side-panel-collapse-toggle btn btn-circle btn-sm btn-ghost mx-4"
+        [attr.aria-label]="toggleItemLabel() | translate"
+        (click)="toggleSidePanel($event)"
+      >
+        <si-icon
+          class="flip-rtl"
+          [class.badge-dot]="showMobileDrawerBadge()"
+          [icon]="isCollapsed() ? icons.elementDoubleLeft : icons.elementDoubleRight"
+        />
+      </button>
+    </div>
   </div>
 </div>
 <div class="rpanel-wrapper d-flex flex-column">

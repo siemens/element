@@ -14,11 +14,14 @@ import {
   SiHeaderLogoDirective
 } from '@siemens/element-ng/application-header';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
+import { Link } from '@siemens/element-ng/link';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { ElementDimensions } from '@siemens/element-ng/resize-observer';
 import {
   SidePanelMode,
   SidePanelSize,
+  SidePanelDisplayMode,
+  SidePanelNavigateConfig,
   SiSidePanelComponent,
   SiSidePanelContentComponent,
   SiSidePanelService,
@@ -47,8 +50,17 @@ import { LOG_EVENT } from '@siemens/live-preview';
 export class SampleComponent implements OnDestroy {
   mode: SidePanelMode = 'scroll';
   size: SidePanelSize = 'regular';
+  displayMode: SidePanelDisplayMode = 'overlay';
   showHelpAction = false;
   showLayout = false;
+
+  routerLink: Link = { title: 'Side panel router link', 'link': '/' };
+
+  navigateConfig: SidePanelNavigateConfig = {
+    type: 'router-link',
+    label: this.routerLink.title!,
+    routerLink: this.routerLink.link!
+  };
 
   primaryActions: ContentActionBarMainItem[] = [
     {
@@ -121,7 +133,13 @@ export class SampleComponent implements OnDestroy {
   }
 
   changeSize(): void {
-    this.size = this.size === 'regular' ? 'wide' : 'regular';
+    if (this.size === 'regular') {
+      this.size = 'wide';
+    } else if (this.size === 'wide') {
+      this.size = 'extended';
+    } else {
+      this.size = 'regular';
+    }
   }
 
   contentResize(dim: ElementDimensions): void {
