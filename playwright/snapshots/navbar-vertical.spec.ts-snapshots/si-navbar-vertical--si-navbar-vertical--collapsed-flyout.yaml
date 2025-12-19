@@ -7,22 +7,24 @@
 - navigation:
   - button "expand"
   - button "Search..."
-  - link "Home":
+  - link "Home New":
     - /url: "#/viewer/viewer/home"
-  - link "Energy & sustainability":
-    - /url: "#/viewer/viewer/energy"
-  - button "User management"
-  - group "User management":
-    - link "Sub item 4":
+  - link "Menu item":
+    - /url: "#/viewer/viewer/menu-item"
+  - button "User management 6"
+  - group "User management 6":
+    - link "Sub item 1":
       - /url: "#/viewer/viewer/subItem"
-    - link "Sub item 2":
+    - link "Sub item 2 3":
       - /url: "#/viewer/viewer/subItem2"
-    - link "Sub item 3":
+    - link "Sub item 3 2":
       - /url: "#/viewer/viewer/subItem3"
-  - link "4 Test coverage":
+  - button "Documentation 1"
+  - link "Test coverage":
     - /url: "#/viewer/viewer/coverage"
-  - button "Documentation"
-  - button "Action"
+  - button "Action Hot"
+  - link /Energy & sustainability \+\d+/:
+    - /url: "#/viewer/viewer/energy"
 - main:
   - heading "Here is a title" [level=2]
   - text: Content with path 'subItem2'

@@ -132,7 +132,9 @@ si-search-bar {
   :host {
     &.nav-collapsed {
       .btn-search {
-        display: block;
+        display: flex;
+        justify-content: flex-start;
+        inline-size: 100%;
       }
     }
   }

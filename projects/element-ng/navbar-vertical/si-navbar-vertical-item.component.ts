@@ -66,6 +66,14 @@ export class SiNavbarVerticalItemComponent implements OnInit {
   private readonly siLink = inject(SiLinkDirective, { optional: true });
 
   /**
+   * Determines if the badge contains text-only content (not numeric)
+   */
+  protected readonly textOnlyBadge = computed(() => {
+    const badge = this.item().badge;
+    return badge ? typeof badge !== 'number' : false;
+  });
+
+  /**
    * Formats badge value to limit display to "+99" for numbers greater than 99
    */
   protected readonly formattedBadge = computed(() => {
