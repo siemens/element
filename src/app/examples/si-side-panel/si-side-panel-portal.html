@@ -17,14 +17,14 @@
       <i class="icon element-command-open" aria-hidden="true"></i>
       Toggle side panel
     </button>
-    <div class="btn-group btn-group-sm ms-5" role="group" aria-label="Content toggle button group">
+    <div class="btn-group ms-5" role="group" aria-label="Content toggle button group">
       <input type="radio" class="btn-check" name="content" id="content-1" />
-      <label class="btn btn-sm" for="content-1" (click)="setContent1()"> Content 1 </label>
+      <label class="btn" for="content-1" (click)="setContent1()"> Content 1 </label>
       <input type="radio" class="btn-check" name="content" id="content-2" />
-      <label class="btn btn-sm" for="content-2" (click)="setContent2()"> Content 2 </label>
+      <label class="btn" for="content-2" (click)="setContent2()"> Content 2 </label>
     </div>
     <br />
-    <div class="btn-group btn-group-sm mt-5" role="group" aria-label="Size toggle button group">
+    <div class="btn-group mt-5" role="group" aria-label="Size toggle button group">
       <input
         type="radio"
         class="btn-check"
@@ -32,7 +32,7 @@
         id="size-regular"
         [checked]="size === 'regular'"
       />
-      <label class="btn btn-sm" for="size-regular" (click)="size = 'regular'">
+      <label class="btn" for="size-regular" (click)="size = 'regular'">
         <i class="icon element-layout-pane-2-right" aria-hidden="true"></i>
         Regular
       </label>
@@ -43,7 +43,7 @@
         id="size-wide"
         [checked]="size === 'wide'"
       />
-      <label class="btn btn-sm" for="size-wide" (click)="size = 'wide'">
+      <label class="btn" for="size-wide" (click)="size = 'wide'">
         <i class="icon element-layout-pane-2" aria-hidden="true"></i>
         Wide
       </label>
@@ -54,17 +54,13 @@
         id="size-extended"
         [checked]="size === 'extended'"
       />
-      <label class="btn btn-sm" for="size-extended" (click)="size = 'extended'">
+      <label class="btn" for="size-extended" (click)="size = 'extended'">
         <i class="icon element-layout-pane-1" aria-hidden="true"></i>
         Extended
       </label>
     </div>
     <br />
-    <div
-      class="btn-group btn-group-sm mt-5"
-      role="group"
-      aria-label="Display mode toggle button group"
-    >
+    <div class="btn-group mt-5" role="group" aria-label="Display mode toggle button group">
       <input
         type="radio"
         class="btn-check"
@@ -72,7 +68,7 @@
         id="display-navigate"
         [checked]="displayMode === 'navigate'"
       />
-      <label class="btn btn-sm" for="display-navigate" (click)="displayMode = 'navigate'">
+      <label class="btn" for="display-navigate" (click)="displayMode = 'navigate'">
         <i class="icon element-export" aria-hidden="true"></i>
         Navigate
       </label>
@@ -83,16 +79,12 @@
         id="display-overlay"
         [checked]="displayMode === 'overlay'"
       />
-      <label class="btn btn-sm" for="display-overlay" (click)="displayMode = 'overlay'">
+      <label class="btn" for="display-overlay" (click)="displayMode = 'overlay'">
         <i class="icon element-zoom" aria-hidden="true"></i>
         Overlay
       </label>
     </div>
-    <div
-      class="btn-group btn-group-sm ms-5 mt-5"
-      role="group"
-      aria-label="Mode toggle button group"
-    >
+    <div class="btn-group ms-5 mt-5" role="group" aria-label="Mode toggle button group">
       <input
         type="radio"
         class="btn-check"
@@ -100,7 +92,7 @@
         id="mode-over"
         [checked]="mode === 'over'"
       />
-      <label class="btn btn-sm" for="mode-over" (click)="mode = 'over'">
+      <label class="btn" for="mode-over" (click)="mode = 'over'">
         <i class="icon element-menu" aria-hidden="true"></i>
         Over
       </label>
@@ -111,7 +103,7 @@
         id="mode-scroll"
         [checked]="mode === 'scroll'"
       />
-      <label class="btn btn-sm" for="mode-scroll" (click)="mode = 'scroll'">
+      <label class="btn" for="mode-scroll" (click)="mode = 'scroll'">
         <i class="icon element-jump-to-list-item" aria-hidden="true"></i>
         Scroll
       </label>
