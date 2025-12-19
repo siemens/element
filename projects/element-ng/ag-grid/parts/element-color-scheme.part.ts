@@ -144,9 +144,9 @@ export const elementColorScheme: Part = createPart({
 
     // menu styles
     menuBorder: {
-      color: 'var(--element-ui-4)'
+      width: '0px'
     },
-    menuShadow: false,
+    menuShadow: '0 0 8px var(--element-box-shadow-color-1), 0 8px 8px var(--element-box-shadow-color-2)',
     menuBackgroundColor: 'var(--element-base-1)',
     chartMenuLabelColor: 'var(--element-text-primary)',
 
