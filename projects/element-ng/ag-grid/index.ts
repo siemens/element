@@ -13,6 +13,7 @@ import {
   pinningStyle,
   radioStyle,
   skeletonStyle,
+  textFilterStyle,
   toggleStyle
 } from './parts';
 
@@ -26,5 +27,6 @@ export const elementTheme: Theme = themeAlpine
   .withPart(paginationStyle)
   .withPart(pinningStyle)
   .withPart(skeletonStyle)
+  .withPart(textFilterStyle)
   .withPart(elementIconOverrides)
   .withPart(elementColorScheme);

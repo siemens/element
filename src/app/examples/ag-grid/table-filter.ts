@@ -32,12 +32,15 @@ export class SampleComponent {
   colDefs: ColDef[] = [
     { field: 'id', headerName: 'ID', rowDrag: true },
     { field: 'make', filter: true, floatingFilter: true },
-    { field: 'model', filter: 'agSetColumnFilter' },
+    { field: 'model' },
     {
       field: 'price',
-      filter: true,
       floatingFilter: true,
-      filterParams: priceFilterParams,
+      filter: 'agNumberColumnFilter',
+      filterParams: {
+        buttons: ['apply', 'reset'],
+        closeOnApply: true
+      } as INumberFilterParams,
       valueFormatter: params => {
         return '$' + params.value.toLocaleString();
       }
@@ -51,7 +54,6 @@ export class SampleComponent {
 
   defaultColDef: ColDef = {
     flex: 1,
-    // minWidth: 150,
     filter: true
   };
 
