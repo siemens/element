@@ -16,7 +16,6 @@ There are three pre-defined widths available: **regular** (`390px`), **wide** (`
 The extended variant adapts its width based on application breakpoints, providing more horizontal space
 on larger viewports while maintaining the same behavior and interaction model as other side panels.
 
-
 ### When to use
 
 - Use it to show detail information of a selected item/object from the main
