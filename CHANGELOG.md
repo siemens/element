@@ -1,3 +1,24 @@
+# [48.9.0](https://github.com/siemens/element/compare/v48.8.0...v48.9.0) (2025-12-19)
+
+
+### Features
+
+* **angular:** add support for Angular 21 ([11fce52](https://github.com/siemens/element/commit/11fce52f61115fc0f0d3b18305a5ebf761fc4683))
+* **dashboards-ng:** support widgets as standalone component ([5dad1d4](https://github.com/siemens/element/commit/5dad1d42b7716b43ca2907f2c1a82d0165228944))
+* **filtered-search:** support free text as pills ([1970897](https://github.com/siemens/element/commit/1970897220b694007a6f9f75ec69c4dd4692a01b))
+
+
+### Bug Fixes
+
+* **charts/circle:** align with figma specs ([75157e7](https://github.com/siemens/element/commit/75157e76c34d5df3a90f2a46fa514da536c7d2e8))
+* **side-panel:** ensure search bar focus outline is visible ([32d3959](https://github.com/siemens/element/commit/32d3959a01a22611226792d15081c9f740c349f2)), closes [#1204](https://github.com/siemens/element/issues/1204)
+
+
+### NOTES
+
+* **angular:** Angular without ZoneJS (Zoneless) is generally supported but due to incomplete of testing,
+  it might not work in all cases.
+
 # [48.8.0](https://github.com/siemens/element/compare/v48.7.0...v48.8.0) (2025-12-17)
 
 
