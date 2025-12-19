@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   DestroyRef,
   ElementRef,
@@ -31,7 +33,8 @@ import { availableDevices, Device } from './devices';
   selector: 'si-live-preview-iframe',
   imports: [FormsModule, SiLivePreviewQrComponent],
   templateUrl: './si-live-preview-iframe.component.html',
-  styleUrl: './si-live-preview-iframe.component.scss'
+  styleUrl: './si-live-preview-iframe.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
   readonly previewIframe = viewChild<ElementRef>('previewIframe');
@@ -68,6 +71,7 @@ export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
   private internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
   private ngZone = inject(NgZone);
   private destroyRef = inject(DestroyRef);
+  private cdRef = inject(ChangeDetectorRef);
 
   @HostBinding('class.is-mobile') protected isMobile = this.internalConfig.isMobile;
 
@@ -176,6 +180,7 @@ export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
         this.localeChange.emit(event.data.message);
         break;
     }
+    this.cdRef.markForCheck();
   }
 
   toggleTheme(): void {

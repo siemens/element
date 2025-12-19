@@ -2,7 +2,16 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, ElementRef, HostListener, inject, NgZone, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostListener,
+  inject,
+  NgZone,
+  viewChild
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { fromEvent } from 'rxjs';
 
@@ -25,7 +34,8 @@ const filterTargets = ['_self', '_top', '_parent', ''];
   selector: 'si-live-preview-wrapper',
   imports: [SiLivePreviewRendererComponent],
   templateUrl: './si-live-preview-wrapper.component.html',
-  styles: 'si-live-preview-renderer { flex: 1;}'
+  styles: 'si-live-preview-renderer { flex: 1;}',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiLivePreviewWrapperComponent {
   readonly renderer = viewChild.required<SiLivePreviewRendererComponent>('renderer');
@@ -50,6 +60,7 @@ export class SiLivePreviewWrapperComponent {
   private internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
   private ngZone = inject(NgZone);
   private webcomponentService = inject(SiLivePreviewWebComponentService, { optional: true });
+  private cdRef = inject(ChangeDetectorRef);
 
   constructor() {
     this.themeApi
@@ -143,6 +154,7 @@ export class SiLivePreviewWrapperComponent {
     } else {
       this.webcomponentService?.destroyComponent();
     }
+    this.cdRef.markForCheck();
   }
 
   @HostListener('click', ['$event']) onClick(event: MouseEvent): void {

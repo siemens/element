@@ -3,9 +3,12 @@
  * SPDX-License-Identifier: MIT
  */
 import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   HostBinding,
+  inject,
   Input,
   OnChanges,
   output,
@@ -17,7 +20,8 @@ import { SiLivePreviewConfig } from '../../../interfaces/live-preview-config';
 
 @Component({
   selector: 'si-live-preview-webcomponent',
-  template: '<div #root id="app"></div>'
+  template: '<div #root id="app"></div>',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiLivePreviewWebComponent implements OnChanges {
   readonly root = viewChild.required('root', { read: ElementRef });
@@ -33,6 +37,7 @@ export class SiLivePreviewWebComponent implements OnChanges {
 
   private reactRoot: any;
   private vueRoot: any;
+  private cdRef = inject(ChangeDetectorRef);
 
   ngOnChanges(changes: SimpleChanges): void {
     this.reactRoot?.unmount();
@@ -79,7 +84,10 @@ export class SiLivePreviewWebComponent implements OnChanges {
 
           import(/* webpackIgnore: true  */ /* @vite-ignore */ dataUrl).then(module => {
             this.reactRoot.render(this.getDefault(react).createElement(module.default));
-            setTimeout(() => this.setInProgress(false));
+            setTimeout(() => {
+              this.setInProgress(false);
+              this.cdRef.markForCheck();
+            });
           });
         });
       });
@@ -120,7 +128,10 @@ export class SiLivePreviewWebComponent implements OnChanges {
           this.vueRoot.mount('#vue_app');
         }
 
-        setTimeout(() => this.setInProgress(false));
+        setTimeout(() => {
+          this.setInProgress(false);
+          this.cdRef.markForCheck();
+        });
       });
     });
   }

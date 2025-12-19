@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, OnDestroy, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, viewChild } from '@angular/core';
 import {
   CartesianChartSeries,
   ChartXAxis,
@@ -17,7 +17,8 @@ import { ChartBase, ChartData } from './chart-base';
 @Component({
   selector: 'app-sample',
   imports: [SiChartCartesianComponent, SiResizeObserverDirective],
-  templateUrl: './chart.html'
+  templateUrl: './chart.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent extends ChartBase implements OnDestroy {
   chartData: ChartData = {

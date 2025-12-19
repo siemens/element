@@ -2,7 +2,15 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, DestroyRef, inject, OnInit, TemplateRef, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  TemplateRef,
+  viewChild
+} from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { SiFormFieldsetComponent, SiFormItemComponent } from '@siemens/element-ng/form';
 import { ModalRef, SiModalService } from '@siemens/element-ng/modal';
@@ -30,6 +38,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiSelectMultiValueDirective
   ],
   templateUrl: './si-wizard-forms.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent implements OnInit {
