@@ -9,6 +9,8 @@ import { createPart, type Part } from 'ag-grid-community';
  * Creates a radio button style part for the Element AG Grid theme.
  * This part applies Element design system styling to radio buttons including colors,
  * hover states, checked states, and disabled states.
+ *
+ * @returns A part that defines radio button styling for the Element AG Grid theme.
  */
 export const radioStyle: Part = createPart({
   css: `

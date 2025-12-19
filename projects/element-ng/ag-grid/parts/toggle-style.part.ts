@@ -9,6 +9,8 @@ import { createPart, type Part } from 'ag-grid-community';
  * Creates a toggle button style part for the Element AG Grid theme.
  * This part applies Element design system switch styling including hover states,
  * transitions, and proper knob positioning to match the Element switch component.
+ *
+ * @returns A part that defines toggle button styling for the Element AG Grid theme.
  */
 export const toggleStyle: Part = createPart({
   css: `

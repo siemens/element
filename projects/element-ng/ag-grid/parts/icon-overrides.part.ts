@@ -40,6 +40,8 @@ const createIconMap = (icons: Record<string, string>): Record<string, { svg: str
  * Creates an icon overrides part for the Element AG Grid theme.
  * This part allows customization of AG Grid icons with Element design system icons.
  * Icons can be added to the icons map as needed.
+ *
+ * @returns A part that defines icon overrides for the Element AG Grid theme.
  */
 export const elementIconOverrides = iconOverrides({
   type: 'image',

@@ -5,6 +5,12 @@
 
 import { createPart, type Part } from 'ag-grid-community';
 
+/**
+ * Creates a pinning style part for the Element AG Grid theme.
+ * This part applies box shadow styling to floating top and bottom rows.
+ *
+ * @returns A part that defines pinning styles for the Element AG Grid theme.
+ */
 export const pinningStyle: Part = createPart({
   css: `
   .ag-floating-top {

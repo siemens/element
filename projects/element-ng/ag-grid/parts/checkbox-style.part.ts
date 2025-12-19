@@ -8,6 +8,8 @@ import { createPart, type Part } from 'ag-grid-community';
 /**
  * Creates a checkbox style part for the Element AG Grid theme.
  * This part overrides the unchecked checkbox hover state to match Element design system.
+ *
+ * @returns A part that defines checkbox styling for the Element AG Grid theme.
  */
 export const checkboxStyle: Part = createPart({
   css: `
