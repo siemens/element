@@ -14,3 +14,4 @@ export * from './si-chat-message.component';
 export * from './si-tool-message.component';
 export * from './si-user-message.component';
 export * from './si-ai-chat-container.component';
+export * from './si-ai-welcome-screen.component';

@@ -14,7 +14,10 @@ import {
   MessageAction,
   SiChatMessageActionDirective,
   SiAttachmentListComponent,
-  Attachment
+  Attachment,
+  SiAiWelcomeScreenComponent,
+  PromptCategory,
+  PromptSuggestion
 } from '@siemens/element-ng/chat-messages';
 import { FileUploadError } from '@siemens/element-ng/file-uploader';
 import { SiIconComponent } from '@siemens/element-ng/icon';
@@ -49,7 +52,8 @@ interface ChatMessage {
     SiIconComponent,
     SiMarkdownRendererComponent,
     SiChatMessageActionDirective,
-    SiAttachmentListComponent
+    SiAttachmentListComponent,
+    SiAiWelcomeScreenComponent
   ],
   templateUrl: './si-chat-container.html'
 })
@@ -195,14 +199,9 @@ export class SampleComponent {
 
   inputActions: MessageAction[] = [
     {
-      label: 'Format text',
-      icon: 'element-brush',
-      action: () => this.logEvent('Format text clicked')
-    },
-    {
-      label: 'Use template',
-      icon: 'element-template',
-      action: () => this.logEvent('Use template clicked')
+      label: 'Clear messages',
+      icon: 'element-delete',
+      action: () => this.onClearMessages()
     }
   ];
 
@@ -233,6 +232,35 @@ export class SampleComponent {
       action: (_message: ChatMessage) => this.logEvent('Export AI message')
     }
   ];
+
+  readonly promptCategories: PromptCategory[] = [
+    { label: 'All prompts' },
+    { label: 'Maintenance' },
+    { label: 'Category 2' },
+    { label: 'Category 3' }
+  ];
+
+  readonly selectedCategory = signal<string>('all');
+
+  readonly allPromptSuggestions: PromptSuggestion[] = [
+    { text: 'How do I optimize performance for large datasets?' },
+    { text: 'What are the best practices for data validation?' },
+    { text: 'Help me troubleshoot this error message' },
+    { text: 'Explain the difference between async and sync operations' }
+  ];
+
+  readonly filteredPromptSuggestions = signal<PromptSuggestion[]>(this.allPromptSuggestions);
+
+  onPromptSelected(suggestion: PromptSuggestion): void {
+    this.logEvent(`Prompt selected: ${suggestion.text}`);
+    this.inputValue.set('');
+    this.onMessageSent({ content: suggestion.text, attachments: [] });
+  }
+
+  onClearMessages(): void {
+    this.logEvent('Clear messages clicked');
+    this.messages.set([]);
+  }
 
   onMessageSent(event: { content: string; attachments: ChatInputAttachment[] }): void {
     this.logEvent(`Message sent: "${event.content}" with ${event.attachments.length} attachments`);

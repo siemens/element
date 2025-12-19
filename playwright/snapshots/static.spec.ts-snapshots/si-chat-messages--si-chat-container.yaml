@@ -23,9 +23,8 @@
   - text: mockup.png
   - button "Remove attachment mockup.png"
 - textbox "Chat message input":
-  - /placeholder: Enter a command, question or topic...
+  - /placeholder: Enter a command, question or topic…
 - button "Attach file"
-- button "Format text"
-- button "Use template"
+- button "Clear messages"
 - button "Send"
 - text: The content is AI generated. Always verify the information for accuracy.

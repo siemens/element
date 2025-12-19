@@ -60,6 +60,18 @@ export interface MessageAction {
     label: TranslatableString;
 }
 
+// @public (undocumented)
+export interface PromptCategory {
+    // (undocumented)
+    label: string;
+}
+
+// @public (undocumented)
+export interface PromptSuggestion {
+    // (undocumented)
+    text: string;
+}
+
 // @public
 export class SiAiChatContainerComponent {
     constructor();
@@ -73,6 +85,7 @@ export class SiAiChatContainerComponent {
     readonly emptyStateDescription: _angular_core.InputSignal<TranslatableString_2>;
     readonly emptyStateTitle: _angular_core.InputSignal<TranslatableString_2>;
     focus(): void;
+    readonly greeting: _angular_core.InputSignal<TranslatableString_2>;
     readonly interrupting: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly loading: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly messages: _angular_core.InputSignal<ChatMessage[] | undefined>;
@@ -115,6 +128,18 @@ export class SiAiMessageComponent {
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiAiMessageComponent, "si-ai-message", never, { "content": { "alias": "content"; "required": false; "isSignal": true; }; "contentFormatter": { "alias": "contentFormatter"; "required": false; "isSignal": true; }; "loading": { "alias": "loading"; "required": false; "isSignal": true; }; "actions": { "alias": "actions"; "required": false; "isSignal": true; }; "secondaryActions": { "alias": "secondaryActions"; "required": false; "isSignal": true; }; "actionParam": { "alias": "actionParam"; "required": false; "isSignal": true; }; "secondaryActionsLabel": { "alias": "secondaryActionsLabel"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiAiMessageComponent, never>;
+}
+
+// @public
+export class SiAiWelcomeScreenComponent {
+    readonly categories: _angular_core.InputSignal<PromptCategory[]>;
+    readonly promptSelected: _angular_core.OutputEmitterRef<PromptSuggestion>;
+    readonly promptSuggestions: _angular_core.InputSignal<PromptSuggestion[] | Record<string, PromptSuggestion[]>>;
+    readonly selectedCategory: _angular_core.ModelSignal<string | undefined>;
+    // (undocumented)
+    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiAiWelcomeScreenComponent, "si-ai-welcome-screen", never, { "categories": { "alias": "categories"; "required": false; "isSignal": true; }; "selectedCategory": { "alias": "selectedCategory"; "required": false; "isSignal": true; }; "promptSuggestions": { "alias": "promptSuggestions"; "required": false; "isSignal": true; }; }, { "selectedCategory": "selectedCategoryChange"; "promptSelected": "promptSelected"; }, never, ["*"], true, [{ directive: typeof i1.SiResponsiveContainerDirective; inputs: {}; outputs: {}; }]>;
+    // (undocumented)
+    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiAiWelcomeScreenComponent, never>;
 }
 
 // @public
