@@ -18,11 +18,6 @@ import {
 } from './parts';
 
 /**
- * Exports the custom AG Grid date input component.
- */
-export * from './components/ag-date-input.component';
-
-/**
  * Base Element AG Grid theme without density parameters.
  * This theme extends the Alpine theme with Element design tokens, icons, and component styling.
  * Use the density-specific theme exports (elementTheme, elementThemeCompact, elementThemeComfort)
@@ -139,3 +134,6 @@ export const themeByDensity = new Map<string, Theme>([
   ['comfort', elementThemeComfort],
   ['standard', elementTheme]
 ]);
+
+export * from './components/ag-date-input.component';
+export * from './provider';
