@@ -144,9 +144,7 @@ export const elementColorScheme: Part = createPart({
     iconButtonHoverColor: 'var(--element-text-primary)',
 
     // menu styles
-    menuBorder: {
-      width: '0px'
-    },
+    menuBorder: false,
     menuShadow:
       '0 0 8px var(--element-box-shadow-color-1), 0 8px 8px var(--element-box-shadow-color-2)',
     menuBackgroundColor: 'var(--element-base-1)',
@@ -163,9 +161,7 @@ export const elementColorScheme: Part = createPart({
     //drag and drop styles
     dragHandleColor: 'var(--element-text-primary)',
     dragAndDropImageBackgroundColor: 'var(--element-base-3)',
-    dragAndDropImageBorder: {
-      width: '0px'
-    },
+    dragAndDropImageBorder: false,
     dragAndDropImageShadow:
       '0 0 8px var(--element-box-shadow-color-1), 0 8px 8px var(--element-box-shadow-color-2)',
 
@@ -213,9 +209,7 @@ export const elementColorScheme: Part = createPart({
     // Tooltip styles
     tooltipBackgroundColor: 'var(--element-base-translucent-2)',
     tooltipTextColor: 'var(--element-text-inverse)',
-    tooltipBorder: {
-      width: '0'
-    },
+    tooltipBorder: false,
 
     // tab styles
     tabSelectedTextColor: 'var(--element-action-primary)',
@@ -228,6 +222,7 @@ export const elementColorScheme: Part = createPart({
     tabHoverBackgroundColor: 'var(--element-action-secondary)',
 
     focusShadow: false,
-    iconSize: '18px'
+    iconSize: '18px',
+    wrapperBorder: false
   } satisfies Partial<ThemeDefaultParams>
 });
