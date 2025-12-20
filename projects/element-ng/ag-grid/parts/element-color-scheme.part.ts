@@ -69,16 +69,16 @@ export const elementColorScheme: Part = createPart({
     cellTextColor: 'var(--element-text-primary)',
 
     // Column styles
-    columnHoverColor: 'var(--element-base-1-hover)',
-    columnDropCellTextColor: 'var(--element-text-primary)',
-    columnDropCellBackgroundColor: 'var(--element-base-1)',
-    columnDropCellDragHandleColor: 'var(--element-text-primary)',
-    columnDropCellBorder: {
-      color: 'var(--element-action-secondary)'
-    },
     columnBorder: {
       color: 'var(--element-action-secondary)'
     },
+    columnDropCellBackgroundColor: 'var(--element-base-1)',
+    columnDropCellBorder: {
+      color: 'var(--element-action-secondary)'
+    },
+    columnDropCellDragHandleColor: 'var(--element-text-primary)',
+    columnDropCellTextColor: 'var(--element-text-primary)',
+    columnHoverColor: 'var(--element-base-1-hover)',
 
     // Row styles
     oddRowBackgroundColor: 'var(--element-base-1)',
@@ -98,51 +98,51 @@ export const elementColorScheme: Part = createPart({
     },
 
     // Checkbox styles
-    checkboxIndeterminateShapeColor: 'var(--element-base-1)',
-    checkboxBorderWidth: '1px',
     checkboxBorderRadius: '2px',
+    checkboxBorderWidth: '1px',
+    checkboxCheckedBackgroundColor: 'var(--element-action-primary)',
+    checkboxCheckedBorderColor: 'var(--element-action-primary)',
+    checkboxCheckedShapeColor: 'var(--element-action-primary-text)',
     checkboxCheckedShapeImage: {
       url: elementCheckedImageShape
     },
-    checkboxUncheckedBackgroundColor: 'var(--element-base-1)',
-    checkboxUncheckedBorderColor: 'var(--element-ui-1)',
-    checkboxCheckedBackgroundColor: 'var(--element-action-primary)',
-    checkboxCheckedBorderColor: 'var(--element-action-primary)',
     checkboxIndeterminateBackgroundColor: 'var(--element-action-primary)',
     checkboxIndeterminateBorderColor: 'var(--element-action-primary)',
-    checkboxCheckedShapeColor: 'var(--element-action-primary-text)',
+    checkboxIndeterminateShapeColor: 'var(--element-base-1)',
+    checkboxUncheckedBackgroundColor: 'var(--element-base-1)',
+    checkboxUncheckedBorderColor: 'var(--element-ui-1)',
 
     // Header styles
-    headerCellHoverBackgroundColor: 'var(--element-base-1-hover)',
     headerBackgroundColor: 'var(--element-base-1)',
-    headerRowBorder: {
-      color: 'var(--element-ui-4)'
-    },
+    headerCellHoverBackgroundColor: 'var(--element-base-1-hover)',
     headerColumnBorder: {
       color: 'var(--element-action-secondary)'
     },
     headerColumnResizeHandleColor: 'var(--element-ui-4)',
+    headerRowBorder: {
+      color: 'var(--element-ui-4)'
+    },
 
     // Input styles
     inputBackgroundColor: 'var(--element-base-1)',
+    inputBorder: {
+      color: 'var(--element-ui-2)'
+    },
+    inputBorderRadius: '2px',
     inputDisabledBackgroundColor: 'var(--element-base-1)',
     inputDisabledBorder: {
       color: 'var(--element-ui-3)'
     },
-    inputTextColor: 'var(--element-text-primary)',
-    inputIconColor: 'var(--element-ui-1)',
     inputDisabledTextColor: 'var(--element-text-disabled)',
-    inputBorder: {
-      color: 'var(--element-ui-2)'
-    },
     inputFocusBorder: {
       color: 'var(--element-focus-default)'
     },
     inputFocusShadow: false,
+    inputIconColor: 'var(--element-ui-1)',
     inputInvalidBorder: {
       color: 'var(--element-status-danger)'
     },
-    inputBorderRadius: '2px',
+    inputTextColor: 'var(--element-text-primary)',
 
     // Icon styles
     iconButtonActiveBackgroundColor: 'var(--element-base-1-selected)',
@@ -182,7 +182,7 @@ export const elementColorScheme: Part = createPart({
     rangeSelectionBorderColor: 'var(--element-action-primary-hover)',
     rangeSelectionHighlightColor: 'var(--element-base-1-selected)',
 
-    //Sidebar styles
+    // Sidebar styles
     sideBarBackgroundColor: 'var(--element-base-1)',
     sidePanelBorder: {
       color: 'var(--element-ui-4)'
@@ -197,8 +197,8 @@ export const elementColorScheme: Part = createPart({
     sideButtonSelectedUnderlineColor: 'var(--element-base-1-selected)',
 
     // Status bar styles
-    statusBarValueColor: 'var(--element-text-primary)',
     statusBarLabelColor: 'var(--element-text-primary)',
+    statusBarValueColor: 'var(--element-text-primary)',
 
     // Select cell styles
     selectCellBorder: {
