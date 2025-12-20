@@ -20,11 +20,6 @@ export const elementColorScheme: Part = createPart({
     fontSize: '14px',
     headerFontWeight: '600',
 
-    // Standard sizes
-    rowHeight: '42px',
-    headerHeight: '48px',
-    spacing: '8px',
-
     accentColor: 'var(--element-focus-default)',
     advancedFilterBuilderButtonBarBorder: 'var(--element-ui-4)',
     advancedFilterBuilderJoinPillColor: 'var(--element-base-danger)',
