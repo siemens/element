@@ -20,7 +20,7 @@ import {
 /**
  * Exports the custom AG Grid date input component.
  */
-export * from './ag-date-input.component';
+export * from './components/ag-date-input.component';
 
 /**
  * Base Element AG Grid theme without density parameters.

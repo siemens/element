@@ -9,7 +9,7 @@ import { SiCalendarButtonComponent, SiDatepickerDirective } from '@siemens/eleme
 import { IDateAngularComp } from 'ag-grid-angular';
 import { IDateParams } from 'ag-grid-community';
 
-import { SiFormItemComponent } from '../form';
+import { SiFormItemComponent } from '../../form';
 
 /**
  * Custom AG Grid date component using Element datepicker.

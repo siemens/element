@@ -7,7 +7,7 @@ import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
 import { themeByDensity } from '@siemens/element-ng/ag-grid';
 import { GridOptions, provideGlobalGridOptions } from 'ag-grid-community';
 
-import { AgDateInputComponent } from './ag-date-input.component';
+import { AgDateInputComponent } from './components';
 
 // TODO: To be decided on default options other than elementTheme
 const ELEMENT_AG_GRID_OPTIONS: GridOptions = {
