@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { elementCheckedImageShape } from '@siemens/element-ng/icon';
 import { Part, ThemeDefaultParams, createPart } from 'ag-grid-community';
 
 /**
@@ -88,7 +89,7 @@ export const elementColorScheme: Part = createPart({
     checkboxBorderWidth: '1px',
     checkboxBorderRadius: '2px',
     checkboxCheckedShapeImage: {
-      url: 'data:image/svg+xml;base64,PHN2ZyBpZD0iSWNvbiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiI+CiAgPHRpdGxlPm9rPC90aXRsZT4KICA8cGF0aCBkPSJNMzc5LjUxLDE1Ni43NmwtMTczLDE3My03NC03NGExMiwxMiwwLDEsMC0xNywxN2w4Mi41LDgyLjVhMTIsMTIsMCwwLDAsMTcsMGwxODEuNS0xODEuNWExMiwxMiwwLDAsMC0xNy0xN1oiLz4KPC9zdmc+Cg=='
+      url: elementCheckedImageShape
     },
     checkboxUncheckedBackgroundColor: 'var(--element-base-1)',
     checkboxUncheckedBorderColor: 'var(--element-ui-1)',
