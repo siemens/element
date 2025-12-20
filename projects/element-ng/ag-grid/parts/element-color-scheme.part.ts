@@ -227,6 +227,7 @@ export const elementColorScheme: Part = createPart({
     },
     tabHoverBackgroundColor: 'var(--element-action-secondary)',
 
-    focusShadow: false
+    focusShadow: false,
+    iconSize: '18px'
   } satisfies Partial<ThemeDefaultParams>
 });
