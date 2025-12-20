@@ -18,20 +18,12 @@ export const elementColorScheme: Part = createPart({
     cellFontFamily: 'var(--element-body-font-family)',
     fontFamily: 'var(--element-body-font-family)',
     fontSize: '14px',
-    headerFontWeight: '600',
-
     accentColor: 'var(--element-focus-default)',
-    advancedFilterBuilderButtonBarBorder: 'var(--element-ui-4)',
-    advancedFilterBuilderJoinPillColor: 'var(--element-base-danger)',
-    advancedFilterBuilderColumnPillColor: 'var(--element-base-success)',
-    advancedFilterBuilderOptionPillColor: 'var(--element-base-warning)',
-    advancedFilterBuilderValuePillColor: 'var(--element-base-information)',
     backgroundColor: 'var(--element-base-1)',
     borderColor: 'var(--element-ui-4)',
 
     // Button styles
     buttonFontWeight: '600',
-
     buttonActiveBackgroundColor: 'var(--element-action-secondary-hover)',
     buttonActiveBorder: {
       color: 'var(--element-action-secondary-hover)'
@@ -55,6 +47,15 @@ export const elementColorScheme: Part = createPart({
       color: 'var(--element-ui-4)'
     },
 
+    // advanced filter builder styles
+    advancedFilterBuilderButtonBarBorder: {
+      color: 'var(--element-ui-4)'
+    },
+    advancedFilterBuilderJoinPillColor: 'var(--element-base-danger)',
+    advancedFilterBuilderColumnPillColor: 'var(--element-base-success)',
+    advancedFilterBuilderOptionPillColor: 'var(--element-base-warning)',
+    advancedFilterBuilderValuePillColor: 'var(--element-base-information)',
+
     columnDropCellTextColor: 'var(--element-text-primary)',
     cellTextColor: 'var(--element-text-primary)',
     cellEditingBorder: {
@@ -69,16 +70,10 @@ export const elementColorScheme: Part = createPart({
     footerRowBorder: {
       color: 'var(--element-ui-4)'
     },
-
     dialogBorder: {
       color: 'var(--element-ui-4)'
     },
-    headerRowBorder: {
-      color: 'var(--element-ui-4)'
-    },
-    headerColumnBorder: {
-      color: 'var(--element-action-secondary)'
-    },
+
     // checkbox styles
     checkboxIndeterminateShapeColor: 'var(--element-base-1)',
     checkboxBorderWidth: '1px',
@@ -95,12 +90,19 @@ export const elementColorScheme: Part = createPart({
     checkboxCheckedShapeColor: 'var(--element-action-primary-text)',
 
     columnHoverColor: 'var(--element-base-1-hover)',
-    columnDropCellBackgroundColor: 'var(--element-base-1)',
-    columnDropCellDragHandleColor: 'var(--element-text-primary)',
     foregroundColor: 'var(--element-text-primary)',
 
+    // header styles
     headerCellHoverBackgroundColor: 'var(--element-base-1-hover)',
     headerBackgroundColor: 'var(--element-base-1)',
+    headerRowBorder: {
+      color: 'var(--element-ui-4)'
+    },
+    headerColumnBorder: {
+      color: 'var(--element-action-secondary)'
+    },
+    headerColumnResizeHandleColor: 'var(--element-ui-4)',
+    headerFontWeight: '600',
 
     // input styles
     inputBackgroundColor: 'var(--element-base-1)',
@@ -115,7 +117,7 @@ export const elementColorScheme: Part = createPart({
       color: 'var(--element-ui-2)'
     },
     inputFocusBorder: {
-      color: 'var(--element-ui-2)'
+      color: 'var(--element-focus-default)'
     },
     inputFocusShadow: false,
     inputInvalidBorder: {
@@ -129,6 +131,7 @@ export const elementColorScheme: Part = createPart({
     },
 
     // icon styles
+    iconSize: '18px',
     iconColor: 'var(--element-text-primary)',
     iconButtonActiveBackgroundColor: 'var(--element-base-1-selected)',
     iconButtonActiveColor: 'var(--element-action-primary-hover)',
@@ -143,7 +146,6 @@ export const elementColorScheme: Part = createPart({
     menuShadow:
       '0 0 8px var(--element-box-shadow-color-1), 0 8px 8px var(--element-box-shadow-color-2)',
     menuBackgroundColor: 'var(--element-base-1)',
-    chartMenuLabelColor: 'var(--element-text-primary)',
 
     // pinning styles
     pinnedColumnBorder: {
@@ -159,19 +161,24 @@ export const elementColorScheme: Part = createPart({
     dragAndDropImageBorder: false,
     dragAndDropImageShadow:
       '0 0 8px var(--element-box-shadow-color-1), 0 8px 8px var(--element-box-shadow-color-2)',
+    columnDropCellBackgroundColor: 'var(--element-base-1)',
+    columnDropCellDragHandleColor: 'var(--element-text-primary)',
 
-    oddRowBackgroundColor: 'var(--element-base-1)',
-    rowHoverColor: 'var(--element-base-1-hover)',
+    // range selection styles
     rangeSelectionBackgroundColor: 'var(--element-base-1-selected)',
     rangeHeaderHighlightColor: 'var(--element-base-1)',
     rangeSelectionHighlightColor: 'var(--element-base-1-selected)',
     rangeSelectionBorderColor: 'var(--element-action-primary-hover)',
+
+    oddRowBackgroundColor: 'var(--element-base-1)',
+    rowHoverColor: 'var(--element-base-1-hover)',
+    chartMenuLabelColor: 'var(--element-text-primary)',
     rowLoadingSkeletonEffectColor: 'var(--element-base-1)',
     sideBarBackgroundColor: 'var(--element-base-1)',
     subtleTextColor: 'var(--element-text-secondary)',
 
     // side button styles
-    sideButtonBackgroundColor: 'var(--element-text-secondary)',
+    sideButtonBackgroundColor: 'var(--element-action-secondary)',
     sideButtonHoverBackgroundColor: 'var(--element-base-1-hover)',
     sideButtonSelectedBackgroundColor: 'var(--element-base-1-selected)',
     sideButtonSelectedBorder: 'var(--element-action-secondary-border)',
@@ -193,7 +200,7 @@ export const elementColorScheme: Part = createPart({
     valueChangeValueHighlightBackgroundColor: 'var(--element-base-1-selected)',
     valueChangeDeltaUpColor: 'var(--element-status-success)',
     valueChangeDeltaDownColor: 'var(--element-status-danger)',
-    headerColumnResizeHandleColor: 'var(--element-ui-4)',
+
     sidePanelBorder: {
       color: 'var(--element-ui-4)'
     },
@@ -217,7 +224,6 @@ export const elementColorScheme: Part = createPart({
     tabHoverBackgroundColor: 'var(--element-action-secondary)',
 
     focusShadow: false,
-    iconSize: '18px',
     wrapperBorder: false
   } satisfies Partial<ThemeDefaultParams>
 });
