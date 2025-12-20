@@ -21,8 +21,10 @@ import { SiTypeaheadDirective } from '@siemens/element-ng/typeahead';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { Observable } from 'rxjs';
 
-import { CriterionDefinition, CriterionValue, OptionType } from './si-filtered-search.model';
+import { InternalCriterionDefinition } from './si-filtered-search-helper';
+import { CriterionValue, OptionType } from './si-filtered-search.model';
 import { SiFilteredSearchDateValueComponent } from './values/date-value/si-filtered-search-date-value.component';
+import { SiFilteredSearchFreeTextComponent } from './values/free-text/si-filtered-search-free-text.component';
 import { SiFilteredSearchMultiSelectComponent } from './values/multi-select/si-filtered-search-multi-select.component';
 import { SiFilteredSearchValueBase } from './values/si-filtered-search-value.base';
 import { SiFilteredSearchTypeaheadComponent } from './values/typeahead/si-filtered-search-typeahead.component';
@@ -35,6 +37,7 @@ import { SiFilteredSearchTypeaheadComponent } from './values/typeahead/si-filter
     FormsModule,
     SiTranslatePipe,
     SiFilteredSearchDateValueComponent,
+    SiFilteredSearchFreeTextComponent,
     SiFilteredSearchTypeaheadComponent,
     SiFilteredSearchMultiSelectComponent,
     SiIconComponent
@@ -45,7 +48,7 @@ import { SiFilteredSearchTypeaheadComponent } from './values/typeahead/si-filter
 })
 export class SiFilteredSearchValueComponent implements OnInit {
   readonly value = model.required<CriterionValue>();
-  readonly definition = input.required<CriterionDefinition>();
+  readonly definition = input.required<InternalCriterionDefinition>();
   readonly disabled = input.required<boolean>();
   readonly readonly = input.required<boolean>();
   readonly onlySelectValue = input.required<boolean>();
@@ -74,7 +77,12 @@ export class SiFilteredSearchValueComponent implements OnInit {
   private readonly valueInput = viewChild(SiFilteredSearchValueBase);
 
   readonly type = computed(() => {
+    // Check if this is a free text criterion first
     const definition = this.definition();
+    if (definition.type === 'free-text') {
+      return 'free-text';
+    }
+
     const validationType = definition.validationType;
     if (validationType === 'date' || validationType === 'date-time') {
       return 'date';
@@ -100,7 +108,7 @@ export class SiFilteredSearchValueComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    if (this.editOnCreation()) {
+    if (this.editOnCreation() && this.type() !== 'free-text') {
       this.edit();
     }
   }
@@ -184,5 +192,11 @@ export class SiFilteredSearchValueComponent implements OnInit {
       dateValue: undefined,
       value: this.definition().multiSelect ? [] : ''
     }));
+  }
+
+  protected freeTextActiveChange(value: boolean): void {
+    if (!value && !this.value().value) {
+      this.deleteCriterion.emit({ triggerSearch: true });
+    }
   }
 }

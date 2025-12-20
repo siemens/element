@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { CommonModule } from '@angular/common';
 import { Component, provideZonelessChangeDetection, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -34,7 +33,7 @@ describe('SiSearchBarComponent', () => {
     let element: HTMLElement;
 
     @Component({
-      imports: [CommonModule, ReactiveFormsModule, SiSearchBarComponent],
+      imports: [ReactiveFormsModule, SiSearchBarComponent],
       template: `<si-search-bar
         [placeholder]="placeholder"
         [showIcon]="true"
@@ -156,7 +155,7 @@ describe('SiSearchBarComponent', () => {
     let element: HTMLElement;
 
     @Component({
-      imports: [CommonModule, SiSearchBarComponent],
+      imports: [SiSearchBarComponent],
       template: `<si-search-bar [value]="value" [disabled]="disabled" />`
     })
     class TestComponent {

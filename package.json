@@ -1,6 +1,6 @@
 {
   "name": "siemens-element",
-  "version": "48.8.0",
+  "version": "48.9.0",
   "description": "Siemens Element open source theme",
   "license": "MIT",
   "private": true,
@@ -109,9 +109,9 @@
     "google-libphonenumber": "3.2.43",
     "gridstack": "12.3.3",
     "ngx-image-cropper": "9.1.5",
-    "ol": "10.6.1",
-    "ol-ext": "4.0.36",
-    "ol-mapbox-style": "13.1.1",
+    "ol": "10.7.0",
+    "ol-ext": "4.0.37",
+    "ol-mapbox-style": "13.2.0",
     "rxjs": "7.8.2",
     "tslib": "2.8.1",
     "zone.js": "0.15.1"

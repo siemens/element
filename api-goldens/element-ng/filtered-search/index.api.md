@@ -40,7 +40,7 @@ export interface CriterionValue {
 
 // @public
 export interface DisplayedCriteriaEventArgs {
-    allow(criteriaNamesToDisplay: string[]): void;
+    allow(criteriaNamesToDisplay: string[], freeText?: boolean): void;
     criteria: string[];
     searchCriteria: SearchCriteria;
 }
@@ -66,9 +66,13 @@ export interface SearchCriteria {
 export class SiFilteredSearchComponent implements OnInit, OnChanges {
     constructor();
     // (undocumented)
+    protected readonly allowFreeTextCache: _angular_core.WritableSignal<boolean>;
+    // (undocumented)
     protected autoEditCriteria: boolean;
     readonly clearButtonLabel: _angular_core.InputSignal<TranslatableString>;
     readonly colorVariant: _angular_core.InputSignal<BackgroundColorVariant>;
+    // (undocumented)
+    protected createFreeTextPill(query: string): void;
     readonly criteria: _angular_core.InputSignal<Criterion[] | CriterionDefinition[]>;
     // (undocumented)
     protected dataSource: Observable<InternalCriterionDefinition[]>;
@@ -89,6 +93,9 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     } | void): void;
     // (undocumented)
     protected freeTextBackspace(event: Event): void;
+    // (undocumented)
+    protected freeTextBlur(): void;
+    readonly freeTextCriterion: _angular_core.InputSignal<CriterionDefinition | undefined>;
     // (undocumented)
     protected freeTextFocus(): void;
     // (undocumented)
@@ -116,6 +123,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly searchCriteria: _angular_core.ModelSignal<SearchCriteria>;
     readonly searchDebounceTime: _angular_core.InputSignal<number>;
+    readonly searchForFreeTextLabel: _angular_core.InputSignal<TranslatableString>;
     readonly searchLabel: _angular_core.InputSignal<TranslatableString>;
     // (undocumented)
     protected searchValue: string;
@@ -140,7 +148,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
         value: CriterionValue;
     }[];
     // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiFilteredSearchComponent, "si-filtered-search", never, { "doSearchOnInputChange": { "alias": "doSearchOnInputChange"; "required": false; "isSignal": true; }; "lazyCriterionProvider": { "alias": "lazyCriterionProvider"; "required": false; "isSignal": true; }; "lazyValueProvider": { "alias": "lazyValueProvider"; "required": false; "isSignal": true; }; "disabled": { "alias": "disabled"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "strictCriterion": { "alias": "strictCriterion"; "required": false; "isSignal": true; }; "strictValue": { "alias": "strictValue"; "required": false; "isSignal": true; }; "onlySelectValue": { "alias": "onlySelectValue"; "required": false; "isSignal": true; }; "lazyLoadingDebounceTime": { "alias": "lazyLoadingDebounceTime"; "required": false; "isSignal": true; }; "searchDebounceTime": { "alias": "searchDebounceTime"; "required": false; "isSignal": true; }; "placeholder": { "alias": "placeholder"; "required": false; "isSignal": true; }; "optionsInScrollableView": { "alias": "optionsInScrollableView"; "required": false; "isSignal": true; }; "searchCriteria": { "alias": "searchCriteria"; "required": false; "isSignal": true; }; "criteria": { "alias": "criteria"; "required": false; "isSignal": true; }; "exclusiveCriteria": { "alias": "exclusiveCriteria"; "required": false; "isSignal": true; }; "maxCriteria": { "alias": "maxCriteria"; "required": false; "isSignal": true; }; "maxCriteriaOptions": { "alias": "maxCriteriaOptions"; "required": false; "isSignal": true; }; "searchLabel": { "alias": "searchLabel"; "required": false; "isSignal": true; }; "clearButtonLabel": { "alias": "clearButtonLabel"; "required": false; "isSignal": true; }; "submitButtonLabel": { "alias": "submitButtonLabel"; "required": false; "isSignal": true; }; "itemCountText": { "alias": "itemCountText"; "required": false; "isSignal": true; }; "colorVariant": { "alias": "colorVariant"; "required": false; "isSignal": true; }; "disableFreeTextSearch": { "alias": "disableFreeTextSearch"; "required": false; "isSignal": true; }; "typeaheadOptionsLimit": { "alias": "typeaheadOptionsLimit"; "required": false; "isSignal": true; }; "disableSelectionByColonAndSemicolon": { "alias": "disableSelectionByColonAndSemicolon"; "required": false; "isSignal": true; }; }, { "doSearch": "doSearch"; "searchCriteria": "searchCriteriaChange"; "interceptDisplayedCriteria": "interceptDisplayedCriteria"; }, never, never, true, never>;
+    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiFilteredSearchComponent, "si-filtered-search", never, { "doSearchOnInputChange": { "alias": "doSearchOnInputChange"; "required": false; "isSignal": true; }; "lazyCriterionProvider": { "alias": "lazyCriterionProvider"; "required": false; "isSignal": true; }; "lazyValueProvider": { "alias": "lazyValueProvider"; "required": false; "isSignal": true; }; "disabled": { "alias": "disabled"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "strictCriterion": { "alias": "strictCriterion"; "required": false; "isSignal": true; }; "strictValue": { "alias": "strictValue"; "required": false; "isSignal": true; }; "onlySelectValue": { "alias": "onlySelectValue"; "required": false; "isSignal": true; }; "lazyLoadingDebounceTime": { "alias": "lazyLoadingDebounceTime"; "required": false; "isSignal": true; }; "searchDebounceTime": { "alias": "searchDebounceTime"; "required": false; "isSignal": true; }; "placeholder": { "alias": "placeholder"; "required": false; "isSignal": true; }; "optionsInScrollableView": { "alias": "optionsInScrollableView"; "required": false; "isSignal": true; }; "searchCriteria": { "alias": "searchCriteria"; "required": false; "isSignal": true; }; "criteria": { "alias": "criteria"; "required": false; "isSignal": true; }; "exclusiveCriteria": { "alias": "exclusiveCriteria"; "required": false; "isSignal": true; }; "maxCriteria": { "alias": "maxCriteria"; "required": false; "isSignal": true; }; "maxCriteriaOptions": { "alias": "maxCriteriaOptions"; "required": false; "isSignal": true; }; "searchLabel": { "alias": "searchLabel"; "required": false; "isSignal": true; }; "clearButtonLabel": { "alias": "clearButtonLabel"; "required": false; "isSignal": true; }; "submitButtonLabel": { "alias": "submitButtonLabel"; "required": false; "isSignal": true; }; "itemCountText": { "alias": "itemCountText"; "required": false; "isSignal": true; }; "colorVariant": { "alias": "colorVariant"; "required": false; "isSignal": true; }; "disableFreeTextSearch": { "alias": "disableFreeTextSearch"; "required": false; "isSignal": true; }; "typeaheadOptionsLimit": { "alias": "typeaheadOptionsLimit"; "required": false; "isSignal": true; }; "disableSelectionByColonAndSemicolon": { "alias": "disableSelectionByColonAndSemicolon"; "required": false; "isSignal": true; }; "freeTextCriterion": { "alias": "freeTextCriterion"; "required": false; "isSignal": true; }; "searchForFreeTextLabel": { "alias": "searchForFreeTextLabel"; "required": false; "isSignal": true; }; }, { "doSearch": "doSearch"; "searchCriteria": "searchCriteriaChange"; "interceptDisplayedCriteria": "interceptDisplayedCriteria"; }, never, never, true, never>;
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiFilteredSearchComponent, never>;
 }

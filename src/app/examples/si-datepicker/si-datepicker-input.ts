@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiDatepickerDirective, SiCalendarButtonComponent } from '@siemens/element-ng/datepicker';
@@ -10,13 +9,7 @@ import { SiFormItemComponent } from '@siemens/element-ng/form';
 
 @Component({
   selector: 'app-sample',
-  imports: [
-    CommonModule,
-    FormsModule,
-    SiDatepickerDirective,
-    SiCalendarButtonComponent,
-    SiFormItemComponent
-  ],
+  imports: [FormsModule, SiDatepickerDirective, SiCalendarButtonComponent, SiFormItemComponent],
   templateUrl: './si-datepicker-input.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

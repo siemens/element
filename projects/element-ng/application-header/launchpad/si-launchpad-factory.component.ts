@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 import { A11yModule } from '@angular/cdk/a11y';
-import { CommonModule } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -31,7 +30,6 @@ export interface FavoriteChangeEvent {
   selector: 'si-launchpad-factory',
   imports: [
     A11yModule,
-    CommonModule,
     SiLinkModule,
     SiTranslatePipe,
     SiLaunchpadAppComponent,

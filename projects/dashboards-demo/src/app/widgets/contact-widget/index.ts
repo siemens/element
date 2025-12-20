@@ -4,4 +4,3 @@
  */
 export * from './contact-widget.component';
 export * from './contact-widget-editor.component';
-export * from './contact-widget.module';
