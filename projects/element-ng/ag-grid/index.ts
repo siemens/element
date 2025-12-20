@@ -17,8 +17,25 @@ import {
   toggleStyle
 } from './parts';
 
+/**
+ * Exports the custom AG Grid date input component.
+ */
 export * from './ag-date-input.component';
 
+/**
+ * The Element design system theme for AG Grid.
+ * Extends the Alpine theme with Element design tokens, icons, and component styling.
+ *
+ * @example
+ * ```typescript
+ * import { elementTheme } from '@siemens/element-ng/ag-grid';
+ *
+ * const gridOptions: GridOptions = {
+ *   theme: elementTheme,
+ *   // ... other options
+ * };
+ * ```
+ */
 export const elementTheme: Theme = themeAlpine
   .withPart(iconSetAlpine)
   .withPart(checkboxStyle)

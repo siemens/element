@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { CommonModule } from '@angular/common';
 import { Component, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiCalendarButtonComponent, SiDatepickerDirective } from '@siemens/element-ng/datepicker';
@@ -18,13 +17,7 @@ import { SiFormItemComponent } from '../form';
  */
 @Component({
   selector: 'si-ag-date-input',
-  imports: [
-    CommonModule,
-    FormsModule,
-    SiDatepickerDirective,
-    SiCalendarButtonComponent,
-    SiFormItemComponent
-  ],
+  imports: [FormsModule, SiDatepickerDirective, SiCalendarButtonComponent, SiFormItemComponent],
   template: `
     <si-form-item>
       <si-calendar-button class="w-100">
@@ -42,19 +35,36 @@ import { SiFormItemComponent } from '../form';
 })
 export class AgDateInputComponent implements IDateAngularComp, OnDestroy {
   /**
-   * The selected date value
+   * The selected date value.
    */
   public date: Date | undefined = undefined;
 
+  /**
+   * AG Grid date filter parameters.
+   * @internal
+   */
   private params!: IDateParams;
+
+  /**
+   * Document click event listener for calendar overlay.
+   * @internal
+   */
   private documentClickListener?: (event: MouseEvent) => void;
 
+  /**
+   * Notifies AG Grid when the date value changes.
+   * @internal
+   */
   onDateChange(): void {
     if (this.params) {
       this.params.onDateChanged();
     }
   }
 
+  /**
+   * Lifecycle hook called after the component GUI is attached.
+   * Sets up event listeners to prevent filter popup from closing when interacting with calendar.
+   */
   afterGuiAttached(): void {
     // Intercept document click events to keep the filter open when clicking the calendar
     this.documentClickListener = (event: MouseEvent) => {

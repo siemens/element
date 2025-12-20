@@ -18,6 +18,26 @@ const ELEMENT_AG_GRID_OPTIONS: GridOptions = {
   }
 };
 
+/**
+ * Provides global AG Grid configuration with Element theme.
+ *
+ * @param gridOptions - Optional additional grid options to merge with Element defaults
+ * @returns Environment providers for AG Grid with Element theme
+ *
+ * @example
+ * ```typescript
+ * import { provideElementTheme } from '@siemens/element-ng/ag-grid';
+ *
+ * export const appConfig: ApplicationConfig = {
+ *   providers: [
+ *     provideElementTheme({
+ *       rowHeight: 50,
+ *       // ... custom options
+ *     })
+ *   ]
+ * };
+ * ```
+ */
 export const provideElementTheme = (gridOptions?: GridOptions): EnvironmentProviders => {
   return makeEnvironmentProviders([
     {
