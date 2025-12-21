@@ -136,4 +136,5 @@ export const themeByDensity = new Map<string, Theme>([
 ]);
 
 export * from './components/ag-date-input.component';
+export * from './components/no-rows-overlay.component';
 export * from './provider';
