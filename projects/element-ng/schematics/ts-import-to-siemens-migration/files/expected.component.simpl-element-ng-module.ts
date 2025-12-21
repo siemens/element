@@ -25,7 +25,6 @@ import { SiLanguageSwitcherModule } from '@siemens/element-ng/language-switcher'
 import { SiLinkModule } from '@siemens/element-ng/link';
 import { SiLoadingSpinnerModule } from '@siemens/element-ng/loading-spinner';
 import { SiMainDetailContainerModule } from '@siemens/element-ng/main-detail-container';
-import { SiNavbarModule } from '@siemens/element-ng/navbar';
 import { SiNavbarVerticalModule } from '@siemens/element-ng/navbar-vertical';
 import { SiNumberInputModule } from '@siemens/element-ng/number-input';
 import { SiPaginationModule } from '@siemens/element-ng/pagination';
@@ -82,7 +81,6 @@ import { SomeOtherModule} from '@simpl/element-ng/some-other-module';
     SiLinkModule,
     SiLoadingSpinnerModule,
     SiMainDetailContainerModule,
-    SiNavbarModule,
     SiNavbarVerticalModule,
     SiNumberInputModule,
     SiPaginationModule,

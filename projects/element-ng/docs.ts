@@ -48,7 +48,6 @@ export * from './localization';
 export * from './main-detail-container';
 export * from './menu';
 export * from './modal';
-export * from './navbar';
 export * from './navbar-vertical';
 export * from './number-input';
 export * from './pagination';

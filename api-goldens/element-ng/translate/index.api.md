@@ -294,15 +294,11 @@ export interface SiTranslatableKeys {
     // (undocumented)
     'SI_LAUNCHPAD.CLOSE'?: string;
     // (undocumented)
-    'SI_LAUNCHPAD.DEFAULT_CATEGORY_TITLE'?: string;
-    // (undocumented)
     'SI_LAUNCHPAD.FAVORITE_APPS'?: string;
     // (undocumented)
     'SI_LAUNCHPAD.SHOW_LESS'?: string;
     // (undocumented)
     'SI_LAUNCHPAD.SHOW_MORE'?: string;
-    // (undocumented)
-    'SI_LAUNCHPAD.SUB_TITLE'?: string;
     // (undocumented)
     'SI_LAUNCHPAD.SUBTITLE'?: string;
     // (undocumented)
@@ -333,10 +329,6 @@ export interface SiTranslatableKeys {
     'SI_LOGIN_SINGLE-SIGN-ON.LOGIN_SIGN_UP'?: string;
     // (undocumented)
     'SI_MAIN_DETAIL_CONTAINER.BACK'?: string;
-    // (undocumented)
-    'SI_NAVBAR.OPEN_LAUNCHPAD'?: string;
-    // (undocumented)
-    'SI_NAVBAR.TOGGLE_NAVIGATION'?: string;
     // (undocumented)
     'SI_NAVBAR_VERTICAL.COLLAPSE'?: string;
     // (undocumented)
