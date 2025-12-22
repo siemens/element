@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { Portal } from '@angular/cdk/portal';
-import { Injectable, signal } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
 import { BehaviorSubject, EMPTY, Observable, Subject } from 'rxjs';
 
 @Injectable({
@@ -38,6 +39,12 @@ export class SiSidePanelService {
    * Emits when fullscreen overlay mode is toggled.
    */
   readonly isFullscreen$ = this.fullscreenSubject.asObservable();
+
+  // Body scroll management
+  private bodyScrollLocks = 0;
+  private originalBodyOverflow?: string;
+  private readonly document = inject(DOCUMENT);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   /** Set or update displayed content. */
   setSidePanelContent(portal: Portal<any> | undefined): void {
@@ -116,5 +123,35 @@ export class SiSidePanelService {
     }
     this.tempContentSubject.next(undefined);
     return true;
+  }
+
+  /**
+   * Request body scroll lock. Uses reference counting to handle multiple panels.
+   */
+  requestBodyScrollLock(): void {
+    if (!this.isBrowser) {
+      return;
+    }
+
+    if (this.bodyScrollLocks === 0) {
+      this.originalBodyOverflow = this.document.body.style.overflow;
+      this.document.body.style.overflow = 'hidden';
+    }
+    this.bodyScrollLocks++;
+  }
+
+  /**
+   * Release body scroll lock. Restores scroll when no more locks exist.
+   */
+  releaseBodyScrollLock(): void {
+    if (!this.isBrowser || this.bodyScrollLocks === 0) {
+      return;
+    }
+
+    this.bodyScrollLocks--;
+    if (this.bodyScrollLocks === 0 && this.originalBodyOverflow !== undefined) {
+      this.document.body.style.overflow = this.originalBodyOverflow;
+      this.originalBodyOverflow = undefined;
+    }
   }
 }
