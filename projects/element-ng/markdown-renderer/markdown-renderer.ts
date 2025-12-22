@@ -112,9 +112,16 @@ export const getMarkdownRenderer = (
     // Process tables first
     let tableIndex = -1;
     const rowIndexMap = new Map<number, number>();
+    const tableHasSeparator = new Map<number, boolean>();
 
     html = html
-      // Remove table separator lines first
+      // Mark tables that have separator lines (these have headers)
+      .replace(/^\|(.+)\|\s*\n\|\s*[-:]+.*\|\s*$/gm, match => {
+        const nextTableIndex = tableIndex + 1;
+        tableHasSeparator.set(nextTableIndex, true);
+        return match;
+      })
+      // Remove table separator lines
       .replace(/^\|\s*[-:]+.*\|\s*$/gm, '')
       // Process table rows
       .replace(/^\|(.+)\|\s*$/gm, (_match, htmlContent) => {
@@ -130,6 +137,7 @@ export const getMarkdownRenderer = (
         const tableData = tableCellData.get(tableIndex)!;
         tableData.set(currentRowIndex, new Map());
         const rowData = tableData.get(currentRowIndex)!;
+        const isHeaderRow = currentRowIndex === 0 && tableHasSeparator.get(tableIndex);
 
         // Handle escaped pipes by temporarily replacing them
         const escapedPipePlaceholder = `--ESCAPED-PIPE-${Math.random().toString(36).substring(2, 15)}--`;
@@ -189,11 +197,19 @@ export const getMarkdownRenderer = (
         // Increment row index for next row
         rowIndexMap.set(tableIndex, currentRowIndex + 1);
 
-        return `<tr>${processedCells.map((cell: string) => `<td>${cell}</td>`).join('')}</tr>`;
+        const cellTag = isHeaderRow ? 'th' : 'td';
+        return `<tr>${processedCells.map((cell: string) => `<${cellTag}>${cell}</${cellTag}>`).join('')}</tr>`;
       })
-      // Wrap table rows in table elements
+      // Wrap header rows in thead
+      .replace(/(<tr><th>[\s\S]*?<\/th><\/tr>)/g, '<thead>$1</thead>')
+      // Wrap body rows in tbody (rows that are not already in thead)
       .replace(
-        /(<tr>[\s\S]*?<\/tr>(?:\s*<tr>[\s\S]*?<\/tr>)*)/g,
+        /(<tr><td>[\s\S]*?<\/td><\/tr>(?:\s*<tr><td>[\s\S]*?<\/td><\/tr>)*)/g,
+        '<tbody>$1</tbody>'
+      )
+      // Wrap table rows in table elements (match thead+tbody together or just tbody)
+      .replace(
+        /(?:<thead><tr><th>[\s\S]*?<\/th><\/tr><\/thead>\s*)?<tbody><tr><td>[\s\S]*?<\/td><\/tr>(?:\s*<tr><td>[\s\S]*?<\/td><\/tr>)*<\/tbody>/g,
         (() => {
           let currentTableWrapIndex = -1;
 
