@@ -3,4 +3,4 @@
  * SPDX-License-Identifier: MIT
  */
 export * from './ag-date-input.component';
-// export * from './no-rows-overlay.component';
+export * from './ag-no-rows-overlay.component';

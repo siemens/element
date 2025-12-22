@@ -4,9 +4,8 @@
  */
 
 import { Component, signal } from '@angular/core';
+import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 import { INoRowsOverlayParams } from 'ag-grid-community';
-
-import { SiEmptyStateComponent } from '../../empty-state';
 
 /**
  * Custom AG Grid no rows overlay component using Element Empty State.

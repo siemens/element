@@ -136,3 +136,4 @@ export const themeByDensity = new Map<string, Theme>([
 ]);
 
 export * from './provider';
+export * from './components';

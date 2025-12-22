@@ -6,9 +6,8 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiCalendarButtonComponent, SiDatepickerDirective } from '@siemens/element-ng/datepicker';
+import { SiFormItemComponent } from '@siemens/element-ng/form';
 import { IDateParams } from 'ag-grid-community';
-
-import { SiFormItemComponent } from '../../form';
 
 /**
  * Custom AG Grid date component using Element datepicker.
