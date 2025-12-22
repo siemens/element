@@ -406,7 +406,10 @@ const transformMarkdownText = (
     .replace(/^#### (.*$)/gm, '<h4>$1</h4>')
     .replace(/^### (.*$)/gm, '<h3>$1</h3>')
     .replace(/^## (.*$)/gm, '<h2>$1</h2>')
-    .replace(/^# (.*$)/gm, '<h2><strong>$1</strong></h2>');
+    .replace(/^# (.*$)/gm, '<h2><strong>$1</strong></h2>')
+
+    // Horizontal rule ---
+    .replace(/^---+$/gm, '<hr>');
 
   html = html
     // Bullet points - handle each type separately (• gets converted to &#8226; by sanitizer)
