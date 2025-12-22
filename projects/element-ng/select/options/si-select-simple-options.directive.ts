@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { computed, Directive, input, OnChanges } from '@angular/core';
+import { computed, Directive, input } from '@angular/core';
 
 import { SelectItem, SelectOption, SelectOptionLegacy } from '../si-select.types';
 import { SI_SELECT_OPTIONS_STRATEGY } from './si-select-options-strategy';
@@ -22,10 +22,7 @@ import { SiSelectOptionsStrategyBase } from './si-select-options-strategy.base';
   selector: 'si-select[options]',
   providers: [{ provide: SI_SELECT_OPTIONS_STRATEGY, useExisting: SiSelectSimpleOptionsDirective }]
 })
-export class SiSelectSimpleOptionsDirective<T = string>
-  extends SiSelectOptionsStrategyBase<T>
-  implements OnChanges
-{
+export class SiSelectSimpleOptionsDirective<T = string> extends SiSelectOptionsStrategyBase<T> {
   /** Options to be shown in select dropdown */
   readonly options = input<(SelectOptionLegacy | SelectItem<T>)[] | null>();
 
@@ -61,8 +58,4 @@ export class SiSelectSimpleOptionsDirective<T = string>
       return [];
     }
   });
-
-  ngOnChanges(): void {
-    this.onFilter();
-  }
 }

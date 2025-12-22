@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { computed, Directive, input, OnChanges } from '@angular/core';
+import { computed, Directive, input } from '@angular/core';
 import { buildTrackByIdentity } from '@siemens/element-ng/common';
 
 import { SelectGroup, SelectOption } from '../si-select.types';
@@ -26,10 +26,7 @@ import { SiSelectOptionsStrategyBase } from './si-select-options-strategy.base';
   selector: 'si-select[complexOptions]',
   providers: [{ provide: SI_SELECT_OPTIONS_STRATEGY, useExisting: SiSelectComplexOptionsDirective }]
 })
-export class SiSelectComplexOptionsDirective<T>
-  extends SiSelectOptionsStrategyBase<T>
-  implements OnChanges
-{
+export class SiSelectComplexOptionsDirective<T> extends SiSelectOptionsStrategyBase<T> {
   /** Options to be shown in select dropdown. */
   readonly complexOptions = input<T[] | Record<string, T[]> | null>();
 
@@ -100,10 +97,6 @@ export class SiSelectComplexOptionsDirective<T>
       return [];
     }
   });
-
-  ngOnChanges(): void {
-    this.onFilter();
-  }
 
   private convertOptionsArray(options: T[]): SelectOption<T>[] {
     const provide = this.valueProvider();
