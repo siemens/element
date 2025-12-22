@@ -42,7 +42,7 @@
             "stylePreprocessorOptions": {
               "includePaths": ["node_modules/"]
             },
-            "styles": ["src/styles.scss"],
+            "styles": ["src/styles.scss", "node_modules/katex/dist/katex.min.css"],
             "scripts": [],
             "allowedCommonJsDependencies": [
               "@babel/standalone",
