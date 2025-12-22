@@ -42,7 +42,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnDestroy {
-  mode: SidePanelMode = 'scroll';
+  mode: SidePanelMode = 'over';
   size: SidePanelSize = 'regular';
   displayMode: SidePanelDisplayMode = 'overlay';
 

@@ -15,14 +15,21 @@
 - button "Toggle side panel"
 - group "Size toggle button group":
   - radio "Regular" [checked]
+  - text: ""
   - radio "Wide"
+  - text: ""
   - radio "Extended"
+  - text: ""
 - group "Display mode toggle button group":
-  - radio "Navigate"
   - radio "Overlay" [checked]
+  - text: ""
+  - radio "Navigate"
+  - text: ""
 - group "Mode toggle button group":
-  - radio "Over"
-  - radio "Scroll" [checked]
+  - radio "Over" [checked]
+  - text: ""
+  - radio "Scroll"
+  - text: ""
 - separator
 - heading "Modes and sizes" [level=2]
 - paragraph:
@@ -42,3 +49,10 @@
   - text: Shows export icon in panel header. Click to navigate to a dedicated page.
   - code: "Overlay:"
   - text: Shows zoom icon in panel header. Click to toggle fullscreen overlay mode with URL state persistence.
+- paragraph:
+  - code: "Backdrop:"
+  - text: Displays a semi-transparent overlay that blocks interactions with the main content while keeping it visible for context. Only active in over-mode (or when scroll mode is forced to over-mode on smaller screens). The backdrop can be clicked to close the side panel and can be disabled with the
+  - code: disableBackdrop
+  - text: input.
+- switch "disableBackdrop" [checked]
+- code: disableBackdrop

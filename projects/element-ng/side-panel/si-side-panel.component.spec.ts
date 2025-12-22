@@ -12,6 +12,7 @@ import {
   viewChild
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Subject } from 'rxjs';
 
 import { ElementDimensions, ResizeObserverService } from '../resize-observer';
@@ -65,7 +66,8 @@ describe('SiSidePanelComponent', () => {
           provide: ResizeObserverService,
           useValue: resizeSpy
         },
-        provideZonelessChangeDetection()
+        provideZonelessChangeDetection(),
+        provideNoopAnimations()
       ]
     }).compileComponents();
   });

@@ -10,14 +10,6 @@ $rpanel-transition-duration: all-variables.$element-default-transition-duration;
 $rpanel-overlay-bg: rgba(0, 0, 0, 0.4);
 $rpanel-collapsed-width: 48px;
 
-@mixin rpanel-over-mode {
-  padding-inline-end: var(--rpanel-collapsed-width);
-
-  &:not(.rpanel-collapsed) .side-panel {
-    box-shadow: all-variables.$element-elevation-2;
-  }
-}
-
 :host {
   --rpanel-collapsed-padding: 0;
   --rpanel-size: #{$rpanel-width-regular};
@@ -35,6 +27,11 @@ $rpanel-collapsed-width: 48px;
     }
   }
 
+  .modal-backdrop {
+    z-index: all-variables.$zindex-sidepanel;
+    opacity: 0;
+  }
+
   .side-panel,
   .side-panel > .inner {
     inline-size: var(--rpanel-width-fullscreen, var(--rpanel-size));
@@ -50,71 +47,39 @@ $rpanel-collapsed-width: 48px;
   }
 
   &.rpanel-size--extended {
-    --rpanel-size: 100%;
+    --rpanel-size: 100vw;
   }
 
   &.rpanel-fullscreen-overlay {
     --rpanel-width-fullscreen: 100vw;
   }
 
-  &.rpanel-resize-sm,
-  &.rpanel-resize-md,
-  &.rpanel-resize-lg,
-  &.rpanel-resize-xl,
-  &.rpanel-resize-xxl,
-  &.rpanel-resize-xxxl {
-    &.rpanel-mode--over {
-      @include rpanel-over-mode;
+  &.rpanel-mode--over {
+    padding-inline-end: var(--rpanel-collapsed-width);
+
+    &:not(.rpanel-collapsed) .side-panel {
+      box-shadow: all-variables.$element-elevation-2;
     }
   }
 
-  &.rpanel-resize-md {
-    &.rpanel-mode--scroll.rpanel-size--extended {
-      @include rpanel-over-mode;
-    }
-
-    &.rpanel-size--extended {
-      --rpanel-size: #{$rpanel-width-extended-md};
-    }
+  &.rpanel-resize-md.rpanel-size--extended {
+    --rpanel-size: #{$rpanel-width-extended-md};
   }
 
-  &.rpanel-resize-lg {
-    &.rpanel-mode--scroll.rpanel-size--wide {
-      @include rpanel-over-mode;
-    }
-
-    &.rpanel-mode--scroll.rpanel-size--extended {
-      @include rpanel-over-mode;
-    }
-
-    &.rpanel-size--extended {
-      --rpanel-size: #{$rpanel-width-extended-md};
-    }
+  &.rpanel-resize-lg.rpanel-size--extended {
+    --rpanel-size: #{$rpanel-width-extended-md};
   }
 
-  &.rpanel-resize-xl {
-    &.rpanel-size--extended {
-      --rpanel-size: #{$rpanel-width-extended-xl};
-    }
+  &.rpanel-resize-xl.rpanel-size--extended {
+    --rpanel-size: #{$rpanel-width-extended-xl};
   }
 
-  &.rpanel-resize-xxl {
-    &.rpanel-size--extended {
-      --rpanel-size: #{$rpanel-width-extended-xxl};
-    }
+  &.rpanel-resize-xxl.rpanel-size--extended {
+    --rpanel-size: #{$rpanel-width-extended-xxl};
   }
 
-  &.rpanel-resize-xxxl {
-    &.rpanel-size--extended {
-      --rpanel-size: #{$rpanel-width-extended-xxxl};
-    }
-  }
-
-  &.rpanel-resize-sm,
-  &.rpanel-resize-md {
-    &.rpanel-mode--scroll {
-      @include rpanel-over-mode;
-    }
+  &.rpanel-resize-xxxl.rpanel-size--extended {
+    --rpanel-size: #{$rpanel-width-extended-xxxl};
   }
 
   &.rpanel-resize-sm {
@@ -125,11 +90,7 @@ $rpanel-collapsed-width: 48px;
 
   &.rpanel-resize-xs {
     --fullscreen-button-display: none;
-
-    &.rpanel-mode--over,
-    &.rpanel-mode--scroll {
-      padding-inline-end: var(--rpanel-collapsed-width);
-    }
+    padding-inline-end: var(--rpanel-collapsed-width);
 
     .side-panel {
       z-index: all-variables.$zindex-sidepanel-responsive;
@@ -142,7 +103,7 @@ $rpanel-collapsed-width: 48px;
 
       .side-panel,
       .side-panel > .inner {
-        inline-size: 100%;
+        inline-size: 100vw;
       }
     }
   }

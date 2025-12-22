@@ -26,14 +26,21 @@
 - button "Close"
 - group "Size toggle button group":
   - radio "Regular" [checked]
+  - text: ""
   - radio "Wide"
+  - text: ""
   - radio "Extended"
+  - text: ""
 - group "Display mode toggle button group":
-  - radio "Navigate"
   - radio "Overlay" [checked]
+  - text: ""
+  - radio "Navigate"
+  - text: ""
 - group "Mode toggle button group":
-  - radio "Over"
-  - radio "Scroll" [checked]
+  - radio "Over" [checked]
+  - text: ""
+  - radio "Scroll"
+  - text: ""
 - separator
 - heading "Collapsible side panel" [level=2]
 - paragraph:
