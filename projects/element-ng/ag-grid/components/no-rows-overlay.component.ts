@@ -4,7 +4,6 @@
  */
 
 import { Component, signal } from '@angular/core';
-import { INoRowsOverlayAngularComp } from 'ag-grid-angular';
 import { INoRowsOverlayParams } from 'ag-grid-community';
 
 import { SiEmptyStateComponent } from '../../empty-state';
@@ -40,7 +39,7 @@ import { SiEmptyStateComponent } from '../../empty-state';
     }
   `
 })
-export class AgNoRowsOverlayComponent implements INoRowsOverlayAngularComp {
+export class AgNoRowsOverlayComponent {
   /**
    * Icon to display in the empty state.
    *

@@ -6,7 +6,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiCalendarButtonComponent, SiDatepickerDirective } from '@siemens/element-ng/datepicker';
-import { IDateAngularComp } from 'ag-grid-angular';
 import { IDateParams } from 'ag-grid-community';
 
 import { SiFormItemComponent } from '../../form';
@@ -33,7 +32,7 @@ import { SiFormItemComponent } from '../../form';
     </si-form-item>
   `
 })
-export class AgDateInputComponent implements IDateAngularComp, OnDestroy {
+export class AgDateInputComponent implements OnDestroy {
   /**
    * The selected date value.
    */

@@ -6,15 +6,15 @@
 import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
 import { GridOptions, provideGlobalGridOptions } from 'ag-grid-community';
 
-import { AgDateInputComponent } from './components';
+// import { AgDateInputComponent } from './components';
 import { themeByDensity } from './index';
 
 // TODO: To be decided on default options other than elementTheme
 const ELEMENT_AG_GRID_OPTIONS: GridOptions = {
   tooltipShowDelay: 200,
-  components: {
-    agDateInput: AgDateInputComponent
-  }
+  // components: {
+  //   agDateInput: AgDateInputComponent
+  // }
 };
 
 /**
