@@ -7,3 +7,48 @@
 # @global-owner1 and @global-owner2 will be requested for
 # review when someone opens a pull request.
 * @siemens/siemens-element-owners
+
+projects/charts-ng/* @akashsonune @dr-itz
+api-goldens/charts-ng/* @akashsonune @dr-itz
+projects/native-charts-ng/* @akashsonune @dr-itz
+api-goldens/native-charts-ng/* @akashsonune @dr-itz
+src/app/examples/si-charts/* @akashsonune @dr-itz
+
+projects/maps-ng/* @dr-itz @spliffone
+api-goldens/maps-ng/* @dr-itz @spliffone
+src/app/examples/si-map/* @dr-itz @spliffone
+
+projects/dashboards-ng/* @chintankavathia
+api-goldens/dashboards-ng/* @chintankavathia
+projects/dashboards-demo/* @chintankavathia
+
+projects/live-preview/* @dr-itz @chintankavathia
+api-goldens/live-preview/* @dr-itz @chintankavathia
+
+projects/element-theme/* @dr-itz
+
+projects/element-docs-builder/* @Killusions @spliffone
+
+projects/element-ng/filtered-search/* @chintankavathia @spliffone
+api-goldens/element-ng/filtered-search/* @chintankavathia @spliffone
+projects/element-ng/data-range-filter/* @dr-itz @spliffone
+api-goldens/element-ng/data-range-filter/* @dr-itz @spliffone
+projects/element-ng/datepicker/* @dr-itz @spliffone
+api-goldens/element-ng/datepicker/* @dr-itz @spliffone
+projects/element-ng/schematics/* @mistrykaran91
+projects/element-ng/landing-page/* @dauriamarco
+api-goldens/element-ng/landing-page/* @dauriamarco
+projects/element-ng/ip-input/* @spliffone
+api-goldens/element-ng/ip-input/* @spliffone
+projects/element-ng/formly/* @chintankavathia
+api-goldens/element-ng/formly/* @chintankavathia
+projects/element-ng/threshold/* @dr-itz
+api-goldens/element-ng/threshold/* @dr-itz
+projects/element-ng/tour/* @dr-itz
+api-goldens/element-ng/tour/* @dr-itz
+
+playwright/* @siemens/siemens-element-members
+docs/* @siemens/siemens-element-members
+src/* @siemens/siemens-element-members
+
+tools/semantic-release/* @ljanner
