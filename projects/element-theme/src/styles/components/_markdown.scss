@@ -172,4 +172,18 @@
     display: block;
     margin-block: map.get(variables.$spacers, 4);
   }
+
+  .latex-display-wrapper {
+    display: block;
+    margin-block: map.get(variables.$spacers, 4);
+    overflow-x: auto;
+    max-inline-size: 100%;
+    text-align: center;
+
+    .katex,
+    .katex * {
+      // stylelint-disable-next-line declaration-no-important
+      box-sizing: content-box !important;
+    }
+  }
 }
