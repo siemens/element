@@ -29,6 +29,7 @@ import {
   MarkPointComponent,
   AxisPointerComponent
 } from 'echarts/components';
+import { LegacyGridContainLabel } from 'echarts/features';
 
 echarts.use([
   BarChart,
@@ -49,7 +50,8 @@ echarts.use([
   MarkAreaComponent,
   MarkLineComponent,
   MarkPointComponent,
-  AxisPointerComponent
+  AxisPointerComponent,
+  LegacyGridContainLabel
 ]);
 
 @Component({

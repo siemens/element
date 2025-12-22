@@ -33,6 +33,7 @@ import {
   MarkPointComponent,
   AxisPointerComponent
 } from 'echarts/components';
+import { LegacyGridContainLabel } from 'echarts/features';
 
 import {
   CartesianChartData,
@@ -55,7 +56,8 @@ echarts.use([
   MarkAreaComponent,
   MarkLineComponent,
   MarkPointComponent,
-  AxisPointerComponent
+  AxisPointerComponent,
+  LegacyGridContainLabel
 ]);
 
 @Component({

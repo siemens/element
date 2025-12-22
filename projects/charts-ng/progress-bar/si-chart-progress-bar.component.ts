@@ -14,10 +14,11 @@ import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
 import { SiChartLoadingSpinnerComponent } from '@siemens/charts-ng/loading-spinner';
 import { BarChart } from 'echarts/charts';
 import { GridComponent } from 'echarts/components';
+import { LegacyGridContainLabel } from 'echarts/features';
 
 import { ProgressBarChartSeries, ProgressBarValueUpdate } from './si-chart-progress-bar.interface';
 
-echarts.use([BarChart, GridComponent]);
+echarts.use([BarChart, GridComponent, LegacyGridContainLabel]);
 
 @Component({
   selector: 'si-chart-progress-bar',

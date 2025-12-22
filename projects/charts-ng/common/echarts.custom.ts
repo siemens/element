@@ -4,7 +4,6 @@
  */
 import { TitleComponent, TooltipComponent } from 'echarts/components';
 import * as echarts from 'echarts/core';
-import { LegacyGridContainLabel } from 'echarts/features';
 import { CanvasRenderer, SVGRenderer } from 'echarts/renderers';
 
 echarts.use([
@@ -14,10 +13,7 @@ echarts.use([
 
   // core components used by all charts
   TitleComponent,
-  TooltipComponent,
-
-  // features
-  LegacyGridContainLabel
+  TooltipComponent
 ]);
 
 export { echarts };
