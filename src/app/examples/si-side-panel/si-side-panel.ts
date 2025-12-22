@@ -42,9 +42,10 @@ import { LOG_EVENT } from '@siemens/live-preview';
 })
 export class SampleComponent {
   collapsed = true;
-  mode: SidePanelMode = 'scroll';
+  mode: SidePanelMode = 'over';
   size: SidePanelSize = 'regular';
   displayMode: SidePanelDisplayMode = 'overlay';
+  disableBackdrop = false;
 
   navigateConfig: SidePanelNavigateConfig = {
     type: 'link',

@@ -1,3 +1,10 @@
+@if (showBackdrop()) {
+  <div
+    class="modal-backdrop"
+    [@backdrop]="showBackdrop() ? 'show' : 'hide'"
+    (click)="toggleSidePanel()"
+  ></div>
+}
 <div #sidePanel class="side-panel focus-none" tabindex="-1">
   <div class="inner" [class.d-none]="showTempContent()">
     <ng-content select="si-side-panel-content, element-side-panel-content" />

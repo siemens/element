@@ -3,6 +3,7 @@
   [collapsed]="collapsed"
   [mode]="mode"
   [size]="size"
+  [disableBackdrop]="disableBackdrop"
   (contentResize)="contentResize($event)"
   (closed)="collapsed = true"
 >
@@ -67,23 +68,23 @@
         type="radio"
         class="btn-check"
         name="displayMode"
-        id="display-navigate"
-        [checked]="displayMode === 'navigate'"
-      />
-      <label class="btn" for="display-navigate" (click)="displayMode = 'navigate'">
-        <i class="icon element-export" aria-hidden="true"></i>
-        Navigate
-      </label>
-      <input
-        type="radio"
-        class="btn-check"
-        name="displayMode"
         id="display-overlay"
         [checked]="displayMode === 'overlay'"
       />
       <label class="btn" for="display-overlay" (click)="displayMode = 'overlay'">
         <i class="icon element-zoom" aria-hidden="true"></i>
         Overlay
+      </label>
+      <input
+        type="radio"
+        class="btn-check"
+        name="displayMode"
+        id="display-navigate"
+        [checked]="displayMode === 'navigate'"
+      />
+      <label class="btn" for="display-navigate" (click)="displayMode = 'navigate'">
+        <i class="icon element-export" aria-hidden="true"></i>
+        Navigate
       </label>
     </div>
     <div class="btn-group ms-5 mt-5" role="group" aria-label="Mode toggle button group">
@@ -133,6 +134,28 @@
         navigate to a dedicated page. <code class="text-primary">Overlay:</code> Shows zoom icon in
         panel header. Click to toggle fullscreen overlay mode with URL state persistence.
       </p>
+      <p>
+        <code class="text-primary">Backdrop:</code> Displays a semi-transparent overlay that blocks
+        interactions with the main content while keeping it visible for context. Only active in
+        over-mode (or when scroll mode is forced to over-mode on smaller screens). The backdrop can
+        be clicked to close the side panel and can be disabled with the
+        <code class="text-primary">disableBackdrop</code> input.
+      </p>
+      <div class="form-check form-switch mt-8">
+        <input
+          type="checkbox"
+          class="form-check-input"
+          role="switch"
+          id="backdrop-switch"
+          [checked]="disableBackdrop"
+          (change)="disableBackdrop = !disableBackdrop"
+        />
+        <span class="bg-base-1 py-2 px-4 rounded-2">
+          <label for="backdrop-switch" class="form-check-label"
+            ><code class="text-body">disableBackdrop</code></label
+          >
+        </span>
+      </div>
     </div>
   </div>
 
