@@ -85,14 +85,12 @@ export class SiSelectActionsDirective {
 }
 
 // @public @deprecated
-export class SiSelectComplexOptionsDirective<T> extends SiSelectOptionsStrategyBase<T> implements OnChanges {
+export class SiSelectComplexOptionsDirective<T> extends SiSelectOptionsStrategyBase<T> {
     // (undocumented)
     readonly allRows: _angular_core.Signal<SelectOption<T>[] | SelectGroup<T>[]>;
     readonly complexOptions: _angular_core.InputSignal<T[] | Record<string, T[]> | null | undefined>;
     readonly disabledProvider: _angular_core.InputSignal<(dropdownOption: T) => boolean>;
     readonly groupProvider: _angular_core.InputSignal<(groupKey: string) => string | undefined>;
-    // (undocumented)
-    ngOnChanges(): void;
     readonly optionsEqual: _angular_core.InputSignal<(a: T, b: T) => boolean>;
     // @deprecated (undocumented)
     readonly trackBy: _angular_core.InputSignal<_angular_core.TrackByFunction<T>>;
@@ -238,11 +236,9 @@ export class SiSelectOptionTemplateDirective {
 }
 
 // @public
-export class SiSelectSimpleOptionsDirective<T = string> extends SiSelectOptionsStrategyBase<T> implements OnChanges {
+export class SiSelectSimpleOptionsDirective<T = string> extends SiSelectOptionsStrategyBase<T> {
     // (undocumented)
     readonly allRows: _angular_core.Signal<SelectItem<T>[]>;
-    // (undocumented)
-    ngOnChanges(): void;
     readonly options: _angular_core.InputSignal<(SelectOptionLegacy | SelectItem<T>)[] | null | undefined>;
     readonly optionsEqual: _angular_core.InputSignal<(a: T, b: T) => boolean>;
     // (undocumented)
