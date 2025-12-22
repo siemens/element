@@ -18,9 +18,9 @@
       </div>
     }
 
-    @if (promptSuggestions().length > 0) {
+    @if (filteredPromptSuggestions().length > 0) {
       <div class="d-flex flex-column gap-4 w-100">
-        @for (suggestion of promptSuggestions(); track $index) {
+        @for (suggestion of filteredPromptSuggestions(); track $index) {
           <button si-action-card type="button" class="w-100" (click)="onPromptClick(suggestion)">
             <div body class="card-body card-text text-white">
               {{ suggestion.text }}

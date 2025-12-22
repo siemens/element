@@ -14,11 +14,11 @@ import {
   Signal,
   isSignal,
   effect,
-  viewChild
+  viewChild,
+  signal
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { BackgroundColorVariant } from '@siemens/element-ng/common';
-import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
 import {
   getMarkdownRenderer,
@@ -27,6 +27,7 @@ import {
 import { MenuItem } from '@siemens/element-ng/menu';
 import { SiResponsiveContainerDirective } from '@siemens/element-ng/resize-observer';
 import {
+  SiTranslatePipe,
   TranslatableString,
   injectSiTranslateService,
   t
@@ -39,6 +40,7 @@ import {
   TemplateChatMessage
 } from './chat-message.model';
 import { SiAiMessageComponent } from './si-ai-message.component';
+import { PromptSuggestion, SiAiWelcomeScreenComponent } from './si-ai-welcome-screen.component';
 import { SiChatContainerInputDirective } from './si-chat-container-input.directive';
 import { SiChatContainerComponent } from './si-chat-container.component';
 import { ChatInputAttachment, SiChatInputComponent } from './si-chat-input.component';
@@ -73,13 +75,14 @@ import { SiUserMessageComponent } from './si-user-message.component';
   selector: 'si-ai-chat-container',
   imports: [
     NgTemplateOutlet,
-    SiEmptyStateComponent,
     SiInlineNotificationComponent,
     SiAiMessageComponent,
     SiToolMessageComponent,
     SiUserMessageComponent,
     SiChatContainerComponent,
-    SiChatContainerInputDirective
+    SiChatContainerInputDirective,
+    SiTranslatePipe,
+    SiAiWelcomeScreenComponent
   ],
   templateUrl: './si-ai-chat-container.component.html',
   host: {
@@ -188,6 +191,17 @@ export class SiAiChatContainerComponent {
   >(undefined);
 
   /**
+   * Optional LaTeX renderer function for math expressions.
+   * Receives LaTeX string and display mode flag, returns an HTML content string to display or undefined to use default rendering.
+   * The returned HTML is sanitized before insertion.
+   * Make sure that the required styles/scripts for the LaTeX renderer are included in your application.
+   * @defaultValue undefined
+   */
+  readonly latexRenderer = input<
+    ((latex: string, displayMode: boolean) => string | undefined) | undefined
+  >(undefined);
+
+  /**
    * Label for the copy button.
    * @defaultValue
    * ```
@@ -208,29 +222,46 @@ export class SiAiChatContainerComponent {
   );
 
   /**
-   * Title for empty state
+   * The greeting text for the welcome screen
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_AI_CHAT_CONTAINER.EMPTY_STATE_TITLE:Start a conversation`)
+   * t(() => $localize`:@@SI_AI_CHAT_CONTAINER.WELCOME_GREETING:Hello,`)
    * ```
    */
-  readonly emptyStateTitle = input<TranslatableString>(
-    t(() => $localize`:@@SI_AI_CHAT_CONTAINER.EMPTY_STATE_TITLE:Start a conversation`)
+  readonly greeting = input(t(() => $localize`:@@SI_AI_CHAT_CONTAINER.WELCOME_GREETING:Hello,`));
+
+  /**
+   * The welcome message text for the welcome screen
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_AI_CHAT_CONTAINER.WELCOME_MESSAGE:how can I help you today?`)
+   * ```
+   */
+  readonly welcomeMessage = input(
+    t(() => $localize`:@@SI_AI_CHAT_CONTAINER.WELCOME_MESSAGE:how can I help you today?`)
   );
 
   /**
-   * Description for empty state
-   * @defaultValue
-   * ```
-   * t(() => $localize`:@@SI_AI_CHAT_CONTAINER.EMPTY_STATE_DESCRIPTION:Send a message to begin chatting`)
-   * ```
+   * The list of prompt suggestions for the welcome screen, either as an array or a record mapping category labels to suggestion arrays
+   * @defaultValue []
    */
-  readonly emptyStateDescription = input<TranslatableString>(
-    t(
-      () =>
-        $localize`:@@SI_AI_CHAT_CONTAINER.EMPTY_STATE_DESCRIPTION:Send a message to begin chatting`
-    )
-  );
+  readonly promptSuggestions = input<PromptSuggestion[] | Record<string, PromptSuggestion[]>>([]);
+
+  /**
+   * Internal selected category state
+   */
+  protected readonly selectedCategory = signal<string | undefined>(undefined);
+
+  /**
+   * Computed list of categories derived from promptSuggestions
+   */
+  protected readonly promptCategories = computed(() => {
+    const suggestions = this.promptSuggestions();
+    if (Array.isArray(suggestions)) {
+      return [];
+    }
+    return Object.keys(suggestions).map(label => ({ label }));
+  });
 
   /**
    * More actions button aria label
@@ -300,6 +331,7 @@ export class SiAiChatContainerComponent {
 
   protected readonly markdownRenderer = computed(() => {
     const highlighterFn = this.syntaxHighlighter();
+    const latexFn = this.latexRenderer();
 
     const options: MarkdownRendererOptions | undefined = {
       copyCodeButton: !this.disableCopyCodeButton() ? this.copyCodeButtonLabel() : undefined,
@@ -307,6 +339,7 @@ export class SiAiChatContainerComponent {
         ? this.downloadTableButtonLabel()
         : undefined,
       syntaxHighlighter: highlighterFn,
+      latexRenderer: latexFn,
       translateSync: this.translateService.translateSync.bind(this.translateService)
     };
 
@@ -544,4 +577,18 @@ export class SiAiChatContainerComponent {
   }
 
   protected readonly isSignal = isSignal;
+
+  protected onPromptSelected(suggestion: PromptSuggestion): void {
+    // Set the input value and emit the send event
+    const inputComponent = this.chatInput();
+    if (inputComponent) {
+      inputComponent.value.set(suggestion.text);
+      // Programmatically trigger the send output
+      inputComponent.send.emit({
+        content: suggestion.text,
+        attachments: []
+      });
+      inputComponent.value.set('');
+    }
+  }
 }

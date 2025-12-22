@@ -1,7 +1,5 @@
 <div class="si-layout-fixed-height w-100 h-100">
   <si-ai-chat-container
-    emptyStateTitle="AI Assistant"
-    emptyStateDescription="Start a conversation"
     statusSeverity="info"
     statusMessage="AI responses are for demonstration purposes."
     colorVariant="base-0"
@@ -11,6 +9,7 @@
     [disableInterrupt]="disableInterrupt()"
     [interrupting]="interrupting()"
     [syntaxHighlighter]="syntaxHighlighter"
+    [promptSuggestions]="promptSuggestionsByCategory"
   >
     <si-chat-input
       class="w-100"
