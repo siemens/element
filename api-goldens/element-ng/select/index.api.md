@@ -185,8 +185,12 @@ export class SiSelectLazyOptionsDirective<T> implements SiSelectOptionsStrategy<
 export class SiSelectListHasFilterComponent<T> extends SiSelectListBase<T> implements OnInit {
     constructor();
     // (undocumented)
+    protected readonly filteredRows: Signal<readonly SelectItem<T>[]>;
+    // (undocumented)
     protected readonly filterInput: Signal<ElementRef<HTMLInputElement>>;
     readonly filterPlaceholder: _angular_core.InputSignal<TranslatableString>;
+    // (undocumented)
+    protected readonly filterValue: _angular_core.WritableSignal<string>;
     // (undocumented)
     protected readonly icons: Record<"elementSearch", string>;
     // (undocumented)

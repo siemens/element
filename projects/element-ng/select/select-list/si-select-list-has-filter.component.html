@@ -27,7 +27,7 @@
   [attr.aria-labelledby]="baseId() + '-aria-label' + ' ' + labelledby()"
   (siAutocompleteOptionSubmitted)="select($event)"
 >
-  @for (item of rows(); track item; let index = $index) {
+  @for (item of filteredRows(); track item; let index = $index) {
     @if (item.type === 'group') {
       <div
         role="group"

@@ -45,32 +45,8 @@ export abstract class SiSelectOptionsStrategyBase<T> implements SiSelectOptionsS
   }
 
   onFilter(filterValue?: string): void {
-    if (filterValue) {
-      const filterValueLC = filterValue.toLowerCase();
-      const checkRow: (row: SelectOption<T>) => boolean = (row: SelectOption<T>) =>
-        (row.typeaheadLabel ?? row.label)!.toLowerCase().includes(filterValueLC!);
-
-      this.rows.set(
-        this.allRows().reduce((rows, row) => {
-          if (row.type === 'option' && checkRow(row)) {
-            rows.push(row);
-          } else if (row.type === 'group') {
-            if (row.label!.toLowerCase().includes(filterValueLC!)) {
-              rows.push(row);
-            } else {
-              const options = row.options.filter(checkRow);
-
-              if (options.length) {
-                rows.push({ ...row, options });
-              }
-            }
-          }
-
-          return rows;
-        }, [] as SelectItem<T>[])
-      );
-    } else {
-      this.rows.set(this.allRows());
-    }
+    // When filterValue is undefined, re-apply the last filter to maintain consistency
+    // if options change while the dropdown is open
+    this.rows.set(this.allRows());
   }
 }

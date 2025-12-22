@@ -357,6 +357,19 @@ describe('SiSelectComponent', () => {
         const item = await selectHarness.getList().then(list => list!.getItemByText('c'));
         expect(await item.isActive()).toBeTrue();
       });
+
+      it('should apply current filter when options are applied', async () => {
+        await selectHarness.open();
+        await selectHarness.getList().then(list => list!.sendKeys('c'));
+        hostComponent.options = [...hostComponent.options!, { id: 'aaa', title: 'aaa' }];
+        fixture.changeDetectorRef.markForCheck();
+        fixture.detectChanges();
+        const items = await selectHarness.getList().then(list => list!.getAllItemTexts());
+        expect(items).not.toContain('a');
+        expect(items).not.toContain('b');
+        expect(items).not.toContain('ab');
+        expect(items).not.toContain('aaa');
+      });
     });
   });
 

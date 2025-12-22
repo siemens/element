@@ -22,6 +22,7 @@ import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-
 import { SiSelectOptionRowComponent } from '../select-option/si-select-option-row.component';
 import { SiSelectGroupTemplateDirective } from '../si-select-group-template.directive';
 import { SiSelectOptionRowTemplateDirective } from '../si-select-option-row-template.directive';
+import { SelectItem, SelectOption } from '../si-select.types';
 import { SiSelectListBase } from './si-select-list.base';
 
 @Component({
@@ -55,6 +56,36 @@ export class SiSelectListHasFilterComponent<T> extends SiSelectListBase<T> imple
   protected readonly initIndex: Signal<number>;
   protected readonly id = computed(() => `${this.baseId()}-listbox`);
   protected readonly icons = addIcons({ elementSearch });
+  protected readonly filterValue = signal<string>('');
+  protected readonly filteredRows = computed(() => {
+    const filter = this.filterValue();
+    const allRows = this.rows();
+    if (!filter) {
+      return allRows;
+    }
+
+    const filterValueLC = filter.toLowerCase();
+    const checkRow: (row: SelectOption<T>) => boolean = (row: SelectOption<T>) =>
+      (row.typeaheadLabel ?? row.label)!.toLowerCase().includes(filterValueLC!);
+
+    return allRows.reduce((rows, row) => {
+      if (row.type === 'option' && checkRow(row)) {
+        rows.push(row);
+      } else if (row.type === 'group') {
+        if (row.label!.toLowerCase().includes(filterValueLC!)) {
+          rows.push(row);
+        } else {
+          const options = row.options.filter(checkRow);
+
+          if (options.length) {
+            rows.push({ ...row, options });
+          }
+        }
+      }
+
+      return rows;
+    }, [] as SelectItem<T>[]);
+  });
 
   constructor() {
     super();
@@ -78,6 +109,7 @@ export class SiSelectListHasFilterComponent<T> extends SiSelectListBase<T> imple
   }
 
   protected input(): void {
+    this.filterValue.set(this.filterInput().nativeElement.value);
     this.selectOptions.onFilter!(this.filterInput().nativeElement.value);
   }
 

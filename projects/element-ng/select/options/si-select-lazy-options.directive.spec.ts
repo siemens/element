@@ -85,7 +85,7 @@ describe('SelectLazyOptionsDirective', () => {
     await fixture.whenStable();
     const list = (await harness.getList())!;
 
-    await list.sendKeys('search');
+    await list.sendKeys('result');
     expect(component.optionSource.getOptionsForSearch).not.toHaveBeenCalled();
     jasmine.clock().tick(200);
     await fixture.whenStable();
