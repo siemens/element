@@ -12,6 +12,7 @@ import {
   viewChild
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 import { SiApplicationHeaderHarness } from '@siemens/element-ng/application-header/testing/si-application-header.harness';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
@@ -47,7 +48,12 @@ describe('SiNavbarPrimaryComponent', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
       imports: [TestHostComponent],
-      providers: [provideRouter([]), provideLocationMocks(), provideZonelessChangeDetection()]
+      providers: [
+        provideRouter([]),
+        provideLocationMocks(),
+        provideZonelessChangeDetection(),
+        provideNoopAnimations()
+      ]
     })
   );
 

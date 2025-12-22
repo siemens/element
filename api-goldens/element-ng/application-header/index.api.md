@@ -27,6 +27,7 @@ export type App = AppLink | AppRouterLink;
 
 // @public (undocumented)
 export interface AppBase {
+    disabled?: boolean;
     external?: boolean;
     favorite?: boolean;
     iconClass?: string;
@@ -198,7 +199,7 @@ export class SiLaunchpadFactoryComponent {
     readonly favoriteChange: _angular_core.OutputEmitterRef<FavoriteChangeEvent>;
     readonly showLessAppsText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly showMoreAppsText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly subtitleText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly subtitleText: _angular_core.InputSignal<string | undefined>;
     readonly titleText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiLaunchpadFactoryComponent, "si-launchpad-factory", never, { "closeText": { "alias": "closeText"; "required": false; "isSignal": true; }; "titleText": { "alias": "titleText"; "required": false; "isSignal": true; }; "subtitleText": { "alias": "subtitleText"; "required": false; "isSignal": true; }; "apps": { "alias": "apps"; "required": true; "isSignal": true; }; "enableFavorites": { "alias": "enableFavorites"; "required": false; "isSignal": true; }; "favoriteAppsText": { "alias": "favoriteAppsText"; "required": false; "isSignal": true; }; "showMoreAppsText": { "alias": "showMoreAppsText"; "required": false; "isSignal": true; }; "showLessAppsText": { "alias": "showLessAppsText"; "required": false; "isSignal": true; }; }, { "favoriteChange": "favoriteChange"; }, never, never, true, never>;

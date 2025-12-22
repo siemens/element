@@ -304,8 +304,6 @@ export interface SiTranslatableKeys {
     // (undocumented)
     'SI_LAUNCHPAD.SUB_TITLE'?: string;
     // (undocumented)
-    'SI_LAUNCHPAD.SUBTITLE'?: string;
-    // (undocumented)
     'SI_LAUNCHPAD.TITLE'?: string;
     // (undocumented)
     'SI_LIST_DETAILS.BACK'?: string;

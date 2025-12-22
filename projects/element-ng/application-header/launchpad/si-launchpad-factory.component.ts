@@ -57,20 +57,16 @@ export class SiLaunchpadFactoryComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Launchpad`)
+   * t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch to application`)
    * ```
    */
-  readonly titleText = input(t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Launchpad`));
+  readonly titleText = input(t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch to application`));
 
   /**
    * Subtitle of the launchpad.
-   *
-   * @defaultValue
-   * ```
-   * t(() => $localize`:@@SI_LAUNCHPAD.SUBTITLE:Access all your apps`)
-   * ```
+   * When not provided, no subtitle is displayed.
    */
-  readonly subtitleText = input(t(() => $localize`:@@SI_LAUNCHPAD.SUBTITLE:Access all your apps`));
+  readonly subtitleText = input<string>();
 
   /** All app items shown in the launchpad. */
   readonly apps = input.required<App[] | AppCategory[]>();
@@ -87,12 +83,10 @@ export class SiLaunchpadFactoryComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_LAUNCHPAD.FAVORITE_APPS:Favorite apps`)
+   * t(() => $localize`:@@SI_LAUNCHPAD.FAVORITE_APPS:Favorites`)
    * ```
    */
-  readonly favoriteAppsText = input(
-    t(() => $localize`:@@SI_LAUNCHPAD.FAVORITE_APPS:Favorite apps`)
-  );
+  readonly favoriteAppsText = input(t(() => $localize`:@@SI_LAUNCHPAD.FAVORITE_APPS:Favorites`));
 
   /**
    * Title of the show more apps button.

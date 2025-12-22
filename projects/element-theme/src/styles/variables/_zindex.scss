@@ -16,5 +16,5 @@ $zindex-sidepanel-responsive: $zindex-fixed + 1; // above vertical-nav
 $zindex-vertical-nav: $zindex-fixed + 1;
 $zindex-vertical-nav-collapsed: $zindex-fixed;
 $zindex-application-header: $zindex-fixed + 3;
-$zindex-launchpad: $zindex-application-header;
+$zindex-launchpad: $zindex-application-header - 1;
 $zindex-application-header-backdrop: $zindex-launchpad - 1;
