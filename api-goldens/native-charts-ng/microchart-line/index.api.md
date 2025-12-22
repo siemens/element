@@ -16,24 +16,12 @@ export interface MicrochartLineSeries {
 // @public (undocumented)
 export class SiMicrochartLineComponent {
     // (undocumented)
-    protected readonly areaPath: _angular_core.Signal<string>;
-    // (undocumented)
-    protected readonly gradientId: string;
-    // (undocumented)
     readonly height: _angular_core.InputSignal<number>;
     readonly lineWidth: _angular_core.InputSignal<number>;
     readonly markerColor: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    protected readonly markerPoints: _angular_core.Signal<Coordinate[]>;
-    // (undocumented)
-    protected readonly markerRadius: _angular_core.Signal<number>;
-    // (undocumented)
-    protected readonly path: _angular_core.Signal<string>;
     readonly series: _angular_core.InputSignal<MicrochartLineSeries>;
     readonly showArea: _angular_core.InputSignal<boolean>;
     readonly showMarkers: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    protected readonly viewBox: _angular_core.Signal<string>;
     // (undocumented)
     readonly width: _angular_core.InputSignal<number>;
     // (undocumented)

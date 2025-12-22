@@ -26,15 +26,9 @@ export class SiFilterBarComponent {
     readonly allowReset: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly collapsedFiltersDescription: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly colorVariant: _angular_core.InputSignal<BackgroundColorVariant>;
-    // (undocumented)
-    protected deleteFilters(deletedPill: Filter): void;
-    // (undocumented)
-    protected deleteOverflowFilter(): void;
     readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly filterDefaultText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly filters: _angular_core.ModelSignal<Filter[]>;
-    // (undocumented)
-    protected onResetFilters(): void;
     readonly resetFilters: _angular_core.OutputEmitterRef<void>;
     readonly resetText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     // (undocumented)
@@ -55,8 +49,6 @@ export class SiFilterBarModule {
 
 // @public (undocumented)
 export class SiFilterPillComponent {
-    // (undocumented)
-    protected deleteClicked(): void;
     readonly deleteFilters: _angular_core.OutputEmitterRef<Filter>;
     // (undocumented)
     readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;

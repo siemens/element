@@ -26,35 +26,13 @@ export interface EnumeratedBreadcrumbItem extends BreadcrumbItem {
 
 // @public (undocumented)
 export class SiBreadcrumbComponent implements OnChanges, OnDestroy {
-    // (undocumented)
-    protected addExpandDropdown: boolean;
     readonly ariaLabel: i0.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected breadcrumbDropdownOpen: number | undefined;
-    // (undocumented)
-    protected breadcrumbShortened: boolean;
-    // (undocumented)
-    protected controlId: string;
-    // (undocumented)
-    protected documentClick(targetElement: any): void;
-    // (undocumented)
-    protected ellipsesLevel: number;
-    // (undocumented)
-    protected readonly icons: Record<"elementBreadcrumbRoot" | "elementRight2", string>;
     readonly items: i0.InputSignal<BreadcrumbItem[]>;
-    // (undocumented)
-    protected itemsHidden: EnumeratedBreadcrumbItem[];
-    // (undocumented)
-    protected itemsShown: EnumeratedBreadcrumbItem[];
     // (undocumented)
     ngOnChanges(): void;
     // (undocumented)
     ngOnDestroy(): void;
-    // (undocumented)
-    protected resetBreadcrumb(): void;
     readonly showRootAsText: i0.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected toggleBreadcrumbDropdown(itemLevel: number): void;
     // (undocumented)
     static ɵcmp: i0.ɵɵComponentDeclaration<SiBreadcrumbComponent, "si-breadcrumb", never, { "items": { "alias": "items"; "required": true; "isSignal": true; }; "showRootAsText": { "alias": "showRootAsText"; "required": false; "isSignal": true; }; "ariaLabel": { "alias": "ariaLabel"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
     // (undocumented)

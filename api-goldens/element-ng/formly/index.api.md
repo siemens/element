@@ -29,10 +29,6 @@ import { OnInit } from '@angular/core';
 export class SiFormlyComponent<TControl extends {
     [K in keyof TControl]: AbstractControl;
 }> implements OnInit {
-    // (undocumented)
-    protected readonly fieldConfig: i0.Signal<FormlyFieldConfig<_ngx_formly_core.FormlyFieldProps & {
-        [additionalProperties: string]: any;
-    }>[]>;
     readonly fields: i0.InputSignal<FormlyFieldConfig<_ngx_formly_core.FormlyFieldProps & {
         [additionalProperties: string]: any;
     }>[]>;
@@ -48,8 +44,6 @@ export class SiFormlyComponent<TControl extends {
     // (undocumented)
     ngOnInit(): void;
     readonly options: i0.InputSignal<FormlyFormOptions>;
-    // (undocumented)
-    protected ownForm: boolean;
     readonly schema: i0.ModelSignal<JSONSchema7 | undefined>;
     // (undocumented)
     static ɵcmp: i0.ɵɵComponentDeclaration<SiFormlyComponent<any>, "si-formly", never, { "form": { "alias": "form"; "required": false; "isSignal": true; }; "model": { "alias": "model"; "required": false; "isSignal": true; }; "options": { "alias": "options"; "required": false; "isSignal": true; }; "schema": { "alias": "schema"; "required": false; "isSignal": true; }; "fields": { "alias": "fields"; "required": false; "isSignal": true; }; "labelWidth": { "alias": "labelWidth"; "required": false; "isSignal": true; }; }, { "form": "formChange"; "model": "modelChange"; "schema": "schemaChange"; "fieldsChange": "fieldsChange"; }, never, never, false, never>;

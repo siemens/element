@@ -75,7 +75,6 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
    * selected criteria and additional filter text.
    */
   readonly doSearch = output<SearchCriteria>();
-
   /**
    * If this is set to `true`, the search triggers for each input (implicit search).
    * By default, the search is triggered when the user submits by pressing the
@@ -117,6 +116,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
    * @defaultValue false
    */
   readonly readonly = input(false, { transform: booleanAttribute });
+
   /**
    * Limit criteria to the predefined ones.
    *
@@ -146,7 +146,6 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
    * @defaultValue 500
    */
   readonly lazyLoadingDebounceTime = input(500);
-
   /**
    * Custom debounce time (in mills) to delay the search emission.
    * (Default is 0 as in most cases a users manually triggers a search.
@@ -155,6 +154,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
    * @defaultValue 0
    */
   readonly searchDebounceTime = input(0);
+
   /**
    * The placeholder for input field.
    *
@@ -178,7 +178,6 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
    * ```
    */
   readonly searchCriteria = model<SearchCriteria>({ criteria: [], value: '' });
-
   /**
    * Predefine criteria options.
    *
@@ -193,6 +192,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
   readonly exclusiveCriteria = input(false, {
     transform: booleanAttribute
   });
+
   /**
    * Limit the number of possible criteria. The default is undefined so that any number of criteria can be used.
    * For example, setting the value to 1 let you only select one criterion that you need to remove before being
@@ -201,7 +201,6 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
    * @defaultValue undefined
    */
   readonly maxCriteria = input<number | undefined>(undefined);
-
   /**
    * Defines the maximum options within one criterion. The default is 20 and 0 means unlimited.
    *
@@ -217,6 +216,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
    * ```
    */
   readonly searchLabel = input(t(() => $localize`:@@SI_FILTERED_SEARCH.SEARCH:Search`));
+
   /**
    * Clear button aria label. Needed for a11y
    *
@@ -238,7 +238,6 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
   readonly submitButtonLabel = input(
     t(() => $localize`:@@SI_FILTERED_SEARCH.SUBMIT_BUTTON:Submit search`)
   );
-
   /**
    * Items count text appended to the count in case of multi-selection of values.
    * Translation key, `{{itemCount}}` in the translation will be replaced with the actual value.
@@ -278,6 +277,34 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
    */
   readonly disableSelectionByColonAndSemicolon = input(false, { transform: booleanAttribute });
   /**
+   * Criterion definition for free-text pills.
+   * When set, free-text values will be added as a pill with this criterion.
+   * If not set, free-text pills are disabled.
+   *
+   * Enabling this will only emit valueChange events when the free-text pill is created.
+   * When the text input is blurred and there is text inside, a free-text pill will be created.
+   *
+   *
+   * @experimental
+   */
+  readonly freeTextCriterion = input<CriterionDefinition>();
+  /**
+   * The value to be shown for creating free-text pills.
+   * Use the `{{query}}` placeholder to show the user input in the label.
+   *
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_FILTERED_SEARCH.SEARCH_FOR_FREE_TEXT:Search for "{{query}}"`)
+   * ```
+   *
+   * @experimental
+   */
+  readonly searchForFreeTextLabel = input(
+    t(() => $localize`:@@SI_FILTERED_SEARCH.SEARCH_FOR_FREE_TEXT:Search for "{{query}}"`)
+  );
+
+  /**
    * The interceptor is called when the list of criteria is shown as soon as the user starts typing in the input field.
    * The interceptor's {@link DisplayedCriteriaEventArgs.allow} method can be used to filter the list of displayed criteria.
    *
@@ -304,16 +331,15 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
   private readonly scrollContainer = viewChild.required('scrollContainer', { read: ElementRef });
 
   private readonly valueComponents = viewChildren(SiFilteredSearchValueComponent);
-
   protected dataSource: Observable<InternalCriterionDefinition[]>;
-  protected autoEditCriteria = false;
 
+  protected autoEditCriteria = false;
   protected values: { config: InternalCriterionDefinition; value: CriterionValue }[] = [];
   protected searchValue = '';
   /** Internal criteria model */
   protected internalCriterionDefinitions: InternalCriterionDefinition[] = [];
-  protected readonly icons = addIcons({ elementCancel, elementSearch });
 
+  protected readonly icons = addIcons({ elementCancel, elementSearch });
   /** Used to trigger a renewed search */
   private typeaheadInputChange = new BehaviorSubject<string>('');
   /** Used to debounce the Search emissions */
@@ -322,14 +348,16 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
   private readonly cdRef = inject(ChangeDetectorRef);
   private readonly translateService = injectSiTranslateService();
   private readonly locale = inject(LOCALE_ID).toString();
+
   /**
    * The cache is used to control when the interceptDisplayedCriteria event needs to be called.
    * Every time a criteria gain the focus we have to reset the cache to call the interceptor.
    */
   private allowedCriteriaCache?: string[];
-
+  protected readonly allowFreeTextCache = signal<boolean>(true);
   // Angular also calls ngOnChanges if we emitted a change and then two-way-databinding writes back our own change.
   // We use this to ensure that we do not write our own change back to the input.
+
   private lastEmittedSearchCriteria?: SearchCriteria;
 
   protected readonly isStrictOrOnlySelectValue = computed(() => {
@@ -339,10 +367,10 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
   private readonly strictCriterionOrValue = computed(() => {
     return this.strictCriterion() || this.isStrictOrOnlySelectValue();
   });
-
   private readonly lazyLoadedCriteria = signal<Criterion[] | CriterionDefinition[] | undefined>(
     undefined
   );
+
   private readonly loadedCriteria = computed(() => {
     const lazyLoadedCriteria = this.lazyLoadedCriteria();
     if (lazyLoadedCriteria) {
@@ -351,6 +379,21 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
       return this.criteria() ?? [];
     }
   });
+
+  private readonly internalFreeTextCriterion = computed<InternalCriterionDefinition | undefined>(
+    () => {
+      const freeTextDef = this.freeTextCriterion();
+      if (!freeTextDef) {
+        return undefined;
+      }
+      return {
+        ...freeTextDef,
+        label: freeTextDef.label ?? freeTextDef.name,
+        translatedLabel: freeTextDef.label ?? freeTextDef.name,
+        type: 'free-text'
+      };
+    }
+  );
 
   private readonly isReadOnly = computed(() => this.readonly() || this.disabled());
 
@@ -406,13 +449,36 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     this.internalCriterionDefinitions = this.loadedCriteria().map(c => toInternalCriteria(c));
   }
 
+  /**
+   * Finds a criterion config for a given criterion value.
+   * Checks internalCriterionDefinitions first, then freeTextCriterion.
+   * Returns undefined if no config was found.
+   */
+  private findCriterionConfig(
+    criterionValue: Criterion | CriterionValue
+  ): InternalCriterionDefinition | undefined {
+    const config = this.internalCriterionDefinitions.find(ic => ic.name === criterionValue.name);
+
+    if (config) {
+      return config;
+    }
+
+    // Check if this matches the freeTextCriterion
+    const freeTextDef = this.internalFreeTextCriterion();
+    if (freeTextDef && freeTextDef.name === criterionValue.name) {
+      return freeTextDef;
+    }
+
+    return undefined;
+  }
+
   private initValue(): void {
     this.autoEditCriteria = false;
     this.searchValue = this.searchCriteria()?.value ?? '';
     this.values =
       this.searchCriteria()?.criteria.map(c => {
         const config =
-          this.internalCriterionDefinitions.find(ic => ic.name === c.name) ??
+          this.findCriterionConfig(c) ??
           ({
             name: c.name,
             label: c.label ?? c.name,
@@ -537,7 +603,9 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
       value: this.searchValue,
       criteria: this.values.map(v => v.value)
     };
-    if (this.disableFreeTextSearch()) {
+    // When free text search is disabled or free text pills are being used,
+    // we must not return any free text value.
+    if (this.disableFreeTextSearch() || this.freeTextCriterion()) {
       correctedCriteria.value = '';
     }
     return correctedCriteria;
@@ -585,9 +653,12 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
         this.interceptDisplayedCriteria.emit({
           criteria: available,
           searchCriteria: this.convertToExternalModel(),
-          allow: criteriaNamesToDisplay => {
+          allow: (criteriaNamesToDisplay, allowFreeTextSearch) => {
             if (criteriaNamesToDisplay) {
               this.allowedCriteriaCache = criteriaNamesToDisplay;
+            }
+            if (allowFreeTextSearch !== undefined) {
+              this.allowFreeTextCache.set(allowFreeTextSearch);
             }
           }
         });
@@ -611,7 +682,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     this.values = this.values.map(v =>
       Object.assign(v, {
         value: v.value,
-        config: this.internalCriterionDefinitions.find(ic => ic.name === v.config.name) ?? v.config
+        config: this.findCriterionConfig(v.value) ?? v.config
       })
     );
 
@@ -672,12 +743,21 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     } else {
       this.searchValue = value;
 
-      if (!this.disableFreeTextSearch()) {
+      // Only emit a change event if free text pills are not enabled and the free text search is enabled.
+      if (!this.disableFreeTextSearch() && !this.freeTextCriterion()) {
         this.emitChangeEvent();
       }
 
       this.typeaheadInputChange.next(value);
     }
+  }
+
+  protected freeTextBlur(): void {
+    queueMicrotask(() => {
+      if (this.freeTextCriterion() && this.searchValue.length > 0) {
+        this.createFreeTextPill(this.searchValue);
+      }
+    });
   }
 
   protected valueChange(
@@ -708,5 +788,26 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     if (this.doSearchOnInputChange()) {
       this.searchEmitQueue.next(this.searchCriteria());
     }
+  }
+
+  protected createFreeTextPill(query: string): void {
+    const freeTextDefinition = this.internalFreeTextCriterion();
+    const maxCriteria = this.maxCriteria();
+    if (!freeTextDefinition || (maxCriteria && this.values.length >= maxCriteria)) {
+      return;
+    }
+    this.values = [
+      ...this.values,
+      {
+        value: {
+          name: freeTextDefinition.name,
+          value: query
+        },
+        config: freeTextDefinition
+      }
+    ];
+    this.searchValue = '';
+    this.allowedCriteriaCache = undefined;
+    this.emitChangeEvent();
   }
 }

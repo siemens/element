@@ -4,9 +4,9 @@
  */
 import { Widget } from '@siemens/dashboards-ng';
 
-const loaderFunction = (name: string): Promise<any> => {
+const loaderFunction = async (name: string): Promise<any> => {
   if (name === 'ContactWidgetComponent' || name === 'ContactWidgetEditorComponent') {
-    return import('./index');
+    return import('./index').then(m => m[name as keyof typeof m]);
   } else {
     throw new Error(`Unknown component to be loaded ${name}`);
   }
@@ -20,8 +20,7 @@ export const WIZARD_WIDGET_DESCRIPTOR: Widget = {
   componentFactory: {
     componentName: 'ContactWidgetComponent',
     editorComponentName: 'ContactWidgetEditorComponent',
-    moduleName: 'ContactWidgetModule',
-    moduleLoader: loaderFunction
+    componentLoader: loaderFunction
   },
   defaults: {
     width: 4,

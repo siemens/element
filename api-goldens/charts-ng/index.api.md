@@ -419,25 +419,13 @@ export { SiCandlestickSeriesOption as SimplCandlestickSeriesOption }
 export class SiChartCartesianComponent extends SiChartComponent implements OnChanges {
     addData(index: number, data: CartesianChartData): void;
     addDataMulti(series: SeriesUpdate<CartesianChartData>[]): void;
-    // (undocumented)
-    protected afterChartInit(skipZoom?: boolean): void;
-    // (undocumented)
-    protected applyOptions(): void;
     getSeriesMarker(seriesName: string): string;
     getSeriesMarkerSvg(seriesName: string): string;
-    // (undocumented)
-    protected getValidXAxis(): Set<number>;
-    // (undocumented)
-    protected handleSelectionChanged(event: any): void;
-    // (undocumented)
-    protected hasData(): boolean;
     // (undocumented)
     ngOnChanges(changes: SimpleChanges): void;
     // (undocumented)
     refreshSeries(isLive?: boolean, dzToSet?: DataZoomRange): void;
     readonly series: _angular_core.InputSignal<CartesianChartSeries[] | undefined>;
-    // (undocumented)
-    protected setZoomMode(): void;
     readonly stacked: _angular_core.InputSignal<boolean>;
     // (undocumented)
     readonly subChartGrids: _angular_core.InputSignal<SubchartGrid[] | undefined>;
@@ -453,10 +441,6 @@ export class SiChartCartesianComponent extends SiChartComponent implements OnCha
 
 // @public (undocumented)
 export class SiChartCircleComponent extends SiChartComponent {
-    // (undocumented)
-    protected applyDataZoom(): void;
-    // (undocumented)
-    protected applyOptions(): void;
     changeMultiValues(updateValues: CircleValueUpdate[]): void;
     changeSingleValue(index: number, valueIndex: number, value: number): void;
     readonly series: _angular_core.InputSignal<CircleChartSeries[] | undefined>;
@@ -468,47 +452,12 @@ export class SiChartCircleComponent extends SiChartComponent {
 
 // @public (undocumented)
 export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDestroy {
-    // (undocumented)
-    protected activeTheme: any;
-    protected actualOptions: EChartOption;
-    // (undocumented)
-    protected addDataInternal(series: SeriesUpdate<any>[]): void;
     readonly additionalOptions: _angular_core.InputSignal<EChartOption | undefined>;
-    // (undocumented)
-    protected addLegendItem(name: string, visible?: boolean | null, index?: number, gridIndex?: number, customLegendProp?: CustomLegendProps, seriesSymbol?: string): void;
-    // (undocumented)
-    protected afterChartInit(skipZoom?: boolean): void;
-    // (undocumented)
-    protected afterChartResize(): void;
-    // (undocumented)
-    protected applyCustomLegendPosition(): void;
-    // (undocumented)
-    protected applyDataZoom(): void;
-    // (undocumented)
-    protected applyOptions(): void;
-    // (undocumented)
-    protected applyStyles(): void;
-    // (undocumented)
-    protected applyTitles(): void;
     readonly autoZoomSeriesIndex: _angular_core.InputSignal<number>;
-    // (undocumented)
-    protected autoZoomUpdate: boolean;
     readonly axisPointer: _angular_core.InputSignal<string | boolean | undefined>;
-    // (undocumented)
-    protected readonly backgroundColor: _angular_core.WritableSignal<string>;
-    // (undocumented)
-    protected readonly chartContainer: _angular_core.Signal<ElementRef<any> | undefined>;
     readonly chartContainerWrapper: _angular_core.Signal<ElementRef<any>>;
     readonly chartGridResized: _angular_core.OutputEmitterRef<GridRectCoordinate>;
     readonly chartSeriesClick: _angular_core.OutputEmitterRef<LegendItem>;
-    // (undocumented)
-    protected readonly containerHeight: _angular_core.WritableSignal<number | null>;
-    // (undocumented)
-    protected curHeight: number;
-    // (undocumented)
-    protected curWidth: number;
-    // (undocumented)
-    protected customLegend: CustomLegend[];
     readonly customLegendAction: _angular_core.InputSignal<boolean | undefined>;
     readonly customLegendMultiLineInfoEvent: _angular_core.OutputEmitterRef<CustomLegendMultiLineInfo[]>;
     readonly dataZoom: _angular_core.OutputEmitterRef<DataZoomEvent>;
@@ -520,36 +469,9 @@ export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDes
     readonly eChartContainerHeight: _angular_core.InputSignal<string | null | undefined>;
     readonly externalXAxisFormatter: _angular_core.InputSignal<((value: any, visibleRange: number) => string) | undefined>;
     readonly externalZoomSlider: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    protected readonly externalZoomSliderContainer: _angular_core.Signal<ElementRef<any> | undefined>;
-    // (undocumented)
-    protected extZoomSliderOptions: EChartOption;
-    protected fetchSeriesColors(colorsToBeUSed?: any): void;
     getOptionNoClone(): any;
     getSeriesColorBySeriesName(seriesName: string): string | undefined;
-    // (undocumented)
-    protected getThemeCustomValue(props: string[], defaultValue: any): any;
-    // (undocumented)
-    protected getThemeValue(props: string[], defaultValue: any, ns?: string): any;
-    // (undocumented)
-    protected getValidXAxis(): Set<number> | undefined;
     getVisibleRange(): DataZoomEvent | undefined;
-    protected handleClickOnChart(event: any, toggleVisibility: boolean): void;
-    // (undocumented)
-    protected handleLegendClick(legend: CustomLegendItem): void;
-    // (undocumented)
-    protected handleLegendHover(legend: CustomLegendItem, start: boolean): void;
-    // (undocumented)
-    protected handleSelectionChanged(event: any): void;
-    protected handleSelectionChangedCustom(event: any): void;
-    // (undocumented)
-    protected hasData(): boolean;
-    // (undocumented)
-    protected hasDataZoom(): boolean;
-    // (undocumented)
-    protected readonly inProgress: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
-    protected internalGetModel(): any;
     readonly maxEntries: _angular_core.InputSignal<number>;
     // (undocumented)
     ngAfterViewInit(skipZoom?: boolean): void;
@@ -561,8 +483,6 @@ export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDes
     ngOnInit(): void;
     readonly options: _angular_core.InputSignal<EChartOption | undefined>;
     readonly palette: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    protected parsePercent(percent: string | number, all: number): number;
     readonly pointer: _angular_core.OutputEmitterRef<AxisPointerEvent>;
     refreshSeries(isLive?: boolean, dzToSet?: DataZoomRange): void;
     readonly renderer: _angular_core.InputSignal<"canvas" | "svg">;
@@ -570,51 +490,19 @@ export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDes
     resize(): void;
     readonly selectedItem: _angular_core.InputSignal<SelectedLegendItem>;
     readonly selectionChanged: _angular_core.OutputEmitterRef<any>;
-    protected selectSeries(element: any, emit: boolean, seriesDataIndex: number): any;
     setTimeRange(range: number): void;
-    // (undocumented)
-    protected setZoomMode(): void;
-    // (undocumented)
-    protected readonly shapePaths: Record<string, string>;
     readonly showCustomLegend: _angular_core.InputSignal<boolean>;
     readonly showLegend: _angular_core.ModelSignal<boolean>;
     // @deprecated
     readonly showTimeRangeBar: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    protected readonly siCustomLegend: _angular_core.Signal<readonly SiCustomLegendComponent[]>;
     startProgressIndication(): void;
     stopProgressIndication(): void;
-    protected styleSelectedSeries(seriesName: string, emit: boolean, seriesDataIndex: number): any;
     readonly subTitle: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    protected readonly subTitleColor: _angular_core.WritableSignal<string>;
-    // (undocumented)
-    protected readonly textColor: _angular_core.WritableSignal<string>;
     readonly theme: _angular_core.InputSignal<any>;
-    // (undocumented)
-    protected themeChanged(): void;
     readonly themeCustomization: _angular_core.InputSignal<any>;
-    // (undocumented)
-    protected readonly timeBarBottom: _angular_core.WritableSignal<number>;
-    // (undocumented)
-    protected readonly timeBarHeight: _angular_core.WritableSignal<number>;
-    // (undocumented)
-    protected readonly timeBarLeft: _angular_core.WritableSignal<number>;
-    // (undocumented)
-    protected readonly timeBarRight: _angular_core.WritableSignal<number>;
     readonly timeRangeChange: _angular_core.OutputEmitterRef<number>;
     readonly title: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    protected readonly titleColor: _angular_core.WritableSignal<string>;
     toggleSeriesVisibility(name: string, visible: boolean): void;
-    protected unselectSeries(element: any, emit: boolean, seriesDataIndex: number): {
-        color: any;
-        series: (EChartSeries | undefined)[];
-    };
-    // (undocumented)
-    protected updateAxisAndDataZoom(inOptions?: EChartOption): boolean;
-    // (undocumented)
-    protected updateEChart(force?: boolean, options?: EChartOption): void;
     readonly visibleEntries: _angular_core.ModelSignal<number>;
     readonly visibleRange: _angular_core.ModelSignal<number>;
     readonly zoomInside: _angular_core.InputSignal<boolean>;
@@ -630,14 +518,6 @@ export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDes
 
 // @public (undocumented)
 export class SiChartGaugeComponent extends SiChartComponent implements OnChanges {
-    // (undocumented)
-    protected afterChartInit(): void;
-    // (undocumented)
-    protected afterChartResize(): void;
-    // (undocumented)
-    protected applyDataZoom(): void;
-    // (undocumented)
-    protected applyOptions(): void;
     readonly axisNumberOfDecimals: _angular_core.InputSignal<number>;
     readonly colors: _angular_core.InputSignal<string[] | undefined>;
     // (undocumented)
@@ -674,16 +554,10 @@ export class SiChartGaugeComponent extends SiChartComponent implements OnChanges
 
 // @public (undocumented)
 export class SiChartProgressBarComponent extends SiChartComponent {
-    // (undocumented)
-    protected applyDataZoom(): void;
-    // (undocumented)
-    protected applyOptions(): void;
     changeMultiValues(updateValues: ProgressBarValueUpdate[]): void;
     changeSingleValue(valueIndex: number, value: number): void;
     readonly labelPosition: _angular_core.InputSignal<string | undefined>;
     readonly series: _angular_core.InputSignal<ProgressBarChartSeries[] | undefined>;
-    // (undocumented)
-    protected themeChanged(): void;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChartProgressBarComponent, "si-chart-progress-bar", never, { "series": { "alias": "series"; "required": false; "isSignal": true; }; "labelPosition": { "alias": "labelPosition"; "required": false; "isSignal": true; }; }, {}, never, ["[slot=timeRangeBar]"], true, never>;
     // (undocumented)
@@ -692,20 +566,10 @@ export class SiChartProgressBarComponent extends SiChartComponent {
 
 // @public (undocumented)
 export class SiChartProgressComponent extends SiChartComponent {
-    // (undocumented)
-    protected afterChartInit(): void;
-    // (undocumented)
-    protected applyDataZoom(): void;
-    // (undocumented)
-    protected applyOptions(): void;
     changeMultiValues(updateValues: ProgressValueUpdate[]): void;
     changeSingleValue(index: number, percent: number): void;
     readonly dataAngle: _angular_core.InputSignal<number>;
-    // (undocumented)
-    protected handleSelectionChanged(event: any): void;
     readonly series: _angular_core.InputSignal<ProgressChartSeries[] | undefined>;
-    // (undocumented)
-    protected themeChanged(): void;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChartProgressComponent, "si-chart-progress", never, { "series": { "alias": "series"; "required": false; "isSignal": true; }; "dataAngle": { "alias": "dataAngle"; "required": false; "isSignal": true; }; }, {}, never, ["[slot=timeRangeBar]"], true, never>;
     // (undocumented)
@@ -714,8 +578,6 @@ export class SiChartProgressComponent extends SiChartComponent {
 
 // @public (undocumented)
 export class SiChartSankeyComponent extends SiChartComponent {
-    // (undocumented)
-    protected applyOptions(): void;
     readonly series: _angular_core.InputSignal<SankeySeriesOption | undefined>;
     // @deprecated (undocumented)
     readonly toolTip: _angular_core.InputSignal<boolean>;
@@ -741,8 +603,6 @@ export { SiChartsNgModule as SimplChartsNgModule }
 
 // @public (undocumented)
 export class SiChartSunburstComponent extends SiChartComponent {
-    // (undocumented)
-    protected applyOptions(): void;
     readonly series: _angular_core.InputSignal<SunburstSeriesOption | undefined>;
     // @deprecated (undocumented)
     readonly toolTip: _angular_core.InputSignal<boolean>;
@@ -758,13 +618,9 @@ export class SiChartSunburstComponent extends SiChartComponent {
 export class SiCustomLegendComponent {
     // (undocumented)
     readonly customLegend: _angular_core.InputSignal<CustomLegend | undefined>;
-    // (undocumented)
-    protected legendClick(legend: CustomLegendItem): void;
     readonly legendClickEvent: _angular_core.OutputEmitterRef<CustomLegendItem>;
     readonly legendHoverEndEvent: _angular_core.OutputEmitterRef<CustomLegendItem>;
     readonly legendHoverStartEvent: _angular_core.OutputEmitterRef<CustomLegendItem>;
-    // (undocumented)
-    protected legendIconClick(legend: CustomLegendItem): void;
     readonly legendIconClickEvent: _angular_core.OutputEmitterRef<CustomLegendItem>;
     readonly subTitle: _angular_core.InputSignal<string | undefined>;
     readonly subTitleColor: _angular_core.InputSignal<string | undefined>;

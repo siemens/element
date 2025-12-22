@@ -24,20 +24,8 @@ export interface PasswordPolicy {
 // @public (undocumented)
 export class SiPasswordStrengthComponent implements AfterViewInit {
     // (undocumented)
-    protected readonly bad: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
-    protected readonly good: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
-    protected readonly medium: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
     ngAfterViewInit(): void;
     readonly showVisibilityIcon: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    protected readonly strong: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
-    protected toggle(type: string): void;
-    // (undocumented)
-    protected readonly weak: _angular_core.WritableSignal<boolean>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiPasswordStrengthComponent, "si-password-strength", never, { "showVisibilityIcon": { "alias": "showVisibilityIcon"; "required": false; "isSignal": true; }; }, {}, ["passwordStrengthDirective", "passwordInput"], ["*"], true, never>;
     // (undocumented)
@@ -46,8 +34,6 @@ export class SiPasswordStrengthComponent implements AfterViewInit {
 
 // @public (undocumented)
 export class SiPasswordStrengthDirective implements Validator {
-    // (undocumented)
-    protected noValidation: boolean;
     readonly passwordStrengthChanged: _angular_core.OutputEmitterRef<number | void>;
     readonly siPasswordStrength: _angular_core.InputSignal<PasswordPolicy>;
     // (undocumented)

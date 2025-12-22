@@ -6,9 +6,11 @@
   [class.invalid-criterion]="invalidCriterion()"
   (cdkFocusChange)="focusChange($event)"
 >
-  <div class="pill pill-interactive criterion-label si-h5" (click)="edit()">
-    {{ definition().label | translate }}
-  </div>
+  @if (type() !== 'free-text') {
+    <div class="pill pill-interactive criterion-label si-h5" (click)="edit()">
+      {{ definition().label | translate }}
+    </div>
+  }
   @if (definition().operators?.length) {
     <div class="pill pill-interactive px-0 criterion-operator-section">
       <!-- criterion operator input -->
@@ -48,6 +50,19 @@
     </div>
   }
   @switch (type()) {
+    @case ('free-text') {
+      <si-filtered-search-free-text
+        [definition]="definition()"
+        [disabled]="disabled()"
+        [searchLabel]="searchLabel()"
+        [(active)]="active"
+        [(criterionValue)]="value"
+        (backspaceOverflow)="backspaceOverflow()"
+        (editValue)="edit('value')"
+        (submitValue)="submitCriterion.emit($event)"
+        (activeChange)="freeTextActiveChange($event)"
+      />
+    }
     @case ('date') {
       <si-filtered-search-date-value
         [definition]="definition()"

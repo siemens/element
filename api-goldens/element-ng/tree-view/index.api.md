@@ -166,8 +166,6 @@ export class SiTreeViewComponent implements OnInit, OnChanges, OnDestroy, AfterV
     addChildItems(children: TreeItem[], parent?: TreeItem, position?: number): void;
     readonly ariaLabel: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly ariaLabelledBy: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    protected readonly children: Signal<readonly SiTreeViewItemComponent[]>;
     readonly childrenIndentation: _angular_core.InputSignal<number>;
     collapseAll(items?: TreeItem[]): void;
     readonly collapseAllTooltip: _angular_core.InputSignal<TranslatableString>;
@@ -192,18 +190,12 @@ export class SiTreeViewComponent implements OnInit, OnChanges, OnDestroy, AfterV
     readonly flatTree: _angular_core.InputSignal<boolean>;
     readonly folderStateStart: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly groupedList: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected handleKeydown(event: KeyboardEvent): void;
-    protected get headerShowsRoot(): boolean;
-    protected get heightAfter(): string;
-    protected get heightBefore(): string;
     readonly horizontalScrolling: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly icons: _angular_core.InputSignal<TreeViewIconSet | undefined>;
     readonly inheritChecked: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly isVirtualized: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly items: _angular_core.InputSignal<TreeItem<any>[]>;
     readonly itemsVirtualizedChanged: _angular_core.OutputEmitterRef<ItemsVirtualizedArgs>;
-    protected get lastBreadCrumbItem(): TreeItem | null;
     readonly loadChildren: _angular_core.OutputEmitterRef<LoadChildrenEventArgs>;
     // (undocumented)
     ngAfterViewChecked(): void;
@@ -216,18 +208,6 @@ export class SiTreeViewComponent implements OnInit, OnChanges, OnDestroy, AfterV
     // (undocumented)
     ngOnInit(): void;
     readonly noActionsString: _angular_core.InputSignal<string>;
-    // (undocumented)
-    protected onFlatTreeNavigateHome(): void;
-    // (undocumented)
-    protected onFlatTreeNavigateUp(): void;
-    // (undocumented)
-    protected onKeyUpCtrl(): void;
-    // (undocumented)
-    protected onKeyUpMeta(): void;
-    // (undocumented)
-    protected onKeyUpShift(): void;
-    // (undocumented)
-    protected onMouseLeave(): void;
     readonly pageSize: _angular_core.InputSignalWithTransform<number, number>;
     readonly pagesVirtualized: _angular_core.InputSignalWithTransform<number, number>;
     refresh(): void;
@@ -238,15 +218,9 @@ export class SiTreeViewComponent implements OnInit, OnChanges, OnDestroy, AfterV
     readonly templates: Signal<readonly SiTreeViewItemTemplateDirective[]>;
     readonly treeItemCheckboxClicked: _angular_core.OutputEmitterRef<CheckboxClickEventArgs>;
     readonly treeItemClicked: _angular_core.OutputEmitterRef<TreeItem<any>>;
-    // (undocumented)
-    protected readonly treeItemContentTemplate: Signal<TemplateRef<any> | undefined>;
     readonly treeItemFolderClicked: _angular_core.OutputEmitterRef<FolderStateEventArgs>;
     readonly treeItemFolderStateChanged: _angular_core.OutputEmitterRef<FolderStateEventArgs>;
     readonly treeItemsSelected: _angular_core.OutputEmitterRef<TreeItem<any>[]>;
-    // (undocumented)
-    protected readonly treeViewInnerElement: Signal<ElementRef<HTMLDivElement>>;
-    // (undocumented)
-    protected updateVirtualizedItemList(): void;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiTreeViewComponent, "si-tree-view", never, { "contextMenuItems": { "alias": "contextMenuItems"; "required": false; "isSignal": true; }; "childrenIndentation": { "alias": "childrenIndentation"; "required": false; "isSignal": true; }; "horizontalScrolling": { "alias": "horizontalScrolling"; "required": false; "isSignal": true; }; "compactMode": { "alias": "compactMode"; "required": false; "isSignal": true; }; "expandCollapseAll": { "alias": "expandCollapseAll"; "required": false; "isSignal": true; }; "expandAllTooltip": { "alias": "expandAllTooltip"; "required": false; "isSignal": true; }; "collapseAllTooltip": { "alias": "collapseAllTooltip"; "required": false; "isSignal": true; }; "icons": { "alias": "icons"; "required": false; "isSignal": true; }; "pageSize": { "alias": "pageSize"; "required": false; "isSignal": true; }; "pagesVirtualized": { "alias": "pagesVirtualized"; "required": false; "isSignal": true; }; "folderStateStart": { "alias": "folderStateStart"; "required": false; "isSignal": true; }; "isVirtualized": { "alias": "isVirtualized"; "required": false; "isSignal": true; }; "items": { "alias": "items"; "required": false; "isSignal": true; }; "selectedItem": { "alias": "selectedItem"; "required": false; "isSignal": true; }; "singleSelectMode": { "alias": "singleSelectMode"; "required": false; "isSignal": true; }; "enableDataField1": { "alias": "enableDataField1"; "required": false; "isSignal": true; }; "enableDataField2": { "alias": "enableDataField2"; "required": false; "isSignal": true; }; "enableStateIndicator": { "alias": "enableStateIndicator"; "required": false; "isSignal": true; }; "enableIcon": { "alias": "enableIcon"; "required": false; "isSignal": true; }; "enableContextMenuButton": { "alias": "enableContextMenuButton"; "required": false; "isSignal": true; }; "enableSelection": { "alias": "enableSelection"; "required": false; "isSignal": true; }; "deleteChildrenOnCollapse": { "alias": "deleteChildrenOnCollapse"; "required": false; "isSignal": true; }; "flatTree": { "alias": "flatTree"; "required": false; "isSignal": true; }; "groupedList": { "alias": "groupedList"; "required": false; "isSignal": true; }; "enableCheckbox": { "alias": "enableCheckbox"; "required": false; "isSignal": true; }; "enableOptionbox": { "alias": "enableOptionbox"; "required": false; "isSignal": true; }; "expandOnClick": { "alias": "expandOnClick"; "required": false; "isSignal": true; }; "inheritChecked": { "alias": "inheritChecked"; "required": false; "isSignal": true; }; "noActionsString": { "alias": "noActionsString"; "required": false; "isSignal": true; }; "ariaLabel": { "alias": "ariaLabel"; "required": false; "isSignal": true; }; "ariaLabelledBy": { "alias": "ariaLabelledBy"; "required": false; "isSignal": true; }; }, { "itemsVirtualizedChanged": "itemsVirtualizedChanged"; "treeItemFolderClicked": "treeItemFolderClicked"; "treeItemFolderStateChanged": "treeItemFolderStateChanged"; "treeItemClicked": "treeItemClicked"; "treeItemCheckboxClicked": "treeItemCheckboxClicked"; "loadChildren": "loadChildren"; "treeItemsSelected": "treeItemsSelected"; }, ["templates", "treeItemContentTemplate", "nextItems"], ["[cdkDropList], [siTreeViewItem]"], true, never>;
     // (undocumented)
@@ -255,60 +229,8 @@ export class SiTreeViewComponent implements OnInit, OnChanges, OnDestroy, AfterV
 
 // @public (undocumented)
 export class SiTreeViewItemComponent implements OnInit, OnDestroy, AfterViewInit, FocusableOption, DoCheck {
-    // (undocumented)
-    protected get ariaChecked(): boolean | null;
-    // (undocumented)
-    protected get ariaExpanded(): boolean | null;
-    // (undocumented)
-    protected get ariaLevel(): number;
-    // (undocumented)
-    protected ariaPosinset?: number;
-    // (undocumented)
-    protected get ariaSelected(): boolean | null;
-    // (undocumented)
-    protected get ariaSetsize(): number;
-    // (undocumented)
-    protected get biggerPaddingStart(): string;
-    // (undocumented)
-    protected readonly contextMenuItems: _angular_core.WritableSignal<(MenuItem | MenuItem_2)[] | null>;
-    // (undocumented)
-    protected readonly deleteChildrenOnCollapse: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly enableContextMenuButton: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly enableDataField1: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly enableDataField2: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly enableSelection: _angular_core.InputSignalWithTransform<boolean, unknown>;
     focus(): void;
-    // (undocumented)
-    protected getInputType(): string;
-    // (undocumented)
-    protected getItemFolderStateClass(): string;
     getLabel(): string;
-    // (undocumented)
-    protected getStateIndicatorColor(): string;
-    // (undocumented)
-    protected icons: _angular_core.Signal<{
-        headerHome: string;
-        headerArrow: string;
-        itemMenu: string;
-        itemCollapsed: string;
-        itemCollapsedFlat: string;
-        itemCollapsedLeft: string;
-        itemExpanded: string;
-        itemExpandedFlat: string;
-        itemExpandedLeft: string;
-    }>;
-    // (undocumented)
-    protected readonly isContextMenuButtonVisible: _angular_core.Signal<boolean>;
-    // (undocumented)
-    protected get isExpanding(): boolean;
-    // (undocumented)
-    protected get isGroupedItem(): boolean;
-    // (undocumented)
-    protected readonly menuTrigger: _angular_core.Signal<CdkMenuTrigger | undefined>;
     // (undocumented)
     ngAfterViewInit(): void;
     // (undocumented)
@@ -317,47 +239,6 @@ export class SiTreeViewItemComponent implements OnInit, OnDestroy, AfterViewInit
     ngOnDestroy(): void;
     // (undocumented)
     ngOnInit(): void;
-    // (undocumented)
-    protected onBoxClicked(): void;
-    // (undocumented)
-    protected onContextMenu(event: Event): boolean;
-    // (undocumented)
-    protected onItemClicked(event: Event): void;
-    // (undocumented)
-    protected onItemFolderClicked(newState?: string): void;
-    // (undocumented)
-    protected onKeydown(event: KeyboardEvent): void;
-    // (undocumented)
-    protected onMouseDownTreeItem(event: MouseEvent): void;
-    // (undocumented)
-    protected onToggleContextMenuClose(): void;
-    // (undocumented)
-    protected onToggleContextMenuOpen(): void;
-    // (undocumented)
-    protected get paddingStart(): string;
-    // (undocumented)
-    protected renderMatchingTemplate(treeItem: TreeItem): TemplateRef<any>;
-    // (undocumented)
-    protected get showCheckOrOptionBox(): boolean;
-    // (undocumented)
-    protected get showFolderStateEnd(): boolean;
-    // (undocumented)
-    protected get showFolderStateStart(): boolean;
-    // (undocumented)
-    protected readonly showIcon: _angular_core.Signal<boolean>;
-    // (undocumented)
-    protected readonly showStateIndicator: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly stickyEndItems: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected templates: _angular_core.Signal<readonly _siemens_element_ng_tree_view.SiTreeViewItemTemplateDirective[]>;
-    // (undocumented)
-    protected treeItemContext: {
-        record: _angular_core.IterableChangeRecord<TreeItem<any>>;
-        parent: _siemens_element_ng_tree_view.SiTreeViewComponent;
-    };
-    // (undocumented)
-    protected treeViewComponent: _siemens_element_ng_tree_view.SiTreeViewComponent;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiTreeViewItemComponent, "si-tree-view-item", never, {}, {}, never, [":not(si-tree-view-item):not([dragPreview])"], true, never>;
     // (undocumented)

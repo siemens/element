@@ -20,18 +20,10 @@ export class SiStatusBarComponent implements DoCheck, OnDestroy, OnChanges {
     constructor();
     readonly allOkText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly blink: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly blinkOnOff: _angular_core.WritableSignal<boolean | undefined>;
     readonly blinkPulse: _angular_core.InputSignal<Observable<boolean> | undefined>;
     readonly collapseButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly compact: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly contentHeight: _angular_core.WritableSignal<number | undefined>;
     readonly expandButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected readonly expanded: _angular_core.WritableSignal<number>;
-    // (undocumented)
-    protected readonly icons: Record<"elementDown2" | "elementSoundMute" | "elementSoundOn", string>;
     readonly items: _angular_core.InputSignal<StatusBarItem[]>;
     readonly muteButton: _angular_core.InputSignal<boolean | undefined>;
     readonly muteButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
@@ -43,20 +35,6 @@ export class SiStatusBarComponent implements DoCheck, OnDestroy, OnChanges {
     // (undocumented)
     ngOnDestroy(): void;
     // (undocumented)
-    protected onItemClicked(item: StatusBarItem): void;
-    // (undocumented)
-    protected readonly placeholderHeight: _angular_core.WritableSignal<number>;
-    // (undocumented)
-    protected resizeHandler(): void;
-    // (undocumented)
-    protected readonly responsiveItems: _angular_core.WritableSignal<ExtendedStatusBarItem[]>;
-    // (undocumented)
-    protected responsiveMode: number;
-    // (undocumented)
-    protected statusId: string;
-    // (undocumented)
-    protected toggleExpand(): void;
-    // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiStatusBarComponent, "si-status-bar", never, { "items": { "alias": "items"; "required": true; "isSignal": true; }; "blink": { "alias": "blink"; "required": false; "isSignal": true; }; "muteButton": { "alias": "muteButton"; "required": false; "isSignal": true; }; "muteButtonText": { "alias": "muteButtonText"; "required": false; "isSignal": true; }; "allOkText": { "alias": "allOkText"; "required": false; "isSignal": true; }; "compact": { "alias": "compact"; "required": false; "isSignal": true; }; "blinkPulse": { "alias": "blinkPulse"; "required": false; "isSignal": true; }; "expandButtonText": { "alias": "expandButtonText"; "required": false; "isSignal": true; }; "collapseButtonText": { "alias": "collapseButtonText"; "required": false; "isSignal": true; }; }, { "muteToggle": "muteToggle"; }, never, ["*"], true, never>;
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiStatusBarComponent, never>;
@@ -65,21 +43,15 @@ export class SiStatusBarComponent implements DoCheck, OnDestroy, OnChanges {
 // @public (undocumented)
 export class SiStatusBarItemComponent {
     // (undocumented)
-    protected readonly background: _angular_core.Signal<string>;
-    // (undocumented)
     readonly blink: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     readonly clickable: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     readonly color: _angular_core.InputSignal<string | undefined>;
     // (undocumented)
-    protected readonly contrastFix: _angular_core.Signal<boolean>;
-    // (undocumented)
     readonly heading: _angular_core.InputSignal<TranslatableString>;
     // (undocumented)
     readonly status: _angular_core.InputSignal<ExtendedStatusType | undefined>;
-    // (undocumented)
-    protected readonly statusIcon: _angular_core.Signal<_siemens_element_ng_common.StatusIcon | undefined>;
     // (undocumented)
     readonly value: _angular_core.InputSignal<number | TranslatableString>;
     // (undocumented)

@@ -16,8 +16,7 @@ npm install --save @siemens/dashboards-ng gridstack
 
 ### Add libraries to your project
 
-The library supports standalone components and modules. However, the widgets when not using web components
-or module federation still need a module definition.
+The library supports standalone components and modules.
 
 ### Standalone
 
@@ -165,13 +164,14 @@ TranslateModule.forRoot({
 ### Widget development
 
 You can develop your own widgets that are managed by the dashboard. One or multiple widgets
-have to be provided by an Angular module and described by a `Widget` object, that includes
+have to be provided by an Angular module or standalone and described by a `Widget` object, that includes
 the meta information and the Angular widget instance component and editor names that are
 used to instantiate the widget at runtime.
 
-The widget instance component has to implement the `WidgetInstance` interface and the
-editor has to implement the `WidgetInstanceEditor` interface. You have to provide a
-module loader function that is used to load the widget when needed.
+The widget instance component must implement the `WidgetInstance` interface and the
+editor must implement the `WidgetInstanceEditor` interface. You must provide either
+a module loader function with module name or a component loader function for standalone components
+that is used to load the widget when needed.
 
 The library ships with a [hello-widget](https://github.com/siemens/element/blob/main/projects/dashboards-demo/src/app/widgets/hello-widget/) example for illustration.
 

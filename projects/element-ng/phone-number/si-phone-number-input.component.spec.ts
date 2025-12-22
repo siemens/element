@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { CommonModule } from '@angular/common';
 import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -13,7 +12,7 @@ import { PhoneDetails, SiPhoneNumberInputComponent } from '.';
 import { SiSelectFilterListHarness } from '../select/testing/si-select-filter-list.harness';
 
 @Component({
-  imports: [SiPhoneNumberInputComponent, CommonModule, ReactiveFormsModule],
+  imports: [SiPhoneNumberInputComponent, ReactiveFormsModule],
   template: `
     <form [formGroup]="form">
       <si-phone-number-input
@@ -70,7 +69,7 @@ describe('SiPhoneNumberInputComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SiPhoneNumberInputComponent, CommonModule, ReactiveFormsModule, WrapperComponent],
+      imports: [SiPhoneNumberInputComponent, ReactiveFormsModule, WrapperComponent],
       providers: [provideZonelessChangeDetection()]
     }).compileComponents();
   });

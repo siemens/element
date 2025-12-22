@@ -143,6 +143,7 @@ export interface DisplayedCriteriaEventArgs {
   /**
    * Interceptor function allows to reduce the list of displayed criteria.
    * @param criteriaNamesToDisplay - list of criteria names to be displayed.
+   * @param freeText - indicates whether free text pills are allowed.
    */
-  allow(criteriaNamesToDisplay: string[]): void;
+  allow(criteriaNamesToDisplay: string[], freeText?: boolean): void;
 }

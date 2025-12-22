@@ -41,8 +41,6 @@ export interface SiBreadcrumbResolverService {
 export class SiBreadcrumbRouterComponent implements OnInit, OnDestroy {
     readonly ariaLabel: i0.InputSignal<string>;
     // (undocumented)
-    protected readonly items: i0.WritableSignal<BreadcrumbItem[]>;
-    // (undocumented)
     ngOnDestroy(): void;
     // (undocumented)
     ngOnInit(): void;

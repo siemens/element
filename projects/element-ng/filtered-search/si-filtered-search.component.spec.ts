@@ -39,6 +39,7 @@ import { SiFilteredSearchHarness } from './testing/si-filtered-search.harness';
     searchLabel="search"
     [disabled]="disabled"
     [disableFreeTextSearch]="disableFreeTextSearch"
+    [freeTextCriterion]="freeTextCriterion"
     [readonly]="readonly"
     [placeholder]="placeholder"
     [lazyLoadingDebounceTime]="lazyLoadingDebounceTime"
@@ -65,6 +66,7 @@ class TestHostComponent {
   readonly filteredSearch = viewChild.required(SiFilteredSearchComponent);
   disabled!: boolean;
   disableFreeTextSearch = false;
+  freeTextCriterion?: CriterionDefinition;
   readonly!: boolean;
   placeholder = '';
 
@@ -2236,6 +2238,72 @@ describe('SiFilteredSearchComponent', () => {
         expect(await freeTextSearch.getItems()).toEqual(['Foo', 'Bar']);
       });
     });
+
+    it('should allow only one free-text pill at a time using interceptor', async () => {
+      component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
+      component.searchCriteria.set({ criteria: [], value: '' });
+      await runOnPushChangeDetection(fixture);
+      spyOn(component, 'showCriteria').and.callFake(e => {
+        const hasFreeTextPill = e.searchCriteria.criteria.some(c => c.name === 'free-text');
+        // Allow criteria but disable free text if one already exists
+        e.allow(e.criteria, !hasFreeTextPill);
+      });
+
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      const freeTextSearch = await filteredSearch.freeTextSearch();
+
+      // Step 1: Add the first free-text pill
+      await freeTextSearch.focus();
+      await freeTextSearch.typeText('first pill');
+      await tick();
+
+      // Select the "Create option" to add the free text pill
+      await freeTextSearch.select({ text: 'Search for "first pill"' });
+      await tick();
+
+      // Verify the pill was created
+      let criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(1);
+      let value = await criteria[0].value();
+      expect(await value?.text()).toBe('first pill');
+
+      // Step 2: Try to add a second free-text pill (should be prevented)
+      await freeTextSearch.focus();
+      await freeTextSearch.typeText('second pill');
+      await tick();
+
+      // Verify the "Create option" is NOT available because interceptor disabled free text
+      expect(await freeTextSearch.getItems()).toBeNull();
+
+      // Verify still only one pill exists
+      criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(1);
+
+      // Step 3: Remove the existing pill
+      await filteredSearch
+        .getCriteria({ valueText: 'first pill' })
+        .then(c => c[0].clickClearButton());
+      await tick();
+
+      // Verify the pill was removed
+      criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(0);
+
+      // Step 4: Add a new free-text pill (should be allowed again)
+      await freeTextSearch.focus();
+      await freeTextSearch.typeText('new pill');
+      await tick();
+
+      // Select the "Create option" to add the free text pill
+      await freeTextSearch.select({ text: 'Search for "new pill"' });
+      await tick();
+
+      // Verify the pill was created
+      criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(1);
+      value = await criteria[0].value();
+      expect(await value?.text()).toBe('new pill');
+    });
   });
 });
 
@@ -2529,5 +2597,185 @@ describe('SiFilteredSearchComponent - With translation', () => {
       criteriaValid.map(criterion => criterion.value().then(value => value!.text()))
     );
     expect(validValues).toEqual(['translated(GermanyKey)']);
+  });
+
+  describe('with free text pills enabled', () => {
+    it('should create a free text pill when typing text and blurring the input', async () => {
+      component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
+      component.searchCriteria.set({
+        value: '',
+        criteria: []
+      });
+      await runOnPushChangeDetection(fixture);
+
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      const freeTextSearch = await filteredSearch.freeTextSearch();
+
+      // Verify no pills exist initially
+      let criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(0);
+
+      // Type text into the free text search
+      await freeTextSearch.focus();
+      await freeTextSearch.typeText('test pill text');
+      await tick();
+
+      // Blur the input
+      await freeTextSearch.blur();
+      await tick();
+
+      // Verify a free text pill was created
+      criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(1);
+      const value = await criteria[0].value();
+      expect(await value?.text()).toBe('test pill text');
+
+      // Verify the search criteria was updated
+      expect(component.searchCriteria().criteria).toEqual([
+        { name: 'free-text', value: 'test pill text' }
+      ]);
+    });
+
+    it('should update an existing free text pill', async () => {
+      component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
+      component.searchCriteria.set({
+        value: '',
+        criteria: [{ name: 'free-text', value: 'original value' }]
+      });
+      await runOnPushChangeDetection(fixture);
+
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      let criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(1);
+
+      // Verify the initial value
+      let value = await criteria[0].value();
+      expect(await value?.text()).toBe('original value');
+
+      // Click on the value to enter edit mode
+      await value?.click();
+      await tick();
+
+      // Clear the existing text and type new value
+      await value?.clearText();
+      await value?.sendKeys('updated value');
+      await tick();
+
+      // Press Enter to submit the change
+      await value?.sendKeys(TestKey.ENTER);
+      await tick();
+
+      // Verify the value has been updated
+      criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(1);
+      value = await criteria[0].value();
+      expect(await value?.text()).toBe('updated value');
+
+      // Verify the search criteria was updated
+      expect(component.searchCriteria().criteria).toEqual([
+        { name: 'free-text', value: 'updated value' }
+      ]);
+    });
+
+    it('should remove free text pill when editing, deleting all value and pressing enter', async () => {
+      component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
+      component.searchCriteria.set({
+        value: '',
+        criteria: [{ name: 'free-text', value: 'text to delete' }]
+      });
+      await runOnPushChangeDetection(fixture);
+
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      let criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(1);
+
+      // Verify the initial value
+      const value = (await criteria[0].value())!;
+      expect(await value.text()).toBe('text to delete');
+
+      // Click on the value to enter edit mode
+      await value.click();
+      await tick();
+
+      // Clear all text
+      await value.clearText();
+      await tick();
+
+      // Press Enter to submit the change
+      await value.sendKeys(TestKey.ENTER);
+      await tick();
+
+      // Verify the criterion was removed
+      criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(0);
+
+      // Verify the search criteria no longer contains the criterion
+      expect(component.searchCriteria().criteria).toEqual([]);
+    });
+
+    it('should not allow adding free text pills when maxCriteria is reached', async () => {
+      component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
+      component.maxCriteria = 2;
+      component.searchCriteria.set({
+        value: '',
+        criteria: [{ name: 'free-text', value: 'initial pill' }]
+      });
+      await runOnPushChangeDetection(fixture);
+
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      const freeTextSearch = await filteredSearch.freeTextSearch();
+
+      // Verify initial pill exists
+      let criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(1);
+      const value = await criteria[0].value();
+      expect(await value?.text()).toBe('initial pill');
+
+      // Add the second free text pill (should be allowed)
+      await freeTextSearch.focus();
+      await freeTextSearch.typeText('second pill');
+      await tick();
+
+      // Verify the "Create option" is available
+      let items = await freeTextSearch.getItems();
+      expect(items).not.toBeNull();
+      expect(items!.length).toBeGreaterThan(0);
+
+      // Select the "Create option" item
+      await freeTextSearch.select({ text: 'SI_FILTERED_SEARCH.SEARCH_FOR_FREE_TEXT translated' });
+      await tick();
+
+      // Verify the second pill was created
+      criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(2);
+      const values = await parallel(() =>
+        criteria.map(criterion => criterion.value().then(criteriaValue => criteriaValue!.text()))
+      );
+      expect(values).toEqual(['initial pill', 'second pill']);
+
+      // Try to add a third free text pill (should be blocked)
+      await freeTextSearch.focus();
+      await freeTextSearch.typeText('third pill');
+      await tick();
+
+      // Verify that the "Create option" is no longer available because maxCriteria is reached
+      items = await freeTextSearch.getItems();
+      expect(items).toBeNull();
+
+      // Verify only two pills exist
+      criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(2);
+
+      // Blur the input to verify no pill is created on blur
+      await freeTextSearch.blur();
+      await tick();
+
+      // Verify still only two pills exist after blur
+      criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(2);
+
+      // Verify the input text was unchanged after blur
+      expect(await freeTextSearch.getValue()).toBe('third pill');
+    });
   });
 });

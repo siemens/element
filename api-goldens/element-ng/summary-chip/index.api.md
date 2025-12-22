@@ -20,15 +20,6 @@ export class SiSummaryChipComponent {
     readonly stackedColor: _angular_core.InputSignal<string | undefined>;
     readonly stackedIcon: _angular_core.InputSignal<string | undefined>;
     readonly status: _angular_core.InputSignal<ExtendedStatusType | undefined>;
-    // (undocumented)
-    protected readonly statusIcon: _angular_core.Signal<_siemens_element_ng_common.StatusIcon | {
-        icon: string | undefined;
-        color: string | undefined;
-        stacked: string | undefined;
-        stackedColor: string | undefined;
-    }>;
-    // (undocumented)
-    protected toggleSelected(): void;
     readonly value: _angular_core.InputSignal<TranslatableString | undefined>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSummaryChipComponent, "si-summary-chip", never, { "status": { "alias": "status"; "required": false; "isSignal": true; }; "icon": { "alias": "icon"; "required": false; "isSignal": true; }; "color": { "alias": "color"; "required": false; "isSignal": true; }; "stackedIcon": { "alias": "stackedIcon"; "required": false; "isSignal": true; }; "stackedColor": { "alias": "stackedColor"; "required": false; "isSignal": true; }; "label": { "alias": "label"; "required": true; "isSignal": true; }; "value": { "alias": "value"; "required": false; "isSignal": true; }; "selected": { "alias": "selected"; "required": false; "isSignal": true; }; "disabled": { "alias": "disabled"; "required": false; "isSignal": true; }; "hideLabel": { "alias": "hideLabel"; "required": false; "isSignal": true; }; }, { "selected": "selectedChange"; }, never, never, true, never>;

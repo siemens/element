@@ -89,62 +89,22 @@ export class SiDateRangeCalculationService {
 // @public (undocumented)
 export class SiDateRangeFilterComponent implements OnChanges {
     readonly advancedLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected advancedMode: boolean;
     readonly afterLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly applyClicked: _angular_core.OutputEmitterRef<void>;
     readonly applyLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly basicMode: _angular_core.InputSignal<"input" | "calendar">;
     readonly beforeLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected readonly calculatedRange: _angular_core.Signal<ResolvedDateRange>;
     readonly dateLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly datepickerConfig: _angular_core.InputSignal<DatepickerInputConfig | undefined>;
-    // (undocumented)
-    protected readonly datepickerConfigInternal: _angular_core.Signal<DatepickerConfig>;
     readonly datePlaceholder: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected readonly dateRange: _angular_core.WritableSignal<DateRange>;
-    // (undocumented)
-    protected readonly dateRangeConfig: _angular_core.Signal<DatepickerConfig>;
     readonly enableTimeSelection: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly filteredPresetList: _angular_core.Signal<DateRangePreset[]>;
-    // (undocumented)
-    protected readonly focusedDate: _angular_core.Signal<Date | undefined>;
     readonly fromLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly hideAdvancedMode: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
-    protected readonly icons: Record<"elementDown2", string>;
-    // (undocumented)
-    protected readonly inputMode: _angular_core.Signal<boolean>;
-    // (undocumented)
     ngOnChanges(changes: SimpleChanges): void;
     readonly nowLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected readonly pipeFormat: _angular_core.Signal<string>;
-    // (undocumented)
-    protected point1Changed(): void;
-    // (undocumented)
-    protected point1date: Date;
-    // (undocumented)
-    protected point1Now: boolean;
-    // (undocumented)
-    protected point2Changed(): void;
-    // (undocumented)
-    protected point2date: Date;
-    // (undocumented)
-    protected point2Mode: 'duration' | 'date';
-    // (undocumented)
-    protected point2offset: number;
-    // (undocumented)
-    protected point2range: 'before' | 'after' | 'within';
-    // (undocumented)
-    protected readonly presetFilter: _angular_core.WritableSignal<string>;
     readonly presetLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly presetList: _angular_core.InputSignal<DateRangePreset[] | undefined>;
-    // (undocumented)
-    protected readonly presetOpen: _angular_core.WritableSignal<boolean>;
     readonly presetSearch: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly previewLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly range: _angular_core.ModelSignal<DateRangeFilter>;
@@ -152,20 +112,10 @@ export class SiDateRangeFilterComponent implements OnChanges {
     readonly refLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly reverseInputFields: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly searchLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected selectPresetItem(event: Event, item: DateRangePreset): void;
     readonly showApplyButton: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly smallScreen: boolean;
     readonly todayLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly toLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly unitLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected updateDateRange(range?: DateRangeFilter): void;
-    // (undocumented)
-    protected updateFromDateRange(dateRange?: DateRange): void;
-    // (undocumented)
-    protected updateOnModeChange(): void;
     readonly valueLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly withinLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     // (undocumented)

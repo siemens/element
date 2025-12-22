@@ -50,16 +50,8 @@ export interface AppItemCategory {
 // @public @deprecated (undocumented)
 export class SiNavbarItemComponent implements OnInit, DoCheck, OnDestroy {
     // (undocumented)
-    protected active: boolean;
-    // (undocumented)
-    protected click(): void;
-    // (undocumented)
     readonly dropdownTrigger: _angular_core.Signal<SiHeaderDropdownTriggerDirective | undefined>;
-    // (undocumented)
-    protected readonly icons: Record<"elementDown2", string>;
     readonly item: _angular_core.InputSignal<MenuItem>;
-    // (undocumented)
-    protected navbar: SiNavbarPrimaryComponent;
     // (undocumented)
     ngDoCheck(): void;
     // (undocumented)
@@ -67,8 +59,6 @@ export class SiNavbarItemComponent implements OnInit, DoCheck, OnDestroy {
     // (undocumented)
     ngOnInit(): void;
     readonly quickAction: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected get visuallyHideTitle(): boolean;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiNavbarItemComponent, "si-navbar-item", never, { "item": { "alias": "item"; "required": true; "isSignal": true; }; "quickAction": { "alias": "quickAction"; "required": false; "isSignal": true; }; }, {}, never, ["si-avatar", "*"], true, never>;
     // (undocumented)
@@ -89,8 +79,6 @@ export class SiNavbarModule {
 export class SiNavbarPrimaryComponent implements OnChanges, HeaderWithDropdowns {
     readonly account: _angular_core.InputSignal<AccountItem | undefined>;
     readonly accountItems: _angular_core.InputSignal<MenuItem[] | undefined>;
-    // (undocumented)
-    protected active?: MenuItem;
     readonly allAppsLink: _angular_core.InputSignal<MenuItem | undefined>;
     readonly appCategoryItems: _angular_core.InputSignal<AppItemCategory[] | undefined>;
     // (undocumented)
@@ -109,10 +97,6 @@ export class SiNavbarPrimaryComponent implements OnChanges, HeaderWithDropdowns 
     readonly home: _angular_core.InputSignal<Link | undefined>;
     readonly logoUrl: _angular_core.InputSignal<string | undefined>;
     readonly navAriaLabel: _angular_core.InputSignal<string>;
-    // (undocumented)
-    protected newAppItems?: App[] | AppCategory[];
-    // (undocumented)
-    protected onFavoriteChange({ app, favorite }: FavoriteChangeEvent): void;
     readonly openAppSwitcherText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly primaryItems: _angular_core.InputSignal<MenuItem[]>;
     readonly showLessAppsTitle: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;

@@ -13,52 +13,16 @@ import { Signal } from '@angular/core';
 
 // @public (undocumented)
 export class SiPillsInputComponent implements OnInit, ControlValueAccessor, SiFormItemControl {
-    // (undocumented)
-    protected readonly activeDescendant: _angular_core.Signal<string | null>;
-    // (undocumented)
-    protected readonly activePillIndex: _angular_core.WritableSignal<number | undefined>;
-    // (undocumented)
-    protected arrowLeft(): void;
-    // (undocumented)
-    protected arrowRight(): void;
-    // (undocumented)
-    protected blur(): void;
-    // (undocumented)
-    protected click(): void;
-    // (undocumented)
-    protected delete(): void;
-    // (undocumented)
-    protected readonly disabled: _angular_core.Signal<boolean>;
     readonly disabledInput: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly errormessageId: _angular_core.InputSignal<string>;
     readonly id: _angular_core.InputSignal<string>;
-    // (undocumented)
-    protected input(): void;
     readonly inputElementAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected readonly inputId: _angular_core.Signal<string>;
-    // (undocumented)
-    protected inputValue: string;
-    // (undocumented)
-    protected keydownBackspace(event: Event): void;
-    // (undocumented)
-    protected keydownEnter(event: Event): void;
     // (undocumented)
     readonly labelledby: _angular_core.InputSignal<string>;
     // (undocumented)
     ngOnInit(): void;
-    // (undocumented)
-    protected onChange: (val: any) => void;
-    // (undocumented)
-    protected onTouched: () => void;
-    // (undocumented)
-    protected readonly pills: _angular_core.WritableSignal<string[]>;
     readonly placeholder: _angular_core.InputSignal<string | undefined>;
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected remove(index: number, focus?: boolean): void;
-    // (undocumented)
-    protected readonly tabindex: _angular_core.Signal<0 | -1 | undefined>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiPillsInputComponent, "si-pills-input", never, { "id": { "alias": "id"; "required": false; "isSignal": true; }; "inputElementAriaLabel": { "alias": "inputElementAriaLabel"; "required": false; "isSignal": true; }; "disabledInput": { "alias": "disabled"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "placeholder": { "alias": "placeholder"; "required": false; "isSignal": true; }; "labelledby": { "alias": "labelledby"; "required": false; "isSignal": true; }; "errormessageId": { "alias": "errormessageId"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
     // (undocumented)

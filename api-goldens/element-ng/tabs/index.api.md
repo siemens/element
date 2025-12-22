@@ -25,8 +25,6 @@ export class SiTabComponent extends SiTabBaseDirective implements OnDestroy {
     // (undocumented)
     selectTab(retainFocus?: boolean): void;
     // (undocumented)
-    protected selectTabByUser(): void;
-    // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiTabComponent, "si-tab", never, { "active": { "alias": "active"; "required": false; "isSignal": true; }; "canActivate": { "alias": "canActivate"; "required": false; "isSignal": true; }; "canDeactivate": { "alias": "canDeactivate"; "required": false; "isSignal": true; }; }, { "active": "activeChange"; }, never, ["*"], true, never>;
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiTabComponent, never>;
@@ -36,8 +34,6 @@ export class SiTabComponent extends SiTabBaseDirective implements OnDestroy {
 export class SiTabLinkComponent extends SiTabBaseDirective {
     // (undocumented)
     readonly active: _angular_core.Signal<boolean | undefined>;
-    // (undocumented)
-    protected routerLinkActive: RouterLinkActive;
     // (undocumented)
     selectTab(retainFocus?: boolean): void;
     // (undocumented)
@@ -49,14 +45,6 @@ export class SiTabLinkComponent extends SiTabBaseDirective {
 // @public
 export class SiTabsetComponent {
     constructor();
-    // (undocumented)
-    protected readonly icons: Record<"elementOptions", string>;
-    // (undocumented)
-    protected keydown(event: KeyboardEvent): void;
-    // (undocumented)
-    protected resizeContainer(width: number, scrollWidth: number): void;
-    // (undocumented)
-    protected tabIsLink(tab: unknown): tab is SiTabLinkComponent;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiTabsetComponent, "si-tabset", never, {}, {}, ["tabPanels"], ["*", "router-outlet"], true, never>;
     // (undocumented)

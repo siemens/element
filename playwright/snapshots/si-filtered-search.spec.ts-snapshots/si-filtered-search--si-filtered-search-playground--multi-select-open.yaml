@@ -24,7 +24,9 @@
 - checkbox "Only predefined criterion options and prevent typing"
 - text: Only predefined criterion options and prevent typing
 - checkbox "Exclusive criteria"
-- text: Exclusive criteria Search debounce time
+- text: Exclusive criteria
+- checkbox "Disable free text pills" [checked]
+- text: Disable free text pills Search debounce time
 - spinbutton "Search debounce time"
 - text: Number of visible options
 - spinbutton "Number of visible options"
@@ -33,7 +35,9 @@
 - text: Max options (0 means unlimited)
 - spinbutton "Max options (0 means unlimited)"
 - text: Search criteria input
-- textbox "Search criteria input": "{ \"criteria\": [{\"name\":\"location\", \"value\":\"Munich\"}], \"value\": \"\" }"
+- textbox "Search criteria input":
+  - /placeholder: "Enter and assign search criteria as JSON e.g. { \"criterias\": [], \"value\": \"test\" }"
+  - text: "{ \"criteria\": [{\"name\":\"location\", \"value\":\"Munich\"}], \"value\": \"\" }"
 - listbox "Suggestions":
   - option "Good"
   - option "Average"

@@ -28,7 +28,6 @@ export const ipV6Validator: (options: {
 
 // @public
 export class SiIp4InputDirective extends SiIpInputDirective implements ControlValueAccessor, Validator {
-    protected leaveInput(): void;
     // (undocumented)
     validate(control: AbstractControl): ValidationErrors | null;
     // (undocumented)
@@ -40,11 +39,7 @@ export class SiIp4InputDirective extends SiIpInputDirective implements ControlVa
 // @public
 export class SiIp6InputDirective extends SiIpInputDirective implements ControlValueAccessor, Validator {
     // (undocumented)
-    protected maskInput(e: AddrInputEvent): void;
-    // (undocumented)
     validate(control: AbstractControl): ValidationErrors | null;
-    // (undocumented)
-    protected readonly validatorFn: i0.Signal<_angular_forms.ValidatorFn>;
     // (undocumented)
     static ɵdir: i0.ɵɵDirectiveDeclaration<SiIp6InputDirective, "input[siIpV6]", ["siIpV6"], {}, {}, never, never, true, never>;
     // (undocumented)

@@ -20,49 +20,23 @@ import { ValidatorFn } from '@angular/forms';
 export class SiNumberInputComponent implements OnChanges, ControlValueAccessor, Validator, SiFormItemControl {
     readonly ariaLabel: _angular_core.InputSignal<TranslatableString | undefined>;
     // (undocumented)
-    protected autoUpdateStart(event: Event, isIncrement: boolean): void;
-    // (undocumented)
-    protected autoUpdateStop(): void;
-    // (undocumented)
-    protected canDec: boolean;
-    // (undocumented)
-    protected canInc: boolean;
-    // (undocumented)
-    protected readonly disabled: _angular_core.Signal<boolean>;
-    // (undocumented)
     readonly disabledInput: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly errormessageId: _angular_core.InputSignal<string>;
-    // (undocumented)
-    protected readonly icons: Record<"elementMinus" | "elementPlus", string>;
     // (undocumented)
     readonly id: _angular_core.Signal<string>;
     // (undocumented)
     readonly inputElement: _angular_core.Signal<ElementRef<HTMLInputElement>>;
     readonly inputId: _angular_core.InputSignal<string>;
-    // (undocumented)
-    protected readonly max: _angular_core.Signal<number | undefined>;
     readonly maxInput: _angular_core.InputSignalWithTransform<number | undefined, unknown>;
-    // (undocumented)
-    protected readonly min: _angular_core.Signal<number | undefined>;
     readonly minInput: _angular_core.InputSignalWithTransform<number | undefined, unknown>;
     // (undocumented)
-    protected modelChanged(): void;
-    // (undocumented)
     ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    protected onChange: (val: any) => void;
-    // (undocumented)
-    protected onTouched: () => void;
-    // (undocumented)
-    protected onValidatorChanged: () => void;
     readonly placeholder: _angular_core.InputSignal<TranslatableString | undefined>;
     // (undocumented)
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly showButtons: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly step: _angular_core.InputSignal<number | "any">;
     readonly unit: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    protected validator: ValidatorFn | null;
     readonly value: _angular_core.InputSignal<number | undefined>;
     // (undocumented)
     readonly valueChange: _angular_core.OutputEmitterRef<number | undefined>;
