@@ -13,14 +13,6 @@ export class SiAutocompleteDirective<T> {
     // (undocumented)
     get active(): SiAutocompleteOptionDirective<T> | undefined | null;
     // (undocumented)
-    protected get activeDescendant(): string;
-    // (undocumented)
-    protected get ariaControls(): string | undefined;
-    // (undocumented)
-    protected get expanded(): boolean;
-    // (undocumented)
-    protected keydown(event: KeyboardEvent): void;
-    // (undocumented)
     static ɵdir: i0.ɵɵDirectiveDeclaration<SiAutocompleteDirective<any>, "input[siAutocomplete]", ["siAutocomplete"], {}, {}, never, never, true, never>;
     // (undocumented)
     static ɵfac: i0.ɵɵFactoryDeclaration<SiAutocompleteDirective<any>, never>;
@@ -59,10 +51,6 @@ export class SiAutocompleteModule {
 
 // @public (undocumented)
 export class SiAutocompleteOptionDirective<T = unknown> implements Highlightable {
-    // (undocumented)
-    protected active?: boolean;
-    // (undocumented)
-    protected click(): void;
     // (undocumented)
     get disabled(): boolean;
     // (undocumented)

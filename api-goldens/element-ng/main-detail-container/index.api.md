@@ -13,32 +13,18 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
 export class SiMainDetailContainerComponent implements OnInit, OnChanges, OnDestroy {
-    // (undocumented)
-    protected animate: boolean;
     readonly containerClass: _angular_core.InputSignal<string>;
     readonly detailContainerClass: _angular_core.InputSignal<string>;
     readonly detailsActive: _angular_core.ModelSignal<boolean>;
     readonly detailsBackButtonText: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
-    protected detailsBackClicked(): void;
     readonly detailsHeading: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
-    protected readonly detailStateId: _angular_core.Signal<string | undefined>;
     hasLargeSize: boolean;
     readonly hasLargeSizeChange: _angular_core.OutputEmitterRef<boolean>;
     readonly heading: _angular_core.InputSignal<TranslatableString>;
     readonly hideBackButton: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly icons: Record<"elementBack", string>;
     readonly largeLayoutBreakpoint: _angular_core.InputSignal<number>;
     readonly mainContainerClass: _angular_core.InputSignal<string>;
     readonly mainContainerWidth: _angular_core.ModelSignal<number | "default">;
-    // (undocumented)
-    protected readonly mainStateId: _angular_core.Signal<string | undefined>;
-    // (undocumented)
-    protected maxDetailSize: string;
-    // (undocumented)
-    protected maxMainSize: string;
     readonly minDetailSize: _angular_core.InputSignal<number>;
     readonly minMainSize: _angular_core.InputSignal<number>;
     // (undocumented)
@@ -47,14 +33,7 @@ export class SiMainDetailContainerComponent implements OnInit, OnChanges, OnDest
     ngOnDestroy(): void;
     // (undocumented)
     ngOnInit(): void;
-    // (undocumented)
-    protected onSplitSizesChange(sizes: number[]): void;
-    // (undocumented)
-    protected opacity: string;
-    protected preventFocusDetails: boolean;
     readonly resizableParts: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected splitSizes: [number, number];
     readonly stateId: _angular_core.InputSignal<string | undefined>;
     readonly truncateHeading: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)

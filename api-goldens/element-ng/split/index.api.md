@@ -41,14 +41,6 @@ export type Scale = 'none' | 'auto';
 // @public (undocumented)
 export class SiSplitComponent implements AfterContentInit, OnChanges {
     // (undocumented)
-    protected gridTemplateAreas: Signal<string>;
-    // (undocumented)
-    protected gridTemplateColumns: Signal<string>;
-    // (undocumented)
-    protected gridTemplateRows: Signal<string>;
-    // (undocumented)
-    protected gutters: Gutter[];
-    // (undocumented)
     gutterSize: number;
     // (undocumented)
     ngAfterContentInit(): void;
@@ -57,12 +49,6 @@ export class SiSplitComponent implements AfterContentInit, OnChanges {
     // (undocumented)
     get orientation(): SplitOrientation;
     set orientation(value: SplitOrientation);
-    // (undocumented)
-    protected readonly _orientation: _angular_core.WritableSignal<SplitOrientation>;
-    // (undocumented)
-    protected parts: QueryList<SiSplitPartComponent>;
-    // (undocumented)
-    protected resizeStart(gutter: Gutter, event: Event): void;
     // (undocumented)
     sizes: number[];
     // (undocumented)
@@ -100,10 +86,6 @@ export class SiSplitPartComponent implements OnChanges {
     set expanded(value: boolean);
     // (undocumented)
     get expanded(): boolean;
-    // (undocumented)
-    protected headerContext: {
-        $implicit: SiSplitPartComponent;
-    };
     // (undocumented)
     headerTemplate?: TemplateRef<any>;
     heading: TranslatableString;

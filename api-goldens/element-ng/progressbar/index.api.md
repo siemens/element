@@ -16,8 +16,6 @@ export class SiProgressbarComponent {
     readonly heading: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly height: _angular_core.InputSignal<ProgressbarHeight>;
     readonly max: _angular_core.InputSignal<number>;
-    // (undocumented)
-    protected readonly percent: _angular_core.Signal<number>;
     readonly progress: _angular_core.InputSignal<string | undefined>;
     readonly value: _angular_core.InputSignal<number | undefined>;
     // (undocumented)

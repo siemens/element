@@ -43,16 +43,6 @@ export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
     // (undocumented)
     ngOnInit(): void;
     // (undocumented)
-    protected onFocusin(event: FocusEvent): void;
-    // (undocumented)
-    protected onKeydown(event: KeyboardEvent): void;
-    // (undocumented)
-    protected onMousedown(event: MouseEvent): void;
-    // (undocumented)
-    protected onMouseup(event: MouseEvent): void;
-    // (undocumented)
-    protected tabIndex: string;
-    // (undocumented)
     static ɵdir: i0.ɵɵDirectiveDeclaration<SiDatatableInteractionDirective, "ngx-datatable[siDatatableInteraction]", ["si-datatable-interaction"], { "datatableInteractionAutoSelect": { "alias": "datatableInteractionAutoSelect"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
     // (undocumented)
     static ɵfac: i0.ɵɵFactoryDeclaration<SiDatatableInteractionDirective, never>;

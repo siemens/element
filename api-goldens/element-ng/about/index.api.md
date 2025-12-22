@@ -37,24 +37,14 @@ export class SiAboutComponent implements OnInit {
     readonly copyrightDetails: _angular_core.InputSignal<CopyrightDetails | undefined>;
     readonly icon: _angular_core.InputSignal<string | undefined>;
     readonly iconName: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    protected readonly icons: Record<"elementDocument", string>;
     readonly imprintLink: _angular_core.InputSignal<Link | undefined>;
-    // (undocumented)
-    protected readonly licenseApi: _angular_core.WritableSignal<ApiInfo[]>;
     readonly licenseInfo: _angular_core.InputSignal<LicenseInfo>;
     readonly links: _angular_core.InputSignal<Link[]>;
     // (undocumented)
     ngOnInit(): void;
     readonly privacyLink: _angular_core.InputSignal<Link | undefined>;
-    // (undocumented)
-    protected readonly sanitizedUrl: _angular_core.Signal<_angular_platform_browser.SafeResourceUrl | undefined>;
     readonly subheading: _angular_core.InputSignal<string[] | undefined>;
     readonly termsLink: _angular_core.InputSignal<Link | undefined>;
-    // (undocumented)
-    protected toggleLoadLicenseApi(apiInfo: ApiInfo): void;
-    // (undocumented)
-    protected toggleLoadLicenseContent(apiInfo: ApiInfo): void;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiAboutComponent, "si-about", never, { "aboutTitle": { "alias": "aboutTitle"; "required": true; "isSignal": true; }; "licenseInfo": { "alias": "licenseInfo"; "required": true; "isSignal": true; }; "icon": { "alias": "icon"; "required": false; "isSignal": true; }; "iconName": { "alias": "iconName"; "required": false; "isSignal": true; }; "appName": { "alias": "appName"; "required": true; "isSignal": true; }; "subheading": { "alias": "subheading"; "required": false; "isSignal": true; }; "acceptableUsePolicyLink": { "alias": "acceptableUsePolicyLink"; "required": false; "isSignal": true; }; "imprintLink": { "alias": "imprintLink"; "required": false; "isSignal": true; }; "privacyLink": { "alias": "privacyLink"; "required": false; "isSignal": true; }; "cookieNoticeLink": { "alias": "cookieNoticeLink"; "required": false; "isSignal": true; }; "termsLink": { "alias": "termsLink"; "required": false; "isSignal": true; }; "links": { "alias": "links"; "required": false; "isSignal": true; }; "copyrightDetails": { "alias": "copyrightDetails"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
     // (undocumented)

@@ -47,13 +47,9 @@ export class SiAiMessageComponent {
     readonly actions: _angular_core.InputSignal<MessageAction[]>;
     readonly content: _angular_core.InputSignal<string>;
     readonly contentFormatter: _angular_core.InputSignal<((text: string) => string | Node) | undefined>;
-    // (undocumented)
-    protected readonly formattedContent: _angular_core.Signal<ElementRef<HTMLDivElement> | undefined>;
     readonly loading: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
     readonly secondaryActionsLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected readonly textContent: _angular_core.WritableSignal<string | undefined>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiAiMessageComponent, "si-ai-message", never, { "content": { "alias": "content"; "required": false; "isSignal": true; }; "contentFormatter": { "alias": "contentFormatter"; "required": false; "isSignal": true; }; "loading": { "alias": "loading"; "required": false; "isSignal": true; }; "actions": { "alias": "actions"; "required": false; "isSignal": true; }; "secondaryActions": { "alias": "secondaryActions"; "required": false; "isSignal": true; }; "actionParam": { "alias": "actionParam"; "required": false; "isSignal": true; }; "secondaryActionsLabel": { "alias": "secondaryActionsLabel"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
     // (undocumented)
@@ -64,12 +60,6 @@ export class SiAiMessageComponent {
 export class SiAttachmentListComponent {
     readonly alignment: _angular_core.InputSignal<"start" | "end">;
     readonly attachments: _angular_core.InputSignal<Attachment[]>;
-    // (undocumented)
-    protected getFileIcon(name: string): string;
-    // (undocumented)
-    protected modalService: SiModalService;
-    // (undocumented)
-    protected openPreview(event: Event, attachment: Attachment): void;
     readonly removable: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly remove: _angular_core.OutputEmitterRef<Attachment>;
     readonly removeLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
@@ -90,8 +80,6 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
     ngOnDestroy(): void;
     readonly noAutoScroll: _angular_core.InputSignalWithTransform<boolean, string | boolean>;
     // (undocumented)
-    protected onScroll(): void;
-    // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChatContainerComponent, "si-chat-container", never, { "colorVariant": { "alias": "colorVariant"; "required": false; "isSignal": true; }; "noAutoScroll": { "alias": "noAutoScroll"; "required": false; "isSignal": true; }; }, {}, never, ["*", "si-inline-notification", "si-chat-input,[siChatContainerInput]"], true, never>;
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChatContainerComponent, never>;
@@ -110,42 +98,14 @@ export class SiChatInputComponent implements AfterViewInit {
     readonly accept: _angular_core.InputSignal<string | undefined>;
     readonly actionParam: _angular_core.InputSignal<any>;
     readonly actions: _angular_core.InputSignal<MessageAction[]>;
-    // (undocumented)
-    protected adjustTextareaHeight(event: Event): void;
     readonly allowAttachments: _angular_core.InputSignal<boolean>;
     readonly attachFileLabel: _angular_core.InputSignal<TranslatableString_2>;
-    // (undocumented)
-    protected get attachmentList(): Attachment[];
     readonly attachments: _angular_core.ModelSignal<ChatInputAttachment[]>;
     readonly autoFocus: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly buttonDisabled: _angular_core.Signal<boolean>;
-    // (undocumented)
-    protected readonly buttonIcon: _angular_core.Signal<string>;
-    // (undocumented)
-    protected readonly buttonLabel: _angular_core.Signal<TranslatableString_2>;
-    // (undocumented)
-    protected readonly canSend: _angular_core.Signal<boolean>;
     readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly disclaimer: _angular_core.InputSignal<TranslatableString_2 | undefined>;
-    // (undocumented)
-    protected dragOver: boolean;
-    // (undocumented)
-    protected dragOverHandler(event: DragEvent): void;
-    // (undocumented)
-    protected dropHandler(event: DragEvent): void;
     readonly fileError: _angular_core.OutputEmitterRef<FileUploadError>;
     focus(): void;
-    // (undocumented)
-    protected readonly hasActions: _angular_core.Signal<boolean>;
-    // (undocumented)
-    protected readonly hasAttachments: _angular_core.Signal<boolean>;
-    // (undocumented)
-    protected readonly hasContent: _angular_core.Signal<boolean>;
-    // (undocumented)
-    protected readonly hasSecondaryActions: _angular_core.Signal<boolean>;
-    // (undocumented)
-    protected readonly id: string;
     readonly interrupt: _angular_core.OutputEmitterRef<void>;
     readonly interruptButtonLabel: _angular_core.InputSignal<TranslatableString_2>;
     readonly interruptible: _angular_core.InputSignalWithTransform<boolean, unknown>;
@@ -154,23 +114,7 @@ export class SiChatInputComponent implements AfterViewInit {
     readonly maxLength: _angular_core.InputSignal<number | undefined>;
     // (undocumented)
     ngAfterViewInit(): void;
-    // (undocumented)
-    protected onButtonClick(): void;
-    // (undocumented)
-    protected onContainerClick(event: Event): void;
-    // (undocumented)
-    protected onFileError(error: FileUploadError): void;
-    // (undocumented)
-    protected onFilesAdded(uploadFiles: UploadFile[]): void;
-    // (undocumented)
-    protected onInputChange(value: string): void;
-    // (undocumented)
-    protected onKeyDown(event: KeyboardEvent): void;
-    // (undocumented)
-    protected onSend(): void;
     readonly placeholder: _angular_core.InputSignal<TranslatableString_2>;
-    // (undocumented)
-    protected removeAttachment(attachment: Attachment): void;
     readonly removeAttachmentLabel: _angular_core.InputSignal<TranslatableString_2>;
     readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
     readonly secondaryActionsLabel: _angular_core.InputSignal<TranslatableString_2>;
@@ -181,8 +125,6 @@ export class SiChatInputComponent implements AfterViewInit {
     readonly sendButtonIcon: _angular_core.InputSignal<string>;
     readonly sendButtonLabel: _angular_core.InputSignal<TranslatableString_2>;
     readonly sending: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly showInterruptButton: _angular_core.Signal<boolean>;
     readonly value: _angular_core.ModelSignal<string>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChatInputComponent, "si-chat-input", never, { "value": { "alias": "value"; "required": false; "isSignal": true; }; "placeholder": { "alias": "placeholder"; "required": false; "isSignal": true; }; "disabled": { "alias": "disabled"; "required": false; "isSignal": true; }; "sending": { "alias": "sending"; "required": false; "isSignal": true; }; "interruptible": { "alias": "interruptible"; "required": false; "isSignal": true; }; "maxLength": { "alias": "maxLength"; "required": false; "isSignal": true; }; "disclaimer": { "alias": "disclaimer"; "required": false; "isSignal": true; }; "actions": { "alias": "actions"; "required": false; "isSignal": true; }; "secondaryActions": { "alias": "secondaryActions"; "required": false; "isSignal": true; }; "allowAttachments": { "alias": "allowAttachments"; "required": false; "isSignal": true; }; "accept": { "alias": "accept"; "required": false; "isSignal": true; }; "maxFileSize": { "alias": "maxFileSize"; "required": false; "isSignal": true; }; "attachments": { "alias": "attachments"; "required": false; "isSignal": true; }; "label": { "alias": "label"; "required": false; "isSignal": true; }; "actionParam": { "alias": "actionParam"; "required": false; "isSignal": true; }; "sendButtonLabel": { "alias": "sendButtonLabel"; "required": false; "isSignal": true; }; "sendButtonIcon": { "alias": "sendButtonIcon"; "required": false; "isSignal": true; }; "interruptButtonLabel": { "alias": "interruptButtonLabel"; "required": false; "isSignal": true; }; "autoFocus": { "alias": "autoFocus"; "required": false; "isSignal": true; }; "attachFileLabel": { "alias": "attachFileLabel"; "required": false; "isSignal": true; }; "removeAttachmentLabel": { "alias": "removeAttachmentLabel"; "required": false; "isSignal": true; }; "secondaryActionsLabel": { "alias": "secondaryActionsLabel"; "required": false; "isSignal": true; }; }, { "value": "valueChange"; "attachments": "attachmentsChange"; "send": "send"; "interrupt": "interrupt"; "fileError": "fileError"; }, never, ["*", "[siChatInputDisclaimer]"], true, never>;
@@ -225,14 +167,8 @@ export class SiUserMessageComponent {
     readonly attachments: _angular_core.InputSignal<Attachment[]>;
     readonly content: _angular_core.InputSignal<string>;
     readonly contentFormatter: _angular_core.InputSignal<((text: string) => string | Node) | undefined>;
-    // (undocumented)
-    protected readonly formattedContent: _angular_core.Signal<ElementRef<HTMLDivElement> | undefined>;
-    // (undocumented)
-    protected readonly hasAttachments: _angular_core.Signal<boolean>;
     readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
     readonly secondaryActionsLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected readonly textContent: _angular_core.WritableSignal<string | undefined>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiUserMessageComponent, "si-user-message", never, { "content": { "alias": "content"; "required": false; "isSignal": true; }; "contentFormatter": { "alias": "contentFormatter"; "required": false; "isSignal": true; }; "actions": { "alias": "actions"; "required": false; "isSignal": true; }; "secondaryActions": { "alias": "secondaryActions"; "required": false; "isSignal": true; }; "attachments": { "alias": "attachments"; "required": false; "isSignal": true; }; "actionParam": { "alias": "actionParam"; "required": false; "isSignal": true; }; "secondaryActionsLabel": { "alias": "secondaryActionsLabel"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
     // (undocumented)

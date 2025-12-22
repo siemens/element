@@ -206,10 +206,7 @@ export const provideIconConfig: (config: IconConfig) => Provider;
 
 // @public
 export class SiIconComponent {
-    protected readonly fontIcon: _angular_core.Signal<string | undefined>;
     readonly icon: _angular_core.InputSignal<string>;
-    // (undocumented)
-    protected readonly svgIcon: _angular_core.Signal<_angular_platform_browser.SafeHtml | undefined>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiIconComponent, "si-icon", never, { "icon": { "alias": "icon"; "required": true; "isSignal": true; }; }, {}, never, never, true, never>;
     // (undocumented)
@@ -219,8 +216,6 @@ export class SiIconComponent {
 // @public @deprecated (undocumented)
 export class SiIconLegacyComponent {
     readonly alt: _angular_core.InputSignal<TranslatableString | undefined>;
-    // (undocumented)
-    protected readonly altText: _angular_core.Signal<string>;
     readonly color: _angular_core.InputSignal<string | undefined>;
     readonly icon: _angular_core.InputSignal<string | undefined>;
     readonly size: _angular_core.InputSignal<string>;
@@ -246,8 +241,6 @@ export class SiIconModule {
 export class SiStatusIconComponent {
     // (undocumented)
     readonly status: _angular_core.InputSignal<EntityStatusType>;
-    // (undocumented)
-    protected readonly statusIcon: _angular_core.Signal<_siemens_element_ng_common.StatusIcon>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiStatusIconComponent, "si-status-icon", never, { "status": { "alias": "status"; "required": true; "isSignal": true; }; }, {}, never, never, true, never>;
     // (undocumented)

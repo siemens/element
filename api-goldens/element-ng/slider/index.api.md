@@ -11,33 +11,13 @@ import { SiFormItemControl } from '@siemens/element-ng/form';
 
 // @public (undocumented)
 export class SiSliderComponent implements ControlValueAccessor, SiFormItemControl {
-    // (undocumented)
-    protected autoUpdateKeydown(event: KeyboardEvent): void;
-    // (undocumented)
-    protected autoUpdateStart(event: Event, isIncrement: boolean): void;
-    // (undocumented)
-    protected autoUpdateStop(): void;
     readonly decrementLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected readonly disabled: _angular_core.Signal<boolean>;
     // (undocumented)
     readonly disabledInput: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly errormessageId: _angular_core.InputSignal<string>;
     // (undocumented)
-    protected handleMouseDown(event: MouseEvent): void;
-    // (undocumented)
-    protected handlePointerDown(event: Event): void;
-    // (undocumented)
-    protected handleTouchStart(event: TouchEvent): void;
-    // (undocumented)
-    protected readonly icons: Record<"elementMinus" | "elementPlus", string>;
-    // (undocumented)
     readonly id: _angular_core.InputSignal<string>;
     readonly incrementLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected readonly indicatorPos: _angular_core.Signal<number>;
-    // (undocumented)
-    protected isDragging: boolean;
     // (undocumented)
     readonly labelledby: _angular_core.InputSignal<string>;
     readonly max: _angular_core.InputSignalWithTransform<number, unknown>;
@@ -45,8 +25,6 @@ export class SiSliderComponent implements ControlValueAccessor, SiFormItemContro
     readonly min: _angular_core.InputSignalWithTransform<number, unknown>;
     readonly minLabel: _angular_core.InputSignal<string>;
     readonly sliderLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected readonly sliderValue: _angular_core.Signal<number>;
     readonly step: _angular_core.InputSignalWithTransform<number, unknown>;
     readonly thumbIcon: _angular_core.InputSignal<string | undefined>;
     readonly value: _angular_core.ModelSignal<number | undefined>;

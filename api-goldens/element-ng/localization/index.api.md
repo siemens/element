@@ -58,8 +58,6 @@ export interface SiLocaleConfig {
 export class SiLocaleId extends String {
     constructor();
     // (undocumented)
-    protected service: SiLocaleService;
-    // (undocumented)
     toLowerCase(): string;
     toString(): string;
     // (undocumented)

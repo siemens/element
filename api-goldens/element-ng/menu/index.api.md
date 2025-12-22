@@ -99,8 +99,6 @@ export abstract class SiMenuActionService {
 export class SiMenuBarDirective {
     readonly disabled: i0.InputSignal<boolean | undefined>;
     // (undocumented)
-    protected get tabIndex(): 0 | -1 | null;
-    // (undocumented)
     static ɵdir: i0.ɵɵDirectiveDeclaration<SiMenuBarDirective, "si-menu-bar", never, { "disabled": { "alias": "disabled"; "required": false; "isSignal": true; }; }, {}, never, never, true, [{ directive: typeof i1.CdkMenuBar; inputs: {}; outputs: {}; }, { directive: typeof i1.CdkTargetMenuAim; inputs: {}; outputs: {}; }]>;
     // (undocumented)
     static ɵfac: i0.ɵɵFactoryDeclaration<SiMenuBarDirective, never>;
@@ -127,15 +125,7 @@ export class SiMenuFactoryComponent {
     // (undocumented)
     readonly actionParam: i0.InputSignal<unknown>;
     // (undocumented)
-    protected isLegacyItemStyle(item: MenuItem_2 | MenuItem): item is MenuItem_2;
-    // (undocumented)
-    protected isNewItemStyle(item: MenuItem_2 | MenuItem): item is MenuItem;
-    // (undocumented)
     readonly items: i0.InputSignal<readonly (MenuItem_2 | MenuItem)[] | undefined>;
-    // (undocumented)
-    protected radioOrCheckboxTriggered(item: MenuItem_2): void;
-    // (undocumented)
-    protected runAction(item: MenuItemAction | MenuItemRadio | MenuItemCheckbox): void;
     // (undocumented)
     static ɵcmp: i0.ɵɵComponentDeclaration<SiMenuFactoryComponent, "si-menu-factory", never, { "items": { "alias": "items"; "required": false; "isSignal": true; }; "actionParam": { "alias": "actionParam"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
     // (undocumented)
@@ -153,12 +143,6 @@ export class SiMenuHeaderDirective {
 // @public (undocumented)
 export class SiMenuItemCheckboxComponent extends SiMenuItemBase {
     // (undocumented)
-    protected get checked(): boolean;
-    // (undocumented)
-    protected readonly hideCheckmark: boolean;
-    // (undocumented)
-    protected readonly icons: Record<"elementOk", string>;
-    // (undocumented)
     static ɵcmp: i0.ɵɵComponentDeclaration<SiMenuItemCheckboxComponent, "si-menu-item-checkbox, button[si-menu-item-checkbox]", never, {}, {}, never, ["*"], true, [{ directive: typeof i1.CdkMenuItemCheckbox; inputs: { "cdkMenuItemChecked": "checked"; "cdkMenuItemDisabled": "disabled"; }; outputs: { "cdkMenuItemTriggered": "triggered"; }; }, { directive: typeof i1.CdkMenuTrigger; inputs: {}; outputs: {}; }]>;
     // (undocumented)
     static ɵfac: i0.ɵɵFactoryDeclaration<SiMenuItemCheckboxComponent, never>;
@@ -167,10 +151,6 @@ export class SiMenuItemCheckboxComponent extends SiMenuItemBase {
 // @public (undocumented)
 export class SiMenuItemComponent extends SiMenuItemBase {
     // (undocumented)
-    protected get hasSubmenu(): boolean;
-    // (undocumented)
-    protected readonly icons: Record<"elementRight2", string>;
-    // (undocumented)
     static ɵcmp: i0.ɵɵComponentDeclaration<SiMenuItemComponent, "si-menu-item, a[si-menu-item], button[si-menu-item]", never, {}, {}, never, ["*", ".end"], true, [{ directive: typeof i1.CdkMenuItem; inputs: { "cdkMenuItemDisabled": "disabled"; }; outputs: { "cdkMenuItemTriggered": "triggered"; }; }]>;
     // (undocumented)
     static ɵfac: i0.ɵɵFactoryDeclaration<SiMenuItemComponent, never>;
@@ -178,10 +158,6 @@ export class SiMenuItemComponent extends SiMenuItemBase {
 
 // @public (undocumented)
 export class SiMenuItemRadioComponent extends SiMenuItemBase {
-    // (undocumented)
-    protected get checked(): boolean;
-    // (undocumented)
-    protected readonly icons: Record<"elementRecordFilled", string>;
     // (undocumented)
     static ɵcmp: i0.ɵɵComponentDeclaration<SiMenuItemRadioComponent, "si-menu-item-radio", never, {}, {}, never, ["*"], true, [{ directive: typeof i1.CdkMenuItemRadio; inputs: { "cdkMenuItemChecked": "checked"; "cdkMenuItemDisabled": "disabled"; }; outputs: { "cdkMenuItemTriggered": "triggered"; }; }, { directive: typeof i1.CdkMenuTrigger; inputs: {}; outputs: {}; }]>;
     // (undocumented)
