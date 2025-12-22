@@ -9,6 +9,12 @@ import type {
   TranslatableString
 } from '@siemens/element-translate-ng/translate';
 
+import {
+  sanitizeHtmlWithStyles,
+  getCachedOrCreateElement,
+  getCachedOrCreateString
+} from './markdown-renderer-helpers';
+
 const CACHE_SIZE = 50;
 
 export interface MarkdownRendererOptions {
@@ -32,6 +38,14 @@ export interface MarkdownRendererOptions {
    * @defaultValue undefined
    */
   syntaxHighlighter?: (code: string, language?: string) => string | undefined;
+  /**
+   * Optional LaTeX renderer function.
+   * Receives LaTeX content and display mode boolean, returns an HTML content string or undefined to use default rendering.
+   * The returned HTML is sanitized before insertion.
+   * Make sure that the required styles/scripts for the LaTeX renderer (e.g., KaTeX) are included in your application.
+   * @defaultValue undefined
+   */
+  latexRenderer?: (latex: string, displayMode: boolean) => string | undefined;
   /**
    * Optional translate sync function of a service instance for translating the copy button label and download button label.
    * @defaultValue undefined
@@ -58,8 +72,10 @@ export const getMarkdownRenderer = (
 ): ((text: string) => Node) => {
   const codeBlockCache = new Map<string, HTMLElement>();
   const tableCache = new Map<string, HTMLElement>();
+  const latexCache = new Map<string, string>();
   const codeBlockCacheOrder: string[] = [];
   const tableCacheOrder: string[] = [];
+  const latexCacheOrder: string[] = [];
 
   return (text: string): Node => {
     const div = document.createElement('div');
@@ -187,7 +203,9 @@ export const getMarkdownRenderer = (
             codeBlockCacheOrder,
             CACHE_SIZE,
             codeBlockCachePlaceholderMap,
-            codeBlockPlaceholderState
+            codeBlockPlaceholderState,
+            latexCache,
+            latexCacheOrder
           );
           // Store original cell text in the map
           rowData.set(index, cells[index]);
@@ -259,7 +277,9 @@ export const getMarkdownRenderer = (
       codeBlockCacheOrder,
       CACHE_SIZE,
       codeBlockCachePlaceholderMap,
-      codeBlockPlaceholderState
+      codeBlockPlaceholderState,
+      latexCache,
+      latexCacheOrder
     );
 
     div.innerHTML = html;
@@ -381,40 +401,6 @@ export const getMarkdownRenderer = (
   };
 };
 
-const getCachedOrCreateElement = (
-  cache: Map<string, HTMLElement>,
-  cacheOrder: string[],
-  cacheSize: number,
-  key: string,
-  createHtml: () => string
-): HTMLElement => {
-  const cached = cache.get(key);
-  if (cached) {
-    const orderIndex = cacheOrder.indexOf(key);
-    if (orderIndex > -1) {
-      cacheOrder.splice(orderIndex, 1);
-    }
-    cacheOrder.push(key);
-    return cached;
-  }
-
-  const tempDiv = document.createElement('div');
-  tempDiv.innerHTML = createHtml();
-  const element = tempDiv.firstElementChild as HTMLElement;
-
-  cache.set(key, element);
-  cacheOrder.push(key);
-
-  if (cacheOrder.length > cacheSize) {
-    const oldestKey = cacheOrder.shift();
-    if (oldestKey) {
-      cache.delete(oldestKey);
-    }
-  }
-
-  return element;
-};
-
 const transformMarkdownText = (
   html: string,
   keepAdditionalNewlines = true,
@@ -424,7 +410,9 @@ const transformMarkdownText = (
   codeBlockCacheOrder?: string[],
   cacheSize?: number,
   codeBlockCachePlaceholderMap?: Map<string, string>,
-  codeBlockPlaceholderState?: { counter: number }
+  codeBlockPlaceholderState?: { counter: number },
+  latexCache?: Map<string, string>,
+  latexCacheOrder?: string[]
 ): string => {
   // Generate a random placeholder for inner code blocks to prevent markdown processing inside them
   const innerCodeQuotePlaceholder = `--INNER-CODE-${Math.random().toString(36).substring(2, 15)}--`;
@@ -432,6 +420,7 @@ const transformMarkdownText = (
 
   const escapedAsteriskPlaceholder = `--ASTERISK-${Math.random().toString(36).substring(2, 15)}--`;
   const escapedUnderscorePlaceholder = `--UNDERSCORE-${Math.random().toString(36).substring(2, 15)}--`;
+  const escapedDollarPlaceholder = `--DOLLAR-${Math.random().toString(36).substring(2, 15)}--`;
 
   // Apply markdown transformations to the sanitized content
 
@@ -538,6 +527,92 @@ const transformMarkdownText = (
 
   // Remove temporary closing marker if it's still there (wasn't part of a code block)
   html = html.replace(tempClosingMarker, '').replace(/--TEMP-CLOSE--/g, '');
+
+  // Process LaTeX expressions after code blocks are extracted
+  const latexPlaceholderMap = new Map<string, string>();
+
+  // Replace escaped dollar signs before processing LaTeX
+  html = html.replace(/\\\$/g, escapedDollarPlaceholder);
+
+  // Display math: $$ ... $$
+  html = html.replace(/\$\$([\s\S]*?)\$\$/g, (match, latex) => {
+    if (options?.latexRenderer) {
+      try {
+        const cacheKey = `display|||${latex.trim()}`;
+
+        // Check cache first (if available)
+        const cached =
+          latexCache && latexCacheOrder
+            ? getCachedOrCreateString(latexCache, latexCacheOrder, CACHE_SIZE, cacheKey, () => {
+                const rendered = options.latexRenderer?.(latex.trim(), true);
+                if (rendered) {
+                  const sanitized = sanitizeHtmlWithStyles(rendered, sanitizer);
+                  if (sanitized) {
+                    return `<div class="latex-display-wrapper">${sanitized}</div>`;
+                  }
+                }
+                return '';
+              })
+            : (() => {
+                const rendered = options.latexRenderer?.(latex.trim(), true);
+                if (rendered) {
+                  const sanitized = sanitizeHtmlWithStyles(rendered, sanitizer);
+                  if (sanitized) {
+                    return `<div class="latex-display-wrapper">${sanitized}</div>`;
+                  }
+                }
+                return '';
+              })();
+
+        if (cached) {
+          const latexPlaceholder = `--LATEX-DISPLAY-${Math.random().toString(36).substring(2, 15)}--`;
+          latexPlaceholderMap.set(latexPlaceholder, cached);
+          return latexPlaceholder;
+        }
+      } catch {
+        // If rendering fails, return the original
+      }
+    }
+    return match;
+  });
+
+  // Inline math: $ ... $ (but not $$)
+  html = html.replace(/(?<!\$)\$(?!\$)((?:(?!\$)[\s\S])+?)\$(?!\$)/g, (match, latex) => {
+    if (options?.latexRenderer) {
+      try {
+        const cacheKey = `inline|||${latex.trim()}`;
+
+        // Check cache first (if available)
+        const cached =
+          latexCache && latexCacheOrder
+            ? getCachedOrCreateString(latexCache, latexCacheOrder, CACHE_SIZE, cacheKey, () => {
+                const rendered = options.latexRenderer?.(latex.trim(), false);
+                if (rendered) {
+                  const sanitized = sanitizeHtmlWithStyles(rendered, sanitizer);
+                  return sanitized ?? '';
+                }
+                return '';
+              })
+            : (() => {
+                const rendered = options.latexRenderer?.(latex.trim(), false);
+                if (rendered) {
+                  const sanitized = sanitizeHtmlWithStyles(rendered, sanitizer);
+                  return sanitized ?? '';
+                }
+                return '';
+              })();
+
+        if (cached) {
+          const latexPlaceholder = `--LATEX-INLINE-${Math.random().toString(36).substring(2, 15)}--`;
+          latexPlaceholderMap.set(latexPlaceholder, cached);
+          return latexPlaceholder;
+        }
+      } catch {
+        // If rendering fails, return the original
+      }
+    }
+    return match;
+  });
 
   html = html
 
@@ -654,6 +729,14 @@ const transformMarkdownText = (
 
   // Restore inner code block placeholders
   html = html.replace(new RegExp(innerCodeQuotePlaceholder, 'g'), '`');
+
+  // Restore LaTeX placeholders
+  latexPlaceholderMap.forEach((latex, placeholder) => {
+    html = html.replace(new RegExp(placeholder, 'g'), latex);
+  });
+
+  // Restore escaped dollar signs
+  html = html.replace(new RegExp(escapedDollarPlaceholder, 'g'), '$');
 
   return html;
 };

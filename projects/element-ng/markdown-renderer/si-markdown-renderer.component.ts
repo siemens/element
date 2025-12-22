@@ -51,6 +51,17 @@ export class SiMarkdownRendererComponent {
   >(undefined);
 
   /**
+   * Optional LaTeX renderer function for math expressions.
+   * Receives LaTeX content and display mode boolean, returns an HTML content string or undefined to use default rendering.
+   * The returned HTML is sanitized before insertion.
+   * Make sure that the required styles/scripts for the LaTeX renderer (e.g., KaTeX) are included in your application.
+   * @defaultValue undefined
+   */
+  readonly latexRenderer = input<
+    ((latex: string, displayMode: boolean) => string | undefined) | undefined
+  >(undefined);
+
+  /**
    * Label for the copy button.
    * @defaultValue
    * ```
@@ -72,11 +83,13 @@ export class SiMarkdownRendererComponent {
 
   private readonly markdownRenderer = computed(() => {
     const highlighterFn = this.syntaxHighlighter();
+    const latexRendererFn = this.latexRenderer();
 
     const options: MarkdownRendererOptions | undefined = {
       copyCodeButton: !this.disableCopyButton() ? this.copyButtonLabel() : undefined,
       downloadTableButton: !this.disableDownloadButton() ? this.downloadButtonLabel() : undefined,
       syntaxHighlighter: highlighterFn,
+      latexRenderer: latexRendererFn,
       translateSync: this.translateService.translateSync.bind(this.translateService)
     };
 

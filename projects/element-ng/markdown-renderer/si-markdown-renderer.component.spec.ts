@@ -11,11 +11,15 @@ describe('SiMarkdownRendererComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
   let hostElement: HTMLElement;
   let text: WritableSignal<string | null>;
+  let latexRendererFn: WritableSignal<
+    ((latex: string, displayMode: boolean) => string | undefined) | undefined
+  >;
 
   beforeEach(() => {
     text = signal('');
+    latexRendererFn = signal(undefined);
     fixture = TestBed.createComponent(TestComponent, {
-      bindings: [inputBinding('text', text)]
+      bindings: [inputBinding('text', text), inputBinding('latexRenderer', latexRendererFn)]
     });
     hostElement = fixture.nativeElement;
   });
@@ -189,17 +193,21 @@ const example = "code block";
     const markdownDiv = hostElement.firstElementChild!;
     const tableElement = markdownDiv.querySelector('table')!;
     const trElements = markdownDiv.querySelectorAll('tr');
+    const thElements = markdownDiv.querySelectorAll('th');
     const tdElements = markdownDiv.querySelectorAll('td');
 
     expect(tableElement).toBeTruthy();
     expect(tableElement).toHaveClass('table');
     expect(tableElement).toHaveClass('table-hover');
     expect(trElements.length).toBe(3); // Header + 2 data rows
-    expect(tdElements.length).toBe(6); // 2 columns × 3 rows
-    expect(tdElements[0]).toHaveTextContent('Name');
-    expect(tdElements[1]).toHaveTextContent('Role');
-    expect(tdElements[2]).toHaveTextContent('Alice');
-    expect(tdElements[3]).toHaveTextContent('Developer');
+    expect(thElements.length).toBe(2); // 2 header cells
+    expect(tdElements.length).toBe(4); // 2 columns × 2 data rows
+    expect(thElements[0]).toHaveTextContent('Name');
+    expect(thElements[1]).toHaveTextContent('Role');
+    expect(tdElements[0]).toHaveTextContent('Alice');
+    expect(tdElements[1]).toHaveTextContent('Developer');
+    expect(tdElements[2]).toHaveTextContent('Bob');
+    expect(tdElements[3]).toHaveTextContent('Designer');
   });
 
   it('should escape HTML in table cells', async () => {
@@ -213,9 +221,9 @@ const example = "code block";
     const markdownDiv = hostElement.firstElementChild!;
     const tdElements = markdownDiv.querySelectorAll('td');
 
-    expect(tdElements[2].innerHTML).not.toContain('<script>');
-    expect(tdElements[2].textContent).toBe('');
-    expect(tdElements[3].innerHTML).toContain('<b>Bold</b>');
+    expect(tdElements[0].innerHTML).not.toContain('<script>');
+    expect(tdElements[0].textContent).toBe('');
+    expect(tdElements[1].innerHTML).toContain('<b>Bold</b>');
   });
 
   it('should handle tables with markdown formatting inside cells', async () => {
@@ -247,10 +255,10 @@ const example = "code block";
     const markdownDiv = hostElement.firstElementChild!;
     const tdElements = markdownDiv.querySelectorAll('td');
 
-    expect(tdElements[2]).toHaveTextContent('grep "text|pattern"');
-    expect(tdElements[3]).toHaveTextContent('Search for text OR pattern');
-    expect(tdElements[4]).toHaveTextContent("awk '{print $1|$2}'");
-    expect(tdElements[5]).toHaveTextContent('Print fields separated by pipe');
+    expect(tdElements[0]).toHaveTextContent('grep "text|pattern"');
+    expect(tdElements[1]).toHaveTextContent('Search for text OR pattern');
+    expect(tdElements[2]).toHaveTextContent("awk '{print $1|$2}'");
+    expect(tdElements[3]).toHaveTextContent('Print fields separated by pipe');
   });
 
   it('should handle lists and line breaks inside table cells', async () => {
@@ -271,14 +279,14 @@ const example = "code block";
     expect(innerHTML).toContain('<em>Line breaks</em>');
 
     // Check that lists are properly formatted
-    expect(tdElements[3].innerHTML).toContain('<ul>');
-    expect(tdElements[3].innerHTML).toContain('<li>First item</li>');
-    expect(tdElements[3].innerHTML).toContain('<li>Second item</li>');
-    expect(tdElements[3].innerHTML).toContain('<li>Third item</li>');
+    expect(tdElements[1].innerHTML).toContain('<ul>');
+    expect(tdElements[1].innerHTML).toContain('<li>First item</li>');
+    expect(tdElements[1].innerHTML).toContain('<li>Second item</li>');
+    expect(tdElements[1].innerHTML).toContain('<li>Third item</li>');
 
     // Check that line breaks work in cells - <br> tags remain as <br> in innerHTML, don't convert to \n in textContent
-    expect(tdElements[5].innerHTML).toContain('<br>');
-    expect(tdElements[5]).toHaveTextContent('Line 1Line 2Line 3');
+    expect(tdElements[3].innerHTML).toContain('<br>');
+    expect(tdElements[3]).toHaveTextContent('Line 1Line 2Line 3');
   });
 
   it('should update content when input changes', async () => {
@@ -294,5 +302,202 @@ const example = "code block";
     markdownDiv = hostElement.firstElementChild!;
     expect(markdownDiv).toHaveTextContent('Updated content');
     expect(markdownDiv.querySelector('strong')).toBeInTheDocument();
+  });
+
+  it('should render LaTeX inline math expressions with provided renderer', async () => {
+    const latexRenderer = vi.fn().mockReturnValue('<span class="katex">E=mc^2</span>');
+
+    latexRendererFn.set(latexRenderer);
+    text.set('The formula is $E = mc^2$ in physics.');
+    await fixture.whenStable();
+
+    expect(latexRenderer).toHaveBeenCalledWith('E = mc^2', false);
+
+    const markdownDiv = hostElement.firstElementChild!;
+    expect(markdownDiv.innerHTML).toContain('<span class="katex">E=mc^2</span>');
+  });
+
+  it('should render LaTeX display math expressions with provided renderer', async () => {
+    const latexRenderer = vi.fn().mockReturnValue('<span class="katex-display">integral</span>');
+
+    latexRendererFn.set(latexRenderer);
+    text.set('$$\\int_{-\\infty}^{\\infty} e^{-x^2} dx$$');
+    await fixture.whenStable();
+
+    expect(latexRenderer).toHaveBeenCalledWith('\\int_{-\\infty}^{\\infty} e^{-x^2} dx', true);
+
+    const markdownDiv = hostElement.firstElementChild!;
+    expect(markdownDiv.innerHTML).toContain('<div class="latex-display-wrapper">');
+    expect(markdownDiv.innerHTML).toContain('<span class="katex-display">integral</span>');
+  });
+
+  it('should not render LaTeX when no renderer is provided', async () => {
+    text.set('The formula is $E = mc^2$ in physics.');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    expect(markdownDiv.textContent).toContain('$E = mc^2$');
+  });
+
+  it('should handle multiple inline LaTeX expressions', async () => {
+    const latexRenderer = vi
+      .fn()
+      .mockImplementation((latex: string) => `<span class="katex">${latex}</span>`);
+
+    latexRendererFn.set(latexRenderer);
+    text.set('First $x^2$ and second $y^3$ formulas.');
+    await fixture.whenStable();
+
+    expect(latexRenderer).toHaveBeenCalledWith('x^2', false);
+    expect(latexRenderer).toHaveBeenCalledWith('y^3', false);
+
+    const markdownDiv = hostElement.firstElementChild!;
+    expect(markdownDiv.innerHTML).toContain('<span class="katex">x^2</span>');
+    expect(markdownDiv.innerHTML).toContain('<span class="katex">y^3</span>');
+  });
+
+  it('should not treat $$ as inline math', async () => {
+    const latexRenderer = vi.fn().mockReturnValue('<span>rendered</span>');
+
+    latexRendererFn.set(latexRenderer);
+    text.set('$$x^2$$');
+    await fixture.whenStable();
+
+    // Should be called with displayMode true, not as inline
+    expect(latexRenderer).toHaveBeenCalledWith('x^2', true);
+    expect(latexRenderer).not.toHaveBeenCalledWith('x^2', false);
+  });
+
+  it('should handle LaTeX rendering errors gracefully', async () => {
+    const latexRenderer = vi.fn().mockImplementation(() => {
+      throw new Error('Parse error');
+    });
+
+    latexRendererFn.set(latexRenderer);
+    text.set('Formula: $E = mc^2$');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    // Should fall back to original text
+    expect(markdownDiv.textContent).toContain('$E = mc^2$');
+  });
+
+  it('should render LaTeX inside markdown with other formatting', async () => {
+    const latexRenderer = vi.fn().mockReturnValue('<span class="katex">formula</span>');
+
+    latexRendererFn.set(latexRenderer);
+    text.set('This is **bold** with $x^2$ formula and `code`.');
+    await fixture.whenStable();
+
+    const markdownDiv = hostElement.firstElementChild!;
+    expect(markdownDiv.innerHTML).toContain('<strong>bold</strong>');
+    expect(markdownDiv.innerHTML).toContain('<span class="katex">formula</span>');
+    expect(markdownDiv.innerHTML).toContain('<code>code</code>');
+  });
+
+  it('should not treat dollar signs in code blocks as LaTeX', async () => {
+    const latexRenderer = vi.fn().mockReturnValue('<span class="katex">formula</span>');
+
+    const markdownText = 'Formula: $x^2$\n\n```javascript\nconst price = "$100";\n```';
+    latexRendererFn.set(latexRenderer);
+    text.set(markdownText);
+    await fixture.whenStable();
+
+    // LaTeX renderer should only be called for the inline math, not the code block
+    expect(latexRenderer).toHaveBeenCalledTimes(1);
+    expect(latexRenderer).toHaveBeenCalledWith('x^2', false);
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const codeElement = markdownDiv.querySelector('code')!;
+    expect(codeElement.textContent).toContain('$100');
+    expect(markdownDiv.innerHTML).toContain('<span class="katex">formula</span>');
+  });
+
+  it('should handle LaTeX and code blocks together in complex markdown', async () => {
+    const latexRenderer = vi
+      .fn()
+      .mockImplementation((latex: string, displayMode: boolean) =>
+        displayMode
+          ? '<div class="katex-display">display</div>'
+          : '<span class="katex">inline</span>'
+      );
+
+    const markdownText = `Inline: $a^2$
+
+$$\\sum_{i=1}^{n} i$$
+
+\`\`\`python
+cost = 50  # $50 per item
+print(f"Total: \${cost}")
+\`\`\`
+
+After: $b^2$`;
+
+    latexRendererFn.set(latexRenderer);
+    text.set(markdownText);
+    await fixture.whenStable();
+
+    // Should be called twice for inline math and once for display math
+    expect(latexRenderer).toHaveBeenCalledTimes(3);
+    expect(latexRenderer).toHaveBeenCalledWith('a^2', false);
+    expect(latexRenderer).toHaveBeenCalledWith('\\sum_{i=1}^{n} i', true);
+    expect(latexRenderer).toHaveBeenCalledWith('b^2', false);
+
+    const markdownDiv = hostElement.firstElementChild!;
+    const codeElement = markdownDiv.querySelector('code')!;
+    // Dollar signs in code should be preserved
+    expect(codeElement.textContent).toContain('$50');
+    expect(codeElement.textContent).toContain('${cost}');
+    // LaTeX should be rendered
+    expect(markdownDiv.innerHTML).toContain('<span class="katex">inline</span>');
+    expect(markdownDiv.innerHTML).toContain('<div class="latex-display-wrapper">');
+    expect(markdownDiv.innerHTML).toContain('<div class="katex-display">display</div>');
+  });
+
+  it('should not treat escaped dollar signs as LaTeX delimiters', async () => {
+    const latexRenderer = vi.fn().mockReturnValue('<span class="katex">formula</span>');
+
+    latexRendererFn.set(latexRenderer);
+    text.set('The price is \\$100 and formula is $x^2$.');
+    await fixture.whenStable();
+
+    // Should only be called for the actual LaTeX, not the escaped dollar
+    expect(latexRenderer).toHaveBeenCalledTimes(1);
+    expect(latexRenderer).toHaveBeenCalledWith('x^2', false);
+
+    const markdownDiv = hostElement.firstElementChild!;
+    expect(markdownDiv.textContent).toContain('$100');
+    expect(markdownDiv.innerHTML).toContain('<span class="katex">formula</span>');
+  });
+
+  it('should handle multiple escaped dollar signs', async () => {
+    const latexRenderer = vi.fn().mockReturnValue('<span class="katex">formula</span>');
+
+    latexRendererFn.set(latexRenderer);
+    text.set('Prices: \\$50, \\$100, \\$150 with math $a + b$.');
+    await fixture.whenStable();
+
+    expect(latexRenderer).toHaveBeenCalledTimes(1);
+    expect(latexRenderer).toHaveBeenCalledWith('a + b', false);
+
+    const markdownDiv = hostElement.firstElementChild!;
+    expect(markdownDiv.textContent).toContain('$50');
+    expect(markdownDiv.textContent).toContain('$100');
+    expect(markdownDiv.textContent).toContain('$150');
+  });
+
+  it('should not treat escaped $$ as display LaTeX', async () => {
+    const latexRenderer = vi.fn().mockReturnValue('<span>rendered</span>');
+
+    latexRendererFn.set(latexRenderer);
+    text.set('Not math: \\$\\$ but this is: $$x^2$$');
+    await fixture.whenStable();
+
+    // Should only be called for the actual display math
+    expect(latexRenderer).toHaveBeenCalledTimes(1);
+    expect(latexRenderer).toHaveBeenCalledWith('x^2', true);
+
+    const markdownDiv = hostElement.firstElementChild!;
+    expect(markdownDiv.textContent).toContain('$$');
   });
 });

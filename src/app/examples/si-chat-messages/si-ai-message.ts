@@ -10,6 +10,7 @@ import { MenuItemAction } from '@siemens/element-ng/menu';
 import { injectSiTranslateService } from '@siemens/element-translate-ng/translate';
 import { LOG_EVENT } from '@siemens/live-preview';
 import hljs from 'highlight.js';
+import katex from 'katex';
 
 @Component({
   selector: 'app-sample',
@@ -40,6 +41,22 @@ export class SampleComponent {
         }
       }
       return undefined;
+    },
+    // Optional: LaTeX rendering with KaTeX
+    // This function returns rendered HTML for LaTeX math expressions.
+    // The returned HTML is sanitized before insertion.
+    // Make sure to include KaTeX styles in your application.
+    // Add to styles in angular.json: "node_modules/katex/dist/katex.min.css"
+    latexRenderer: (latex: string, displayMode: boolean): string | undefined => {
+      try {
+        return katex.renderToString(latex, {
+          displayMode,
+          throwOnError: false,
+          output: 'html'
+        });
+      } catch {
+        return undefined;
+      }
     }
   });
 
