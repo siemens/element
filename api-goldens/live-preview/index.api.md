@@ -68,27 +68,13 @@ export class SiDummyComponent {
 // @public (undocumented)
 export class SiExampleOverviewComponent implements OnInit, OnDestroy {
     // (undocumented)
-    protected activeExampleRoute: Observable<string>;
-    // (undocumented)
-    protected baseUrl: string;
-    // (undocumented)
-    protected isCollapsed: boolean;
-    // (undocumented)
     ngOnDestroy(): void;
     // (undocumented)
     ngOnInit(): void;
     // (undocumented)
     resetSearchBar(): void;
     // (undocumented)
-    protected searchControl: UntypedFormControl;
-    // (undocumented)
-    protected showContent: boolean;
-    // (undocumented)
-    protected ticketBaseUrl: string;
-    // (undocumented)
     toggleCollapse(): void;
-    // (undocumented)
-    protected tree: TreeItem[];
     // (undocumented)
     static ɵcmp: i0.ɵɵComponentDeclaration<SiExampleOverviewComponent, "si-example-overview", never, {}, {}, never, never, true, never>;
     // (undocumented)
@@ -306,8 +292,6 @@ export interface SiLivePreviewConfig {
 // @public (undocumented)
 export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
     // (undocumented)
-    protected availableDevices: Device[];
-    // (undocumented)
     baseUrl: string;
     // (undocumented)
     deviceChanged(): void;
@@ -322,13 +306,7 @@ export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
     // (undocumented)
     isFullscreen: boolean;
     // (undocumented)
-    protected isMobile: boolean;
-    // (undocumented)
     isRTL?: boolean;
-    // (undocumented)
-    protected landscape: boolean;
-    // (undocumented)
-    protected landscapeEnabled: boolean | undefined;
     // (undocumented)
     loadJs?: boolean;
     // (undocumented)
@@ -346,31 +324,15 @@ export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
     // (undocumented)
     readonly logRenderingError: i0.OutputEmitterRef<any>;
     // (undocumented)
-    protected mode: string;
-    // (undocumented)
     ngOnChanges(changes: SimpleChanges): void;
     // (undocumented)
     ngOnInit(): void;
     // (undocumented)
     openQrMenu(): void;
     // (undocumented)
-    protected plainUrl: string;
-    // (undocumented)
-    protected plainUrlShort: string;
-    // (undocumented)
     readonly previewIframe: i0.Signal<ElementRef<any> | undefined>;
     // (undocumented)
     reactVueTemplate?: string;
-    // (undocumented)
-    protected selectedDevice?: Device;
-    // (undocumented)
-    protected showNotch: boolean;
-    // (undocumented)
-    protected showQrMenu: boolean;
-    // (undocumented)
-    protected supportsLandscape: boolean;
-    // (undocumented)
-    protected switcherEnabled: boolean | undefined;
     // (undocumented)
     template: string;
     // (undocumented)

@@ -17,14 +17,8 @@ export interface IsoLanguageValue {
 
 // @public (undocumented)
 export class SiLanguageSwitcherComponent {
-    // (undocumented)
-    protected readonly availableIsoLanguages: i0.Signal<IsoLanguageValue[]>;
     readonly availableLanguages: i0.InputSignal<(string | IsoLanguageValue)[] | null>;
     readonly languageSwitcherLabel: i0.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected switchLanguage(target: EventTarget | null): void;
-    // (undocumented)
-    protected readonly translate: _siemens_element_translate_ng_translate.SiTranslateService;
     readonly translationKey: i0.InputSignal<string>;
     // (undocumented)
     static ɵcmp: i0.ɵɵComponentDeclaration<SiLanguageSwitcherComponent, "si-language-switcher", never, { "translationKey": { "alias": "translationKey"; "required": false; "isSignal": true; }; "languageSwitcherLabel": { "alias": "languageSwitcherLabel"; "required": false; "isSignal": true; }; "availableLanguages": { "alias": "availableLanguages"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;

@@ -30,10 +30,6 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate';
 export class SiDashboardCardComponent extends SiCardComponent implements OnDestroy {
     constructor();
     // (undocumented)
-    protected readonly actionBarTitleComputed: _angular_core.Signal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected readonly actionBarViewTypeComputed: _angular_core.Signal<_siemens_element_ng_content_action_bar.ViewType>;
-    // (undocumented)
     readonly displayContentActionBar: _angular_core.Signal<boolean>;
     readonly enableExpandInteraction: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
@@ -44,8 +40,6 @@ export class SiDashboardCardComponent extends SiCardComponent implements OnDestr
     readonly isExpanded: _angular_core.WritableSignal<boolean>;
     // (undocumented)
     ngOnDestroy(): void;
-    // (undocumented)
-    protected readonly primaryActionsComputed: _angular_core.Signal<(MenuItem | ContentActionBarMainItem)[]>;
     restore(): void;
     readonly restoreText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly showMenubar: _angular_core.InputSignalWithTransform<boolean, unknown>;
@@ -58,14 +52,10 @@ export class SiDashboardCardComponent extends SiCardComponent implements OnDestr
 // @public (undocumented)
 export class SiDashboardComponent implements OnChanges, AfterViewInit {
     constructor();
-    // (undocumented)
-    protected dashboardFrameEndPadding: number | null;
     readonly enableExpandInteractions: _angular_core.InputSignalWithTransform<boolean, unknown>;
     expand(card: SiDashboardCardComponent): void;
     readonly heading: _angular_core.InputSignal<string | undefined>;
     readonly hideMenubar: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly hideMenubarComputed: _angular_core.Signal<boolean>;
     get isExpanded(): boolean;
     // (undocumented)
     ngAfterViewInit(): void;
@@ -102,10 +92,6 @@ export class SiDashboardService {
 
 // @public
 export class SiLinkWidgetComponent extends SiWidgetBaseComponent<Link[]> {
-    // (undocumented)
-    protected readonly ghosts: _angular_core.Signal<any[]>;
-    // (undocumented)
-    protected readonly icons: Record<"elementRight2", string>;
     readonly numberOfLinks: _angular_core.InputSignal<number>;
     readonly showLinkIcons: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
@@ -117,15 +103,11 @@ export class SiLinkWidgetComponent extends SiWidgetBaseComponent<Link[]> {
 // @public
 export class SiListWidgetBodyComponent extends SiWidgetBaseComponent<SiListWidgetItem[]> implements OnChanges {
     readonly compareFn: _angular_core.InputSignal<(a: SiListWidgetItem, b: SiListWidgetItem) => number | undefined>;
-    protected readonly filteredListWidgetItems: _angular_core.Signal<SiListWidgetItem[] | undefined>;
     readonly filterFn: _angular_core.InputSignal<(item: SiListWidgetItem, searchTerm: string) => boolean | undefined>;
-    protected readonly ghosts: _angular_core.Signal<any[]>;
     readonly link: _angular_core.InputSignal<Link | undefined>;
     readonly numberOfLinks: _angular_core.InputSignal<number>;
     readonly search: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly searchPlaceholderLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected readonly searchText: _angular_core.ModelSignal<string>;
     readonly sort: _angular_core.InputSignal<SortOrder | undefined>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiListWidgetBodyComponent, "si-list-widget-body", never, { "link": { "alias": "link"; "required": false; "isSignal": true; }; "searchPlaceholderLabel": { "alias": "searchPlaceholderLabel"; "required": false; "isSignal": true; }; "sort": { "alias": "sort"; "required": false; "isSignal": true; }; "search": { "alias": "search"; "required": false; "isSignal": true; }; "compareFn": { "alias": "compareFn"; "required": false; "isSignal": true; }; "filterFn": { "alias": "filterFn"; "required": false; "isSignal": true; }; "numberOfLinks": { "alias": "numberOfLinks"; "required": false; "isSignal": true; }; "searchText": { "alias": "searchText"; "required": false; "isSignal": true; }; }, { "searchText": "searchTextChange"; }, never, ["[empty-state]"], true, never>;
@@ -135,20 +117,15 @@ export class SiListWidgetBodyComponent extends SiWidgetBaseComponent<SiListWidge
 
 // @public
 export class SiListWidgetComponent extends SiWidgetBaseComponent<SiListWidgetItem[]> implements OnChanges {
-    // (undocumented)
-    protected readonly accentClass: _angular_core.Signal<string>;
     readonly accentLine: _angular_core.InputSignal<AccentLineType | undefined>;
     readonly compareFn: _angular_core.InputSignal<(a: SiListWidgetItem, b: SiListWidgetItem) => number | undefined>;
     readonly filterFn: _angular_core.InputSignal<(item: SiListWidgetItem, searchTerm: string) => boolean | undefined>;
     readonly heading: _angular_core.InputSignal<TranslatableString | undefined>;
-    // (undocumented)
-    protected readonly icons: Record<"elementRight2" | "elementSortDown" | "elementSortUp", string>;
     readonly link: _angular_core.InputSignal<Link | undefined>;
     readonly numberOfLinks: _angular_core.InputSignal<number>;
     readonly search: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly searchPlaceholderLabel: _angular_core.InputSignal<TranslatableString>;
     readonly sort: _angular_core.ModelSignal<SortOrder | undefined>;
-    protected readonly sortAction: _angular_core.Signal<ContentActionBarMainItem[]>;
     // (undocumented)
     readonly sortAscendingLabel: _angular_core.InputSignal<TranslatableString>;
     // (undocumented)
@@ -173,16 +150,6 @@ export interface SiListWidgetItem {
 // @public
 export class SiListWidgetItemComponent extends SiWidgetBaseComponent<SiListWidgetItem> {
     // (undocumented)
-    protected readonly badgeColor: _angular_core.Signal<string>;
-    // (undocumented)
-    protected readonly icons: Record<"elementRight2", string>;
-    // (undocumented)
-    protected readonly isLink: _angular_core.Signal<boolean>;
-    // (undocumented)
-    protected readonly label: _angular_core.Signal<string>;
-    // (undocumented)
-    protected readonly link: _angular_core.Signal<Link>;
-    // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiListWidgetItemComponent, "si-list-widget-item", never, {}, {}, never, never, true, never>;
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiListWidgetItemComponent, never>;
@@ -190,7 +157,6 @@ export class SiListWidgetItemComponent extends SiWidgetBaseComponent<SiListWidge
 
 // @public (undocumented)
 export class SiTimelineWidgetBodyComponent extends SiWidgetBaseComponent<SiTimelineWidgetItem[]> {
-    protected readonly ghosts: _angular_core.Signal<any[]>;
     readonly numberOfItems: _angular_core.InputSignal<number>;
     readonly showDescription: _angular_core.InputSignal<boolean>;
     // (undocumented)
@@ -201,12 +167,8 @@ export class SiTimelineWidgetBodyComponent extends SiWidgetBaseComponent<SiTimel
 
 // @public (undocumented)
 export class SiTimelineWidgetComponent extends SiWidgetBaseComponent<SiTimelineWidgetItem[]> implements OnChanges {
-    // (undocumented)
-    protected readonly accentClass: _angular_core.Signal<string>;
     readonly accentLine: _angular_core.InputSignal<AccentLineType | undefined>;
     readonly heading: _angular_core.InputSignal<TranslatableString | undefined>;
-    // (undocumented)
-    protected readonly icons: Record<"elementRight2", string>;
     readonly link: _angular_core.InputSignal<Link | undefined>;
     readonly numberOfItems: _angular_core.InputSignal<number>;
     readonly primaryActions: _angular_core.InputSignal<(MenuItem | ContentActionBarMainItem)[]>;
@@ -233,8 +195,6 @@ export interface SiTimelineWidgetItem {
 
 // @public
 export class SiTimelineWidgetItemComponent extends SiWidgetBaseComponent<SiTimelineWidgetItem> implements OnInit, OnChanges {
-    // (undocumented)
-    protected readonly activatedRoute: ActivatedRoute | null;
     readonly ariaLabelDropdown: TranslatableString;
     readonly showDescription: _angular_core.InputSignal<boolean>;
     // (undocumented)
@@ -257,8 +217,6 @@ export class SiValueWidgetBodyComponent extends SiWidgetBaseComponent<Translatab
 
 // @public
 export class SiValueWidgetComponent {
-    // (undocumented)
-    protected readonly accentClass: _angular_core.Signal<string>;
     readonly accentLine: _angular_core.InputSignal<AccentLineType | undefined>;
     readonly description: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly disableAutoLoadingIndicator: _angular_core.InputSignalWithTransform<boolean, unknown>;

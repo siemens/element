@@ -15,17 +15,6 @@ export interface MicrochartDonutSeries {
 
 // @public (undocumented)
 export class SiMicrochartDonutComponent {
-    // (undocumented)
-    protected readonly arcThickness: _angular_core.Signal<number>;
-    // (undocumented)
-    protected readonly backgroundPath: _angular_core.Signal<string>;
-    // (undocumented)
-    protected readonly dim: _angular_core.Signal<{
-        width: number;
-        height: number;
-    }>;
-    // (undocumented)
-    protected readonly internalSeries: _angular_core.Signal<InternalSeries[]>;
     readonly radius: _angular_core.InputSignalWithTransform<number, unknown>;
     readonly series: _angular_core.InputSignal<MicrochartDonutSeries[]>;
     // (undocumented)

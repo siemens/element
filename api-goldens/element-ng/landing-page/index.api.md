@@ -56,40 +56,20 @@ export class SiChangePasswordComponent implements OnInit, OnDestroy {
     readonly backButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly changeButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly changePasswordAlert: _angular_core.InputSignal<AlertConfig | undefined>;
-    // (undocumented)
-    protected changePasswordForm: FormGroup<{
-        newPassword: FormControl<string | null>;
-        confirmPassword: FormControl<string | null>;
-    }>;
     readonly changePasswordRequested: _angular_core.OutputEmitterRef<ChangePassword>;
-    // (undocumented)
-    protected confirmPasswordId: string;
     readonly confirmPasswordLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly disableChange: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    protected handleBackClick(): void;
-    // (undocumented)
-    protected handlePasswordStrengthChanged(data: number | void): void;
-    // (undocumented)
-    protected handleValueChanges(): void;
     readonly heading: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    protected landingPage: SiLandingPageComponent | null;
-    // (undocumented)
-    protected newPasswordId: string;
     readonly newPasswordLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     // (undocumented)
     ngOnDestroy(): void;
     // (undocumented)
     ngOnInit(): void;
     readonly passwordPolicyContent: _angular_core.InputSignal<string | TemplateRef<unknown>>;
-    // (undocumented)
-    protected passwordPolicyContentTemplate: TemplateRef<any> | null;
     readonly passwordPolicyTitle: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly passwordStrength: _angular_core.InputSignal<PasswordPolicy>;
     readonly passwordStrengthChanged: _angular_core.OutputEmitterRef<number | void>;
     readonly subheading: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected submit(): void;
     readonly valueChanged: _angular_core.OutputEmitterRef<ChangePassword>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChangePasswordComponent, "si-change-password", never, { "heading": { "alias": "heading"; "required": false; "isSignal": true; }; "subheading": { "alias": "subheading"; "required": false; "isSignal": true; }; "newPasswordLabel": { "alias": "newPasswordLabel"; "required": false; "isSignal": true; }; "confirmPasswordLabel": { "alias": "confirmPasswordLabel"; "required": false; "isSignal": true; }; "changeButtonLabel": { "alias": "changeButtonLabel"; "required": false; "isSignal": true; }; "backButtonLabel": { "alias": "backButtonLabel"; "required": false; "isSignal": true; }; "disableChange": { "alias": "disableChange"; "required": false; "isSignal": true; }; "passwordPolicyTitle": { "alias": "passwordPolicyTitle"; "required": false; "isSignal": true; }; "passwordPolicyContent": { "alias": "passwordPolicyContent"; "required": true; "isSignal": true; }; "passwordStrength": { "alias": "passwordStrength"; "required": true; "isSignal": true; }; "changePasswordAlert": { "alias": "changePasswordAlert"; "required": false; "isSignal": true; }; }, { "valueChanged": "valueChanged"; "changePasswordRequested": "changePasswordRequested"; "passwordStrengthChanged": "passwordStrengthChanged"; "back": "back"; }, never, never, true, never>;
@@ -104,12 +84,7 @@ export class SiExplicitLegalAcknowledgeComponent implements OnInit, OnDestroy {
     readonly back: _angular_core.OutputEmitterRef<void>;
     readonly backButtonLabel: _angular_core.InputSignal<TranslatableString>;
     readonly disableAcceptance: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    protected handleAccept(): void;
-    // (undocumented)
-    protected handleBack(): void;
     readonly heading: _angular_core.InputSignal<TranslatableString>;
-    protected landingPage: SiLandingPageComponent | null;
     // (undocumented)
     ngOnDestroy(): void;
     // (undocumented)
@@ -160,39 +135,18 @@ export class SiLoginBasicComponent implements OnInit {
     readonly backButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly disableLogin: _angular_core.InputSignal<boolean>;
     readonly forgotPasswordLink: _angular_core.InputSignal<Link | undefined>;
-    // (undocumented)
-    protected goBack(): void;
-    // (undocumented)
-    protected handleValueChanges(): void;
     readonly loading: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    protected readonly loadingNext: _angular_core.WritableSignal<boolean>;
     readonly login: _angular_core.OutputEmitterRef<UsernamePassword>;
     readonly loginButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected loginCredentials: FormGroup<{
-        username: FormControl<string | null>;
-        password: FormControl<string | null>;
-    }>;
     readonly nextButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     // (undocumented)
     ngOnInit(): void;
-    // (undocumented)
-    protected passwordId: string;
     readonly passwordLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly registerNowIntroText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly registerNowLink: _angular_core.InputSignal<Link | undefined>;
-    // (undocumented)
-    protected readonly secondStepVisible: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
-    protected submit(): void;
     readonly twoStep: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected usernameId: string;
     readonly usernameLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly usernameValidation: _angular_core.OutputEmitterRef<UsernameValidationPayload>;
-    // (undocumented)
-    protected validateUsername(): void;
     readonly valueChanged: _angular_core.OutputEmitterRef<UsernamePassword>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiLoginBasicComponent, "si-login-basic", never, { "usernameLabel": { "alias": "usernameLabel"; "required": false; "isSignal": true; }; "passwordLabel": { "alias": "passwordLabel"; "required": false; "isSignal": true; }; "forgotPasswordLink": { "alias": "forgotPasswordLink"; "required": false; "isSignal": true; }; "registerNowIntroText": { "alias": "registerNowIntroText"; "required": false; "isSignal": true; }; "registerNowLink": { "alias": "registerNowLink"; "required": false; "isSignal": true; }; "loginButtonLabel": { "alias": "loginButtonLabel"; "required": false; "isSignal": true; }; "disableLogin": { "alias": "disableLogin"; "required": false; "isSignal": true; }; "twoStep": { "alias": "twoStep"; "required": false; "isSignal": true; }; "loading": { "alias": "loading"; "required": false; "isSignal": true; }; "backButtonLabel": { "alias": "backButtonLabel"; "required": false; "isSignal": true; }; "nextButtonLabel": { "alias": "nextButtonLabel"; "required": false; "isSignal": true; }; }, { "usernameValidation": "usernameValidation"; "valueChanged": "valueChanged"; "login": "login"; }, never, never, true, never>;
@@ -204,8 +158,6 @@ export class SiLoginBasicComponent implements OnInit {
 export class SiLoginSingleSignOnComponent {
     readonly disableSso: _angular_core.InputSignal<boolean>;
     readonly ssoButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected ssoClick(): void;
     readonly ssoEvent: _angular_core.OutputEmitterRef<void>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiLoginSingleSignOnComponent, "si-login-single-sign-on", never, { "ssoButtonLabel": { "alias": "ssoButtonLabel"; "required": false; "isSignal": true; }; "disableSso": { "alias": "disableSso"; "required": false; "isSignal": true; }; }, { "ssoEvent": "ssoEvent"; }, never, never, true, never>;

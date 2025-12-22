@@ -16,20 +16,10 @@ import { Type } from '@angular/core';
 
 // @public (undocumented)
 export class SiTooltipDirective implements OnDestroy {
-    // (undocumented)
-    protected describedBy: string;
-    // (undocumented)
-    protected focusIn(): void;
-    // (undocumented)
-    protected hide(): void;
     readonly isDisabled: i0.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected mouseOut(): void;
     // (undocumented)
     ngOnDestroy(): void;
     readonly placement: i0.InputSignal<"auto" | "top" | "start" | "end" | "bottom">;
-    // (undocumented)
-    protected show(): void;
     readonly siTooltip: i0.InputSignal<TemplateRef<any> | TranslatableString>;
     readonly tooltipContext: i0.InputSignal<unknown>;
     readonly triggers: i0.InputSignal<"" | "focus" | undefined>;

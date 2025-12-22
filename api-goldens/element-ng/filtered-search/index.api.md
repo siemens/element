@@ -65,47 +65,18 @@ export interface SearchCriteria {
 // @public (undocumented)
 export class SiFilteredSearchComponent implements OnInit, OnChanges {
     constructor();
-    // (undocumented)
-    protected readonly allowFreeTextCache: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
-    protected autoEditCriteria: boolean;
     readonly clearButtonLabel: _angular_core.InputSignal<TranslatableString>;
     readonly colorVariant: _angular_core.InputSignal<BackgroundColorVariant>;
-    // (undocumented)
-    protected createFreeTextPill(query: string): void;
     readonly criteria: _angular_core.InputSignal<Criterion[] | CriterionDefinition[]>;
-    // (undocumented)
-    protected dataSource: Observable<InternalCriterionDefinition[]>;
     deleteAllCriteria(event?: MouseEvent): void;
-    // (undocumented)
-    protected deleteCriterion(criterion: CriterionValue, index: number, event: {
-        triggerSearch: boolean;
-    } | void): void;
     readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly disableFreeTextSearch: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly disableSelectionByColonAndSemicolon: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly doSearch: _angular_core.OutputEmitterRef<SearchCriteria>;
     readonly doSearchOnInputChange: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly exclusiveCriteria: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected focusNext(index: number, event: {
-        freeText: string;
-    } | void): void;
-    // (undocumented)
-    protected freeTextBackspace(event: Event): void;
-    // (undocumented)
-    protected freeTextBlur(): void;
     readonly freeTextCriterion: _angular_core.InputSignal<CriterionDefinition | undefined>;
-    // (undocumented)
-    protected freeTextFocus(): void;
-    // (undocumented)
-    protected freeTextInput(event: Event): void;
-    // (undocumented)
-    protected readonly icons: Record<"elementCancel" | "elementSearch", string>;
     readonly interceptDisplayedCriteria: _angular_core.OutputEmitterRef<DisplayedCriteriaEventArgs>;
-    protected internalCriterionDefinitions: InternalCriterionDefinition[];
-    // (undocumented)
-    protected readonly isStrictOrOnlySelectValue: _angular_core.Signal<boolean>;
     readonly itemCountText: _angular_core.InputSignal<TranslatableString>;
     readonly lazyCriterionProvider: _angular_core.InputSignal<((typed: string, searchCriteria?: SearchCriteria) => Observable<Criterion[] | CriterionDefinition[]>) | undefined>;
     readonly lazyLoadingDebounceTime: _angular_core.InputSignal<number>;
@@ -125,28 +96,10 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     readonly searchDebounceTime: _angular_core.InputSignal<number>;
     readonly searchForFreeTextLabel: _angular_core.InputSignal<TranslatableString>;
     readonly searchLabel: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
-    protected searchValue: string;
     readonly strictCriterion: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly strictValue: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected submit(): void;
     readonly submitButtonLabel: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
-    protected typeaheadOnSelectCriterion(event: TypeaheadOption): void;
     readonly typeaheadOptionsLimit: _angular_core.InputSignal<number>;
-    // (undocumented)
-    protected validateCriterionLabel(criterion: InternalCriterionDefinition): boolean;
-    // (undocumented)
-    protected valueChange(value: CriterionValue, criterion: {
-        config: InternalCriterionDefinition;
-        value: CriterionValue;
-    }): void;
-    // (undocumented)
-    protected values: {
-        config: InternalCriterionDefinition;
-        value: CriterionValue;
-    }[];
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiFilteredSearchComponent, "si-filtered-search", never, { "doSearchOnInputChange": { "alias": "doSearchOnInputChange"; "required": false; "isSignal": true; }; "lazyCriterionProvider": { "alias": "lazyCriterionProvider"; "required": false; "isSignal": true; }; "lazyValueProvider": { "alias": "lazyValueProvider"; "required": false; "isSignal": true; }; "disabled": { "alias": "disabled"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "strictCriterion": { "alias": "strictCriterion"; "required": false; "isSignal": true; }; "strictValue": { "alias": "strictValue"; "required": false; "isSignal": true; }; "onlySelectValue": { "alias": "onlySelectValue"; "required": false; "isSignal": true; }; "lazyLoadingDebounceTime": { "alias": "lazyLoadingDebounceTime"; "required": false; "isSignal": true; }; "searchDebounceTime": { "alias": "searchDebounceTime"; "required": false; "isSignal": true; }; "placeholder": { "alias": "placeholder"; "required": false; "isSignal": true; }; "optionsInScrollableView": { "alias": "optionsInScrollableView"; "required": false; "isSignal": true; }; "searchCriteria": { "alias": "searchCriteria"; "required": false; "isSignal": true; }; "criteria": { "alias": "criteria"; "required": false; "isSignal": true; }; "exclusiveCriteria": { "alias": "exclusiveCriteria"; "required": false; "isSignal": true; }; "maxCriteria": { "alias": "maxCriteria"; "required": false; "isSignal": true; }; "maxCriteriaOptions": { "alias": "maxCriteriaOptions"; "required": false; "isSignal": true; }; "searchLabel": { "alias": "searchLabel"; "required": false; "isSignal": true; }; "clearButtonLabel": { "alias": "clearButtonLabel"; "required": false; "isSignal": true; }; "submitButtonLabel": { "alias": "submitButtonLabel"; "required": false; "isSignal": true; }; "itemCountText": { "alias": "itemCountText"; "required": false; "isSignal": true; }; "colorVariant": { "alias": "colorVariant"; "required": false; "isSignal": true; }; "disableFreeTextSearch": { "alias": "disableFreeTextSearch"; "required": false; "isSignal": true; }; "typeaheadOptionsLimit": { "alias": "typeaheadOptionsLimit"; "required": false; "isSignal": true; }; "disableSelectionByColonAndSemicolon": { "alias": "disableSelectionByColonAndSemicolon"; "required": false; "isSignal": true; }; "freeTextCriterion": { "alias": "freeTextCriterion"; "required": false; "isSignal": true; }; "searchForFreeTextLabel": { "alias": "searchForFreeTextLabel"; "required": false; "isSignal": true; }; }, { "doSearch": "doSearch"; "searchCriteria": "searchCriteriaChange"; "interceptDisplayedCriteria": "interceptDisplayedCriteria"; }, never, never, true, never>;
     // (undocumented)

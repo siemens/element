@@ -13,14 +13,8 @@ import { ViewType } from '@siemens/element-ng/content-action-bar';
 
 // @public
 export class SiActionCardComponent extends SiCardBaseDirective {
-    // (undocumented)
-    protected contentId: string;
-    // (undocumented)
-    protected headingId: string;
     readonly selectable: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly selected: _angular_core.ModelSignal<boolean>;
-    // (undocumented)
-    protected subHeadingId: string;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiActionCardComponent, "button[si-action-card]", never, { "selectable": { "alias": "selectable"; "required": false; "isSignal": true; }; "selected": { "alias": "selected"; "required": false; "isSignal": true; }; }, { "selected": "selectedChange"; }, never, ["[headerIcon]", "[body]", "[footer]"], true, never>;
     // (undocumented)

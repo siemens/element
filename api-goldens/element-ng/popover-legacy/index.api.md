@@ -12,8 +12,6 @@ import { TemplateRef } from '@angular/core';
 // @public @deprecated (undocumented)
 export class SiPopoverLegacyDirective implements OnInit, OnDestroy {
     readonly containerClass: _angular_core.InputSignal<string>;
-    // (undocumented)
-    protected focusOut(): void;
     readonly hidden: _angular_core.OutputEmitterRef<void>;
     hide(): void;
     readonly icon: _angular_core.InputSignal<string | undefined>;
@@ -22,8 +20,6 @@ export class SiPopoverLegacyDirective implements OnInit, OnDestroy {
     ngOnDestroy(): void;
     // (undocumented)
     ngOnInit(): void;
-    // (undocumented)
-    protected onTrigger(trigger: string): void;
     readonly outsideClick: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly placement: _angular_core.InputSignal<"auto" | "start" | "end" | "top" | "bottom">;
     // (undocumented)

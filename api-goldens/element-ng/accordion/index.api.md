@@ -48,31 +48,13 @@ export class SiCollapsiblePanelComponent {
     readonly colorVariant: _angular_core.InputSignal<BackgroundColorVariant | undefined>;
     readonly contentBgClasses: _angular_core.InputSignal<string>;
     readonly contentCssClasses: _angular_core.InputSignal<string>;
-    // (undocumented)
-    protected controlId: string;
     readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected doToggle(event?: Event): void;
-    // (undocumented)
-    protected readonly fullHeight: _angular_core.Signal<boolean>;
-    // (undocumented)
-    protected readonly hcollapsed: _angular_core.Signal<boolean>;
     readonly headerCssClasses: _angular_core.InputSignal<string>;
-    // (undocumented)
-    protected headerId: string;
     readonly heading: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly icon: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    protected readonly icons: Record<"elementDown2", string>;
-    // (undocumented)
-    protected isHCollapsible: boolean;
-    // (undocumented)
-    protected keydown(event: KeyboardEvent): void;
     openClose(open: boolean, enableAnimation?: boolean): void;
     readonly opened: _angular_core.ModelSignal<boolean>;
     readonly panelToggle: _angular_core.OutputEmitterRef<boolean>;
-    // (undocumented)
-    protected get showHide(): string;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiCollapsiblePanelComponent, "si-collapsible-panel", never, { "heading": { "alias": "heading"; "required": false; "isSignal": true; }; "headerCssClasses": { "alias": "headerCssClasses"; "required": false; "isSignal": true; }; "contentBgClasses": { "alias": "contentBgClasses"; "required": false; "isSignal": true; }; "contentCssClasses": { "alias": "contentCssClasses"; "required": false; "isSignal": true; }; "opened": { "alias": "opened"; "required": false; "isSignal": true; }; "icon": { "alias": "icon"; "required": false; "isSignal": true; }; "disabled": { "alias": "disabled"; "required": false; "isSignal": true; }; "colorVariant": { "alias": "colorVariant"; "required": false; "isSignal": true; }; "badge": { "alias": "badge"; "required": false; "isSignal": true; }; "badgeColor": { "alias": "badgeColor"; "required": false; "isSignal": true; }; }, { "opened": "openedChange"; "panelToggle": "panelToggle"; }, never, ["[si-panel-heading]", "*"], true, never>;
     // (undocumented)

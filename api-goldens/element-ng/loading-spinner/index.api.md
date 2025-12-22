@@ -26,8 +26,6 @@ export class SiLoadingButtonComponent {
     readonly ariaLabelledBy: _angular_core.InputSignal<string | undefined>;
     readonly buttonClass: _angular_core.InputSignal<string>;
     readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected handleClick(event: Event): void;
     readonly loading: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly type: _angular_core.InputSignal<"button" | "submit" | "reset">;
     // (undocumented)
@@ -51,8 +49,6 @@ export class SiLoadingService {
 export class SiLoadingSpinnerComponent {
     readonly ariaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     // (undocumented)
-    protected fadeAnimation: string;
-    // (undocumented)
     readonly isBlockingSpinner: _angular_core.InputSignal<boolean | null>;
     // (undocumented)
     readonly isSpinnerOverlay: _angular_core.InputSignal<boolean | null>;
@@ -73,8 +69,6 @@ export class SiLoadingSpinnerDirective implements OnInit, OnChanges, OnDestroy {
     // (undocumented)
     ngOnInit(): void;
     readonly siLoading: _angular_core.InputSignal<number | boolean>;
-    // (undocumented)
-    protected readonly spinner$: rxjs.Observable<boolean>;
     // (undocumented)
     static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiLoadingSpinnerDirective, "[siLoading]", never, { "siLoading": { "alias": "siLoading"; "required": true; "isSignal": true; }; "blocking": { "alias": "blocking"; "required": false; "isSignal": true; }; "initialDelay": { "alias": "initialDelay"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
     // (undocumented)

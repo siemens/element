@@ -74,6 +74,8 @@ npm run lint:scss
 We guard our APIs against unintentional changes using API goldens based on [API Extractor](https://api-extractor.com/).
 Whenever the public API is changed, the corresponding golden must be updated.
 
+`protected` members are considered internal and are excluded from the public API report.
+
 ```shell
 # Build and updates the API goldens. This is the main command needed for local development.
 npm run api-goldens:build-accept

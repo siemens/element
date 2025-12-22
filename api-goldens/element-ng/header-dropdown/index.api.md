@@ -29,18 +29,8 @@ export class SiHeaderDropdownItemComponent {
     readonly badge: _angular_core.InputSignal<string | number | undefined>;
     readonly badgeColor: _angular_core.InputSignal<string | undefined>;
     readonly checked: _angular_core.InputSignal<"" | "check" | "radio" | undefined>;
-    // (undocumented)
-    protected click(): void;
     readonly icon: _angular_core.InputSignal<string | undefined>;
     readonly iconBadge: _angular_core.InputSignal<string | number | undefined>;
-    // (undocumented)
-    protected readonly icons: Record<"elementDown2" | "elementOk" | "elementRecordFilled", string>;
-    // (undocumented)
-    protected readonly navbar: _siemens_element_ng_header_dropdown.HeaderWithDropdowns | null;
-    // (undocumented)
-    protected readonly ownTrigger: SiHeaderDropdownTriggerDirective | null;
-    // (undocumented)
-    protected readonly parentTrigger: SiHeaderDropdownTriggerDirective;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiHeaderDropdownItemComponent, "si-header-dropdown-item, a[si-header-dropdown-item], button[si-header-dropdown-item]", never, { "icon": { "alias": "icon"; "required": false; "isSignal": true; }; "badge": { "alias": "badge"; "required": false; "isSignal": true; }; "iconBadge": { "alias": "iconBadge"; "required": false; "isSignal": true; }; "badgeColor": { "alias": "badgeColor"; "required": false; "isSignal": true; }; "checked": { "alias": "checked"; "required": false; "isSignal": true; }; }, {}, never, ["*"], true, never>;
     // (undocumented)
@@ -49,16 +39,12 @@ export class SiHeaderDropdownItemComponent {
 
 // @public
 export class SiHeaderDropdownTriggerDirective implements OnChanges, OnInit, OnDestroy {
-    // (undocumented)
-    protected click(): void;
     close(options?: {
         all?: boolean;
     }): void;
     readonly dropdown: _angular_core.InputSignal<TemplateRef<unknown>>;
     readonly dropdownData: _angular_core.InputSignal<unknown>;
     get isOpen(): boolean;
-    // (undocumented)
-    protected _isOpen: boolean;
     // (undocumented)
     ngOnChanges(): void;
     // (undocumented)

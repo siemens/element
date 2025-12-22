@@ -14,23 +14,12 @@ export class SiSummaryWidgetComponent {
     readonly color: _angular_core.InputSignal<string | undefined>;
     readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly icon: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    protected readonly interactive: _angular_core.Signal<boolean>;
     readonly label: _angular_core.InputSignal<TranslatableString>;
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly selected: _angular_core.ModelSignal<boolean>;
     readonly stackedColor: _angular_core.InputSignal<string | undefined>;
     readonly stackedIcon: _angular_core.InputSignal<string | undefined>;
     readonly status: _angular_core.InputSignal<ExtendedStatusType | undefined>;
-    // (undocumented)
-    protected readonly statusIcon: _angular_core.Signal<_siemens_element_ng_common.StatusIcon | {
-        icon: string | undefined;
-        color: string | undefined;
-        stacked: string | undefined;
-        stackedColor: string | undefined;
-    }>;
-    // (undocumented)
-    protected toggleSelected(): void;
     readonly value: _angular_core.InputSignal<TranslatableString>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSummaryWidgetComponent, "si-summary-widget", never, { "status": { "alias": "status"; "required": false; "isSignal": true; }; "icon": { "alias": "icon"; "required": false; "isSignal": true; }; "color": { "alias": "color"; "required": false; "isSignal": true; }; "stackedIcon": { "alias": "stackedIcon"; "required": false; "isSignal": true; }; "stackedColor": { "alias": "stackedColor"; "required": false; "isSignal": true; }; "label": { "alias": "label"; "required": true; "isSignal": true; }; "value": { "alias": "value"; "required": true; "isSignal": true; }; "selected": { "alias": "selected"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "disabled": { "alias": "disabled"; "required": false; "isSignal": true; }; }, { "selected": "selectedChange"; }, never, never, true, never>;

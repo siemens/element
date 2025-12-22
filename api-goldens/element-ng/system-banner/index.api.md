@@ -10,8 +10,6 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public
 export class SiSystemBannerComponent {
-    // (undocumented)
-    protected readonly bannerClass: _angular_core.Signal<string>;
     readonly message: _angular_core.InputSignal<TranslatableString>;
     readonly status: _angular_core.InputSignal<ExtendedStatusType>;
     // (undocumented)

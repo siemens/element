@@ -11,8 +11,6 @@ export type ConnectionStrength = 'none' | 'low' | 'medium' | 'strong';
 
 // @public (undocumented)
 export class SiConnectionStrengthComponent {
-    // (undocumented)
-    protected readonly numberValue: i0.Signal<number>;
     readonly value: i0.InputSignal<ConnectionStrength>;
     readonly wlan: i0.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)

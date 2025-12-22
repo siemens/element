@@ -27,26 +27,9 @@ export interface GaugeSeries {
 
 // @public (undocumented)
 export class SiNChartGaugeComponent implements OnInit, OnChanges {
-    // (undocumented)
-    protected additionalHeight: number;
     readonly axisLabelFormatter: _angular_core.InputSignal<((val: number) => string) | undefined>;
     readonly axisNumberOfDecimals: _angular_core.InputSignal<number>;
-    // (undocumented)
-    protected backgroundPath: string;
-    // (undocumented)
-    protected center: Coordinate;
-    // (undocumented)
-    protected dim: {
-        width: number;
-        height: number;
-    };
     readonly endAngle: _angular_core.InputSignalWithTransform<number, unknown>;
-    // (undocumented)
-    protected init(): void;
-    // (undocumented)
-    protected internalSegments: InternalGaugeSegment[];
-    // (undocumented)
-    protected internalSeries: InternalSeries[];
     readonly legendPosition: _angular_core.InputSignal<"row" | "column">;
     readonly max: _angular_core.InputSignalWithTransform<number, unknown>;
     readonly maxNumberOfDecimals: _angular_core.InputSignal<number>;
@@ -57,23 +40,13 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
     ngOnChanges(changes: SimpleChanges): void;
     // (undocumented)
     ngOnInit(): void;
-    // (undocumented)
-    protected radius: number;
     readonly segments: _angular_core.InputSignal<GaugeSegment[]>;
     readonly series: _angular_core.InputSignal<GaugeSeries[]>;
     readonly showLegend: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly showRangeLabelsOutside: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly showTicks: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly startAngle: _angular_core.InputSignalWithTransform<number, unknown>;
-    // (undocumented)
-    protected ticks: Tick[];
-    // (undocumented)
-    protected totalSum: number;
-    // (undocumented)
-    protected totalSumString: string;
     readonly unit: _angular_core.InputSignal<string>;
-    // (undocumented)
-    protected valignMiddle: boolean;
     readonly valueFormatter: _angular_core.InputSignal<((val: number) => string) | undefined>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiNChartGaugeComponent, "si-nchart-gauge", never, { "startAngle": { "alias": "startAngle"; "required": false; "isSignal": true; }; "endAngle": { "alias": "endAngle"; "required": false; "isSignal": true; }; "min": { "alias": "min"; "required": false; "isSignal": true; }; "max": { "alias": "max"; "required": false; "isSignal": true; }; "mode": { "alias": "mode"; "required": false; "isSignal": true; }; "series": { "alias": "series"; "required": false; "isSignal": true; }; "segments": { "alias": "segments"; "required": false; "isSignal": true; }; "unit": { "alias": "unit"; "required": false; "isSignal": true; }; "minNumberOfDecimals": { "alias": "minNumberOfDecimals"; "required": false; "isSignal": true; }; "maxNumberOfDecimals": { "alias": "maxNumberOfDecimals"; "required": false; "isSignal": true; }; "axisNumberOfDecimals": { "alias": "axisNumberOfDecimals"; "required": false; "isSignal": true; }; "axisLabelFormatter": { "alias": "axisLabelFormatter"; "required": false; "isSignal": true; }; "valueFormatter": { "alias": "valueFormatter"; "required": false; "isSignal": true; }; "showTicks": { "alias": "showTicks"; "required": false; "isSignal": true; }; "showLegend": { "alias": "showLegend"; "required": false; "isSignal": true; }; "legendPosition": { "alias": "legendPosition"; "required": false; "isSignal": true; }; "showRangeLabelsOutside": { "alias": "showRangeLabelsOutside"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;

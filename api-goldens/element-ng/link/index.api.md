@@ -61,10 +61,6 @@ export class SiLinkDirective implements DoCheck, OnChanges, OnDestroy {
     // (undocumented)
     readonly exactMatch: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
-    protected readonly href: _angular_core.WritableSignal<string | undefined>;
-    // (undocumented)
-    protected readonly isAriaCurrent: _angular_core.Signal<AriaCurrentType | undefined>;
-    // (undocumented)
     ngDoCheck(): void;
     // (undocumented)
     ngOnChanges(): void;
@@ -76,10 +72,6 @@ export class SiLinkDirective implements DoCheck, OnChanges, OnDestroy {
     readonly siLink: _angular_core.InputSignal<Link | undefined>;
     // (undocumented)
     readonly siLinkDefaultTarget: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    protected readonly target: _angular_core.WritableSignal<string | undefined>;
-    // (undocumented)
-    protected readonly title: _angular_core.WritableSignal<string | undefined>;
     // (undocumented)
     static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiLinkDirective, "[siLink]", ["siLink"], { "siLink": { "alias": "siLink"; "required": false; "isSignal": true; }; "siLinkDefaultTarget": { "alias": "siLinkDefaultTarget"; "required": false; "isSignal": true; }; "actionParam": { "alias": "actionParam"; "required": false; "isSignal": true; }; "activeClass": { "alias": "activeClass"; "required": false; "isSignal": true; }; "exactMatch": { "alias": "exactMatch"; "required": false; "isSignal": true; }; "ariaCurrent": { "alias": "ariaCurrent"; "required": false; "isSignal": true; }; }, { "activeChange": "activeChange"; }, never, never, true, never>;
     // (undocumented)

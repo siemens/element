@@ -11,42 +11,23 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
 export class SiWizardComponent {
-    // (undocumented)
-    protected activateStep(event: Event, stepIndex: number): void;
-    protected readonly activeSteps: _angular_core.Signal<StepItem[]>;
     back(delta?: number): void;
     readonly backText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected canActivate(stepIndex: number): boolean;
     readonly cancelText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly completionAction: _angular_core.OutputEmitterRef<void>;
     readonly completionPageVisibleTime: _angular_core.InputSignal<number>;
     readonly completionText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected readonly containerSteps: _angular_core.Signal<ElementRef<HTMLDivElement> | undefined>;
     get currentStep(): SiWizardStepComponent | undefined;
     readonly enableCompletionPage: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected getAriaCurrent(stepIndex: number): string;
-    // (undocumented)
-    protected getAriaDisabled(stepIndex: number): string;
-    // (undocumented)
-    protected getState(step: SiWizardStepComponent, stepIndex: number): string;
-    // (undocumented)
-    protected getStateClass(stepIndex: number): string;
     readonly hasCancel: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly hideNavigation: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly hideSave: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly icons: Record<"elementNotChecked" | "elementRadioChecked" | "elementCheckedFilled" | "elementWarningFilled" | "elementCancel" | "elementChecked" | "elementLeft4" | "elementRight4", string>;
     get index(): number;
     readonly inlineNavigation: _angular_core.InputSignalWithTransform<boolean, unknown>;
     next(delta?: number): void;
     readonly nextText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     save(): void;
     readonly saveText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected readonly showCompletionPage: _angular_core.WritableSignal<boolean>;
     readonly showStepNumbers: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly showVerticalDivider: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly stepActiveIcon: _angular_core.InputSignal<string>;
@@ -54,15 +35,9 @@ export class SiWizardComponent {
     get stepCount(): number;
     readonly stepFailedIcon: _angular_core.InputSignal<string>;
     readonly stepIcon: _angular_core.InputSignal<string>;
-    // (undocumented)
-    protected readonly steps: _angular_core.Signal<readonly SiWizardStepComponent[]>;
-    // (undocumented)
-    protected updateVisibleSteps(): void;
     readonly verticalLayout: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly verticalMaxSize: _angular_core.InputSignal<string | undefined>;
     readonly verticalMinSize: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    protected readonly visibleSteps: _angular_core.WritableSignal<number>;
     readonly wizardCancel: _angular_core.OutputEmitterRef<void>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiWizardComponent, "si-wizard", never, { "backText": { "alias": "backText"; "required": false; "isSignal": true; }; "nextText": { "alias": "nextText"; "required": false; "isSignal": true; }; "hideNavigation": { "alias": "hideNavigation"; "required": false; "isSignal": true; }; "saveText": { "alias": "saveText"; "required": false; "isSignal": true; }; "hideSave": { "alias": "hideSave"; "required": false; "isSignal": true; }; "completionText": { "alias": "completionText"; "required": false; "isSignal": true; }; "cancelText": { "alias": "cancelText"; "required": false; "isSignal": true; }; "hasCancel": { "alias": "hasCancel"; "required": false; "isSignal": true; }; "enableCompletionPage": { "alias": "enableCompletionPage"; "required": false; "isSignal": true; }; "completionPageVisibleTime": { "alias": "completionPageVisibleTime"; "required": false; "isSignal": true; }; "stepIcon": { "alias": "stepIcon"; "required": false; "isSignal": true; }; "stepActiveIcon": { "alias": "stepActiveIcon"; "required": false; "isSignal": true; }; "stepCompletedIcon": { "alias": "stepCompletedIcon"; "required": false; "isSignal": true; }; "stepFailedIcon": { "alias": "stepFailedIcon"; "required": false; "isSignal": true; }; "verticalLayout": { "alias": "verticalLayout"; "required": false; "isSignal": true; }; "inlineNavigation": { "alias": "inlineNavigation"; "required": false; "isSignal": true; }; "showStepNumbers": { "alias": "showStepNumbers"; "required": false; "isSignal": true; }; "showVerticalDivider": { "alias": "showVerticalDivider"; "required": false; "isSignal": true; }; "verticalMinSize": { "alias": "verticalMinSize"; "required": false; "isSignal": true; }; "verticalMaxSize": { "alias": "verticalMaxSize"; "required": false; "isSignal": true; }; }, { "completionAction": "completionAction"; "wizardCancel": "wizardCancel"; }, ["steps"], ["*"], true, never>;
