@@ -309,11 +309,12 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
     series: [{ type: 'line', showSymbol: false, lineStyle: { opacity: 0 }, data: [] }]
   };
 
-  private echartMouseDown = (): void => this.handleChartMouseDown();
-  private echartMouseUp = (event: MouseEvent): void => this.handleChartMouseUp(event);
+  private readonly echartMouseDown = (): void => this.handleChartMouseDown();
+  private readonly echartMouseUp = (event: MouseEvent): void => this.handleChartMouseUp(event);
 
-  private echartExtSliderMouseDown = (): void => this.handleExtChartMouseDown();
-  private echartExtSliderMouseUp = (event: MouseEvent): void => this.handleExtChartMouseUp(event);
+  private readonly echartExtSliderMouseDown = (): void => this.handleExtChartMouseDown();
+  private readonly echartExtSliderMouseUp = (event: MouseEvent): void =>
+    this.handleExtChartMouseUp(event);
 
   private readonly ngZone = inject(NgZone);
   protected readonly shapePaths: Record<string, string> = {
