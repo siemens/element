@@ -9,6 +9,8 @@ import type {
   TranslatableString
 } from '@siemens/element-translate-ng/translate';
 
+const CACHE_SIZE = 50;
+
 export interface MarkdownRendererOptions {
   /**
    * Provide this to enable the copy code button functionality.
@@ -54,12 +56,23 @@ export const getMarkdownRenderer = (
   sanitizer: DomSanitizer,
   options?: MarkdownRendererOptions
 ): ((text: string) => Node) => {
+  const codeBlockCache = new Map<string, HTMLElement>();
+  const tableCache = new Map<string, HTMLElement>();
+  const codeBlockCacheOrder: string[] = [];
+  const tableCacheOrder: string[] = [];
+
   return (text: string): Node => {
     const div = document.createElement('div');
     div.className = 'markdown-content text-break';
 
     // Map to store original table cell content: tableIndex -> rowIndex -> columnIndex -> original text
     const tableCellData = new Map<number, Map<number, Map<number, string>>>();
+
+    // Maps to track placeholder IDs to cache keys
+    const tablePlaceholderMap = new Map<string, string>();
+    const codeBlockCachePlaceholderMap = new Map<string, string>();
+    let tablePlaceholderCounter = 0;
+    const codeBlockPlaceholderState = { counter: 0 };
 
     if (!text) {
       return div;
@@ -157,7 +170,17 @@ export const getMarkdownRenderer = (
 
         // Recursively process cell content for markdown formatting and store original data
         const processedCells = cellsWithNewlines.map((cell: string, index: number) => {
-          const formattedContent = transformMarkdownText(cell, false, sanitizer, options);
+          const formattedContent = transformMarkdownText(
+            cell,
+            false,
+            sanitizer,
+            options,
+            codeBlockCache,
+            codeBlockCacheOrder,
+            CACHE_SIZE,
+            codeBlockCachePlaceholderMap,
+            codeBlockPlaceholderState
+          );
           // Store original cell text in the map
           rowData.set(index, cells[index]);
           return formattedContent;
@@ -170,7 +193,7 @@ export const getMarkdownRenderer = (
       })
       // Wrap table rows in table elements
       .replace(
-        /(<tr>.*?<\/tr>)/gs,
+        /(<tr>[\s\S]*?<\/tr>(?:\s*<tr>[\s\S]*?<\/tr>)*)/g,
         (() => {
           let currentTableWrapIndex = -1;
 
@@ -188,13 +211,20 @@ export const getMarkdownRenderer = (
 
           return (match: string) => {
             currentTableWrapIndex++;
-            const tableId = `table-${Math.random().toString(36).substring(2, 15)}`;
+            const cacheKey = `${match}|||${options?.downloadTableButton ?? ''}`;
+            const placeholderId = `table-${tablePlaceholderCounter++}`;
+            tablePlaceholderMap.set(placeholderId, cacheKey);
 
-            const downloadTableCsvButton = buttonLabel
-              ? `<button type="button" class="btn btn-circle btn-sm btn-tertiary element-download download-table-btn" data-table-id="${tableId}" data-table-index="${currentTableWrapIndex}" aria-label="${buttonLabel}"></button>`
-              : '';
+            getCachedOrCreateElement(tableCache, tableCacheOrder, CACHE_SIZE, cacheKey, () => {
+              const tableId = `table-${Math.random().toString(36).substring(2, 15)}`;
 
-            return `<div class="table-wrapper">${downloadTableCsvButton}<table class="table table-hover" id="${tableId}">${match}</table></div>`;
+              const downloadTableCsvButton = buttonLabel
+                ? `<button type="button" class="btn btn-circle btn-sm btn-tertiary element-download download-table-btn" data-table-id="${tableId}" data-table-index="${currentTableWrapIndex}" aria-label="${buttonLabel}"></button>`
+                : '';
+
+              return `<div class="table-wrapper">${downloadTableCsvButton}<table class="table table-hover" id="${tableId}">${match}</table></div>`;
+            });
+            return `<!--TABLE-PLACEHOLDER-${placeholderId}-->`;
           };
         })()
       )
@@ -204,9 +234,58 @@ export const getMarkdownRenderer = (
         ''
       );
 
-    html = transformMarkdownText(html, true, sanitizer, options);
+    html = transformMarkdownText(
+      html,
+      true,
+      sanitizer,
+      options,
+      codeBlockCache,
+      codeBlockCacheOrder,
+      CACHE_SIZE,
+      codeBlockCachePlaceholderMap,
+      codeBlockPlaceholderState
+    );
 
     div.innerHTML = html;
+
+    // Replace placeholders with cached elements
+    const walker = document.createTreeWalker(div, NodeFilter.SHOW_COMMENT);
+    const commentsToReplace: { comment: Comment; element: HTMLElement }[] = [];
+
+    let currentNode = walker.nextNode();
+    while (currentNode) {
+      const comment = currentNode as Comment;
+      const tableMatch = comment.textContent?.match(/TABLE-PLACEHOLDER-(.*)/);
+      if (tableMatch) {
+        const placeholderId = tableMatch[1];
+        const cacheKey = tablePlaceholderMap.get(placeholderId);
+        if (cacheKey) {
+          const cachedElement = tableCache.get(cacheKey);
+          if (cachedElement) {
+            commentsToReplace.push({ comment, element: cachedElement });
+          }
+        }
+      }
+
+      const codeMatch = comment.textContent?.match(/CODE-BLOCK-PLACEHOLDER-(.*)/);
+      if (codeMatch) {
+        const placeholderId = codeMatch[1];
+        const cacheKey = codeBlockCachePlaceholderMap.get(placeholderId);
+        if (cacheKey) {
+          const cachedElement = codeBlockCache.get(cacheKey);
+          if (cachedElement) {
+            commentsToReplace.push({ comment, element: cachedElement });
+          }
+        }
+      }
+
+      currentNode = walker.nextNode();
+    }
+
+    // Replace all comments with their cached elements
+    commentsToReplace.forEach(({ comment, element }) => {
+      comment.parentNode?.replaceChild(element, comment);
+    });
 
     // Add copy functionality to code blocks
     div.querySelectorAll('.copy-code-btn').forEach(btn => {
@@ -286,11 +365,50 @@ export const getMarkdownRenderer = (
   };
 };
 
+const getCachedOrCreateElement = (
+  cache: Map<string, HTMLElement>,
+  cacheOrder: string[],
+  cacheSize: number,
+  key: string,
+  createHtml: () => string
+): HTMLElement => {
+  const cached = cache.get(key);
+  if (cached) {
+    const orderIndex = cacheOrder.indexOf(key);
+    if (orderIndex > -1) {
+      cacheOrder.splice(orderIndex, 1);
+    }
+    cacheOrder.push(key);
+    return cached;
+  }
+
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = createHtml();
+  const element = tempDiv.firstElementChild as HTMLElement;
+
+  cache.set(key, element);
+  cacheOrder.push(key);
+
+  if (cacheOrder.length > cacheSize) {
+    const oldestKey = cacheOrder.shift();
+    if (oldestKey) {
+      cache.delete(oldestKey);
+    }
+  }
+
+  return element;
+};
+
 const transformMarkdownText = (
   html: string,
   keepAdditionalNewlines = true,
   sanitizer: DomSanitizer,
-  options?: MarkdownRendererOptions
+  options?: MarkdownRendererOptions,
+  codeBlockCache?: Map<string, HTMLElement>,
+  codeBlockCacheOrder?: string[],
+  cacheSize?: number,
+  codeBlockCachePlaceholderMap?: Map<string, string>,
+  codeBlockPlaceholderState?: { counter: number }
 ): string => {
   // Generate a random placeholder for inner code blocks to prevent markdown processing inside them
   const innerCodeQuotePlaceholder = `--INNER-CODE-${Math.random().toString(36).substring(2, 15)}--`;
@@ -308,45 +426,98 @@ const transformMarkdownText = (
   html = html
     // Multiline code blocks ```code``` with placeholder
     .replace(/```([^\n]*)\n?([\s\S]*?)\n?```/g, (match, language, content) => {
-      // Escape HTML special characters in code blocks (not for security, but for correct display) and preserve inner backticks
-      const escapedCode = content
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/`/g, innerCodeQuotePlaceholder);
+      const cacheKey = `${language}|||${content}|||${options?.copyCodeButton ?? ''}`;
 
-      const codeId = `code-${Math.random().toString(36).substring(2, 15)}`;
+      if (
+        codeBlockCache &&
+        codeBlockCacheOrder &&
+        cacheSize &&
+        codeBlockCachePlaceholderMap &&
+        codeBlockPlaceholderState
+      ) {
+        const placeholderId = `code-${codeBlockPlaceholderState.counter++}`;
+        codeBlockCachePlaceholderMap.set(placeholderId, cacheKey);
 
-      // Apply syntax highlighting if highlighter is provided
-      const highlightedCode = options?.syntaxHighlighter
-        ? // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-          options.syntaxHighlighter(content, language?.trim() || undefined)
-        : undefined;
+        getCachedOrCreateElement(codeBlockCache, codeBlockCacheOrder, cacheSize, cacheKey, () => {
+          // Escape HTML special characters in code blocks (not for security, but for correct display) and preserve inner backticks
+          const escapedCode = content
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/`/g, innerCodeQuotePlaceholder);
 
-      // Apply sanitization to the final code content
-      const codeBlockContent = sanitizer.sanitize(
-        SecurityContext.HTML,
-        highlightedCode ?? escapedCode
-      );
+          const codeId = `code-${Math.random().toString(36).substring(2, 15)}`;
 
-      const translatedLabel =
-        options?.copyCodeButton && options?.translateSync
-          ? options.translateSync(options.copyCodeButton)
-          : options?.copyCodeButton
-            ? String(options.copyCodeButton)
+          // Apply syntax highlighting if highlighter is provided
+          const highlightedCode = options?.syntaxHighlighter
+            ? // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+              options.syntaxHighlighter(content, language?.trim() || undefined)
             : undefined;
-      const buttonLabel = translatedLabel
-        ?.replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-      const codeCopyButton = buttonLabel
-        ? `<button type="button" class="btn btn-circle btn-sm btn-tertiary element-copy copy-code-btn" data-code-id="${codeId}" aria-label="${buttonLabel}"></button>`
-        : '';
 
-      const code = `<div class="code-wrapper">${codeCopyButton}<pre><code id="${codeId}">${codeBlockContent}</code></pre></div>`;
-      const codePlaceholder = `--CODE-BLOCK-${Math.random().toString(36).substring(2, 15)}--`;
-      codeSectionPlaceholderMap.set(codePlaceholder, code);
-      return codePlaceholder;
+          // Apply sanitization to the final code content
+          const codeBlockContent = sanitizer.sanitize(
+            SecurityContext.HTML,
+            highlightedCode ?? escapedCode
+          );
+
+          const translatedLabel =
+            options?.copyCodeButton && options?.translateSync
+              ? options.translateSync(options.copyCodeButton)
+              : options?.copyCodeButton
+                ? String(options.copyCodeButton)
+                : undefined;
+          const buttonLabel = translatedLabel
+            ?.replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+          const codeCopyButton = buttonLabel
+            ? `<button type="button" class="btn btn-circle btn-sm btn-tertiary element-copy copy-code-btn" data-code-id="${codeId}" aria-label="${buttonLabel}"></button>`
+            : '';
+
+          return `<div class="code-wrapper">${codeCopyButton}<pre><code id="${codeId}">${codeBlockContent}</code></pre></div>`;
+        });
+        return `<!--CODE-BLOCK-PLACEHOLDER-${placeholderId}-->`;
+      } else {
+        // Escape HTML special characters in code blocks (not for security, but for correct display) and preserve inner backticks
+        const escapedCode = content
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/`/g, innerCodeQuotePlaceholder);
+
+        const codeId = `code-${Math.random().toString(36).substring(2, 15)}`;
+
+        // Apply syntax highlighting if highlighter is provided
+        const highlightedCode = options?.syntaxHighlighter
+          ? // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+            options.syntaxHighlighter(content, language?.trim() || undefined)
+          : undefined;
+
+        // Apply sanitization to the final code content
+        const codeBlockContent = sanitizer.sanitize(
+          SecurityContext.HTML,
+          highlightedCode ?? escapedCode
+        );
+
+        const translatedLabel =
+          options?.copyCodeButton && options?.translateSync
+            ? options.translateSync(options.copyCodeButton)
+            : options?.copyCodeButton
+              ? String(options.copyCodeButton)
+              : undefined;
+        const buttonLabel = translatedLabel
+          ?.replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+        const codeCopyButton = buttonLabel
+          ? `<button type="button" class="btn btn-circle btn-sm btn-tertiary element-copy copy-code-btn" data-code-id="${codeId}" aria-label="${buttonLabel}"></button>`
+          : '';
+
+        const code = `<div class="code-wrapper">${codeCopyButton}<pre><code id="${codeId}">${codeBlockContent}</code></pre></div>`;
+        const codePlaceholder = `--CODE-BLOCK-${Math.random().toString(36).substring(2, 15)}--`;
+        codeSectionPlaceholderMap.set(codePlaceholder, code);
+        return codePlaceholder;
+      }
     });
 
   // Remove temporary closing marker if it's still there (wasn't part of a code block)
