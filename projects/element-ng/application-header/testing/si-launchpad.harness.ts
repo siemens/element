@@ -17,7 +17,7 @@ export class SiLaunchpadHarness extends ComponentHarness {
   }
 
   async getFavoriteCategory(): Promise<SiLaunchpadCategoryHarness> {
-    return this.getCategory('Favorite apps');
+    return this.getCategory('Favorites');
   }
 
   async getCategories(): Promise<SiLaunchpadCategoryHarness[]> {

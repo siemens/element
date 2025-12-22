@@ -2,4 +2,40 @@
 
 .modal-backdrop {
   z-index: variables.$zindex-application-header-backdrop;
+  opacity: 1;
+  transition: opacity 0.15s linear;
+
+  @starting-style {
+    opacity: 0;
+  }
+
+  &.backdrop-leave {
+    opacity: 0;
+    transition: opacity 0.15s linear;
+  }
+}
+
+.launchpad-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: variables.$zindex-launchpad;
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+
+  @starting-style {
+    opacity: 0;
+    transform: translateY(-120px);
+  }
+
+  &.expand-leave {
+    opacity: 0;
+    transform: translateY(-120px);
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease;
+  }
 }

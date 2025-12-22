@@ -10,9 +10,10 @@
       - /url: "#/viewer/viewer/item2"
   - button "Help"
   - button "Jane Smith"
-- paragraph: Launchpad
+- paragraph: Switch applications
 - paragraph: Access all your apps
-- text: Favorite apps
+- button "Close launchpad"
+- text: Favorites
 - link "Water":
   - /url: .
 - button "Show less"
@@ -28,4 +29,3 @@
   - /url: .
 - link "Add more":
   - /url: https://example.org
-- button "Close launchpad"

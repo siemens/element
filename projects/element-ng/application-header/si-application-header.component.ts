@@ -148,9 +148,6 @@ export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDest
       this.dropdownOpened();
       this.closeMobileMenus.next();
       this.launchpadOpen.set(true);
-      this.inlineDropdown
-        .pipe(skip(1), takeUntil(this.closeMobileMenus))
-        .subscribe(() => this.closeMobileMenus.next());
     }
   }
 

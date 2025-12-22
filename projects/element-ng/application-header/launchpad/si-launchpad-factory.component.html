@@ -1,27 +1,43 @@
 <!-- eslint-disable @angular-eslint/template/no-any -->
 <!-- temporary until old primary-navbar is removed -->
 <div
-  class="app-switcher pt-8 g-5 g-sm-9 container-fluid"
+  class="app-switcher gap-6 g-5 g-sm-9 container-fluid"
   cdkTrapFocus
   cdkTrapFocusAutoCapture
   (keydown.escape)="escape()"
 >
   @if (titleText()) {
-    <p class="mb-4 si-h4 lh-1">{{ titleText() | translate }}</p>
+    <div class="apps-header">
+      <span>
+        <p class="si-h4 lh-1 m-0">{{ titleText() | translate }}</p>
+        @if (subtitleText()) {
+          <p class="si-body text-secondary mt-4 mb-0">{{ subtitleText() | translate }}</p>
+        }
+      </span>
+      <button
+        type="button"
+        class="btn btn-circle btn-ghost"
+        [attr.aria-label]="closeText() | translate"
+        (click)="closeLaunchpad()"
+      >
+        <si-icon [icon]="icons.elementCancel" />
+      </button>
+    </div>
   }
-  @if (subtitleText()) {
-    <p class="si-body text-secondary mb-4">{{ subtitleText() | translate }}</p>
-  }
-  <div class="apps-scroll pb-8 ms-n2 ps-2">
+  <div class="apps-scroll ms-n2 ps-2">
     @for (category of categories(); track category; let first = $first) {
       @if (!enableFavorites() || !hasFavorites() || first || showAllApps) {
-        <div class="mt-4">
+        <div>
           @if (category.name) {
-            <span class="si-h4">
+            <div
+              class="si-h4 launchpad-category-title mb-6"
+              [class.mt-4]="first"
+              [class.mt-8]="!first"
+            >
               {{ category.name | translate }}
-            </span>
+            </div>
           }
-          <div class="mt-4 d-flex flex-wrap gap-4">
+          <div class="d-flex flex-wrap gap-4">
             @for (app of category.apps; track app) {
               @switch (app.type) {
                 @case ('router-link') {
@@ -76,7 +92,7 @@
       @if (enableFavorites() && first && hasFavorites()) {
         <button
           type="button"
-          class="btn btn-link dropdown-toggle text-decoration-none my-4 si-h5"
+          class="btn btn-link btn-show-all dropdown-toggle text-decoration-none si-h5"
           [class.show]="showAllApps"
           (click)="showAllApps = !showAllApps"
         >
@@ -86,12 +102,4 @@
       }
     }
   </div>
-  <button
-    type="button"
-    class="btn btn-circle btn-ghost position-absolute top-0 end-0 mt-6 me-4"
-    [attr.aria-label]="closeText() | translate"
-    (click)="closeLaunchpad()"
-  >
-    <si-icon [icon]="icons.elementCancel" />
-  </button>
 </div>

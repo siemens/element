@@ -15,7 +15,7 @@ import {
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { addIcons, elementCancel, elementDown2, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLinkModule } from '@siemens/element-ng/link';
-import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiApplicationHeaderComponent } from '../si-application-header.component';
 import { SiLaunchpadAppComponent } from './si-launchpad-app.component';
@@ -57,20 +57,16 @@ export class SiLaunchpadFactoryComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Launchpad`)
+   * t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch applications`)
    * ```
    */
-  readonly titleText = input(t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Launchpad`));
+  readonly titleText = input(t(() => $localize`:@@SI_LAUNCHPAD.TITLE:Switch applications`));
 
   /**
    * Subtitle of the launchpad.
-   *
-   * @defaultValue
-   * ```
-   * t(() => $localize`:@@SI_LAUNCHPAD.SUBTITLE:Access all your apps`)
-   * ```
+   * When not provided, no subtitle is displayed.
    */
-  readonly subtitleText = input(t(() => $localize`:@@SI_LAUNCHPAD.SUBTITLE:Access all your apps`));
+  readonly subtitleText = input<TranslatableString>();
 
   /** All app items shown in the launchpad. */
   readonly apps = input.required<App[] | AppCategory[]>();
@@ -87,12 +83,10 @@ export class SiLaunchpadFactoryComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_LAUNCHPAD.FAVORITE_APPS:Favorite apps`)
+   * t(() => $localize`:@@SI_LAUNCHPAD.FAVORITE_APPS:Favorites`)
    * ```
    */
-  readonly favoriteAppsText = input(
-    t(() => $localize`:@@SI_LAUNCHPAD.FAVORITE_APPS:Favorite apps`)
-  );
+  readonly favoriteAppsText = input(t(() => $localize`:@@SI_LAUNCHPAD.FAVORITE_APPS:Favorites`));
 
   /**
    * Title of the show more apps button.
