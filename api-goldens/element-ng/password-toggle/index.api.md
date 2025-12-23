@@ -5,17 +5,21 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
+import { DoCheck } from '@angular/core';
+import { NgControl } from '@angular/forms';
 import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
 
 // @public (undocumented)
-export class SiPasswordToggleComponent {
+export class SiPasswordToggleComponent implements DoCheck {
     readonly hideLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     get inputType(): string;
+    // (undocumented)
+    ngDoCheck(): void;
     readonly showLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly showVisibilityIcon: _angular_core.InputSignal<boolean>;
     readonly typeChange: _angular_core.OutputEmitterRef<string>;
     // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiPasswordToggleComponent, "si-password-toggle", never, { "showVisibilityIcon": { "alias": "showVisibilityIcon"; "required": false; "isSignal": true; }; "showLabel": { "alias": "showLabel"; "required": false; "isSignal": true; }; "hideLabel": { "alias": "hideLabel"; "required": false; "isSignal": true; }; }, { "typeChange": "typeChange"; }, never, ["*"], true, never>;
+    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiPasswordToggleComponent, "si-password-toggle", never, { "showVisibilityIcon": { "alias": "showVisibilityIcon"; "required": false; "isSignal": true; }; "showLabel": { "alias": "showLabel"; "required": false; "isSignal": true; }; "hideLabel": { "alias": "hideLabel"; "required": false; "isSignal": true; }; }, { "typeChange": "typeChange"; }, ["ngControl"], ["*"], true, never>;
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiPasswordToggleComponent, never>;
 }
