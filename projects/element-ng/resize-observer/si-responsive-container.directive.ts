@@ -43,46 +43,16 @@ export const BOOTSTRAP_BREAKPOINTS: Breakpoints = {
 export class SiResponsiveContainerDirective implements OnInit, OnDestroy {
   /** @defaultValue false */
   readonly xs = signal(false);
-  /**
-   * @deprecated Use {@link xs} instead.
-   * @defaultValue false
-   **/
-  isXs = false;
   /** @defaultValue false */
   readonly sm = signal(false);
-  /**
-   * @deprecated Use {@link sm} instead.
-   * @defaultValue false
-   **/
-  isSm = false;
   /** @defaultValue false */
   readonly md = signal(false);
-  /**
-   * @deprecated Use {@link md} instead.
-   * @defaultValue false
-   **/
-  isMd = false;
   /** @defaultValue false */
   readonly lg = signal(false);
-  /**
-   * @deprecated Use {@link lg} instead.
-   * @defaultValue false
-   **/
-  isLg = false;
   /** @defaultValue false */
   readonly xl = signal(false);
-  /**
-   * @deprecated Use {@link xl} instead.
-   * @defaultValue false
-   **/
-  isXl = false;
   /** @defaultValue false */
   readonly xxl = signal(false);
-  /**
-   * @deprecated Use {@link xxl} instead.
-   * @defaultValue false
-   **/
-  isXxl = false;
 
   /** @defaultValue 100 */
   readonly resizeThrottle = input(100);
@@ -111,16 +81,10 @@ export class SiResponsiveContainerDirective implements OnInit, OnDestroy {
     const breakpoints = this.breakpoints() ?? BOOTSTRAP_BREAKPOINTS;
 
     this.xs.set(width < breakpoints.smMinimum);
-    this.isXs = this.xs();
     this.sm.set(width >= breakpoints.smMinimum && width < breakpoints.mdMinimum);
-    this.isSm = this.sm();
     this.md.set(width >= breakpoints.mdMinimum && width < breakpoints.lgMinimum);
-    this.isMd = this.md();
     this.lg.set(width >= breakpoints.lgMinimum && width < breakpoints.xlMinimum);
-    this.isLg = this.lg();
     this.xl.set(width >= breakpoints.xlMinimum && width < breakpoints.xxlMinimum);
-    this.isXl = this.xl();
     this.xxl.set(width >= breakpoints.xxlMinimum);
-    this.isXxl = this.xxl();
   }
 }
