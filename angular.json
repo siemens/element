@@ -38,6 +38,11 @@
                 "glob": "**/*",
                 "input": "./projects/maps-ng/assets",
                 "output": "/assets/"
+              },
+              {
+                "glob": "**/*",
+                "input": "projects/live-preview/assets/",
+                "output": "/assets/"
               }
             ],
             "stylePreprocessorOptions": {
