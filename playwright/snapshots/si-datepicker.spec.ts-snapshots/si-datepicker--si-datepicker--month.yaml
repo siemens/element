@@ -37,11 +37,17 @@
 - text: Consider time
 - group:
   - text: hh
-  - textbox "Hours"
+  - textbox "Hours":
+    - /placeholder: hh
+    - text: ""
   - text: mm
-  - textbox "Minutes"
+  - textbox "Minutes":
+    - /placeholder: mm
+    - text: ""
   - text: ss
-  - textbox "Seconds"
+  - textbox "Seconds":
+    - /placeholder: ss
+    - text: ""
   - text: am/pm
   - combobox "Period":
     - option "AM" [selected]
@@ -163,11 +169,15 @@
 - text: Consider time
 - group:
   - text: hh
-  - textbox "Hours"
+  - textbox "Hours":
+    - /placeholder: hh
+    - text: ""
   - text: mm
-  - textbox "Minutes"
+  - textbox "Minutes":
+    - /placeholder: mm
+    - text: ""
   - text: am/pm
   - combobox "Period":
     - option "AM" [selected]
     - option "PM"
-- text: "/Selected date: Saturday, March \\d+, \\d+ at 5:\\d+:\\d+ AM GMT\\+\\d+:\\d+/"
+- text: "/Selected date: Saturday, March \\d+, \\d+, 5:\\d+:\\d+ AM GMT\\+\\d+:\\d+/"

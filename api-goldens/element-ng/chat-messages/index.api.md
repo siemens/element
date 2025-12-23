@@ -12,7 +12,7 @@ import { FileUploadError } from '@siemens/element-ng/file-uploader';
 import * as i1 from '@siemens/element-ng/resize-observer';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { OnDestroy } from '@angular/core';
-import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
+import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SiModalService } from '@siemens/element-ng/modal';
 import { TemplateRef } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
@@ -49,7 +49,7 @@ export class SiAiMessageComponent {
     readonly contentFormatter: _angular_core.InputSignal<((text: string) => string | Node) | undefined>;
     readonly loading: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
-    readonly secondaryActionsLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly secondaryActionsLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiAiMessageComponent, "si-ai-message", never, { "content": { "alias": "content"; "required": false; "isSignal": true; }; "contentFormatter": { "alias": "contentFormatter"; "required": false; "isSignal": true; }; "loading": { "alias": "loading"; "required": false; "isSignal": true; }; "actions": { "alias": "actions"; "required": false; "isSignal": true; }; "secondaryActions": { "alias": "secondaryActions"; "required": false; "isSignal": true; }; "actionParam": { "alias": "actionParam"; "required": false; "isSignal": true; }; "secondaryActionsLabel": { "alias": "secondaryActionsLabel"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
     // (undocumented)
@@ -62,7 +62,7 @@ export class SiAttachmentListComponent {
     readonly attachments: _angular_core.InputSignal<Attachment[]>;
     readonly removable: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly remove: _angular_core.OutputEmitterRef<Attachment>;
-    readonly removeLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly removeLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiAttachmentListComponent, "si-attachment-list", never, { "attachments": { "alias": "attachments"; "required": false; "isSignal": true; }; "alignment": { "alias": "alignment"; "required": false; "isSignal": true; }; "removable": { "alias": "removable"; "required": false; "isSignal": true; }; "removeLabel": { "alias": "removeLabel"; "required": false; "isSignal": true; }; }, { "remove": "remove"; }, never, never, true, never>;
     // (undocumented)
@@ -168,7 +168,7 @@ export class SiUserMessageComponent {
     readonly content: _angular_core.InputSignal<string>;
     readonly contentFormatter: _angular_core.InputSignal<((text: string) => string | Node) | undefined>;
     readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
-    readonly secondaryActionsLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly secondaryActionsLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiUserMessageComponent, "si-user-message", never, { "content": { "alias": "content"; "required": false; "isSignal": true; }; "contentFormatter": { "alias": "contentFormatter"; "required": false; "isSignal": true; }; "actions": { "alias": "actions"; "required": false; "isSignal": true; }; "secondaryActions": { "alias": "secondaryActions"; "required": false; "isSignal": true; }; "attachments": { "alias": "attachments"; "required": false; "isSignal": true; }; "actionParam": { "alias": "actionParam"; "required": false; "isSignal": true; }; "secondaryActionsLabel": { "alias": "secondaryActionsLabel"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
     // (undocumented)

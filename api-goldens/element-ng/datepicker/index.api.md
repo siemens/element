@@ -20,7 +20,7 @@ import { NgControl } from '@angular/forms';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
-import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
+import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SiFormItemControl } from '@siemens/element-ng/form';
 import { SimpleChanges } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -298,7 +298,7 @@ export type RangeType = 'START' | 'END' | undefined;
 
 // @public
 export class SiCalendarButtonComponent implements OnInit, AfterContentInit, DoCheck {
-    readonly ariaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly ariaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     // (undocumented)
     ngAfterContentInit(): void;
     // (undocumented)

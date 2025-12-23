@@ -4,6 +4,7 @@
  */
 import { Injectable } from '@angular/core';
 
+// eslint-disable-next-line @typescript-eslint/no-deprecated
 @Injectable({
   providedIn: 'any'
 })

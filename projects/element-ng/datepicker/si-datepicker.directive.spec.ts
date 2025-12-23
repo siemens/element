@@ -168,7 +168,7 @@ describe('SiDatepickerDirective', () => {
       await updateConfig({ showTime: true, showSeconds: true });
       await changeDate(getTestDate());
       fixture.detectChanges();
-      expect(component.siDatePicker().nativeElement.value).toBe('3/12/2022, 5:30:20 AM');
+      expect(component.siDatePicker().nativeElement.value).toBe('3/12/2022, 5:30:20 AM');
     });
 
     it('should close overlay on click', async () => {

@@ -35,12 +35,12 @@ describe('date time helper', () => {
 
   it('should correctly get custom format', () => {
     const format = getNamedFormat('en', 'short');
-    expect(format).toEqual('M/d/yy, h:mm a');
+    expect(format).toEqual('M/d/yy, h:mm a');
   });
 
   it('should correctly get custom format with mediumTime', () => {
     const format = getNamedFormat('en', 'medium');
-    expect(format).toEqual('M/d/yy, h:mm:ss a');
+    expect(format).toEqual('M/d/yy, h:mm:ss a');
   });
 
   it('should correctly parse date time', () => {

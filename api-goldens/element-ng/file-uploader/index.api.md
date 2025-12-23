@@ -11,7 +11,7 @@ import { HttpRequest } from '@angular/common/http';
 import { HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { OnChanges } from '@angular/core';
-import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
+import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -52,18 +52,18 @@ export interface FileUploadResult {
 // @public (undocumented)
 export class SiFileDropzoneComponent {
     readonly accept: _angular_core.InputSignal<string | undefined>;
-    readonly acceptText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly acceptText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly directoryUpload: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly errorTextFileMaxSize: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly errorTextFileType: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly errorTextFileMaxSize: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly errorTextFileType: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly fileError: _angular_core.OutputEmitterRef<FileUploadError>;
     readonly filesAdded: _angular_core.OutputEmitterRef<UploadFile[]>;
     readonly maxFileSize: _angular_core.InputSignal<number | undefined>;
-    readonly maxFileSizeText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly maxFileSizeText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly multiple: _angular_core.InputSignalWithTransform<boolean, unknown>;
     reset(): void;
-    readonly uploadDropText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly uploadTextFileSelect: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly uploadDropText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly uploadTextFileSelect: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiFileDropzoneComponent, "si-file-dropzone", never, { "uploadTextFileSelect": { "alias": "uploadTextFileSelect"; "required": false; "isSignal": true; }; "uploadDropText": { "alias": "uploadDropText"; "required": false; "isSignal": true; }; "maxFileSizeText": { "alias": "maxFileSizeText"; "required": false; "isSignal": true; }; "acceptText": { "alias": "acceptText"; "required": false; "isSignal": true; }; "errorTextFileType": { "alias": "errorTextFileType"; "required": false; "isSignal": true; }; "errorTextFileMaxSize": { "alias": "errorTextFileMaxSize"; "required": false; "isSignal": true; }; "accept": { "alias": "accept"; "required": false; "isSignal": true; }; "maxFileSize": { "alias": "maxFileSize"; "required": false; "isSignal": true; }; "multiple": { "alias": "multiple"; "required": false; "isSignal": true; }; "directoryUpload": { "alias": "directoryUpload"; "required": false; "isSignal": true; }; }, { "filesAdded": "filesAdded"; "fileError": "fileError"; }, never, never, true, never>;
     // (undocumented)
@@ -98,36 +98,36 @@ export class SiFileUploadDirective {
 // @public (undocumented)
 export class SiFileUploaderComponent implements OnChanges {
     readonly accept: _angular_core.InputSignal<string | undefined>;
-    readonly acceptText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly acceptText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly autoUpload: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly cancelButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly clearButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly cancelButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly clearButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly directoryUpload: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly disableUpload: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly errorTextFileMaxSize: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly errorTextFileType: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly errorUploadFailed: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly errorTextFileMaxSize: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly errorTextFileType: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly errorUploadFailed: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly filesChanges: _angular_core.OutputEmitterRef<UploadFile[]>;
     fileUpload(doRetry?: boolean): void;
     readonly maxConcurrentUploads: _angular_core.InputSignalWithTransform<number, unknown>;
     readonly maxFiles: _angular_core.InputSignalWithTransform<number, unknown>;
     readonly maxFileSize: _angular_core.InputSignalWithTransform<number | undefined, unknown>;
-    readonly maxFileSizeText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly maxFilesReachedText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly maxFileSizeText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly maxFilesReachedText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     // (undocumented)
     ngOnChanges(changes: SimpleChanges): void;
-    readonly removeButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly removeButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     reset(emit?: boolean): void;
     readonly retries: _angular_core.InputSignalWithTransform<number, unknown>;
     readonly showHttpError: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly successTextTitle: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly uploadButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly successTextTitle: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly uploadButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly uploadCanceled: _angular_core.OutputEmitterRef<UploadFile>;
     readonly uploadCompleted: _angular_core.OutputEmitterRef<FileUploadResult>;
     readonly uploadConfig: _angular_core.InputSignal<FileUploadConfig>;
-    readonly uploadDropText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly uploadingText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly uploadTextFileSelect: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly uploadDropText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly uploadingText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly uploadTextFileSelect: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiFileUploaderComponent, "si-file-uploader", never, { "uploadTextFileSelect": { "alias": "uploadTextFileSelect"; "required": false; "isSignal": true; }; "uploadDropText": { "alias": "uploadDropText"; "required": false; "isSignal": true; }; "maxFileSizeText": { "alias": "maxFileSizeText"; "required": false; "isSignal": true; }; "maxFilesReachedText": { "alias": "maxFilesReachedText"; "required": false; "isSignal": true; }; "acceptText": { "alias": "acceptText"; "required": false; "isSignal": true; }; "uploadButtonText": { "alias": "uploadButtonText"; "required": false; "isSignal": true; }; "clearButtonText": { "alias": "clearButtonText"; "required": false; "isSignal": true; }; "uploadingText": { "alias": "uploadingText"; "required": false; "isSignal": true; }; "removeButtonText": { "alias": "removeButtonText"; "required": false; "isSignal": true; }; "cancelButtonText": { "alias": "cancelButtonText"; "required": false; "isSignal": true; }; "successTextTitle": { "alias": "successTextTitle"; "required": false; "isSignal": true; }; "errorUploadFailed": { "alias": "errorUploadFailed"; "required": false; "isSignal": true; }; "showHttpError": { "alias": "showHttpError"; "required": false; "isSignal": true; }; "errorTextFileType": { "alias": "errorTextFileType"; "required": false; "isSignal": true; }; "errorTextFileMaxSize": { "alias": "errorTextFileMaxSize"; "required": false; "isSignal": true; }; "uploadConfig": { "alias": "uploadConfig"; "required": false; "isSignal": true; }; "accept": { "alias": "accept"; "required": false; "isSignal": true; }; "maxFileSize": { "alias": "maxFileSize"; "required": false; "isSignal": true; }; "maxFiles": { "alias": "maxFiles"; "required": false; "isSignal": true; }; "maxConcurrentUploads": { "alias": "maxConcurrentUploads"; "required": false; "isSignal": true; }; "retries": { "alias": "retries"; "required": false; "isSignal": true; }; "autoUpload": { "alias": "autoUpload"; "required": false; "isSignal": true; }; "disableUpload": { "alias": "disableUpload"; "required": false; "isSignal": true; }; "directoryUpload": { "alias": "directoryUpload"; "required": false; "isSignal": true; }; }, { "uploadCanceled": "uploadCanceled"; "uploadCompleted": "uploadCompleted"; "filesChanges": "filesChanges"; }, never, never, true, never>;
     // (undocumented)
