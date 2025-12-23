@@ -4,7 +4,7 @@
  */
 import { Directive } from '@angular/core';
 import {
-  SiSelectComplexOptionsDirective,
+  SiSelectSimpleOptionsDirective,
   SiSelectSingleValueDirective
 } from '@siemens/element-ng/select';
 
@@ -16,8 +16,8 @@ import {
   selector: '[siPhoneNumberInputSelect]',
   hostDirectives: [
     {
-      directive: SiSelectComplexOptionsDirective,
-      inputs: ['complexOptions', 'valueProvider']
+      directive: SiSelectSimpleOptionsDirective,
+      inputs: ['options']
     },
     { directive: SiSelectSingleValueDirective, inputs: ['value'], outputs: ['valueChange'] }
   ]
