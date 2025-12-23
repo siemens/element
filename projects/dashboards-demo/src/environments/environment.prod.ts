@@ -5,5 +5,7 @@
 /** */
 export const environment = {
   mfeBaseUrl: './mfe',
-  webComponentsBaseUrl: './webcomponents'
+  mfeEsmBaseUrl: './mfe-esm',
+  webComponentsBaseUrl: './webcomponents',
+  useModuleFederation: true
 };

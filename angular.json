@@ -473,6 +473,125 @@
             ],
             "eslintConfig": "projects/dashboards-demo/eslint.config.js"
           }
+        },
+        "esbuild": {
+          "builder": "@angular/build:application",
+          "options": {
+            "outputPath": {
+              "base": "dist/dashboards-demo-esm",
+              "browser": ""
+            },
+            "index": "projects/dashboards-demo/src/index.html",
+            "browser": "projects/dashboards-demo/src/main.ts",
+            "polyfills": ["es-module-shims"],
+            "tsConfig": "projects/dashboards-demo/tsconfig.app.json",
+            "aot": true,
+            "fileReplacements": [
+              {
+                "replace": "projects/dashboards-demo/src/environments/environment.ts",
+                "with": "projects/dashboards-demo/src/environments/environment.esm.ts"
+              }
+            ],
+            "assets": [
+              "projects/dashboards-demo/src/assets",
+              "projects/dashboards-demo/src/favicon.png",
+              {
+                "glob": "*",
+                "input": "projects/dashboards-ng/assets/i18n",
+                "output": "assets/i18n/dashboards-ng/"
+              }
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["node_modules/"]
+            },
+            "styles": [
+              "projects/dashboards-demo/src/styles-esm.scss",
+              "node_modules/gridstack/dist/gridstack.css"
+            ],
+            "allowedCommonJsDependencies": [
+              "echarts",
+              "gridstack",
+              "@angular-architects/module-federation",
+              "@module-federation/runtime"
+            ],
+            "extractLicenses": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/dashboards-demo/tsconfig.app.prod.json",
+              "fileReplacements": [
+                {
+                  "replace": "projects/dashboards-demo/src/environments/environment.ts",
+                  "with": "projects/dashboards-demo/src/environments/environment.esm.prod.ts"
+                }
+              ],
+              "crossOrigin": "use-credentials",
+              "optimization": true,
+              "outputHashing": "all",
+              "namedChunks": false,
+              "extractLicenses": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          }
+        },
+        "build-esm": {
+          "builder": "@angular-architects/native-federation:build",
+          "options": {},
+          "configurations": {
+            "production": {
+              "target": "dashboards-demo:esbuild:production"
+            },
+            "development": {
+              "target": "dashboards-demo:esbuild:development",
+              "dev": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-esm": {
+          "builder": "@angular-architects/native-federation:build",
+          "options": {
+            "target": "dashboards-demo:serve-esm-original:development",
+            "rebuildDelay": 500,
+            "dev": true,
+            "cacheExternalArtifacts": false,
+            "port": 0
+          }
+        },
+        "serve-esm-original": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "port": 4204,
+            "buildTarget": "dashboards-demo:build-esm"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "dashboards-demo:esbuild:production"
+            },
+            "development": {
+              "buildTarget": "dashboards-demo:esbuild:development"
+            }
+          },
+          "defaultConfiguration": "development"
         }
       }
     },
@@ -488,11 +607,14 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular/build:application",
           "options": {
-            "outputPath": "dist/dashboards-demo-webcomponents",
+            "outputPath": {
+              "base": "dist/dashboards-demo-webcomponents",
+              "browser": ""
+            },
             "index": "projects/dashboards-demo/webcomponents/src/index.html",
-            "main": "projects/dashboards-demo/webcomponents/src/main.ts",
+            "browser": "projects/dashboards-demo/webcomponents/src/main.ts",
             "tsConfig": "projects/dashboards-demo/webcomponents/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [],
@@ -518,9 +640,7 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
@@ -529,7 +649,7 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
               "buildTarget": "dashboards-demo-webcomponents:build:production"
@@ -598,6 +718,9 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
+            },
+            "bridge": {
+              "outputPath": "dist/dashboards-demo-esm/mfe"
             }
           }
         },
@@ -628,6 +751,88 @@
             ],
             "eslintConfig": "projects/dashboards-demo/mfe/eslint.config.js"
           }
+        },
+        "esbuild": {
+          "builder": "@angular/build:application",
+          "options": {
+            "outputPath": {
+              "base": "dist/dashboards-demo-esm/mfe-esm",
+              "browser": ""
+            },
+            "index": "projects/dashboards-demo/mfe/src/index.html",
+            "browser": "projects/dashboards-demo/mfe/src/main.esm.ts",
+            "polyfills": ["es-module-shims"],
+            "tsConfig": "projects/dashboards-demo/mfe/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/dashboards-demo/mfe/src/favicon.png",
+              "projects/dashboards-demo/mfe/src/assets"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["node_modules/"]
+            },
+            "styles": ["projects/dashboards-demo/mfe/src/styles.scss"],
+            "scripts": [],
+            "extractLicenses": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/dashboards-demo/mfe/tsconfig.app.json",
+              "crossOrigin": "use-credentials",
+              "optimization": true,
+              "outputHashing": "all",
+              "namedChunks": false,
+              "extractLicenses": true
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          }
+        },
+        "build-esm": {
+          "builder": "@angular-architects/native-federation:build",
+          "options": {},
+          "configurations": {
+            "production": {
+              "target": "dashboards-demo-mfe:esbuild:production"
+            },
+            "development": {
+              "target": "dashboards-demo-mfe:esbuild:development",
+              "dev": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-esm": {
+          "builder": "@angular-architects/native-federation:build",
+          "options": {
+            "target": "dashboards-demo-mfe:serve-esm-original:development",
+            "rebuildDelay": 500,
+            "dev": true,
+            "cacheExternalArtifacts": false,
+            "port": 0
+          }
+        },
+        "serve-esm-original": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "port": 4205,
+            "buildTarget": "dashboards-demo-mfe:build-esm"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "dashboards-demo-mfe:esbuild:production"
+            },
+            "development": {
+              "buildTarget": "dashboards-demo-mfe:esbuild:development"
+            }
+          },
+          "defaultConfiguration": "development"
         }
       }
     }

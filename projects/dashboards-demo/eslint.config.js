@@ -5,7 +5,11 @@ export default defineConfig(
   {
     extends: [...tsConfig],
     files: ['**/*.ts'],
-    ignores: ['**/environments/environment.prod.ts'],
+    ignores: [
+      '**/environments/environment.prod.ts',
+      '**/environments/environment.esm.ts',
+      '**/environments/environment.esm.prod.ts'
+    ],
     languageOptions: {
       parserOptions: {
         project: ['projects/dashboards-demo/tsconfig.app.json']
