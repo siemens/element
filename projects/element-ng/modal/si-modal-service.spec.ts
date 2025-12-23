@@ -114,9 +114,9 @@ describe('SiModalService', () => {
       appRef.tick();
     });
 
-    it('set input using initialState', () => {
+    it('set input using inputValues', () => {
       const modalRef = service.show(DialogComponent, {
-        initialState: { normalProp: 'prop value' }
+        inputValues: { normalProp: 'prop value' }
       });
 
       appRef.tick();
