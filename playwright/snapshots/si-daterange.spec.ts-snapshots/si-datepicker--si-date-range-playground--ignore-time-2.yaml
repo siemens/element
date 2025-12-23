@@ -161,8 +161,15 @@
 - switch "Ignore time"
 - text: Ignore time from
 - group:
-  - textbox "Hours" [disabled]
-  - textbox "Minutes" [disabled]
+  - textbox "Hours" [disabled]:
+    - /placeholder: hh
+    - text: ""
+  - textbox "Minutes" [disabled]:
+    - /placeholder: mm
+    - text: ""
+  - combobox "Period" [disabled]:
+    - option "AM" [selected]
+    - option "PM"
 - button "Previous"
 - button "December"
 - button /\d+/
@@ -278,5 +285,12 @@
 - button "Today"
 - text: to
 - group:
-  - textbox "Hours" [disabled]
-  - textbox "Minutes" [disabled]
+  - textbox "Hours" [disabled]:
+    - /placeholder: hh
+    - text: ""
+  - textbox "Minutes" [disabled]:
+    - /placeholder: mm
+    - text: ""
+  - combobox "Period" [disabled]:
+    - option "AM" [selected]
+    - option "PM"
