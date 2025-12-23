@@ -79,9 +79,15 @@ export const DEFAULT_GRIDSTACK_OPTIONS: GridStackOptions;
 // @public
 export const DEFAULT_WIDGET_STORAGE_TOKEN: InjectionToken<Storage>;
 
-// @public (undocumented)
+// @public
+export type FederatedBridgeModule = CommonFactoryFields & LoadRemoteBridgeOptions & {
+    factoryType: 'native-federation-module-bridge';
+    [index: string]: any;
+};
+
+// @public
 export type FederatedModule = CommonFactoryFields & LoadRemoteModuleOptions & {
-    factoryType: 'module-federation';
+    factoryType: 'module-federation' | 'native-federation';
     [index: string]: any;
 };
 
@@ -89,6 +95,15 @@ export type FederatedModule = CommonFactoryFields & LoadRemoteModuleOptions & {
 export interface GridConfig {
     gridStackOptions?: GridStackOptions;
 }
+
+// @public
+export type LoadRemoteBridgeOptions = {
+    id: string;
+    options?: {
+        loadFactory?: boolean | undefined;
+        from: 'build' | 'runtime';
+    } | undefined;
+};
 
 // @public (undocumented)
 export type LoadRemoteModuleEsmOptions = {
@@ -263,7 +278,7 @@ export interface Widget {
 }
 
 // @public
-export type WidgetComponentFactory = WidgetComponentTypeFactory | FederatedModule | WebComponent;
+export type WidgetComponentFactory = WidgetComponentTypeFactory | FederatedModule | WebComponent | FederatedBridgeModule;
 
 // @public (undocumented)
 export type WidgetComponentTypeFactory = CommonFactoryFields & (ModuleOptions | StandaloneOptions);
