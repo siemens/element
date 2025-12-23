@@ -25,7 +25,7 @@ export const STYLE_REPLACEMENTS = [
 // Apply theme styles if not already present
 export const THEME_STYLE_ENTRIES = [
   { insert: `// Load Siemens fonts` },
-  { insert: `@use '@simpl/brand/assets/fonts/styles/siemens-sans';` },
+  { insert: `@use '@linus/brand/assets/fonts/styles/siemens-sans';` },
   { insert: `// Load Element icons` },
   { insert: `@use '@simpl/element-icons/dist/style/simpl-element-icons';` },
   { insert: `// Use Element theme` },
@@ -43,8 +43,8 @@ export const THEME_STYLE_ENTRIES = [
   { insert: `@use '@siemens/element-ng/element-ng';` },
   { insert: `// Actually build the siemens-brand theme` },
   { insert: `@use '@siemens/element-theme/src/styles/themes';` },
-  { insert: `@use '@simpl/brand/dist/element-theme-siemens-brand-light' as brand-light;` },
-  { insert: `@use '@simpl/brand/dist/element-theme-siemens-brand-dark' as brand-dark;` },
+  { insert: `@use '@linus/brand/dist/element-theme-siemens-brand-light' as brand-light;` },
+  { insert: `@use '@linus/brand/dist/element-theme-siemens-brand-dark' as brand-dark;` },
   {
     insert: `@include themes.make-theme(brand-light.$tokens, 'siemens-brand');`,
     pattern: /@include themes\.make-theme\(brand-light\.\$tokens, 'siemens-brand'\);/g
