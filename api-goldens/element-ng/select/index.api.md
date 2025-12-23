@@ -4,7 +4,6 @@
 
 ```ts
 
-import { AfterContentInit } from '@angular/core';
 import * as _angular_core from '@angular/core';
 import { ConfigurableFocusTrap } from '@angular/cdk/a11y';
 import { ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
@@ -12,13 +11,11 @@ import { ControlValueAccessor } from '@angular/forms';
 import { ElementRef } from '@angular/core';
 import { InputSignal } from '@angular/core';
 import { Observable } from 'rxjs';
-import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import * as _siemens_element_ng_select from '@siemens/element-ng/select';
 import { SiFormItemControl } from '@siemens/element-ng/form';
 import { Signal } from '@angular/core';
-import { SimpleChanges } from '@angular/core';
 import { TemplateRef } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
@@ -82,25 +79,8 @@ export class SiSelectActionsDirective {
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSelectActionsDirective, never>;
 }
 
-// @public @deprecated
-export class SiSelectComplexOptionsDirective<T> extends SiSelectOptionsStrategyBase<T> {
-    // (undocumented)
-    readonly allRows: _angular_core.Signal<SelectOption<T>[] | SelectGroup<T>[]>;
-    readonly complexOptions: _angular_core.InputSignal<T[] | Record<string, T[]> | null | undefined>;
-    readonly disabledProvider: _angular_core.InputSignal<(dropdownOption: T) => boolean>;
-    readonly groupProvider: _angular_core.InputSignal<(groupKey: string) => string | undefined>;
-    readonly optionsEqual: _angular_core.InputSignal<(a: T, b: T) => boolean>;
-    // @deprecated (undocumented)
-    readonly trackBy: _angular_core.InputSignal<_angular_core.TrackByFunction<T>>;
-    readonly valueProvider: _angular_core.InputSignal<((dropdownOption: T) => string | undefined) | undefined>;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiSelectComplexOptionsDirective<any>, "si-select[complexOptions]", never, { "complexOptions": { "alias": "complexOptions"; "required": false; "isSignal": true; }; "trackBy": { "alias": "trackBy"; "required": false; "isSignal": true; }; "optionsEqual": { "alias": "optionEqualCheckFn"; "required": false; "isSignal": true; }; "valueProvider": { "alias": "valueProvider"; "required": false; "isSignal": true; }; "groupProvider": { "alias": "groupProvider"; "required": false; "isSignal": true; }; "disabledProvider": { "alias": "disabledProvider"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSelectComplexOptionsDirective<any>, never>;
-}
-
 // @public (undocumented)
-export class SiSelectComponent<T> implements OnChanges, AfterContentInit, SiFormItemControl {
+export class SiSelectComponent<T> implements SiFormItemControl {
     readonly ariaLabel: _angular_core.InputSignal<string | null>;
     close(): void;
     // @deprecated
@@ -110,10 +90,6 @@ export class SiSelectComponent<T> implements OnChanges, AfterContentInit, SiForm
     readonly hasFilter: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly id: _angular_core.InputSignal<string>;
     readonly labelledbyInput: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    ngAfterContentInit(): void;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
     readonly noResultsFoundLabel: _angular_core.InputSignal<TranslatableString>;
     open(): void;
     readonly openChange: _angular_core.OutputEmitterRef<boolean>;
@@ -177,7 +153,7 @@ export class SiSelectModule {
     // (undocumented)
     static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiSelectModule>;
     // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiSelectModule, never, [typeof SiSelectActionDirective, typeof SiSelectActionsDirective, typeof SiSelectComplexOptionsDirective, typeof SiSelectComponent, typeof SiSelectGroupTemplateDirective, typeof SiSelectMultiValueDirective, typeof SiSelectOptionTemplateDirective, typeof SiSelectSimpleOptionsDirective, typeof SiSelectSingleValueDirective], [typeof SiSelectActionDirective, typeof SiSelectActionsDirective, typeof SiSelectComplexOptionsDirective, typeof SiSelectComponent, typeof SiSelectGroupTemplateDirective, typeof SiSelectMultiValueDirective, typeof SiSelectOptionTemplateDirective, typeof SiSelectSimpleOptionsDirective, typeof SiSelectSingleValueDirective]>;
+    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiSelectModule, never, [typeof SiSelectActionDirective, typeof SiSelectActionsDirective, typeof SiSelectComponent, typeof SiSelectGroupTemplateDirective, typeof SiSelectMultiValueDirective, typeof SiSelectOptionTemplateDirective, typeof SiSelectSimpleOptionsDirective, typeof SiSelectSingleValueDirective], [typeof SiSelectActionDirective, typeof SiSelectActionsDirective, typeof SiSelectComponent, typeof SiSelectGroupTemplateDirective, typeof SiSelectMultiValueDirective, typeof SiSelectOptionTemplateDirective, typeof SiSelectSimpleOptionsDirective, typeof SiSelectSingleValueDirective]>;
 }
 
 // @public

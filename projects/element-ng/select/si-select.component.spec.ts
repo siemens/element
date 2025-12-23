@@ -10,7 +10,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SiSelectHarness } from '@siemens/element-ng/select/testing';
 
-import { SelectOption, SelectOptionLegacy, SiSelectComponent, SiSelectModule } from './index';
+import {
+  SelectOption,
+  SelectOptionLegacy,
+  SelectItem,
+  SiSelectComponent,
+  SiSelectModule
+} from './index';
 import { SiSelectSelectionStrategy } from './selection/si-select-selection-strategy';
 
 const OPTIONS_LIST: readonly SelectOptionLegacy[] = [
@@ -98,8 +104,7 @@ class TestHostNumberComponent {
       multi
       inputId="test-select"
       placeholder="Select an option"
-      [complexOptions]="options"
-      [valueProvider]="valueProvider"
+      [options]="options"
       [optionEqualCheckFn]="optionEqualCheckFn"
       [disabled]="disabled"
       [readonly]="readonly"
@@ -113,24 +118,17 @@ class TestHostMultiComponent {
   readonly selectComponent = viewChild.required(SiSelectComponent);
 
   values?: string[];
-  options?: Record<string, string[]> = { group: ['good', 'average', 'poor'] };
-  valueProvider = (item: string): string => item.charAt(0).toUpperCase() + item.slice(1);
+  options?: readonly SelectItem<string>[] = [
+    { type: 'option', value: 'good', label: 'Good' },
+    { type: 'option', value: 'average', label: 'Average' },
+    { type: 'option', value: 'poor', label: 'Poor' }
+  ];
   disabled = false;
   readonly = false;
   hasFilter = false;
 
   selectionChanged: ($event: any[]) => void = () => {};
   optionEqualCheckFn = (a: string, b: string): boolean => a.toLowerCase() === b.toLowerCase();
-}
-
-@Component({
-  imports: [SiSelectModule],
-  template: ` <si-select [hasFilter]="hasFilter" [complexOptions]="[]">
-    <ng-template let-option siSelectOptionTemplate>{{ option }}</ng-template>
-  </si-select>`
-})
-class WithFilterInvalidTestComponent {
-  hasFilter = true;
 }
 
 @Component({
@@ -532,9 +530,30 @@ describe('SiSelectComponent', () => {
       expect(await selectHarness.getOverflowCount()).toBe(3);
     });
 
-    it('should filter in complex options', async () => {
+    it('should filter in grouped options', async () => {
       hostComponent.hasFilter = true;
-      hostComponent.options = { x: ['a', 'b', 'c', 'y'], xy: ['d', 'ab'] };
+      hostComponent.options = [
+        {
+          type: 'group',
+          key: 'x',
+          label: 'x',
+          options: [
+            { type: 'option', value: 'a', label: 'A' },
+            { type: 'option', value: 'b', label: 'B' },
+            { type: 'option', value: 'c', label: 'C' },
+            { type: 'option', value: 'y', label: 'Y' }
+          ]
+        },
+        {
+          type: 'group',
+          key: 'xy',
+          label: 'xy',
+          options: [
+            { type: 'option', value: 'd', label: 'D' },
+            { type: 'option', value: 'ab', label: 'Ab' }
+          ]
+        }
+      ];
       hostComponent.values = ['a', 'ab'];
 
       fixture.changeDetectorRef.markForCheck();
@@ -566,7 +585,11 @@ describe('SiSelectComponent', () => {
       await selectHarness.open();
       await selectHarness.clickItemsByText('Good');
       expect(await selectHarness.getSelectedTexts()).toEqual(['Good', 'Average']);
-      hostComponent.options = { group: ['GOOD', 'aveRAGE', 'poor'] };
+      hostComponent.options = [
+        { type: 'option', value: 'GOOD', label: 'GOOD' },
+        { type: 'option', value: 'aveRAGE', label: 'AveRAGE' },
+        { type: 'option', value: 'poor', label: 'poor' }
+      ];
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
@@ -575,26 +598,6 @@ describe('SiSelectComponent', () => {
       // It should only emit if the user changes something.
       expect(hostComponent.values).toEqual(['good', 'average']);
     });
-  });
-
-  it('should throw an error when using filter and option template without valueProvider', () => {
-    spyOn(console, 'error');
-    TestBed.configureTestingModule({
-      imports: [WithFilterInvalidTestComponent],
-      providers: [provideZonelessChangeDetection()]
-    });
-    const typedFixture = TestBed.createComponent(WithFilterInvalidTestComponent);
-    typedFixture.detectChanges();
-    typedFixture.componentInstance.hasFilter = false;
-    typedFixture.changeDetectorRef.markForCheck();
-    typedFixture.detectChanges();
-    typedFixture.componentInstance.hasFilter = true;
-    typedFixture.changeDetectorRef.markForCheck();
-    typedFixture.detectChanges();
-    expect(console.error).toHaveBeenCalledTimes(3);
-    expect(console.error).toHaveBeenCalledWith(
-      'A valueProvider is required when [hasFilter]="true" and having custom option template on si-select'
-    );
   });
 
   describe('with custom actions', () => {

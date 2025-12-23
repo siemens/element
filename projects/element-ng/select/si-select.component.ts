@@ -4,7 +4,6 @@
  */
 import { CdkOverlayOrigin, OverlayModule } from '@angular/cdk/overlay';
 import {
-  AfterContentInit,
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
@@ -13,18 +12,14 @@ import {
   ElementRef,
   inject,
   input,
-  OnChanges,
   output,
   signal,
-  SimpleChanges,
   TemplateRef,
   viewChild
 } from '@angular/core';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
 import { t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
-import { SiSelectComplexOptionsDirective } from './options/si-select-complex-options.directive';
-import { SI_SELECT_OPTIONS_STRATEGY } from './options/si-select-options-strategy';
 import { SiSelectInputComponent } from './select-input/si-select-input.component';
 import { SiSelectListHasFilterComponent } from './select-list/si-select-list-has-filter.component';
 import { SiSelectListComponent } from './select-list/si-select-list.component';
@@ -53,7 +48,7 @@ import { SelectGroup, SelectItem, SelectOption } from './si-select.types';
     '[class.si-select-has-filter]': 'hasFilter()'
   }
 })
-export class SiSelectComponent<T> implements OnChanges, AfterContentInit, SiFormItemControl {
+export class SiSelectComponent<T> implements SiFormItemControl {
   private static idCounter = 0;
   /**
    * Unique identifier.
@@ -156,7 +151,6 @@ export class SiSelectComponent<T> implements OnChanges, AfterContentInit, SiForm
   protected readonly selectionStrategy = inject(SiSelectSelectionStrategy<T>);
 
   private backdropClicked = false;
-  private readonly selectOptions = inject(SI_SELECT_OPTIONS_STRATEGY);
 
   /**
    * Enables the filter input
@@ -164,16 +158,6 @@ export class SiSelectComponent<T> implements OnChanges, AfterContentInit, SiForm
    * @defaultref {@link SiSelectComponent#_hasFilter}
    */
   readonly hasFilter = input(false, { transform: booleanAttribute });
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.hasFilter && this.hasFilter()) {
-      this.verifyValueProvider();
-    }
-  }
-
-  ngAfterContentInit(): void {
-    this.verifyValueProvider();
-  }
 
   /** Opens the `si-select`. */
   open(): void {
@@ -201,18 +185,5 @@ export class SiSelectComponent<T> implements OnChanges, AfterContentInit, SiForm
   protected backdropClick(): void {
     this.backdropClicked = true;
     this.isOpen.set(false);
-  }
-
-  private verifyValueProvider(): void {
-    if (
-      this.hasFilter() &&
-      this.optionTemplate() &&
-      this.selectOptions instanceof SiSelectComplexOptionsDirective &&
-      !this.selectOptions.valueProvider()
-    ) {
-      console.error(
-        'A valueProvider is required when [hasFilter]="true" and having custom option template on si-select'
-      );
-    }
   }
 }

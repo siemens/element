@@ -8,11 +8,19 @@ import { SelectGroup } from './si-select.types';
 
 /**
  * The directive allows to template/customize the group option rendering.
- * This requires using the {@link SiSelectComplexOptionsDirective} to specify complex options as input.
+ * This requires using the {@link SiSelectSimpleOptionsDirective} to specify options as input.
  *
  * @example
  * ```html
- * <si-select [complexOptions]="{ g1: ['g1.i1', 'g1.i2'], g2: ['g2.i1'] }" >
+ * <si-select [options]="[
+ *   { type: 'group', key: 'g1', label: 'Group 1', options: [
+ *     { type: 'option', value: 'g1.i1', label: 'Item 1' },
+ *     { type: 'option', value: 'g1.i2', label: 'Item 2' }
+ *   ]},
+ *   { type: 'group', key: 'g2', label: 'Group 2', options: [
+ *     { type: 'option', value: 'g2.i1', label: 'Item 1' }
+ *   ]}
+ * ]">
  *   <ng-template siSelectGroupTemplate let-group>{{ group.key | uppercase }}</ng-template>
  * </si-select>
  * ```
