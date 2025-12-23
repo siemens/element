@@ -91,7 +91,7 @@
   "dependencies": {
     "@angular-architects/module-federation": "20.0.0",
     "@angular/animations": "21.0.6",
-    "@angular/cdk": "20.0.6",
+    "@angular/cdk": "21.0.5",
     "@angular/common": "21.0.6",
     "@angular/core": "21.0.6",
     "@angular/elements": "21.0.6",
