@@ -315,13 +315,13 @@ export class SiStatusIconComponent {
 
 // @public
 export const STATUS_ICON_CONFIG: InjectionToken<{
+    unknown: StatusIcon;
     info: StatusIcon;
     success: StatusIcon;
     warning: StatusIcon;
     danger: StatusIcon;
     caution: StatusIcon;
     critical: StatusIcon;
-    unknown: StatusIcon;
     pending: StatusIcon;
     progress: StatusIcon;
 }>;

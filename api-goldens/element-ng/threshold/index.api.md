@@ -8,15 +8,15 @@ import * as _angular_core from '@angular/core';
 import { OnChanges } from '@angular/core';
 import { SelectOption } from '@siemens/element-ng/select';
 import { SelectOptionLegacy } from '@siemens/element-ng/select';
-import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
+import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
 export class SiThresholdComponent implements OnChanges {
-    readonly addAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly addAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly canAddRemoveSteps: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly deleteAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly deleteAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly horizontalLayout: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly inputAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly inputAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly maxSteps: _angular_core.InputSignal<number>;
     readonly maxValue: _angular_core.InputSignal<number>;
     readonly minValue: _angular_core.InputSignal<number>;
@@ -26,7 +26,7 @@ export class SiThresholdComponent implements OnChanges {
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly readonlyConditions: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly showDecIncButtons: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly statusAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly statusAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly stepSize: _angular_core.InputSignal<number>;
     readonly thresholdSteps: _angular_core.ModelSignal<ThresholdStep[]>;
     readonly unit: _angular_core.InputSignal<string>;

@@ -8,7 +8,7 @@ import * as i0 from '@angular/core';
 import { Link } from '@siemens/element-ng/link';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
-import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
+import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 
 // @public
 export interface BreadcrumbItem extends Link {
@@ -26,7 +26,7 @@ export interface EnumeratedBreadcrumbItem extends BreadcrumbItem {
 
 // @public (undocumented)
 export class SiBreadcrumbComponent implements OnChanges, OnDestroy {
-    readonly ariaLabel: i0.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly ariaLabel: i0.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly items: i0.InputSignal<BreadcrumbItem[]>;
     // (undocumented)
     ngOnChanges(): void;

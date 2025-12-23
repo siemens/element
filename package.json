@@ -183,5 +183,10 @@
     "@simpl/brand": "2.2.1",
     "@simpl/docs-composer": "11.16.6",
     "@simpl/element-icons": "1.33.0"
+  },
+  "overrides": {
+    "@microsoft/api-extractor": {
+      "typescript": "$typescript"
+    }
   }
 }

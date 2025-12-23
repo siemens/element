@@ -11,7 +11,7 @@ import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import * as rxjs from 'rxjs';
-import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
+import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
@@ -47,7 +47,7 @@ export class SiLoadingService {
 
 // @public (undocumented)
 export class SiLoadingSpinnerComponent {
-    readonly ariaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly ariaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     // (undocumented)
     readonly isBlockingSpinner: _angular_core.InputSignal<boolean | null>;
     // (undocumented)
