@@ -1,0 +1,14 @@
+<div class="my-5 d-flex flex-wrap gap-4">
+  <!-- Badge inside a button which is hidden for assistive technologies -->
+  <button type="button" class="btn btn-primary">
+    Notifications <span class="badge bg-secondary" aria-hidden="true">4</span>
+  </button>
+  <!-- Badge inside a button with descriptive text that is visually hidden -->
+  <button type="button" class="btn btn-primary position-relative">
+    Inbox
+    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+      99+
+      <span class="visually-hidden">unread messages</span>
+    </span>
+  </button>
+</div>
