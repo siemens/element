@@ -6,17 +6,17 @@
 
 import * as _angular_core from '@angular/core';
 import { ElementRef } from '@angular/core';
-import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
+import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
 export class SiWizardComponent {
     back(delta?: number): void;
-    readonly backText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly cancelText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly backText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly cancelText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly completionAction: _angular_core.OutputEmitterRef<void>;
     readonly completionPageVisibleTime: _angular_core.InputSignal<number>;
-    readonly completionText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly completionText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     get currentStep(): SiWizardStepComponent | undefined;
     readonly enableCompletionPage: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly hasCancel: _angular_core.InputSignalWithTransform<boolean, unknown>;
@@ -25,9 +25,9 @@ export class SiWizardComponent {
     get index(): number;
     readonly inlineNavigation: _angular_core.InputSignalWithTransform<boolean, unknown>;
     next(delta?: number): void;
-    readonly nextText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly nextText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     save(): void;
-    readonly saveText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly saveText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly showStepNumbers: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly showVerticalDivider: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly stepActiveIcon: _angular_core.InputSignal<string>;
