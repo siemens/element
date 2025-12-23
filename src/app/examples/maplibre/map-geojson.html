@@ -1,0 +1,23 @@
+<mgl-map
+  class="h-100"
+  [attributionControl]="false"
+  [locale]="translations()"
+  [style]="style()"
+  [center]="[-71.033038671, 42.212508657]"
+  [canvasContextAttributes]="{ preserveDrawingBuffer: true }"
+  [zoom]="[19]"
+  (mapError)="onError($event)"
+>
+  <mgl-control mglAttribution position="bottom-left" />
+  <mgl-control mglNavigation position="bottom-right" />
+  <app-geometry-layer [data]="geoJsonBuilding()" />
+</mgl-map>
+<div class="card mt-5 e2e-ignore">
+  <div class="card-body">
+    <button type="button" class="btn btn-secondary me-4" (click)="refresh()">
+      Refresh points
+    </button>
+    <button type="button" class="btn btn-secondary me-4" (click)="select()">Select point</button>
+    <button type="button" class="btn btn-secondary me-4" (click)="clear()">Clear map</button>
+  </div>
+</div>

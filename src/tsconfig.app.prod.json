@@ -17,6 +17,7 @@
       "@siemens/maps-ng": ["dist/@siemens/maps-ng"],
       "@siemens/maps-ng/*": ["dist/@siemens/maps-ng/*"]
     },
+    "skipLibCheck": true,
     "useDefineForClassFields": true
   },
   "include": ["**/*.ts"],

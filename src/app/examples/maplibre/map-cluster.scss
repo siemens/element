@@ -1,0 +1,90 @@
+@use '@siemens/element-theme/src/styles/variables';
+/*
+:host {
+  ::ng-deep {
+    .maplibregl-map {
+      font: unset;
+      font-size: 12px;
+      line-height: 20px;
+      background: var(--element-base-3);
+    }
+
+    .maplibregl-ctrl-attrib-button,
+    .maplibregl-ctrl-group button {
+      background: var(--element-base-3);
+
+      &:hover {
+        background: var(--element-action-secondary-hover);
+      }
+
+      &:focus {
+        @include variables.make-outline-focus();
+      }
+    }
+
+    .maplibregl-ctrl-attrib {
+      a:hover {
+        color: var(--element-base-translucent-2);
+      }
+    }
+
+    .maplibregl-ctrl {
+      button {
+        &.maplibregl-ctrl-geolocate .maplibregl-ctrl-icon {
+          background-image: none;
+          background-color: var(--element-action-secondary-text);
+          mask-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA1MTIgNTEyJz48cGF0aCBkPSdNMjU2IDg4Yy05Mi42NCAwLTE2OCA3NS4zNi0xNjggMTY4czc1LjM2IDE2OCAxNjggMTY4IDE2OC03NS4zNiAxNjgtMTY4UzM0OC42NCA4OCAyNTYgODhabTEyIDMxMS41di00OS45YTEyIDEyIDAgMCAwLTI0IDB2NDkuOUExNDQuMjQgMTQ0LjI0IDAgMCAxIDExMi41IDI2OGg0OS45YTEyIDEyIDAgMCAwIDAtMjRoLTQ5LjlBMTQ0LjI0IDE0NC4yNCAwIDAgMSAyNDQgMTEyLjV2NDkuOWExMiAxMiAwIDAgMCAyNCAwdi00OS45QTE0NC4yNCAxNDQuMjQgMCAwIDEgMzk5LjUgMjQ0aC00OS45YTEyIDEyIDAgMCAwIDAgMjRoNDkuOUExNDQuMjQgMTQ0LjI0IDAgMCAxIDI2OCAzOTkuNVonLz48L3N2Zz4=');
+        }
+
+        &.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon {
+          background-image: none;
+          background-color: var(--element-action-secondary-text);
+          mask-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA1MTIgNTEyJz48cGF0aCBkPSdNMzU2IDI2OEgxNTZhMTIgMTIgMCAwIDEgMC0yNGgyMDBhMTIgMTIgMCAwIDEgMCAyNFonLz48L3N2Zz4=');
+        }
+
+        &.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon {
+          background-image: none;
+          background-color: var(--element-action-secondary-text);
+          mask-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA1MTIgNTEyJz48cGF0aCBkPSdNMzU2IDI0NGgtODh2LTg4YTEyIDEyIDAgMCAwLTI0IDB2ODhoLTg4YTEyIDEyIDAgMCAwIDAgMjRoODh2ODhhMTIgMTIgMCAwIDAgMjQgMHYtODhoODhhMTIgMTIgMCAwIDAgMC0yNFonLz48L3N2Zz4=');
+        }
+
+        &.maplibregl-ctrl-compass .maplibregl-ctrl-icon {
+          background-image: none;
+          background-color: var(--element-action-secondary-text);
+          mask-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA1MTIgNTEyJz48cGF0aCBkPSdtMzU0LjYzIDI1MC40My04OC0xNjhDMjY0LjU2IDc4LjQ4IDI2MC40NiA3NiAyNTYgNzZzLTguNTYgMi40OC0xMC42MyA2LjQzbC04OCAxNjhhMTEuOTg5IDExLjk4OSAwIDAgMCAwIDExLjE0bDg4IDE2OGMyLjA3IDMuOTUgNi4xNyA2LjQzIDEwLjYzIDYuNDNzOC41Ni0yLjQ4IDEwLjYzLTYuNDNsODgtMTY4YzEuODMtMy40OSAxLjgzLTcuNjUgMC0xMS4xNFpNMjU2IDIzNmMxMS4wNSAwIDIwIDguOTUgMjAgMjBzLTguOTUgMjAtMjAgMjAtMjAtOC45NS0yMC0yMCA4Ljk1LTIwIDIwLTIwWm0wIDE2Mi4xNEwxODEuNTUgMjU2SDIxMmMwIDI0LjI2IDE5Ljc0IDQ0IDQ0IDQ0czQ0LTE5Ljc0IDQ0LTQ0aDMwLjQ1TDI1NiAzOTguMTRaJyBzdHlsZT0nc3Ryb2tlLXdpZHRoOjAnLz48L3N2Zz4=');
+        }
+      }
+    }
+
+    .maplibregl-popup-anchor-bottom-right,
+    .maplibregl-popup-anchor-bottom-left,
+    .maplibregl-popup-anchor-bottom {
+      .maplibregl-popup-tip {
+        border-block-start-color: var(--element-base-3);
+      }
+    }
+
+    .maplibregl-popup-anchor-top-left,
+    .maplibregl-popup-anchor-top,
+    .maplibregl-popup-anchor-top-right {
+      .maplibregl-popup-tip {
+        border-block-end-color: var(--element-base-3);
+      }
+    }
+
+    .maplibregl-popup-anchor-left {
+      .maplibregl-popup-tip {
+        border-inline-end-color: var(--element-base-3);
+      }
+    }
+
+    .maplibregl-popup-anchor-right .maplibregl-popup-tip {
+      border-inline-start-color: var(--element-base-3);
+    }
+
+    .maplibregl-popup-content {
+      background: var(--element-base-3);
+    }
+  }
+}
+*/

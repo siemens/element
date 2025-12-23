@@ -1,0 +1,72 @@
+<mgl-map
+  class="h-100"
+  [attributionControl]="false"
+  [locale]="translations()"
+  [style]="mapStyle()"
+  [center]="[15, 44]"
+  [canvasContextAttributes]="{ preserveDrawingBuffer: true }"
+  [zoom]="[5]"
+  (styleImageMissing)="getImage($event)"
+  (mapError)="onError($event)"
+>
+  <mgl-control mglAttribution position="bottom-left" />
+  <mgl-control mglNavigation position="bottom-right" />
+  <mgl-control mglGeolocate position="bottom-right" (geolocate)="onGeolocate($event)" />
+  <mgl-geojson-source
+    id="cluster-source"
+    [data]="geoJson()"
+    [cluster]="true"
+    [clusterRadius]="50"
+    [clusterProperties]="clusterProperties"
+  />
+  <mgl-layer
+    id="cluster-source-poi-labels"
+    type="symbol"
+    source="cluster-source"
+    [layout]="{
+      'text-field': '{name}',
+      'text-variable-anchor': ['top', 'left', 'right'],
+      'text-radial-offset': 1.2,
+      'text-justify': 'auto'
+    }"
+    [paint]="{
+      'text-color': `${palette().textColor}`
+    }"
+  />
+  <mgl-markers-for-clusters source="cluster-source">
+    <ng-template let-feature mglPoint>
+      <mgl-marker #myMarker [lngLat]="feature.geometry.coordinates">
+        <si-marker-icon
+          [props]="feature.properties"
+          [group]="feature.properties.group"
+          [groupColors]="groupColors"
+        />
+      </mgl-marker>
+      <mgl-popup [marker]="myMarker" [closeButton]="false">
+        {{ toString(feature) }}
+      </mgl-popup>
+    </ng-template>
+    <ng-template let-feature mglClusterPoint>
+      <app-donut-chart-grouping
+        #myCluster
+        [feature]="feature"
+        (click)="selectCluster($event, feature)"
+      />
+    </ng-template>
+  </mgl-markers-for-clusters>
+  @if (selectedCluster(); as selectedClusterValue) {
+    <!-- eslint-disable-next-line @angular-eslint/template/no-any -->
+    <mgl-popup [feature]="$any(selectedClusterValue)" [offset]="20" [closeButton]="false">
+      {{ toString(selectedClusterValue) }}
+    </mgl-popup>
+  }
+</mgl-map>
+<div class="card mt-5 e2e-ignore">
+  <div class="card-body">
+    <button type="button" class="btn btn-secondary me-4" (click)="refresh()">
+      Refresh points
+    </button>
+    <button type="button" class="btn btn-secondary me-4" (click)="select()">Select point</button>
+    <button type="button" class="btn btn-secondary me-4" (click)="clear()">Clear map</button>
+  </div>
+</div>
