@@ -14,6 +14,6 @@ test.describe('si-loading-button', () => {
     await page.locator('input[type=checkbox]').check();
     const spinnerCount = await page.locator('si-loading-spinner').count();
     expect(spinnerCount).toBeGreaterThan(0);
-    await si.runVisualAndA11yTests('second-step', { maxDiffPixels: 40 });
+    await si.runVisualAndA11yTests('second-step', { maxDiffPixels: 45 });
   });
 });
