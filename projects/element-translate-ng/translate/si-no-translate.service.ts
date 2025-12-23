@@ -5,6 +5,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
+import { isBypassTranslation } from './si-bypass-translate';
 import { SiTranslateService, TranslationResult } from './si-translate.service';
 
 const arrayToRecord = (keys: string[]): Record<string, string> =>
@@ -53,6 +54,9 @@ export class SiNoTranslateService extends SiTranslateService {
     keys: T,
     _params?: Record<string, unknown>
   ): TranslationResult<T> {
+    if (isBypassTranslation(keys)) {
+      return keys.value as unknown as TranslationResult<T>;
+    }
     const translateKey = (key: string): string => {
       return _params ? replacePlaceholders(key, _params) : key;
     };
