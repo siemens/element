@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } fr
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { SiSelectModule } from '@siemens/element-ng/select';
+import { SelectItem, SiSelectModule } from '@siemens/element-ng/select';
 
 import { SiSelectHarness } from '../testing/si-select.harness';
 
@@ -17,7 +17,7 @@ import { SiSelectHarness } from '../testing/si-select.harness';
     <si-select
       multi
       style="width: 200px"
-      [complexOptions]="options"
+      [options]="options"
       [formControl]="control"
       (valueChange)="valueChange($event)"
     />
@@ -25,7 +25,14 @@ import { SiSelectHarness } from '../testing/si-select.harness';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class TestComponent {
-  options = ['a', 'b', 'c', 'd', 'e', 'f'];
+  options: SelectItem<string>[] = [
+    { type: 'option', value: 'a', label: 'a' },
+    { type: 'option', value: 'b', label: 'b' },
+    { type: 'option', value: 'c', label: 'c' },
+    { type: 'option', value: 'd', label: 'd' },
+    { type: 'option', value: 'e', label: 'e' },
+    { type: 'option', value: 'f', label: 'f' }
+  ];
 
   control = new FormControl(['a', 'b']);
 

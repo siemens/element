@@ -8,7 +8,7 @@ import { SelectOption } from './si-select.types';
 
 /**
  * The directive allows to template/customize the value option rendering.
- * This requires using the {@link SiSelectComplexOptionsDirective} to specify complex options as input.
+ * This requires using the {@link SiSelectSimpleOptionsDirective} to specify options as input.
  *
  * @example
  * ```html
