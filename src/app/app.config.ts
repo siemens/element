@@ -17,7 +17,7 @@ import {
   ɵLocaleDataIndex
 } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { provideTranslateService, TranslateLoader } from '@ngx-translate/core';
 import { provideSiUiState } from '@siemens/element-ng/common';
 import { provideSiDatatableConfig } from '@siemens/element-ng/datatable';
 import { SiFormlyModule } from '@siemens/element-ng/formly';
@@ -28,7 +28,10 @@ import {
   SiLocaleId,
   SiLocaleService
 } from '@siemens/element-ng/localization';
-import { provideNgxTranslateForElement } from '@siemens/element-translate-ng/ngx-translate';
+import {
+  provideElementMissingTranslationHandler,
+  provideNgxTranslateForElement
+} from '@siemens/element-translate-ng/ngx-translate';
 import {
   SiLivePreviewLocaleApi,
   SiLivePreviewThemeApi,
@@ -108,13 +111,6 @@ export const appInitializerFactory =
 export const APP_CONFIG: ApplicationConfig = {
   providers: [
     importProvidersFrom(
-      // Npm dependencies
-      TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: BundlerTranslateLoader
-        }
-      }),
       SiLivePreviewRoutingModule,
       // App internal
       SiLivePreviewModule.forRoot(
@@ -153,6 +149,16 @@ export const APP_CONFIG: ApplicationConfig = {
     { provide: HTTP_INTERCEPTORS, useExisting: FileUploadInterceptor, multi: true },
     provideAnimationsAsync(navigator.webdriver ? 'noop' : 'animations'),
     provideHttpClient(withInterceptorsFromDi()),
+    provideTranslateService(
+      // Npm dependencies
+      {
+        missingTranslationHandler: provideElementMissingTranslationHandler(),
+        loader: {
+          provide: TranslateLoader,
+          useClass: BundlerTranslateLoader
+        }
+      }
+    ),
     provideNgxTranslateForElement(),
     provideSiDatatableConfig(),
     provideIconConfig({ disableSvgIcons: false }),

@@ -6,10 +6,30 @@
 
 import { EnvironmentProviders } from '@angular/core';
 import * as i0 from '@angular/core';
+import { MissingTranslationHandler } from '@ngx-translate/core';
+import { MissingTranslationHandlerParams } from '@ngx-translate/core';
+import { Observable } from 'rxjs';
 import { Provider } from '@angular/core';
+import { Translation } from '@ngx-translate/core';
+
+// @public
+export const provideElementMissingTranslationHandler: (appMissingTranslationHandler?: MissingTranslationHandler) => Provider;
 
 // @public
 export const provideNgxTranslateForElement: () => (EnvironmentProviders | Provider)[];
+
+// @public
+export class SiMissingTranslateService implements MissingTranslationHandler {
+    constructor(appHandler?: MissingTranslationHandler);
+    getDefault(key: string): string | undefined;
+    // (undocumented)
+    handle(params: MissingTranslationHandlerParams): Translation | Observable<Translation>;
+    setTranslation(key: string, value: string): void;
+    // (undocumented)
+    static ɵfac: i0.ɵɵFactoryDeclaration<SiMissingTranslateService, never>;
+    // (undocumented)
+    static ɵprov: i0.ɵɵInjectableDeclaration<SiMissingTranslateService>;
+}
 
 // @public
 export class SiTranslateNgxTModule {

@@ -6,8 +6,7 @@ import { Component, DOCUMENT, Injectable, provideZonelessChangeDetection } from 
 import { TestBed } from '@angular/core/testing';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { SiTranslateNgxTService } from '@siemens/element-translate-ng/ngx-translate/si-translate-ngxt.service';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
   injectSiTranslateService,
   SiTranslatePipe,
@@ -16,6 +15,8 @@ import {
 import { Observable, of, Subject } from 'rxjs';
 
 import { SiTranslateNgxTModule } from './si-translate-ngxt.module';
+import { provideElementMissingTranslationHandler } from './si-translate-ngxt.provider';
+import { SiTranslateNgxTService } from './si-translate-ngxt.service';
 
 @Injectable()
 class RootTestService {
@@ -46,6 +47,7 @@ describe('SiTranslateNgxT', () => {
           TranslateModule.forRoot({
             defaultLanguage: 'test',
             useDefaultLang: true,
+            missingTranslationHandler: provideElementMissingTranslationHandler(),
             loader: {
               provide: TranslateLoader,
               useValue: {
@@ -95,6 +97,7 @@ describe('SiTranslateNgxT', () => {
           TranslateModule.forRoot({
             defaultLanguage: 'test',
             useDefaultLang: true,
+            missingTranslationHandler: provideElementMissingTranslationHandler(),
             loader: {
               provide: TranslateLoader,
               useValue: {
@@ -236,6 +239,76 @@ describe('SiTranslateNgxT', () => {
           done();
         });
       });
+    });
+  });
+
+  describe('without missing translation service', () => {
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          SiTranslateNgxTModule,
+          TranslateModule.forRoot({
+            defaultLanguage: 'test',
+            useDefaultLang: true,
+            loader: {
+              provide: TranslateLoader,
+              useValue: {
+                getTranslation: () => of({})
+              } as TranslateLoader
+            }
+          })
+        ],
+        providers: [provideZonelessChangeDetection()]
+      });
+    });
+
+    it('should warn about missing SiMissingTranslateService', () => {
+      const consoleWarnSpy = spyOn(console, 'warn');
+      TestBed.runInInjectionContext(() => injectSiTranslateService()) as SiTranslateNgxTService;
+      expect(consoleWarnSpy).toHaveBeenCalledWith(
+        'SiMissingTranslateService not provided as missingTranslateHandler, default translations will not work.'
+      );
+    });
+  });
+
+  describe('with appMissingTranslationHandler', () => {
+    const appTranslateSpy = {
+      handle: jasmine
+        .createSpy('appMissingTranslationHandler', (params: any) => `APP-${params.key}`)
+        .and.callThrough()
+    };
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          SiTranslateNgxTModule,
+          TranslateModule.forRoot({
+            defaultLanguage: 'test',
+            useDefaultLang: true,
+            missingTranslationHandler: provideElementMissingTranslationHandler(appTranslateSpy),
+            loader: {
+              provide: TranslateLoader,
+              useValue: {
+                getTranslation: () =>
+                  of({
+                    'KEY-1': 'VALUE-1',
+                    'KEY-2': 'VALUE-2',
+                    'KEY-3': 'VALUE-3'
+                  })
+              } as TranslateLoader
+            }
+          }),
+          HostComponent
+        ],
+        providers: [provideZonelessChangeDetection()]
+      });
+    });
+
+    it('should call app missing translation handler', async () => {
+      const translateService = TestBed.inject(TranslateService);
+      expect(translateService.instant('MISSING')).toBe('APP-MISSING');
+      expect(appTranslateSpy.handle).toHaveBeenCalledWith(
+        jasmine.objectContaining({ key: 'MISSING' })
+      );
     });
   });
 });
