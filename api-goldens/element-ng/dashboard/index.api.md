@@ -22,7 +22,7 @@ import { OnInit } from '@angular/core';
 import * as rxjs from 'rxjs';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import * as _siemens_element_ng_content_action_bar from '@siemens/element-ng/content-action-bar';
-import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
+import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SimpleChanges } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
@@ -36,12 +36,12 @@ export class SiDashboardCardComponent extends SiCardComponent implements OnDestr
     readonly enableExpandInteractionComputed: _angular_core.Signal<boolean>;
     expand(): void;
     readonly expandChange: _angular_core.OutputEmitterRef<boolean>;
-    readonly expandText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly expandText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly isExpanded: _angular_core.WritableSignal<boolean>;
     // (undocumented)
     ngOnDestroy(): void;
     restore(): void;
-    readonly restoreText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly restoreText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly showMenubar: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiDashboardCardComponent, "si-dashboard-card", never, { "restoreText": { "alias": "restoreText"; "required": false; "isSignal": true; }; "expandText": { "alias": "expandText"; "required": false; "isSignal": true; }; "enableExpandInteraction": { "alias": "enableExpandInteraction"; "required": false; "isSignal": true; }; "showMenubar": { "alias": "showMenubar"; "required": false; "isSignal": true; }; }, { "expandChange": "expandChange"; }, never, ["[headerIcon]", "[body]", "[footer]"], true, never>;
@@ -107,7 +107,7 @@ export class SiListWidgetBodyComponent extends SiWidgetBaseComponent<SiListWidge
     readonly link: _angular_core.InputSignal<Link | undefined>;
     readonly numberOfLinks: _angular_core.InputSignal<number>;
     readonly search: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly searchPlaceholderLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly searchPlaceholderLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly sort: _angular_core.InputSignal<SortOrder | undefined>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiListWidgetBodyComponent, "si-list-widget-body", never, { "link": { "alias": "link"; "required": false; "isSignal": true; }; "searchPlaceholderLabel": { "alias": "searchPlaceholderLabel"; "required": false; "isSignal": true; }; "sort": { "alias": "sort"; "required": false; "isSignal": true; }; "search": { "alias": "search"; "required": false; "isSignal": true; }; "compareFn": { "alias": "compareFn"; "required": false; "isSignal": true; }; "filterFn": { "alias": "filterFn"; "required": false; "isSignal": true; }; "numberOfLinks": { "alias": "numberOfLinks"; "required": false; "isSignal": true; }; "searchText": { "alias": "searchText"; "required": false; "isSignal": true; }; }, { "searchText": "searchTextChange"; }, never, ["[empty-state]"], true, never>;

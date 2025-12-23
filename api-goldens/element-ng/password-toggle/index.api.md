@@ -5,13 +5,13 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
-import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
+import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
 export class SiPasswordToggleComponent {
-    readonly hideLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly hideLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     get inputType(): string;
-    readonly showLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly showLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly showVisibilityIcon: _angular_core.InputSignal<boolean>;
     readonly typeChange: _angular_core.OutputEmitterRef<string>;
     // (undocumented)

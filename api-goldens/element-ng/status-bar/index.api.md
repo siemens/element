@@ -11,22 +11,22 @@ import { Observable } from 'rxjs';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import * as _siemens_element_ng_common from '@siemens/element-ng/common';
-import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
+import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SimpleChanges } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public
 export class SiStatusBarComponent implements DoCheck, OnDestroy, OnChanges {
     constructor();
-    readonly allOkText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly allOkText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly blink: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly blinkPulse: _angular_core.InputSignal<Observable<boolean> | undefined>;
-    readonly collapseButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly collapseButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly compact: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly expandButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly expandButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly items: _angular_core.InputSignal<StatusBarItem[]>;
     readonly muteButton: _angular_core.InputSignal<boolean | undefined>;
-    readonly muteButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly muteButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly muteToggle: _angular_core.OutputEmitterRef<void>;
     // (undocumented)
     ngDoCheck(): void;

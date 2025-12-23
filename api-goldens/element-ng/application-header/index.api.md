@@ -15,7 +15,7 @@ import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import * as rxjs from 'rxjs';
 import * as _siemens_element_ng_application_header from '@siemens/element-ng/application-header';
-import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
+import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SiHeaderDropdownTriggerDirective } from '@siemens/element-ng/header-dropdown';
 import { SimpleChanges } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -86,7 +86,7 @@ export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDest
     // (undocumented)
     readonly launchpad: _angular_core.InputSignal<TemplateRef<void> | undefined>;
     // (undocumented)
-    readonly launchpadLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly launchpadLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     // (undocumented)
     ngOnDestroy(): void;
     // (undocumented)
@@ -133,7 +133,7 @@ export class SiHeaderBrandDirective {
 
 // @public
 export class SiHeaderCollapsibleActionsComponent implements OnDestroy {
-    readonly mobileToggleLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly mobileToggleLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     // (undocumented)
     ngOnDestroy(): void;
     // (undocumented)
@@ -191,15 +191,15 @@ export class SiHeaderSiemensLogoComponent extends SiHeaderLogoDirective {
 // @public (undocumented)
 export class SiLaunchpadFactoryComponent {
     readonly apps: _angular_core.InputSignal<App[] | AppCategory[]>;
-    readonly closeText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly closeText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly enableFavorites: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly favoriteAppsText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly favoriteAppsText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     // (undocumented)
     readonly favoriteChange: _angular_core.OutputEmitterRef<FavoriteChangeEvent>;
-    readonly showLessAppsText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly showMoreAppsText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly subtitleText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly titleText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly showLessAppsText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly showMoreAppsText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly subtitleText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly titleText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiLaunchpadFactoryComponent, "si-launchpad-factory", never, { "closeText": { "alias": "closeText"; "required": false; "isSignal": true; }; "titleText": { "alias": "titleText"; "required": false; "isSignal": true; }; "subtitleText": { "alias": "subtitleText"; "required": false; "isSignal": true; }; "apps": { "alias": "apps"; "required": true; "isSignal": true; }; "enableFavorites": { "alias": "enableFavorites"; "required": false; "isSignal": true; }; "favoriteAppsText": { "alias": "favoriteAppsText"; "required": false; "isSignal": true; }; "showMoreAppsText": { "alias": "showMoreAppsText"; "required": false; "isSignal": true; }; "showLessAppsText": { "alias": "showLessAppsText"; "required": false; "isSignal": true; }; }, { "favoriteChange": "favoriteChange"; }, never, never, true, never>;
     // (undocumented)

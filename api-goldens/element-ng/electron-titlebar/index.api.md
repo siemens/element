@@ -7,7 +7,7 @@
 import * as _angular_core from '@angular/core';
 import { MenuItem } from '@siemens/element-ng/common';
 import { MenuItem as MenuItem_2 } from '@siemens/element-ng/menu';
-import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
+import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
 export const runsInElectron: () => boolean;
@@ -15,9 +15,9 @@ export const runsInElectron: () => boolean;
 // @public (undocumented)
 export class SiElectrontitlebarComponent {
     readonly appTitle: _angular_core.InputSignal<string>;
-    readonly ariaLabelBack: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly ariaLabelForward: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly ariaLabelMenu: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly ariaLabelBack: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly ariaLabelForward: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly ariaLabelMenu: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly back: _angular_core.OutputEmitterRef<void>;
     readonly canGoBack: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly canGoForward: _angular_core.InputSignalWithTransform<boolean, unknown>;

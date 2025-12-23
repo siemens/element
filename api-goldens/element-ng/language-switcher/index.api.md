@@ -6,7 +6,6 @@
 
 import * as i0 from '@angular/core';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
-import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
@@ -18,7 +17,7 @@ export interface IsoLanguageValue {
 // @public (undocumented)
 export class SiLanguageSwitcherComponent {
     readonly availableLanguages: i0.InputSignal<(string | IsoLanguageValue)[] | null>;
-    readonly languageSwitcherLabel: i0.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly languageSwitcherLabel: i0.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly translationKey: i0.InputSignal<string>;
     // (undocumented)
     static ɵcmp: i0.ɵɵComponentDeclaration<SiLanguageSwitcherComponent, "si-language-switcher", never, { "translationKey": { "alias": "translationKey"; "required": false; "isSignal": true; }; "languageSwitcherLabel": { "alias": "languageSwitcherLabel"; "required": false; "isSignal": true; }; "availableLanguages": { "alias": "availableLanguages"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
