@@ -59,7 +59,8 @@
             "namedChunks": true,
             "define": {
               "maptilerKey": "''",
-              "maptilerUrl": "''"
+              "maptilerUrl": "''",
+              "jitMode": "true"
             }
           },
           "configurations": {
@@ -90,11 +91,22 @@
                 }
               ]
             },
+            "aot-development": {
+              "aot": true,
+              "sourceMap": true,
+              "tsConfig": "src/tsconfig.app.json",
+              "define": {
+                "jitMode": "false"
+              }
+            },
             "aot": {
               "aot": true,
               "sourceMap": false,
               "tsConfig": "src/tsconfig.app.prod.json",
-              "outputPath": "dist/element-examples-aot"
+              "outputPath": "dist/element-examples-aot",
+              "define": {
+                "jitMode": "false"
+              }
             }
           }
         },
@@ -112,6 +124,9 @@
             },
             "local-maps": {
               "buildTarget": "element-examples:build:local-maps"
+            },
+            "aot-development": {
+              "buildTarget": "element-examples:build:aot-development"
             }
           }
         },

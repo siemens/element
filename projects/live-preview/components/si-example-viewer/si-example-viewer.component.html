@@ -33,12 +33,21 @@
 </div>
 
 @if (mode !== 'editor') {
-  <si-live-preview-renderer
-    #renderer
-    [exampleUrl]="baseUrl + exampleUrl"
-    [dataId]="dataId"
-    [template]="template"
-  />
+  @if (enableJitMode) {
+    <si-live-preview-jit-renderer
+      #renderer
+      [exampleUrl]="baseUrl + exampleUrl"
+      [dataId]="dataId"
+      [template]="template"
+    />
+  } @else {
+    <si-live-preview-renderer
+      #renderer
+      [exampleUrl]="baseUrl + exampleUrl"
+      [dataId]="dataId"
+      [template]="template"
+    />
+  }
 } @else {
   <si-live-preview
     [ticketBaseUrl]="ticketBaseUrl"

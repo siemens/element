@@ -8,6 +8,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { setDeviceMode, setDirectionRtl } from '../../helpers/utils';
 import {
   SI_LIVE_PREVIEW_CONFIG,
+  SI_LIVE_PREVIEW_ENABLE_JIT,
   SI_LIVE_PREVIEW_INTERNALS
 } from '../../interfaces/live-preview-config';
 import {
@@ -15,12 +16,17 @@ import {
   SiLivePreviewThemeApi,
   ThemeType
 } from '../../interfaces/si-live-preview.api';
+import { SiLivePreviewJitRendererComponent } from '../si-live-preview-renderer/si-live-preview-jit-renderer.component';
 import { SiLivePreviewRendererComponent } from '../si-live-preview-renderer/si-live-preview-renderer.component';
 import { SiLivePreviewComponent } from '../si-live-preview/si-live-preview.component';
 
 @Component({
   selector: 'si-example-viewer',
-  imports: [SiLivePreviewComponent, SiLivePreviewRendererComponent],
+  imports: [
+    SiLivePreviewComponent,
+    SiLivePreviewRendererComponent,
+    SiLivePreviewJitRendererComponent
+  ],
   templateUrl: './si-example-viewer.component.html',
   styleUrl: './si-example-viewer.component.scss'
 })
@@ -31,8 +37,11 @@ export class SiExampleViewerComponent {
   private internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
   private themeApi = inject(SiLivePreviewThemeApi, { optional: true });
   private localeApi = inject(SiLivePreviewLocaleApi, { optional: true });
+  protected enableJitMode = inject(SI_LIVE_PREVIEW_ENABLE_JIT);
 
-  readonly renderer = viewChild.required<SiLivePreviewRendererComponent>('renderer');
+  readonly renderer = viewChild.required<
+    SiLivePreviewRendererComponent | SiLivePreviewJitRendererComponent
+  >('renderer');
 
   @HostBinding('class.has-tabs') get hasTabs(): boolean {
     return this.tabs.length > 1;
