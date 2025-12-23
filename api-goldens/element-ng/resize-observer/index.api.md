@@ -78,18 +78,6 @@ export class SiResizeObserverModule {
 export class SiResponsiveContainerDirective implements OnInit, OnDestroy {
     // (undocumented)
     readonly breakpoints: _angular_core.InputSignal<Breakpoints | undefined>;
-    // @deprecated (undocumented)
-    isLg: boolean;
-    // @deprecated (undocumented)
-    isMd: boolean;
-    // @deprecated (undocumented)
-    isSm: boolean;
-    // @deprecated (undocumented)
-    isXl: boolean;
-    // @deprecated (undocumented)
-    isXs: boolean;
-    // @deprecated (undocumented)
-    isXxl: boolean;
     // (undocumented)
     readonly lg: _angular_core.WritableSignal<boolean>;
     // (undocumented)
