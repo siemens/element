@@ -1,4 +1,4 @@
-# MCP Server for Element
+# MCP server for Element
 
 A Model Context Protocol (MCP) server that provides AI assistants (Agents) with access to
 [Siemens Element](https://element.siemens.io) design system and component API documentation through
