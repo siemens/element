@@ -16,6 +16,10 @@
   inline-size: 100%;
   border-radius: 0;
 
+  .item-content {
+    overflow: hidden;
+  }
+
   .item-title {
     margin-inline-start: map.get(variables.$spacers, 5);
   }
@@ -28,8 +32,17 @@
     margin-inline-start: map.get(variables.$spacers, 5);
   }
 
+  &.show .badge:not(.badge-collapsed) {
+    display: none;
+  }
+
+  &:not(.show) .badge + .dropdown-caret {
+    margin-inline: 0;
+    padding-inline: 0;
+  }
+
   &.active {
-    color: variables.$element-text-active;
+    color: variables.$element-action-primary-hover;
     background: variables.$element-base-1-selected;
 
     &::after {
@@ -38,7 +51,7 @@
       inset-block: 0;
       inset-inline-start: 0;
       inline-size: 4px;
-      background: variables.$element-ui-0;
+      background: variables.$element-action-primary-hover;
     }
   }
 
@@ -73,12 +86,12 @@
   }
 }
 
-:host-context(.nav-collapsed) :is(.badge, .dropdown-caret) {
+:host-context(.nav-collapsed) :is(.dropdown-caret) {
   display: none;
 }
 
-:host-context(si-navbar-vertical:not(.nav-collapsed)) .badge-text {
-  display: none;
+:host-context(.nav-collapsed) :is(.item-title) {
+  opacity: 0;
 }
 
 :host-context(.link-with-items) > :host(button) {
@@ -117,11 +130,41 @@
 }
 
 .badge {
+  position: relative;
   margin-inline: auto 0;
+  transform: translate(0, 0);
+  transition:
+    transform 0.5s ease-out,
+    block-size 0.5s ease-out,
+    min-inline-size 0.5s ease-out,
+    border-radius 0.5s ease-out,
+    line-height 0.5s ease-out,
+    padding 0.5s ease-out,
+    font-weight 0.5s ease-out,
+    color 0.2s ease-out,
+    font-size 0.2s ease-out;
 }
 
-.badge-text {
+.badge-collapsed:not(.dropdown-item .badge) {
   position: absolute;
-  inset-block-start: map.get(variables.$spacers, 2);
-  inset-inline-end: map.get(variables.$spacers, 3);
+  inset-inline-end: 12px;
+  transform: translate(6px, -9px);
+  block-size: 14px;
+  min-inline-size: 14px;
+  border-radius: 7px;
+  font-size: variables.$si-font-size-caption;
+  line-height: 14px;
+  padding-block: 0;
+  padding-inline: map.get(variables.$spacers, 2);
+  font-weight: variables.$si-font-weight-semibold;
+
+  :host(.dropdown-toggle) & {
+    inset-inline-end: 36px;
+    transform: translate(30px, -9px);
+  }
+
+  &.badge-text-only {
+    color: transparent;
+    font-size: 0;
+  }
 }

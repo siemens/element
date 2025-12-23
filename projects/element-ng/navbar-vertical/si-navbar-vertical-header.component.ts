@@ -13,7 +13,7 @@ import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
   imports: [SiNavbarVerticalDividerComponent],
   template: `
     @if (!navbar.collapsed()) {
-      <div class="si-h5 text-secondary p-5">
+      <div class="si-h5 text-secondary text-truncate p-5">
         <ng-content />
       </div>
     } @else {
@@ -32,16 +32,21 @@ import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
         query('.si-h5', style({ position: 'absolute' }), { optional: true }),
         group([
           query(
-            ':leave',
-            [style({ opacity: '1' }), animate('0.2s ease-in', style({ opacity: '0' }))],
+            '.si-h5:leave',
+            [style({ opacity: '1' }), animate('0.25s ease-in', style({ opacity: '0' }))],
             { optional: true }
           ),
           query(
-            ':enter',
-            [style({ opacity: '0' }), animate('0.2s 0.3s ease-out', style({ opacity: '1' }))],
+            '.si-h5:enter',
+            [style({ opacity: '0' }), animate('0.2s 0.1s ease-out', style({ opacity: '1' }))],
             { optional: true }
           ),
-          animate('0.5s ease')
+          query(
+            'si-navbar-vertical-divider:enter',
+            [style({ opacity: '0' }), animate('0.2s 0.25s ease-out', style({ opacity: '1' }))],
+            { optional: true }
+          ),
+          animate('0.5s ease-out')
         ])
       ])
     ])

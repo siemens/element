@@ -114,6 +114,16 @@ export class SiNavbarVerticalItemGuardDirective {
             { optional: true }
           ),
           query(
+            '.item-content .icon',
+            [style({ 'position': 'absolute' }), animate('0.2s', style({ 'position': 'relative' }))],
+            { optional: true }
+          ),
+          query(
+            '.item-title',
+            [style({ 'opacity': '0' }), animate('0.2s 0.1s ease-out', style({ 'opacity': '1' }))],
+            { optional: true }
+          ),
+          query(
             '.mobile-drawer',
             style({ 'box-shadow': 'none', background: 'var(--element-base-1)' })
           ),
@@ -134,6 +144,16 @@ export class SiNavbarVerticalItemGuardDirective {
           }),
           query('.section-item', style({ visibility: 'hidden' }), { optional: true }),
           query('si-navbar-vertical-group', style({ visibility: 'hidden' }), { optional: true }),
+          query(
+            '.item-title',
+            [style({ 'opacity': '1' }), animate('0.2s ease', style({ 'opacity': '0' }))],
+            { optional: true }
+          ),
+          query(
+            '.dropdown-toggle.show .badge-collapsed',
+            [style({ 'opacity': '0' }), animate('0.5s ease', style({ 'opacity': '1' }))],
+            { optional: true }
+          ),
           query('.mobile-drawer', [
             style({ 'inline-size': '240px', 'box-shadow': 'none' }),
             animate('0.5s ease', style({ 'inline-size': '*' })),
