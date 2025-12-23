@@ -56,7 +56,7 @@
           siDatatableInteraction
           columnMode="force"
           selectionType="multi"
-          [rows]="rows"
+          [rows]="rows()"
           [columns]="[
             { name: 'Name', sortable: false },
             { name: 'Role', sortable: false },
@@ -69,8 +69,8 @@
           [scrollbarV]="true"
           [externalPaging]="true"
           [externalSorting]="true"
-          [count]="totalElements"
-          [offset]="pageNumber"
+          [count]="totalElements()"
+          [offset]="pageNumber()"
           [datatableInteractionAutoSelect]="true"
           (page)="setPage($event)"
           (selectedChange)="onSelect($event)"
