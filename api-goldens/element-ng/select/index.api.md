@@ -202,7 +202,7 @@ export class SiSelectOptionTemplateDirective {
 // @public
 export class SiSelectSimpleOptionsDirective<T = string> extends SiSelectOptionsStrategyBase<T> implements OnChanges {
     // (undocumented)
-    readonly allRows: _angular_core.Signal<SelectItem<T>[]>;
+    readonly allRows: _angular_core.Signal<(_siemens_element_ng_select.SelectGroup<T> | SelectOption<T>)[]>;
     // (undocumented)
     ngOnChanges(): void;
     readonly options: _angular_core.InputSignal<(SelectOptionLegacy | SelectItem<T>)[] | null | undefined>;

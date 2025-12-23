@@ -70,3 +70,13 @@ export interface SelectOption<T> {
 
 /** Alias for {@link SelectOption} or {@link SelectGroup} */
 export type SelectItem<T> = SelectGroup<T> | SelectOption<T>;
+
+/** @internal */
+export const isSelectOption = (
+  o?: SelectOptionLegacy | SelectOption<unknown>
+): o is SelectOption<unknown> => o != null && 'type' in o && o.type === 'option';
+
+/** @internal */
+export const isSelectItem = (
+  o?: SelectOptionLegacy | SelectItem<unknown>
+): o is SelectItem<unknown> => o != null && (o.type === 'option' || o.type === 'group');
