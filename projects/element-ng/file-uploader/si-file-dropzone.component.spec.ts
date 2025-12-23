@@ -134,7 +134,7 @@ describe('SiFileDropzoneComponent', () => {
       add: () => null,
       clear: () => {},
       remove: () => false
-    };
+    } as any;
   };
 
   it('should contain set upload text to file selecting', () => {

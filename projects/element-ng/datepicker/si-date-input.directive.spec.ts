@@ -110,7 +110,7 @@ describe('SiDateInputDirective', () => {
 
     await fixture.whenStable();
     fixture.detectChanges();
-    expect(component.siDateInput().nativeElement.value).toBe('3/12/2022, 5:30:20 AM');
+    expect(component.siDateInput().nativeElement.value).toBe('3/12/2022, 5:30:20 AM');
   });
 
   it('should consider minDate criteria with time', async () => {
@@ -220,7 +220,7 @@ describe('SiDateInputDirective', () => {
     await updateConfig({ showTime: true });
     fixture.detectChanges();
 
-    expect(component.siDateInput().nativeElement.value).toBe('3/12/2022, 5:30 AM');
+    expect(component.siDateInput().nativeElement.value).toBe('3/12/2022, 5:30 AM');
 
     await updateConfig({ showTime: true, dateTimeFormat: 'dd.MM.yyyy, HH:mm' });
     fixture.detectChanges();
