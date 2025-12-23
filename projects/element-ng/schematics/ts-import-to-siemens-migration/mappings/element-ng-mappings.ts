@@ -590,8 +590,6 @@ export const ELEMENT_NG_MAPPINGS: { [symbol: string]: string } = {
   'SiTypeaheadDirective': '@siemens/element-ng/typeahead',
   'SiTypeaheadItemTemplateDirective': '@siemens/element-ng/typeahead',
   'SiTypeaheadModule': '@siemens/element-ng/typeahead',
-  'SiUnauthorizedPageComponent': '@siemens/element-ng/unauthorized-page',
-  'SiUnauthorizedPageModule': '@siemens/element-ng/unauthorized-page',
   'SiValueWidgetBodyComponent': '@siemens/element-ng/dashboard',
   'SiValueWidgetComponent': '@siemens/element-ng/dashboard',
   'SiWizardComponent': '@siemens/element-ng/wizard',
@@ -701,6 +699,5 @@ export const SIMPL_ELEMENT_NG_MODULES = [
   'SiTooltipModule',
   'SiTreeViewModule',
   'SiTypeaheadModule',
-  'SiUnauthorizedPageModule',
   'SiWizardModule'
 ];
