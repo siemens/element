@@ -161,7 +161,9 @@ const removeSymbols = ({
 }): void => {
   findElement(template, element => element.name === elementName).forEach(el => {
     if (attributeSelector) {
-      const hasAttributeSelector = el.attrs.some(attr => attr.name === attributeSelector);
+      const hasAttributeSelector = el.attrs.some(
+        attr => attr.name === attributeSelector || attr.name === `[${attributeSelector}]`
+      );
       if (!hasAttributeSelector) {
         return;
       }

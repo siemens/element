@@ -60,5 +60,11 @@ export const SYMBOL_REMOVALS_MIGRATION: SymbolRemovalInstruction[] = [
     module: /@(siemens|simpl)\/element-ng(\/navbar-vertical)?/,
     elementSelector: 'si-tree-view',
     names: ['disableFilledIcons', 'trackByFunction']
+  },
+  {
+    module: /@(siemens|simpl)\/element-ng(\/select)?/,
+    elementSelector: 'si-select',
+    attributeSelector: 'complexOptions',
+    names: ['trackBy']
   }
 ];
