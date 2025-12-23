@@ -10,7 +10,7 @@ import { ControlValueAccessor } from '@angular/forms';
 import { ElementRef } from '@angular/core';
 import { OnChanges } from '@angular/core';
 import { SelectOption } from '@siemens/element-ng/select';
-import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
+import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SiFormItemControl } from '@siemens/element-ng/form';
 import { SimpleChanges } from '@angular/core';
 import { ValidationErrors } from '@angular/forms';
@@ -48,13 +48,13 @@ export class SiPhoneNumberInputComponent implements ControlValueAccessor, Valida
     readonly labelledby: _angular_core.InputSignal<string>;
     // (undocumented)
     ngOnChanges(changes: SimpleChanges): void;
-    readonly phoneNumberAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly placeholderForSearch: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly phoneNumberAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly placeholderForSearch: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     // (undocumented)
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
-    readonly searchNoResultsFoundLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly selectCountryAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly searchNoResultsFoundLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly selectCountryAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly supportedCountries: _angular_core.InputSignal<readonly string[] | null | undefined>;
     // (undocumented)
     readonly valueChange: _angular_core.OutputEmitterRef<PhoneDetails>;

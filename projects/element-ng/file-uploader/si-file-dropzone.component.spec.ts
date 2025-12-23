@@ -78,7 +78,7 @@ describe('SiFileDropzoneComponent', () => {
 
   const getFiles = (): UploadFile[] => eventSpy.calls.first().args[0]!;
 
-  const createDirectoryItemsWithFiles = (): DataTransferItemList => {
+  const createDirectoryItemsWithFiles = (): Partial<DataTransferItemList> => {
     return {
       length: 2,
       // sample file

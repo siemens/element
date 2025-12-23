@@ -14,6 +14,7 @@ import {
   Injectable,
   LOCALE_ID,
   provideAppInitializer,
+  provideZoneChangeDetection,
   ɵLocaleDataIndex
 } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -152,12 +153,14 @@ export const APP_CONFIG: ApplicationConfig = {
     { provide: SiLivePreviewThemeApi, useClass: LivePreviewThemeApiService },
     { provide: SiLivePreviewLocaleApi, useClass: LivePreviewLocaleApiService },
     { provide: HTTP_INTERCEPTORS, useExisting: FileUploadInterceptor, multi: true },
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     provideAnimationsAsync(navigator.webdriver ? 'noop' : 'animations'),
     provideHttpClient(withInterceptorsFromDi()),
     provideNgxTranslateForElement(),
     provideSiDatatableConfig(),
     provideIconConfig({ disableSvgIcons: false }),
     provideSiUiState(),
-    provideSiAgGridConfig()
+    provideSiAgGridConfig(),
+    provideZoneChangeDetection()
   ]
 };

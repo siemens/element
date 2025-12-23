@@ -11,7 +11,7 @@ import { MenuItem } from '@siemens/element-ng/common';
 import { NavigationExtras } from '@angular/router';
 import { OnChanges } from '@angular/core';
 import { OnInit } from '@angular/core';
-import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
+import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SimpleChanges } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
@@ -86,17 +86,17 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit {
     readonly collapsed: _angular_core.ModelSignal<boolean>;
     expand(): void;
     readonly items: _angular_core.ModelSignal<(MenuItem | NavbarVerticalItem)[]>;
-    readonly navbarCollapseButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly navbarExpandButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly navbarCollapseButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly navbarExpandButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     // (undocumented)
     ngOnChanges(changes: SimpleChanges): void;
     // (undocumented)
     ngOnInit(): void;
     readonly searchable: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly searchEvent: _angular_core.OutputEmitterRef<string>;
-    readonly searchPlaceholder: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly skipLinkMainContentLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly skipLinkNavigationLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly searchPlaceholder: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly skipLinkMainContentLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly skipLinkNavigationLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly stateId: _angular_core.InputSignal<string | undefined>;
     readonly textOnly: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly visible: _angular_core.InputSignalWithTransform<boolean, unknown>;

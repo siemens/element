@@ -6,7 +6,7 @@
 
 import * as _angular_core from '@angular/core';
 import { BackgroundColorVariant } from '@siemens/element-ng/common';
-import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
+import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
@@ -24,13 +24,13 @@ export type FilterStatusType = 'default' | 'success' | 'info' | 'warning' | 'dan
 // @public (undocumented)
 export class SiFilterBarComponent {
     readonly allowReset: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly collapsedFiltersDescription: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly collapsedFiltersDescription: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly colorVariant: _angular_core.InputSignal<BackgroundColorVariant>;
     readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly filterDefaultText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly filterDefaultText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly filters: _angular_core.ModelSignal<Filter[]>;
     readonly resetFilters: _angular_core.OutputEmitterRef<void>;
-    readonly resetText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly resetText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiFilterBarComponent, "si-filter-bar", never, { "filterDefaultText": { "alias": "filterDefaultText"; "required": false; "isSignal": true; }; "filters": { "alias": "filters"; "required": false; "isSignal": true; }; "resetText": { "alias": "resetText"; "required": false; "isSignal": true; }; "allowReset": { "alias": "allowReset"; "required": false; "isSignal": true; }; "colorVariant": { "alias": "colorVariant"; "required": false; "isSignal": true; }; "disabled": { "alias": "disabled"; "required": false; "isSignal": true; }; "collapsedFiltersDescription": { "alias": "collapsedFiltersDescription"; "required": false; "isSignal": true; }; }, { "filters": "filtersChange"; "resetFilters": "resetFilters"; }, never, never, true, never>;
     // (undocumented)

@@ -577,7 +577,7 @@ describe('SiFilteredSearchComponent', () => {
       const criterionValue = await criterion.value();
       await criterionValue?.click();
 
-      expect(await criterionValue?.getValue()).toContain('8/28/2020, 8:30:00 AM');
+      expect(await criterionValue?.getValue()).toContain('8/28/2020, 8:30:00 AM');
       (await (await criterionValue?.datepicker())?.considerTimeSwitch())?.toggle();
       expect(await criterionValue?.getValue()).toContain('8/28/2020');
     });

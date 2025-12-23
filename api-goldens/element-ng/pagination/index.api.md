@@ -5,14 +5,14 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
-import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
+import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
 export class SiPaginationComponent {
-    readonly backButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly backButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly currentPage: _angular_core.ModelSignal<number>;
-    readonly forwardButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly navAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly forwardButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly navAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly pageSize: _angular_core.InputSignal<number | undefined>;
     readonly totalPages: _angular_core.InputSignal<number | undefined>;
     readonly totalRowCount: _angular_core.InputSignal<number | undefined>;

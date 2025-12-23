@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { HttpBackend, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withHashLocation } from '@angular/router';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -46,8 +46,10 @@ export const appConfig: ApplicationConfig = {
         }
       })
     ),
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     provideAnimations(),
     provideHttpClient(withInterceptorsFromDi()),
-    provideNgxTranslateForElement()
+    provideNgxTranslateForElement(),
+    provideZoneChangeDetection()
   ]
 };
