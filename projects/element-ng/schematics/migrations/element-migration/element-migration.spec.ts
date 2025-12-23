@@ -130,4 +130,8 @@ describe('to legacy migration', () => {
   it('should remove the deprecated api from module based accordion', async () => {
     await checkTemplateMigration(['module-based.accordion-inline-template.ts']);
   });
+
+  it('should replace deprecated properties with signals for SiResponsiveContainerDirective', async () => {
+    await checkTemplateMigration(['resize-observer-property-access.ts']);
+  });
 });
