@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   SiAccountDetailsComponent,
@@ -47,10 +47,13 @@ import { CorporateEmployee, DataService, Page, PageRequest } from '../datatable/
     SiHeaderLogoDirective
   ],
   templateUrl: './content-full-layout-full-scroll.html',
-  providers: [DataService]
+  providers: [DataService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnInit {
-  menuItems: NavbarVerticalItem[] = [
+  private readonly dataService = inject(DataService);
+  protected readonly tableConfig = SI_DATATABLE_CONFIG;
+  protected readonly menuItems: NavbarVerticalItem[] = [
     {
       type: 'group',
       label: 'Home',
@@ -73,13 +76,11 @@ export class SampleComponent implements OnInit {
     { type: 'router-link', label: 'Energy & Operations', routerLink: 'energy' },
     { type: 'router-link', label: 'Test Coverage', routerLink: 'coverage' }
   ];
-  tableConfig = SI_DATATABLE_CONFIG;
-  pageRequest?: PageRequest;
-  page = new Page();
-  rows = new Array<CorporateEmployee>();
-  isLoading = 0;
 
-  private dataService = inject(DataService);
+  protected pageRequest?: PageRequest;
+  protected readonly page = signal(new Page());
+  protected readonly rows = signal<CorporateEmployee[]>([]);
+  protected readonly isLoading = signal(0);
 
   ngOnInit(): void {
     // timeout needed to work in the iFrame in the docs
@@ -96,27 +97,27 @@ export class SampleComponent implements OnInit {
       this.pageRequest?.pageSize !== pageRequest.pageSize
     ) {
       this.pageRequest = pageRequest;
-      this.isLoading++;
+      this.isLoading.update(value => value + 1);
       // We reload the data when the page number or page size changes.
       // During this time, we want to show the ghost loading indicator.
       // To make sure no data is presented. We set the rows in the table
       // to an empty array.
-      this.rows = [];
+      this.rows.set([]);
       this.dataService.getResults(pageRequest).subscribe(pagedData => {
-        this.isLoading--;
+        this.isLoading.update(value => value - 1);
         // Make sure we set the date to the latest page request.
         if (
           this.pageRequest?.offset === pageRequest.offset &&
           this.pageRequest?.pageSize === pageRequest.pageSize
         ) {
-          this.page = pagedData.page;
-          this.rows = pagedData.data;
+          this.page.set(pagedData.page);
+          this.rows.set(pagedData.data);
         }
       });
     }
   }
 
-  updateTableData(dimensions?: ElementDimensions): void {
+  protected updateTableData(dimensions?: ElementDimensions): void {
     if (!dimensions) {
       return;
     }
@@ -124,10 +125,10 @@ export class SampleComponent implements OnInit {
     const bodyHeight =
       dimensions.height - SI_DATATABLE_CONFIG.headerHeight - SI_DATATABLE_CONFIG.footerHeight;
     const pageSize = Math.floor(bodyHeight / SI_DATATABLE_CONFIG.rowHeightSmall);
-    this.page.size = pageSize;
+    this.page.update(value => ({ ...value, size: pageSize }));
     this.setPage({
-      offset: this.page.pageNumber,
-      pageSize: this.page.size
+      offset: this.page().pageNumber,
+      pageSize: this.page().size
     });
   }
 }
