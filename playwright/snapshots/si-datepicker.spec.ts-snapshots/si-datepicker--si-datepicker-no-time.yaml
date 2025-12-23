@@ -224,4 +224,4 @@
       - gridcell /Sat Apr \d+ \d+/:
         - button /Sat Apr \d+ \d+/
 - button "Today"
-- text: "/Selected date: Saturday, March \\d+, \\d+ at 5:\\d+:\\d+ AM GMT\\+\\d+:\\d+/"
+- text: "/Selected date: Saturday, March \\d+, \\d+, 5:\\d+:\\d+ AM GMT\\+\\d+:\\d+/"
