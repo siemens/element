@@ -10,6 +10,7 @@ import {
   signal
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import {
   addDays,
@@ -178,7 +179,7 @@ describe('SiDaySelectionComponent', () => {
 
       const selectedElement = element.querySelector('.selected')!;
       expect(selectedElement.innerHTML.trim()).toBe('31');
-      expect(isSameDate(wrapperComponent.focusedDate(), new Date('2022-03-31'))).toBeTrue();
+      expect(isSameDate(wrapperComponent.focusedDate(), new Date('2022-03-31'))).toBe(true);
     });
 
     it('should focus active date', () => {
@@ -239,7 +240,7 @@ describe('SiDaySelectionComponent', () => {
         wrapperComponent.focusedDate.set(new Date(2022, month, 1));
         fixture.detectChanges();
 
-        expect(helper.getCells()).toHaveSize(cellsCount);
+        expect(helper.getCells()).toHaveLength(cellsCount);
       }
     });
 
@@ -451,7 +452,7 @@ describe('SiDaySelectionComponent', () => {
       });
 
       it('should go to today', () => {
-        const pipeSpy = spyOn(DatePipe.prototype, 'transform');
+        const pipeSpy = vi.spyOn(DatePipe.prototype, 'transform');
 
         (element.querySelector('.today-button') as HTMLElement)!.click();
         fixture.detectChanges();
@@ -460,12 +461,12 @@ describe('SiDaySelectionComponent', () => {
 
         expect(pipeSpy).toHaveBeenCalledTimes(2);
 
-        const month = pipeSpy.calls.argsFor(0);
-        expect(isSameMonth(month[0] as Date, today)).toBeTrue();
+        const month = vi.mocked(pipeSpy).mock.calls[0];
+        expect(isSameMonth(month[0] as Date, today)).toBe(true);
         expect(month[1] as string).toBe('MMMM');
 
-        const year = pipeSpy.calls.argsFor(1);
-        expect(isSameYear(year[0] as Date, today)).toBeTrue();
+        const year = vi.mocked(pipeSpy).mock.calls[1];
+        expect(isSameYear(year[0] as Date, today)).toBe(true);
         expect(year[1] as string).toBe('yyyy');
 
         const activeCell = helper
@@ -473,7 +474,7 @@ describe('SiDaySelectionComponent', () => {
           .querySelector('[cdkfocusinitial]') as HTMLElement;
         expect(activeCell).toBeTruthy();
         expect(activeCell.innerHTML.trim()).toBe(today.getDate().toString());
-        expect(isSameDate(wrapperComponent.focusedDate(), today)).toBeTrue();
+        expect(isSameDate(wrapperComponent.focusedDate(), today)).toBe(true);
       });
 
       it('should disable today button after click', async () => {
@@ -513,7 +514,7 @@ describe('SiDaySelectionComponent', () => {
           .querySelector('[cdkfocusinitial]') as HTMLElement;
         expect(activeCell).toBeTruthy();
         expect(activeCell.innerHTML.trim()).toBe(today.getDate().toString());
-        expect(isSameDate(wrapperComponent.focusedDate(), today)).toBeTrue();
+        expect(isSameDate(wrapperComponent.focusedDate(), today)).toBe(true);
       });
     });
 
@@ -572,7 +573,7 @@ describe('SiDaySelectionComponent', () => {
       let selectedElements = helper.queryAsArray('.selected')!;
       expect(selectedElements.length).toBe(1);
       expect(selectedElements.at(-1)!.innerHTML.trim()).toBe('16');
-      expect(isSameDate(rangeWrapperComponent.focusedDate(), new Date('2022-03-16'))).toBeTrue();
+      expect(isSameDate(rangeWrapperComponent.focusedDate(), new Date('2022-03-16'))).toBe(true);
 
       selectDate(31);
 

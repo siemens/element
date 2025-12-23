@@ -6,6 +6,7 @@ import { DebugElement, provideZonelessChangeDetection, TemplateRef } from '@angu
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiModalService } from '@siemens/element-ng/modal';
+import { vi } from 'vitest';
 
 import {
   SiAttachmentListComponent as TestComponent,
@@ -17,7 +18,9 @@ describe('SiAttachmentListComponent', () => {
   let debugElement: DebugElement;
 
   beforeEach(async () => {
-    const modalServiceSpy = jasmine.createSpyObj('SiModalService', ['open']);
+    const modalServiceSpy = {
+      open: vi.fn()
+    };
 
     await TestBed.configureTestingModule({
       imports: [TestComponent],

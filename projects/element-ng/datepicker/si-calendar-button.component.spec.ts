@@ -51,7 +51,7 @@ describe('SiCalendarButtonComponent', () => {
   };
 
   beforeEach(async () => {
-    jasmine.clock().mockDate(new Date('2023-12-31'));
+    vi.setSystemTime(new Date('2023-12-31'));
     TestBed.configureTestingModule({
       imports: [WrapperComponent],
       providers: [provideZonelessChangeDetection()]
@@ -75,21 +75,21 @@ describe('SiCalendarButtonComponent', () => {
     const overlay = document.querySelector('si-datepicker-overlay');
     expect(overlay).toBeTruthy();
 
-    const spy = spyOn(button, 'focus');
+    const spy = vi.spyOn(button, 'focus');
     overlay?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     fixture.detectChanges();
     expect(spy).toHaveBeenCalled();
   });
 
   it('should mark as touched if button is blurred', () => {
-    jasmine.clock().install();
-    const touchSpy = spyOn(SiDatepickerDirective.prototype, 'touch');
+    vi.useFakeTimers();
+    const touchSpy = vi.spyOn(SiDatepickerDirective.prototype, 'touch');
     const button = calendarToggleButton();
     button.focus();
     button.blur();
-    jasmine.clock().tick(0);
+    vi.advanceTimersByTime(0);
     expect(touchSpy).toHaveBeenCalled();
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should use default aria label', () => {

@@ -9,6 +9,7 @@ import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
 import { SiFormModule } from '@siemens/element-ng/form';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import { SiFormlyObjectGridComponent } from './si-formly-object-grid.component';
 
@@ -82,20 +83,20 @@ describe('formly grid  type', () => {
     fixture.detectChanges();
 
     /*
-    Expecting following structure:
-      container
-        - row
-          - col
-            - formly-field
-            - formly-field
-          - col
-            - formly-field
-        - row
-          - col
-            - formly-field
-            - formly-field
-            - formly-field
-    */
+        Expecting following structure:
+          container
+            - row
+              - col
+                - formly-field
+                - formly-field
+              - col
+                - formly-field
+            - row
+              - col
+                - formly-field
+                - formly-field
+                - formly-field
+        */
     const container = fixture.debugElement.query(By.css('.container'));
     expect(container).toBeTruthy();
     const rows = container.queryAll(By.css('.row'));
@@ -166,20 +167,20 @@ describe('formly grid  type', () => {
     fixture.detectChanges();
 
     /*
-    Expecting following structure:
-      alt-container
-        - alt-row
-          - alt-col
-            - formly-field
-            - formly-field
-          - alt-col
-            - formly-field
-        - alt-row
-          - col
-            - formly-field
-            - formly-field
-            - formly-field
-    */
+        Expecting following structure:
+          alt-container
+            - alt-row
+              - alt-col
+                - formly-field
+                - formly-field
+              - alt-col
+                - formly-field
+            - alt-row
+              - col
+                - formly-field
+                - formly-field
+                - formly-field
+        */
     const container = fixture.debugElement.query(By.css('.alt-container'));
     expect(container).toBeTruthy();
     const rows = container.queryAll(By.css('.alt-row'));

@@ -48,13 +48,12 @@ describe('SiWidgetInstanceEditorDialogComponent', () => {
     expect(component.widget()).toBeDefined();
   });
 
-  it('should setup custom editor', (done: DoneFn) => {
+  it('should setup custom editor', async () => {
     component.editorSetupCompleted.subscribe(_ => {
       expect(
         fixture.debugElement.query(By.css('.si-layout-fixed-height')).children[0].nativeElement
           .tagName
       ).toBe('SI-TEST-WIDGET-EDITOR');
-      done();
     });
 
     fixture.componentRef.setInput('widget', TEST_WIDGET);
@@ -65,7 +64,7 @@ describe('SiWidgetInstanceEditorDialogComponent', () => {
     fixture.detectChanges();
   });
 
-  it('#onCancel() should emit undefined on closed', (done: DoneFn) => {
+  it('#onCancel() should emit undefined on closed', async () => {
     fixture.componentRef.setInput('widget', TEST_WIDGET);
     fixture.componentRef.setInput('widgetConfig', {
       ...createWidgetConfig(TEST_WIDGET),
@@ -75,12 +74,11 @@ describe('SiWidgetInstanceEditorDialogComponent', () => {
 
     component.closed.subscribe(wd => {
       expect(wd).toBeUndefined();
-      done();
     });
     buttonsByName('Cancel')[0].nativeElement.click();
   });
 
-  it('#onSave() should emit widget config on closed', (done: DoneFn) => {
+  it('#onSave() should emit widget config on closed', async () => {
     const widgetConfig = { ...createWidgetConfig(TEST_WIDGET), id: 'testId' };
     fixture.componentRef.setInput('widget', TEST_WIDGET);
     fixture.componentRef.setInput('widgetConfig', widgetConfig);
@@ -88,7 +86,6 @@ describe('SiWidgetInstanceEditorDialogComponent', () => {
 
     component.closed.subscribe(wd => {
       expect(wd).toEqual(widgetConfig);
-      done();
     });
     buttonsByName('Save')[0].nativeElement.click();
   });

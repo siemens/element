@@ -4,7 +4,7 @@
  */
 import { computed, Directive, input } from '@angular/core';
 
-import { SelectItem, SelectOption, SelectOptionLegacy } from '../si-select.types';
+import { isSelectItem, SelectItem, SelectOption, SelectOptionLegacy } from '../si-select.types';
 import { SI_SELECT_OPTIONS_STRATEGY } from './si-select-options-strategy';
 import { SiSelectOptionsStrategyBase } from './si-select-options-strategy.base';
 
@@ -43,7 +43,7 @@ export class SiSelectSimpleOptionsDirective<T = string> extends SiSelectOptionsS
     const options = this.options();
     if (options) {
       return options?.map(option =>
-        option.type
+        isSelectItem(option)
           ? option
           : ({
               type: 'option',

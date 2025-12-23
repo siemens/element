@@ -20,7 +20,6 @@ import { SiValueWidgetComponent } from './si-value-widget.component';
       [heading]="heading"
       [primaryActions]="primaryActions"
       [secondaryActions]="secondaryActions"
-      [link]="simplActionLink"
     />
   `,
   changeDetection: ChangeDetectionStrategy.OnPush

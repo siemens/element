@@ -114,73 +114,73 @@ describe('SiApplicationHeaderComponent', () => {
 
     it('should have backdrop for nav-item opened', async () => {
       await headerHarness.openNavigationMobile();
-      expect(await headerHarness.hasBackdrop()).toBeTrue();
+      expect(await headerHarness.hasBackdrop()).toBe(true);
       const navItemHarness = await headerHarness.getNavigationItem('NavItem');
       await navItemHarness.toggle();
-      expect(await headerHarness.hasBackdrop()).toBeTrue();
+      expect(await headerHarness.hasBackdrop()).toBe(true);
       await headerHarness.clickBackdrop();
-      expect(await headerHarness.hasBackdrop()).toBeFalse();
+      expect(await headerHarness.hasBackdrop()).toBe(false);
     });
 
     it('should have backdrop for action-item opened', async () => {
       const actionItemHarness = await headerHarness.getActionItem('AItem 1');
       await actionItemHarness.toggle();
-      expect(await headerHarness.hasBackdrop()).toBeTrue();
+      expect(await headerHarness.hasBackdrop()).toBe(true);
       await actionItemHarness
         .getDropdown()
         .then(dropdown => dropdown.getItem('DItem 1'))
         .then(d1 => d1.click());
-      expect(await headerHarness.hasBackdrop()).toBeTrue();
+      expect(await headerHarness.hasBackdrop()).toBe(true);
       await headerHarness.clickBackdrop();
-      expect(await headerHarness.hasBackdrop()).toBeFalse();
+      expect(await headerHarness.hasBackdrop()).toBe(false);
     });
 
     it('should have backdrop for collapsible action-item opened', async () => {
       await headerHarness.openCollapsibleActions();
-      expect(await headerHarness.hasBackdrop()).toBeTrue();
+      expect(await headerHarness.hasBackdrop()).toBe(true);
       const actionItemHarness = await headerHarness.getActionItem('AItem 2');
       await actionItemHarness.toggle();
-      expect(await headerHarness.hasBackdrop()).toBeTrue();
+      expect(await headerHarness.hasBackdrop()).toBe(true);
       await headerHarness.clickBackdrop();
-      expect(await headerHarness.hasBackdrop()).toBeFalse();
+      expect(await headerHarness.hasBackdrop()).toBe(false);
     });
 
     it('should close others if nav opened', async () => {
       const actionItemHarness = await headerHarness.getActionItem('AItem 1');
       await actionItemHarness.toggle();
-      expect(await headerHarness.hasBackdrop()).toBeTrue();
-      expect(await actionItemHarness.isOpen()).toBeTrue();
+      expect(await headerHarness.hasBackdrop()).toBe(true);
+      expect(await actionItemHarness.isOpen()).toBe(true);
       await headerHarness.openNavigationMobile();
-      expect(await actionItemHarness.isOpen()).toBeFalse();
-      expect(await headerHarness.hasBackdrop()).toBeTrue();
+      expect(await actionItemHarness.isOpen()).toBe(false);
+      expect(await headerHarness.hasBackdrop()).toBe(true);
     });
 
     it('should close others if action-item opened', async () => {
       await headerHarness.openCollapsibleActions();
-      expect(await headerHarness.hasBackdrop()).toBeTrue();
+      expect(await headerHarness.hasBackdrop()).toBe(true);
       await headerHarness.getActionItem('AItem 1').then(item => item.toggle());
-      expect(await headerHarness.isCollapsibleActionsOpen()).toBeFalse();
-      expect(await headerHarness.hasBackdrop()).toBeTrue();
+      expect(await headerHarness.isCollapsibleActionsOpen()).toBe(false);
+      expect(await headerHarness.hasBackdrop()).toBe(true);
     });
 
     it('should close others if collapsible actions opened', async () => {
       await headerHarness.openNavigationMobile();
-      expect(await headerHarness.hasBackdrop()).toBeTrue();
+      expect(await headerHarness.hasBackdrop()).toBe(true);
       await headerHarness.openCollapsibleActions();
-      expect(await headerHarness.isNavigationMobileOpen()).toBeFalse();
-      expect(await headerHarness.hasBackdrop()).toBeTrue();
+      expect(await headerHarness.isNavigationMobileOpen()).toBe(false);
+      expect(await headerHarness.hasBackdrop()).toBe(true);
     });
 
     it('should keep collapsible actions open if dropdowns are opened inside', async () => {
       await headerHarness.openCollapsibleActions();
-      expect(await headerHarness.isCollapsibleActionsOpen()).toBeTrue();
+      expect(await headerHarness.isCollapsibleActionsOpen()).toBe(true);
       const actionItemHarness = await headerHarness.getActionItem('AItem 2');
       await actionItemHarness.toggle();
       await actionItemHarness
         .getDropdown()
         .then(dropdown => dropdown.getItem('DItem 1'))
         .then(d1 => d1.click());
-      expect(await headerHarness.isCollapsibleActionsOpen()).toBeTrue();
+      expect(await headerHarness.isCollapsibleActionsOpen()).toBe(true);
     });
   });
 
@@ -239,7 +239,7 @@ describe('SiApplicationHeaderComponent', () => {
     it('should show a dot for booleans', async () => {
       component.bade1 = true;
       await runOnPushChangeDetection(fixture);
-      expect(await actionItem1Harness.hasBadgeDot()).toBeTrue();
+      expect(await actionItem1Harness.hasBadgeDot()).toBe(true);
     });
 
     it('should show a text for numbers', async () => {
@@ -249,28 +249,28 @@ describe('SiApplicationHeaderComponent', () => {
     });
 
     it('should update parent account', async () => {
-      expect(await headerHarness.hasCollapsibleActionsBadge()).toBeFalse();
+      expect(await headerHarness.hasCollapsibleActionsBadge()).toBe(false);
       component.bade1 = 1;
       await runOnPushChangeDetection(fixture);
-      expect(await headerHarness.hasCollapsibleActionsBadge()).toBeTrue();
+      expect(await headerHarness.hasCollapsibleActionsBadge()).toBe(true);
       component.bade2 = true;
       await runOnPushChangeDetection(fixture);
-      expect(await headerHarness.hasCollapsibleActionsBadge()).toBeTrue();
+      expect(await headerHarness.hasCollapsibleActionsBadge()).toBe(true);
       component.bade1 = 0;
       await runOnPushChangeDetection(fixture);
-      expect(await headerHarness.hasCollapsibleActionsBadge()).toBeTrue();
+      expect(await headerHarness.hasCollapsibleActionsBadge()).toBe(true);
       component.bade2 = false;
       await runOnPushChangeDetection(fixture);
-      expect(await headerHarness.hasCollapsibleActionsBadge()).toBeFalse();
+      expect(await headerHarness.hasCollapsibleActionsBadge()).toBe(false);
       component.bade1 = true;
       await runOnPushChangeDetection(fixture);
-      expect(await headerHarness.hasCollapsibleActionsBadge()).toBeTrue();
+      expect(await headerHarness.hasCollapsibleActionsBadge()).toBe(true);
       component.bade1 = 1;
       await runOnPushChangeDetection(fixture);
-      expect(await headerHarness.hasCollapsibleActionsBadge()).toBeTrue();
+      expect(await headerHarness.hasCollapsibleActionsBadge()).toBe(true);
       component.bade1 = false;
       await runOnPushChangeDetection(fixture);
-      expect(await headerHarness.hasCollapsibleActionsBadge()).toBeFalse();
+      expect(await headerHarness.hasCollapsibleActionsBadge()).toBe(false);
     });
   });
 
@@ -323,16 +323,16 @@ describe('SiApplicationHeaderComponent', () => {
 
     it('should close mobile navigation on expand', async () => {
       await headerHarness.openNavigationMobile();
-      expect(await headerHarness.isNavigationMobileOpen()).toBeTrue();
+      expect(await headerHarness.isNavigationMobileOpen()).toBe(true);
       breakpointObserver.observeResult.next({ matches: false, breakpoints: {} });
-      expect(await headerHarness.isNavigationMobileOpen()).toBeFalse();
+      expect(await headerHarness.isNavigationMobileOpen()).toBe(false);
     });
 
     it('should close collapsible actions on expand', async () => {
       await headerHarness.openCollapsibleActions();
-      expect(await headerHarness.isCollapsibleActionsOpen()).toBeTrue();
+      expect(await headerHarness.isCollapsibleActionsOpen()).toBe(true);
       breakpointObserver.observeResult.next({ matches: false, breakpoints: {} });
-      expect(await headerHarness.isCollapsibleActionsOpen()).toBeFalse();
+      expect(await headerHarness.isCollapsibleActionsOpen()).toBe(false);
     });
   });
 
@@ -368,9 +368,9 @@ describe('SiApplicationHeaderComponent', () => {
 
     it('should close other when open launchpad', async () => {
       await headerHarness.openNavigationMobile();
-      expect(await headerHarness.isNavigationMobileOpen()).toBeTrue();
+      expect(await headerHarness.isNavigationMobileOpen()).toBe(true);
       await headerHarness.openLaunchpad();
-      expect(await headerHarness.isNavigationMobileOpen()).toBeFalse();
+      expect(await headerHarness.isNavigationMobileOpen()).toBe(false);
       expect(await headerHarness.getLaunchpad()).toBeTruthy();
     });
 
@@ -379,7 +379,7 @@ describe('SiApplicationHeaderComponent', () => {
       expect(await headerHarness.getLaunchpad()).toBeTruthy();
       await headerHarness.openNavigationMobile();
       expect(await headerHarness.getLaunchpad()).toBeFalsy();
-      expect(await headerHarness.isNavigationMobileOpen()).toBeTrue();
+      expect(await headerHarness.isNavigationMobileOpen()).toBe(true);
     });
   });
 });

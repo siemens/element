@@ -2,6 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { expect } from 'vitest';
+
 /** */
 export class CalendarTestHelper {
   constructor(private element: HTMLElement) {}

@@ -13,6 +13,7 @@ import RenderFeature from 'ol/render/Feature';
 import { Cluster, Vector as VectorSource } from 'ol/source';
 import { mockGeoJson } from 'src/app/mocks/geojson.mock';
 import { mockPoints, singlePoint } from 'src/app/mocks/points.mock';
+import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { SiMapComponent, SiMapModule, SiMapPopoverComponent, SiMapTooltipComponent } from '.';
 import { MapService } from './services/map.service';
@@ -80,7 +81,7 @@ describe('SiMapComponent', () => {
     componentRef.setInput('displayTooltipOnHover', true);
     componentRef.setInput('cluster', true);
     component.isClicked = false;
-    spyOn(component, 'showTooltipContent').and.callThrough();
+    vi.spyOn(component, 'showTooltipContent');
 
     fixture.detectChanges();
     component.showTooltipContent(mockFeature);
@@ -115,11 +116,11 @@ describe('SiMapComponent', () => {
   it('should open cluster with elements and zoom in when clicking to cluster', () => {
     componentRef.setInput('cluster', true);
     componentRef.setInput('markerAnimation', true);
-    spyOn(window, 'alert');
+    vi.spyOn(window, 'alert');
     const popover = fixture.debugElement.query(
       By.directive(SiMapPopoverComponent)
     ).componentInstance;
-    spyOn(popover, 'render');
+    vi.spyOn(popover, 'render');
     fixture.detectChanges();
     const feature = new Feature(new Point([1373214.9745276642, 5690661.889241241]));
     feature.setProperties({
@@ -180,7 +181,7 @@ describe('SiMapComponent', () => {
 
   it('should no display tooltip if feature is Clicked', () => {
     componentRef.setInput('displayTooltipOnHover', true);
-    spyOn(component, 'featureClick').and.callThrough();
+    vi.spyOn(component, 'featureClick');
     fixture.detectChanges();
     component.select(singlePoint);
     expect(component.featureClick).toHaveBeenCalled();
@@ -190,7 +191,7 @@ describe('SiMapComponent', () => {
 
   it('should display popover component on hover when hovered', () => {
     componentRef.setInput('displayTooltipOnHover', true);
-    spyOn(component, 'onFeatureHover').and.callThrough();
+    vi.spyOn(component, 'onFeatureHover');
     const event: any = {
       pixel: [320, 420]
     };
@@ -200,7 +201,7 @@ describe('SiMapComponent', () => {
   });
 
   it('should emit clicked MapPoint', () => {
-    spyOn(component.pointsSelected, 'emit').and.callThrough();
+    vi.spyOn(component.pointsSelected, 'emit');
     fixture.detectChanges();
     component.select(singlePoint);
     expect(component.pointsSelected.emit).toHaveBeenCalledWith([singlePoint]);
@@ -210,11 +211,11 @@ describe('SiMapComponent', () => {
     componentRef.setInput('displayTooltipOnHover', true);
     component.isClicked = false;
     componentRef.setInput('cluster', true);
-    spyOn(component, 'showTooltipContent').and.callThrough();
+    vi.spyOn(component, 'showTooltipContent');
     const tooltip = fixture.debugElement.query(
       By.directive(SiMapTooltipComponent)
     ).componentInstance;
-    spyOn<any>(tooltip, 'setTooltip');
+    vi.spyOn<any, any>(tooltip, 'setTooltip');
     const feat = new Feature({
       geometry: new Point([4456989.943596791, 1369860.9690134972])
     });
@@ -230,7 +231,7 @@ describe('SiMapComponent', () => {
     componentRef.setInput('displayTooltipOnHover', true);
     component.isClicked = false;
     componentRef.setInput('cluster', true);
-    spyOn(component, 'showTooltipContent').and.callThrough();
+    vi.spyOn(component, 'showTooltipContent');
     fixture.detectChanges();
     const feat = new RenderFeature('Point', [0, 0], [0], 0, {}, 1);
     const feats = [feat];
@@ -242,8 +243,8 @@ describe('SiMapComponent', () => {
     componentRef.setInput('displayTooltipOnHover', true);
     component.isClicked = false;
     componentRef.setInput('cluster', true);
-    spyOn(component, 'closePopup').and.callThrough();
-    spyOn(component.pointsSelected, 'emit').and.callThrough();
+    vi.spyOn(component, 'closePopup');
+    vi.spyOn(component.pointsSelected, 'emit');
     const event: any = {
       pixel: [410, 255]
     };
@@ -266,14 +267,14 @@ describe('SiMapComponent', () => {
 
   it('update map style to light map on theme change', () => {
     componentRef.setInput('maptilerKey', 'asdfghjkl');
-    spyOn(component, 'setMapStyle');
+    vi.spyOn(component, 'setMapStyle');
     component.onThemeSwitch(false);
     expect(component.setMapStyle).toHaveBeenCalledWith(false, 'asdfghjkl');
   });
 
   it('update map style to dark map on theme change', () => {
     componentRef.setInput('maptilerKey', 'qwertyuiop');
-    spyOn(component, 'setMapStyle');
+    vi.spyOn(component, 'setMapStyle');
     component.onThemeSwitch(true);
     expect(component.setMapStyle).toHaveBeenCalledWith(true, 'qwertyuiop');
   });
@@ -284,8 +285,8 @@ describe('SiMapComponent', () => {
         geometry: new Point([4456989.943596791, 1369860.9690134972])
       })
     ];
-    spyOn(component.tooltipOverlay, 'setOffset');
-    spyOn(component.tooltipOverlay, 'setPosition');
+    vi.spyOn(component.tooltipOverlay, 'setOffset');
+    vi.spyOn(component.tooltipOverlay, 'setPosition');
     component.showClusterTooltipContent(feat);
     expect(component.tooltipOverlay.setOffset).toHaveBeenCalledWith([0, 20]);
     expect(component.tooltipOverlay.setPosition).toHaveBeenCalled();

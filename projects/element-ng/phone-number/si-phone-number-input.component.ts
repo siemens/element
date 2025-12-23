@@ -388,7 +388,7 @@ export class SiPhoneNumberInputComponent
       return this.phoneUtil.parse(rawNumber, regionCodeForParsing);
     } catch (e) {
       // The Number is too short, we cannot parse it yet. Error can be ignored. Hopefully, the user enters more digits.
-      return;
+      return undefined;
     }
   }
 

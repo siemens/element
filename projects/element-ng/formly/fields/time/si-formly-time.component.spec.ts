@@ -14,6 +14,7 @@ import { FormRecord, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
 import { SiDatepickerModule, SiTimepickerComponent } from '@siemens/element-ng/datepicker';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import { SiFormlyTimeComponent } from './si-formly-time.component';
 
@@ -73,7 +74,7 @@ describe('formly time-type', () => {
 
     const debugEl = fixture.debugElement.query(By.directive(SiTimepickerComponent));
     const instance = debugEl.componentInstance as SiTimepickerComponent;
-    expect(instance.hideLabels()).toBeTrue();
+    expect(instance.hideLabels()).toBe(true);
   });
 
   it('should set timepicker to readonly', () => {
@@ -95,7 +96,7 @@ describe('formly time-type', () => {
 
     const debugEl = fixture.debugElement.query(By.directive(SiTimepickerComponent));
     const instance = debugEl.componentInstance as SiTimepickerComponent;
-    expect(instance.readonly()).toBeTrue();
+    expect(instance.readonly()).toBe(true);
   });
 
   it('should set timepicker hideLabels to false', () => {
@@ -114,7 +115,7 @@ describe('formly time-type', () => {
 
     const debugEl = fixture.debugElement.query(By.directive(SiTimepickerComponent));
     const instance = debugEl.componentInstance as SiTimepickerComponent;
-    expect(instance.hideLabels()).toBeFalse();
+    expect(instance.hideLabels()).toBe(false);
   });
 
   it('should not use the padding-inline-end or class .form-control-has-icon', () => {
@@ -155,7 +156,7 @@ describe('formly time-type', () => {
 
     const debugEl = fixture.debugElement.query(By.directive(SiTimepickerComponent));
     const instance = debugEl.componentInstance as SiTimepickerComponent;
-    expect(instance.showMinutes()).toBeFalse();
+    expect(instance.showMinutes()).toBe(false);
   });
 
   it('should set timepicker showSeconds to true', () => {
@@ -175,7 +176,7 @@ describe('formly time-type', () => {
 
     const debugEl = fixture.debugElement.query(By.directive(SiTimepickerComponent));
     const instance = debugEl.componentInstance as SiTimepickerComponent;
-    expect(instance.showSeconds()).toBeTrue();
+    expect(instance.showSeconds()).toBe(true);
   });
 
   it('should set timepicker showSeconds to true', () => {
@@ -195,7 +196,7 @@ describe('formly time-type', () => {
 
     const debugEl = fixture.debugElement.query(By.directive(SiTimepickerComponent));
     const instance = debugEl.componentInstance as SiTimepickerComponent;
-    expect(instance.showMilliseconds()).toBeTrue();
+    expect(instance.showMilliseconds()).toBe(true);
   });
 
   it(`should set timepicker show meridian`, () => {
@@ -215,7 +216,7 @@ describe('formly time-type', () => {
 
     const debugEl = fixture.debugElement.query(By.directive(SiTimepickerComponent));
     const instance = debugEl.componentInstance as SiTimepickerComponent;
-    expect(instance.showMeridian()).toBeTrue();
+    expect(instance.showMeridian()).toBe(true);
   });
 
   it(`should support date string value input`, () => {

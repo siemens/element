@@ -36,7 +36,7 @@ export class SiBreadcrumbDefaultResolverService implements SiBreadcrumbResolverS
           }) as BreadcrumbItem
       );
     }
-    return;
+    return undefined;
   }
 
   private resolveDefault(route: ActivatedRouteSnapshot | null): BreadcrumbItem[] {

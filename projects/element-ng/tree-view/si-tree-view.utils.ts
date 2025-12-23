@@ -108,7 +108,7 @@ export const selectItemsBetween = <T = any>(
   end: TreeItem<T>
 ): TreeItem<T>[] | undefined => {
   if (start === end) {
-    return;
+    return undefined;
   }
   const foundItems: TreeItem<T>[] = [];
   const inBetweenState: InBetweenState = { startIsFirst: false, inBetween: false, done: false };

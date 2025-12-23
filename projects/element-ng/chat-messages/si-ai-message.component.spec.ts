@@ -6,6 +6,7 @@ import { DebugElement, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By, DomSanitizer } from '@angular/platform-browser';
 import { getMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
+import { vi } from 'vitest';
 
 import { MessageAction } from './message-action.model';
 import { SiAiMessageComponent as TestComponent } from './si-ai-message.component';
@@ -134,7 +135,7 @@ describe('SiAiMessageComponent', () => {
   });
 
   it('should call action with actionParam', () => {
-    const actionSpy = jasmine.createSpy('action');
+    const actionSpy = vi.fn();
     const actions: MessageAction[] = [
       {
         label: 'Copy',

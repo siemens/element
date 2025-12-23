@@ -5,7 +5,7 @@
 import { NgClass } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
-import { SelectOption, SelectOptionLegacy } from '@siemens/element-ng/select';
+import { isSelectOption, SelectOption, SelectOptionLegacy } from '@siemens/element-ng/select';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 @Component({
@@ -36,7 +36,7 @@ export class SiReadonlyThresholdOptionComponent {
     const options = this.options();
     const value = this.value();
     if (value && options) {
-      return options.find(opt => (opt.type === 'option' ? opt.value === value : opt.id === value));
+      return options.find(opt => (isSelectOption(opt) ? opt.value === value : opt.id === value));
     }
     return undefined;
   });
@@ -45,13 +45,13 @@ export class SiReadonlyThresholdOptionComponent {
     const option = this.option();
     return !option || option.disabled
       ? undefined
-      : option.type === 'option'
+      : isSelectOption(option)
         ? option.iconColor
         : option.color;
   });
 
   protected readonly label = computed(() => {
     const option = this.option();
-    return option?.type === 'option' ? option.label : option?.title;
+    return isSelectOption(option) ? option.label : option?.title;
   });
 }

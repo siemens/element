@@ -5,7 +5,6 @@
     "declaration": true,
     "inlineSources": true,
     "types": ["@siemens/element-translate-ng/localize-types"],
-    "lib": ["dom", "es2018"],
     "paths": {
       "@siemens/element-translate-ng": ["dist/@siemens/element-translate-ng"],
       "@siemens/element-translate-ng/*": ["dist/@siemens/element-translate-ng/*"],

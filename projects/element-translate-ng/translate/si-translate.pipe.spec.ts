@@ -14,6 +14,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { injectSiTranslateService, t } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { SiTranslatePipe } from './si-translate.pipe';
 import { SiTranslateService, TranslationResult } from './si-translate.service';
@@ -120,8 +121,8 @@ describe('SiTranslatePipe', () => {
     });
 
     it('should not call translate when no param changed', () => {
-      const pipeSpy = spyOn(SiTranslatePipe.prototype, 'transform');
-      const translateSpy = spyOn(SiAsyncTranslateService.prototype, 'translate');
+      const pipeSpy = vi.spyOn(SiTranslatePipe.prototype, 'transform');
+      const translateSpy = vi.spyOn(SiAsyncTranslateService.prototype, 'translate');
       component.cdRef.detectChanges();
       expect(pipeSpy).toHaveBeenCalled();
       expect(translateSpy).not.toHaveBeenCalled();

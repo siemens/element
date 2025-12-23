@@ -7,6 +7,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { SiLoadingSpinnerModule } from './si-loading-spinner.module';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 @Component({
   imports: [SiLoadingSpinnerModule],
@@ -45,56 +46,56 @@ describe('SiLoadingSpinnerDirective', () => {
   });
 
   beforeEach(() => {
-    jasmine.clock().install();
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should not display spinner before initial delay', async () => {
     fixture.detectChanges();
-    jasmine.clock().tick(initialDelay - 10);
+    vi.advanceTimersByTime(initialDelay - 10);
     await fixture.whenStable();
-    expect(isLoading()).toBeFalse();
+    expect(isLoading()).toBe(false);
   });
 
   it('should display spinner after initial delay', async () => {
     await fixture.whenStable();
-    jasmine.clock().tick(initialDelay);
+    vi.advanceTimersByTime(initialDelay);
     await fixture.whenStable();
-    expect(isLoading()).toBeTrue();
+    expect(isLoading()).toBe(true);
   });
 
   it('should skip showing spinner if canceled before initial delay', async () => {
     await fixture.whenStable();
-    jasmine.clock().tick(initialDelay - 10);
+    vi.advanceTimersByTime(initialDelay - 10);
     await fixture.whenStable();
-    expect(isLoading()).toBeFalse();
+    expect(isLoading()).toBe(false);
 
     fixture.componentInstance.loading = false;
     fixture.changeDetectorRef.markForCheck();
-    jasmine.clock().tick(600);
+    vi.advanceTimersByTime(600);
     await fixture.whenStable();
 
-    expect(isLoading()).toBeFalse();
+    expect(isLoading()).toBe(false);
   });
 
   it('should show and hide spinner', async () => {
-    jasmine.clock().tick(initialDelay);
+    vi.advanceTimersByTime(initialDelay);
     await fixture.whenStable();
-    jasmine.clock().tick(initialDelay);
+    vi.advanceTimersByTime(initialDelay);
     await fixture.whenStable();
-    expect(isLoading()).toBeTrue();
+    expect(isLoading()).toBe(true);
 
     fixture.componentInstance.loading = false;
     fixture.changeDetectorRef.markForCheck();
-    jasmine.clock().tick(500);
+    vi.advanceTimersByTime(500);
     await fixture.whenStable();
     // another one to update the DOM
-    jasmine.clock().tick(0);
+    vi.advanceTimersByTime(0);
     await fixture.whenStable();
 
-    expect(isLoading()).toBeFalse();
+    expect(isLoading()).toBe(false);
   });
 });

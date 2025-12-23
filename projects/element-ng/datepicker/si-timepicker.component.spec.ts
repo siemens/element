@@ -7,6 +7,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { SiTimepickerComponent as TestComponent } from './index';
+import { expect, it } from 'vitest';
 
 @Component({
   imports: [TestComponent, ReactiveFormsModule],
@@ -191,22 +192,22 @@ describe('SiTimepickerComponent', () => {
       component.time.setValue('2022-01-12 16:23:59.435');
       fixture.detectChanges();
 
-      expect(component.picker().isPM()).toBeTrue();
+      expect(component.picker().isPM()).toBe(true);
 
       component.time.setValue('2022-01-12 04:23:59.435');
       fixture.detectChanges();
-      expect(component.picker().isPM()).toBeFalse();
+      expect(component.picker().isPM()).toBe(false);
     });
 
     it('should falsify isPM when meridian is hidden', () => {
       fixture.detectChanges();
       component.time.setValue('2022-01-12 16:23:59.435');
       fixture.detectChanges();
-      expect(component.picker().isPM()).toBeTrue();
+      expect(component.picker().isPM()).toBe(true);
 
       component.showMeridian.set(false);
       fixture.detectChanges();
-      expect(component.picker().isPM()).toBeFalse();
+      expect(component.picker().isPM()).toBe(false);
     });
 
     it('should validate hours range', () => {
@@ -421,19 +422,19 @@ describe('SiTimepickerComponent', () => {
       component.showMeridian.set(false);
       fixture.detectChanges();
 
-      const spyMinutes = spyOn(getMinutes(), 'focus').and.callThrough();
+      const spyMinutes = vi.spyOn(getMinutes(), 'focus');
       getHours().dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
       expect(spyMinutes).toHaveBeenCalled();
 
-      const spySeconds = spyOn(getSeconds(), 'focus').and.callThrough();
+      const spySeconds = vi.spyOn(getSeconds(), 'focus');
       getMinutes().dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
       expect(spySeconds).toHaveBeenCalled();
 
-      const spyMilliseconds = spyOn(getMilliseconds(), 'focus').and.callThrough();
+      const spyMilliseconds = vi.spyOn(getMilliseconds(), 'focus');
       getSeconds().dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
       expect(spyMilliseconds).toHaveBeenCalled();
 
-      const spyInputCompleted = spyOn(component, 'onInputCompleted');
+      const spyInputCompleted = vi.spyOn(component, 'onInputCompleted');
       getMilliseconds().dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
       expect(spyInputCompleted).toHaveBeenCalled();
     });

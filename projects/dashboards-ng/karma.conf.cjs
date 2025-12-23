@@ -9,6 +9,6 @@ module.exports = function (config) {
   config.set({
     ...sharedConfig,
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
-    plugins: [...sharedConfig.plugins, require('@angular-devkit/build-angular/plugins/karma')]
+    plugins: [...sharedConfig.plugins]
   });
 };

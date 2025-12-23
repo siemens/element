@@ -5,6 +5,7 @@
 import { ComponentRef, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { SiLoginBasicComponent as TestComponent } from './si-login-basic.component';
 
@@ -57,11 +58,11 @@ describe('SiLoginBasicComponent', () => {
     expect(nextButton.textContent.trim()).toBe('Test Next');
 
     // Spy on usernameValidation output and simulate validation callback to activate second step.
-    const usernameValidationSpy = spyOn(component.instance.usernameValidation, 'emit').and.callFake(
-      (payload: any) => {
+    const usernameValidationSpy = vi
+      .spyOn(component.instance.usernameValidation, 'emit')
+      .mockImplementation((payload: any) => {
         payload.validate(true);
-      }
-    );
+      });
 
     nextButton.click();
     fixture.detectChanges();
@@ -95,7 +96,7 @@ describe('SiLoginBasicComponent', () => {
     passwordInput.dispatchEvent(new Event('input'));
     fixture.detectChanges();
 
-    const spy = spyOn(component.instance.login, 'emit');
+    const spy = vi.spyOn(component.instance.login, 'emit');
     const loginButton = fixture.nativeElement.querySelector('button[type="submit"]');
     loginButton.click();
     fixture.detectChanges();
@@ -115,13 +116,13 @@ describe('SiLoginBasicComponent', () => {
     usernameInput.dispatchEvent(new Event('input'));
     fixture.detectChanges();
 
-    const spy = spyOn(component.instance.usernameValidation, 'emit');
+    const spy = vi.spyOn(component.instance.usernameValidation, 'emit');
     const nextButton = fixture.nativeElement.querySelector('.login-basic-next-button');
     nextButton.click();
     fixture.detectChanges();
 
     expect(spy).toHaveBeenCalled();
-    const payload = spy.calls.mostRecent().args[0];
+    const payload = vi.mocked(spy).mock.lastCall[0];
     expect(payload.username).toBe('user@example.com');
   });
 
@@ -133,7 +134,7 @@ describe('SiLoginBasicComponent', () => {
     fixture.detectChanges();
 
     // Activate second step by simulating next button click.
-    spyOn(component.instance.usernameValidation, 'emit').and.callFake((payload: any) => {
+    vi.spyOn(component.instance.usernameValidation, 'emit').mockImplementation((payload: any) => {
       payload.validate(true);
     });
     const nextButton = fixture.nativeElement.querySelector('.login-basic-next-button');

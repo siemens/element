@@ -12,6 +12,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { STATUS_ICON } from '@siemens/element-ng/common';
 import { Subject } from 'rxjs';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { SI_TOAST_AUTO_HIDE_DELAY, SiToast } from '../si-toast.model';
 import { SiToastNotificationComponent } from './si-toast-notification.component';
@@ -62,7 +63,7 @@ describe('SiToastNotificationComponent', () => {
   });
 
   it('calls the close() function on clicking close icon', () => {
-    const closeSpy = jasmine.createSpy();
+    const closeSpy = vi.fn();
     component.toast.close = closeSpy;
 
     element.querySelector<HTMLElement>(`[aria-label="Close"]`)?.click();
@@ -72,8 +73,8 @@ describe('SiToastNotificationComponent', () => {
 
   it('should pause/resume the animation on mouse events', () => {
     const timerBar = element.querySelector<HTMLElement>('.si-toast-timer-bar');
-    spyOn(component.siToastComponent().paused, 'emit');
-    spyOn(component.siToastComponent().resumed, 'emit');
+    vi.spyOn(component.siToastComponent().paused, 'emit');
+    vi.spyOn(component.siToastComponent().resumed, 'emit');
 
     expect(timerBar?.style.getPropertyValue('--toast-timer-duration')).toBe(
       SI_TOAST_AUTO_HIDE_DELAY / 1000 + 's'

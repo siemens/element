@@ -2,6 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { afterEach, describe, expect, it } from 'vitest';
+
 import { SI_LOCALE_LOCAL_STORAGE_KEY, SiDefaultLocaleStore } from './si-locale-store';
 
 describe('SiDefaultLocaleStore', () => {
@@ -14,13 +16,12 @@ describe('SiDefaultLocaleStore', () => {
     expect(store.locale).toBeUndefined();
   });
 
-  it('should return a saved locale', (done: DoneFn) => {
+  it('should return a saved locale', async () => {
     const store = new SiDefaultLocaleStore(true);
     store.saveLocale('en').subscribe((saveSucceed: boolean) => {
-      expect(saveSucceed).toBeTrue();
+      expect(saveSucceed).toBe(true);
       const store2 = new SiDefaultLocaleStore(true);
       expect(store2.locale).toBe('en');
-      done();
     });
   });
 });
