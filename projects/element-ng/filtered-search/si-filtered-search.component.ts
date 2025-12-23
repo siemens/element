@@ -109,15 +109,6 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
    */
   readonly disabled = input(false, { transform: booleanAttribute });
   /**
-   * Do not allow changes. Search can still be triggered.
-   *
-   * @deprecated Use {@link disabled} instead.
-   *
-   * @defaultValue false
-   */
-  readonly readonly = input(false, { transform: booleanAttribute });
-
-  /**
    * Limit criteria to the predefined ones.
    *
    * @defaultValue false
@@ -395,7 +386,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     }
   );
 
-  private readonly isReadOnly = computed(() => this.readonly() || this.disabled());
+  private readonly isReadOnly = computed(() => this.disabled());
 
   constructor() {
     this.dataSource = this.typeaheadInputChange.pipe(
