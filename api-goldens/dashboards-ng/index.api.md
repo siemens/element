@@ -121,9 +121,6 @@ export type LoadRemoteModuleScriptOptions = {
     exposedModule: string;
 };
 
-// @public (undocumented)
-export const NEW_WIDGET_PREFIX = "new-widget-";
-
 // @public
 export type ObjectFit = 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
 
@@ -138,6 +135,9 @@ export const setupWidgetInstance: (widgetComponentFactory: WidgetComponentFactor
 
 // @public
 export const SI_DASHBOARD_CONFIGURATION: InjectionToken<Config>;
+
+// @public
+export const SI_WIDGET_ID_PROVIDER: InjectionToken<SiWidgetIdProvider>;
 
 // @public
 export const SI_WIDGET_STORE: InjectionToken<SiWidgetStorage>;
@@ -165,7 +165,7 @@ export class SiDefaultWidgetStorage extends SiWidgetStorage {
     // (undocumented)
     load(dashboardId?: string): Observable<WidgetConfig[]>;
     // (undocumented)
-    save(widgets: (WidgetConfig | Omit<WidgetConfig, 'id'>)[], removedWidgets?: WidgetConfig[], dashboardId?: string): Observable<WidgetConfig[]>;
+    save(modifiedWidgets: WidgetConfig[], addedWidgets: WidgetConfig[], removedWidgets?: WidgetConfig[], dashboardId?: string): Observable<WidgetConfig[]>;
     // (undocumented)
     storage: Storage;
 }
@@ -256,6 +256,20 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
 }
 
 // @public
+export class SiWidgetDefaultIdProvider extends SiWidgetIdProvider {
+    generateWidgetId(widget: Omit<WidgetConfig, 'id'>, dashboardId?: string): string;
+    // (undocumented)
+    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiWidgetDefaultIdProvider, never>;
+    // (undocumented)
+    static ɵprov: _angular_core.ɵɵInjectableDeclaration<SiWidgetDefaultIdProvider>;
+}
+
+// @public
+export abstract class SiWidgetIdProvider {
+    abstract generateWidgetId(widget: Omit<WidgetConfig, 'id'>, dashboardId?: string): string;
+}
+
+// @public
 export class SiWidgetInstanceEditorDialogComponent implements OnInit, OnDestroy {
     readonly closed: _angular_core.OutputEmitterRef<WidgetConfig | undefined>;
     readonly editorSetupCompleted: _angular_core.OutputEmitterRef<void>;
@@ -278,7 +292,7 @@ export abstract class SiWidgetStorage {
         secondary: Observable<(MenuItem | DashboardToolbarItem)[]>;
     };
     abstract load(dashboardId?: string): Observable<WidgetConfig[]>;
-    abstract save(widgets: (WidgetConfig | Omit<WidgetConfig, 'id'>)[], removedWidgets?: WidgetConfig[], dashboardId?: string): Observable<WidgetConfig[]>;
+    abstract save(modifiedWidgets: WidgetConfig[], addedWidgets: WidgetConfig[], removedWidgets?: WidgetConfig[], dashboardId?: string): Observable<WidgetConfig[]>;
 }
 
 // @public
