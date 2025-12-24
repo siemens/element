@@ -2,6 +2,13 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger as animationTrigger
+} from '@angular/animations';
 import { A11yModule, CdkTrapFocus } from '@angular/cdk/a11y';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { NgClass, NgTemplateOutlet } from '@angular/common';
@@ -40,7 +47,37 @@ import { map, skip, takeUntil } from 'rxjs/operators';
   templateUrl: './si-application-header.component.html',
   styleUrl: './si-application-header.component.scss',
   providers: [{ provide: SI_HEADER_WITH_DROPDOWNS, useExisting: SiApplicationHeaderComponent }],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    animationTrigger('expand', [
+      transition(':enter', [
+        style({
+          opacity: 0,
+          transform: 'translateY(-120px)'
+        }),
+        animate(
+          '0.5s ease',
+          style({
+            opacity: 1,
+            transform: 'translateY(0)'
+          })
+        )
+      ]),
+      transition(':leave', [
+        animate(
+          '0.25s ease',
+          style({
+            opacity: 0,
+            transform: 'translateY(-120px)'
+          })
+        )
+      ])
+    ]),
+    animationTrigger('backdrop', [
+      state('show', style({ 'opacity': '1' })),
+      transition('* <=> *', [animate('0.15s linear')])
+    ])
+  ]
 })
 export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDestroy {
   private static idCounter = 0;
@@ -148,9 +185,6 @@ export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDest
       this.dropdownOpened();
       this.closeMobileMenus.next();
       this.launchpadOpen.set(true);
-      this.inlineDropdown
-        .pipe(skip(1), takeUntil(this.closeMobileMenus))
-        .subscribe(() => this.closeMobileMenus.next());
     }
   }
 

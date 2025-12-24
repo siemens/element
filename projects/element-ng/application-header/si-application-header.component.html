@@ -53,8 +53,10 @@
 </header>
 
 @if (launchpadOpen() && launchpad()) {
-  <div [id]="id + '-launchpad'">
-    <ng-template [ngTemplateOutlet]="launchpad()!" [ngTemplateOutletInjector]="injector" />
+  <div class="launchpad-container" [@expand]>
+    <div [id]="id + '-launchpad'">
+      <ng-template [ngTemplateOutlet]="launchpad()!" [ngTemplateOutletInjector]="injector" />
+    </div>
   </div>
 }
 
@@ -62,6 +64,7 @@
   <div
     class="modal-backdrop"
     [ngClass]="launchpadOpen() ? 'd-block' : 'd-' + expandBreakpoint() + '-none'"
+    [@backdrop]="'show'"
     (click)="backdropClicked()"
   ></div>
 }

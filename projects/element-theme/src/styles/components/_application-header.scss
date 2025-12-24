@@ -31,8 +31,9 @@
   align-items: stretch;
   border-block-end: 1px solid semantic-tokens.$element-ui-4;
 
-  // hide border when mobile styles are applied and either the dropdown-menu or header-toggle is shown
-  &:has(.dropdown-menu.show, .header-toggle.show) {
+  // hide border when mobile styles are applied and either the dropdown-menu is shown or navigation is expanded
+  &:has(.dropdown-menu.show),
+  &.show-navigation {
     border-block-end: none;
   }
 

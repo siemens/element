@@ -1,32 +1,41 @@
 @use 'sass:map';
-@use '@siemens/element-theme/src/styles/variables';
+@use '@siemens/element-theme/src/styles/all-variables';
 
 :host {
   display: flex;
   align-items: center;
   flex-flow: column nowrap;
   position: relative;
-  padding-block: map.get(variables.$spacers, 7);
+  padding-block: map.get(all-variables.$spacers, 8);
   inline-size: 152px;
   max-inline-size: 152px;
-  padding-inline: map.get(variables.$spacers, 2);
-  color: variables.$element-text-primary;
-  border-radius: variables.$element-radius-2;
-
-  &.active {
-    border: 1px solid variables.$element-ui-0;
-    background-color: variables.$element-base-1-hover;
-  }
+  padding-inline: map.get(all-variables.$spacers, 4);
+  color: all-variables.$element-text-primary;
+  border-radius: all-variables.$element-radius-2;
 
   &.action {
-    color: variables.$element-action-primary;
+    color: all-variables.$element-action-primary;
   }
 
+  &.active,
   &:hover {
-    color: variables.$element-text-primary;
+    color: all-variables.$element-text-primary;
     text-decoration: none;
-    background-color: variables.$element-base-1-hover;
+    background-color: all-variables.$element-base-1-hover;
   }
+
+  &:is([disabled], .disabled) {
+    pointer-events: none;
+    opacity: all-variables.$element-action-disabled-opacity;
+  }
+}
+
+.app-text {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  max-inline-size: 100%;
+  overflow: hidden;
 }
 
 .app-icon {
@@ -35,26 +44,57 @@
   justify-content: center;
   inline-size: 48px;
   block-size: 48px;
-  margin-block-end: map.get(variables.$spacers, 4);
-  border-radius: variables.$element-radius-2;
+  margin-block-end: map.get(all-variables.$spacers, 4);
+  border-radius: all-variables.$element-radius-2;
 
   &:is(si-icon) {
-    background: variables.$element-launchpad-app-background;
+    background: all-variables.$element-launchpad-app-background;
     font-size: 40px;
-    padding: map.get(variables.$spacers, 2);
-    color: variables.$element-launchpad-app-color;
+    padding: map.get(all-variables.$spacers, 2);
+    color: all-variables.$element-launchpad-app-color;
   }
 }
 
 .favorite-icon {
   font-size: 20px;
   position: absolute;
-  inset-inline-end: 22px;
-  inset-block-start: 10px;
-  padding: map.get(variables.$spacers, 1);
-  color: variables.$element-text-primary;
+  inset-inline-end: 14px;
+  inset-block-start: 14px;
+  padding: map.get(all-variables.$spacers, 1);
+  color: all-variables.$element-text-primary;
+}
+
+.external-icon {
+  font-size: 16px;
 }
 
 .is-favorite {
-  color: variables.$element-status-caution;
+  color: all-variables.$element-status-caution;
+}
+
+@include all-variables.media-breakpoint-down(md) {
+  :host {
+    flex-flow: row nowrap;
+    inline-size: 100%;
+    max-inline-size: 100%;
+    padding: map.get(all-variables.$spacers, 4);
+
+    &:has(.favorite-icon) {
+      padding-inline-end: map.get(all-variables.$spacers, 9);
+    }
+  }
+
+  .app-icon {
+    margin-block-end: 0;
+    margin-inline-end: map.get(all-variables.$spacers, 4);
+  }
+
+  .app-text {
+    align-items: start;
+  }
+
+  .favorite-icon {
+    inset-inline-end: map.get(all-variables.$spacers, 4);
+    inset-block-start: map.get(all-variables.$spacers, 4);
+  }
 }
