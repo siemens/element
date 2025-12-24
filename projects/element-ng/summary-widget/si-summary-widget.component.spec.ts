@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ComponentRef } from '@angular/core';
+import { ComponentRef, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiSummaryWidgetComponent } from './index';
@@ -14,7 +14,8 @@ describe('SiSummaryWidgetComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [SiSummaryWidgetComponent]
+      imports: [SiSummaryWidgetComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents()
   );
 

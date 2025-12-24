@@ -54,8 +54,6 @@ export class SiAutoCollapsableListItemDirective extends SiAutoCollapsableListMea
 
 // @public (undocumented)
 export class SiAutoCollapsableListMeasurable {
-    // (undocumented)
-    protected readonly elementRef: ElementRef<any>;
     size$: rxjs.Observable<number>;
     // (undocumented)
     static ɵdir: i0.ɵɵDirectiveDeclaration<SiAutoCollapsableListMeasurable, never, never, {}, {}, never, never, true, never>;

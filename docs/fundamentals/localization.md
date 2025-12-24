@@ -33,8 +33,7 @@ generic example that only loads the selected Angular locale into the application
 
 Note, the `/* webpackInclude: /(en|de|fr)\.js$/ */` statement that need to match the supported locales.
 
-``` ts
-
+```ts
 // On locale change, we dynamically reload the locale definition
 // for angular. With this configuration, we only load the current
 // locale into the client and not all application locales.
@@ -49,7 +48,7 @@ const genericLocaleInitializer = (localeId: string): Promise<any> => {
   ).then(module => {
     registerLocaleData(module.default);
   });
-}
+};
 
 const localeConfig: SiLocaleConfig = {
   availableLocales: ['en', 'de', 'fr'],
@@ -59,14 +58,14 @@ const localeConfig: SiLocaleConfig = {
   fallbackEnabled: false
 };
 
-:
-:
-providers: [
-  { provide: LOCALE_ID, useClass: SiLocaleId, deps: [SiLocaleService] },
-  { provide: SI_LOCALE_CONFIG, useValue: localeConfig }
-  // , { provide: APP_INITIALIZER, useFactory: appLoadFactory, multi: true, deps: [DemoLocaleService] },
-  // { provide: SiLocaleStore, useClass: DemoLocaleService }
-],
+export const APP_CONFIG: ApplicationConfig = {
+  providers: [
+    { provide: LOCALE_ID, useClass: SiLocaleId, deps: [SiLocaleService] },
+    { provide: SI_LOCALE_CONFIG, useValue: localeConfig }
+    // , { provide: APP_INITIALIZER, useFactory: appLoadFactory, multi: true, deps: [DemoLocaleService] },
+    // { provide: SiLocaleStore, useClass: DemoLocaleService }
+  ]
+};
 ```
 
 In addition, `fallbackEnabled` enable ngx-translate to use the translation from the `defaultLocale` language when a translate value is missing.
@@ -92,12 +91,19 @@ export function appLoadFactory(service: DemoLocaleService) {
 ```ts
 // Configure the APP_INITIALIZER provider and configure to use the
 // DemoLocaleService as a locale store.
-providers: [
-  { provide: LOCALE_ID, useClass: SiLocaleId, deps: [SiLocaleService] },
-  { provide: SI_LOCALE_CONFIG, useValue: localeConfig },
-  { provide: APP_INITIALIZER, useFactory: appLoadFactory, multi: true, deps: [DemoLocaleService] },
-  { provide: SiLocaleStore, useClass: DemoLocaleService }
-],
+export const APP_CONFIG: ApplicationConfig = {
+  providers: [
+    { provide: LOCALE_ID, useClass: SiLocaleId, deps: [SiLocaleService] },
+    { provide: SI_LOCALE_CONFIG, useValue: localeConfig },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: appLoadFactory,
+      multi: true,
+      deps: [DemoLocaleService]
+    },
+    { provide: SiLocaleStore, useClass: DemoLocaleService }
+  ]
+};
 ```
 
 You can also combine a Store that caches the last value in the localStore and loads in parallel the current value from a backend.
@@ -106,7 +112,7 @@ You can also combine a Store that caches the last value in the localStore and lo
 
 If you need to support locale changes without reloading, we recommend to extend the Angular pipes and set the `pure` property to false.
 
-``` ts
+```ts
 @Pipe({
   name: 'dateImpure',
   pure: false // eslint-disable-line @angular-eslint/no-pipe-impure
@@ -129,10 +135,12 @@ For standalone applications, the respective provider factory must be imported in
 Supported frameworks:
 
 <!-- markdownlint-disable MD013 -->
-| Framework           | Path                                 | Module                        | Provider factory                | Remarks                                                                                                        |
-|---------------------|--------------------------------------|-------------------------------|---------------------------------|----------------------------------------------------------------------------------------------------------------|
+
+| Framework           | Path                                             | Module                        | Provider factory                | Remarks                                                                                                        |
+| ------------------- | ------------------------------------------------ | ----------------------------- | ------------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | `ngx-translate`     | `@siemens/element-translate-ng/ngx-translate`    | `SiTranslateNgxTModule`       | `provideNgxTranslateForElement` |                                                                                                                |
 | `@angular/localize` | `@siemens/element-translate-ng/angular-localize` | `SiTranslateNgLocalizeModule` | `provideNgLocalizeForElement`   | The support is experimental. Please reach out to us via an issue, if you plan to use this in a productive app. |
+
 <!-- markdownlint-enable MD013 -->
 
 Remember, this is only the activation of the respective layer for Element, you still need to import and configure
@@ -141,6 +149,7 @@ the framework in your application as you would normally do.
 If no framework is configured, Element will fall back to English.
 
 !!! info "Support for other translation frameworks"
+
     Support for `@ngneat/transloco` and other frameworks might be added in the future on request.
 
 ### Overriding default text keys globally
@@ -190,7 +199,7 @@ be [overridden by a global provider](#overriding-default-text-keys-globally).
 The `translate` pipe is needed for frameworks like `ngx-translate` where translation happens at runtime.
 It resolves a `TranslatableString` generated by `$localize` using an actual translation framework.
 
-### Adding Cache busting feature to the translation *.json files
+### Adding Cache busting feature to the translation \*.json files
 
 By default, the `*.json` files used for translation, are not hashed by Webpack during the build and may cause caching issues when newer versions of the applications are deployed.
 To counter this, we can either use the bundler to load translations
@@ -202,14 +211,15 @@ we could simply provide a randomly generated string as a query parameter to the 
 ```ts
 export const environment = {
   production: false,
-  hash:`${new Date().valueOf()}`
+  hash: `${new Date().valueOf()}`
 };
 ```
 
 - When you initialize `TranslateHttpLoader` in your application, just append the below query parameter at the end:
 
 ```ts
-export const createTranslateLoader = (http: HttpClient) => new TranslateHttpLoader(http, './assets/i18n/', '.json?hash=' + environment.hash)
+export const createTranslateLoader = (http: HttpClient) =>
+  new TranslateHttpLoader(http, './assets/i18n/', '.json?hash=' + environment.hash);
 ```
 
 Note that this hash key will only be appended to the translation based JSON files which will be loaded by the `TranslateHttpLoader` and rest of the API calls will be working as usual.

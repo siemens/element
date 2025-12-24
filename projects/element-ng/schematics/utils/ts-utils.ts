@@ -4,7 +4,7 @@
  */
 import { normalize } from '@angular-devkit/core';
 import { SchematicsException, Tree } from '@angular-devkit/schematics';
-import { isAbsolute } from 'path';
+import { isAbsolute } from 'path/posix';
 import ts from 'typescript';
 
 import { ComponentNamesInstruction } from '../migrations/data/component-names.js';
@@ -129,13 +129,17 @@ const visitDirectory = (fs: SchematicsFileSystem, dirPath: string): string[] => 
   const entries = fs.getDir(dirPath);
   const files: string[] = [];
   entries.subfiles.forEach(filename => {
-    const fullPath = normalize(`${dirPath}/${filename}`);
-    files.push(fullPath);
+    if (!filename.startsWith('.')) {
+      const fullPath = normalize(`${dirPath}/${filename}`);
+      files.push(fullPath);
+    }
   });
 
   entries.subdirs.forEach(subdirname => {
-    const newFiles = visitDirectory(fs, `${dirPath}/${subdirname}`);
-    files.push(...newFiles);
+    if (!subdirname.startsWith('.') && subdirname !== 'node_modules') {
+      const newFiles = visitDirectory(fs, `${dirPath}/${subdirname}`);
+      files.push(...newFiles);
+    }
   });
 
   return files;

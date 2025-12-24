@@ -15,7 +15,8 @@ import { main } from './index_npm_packages';
     'element-ng',
     'element-translate-ng',
     'live-preview',
-    'native-charts-ng'
+    'native-charts-ng',
+    'dashboards-ng'
   ];
 
   const outdatedGoldens: string[] = [];

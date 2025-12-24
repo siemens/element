@@ -6,9 +6,9 @@
 
 To separate and define these terms we use the definitions from [Redux](https://redux.js.org/usage/structuring-reducers/basic-reducer-structure#basic-state-shape).
 
-- *Domain* data: data that the application needs to show, use, or modify (such as "all of the Todos retrieved from the server")
-- *App state*: data that is specific to the application's behavior (such as "Todo #5 is currently selected", or "there is a request in progress to fetch Todos")
-- *UI state*: data that represents how the UI is currently displayed (such as "The EditTodo modal dialog is currently open")
+- _Domain_ data: data that the application needs to show, use, or modify (such as "all the Todos retrieved from the server")
+- _App state_: data that is specific to the application's behavior (such as "Todo #5 is currently selected", or "there is a request in progress to fetch Todos")
+- _UI state_: data that represents how the UI is currently displayed (such as "The EditTodo modal dialog is currently open")
 
 However, we provide a lightweight UI state service to persist some UI states, which many users like to keep through reloading the web page.
 The supported components are
@@ -32,16 +32,14 @@ It requires two steps to enable it for a specific component.
 
 1. Include `provideSiUiService` in your app configuration / `AppModule` to enable it in general:
 
-    ```ts
-    import { ApplicationConfig } from '@angular/core';
-    import { provideSiUiState } from '@siemens/element-ng/common';
-    
-    const config: ApplicationConfig = {
-      providers: [
-        provideSiUiState()
-      ]
-    }
-    ```
+   ```ts
+   import { ApplicationConfig } from '@angular/core';
+   import { provideSiUiState } from '@siemens/element-ng/common';
+
+   const config: ApplicationConfig = {
+     providers: [provideSiUiState()]
+   };
+   ```
 
 2. Set the `stateId` on supported components like the
 
@@ -67,7 +65,7 @@ class MyUIStateStorage implements UIStateStorage {
   }
 
   load(stateId: string): string | undefined | null | Promise<string | undefined | null> {
-    // Load the data by stateId. Return undefined or null if nothing was stored previously. 
+    // Load the data by stateId. Return undefined or null if nothing was stored previously.
     // Handle errors here. Otherwise the will just be retrhown.
   }
 }
@@ -78,14 +76,14 @@ The custom storage needs to be configured on initialization of the `SiUIState`:
 ```ts
 import { ApplicationConfig } from '@angular/core';
 import { provideSiUiState } from '@siemens/element-ng/common';
-    
-const config: ApplicationConfig = { 
+
+const config: ApplicationConfig = {
   providers: [
     provideSiUiState({
       store: MyUIStateStorage
     })
   ]
-}
+};
 ```
 
 <si-docs-type name="provideSiUiStateService"></si-docs-api>

@@ -4,7 +4,13 @@
  */
 import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, HostListener, inject, input } from '@angular/core';
-import { SiIconComponent } from '@siemens/element-ng/icon';
+import {
+  addIcons,
+  elementDown2,
+  elementOk,
+  elementRecordFilled,
+  SiIconComponent
+} from '@siemens/element-ng/icon';
 
 import { SiHeaderDropdownTriggerDirective } from './si-header-dropdown-trigger.directive';
 import { SI_HEADER_WITH_DROPDOWNS } from './si-header.model';
@@ -23,6 +29,8 @@ import { SI_HEADER_WITH_DROPDOWNS } from './si-header.model';
   }
 })
 export class SiHeaderDropdownItemComponent {
+  protected readonly icons = addIcons({ elementDown2, elementOk, elementRecordFilled });
+
   /** Optional icon that will be rendered before the label. */
   readonly icon = input<string>();
   /** Badge that is rendered after the label. */

@@ -302,7 +302,7 @@ export class SiDateRangeFilterComponent implements OnChanges {
 
   protected readonly icons = addIcons({ elementDown2 });
   protected advancedMode = false;
-  protected dateRange: DateRange = { start: undefined, end: undefined };
+  protected readonly dateRange = signal<DateRange>({ start: undefined, end: undefined });
 
   protected point1Now = true;
   protected point2Mode: 'duration' | 'date' = 'duration';
@@ -341,7 +341,8 @@ export class SiDateRangeFilterComponent implements OnChanges {
   });
 
   protected readonly focusedDate = computed(() => {
-    const date = this.dateRange.end ?? this.dateRange.start;
+    const range = this.dateRange();
+    const date = range.end ?? range.start;
     return isValid(date) ? date : undefined;
   });
   protected readonly presetFilter = signal('');
@@ -415,8 +416,7 @@ export class SiDateRangeFilterComponent implements OnChanges {
 
   protected updateDateRange(range = this.range()): void {
     const calculatedRange = this.resolve(range);
-    this.dateRange.start = calculatedRange.start;
-    this.dateRange.end = calculatedRange.end;
+    this.dateRange.set({ start: calculatedRange.start, end: calculatedRange.end });
   }
 
   protected updateOnModeChange(): void {
@@ -459,9 +459,13 @@ export class SiDateRangeFilterComponent implements OnChanges {
     }
   }
 
-  protected updateFromDateRange(): void {
-    const startDate = this.dateRange.start ?? this.getDateNow();
-    const endDate = this.dateRange.end ?? this.getDateNow();
+  protected updateFromDateRange(dateRange?: DateRange): void {
+    if (dateRange) {
+      this.dateRange.set(dateRange);
+    }
+    const range = this.dateRange();
+    const startDate = range.start ?? this.getDateNow();
+    const endDate = range.end ?? this.getDateNow();
     this.point1date = startDate;
     this.point2date = startDate;
     this.range.set({

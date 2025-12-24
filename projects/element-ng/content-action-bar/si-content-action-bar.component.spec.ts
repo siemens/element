@@ -4,8 +4,8 @@
  */
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { booleanAttribute, Component, Input } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { booleanAttribute, Component, Input, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 import { MenuItem } from '@siemens/element-ng/menu';
@@ -42,12 +42,12 @@ describe('SiContentActionBarComponent', () => {
   let loader: HarnessLoader;
   let harness: SiContentActionBarHarness;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [BrowserAnimationsModule, TestComponent],
-      providers: [provideRouter([])]
+      providers: [provideRouter([]), provideZonelessChangeDetection()]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(async () => {
     fixture = TestBed.createComponent(TestComponent);
@@ -63,7 +63,8 @@ describe('SiContentActionBarComponent', () => {
       { type: 'group', label: 'Save', children: [] },
       { type: 'action', label: 'Delete', action: () => alert('Delete') }
     ];
-
+    fixture.changeDetectorRef.markForCheck();
+    await fixture.whenStable();
     expect(await harness.getPrimaryActionTexts()).toEqual(['Create', 'Route me', 'Save', 'Delete']);
   });
 
@@ -80,6 +81,8 @@ describe('SiContentActionBarComponent', () => {
         ]
       }
     ];
+    fixture.changeDetectorRef.markForCheck();
+    await fixture.whenStable();
 
     await harness.toggleSecondary();
     const secondaryMenu = await harness.getSecondaryMenu();
@@ -108,9 +111,14 @@ describe('SiContentActionBarComponent', () => {
         ]
       }
     ];
+    fixture.changeDetectorRef.markForCheck();
+    await fixture.whenStable();
 
+    // cannot use jasmine.clock here
+    await new Promise(resolve => setTimeout(resolve, 50));
     expect(await harness.isPrimaryExpanded()).toBeFalse();
     await harness.togglePrimary();
+    await fixture.whenStable();
     expect(await harness.isPrimaryExpanded()).toBeTrue();
   });
 
@@ -119,6 +127,8 @@ describe('SiContentActionBarComponent', () => {
     component.primaryActions = [
       { type: 'action', label: 'Item', disabled: true, action: () => {} }
     ];
+    fixture.changeDetectorRef.markForCheck();
+    await fixture.whenStable();
 
     expect(await harness.getPrimaryAction('Item').then(item => item.isDisabled())).toBeTrue();
   });
@@ -127,7 +137,8 @@ describe('SiContentActionBarComponent', () => {
     const actionSpy = jasmine.createSpy('clickSpy');
     component.viewType = 'expanded';
     component.primaryActions = [{ type: 'action', label: 'Item', action: actionSpy }];
-
+    fixture.changeDetectorRef.markForCheck();
+    await fixture.whenStable();
     await harness.getPrimaryAction('Item').then(item => item.click());
     expect(actionSpy).toHaveBeenCalled();
   });
@@ -138,7 +149,8 @@ describe('SiContentActionBarComponent', () => {
         { type: 'action', label: 'primaryItem', icon: 'element-user', action: () => {} }
       ];
       component.preventIconsInDropdownMenus = true;
-
+      fixture.changeDetectorRef.markForCheck();
+      await fixture.whenStable();
       expect(
         await harness.getPrimaryAction('primaryItem').then(item => item.hasIcon('element-user'))
       ).toBeTrue();
@@ -149,6 +161,8 @@ describe('SiContentActionBarComponent', () => {
         { type: 'action', label: 'primaryItem', icon: 'element-user', action: () => {} }
       ];
       component.viewType = 'mobile';
+      fixture.changeDetectorRef.markForCheck();
+      await fixture.whenStable();
 
       await harness.toggleMobile();
       expect(
@@ -165,6 +179,8 @@ describe('SiContentActionBarComponent', () => {
       ];
       component.viewType = 'mobile';
       component.preventIconsInDropdownMenus = true;
+      fixture.changeDetectorRef.markForCheck();
+      await fixture.whenStable();
 
       await harness.toggleMobile();
       expect(
@@ -183,6 +199,8 @@ describe('SiContentActionBarComponent', () => {
       component.secondaryActions = [
         { type: 'action', label: 'secondaryItem', icon: 'element-copy', action: () => {} }
       ];
+      fixture.changeDetectorRef.markForCheck();
+      await fixture.whenStable();
 
       await harness.toggleSecondary();
       expect(
@@ -203,6 +221,8 @@ describe('SiContentActionBarComponent', () => {
       ];
       component.preventIconsInDropdownMenus = true;
 
+      fixture.changeDetectorRef.markForCheck();
+      await fixture.whenStable();
       await harness.toggleMobile();
       expect(
         await harness
@@ -217,8 +237,12 @@ describe('SiContentActionBarComponent', () => {
     component.primaryActions = [
       { type: 'action', label: 'primaryItem', icon: 'element-user', action: () => {} }
     ];
+    fixture.changeDetectorRef.markForCheck();
+    await fixture.whenStable();
     expect(await harness.isMobile()).toBeFalse();
     component.primaryActions = [];
+    fixture.changeDetectorRef.markForCheck();
+    await fixture.whenStable();
     expect(await harness.isMobile()).toBeTrue();
   });
 });

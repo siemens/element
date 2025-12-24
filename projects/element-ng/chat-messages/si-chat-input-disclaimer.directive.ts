@@ -5,7 +5,7 @@
 import { Directive } from '@angular/core';
 
 /**
- * Directive to mark content as chat input disclaimer.
+ * Directive to mark content as chat input disclaimer into {@link SiChatInputComponent}.
  * Apply this directive to content that should be slotted into the disclaimer area.
  *
  * @example
@@ -16,6 +16,10 @@ import { Directive } from '@angular/core';
  *   </div>
  * </si-chat-input>
  * ```
+ *
+ * @see {@link SiChatInputComponent} for the chat input wrapper component
+ *
+ * @experimental
  */
 @Directive({
   selector: '[siChatInputDisclaimer]'

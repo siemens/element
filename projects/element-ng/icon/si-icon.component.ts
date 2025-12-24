@@ -118,10 +118,23 @@ export class SiIconComponent {
     this.svgIcon() ? undefined : this.camelToKebabCase(this.icon())
   );
 
+  private isKebabCase(str: string): boolean {
+    return /^[a-z0-9]+(-[a-z0-9]+)*$/.test(str);
+  }
+
+  /**
+   * Converts a camelCase string to kebab-case.
+   * If the string is already in kebab-case, it returns it unchanged.
+   *
+   * Note: This conversion has limitations with mixed alphanumeric cases.
+   * Complex number-letter combinations may not convert as expected.
+   */
   private camelToKebabCase(str: string): string {
-    return str
-      ?.replace(/([a-z])([A-Z0-9])/g, '$1-$2')
-      .replace(/([0-9])([A-Z])/g, '$1-$2')
-      .toLowerCase();
+    return this.isKebabCase(str)
+      ? str
+      : str
+          ?.replace(/([a-z])([A-Z0-9])/g, '$1-$2')
+          .replace(/([0-9])([A-Z])/g, '$1-$2')
+          .toLowerCase();
   }
 }

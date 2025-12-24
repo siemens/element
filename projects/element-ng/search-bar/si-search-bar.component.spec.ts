@@ -2,9 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { CommonModule } from '@angular/common';
-import { Component, viewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { Component, provideZonelessChangeDetection, viewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { SiSearchBarComponent } from './index';
@@ -18,6 +17,15 @@ describe('SiSearchBarComponent', () => {
 
   const getParameterFromSpy = (spy: any): string => (spy as jasmine.Spy).calls.mostRecent().args[0];
 
+  beforeEach(() => {
+    jasmine.clock().install();
+    jasmine.clock().mockDate();
+  });
+
+  afterEach(() => {
+    jasmine.clock().uninstall();
+  });
+
   describe('as form control', () => {
     let fixture: ComponentFixture<TestComponent>;
     let component: SiSearchBarComponent;
@@ -25,7 +33,7 @@ describe('SiSearchBarComponent', () => {
     let element: HTMLElement;
 
     @Component({
-      imports: [CommonModule, ReactiveFormsModule, SiSearchBarComponent],
+      imports: [ReactiveFormsModule, SiSearchBarComponent],
       template: `<si-search-bar
         [placeholder]="placeholder"
         [showIcon]="true"
@@ -41,6 +49,9 @@ describe('SiSearchBarComponent', () => {
     }
 
     beforeEach(() => {
+      TestBed.configureTestingModule({
+        providers: [provideZonelessChangeDetection()]
+      }).compileComponents();
       fixture = TestBed.createComponent(TestComponent);
       testComponent = fixture.componentInstance;
       component = fixture.componentInstance.searchBar();
@@ -53,66 +64,67 @@ describe('SiSearchBarComponent', () => {
       expect(element.querySelector('input')!.placeholder).toBe('Users');
     });
 
-    it('should reset search when clicking cancel button', fakeAsync(() => {
+    it('should reset search when clicking cancel button', () => {
       spyOn(component.searchChange, 'emit');
       testComponent.search.setValue('Test1234$');
       fixture.detectChanges();
       element.querySelector<HTMLElement>('button')!.click();
-      tick(1000);
       expect(getParameterFromSpy(component.searchChange.emit)).toBe('');
-    }));
+    });
 
-    it('should trigger the change event on input', fakeAsync(() => {
+    it('should trigger the change event on input', async () => {
       spyOn(component.searchChange, 'emit');
       fixture.detectChanges();
       fakeInput('Test1234$', element);
-      tick(1000);
+      jasmine.clock().tick(400);
+      await fixture.whenStable();
       expect(getParameterFromSpy(component.searchChange.emit)).toEqual('Test1234$');
-    }));
+    });
 
-    it('should trigger the initial change event just once per value', fakeAsync(() => {
+    it('should trigger the initial change event just once per value', async () => {
       fixture.detectChanges();
       spyOn(component.searchChange, 'emit');
       fakeInput('CodeTest1234$', element);
       fixture.detectChanges();
-      tick(400);
+      jasmine.clock().tick(400);
+      await fixture.whenStable();
       expect(component.searchChange.emit).toHaveBeenCalledTimes(1);
-    }));
+    });
 
-    it('should not prohibit characters by default', fakeAsync(() => {
+    it('should not prohibit characters by default', async () => {
       spyOn(component.searchChange, 'emit');
       fixture.detectChanges();
       fakeInput('Test1234$', element);
-      tick(1000);
+      jasmine.clock().tick(400);
+      await fixture.whenStable();
       expect(getParameterFromSpy(component.searchChange.emit)).toEqual('Test1234$');
-    }));
+    });
 
-    it('should not prohibit characters if string is empty', fakeAsync(() => {
+    it('should not prohibit characters if string is empty', () => {
       spyOn(component.searchChange, 'emit');
       testComponent.prohibitedCharacters = '1234$';
       fixture.detectChanges();
       fakeInput('', element);
-      tick(1000);
       expect(component.searchChange.emit).not.toHaveBeenCalled();
-    }));
+    });
 
-    it('should not prohibit characters if string is valid', fakeAsync(() => {
+    it('should not prohibit characters if string is valid', async () => {
       spyOn(component.searchChange, 'emit');
       testComponent.prohibitedCharacters = '1234$';
       fixture.detectChanges();
       fakeInput('Test', element);
-      tick(1000);
+      jasmine.clock().tick(400);
+      await fixture.whenStable();
       expect(getParameterFromSpy(component.searchChange.emit)).toEqual('Test');
-    }));
+    });
 
-    it('should prohibit characters if string is not valid', fakeAsync(() => {
+    it('should prohibit characters if string is not valid', () => {
       spyOn(component.searchChange, 'emit');
       testComponent.prohibitedCharacters = '1234$';
       fixture.detectChanges();
       fakeInput('Test1234$', element);
-      tick(1000);
       expect(component.searchChange.emit).not.toHaveBeenCalled();
-    }));
+    });
 
     it('should support disable state', () => {
       testComponent.search.disable();
@@ -143,7 +155,7 @@ describe('SiSearchBarComponent', () => {
     let element: HTMLElement;
 
     @Component({
-      imports: [CommonModule, SiSearchBarComponent],
+      imports: [SiSearchBarComponent],
       template: `<si-search-bar [value]="value" [disabled]="disabled" />`
     })
     class TestComponent {
@@ -153,6 +165,10 @@ describe('SiSearchBarComponent', () => {
     }
 
     beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [TestComponent],
+        providers: [provideZonelessChangeDetection()]
+      }).compileComponents();
       fixture = TestBed.createComponent(TestComponent);
       testComponent = fixture.componentInstance;
       component = fixture.componentInstance.searchBar();
@@ -162,11 +178,13 @@ describe('SiSearchBarComponent', () => {
     it('should not emit values when changed via value input', () => {
       spyOn(component.searchChange, 'emit');
       testComponent.value = 'Initial Value';
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(element.querySelector('input')!.value).toBe('Initial Value');
       expect(component.searchChange.emit).not.toHaveBeenCalled();
 
       testComponent.value = 'Updated Value';
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(element.querySelector('input')!.value).toBe('Updated Value');
       expect(component.searchChange.emit).not.toHaveBeenCalled();
@@ -174,9 +192,11 @@ describe('SiSearchBarComponent', () => {
 
     it('should support disabled input', () => {
       testComponent.disabled = true;
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(element.querySelector('input')!.disabled).toBe(true);
       testComponent.disabled = false;
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(element.querySelector('input')!.disabled).toBe(false);
     });

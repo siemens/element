@@ -19,45 +19,21 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
     readonly colorVariant: _angular_core.InputSignal<BackgroundColorVariant>;
     readonly debounceTime: _angular_core.InputSignalWithTransform<number, unknown>;
     // (undocumented)
-    protected readonly disabled: _angular_core.Signal<boolean>;
-    // (undocumented)
     readonly disabledInput: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly icons: Record<"elementCancel" | "elementSearch", string>;
-    // (undocumented)
-    protected inFocus: boolean;
-    // (undocumented)
-    protected input(event: Event): void;
-    // (undocumented)
-    protected isInvalid: boolean;
     // (undocumented)
     ngOnChanges(changes: SimpleChanges): void;
     // (undocumented)
     ngOnDestroy(): void;
     // (undocumented)
     ngOnInit(): void;
-    // (undocumented)
-    protected onBlur(): void;
-    // (undocumented)
-    protected onCancelFocus(event: Event): void;
-    // (undocumented)
-    protected onChange: (val: any) => void;
-    // (undocumented)
-    protected onTouch: () => void;
     readonly placeholder: _angular_core.InputSignal<string>;
     readonly prohibitedCharacters: _angular_core.InputSignal<string | undefined>;
     // (undocumented)
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected resetForm(): void;
     readonly searchChange: _angular_core.OutputEmitterRef<string>;
-    // (undocumented)
-    protected readonly searchValue: _angular_core.WritableSignal<string>;
     readonly showIcon: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly tabbable: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly value: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    protected writeSearchValue(value: string): void;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSearchBarComponent, "si-search-bar", never, { "debounceTime": { "alias": "debounceTime"; "required": false; "isSignal": true; }; "prohibitedCharacters": { "alias": "prohibitedCharacters"; "required": false; "isSignal": true; }; "placeholder": { "alias": "placeholder"; "required": false; "isSignal": true; }; "showIcon": { "alias": "showIcon"; "required": false; "isSignal": true; }; "tabbable": { "alias": "tabbable"; "required": false; "isSignal": true; }; "value": { "alias": "value"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "colorVariant": { "alias": "colorVariant"; "required": false; "isSignal": true; }; "disabledInput": { "alias": "disabled"; "required": false; "isSignal": true; }; "clearButtonAriaLabel": { "alias": "clearButtonAriaLabel"; "required": false; "isSignal": true; }; }, { "searchChange": "searchChange"; }, never, never, true, never>;
     // (undocumented)

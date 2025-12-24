@@ -4,7 +4,7 @@
  */
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SiChartCircleComponent, themeElement, themeSupport } from '@siemens/charts-ng';
+import { SiChartCircleComponent } from '@siemens/charts-ng';
 import {
   SiAccountDetailsComponent,
   SiApplicationHeaderComponent,
@@ -25,11 +25,9 @@ import { NavbarVerticalItem } from '@siemens/element-ng/navbar-vertical';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
 import { LOG_EVENT } from '@siemens/live-preview';
-import { NgxDatatableModule, SelectEvent } from '@siemens/ngx-datatable';
+import { NgxDatatableModule } from '@siemens/ngx-datatable';
 
 import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.service';
-
-themeSupport.setDefault(themeElement);
 
 @Component({
   selector: 'app-sample',
@@ -88,7 +86,7 @@ export class SampleComponent {
 
   private dataService = inject(DataService);
 
-  onSelect(event: SelectEvent<CorporateEmployee>): void {
+  onSelect(event: CorporateEmployee[]): void {
     this.logEvent(event);
   }
 

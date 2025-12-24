@@ -11,36 +11,14 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate';
 // @public (undocumented)
 export class SiColorPickerComponent implements ControlValueAccessor {
     readonly ariaLabel: _angular_core.InputSignal<TranslatableString | undefined>;
-    // (undocumented)
-    protected arrowDown(index: number, event: Event): void;
-    // (undocumented)
-    protected arrowLeft(index: number, event: Event): void;
-    // (undocumented)
-    protected arrowRight(index: number, event: Event): void;
-    // (undocumented)
-    protected arrowUp(index: number, event: Event): void;
     readonly autoClose: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected blur(): void;
     readonly color: _angular_core.ModelSignal<string | undefined>;
     readonly colorPalette: _angular_core.InputSignal<string[]>;
-    // (undocumented)
-    protected readonly disabled: _angular_core.Signal<boolean>;
     readonly disabledInput: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    protected readonly icons: Record<"elementOk", string>;
-    // (undocumented)
-    protected readonly isOverlayOpen: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
-    protected openOverlay(): void;
-    // (undocumented)
-    protected overlayDetach(): void;
     // (undocumented)
     registerOnChange(fn: (value: string) => void): void;
     // (undocumented)
     registerOnTouched(fn: () => void): void;
-    // (undocumented)
-    protected selectColor(color: string): void;
     // (undocumented)
     setDisabledState(isDisabled: boolean): void;
     // (undocumented)

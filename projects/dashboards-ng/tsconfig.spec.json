@@ -1,5 +1,5 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "types": ["jasmine", "@siemens/element-translate-ng/localize-types", "node"],
     "paths": {

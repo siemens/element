@@ -4,6 +4,9 @@ This directory contains the script needed to generate and verify API goldens for
 This script is using [API Extractor](https://api-extractor.com/) internally.
 Since the API Extractor is currently not supporting multiple entrypoints, it is called separately for each entrypoint.
 
+The script patches the API Extractor to flag all protected members as `internal`.
+This excludes them from the public API report.
+
 See the [Developer Guide](../../DEVELOPER.md) for usage instructions.
 
 

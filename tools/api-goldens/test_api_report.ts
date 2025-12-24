@@ -15,11 +15,18 @@ import {
   ExtractorMessageId,
   IConfigFile
 } from '@microsoft/api-extractor';
+import { ReleaseTag } from '@microsoft/api-extractor-model';
+import { AstDeclaration } from '@microsoft/api-extractor/lib/analyzer/AstDeclaration';
 import { AstModule } from '@microsoft/api-extractor/lib/analyzer/AstModule';
 import { ExportAnalyzer } from '@microsoft/api-extractor/lib/analyzer/ExportAnalyzer';
+import { ApiItemMetadata } from '@microsoft/api-extractor/lib/collector/ApiItemMetadata';
+import { Collector } from '@microsoft/api-extractor/lib/collector/Collector';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
+import ts, {
+  ConstructorDeclaration,
+  GetAccessorDeclaration, MethodDeclaration, PropertyDeclaration, SetAccessorDeclaration } from 'typescript';
 
 import { resolveTypePackages } from './interop_module_mappings.js';
 
@@ -29,6 +36,13 @@ import { resolveTypePackages } from './interop_module_mappings.js';
  * specified strip export patterns.
  * */
 const _origFetchAstModuleExportInfo = ExportAnalyzer.prototype.fetchAstModuleExportInfo;
+
+/**
+ * Original definition of the `Collector#fetchApiItemMetadata` method.
+ * We store the original function since we monkey-patch it later to mark
+ * protected members as internal.
+ * */
+const _origFetchApiItemMetadata = Collector.prototype.fetchApiItemMetadata;
 
 /**
  * Builds an API report for the given entry-point file and compares
@@ -134,6 +148,38 @@ export async function testApiGolden(
     });
 
     return info;
+  };
+
+  // This patches the `Collector` of `api-extractor` so that we can mark protected
+  // members as internal. This prevents them from appearing in the API report.
+  Collector.prototype.fetchApiItemMetadata = function (astDeclaration: AstDeclaration) {
+    const metadata: ApiItemMetadata = _origFetchApiItemMetadata.apply(this, [astDeclaration]);
+
+    const declaration = astDeclaration.declaration;
+    if (
+      ts.isPropertyDeclaration(declaration) ||
+      ts.isMethodDeclaration(declaration) ||
+      ts.isGetAccessorDeclaration(declaration) ||
+      ts.isSetAccessorDeclaration(declaration) ||
+      ts.isConstructorDeclaration(declaration)
+    ) {
+      const isProtected = (declaration as (PropertyDeclaration | MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration | ConstructorDeclaration))
+        .modifiers?.some(modifier => modifier.kind === ts.SyntaxKind.ProtectedKeyword) ?? false;
+      if (isProtected) {
+        return new ApiItemMetadata({
+          effectiveReleaseTag: ReleaseTag.Internal,
+          declaredReleaseTag: ReleaseTag.Internal,
+          releaseTagSameAsParent: false,
+          isOverride: metadata.isOverride,
+          isSealed: metadata.isSealed,
+          isVirtual: metadata.isVirtual,
+          isEventProperty: metadata.isEventProperty,
+          isPreapproved: metadata.isPreapproved
+        });
+      }
+    }
+
+    return metadata;
   };
 
   const reportTmpOutPath = path.join(

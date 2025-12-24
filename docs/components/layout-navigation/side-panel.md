@@ -1,6 +1,6 @@
 # Side panel
 
-The **side panel** is a responsive layout container that pushes-in from the
+The **side panel** is a layout container that pushes-in from the
 right side of an application (for left-to-right/LTR orientation).
 
 ## Usage ---
@@ -10,9 +10,11 @@ related to the main content of a page.
 
 ![Side panel](images/side-panel.png)
 
-The panel takes the full application height and a fixed width. There are two
-pre-defined widths to choose from, either *regular* (`390px`) or *wide*
-(`500px`).
+The panel takes the full application height and a fixed width.
+There are three pre-defined widths available: **regular** (`390px`), **wide** (`500px`), and **extended** (responsive).
+
+The extended variant adapts its width based on application breakpoints, providing more horizontal space
+on larger viewports while maintaining the same behavior and interaction model as other side panels.
 
 ### When to use
 
@@ -60,23 +62,35 @@ is not restricted to these cases.
 
 ### Modes
 
-The side panel can be either *closeable* (the panel is completely hidden) or
-*collapsible* (still visible with summary information) according to the
+The side panel can be either _closeable_ (the panel is completely hidden) or
+_collapsible_ (still visible with summary information) according to the
 application/project use-case.
 
-- Use a *closeable* side panel if the content has no direct relation to the
+- Use a _closeable_ side panel if the content has no direct relation to the
   items within the main content area. Closeable side panels are typically opened
   by selecting an entry within the horizontal navigation.
-- Use a *collapsible* side panel if the content changes based on the selection
+- Use a _collapsible_ side panel if the content changes based on the selection
   made within the main content area.
 
 ![Side panel collapsible](images/side-panel-expanded-collapsed.png)
 
-A side panel can be configured to use either *over-mode* or *scroll-mode*.
-In *over-mode*, the panel overlaps the main content area, while in
-*scroll-mode*, the panel pushes the main content area away.
+A side panel can be configured to use either _over-mode_ or _scroll-mode_.
+In _over-mode_, the panel overlaps the main content area, while in
+_scroll-mode_, the panel pushes the main content area away.
 
 ![Side panel modes](images/side-panel-modes.png)
+
+### Extended side panel
+
+The extended side panel can be used as a responsive container when additional
+space is required beyond standard panel widths.
+
+![Side panelextended](images/side-panel-extended.png)
+
+The extended side panel can remain alongside the main content, **overlay** it,
+or be used to **navigate** to a dedicated page.
+
+![Side panel behavior](images/side-panel-extended-behavior.png)
 
 ### Collapsible floating button
 

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, signal } from '@angular/core';
+import { Component, provideZonelessChangeDetection, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiNavbarVerticalItemComponent } from './si-navbar-vertical-item.component';
@@ -33,7 +33,10 @@ describe('SiNavbarVerticalItemComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TestHostComponent],
-      providers: [{ provide: SI_NAVBAR_VERTICAL, useValue: mockNavbar }]
+      providers: [
+        { provide: SI_NAVBAR_VERTICAL, useValue: mockNavbar },
+        provideZonelessChangeDetection()
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestHostComponent);

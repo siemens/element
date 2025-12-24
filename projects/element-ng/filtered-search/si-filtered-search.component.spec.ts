@@ -9,10 +9,11 @@ import {
   ChangeDetectorRef,
   Component,
   inject,
+  provideZonelessChangeDetection,
   signal,
   viewChild
 } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule, provideNoopAnimations } from '@angular/platform-browser/animations';
 import { CriterionDefinition } from '@siemens/element-ng/filtered-search';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
@@ -38,6 +39,7 @@ import { SiFilteredSearchHarness } from './testing/si-filtered-search.harness';
     searchLabel="search"
     [disabled]="disabled"
     [disableFreeTextSearch]="disableFreeTextSearch"
+    [freeTextCriterion]="freeTextCriterion"
     [readonly]="readonly"
     [placeholder]="placeholder"
     [lazyLoadingDebounceTime]="lazyLoadingDebounceTime"
@@ -64,6 +66,7 @@ class TestHostComponent {
   readonly filteredSearch = viewChild.required(SiFilteredSearchComponent);
   disabled!: boolean;
   disableFreeTextSearch = false;
+  freeTextCriterion?: CriterionDefinition;
   readonly!: boolean;
   placeholder = '';
 
@@ -104,7 +107,8 @@ describe('SiFilteredSearchComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, TestHostComponent]
+      imports: [NoopAnimationsModule, TestHostComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestHostComponent);
@@ -112,6 +116,19 @@ describe('SiFilteredSearchComponent', () => {
     element = fixture.nativeElement;
     loader = TestbedHarnessEnvironment.loader(fixture);
   });
+
+  beforeEach(() => {
+    jasmine.clock().install();
+  });
+
+  afterEach(() => {
+    jasmine.clock().uninstall();
+  });
+
+  const tick = async (ms = 100): Promise<void> => {
+    jasmine.clock().tick(ms);
+    await fixture.whenStable();
+  };
 
   describe('idempotence criteria order', () => {
     it('should idempotence criteria order for date', async () => {
@@ -307,6 +324,7 @@ describe('SiFilteredSearchComponent', () => {
       const freeTextSearch = await filteredSearch.freeTextSearch();
       await freeTextSearch.focus();
       await freeTextSearch.typeText('Fo');
+      await tick();
       const items = await freeTextSearch.getItems();
       expect(items).toHaveSize(1);
     });
@@ -325,7 +343,9 @@ describe('SiFilteredSearchComponent', () => {
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
       await freeTextSearch.typeText('Fo');
+      await tick();
       await freeTextSearch.select({ text: 'Foo' });
+      await tick();
 
       const criteria = await filteredSearch.getCriteria();
       const criteriaValue = await criteria[0].value();
@@ -344,12 +364,16 @@ describe('SiFilteredSearchComponent', () => {
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
       await freeTextSearch.focus();
+      await tick();
       await freeTextSearch.select({ text: 'WithOptions' });
+
+      await tick();
 
       const criterion = (await filteredSearch.getCriteria({ labelText: 'WithOptions' })).at(0);
       const criterionValue = await criterion?.value();
       await criterionValue?.focus();
       await criterionValue?.select({ text: 'first' });
+      await tick();
       expect(await freeTextSearch.isFocused()).toBeTrue();
 
       await criterionValue?.click();
@@ -365,6 +389,7 @@ describe('SiFilteredSearchComponent', () => {
       /* Simulate pressing backspace to remove the entire input field value */
       await criteriaValue?.sendKeys(TestKey.BACKSPACE);
       await criteriaValue?.clearText();
+      await tick();
       expect(await criteriaValue?.getItemLabels()).toEqual(['foo1', 'bar1']);
     });
 
@@ -374,9 +399,12 @@ describe('SiFilteredSearchComponent', () => {
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
       await freeTextSearch.focus();
+
       criterionProvider.next([{ name: 'foo', label: 'Foo', options: ['foo1', 'foo2'] }]);
       await freeTextSearch.typeText('oo');
+      await tick();
       await freeTextSearch.select({ text: 'Foo' });
+      await tick();
       const [criterion] = await filteredSearch.getCriteria({ labelText: 'Foo' });
       await criterion.clickLabel();
       expect(await criterion.value().then(value => value?.getItemLabels())).toEqual([
@@ -384,11 +412,14 @@ describe('SiFilteredSearchComponent', () => {
         'foo2'
       ]);
       await criterion.value().then(value => value?.select({ text: 'foo2' }));
+      await tick();
       criterionProvider.next([{ name: 'foo', label: 'Foo', options: ['foo3'] }]);
       // TODO: it should immediately update the values.
       await freeTextSearch.focus();
+      await tick();
       await criterion.clickLabel();
       await criterion.value().then(value => value?.clearText());
+      await tick();
       expect(await criterion.value().then(value => value?.getItemLabels())).toEqual(['foo3']);
     });
   });
@@ -411,6 +442,7 @@ describe('SiFilteredSearchComponent', () => {
       const criteria = await filteredSearch.getCriteria();
       const value = await criteria[0].value();
       await value?.click();
+      await tick();
       expect(component.lazyValueProvider).toHaveBeenCalledWith('foo', 'Foo');
     });
 
@@ -421,6 +453,7 @@ describe('SiFilteredSearchComponent', () => {
       await value?.click();
       await value?.clearText();
       await value?.sendKeys('Fo');
+      await tick();
       expect(component.lazyValueProvider).toHaveBeenCalledWith('foo', 'Fo');
     });
 
@@ -431,6 +464,7 @@ describe('SiFilteredSearchComponent', () => {
       await criteriaValue?.click();
       await criteriaValue?.clearText();
       await criteriaValue?.sendKeys('Fo');
+      await tick();
       expect(component.lazyValueProvider).toHaveBeenCalledWith('foo', 'Fo');
 
       const items = await criteriaValue?.getItemLabels();
@@ -451,6 +485,7 @@ describe('SiFilteredSearchComponent', () => {
       const newCriteriaValue = await filteredSearch.getCriteria().then(c => c[0].value());
       await newCriteriaValue!.click();
       await newCriteriaValue!.focus();
+      await tick();
       expect(component.lazyValueProvider).toHaveBeenCalledWith('location', '');
     });
 
@@ -468,12 +503,13 @@ describe('SiFilteredSearchComponent', () => {
       await criteria[0].clickLabel();
       const criteriaValue = await criteria[0].value();
       await criteriaValue?.click();
+      await tick();
       expect(await criteriaValue?.getItemLabels({ isSelected: true })).toEqual(['Bar']);
     });
   });
 
   describe('with lazy loaded values and optiontype as return type', () => {
-    beforeEach(waitForAsync(() => {
+    beforeEach(() => {
       component.criteria.set([
         { name: 'foo', label: 'Foo' },
         { name: 'bar', label: 'Bar' }
@@ -490,7 +526,7 @@ describe('SiFilteredSearchComponent', () => {
       });
       component.doSearchOnInputChange = true;
       fixture.detectChanges();
-    }));
+    });
 
     it('should emit selected optionType value ', async () => {
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
@@ -498,11 +534,13 @@ describe('SiFilteredSearchComponent', () => {
       const criteriaValue = await criteria[0].value();
       await criteriaValue?.click();
       await criteriaValue?.focus();
+      await tick();
 
       expect(component.lazyValueProvider).toHaveBeenCalledWith('foo', '');
 
       const spy = spyOn(component, 'doSearch');
       await criteriaValue?.select({ text: 'Foo' });
+      await tick();
 
       expect(spy).toHaveBeenCalledWith({
         criteria: [{ name: 'foo', value: 'fO' }],
@@ -571,9 +609,21 @@ describe('SiFilteredSearchComponent', () => {
       const criterion = criteria[0];
       const criterionValue = await criterion.value();
       await criterionValue?.click();
+      await tick();
+
       // Date Time keyboard interactions
       await criterionValue?.sendKeys(TestKey.BACKSPACE);
-      await filteredSearch.freeTextSearch().then(freeTextSearch => freeTextSearch.focus());
+
+      jasmine.clock().uninstall();
+      // needed to avoid flaky test
+      await new Promise(resolve => setTimeout(resolve, 0));
+      jasmine.clock().install();
+
+      await filteredSearch.freeTextSearch().then(async freeTextSearch => {
+        await freeTextSearch.focus();
+      });
+      await tick();
+
       expect(await criterionValue?.isEditable()).toBeFalsy();
     });
 
@@ -598,7 +648,9 @@ describe('SiFilteredSearchComponent', () => {
       const criteria = await filteredSearch.getCriteria();
       const criterionValue = await criteria[0].value();
       await criterionValue?.click();
+      await tick();
       await criterionValue?.sendKeys(TestKey.ENTER);
+      await tick();
       const operator2 = await criteria[1].operator();
       expect(await operator2!.hasFocs()).toBeTrue();
       await operator2!.sendKeys(TestKey.ENTER);
@@ -653,6 +705,7 @@ describe('SiFilteredSearchComponent', () => {
       const criteria = await filteredSearch.getCriteria();
       const criterionValue = (await criteria[0].value())!;
       await criterionValue.click();
+      await tick();
       const datepicker = await criterionValue.datepicker();
       await datepicker!.next();
       await datepicker!.selectCell({ text: '13' });
@@ -660,6 +713,7 @@ describe('SiFilteredSearchComponent', () => {
       expect(await criterionValue.isEditable()).toBeTrue();
       expect(await criterionValue.getValue()).toBe('9/13/1999');
       await criterionValue.blur();
+      await tick();
       expect(await criterionValue.isEditable()).toBeFalse();
       expect(await criterionValue.text()).toBe('9/13/1999');
     });
@@ -690,7 +744,6 @@ describe('SiFilteredSearchComponent', () => {
     const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
     const freeTextSearch = await filteredSearch.freeTextSearch();
     await freeTextSearch.focus();
-    await new Promise<void>(resolve => setTimeout(resolve));
     await freeTextSearch.typeText('');
     await freeTextSearch.sendKeys(TestKey.ENTER);
     expect(spy).toHaveBeenCalledWith({ criteria: [], value: '' });
@@ -702,6 +755,7 @@ describe('SiFilteredSearchComponent', () => {
     const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
     const freeTextSearch = await filteredSearch.freeTextSearch();
     await freeTextSearch.focus();
+    await tick();
     expect(await freeTextSearch.getItems()).toHaveSize(1);
     await freeTextSearch.sendKeys(TestKey.ENTER);
     expect(spy).toHaveBeenCalledWith({ criteria: [], value: '' });
@@ -713,6 +767,7 @@ describe('SiFilteredSearchComponent', () => {
     const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
     const freeTextSearch = await filteredSearch.freeTextSearch();
     await freeTextSearch.focus();
+    await tick();
     await freeTextSearch.sendKeys(TestKey.DOWN_ARROW, TestKey.ENTER);
     expect(spy).not.toHaveBeenCalled();
   });
@@ -738,6 +793,7 @@ describe('SiFilteredSearchComponent', () => {
     const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
     const freeTextSearch = await filteredSearch.freeTextSearch();
     await freeTextSearch.focus();
+    await tick();
     const labels = await freeTextSearch.getItems();
     expect(labels).toEqual(['Company', 'Name']);
   });
@@ -747,11 +803,12 @@ describe('SiFilteredSearchComponent', () => {
     const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
     const freeTextSearch = await filteredSearch.freeTextSearch();
     await freeTextSearch.focus();
+    await tick();
     // Should not show a typeahead
     expect(await freeTextSearch.getItems()).toBe(null);
     // Update the criteria while the user focused the free text input
     component.criteria.set([{ name: 'company', label: 'Company' }, { name: 'Name' }]);
-    fixture.detectChanges();
+
     const labels = await freeTextSearch.getItems();
     expect(labels).toEqual(['Company', 'Name']);
   });
@@ -780,10 +837,13 @@ describe('SiFilteredSearchComponent', () => {
     const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
     const freeTextSearch = await filteredSearch.freeTextSearch();
     await freeTextSearch.focus();
+    await tick();
     await freeTextSearch.select({ text: 'Company' });
+    await tick();
     const [criteria] = await filteredSearch.getCriteria({ labelText: 'Company' });
     await criteria.value().then(value => value!.select({ text: 'Foo' }));
     await freeTextSearch.focus();
+    await tick();
     expect(await freeTextSearch.getItems()).toEqual(['Age']);
     await criteria.clickClearButton();
     expect(await freeTextSearch.getItems()).toEqual(['Company', 'Age']);
@@ -802,14 +862,17 @@ describe('SiFilteredSearchComponent', () => {
     const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
     const freeTextSearch = await filteredSearch.freeTextSearch();
     await freeTextSearch.focus();
+    await tick();
     expect(await freeTextSearch.getItems()).toEqual(['Company', 'Name', 'Age']);
     await freeTextSearch.select({ text: 'Company' });
+    await tick();
     const [criteria] = await filteredSearch.getCriteria({ labelText: 'Company' });
     await criteria.value().then(value => value!.select({ text: 'Foo' }));
     // reset input
     component.searchCriteria.set({ value: '', criteria: [] });
     // see if all criteria are available again
     await freeTextSearch.focus();
+    await tick();
     expect(await freeTextSearch.getItems()).toEqual(['Company', 'Name', 'Age']);
   });
 
@@ -831,6 +894,7 @@ describe('SiFilteredSearchComponent', () => {
     const criterionValue = await criteria[0].value();
     await criterionValue?.click();
     await criterionValue?.focus();
+    await tick();
     const items = (await criterionValue?.getItems()) ?? [];
     expect(items).toHaveSize(3);
     const icons = await parallel(() => items?.map(async i => await i.icon()));
@@ -911,6 +975,7 @@ describe('SiFilteredSearchComponent', () => {
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const criteria = await filteredSearch.getCriteria();
       await criteria[0].clickLabel();
+      await tick();
       const criteriaValue = await criteria[0].value();
       await criteriaValue?.focus();
 
@@ -946,8 +1011,10 @@ describe('SiFilteredSearchComponent', () => {
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
       await freeTextSearch.focus();
+      await tick();
       await freeTextSearch.select(-1);
       await freeTextSearch.sendKeys(TestKey.ENTER);
+      await tick();
 
       expect(component.doSearch).toHaveBeenCalledWith({
         criteria: [{ name: 'country', value: [] }],
@@ -977,8 +1044,10 @@ describe('SiFilteredSearchComponent', () => {
       const criteriaValue = await criterion?.value();
       await criteriaValue?.click();
       await criteriaValue?.focus();
+      await tick();
       await criteriaValue?.select({ text: 'Switzerland' });
       await filteredSearch.freeTextSearch().then(freeTextSearch => freeTextSearch.focus());
+      await tick();
       expect(await criteriaValue?.text()).toBe('Switzerland');
     });
 
@@ -999,6 +1068,7 @@ describe('SiFilteredSearchComponent', () => {
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const criterion = (await filteredSearch.getCriteria()).at(0)!;
       await criterion.clickLabel();
+      await tick();
       const criterionValue = (await criterion.value())!;
       expect(await criterionValue.getItems({ isSelected: false })).toHaveSize(2);
       await criterion.clickClearButton();
@@ -1031,6 +1101,7 @@ describe('SiFilteredSearchComponent', () => {
       await criteriaValue?.click();
       await criteriaValue?.focus();
       await criteriaValue?.sendKeys('Z');
+      await tick();
       await criteriaValue?.sendKeys(' ');
 
       expect(component.filteredSearch().searchCriteria()).toEqual({
@@ -1060,8 +1131,8 @@ describe('SiFilteredSearchComponent', () => {
       await criteriaValue?.focus();
       await criteriaValue?.clearText();
       await criteriaValue?.sendKeys('K');
+      await tick();
       await criteriaValue?.sendKeys(' ');
-
       expect(component.searchCriteria()).toEqual({
         criteria: [
           jasmine.objectContaining({ name: 'location', value: ['Munich', 'Zug', 'Karlsruhe'] })
@@ -1082,15 +1153,18 @@ describe('SiFilteredSearchComponent', () => {
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
       await freeTextSearch.focus();
+      await tick();
       await freeTextSearch.select({ text: 'Location' });
+      await tick();
       const criterion = (await filteredSearch.getCriteria({ labelText: 'Location' })).at(0);
       const criteriaValue = await criterion?.value();
       await criteriaValue?.focus();
       await criteriaValue?.select({ text: 'Karlsruhe' });
       await criteriaValue?.select({ text: 'Zug' });
       await criteriaValue?.blur();
-
+      await tick();
       await criteriaValue?.click();
+      await tick();
       const items = (await criteriaValue?.getItems({ isSelected: true })) ?? [];
       const selected = await parallel(() => items?.map(async i => await i.getText()));
       expect(selected).toEqual(['Karlsruhe', 'Zug']);
@@ -1195,7 +1269,9 @@ describe('SiFilteredSearchComponent', () => {
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
       await freeTextSearch.focus();
+      await tick();
       await freeTextSearch.select({ text: 'Location' });
+      await tick();
       const [criteria] = await filteredSearch.getCriteria({ labelText: 'Location' });
       await criteria.value().then(value => value!.select({ text: 'zug' }));
 
@@ -1224,6 +1300,7 @@ describe('SiFilteredSearchComponent', () => {
       const criterionValue = await criteria[0].value();
       await criterionValue?.click();
       await criterionValue?.focus();
+      await tick();
       const items = (await criterionValue?.getItems()) ?? [];
 
       const icons = await parallel(() => items?.map(async i => await i.getText()));
@@ -1334,6 +1411,7 @@ describe('SiFilteredSearchComponent', () => {
       const freeTextSearch = await filteredSearch.freeTextSearch();
       await freeTextSearch.focus();
       await freeTextSearch.typeText('te');
+      await tick();
       const items = await freeTextSearch.getItems();
       expect(items).toEqual(['test']);
     });
@@ -1344,6 +1422,7 @@ describe('SiFilteredSearchComponent', () => {
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
       await freeTextSearch.typeText('bla');
+      await tick();
       expect(component.doSearch).toHaveBeenCalledWith({
         criteria: [],
         value: 'bla'
@@ -1364,6 +1443,7 @@ describe('SiFilteredSearchComponent', () => {
       await criteriaValue?.click();
       await criteriaValue?.clearText();
       await criteriaValue?.sendKeys('Zug');
+      await tick();
 
       expect(component.doSearch).toHaveBeenCalledWith({
         criteria: [{ name: 'location', value: 'Zug' }],
@@ -1386,6 +1466,7 @@ describe('SiFilteredSearchComponent', () => {
       await criteriaValue?.click();
       await criteriaValue?.clearText();
       await criteriaValue?.sendKeys('Zug');
+      await tick();
 
       expect(component.doSearch).toHaveBeenCalledWith({
         criteria: [{ name: 'location', value: 'Zug' }],
@@ -1413,7 +1494,9 @@ describe('SiFilteredSearchComponent', () => {
       await criteria[0].clickLabel();
       const operator = await criteria[0].operator();
       await operator?.clearText();
+      await tick();
       await operator?.select({ text: '<' });
+      await tick();
       expect(await criteria[0].value().then(value => value?.hasFocs())).toBeTrue();
 
       expect(component.doSearch).toHaveBeenCalledWith({
@@ -1484,6 +1567,7 @@ describe('SiFilteredSearchComponent', () => {
     const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
     const freeTextSearch = await filteredSearch.freeTextSearch();
     await freeTextSearch.focus();
+    await tick();
     const items = await freeTextSearch.getItems();
     expect(items).toHaveSize(24);
   });
@@ -1505,6 +1589,7 @@ describe('SiFilteredSearchComponent', () => {
     const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
     const freeTextSearch = await filteredSearch.freeTextSearch();
     await freeTextSearch.focus();
+    await tick();
     const items = await freeTextSearch.getItems();
     expect(items).toHaveSize(10);
   });
@@ -1515,7 +1600,9 @@ describe('SiFilteredSearchComponent', () => {
     const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
     const freeText = await filteredSearch.freeTextSearch();
     await freeText.focus();
+    await tick();
     await freeText.select({ text: 'country' });
+    await tick();
     const [criterion] = await filteredSearch.getCriteria();
     await criterion.clickLabel();
     await criterion.value().then(async value => {
@@ -1557,6 +1644,7 @@ describe('SiFilteredSearchComponent', () => {
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const criteria = await filteredSearch.getCriteria();
       await criteria[0].clickLabel();
+      await tick();
       const operator = await criteria[0].operator();
       await operator?.focus();
       const items = await operator?.getItemLabels();
@@ -1580,6 +1668,7 @@ describe('SiFilteredSearchComponent', () => {
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const criteria = await filteredSearch.getCriteria();
       await criteria[0].clickLabel();
+      await tick();
       const operator = await criteria[0].operator();
       await operator?.focus();
       const activeItem = await operator?.getItemLabels({ isActive: true });
@@ -1691,6 +1780,7 @@ describe('SiFilteredSearchComponent', () => {
       const value2 = await filteredSearch
         .getCriteria({ labelText: 'second' })
         .then(criteria => criteria[0].value());
+      await tick();
       expect(await value2!.hasFocs()).toBeTrue();
       await value2!.sendKeys(TestKey.BACKSPACE);
       expect(
@@ -1733,7 +1823,7 @@ describe('SiFilteredSearchComponent', () => {
       const freeTextSearch = await filteredSearch.freeTextSearch();
       await freeTextSearch.sendKeys(TestKey.BACKSPACE);
       const criteria = await filteredSearch.getCriteria({ labelText: 'location' });
-      await new Promise(resolve => setTimeout(resolve, 0));
+      await tick();
       expect(await criteria[0].value().then(value => value?.hasFocs())).toBeTrue();
     });
 
@@ -1747,6 +1837,7 @@ describe('SiFilteredSearchComponent', () => {
       const freeTextSearch = await filteredSearch.freeTextSearch();
       await freeTextSearch.focus();
       await freeTextSearch.sendKeys('location:');
+      await tick();
 
       expect(component.doSearch).toHaveBeenCalledWith({
         value: '',
@@ -1762,13 +1853,16 @@ describe('SiFilteredSearchComponent', () => {
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
       await freeTextSearch.focus();
+      await tick();
       await freeTextSearch.select({ text: 'Location' });
+      await tick();
 
       await filteredSearch
         .getCriteria()
         .then(criteria => criteria[0].value())
         .then(value => value!.sendKeys('Hannover;FreeText'));
 
+      await tick();
       expect(component.doSearch).toHaveBeenCalledWith({
         value: 'FreeText',
         criteria: [{ value: 'Hannover', name: 'test' }]
@@ -1793,7 +1887,9 @@ describe('SiFilteredSearchComponent', () => {
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
       const freeTextSearch = await filteredSearch.freeTextSearch();
       await freeTextSearch.focus();
+      await tick();
       await freeTextSearch.select({ text: 'Location' });
+      await tick();
       const spy = spyOn(component, 'doSearch');
       await filteredSearch
         .getCriteria()
@@ -1801,6 +1897,7 @@ describe('SiFilteredSearchComponent', () => {
         .then(value => value!.sendKeys('H;H'));
       expect(spy).not.toHaveBeenCalled();
       await freeTextSearch.focus();
+      await tick();
       expect(
         await filteredSearch
           .getCriteria()
@@ -1822,6 +1919,7 @@ describe('SiFilteredSearchComponent', () => {
       expect(await freeTextSearch.getValue()).toBe('Max');
       await freeTextSearch.focus();
       await freeTextSearch.sendKeys(':');
+      await tick();
 
       expect(component.doSearch).toHaveBeenCalledWith({
         criteria: [
@@ -1852,6 +1950,7 @@ describe('SiFilteredSearchComponent', () => {
       const freeTextSearch = await filteredSearch.freeTextSearch();
       await freeTextSearch.focus();
       await freeTextSearch.sendKeys(':');
+      await tick();
 
       expect(component.doSearch).toHaveBeenCalledWith({
         criteria: [{ name: 'location', value: 'Munich' }],
@@ -1910,6 +2009,7 @@ describe('SiFilteredSearchComponent', () => {
       const freeTextSearch = await filteredSearch.freeTextSearch();
       await freeTextSearch.focus();
       await freeTextSearch.sendKeys(':');
+      await tick();
 
       expect(component.doSearch).toHaveBeenCalledWith({
         criteria: jasmine.arrayContaining([{ name: 'country', value: 'CH' }]),
@@ -1940,6 +2040,7 @@ describe('SiFilteredSearchComponent', () => {
       const freeTextSearch = await filteredSearch.freeTextSearch();
       await freeTextSearch.focus();
       await freeTextSearch.sendKeys(':');
+      await tick();
 
       expect(component.doSearch).toHaveBeenCalledWith({
         criteria: jasmine.arrayContaining([{ name: 'country', value: 'Switzerland' }]),
@@ -1968,6 +2069,7 @@ describe('SiFilteredSearchComponent', () => {
       const freeTextSearch = await filteredSearch.freeTextSearch();
       await freeTextSearch.focus();
       await freeTextSearch.sendKeys(':');
+      await tick();
 
       expect(component.doSearch).toHaveBeenCalledWith({
         criteria: jasmine.arrayContaining([{ name: 'country', value: 'Switzerland' }]),
@@ -1999,6 +2101,7 @@ describe('SiFilteredSearchComponent', () => {
       const freeTextSearch = await filteredSearch.freeTextSearch();
       await freeTextSearch.focus();
       await freeTextSearch.sendKeys(':');
+      await tick();
 
       expect(component.doSearch).toHaveBeenCalledWith({
         criteria: jasmine.arrayContaining([{ name: 'country', value: 'Switzerland_Overrride' }]),
@@ -2031,6 +2134,7 @@ describe('SiFilteredSearchComponent', () => {
       const freeTextSearch = await filteredSearch.freeTextSearch();
       await freeTextSearch.focus();
       await freeTextSearch.sendKeys(':');
+      await tick();
       expect(component.doSearch).toHaveBeenCalledWith({
         criteria: [
           { name: 'country', value: ['DE', 'CH'] },
@@ -2111,10 +2215,13 @@ describe('SiFilteredSearchComponent', () => {
         const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
         const freeTextSearch = await filteredSearch.freeTextSearch();
         await freeTextSearch.focus();
+        await tick();
         expect(spy).toHaveBeenCalledTimes(1);
         expect(await freeTextSearch.getItems()).toEqual(['Foo', 'Bar']);
         await freeTextSearch.select({ text: 'Foo' });
+        await tick();
         await freeTextSearch.focus();
+        await tick();
         expect(spy).toHaveBeenCalledTimes(2);
         expect(await freeTextSearch.getItems()).toEqual(['Bar']);
       });
@@ -2123,12 +2230,79 @@ describe('SiFilteredSearchComponent', () => {
         const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
         const freeTextSearch = await filteredSearch.freeTextSearch();
         await freeTextSearch.focus();
+        await tick();
         expect(spy).toHaveBeenCalledTimes(1);
         expect(await freeTextSearch.getItems()).toEqual(['Bar']);
         await filteredSearch.getCriteria({ labelText: 'Foo' }).then(c => c[0].clickClearButton());
         expect(spy).toHaveBeenCalledTimes(2);
         expect(await freeTextSearch.getItems()).toEqual(['Foo', 'Bar']);
       });
+    });
+
+    it('should allow only one free-text pill at a time using interceptor', async () => {
+      component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
+      component.searchCriteria.set({ criteria: [], value: '' });
+      await runOnPushChangeDetection(fixture);
+      spyOn(component, 'showCriteria').and.callFake(e => {
+        const hasFreeTextPill = e.searchCriteria.criteria.some(c => c.name === 'free-text');
+        // Allow criteria but disable free text if one already exists
+        e.allow(e.criteria, !hasFreeTextPill);
+      });
+
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      const freeTextSearch = await filteredSearch.freeTextSearch();
+
+      // Step 1: Add the first free-text pill
+      await freeTextSearch.focus();
+      await freeTextSearch.typeText('first pill');
+      await tick();
+
+      // Select the "Create option" to add the free text pill
+      await freeTextSearch.select({ text: 'Search for "first pill"' });
+      await tick();
+
+      // Verify the pill was created
+      let criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(1);
+      let value = await criteria[0].value();
+      expect(await value?.text()).toBe('first pill');
+
+      // Step 2: Try to add a second free-text pill (should be prevented)
+      await freeTextSearch.focus();
+      await freeTextSearch.typeText('second pill');
+      await tick();
+
+      // Verify the "Create option" is NOT available because interceptor disabled free text
+      expect(await freeTextSearch.getItems()).toBeNull();
+
+      // Verify still only one pill exists
+      criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(1);
+
+      // Step 3: Remove the existing pill
+      await filteredSearch
+        .getCriteria({ valueText: 'first pill' })
+        .then(c => c[0].clickClearButton());
+      await tick();
+
+      // Verify the pill was removed
+      criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(0);
+
+      // Step 4: Add a new free-text pill (should be allowed again)
+      await freeTextSearch.focus();
+      await freeTextSearch.typeText('new pill');
+      await tick();
+
+      // Select the "Create option" to add the free text pill
+      await freeTextSearch.select({ text: 'Search for "new pill"' });
+      await tick();
+
+      // Verify the pill was created
+      criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(1);
+      value = await criteria[0].value();
+      expect(await value?.text()).toBe('new pill');
     });
   });
 });
@@ -2144,10 +2318,11 @@ describe('SiFilteredSearchComponent - With translation', () => {
   let component: TestHostComponent;
   let loader: HarnessLoader;
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [TestHostComponent],
       providers: [
+        provideZonelessChangeDetection(),
         provideNoopAnimations(),
         provideMockTranslateServiceBuilder(
           () =>
@@ -2178,7 +2353,7 @@ describe('SiFilteredSearchComponent - With translation', () => {
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     loader = TestbedHarnessEnvironment.loader(fixture);
-  }));
+  });
 
   beforeEach(async () => {
     component.criteria.set([
@@ -2201,10 +2376,24 @@ describe('SiFilteredSearchComponent - With translation', () => {
     });
   });
 
+  beforeEach(() => {
+    jasmine.clock().install();
+  });
+
+  afterEach(() => {
+    jasmine.clock().uninstall();
+  });
+
+  const tick = async (ms = 100): Promise<void> => {
+    jasmine.clock().tick(ms);
+    await fixture.whenStable();
+  };
+
   it('should update items on translate', async () => {
     const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
     const freeTextSearch = await filteredSearch.freeTextSearch();
     await freeTextSearch.focus();
+    await tick();
     const items = await freeTextSearch.getItems();
     expect(items).toEqual(['translated(CountryKey)']);
     await freeTextSearch.select({ text: 'translated(CountryKey)' });
@@ -2228,6 +2417,7 @@ describe('SiFilteredSearchComponent - With translation', () => {
     expect(await deOptionValue!.getValue()).toBe('translated(GermanyKey)');
     await deOptionValue!.clearText();
     await deOptionValue!.sendKeys('other-country');
+    await tick();
     expect(spy).toHaveBeenCalledWith({
       criteria: [
         { name: 'country', value: 'other-country' },
@@ -2237,6 +2427,7 @@ describe('SiFilteredSearchComponent - With translation', () => {
     });
     await deOptionValue!.clearText();
     await deOptionValue!.sendKeys('translated(GermanyKey)');
+    await tick();
     expect(spy).toHaveBeenCalledWith({
       criteria: [
         { name: 'country', value: 'DE' },
@@ -2250,6 +2441,7 @@ describe('SiFilteredSearchComponent - With translation', () => {
     const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
     const freeTextSearch = await filteredSearch.freeTextSearch();
     await freeTextSearch.focus();
+    await tick();
     const items = await freeTextSearch.getItems();
     expect(items).toEqual(['translated(CountryKey)']);
   });
@@ -2321,9 +2513,15 @@ describe('SiFilteredSearchComponent - With translation', () => {
     const value = await criteria[0].value();
     await value!.click();
     await value!.setValue('');
+    await tick();
     await value!.sendKeys('broken-format');
+    jasmine.clock().uninstall();
+    // needed to avoid flaky test
+    await new Promise(resolve => setTimeout(resolve, 0));
+    jasmine.clock().install();
     await value!.blur();
     await filteredSearch.clickSearchButton();
+    await tick();
     expect(await value!.text()).toBe('Invalid Date');
     expect(spy).toHaveBeenCalledWith({
       criteria: [
@@ -2342,6 +2540,7 @@ describe('SiFilteredSearchComponent - With translation', () => {
     const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
     const freeTextSearch = await filteredSearch.freeTextSearch();
     await freeTextSearch.focus();
+    await tick();
     expect(await freeTextSearch.getItems({ isActive: true })).toHaveSize(0);
     await freeTextSearch.typeText('C');
     expect(await freeTextSearch.getItems({ isActive: true })).toHaveSize(1);
@@ -2362,8 +2561,11 @@ describe('SiFilteredSearchComponent - With translation', () => {
       .then(value => value!.blur());
     expect(await filteredSearch.getCriteria()).toHaveSize(1);
     await freeTextSearch.focus();
+    await tick();
     await freeTextSearch.clearText();
+    await tick();
     await freeTextSearch.select({ text: 'translated(Date)' });
+    await tick();
     // we have to check by the label here. As the text translated: will create another criterion called: translated
     const criteriaDate = await filteredSearch.getCriteria({ labelText: 'translated(Date)' });
     await criteriaDate
@@ -2395,5 +2597,185 @@ describe('SiFilteredSearchComponent - With translation', () => {
       criteriaValid.map(criterion => criterion.value().then(value => value!.text()))
     );
     expect(validValues).toEqual(['translated(GermanyKey)']);
+  });
+
+  describe('with free text pills enabled', () => {
+    it('should create a free text pill when typing text and blurring the input', async () => {
+      component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
+      component.searchCriteria.set({
+        value: '',
+        criteria: []
+      });
+      await runOnPushChangeDetection(fixture);
+
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      const freeTextSearch = await filteredSearch.freeTextSearch();
+
+      // Verify no pills exist initially
+      let criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(0);
+
+      // Type text into the free text search
+      await freeTextSearch.focus();
+      await freeTextSearch.typeText('test pill text');
+      await tick();
+
+      // Blur the input
+      await freeTextSearch.blur();
+      await tick();
+
+      // Verify a free text pill was created
+      criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(1);
+      const value = await criteria[0].value();
+      expect(await value?.text()).toBe('test pill text');
+
+      // Verify the search criteria was updated
+      expect(component.searchCriteria().criteria).toEqual([
+        { name: 'free-text', value: 'test pill text' }
+      ]);
+    });
+
+    it('should update an existing free text pill', async () => {
+      component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
+      component.searchCriteria.set({
+        value: '',
+        criteria: [{ name: 'free-text', value: 'original value' }]
+      });
+      await runOnPushChangeDetection(fixture);
+
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      let criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(1);
+
+      // Verify the initial value
+      let value = await criteria[0].value();
+      expect(await value?.text()).toBe('original value');
+
+      // Click on the value to enter edit mode
+      await value?.click();
+      await tick();
+
+      // Clear the existing text and type new value
+      await value?.clearText();
+      await value?.sendKeys('updated value');
+      await tick();
+
+      // Press Enter to submit the change
+      await value?.sendKeys(TestKey.ENTER);
+      await tick();
+
+      // Verify the value has been updated
+      criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(1);
+      value = await criteria[0].value();
+      expect(await value?.text()).toBe('updated value');
+
+      // Verify the search criteria was updated
+      expect(component.searchCriteria().criteria).toEqual([
+        { name: 'free-text', value: 'updated value' }
+      ]);
+    });
+
+    it('should remove free text pill when editing, deleting all value and pressing enter', async () => {
+      component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
+      component.searchCriteria.set({
+        value: '',
+        criteria: [{ name: 'free-text', value: 'text to delete' }]
+      });
+      await runOnPushChangeDetection(fixture);
+
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      let criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(1);
+
+      // Verify the initial value
+      const value = (await criteria[0].value())!;
+      expect(await value.text()).toBe('text to delete');
+
+      // Click on the value to enter edit mode
+      await value.click();
+      await tick();
+
+      // Clear all text
+      await value.clearText();
+      await tick();
+
+      // Press Enter to submit the change
+      await value.sendKeys(TestKey.ENTER);
+      await tick();
+
+      // Verify the criterion was removed
+      criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(0);
+
+      // Verify the search criteria no longer contains the criterion
+      expect(component.searchCriteria().criteria).toEqual([]);
+    });
+
+    it('should not allow adding free text pills when maxCriteria is reached', async () => {
+      component.freeTextCriterion = { name: 'free-text', label: 'Free Text' };
+      component.maxCriteria = 2;
+      component.searchCriteria.set({
+        value: '',
+        criteria: [{ name: 'free-text', value: 'initial pill' }]
+      });
+      await runOnPushChangeDetection(fixture);
+
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      const freeTextSearch = await filteredSearch.freeTextSearch();
+
+      // Verify initial pill exists
+      let criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(1);
+      const value = await criteria[0].value();
+      expect(await value?.text()).toBe('initial pill');
+
+      // Add the second free text pill (should be allowed)
+      await freeTextSearch.focus();
+      await freeTextSearch.typeText('second pill');
+      await tick();
+
+      // Verify the "Create option" is available
+      let items = await freeTextSearch.getItems();
+      expect(items).not.toBeNull();
+      expect(items!.length).toBeGreaterThan(0);
+
+      // Select the "Create option" item
+      await freeTextSearch.select({ text: 'SI_FILTERED_SEARCH.SEARCH_FOR_FREE_TEXT translated' });
+      await tick();
+
+      // Verify the second pill was created
+      criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(2);
+      const values = await parallel(() =>
+        criteria.map(criterion => criterion.value().then(criteriaValue => criteriaValue!.text()))
+      );
+      expect(values).toEqual(['initial pill', 'second pill']);
+
+      // Try to add a third free text pill (should be blocked)
+      await freeTextSearch.focus();
+      await freeTextSearch.typeText('third pill');
+      await tick();
+
+      // Verify that the "Create option" is no longer available because maxCriteria is reached
+      items = await freeTextSearch.getItems();
+      expect(items).toBeNull();
+
+      // Verify only two pills exist
+      criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(2);
+
+      // Blur the input to verify no pill is created on blur
+      await freeTextSearch.blur();
+      await tick();
+
+      // Verify still only two pills exist after blur
+      criteria = await filteredSearch.getCriteria();
+      expect(criteria.length).toBe(2);
+
+      // Verify the input text was unchanged after blur
+      expect(await freeTextSearch.getValue()).toBe('third pill');
+    });
   });
 });

@@ -9,7 +9,6 @@ import { EmitHint } from 'typescript';
 
 import {
   discoverSourceFiles,
-  getImportSpecifiers,
   renameApi,
   renameAttribute,
   renameElementTag,
@@ -92,16 +91,6 @@ export const elementMigrationRule = (options: { path: string }): Rule => {
         recorder ??= tree.beginUpdate(filePath);
 
         for (const change of migrationData.outputNameChanges) {
-          const importSpecifiers = getImportSpecifiers(
-            sourceFile,
-            change.module,
-            change.componentOrModuleName
-          );
-
-          if (!importSpecifiers?.length) {
-            continue;
-          }
-
           renameApi({
             tree,
             recorder,
@@ -117,16 +106,6 @@ export const elementMigrationRule = (options: { path: string }): Rule => {
         recorder ??= tree.beginUpdate(filePath);
 
         for (const change of migrationData.symbolRemovalChanges) {
-          const importSpecifiers = getImportSpecifiers(
-            sourceFile,
-            change.module,
-            change.componentOrModuleName
-          );
-
-          if (!importSpecifiers?.length) {
-            continue;
-          }
-
           removeSymbol({
             tree,
             recorder,

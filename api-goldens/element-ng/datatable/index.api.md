@@ -5,13 +5,28 @@
 ```ts
 
 import * as i0 from '@angular/core';
-import { NgxDatatableConfig } from '@siemens/ngx-datatable';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Provider } from '@angular/core';
 
 // @public @deprecated (undocumented)
 export interface INgxDatatableConfig extends NgxDatatableConfig {
+}
+
+// @public
+export interface NgxDatatableConfig {
+    // (undocumented)
+    cssClasses?: NgxDatatableCssClasses;
+    // (undocumented)
+    defaultColumnWidth?: number;
+    // (undocumented)
+    footerHeight?: number;
+    // (undocumented)
+    headerHeight?: number;
+    // (undocumented)
+    messages?: NgxDatatableMessages;
+    // (undocumented)
+    rowHeight?: number;
 }
 
 // @public
@@ -27,16 +42,6 @@ export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
     ngOnDestroy(): void;
     // (undocumented)
     ngOnInit(): void;
-    // (undocumented)
-    protected onFocusin(event: FocusEvent): void;
-    // (undocumented)
-    protected onKeydown(event: KeyboardEvent): void;
-    // (undocumented)
-    protected onMousedown(event: MouseEvent): void;
-    // (undocumented)
-    protected onMouseup(event: MouseEvent): void;
-    // (undocumented)
-    protected tabIndex: string;
     // (undocumented)
     static ɵdir: i0.ɵɵDirectiveDeclaration<SiDatatableInteractionDirective, "ngx-datatable[siDatatableInteraction]", ["si-datatable-interaction"], { "datatableInteractionAutoSelect": { "alias": "datatableInteractionAutoSelect"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
     // (undocumented)

@@ -2,8 +2,15 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, ElementRef, signal, viewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  provideZonelessChangeDetection,
+  signal,
+  viewChild
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, NgControl } from '@angular/forms';
 
 import { dispatchEvents, enterValue } from './components/test-helper.spec';
@@ -56,7 +63,8 @@ describe('SiDateInputDirective', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [WrapperComponent]
+      imports: [WrapperComponent],
+      providers: [provideZonelessChangeDetection()]
     })
   );
 
@@ -105,7 +113,8 @@ describe('SiDateInputDirective', () => {
     expect(component.siDateInput().nativeElement.value).toBe('3/12/2022, 5:30:20 AM');
   });
 
-  it('should consider minDate criteria with time', fakeAsync(() => {
+  it('should consider minDate criteria with time', async () => {
+    jasmine.clock().install();
     spyOn(component.siDateInputDirective(), 'validate').and.callThrough();
     component.date = new Date('2020-03-12T13:13:13');
     updateConfig({
@@ -115,16 +124,18 @@ describe('SiDateInputDirective', () => {
     });
     dispatchEvents(dateInput(), ['focus', 'change']);
 
-    tick();
+    jasmine.clock().tick(1);
+    await fixture.whenStable();
 
     expect(component.validation().errors?.minDate).toEqual({
       actual: component.date,
       min: component.config().minDate
     });
-    flush();
-  }));
+    jasmine.clock().uninstall();
+  });
 
-  it('should consider minDate criteria only date', fakeAsync(() => {
+  it('should consider minDate criteria only date', async () => {
+    jasmine.clock().install();
     spyOn(component.siDateInputDirective(), 'validate').and.callThrough();
     component.date = new Date('2020-03-12');
     updateConfig({
@@ -134,16 +145,18 @@ describe('SiDateInputDirective', () => {
     });
     dispatchEvents(dateInput(), ['focus', 'change']);
 
-    tick();
+    jasmine.clock().tick(1);
+    await fixture.whenStable();
 
     expect(component.validation().errors?.minDate).toEqual({
       actual: component.date,
       min: component.config().minDate
     });
-    flush();
-  }));
+    jasmine.clock().uninstall();
+  });
 
-  it('should consider maxDate criteria with time', fakeAsync(() => {
+  it('should consider maxDate criteria with time', async () => {
+    jasmine.clock().install();
     spyOn(component.siDateInputDirective(), 'validate').and.callThrough();
     component.date = new Date('2024-03-12T13:13:13');
     updateConfig({
@@ -153,15 +166,17 @@ describe('SiDateInputDirective', () => {
     });
     dispatchEvents(dateInput(), ['focus', 'change']);
 
-    tick();
+    jasmine.clock().tick(1);
+    await fixture.whenStable();
     expect(component.validation().errors?.maxDate).toEqual({
       actual: component.date,
       max: component.config().maxDate
     });
-    flush();
-  }));
+    jasmine.clock().uninstall();
+  });
 
-  it('should consider maxDate criteria only date', fakeAsync(() => {
+  it('should consider maxDate criteria only date', async () => {
+    jasmine.clock().install();
     spyOn(component.siDateInputDirective(), 'validate').and.callThrough();
     component.date = new Date('2024-03-12');
     updateConfig({
@@ -171,22 +186,23 @@ describe('SiDateInputDirective', () => {
     });
     dispatchEvents(dateInput(), ['focus', 'change']);
 
-    tick();
+    jasmine.clock().tick(1);
+    await fixture.whenStable();
     expect(component.validation().errors?.maxDate).toEqual({
       actual: component.date,
       max: component.config().maxDate
     });
-    flush();
-  }));
+    jasmine.clock().uninstall();
+  });
 
-  it('should disable input element when setting disabled property to true', fakeAsync(() => {
+  it('should disable input element when setting disabled property to true', () => {
     expect(component.siDateInputDirective().disabled()).toBe(false);
     expect(dateInput().disabled).toBe(false);
 
     component.disabled.set(true);
     fixture.detectChanges();
     expect(dateInput().disabled).toBe(true);
-  }));
+  });
 
   it('should trigger modelChange with undefined when input is blank string', async () => {
     // In case user remove the date string this should be reflected in the datepicker

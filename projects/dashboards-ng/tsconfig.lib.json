@@ -1,5 +1,5 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/lib",
     "declaration": true,
@@ -10,7 +10,8 @@
       "@siemens/element-translate-ng": ["dist/@siemens/element-translate-ng"],
       "@siemens/element-translate-ng/*": ["dist/@siemens/element-translate-ng/*"],
       "@siemens/element-ng": ["dist/@siemens/element-ng"],
-      "@siemens/element-ng/*": ["dist/@siemens/element-ng/*"]
+      "@siemens/element-ng/*": ["dist/@siemens/element-ng/*"],
+      "@siemens/dashboards-ng": ["projects/dashboards-ng/src/public-api.ts"]
     }
   },
   "angularCompilerOptions": {
@@ -20,5 +21,6 @@
     "enableResourceInlining": true,
     "compilationMode": "partial"
   },
+  "include": ["./**/*.ts"],
   "exclude": ["**/*.spec.ts", "test"]
 }

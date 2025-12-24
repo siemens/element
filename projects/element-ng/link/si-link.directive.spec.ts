@@ -2,8 +2,14 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  provideZonelessChangeDetection
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 import {
@@ -46,8 +52,8 @@ describe('SiLinkDirective', () => {
   let component: TestHostComponent;
   let element: HTMLElement;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [SiLinkDirective, TestHostComponent],
       providers: [
         SiLinkActionService,
@@ -57,10 +63,11 @@ describe('SiLinkDirective', () => {
             ({
               translateAsync: (keys, params) => of(`translated=>${keys}-${JSON.stringify(params)}`)
             }) as SiTranslateService
-        )
+        ),
+        provideZonelessChangeDetection()
       ]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
@@ -146,12 +153,12 @@ describe('SiLinkDirective', () => {
     });
   });
 
-  it('updates active class on isActive change', fakeAsync(() => {
+  it('updates active class on isActive change', async () => {
     const changeSpy = spyOn(component, 'activeChange');
     component.link = { action: () => {} };
     component.cdRef.markForCheck();
     fixture.detectChanges();
-    tick();
+    await fixture.whenStable();
 
     const anchor = element.querySelector('a')!;
     expect(anchor.classList).not.toContain('active');
@@ -160,7 +167,7 @@ describe('SiLinkDirective', () => {
     component.link.isActive = true;
     component.cdRef.markForCheck();
     fixture.detectChanges();
-    tick();
+    await fixture.whenStable();
 
     expect(anchor.classList).toContain('active');
     expect(changeSpy).toHaveBeenCalledWith(true);
@@ -169,11 +176,11 @@ describe('SiLinkDirective', () => {
     component.link.isActive = false;
     component.cdRef.markForCheck();
     fixture.detectChanges();
-    tick();
+    await fixture.whenStable();
 
     expect(anchor.classList).not.toContain('active');
     expect(changeSpy).toHaveBeenCalledWith(false);
-  }));
+  });
 
   describe('router link', () => {
     it('should create an instance with a link', async () => {
@@ -225,7 +232,8 @@ describe('SiLinkDirective', () => {
             {
               provide: SI_LINK_DEFAULT_NAVIGATION_EXTRA,
               useValue: { preserveFragment: false, queryParamsHandling: '' }
-            }
+            },
+            provideZonelessChangeDetection()
           ]
         });
 

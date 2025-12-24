@@ -2,7 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
@@ -12,9 +13,10 @@ describe('SiDashboardToolbarComponent', () => {
   let component: SiDashboardToolbarComponent;
   let fixture: ComponentFixture<SiDashboardToolbarComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [SiTranslateModule, SiDashboardToolbarComponent]
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [SiTranslateModule, SiDashboardToolbarComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
   });
 
@@ -28,19 +30,19 @@ describe('SiDashboardToolbarComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('#onEdit() shall set editable mode', fakeAsync(() => {
+  it('#onEdit() shall set editable mode', async () => {
     expect(component.editable()).toBeFalse();
     const button = fixture.debugElement.query(By.css('button'));
     button.triggerEventHandler('click', null);
+    await fixture.whenStable();
     fixture.detectChanges();
-    tick();
 
     expect(component.editable()).toBeTrue();
     const buttons = fixture.debugElement.queryAll(By.css('button'));
     expect(buttons.length).toBe(2);
-  }));
+  });
 
-  it('#onCancel() shall cancel editable mode', fakeAsync(() => {
+  it('#onCancel() shall cancel editable mode', async () => {
     fixture.componentRef.setInput('editable', true);
     fixture.detectChanges();
     const buttons = fixture.debugElement.queryAll(By.css('button'));
@@ -48,13 +50,13 @@ describe('SiDashboardToolbarComponent', () => {
     expect(buttons[0].nativeElement.textContent).toContain('Cancel');
 
     buttons[0].triggerEventHandler('click', null);
+    await fixture.whenStable();
     fixture.detectChanges();
-    tick();
 
     expect(component.editable()).withContext('Cancel shall not change editable state').toBeTrue();
-  }));
+  });
 
-  it('#onSave() shall cancel editable mode and emit save', fakeAsync(() => {
+  it('#onSave() shall cancel editable mode and emit save', async () => {
     fixture.componentRef.setInput('editable', true);
     fixture.detectChanges();
     const buttons = fixture.debugElement.queryAll(By.css('button'));
@@ -62,11 +64,11 @@ describe('SiDashboardToolbarComponent', () => {
     expect(buttons[1].nativeElement.textContent).toContain('Save');
 
     buttons[1].triggerEventHandler('click', null);
+    await fixture.whenStable();
     fixture.detectChanges();
-    tick();
 
     expect(component.editable()).withContext('Save shall not change editable state').toBeTrue();
-  }));
+  });
 
   it('#hideEditButton shall hide the edit button', () => {
     expect(component.editable()).toBeFalse();

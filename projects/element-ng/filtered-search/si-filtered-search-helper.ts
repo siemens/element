@@ -15,6 +15,7 @@ export interface TypeaheadOptionCriterion extends OptionCriterion {
 export interface InternalCriterionDefinition extends CriterionDefinition {
   label: string;
   translatedLabel: string;
+  type?: 'free-text';
 }
 
 /** Convert options to option criterions */

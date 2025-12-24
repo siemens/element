@@ -17,7 +17,9 @@ import { Subscription, timer } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnInit {
-  logEvent = inject(LOG_EVENT);
+  private readonly logEvent = inject(LOG_EVENT);
+  private readonly blink = inject(BlinkService);
+  private readonly destroyRef = inject(DestroyRef);
 
   muteButton = false;
   blinkOn = false;
@@ -55,8 +57,6 @@ export class SampleComponent implements OnInit {
   shouldBlink = !navigator.webdriver;
 
   private addBlinkSubs?: Subscription;
-  private blink = inject(BlinkService);
-  private destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
     // disable updating content in e2e tests

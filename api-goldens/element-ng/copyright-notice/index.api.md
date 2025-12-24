@@ -19,15 +19,7 @@ export const SI_COPYRIGHT_DETAILS: InjectionToken<CopyrightDetails>;
 
 // @public (undocumented)
 export class SiCopyrightNoticeComponent {
-    // (undocumented)
-    protected readonly company: _angular_core.Signal<string | undefined>;
     readonly copyright: _angular_core.InputSignal<CopyrightDetails | undefined>;
-    // (undocumented)
-    protected readonly copyrightInfo: _angular_core.Signal<string>;
-    // (undocumented)
-    protected readonly lastUpdateYear: _angular_core.Signal<number | undefined>;
-    // (undocumented)
-    protected readonly startYear: _angular_core.Signal<number>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiCopyrightNoticeComponent, "si-copyright-notice", never, { "copyright": { "alias": "copyright"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
     // (undocumented)

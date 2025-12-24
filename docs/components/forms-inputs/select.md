@@ -66,7 +66,7 @@ Advanced select provides two configurations: Inline for direct integration with 
 Effective form labeling helps users understand what information to enter.
 
 - Keep labels short and clear (should not be wider than the input field).
-- A mandatory field is marked with an ***-asterisk**.
+- A mandatory field is marked with an **\*-asterisk**.
 
 ![Select input label](images/select-input-label.png)
 
@@ -197,7 +197,6 @@ To use the `[optionSource]` applications must implement the `SelectOptionSource`
 // For async methods the si-select will show a loading spinner until the observable emits the first time.
 // Always return options in a consistent order.
 export class MyOptionSource implements SelectOptionSource<MyValue> {
-  
   getOptionsForValues(values: MyValue[]): Observable<SelectOptionNext<MyValue>[]> {
     // si-select will call this function when it needs to get options for the provided values.
     // This function is typically called when the value is set via a formControl or ngModel.
@@ -216,7 +215,7 @@ export class MyOptionSource implements SelectOptionSource<MyValue> {
     // It is never called with an empty search value.
     // Return all options that matches the search value.
   }
-  
+
   compareOptions?(a: SelectOptionNext<MyValue>, b: SelectOptionNext<MyValue>): number {
     // This function is optional.
     // If provided it is used to compare options for sorting.
@@ -234,7 +233,11 @@ export class MyOptionSource implements SelectOptionSource<MyValue> {
 Then use this source in your component:
 
 ```ts
-import { SiSelectComponent, SiSelectSingleValueDirective, SiSelectLazyOptionsDirective } from '@siemens/element-ng/select';
+import {
+  SiSelectComponent,
+  SiSelectSingleValueDirective,
+  SiSelectLazyOptionsDirective
+} from '@siemens/element-ng/select';
 
 @Component({
   selector: 'app-sample',
@@ -315,10 +318,14 @@ To align the styling to the design system specification it is necessary that act
 - and footer buttons shall apply the following classes `btn btn-link`.
 
 ```html
-<si-select [options]="[{ id: 'option1', title: 'Option 1' }, { id: 'option2', title: 'Option 2' }]" >
+<si-select [options]="[{ id: 'option1', title: 'Option 1' }, { id: 'option2', title: 'Option 2' }]">
   <ng-template siSelectActions>
-    <button siSelectAction type="button" class="btn btn-link" aria-label="Action 1">Action 1</button>
-    <button siSelectAction type="button" class="btn btn-link" aria-label="Action 2">Action 2</button>
+    <button siSelectAction type="button" class="btn btn-link" aria-label="Action 1">
+      Action 1
+    </button>
+    <button siSelectAction type="button" class="btn btn-link" aria-label="Action 2">
+      Action 2
+    </button>
   </ng-template>
 </si-select>
 ```
@@ -328,14 +335,9 @@ In some scenarios it is necessary to close the dropdown on click for example to 
 The following demonstrates how to add a "Create" button within the dropdown actions that, when clicked, will close the dropdown:
 
 ```html
-<si-select [options]="[{ id: 'option1', title: 'Option 1' }, { id: 'option2', title: 'Option 2' }]" >
+<si-select [options]="[{ id: 'option1', title: 'Option 1' }, { id: 'option2', title: 'Option 2' }]">
   <ng-template siSelectActions>
-    <button 
-      siSelectAction 
-      selectActionAutoClose
-      type="button"
-      class="btn btn-link" 
-      (click)="....">
+    <button siSelectAction selectActionAutoClose type="button" class="btn btn-link" (click)="....">
       Create
     </button>
   </ng-template>

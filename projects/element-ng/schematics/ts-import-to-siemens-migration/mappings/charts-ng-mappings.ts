@@ -66,5 +66,6 @@ export const CHARTS_NG_MAPPINGS: { [symbol: string]: string } = {
   'themeElement': '@siemens/charts-ng',
   'themeSupport': '@siemens/charts-ng',
   'XAxisPosition': '@siemens/charts-ng',
-  'YAxisPosition': '@siemens/charts-ng'
+  'YAxisPosition': '@siemens/charts-ng',
+  'SimplChartsNgModule': '@siemens/charts-ng'
 };

@@ -8,4 +8,12 @@ import { Directive } from '@angular/core';
   selector: '[siSelectActions]',
   exportAs: 'si-select-actions'
 })
-export class SiSelectActionsDirective {}
+export class SiSelectActionsDirective {
+  /** @internal */
+  static ngTemplateContextGuard(
+    directive: SiSelectActionsDirective,
+    context: unknown
+  ): context is { searchText?: string; visibleOptionsCount?: number } {
+    return true;
+  }
+}

@@ -36,7 +36,7 @@ total number of items.
 
 ![Accordion Elements](images/accordion-elements.png)
 
- > 1. Header, 2. Content, 3. Badge (optional), 4. Expand/collapse indicator
+> \1.Header, 2. Content, 3. Badge (optional), 4. Expand/collapse indicator
 
 ### States
 

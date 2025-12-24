@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -16,7 +17,8 @@ describe('SiMapTooltipComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SiMapTooltipComponent]
+      imports: [SiMapTooltipComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
   });
 

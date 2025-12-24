@@ -42,10 +42,6 @@ export class SiFormContainerComponent<TControl extends {
     readonly disableErrorPrinting: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly errorCodeTranslateKeyMap: _angular_core.InputSignal<SiFormValidationErrorMapper | Map<string, string> | undefined>;
     readonly form: _angular_core.InputSignal<FormGroup<TControl> | undefined>;
-    // (undocumented)
-    protected getControlNameTranslateKey(controlName: string): string | undefined;
-    // (undocumented)
-    protected hasParentContainer: boolean;
     get invalidFormContainerMessage(): boolean;
     readonly labelWidth: _angular_core.InputSignal<string | undefined>;
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
@@ -59,20 +55,12 @@ export class SiFormContainerComponent<TControl extends {
 
 // @public (undocumented)
 export class SiFormFieldsetComponent implements DoCheck {
-    // (undocumented)
-    protected readonly errors: _angular_core.Signal<_siemens_element_ng_form.SiFormError[]>;
     readonly inline: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly isRequired: _angular_core.Signal<boolean>;
     readonly label: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
-    protected labelId: string;
     readonly labelWidth: _angular_core.InputSignal<string | undefined>;
     // (undocumented)
     ngDoCheck(): void;
     readonly required: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly touched: _angular_core.WritableSignal<boolean>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiFormFieldsetComponent, "si-form-fieldset", never, { "label": { "alias": "label"; "required": true; "isSignal": true; }; "labelWidth": { "alias": "labelWidth"; "required": false; "isSignal": true; }; "required": { "alias": "required"; "required": false; "isSignal": true; }; "inline": { "alias": "inline"; "required": false; "isSignal": true; }; }, {}, never, ["[si-help-button]", "*"], true, never>;
     // (undocumented)
@@ -81,31 +69,11 @@ export class SiFormFieldsetComponent implements DoCheck {
 
 // @public (undocumented)
 export class SiFormItemComponent implements AfterContentInit, AfterContentChecked, OnChanges, OnInit, OnDestroy {
-    // (undocumented)
-    protected container: SiFormContainerComponent<{
-        [x: string]: _angular_forms.AbstractControl<any, any>;
-    }> | null;
-    // (undocumented)
-    protected readonly controlElementRef: _angular_core.Signal<ElementRef<HTMLElement> | undefined>;
     readonly disableErrorPrinting: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
-    protected readonly fieldControl: _angular_core.Signal<SiFormItemControl | undefined>;
-    // (undocumented)
-    protected readonly fieldControlQuery: _angular_core.Signal<SiFormItemControl | undefined>;
-    // (undocumented)
-    protected fieldset: SiFormFieldsetComponent | null;
-    // (undocumented)
     readonly formErrorMapper: _angular_core.InputSignal<SiFormValidationErrorMapper | undefined>;
-    // (undocumented)
-    protected get formItemErrormessageId(): string | null;
-    // (undocumented)
-    protected get formItemId(): string | null;
-    // (undocumented)
-    protected get formItemLabelledBy(): string | null;
     readonly label: _angular_core.InputSignal<TranslatableString | null | undefined>;
     readonly labelWidth: _angular_core.InputSignal<string | number | undefined>;
-    // (undocumented)
-    protected readonly labelWidthCssVar: _angular_core.Signal<string | undefined>;
     // (undocumented)
     ngAfterContentChecked(): void;
     // (undocumented)
@@ -116,11 +84,7 @@ export class SiFormItemComponent implements AfterContentInit, AfterContentChecke
     ngOnDestroy(): void;
     // (undocumented)
     ngOnInit(): void;
-    // (undocumented)
-    protected readonly printErrors: _angular_core.Signal<boolean>;
     readonly requiredInput: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly requiredValidator: _angular_core.Signal<RequiredValidator | undefined>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiFormItemComponent, "si-form-item", never, { "label": { "alias": "label"; "required": false; "isSignal": true; }; "labelWidth": { "alias": "labelWidth"; "required": false; "isSignal": true; }; "disableErrorPrinting": { "alias": "disableErrorPrinting"; "required": false; "isSignal": true; }; "formErrorMapper": { "alias": "formErrorMapper"; "required": false; "isSignal": true; }; "requiredInput": { "alias": "required"; "required": false; "isSignal": true; }; }, {}, ["fieldControlQuery", "ngControl", "controlElementRef", "requiredValidator"], ["[si-help-button]", ".warning-feedback, .info-feedback, .invalid-feedback", "*"], true, never>;
     // (undocumented)
@@ -225,13 +189,7 @@ export interface SiFormValidationErrorMapper {
 // @public
 export class SiFormValidationTooltipDirective implements OnDestroy, DoCheck {
     // (undocumented)
-    protected decreaseActivation(): void;
-    // (undocumented)
-    protected readonly describedBy: string;
-    // (undocumented)
     readonly formErrorMapper: _angular_core.InputSignal<SiFormValidationErrorMapper | undefined>;
-    // (undocumented)
-    protected increaseActivation(): void;
     // (undocumented)
     ngDoCheck(): void;
     // (undocumented)

@@ -29,29 +29,131 @@
     </si-application-header>
     <br />
     <div class="si-layout-top-element">
-      <button type="button" class="btn btn-secondary mt-2 ms-2" (click)="toggle()">
+      <button type="button" class="btn btn-secondary" (click)="toggle()">
+        <i class="icon element-command-open" aria-hidden="true"></i>
         Toggle side panel
       </button>
-      <button type="button" class="btn btn-secondary mt-2 ms-2" (click)="close()"> close </button>
-      <button type="button" class="btn btn-secondary mt-2 ms-2" (click)="toggleMode()">
-        {{ mode + ' - Mode' }}
+      <button type="button" class="btn btn-secondary ms-5" (click)="close()">
+        <i class="icon element-cancel" aria-hidden="true"></i>
+        Close
       </button>
-      <button type="button" class="btn btn-secondary mt-2 ms-2" (click)="changeSize()">
-        {{ size + ' - Width' }}
-      </button>
+      <br />
+      <div class="btn-group btn-group-sm mt-5" role="group" aria-label="Size toggle button group">
+        <input
+          type="radio"
+          class="btn-check"
+          name="size"
+          id="size-regular"
+          [checked]="size === 'regular'"
+        />
+        <label class="btn btn-sm" for="size-regular" (click)="size = 'regular'">
+          <i class="icon element-layout-pane-2-right" aria-hidden="true"></i>
+          Regular
+        </label>
+        <input
+          type="radio"
+          class="btn-check"
+          name="size"
+          id="size-wide"
+          [checked]="size === 'wide'"
+        />
+        <label class="btn btn-sm" for="size-wide" (click)="size = 'wide'">
+          <i class="icon element-layout-pane-2" aria-hidden="true"></i>
+          Wide
+        </label>
+        <input
+          type="radio"
+          class="btn-check"
+          name="size"
+          id="size-extended"
+          [checked]="size === 'extended'"
+        />
+        <label class="btn btn-sm" for="size-extended" (click)="size = 'extended'">
+          <i class="icon element-layout-pane-1" aria-hidden="true"></i>
+          Extended
+        </label>
+      </div>
+      <br />
+      <div
+        class="btn-group btn-group-sm mt-5"
+        role="group"
+        aria-label="Display mode toggle button group"
+      >
+        <input
+          type="radio"
+          class="btn-check"
+          name="displayMode"
+          id="display-navigate"
+          [checked]="displayMode === 'navigate'"
+        />
+        <label class="btn btn-sm" for="display-navigate" (click)="displayMode = 'navigate'">
+          <i class="icon element-export" aria-hidden="true"></i>
+          Navigate
+        </label>
+        <input
+          type="radio"
+          class="btn-check"
+          name="displayMode"
+          id="display-overlay"
+          [checked]="displayMode === 'overlay'"
+        />
+        <label class="btn btn-sm" for="display-overlay" (click)="displayMode = 'overlay'">
+          <i class="icon element-zoom" aria-hidden="true"></i>
+          Overlay
+        </label>
+      </div>
+      <div
+        class="btn-group btn-group-sm ms-5 mt-5"
+        role="group"
+        aria-label="Mode toggle button group"
+      >
+        <input
+          type="radio"
+          class="btn-check"
+          name="mode"
+          id="mode-over"
+          [checked]="mode === 'over'"
+        />
+        <label class="btn btn-sm" for="mode-over" (click)="mode = 'over'">
+          <i class="icon element-menu" aria-hidden="true"></i>
+          Over
+        </label>
+        <input
+          type="radio"
+          class="btn-check"
+          name="mode"
+          id="mode-scroll"
+          [checked]="mode === 'scroll'"
+        />
+        <label class="btn btn-sm" for="mode-scroll" (click)="mode = 'scroll'">
+          <i class="icon element-jump-to-list-item" aria-hidden="true"></i>
+          Scroll
+        </label>
+      </div>
     </div>
     <hr />
-    <p>
-      Hey there! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Alias, ab ex quis iste
-      non nemo delectus sequi tempore nihil sit ducimus illo reprehenderit saepe iusto cum tenetur,
-      voluptatibus corrupti unde? Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat
-      autem ducimus minus! Ducimus qui quam laborum enim nihil, accusantium maiores inventore
-      aliquam laudantium eveniet reiciendis praesentium libero consectetur eum eius!
-    </p>
+    <div class="mb-4">
+      <h2>Collapsible side panel</h2>
+      <p>
+        This example demonstrates a <code class="text-primary">collapsible</code> side panel with
+        mobile support enabled. The panel can be collapsed to a minimal width while maintaining
+        visibility of key navigation elements.
+      </p>
+      <p>
+        <code class="text-primary">Over:</code> Panel overlays content for temporary interactions.
+        <code class="text-primary">Scroll:</code> Panel pushes content aside for persistent
+        workflows. <code class="text-primary">Regular (390px):</code> Standard width for navigation
+        and settings. <code class="text-primary">Wide (500px):</code> Expanded width for complex
+        forms and content. <code class="text-primary">Extended (Responsive):</code> Adaptive width
+        scaling from mobile full-width to desktop 912px max.
+      </p>
+    </div>
   </div>
 
   <si-side-panel-content
     heading="Cooling coil"
+    [displayMode]="displayMode"
+    [navigateConfig]="navigateConfig"
     [primaryActions]="primaryActions"
     [secondaryActions]="secondaryActions"
     [statusActions]="statusActions"
@@ -78,13 +180,21 @@
 </si-side-panel>
 
 <ng-template #helpPanel cdkPortal>
-  <si-side-panel-content heading="Help">
+  <si-side-panel-content
+    heading="Help"
+    [displayMode]="displayMode"
+    [navigateConfig]="navigateConfig"
+  >
     <div class="p-6">Help yourself</div>
   </si-side-panel-content>
 </ng-template>
 
 <ng-template #layoutPanel cdkPortal>
-  <si-side-panel-content heading="Layout">
+  <si-side-panel-content
+    heading="Layout"
+    [displayMode]="displayMode"
+    [navigateConfig]="navigateConfig"
+  >
     <div class="p-6">
       <p class="small">Status bar height</p>
       <button type="button" aria-label="small" class="layout-button btn btn-tertiary me-6 active">

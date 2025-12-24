@@ -3,7 +3,13 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkConnectedOverlay, CdkOverlayOrigin } from '@angular/cdk/overlay';
-import { Component, input, signal, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  input,
+  provideZonelessChangeDetection,
+  signal,
+  ViewEncapsulation
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiShadowRootDirective } from './si-shadow-root.directive';
@@ -51,6 +57,9 @@ describe('ShadowRootDirective', () => {
   let fixture: ComponentFixture<TestHostComponent>;
 
   beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [provideZonelessChangeDetection()]
+    }).compileComponents();
     fixture = TestBed.createComponent(TestHostComponent);
   });
 

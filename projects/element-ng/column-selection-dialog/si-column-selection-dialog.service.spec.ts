@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ApplicationRef } from '@angular/core';
-import { fakeAsync, flush, TestBed } from '@angular/core/testing';
+import { ApplicationRef, provideZonelessChangeDetection } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 
 import { SiColumnSelectionDialogService } from './si-column-selection-dialog.service';
 import { ColumnSelectionDialogResult } from './si-column-selection-dialog.types';
@@ -14,19 +14,19 @@ describe('SiColumnSelectionDialogService', () => {
 
   const clickSaveButton = (): void => {
     appRef.tick();
-    flush();
     document.querySelector<HTMLElement>('si-modal button.btn-primary')?.click();
     appRef.tick();
-    flush();
   };
 
   beforeEach(() => {
-    TestBed.configureTestingModule({}).compileComponents();
+    TestBed.configureTestingModule({
+      providers: [provideZonelessChangeDetection()]
+    }).compileComponents();
     service = TestBed.inject(SiColumnSelectionDialogService);
     appRef = TestBed.inject(ApplicationRef);
   });
 
-  it('should show the column selection dialog', fakeAsync(() => {
+  it('should show the column selection dialog', () => {
     const observable = service.showColumnSelectionDialog({
       heading: 'Column Dialog',
       bodyTitle: 'Select columns',
@@ -39,5 +39,5 @@ describe('SiColumnSelectionDialogService', () => {
     });
     clickSaveButton();
     subscription.unsubscribe();
-  }));
+  });
 });

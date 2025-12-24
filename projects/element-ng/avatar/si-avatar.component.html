@@ -1,7 +1,7 @@
 @if (imageUrl()) {
   <img [src]="imageUrl()" [alt]="altText()" />
 } @else if (icon()) {
-  <i class="icon" [title]="altText()" [ngClass]="icon()"></i>
+  <si-icon class="icon" [title]="altText()" [icon]="icon()!" />
 } @else {
   <div
     class="initials"

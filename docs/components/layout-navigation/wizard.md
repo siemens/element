@@ -50,8 +50,8 @@ Use a vertical wizard if:
 
 ![Wizard - elements](images/wizard-usage-construction.png)
 
-> 1. Indication "*more steps*", 2. Step completed, 3. Current step, 4. Future
-  step, 5. Indication "*more steps*", 6. Label
+> \1. Indication "_more steps_", 2. Step completed, 3. Current step, 4. Future
+> step, 5. Indication "_more steps_", 6. Label
 
 The vertical variant can also include an optional divider to visually separate
 steps and content for better clarity. Select the layout that aligns with the
@@ -66,7 +66,7 @@ buttons below the wizard content.
 
 ![Wizard - button placement](images/wizard-usage-button-placement.png)
 
-> 1. Cancel button (optional), 2. Back button,  3. Next button
+> 1. Cancel button (optional), 2. Back button, 3. Next button
 
 #### Alternative button placement for horizontal wizard
 

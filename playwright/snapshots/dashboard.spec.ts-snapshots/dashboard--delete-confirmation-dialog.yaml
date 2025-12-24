@@ -82,6 +82,7 @@
   - link "Go to...":
     - /url: https://github.com/siemens/element/issues
 - dialog "Remove widget":
+  - text: ""
   - button "Cancel"
   - text: Do you really want to remove the widget?
   - button "Cancel"

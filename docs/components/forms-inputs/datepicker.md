@@ -39,7 +39,7 @@ When needed, the calendar view opens for visual selection, making this structure
 
 ![Date picker anatomy](images/date-picker-anatomy.png)
 
-> 1. Label (optional), 2. Input, 3. Calendar button, 4. Month & Year control, 5. Previous and Next month control, 6. Default day, 7. Selected day, 8. Current day,  9. Off month day, 10. Today control
+> 1. Label (optional), 2. Input, 3. Calendar button, 4. Month & Year control, 5. Previous and Next month control, 6. Default day, 7. Selected day, 8. Current day, 9. Off month day, 10. Today control
 
 ### Single date and date-time picker
 
@@ -86,11 +86,11 @@ import { SiDatepickerModule } from '@siemens/element-ng/datepicker';
 or as a standalone component:
 
 ```ts
-import {  
+import {
   SiDateInputDirective,
   SiDatepickerComponent,
   SiDatepickerDirective,
-  SiDateRangeComponent 
+  SiDateRangeComponent
 } from '@siemens/element-ng/datepicker';
 
 @Component({

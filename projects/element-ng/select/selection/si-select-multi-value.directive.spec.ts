@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
@@ -43,7 +43,8 @@ describe('SiSelectMultiValueDirective', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SiSelectModule, ReactiveFormsModule, TranslateModule.forRoot(), TestComponent]
+      imports: [SiSelectModule, ReactiveFormsModule, TranslateModule.forRoot(), TestComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
   });
 

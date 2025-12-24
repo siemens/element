@@ -13,7 +13,10 @@ copyright: '&copy; Siemens 2016-2025'
 strict: true
 
 nav:
-  - Home:                                 'README.md'
+  - Home:
+    - Overview:                           'README.md'
+    - Get started:                        'get-started/quickstart.md'
+    - Build with AI:                      'get-started/element-mcp.md'
   - Fundamentals:
     - Typography:                         'fundamentals/typography.md'
     - Colors:
@@ -35,6 +38,7 @@ nav:
     - Icons:                              'fundamentals/icons.md'
     - Localization:                       'fundamentals/localization.md'
     - Styles:
+      - Display:                           'fundamentals/styles/display.md'
       - Flex:                              'fundamentals/styles/flex.md'
       - Interactions:                      'fundamentals/styles/interactions.md'
     - UX Writing:
@@ -53,13 +57,12 @@ nav:
     - Overview:                           'components/index.md'
     - Buttons & menus:
       - Buttons:                          'components/buttons-menus/buttons.md'
+      - Button Group:                     'components/buttons-menus/button-group.md'
       - Content Action Bar:               'components/buttons-menus/content-actions.md'
       - Dropdowns:                        'components/buttons-menus/dropdowns.md'
       - Help Button:                      'components/buttons-menus/help-button.md'
       - Links:                            'components/buttons-menus/links.md'
       - Menu:                             'components/buttons-menus/menu.md'
-      - Segmented Button:                 'components/buttons-menus/segmented-button.md'
-      - Split buttons:                    'components/buttons-menus/split-button.md'
     - Dashboards:
       - Overview:                         'components/dashboards/index.md'
       - Dashboard:                        'components/dashboards/dashboard.md'
@@ -143,8 +146,7 @@ nav:
       - Tooltip:                          'components/status-notifications/tooltip.md'
     - Chat & Messages:
       - Chat Input:                       'components/chat-messages/chat-input.md'
-      - User Message:                     'components/chat-messages/user-message.md'
-      - AI Message:                       'components/chat-messages/ai-message.md'
+      - Chat Message:                     'components/chat-messages/chat-message.md'
     - Charts:
       - Overview:                         'components/charts/index.md'
       - Bar Chart:                        'components/charts/bar-chart.md'
@@ -206,8 +208,13 @@ theme:
     - navigation.tabs
     - page.toc
     - content.action.edit
+    - content.code.copy
+
+extra_css:
+  - '_src/dos-and-donts.css'
 
 extra_javascript:
+  - '_src/confetti.browser.min.js'
   - '//w3.siemens.com/ote/ote_config.js'
   - '//w3.siemens.com/ote/sinet/ote.js'
   - 'https://assets.adobedtm.com/5dfc7d97c6fb/f16b45bec907/launch-af252bb19983.min.js'
@@ -237,6 +244,7 @@ markdown_extensions:
   - md_in_html
   - element-docs:
       examples_base: !ENV [ EXAMPLES_BASE, 'http://localhost:4200' ]
+      md_file: !relative
   - toc:
       permalink: true
 

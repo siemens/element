@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, input, viewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import { Component, input, provideZonelessChangeDetection, viewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
 
@@ -63,22 +63,18 @@ describe('SiWizardComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [SiResizeObserverModule, TestHostComponent]
+      imports: [SiResizeObserverModule, TestHostComponent],
+      providers: [provideZonelessChangeDetection()]
     })
   );
 
-  beforeEach(fakeAsync(() => {
+  beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
     hostComponent = fixture.componentInstance;
     component = fixture.componentInstance.wizard();
     element = fixture.nativeElement.querySelector('si-wizard');
     fixture.detectChanges();
-
-    flush();
-    tick();
-    fixture.detectChanges();
-    tick();
-  }));
+  });
 
   it('stepCount should match number of steps', () => {
     expect(component.stepCount).toBe(hostComponent.steps.length);
@@ -86,6 +82,7 @@ describe('SiWizardComponent', () => {
 
   it('should center activated step', () => {
     fixture.componentInstance.generateSteps(10);
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     // Activate last step
     const steps = fixture.debugElement.queryAll(By.css('.step a'));
@@ -186,6 +183,7 @@ describe('SiWizardComponent', () => {
 
     it('should reset index if current item is removed', () => {
       fixture.componentInstance.steps = ['Other Step'];
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(element.querySelector('.back.invisible')).toBeTruthy();
       expect(element.querySelector('a.active .title')?.textContent).toBe('Other Step');
@@ -193,6 +191,7 @@ describe('SiWizardComponent', () => {
 
     it('should update the index if an item was moved', () => {
       fixture.componentInstance.steps = ['other step', 'and another', 'Step 2'];
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(element.querySelector('a.active .title')?.textContent).toBe('Step 2');
     });
@@ -240,21 +239,19 @@ describe('SiWizardComponent', () => {
 
     it('should contain cancel button', () => {
       fixture.componentInstance.hasCancel = true;
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(element.querySelectorAll('[aria-label="Cancel"]')).toHaveSize(1);
     });
   });
 
-  it('should calculate visible items', fakeAsync(() => {
+  it('should calculate visible items', () => {
     fixture.componentInstance.generateSteps(10);
-    fixture.detectChanges();
-    tick();
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(element.querySelectorAll('.container-steps .step').length).toBe(7);
     element.querySelector<HTMLElement>('.next')!.click();
-    tick();
-    fixture.detectChanges();
-  }));
+  });
 
   describe('without navigation button', () => {
     beforeEach(async () => {
@@ -305,22 +302,25 @@ describe('SiWizardComponent', () => {
   });
 
   describe('steps with lazy loading', () => {
-    it('should render steps if they are loaded lazily', fakeAsync(() => {
+    it('should render steps if they are loaded lazily', async () => {
       fixture.componentInstance.steps = [];
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       const steps = element.querySelectorAll('.step');
       expect(steps.length).toBe(0);
+      jasmine.clock().install();
       setTimeout(() => {
         fixture.componentInstance.generateSteps(3);
+        fixture.changeDetectorRef.markForCheck();
         fixture.detectChanges();
       }, 100);
-      tick(100);
-      fixture.detectChanges();
-      fixture.whenStable().then(() => {
-        const updatedSteps = element.querySelectorAll('.step');
-        expect(updatedSteps.length).toBe(3);
-      });
-    }));
+      jasmine.clock().tick(100);
+
+      await fixture.whenStable();
+      const updatedSteps = element.querySelectorAll('.step');
+      expect(updatedSteps.length).toBe(3);
+      jasmine.clock().uninstall();
+    });
   });
 
   describe('use vertical layout', () => {

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ComponentRef } from '@angular/core';
+import { ComponentRef, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -14,7 +14,8 @@ describe('SiLoginBasicComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [TestComponent, BrowserAnimationsModule]
+      imports: [TestComponent, BrowserAnimationsModule],
+      providers: [provideZonelessChangeDetection()]
     })
   );
 

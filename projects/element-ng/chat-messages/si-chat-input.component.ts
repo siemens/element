@@ -25,8 +25,20 @@ import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
 import { SiTranslatePipe, TranslatableString, t } from '@siemens/element-translate-ng/translate';
 
 import { MessageAction } from './message-action.model';
-import { SiAttachmentListComponent, Attachment } from './si-attachment-list.component';
+import { Attachment, SiAttachmentListComponent } from './si-attachment-list.component';
 
+/**
+ * Attachment item interface for file attachments in chat messages, extension of {@link Attachment} for {@link SiAttachmentListComponent} to use within {@link SiChatInputComponent}.
+ * Adds the action file information.
+ * Can be used within {@link SiChatContainerComponent}.
+ *
+ * @see {@link Attachment} for base attachment interface
+ * @see {@link SiAttachmentListComponent} for the attachment list component
+ * @see {@link SiChatInputComponent} for the chat input component
+ * @see {@link SiChatContainerComponent} for the chat container component
+ *
+ * @experimental
+ */
 export interface ChatInputAttachment extends Attachment {
   /** File object */
   file: File;
@@ -36,6 +48,28 @@ export interface ChatInputAttachment extends Attachment {
   type: string;
 }
 
+/**
+ * Chat input component for composing and sending messages in conversational interfaces.
+ *
+ * The chat input component provides a text area for users to compose messages,
+ * supporting text, attachments, and contextual actions. It appears as a textarea
+ * with buttons for adding attachments and sending messages, as well as an optional disclaimer.
+ *
+ * The component automatically handles:
+ * - Styling for chat input and actions.
+ * - Dynamic resizing of the textarea based on content.
+ * - Uploading of and displaying of attachments above the input area.
+ * - Displaying primary and secondary actions.
+ *
+ * Additionally to the inputs and outputs documented here, the component supports content projection via the following slots:
+ * - Default content: Custom action buttons to display inline, prefer using the `actions` input for buttons, can be used in addition.
+ * - `siChatInputDisclaimer` selector: Custom disclaimer content to display below the input area, prefer using the `disclaimer` input for simple text disclaimers.
+ *
+ * @see {@link SiAttachmentListComponent} for the base attachment component
+ * @see {@link SiChatInputDisclaimerDirective} to slot in custom disclaimer content
+ *
+ * @experimental
+ */
 @Component({
   selector: 'si-chat-input',
   imports: [
@@ -54,6 +88,7 @@ export class SiChatInputComponent implements AfterViewInit {
   private static idCounter = 0;
   private readonly textInput = viewChild<ElementRef<HTMLTextAreaElement>>('textInput');
   private readonly projectedContent = viewChild<ElementRef>('projected');
+  private readonly fileUploadDirective = viewChild(SiFileUploadDirective);
 
   /**
    * Current input value
@@ -269,6 +304,8 @@ export class SiChatInputComponent implements AfterViewInit {
     this.showInterruptButton() ? this.interruptButtonLabel() : this.sendButtonLabel()
   );
 
+  protected dragOver = false;
+
   protected get attachmentList(): Attachment[] {
     return this.attachments() as Attachment[];
   }
@@ -300,9 +337,13 @@ export class SiChatInputComponent implements AfterViewInit {
   protected onKeyDown(event: KeyboardEvent): void {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
-      if (!this.showInterruptButton()) {
-        this.onSend();
+      if (!this.canSend()) {
+        return;
       }
+      if (this.showInterruptButton()) {
+        this.interrupt.emit();
+      }
+      this.onSend();
     }
   }
 
@@ -310,9 +351,10 @@ export class SiChatInputComponent implements AfterViewInit {
     const validFiles = uploadFiles.filter(uploadFile => uploadFile.status === 'added');
 
     validFiles.forEach(uploadFile => {
+      const size = parseInt(uploadFile.size, 10);
       const attachment: ChatInputAttachment = {
         name: uploadFile.fileName,
-        size: uploadFile.file.size,
+        size: isNaN(size) ? uploadFile.file.size : size,
         type: uploadFile.file.type,
         file: uploadFile.file
       };
@@ -377,6 +419,31 @@ export class SiChatInputComponent implements AfterViewInit {
     if (textarea?.nativeElement) {
       textarea.nativeElement.focus();
     }
+  }
+
+  protected dropHandler(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.dragOver = false;
+
+    if (!this.allowAttachments() || this.disabled()) {
+      return;
+    }
+
+    const directive = this.fileUploadDirective();
+    if (directive && event.dataTransfer?.files) {
+      directive.handleFiles(event.dataTransfer.files);
+    }
+  }
+
+  protected dragOverHandler(event: DragEvent): void {
+    if (!this.allowAttachments() || this.disabled()) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    this.dragOver = true;
   }
 
   private setTextareaHeight(textarea: HTMLTextAreaElement): void {

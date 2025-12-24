@@ -42,5 +42,6 @@ export const MAPS_NG_MAPPINGS: { [symbol: string]: string } = {
   'SiMapPopoverComponent': '@siemens/maps-ng',
   'SiMapsNgModule': '@siemens/maps-ng',
   'SiMapTooltipComponent': '@siemens/maps-ng',
-  'TOOLTIP_FEATURES_TO_DISPLAY': '@siemens/maps-ng'
+  'TOOLTIP_FEATURES_TO_DISPLAY': '@siemens/maps-ng',
+  'SimplMapsNgModule': '@siemens/maps-ng'
 };

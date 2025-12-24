@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { SiGridService } from './si-grid.service';
@@ -11,7 +12,7 @@ describe('SiGridService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [SiGridService]
+      providers: [SiGridService, provideZonelessChangeDetection()]
     });
     service = TestBed.inject(SiGridService);
   });
@@ -26,7 +27,7 @@ describe('SiGridService', () => {
     });
 
     it('should return the widget of the id', () => {
-      service.widgetCatalog = [
+      service.widgetCatalog.set([
         {
           id: 'id',
           name: 'widget',
@@ -36,8 +37,8 @@ describe('SiGridService', () => {
             moduleLoader: () => Promise.reject()
           }
         }
-      ];
-      expect(service.getWidget('id')).toBe(service.widgetCatalog[0]);
+      ]);
+      expect(service.getWidget('id')).toBe(service.widgetCatalog()[0]);
     });
   });
 });

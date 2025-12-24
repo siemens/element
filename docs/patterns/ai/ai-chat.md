@@ -30,8 +30,8 @@ AI chat is useful when users describe tasks in their own words and expect struct
 ![AI chat elements](images/ai-chat-elements.png)
 
 1. [Chat input](../../components/chat-messages/chat-input.md)
-2. [AI message](../../components/chat-messages/ai-message.md)
-3. [User message](../../components/chat-messages/user-message.md)
+2. [Chat message - AI](../../components/chat-messages/chat-message.md)
+3. [Chat message- User](../../components/chat-messages/chat-message.md)
 
 ### Layouts
 
@@ -54,7 +54,7 @@ In this case, the AI appears as an on-demand assistant without disrupting the wo
 [side panel](../../components/layout-navigation/side-panel.md).
 
 - When the AI feature is globally accessible, the side panel can be triggered from the
-[application header](../../components/layout-navigation/application-header.md), ensuring consistent entry across all screens.
+  [application header](../../components/layout-navigation/application-header.md), ensuring consistent entry across all screens.
 - For contextual use, place the trigger near the related feature or content.
 
 ![AI chat in side panel](images/ai-chat-side-panel.png)
@@ -62,14 +62,14 @@ In this case, the AI appears as an on-demand assistant without disrupting the wo
 ### Initial screen
 
 Before the first message, show an initial screen to set expectations and explain what the AI can do.
-As soon as the user prompts a message, the initial screen should dissapear.
+As soon as the user prompts a message, the initial screen should disappear.
 
 ![AI initial screen](images/ai-initial-screen.png)
 
 1. AI icon
 1. Salutation: A brief, welcoming message that sets a conversational tone.
 1. Prompt categories (optional): When suggestions exceed a manageable number, group them by topic or function using
-  [summary chips](../../components/status-notifications/summary-chip.md)
+   [summary chips](../../components/status-notifications/summary-chip.md)
 1. Prompt suggestions (optional): Curated prompts or example questions that reflect common or relevant actions.
 1. [Chat input](../../components/chat-messages/chat-input.md)
 
@@ -83,3 +83,23 @@ When the AI cannot complete a task due to a known limitation, it should respond 
 These are not treated as errors and do not require a separate notification.
 
 ![AI errors and limitations](images/ai-errors.png)
+
+## Code ---
+
+Use the chat container with the chat messages to build chat message interfaces.
+
+The **si-chat-container** component is a wrapper component, it has slots for
+[chat messages](../../components/chat-messages/chat-message.md) and a
+[chat input](../../components/chat-messages/chat-input.md).
+
+The slots are:
+
+- default -> chat messages or empty state
+- `si-chat-input/siChatContainerInput (helper directive)` -> For the input (whether default or custom).
+- `si-inline-notification` -> Slotted above the input for displaying the status.
+
+<si-docs-component example="si-chat-messages/si-chat-container" height="600"></si-docs-component>
+
+<si-docs-api component="SiChatContainerComponent"></si-docs-api>
+
+<si-docs-types></si-docs-types>

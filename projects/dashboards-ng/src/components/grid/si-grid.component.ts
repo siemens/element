@@ -210,13 +210,13 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     if (changes.widgetCatalog) {
-      this.gridService.widgetCatalog = this.widgetCatalog();
+      this.gridService.widgetCatalog.set(this.widgetCatalog());
     }
   }
 
   ngOnInit(): void {
     queueMicrotask(() => this.loadAndSubscribeWidgets());
-    this.gridService.widgetCatalog = this.widgetCatalog();
+    this.gridService.widgetCatalog.set(this.widgetCatalog());
   }
 
   ngOnDestroy(): void {
@@ -342,7 +342,7 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
    */
   editWidgetInstance(widgetInstanceConfig: WidgetConfig): void {
     // Need to edit a clone to avoid runtime editing
-    const widgetConfigClone: WidgetConfig = JSON.parse(JSON.stringify(widgetInstanceConfig));
+    const widgetConfigClone = structuredClone(widgetInstanceConfig);
     if (this.emitWidgetInstanceEditEvents()) {
       this.widgetInstanceEdit.emit(widgetConfigClone);
     } else {

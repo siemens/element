@@ -14,17 +14,7 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate-type
 
 // @public (undocumented)
 export class SiStatusToggleComponent implements ControlValueAccessor, OnInit, OnDestroy, OnChanges {
-    // (undocumented)
-    protected readonly animated: _angular_core.WritableSignal<boolean>;
     readonly disabled: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    protected readonly draggablePosition: _angular_core.WritableSignal<string>;
-    // (undocumented)
-    protected handleMouseDown(event: MouseEvent): void;
-    // (undocumented)
-    protected handleTouchStart(event: TouchEvent): void;
-    // (undocumented)
-    protected readonly isDisabled: _angular_core.Signal<boolean>;
     readonly itemClick: _angular_core.OutputEmitterRef<string | number>;
     readonly items: _angular_core.InputSignal<StatusToggleItem[]>;
     // (undocumented)
@@ -33,10 +23,6 @@ export class SiStatusToggleComponent implements ControlValueAccessor, OnInit, On
     ngOnDestroy(): void;
     // (undocumented)
     ngOnInit(): void;
-    // (undocumented)
-    protected readonly selectedIndex: _angular_core.WritableSignal<number | undefined>;
-    // (undocumented)
-    protected selectItem(index: number | undefined, animated?: boolean, emit?: boolean): void;
     readonly value: _angular_core.ModelSignal<string | number | undefined>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiStatusToggleComponent, "si-status-toggle", never, { "items": { "alias": "items"; "required": true; "isSignal": true; }; "disabled": { "alias": "disabled"; "required": false; "isSignal": true; }; "value": { "alias": "value"; "required": false; "isSignal": true; }; }, { "value": "valueChange"; "itemClick": "itemClick"; }, never, never, true, never>;

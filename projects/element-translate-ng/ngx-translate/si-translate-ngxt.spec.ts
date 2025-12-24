@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, DOCUMENT, Injectable } from '@angular/core';
+import { Component, DOCUMENT, Injectable, provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
@@ -67,15 +67,13 @@ describe('SiTranslateNgxT', () => {
           ]),
           HostComponent
         ],
-        providers: [RootTestService]
+        providers: [RootTestService, provideZonelessChangeDetection()]
       });
     });
 
     it('should use correct translation service', async () => {
-      const fixture = TestBed.createComponent(HostComponent);
-      await RouterTestingHarness.create('/');
-      fixture.detectChanges();
-      expect((fixture.nativeElement as HTMLElement).innerText).toBe('VALUE-MODIFIED');
+      const router = await RouterTestingHarness.create('/');
+      expect((router.routeNativeElement as HTMLElement).innerText).toBe('VALUE-MODIFIED');
       expect(TestBed.inject(RootTestService).siTranslateService.translateSync('KEY-1')).toBe(
         'VALUE-1'
       );
@@ -104,7 +102,8 @@ describe('SiTranslateNgxT', () => {
               } as TranslateLoader
             }
           })
-        ]
+        ],
+        providers: [provideZonelessChangeDetection()]
       });
     });
     beforeEach(() => {

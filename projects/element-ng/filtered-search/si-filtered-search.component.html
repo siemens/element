@@ -37,6 +37,13 @@
     [typeaheadScrollable]="true"
     [typeaheadOptionsInScrollableView]="optionsInScrollableView()"
     [typeaheadAutoSelectIndex]="searchValue ? 0 : -1"
+    [typeaheadCreateOption]="
+      freeTextCriterion() &&
+      (!maxCriteria() || values.length < maxCriteria()!) &&
+      allowFreeTextCache()
+        ? searchForFreeTextLabel()
+        : undefined
+    "
     [readonly]="readonly()"
     [disabled]="disabled()"
     [placeholder]="placeholder()"
@@ -44,9 +51,11 @@
     [value]="searchValue"
     (focus)="freeTextFocus()"
     (input)="freeTextInput($event)"
+    (blur)="freeTextBlur()"
     (keydown.backspace)="freeTextBackspace($event)"
     (keydown.enter)="submit()"
     (typeaheadOnSelect)="typeaheadOnSelectCriterion($event.option)"
+    (typeaheadOnCreateOption)="createFreeTextPill($event)"
   />
 </div>
 <!-- clear all searchCriteria -->

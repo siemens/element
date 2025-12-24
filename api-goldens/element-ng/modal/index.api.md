@@ -62,10 +62,6 @@ export class ModalRef<T = never, CT = any> {
 
 // @public (undocumented)
 export class SiModalService {
-    // (undocumented)
-    protected buildInjector(): Injector;
-    // (undocumented)
-    protected detach(modalRef: ModalRef<unknown, any>): void;
     show<T, CT = any>(content: TemplateRef<any> | (new (...args: any[]) => T), config: ModalOptions<T>, closeValue?: CT): ModalRef<T, CT>;
     // (undocumented)
     static ɵfac: i0.ɵɵFactoryDeclaration<SiModalService, never>;

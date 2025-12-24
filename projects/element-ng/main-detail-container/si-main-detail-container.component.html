@@ -93,10 +93,12 @@
       @if (!this.hasLargeSize && !this.hideBackButton()) {
         <button
           type="button"
-          class="btn btn-circle btn-sm btn-secondary element-back"
+          class="btn btn-circle btn-sm btn-secondary"
           (click)="detailsBackClicked()"
-          ><span class="visually-hidden">{{ detailsBackButtonText() | translate }}</span></button
         >
+          <si-icon [icon]="icons.elementBack" />
+          <span class="visually-hidden">{{ detailsBackButtonText() | translate }}</span>
+        </button>
       }
       @if (detailsHeading()) {
         <span class="detail-heading si-h4 me-auto ms-6 my-auto text-truncate">{{

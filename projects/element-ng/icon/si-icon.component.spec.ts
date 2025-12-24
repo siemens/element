@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, signal } from '@angular/core';
+import { Component, provideZonelessChangeDetection, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiThemeService } from '@siemens/element-ng/theme';
@@ -36,7 +36,10 @@ describe('SiSvgIconComponent', () => {
     describe('with enabled svg icons', () => {
       beforeEach(async () => {
         TestBed.configureTestingModule({
-          providers: [provideIconConfig({ disableSvgIcons: false })]
+          providers: [
+            provideIconConfig({ disableSvgIcons: false }),
+            provideZonelessChangeDetection()
+          ]
         });
         fixture = TestBed.createComponent(TestHostComponent);
         component = fixture.componentInstance;
@@ -45,6 +48,12 @@ describe('SiSvgIconComponent', () => {
 
       it('should fallback to icon-font', () => {
         expect(fixture.debugElement.query(By.css('.element-user'))).toBeTruthy();
+      });
+
+      it('should use original kebabCase icon as icon font', () => {
+        component.icon.set('element-co2-outdoor');
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('.element-co2-outdoor'))).toBeTruthy();
       });
 
       describe('with icon from registry', () => {
@@ -100,6 +109,9 @@ describe('SiSvgIconComponent', () => {
 
     describe('with disabled svg icons', () => {
       beforeEach(async () => {
+        TestBed.configureTestingModule({
+          providers: [provideZonelessChangeDetection()]
+        }).compileComponents();
         fixture = TestBed.createComponent(TestHostComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -156,6 +168,9 @@ describe('SiSvgIconComponent', () => {
     let component: TestHostComponent;
     let iconService: IconService;
     beforeEach(() => {
+      TestBed.configureTestingModule({
+        providers: [provideZonelessChangeDetection()]
+      }).compileComponents();
       fixture = TestBed.createComponent(TestHostComponent);
       component = fixture.componentInstance;
       iconService = TestBed.inject(IconService);

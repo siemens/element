@@ -113,7 +113,7 @@
     [attr.aria-label]="action.ariaLabel"
     (click)="action.action(action)"
   >
-    <i [ngClass]="'icon ' + action.icon"></i>
+    <si-icon class="icon" [icon]="action.icon" />
   </button>
 </ng-template>
 
@@ -131,7 +131,7 @@
     [replaceUrl]="action.extras?.replaceUrl"
     [attr.aria-label]="action.ariaLabel"
   >
-    <i class="icon" [ngClass]="action.icon"></i>
+    <si-icon class="icon" [icon]="action.icon" />
   </a>
 </ng-template>
 
@@ -142,17 +142,19 @@
     [target]="action.target"
     [attr.aria-label]="action.ariaLabel"
   >
-    <i class="icon" [ngClass]="action.icon"></i>
+    <si-icon class="icon" [icon]="action.icon" />
   </a>
 </ng-template>
 
 <ng-template #menu let-action>
   <button
     type="button"
-    class="btn btn-ghost btn-circle btn-sm element-options-vertical"
+    class="btn btn-ghost btn-circle btn-sm"
     [attr.aria-label]="heading() + ' dropdown'"
     [cdkMenuTriggerFor]="actionMenu"
-  ></button>
+  >
+    <si-icon [icon]="icons.elementOptionsVertical" />
+  </button>
 
   <ng-template #actionMenu>
     <si-menu-factory [items]="action.menuItems" />

@@ -94,8 +94,6 @@ export interface NotificationItemRouterLinkIcon extends NotificationItemBase {
 
 // @public
 export class SiNotificationItemComponent {
-    // (undocumented)
-    protected readonly activatedRoute: ActivatedRoute | null;
     readonly description: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly heading: _angular_core.InputSignal<TranslatableString>;
     readonly itemLink: _angular_core.InputSignal<NotificationItemRouterLink | NotificationItemLink | undefined>;

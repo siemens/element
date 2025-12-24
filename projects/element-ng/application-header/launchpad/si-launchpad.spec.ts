@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component } from '@angular/core';
+import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiApplicationHeaderComponent } from '../si-application-header.component';
@@ -33,7 +33,10 @@ describe('SiLaunchpad', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [TestHostComponent],
-      providers: [{ provide: SiApplicationHeaderComponent, useValue: {} }]
+      providers: [
+        { provide: SiApplicationHeaderComponent, useValue: {} },
+        provideZonelessChangeDetection()
+      ]
     }).compileComponents();
   });
 
@@ -58,7 +61,7 @@ describe('SiLaunchpad', () => {
             ]
           }
         ];
-
+        fixture.changeDetectorRef.markForCheck();
         expect(await harness.hasToggle()).toBeTrue();
         expect(await harness.getCategories()).toHaveSize(1);
         await harness.toggleMore();
@@ -80,6 +83,7 @@ describe('SiLaunchpad', () => {
             ]
           }
         ];
+        fixture.changeDetectorRef.markForCheck();
         expect(await harness.getFavoriteCategory().then(category => category.getApps())).toHaveSize(
           1
         );
@@ -104,7 +108,7 @@ describe('SiLaunchpad', () => {
           { name: 'A-1', href: '/a-1', favorite: true },
           { name: 'A-2', href: '/a-2' }
         ];
-
+        fixture.changeDetectorRef.markForCheck();
         await harness.toggleMore();
         const categories = await harness.getCategories();
         expect(categories).toHaveSize(2);
@@ -130,7 +134,7 @@ describe('SiLaunchpad', () => {
             ]
           }
         ];
-
+        fixture.changeDetectorRef.markForCheck();
         expect(await harness.hasToggle()).toBeFalse();
         expect(await harness.getCategories()).toHaveSize(1);
       });
@@ -142,6 +146,7 @@ describe('SiLaunchpad', () => {
           { name: 'A-1', href: '/a-1' },
           { name: 'A-2', href: '/a-2' }
         ];
+        fixture.changeDetectorRef.markForCheck();
         expect(await harness.hasToggle()).toBeFalse();
       });
     });

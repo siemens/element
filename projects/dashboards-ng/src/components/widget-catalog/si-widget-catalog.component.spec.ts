@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { DebugElement, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ModalRef } from '@siemens/element-ng/modal';
 
@@ -24,7 +24,7 @@ describe('SiWidgetCatalogComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TestingModule, SiWidgetCatalogComponent],
-      providers: [{ provide: ModalRef, useValue: new ModalRef() }]
+      providers: [{ provide: ModalRef, useValue: new ModalRef() }, provideZonelessChangeDetection()]
     }).compileComponents();
   });
 
@@ -125,12 +125,14 @@ describe('SiWidgetCatalogComponent', () => {
 
     it('should switch to editor view and display the widget editor component', async () => {
       component.widgetCatalog = [TEST_WIDGET];
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
       buttonsByName('Next')[0].nativeElement.click();
       fixture.detectChanges();
-      await fixture.whenStable();
 
+      // cannot use jasmine.clock here.
+      await new Promise(resolve => setTimeout(resolve, 100));
       expect(component.view()).toBe('editor');
       expect(
         fixture.debugElement.query(By.css('.si-layout-fixed-height')).children[0].nativeElement
@@ -201,15 +203,17 @@ describe('SiWidgetCatalogComponent', () => {
       expect(fixture.debugElement.queryAll(By.css('.list-group-item')).length).toBe(3);
     });
 
-    it('shall keep the search term and result after clicking `Next` to widget editor and `Previous` to catalog', fakeAsync(async () => {
+    it('shall keep the search term and result after clicking `Next` to widget editor and `Previous` to catalog', async () => {
       expect(buttonsByName('Next').length).toBe(0);
 
       let searchInput = fixture.nativeElement.querySelector('si-search-bar input')!;
       searchInput.value = 'zwei';
       searchInput.dispatchEvent(new Event('input'));
-      tick(400); // debounce time in search bar
-
       fixture.detectChanges();
+
+      // cannot use jasmine.clock here.
+      await new Promise(resolve => setTimeout(resolve, 400)); // wait for debounce time
+      await fixture.whenStable();
 
       expect(buttonsByName('Next').length).toBe(1);
       expect(fixture.debugElement.queryAll(By.css('.list-group-item')).length).toBe(1);
@@ -238,7 +242,7 @@ describe('SiWidgetCatalogComponent', () => {
       expect(searchInput.value).toBe('zwei');
       expect(buttonsByName('Next').length).toBe(1);
       expect(fixture.debugElement.queryAll(By.css('.list-group-item')).length).toBe(1);
-    }));
+    });
   });
 
   it('Cancel button shall emit undefined on closed', (done: DoneFn) => {
@@ -260,6 +264,8 @@ describe('SiWidgetCatalogComponent', () => {
     await fixture.whenStable();
 
     expect(component.view()).toBe('editor');
+    // cannot use jasmine.clock here.
+    await new Promise(resolve => setTimeout(resolve, 100));
     expect(
       fixture.debugElement.query(By.css('.si-layout-fixed-height')).children[0].nativeElement
         .tagName

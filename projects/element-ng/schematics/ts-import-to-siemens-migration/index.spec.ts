@@ -4,6 +4,7 @@
  */
 import { Tree } from '@angular-devkit/schematics';
 import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
+import { readFileSync } from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -23,6 +24,50 @@ describe('ts-import-to-siemens migration', () => {
     runner = new SchematicTestRunner(name, collectionPath);
     appTree = await createTestApp(runner, { style: 'scss' });
   });
+
+  const buildRelativeFromFile = (relativePath: string): string =>
+    path.join(path.dirname(fileURLToPath(import.meta.url)), relativePath);
+
+  const checkTemplateMigration = async (
+    fileNames: string[],
+    basePath = `/projects/app/src/components/test/`
+  ): Promise<void> => {
+    addTestFiles(
+      appTree,
+      Object.fromEntries(
+        fileNames.map(fileName => [
+          path.join(basePath, fileName),
+          readFileSync(buildRelativeFromFile(path.join('files', fileName)), 'utf8')
+        ])
+      )
+    );
+
+    addTestFiles(appTree, {
+      '/package.json': `{
+           "dependencies": {
+            "@simpl/element-ng": "47.0.3",
+            "@simpl/maps-ng": "47.0.3",
+            "@simpl/dashboards-ng": "47.0.3",
+            "@simpl/element-translate-ng": "47.0.3",
+            "some-other-dep": "1.2.3"
+          }
+          }`
+    });
+
+    const tree = await runner.runSchematic(
+      'migrate-ts-imports-to-siemens',
+      { path: 'projects/app/src' },
+      appTree
+    );
+    for (const fileName of fileNames) {
+      const expected = readFileSync(
+        buildRelativeFromFile(path.join('files', 'expected.' + fileName)),
+        'utf8'
+      );
+      const actual = tree.readContent(path.join(basePath, fileName));
+      expect(actual).toEqual(expected);
+    }
+  };
 
   it('should migrate to subpath', async () => {
     addTestFiles(appTree, {
@@ -146,6 +191,19 @@ describe('ts-import-to-siemens migration', () => {
     ]);
   });
 
+  it('should migrate translation symbol if imported from `@simpl/element-ng`', async () => {
+    addTestFiles(appTree, {
+      [sourceFile]: [
+        `import { SiTranslatePipe, TranslatableString } from '@simpl/element-ng';`
+      ].join('\n')
+    });
+    const tree = await runner.runSchematic(name, { path: 'projects/app/src' }, appTree);
+    const actual = readLines(tree, sourceFile);
+    expect(actual).toEqual([
+      `import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';`
+    ]);
+  });
+
   it('should throw error if no tsconfig could be found', async () => {
     removeTestFiles(appTree, [
       'projects/app/tsconfig.app.json',
@@ -168,5 +226,29 @@ describe('ts-import-to-siemens migration', () => {
     } catch (e: any) {
       expect(e.message).toMatch('Path "/angular.json" does not exist.');
     }
+  });
+
+  it('should migrate imports from SimplElementNgModule in module', async () => {
+    await checkTemplateMigration(['module.simpl-element-ng-module.ts']);
+  });
+
+  it('should migrate imports from SimplElementNgModule in component', async () => {
+    await checkTemplateMigration(['component.simpl-element-ng-module.ts']);
+  });
+
+  it('should migrate imports correctly if there are multiple symbol from @simpl/element-ng', async () => {
+    await checkTemplateMigration(['component.simpl-element-ng-module-multiple-symbol.ts']);
+  });
+
+  it('should migrate imports correctly if there are multiple imports of the symbol', async () => {
+    await checkTemplateMigration(['component.simpl-element-ng-module-multiple-imports.ts']);
+  });
+
+  it('should migrate exports from SimplElementNgModule in module', async () => {
+    await checkTemplateMigration(['module.export.simpl-element-ng-module.ts']);
+  });
+
+  it('should not add SimplElementNgModule in module if they are not imported or exported', async () => {
+    await checkTemplateMigration(['module.no-import-simpl-element-ng-module.ts']);
   });
 });

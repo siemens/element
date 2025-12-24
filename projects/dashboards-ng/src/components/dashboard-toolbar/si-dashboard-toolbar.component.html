@@ -3,20 +3,21 @@
     @if (!editable()) {
       <ng-content select="[filters-slot]" />
       @if (!hideEditButton()) {
+        @let showEditButtonLabelDesktop = this.showEditButtonLabelDesktop();
         <button
           type="button"
           class="btn ms-auto"
           [ngClass]="
-            showEditButtonLabelDesktop()
+            showEditButtonLabelDesktop
               ? 'btn-secondary'
               : 'btn-circle btn-sm btn-tertiary element-edit'
           "
           [attr.aria-label]="labelEdit | translate"
-          [attr.title]="!showEditButtonLabelDesktop() ? (labelEdit | translate) : undefined"
+          [attr.title]="!showEditButtonLabelDesktop ? (labelEdit | translate) : undefined"
           [disabled]="disabled()"
           (click)="onEdit()"
         >
-          @if (showEditButtonLabelDesktop()) {
+          @if (showEditButtonLabelDesktop) {
             {{ labelEdit | translate }}
           }
         </button>

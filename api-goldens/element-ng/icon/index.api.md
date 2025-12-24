@@ -26,6 +26,9 @@ export const elementAlarmFilled = "data:image/svg+xml;utf8,<svg xmlns='http://ww
 export const elementAlarmTick = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M427.72 116.64 279.19 277.47l-73.9-73.9a12 12 0 0 0-17 17l82.73 82.73a12 12 0 0 0 8.48 3.51h.24a12 12 0 0 0 8.58-3.86l157-170a12 12 0 0 0-17.63-16.28Z'/></svg>";
 
 // @public (undocumented)
+export const elementBack = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M391 244H150.09l78.51-78.51a12 12 0 1 0-17-17l-98.09 98.09a12 12 0 0 0 0 18.78l98.09 98.09a12 12 0 1 0 17-17L150.09 268H391a12 12 0 0 0 0-24Z'/></svg>";
+
+// @public (undocumented)
 export const elementBreadcrumbRoot = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='m300.35 157.77 1.72 1.44 88 88a12.43 12.43 0 0 1 1.44 15.86l-1.44 1.72-88 88a12.43 12.43 0 0 1-19-15.86l1.44-1.72 79.2-79.21-79.21-79.21a12.43 12.43 0 0 1-1.44-15.86l1.44-1.72a12.44 12.44 0 0 1 15.85-1.44Z'/><path d='M186.29 364h-56a12 12 0 0 1-12-12V160a12 12 0 0 1 12-12h56a12 12 0 0 1 8.48 3.51l96 96a12 12 0 0 1 0 17l-96 96a12 12 0 0 1-8.48 3.49Zm-44-24h39l84-84-84-84h-39Z'/></svg>";
 
 // @public (undocumented)
@@ -101,6 +104,9 @@ export const elementOctagonFilled = "data:image/svg+xml;utf8,<svg xmlns='http://
 export const elementOk = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='m379.51 156.76-173 173-74-74a12 12 0 1 0-17 17l82.5 82.5a12 12 0 0 0 17 0l181.5-181.5a12 12 0 0 0-17-17Z'/></svg>";
 
 // @public (undocumented)
+export const elementOptions = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M256 284a28 28 0 1 1 28-28 28 28 0 0 1-28 28ZM368 284a28 28 0 1 1 28-28 28 28 0 0 1-28 28ZM144 284a28 28 0 1 1 28-28 28 28 0 0 1-28 28Z'/></svg>";
+
+// @public (undocumented)
 export const elementOptionsVertical = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M284 256a28 28 0 1 1-28-28 28 28 0 0 1 28 28ZM284 144a28 28 0 1 1-28-28 28 28 0 0 1 28 28ZM284 368a28 28 0 1 1-28-28 28 28 0 0 1 28 28Z'/></svg>";
 
 // @public (undocumented)
@@ -155,19 +161,19 @@ export const elementSquare45Filled = "data:image/svg+xml;utf8,<svg xmlns='http:/
 export const elementSquareFilled = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect x='88' y='88' width='336' height='336' rx='48'/></svg>";
 
 // @public (undocumented)
-export const elementStateExclamationMark = "data:image/svg+xml;utf8,<svg id='Icon' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><style>.cls-1{stroke-width:0}</style></defs><path class='cls-1' d='M256 279.12c-11.05 0-20-8.95-20-20v-89.8c0-11.05 8.95-20 20-20s20 8.95 20 20v89.8c0 11.05-8.95 20-20 20ZM256.17 359.03h-.34c-13.16 0-23.83-10.75-23.83-24s10.67-24 23.83-24h.34c13.16 0 23.83 10.75 23.83 24s-10.67 24-23.83 24Z'/></svg>";
+export const elementStateExclamationMark = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><style>.cls-1{stroke-width:0}</style></defs><path class='cls-1' d='M256 279.12c-11.05 0-20-8.95-20-20v-89.8c0-11.05 8.95-20 20-20s20 8.95 20 20v89.8c0 11.05-8.95 20-20 20ZM256.17 359.03h-.34c-13.16 0-23.83-10.75-23.83-24s10.67-24 23.83-24h.34c13.16 0 23.83 10.75 23.83 24s-10.67 24-23.83 24Z'/></svg>";
 
 // @public (undocumented)
-export const elementStateInfo = "data:image/svg+xml;utf8,<svg id='Icon' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><style>.cls-1{stroke-width:0}</style></defs><path class='cls-1' d='M256 356c-11.05 0-20-8.95-20-20v-80c0-11.05 8.95-20 20-20s20 8.95 20 20v80c0 11.05-8.95 20-20 20ZM256.17 156.32h-.34c-13.16 0-23.83 10.75-23.83 24s10.67 24 23.83 24h.34c13.16 0 23.83-10.75 23.83-24s-10.67-24-23.83-24Z'/></svg>";
+export const elementStateInfo = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><style>.cls-1{stroke-width:0}</style></defs><path class='cls-1' d='M256 356c-11.05 0-20-8.95-20-20v-80c0-11.05 8.95-20 20-20s20 8.95 20 20v80c0 11.05-8.95 20-20 20ZM256.17 156.32h-.34c-13.16 0-23.83 10.75-23.83 24s10.67 24 23.83 24h.34c13.16 0 23.83-10.75 23.83-24s-10.67-24-23.83-24Z'/></svg>";
 
 // @public (undocumented)
-export const elementStatePause = "data:image/svg+xml;utf8,<svg id='Icon' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><style>.cls-1{stroke-width:0}</style></defs><path class='cls-1' d='M222 349.5c-11.05 0-20-8.95-20-20v-147c0-11.05 8.95-20 20-20s20 8.95 20 20v147c0 11.05-8.95 20-20 20ZM290 349.5c-11.05 0-20-8.95-20-20v-147c0-11.05 8.95-20 20-20s20 8.95 20 20v147c0 11.05-8.95 20-20 20Z'/></svg>";
+export const elementStatePause = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><style>.cls-1{stroke-width:0}</style></defs><path class='cls-1' d='M222 349.5c-11.05 0-20-8.95-20-20v-147c0-11.05 8.95-20 20-20s20 8.95 20 20v147c0 11.05-8.95 20-20 20ZM290 349.5c-11.05 0-20-8.95-20-20v-147c0-11.05 8.95-20 20-20s20 8.95 20 20v147c0 11.05-8.95 20-20 20Z'/></svg>";
 
 // @public (undocumented)
 export const elementStateProgress = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M270.43 253.68V114.43c69.75 0 127.15 62.86 127.15 139.26 0 38.04-14.23 74.47-39.36 100.74l-87.79-100.74Z'/></svg>";
 
 // @public (undocumented)
-export const elementStateQuestionMark = "data:image/svg+xml;utf8,<svg id='Icon' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><style>.cls-1{stroke-width:0}</style></defs><path class='cls-1' d='M256 311c-11.05 0-20-8.95-20-20v-29.22a19.994 19.994 0 0 1 13.63-18.96c10.43-3.62 33.09-15.84 33.09-28.82.02-11.91-7.5-22.54-18.71-26.49-14.56-5.12-30.58 2.56-35.7 17.12-3.67 10.42-15.08 15.9-25.5 12.23s-15.9-15.08-12.23-25.5c12.44-35.37 51.34-54.02 86.71-41.58 27.22 9.58 45.48 35.4 45.44 64.25 0 13.92-5.57 34.34-32.11 52.4-5.12 3.49-10.2 6.31-14.61 8.5V291c0 11.05-8.95 20-20 20ZM256.16 375h-.32c-13.17 0-23.84-10.75-23.84-24s10.67-24 23.84-24h.32c13.17 0 23.84 10.75 23.84 24s-10.67 24-23.84 24Z'/></svg>";
+export const elementStateQuestionMark = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><style>.cls-1{stroke-width:0}</style></defs><path class='cls-1' d='M256 311c-11.05 0-20-8.95-20-20v-29.22a19.994 19.994 0 0 1 13.63-18.96c10.43-3.62 33.09-15.84 33.09-28.82.02-11.91-7.5-22.54-18.71-26.49-14.56-5.12-30.58 2.56-35.7 17.12-3.67 10.42-15.08 15.9-25.5 12.23s-15.9-15.08-12.23-25.5c12.44-35.37 51.34-54.02 86.71-41.58 27.22 9.58 45.48 35.4 45.44 64.25 0 13.92-5.57 34.34-32.11 52.4-5.12 3.49-10.2 6.31-14.61 8.5V291c0 11.05-8.95 20-20 20ZM256.16 375h-.32c-13.17 0-23.84-10.75-23.84-24s10.67-24 23.84-24h.32c13.17 0 23.84 10.75 23.84 24s-10.67 24-23.84 24Z'/></svg>";
 
 // @public (undocumented)
 export const elementStateTick = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M222.25 345.88c-5.12 0-10.24-1.95-14.14-5.86l-56.25-56.25c-7.81-7.81-7.81-20.47 0-28.29s20.47-7.81 28.28 0l42.11 42.11 109.61-109.61c7.81-7.81 20.47-7.81 28.28 0s7.81 20.47 0 28.29L236.39 340.02a19.92 19.92 0 0 1-14.14 5.86Z' style='stroke-width:0'/></svg>";
@@ -200,10 +206,7 @@ export const provideIconConfig: (config: IconConfig) => Provider;
 
 // @public
 export class SiIconComponent {
-    protected readonly fontIcon: _angular_core.Signal<string | undefined>;
     readonly icon: _angular_core.InputSignal<string>;
-    // (undocumented)
-    protected readonly svgIcon: _angular_core.Signal<_angular_platform_browser.SafeHtml | undefined>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiIconComponent, "si-icon", never, { "icon": { "alias": "icon"; "required": true; "isSignal": true; }; }, {}, never, never, true, never>;
     // (undocumented)
@@ -213,8 +216,6 @@ export class SiIconComponent {
 // @public @deprecated (undocumented)
 export class SiIconLegacyComponent {
     readonly alt: _angular_core.InputSignal<TranslatableString | undefined>;
-    // (undocumented)
-    protected readonly altText: _angular_core.Signal<string>;
     readonly color: _angular_core.InputSignal<string | undefined>;
     readonly icon: _angular_core.InputSignal<string | undefined>;
     readonly size: _angular_core.InputSignal<string>;
@@ -240,8 +241,6 @@ export class SiIconModule {
 export class SiStatusIconComponent {
     // (undocumented)
     readonly status: _angular_core.InputSignal<EntityStatusType>;
-    // (undocumented)
-    protected readonly statusIcon: _angular_core.Signal<_siemens_element_ng_common.StatusIcon>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiStatusIconComponent, "si-status-icon", never, { "status": { "alias": "status"; "required": true; "isSignal": true; }; }, {}, never, never, true, never>;
     // (undocumented)

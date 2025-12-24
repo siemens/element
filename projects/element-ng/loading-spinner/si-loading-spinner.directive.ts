@@ -5,6 +5,7 @@
 import { ComponentPortal, DomPortalOutlet } from '@angular/cdk/portal';
 import {
   booleanAttribute,
+  ChangeDetectorRef,
   computed,
   Directive,
   ElementRef,
@@ -52,6 +53,7 @@ export class SiLoadingSpinnerDirective implements OnInit, OnChanges, OnDestroy {
 
   private el = inject(ElementRef);
   private readonly viewRef = inject(ViewContainerRef);
+  private cdRef = inject(ChangeDetectorRef);
 
   private sub?: Subscription;
   private progressSubject = new BehaviorSubject(false);
@@ -104,6 +106,7 @@ export class SiLoadingSpinnerDirective implements OnInit, OnChanges, OnDestroy {
       } else if (this.compPortal.isAttached) {
         this.compPortal.detach();
       }
+      this.cdRef.markForCheck();
     });
   }
 

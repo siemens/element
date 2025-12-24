@@ -15,7 +15,7 @@ export const tsConfig = defineConfig({
   files: ['**/*.ts'],
   languageOptions: {
     parserOptions: {
-      project: ['tsconfig.json'],
+      project: ['src/tsconfig.app.json'],
       tsconfigRootDir: __dirname
     }
   },
@@ -70,6 +70,16 @@ export const tsConfig = defineConfig({
           {
             name: '@siemens/element-ng',
             message: 'Use the secondary entrypoints instead.'
+          },
+          {
+            name: '@ngx-translate/core',
+            importNames: ['TranslatePipe'],
+            message: 'Use `SiTranslatePipe` from `@siemens/element-translate-ng/translate` instead.'
+          },
+          {
+            name: '@siemens/element-translate-ng',
+            message:
+              'Always use a dedicated secondary entrypoint, e.g. `@siemens/element-translate-ng/translate`.'
           }
         ]
       }

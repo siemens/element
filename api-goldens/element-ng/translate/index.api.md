@@ -158,6 +158,8 @@ export interface SiTranslatableKeys {
     // (undocumented)
     'SI_DATEPICKER.START_TIME_LABEL'?: string;
     // (undocumented)
+    'SI_DATEPICKER.TODAY'?: string;
+    // (undocumented)
     'SI_DELETE_CONFIRMATION_DIALOG.CANCEL_BTN'?: string;
     // (undocumented)
     'SI_DELETE_CONFIRMATION_DIALOG.DELETE_BTN'?: string;
@@ -225,6 +227,8 @@ export interface SiTranslatableKeys {
     'SI_FILTERED_SEARCH.ITEM_COUNT'?: string;
     // (undocumented)
     'SI_FILTERED_SEARCH.SEARCH'?: string;
+    // (undocumented)
+    'SI_FILTERED_SEARCH.SEARCH_FOR_FREE_TEXT'?: string;
     // (undocumented)
     'SI_FILTERED_SEARCH.SUBMIT_BUTTON'?: string;
     // (undocumented)
@@ -391,6 +395,10 @@ export interface SiTranslatableKeys {
     'SI_SELECT.SEARCH-PLACEHOLDER'?: string;
     // (undocumented)
     'SI_SIDE_PANEL.CLOSE'?: string;
+    // (undocumented)
+    'SI_SIDE_PANEL.ENTER_FULLSCREEN'?: string;
+    // (undocumented)
+    'SI_SIDE_PANEL.EXIT_FULLSCREEN'?: string;
     // (undocumented)
     'SI_SIDE_PANEL.SEARCH_PLACEHOLDER'?: string;
     // (undocumented)

@@ -16,9 +16,8 @@
     [class.readonly]="readonly()"
     [attr.aria-labelledby]="id() + '-aria-label ' + id() + '-value'"
     [attr.aria-expanded]="open"
-    [complexOptions]="countryList()"
+    [options]="countryList()"
     [value]="selectedCountry"
-    [valueProvider]="valueProvider"
     [tabindex]="disabled() ? '-1' : '0'"
     [attr.aria-controls]="id() + '-listbox'"
     (valueChange)="countryInput($event)"
@@ -32,7 +31,7 @@
     <span
       class="fi"
       aria-hidden="true"
-      [ngClass]="'fi-' + (selectedCountry?.isoCode?.toLowerCase() ?? 'xx')"
+      [ngClass]="'fi-' + ((selectedCountry?.isoCode | lowercase) ?? 'xx')"
     ></span>
     @if (selectedCountry) {
       <span class="si-body ms-4" [id]="id() + '-value'">

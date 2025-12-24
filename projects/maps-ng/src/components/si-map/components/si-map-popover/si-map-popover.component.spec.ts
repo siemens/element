@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MapPointMetaData } from '../../models';
@@ -20,7 +20,8 @@ describe('SiMapPopoverComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SiMapPopoverComponent, MockCustomPopoverComponent]
+      imports: [SiMapPopoverComponent, MockCustomPopoverComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
   });
 

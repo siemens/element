@@ -2,11 +2,23 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { Type } from '@angular/core';
 import { Widget, WidgetConfig } from '@siemens/dashboards-ng';
+import * as testWidgetModule from 'projects/dashboards-ng/test/test-widget/index';
 
 const loaderFunction = (name: string): Promise<any> => {
   if (name === 'TestWidgetComponent' || name === 'TestWidgetEditorComponent') {
-    return import('projects/dashboards-ng/test/test-widget/index');
+    // immediately resolve so we don't have to deal with timers in tests
+    return Promise.resolve(testWidgetModule);
+  } else {
+    throw new Error(`Unknown component to be loaded ${name}`);
+  }
+};
+
+const loaderFunctionStandalone = <T>(name: string): Promise<Type<T>> => {
+  if (name === 'TestWidgetComponent' || name === 'TestWidgetEditorComponent') {
+    // immediately resolve so we don't have to deal with timers in tests
+    return Promise.resolve(testWidgetModule[name]) as Promise<Type<T>>;
   } else {
     throw new Error(`Unknown component to be loaded ${name}`);
   }
@@ -22,6 +34,25 @@ export const TEST_WIDGET: Widget = {
     editorComponentName: 'TestWidgetEditorComponent',
     moduleName: 'TestWidgetModule',
     moduleLoader: loaderFunction
+  },
+  defaults: {
+    width: 4,
+    height: 2
+  },
+  payload: {
+    message: 'Test Widgets!'
+  }
+};
+
+export const TEST_WIDGET_STANDALONE: Widget = {
+  name: 'Test Widget',
+  id: '@siemens/dashboards-ng/TestWidgetComponent',
+  iconClass: 'element-report',
+  description: 'A dummy widget for testing.',
+  componentFactory: {
+    componentName: 'TestWidgetComponent',
+    editorComponentName: 'TestWidgetEditorComponent',
+    componentLoader: loaderFunctionStandalone
   },
   defaults: {
     width: 4,

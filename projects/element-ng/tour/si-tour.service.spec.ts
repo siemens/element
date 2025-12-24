@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from '@angular/core/testing';
+import { Component, inject, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiTourService } from './si-tour.service';
 
@@ -18,12 +18,12 @@ describe('SiTourService', () => {
   let component: TestHostComponent;
   let fixture: ComponentFixture<TestHostComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent]
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [TestHostComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
-  }));
-
+  });
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
@@ -34,7 +34,7 @@ describe('SiTourService', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should show/hide modal', fakeAsync(() => {
+  it('should show/hide modal', async () => {
     fixture.detectChanges();
     component.tourService.addSteps([
       {
@@ -52,7 +52,7 @@ describe('SiTourService', () => {
       }
     ]);
     component.tourService.start();
-    flush();
+    await fixture.whenStable();
     fixture.detectChanges();
 
     const tour = document.querySelector('si-tour');
@@ -66,6 +66,5 @@ describe('SiTourService', () => {
     expect(skip?.innerText).toBe('Skip tour');
 
     component.tourService.complete();
-    flush();
-  }));
+  });
 });

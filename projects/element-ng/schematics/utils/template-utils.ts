@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { Tree, UpdateRecorder } from '@angular-devkit/schematics';
-import { join, dirname } from 'path';
+import { join, dirname } from 'path/posix';
 import ts, { NoSubstitutionTemplateLiteral, PropertyAssignment, StringLiteral } from 'typescript';
 
 import { findAttribute, findElement } from './html-utils.js';
@@ -199,7 +199,7 @@ export const renameElementTag = ({
 }: RenameElementTagParams): void => {
   getInlineTemplates(sourceFile).forEach(template =>
     renameElementTagInTemplate({
-      template: template.text,
+      template: sourceFile.text.substring(template.getStart() + 1, template.getEnd() - 1),
       offset: template.getStart() + 1,
       toName,
       fromName,
@@ -231,7 +231,7 @@ export const renameAttribute = ({
 }: RenameElementTagParams): void => {
   getInlineTemplates(sourceFile).forEach(template =>
     renameAttributeInTemplate({
-      template: template.text,
+      template: sourceFile.text.substring(template.getStart() + 1, template.getEnd() - 1),
       offset: template.getStart() + 1,
       toName,
       fromName,
@@ -270,7 +270,7 @@ export const renameApi = ({
 }): void => {
   getInlineTemplates(sourceFile).forEach(template =>
     renameApiInTemplate({
-      template: template.text,
+      template: sourceFile.text.substring(template.getStart() + 1, template.getEnd() - 1),
       offset: template.getStart() + 1,
       elementName,
       recorder,
@@ -311,7 +311,7 @@ export const removeSymbol = ({
 }): void => {
   getInlineTemplates(sourceFile).forEach(template =>
     removeSymbols({
-      template: template.text,
+      template: sourceFile.text.substring(template.getStart() + 1, template.getEnd() - 1),
       offset: template.getStart() + 1,
       elementName,
       attributeSelector,

@@ -9,7 +9,7 @@ import {
   allWorkspaceTargets,
   getWorkspace
 } from '@schematics/angular/utility/workspace';
-import { dirname, isAbsolute, resolve } from 'path';
+import { dirname, isAbsolute, resolve } from 'path/posix';
 
 import { parseTsconfigFile } from './ts-utils.js';
 

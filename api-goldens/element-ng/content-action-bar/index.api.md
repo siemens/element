@@ -24,30 +24,12 @@ export type ContentActionBarMainItem = (MenuItemAction | MenuItemCheckbox | Menu
 // @public (undocumented)
 export class SiContentActionBarComponent implements AfterViewInit {
     readonly actionParam: _angular_core.InputSignal<any>;
-    // (undocumented)
-    protected collapse(): void;
     readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
-    protected expand(): void;
-    // (undocumented)
-    protected readonly expanded: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
-    protected readonly icons: Record<"elementCancel" | "elementOptionsVertical", string>;
-    // (undocumented)
-    protected isNewItemStyle(item: MenuItem | ContentActionBarMainItem): item is ContentActionBarMainItem;
-    // (undocumented)
-    protected readonly mobileActions: _angular_core.Signal<readonly (MenuItem | MenuItem_2)[]>;
-    // (undocumented)
     ngAfterViewInit(): void;
-    // (undocumented)
-    protected parentElement?: HTMLElement | null;
     readonly preventIconsInDropdownMenus: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly primaryActions: _angular_core.InputSignal<readonly (MenuItem | ContentActionBarMainItem)[] | undefined>;
-    // (undocumented)
-    protected runAction(item: MenuItemAction | MenuItemRadio | MenuItemCheckbox): void;
     readonly secondaryActions: _angular_core.InputSignal<readonly (MenuItem | MenuItem_2)[] | undefined>;
-    // (undocumented)
-    protected readonly secondaryActionsInternal: _angular_core.Signal<readonly (MenuItem | MenuItem_2)[] | undefined>;
     readonly toggleItemLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly viewType: _angular_core.InputSignal<ViewType>;
     // (undocumented)

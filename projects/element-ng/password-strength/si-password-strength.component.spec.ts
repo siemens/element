@@ -2,8 +2,14 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, ElementRef, viewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  provideZonelessChangeDetection,
+  viewChild
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
 import {
@@ -64,7 +70,8 @@ describe('SiPasswordStrengthDirective', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SiPasswordStrengthModule, FormsModule, WrapperComponent]
+      imports: [SiPasswordStrengthModule, FormsModule, WrapperComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
   });
 
@@ -187,7 +194,7 @@ describe('SiPasswordStrengthDirective', () => {
     expect(element.classList.contains('strong')).toBeTrue();
   });
 
-  it('should show the icon, toggle', fakeAsync(() => {
+  it('should show the icon, toggle', () => {
     fixture.detectChanges();
 
     const icon = element.querySelector('button')!;
@@ -198,9 +205,8 @@ describe('SiPasswordStrengthDirective', () => {
     expect(element.querySelector<HTMLElement>('input')?.getAttribute('type')).toBe('password');
 
     element.querySelector('button')?.click();
-    tick();
     fixture.detectChanges();
 
     expect(element.querySelector<HTMLElement>('input')?.getAttribute('type')).toBe('text');
-  }));
+  });
 });

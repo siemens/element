@@ -23,6 +23,7 @@
       <!-- Flex-column if actions bottom, flex-row/flex-row-reverse if actions start -->
       <div
         class="message-wrapper mw-0 d-flex mb-2"
+        [class.start]="alignment() === 'start'"
         [class.end]="alignment() === 'end'"
         [class.flex-column]="actionsPosition() === 'bottom'"
         [class.flex-row]="actionsPosition() === 'side' && alignment() === 'start'"

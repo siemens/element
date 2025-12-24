@@ -5,15 +5,17 @@
 import {
   Component,
   ComponentRef,
+  computed,
   ElementRef,
   inject,
   input,
+  inputBinding,
   NgZone,
   OnChanges,
-  OnDestroy,
   OnInit,
   output,
-  OutputRefSubscription,
+  outputBinding,
+  signal,
   SimpleChanges,
   viewChild,
   ViewContainerRef
@@ -36,7 +38,7 @@ export interface GridWrapperEvent {
   templateUrl: './si-gridstack-wrapper.component.html',
   styleUrl: './si-gridstack-wrapper.component.scss'
 })
-export class SiGridstackWrapperComponent implements OnInit, OnChanges, OnDestroy {
+export class SiGridstackWrapperComponent implements OnInit, OnChanges {
   /**
    * Grid items to render inside the gridstack
    *
@@ -74,16 +76,22 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges, OnDestroy
 
   private grid!: GridStack;
   private markedForRender: WidgetConfig[] = [];
-  private gridItems: {
-    id: string;
-    component: ComponentRef<SiWidgetHostComponent>;
-  }[] = [];
+  private readonly gridItems = signal<
+    {
+      id: string;
+      component: ComponentRef<SiWidgetHostComponent>;
+    }[]
+  >([]);
+  private readonly gridItemsMap = computed(
+    () => new Map(this.gridItems().map(item => [item.id, item]))
+  );
   private readonly itemIdAttr = 'item-id';
-
-  private widgetIdSubscriptionMap = new Map<string, OutputRefSubscription[]>();
 
   private ngZone = inject(NgZone);
   private elementRef = inject(ElementRef);
+  private readonly widgetConfigsMap = computed(
+    () => new Map(this.widgetConfigs().map(w => [w.id, w]))
+  );
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.widgetConfigs) {
@@ -93,15 +101,13 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges, OnDestroy
       if (firstChange) {
         this.markedForRender = currentValue;
       } else {
+        const currentIds = new Set(currentValue.map((item: WidgetConfig) => item.id));
+        const previousIds = new Set(previousValue.map((item: WidgetConfig) => item.id));
         // Get newly added items
-        const toBeAdded = currentValue.filter(
-          (item: WidgetConfig) => !previousValue.find((i: WidgetConfig) => i.id === item.id)
-        );
+        const toBeAdded = currentValue.filter((item: WidgetConfig) => !previousIds.has(item.id));
 
         // Get deleted items
-        const toBeRemoved = previousValue.filter(
-          (item: WidgetConfig) => !currentValue.find((i: WidgetConfig) => i.id === item.id)
-        );
+        const toBeRemoved = previousValue.filter((item: WidgetConfig) => !currentIds.has(item.id));
 
         if (toBeAdded) {
           this.mount(toBeAdded);
@@ -112,8 +118,6 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges, OnDestroy
         }
       }
 
-      // Detect changes
-      this.updateViewComponents(currentValue);
       this.updateLayout(currentValue);
       this.grid?.batchUpdate(false);
     }
@@ -144,13 +148,6 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges, OnDestroy
     this.hookEvents(this.grid);
 
     this.mount(this.markedForRender);
-  }
-
-  ngOnDestroy(): void {
-    this.widgetIdSubscriptionMap.forEach(subscriptions => {
-      subscriptions.forEach(subscription => subscription.unsubscribe());
-    });
-    this.widgetIdSubscriptionMap.clear();
   }
 
   mount(items: WidgetConfig[]): void {
@@ -187,36 +184,38 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges, OnDestroy
   }
 
   private updateLayout(widgets: WidgetConfig[]): void {
-    const tmp = widgets.map(w => ({ ...w, w: w.width, h: w.height }));
+    const widgetConfigMap = new Map(widgets.map(w => [w.id, { ...w, w: w.width, h: w.height }]));
+
     if (this.grid) {
       const gridItems = this.grid.getGridItems();
       gridItems.forEach(gridItem => {
-        const config = tmp.find(widget => widget.id === gridItem.getAttribute('item-id'));
-        this.grid.update(gridItem, { ...config });
+        const itemId = gridItem.getAttribute('item-id');
+        const config = widgetConfigMap.get(itemId!);
+        if (config) {
+          this.grid.update(gridItem, config);
+        }
       });
     }
   }
 
   private addToView(item: WidgetConfig): void {
-    const componentRef = this.gridstackContainer()!.createComponent(SiWidgetHostComponent);
-    componentRef.setInput('widgetConfig', item);
-    const subscriptions: OutputRefSubscription[] = [];
-    const subscriptionRemove = componentRef.instance.remove.subscribe(widgetId => {
-      const widgetSubscriptions = this.widgetIdSubscriptionMap.get(widgetId);
-      if (widgetSubscriptions) {
-        widgetSubscriptions.forEach(sub => sub.unsubscribe());
-      }
-      this.widgetInstanceRemove.emit(widgetId);
+    // we use computed here to dynamically bind the widgetConfig to the SiWidgetHostComponent
+    const config = computed(() => this.widgetConfigsMap().get(item.id)!);
+    const componentRef = this.gridstackContainer()!.createComponent(SiWidgetHostComponent, {
+      bindings: [
+        inputBinding('widgetConfig', config),
+        outputBinding<string>('remove', widgetId => {
+          this.widgetInstanceRemove.emit(widgetId);
+        }),
+        outputBinding<WidgetConfig>('edit', widgetConfig => {
+          this.widgetInstanceEdit.emit(widgetConfig);
+        })
+      ]
     });
-    subscriptions.push(subscriptionRemove);
-    const subscriptionEdit = componentRef.instance.edit.subscribe(widgetConfig => {
-      this.widgetInstanceEdit.emit(widgetConfig);
-    });
-    subscriptions.push(subscriptionEdit);
-    this.widgetIdSubscriptionMap.set(item.id, subscriptions);
+
     const element = componentRef.location.nativeElement as HTMLElement;
     element.setAttribute(this.itemIdAttr, item.id!);
-    this.gridItems.push({ id: item.id!, component: componentRef });
+    this.gridItems.update(items => [...items, { id: item.id!, component: componentRef }]);
     this.grid.makeWidget(element, {
       w: item.width,
       h: item.height,
@@ -236,23 +235,10 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges, OnDestroy
 
     if (toRemove) {
       this.grid.removeWidget(toRemove);
-      const index = this.gridItems.findIndex(i => i.id === widgetId);
-      this.gridItems[index].component.destroy();
-      this.gridItems.splice(index, 1);
-    }
-  }
-
-  /**
-   * GridItemComponents are created dynamically, change detection won't trigger as there is no \@Input binding.
-   * We have to update instance and run ChangeDetectionRef manually.
-   */
-  private updateViewComponents(newConfigs: WidgetConfig[]): void {
-    // TODO: lookup by id would fasten the update
-    for (const config of newConfigs) {
-      const gridItem = this.gridItems.find(item => item.id === config.id);
-      if (gridItem) {
-        gridItem.component.setInput('widgetConfig', config);
-      }
+      const gridItemToRemove = this.gridItemsMap().get(widgetId);
+      gridItemToRemove?.component.destroy();
+      this.gridItemsMap().delete(widgetId);
+      this.gridItems.set(Array.from(this.gridItemsMap().values()));
     }
   }
 

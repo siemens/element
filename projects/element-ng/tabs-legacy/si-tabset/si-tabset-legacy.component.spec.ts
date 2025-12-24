@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, DebugElement, viewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import { Component, DebugElement, provideZonelessChangeDetection, viewChild } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { SiTabsLegacyModule } from '../si-tabs-legacy.module';
@@ -85,24 +85,36 @@ describe('SiTabset', () => {
     );
   };
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SiTabsLegacyModule, TestComponent]
+      imports: [SiTabsLegacyModule, TestComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestComponent);
     fixture.detectChanges();
     testComponent = fixture.componentInstance;
     component = testComponent.tabSet();
-  }));
+  });
+
+  beforeEach(async () => {
+    jasmine.clock().install();
+    jasmine.clock().mockDate();
+  });
+
+  afterEach(() => {
+    jasmine.clock().uninstall();
+  });
 
   it('should be possible to create a tabComponent instance', async () => {
     expect(getLength()).toEqual(0);
 
     testComponent.tabs = ['test'];
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
+
+    jasmine.clock().tick(1000);
     await fixture.whenStable();
-    fixture.detectChanges();
 
     expect(getLength()).toEqual(1);
     expect(getHeading(0)).toBe('test');
@@ -111,10 +123,10 @@ describe('SiTabset', () => {
 
   it('should be possible to add a few tabs to the tabComponent', async () => {
     testComponent.tabs = ['1', '2', '3'];
+    fixture.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
 
-    fixture.detectChanges();
-    await fixture.whenStable();
-    fixture.detectChanges();
+    jasmine.clock().tick(1000);
     await fixture.whenStable();
 
     expect(getActive(0)).toBeTrue();
@@ -125,6 +137,7 @@ describe('SiTabset', () => {
 
   it('should be possible to select a tab', () => {
     testComponent.tabs = ['1', '2', '3'];
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
 
     getElement(1).nativeElement.click();
@@ -137,19 +150,22 @@ describe('SiTabset', () => {
 
   it('should remove tab on destroy', () => {
     testComponent.tabs = ['1', '2', '3'];
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(getLength()).toEqual(3);
     testComponent.tabs = [];
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     expect(getLength()).toEqual(0);
   });
 
-  it('should ignore tab selection with wrong input', fakeAsync(() => {
+  it('should ignore tab selection with wrong input', async () => {
     testComponent.tabs = ['1', '2', '3'];
+    fixture.changeDetectorRef.markForCheck();
+    fixture.detectChanges();
 
-    fixture.detectChanges();
-    tick();
-    fixture.detectChanges();
+    jasmine.clock().tick(1000);
+    await fixture.whenStable();
 
     expect(getActive(0)).toEqual(true);
     expect(component.selectedTabIndex).toEqual(0);
@@ -159,21 +175,23 @@ describe('SiTabset', () => {
     expect(component.selectedTabIndex).toEqual(2);
     component.selectedTabIndex = 5;
     expect(component.selectedTabIndex).toEqual(2);
-  }));
+  });
 
-  it('should should emit selectedTabIndexChange event', fakeAsync(() => {
+  it('should should emit selectedTabIndexChange event', async () => {
     spyOn(component.selectedTabIndexChange, 'emit');
     testComponent.tabs = ['1', '2', '3'];
-    fixture.detectChanges();
-    tick();
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
 
     component.selectedTabIndex = 2;
+    jasmine.clock().tick(1000);
+    await fixture.whenStable();
     expect(component.selectedTabIndexChange.emit).toHaveBeenCalledTimes(2); // the first call is caused by adding the tabs
-  }));
+  });
 
   it('should scroll', () => {
     testComponent.tabs = ['Tab 1 name extender', 'Tab 1 name extender', 'Tab 1 name extender'];
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     const preventDefault = jasmine.createSpy('preventDefault');
 
@@ -201,6 +219,7 @@ describe('SiTabset', () => {
 
   it('should handle focus correctly', async () => {
     testComponent.tabs = ['1', '2', '3'];
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     await fixture.whenStable();
     if (document.hasFocus()) {
@@ -216,14 +235,21 @@ describe('SiTabset', () => {
 
   it('should restore focus to active element when blurred', async () => {
     testComponent.tabs = ['1', '2'];
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     await fixture.whenStable();
     if (document.hasFocus()) {
       getElement(0).nativeElement.focus();
+      jasmine.clock().tick(500);
+      await fixture.whenStable();
       focusNext();
+      jasmine.clock().tick(500);
+      await fixture.whenStable();
       expect(document.activeElement).toBe(getElement(1).nativeElement);
       (document.activeElement! as HTMLElement).blur();
-      fixture.detectChanges();
+      jasmine.clock().tick(500);
+      await fixture.whenStable();
+
       expect(getElement(0).attributes.tabindex).toBe('0');
     }
   });
@@ -231,6 +257,7 @@ describe('SiTabset', () => {
   it('should use defined tabButtonMaxWidth value', async () => {
     testComponent.tabButtonMaxWidth = 110;
     testComponent.tabs = ['Tab 1 Long Long Long Long Long', 'Tab 2 Long Long Long Long Long'];
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -243,6 +270,7 @@ describe('SiTabset', () => {
   it('should use nav-tabs min-inline-size', async () => {
     testComponent.tabButtonMaxWidth = 90;
     testComponent.tabs = ['Tab 1 Long Long Long Long Long', 'Tab 2 Long Long Long Long Long'];
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -254,34 +282,52 @@ describe('SiTabset', () => {
 
   it('should emit tab close event for closable tab and preserve active tab', async () => {
     testComponent.tabs = ['1', '2', { heading: '3', closable: true }, '4'];
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
+    jasmine.clock().tick(500);
+    await fixture.whenStable();
     const closeSpy = spyOn(testComponent, 'closeTriggered').and.callThrough();
     getElement(3).nativeElement.click();
-    getElement(2).query(By.css('.element-cancel')).nativeElement.click();
-    fixture.detectChanges();
+    jasmine.clock().tick(500);
     await fixture.whenStable();
+
+    getElement(2).query(By.css('.element-cancel')).nativeElement.click();
+    jasmine.clock().tick(500);
+    await fixture.whenStable();
+
     expect(closeSpy).toHaveBeenCalledWith(jasmine.objectContaining({ heading: '3' }));
     expect(getElement(2).nativeElement).toBe(document.activeElement);
+
     focusPrevious();
+    jasmine.clock().tick(500);
+    await fixture.whenStable();
     expect(getElement(1).nativeElement).toBe(document.activeElement);
   });
 
   it('should emit tab close event for closable tab and select next tab as active', async () => {
     testComponent.tabs = ['1', '2', { heading: '3', closable: true }, '4'];
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
+    jasmine.clock().tick(500);
+    await fixture.whenStable();
     const closeSpy = spyOn(testComponent, 'closeTriggered').and.callThrough();
     getElement(2).nativeElement.click();
+    jasmine.clock().tick(500);
+    await fixture.whenStable();
     getElement(2).query(By.css('.element-cancel')).nativeElement.click();
-    fixture.detectChanges();
+    jasmine.clock().tick(500);
     await fixture.whenStable();
     expect(closeSpy).toHaveBeenCalledWith(jasmine.objectContaining({ heading: '3' }));
     expect(getElement(2).nativeElement).toBe(document.activeElement);
     focusPrevious();
+    jasmine.clock().tick(500);
+    await fixture.whenStable();
     expect(getElement(1).nativeElement).toBe(document.activeElement);
   });
 
   it('should not display close icon for non closable tab', () => {
     testComponent.tabs = ['1', { heading: '2', closable: true }];
+    fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     let closeIcon = getElement(0).nativeElement.querySelector('.element-cancel');
     fixture.detectChanges();

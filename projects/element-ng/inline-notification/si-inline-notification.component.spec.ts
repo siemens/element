@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StatusType } from '@siemens/element-ng/common';
 import { Link } from '@siemens/element-ng/link';
@@ -42,6 +42,7 @@ describe('SiInlineNotificationComponent', () => {
     TestBed.configureTestingModule({
       imports: [TestHostComponent],
       providers: [
+        provideZonelessChangeDetection(),
         provideMockTranslateServiceBuilder(
           () =>
             ({

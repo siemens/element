@@ -19,7 +19,7 @@ quality-levels and more.
 The component is highly flexible and can be customized to specific project needs
 in terms of:
 
-- Number of thresholds (*1..n*)
+- Number of thresholds (_1..n_)
 - Unit of threshold values
 - Condition levels
 - Adding and deleting thresholds
@@ -33,11 +33,11 @@ in terms of:
 
 1. **Threshold value:** Allows users to input a numeric value. The unit
    (optional) is configurable to a specific to need and has to be the same for
-   all threshold values. See the [*number input*](../forms-inputs/number-input.md)
+   all threshold values. See the [_number input_](../forms-inputs/number-input.md)
    component to for its interaction states.
 2. **Connector:** Visually links the different steps together. It can assume
    different colors according to the selected condition.
-3. **Condition:** Allows users to select a condition. It can have an icon or a composite icon. See the [*select*](../forms-inputs/select.md)
+3. **Condition:** Allows users to select a condition. It can have an icon or a composite icon. See the [_select_](../forms-inputs/select.md)
    component for further details.
 
 ### Number of thresholds

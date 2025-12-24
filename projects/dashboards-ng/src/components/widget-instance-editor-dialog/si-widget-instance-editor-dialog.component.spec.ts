@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { DebugElement } from '@angular/core';
+import { DebugElement, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ModalRef } from '@siemens/element-ng/modal';
@@ -25,7 +25,7 @@ describe('SiWidgetInstanceEditorDialogComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TestingModule, SiWidgetInstanceEditorDialogComponent],
-      providers: [{ provide: ModalRef, useValue: new ModalRef() }]
+      providers: [{ provide: ModalRef, useValue: new ModalRef() }, provideZonelessChangeDetection()]
     }).compileComponents();
   });
 
@@ -34,7 +34,7 @@ describe('SiWidgetInstanceEditorDialogComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('should create', () => {
+  it('should create', async () => {
     expect(component).toBeTruthy();
     fixture.componentRef.setInput('widget', TEST_WIDGET);
     fixture.componentRef.setInput('widgetConfig', {
@@ -42,6 +42,8 @@ describe('SiWidgetInstanceEditorDialogComponent', () => {
       id: 'testId'
     });
     fixture.detectChanges();
+    // to avoid injector destroyed error
+    await new Promise(resolve => setTimeout(resolve, 0));
     expect(component.widgetConfig()).toBeDefined();
     expect(component.widget()).toBeDefined();
   });

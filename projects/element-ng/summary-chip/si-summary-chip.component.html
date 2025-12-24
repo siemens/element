@@ -18,8 +18,11 @@
       }
     </span>
   }
-  <div class="si-body" [class.visually-hidden]="hideLabel()">
+  @let value = this.value();
+  <div class="si-body" [class.visually-hidden]="hideLabel() && value && actualIcon.icon">
     {{ label() | translate }}
   </div>
-  <div class="si-h5">{{ value() | translate }}</div>
+  @if (value) {
+    <div class="si-h5">{{ value | translate }}</div>
+  }
 </div>

@@ -10,16 +10,17 @@ import {
   ChangeDetectorRef,
   Component,
   computed,
+  DestroyRef,
   DOCUMENT,
   ElementRef,
   inject,
   input,
   OnChanges,
-  OnDestroy,
   signal,
   SimpleChanges,
   viewChild
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ScrollbarHelper } from '@siemens/element-ng/common';
 import {
   BOOTSTRAP_BREAKPOINTS,
@@ -27,8 +28,6 @@ import {
   ResizeObserverService
 } from '@siemens/element-ng/resize-observer';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 import { SiDashboardCardComponent } from './si-dashboard-card.component';
 import { SiDashboardService } from './si-dashboard.service';
@@ -43,7 +42,8 @@ const FIX_SCROLL_PADDING_RESIZE_OBSERVER_THROTTLE = 10;
   providers: [SiDashboardService],
   host: { class: 'si-layout-fixed-height' }
 })
-export class SiDashboardComponent implements OnChanges, OnDestroy, AfterViewInit {
+export class SiDashboardComponent implements OnChanges, AfterViewInit {
+  private readonly destroyRef = inject(DestroyRef);
   /**
    * Heading for the dashboard page.
    */
@@ -84,7 +84,6 @@ export class SiDashboardComponent implements OnChanges, OnDestroy, AfterViewInit
   );
 
   private _isExpanded = false;
-  private unsubscribe = new Subject<void>();
   private scrollPosition: [number, number] = [0, 0];
 
   private cards: SiDashboardCardComponent[] = [];
@@ -107,7 +106,7 @@ export class SiDashboardComponent implements OnChanges, OnDestroy, AfterViewInit
 
   constructor() {
     this.dashboardService.cards$
-      .pipe(takeUntil(this.unsubscribe))
+      .pipe(takeUntilDestroyed())
       .subscribe(cards => this.subscribeToCards(cards));
   }
 
@@ -120,17 +119,12 @@ export class SiDashboardComponent implements OnChanges, OnDestroy, AfterViewInit
   ngAfterViewInit(): void {
     this.resizeObserver
       .observe(this.dashboard().nativeElement, FIX_SCROLL_PADDING_RESIZE_OBSERVER_THROTTLE)
-      .pipe(takeUntil(this.unsubscribe))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(x => this.setDashboardFrameEndPadding(this.dashboardFrameDimensions, x));
     this.resizeObserver
       .observe(this.dashboardFrame().nativeElement, FIX_SCROLL_PADDING_RESIZE_OBSERVER_THROTTLE)
-      .pipe(takeUntil(this.unsubscribe))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(dims => this.setDashboardFrameEndPadding(dims, this.dashboardDimensions));
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
   }
 
   private subscribeToCards(cards: SiDashboardCardComponent[]): void {

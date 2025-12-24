@@ -5,7 +5,6 @@
 
 import { Tree } from '@angular-devkit/schematics';
 import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
-import { join } from '@angular/compiler-cli';
 import { readFileSync } from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
@@ -35,8 +34,8 @@ describe('wizard migration', () => {
       appTree,
       Object.fromEntries(
         fileNames.map(fileName => [
-          join(basePath, fileName),
-          readFileSync(buildRelativeFromFile(join('files', fileName)), 'utf8')
+          path.join(basePath, fileName),
+          readFileSync(buildRelativeFromFile(path.join('files', fileName)), 'utf8')
         ])
       )
     );
@@ -60,10 +59,10 @@ describe('wizard migration', () => {
     );
     for (const fileName of fileNames) {
       const expected = readFileSync(
-        buildRelativeFromFile(join('files', 'expected.' + fileName)),
+        buildRelativeFromFile(path.join('files', 'expected.' + fileName)),
         'utf8'
       );
-      const actual = tree.readContent(join(basePath, fileName));
+      const actual = tree.readContent(path.join(basePath, fileName));
       expect(actual).toEqual(expected);
     }
   };

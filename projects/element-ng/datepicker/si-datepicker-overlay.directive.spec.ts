@@ -8,6 +8,7 @@ import {
   ComponentRef,
   HostListener,
   inject,
+  provideZonelessChangeDetection,
   signal
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -84,7 +85,8 @@ describe('SiDatepickerOverlayDirective', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [WrapperComponent]
+      imports: [WrapperComponent],
+      providers: [provideZonelessChangeDetection()]
     })
   );
 

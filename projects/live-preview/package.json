@@ -1,7 +1,7 @@
 {
   "name": "@siemens/live-preview",
   "description": "Element live preview for web",
-  "version": "48.3.0",
+  "version": "48.9.0",
   "license": "MIT",
   "type": "module",
   "repository": {
@@ -20,7 +20,7 @@
   "dependencies": {
     "codeflask": "^1.4.1",
     "qrcode-generator": "^2.0.0",
-    "glob": "11.0.3"
+    "glob": "13.0.0"
   },
   "devDependencies": {
     "@types/babel__standalone": "^7.1.7",
@@ -29,8 +29,8 @@
     "@types/react-dom": "^19.0.0"
   },
   "peerDependencies": {
-    "@angular/common": "20",
-    "@angular/core": "20",
+    "@angular/common": "20 - 21",
+    "@angular/core": "20 - 21",
     "react": "18 || 19",
     "react-dom": "18 || 19",
     "vue": "3",

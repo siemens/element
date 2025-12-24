@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SiIconModule } from '@siemens/element-ng/icon';
 
@@ -36,7 +36,8 @@ describe('SiStatusBarItemComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [SiIconModule, SiStatusBarItemComponent, TestHostComponent]
+      imports: [SiIconModule, SiStatusBarItemComponent, TestHostComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents()
   );
 

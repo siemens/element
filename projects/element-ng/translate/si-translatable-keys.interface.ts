@@ -53,6 +53,7 @@ export interface SiTranslatableKeys {
   'SI_DATEPICKER.SECONDS'?: string;
   'SI_DATEPICKER.START_DATE_PLACEHOLDER'?: string;
   'SI_DATEPICKER.START_TIME_LABEL'?: string;
+  'SI_DATEPICKER.TODAY'?: string;
   'SI_DATE_RANGE_FILTER.ADVANCED'?: string;
   'SI_DATE_RANGE_FILTER.AFTER'?: string;
   'SI_DATE_RANGE_FILTER.APPLY'?: string;
@@ -108,6 +109,7 @@ export interface SiTranslatableKeys {
   'SI_FILTERED_SEARCH.CLEAR'?: string;
   'SI_FILTERED_SEARCH.ITEM_COUNT'?: string;
   'SI_FILTERED_SEARCH.SEARCH'?: string;
+  'SI_FILTERED_SEARCH.SEARCH_FOR_FREE_TEXT'?: string;
   'SI_FILTERED_SEARCH.SUBMIT_BUTTON'?: string;
   'SI_FILTER_BAR.COLLAPSED_FILTERS_DESCRIPTION'?: string;
   'SI_FILTER_BAR.NO_FILTERS'?: string;
@@ -194,6 +196,8 @@ export interface SiTranslatableKeys {
   'SI_SELECT.NO-RESULTS-FOUND'?: string;
   'SI_SELECT.SEARCH-PLACEHOLDER'?: string;
   'SI_SIDE_PANEL.CLOSE'?: string;
+  'SI_SIDE_PANEL.ENTER_FULLSCREEN'?: string;
+  'SI_SIDE_PANEL.EXIT_FULLSCREEN'?: string;
   'SI_SIDE_PANEL.SEARCH_PLACEHOLDER'?: string;
   'SI_SIDE_PANEL.TOGGLE'?: string;
   'SI_SKIP_LINKS.JUMP_TO'?: string;

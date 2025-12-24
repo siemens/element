@@ -14,6 +14,7 @@ export default defineConfig(
     languageOptions: {
       parserOptions: {
         project: [
+          'projects/element-ng/tsconfig.docs.json',
           'projects/element-ng/tsconfig.lib.json',
           'projects/element-ng/tsconfig.spec.json',
           'projects/element-ng/tsconfig.schematics.json',
@@ -47,6 +48,13 @@ export default defineConfig(
         }
       ],
       '@typescript-eslint/no-deprecated': ['off']
+    }
+  },
+  // TODO: remove this once upgraded to Angular 21
+  {
+    files: ['**/*.spec.ts'],
+    rules: {
+      '@angular-eslint/no-developer-preview': ['off']
     }
   },
   ...templateConfig

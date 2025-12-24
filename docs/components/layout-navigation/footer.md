@@ -26,7 +26,7 @@ The footer contains the `Copyright Notice` and a link list to (legal) artifacts.
 
 ![Footer construction](images/footer-usage-construction.png)
 
- > 1. Link list, 2. Copyright notice
+> \1.Link list, 2. Copyright notice
 
 ### Wide version
 

@@ -5,7 +5,7 @@
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { ComponentHarness, HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component } from '@angular/core';
+import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiLinkActionService } from '@siemens/element-ng/link';
@@ -85,7 +85,10 @@ const withObjectType = <ItemType extends MenuItem, ComponentType extends { items
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        providers: [{ provide: SiLinkActionService, useValue: jasmine.createSpyObj(['emit']) }]
+        providers: [
+          { provide: SiLinkActionService, useValue: jasmine.createSpyObj(['emit']) },
+          provideZonelessChangeDetection()
+        ]
       });
       fixture = TestBed.createComponent(componentType);
       loader = TestbedHarnessEnvironment.loader(fixture);
@@ -160,6 +163,7 @@ const withObjectType = <ItemType extends MenuItem, ComponentType extends { items
       expect(await menuItem.isDisabled()).toBeTrue();
       if (!fixture.componentInstance.items[disabledIndex].type) {
         fixture.componentInstance.items[disabledIndex].disabled = false;
+        fixture.changeDetectorRef.markForCheck();
       }
       expect(await menuItem.isDisabled()).toBeFalse();
     });

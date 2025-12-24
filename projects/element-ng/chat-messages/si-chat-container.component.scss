@@ -1,0 +1,76 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  overflow-y: hidden;
+  overflow-x: visible;
+
+  &.base-0 {
+    background-color: variables.$element-base-0;
+  }
+
+  &.base-1 {
+    background-color: variables.$element-base-1;
+  }
+}
+
+.chat-container {
+  &.initialized {
+    scroll-behavior: smooth;
+  }
+
+  // Ensure the container can grow to fill available space
+  min-block-size: 0;
+  overflow-y: hidden;
+  overflow-x: visible;
+}
+
+.messages-container {
+  max-inline-size: 720px;
+  overflow-y: auto;
+  overflow-x: visible;
+  gap: map.get(variables.$spacers, 9) + map.get(variables.$spacers, 4);
+
+  // Padding is included here, cancel out the gap on the messages container
+  ::ng-deep si-user-message:not(.last) {
+    margin-block-end: -1 * (map.get(variables.$spacers, 9) + map.get(variables.$spacers, 4));
+  }
+}
+
+.chat-input-area {
+  justify-self: flex-end;
+  align-self: center;
+  overflow: visible;
+  inline-size: 100%;
+  max-inline-size: 720px;
+
+  &:empty,
+  &:has([sichatcontainerinput]:empty) {
+    ::ng-deep &:not(:has(si-inline-notification)) {
+      // stylelint-disable-next-line declaration-no-important
+      display: none !important;
+    }
+
+    ::ng-deep > si-inline-notification,
+    ::ng-deep * > si-inline-notification {
+      // stylelint-disable-next-line declaration-no-important
+      margin-block-end: 0 !important;
+    }
+  }
+}
+
+.chat-container:has(.messages-container:not(:empty)) .messages-empty-state {
+  // stylelint-disable-next-line declaration-no-important
+  display: none !important;
+}
+
+// In mobile mode the inline-notification is massive compared to the scrollable area
+:host-context(.si-container-xs, .si-container-sm) ::ng-deep {
+  si-inline-notification {
+    .alert,
+    .alert-link {
+      font-size: variables.$si-font-size-body;
+    }
+  }
+}

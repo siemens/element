@@ -20,6 +20,7 @@ import {
   output,
   SimpleChanges
 } from '@angular/core';
+import { addIcons, elementBack, SiIconComponent } from '@siemens/element-ng/icon';
 import {
   BOOTSTRAP_BREAKPOINTS,
   ElementDimensions,
@@ -31,13 +32,22 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'si-main-detail-container',
-  imports: [NgClass, NgTemplateOutlet, SiSplitComponent, SiSplitPartComponent, SiTranslatePipe],
+  imports: [
+    NgClass,
+    NgTemplateOutlet,
+    SiSplitComponent,
+    SiSplitPartComponent,
+    SiTranslatePipe,
+    SiIconComponent
+  ],
   templateUrl: './si-main-detail-container.component.html',
   styleUrl: './si-main-detail-container.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'si-layout-inner' }
 })
 export class SiMainDetailContainerComponent implements OnInit, OnChanges, OnDestroy {
+  protected readonly icons = addIcons({ elementBack });
+
   private animationDuration = 500;
   private resizeSubs?: Subscription;
   private elementRef = inject(ElementRef);

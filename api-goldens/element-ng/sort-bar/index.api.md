@@ -11,19 +11,11 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
 export class SiSortBarComponent implements OnInit {
-    // (undocumented)
-    protected activeSortCriteria: SortCriteria['key'];
     readonly defaultSortCriteria: i0.InputSignal<string | number>;
     // (undocumented)
-    protected readonly icons: Record<"elementSortDown" | "elementSortUp", string>;
-    // (undocumented)
     ngOnInit(): void;
-    // (undocumented)
-    protected setActive(key: SortCriteria['key']): void;
     readonly sortChange: i0.OutputEmitterRef<HttpParams>;
     readonly sortCriteria: i0.InputSignal<SortCriteria[]>;
-    // (undocumented)
-    protected sortIsDescending: boolean;
     readonly sortTitle: i0.InputSignal<TranslatableString>;
     // (undocumented)
     static ɵcmp: i0.ɵɵComponentDeclaration<SiSortBarComponent, "si-sort-bar", never, { "sortTitle": { "alias": "sortTitle"; "required": false; "isSignal": true; }; "sortCriteria": { "alias": "sortCriteria"; "required": true; "isSignal": true; }; "defaultSortCriteria": { "alias": "defaultSortCriteria"; "required": true; "isSignal": true; }; }, { "sortChange": "sortChange"; }, never, never, true, never>;

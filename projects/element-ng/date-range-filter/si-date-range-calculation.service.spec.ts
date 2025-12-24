@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { formatDate } from '@angular/common';
+import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { SiDateRangeCalculationService } from './si-date-range-calculation.service';
@@ -18,7 +19,9 @@ describe('SiDateRangeCalculationService', () => {
     expect(formatDate(d1, 'dateShort', 'en')).toEqual(formatDate(d2, 'dateShort', 'en'));
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ providers: [SiDateRangeCalculationService] });
+    TestBed.configureTestingModule({
+      providers: [SiDateRangeCalculationService, provideZonelessChangeDetection()]
+    });
     service = TestBed.inject(SiDateRangeCalculationService);
   });
 

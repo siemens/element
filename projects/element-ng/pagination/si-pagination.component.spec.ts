@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { CommonModule } from '@angular/common';
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiPaginationComponent as TestComponent } from '.';
 
@@ -20,11 +21,12 @@ describe('SiPaginationComponent', () => {
   const getCurrentItem = (): HTMLElement =>
     element.querySelector('.page-item.active') as HTMLElement;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [CommonModule, TestComponent]
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [CommonModule, TestComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestComponent);
@@ -81,7 +83,7 @@ describe('SiPaginationComponent', () => {
     expect(getCurrentItem().innerHTML).toContain('9');
   });
 
-  it('should enable/disable buttons', fakeAsync(() => {
+  it('should enable/disable buttons', () => {
     fixture.componentRef.setInput('totalPages', 3);
     fixture.componentRef.setInput('currentPage', 1);
 
@@ -95,7 +97,6 @@ describe('SiPaginationComponent', () => {
 
     (buttons.item(1) as HTMLElement).click();
     fixture.detectChanges();
-    tick();
 
     buttons = getNavButtons();
     expect(buttons.item(0).disabled).toBeFalse();
@@ -104,11 +105,10 @@ describe('SiPaginationComponent', () => {
 
     (buttons.item(1) as HTMLElement).click();
     fixture.detectChanges();
-    tick();
 
     buttons = getNavButtons();
     expect(buttons.item(0).disabled).toBeFalse();
     expect(buttons.item(1).disabled).toBeTrue();
     expect(getCurrentItem().innerHTML).toContain('3');
-  }));
+  });
 });

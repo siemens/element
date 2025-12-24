@@ -1,3 +1,131 @@
+# [48.9.0](https://github.com/siemens/element/compare/v48.8.0...v48.9.0) (2025-12-19)
+
+
+### Features
+
+* **angular:** add support for Angular 21 ([11fce52](https://github.com/siemens/element/commit/11fce52f61115fc0f0d3b18305a5ebf761fc4683))
+* **dashboards-ng:** support widgets as standalone component ([5dad1d4](https://github.com/siemens/element/commit/5dad1d42b7716b43ca2907f2c1a82d0165228944))
+* **filtered-search:** support free text as pills ([1970897](https://github.com/siemens/element/commit/1970897220b694007a6f9f75ec69c4dd4692a01b))
+
+
+### Bug Fixes
+
+* **charts/circle:** align with figma specs ([75157e7](https://github.com/siemens/element/commit/75157e76c34d5df3a90f2a46fa514da536c7d2e8))
+* **side-panel:** ensure search bar focus outline is visible ([32d3959](https://github.com/siemens/element/commit/32d3959a01a22611226792d15081c9f740c349f2)), closes [#1204](https://github.com/siemens/element/issues/1204)
+
+
+### NOTES
+
+* **angular:** Angular without ZoneJS (Zoneless) is generally supported but due to incomplete of testing,
+  it might not work in all cases.
+
+# [48.8.0](https://github.com/siemens/element/compare/v48.7.0...v48.8.0) (2025-12-17)
+
+
+### Features
+
+* **side-panel:** add extended size option ([199e451](https://github.com/siemens/element/commit/199e4515dfa7bc6d0416eb212f2ad81b21f6d3f5))
+* **side-panel:** enhance navigation with router-link and link support ([3f8679a](https://github.com/siemens/element/commit/3f8679ace83c3c2af64fc9641d4262a4d99ac254))
+* **side-panel:** implement fullscreen overlay and navigation modes ([526773f](https://github.com/siemens/element/commit/526773f8208ae566f7efc8b17f79d61d98580612))
+
+
+### Bug Fixes
+
+* **date-range-filter:** update datepicker date-range on preset selection ([70433ae](https://github.com/siemens/element/commit/70433ae6d531a5f0e50fec9859146750238a651a))
+* **datepicker:** convert 12 AM to 0 hours for 12-hour clock ([1f2eb16](https://github.com/siemens/element/commit/1f2eb16405e20d07609c01c984e8be04bdbe1e00))
+* **icon:** render font icons when name contains kebab-case with numbers ([8684c7f](https://github.com/siemens/element/commit/8684c7f25d0bf9e53065ab346248da662fc1f672))
+* **password-toggle:** hide MS Edge built-in reveal toggle icon ([fdba859](https://github.com/siemens/element/commit/fdba859c7531725c8c0b175baa744c1307c9c697))
+
+# [48.7.0](https://github.com/siemens/element/compare/v48.6.0...v48.7.0) (2025-12-10)
+
+
+### Features
+
+* **chat-messages:** allow asterisk lists and simple images for markdown renderer ([7559fce](https://github.com/siemens/element/commit/7559fce7528406ce7692bbdee978cb1f0832d101))
+* **typeahead:** introduce experimental create option ([a2b2ae9](https://github.com/siemens/element/commit/a2b2ae903639c946eb3e9d83735c16c0b0caf2cd))
+
+
+### Bug Fixes
+
+* **charts/cartesian:** confine tooltip for cartesian ([f3dc55f](https://github.com/siemens/element/commit/f3dc55f0c5045d9f90445ceb4889d4ea3dd28c9f))
+* **datatable:** support compatibility with datatable v22 ([bedc4ec](https://github.com/siemens/element/commit/bedc4ec9290a2845846f873d5cfa0ecda070ac1b))
+* **loading-spinner:** should work in zoneless environment ([09b6530](https://github.com/siemens/element/commit/09b6530ed87a3077ce785888dfd2bbcaf415b1b8))
+
+# [48.6.0](https://github.com/siemens/element/compare/v48.5.2...v48.6.0) (2025-12-02)
+
+
+### Features
+
+* **datatable:** support @siemens/ngx-datatable@25 ([c89d4f6](https://github.com/siemens/element/commit/c89d4f64a66356cf0edd335b6ec984a18a6d2837))
+* **microchart-line:** add area support ([de15e4d](https://github.com/siemens/element/commit/de15e4d92351760c796481e868715ce2bcf3b8bd))
+
+
+### Bug Fixes
+
+* **icon:** don't use hardcoded id on svg ([8b0792f](https://github.com/siemens/element/commit/8b0792f2f148852a208e368c5e93d8f8e4f6f45d))
+* **microchart-line:** fix gradient ID not unique ([0a1ceb0](https://github.com/siemens/element/commit/0a1ceb0e399c6d7a96086d21e1b9d922da27e69f))
+* **schematics:** ignore dot files and node_modules in directory traversal ([b97e4ce](https://github.com/siemens/element/commit/b97e4ce08b9bfbfe1a21389d8b76911ace468cee))
+* **schematics:** remove simpl-element-ng token from scss files and support single and double quotes ([8500e73](https://github.com/siemens/element/commit/8500e73332402a437c88313c2ce8cf3660bd0115))
+* **summary-chip:** make value attribute optional ([ea69015](https://github.com/siemens/element/commit/ea6901550d7666715cd54b4ce1fec07268a3b3b2))
+
+## [48.5.2](https://github.com/siemens/element/compare/v48.5.1...v48.5.2) (2025-11-26)
+
+
+### Bug Fixes
+
+* **map:** avoid TypeError when clicking point without handler ([b8f36b4](https://github.com/siemens/element/commit/b8f36b4a08a4a08e65f13a0ede586afb713602f8))
+* **schematics:** scss migration should not modify node_modules ([e521c20](https://github.com/siemens/element/commit/e521c20d4e28e6546551f614cc3a081128b3e4bf))
+* **translate-ng:** prevent unwanted import of ngx-translate ([d8a636c](https://github.com/siemens/element/commit/d8a636ca064d61ef1e5d651163787a277a49891a))
+
+## [48.5.1](https://github.com/siemens/element/compare/v48.5.0...v48.5.1) (2025-11-26)
+
+
+### Bug Fixes
+
+* **application-header:** replace ngx-translate dependency with element translate pipe ([8a8022c](https://github.com/siemens/element/commit/8a8022c577a07cc550d04988635fb4dd57837d4e))
+* **badges:** prevent misaligned icons ([452db9a](https://github.com/siemens/element/commit/452db9a2989819078555fff45d5f1144eb30478e))
+* **datepicker:** fix incorrect week numbers ([c84fceb](https://github.com/siemens/element/commit/c84fcebefa21242a8771de4d77eb0ca23a9f79af))
+* **schematics:** add symbols in exports as well for NgModule ([ac2fd82](https://github.com/siemens/element/commit/ac2fd82ed756a846a98e9146c049861e2b9c872e))
+
+# [48.5.0](https://github.com/siemens/element/compare/v48.4.0...v48.5.0) (2025-11-24)
+
+
+### Features
+
+* **schematics:** add mappings for native charts components and module ([fe9fea5](https://github.com/siemens/element/commit/fe9fea58974e0765e4b18df7f53363509c23bd23))
+
+
+### Bug Fixes
+
+* **application-header:** truncate heading if needed in collapsed mode ([32f270a](https://github.com/siemens/element/commit/32f270a354fa662b8353197945d46ac409849e38))
+* **charts/custom-legend:** align symbol spacing with design specs ([778b889](https://github.com/siemens/element/commit/778b8895c0ee9a1d62cc8740a436c2fdda097339))
+* **chat-messages:** allow dragging on files to chat-input ([40019e0](https://github.com/siemens/element/commit/40019e09a00215be26d43d24bdc5be53cf35f85c))
+* **chat-messages:** allow interrupting with enter ([19112a6](https://github.com/siemens/element/commit/19112a60600fd78f335392c4ac50428774ffb8f5))
+* **loading-spinner:** slow down animation isof stopping for reduced-motion ([0c8371c](https://github.com/siemens/element/commit/0c8371c19b8fca74f1690fea453f49feeb3460c7))
+* **schematics:** add support for SimplElementNgModule imports and update mappings ([5260687](https://github.com/siemens/element/commit/5260687a91b75b417fa3fd435135e5a303818462))
+* **schematics:** add translation mapping in element-ng case and update mappings ([8b9df33](https://github.com/siemens/element/commit/8b9df33ac1a41e18a5c0d57e35dbf9c95964ff69))
+* **schematics:** update path imports for cross-platform compatibility and update mapping file ([2e7a2dc](https://github.com/siemens/element/commit/2e7a2dc8b46644ef85a91a3cbf3c67acb53c1a67))
+
+
+### Performance Improvements
+
+* **dashboards-ng:** optimize lookups ([fb3da90](https://github.com/siemens/element/commit/fb3da90e917cfb41a6f6b6bab0142a97bdd93466))
+
+# [48.4.0](https://github.com/siemens/element/compare/v48.3.0...v48.4.0) (2025-11-13)
+
+
+### Features
+
+* **chat-messages:** add chat container ([bb5ef0c](https://github.com/siemens/element/commit/bb5ef0c791ac07bc8fa0f2a803eb1e46bed906c0))
+* **select:** add template context guard for select actions directive ([d16b4b8](https://github.com/siemens/element/commit/d16b4b8ef4c4f2c75d3f34e0e23fd8ec9439464d))
+
+
+### Bug Fixes
+
+* **chat-messages:** auto-collapse smaller left-aligned chat-messages ([52cde0a](https://github.com/siemens/element/commit/52cde0a08d21a7ed08494e7e726b26ef98b3d733))
+* **datepicker:** add translation key for today button default text ([fb082e5](https://github.com/siemens/element/commit/fb082e5341b09202dae08fcf3e5817ccd8dc4457))
+* **schematics:** remove unused imports after action-modal migration ([d79cb07](https://github.com/siemens/element/commit/d79cb07a59165ca99f5eedecdba0688771516268))
+
 # [48.3.0](https://github.com/siemens/element/compare/v48.2.0...v48.3.0) (2025-11-05)
 
 

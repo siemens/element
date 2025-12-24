@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiTimelineWidgetBodyComponent } from './si-timeline-widget-body.component';
@@ -32,7 +32,8 @@ describe('SiTimelineWidgetBodyComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [TestHostComponent]
+      imports: [TestHostComponent],
+      providers: [provideZonelessChangeDetection()]
     })
   );
 

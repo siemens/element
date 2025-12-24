@@ -59,6 +59,12 @@ export class SampleComponent {
     negativeColorToken: 'element-data-10'
   };
 
+  whiskerChart: MicrochartBarSeries = {
+    values: [25, 25, 25, -25, -25, 25, 25, -25, 25, 25, 25],
+    colorToken: 'element-data-3',
+    negativeColorToken: 'element-data-10'
+  };
+
   positiveSeries: MicrochartBarSeries = {
     values: [5, 8, 12, 18, 25, 30, 38, 42, 48, 55, 62, 70],
     colorToken: 'element-data-2'
@@ -78,6 +84,12 @@ export class SampleComponent {
     values: [1, 3, 1, 9, 5, 10, 12],
     colorToken: 'element-data-1'
   };
+
+  lineAreaSeries: MicrochartLineSeries = {
+    values: [1, 3, 1, 9, 5, 10, 12],
+    colorToken: 'element-data-13'
+  };
+
   progressSeries1: MicrochartProgressSeries = { valuePercent: 40, colorToken: 'element-data-2' };
   progressSeries2: MicrochartProgressSeries = { valuePercent: 80, colorToken: 'element-data-12' };
 }

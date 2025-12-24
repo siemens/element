@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ApplicationRef } from '@angular/core';
-import { fakeAsync, flush, TestBed } from '@angular/core/testing';
+import { ApplicationRef, provideZonelessChangeDetection } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Subject } from 'rxjs';
 
@@ -16,14 +16,15 @@ describe('SiActionDialogService', () => {
 
   const clickDialogButton = (index: number): void => {
     appRef.tick();
-    flush();
     document.querySelectorAll<HTMLElement>('si-modal button:not(.btn-circle)')[index]?.click();
     appRef.tick();
-    flush();
   };
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ imports: [NoopAnimationsModule] }).compileComponents();
+    TestBed.configureTestingModule({
+      imports: [NoopAnimationsModule],
+      providers: [provideZonelessChangeDetection()]
+    }).compileComponents();
     service = TestBed.inject(SiActionDialogService);
     appRef = TestBed.inject(ApplicationRef);
   });
@@ -32,7 +33,7 @@ describe('SiActionDialogService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should show alert dialog with all options and confirm', fakeAsync(() => {
+  it('should show alert dialog with all options and confirm', () => {
     const observable = service.showActionDialog({
       type: 'alert',
       message: 'This is an alert.',
@@ -44,18 +45,18 @@ describe('SiActionDialogService', () => {
     });
     clickDialogButton(0);
     subscription.unsubscribe();
-  }));
+  });
 
-  it('should show alert dialog with no options and confirm', fakeAsync(() => {
+  it('should show alert dialog with no options and confirm', () => {
     const observable = service.showActionDialog({ type: 'alert', message: 'This is an alert.' });
     const subscription = observable.subscribe(result => {
       expect(result).toBe('confirm');
     });
     clickDialogButton(0);
     subscription.unsubscribe();
-  }));
+  });
 
-  it('should show confirmation dialog and confirm', fakeAsync(() => {
+  it('should show confirmation dialog and confirm', () => {
     const observable = service.showActionDialog({
       type: 'confirmation',
       message: 'This is an alert.',
@@ -68,9 +69,9 @@ describe('SiActionDialogService', () => {
 
     clickDialogButton(1);
     subscription.unsubscribe();
-  }));
+  });
 
-  it('should show confirmation dialog with all options and confirm', fakeAsync(() => {
+  it('should show confirmation dialog with all options and confirm', () => {
     const observable = service.showActionDialog({
       type: 'confirmation',
       message: 'This is an alert.',
@@ -82,9 +83,9 @@ describe('SiActionDialogService', () => {
     });
     clickDialogButton(1);
     subscription.unsubscribe();
-  }));
+  });
 
-  it('should show confirmation dialog with no options and confirm', fakeAsync(() => {
+  it('should show confirmation dialog with no options and confirm', () => {
     const observable = service.showActionDialog({
       type: 'confirmation',
       message: 'This is an alert.'
@@ -94,9 +95,9 @@ describe('SiActionDialogService', () => {
     });
     clickDialogButton(1);
     subscription.unsubscribe();
-  }));
+  });
 
-  it('should show confirmation dialog and decline', fakeAsync(() => {
+  it('should show confirmation dialog and decline', () => {
     const observable = service.showActionDialog({
       type: 'confirmation',
       message: 'Question.',
@@ -109,9 +110,9 @@ describe('SiActionDialogService', () => {
     });
     clickDialogButton(0);
     subscription.unsubscribe();
-  }));
+  });
 
-  it('should show edit-discard dialog with all options and save', fakeAsync(() => {
+  it('should show edit-discard dialog with all options and save', () => {
     const observable = service.showActionDialog({
       type: 'edit-discard',
       disableSave: false,
@@ -127,18 +128,18 @@ describe('SiActionDialogService', () => {
     });
     clickDialogButton(2);
     subscription.unsubscribe();
-  }));
+  });
 
-  it('should show edit-discard dialog with no options and save', fakeAsync(() => {
+  it('should show edit-discard dialog with no options and save', () => {
     const observable = service.showActionDialog({ type: 'edit-discard' });
     const subscription = observable.subscribe(result => {
       expect(result).toBe('save');
     });
     clickDialogButton(2);
     subscription.unsubscribe();
-  }));
+  });
 
-  it('should show edit-discard dialog and discard', fakeAsync(() => {
+  it('should show edit-discard dialog and discard', () => {
     const observable = service.showActionDialog({
       type: 'edit-discard',
       disableSave: false,
@@ -153,9 +154,9 @@ describe('SiActionDialogService', () => {
     });
     clickDialogButton(1);
     subscription.unsubscribe();
-  }));
+  });
 
-  it('should show edit-discard dialog and cancel', fakeAsync(() => {
+  it('should show edit-discard dialog and cancel', () => {
     const observable = service.showActionDialog({
       type: 'edit-discard',
       disableSave: false,
@@ -170,9 +171,9 @@ describe('SiActionDialogService', () => {
     });
     clickDialogButton(0);
     subscription.unsubscribe();
-  }));
+  });
 
-  it('should show delete confirmation with all options dialog and delete', fakeAsync(() => {
+  it('should show delete confirmation with all options dialog and delete', () => {
     const observable = service.showActionDialog({
       type: 'delete-confirm',
       message: 'This is an alert.',
@@ -185,18 +186,18 @@ describe('SiActionDialogService', () => {
     });
     clickDialogButton(1);
     subscription.unsubscribe();
-  }));
+  });
 
-  it('should show delete confirmation with no options dialog and delete', fakeAsync(() => {
+  it('should show delete confirmation with no options dialog and delete', () => {
     const observable = service.showActionDialog({ type: 'delete-confirm' });
     const subscription = observable.subscribe(result => {
       expect(result).toBe('delete');
     });
     clickDialogButton(1);
     subscription.unsubscribe();
-  }));
+  });
 
-  it('should show delete confirmation dialog and cancel', fakeAsync(() => {
+  it('should show delete confirmation dialog and cancel', () => {
     const observable = service.showActionDialog({
       type: 'delete-confirm',
       message: 'This is an alert.',
@@ -209,9 +210,9 @@ describe('SiActionDialogService', () => {
     });
     clickDialogButton(0);
     subscription.unsubscribe();
-  }));
+  });
 
-  it('should delay closing until delayDismiss() completes', fakeAsync(() => {
+  it('should delay closing until delayDismiss() completes', () => {
     const delaySubject = new Subject<DeleteConfirmationDialogResult>();
     const observable = service.showActionDialog({
       type: 'delete-confirm',
@@ -222,12 +223,9 @@ describe('SiActionDialogService', () => {
     });
     clickDialogButton(1);
 
-    flush();
     expect(document.querySelector('si-modal si-loading-button si-loading-spinner')).toBeTruthy();
     delaySubject.next('delete');
     delaySubject.complete();
-    flush();
-
     subscription.unsubscribe();
-  }));
+  });
 });

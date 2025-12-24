@@ -13,17 +13,9 @@ import * as _siemens_element_translate_ng_translate_types from '@siemens/element
 // @public (undocumented)
 export class SiThresholdComponent implements OnChanges {
     readonly addAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected addStep(index: number): void;
     readonly canAddRemoveSteps: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly colors: _angular_core.Signal<string[]>;
     readonly deleteAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected deleteStep(index: number): void;
     readonly horizontalLayout: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly icons: Record<"elementPlus", string>;
     readonly inputAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     readonly maxSteps: _angular_core.InputSignal<number>;
     readonly maxValue: _angular_core.InputSignal<number>;
@@ -35,8 +27,6 @@ export class SiThresholdComponent implements OnChanges {
     readonly readonlyConditions: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly showDecIncButtons: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly statusAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    // (undocumented)
-    protected stepChange(): void;
     readonly stepSize: _angular_core.InputSignal<number>;
     readonly thresholdSteps: _angular_core.ModelSignal<ThresholdStep[]>;
     readonly unit: _angular_core.InputSignal<string>;

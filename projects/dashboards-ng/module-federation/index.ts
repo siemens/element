@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { loadRemoteModule } from '@angular-architects/module-federation';
-import { ComponentRef, EnvironmentInjector, Injector, ViewContainerRef } from '@angular/core';
+import { ComponentRef, EnvironmentInjector, Injector, ViewContainerRef, Type } from '@angular/core';
 import { FederatedModule, SetupComponentFn, widgetFactoryRegistry } from '@siemens/dashboards-ng';
 import { Observable, Subject } from 'rxjs';
 
@@ -16,8 +16,8 @@ const setupRemoteComponent = <T>(
 ): Observable<ComponentRef<T>> => {
   const result = new Subject<ComponentRef<T>>();
 
-  loadRemoteModule(factory).then(
-    (module: any) => {
+  loadRemoteModule<Type<T>[]>(factory).then(
+    module => {
       const componentType = module[factory[componentName]];
       const widgetInstanceRef = host.createComponent<T>(componentType, {
         injector,

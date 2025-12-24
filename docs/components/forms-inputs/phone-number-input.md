@@ -19,7 +19,6 @@ a text input field.
 - Use smart defaults, such as showing the country code and phone number format based on the user's location.
 - When collecting non-phone number data, a standard [input](../forms-inputs/input.md) component should be used.
 
-
 ## Design ---
 
 ### Elements
@@ -60,13 +59,17 @@ import { SiPhoneNumberInputComponent } from '@siemens/element-ng/phone-number';
   imports: [SiPhoneNumberInputComponent, ...]
 })
 ```
+
 <!-- markdownlint-disable MD046-->
+
 ??? info "Required Packages"
+
     - [google-libphonenumber](https://www.npmjs.com/package/google-libphonenumber)
     - [@types/google-libphonenumber](https://www.npmjs.com/package/@types/google-libphonenumber)
     - [flag-icons](https://www.npmjs.com/package/flag-icons)
 
     The versions of the required packages are defined in the peer-dependencies of [element-ng](https://github.com/siemens/element/blob/main/projects/element-ng/package.json). Together with the types package, they are also part of the [package.json of the demo app](https://github.com/siemens/element/blob/main/package.json).
+
 <!-- markdownlint-enable MD046-->
 
 - Ensure to import the `node_modules/flag-icons/css/flag-icons.css` to the `angular.json` styles configuration as follows:

@@ -2,14 +2,22 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, ElementRef, inject, signal } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  inject,
+  provideZonelessChangeDetection,
+  signal
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import {
   MockResizeObserver,
   mockResizeObserver,
   restoreResizeObserver
 } from '../resize-observer/mock-resize-observer.spec';
+import { runOnPushChangeDetection } from '../test-helpers';
 import { SiStatusBarComponent, StatusBarItem } from './index';
 
 @Component({
@@ -39,7 +47,8 @@ describe('SiStatusBarComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [TestHostComponent]
+      imports: [TestHostComponent],
+      providers: [provideZonelessChangeDetection()]
     })
   );
 
@@ -48,9 +57,18 @@ describe('SiStatusBarComponent', () => {
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
+
+    jasmine.clock().install();
   });
 
-  afterEach(() => restoreResizeObserver());
+  afterAll(() => {
+    jasmine.clock().uninstall();
+  });
+
+  afterEach(() => {
+    restoreResizeObserver();
+    jasmine.clock().uninstall();
+  });
 
   it('should display all items with relevant content', () => {
     component.items = [
@@ -89,24 +107,26 @@ describe('SiStatusBarComponent', () => {
     expect(mute.classList.contains('element-sound-on')).toBeTrue();
 
     component.muteButton = false;
-    await fixture.whenStable();
-    fixture.detectChanges();
+    // uninstall clock before doing runOnPushChangeDetection
+    jasmine.clock().uninstall();
+    await runOnPushChangeDetection(fixture);
     expect(mute.classList.contains('element-sound-on')).toBeFalse();
   });
 
   describe('responsive mode', () => {
     const sizes = [575, 766, 989, 1300];
 
-    const applySize = (outerSize: number): void => {
+    const applySize = async (outerSize: number): Promise<void> => {
       component.width.set(outerSize);
       fixture.detectChanges();
       MockResizeObserver.triggerResize({});
-      flush();
+      jasmine.clock().tick(200);
       fixture.detectChanges();
+      await fixture.whenStable();
     };
 
     sizes.forEach(size => {
-      it(`sets the correct amount of items for size ${size}`, fakeAsync(() => {
+      it(`sets the correct amount of items for size ${size}`, async () => {
         component.muteButton = undefined;
         component.items = [
           { title: 'one with some text', status: 'success', value: 0 },
@@ -119,8 +139,7 @@ describe('SiStatusBarComponent', () => {
         ];
         fixture.detectChanges();
 
-        applySize(size);
-        tick();
+        await applySize(size);
 
         const responsive = component.items.length * 152 > size;
         const container = element.querySelector('.responsive') as HTMLElement;
@@ -132,9 +151,9 @@ describe('SiStatusBarComponent', () => {
           const className = 'responsive-' + numItems;
           expect(container.classList.contains(className)).toBe(true);
         }
-      }));
+      });
 
-      it(`sets the correct amount of items for size ${size} using value`, fakeAsync(() => {
+      it(`sets the correct amount of items for size ${size} using value`, async () => {
         component.muteButton = undefined;
         component.items = [
           { value: 'one with some text', status: 'success', title: '' },
@@ -147,8 +166,7 @@ describe('SiStatusBarComponent', () => {
         ];
         fixture.detectChanges();
 
-        applySize(size);
-        tick();
+        await applySize(size);
 
         const responsive = component.items.length * 152 > size;
         const container = element.querySelector('.responsive') as HTMLElement;
@@ -160,10 +178,10 @@ describe('SiStatusBarComponent', () => {
           const className = 'responsive-' + numItems;
           expect(container.classList.contains(className)).toBe(true);
         }
-      }));
+      });
     });
 
-    it('shows the correct number of hidden active items', fakeAsync(() => {
+    it('shows the correct number of hidden active items', async () => {
       component.muteButton = undefined;
       component.items = [
         { title: 'one with some text', status: 'success', value: 1 },
@@ -176,17 +194,16 @@ describe('SiStatusBarComponent', () => {
       ];
       fixture.detectChanges();
 
-      applySize(800);
-      tick();
+      await applySize(800);
 
       const container = element.querySelector('.responsive') as HTMLElement;
       expect(container.classList.contains('responsive-4')).toBe(true);
 
       const items = container.querySelectorAll('si-status-bar-item');
       expect(items[3].querySelector<HTMLElement>('.item-value')!.innerText).toContain('2+');
-    }));
+    });
 
-    it('allows expanding in responsive mode', fakeAsync(() => {
+    it('allows expanding in responsive mode', async () => {
       component.items = [
         { title: 'one with some text', status: 'success', value: 111 },
         { title: 'two with some text', status: 'warning', value: 222 },
@@ -194,23 +211,21 @@ describe('SiStatusBarComponent', () => {
         { title: 'four with some text', status: 'danger', value: 444 }
       ];
       fixture.detectChanges();
-
-      applySize(575);
-
+      await applySize(575);
       const expander = element.querySelector('.collapse-expand') as HTMLElement;
       expect(expander).toBeTruthy();
 
       expander.click();
-      flush();
       fixture.detectChanges();
+      jasmine.clock().tick(1000);
 
       expect(element.querySelector('.expanded')).toBeTruthy();
 
       expander.click();
-      flush();
+      jasmine.clock().tick(1000);
       fixture.detectChanges();
 
       expect(element.querySelector('.expanded')).toBeFalsy();
-    }));
+    });
   });
 });

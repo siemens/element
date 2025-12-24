@@ -19,7 +19,7 @@ import { SiWebComponentWrapperBaseComponent } from './si-web-component-wrapper-b
   templateUrl: './si-web-component-wrapper.component.html'
 })
 export class SiWebComponentEditorWrapperComponent
-  extends SiWebComponentWrapperBaseComponent
+  extends SiWebComponentWrapperBaseComponent<WidgetInstanceEditor>
   implements WidgetInstanceEditor, WidgetInstanceEditorWizard, AfterViewInit, OnDestroy
 {
   state!: WidgetInstanceEditorWizardState;
@@ -31,14 +31,23 @@ export class SiWebComponentEditorWrapperComponent
    */
   statusChangesHandler?: (statusChanges: Partial<WidgetConfigStatus>) => void;
 
-  private webComponentEventListener = (event: any): void => this.configChange.next(event.detail);
+  private webComponentEventListener = (event: CustomEventInit<WidgetConfig>): void =>
+    event.detail && this.configChange.next(event.detail);
 
-  private webComponentStateChangeListener = (event: any): void => {
-    this.state = event.detail;
-    this.stateChange.next(event.detail);
+  private webComponentStateChangeListener = (
+    event: CustomEventInit<WidgetInstanceEditorWizardState>
+  ): void => {
+    if (event.detail) {
+      this.state = event.detail;
+      this.stateChange.next(event.detail);
+    }
   };
-  private webComponentStatusChangesListener = (event: any): void => {
-    this.statusChangesHandler?.(event.detail);
+  private webComponentStatusChangesListener = (
+    event: CustomEventInit<Partial<WidgetConfigStatus>>
+  ): void => {
+    if (event.detail) {
+      this.statusChangesHandler?.(event.detail);
+    }
   };
 
   override ngAfterViewInit(): void {

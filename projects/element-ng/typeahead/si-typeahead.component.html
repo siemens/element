@@ -13,6 +13,8 @@
   }
 </ng-template>
 
+@let createOption = parent.typeaheadCreateOption();
+
 <!-- Only display the component if there are any matches and set the CSS transform to properly position the typeahead -->
 <ul
   #typeahead
@@ -20,7 +22,6 @@
   [siAutocompleteListboxFor]="autocompleteDirective"
   [siAutocompleteDefaultIndex]="parent.typeaheadAutoSelectIndex()"
   [attr.aria-label]="parent.typeaheadAutocompleteListLabel() | translate"
-  [class.d-none]="!matches().length"
   (siAutocompleteOptionSubmitted)="selectMatch($event)"
 >
   <!-- Loop through every match and bind events, the mousedown prevent default is to prevent the host from losing focus on click -->
@@ -44,6 +45,11 @@
           query: parent.query()
         }"
       />
+    </li>
+  }
+  @if (createOption && parent.query().length) {
+    <li class="dropdown-item" [siAutocompleteOption]="undefined">
+      {{ createOption | translate: { query: parent.query() } }}
     </li>
   }
 </ul>

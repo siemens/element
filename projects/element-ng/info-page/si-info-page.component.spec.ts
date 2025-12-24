@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ComponentRef } from '@angular/core';
+import { ComponentRef, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
 
@@ -15,7 +15,8 @@ describe('SiInfoPageComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [TestComponent, RouterModule]
+      imports: [TestComponent, RouterModule],
+      providers: [provideZonelessChangeDetection()]
     })
   );
 

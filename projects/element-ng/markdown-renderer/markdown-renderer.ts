@@ -132,6 +132,17 @@ const transformMarkdownText = (
       return codePlaceholder;
     })
 
+    // Images ![alt](url)
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (_match, alt, url) => {
+      const sanitizedUrl = sanitizeUrl(url, sanitizer);
+      const escapedAlt = alt
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+      return `<img src="${sanitizedUrl}" alt="${escapedAlt}">`;
+    })
+
     // Links [text](url)
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_match, text, url) => {
       const sanitizedUrl = sanitizeUrl(url, sanitizer);
@@ -156,7 +167,7 @@ const transformMarkdownText = (
     .replace(/_(.*?)_/g, '<em>$1</em>')
 
     .replace(new RegExp(escapedAsteriskPlaceholder, 'g'), '*')
-    .replace(new RegExp(escapedUnderscorePlaceholder, 'g'), '*')
+    .replace(new RegExp(escapedUnderscorePlaceholder, 'g'), '_')
 
     // Headings #, ##, ###, etc.
     .replace(/^###### (.*$)/gm, '<strong>$1</strong>')
@@ -170,6 +181,7 @@ const transformMarkdownText = (
     // Bullet points - handle each type separately (• gets converted to &#8226; by sanitizer)
     .replace(/^&#8226; (.*$)/gm, '<li class="unordered">$1</li>')
     .replace(/^- (.*$)/gm, '<li class="unordered">$1</li>')
+    .replace(/^\* (.*$)/gm, '<li class="unordered">$1</li>')
 
     // Ordered list items (1., 2., 3., etc.)
     .replace(/^\d+\. (.*$)/gm, '<li class="ordered">$1</li>');

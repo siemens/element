@@ -35,5 +35,12 @@ export default defineConfig(
       ]
     }
   },
+  // TODO: remove this once upgraded to Angular 21
+  {
+    files: ['**/*.spec.ts'],
+    rules: {
+      '@angular-eslint/no-developer-preview': ['off']
+    }
+  },
   ...templateConfig
 );

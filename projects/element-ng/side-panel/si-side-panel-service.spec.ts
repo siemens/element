@@ -3,15 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkPortal, PortalModule } from '@angular/cdk/portal';
-import { CommonModule } from '@angular/common';
-import { Component, viewChild } from '@angular/core';
-import { fakeAsync, TestBed } from '@angular/core/testing';
+import { Component, provideZonelessChangeDetection, viewChild } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 
 import { SiSidePanelService } from './si-side-panel.service';
 
 @Component({
   selector: 'si-mock-component',
-  imports: [CommonModule, PortalModule],
+  imports: [PortalModule],
   template: `<ng-template #helpPanel cdkPortal>
       <h3>Help Panel</h3>
     </ng-template>
@@ -25,8 +24,8 @@ describe('SiSidePanelService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, PortalModule, MockComponent],
-      providers: [SiSidePanelService]
+      imports: [PortalModule, MockComponent],
+      providers: [SiSidePanelService, provideZonelessChangeDetection()]
     }).compileComponents();
   });
 
@@ -39,11 +38,11 @@ describe('SiSidePanelService', () => {
     service.content$.subscribe(content => expect(content).toBeUndefined());
   });
 
-  it('should toggle content', fakeAsync(() => {
+  it('should toggle content', () => {
     service.open();
     expect(service.isOpen()).toBeTrue();
 
     service.toggle();
     expect(service.isOpen()).toBeFalse();
-  }));
+  });
 });

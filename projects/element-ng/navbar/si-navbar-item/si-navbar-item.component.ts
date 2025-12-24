@@ -19,6 +19,7 @@ import {
   SiHeaderDropdownItemsFactoryComponent,
   SiHeaderDropdownTriggerDirective
 } from '@siemens/element-ng/header-dropdown';
+import { addIcons, elementDown2, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLinkDirective } from '@siemens/element-ng/link';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
@@ -34,12 +35,15 @@ import { SiNavbarPrimaryComponent } from '../si-navbar-primary/si-navbar-primary
     NgTemplateOutlet,
     SiHeaderDropdownComponent,
     SiHeaderDropdownItemsFactoryComponent,
-    SiHeaderDropdownTriggerDirective
+    SiHeaderDropdownTriggerDirective,
+    SiIconComponent
   ],
   templateUrl: './si-navbar-item.component.html',
   host: { class: 'd-contents' }
 })
 export class SiNavbarItemComponent implements OnInit, DoCheck, OnDestroy {
+  protected readonly icons = addIcons({ elementDown2 });
+
   /**
    * MenuItem to display in the navbar.
    */

@@ -2,19 +2,20 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { TestBed, waitForAsync } from '@angular/core/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 
 import { MapService } from './map.service';
 
 describe('Service: Map', () => {
   let mapService: MapService;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      providers: [MapService]
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      providers: [MapService, provideZonelessChangeDetection()]
     }).compileComponents();
     mapService = TestBed.inject(MapService);
-  }));
+  });
 
   it('should create the service', () => {
     expect(mapService).toBeTruthy();

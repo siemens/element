@@ -1,0 +1,15 @@
+<div class="chat-container d-flex flex-column flex-grow-1 px-6 px-md-9 py-6 w-100">
+  <div
+    #messagesContainer
+    class="messages-container d-flex flex-column flex-grow-1 w-100 align-self-center"
+    tabindex="0"
+    (scroll)="onScroll()"
+  >
+    <ng-content />
+  </div>
+
+  <div class="chat-input-area py-3 pt-0 mt-6 d-flex flex-column align-items-center">
+    <ng-content select="si-inline-notification" />
+    <ng-content select="si-chat-input,[siChatContainerInput]" />
+  </div>
+</div>

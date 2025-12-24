@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
+import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Filter } from './filter';
 import { SiFilterPillComponent } from './index';
@@ -27,7 +27,8 @@ describe('SiFilterPillComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [SiFilterPillComponent, TestHostComponent]
+      imports: [SiFilterPillComponent, TestHostComponent],
+      providers: [provideZonelessChangeDetection()]
     })
   );
 
@@ -37,7 +38,7 @@ describe('SiFilterPillComponent', () => {
     element = fixture.nativeElement;
   });
 
-  it('should correctly display the filter properties', fakeAsync(() => {
+  it('should correctly display the filter properties', () => {
     component.filter = {
       filterName: 'location',
       title: 'Current Location',
@@ -46,9 +47,9 @@ describe('SiFilterPillComponent', () => {
     fixture.detectChanges();
     expect(element.querySelector('div.name')!.innerHTML).toBe('Current Location');
     expect(element.querySelector('div.value')!.innerHTML).toBe('Florida');
-  }));
+  });
 
-  it('should emit a deleted event if deleted - for single pill', fakeAsync(() => {
+  it('should emit a deleted event if deleted - for single pill', () => {
     component.filter = {
       filterName: 'lastName',
       title: 'Last Name',
@@ -56,9 +57,8 @@ describe('SiFilterPillComponent', () => {
     };
     const spyEvent = spyOn(component, 'deleteFilters');
     fixture.detectChanges();
-    flush();
     element.querySelector<HTMLElement>('[aria-label="Remove"]')?.click();
     fixture.detectChanges();
     expect(spyEvent).toHaveBeenCalled();
-  }));
+  });
 });

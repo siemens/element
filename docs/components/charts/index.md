@@ -17,25 +17,25 @@ available.
 ![Chart decision tree](images/charts-decision-tree.png)
 
 - **Range**
-    - [Gauge chart](gauge-chart.md)
-    - Bullet chart
-    - Consumption chart
+  - [Gauge chart](gauge-chart.md)
+  - Bullet chart
+  - Consumption chart
 
 - **Comparison**
-    - [Bar chart](bar-chart.md)
-    - [Line chart](line-chart.md)
-    - Area chart
+  - [Bar chart](bar-chart.md)
+  - [Line chart](line-chart.md)
+  - Area chart
 
 - **Distribution**
-    - Bubble chart
-    - [Scatter plot chart](scatter-chart.md)
-    - Histogram
+  - Bubble chart
+  - [Scatter plot chart](scatter-chart.md)
+  - Histogram
 
 - **Composition**
-    - Heatmap
-    - [Pie/Donut chart](circle-chart.md)
-    - Stacked bar chart
-    - Stacked area chart
+  - Heatmap
+  - [Pie/Donut chart](circle-chart.md)
+  - Stacked bar chart
+  - Stacked area chart
 
 There is also a [generic chart](generic-chart.md) which provides full
 flexibility by supporting all ECharts options.
@@ -97,7 +97,7 @@ chart.
 
 There is no support for CSS styling. Element Charts uses EChart themes with
 options defined as a simple JS object (no JSON). It is possible to load/register
-a theme for each chart separately or to load a default theme for everything. If 
+a theme for each chart separately or to load a default theme for everything. If
 no theme is provided, the element theme will be loaded by default.
 
 The desired default theme can be loaded anywhere in your project like this:
@@ -134,15 +134,11 @@ changes size. Combining those two aspects leads to following example, which
 takes care of all re-sizing and re-drawing aspects:
 
 ```html
-<si-chart
-  #chart
-  (siResizeObserver)="chart.resize()"
-  [options]="options"
-></si-chart>
+<si-chart #chart (siResizeObserver)="chart.resize()" [options]="options"></si-chart>
 ```
 
 > **Note:** This pattern is not only handy in case of a resize scenario but
-> could actually be required in *some* cases to see any data at all. If a chart
+> could actually be required in _some_ cases to see any data at all. If a chart
 > is getting initialized while it's not visible, wrong size values could lead to
 > a blank component. Such scenarios include shadow DOMs, as it's the case with
 > Ionic components.

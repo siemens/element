@@ -40,6 +40,7 @@ They are one of the most effective and highly used command surfaces, and can be 
 ## Code ---
 
 !!! warning "Important API changes"
+
     With Element v45, the `si-menu` has been completely re-implemented to feature a declarative API style based on the [CDK Menu](https://material.angular.io/cdk/menu/overview).
     If you are migrating from the old `si-menu-legacy`, you might want to consider using the `si-menu-factory`, which provides a more compatible model-driven API.
 

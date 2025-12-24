@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable, Subject } from 'rxjs';
 
@@ -24,11 +24,12 @@ describe('SiToastNotificationDrawerComponent', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let element: HTMLElement;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, TestHostComponent]
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [NoopAnimationsModule, TestHostComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
@@ -41,7 +42,7 @@ describe('SiToastNotificationDrawerComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('renders toasts', fakeAsync(() => {
+  it('renders toasts', () => {
     const toastSubject = new Subject<SiToast[]>();
     component.toasts = toastSubject;
     fixture.detectChanges();
@@ -52,11 +53,10 @@ describe('SiToastNotificationDrawerComponent', () => {
     ]);
 
     fixture.detectChanges();
-    tick();
 
     const toasts = element.querySelectorAll('si-toast-notification');
     expect(toasts.length).toBe(2);
     expect(toasts[0].innerHTML).toContain('danger message');
     expect(toasts[1].innerHTML).toContain('info message');
-  }));
+  });
 });

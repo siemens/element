@@ -8,12 +8,13 @@ import {
   computed,
   inject,
   input,
+  inputBinding,
   model,
   OnChanges,
   OnDestroy,
   OnInit,
   output,
-  OutputRefSubscription,
+  outputBinding,
   signal,
   SimpleChanges,
   Type,
@@ -23,7 +24,7 @@ import {
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiDashboardComponent } from '@siemens/element-ng/dashboard';
 import { t } from '@siemens/element-translate-ng/translate';
-import { BehaviorSubject, combineLatest, of, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, combineLatest, of, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 
 import { Config, SI_DASHBOARD_CONFIGURATION } from '../../model/configuration';
@@ -205,11 +206,9 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
   });
 
   private readonly viewState = signal<ViewState>('dashboard');
-  private subscriptions: Subscription[] = [];
   private widgetStorage = inject(SI_WIDGET_STORE);
   private hideAddWidgetInstanceButton$ = new BehaviorSubject(this.hideAddWidgetInstanceButton());
   private dashboardId$ = new Subject<string | undefined>();
-  private outputRefSubscription: OutputRefSubscription[] = [];
   private readonly toolbar = viewChild.required<SiDashboardToolbarComponent>('toolbar');
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -241,24 +240,10 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
 
   ngOnInit(): void {
     this.setupMenuItems();
-
-    const grid = this.grid();
-    this.outputRefSubscription.push(
-      grid.widgetInstanceEdit.subscribe(widgetConfig => {
-        this.editWidgetInstance(widgetConfig);
-      })
-    );
-    this.outputRefSubscription.push(
-      grid.editable.subscribe(editable => {
-        this.editable.set(editable);
-      })
-    );
   }
 
   ngOnDestroy(): void {
     this.dashboardId$.next(undefined);
-    this.subscriptions?.forEach(sub => sub.unsubscribe());
-    this.outputRefSubscription?.forEach(sub => sub.unsubscribe());
   }
 
   /**
@@ -275,18 +260,19 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
     }
     this.viewState.set('catalog');
     const componentType = this.widgetCatalogComponent() ?? SiWidgetCatalogComponent;
-    const catalogRef = this.catalogHost().createComponent<SiWidgetCatalogComponent>(componentType);
-    catalogRef.setInput('searchPlaceholder', this.searchPlaceholder());
-    catalogRef.instance.widgetCatalog = this.widgetCatalog();
-
-    const subscription = catalogRef.instance.closed.subscribe(widgetConfig => {
-      subscription.unsubscribe();
-      this.viewState.set('dashboard');
-      this.catalogHost().clear();
-      if (widgetConfig) {
-        this.grid().addWidgetInstance(widgetConfig);
-      }
+    const catalogRef = this.catalogHost().createComponent<SiWidgetCatalogComponent>(componentType, {
+      bindings: [
+        inputBinding('searchPlaceholder', this.searchPlaceholder),
+        outputBinding<Omit<WidgetConfig, 'id'> | undefined>('closed', widgetConfig => {
+          this.viewState.set('dashboard');
+          this.catalogHost().clear();
+          if (widgetConfig) {
+            this.grid().addWidgetInstance(widgetConfig);
+          }
+        })
+      ]
     });
+    catalogRef.instance.widgetCatalog = this.widgetCatalog();
   }
 
   protected onModified(event: boolean): void {
@@ -327,7 +313,7 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
     this.primaryEditActions$.next(next);
   }
 
-  private editWidgetInstance(widgetConfig: WidgetConfig): void {
+  protected editWidgetInstance(widgetConfig: WidgetConfig): void {
     const dashboard = this.dashboard();
     if (dashboard.isExpanded) {
       dashboard.restore();
@@ -338,17 +324,18 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
       widgetInstanceEditorDialogComponent ?? SiWidgetInstanceEditorDialogComponent;
 
     this.viewState.set('editor');
-    const catalogRef =
-      this.catalogHost().createComponent<SiWidgetInstanceEditorDialogComponent>(componentType);
-    catalogRef.setInput('widgetConfig', widgetConfig);
-    catalogRef.setInput('widget', widget);
-    const subscription = catalogRef.instance.closed.subscribe(editedWidgetConfig => {
-      subscription.unsubscribe();
-      this.viewState.set('dashboard');
-      this.catalogHost().clear();
-      if (editedWidgetConfig) {
-        this.grid().updateWidgetInstance(editedWidgetConfig);
-      }
+    this.catalogHost().createComponent<SiWidgetInstanceEditorDialogComponent>(componentType, {
+      bindings: [
+        inputBinding('widgetConfig', () => widgetConfig),
+        inputBinding('widget', () => widget),
+        outputBinding<WidgetConfig | undefined>('closed', editedWidgetConfig => {
+          this.viewState.set('dashboard');
+          this.catalogHost().clear();
+          if (editedWidgetConfig) {
+            this.grid().updateWidgetInstance(editedWidgetConfig);
+          }
+        })
+      ]
     });
   }
 
@@ -356,13 +343,10 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
     item: MenuItem | DashboardToolbarItem
   ): MenuItem | DashboardToolbarItem {
     if ('action' in item) {
-      if (!item.action || item.action instanceof String) {
-        return item;
+      if (typeof item.action === 'function') {
+        item.action = item.action.bind(this, this.grid());
       } else {
-        const realAction = item.action as (param?: any) => void | any;
-        item.action = () => {
-          realAction(this.grid());
-        };
+        return item;
       }
     }
     return item;

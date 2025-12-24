@@ -26,8 +26,6 @@ export class SiDetailsPaneBodyComponent {
 export class SiDetailsPaneComponent {
     constructor();
     // (undocumented)
-    protected parent: SiListDetailsComponent;
-    // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiDetailsPaneComponent, "si-details-pane", never, {}, {}, ["routerOutlet"], ["*"], true, never>;
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiDetailsPaneComponent, never>;
@@ -46,10 +44,6 @@ export class SiDetailsPaneHeaderComponent {
     constructor();
     readonly backButtonText: _angular_core.InputSignal<TranslatableString>;
     readonly backButtonUrl: _angular_core.InputSignal<string>;
-    // (undocumented)
-    protected backClicked(): void;
-    // (undocumented)
-    protected get hasLargeSize(): Signal<boolean>;
     readonly hideBackButton: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly title: _angular_core.InputSignal<TranslatableString | undefined>;
     // (undocumented)
@@ -61,16 +55,10 @@ export class SiDetailsPaneHeaderComponent {
 // @public (undocumented)
 export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
     readonly detailsActive: _angular_core.ModelSignal<boolean>;
-    // (undocumented)
-    protected detailsExpandedAnimationDone(): void;
-    // (undocumented)
-    protected readonly detailsStateId: _angular_core.Signal<string | undefined>;
     readonly disableResizing: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly expandBreakpoint: _angular_core.InputSignal<number>;
     // (undocumented)
     readonly hasLargeSize: _angular_core.Signal<boolean>;
-    // (undocumented)
-    protected readonly listStateId: _angular_core.Signal<string | undefined>;
     readonly listWidth: _angular_core.ModelSignal<number>;
     readonly minDetailsSize: _angular_core.InputSignal<number>;
     readonly minListSize: _angular_core.InputSignal<number>;
@@ -80,12 +68,6 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
     ngOnDestroy(): void;
     // (undocumented)
     ngOnInit(): void;
-    // (undocumented)
-    protected onSplitSizesChange(sizes: number[]): void;
-    // (undocumented)
-    protected readonly opacity: _angular_core.Signal<"" | "0">;
-    // (undocumented)
-    protected readonly splitSizes: _angular_core.Signal<[number, number]>;
     readonly stateId: _angular_core.InputSignal<string | undefined>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiListDetailsComponent, "si-list-details", never, { "expandBreakpoint": { "alias": "expandBreakpoint"; "required": false; "isSignal": true; }; "detailsActive": { "alias": "detailsActive"; "required": false; "isSignal": true; }; "disableResizing": { "alias": "disableResizing"; "required": false; "isSignal": true; }; "listWidth": { "alias": "listWidth"; "required": false; "isSignal": true; }; "minListSize": { "alias": "minListSize"; "required": false; "isSignal": true; }; "minDetailsSize": { "alias": "minDetailsSize"; "required": false; "isSignal": true; }; "stateId": { "alias": "stateId"; "required": false; "isSignal": true; }; }, { "detailsActive": "detailsActiveChange"; "listWidth": "listWidthChange"; }, never, ["si-list-pane", "si-details-pane"], true, never>;
@@ -104,8 +86,6 @@ export class SiListPaneBodyComponent {
 // @public (undocumented)
 export class SiListPaneComponent {
     constructor();
-    // (undocumented)
-    protected parent: SiListDetailsComponent;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiListPaneComponent, "si-list-pane", never, {}, {}, never, ["*"], true, never>;
     // (undocumented)

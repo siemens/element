@@ -14,8 +14,10 @@ jobs:
     runs-on: ubuntu-24.04
     needs:
       - build-and-test
+    permissions:
+      id-token: write
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0 # semantic-release needs this
           token: ${{ secrets.ELEMENT_BOT_GITHUB_TOKEN }} # Otherwise, branch protection rules are not bypassed.
@@ -23,7 +25,7 @@ jobs:
         with:
           node-version: lts/krypton
           cache: 'npm'
-      - uses: actions/download-artifact@v6
+      - uses: actions/download-artifact@v7
         with:
           name: dist
           path: dist
@@ -35,4 +37,3 @@ jobs:
           GIT_COMMITTER_NAME: 'Siemens Element Bot'
           GIT_COMMITTER_EMAIL: 'simpl.si@siemens.com'
           GITHUB_TOKEN: ${{ secrets.ELEMENT_BOT_GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

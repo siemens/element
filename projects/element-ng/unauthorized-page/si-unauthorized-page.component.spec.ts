@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
 import { SiIconModule } from '@siemens/element-ng/icon';
@@ -14,7 +15,8 @@ describe('SiUnauthorizedPageComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [SiIconModule, TestComponent, RouterModule]
+      imports: [SiIconModule, TestComponent, RouterModule],
+      providers: [provideZonelessChangeDetection()]
     })
   );
 

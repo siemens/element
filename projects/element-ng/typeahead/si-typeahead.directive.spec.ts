@@ -5,8 +5,14 @@
 import { DOWN_ARROW, ENTER } from '@angular/cdk/keycodes';
 import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, Component, TemplateRef, viewChild } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  provideZonelessChangeDetection,
+  TemplateRef,
+  viewChild
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { BehaviorSubject, of } from 'rxjs';
 
@@ -40,9 +46,11 @@ const testItems = ['test', 'item'];
       [typeaheadItemTemplate]="itemTemplate"
       [typeaheadSkipSortingMatches]="typeaheadSkipSortingMatches"
       [typeaheadClearValueOnSelect]="typeaheadClearValueOnSelect"
+      [typeaheadCreateOption]="createOption"
       (typeaheadOnFullMatch)="onFullMatch($event)"
       (typeaheadOnSelect)="onSelect($event)"
       (ngModelChange)="onModelChange($event)"
+      (typeaheadOnCreateOption)="onCreateOption($event)"
     />
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -63,6 +71,7 @@ class WrapperComponent {
   itemTemplate!: TemplateRef<TypeaheadOptionItemContext>;
   typeaheadSkipSortingMatches = false;
   typeaheadClearValueOnSelect = false;
+  createOption: string | undefined = undefined;
 
   readonly template = viewChild.required('testTemplate', {
     read: TemplateRef<TypeaheadOptionItemContext>
@@ -71,6 +80,7 @@ class WrapperComponent {
   onFullMatch = ($event: TypeaheadMatch): void => {};
   onSelect = ($event: TypeaheadMatch): void => {};
   onModelChange = ($event: string): void => {};
+  onCreateOption = ($event: string): void => {};
 }
 
 describe('SiTypeaheadDirective', () => {
@@ -94,7 +104,8 @@ describe('SiTypeaheadDirective', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SiTypeaheadDirective, FormsModule, WrapperComponent]
+      imports: [SiTypeaheadDirective, FormsModule, WrapperComponent],
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
     fixture = TestBed.createComponent(WrapperComponent);
     wrapperComponent = fixture.componentInstance;
@@ -104,17 +115,28 @@ describe('SiTypeaheadDirective', () => {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000000;
   });
 
+  beforeAll(() => jasmine.clock().install());
+  afterAll(() => jasmine.clock().uninstall());
+
+  const tick = async (ms = 0): Promise<void> => {
+    jasmine.clock().tick(ms);
+    fixture.detectChanges();
+    await fixture.whenStable();
+  };
+
   it('should create typeahead list on focus', async () => {
     wrapperComponent.minLength = 0;
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
+    await tick(0);
     expect(await input.getItems()).toBeTruthy();
   });
 
   it('should create component on input', async () => {
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.sendKeys('t');
+    await tick(0);
     expect(await input.getItems()).toBeTruthy();
   });
 
@@ -123,6 +145,7 @@ describe('SiTypeaheadDirective', () => {
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
+    await tick(0);
     expect(await input.getItems()).toEqual(['test', 'item']);
   });
 
@@ -132,6 +155,7 @@ describe('SiTypeaheadDirective', () => {
 
       const input = await loader.getHarness(SiTypeaheadInputHarness);
       await input.typeText('tes');
+      await tick(0);
       expect(await input.getItems()).toEqual(['test']);
     });
 
@@ -140,6 +164,7 @@ describe('SiTypeaheadDirective', () => {
 
       const input = await loader.getHarness(SiTypeaheadInputHarness);
       await input.typeText('tests');
+      await tick(0);
       expect(await input.getItems()).toBeNull();
     });
   });
@@ -148,24 +173,28 @@ describe('SiTypeaheadDirective', () => {
     it('should contain items from array matching simple search', async () => {
       const input = await loader.getHarness(SiTypeaheadInputHarness);
       await input.typeText('tes');
+      await tick(0);
       expect(await input.getItems()).toEqual(['test']);
     });
 
     it('should contain no items from array not matching simple search', async () => {
       const input = await loader.getHarness(SiTypeaheadInputHarness);
       await input.typeText('tests');
+      await tick(0);
       expect(await input.getItems()).toBeNull();
     });
 
     it('should contain items from array matching tokenized search and match all tokens set to separately', async () => {
       const input = await loader.getHarness(SiTypeaheadInputHarness);
       await input.typeText('tes t');
+      await tick(0);
       expect(await input.getItems()).toEqual(['test']);
     });
 
     it('should contain no items from array not matching tokenized search and match all tokens set to separately', async () => {
       const input = await loader.getHarness(SiTypeaheadInputHarness);
       await input.typeText('tes st');
+      await tick(0);
       expect(await input.getItems()).toBeNull();
     });
 
@@ -174,6 +203,7 @@ describe('SiTypeaheadDirective', () => {
 
       const input = await loader.getHarness(SiTypeaheadInputHarness);
       await input.typeText('te t');
+      await tick(0);
       expect(await input.getItems()).toEqual(['test']);
     });
 
@@ -182,6 +212,7 @@ describe('SiTypeaheadDirective', () => {
 
       const input = await loader.getHarness(SiTypeaheadInputHarness);
       await input.typeText('tes t');
+      await tick(0);
       expect(await input.getItems()).toBeNull();
     });
 
@@ -190,6 +221,7 @@ describe('SiTypeaheadDirective', () => {
 
       const input = await loader.getHarness(SiTypeaheadInputHarness);
       await input.typeText('test t');
+      await tick(0);
       expect(await input.getItems()).toEqual(['test']);
     });
 
@@ -198,6 +230,7 @@ describe('SiTypeaheadDirective', () => {
 
       const input = await loader.getHarness(SiTypeaheadInputHarness);
       await input.typeText('test q');
+      await tick(0);
       expect(await input.getItems()).toBeNull();
     });
 
@@ -206,6 +239,7 @@ describe('SiTypeaheadDirective', () => {
 
       const input = await loader.getHarness(SiTypeaheadInputHarness);
       await input.typeText('test q');
+      await tick(0);
       expect(await input.getItems()).toEqual(['test']);
     });
 
@@ -214,6 +248,7 @@ describe('SiTypeaheadDirective', () => {
 
       const input = await loader.getHarness(SiTypeaheadInputHarness);
       await input.typeText('q');
+      await tick(0);
       expect(await input.getItems()).toBeNull();
     });
   });
@@ -224,6 +259,7 @@ describe('SiTypeaheadDirective', () => {
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.typeText('f');
+    await tick(0);
     expect(await input.getItems()).toEqual(['foo', 'fuu']);
   });
 
@@ -234,6 +270,7 @@ describe('SiTypeaheadDirective', () => {
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.typeText('f');
+    await tick(0);
     expect(await input.getItems()).toEqual(['foo', 'fuu', 'bar']);
   });
 
@@ -242,6 +279,7 @@ describe('SiTypeaheadDirective', () => {
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.typeText('tes');
+    await tick(0);
     expect(await input.getItems()).toEqual(['test']);
   });
 
@@ -250,6 +288,7 @@ describe('SiTypeaheadDirective', () => {
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.typeText('a');
+    await tick(0);
     expect(await input.getItems()).toEqual(['a', 'aa', 'ad', 'Add', 'And']);
   });
 
@@ -259,6 +298,7 @@ describe('SiTypeaheadDirective', () => {
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.typeText('a');
+    await tick(0);
     expect(await input.getItems()).toEqual(['aa', 'a', 'ad', 'Add', 'And']);
   });
 
@@ -267,6 +307,7 @@ describe('SiTypeaheadDirective', () => {
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.typeText('mar');
+    await tick(0);
     expect(await input.getItems()).toEqual(['Mark', 'DMark', 'Deutsche Mark']);
   });
 
@@ -275,6 +316,7 @@ describe('SiTypeaheadDirective', () => {
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.typeText('mar');
+    await tick(0);
     expect(await input.getItems()).toEqual(['Markmar', 'ZMarkmar', 'AA Markmar', 'DMark']);
   });
 
@@ -283,6 +325,7 @@ describe('SiTypeaheadDirective', () => {
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.typeText('mar');
+    await tick(0);
     expect(await input.getItems()).toEqual([
       'Markmar mar',
       'Markmar',
@@ -297,9 +340,11 @@ describe('SiTypeaheadDirective', () => {
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.typeText('a');
+    await tick(0);
     expect(await input.getItems()).toEqual(['alabama', 'are']);
 
     await input.typeText('al');
+    await tick(0);
     expect(await input.getItems()).toEqual(['alabama']);
   });
 
@@ -309,6 +354,7 @@ describe('SiTypeaheadDirective', () => {
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
+    await tick(0);
     const labels = await input.getItems();
     labels!.forEach(i => expect(i).toContain('Test Template: '));
   });
@@ -318,6 +364,7 @@ describe('SiTypeaheadDirective', () => {
     wrapperComponent.onFullMatch = jasmine.createSpy();
 
     await (await loader.getHarness(SiTypeaheadInputHarness)).typeText('so');
+    await tick(0);
     expect(wrapperComponent.onFullMatch).toHaveBeenCalled();
   });
 
@@ -326,6 +373,7 @@ describe('SiTypeaheadDirective', () => {
     wrapperComponent.onFullMatch = jasmine.createSpy();
 
     await (await loader.getHarness(SiTypeaheadInputHarness)).typeText('s');
+    await tick(0);
     expect(wrapperComponent.onFullMatch).not.toHaveBeenCalled();
   });
 
@@ -335,6 +383,7 @@ describe('SiTypeaheadDirective', () => {
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
+    await tick(0);
     await input.select({ text: 'test' });
     expect(wrapperComponent.onSelect).toHaveBeenCalled();
   });
@@ -347,6 +396,8 @@ describe('SiTypeaheadDirective', () => {
 
     await (await loader.getHarness(SiTypeaheadInputHarness)).focus();
 
+    await tick(wrapperComponent.waitMs);
+
     expect(setTimeout).toHaveBeenCalledWith(jasmine.any(Function), 333);
   });
 
@@ -356,6 +407,7 @@ describe('SiTypeaheadDirective', () => {
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
+    await tick(0);
     await input.select({ text: 'item' });
 
     expect(wrapperComponent.onModelChange).toHaveBeenCalledWith('item');
@@ -367,6 +419,7 @@ describe('SiTypeaheadDirective', () => {
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.typeText('item');
     await input.focus();
+    await tick(0);
     await input.select({ text: 'item' });
 
     expect(await input.getValue()).toEqual('item');
@@ -378,12 +431,14 @@ describe('SiTypeaheadDirective', () => {
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.typeText('item');
     await input.focus();
+    await tick(0);
     await input.select({ text: 'item' });
+    await tick(0);
 
     expect(await input.getValue()).toEqual('');
   });
 
-  it('should properly select item with arrow down and enter', fakeAsync(() => {
+  it('should properly select item with arrow down and enter', async () => {
     wrapperComponent.items = testList;
     wrapperComponent.minLength = 0;
     wrapperComponent.onModelChange = jasmine.createSpy();
@@ -392,27 +447,24 @@ describe('SiTypeaheadDirective', () => {
 
     const inputElement = wrapperElement.querySelector('input')! as HTMLInputElement;
     inputElement.dispatchEvent(new Event('focusin'));
-    tick();
-    fixture.detectChanges();
-    tick();
-    fixture.detectChanges();
+    await tick(0);
     inputElement.dispatchEvent(
       new KeyboardEvent('keydown', {
         key: 'ArrowDown',
         keyCode: DOWN_ARROW
       })
     );
+    await tick(0);
     inputElement.dispatchEvent(
       new KeyboardEvent('keydown', {
         key: 'Enter',
         keyCode: ENTER
       })
     );
-
-    tick();
+    await tick(0);
 
     expect(wrapperComponent.onModelChange).toHaveBeenCalledWith('home');
-  }));
+  });
 
   it('should not select any item when selecting the first item is disabled', async () => {
     wrapperComponent.minLength = 0;
@@ -420,7 +472,9 @@ describe('SiTypeaheadDirective', () => {
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
+    await tick(0);
     await input.sendKeys(TestKey.TAB);
+    await tick(0);
 
     expect(wrapperComponent.onModelChange).not.toHaveBeenCalledWith('item');
   });
@@ -430,8 +484,10 @@ describe('SiTypeaheadDirective', () => {
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
+    await tick(0);
     expect(await input.getItems()).toBeTruthy();
     await input.sendKeys(TestKey.ESCAPE);
+    await tick(0);
     expect(await input.getItems()).toBeFalsy();
   });
 
@@ -441,8 +497,10 @@ describe('SiTypeaheadDirective', () => {
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
+    await tick(0);
     expect(await input.getItems()).toBeTruthy();
     await input.sendKeys(TestKey.ESCAPE);
+    await tick(0);
     expect(await input.getItems()).toBeTruthy();
   });
 
@@ -453,10 +511,12 @@ describe('SiTypeaheadDirective', () => {
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
+    await tick(0);
 
     const height = (await input.getTypeaheadDimensions())?.height;
     expect(height).toBeGreaterThan(0);
     await input.typeText('a');
+    await tick(0);
 
     expect((await input.getTypeaheadDimensions())?.height).toBeLessThan(height!);
   });
@@ -470,6 +530,7 @@ describe('SiTypeaheadDirective', () => {
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
+    await tick(0);
 
     const computedStyle = window.getComputedStyle(
       getElement().querySelector('.typeahead') as HTMLElement
@@ -503,8 +564,10 @@ describe('SiTypeaheadDirective', () => {
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
+    await tick(0);
     for (let i = 0; i < 12; i++) {
       await input.sendKeys(TestKey.DOWN_ARROW);
+      await tick(0);
     }
 
     const typeaheadElement = getElement().querySelector('.typeahead') as HTMLElement;
@@ -527,8 +590,10 @@ describe('SiTypeaheadDirective', () => {
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
+    await tick(0);
     for (let i = 0; i < 4; i++) {
       await input.sendKeys(TestKey.UP_ARROW);
+      await tick(0);
     }
 
     const overlay = await rootLoader.getHarness(SiTypeaheadHarness);
@@ -545,8 +610,10 @@ describe('SiTypeaheadDirective', () => {
   it('should remove when input field is empty again', async () => {
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.typeText('t');
+    await tick(0);
     expect(await input.getItems()).toBeTruthy();
     await input.typeText('');
+    await tick(0);
     expect(await input.getItems()).toBeFalsy();
   });
 
@@ -557,11 +624,32 @@ describe('SiTypeaheadDirective', () => {
 
     const input = await loader.getHarness(SiTypeaheadInputHarness);
     await input.focus();
+    await tick(0);
     expect(await input.getItems()).toBeTruthy();
     await input.blur();
+    await tick(0);
     expect(await input.getItems()).toBeFalsy();
     // Updating the items should not bring back typeahead overlay.
     items.next(['value']);
     expect(await input.getItems()).toBeFalsy();
+  });
+
+  it('should trigger the create option', async () => {
+    wrapperComponent.createOption = 'Create {{query}}';
+    const createSpy = spyOn(wrapperComponent, 'onCreateOption');
+    const selectSpy = spyOn(wrapperComponent, 'onSelect');
+
+    const input = await loader.getHarness(SiTypeaheadInputHarness);
+    await input.focus();
+    await tick(0);
+    await input.typeText('Success');
+    await tick(0);
+    const items = await input.getItems();
+    expect(items).toContain('Create Success');
+    await input.select({ text: 'Create Success' });
+    await tick(0);
+    expect(createSpy).toHaveBeenCalledWith('Success');
+    expect(selectSpy).not.toHaveBeenCalled();
+    expect(await input.getItems()).toBeNull();
   });
 });

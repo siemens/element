@@ -8,9 +8,6 @@ import * as i0 from '@angular/core';
 import { Subject } from 'rxjs';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
-// @public @deprecated
-export type ModalPosition = 'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'right' | 'right-start' | 'right-end' | 'left' | 'left-start' | 'left-end';
-
 // @public (undocumented)
 export class SiTourService {
     constructor();
@@ -36,7 +33,6 @@ export interface TourOptions {
 export interface TourStep extends TourStepCommonOptions {
     attachTo?: {
         element: string | HTMLElement | (() => string | HTMLElement);
-        on?: ModalPosition;
     };
     id?: string;
     text?: TranslatableString;

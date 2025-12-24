@@ -243,7 +243,28 @@ describe('action modal migration', () => {
 
     const expected = [
       `import { Component, inject } from '@angular/core';`,
-      `import { AlertDialogResult, SiActionDialogService } from '@siemens/element-ng/action-modal';`,
+      `import { SiActionDialogService } from '@siemens/element-ng/action-modal';`,
+      `@Component({ selector: 'app-test-action-modal' })`,
+      `export class TestActionModalComponent {`,
+      `showDialog() { inject(SiActionDialogService).showActionDialog({ type: 'alert', message: 'Message', heading: 'Heading', confirmBtnName: 'Confirmation button text' }) } }`
+    ];
+
+    await checkTemplateMigration(original, expected);
+  });
+
+  it('should clean-up imports', async () => {
+    const original = [
+      `import { Component, inject } from '@angular/core';`,
+      `import { AlertDialogResult, SiActionDialogService, SiUnrelated } from '@siemens/element-ng';`,
+      `import { DeleteConfirmationDialogResult } from '@siemens/element-ng/action-modal';`,
+      `@Component({ selector: 'app-test-action-modal' })`,
+      `export class TestActionModalComponent {`,
+      `showDialog() { inject(SiActionDialogService).showAlertDialog('Message', 'Heading', 'Confirmation button text') } }`
+    ];
+
+    const expected = [
+      `import { Component, inject } from '@angular/core';`,
+      `import { SiActionDialogService, SiUnrelated } from '@siemens/element-ng';`,
       `@Component({ selector: 'app-test-action-modal' })`,
       `export class TestActionModalComponent {`,
       `showDialog() { inject(SiActionDialogService).showActionDialog({ type: 'alert', message: 'Message', heading: 'Heading', confirmBtnName: 'Confirmation button text' }) } }`

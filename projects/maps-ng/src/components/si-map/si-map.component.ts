@@ -23,7 +23,11 @@ import {
   Type,
   viewChild
 } from '@angular/core';
-import { SiNoTranslateService, SiTranslateServiceBuilder, t } from '@siemens/element-translate-ng';
+import {
+  SiNoTranslateService,
+  SiTranslateServiceBuilder,
+  t
+} from '@siemens/element-translate-ng/translate';
 import { apply as applyMapboxStyle } from 'ol-mapbox-style';
 import Control from 'ol/control/Control';
 import { defaults as defaultControls } from 'ol/control/defaults';
@@ -1136,7 +1140,7 @@ export class SiMapComponent implements AfterViewInit, OnChanges, OnDestroy, Afte
         mapPoints: feature.getProperties() as MapPointMetaData
       });
       if (extraProperties) {
-        feature.getProperties().click(extraProperties);
+        feature.getProperties().click?.(extraProperties);
       }
     } else if (this.geoJson()) {
       const coordinates = event.coordinate;

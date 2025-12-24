@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component } from '@angular/core';
+import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
@@ -23,6 +23,9 @@ describe('SiFormValidationTooltipDirective', () => {
   let harness: SiFormValidationTooltipHarness;
 
   beforeEach(async () => {
+    TestBed.configureTestingModule({
+      providers: [provideZonelessChangeDetection()]
+    }).compileComponents();
     fixture = TestBed.createComponent(TestHostComponent);
     harness = await TestbedHarnessEnvironment.loader(fixture).getHarness(
       SiFormValidationTooltipHarness

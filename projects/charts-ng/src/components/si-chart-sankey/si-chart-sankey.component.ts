@@ -29,7 +29,7 @@ export class SiChartSankeyComponent extends SiChartComponent {
   protected override applyOptions(): void {
     const series = this.series();
     this.actualOptions = {
-      series: series ? (Object.assign({ type: 'sankey' }, series) as any) : [],
+      series: series ? [{ type: 'sankey', ...series }] : [],
       tooltip: { show: this.toolTip() || this.tooltip() }
     };
 

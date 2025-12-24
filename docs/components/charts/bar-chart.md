@@ -1,7 +1,7 @@
 # Bar chart
 
 Shows the differences or similarities between values. Bar chart data answers the
-question of "*how many?*" in each category.
+question of "_how many?_" in each category.
 
 ## Usage ---
 
@@ -52,6 +52,7 @@ understand what relationship each part has with the total amount.
 ### Usage
 
 ??? info "Required Packages"
+
     - [echarts](https://www.npmjs.com/package/echarts)
 
 ```ts
@@ -64,13 +65,13 @@ import { SiChartCartesianComponent } from '@siemens/charts-ng';
 
 ### Simple Bar Chart
 
-<si-docs-component example="si-charts/si-chart-bar" height="400"></si-docs-component>
+<si-docs-component example="si-charts/cartesian/si-chart-bar" height="400"></si-docs-component>
 
 ### Stacked Bar Chart
 
 The same component can also be used in a stacked configuration.
 
-<si-docs-component example="si-charts/si-chart-bar-stacked" height="400"></si-docs-component>
+<si-docs-component example="si-charts/cartesian/si-chart-bar-stacked" height="400"></si-docs-component>
 
 <si-docs-api component="SiChartCartesianComponent" package="@siemens/charts-ng" hideImplicitlyPublic="true"></si-docs-api>
 

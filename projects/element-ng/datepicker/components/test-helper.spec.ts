@@ -116,7 +116,7 @@ export const generateKeyEvent = (key: string): KeyboardEvent => {
 
 export const backdropClick = async (fixture: any): Promise<void> => {
   const backdrop = document.querySelector('.cdk-overlay-backdrop') as HTMLElement;
-  backdrop.click();
+  await backdrop.click();
   fixture.detectChanges();
   await fixture.whenStable();
 };

@@ -54,7 +54,7 @@ It’s designed to help users understand specific actions or features on the cur
 
 > 1. Help button, 2. Popover
 
-The content should be short and concise, optionaly with [links](../components/buttons-menus/links.md)
+The content should be short and concise, optionally with [links](../components/buttons-menus/links.md)
 to more detailed information available elsewhere, or any other interactive element needed to complete the task.
 
 Contextual help can be embedded in [forms](../components/forms-inputs/forms.md),

@@ -2,15 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import {
-  Component,
-  DestroyRef,
-  ElementRef,
-  HostListener,
-  inject,
-  NgZone,
-  viewChild
-} from '@angular/core';
+import { Component, ElementRef, HostListener, inject, NgZone, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { fromEvent } from 'rxjs';
 
@@ -57,20 +49,19 @@ export class SiLivePreviewWrapperComponent {
   private localeApi = inject(SiLivePreviewLocaleApi, { optional: true });
   private internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
   private ngZone = inject(NgZone);
-  private destroyRef = inject(DestroyRef);
   private webcomponentService = inject(SiLivePreviewWebComponentService, { optional: true });
 
   constructor() {
     this.themeApi
       ?.getApplicationThemeObservable()
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(takeUntilDestroyed())
       .subscribe(theme => {
         this.theme = theme;
         this.sendMessage('theme', this.theme);
       });
     this.localeApi
       ?.getLocale()
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(takeUntilDestroyed())
       .subscribe(locale => {
         if (this.locale !== locale) {
           this.locale = locale;
@@ -85,7 +76,7 @@ export class SiLivePreviewWrapperComponent {
 
     this.ngZone.runOutsideAngular(() =>
       fromEvent<MessageEvent>(window, 'message')
-        .pipe(takeUntilDestroyed(this.destroyRef))
+        .pipe(takeUntilDestroyed())
         .subscribe(message => this.onMessage(message))
     );
   }

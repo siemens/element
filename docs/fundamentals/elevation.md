@@ -15,7 +15,7 @@ At the core of the layering model are the **base-0** and **base-1** tokens:
 - `base-1`: Is placed on top of `base-0` and is the default layer for container elements like cards,
   vertical navigation, and side panels.
 - `base-3`: Used to layer content above other content. It works best with shadows and is
-reserved for components like popovers and toasts to enhance depth in low-light environments.
+  reserved for components like popovers and toasts to enhance depth in low-light environments.
 
 ![Elevation](images/elevation.png)
 
@@ -34,7 +34,7 @@ However, in specific cases where additional differentiation is necessary:
 
 - Use an outline with `ui-4` to define boundaries between elements on the same layer,
   such as layout sections or grouped content
-- Use `base-4` when a stronger distinction is needed, especially to  highlight a container.
+- Use `base-4` when a stronger distinction is needed, especially to highlight a container.
 
 ![Elevation exceptions example](images/elevation-exceptions.png)
 
@@ -59,16 +59,16 @@ illustrations, or animations to enhance depth and spatial relationships.
 - `elevation-3`: For elements requiring stronger visual prominence, such as multi-layered highlights.
 - `elevation-4`: Reserved for rare or critical cases requiring maximum elevation distinction.
 
-| Elevation | Token                  | Color            | Opacity (light) | Opacity (dark)  | X   | Y    | Blur
-|-----------|------------------------|------------------|-----------------|-----------------|-----|------|-----
-| Level 1   | `$element-elevation-1` | `$element-black` | 16%             | 40%             | 0px | 0px  | 4px
-|           |                        | `$element-black` | 8%              | 20%             | 0px | 4px  | 4px
-| Level 2   | `$element-elevation-2` | `$element-black` | 16%             | 40%             | 0px | 0px  | 8px
-|           |                        | `$element-black` | 8%              | 20%             | 0px | 8px  | 8px
-| Level 3   | `$element-elevation-3` | `$element-black` | 16%             | 40%             | 0px | 0px  | 16px
-|           |                        | `$element-black` | 8%              | 20%             | 0px | 40px | 16px
-| Level 4   | `$element-elevation-4` | `$element-black` | 16%             | 40%             | 0px | 0px  | 32px
-|           |                        | `$element-black` | 8%              | 20%             | 0px | 32px | 32px
+| Elevation | Token                  | Color            | Opacity (light) | Opacity (dark) | X   | Y    | Blur |
+| --------- | ---------------------- | ---------------- | --------------- | -------------- | --- | ---- | ---- |
+| Level 1   | `$element-elevation-1` | `$element-black` | 16%             | 40%            | 0px | 0px  | 4px  |
+|           |                        | `$element-black` | 8%              | 20%            | 0px | 4px  | 4px  |
+| Level 2   | `$element-elevation-2` | `$element-black` | 16%             | 40%            | 0px | 0px  | 8px  |
+|           |                        | `$element-black` | 8%              | 20%            | 0px | 8px  | 8px  |
+| Level 3   | `$element-elevation-3` | `$element-black` | 16%             | 40%            | 0px | 0px  | 16px |
+|           |                        | `$element-black` | 8%              | 20%            | 0px | 40px | 16px |
+| Level 4   | `$element-elevation-4` | `$element-black` | 16%             | 40%            | 0px | 0px  | 32px |
+|           |                        | `$element-black` | 8%              | 20%            | 0px | 32px | 32px |
 
 ## Code ---
 
@@ -79,7 +79,7 @@ be accessed directly by using CSS utility classes.
 
 ### Sass Variables
 
-The shadow values for each *Element* elevation level can also be alternatively
+The shadow values for each _Element_ elevation level can also be alternatively
 used as SCSS variables within stylesheets. This also allows you to consume the
 inset alternatives to the outside shadow variants.
 

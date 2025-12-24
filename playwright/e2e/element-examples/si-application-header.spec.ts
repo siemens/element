@@ -24,7 +24,7 @@ test.describe('application-header', () => {
 
   test('on a small screen', async ({ page, si }) => {
     await si.visitExample(example);
-    await page.setViewportSize({ width: 500, height: 660 });
+    await page.setViewportSize({ width: 312, height: 660 });
     await page.getByLabel('Toggle navigation').click();
     await page.getByText('Module 2').click();
     await si.runVisualAndA11yTests('mobile navigation expanded');

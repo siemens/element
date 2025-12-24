@@ -2,8 +2,13 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  provideZonelessChangeDetection,
+  signal
+} from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { t } from '@siemens/element-translate-ng/translate';
 
 import { SiRelativeDateComponent } from './si-relative-date.component';
@@ -43,17 +48,10 @@ describe('SiRelativeDateComponent', () => {
     btn?.dispatchEvent(new Event('mouseup'));
   };
 
-  const updateView = (): void => {
-    // twice because of si-number-input
-    fixture.detectChanges();
-    flush();
-    fixture.detectChanges();
-    flush();
-  };
-
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [SiRelativeDateComponent, TestHostComponent]
+      imports: [SiRelativeDateComponent, TestHostComponent],
+      providers: [provideZonelessChangeDetection()]
     })
   );
 
@@ -63,69 +61,68 @@ describe('SiRelativeDateComponent', () => {
     element = fixture.nativeElement;
   });
 
-  it('pre-selects matching offset', fakeAsync(() => {
+  it('pre-selects matching offset', async () => {
     component.value.set(2 * ONE_DAY);
-    updateView();
+    await fixture.whenStable();
 
     expect(inputValue()).toBe(2);
     expect(selectContent()).toBe('Days');
 
     component.value.set(88 * ONE_DAY);
-    updateView();
+    await fixture.whenStable();
 
     expect(inputValue()).toBe(88);
     expect(selectContent()).toBe('Days');
-  }));
+  });
 
-  it('falls back to smallest unit', fakeAsync(() => {
+  it('falls back to smallest unit', async () => {
     component.value.set(7 * ONE_DAY);
-    updateView();
+    await fixture.whenStable();
 
     expect(inputValue()).toBe(1);
     expect(selectContent()).toBe('Weeks');
 
     component.value.set(0);
-    updateView();
+    await fixture.whenStable();
 
     expect(inputValue()).toBe(1);
     expect(selectContent()).toBe('Days');
-  }));
+  });
 
-  it('updates input values', fakeAsync(() => {
+  it('updates input values', async () => {
     component.value.set(2 * ONE_DAY);
-    updateView();
+    await fixture.whenStable();
 
     component.value.set(7 * ONE_DAY);
-    updateView();
+    await fixture.whenStable();
 
     expect(inputValue()).toBe(1);
     expect(selectContent()).toBe('Weeks');
-  }));
+  });
 
-  it('calculates and emits value/unit changes', fakeAsync(() => {
+  it('calculates and emits value/unit changes', async () => {
     component.value.set(7 * ONE_DAY);
-    updateView();
+    await fixture.whenStable();
 
     element.querySelector<HTMLElement>('si-select .select')?.click();
-    tick();
-    fixture.detectChanges();
+    await fixture.whenStable();
     document.querySelector<HTMLElement>('.dropdown-menu [data-id=weeks]')?.click();
-    updateView();
+    await fixture.whenStable();
 
     inputAction('.inc');
-    updateView();
+    await fixture.whenStable();
 
     expect(inputValue()).toBe(2);
     expect(component.value()).toBe(14 * ONE_DAY);
-  }));
+  });
 
-  it('handles time selection', fakeAsync(() => {
+  it('handles time selection', async () => {
     component.enableTimeSelection = true;
-    updateView();
+    await fixture.whenStable();
 
     element.querySelector<HTMLElement>('si-select .select')?.click();
-    updateView();
+    await fixture.whenStable();
 
     expect(document.querySelector<HTMLElement>('.dropdown-menu [data-id=minutes]')).toBeTruthy();
-  }));
+  });
 });

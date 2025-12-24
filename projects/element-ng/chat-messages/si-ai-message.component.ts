@@ -26,63 +26,18 @@ import { SiChatMessageComponent } from './si-chat-message.component';
  * The AI message component renders AI-generated content in chat interfaces,
  * supporting text formatting, markdown, loading states, and contextual actions.
  * It appears as text (no bubble) aligned to the left side without any avatar/icon slot.
- *
- * @remarks
- * This component is designed for use in:
- * - AI chat interfaces where model responses need to be displayed
- * - Chatbot implementations
- * - Conversational AI applications
- * - AI assistant interfaces
+ * Can be used within {@link SiChatContainerComponent}.
  *
  * The component automatically handles:
- * - Rendering markdown content with syntax highlighting
+ * - Styling for AI messages distinct from user or generic chat messages
+ * - Option to render markdown content, provide via `contentFormatter` input with a markdown renderer function (e.g., from {@link getMarkdownRenderer})
  * - Showing loading states with skeleton UI during generation
- * - Displaying primary and secondary actions on hover (desktop) or tap (mobile)
- * - Proper alignment and styling for AI messages
- * - Content sanitization for security
- *
- * @example
- * Basic usage with content only:
- * ```html
- * <si-ai-message [content]="'I can help you with that.'" />
- * ```
- *
- * @example
- * With loading state and actions:
- * ```typescript
- * import { Component } from '@angular/core';
- * import { SiAiMessageComponent } from '@siemens/element-ng/chat-messages';
- *
- * @Component({
- *   selector: 'app-chat',
- *   imports: [SiAiMessageComponent],
- *   template: `
- *     <si-ai-message
- *       [content]="message.text"
- *       [loading]="message.isGenerating"
- *       [actions]="messageActions"
- *       [secondaryActions]="menuActions"
- *       [actionParam]="message"
- *     />
- *   `
- * })
- * export class ChatComponent {
- *   messageActions = [
- *     { icon: 'thumbs-up', label: 'Good response', action: (id) => this.ratePositive(id) },
- *     { icon: 'thumbs-down', label: 'Bad response', action: (id) => this.rateNegative(id) },
- *     { icon: 'copy', label: 'Copy', action: (id) => this.copyMessage(id) }
- *   ];
- *
- *   menuActions = [
- *     { label: 'Regenerate', action: (id) => this.regenerate(id) },
- *     { label: 'Report', action: (id) => this.reportMessage(id) }
- *   ];
- * }
- * ```
+ * - Displaying primary and secondary actions
  *
  * @see {@link SiChatMessageComponent} for the base message wrapper component
- * @see {@link SiUserMessageComponent} for the companion user message component
+ * @see {@link SiUserMessageComponent} for the user message component
  * @see {@link getMarkdownRenderer} for markdown formatting support
+ * @see {@link SiChatContainerComponent} for the chat container to use this within
  *
  * @experimental
  */
@@ -97,10 +52,7 @@ import { SiChatMessageComponent } from './si-chat-message.component';
     SiTranslatePipe
   ],
   templateUrl: './si-ai-message.component.html',
-  styleUrl: './si-ai-message.component.scss',
-  host: {
-    class: 'si-ai-message'
-  }
+  styleUrl: './si-ai-message.component.scss'
 })
 export class SiAiMessageComponent {
   protected readonly formattedContent = viewChild<ElementRef<HTMLDivElement>>('formattedContent');

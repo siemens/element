@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { DatePipe } from '@angular/common';
+import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import {
@@ -12,6 +13,7 @@ import {
   getDateSameOrBetween,
   getNamedFormat,
   getWeekEndDate,
+  getWeekOfYear,
   getWeekStartDate,
   isSameDate,
   parseDate,
@@ -26,7 +28,7 @@ describe('date time helper', () => {
   let dtPipe: DatePipe;
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [DatePipe]
+      providers: [DatePipe, provideZonelessChangeDetection()]
     });
     dtPipe = TestBed.inject(DatePipe);
   });
@@ -315,5 +317,20 @@ describe('date time helper', () => {
         });
       });
     });
+  });
+
+  it('getWeekOfYear', () => {
+    expect(getWeekOfYear(new Date(2022, 0, 1), 'saturday')).toBe(1);
+    expect(getWeekOfYear(new Date(2022, 2, 6), 'monday')).toBe(9);
+    expect(getWeekOfYear(new Date(2022, 2, 6), 'sunday')).toBe(10);
+    expect(getWeekOfYear(new Date(2022, 2, 12), 'sunday')).toBe(10);
+    expect(getWeekOfYear(new Date(2022, 11, 26), 'monday')).toBe(52);
+    expect(getWeekOfYear(new Date(2022, 11, 26), 'sunday')).toBe(52);
+    expect(getWeekOfYear(new Date(2023, 0, 1), 'monday')).toBe(52);
+    expect(getWeekOfYear(new Date(2023, 0, 1), 'sunday')).toBe(1);
+    expect(getWeekOfYear(new Date(2023, 0, 4), 'monday')).toBe(1);
+    expect(getWeekOfYear(new Date(2023, 0, 4), 'sunday')).toBe(1);
+    expect(getWeekOfYear(new Date(2025, 2, 31), 'monday')).toBe(14);
+    expect(getWeekOfYear(new Date(2025, 2, 31), 'sunday')).toBe(14);
   });
 });

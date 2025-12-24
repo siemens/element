@@ -7,7 +7,7 @@ import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/data
 import { ModalRef } from '@siemens/element-ng/modal';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
 import { LOG_EVENT } from '@siemens/live-preview';
-import { NgxDatatableModule, SelectEvent, TableColumn } from '@siemens/ngx-datatable';
+import { NgxDatatableModule, TableColumn } from '@siemens/ngx-datatable';
 
 import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.service';
 
@@ -33,7 +33,7 @@ export class AppTableComponent {
 
   modalRef = inject(ModalRef);
 
-  onSelect(event: SelectEvent<CorporateEmployee>): void {
+  onSelect(event: CorporateEmployee[]): void {
     this.logEvent(event);
   }
 

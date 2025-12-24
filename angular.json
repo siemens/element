@@ -109,6 +109,9 @@
             },
             "local": {
               "buildTarget": "element-examples:build:local"
+            },
+            "local-maps": {
+              "buildTarget": "element-examples:build:local-maps"
             }
           }
         },
@@ -137,7 +140,6 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/element-ng/tsconfig.spec.json",
             "karmaConfig": "projects/element-ng/karma.conf.cjs",
             "exclude": ["projects/element-ng/schematics/**"],
@@ -186,7 +188,6 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/element-translate-ng/tsconfig.spec.json",
             "karmaConfig": "projects/element-translate-ng/karma.conf.cjs",
             "stylePreprocessorOptions": {
@@ -251,7 +252,6 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/charts-ng/tsconfig.spec.json",
             "karmaConfig": "projects/charts-ng/karma.conf.cjs",
             "codeCoverageExclude": ["projects/charts-ng/src/**/*.module.ts"]
@@ -282,7 +282,6 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/native-charts-ng/tsconfig.spec.json",
             "karmaConfig": "projects/native-charts-ng/karma.conf.cjs",
             "codeCoverageExclude": ["projects/native-charts-ng/src/**/*.module.ts"]
@@ -316,7 +315,6 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/maps-ng/tsconfig.spec.json",
             "karmaConfig": "projects/maps-ng/karma.conf.cjs",
             "codeCoverageExclude": ["projects/maps-ng/src/**/*.module.ts"]
@@ -348,7 +346,6 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "builderMode": "browser",
-            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/dashboards-ng/tsconfig.spec.json",
             "karmaConfig": "projects/dashboards-ng/karma.conf.cjs",
             "codeCoverageExclude": ["projects/dashboards-ng/src/**/*.module.ts"]
@@ -469,29 +466,6 @@
           },
           "defaultConfiguration": "development"
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "builderMode": "application",
-            "polyfills": ["zone.js", "zone.js/testing"],
-            "tsConfig": "projects/dashboards-demo/tsconfig.spec.json",
-            "karmaConfig": "projects/dashboards-demo/karma.conf.cjs",
-            "assets": [
-              "projects/dashboards-demo/src/assets",
-              "projects/dashboards-demo/src/favicon.png",
-              {
-                "glob": "*",
-                "input": "projects/dashboards-ng/assets/i18n",
-                "output": "assets/i18n/dashboards-ng/"
-              }
-            ],
-            "stylePreprocessorOptions": {
-              "includePaths": ["node_modules/"]
-            },
-            "styles": ["projects/dashboards-demo/src/styles.scss"],
-            "scripts": []
-          }
-        },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
@@ -568,19 +542,6 @@
             }
           },
           "defaultConfiguration": "development"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "builderMode": "application",
-            "polyfills": ["zone.js", "zone.js/testing"],
-            "tsConfig": "projects/dashboards-demo/webcomponents/tsconfig.spec.json",
-            "karmaConfig": "projects/dashboards-demo/webcomponents/karma.conf.cjs",
-            "inlineStyleLanguage": "scss",
-            "assets": [],
-            "styles": ["projects/dashboards-demo/webcomponents/src/styles.scss"],
-            "scripts": []
-          }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",

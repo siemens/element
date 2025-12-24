@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { SiStatusToggleComponent, StatusToggleItem } from '@siemens/element-ng/status-toggle';
@@ -13,9 +13,8 @@ import { LOG_EVENT } from '@siemens/live-preview';
   imports: [ReactiveFormsModule, SiStatusToggleComponent],
   templateUrl: './si-status-toggle.html'
 })
-export class SampleComponent implements OnInit {
-  logEvent = inject(LOG_EVENT);
-  private destroyRef = inject(DestroyRef);
+export class SampleComponent {
+  protected readonly logEvent = inject(LOG_EVENT);
 
   itemsPlain: StatusToggleItem[] = [
     { text: 'Not checked', value: 'A', icon: 'element-not-checked' },
@@ -129,9 +128,9 @@ export class SampleComponent implements OnInit {
 
   formControl = new FormControl('B');
 
-  ngOnInit(): void {
+  constructor() {
     this.formControl.valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(takeUntilDestroyed())
       .subscribe(event => this.logEvent('Form toggle value changed', event));
   }
 

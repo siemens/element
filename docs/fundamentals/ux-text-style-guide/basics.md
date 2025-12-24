@@ -21,14 +21,32 @@ writing errors to avoid when creating industrial products and experiences.
 - Use positive instead of negative framing
 - Avoid using contractions in general
 
-| Dos                                            | Don'ts                                                 |
-|------------------------------------------------|--------------------------------------------------------|
-| their, them, theirs, salesperson               | his, hers, him, salesman                               |
-| Welcome to Building X                          | Hey there!                                             |
-| Welcome Werner von Siemens                     | Hey there!                                             |
-| X appears when detail view has selected events | X doesn't appear if detail view has no selected events |
-| cannot, will not                               | can't, won't                                           |
-| you will, we have                              | you'll, we've                                          |
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+#### Do's
+
+- their, them, theirs, salesperson
+- Welcome to Building X
+- Welcome Werner von Siemens
+- X appears when detail view has selected events
+- cannot, will not
+- you will, we have
+
+</div>
+<div class="donts" markdown>
+
+#### Don'ts
+
+- his, hers, him, salesman
+- Hey there!
+- Hey there!
+- X doesn't appear if detail view has no selected events
+- can't, won't
+- you'll, we've
+
+</div>
+</div>
 
 ## Length
 
@@ -46,31 +64,70 @@ writing errors to avoid when creating industrial products and experiences.
 - Capitalize proper nouns, i.e. places, organizations, tools, languages, products and things according the [proper nouns](proper-nouns.md) chapter
 - Capitalize named app functions and UI elements: Go to Settings, Allocate users in User management, Press OK
 
-| Dos                                                        | Don'ts                                                     |
-| -----------------------------------------------------------|------------------------------------------------------------|
-| Go to Settings                                             | Go To Settings                                             |
-| Press OK                                                   | Press Ok                                                   |
-| Log in                                                     | LOG IN                                                     |
-| For more information, see Siemens Industry Online Support. | For more information, see Siemens industry online support. |
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+#### Do's
+
+- Go to Settings
+- Press OK
+- Log in
+- For more information, see Siemens Industry Online Support.
+
+</div>
+<div class="donts" markdown>
+
+#### Don'ts
+
+- Go To Settings
+- Press Ok
+- LOG IN
+- For more information, see Siemens industry online support.
+
+</div>
+</div>
 
 ## Common UX wording mistakes
 
 The following table contains frequently discovered UX writing mistakes.
 
-<!-- markdownlint-disable MD033 -->
-| Dos                                                                       | Don'ts                  |
-| --------------------------------------------------------------------------|-------------------------|
-| time zone                                                                 | timezone                |
-| log file                                                                  | logfile                 |
-| log in (as an action)                                                     | login                   |
-| login (as a noun)                                                         | log in                  |
-| equipment                                                                 | equipments              |
-| feedback                                                                  | feedbacks               |
-| training                                                                  | trainings               |
-| current<br>_Avoid misunderstandings with current (electricity)_           | actual                  |
-| present<br>_If misunderstandings with current (electricity) are possible_ | actual                  |
-| avoid "shall"                                                             | user shall manage users |
-| Siemens has                                                               | Siemens have            |
-| 34 million / 35 billion                                                   | 34 / 35                 |
-| 34 million                                                                | 34 millions             |
-<!-- markdownlint-enable MD033 -->
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+#### Do's
+
+- time zone
+- log file
+- log in (as an action)
+- login (as a noun)
+- equipment
+- feedback
+- training
+- current<br>_Avoid misunderstandings with current (electricity)_
+- present<br>_If misunderstandings with current (electricity) are possible_
+- avoid "shall"
+- Siemens has
+- 34 million / 35 billion
+- 34 million
+
+</div>
+<div class="donts" markdown>
+
+#### Don'ts
+
+- timezone
+- logfile
+- login
+- log in
+- equipments
+- feedbacks
+- trainings
+- actual
+- actual
+- user shall manage users
+- Siemens have
+- 34 / 35
+- 34 millions
+
+</div>
+</div>

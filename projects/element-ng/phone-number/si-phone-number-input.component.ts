@@ -30,7 +30,7 @@ import {
 } from '@angular/forms';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
 import { addIcons, elementDown2, SiIconComponent } from '@siemens/element-ng/icon';
-import { SiSelectListHasFilterComponent } from '@siemens/element-ng/select';
+import { SelectOption, SiSelectListHasFilterComponent } from '@siemens/element-ng/select';
 import {
   injectSiTranslateService,
   SiTranslatePipe,
@@ -198,12 +198,20 @@ export class SiPhoneNumberInputComponent
   protected readonly countryList = computed(() => {
     const countries = this.allowedCountries() ?? this.phoneUtil.getSupportedRegions();
     return countries
-      .map((country: string) => ({
-        name: this.getCountryName(country),
-        countryCode: this.phoneUtil.getCountryCodeForRegion(country),
-        isoCode: country
-      }))
-      .sort((a: CountryInfo, b: CountryInfo) => a.name.localeCompare(b.name));
+      .map((country: string) => {
+        const countryInfo: CountryInfo = {
+          name: this.getCountryName(country),
+          countryCode: this.phoneUtil.getCountryCodeForRegion(country),
+          isoCode: country
+        };
+        return {
+          type: 'option',
+          value: countryInfo,
+          label: `${countryInfo.name} +${countryInfo.countryCode}`,
+          typeaheadLabel: `${countryInfo.name} +${countryInfo.countryCode}`
+        } as SelectOption<CountryInfo>;
+      })
+      .sort((a, b) => a.value.name.localeCompare(b.value.name));
   });
   protected readonly icons = addIcons({ elementDown2 });
   private readonly allowedCountries = computed(
@@ -264,7 +272,7 @@ export class SiPhoneNumberInputComponent
       };
     }
 
-    if (!this.countryList().some(c => c.isoCode === this.selectedCountry!.isoCode)) {
+    if (!this.countryList().some(c => c.value.isoCode === this.selectedCountry!.isoCode)) {
       return {
         notSupportedPhoneNumberCountry: true
       };
@@ -280,7 +288,9 @@ export class SiPhoneNumberInputComponent
 
     if (this.phoneNumber) {
       const regionCode = this.getRegionCode();
-      let countryInfo = this.countryList().find(country => regionCode === country.isoCode);
+      let countryInfo = this.countryList().find(
+        country => regionCode === country.value.isoCode
+      )?.value;
       if (!countryInfo && regionCode) {
         countryInfo = {
           name: this.getCountryName(regionCode),
@@ -328,13 +338,11 @@ export class SiPhoneNumberInputComponent
     this.phoneInput().nativeElement.focus();
   }
 
-  protected valueProvider(country: CountryInfo): string {
-    return `${country.name} +${country.countryCode}`;
-  }
-
   private writeCountry(): void {
     const currentCountry = this.country()!;
-    this.selectedCountry = this.countryList().find(country => country.isoCode === currentCountry);
+    this.selectedCountry = this.countryList().find(
+      country => country.value.isoCode === currentCountry
+    )?.value;
     if (!this.selectedCountry) {
       const countryCode = this.phoneUtil.getCountryCodeForRegion(
         currentCountry ?? this.defaultCountry() ?? 'XX'

@@ -300,26 +300,11 @@ export type RangeType = 'START' | 'END' | undefined;
 export class SiCalendarButtonComponent implements OnInit, AfterContentInit, DoCheck {
     readonly ariaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     // (undocumented)
-    protected readonly button: _angular_core.Signal<ElementRef<HTMLButtonElement>>;
-    protected readonly datepicker: _angular_core.Signal<SiDatepickerDirective>;
-    // (undocumented)
-    protected readonly datepickerOverlay: _angular_core.Signal<SiDatepickerOverlayDirective>;
-    // (undocumented)
-    protected readonly disabled: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
-    protected readonly icons: Record<"elementCalendar", string>;
-    // (undocumented)
     ngAfterContentInit(): void;
-    // (undocumented)
-    protected readonly ngControl: _angular_core.Signal<NgControl | undefined>;
     // (undocumented)
     ngDoCheck(): void;
     // (undocumented)
     ngOnInit(): void;
-    // (undocumented)
-    protected show(): void;
-    // (undocumented)
-    protected readonly showValidationMessages: _angular_core.WritableSignal<boolean>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiCalendarButtonComponent, "si-calendar-button", never, { "ariaLabel": { "alias": "ariaLabel"; "required": false; "isSignal": true; }; }, {}, ["datepicker", "datepickerOverlay", "ngControl"], ["*"], true, never>;
     // (undocumented)
@@ -328,27 +313,12 @@ export class SiCalendarButtonComponent implements OnInit, AfterContentInit, DoCh
 
 // @public
 export class SiDateInputDirective implements ControlValueAccessor, OnChanges, Validator, SiFormItemControl {
-    // (undocumented)
-    protected date?: Date;
-    protected readonly dateChange: _angular_core.OutputEmitterRef<Date | undefined>;
-    // (undocumented)
-    protected readonly dateString: _angular_core.WritableSignal<string>;
     readonly disabledInput: _angular_core.InputSignal<boolean>;
     readonly errormessageId: _angular_core.InputSignal<string>;
     // (undocumented)
     readonly id: _angular_core.InputSignal<string>;
     // (undocumented)
-    protected readonly locale: string;
-    // (undocumented)
     ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    protected onBlur(event: FocusEvent): void;
-    protected onDateChanged(date?: Date): void;
-    protected onInput(event: Event): void;
-    // (undocumented)
-    protected onModelChange: (value: any) => void;
-    // (undocumented)
-    protected onTouched: () => void;
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     registerOnChange(fn: any): void;
@@ -363,7 +333,6 @@ export class SiDateInputDirective implements ControlValueAccessor, OnChanges, Va
     readonly stateChange: _angular_core.OutputEmitterRef<void>;
     // (undocumented)
     validate(c: AbstractControl): ValidationErrors | null;
-    protected validator: _angular_forms.ValidatorFn;
     // (undocumented)
     writeValue(value?: Date | string): void;
     // (undocumented)
@@ -375,34 +344,17 @@ export class SiDateInputDirective implements ControlValueAccessor, OnChanges, Va
 // @public (undocumented)
 export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
     constructor();
-    protected activeMonthChange(selection: Date | null): void;
-    protected activeYearChange(selection: Date | null): void;
-    // (undocumented)
-    protected readonly actualFocusedDate: _angular_core.Signal<Date>;
     readonly calendarWeekLabel: _angular_core.InputSignal<TranslatableString>;
     // @deprecated
     readonly calenderWeekLabel: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly config: _angular_core.ModelSignal<DatepickerConfig>;
     readonly date: _angular_core.ModelSignal<Date | undefined>;
     readonly dateRange: _angular_core.ModelSignal<DateRange | undefined>;
-    // (undocumented)
-    protected readonly derivedWeekLabel: _angular_core.Signal<TranslatableString>;
     readonly disabledTime: _angular_core.ModelSignal<boolean>;
-    // (undocumented)
-    protected get endDate(): Date | undefined;
     focusActiveCell(): void;
     readonly focusedDate: _angular_core.ModelSignal<Date | undefined>;
-    protected readonly forceFocus: _angular_core.Signal<boolean>;
     readonly hideTimeToggle: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    protected get hideWeekNumbers(): boolean;
-    // (undocumented)
-    protected readonly includeTimeLabel: _angular_core.Signal<TranslatableString>;
     readonly initialFocus: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    protected months: string[];
-    // (undocumented)
-    protected monthViewSwitchTo: 'month' | 'week';
     readonly nextLabel: _angular_core.InputSignal<TranslatableString>;
     // (undocumented)
     ngAfterViewInit(): void;
@@ -410,30 +362,10 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
     ngOnChanges(changes: SimpleChanges): void;
     // (undocumented)
     ngOnInit(): void;
-    // (undocumented)
-    protected onActiveHoverChange(event?: Cell): void;
     readonly previousLabel: _angular_core.InputSignal<TranslatableString>;
     readonly rangeType: _angular_core.ModelSignal<RangeType>;
-    // (undocumented)
-    protected readonly requireFocus: _angular_core.WritableSignal<boolean>;
-    protected selectionChange(selection: Date): void;
-    // (undocumented)
-    protected get startDate(): Date | undefined;
-    // (undocumented)
-    protected switchId: string;
-    protected time: FormControl<Date | undefined>;
     readonly time12h: _angular_core.InputSignalWithTransform<boolean | undefined, unknown>;
-    // (undocumented)
-    protected timepickerId: string;
     readonly timepickerLabel: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    protected timeSelected(newTime?: Date): void;
-    // (undocumented)
-    protected toggleDisabledTime(): void;
-    protected readonly view: _angular_core.WritableSignal<ViewType>;
-    // (undocumented)
-    protected get weekStartDay(): WeekStart;
-    protected yearViewSwitchTo: 'month' | 'week';
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiDatepickerComponent, "si-datepicker", never, { "focusedDate": { "alias": "focusedDate"; "required": false; "isSignal": true; }; "date": { "alias": "date"; "required": false; "isSignal": true; }; "dateRange": { "alias": "dateRange"; "required": false; "isSignal": true; }; "dateRangeRole": { "alias": "dateRangeRole"; "required": false; "isSignal": true; }; "initialFocus": { "alias": "initialFocus"; "required": false; "isSignal": true; }; "disabledTime": { "alias": "disabledTime"; "required": false; "isSignal": true; }; "config": { "alias": "config"; "required": false; "isSignal": true; }; "previousLabel": { "alias": "previousLabel"; "required": false; "isSignal": true; }; "nextLabel": { "alias": "nextLabel"; "required": false; "isSignal": true; }; "calenderWeekLabel": { "alias": "calenderWeekLabel"; "required": false; "isSignal": true; }; "calendarWeekLabel": { "alias": "calendarWeekLabel"; "required": false; "isSignal": true; }; "time12h": { "alias": "time12h"; "required": false; "isSignal": true; }; "rangeType": { "alias": "rangeType"; "required": false; "isSignal": true; }; "minMonth": { "alias": "minMonth"; "required": false; "isSignal": true; }; "maxMonth": { "alias": "maxMonth"; "required": false; "isSignal": true; }; "hideTimeToggle": { "alias": "hideTimeToggle"; "required": false; "isSignal": true; }; "hideCalendar": { "alias": "hideCalendar"; "required": false; "isSignal": true; }; "timepickerLabel": { "alias": "timepickerLabel"; "required": false; "isSignal": true; }; "activeHover": { "alias": "activeHover"; "required": false; "isSignal": true; }; }, { "focusedDate": "focusedDateChange"; "date": "dateChange"; "dateRange": "dateRangeChange"; "disabledTime": "disabledTimeChange"; "config": "configChange"; "rangeType": "rangeTypeChange"; "activeHover": "activeHoverChange"; }, never, never, true, never>;
     // (undocumented)
@@ -444,14 +376,7 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
 export class SiDatepickerDirective extends SiDateInputDirective implements AfterViewInit {
     readonly autoClose: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
-    protected focusChange(): void;
-    // (undocumented)
     ngAfterViewInit(): void;
-    protected onBlur(event: FocusEvent): void;
-    protected onClick(): void;
-    protected onDateChanged(date?: Date): void;
-    // (undocumented)
-    protected onTab(): void;
     // (undocumented)
     static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiDatepickerDirective, "[siDatepicker]", ["siDatepicker"], { "autoClose": { "alias": "autoClose"; "required": false; "isSignal": true; }; }, {}, never, never, true, [{ directive: typeof SiDatepickerOverlayDirective; inputs: {}; outputs: { "siDatepickerClose": "siDatepickerClose"; }; }]>;
     // (undocumented)
@@ -470,31 +395,13 @@ export class SiDatepickerModule {
 
 // @public (undocumented)
 export class SiDatepickerOverlayComponent implements OnChanges, OnInit, OnDestroy {
-    // (undocumented)
-    protected activeHover?: Cell;
-    // (undocumented)
-    protected readonly completeAnimation: _angular_core.WritableSignal<boolean>;
     readonly config: _angular_core.InputSignal<DatepickerConfig>;
     readonly date: _angular_core.ModelSignal<Date | undefined>;
-    // (undocumented)
-    protected readonly datepicker: _angular_core.Signal<SiDatepickerComponent>;
     readonly dateRange: _angular_core.ModelSignal<DateRange | undefined>;
     readonly disabledTimeChange: _angular_core.OutputEmitterRef<boolean>;
-    // (undocumented)
-    protected disableTime: boolean;
-    // (undocumented)
-    protected readonly firstDatepickerConfig: _angular_core.WritableSignal<DatepickerConfig>;
-    // (undocumented)
-    protected firstDatepickerFocusDateChange(newFocusedDate?: Date): void;
     focusActiveCell(): void;
     readonly initialFocus: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly isMobile: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    protected readonly isTwoMonthDateRange: _angular_core.Signal<boolean>;
-    // (undocumented)
-    protected readonly maxMonth: _angular_core.WritableSignal<Date | undefined>;
-    // (undocumented)
-    protected readonly minMonth: _angular_core.WritableSignal<Date | undefined>;
     // (undocumented)
     ngOnChanges(changes: SimpleChanges): void;
     // (undocumented)
@@ -502,10 +409,6 @@ export class SiDatepickerOverlayComponent implements OnChanges, OnInit, OnDestro
     // (undocumented)
     ngOnInit(): void;
     readonly rangeType: _angular_core.ModelSignal<"START" | "END" | undefined>;
-    // (undocumented)
-    protected readonly secondDatepickerConfig: _angular_core.WritableSignal<DatepickerConfig>;
-    // (undocumented)
-    protected secondDatepickerFocusDateChange(newFocusedDate?: Date): void;
     readonly time12h: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiDatepickerOverlayComponent, "si-datepicker-overlay", never, { "initialFocus": { "alias": "initialFocus"; "required": false; "isSignal": true; }; "config": { "alias": "config"; "required": false; "isSignal": true; }; "date": { "alias": "date"; "required": false; "isSignal": true; }; "dateRange": { "alias": "dateRange"; "required": false; "isSignal": true; }; "rangeType": { "alias": "rangeType"; "required": false; "isSignal": true; }; "time12h": { "alias": "time12h"; "required": false; "isSignal": true; }; "isMobile": { "alias": "isMobile"; "required": false; "isSignal": true; }; }, { "date": "dateChange"; "dateRange": "dateRangeChange"; "rangeType": "rangeTypeChange"; "disabledTimeChange": "disabledTimeChange"; }, never, never, true, never>;
@@ -518,10 +421,6 @@ export class SiDatepickerOverlayDirective implements OnDestroy {
     closeAfterSelection(): void;
     closeOverlay(): undefined;
     contains(element: HTMLElement): boolean;
-    // (undocumented)
-    protected createDesktopOverlay(): void;
-    // (undocumented)
-    protected createMobileOverlay(): void;
     focus(focus?: boolean): this;
     isShown(): ComponentRef<SiDatepickerOverlayComponent> | undefined;
     // (undocumented)
@@ -539,15 +438,11 @@ export class SiDatepickerOverlayDirective implements OnDestroy {
 export class SiDateRangeComponent implements ControlValueAccessor, Validator, AfterViewInit, OnChanges, SiFormItemControl {
     readonly ariaLabelCalendarButton: _angular_core.InputSignal<TranslatableString>;
     readonly autoClose: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly disabled: _angular_core.Signal<boolean>;
     readonly disabledInput: _angular_core.InputSignal<boolean>;
     readonly disabledTimeChange: _angular_core.OutputEmitterRef<boolean>;
     readonly endDatePlaceholder: _angular_core.InputSignal<TranslatableString>;
     readonly endTimeLabel: _angular_core.InputSignal<TranslatableString>;
     readonly errormessageId: _angular_core.InputSignal<string>;
-    // (undocumented)
-    protected readonly icons: Record<"elementCalendar", string>;
     // (undocumented)
     readonly id: _angular_core.InputSignal<string>;
     // (undocumented)
@@ -556,8 +451,6 @@ export class SiDateRangeComponent implements ControlValueAccessor, Validator, Af
     ngAfterViewInit(): void;
     // (undocumented)
     ngOnChanges(changes: SimpleChanges): void;
-    protected onFocusOut(event: FocusEvent): void;
-    protected onInputChanged(dateRange: DateRange): void;
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     registerOnChange(fn: any): void;
@@ -565,8 +458,6 @@ export class SiDateRangeComponent implements ControlValueAccessor, Validator, Af
     registerOnTouched(fn: () => void): void;
     // (undocumented)
     setDisabledState(isDisabled: boolean): void;
-    // (undocumented)
-    protected show(): void;
     readonly siDatepickerConfig: _angular_core.ModelSignal<DatepickerInputConfig>;
     readonly siDatepickerRangeChange: _angular_core.OutputEmitterRef<DateRange | undefined>;
     readonly startDatePlaceholder: _angular_core.InputSignal<TranslatableString>;
@@ -585,15 +476,8 @@ export class SiDateRangeComponent implements ControlValueAccessor, Validator, Af
 // @public (undocumented)
 export class SiTimepickerComponent implements ControlValueAccessor, Validator, SiFormItemControl {
     constructor();
-    // (undocumented)
-    protected readonly disabled: _angular_core.Signal<boolean>;
     readonly disabledInput: _angular_core.InputSignal<boolean>;
     readonly errormessageId: _angular_core.InputSignal<string>;
-    // (undocumented)
-    protected focusChange(event: FocusOrigin): void;
-    protected focusNext(event: Event): void;
-    protected handleKeyPressEvent(event: KeyboardEvent): void;
-    protected hasInvalidUnit(): boolean;
     readonly hideLabels: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     readonly hoursAriaLabel: _angular_core.InputSignal<TranslatableString>;
@@ -610,8 +494,6 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
     // (undocumented)
     readonly labelledby: string;
     readonly max: _angular_core.InputSignal<Date | undefined>;
-    // (undocumented)
-    protected readonly meridian: _angular_core.WritableSignal<"" | "am" | "pm">;
     // (undocumented)
     readonly meridianChange: _angular_core.OutputEmitterRef<string>;
     // (undocumented)
@@ -634,8 +516,6 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
     // (undocumented)
     readonly minutesPlaceholder: _angular_core.InputSignal<string>;
     // (undocumented)
-    protected readonly periods: _angular_core.Signal<string[]>;
-    // (undocumented)
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     registerOnChange(fn: any): void;
@@ -656,29 +536,6 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
     readonly showMinutes: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     readonly showSeconds: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    protected readonly timeControls: _angular_forms.FormGroup<{
-        hours: _angular_forms.FormControl<string>;
-        minutes: _angular_forms.FormControl<string>;
-        seconds: _angular_forms.FormControl<string>;
-        milliseconds: _angular_forms.FormControl<string>;
-    }>;
-    // (undocumented)
-    protected toggleMeridian(): void;
-    // (undocumented)
-    protected toHtmlInputElement: (target?: EventTarget | null) => HTMLInputElement;
-    // (undocumented)
-    protected readonly units: _angular_core.Signal<Config[]>;
-    // (undocumented)
-    protected updateField(name: keyof Value, value: string): void;
-    // (undocumented)
-    protected readonly use12HourClock: _angular_core.Signal<boolean>;
-    // (undocumented)
-    protected validateMax(control: AbstractControl): ValidationErrors | null;
-    // (undocumented)
-    protected validateMin(control: AbstractControl): ValidationErrors | null;
-    // (undocumented)
-    protected validateTime(name: string): ValidatorFn;
     // (undocumented)
     writeValue(obj?: Date | string): void;
     // (undocumented)

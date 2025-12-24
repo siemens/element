@@ -14,7 +14,7 @@ import {
   viewChildren
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { addIcons, elementPlus, SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, elementDelete, elementPlus, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
 import {
   SelectOption,
@@ -192,7 +192,7 @@ export class SiThresholdComponent implements OnChanges {
     return this.thresholdSteps().map(ths => colorMap.get(ths.optionValue) ?? '');
   });
 
-  protected readonly icons = addIcons({ elementPlus });
+  protected readonly icons = addIcons({ elementDelete, elementPlus });
   private _valid = true;
   /**
    * Whether the current input value is valid or not.

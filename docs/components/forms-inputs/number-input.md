@@ -28,7 +28,7 @@ It acts as a high-level alternative to the native number input control.
 
 ![Number input - elements](images/number-input-elements.png)
 
-> 1. Label (optional), 2. Container, 3. Content, 4. Unit (optional), 5. Controls
+> \1. Label (optional), 2. Container, 3. Content, 4. Unit (optional), 5. Controls
 > (optional)
 
 #### Label (optional)

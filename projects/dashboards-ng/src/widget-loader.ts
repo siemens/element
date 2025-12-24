@@ -106,6 +106,59 @@ const setupComponent = (
   }
 };
 
+const loadModuleBasedComponent = <T>(
+  factory: WidgetComponentTypeFactory,
+  componentName: 'componentName' | 'editorComponentName',
+  host: ViewContainerRef,
+  injector: Injector,
+  envInjector: EnvironmentInjector,
+  result: Subject<ComponentRef<T>>
+): void => {
+  const loader = factory.moduleLoader!;
+  const componentKey = factory[componentName]!;
+
+  loader(componentKey).then(
+    moduleExports => {
+      const ngModuleRef = createNgModule(moduleExports[factory.moduleName!], envInjector);
+      const componentType = moduleExports[componentKey];
+      const widgetInstanceRef = host.createComponent<T>(componentType, { injector, ngModuleRef });
+      result.next(widgetInstanceRef);
+      result.complete();
+    },
+    rejection => {
+      const errorMsg = `Loading widget module ${factory.moduleName} failed`;
+      const msg = rejection ? `${errorMsg} with ${JSON.stringify(rejection.toString())}` : errorMsg;
+      result.error(msg);
+      result.complete();
+    }
+  );
+};
+
+const loadStandaloneComponent = <T>(
+  factory: WidgetComponentTypeFactory,
+  componentName: 'componentName' | 'editorComponentName',
+  host: ViewContainerRef,
+  injector: Injector,
+  result: Subject<ComponentRef<T>>
+): void => {
+  const loader = factory.componentLoader!;
+  const componentKey = factory[componentName]!;
+
+  loader<T>(componentKey).then(
+    componentType => {
+      const widgetInstanceRef = host.createComponent<T>(componentType, { injector });
+      result.next(widgetInstanceRef);
+      result.complete();
+    },
+    rejection => {
+      const errorMsg = `Loading widget component ${componentKey} failed`;
+      const msg = rejection ? `${errorMsg} with ${JSON.stringify(rejection.toString())}` : errorMsg;
+      result.error(msg);
+      result.complete();
+    }
+  );
+};
+
 const loadAndAttachComponent = <T>(
   factory: WidgetComponentTypeFactory,
   componentName: 'componentName' | 'editorComponentName',
@@ -114,31 +167,18 @@ const loadAndAttachComponent = <T>(
   envInjector: EnvironmentInjector
 ): Observable<ComponentRef<T>> => {
   const result = new Subject<ComponentRef<T>>();
-  if (factory[componentName]) {
-    factory.moduleLoader(factory[componentName]!).then(
-      module => {
-        const ngModuleRef = createNgModule(module[factory.moduleName], envInjector);
-        const componentKey = factory[componentName];
-        if (!componentKey) {
-          throw new Error(`Component configuration for ${componentName} is undefined.`);
-        }
-        const componentType = module[componentKey];
-        const widgetInstanceRef = host.createComponent<T>(componentType, { injector, ngModuleRef });
-        result.next(widgetInstanceRef);
-        result.complete();
-      },
-      rejection => {
-        const msg = rejection
-          ? `Loading widget module ${factory.moduleName} failed with ${JSON.stringify(
-              rejection.toString()
-            )}`
-          : `Loading widget module ${factory.moduleName} failed`;
-        result.error(msg);
-        result.complete();
-      }
-    );
-  } else {
+
+  if (!factory[componentName]) {
     result.error(`Provided component factory has no ${componentName} component configuration`);
+    return result;
+  }
+
+  if (factory.moduleName) {
+    loadModuleBasedComponent(factory, componentName, host, injector, envInjector, result);
+  } else if (factory.componentLoader) {
+    loadStandaloneComponent(factory, componentName, host, injector, result);
+  } else {
+    result.error('Invalid factory configuration: missing moduleLoader or componentLoader');
   }
   return result;
 };

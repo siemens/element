@@ -5,7 +5,12 @@
 
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  provideZonelessChangeDetection
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
 
@@ -39,6 +44,9 @@ describe('SiActionCardComponent', () => {
   let actionCardHarness: SiActionCardHarness;
 
   beforeEach(async () => {
+    TestBed.configureTestingModule({
+      providers: [provideZonelessChangeDetection()]
+    }).compileComponents();
     fixture = TestBed.createComponent(WrapperComponent);
     loader = TestbedHarnessEnvironment.loader(fixture);
     actionCardHarness = await loader.getHarness(SiActionCardHarness);

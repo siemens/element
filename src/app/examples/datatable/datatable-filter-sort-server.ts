@@ -23,6 +23,7 @@ export class SampleComponent implements OnDestroy {
   tableConfig = SI_DATATABLE_CONFIG;
 
   rows: CorporateEmployee[] = [].constructor(5);
+  offset = 0;
 
   isLoading = false;
 
@@ -46,7 +47,7 @@ export class SampleComponent implements OnDestroy {
     const table = this.table();
     if (table) {
       // Whenever the filter changes, always go back to the first page
-      table.offset = 0;
+      this.offset = 0;
     }
     this.subscription?.unsubscribe();
     this.subscription = this.dataService.getResults(pageRequest).subscribe(data => {

@@ -3,14 +3,22 @@
  * SPDX-License-Identifier: MIT
  */
 import { NgClass } from '@angular/common';
-import { booleanAttribute, Component, computed, input, numberAttribute } from '@angular/core';
+import {
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+  numberAttribute
+} from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 
 @Component({
   selector: 'si-status-counter, si-icon-status',
   imports: [NgClass, SiIconComponent],
   templateUrl: './si-status-counter.component.html',
-  styleUrl: './si-status-counter.component.scss'
+  styleUrl: './si-status-counter.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiStatusCounterComponent {
   /** Icon to display. */

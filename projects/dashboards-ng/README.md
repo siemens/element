@@ -2,7 +2,7 @@
 
 ## Usage
 
-Check out our [dashboard demo project](../dashboards-demo/) for examples on how
+Check out our [dashboard demo project](https://github.com/siemens/element/blob/main/projects/dashboards-demo/) for examples on how
 to integrate the Siemens Dashboards library in your project.
 
 ### Install dependencies
@@ -16,8 +16,7 @@ npm install --save @siemens/dashboards-ng gridstack
 
 ### Add libraries to your project
 
-The library supports standalone components and modules. However, the widgets when not using web components
-or module federation still need a module definition.
+The library supports standalone components and modules.
 
 ### Standalone
 
@@ -36,8 +35,7 @@ providers: [
         useFactory: createTranslateLoader,
         deps: [HttpBackend]
       }
-    }),
-    SiTranslateNgxTModule
+    })
   ),
   provideAnimations(),
   provideNgxTranslateForElement(),
@@ -73,7 +71,7 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 export class AppModule { }
 ```
 
-Add `gridstack` CSS files to you application by editing
+Add `gridstack` CSS files to your application by editing
 the `angular.json` file.
 
 ```json
@@ -89,7 +87,7 @@ the `angular.json` file.
 
 ### Add the dashboard to your application
 
-To add the dashboard to your application, add the `si-flexible-dashboard component
+To add the dashboard to your application, add the `si-flexible-dashboard` component
 to your template. Configure the widget catalog by setting the _widgetCatalog_ input
 property.
 
@@ -166,29 +164,30 @@ TranslateModule.forRoot({
 ### Widget development
 
 You can develop your own widgets that are managed by the dashboard. One or multiple widgets
-have to be provided by an Angular module and described by a `Widget` object, that includes
+have to be provided by an Angular module or standalone and described by a `Widget` object, that includes
 the meta information and the Angular widget instance component and editor names that are
 used to instantiate the widget at runtime.
 
-The widget instance component has to implement the `WidgetInstance` interface and the
-editor has to implement the `WidgetInstanceEditor` interface. You have to provide a
-module loader function that is used to load the widget when needed.
+The widget instance component must implement the `WidgetInstance` interface and the
+editor must implement the `WidgetInstanceEditor` interface. You must provide either
+a module loader function with module name or a component loader function for standalone components
+that is used to load the widget when needed.
 
-The library ships with a [hello-widget](./src/app/widgets/hello-widget/) example for illustration.
+The library ships with a [hello-widget](https://github.com/siemens/element/blob/main/projects/dashboards-demo/src/app/widgets/hello-widget/) example for illustration.
 
 E.g. a widget implements a user interface that is added at runtime into the body of a dashboard card.
 Optionally, the widget template may include a `<ng-template/>` to provides a footer implementation like
-`<ng-template #footer><a [siLink]="link">Go to issues</a></ng-template>` in the [value-widget](./src/app/widgets/charts/value-widget.component.ts).
+`<ng-template #footer><a [siLink]="link">Go to issues</a></ng-template>` in the [value-widget](https://github.com/siemens/element/blob/main/projects/dashboards-demo/src/app/widgets/charts/value-widget.component.ts).
 The Angular component should export the template as the public attribute `footer`.
 
 ```ts
-`@ViewChild('footer', { static: true }) footer?: TemplateRef<unknown>;`;
+@ViewChild('footer', { static: true }) footer?: TemplateRef<unknown>;
 ```
 
 ### Dashboard persistence
 
 The library persists a dashboard configuration by the default `SiDefaultWidgetStorage` implementation
-of the API [SiWidgetStorage](./projects/dashboards-ng/src/model/si-widget-storage.ts). The
+of the API [SiWidgetStorage](https://github.com/siemens/element/blob/main/projects/dashboards-ng/src/model/si-widget-storage.ts). The
 `SiDefaultWidgetStorage` uses the `Storage` implementation `sessionStorage`. You can set a different
 `Storage` like the `localStorage` by providing the `DEFAULT_WIDGET_STORAGE_TOKEN` in the related module.
 
@@ -197,7 +196,7 @@ providers: [..., { provide: DEFAULT_WIDGET_STORAGE_TOKEN, useValue: localStorage
 ```
 
 For persistence in a backend service, you should implement your own
-[SiWidgetStorage](./projects/dashboards-ng/src/model/si-widget-storage.ts) and provide it in
+[SiWidgetStorage](https://github.com/siemens/element/blob/main/projects/dashboards-ng/src/model/si-widget-storage.ts) and provide it in
 the library module definition.
 
 ```ts
@@ -214,17 +213,17 @@ SiDashboardsNgModule.forRoot({
 
 The dashboard is configurable through the Angular inputs of the exposed components and by
 the usage of the configuration object `Config`, which includes a `GridConfig` and including
-the [GridStackOptions](./projects/dashboards-ng/src/model/gridstack.model.ts).
+the [GridStackOptions](https://github.com/siemens/element/blob/main/projects/dashboards-ng/src/model/gridstack.model.ts).
 
 To configure all dashboard instances, you can leverage dependency injection when importing
 the `SiDashboardsNgModule` using `SiDashboardsNgModule.forRoot({...})`.
 Alternatively, you have the option to configure individual dashboard instances by setting
 the input property `SiFlexibleDashboardComponent.config = {...}`.
 
-Here is the [demo](./src/app/pages/fixed-widgets-dashboard/fixed-widgets-dashboard.component.ts)
+Here is the [demo](https://github.com/siemens/element/blob/main/projects/dashboards-demo/src/app/pages/fixed-widgets-dashboard/fixed-widgets-dashboard.component.ts)
 
 ## License
 
 Code and documentation Copyright (c) Siemens 2016 - 2025
 
-See [LICENSE.md](../../LICENSE.md).
+See [LICENSE.md](https://github.com/siemens/element/blob/main/LICENSE.md).

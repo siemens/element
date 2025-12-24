@@ -13,6 +13,7 @@ export default defineConfig(
     languageOptions: {
       parserOptions: {
         project: [
+          'projects/dashboards-ng/tsconfig.docs.json',
           'projects/dashboards-ng/tsconfig.lib.json',
           'projects/dashboards-ng/tsconfig.spec.json'
         ]
@@ -37,6 +38,13 @@ export default defineConfig(
         }
       ],
       '@typescript-eslint/no-deprecated': ['off']
+    }
+  },
+  // TODO: remove this once upgraded to Angular 21
+  {
+    files: ['**/*.spec.ts'],
+    rules: {
+      '@angular-eslint/no-developer-preview': ['off']
     }
   },
   ...templateConfig
