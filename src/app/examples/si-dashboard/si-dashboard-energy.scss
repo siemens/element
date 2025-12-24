@@ -1,0 +1,305 @@
+/**
+ * Copyright (c) Siemens 2016 - 2025
+ * SPDX-License-Identifier: MIT
+ */
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--si-color-base-1, #f5f5f5);
+}
+
+.dashboard-header {
+  padding: 1.5rem 2rem;
+  background-color: var(--si-color-base-0, #fff);
+  border-bottom: 1px solid var(--si-color-border, #e0e0e0);
+
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--si-color-text-default, #000);
+  }
+
+  p {
+    font-size: 0.95rem;
+    margin: 0;
+  }
+}
+
+.dashboard-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem 2rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem 1rem;
+  }
+}
+
+/* KPI Cards Section */
+.kpi-section {
+  margin-bottom: 2rem;
+
+  .kpi-card {
+    border: 1px solid var(--si-color-border, #e0e0e0);
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .card-body {
+      h3 {
+        font-size: 1.75rem;
+        font-weight: 600;
+        color: var(--si-color-text-default, #000);
+
+        .unit {
+          font-size: 0.85rem;
+          font-weight: 400;
+          color: var(--si-color-text-secondary, #666);
+          margin-left: 0.5rem;
+        }
+      }
+    }
+  }
+}
+
+/* Energy Sources Section */
+.energy-sources-section {
+  h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--si-color-text-default, #000);
+    margin-bottom: 1.5rem;
+  }
+
+  si-card {
+    border: 1px solid var(--si-color-border, #e0e0e0);
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-body {
+      h5 {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--si-color-text-default, #000);
+      }
+
+      .progress {
+        background-color: var(--si-color-base-2, #efefef);
+        border-radius: 2px;
+        height: 8px;
+
+        .progress-bar {
+          border-radius: 2px;
+          transition: width 0.3s ease;
+        }
+      }
+    }
+  }
+}
+
+/* Buildings Section */
+.buildings-section {
+  h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--si-color-text-default, #000);
+    margin-bottom: 1.5rem;
+  }
+
+  .building-card {
+    border: 1px solid var(--si-color-border, #e0e0e0);
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+      border-color: var(--si-color-accent, #0066cc);
+    }
+
+    .card-body {
+      display: flex;
+      flex-direction: column;
+
+      h5 {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--si-color-text-default, #000);
+        line-height: 1.3;
+      }
+
+      .metric {
+        .progress {
+          background-color: var(--si-color-base-2, #efefef);
+          border-radius: 2px;
+          height: 4px;
+
+          .progress-bar {
+            border-radius: 2px;
+            transition: width 0.3s ease;
+          }
+        }
+
+        strong {
+          font-weight: 600;
+          color: var(--si-color-text-default, #000);
+        }
+      }
+
+      .btn-link {
+        padding: 0;
+        color: var(--si-color-accent, #0066cc);
+        font-weight: 500;
+        text-decoration: none;
+        transition: color 0.2s ease;
+
+        &:hover {
+          color: darken(#0066cc, 10%);
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+/* Activity Section */
+.activity-section {
+  h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--si-color-text-default, #000);
+    margin-bottom: 1.5rem;
+  }
+
+  si-card {
+    border: 1px solid var(--si-color-border, #e0e0e0);
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+    .list-group-item {
+      border-bottom: 1px solid var(--si-color-base-2, #efefef);
+      background-color: var(--si-color-base-0, #fff);
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      p {
+        font-size: 0.95rem;
+        color: var(--si-color-text-default, #000);
+      }
+
+      .badge {
+        font-size: 0.75rem;
+        padding: 0.35rem 0.65rem;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+/* Badges and Status */
+.badge {
+  font-size: 0.75rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+
+  &.bg-success {
+    background-color: var(--si-color-success, #4caf50) !important;
+    color: white;
+  }
+
+  &.bg-warning {
+    background-color: var(--si-color-warning, #ff9800) !important;
+    color: white;
+  }
+
+  &.bg-danger {
+    background-color: var(--si-color-danger, #f44336) !important;
+    color: white;
+  }
+
+  &.bg-info {
+    background-color: var(--si-color-info, #2196f3) !important;
+    color: white;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .dashboard-content {
+    padding: 1.5rem 1.5rem;
+  }
+
+  .kpi-section {
+    .kpi-card .card-body h3 {
+      font-size: 1.5rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-content {
+    padding: 1rem;
+  }
+
+  .kpi-section {
+    .kpi-card .card-body {
+      h3 {
+        font-size: 1.35rem;
+      }
+
+      .unit {
+        font-size: 0.75rem;
+      }
+    }
+  }
+
+  .energy-sources-section,
+  .buildings-section,
+  .activity-section {
+    h4 {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+/* Utilities */
+.text-muted {
+  color: var(--si-color-text-secondary, #999) !important;
+}
+
+.small {
+  font-size: 0.85rem;
+}
+
+.flex-grow-1 {
+  flex-grow: 1;
+}
+
+.h-100 {
+  height: 100%;
+}
