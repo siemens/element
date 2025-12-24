@@ -14,6 +14,7 @@ import {
   Injectable,
   LOCALE_ID,
   provideAppInitializer,
+  provideZonelessChangeDetection,
   ɵLocaleDataIndex
 } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -156,6 +157,8 @@ export const APP_CONFIG: ApplicationConfig = {
     provideNgxTranslateForElement(),
     provideSiDatatableConfig(),
     provideIconConfig({ disableSvgIcons: false }),
-    provideSiUiState()
+    provideSiUiState(),
+    // eslint-disable-next-line @angular-eslint/no-developer-preview
+    provideZonelessChangeDetection()
   ]
 };

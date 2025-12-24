@@ -5,9 +5,11 @@
 import { CdkMonitorFocus, FocusOrigin } from '@angular/cdk/a11y';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   computed,
   ElementRef,
+  inject,
   input,
   model,
   OnInit,
@@ -75,6 +77,7 @@ export class SiFilteredSearchValueComponent implements OnInit {
 
   private readonly operatorInput = viewChild<ElementRef<HTMLInputElement>>('operatorInput');
   private readonly valueInput = viewChild(SiFilteredSearchValueBase);
+  private cdRef = inject(ChangeDetectorRef);
 
   readonly type = computed(() => {
     // Check if this is a free text criterion first
@@ -157,6 +160,7 @@ export class SiFilteredSearchValueComponent implements OnInit {
       if (this.active() && !focusOrigin && !this.valueInput()?.focusInOverlay()) {
         this.active.set(false);
       }
+      this.cdRef.markForCheck();
     });
   }
 
