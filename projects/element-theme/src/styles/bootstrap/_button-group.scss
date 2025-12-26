@@ -75,7 +75,8 @@
   + .btn {
     background: transparent;
     color: semantic-tokens.$element-text-primary;
-    padding-block: map.get(spacers.$spacers, 5) - 1px;
+    padding-block: calc(variables.$btn-padding-y - 1px);
+    padding-inline: calc(variables.$btn-padding-x - 1px);
     border: 1px solid semantic-tokens.$element-ui-4;
     transition: none;
 
@@ -91,12 +92,6 @@
       .icon {
         margin-inline: 0;
       }
-    }
-
-    &.btn-sm {
-      padding-block: map.get(spacers.$spacers, 4) - 1px;
-      font-size: typography.$si-font-size-body;
-      line-height: typography.$si-line-height-body;
     }
   }
 
