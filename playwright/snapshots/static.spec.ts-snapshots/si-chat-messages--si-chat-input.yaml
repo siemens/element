@@ -5,7 +5,7 @@
   - text: mockup.png
   - button "Remove attachment mockup.png"
 - textbox "Chat message input":
-  - /placeholder: Enter a command, question or topic...
+  - /placeholder: Enter a command, question or topic…
 - button "Attach files"
 - button "Take photo"
 - button "Text formatting"

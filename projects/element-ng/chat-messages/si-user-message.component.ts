@@ -8,8 +8,8 @@ import { SiIconComponent } from '@siemens/element-ng/icon';
 import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
-import { MessageAction } from './message-action.model';
-import { Attachment, SiAttachmentListComponent } from './si-attachment-list.component';
+import { Attachment, MessageAction } from './chat-message.model';
+import { SiAttachmentListComponent } from './si-attachment-list.component';
 import { SiChatMessageActionDirective } from './si-chat-message-action.directive';
 import { SiChatMessageComponent } from './si-chat-message.component';
 
@@ -32,6 +32,7 @@ import { SiChatMessageComponent } from './si-chat-message.component';
  * @see {@link SiAttachmentListComponent} for the base attachment component
  * @see {@link getMarkdownRenderer} for markdown formatting support
  * @see {@link SiChatContainerComponent} for the chat container to use this within
+ * @see {@link SiAiChatContainerComponent} for the AI chat container which uses this component
  *
  * @experimental
  */
