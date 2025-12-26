@@ -42,9 +42,11 @@ export class SiTooltipDirective implements OnDestroy {
   readonly placement = input<keyof typeof positions>('auto');
 
   /**
-   * The trigger event on which the tooltip shall be displayed
+   * Delay in milliseconds before showing the tooltip
+   *
+   * @defaultValue 500
    */
-  readonly triggers = input<'' | 'focus'>();
+  readonly showDelay = input(500);
 
   /**
    * Allows the tooltip to be disabled
@@ -61,50 +63,61 @@ export class SiTooltipDirective implements OnDestroy {
   protected describedBy = `__tooltip_${SiTooltipDirective.idCounter++}`;
 
   private tooltipRef?: TooltipRef;
+  private showTimeout?: number;
   private tooltipService = inject(SiTooltipService);
   private elementRef = inject(ElementRef);
 
   ngOnDestroy(): void {
+    this.clearShowTimeout();
     this.tooltipRef?.destroy();
   }
 
-  private showTooltip(): void {
+  private clearShowTimeout(): void {
+    if (this.showTimeout) {
+      window.clearTimeout(this.showTimeout);
+      this.showTimeout = undefined;
+    }
+  }
+
+  private showTooltip(immediate = false): void {
     const siTooltip = this.siTooltip();
     if (this.isDisabled() || !siTooltip) {
       return;
     }
-    this.tooltipRef ??= this.tooltipService.createTooltip({
-      describedBy: this.describedBy,
-      element: this.elementRef,
-      placement: this.placement()
-    });
-    this.tooltipRef.show(this.siTooltip(), this.tooltipContext());
+
+    this.clearShowTimeout();
+
+    const delay = immediate ? 0 : this.showDelay();
+
+    this.showTimeout = window.setTimeout(() => {
+      this.tooltipRef ??= this.tooltipService.createTooltip({
+        describedBy: this.describedBy,
+        element: this.elementRef,
+        placement: this.placement()
+      });
+      this.tooltipRef.show(this.siTooltip(), this.tooltipContext());
+    }, delay);
   }
 
   @HostListener('focus')
   protected focusIn(): void {
-    this.showTooltip();
+    this.showTooltip(true);
   }
 
   @HostListener('mouseenter')
   protected show(): void {
-    if (this.triggers() === 'focus') {
-      return;
-    }
-    this.showTooltip();
+    this.showTooltip(false);
   }
 
   @HostListener('touchstart')
   @HostListener('focusout')
   protected hide(): void {
+    this.clearShowTimeout();
     this.tooltipRef?.hide();
   }
 
   @HostListener('mouseleave')
   protected mouseOut(): void {
-    if (this.triggers() === 'focus') {
-      return;
-    }
     this.hide();
   }
 }
