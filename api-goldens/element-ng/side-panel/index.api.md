@@ -60,6 +60,7 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
     // (undocumented)
     readonly collapsible: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly contentResize: _angular_core.OutputEmitterRef<ElementDimensions>;
+    readonly disableBackdrop: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly enableMobile: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly mode: _angular_core.InputSignal<SidePanelMode>;
     // (undocumented)
@@ -72,7 +73,7 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
     readonly toggleItemLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
     toggleSidePanel(): void;
     // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSidePanelComponent, "si-side-panel", never, { "collapsible": { "alias": "collapsible"; "required": false; "isSignal": true; }; "collapsed": { "alias": "collapsed"; "required": false; "isSignal": true; }; "mode": { "alias": "mode"; "required": false; "isSignal": true; }; "size": { "alias": "size"; "required": false; "isSignal": true; }; "toggleItemLabel": { "alias": "toggleItemLabel"; "required": false; "isSignal": true; }; "breakpoints": { "alias": "breakpoints"; "required": false; "isSignal": true; }; "enableMobile": { "alias": "enableMobile"; "required": false; "isSignal": true; }; }, { "collapsed": "collapsedChange"; "closed": "closed"; "contentResize": "contentResize"; }, never, ["si-side-panel-content, element-side-panel-content", "*"], true, never>;
+    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSidePanelComponent, "si-side-panel", never, { "collapsible": { "alias": "collapsible"; "required": false; "isSignal": true; }; "collapsed": { "alias": "collapsed"; "required": false; "isSignal": true; }; "mode": { "alias": "mode"; "required": false; "isSignal": true; }; "size": { "alias": "size"; "required": false; "isSignal": true; }; "toggleItemLabel": { "alias": "toggleItemLabel"; "required": false; "isSignal": true; }; "breakpoints": { "alias": "breakpoints"; "required": false; "isSignal": true; }; "enableMobile": { "alias": "enableMobile"; "required": false; "isSignal": true; }; "disableBackdrop": { "alias": "disableBackdrop"; "required": false; "isSignal": true; }; }, { "collapsed": "collapsedChange"; "closed": "closed"; "contentResize": "contentResize"; }, never, ["si-side-panel-content, element-side-panel-content", "*"], true, never>;
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSidePanelComponent, never>;
 }
@@ -125,6 +126,8 @@ export class SiSidePanelService {
     isOpen(): boolean;
     isTemporaryOpen(): boolean;
     open(): void;
+    releaseBodyScrollLock(): void;
+    requestBodyScrollLock(): void;
     setFullscreen(fullscreen: boolean): void;
     setSidePanelContent(portal: Portal<any> | undefined): void;
     showTemporaryContent(portal: Portal<any> | undefined): Observable<void>;

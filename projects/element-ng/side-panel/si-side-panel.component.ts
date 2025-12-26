@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CdkPortalOutlet, Portal, PortalModule } from '@angular/cdk/portal';
 import { isPlatformBrowser } from '@angular/common';
 import {
@@ -11,6 +12,7 @@ import {
   computed,
   DestroyRef,
   DOCUMENT,
+  effect,
   ElementRef,
   inject,
   input,
@@ -49,7 +51,7 @@ import { SidePanelMode, SidePanelSize } from './side-panel.model';
     '[class.rpanel-size--regular]': 'this.size() === "regular"',
     '[class.rpanel-size--wide]': 'this.size() === "wide"',
     '[class.rpanel-size--extended]': 'this.size() === "extended"',
-    '[class.rpanel-mode--over]': 'this.mode() === "over"',
+    '[class.rpanel-mode--over]': 'isOverMode()',
     '[class.rpanel-mode--scroll]': 'isScrollMode()',
     '[class.rpanel-collapsed]': 'isCollapsed()',
     '[class.ready]': 'ready()',
@@ -64,7 +66,14 @@ import { SidePanelMode, SidePanelSize } from './side-panel.model';
     '[class.rpanel-resize-xl]': 'isXl()',
     '[class.rpanel-resize-xxl]': 'isXxl()',
     '[class.rpanel-resize-xxxl]': 'isXxxl()'
-  }
+  },
+  animations: [
+    trigger('backdrop', [
+      state('show', style({ 'opacity': '1' })),
+      state('hide', style({ 'opacity': '0' })),
+      transition('* <=> *', [animate('0.15s linear')])
+    ])
+  ]
 })
 export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
   /**
@@ -125,6 +134,14 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
   readonly enableMobile = input(false, { transform: booleanAttribute });
 
   /**
+   * Whether to disable backdrop when side panel is open in over mode.
+   * When false (default), the backdrop prevents interaction with background content while preserving visual context.
+   *
+   * @defaultValue false
+   */
+  readonly disableBackdrop = input(false, { transform: booleanAttribute });
+
+  /**
    * Emits when the panel is closed
    */
   readonly closed = output();
@@ -135,6 +152,25 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
   readonly contentResize = output<ElementDimensions>();
 
   protected readonly isScrollMode = computed(() => this.mode() === 'scroll');
+  protected readonly isOverMode = computed(() => {
+    if (this.mode() === 'over') {
+      return true;
+    }
+
+    if (this.mode() === 'scroll') {
+      if (this.isXs() || this.isSm() || this.isMd()) {
+        return true;
+      }
+      if (this.isLg() && (this.size() === 'wide' || this.size() === 'extended')) {
+        return true;
+      }
+    }
+
+    return false;
+  });
+  protected readonly showBackdrop = computed(
+    () => !this.disableBackdrop() && this.isOverMode() && !this.isCollapsed()
+  );
   protected readonly isXs = signal(false);
   protected readonly isSm = signal(false);
   protected readonly isMd = signal(true);
@@ -198,6 +234,14 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
           }
         });
     }
+
+    effect(() => {
+      if (this.showBackdrop()) {
+        this.service.requestBodyScrollLock();
+      } else {
+        this.service.releaseBodyScrollLock();
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -252,11 +296,12 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
 
     this.service.isOpen$
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(state => this.openClose(state));
+      .subscribe(isOpen => this.openClose(isOpen));
   }
 
   ngOnDestroy(): void {
     this.portalOutlet().detach();
+    this.service.releaseBodyScrollLock();
   }
   /**
    * Toggle whether the side panel is expanded or not.

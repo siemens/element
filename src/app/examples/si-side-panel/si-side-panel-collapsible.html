@@ -83,23 +83,23 @@
           type="radio"
           class="btn-check"
           name="displayMode"
-          id="display-navigate"
-          [checked]="displayMode === 'navigate'"
-        />
-        <label class="btn btn-sm" for="display-navigate" (click)="displayMode = 'navigate'">
-          <i class="icon element-export" aria-hidden="true"></i>
-          Navigate
-        </label>
-        <input
-          type="radio"
-          class="btn-check"
-          name="displayMode"
           id="display-overlay"
           [checked]="displayMode === 'overlay'"
         />
         <label class="btn btn-sm" for="display-overlay" (click)="displayMode = 'overlay'">
           <i class="icon element-zoom" aria-hidden="true"></i>
           Overlay
+        </label>
+        <input
+          type="radio"
+          class="btn-check"
+          name="displayMode"
+          id="display-navigate"
+          [checked]="displayMode === 'navigate'"
+        />
+        <label class="btn btn-sm" for="display-navigate" (click)="displayMode = 'navigate'">
+          <i class="icon element-export" aria-hidden="true"></i>
+          Navigate
         </label>
       </div>
       <div
@@ -111,23 +111,23 @@
           type="radio"
           class="btn-check"
           name="mode"
-          id="mode-over"
-          [checked]="mode === 'over'"
-        />
-        <label class="btn btn-sm" for="mode-over" (click)="mode = 'over'">
-          <i class="icon element-menu" aria-hidden="true"></i>
-          Over
-        </label>
-        <input
-          type="radio"
-          class="btn-check"
-          name="mode"
           id="mode-scroll"
           [checked]="mode === 'scroll'"
         />
         <label class="btn btn-sm" for="mode-scroll" (click)="mode = 'scroll'">
           <i class="icon element-jump-to-list-item" aria-hidden="true"></i>
           Scroll
+        </label>
+        <input
+          type="radio"
+          class="btn-check"
+          name="mode"
+          id="mode-over"
+          [checked]="mode === 'over'"
+        />
+        <label class="btn btn-sm" for="mode-over" (click)="mode = 'over'">
+          <i class="icon element-menu" aria-hidden="true"></i>
+          Over
         </label>
       </div>
     </div>

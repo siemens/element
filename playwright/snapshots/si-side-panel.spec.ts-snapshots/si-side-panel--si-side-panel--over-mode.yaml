@@ -1,0 +1,58 @@
+- paragraph: Title
+- button "Enter fullscreen"
+- button "Close"
+- button "Hey there" [expanded]
+- region "Hey there": And here we have some content
+- button "Another one"
+- region "Another one"
+- button "Number three"
+- region "Number three"
+- banner:
+  - link "Siemens logo":
+    - /url: "#/"
+  - heading "Side panel" [level=1]
+  - button "Layout"
+- button "Toggle side panel"
+- group "Size toggle button group":
+  - radio "Regular" [checked]
+  - text: ""
+  - radio "Wide"
+  - text: ""
+  - radio "Extended"
+  - text: ""
+- group "Display mode toggle button group":
+  - radio "Overlay" [checked]
+  - text: ""
+  - radio "Navigate"
+  - text: ""
+- group "Mode toggle button group":
+  - radio "Over" [checked]
+  - text: ""
+  - radio "Scroll"
+  - text: ""
+- separator
+- heading "Modes and sizes" [level=2]
+- paragraph:
+  - code: "Over:"
+  - text: The side panel overlays on top of the main content, which remains in its original position. Ideal for temporary interactions without losing context.
+  - code: "Scroll:"
+  - text: The side panel pushes the main content to the left, resizing the available space. Best for persistent side-by-side workflows.
+- paragraph:
+  - code: "Regular (390px):"
+  - text: Standard width suitable for most content like navigation, settings, or simple forms.
+  - code: "Wide (500px):"
+  - text: Expanded width for more complex content, detailed forms, or when more reading space is needed.
+  - code: "Extended (Responsive):"
+  - text: Adaptive width that scales with screen size - full width on mobile/tablet, progressively larger on desktop (480px → 912px max) for optimal space utilization.
+- paragraph:
+  - code: "Navigate:"
+  - text: Shows export icon in panel header. Click to navigate to a dedicated page.
+  - code: "Overlay:"
+  - text: Shows zoom icon in panel header. Click to toggle fullscreen overlay mode with URL state persistence.
+- paragraph:
+  - code: "Backdrop:"
+  - text: Displays a semi-transparent overlay that blocks interactions with the main content while keeping it visible for context. Only active in over-mode (or when scroll mode is forced to over-mode on smaller screens). The backdrop can be clicked to close the side panel and can be disabled with the
+  - code: disableBackdrop
+  - text: input.
+- switch "disableBackdrop"
+- code: disableBackdrop
