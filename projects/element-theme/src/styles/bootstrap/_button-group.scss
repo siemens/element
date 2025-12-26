@@ -52,6 +52,13 @@
     margin-inline-start: -1px;
   }
 
+  .btn-icon {
+    inline-size: unset;
+    padding-inline: calc(
+      #{map.get(spacers.$spacers, 2)} - var(--btn-border-width, 0px)
+    ) !important; // stylelint-disable-line declaration-no-important
+  }
+
   // Dropdown toggle styling for split buttons
   .btn.dropdown-toggle {
     inline-size: 24px;
@@ -80,13 +87,13 @@
     transition: none;
 
     &.btn-icon {
-      padding-inline: map.get(spacers.$spacers, 5) - 1px;
+      padding-inline: map.get(spacers.$spacers, 5) - 1px !important; // stylelint-disable-line declaration-no-important
     }
 
     // @deprecated Will be removed in a future major version, use .btn-icon instead.
     &.icon-only {
       min-inline-size: unset;
-      padding-inline: map.get(spacers.$spacers, 5) - 1px;
+      padding-inline: map.get(spacers.$spacers, 5) - 1px !important; // stylelint-disable-line declaration-no-important
 
       .icon {
         margin-inline: 0;
