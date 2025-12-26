@@ -1,0 +1,140 @@
+@use '../variables';
+
+// Custom highlight.js theme using Element color tokens
+// Theme automatically adapts to light and dark modes via Element's color tokens
+
+.markdown-content {
+  // Base code block styling
+  .hljs {
+    color: variables.$element-text-primary;
+  }
+
+  // Comments, documentation
+  .hljs-comment,
+  .hljs-quote {
+    color: variables.$element-text-secondary;
+    font-style: italic;
+  }
+
+  // Keywords, control flow
+  .hljs-keyword,
+  .hljs-selector-tag,
+  .hljs-subst {
+    color: variables.$element-text-active;
+    font-weight: variables.$si-font-weight-semibold;
+  }
+
+  // Numbers, literals
+  .hljs-number,
+  .hljs-literal,
+  .hljs-variable,
+  .hljs-template-variable {
+    color: variables.$element-text-primary;
+  }
+
+  // Strings
+  .hljs-string,
+  .hljs-doctag {
+    color: variables.$element-text-secondary;
+  }
+
+  // Function names, class names
+  .hljs-title,
+  .hljs-section,
+  .hljs-selector-id {
+    color: variables.$element-text-primary;
+    font-weight: variables.$si-font-weight-semibold;
+  }
+
+  // Types, classes
+  .hljs-type,
+  .hljs-class .hljs-title {
+    color: variables.$element-text-primary;
+  }
+
+  // Attributes, properties
+  .hljs-attribute,
+  .hljs-name,
+  .hljs-tag {
+    color: variables.$element-text-primary;
+  }
+
+  // Regex, symbols
+  .hljs-regexp,
+  .hljs-link {
+    color: variables.$element-text-secondary;
+  }
+
+  // Built-in functions and constants
+  .hljs-built-in,
+  .hljs-builtin-name {
+    color: variables.$element-text-primary;
+  }
+
+  // stylelint-disable-next-line selector-class-pattern
+  .hljs-built_in {
+    color: variables.$element-text-primary;
+  }
+
+  // Meta, decorators
+  .hljs-meta {
+    color: variables.$element-text-secondary;
+  }
+
+  // Deletions in diffs
+  .hljs-deletion {
+    color: variables.$element-status-danger;
+  }
+
+  // Additions in diffs
+  .hljs-addition {
+    color: variables.$element-status-success;
+  }
+
+  // Template tags
+  .hljs-template-tag {
+    color: variables.$element-text-primary;
+  }
+
+  // Symbols, bullets
+  .hljs-symbol,
+  .hljs-bullet {
+    color: variables.$element-text-primary;
+  }
+
+  // Emphasis
+  .hljs-emphasis {
+    font-style: italic;
+  }
+
+  // Strong emphasis
+  .hljs-strong {
+    font-weight: variables.$si-font-weight-semibold;
+  }
+
+  // XML/HTML specific
+  .hljs-selector-attr,
+  .hljs-selector-pseudo {
+    color: variables.$element-text-primary;
+  }
+
+  // CSS specific
+  .hljs-selector-class {
+    color: variables.$element-text-primary;
+  }
+
+  // Markup
+  .hljs-code {
+    color: variables.$element-text-primary;
+  }
+
+  // Formula
+  .hljs-formula {
+    color: variables.$element-text-primary;
+  }
+
+  // Params
+  .hljs-params {
+    color: variables.$element-text-primary;
+  }
+}
