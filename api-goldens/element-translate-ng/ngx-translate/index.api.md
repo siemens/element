@@ -13,12 +13,6 @@ export const provideNgxTranslateForElement: () => (EnvironmentProviders | Provid
 
 // @public
 export class SiTranslateNgxTModule {
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiTranslateNgxTModule, never>;
-    // (undocumented)
-    static ɵinj: i0.ɵɵInjectorDeclaration<SiTranslateNgxTModule>;
-    // (undocumented)
-    static ɵmod: i0.ɵɵNgModuleDeclaration<SiTranslateNgxTModule, never, never, never>;
 }
 
 // (No @packageDocumentation comment for this package)

@@ -24,10 +24,6 @@ export class SiMicrochartLineComponent {
     readonly showMarkers: _angular_core.InputSignal<boolean>;
     // (undocumented)
     readonly width: _angular_core.InputSignal<number>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiMicrochartLineComponent, "si-microchart-line", never, { "series": { "alias": "series"; "required": true; "isSignal": true; }; "width": { "alias": "width"; "required": false; "isSignal": true; }; "height": { "alias": "height"; "required": false; "isSignal": true; }; "showMarkers": { "alias": "showMarkers"; "required": false; "isSignal": true; }; "showArea": { "alias": "showArea"; "required": false; "isSignal": true; }; "lineWidth": { "alias": "lineWidth"; "required": false; "isSignal": true; }; "markerColor": { "alias": "markerColor"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiMicrochartLineComponent, never>;
 }
 
 // (No @packageDocumentation comment for this package)

@@ -18,10 +18,6 @@ export class SiTourService {
     readonly onTourComplete: Subject<void>;
     setOptions(options: TourOptions): void;
     start(): void;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiTourService, never>;
-    // (undocumented)
-    static ɵprov: i0.ɵɵInjectableDeclaration<SiTourService>;
 }
 
 // @public

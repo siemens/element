@@ -16,20 +16,10 @@ export class SiPaginationComponent {
     readonly pageSize: _angular_core.InputSignal<number | undefined>;
     readonly totalPages: _angular_core.InputSignal<number | undefined>;
     readonly totalRowCount: _angular_core.InputSignal<number | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiPaginationComponent, "si-pagination", never, { "totalPages": { "alias": "totalPages"; "required": false; "isSignal": true; }; "currentPage": { "alias": "currentPage"; "required": false; "isSignal": true; }; "pageSize": { "alias": "pageSize"; "required": false; "isSignal": true; }; "totalRowCount": { "alias": "totalRowCount"; "required": false; "isSignal": true; }; "backButtonText": { "alias": "backButtonText"; "required": false; "isSignal": true; }; "forwardButtonText": { "alias": "forwardButtonText"; "required": false; "isSignal": true; }; "navAriaLabel": { "alias": "navAriaLabel"; "required": false; "isSignal": true; }; }, { "currentPage": "currentPageChange"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiPaginationComponent, never>;
 }
 
 // @public (undocumented)
 export class SiPaginationModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiPaginationModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiPaginationModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiPaginationModule, never, [typeof SiPaginationComponent], [typeof SiPaginationComponent]>;
 }
 
 // (No @packageDocumentation comment for this package)

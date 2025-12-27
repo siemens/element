@@ -19,24 +19,10 @@ export class SiAccordionComponent implements AfterContentInit, OnChanges {
     readonly fullHeight: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     readonly hcollapsed: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    ngAfterContentInit(): void;
-    // (undocumented)
-    ngOnChanges(): void;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiAccordionComponent, "si-accordion", never, { "expandFirstPanel": { "alias": "expandFirstPanel"; "required": false; "isSignal": true; }; "fullHeight": { "alias": "fullHeight"; "required": false; "isSignal": true; }; "hcollapsed": { "alias": "hcollapsed"; "required": false; "isSignal": true; }; }, {}, ["panels"], ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiAccordionComponent, never>;
 }
 
 // @public (undocumented)
 export class SiAccordionModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiAccordionModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiAccordionModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiAccordionModule, never, [typeof SiAccordionComponent, typeof SiCollapsiblePanelComponent], [typeof SiAccordionComponent, typeof SiCollapsiblePanelComponent]>;
 }
 
 // @public (undocumented)
@@ -55,10 +41,6 @@ export class SiCollapsiblePanelComponent {
     openClose(open: boolean, enableAnimation?: boolean): void;
     readonly opened: _angular_core.ModelSignal<boolean>;
     readonly panelToggle: _angular_core.OutputEmitterRef<boolean>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiCollapsiblePanelComponent, "si-collapsible-panel", never, { "heading": { "alias": "heading"; "required": false; "isSignal": true; }; "headerCssClasses": { "alias": "headerCssClasses"; "required": false; "isSignal": true; }; "contentBgClasses": { "alias": "contentBgClasses"; "required": false; "isSignal": true; }; "contentCssClasses": { "alias": "contentCssClasses"; "required": false; "isSignal": true; }; "opened": { "alias": "opened"; "required": false; "isSignal": true; }; "icon": { "alias": "icon"; "required": false; "isSignal": true; }; "disabled": { "alias": "disabled"; "required": false; "isSignal": true; }; "colorVariant": { "alias": "colorVariant"; "required": false; "isSignal": true; }; "badge": { "alias": "badge"; "required": false; "isSignal": true; }; "badgeColor": { "alias": "badgeColor"; "required": false; "isSignal": true; }; }, { "opened": "openedChange"; "panelToggle": "panelToggle"; }, never, ["[si-panel-heading]", "*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiCollapsiblePanelComponent, never>;
 }
 
 // (No @packageDocumentation comment for this package)
