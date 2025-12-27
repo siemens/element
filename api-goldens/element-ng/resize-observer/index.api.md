@@ -40,10 +40,6 @@ export class ResizeObserverService {
     // @deprecated
     _checkAll(): void;
     observe(element: Element, throttle: number, emitInitial?: boolean, emitImmediate?: boolean): Observable<ElementDimensions>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<ResizeObserverService, never>;
-    // (undocumented)
-    static ɵprov: _angular_core.ɵɵInjectableDeclaration<ResizeObserverService>;
 }
 
 // @public
@@ -51,27 +47,13 @@ export class SiResizeObserverDirective implements OnInit, OnDestroy {
     // (undocumented)
     readonly emitInitial: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
-    // (undocumented)
     readonly resizeThrottle: _angular_core.InputSignal<number>;
     // (undocumented)
     readonly siResizeObserver: _angular_core.OutputEmitterRef<ElementDimensions>;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiResizeObserverDirective, "[siResizeObserver]", never, { "resizeThrottle": { "alias": "resizeThrottle"; "required": false; "isSignal": true; }; "emitInitial": { "alias": "emitInitial"; "required": false; "isSignal": true; }; }, { "siResizeObserver": "siResizeObserver"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiResizeObserverDirective, never>;
 }
 
 // @public (undocumented)
 export class SiResizeObserverModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiResizeObserverModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiResizeObserverModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiResizeObserverModule, never, [typeof SiResizeObserverDirective, typeof SiResponsiveContainerDirective], [typeof SiResizeObserverDirective, typeof SiResponsiveContainerDirective]>;
 }
 
 // @public
@@ -83,10 +65,6 @@ export class SiResponsiveContainerDirective implements OnInit, OnDestroy {
     // (undocumented)
     readonly md: _angular_core.WritableSignal<boolean>;
     // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
-    // (undocumented)
     readonly resizeThrottle: _angular_core.InputSignal<number>;
     // (undocumented)
     readonly sm: _angular_core.WritableSignal<boolean>;
@@ -96,10 +74,6 @@ export class SiResponsiveContainerDirective implements OnInit, OnDestroy {
     readonly xs: _angular_core.WritableSignal<boolean>;
     // (undocumented)
     readonly xxl: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiResponsiveContainerDirective, "[siResponsiveContainer]", ["siResponsiveContainer"], { "resizeThrottle": { "alias": "resizeThrottle"; "required": false; "isSignal": true; }; "breakpoints": { "alias": "breakpoints"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiResponsiveContainerDirective, never>;
 }
 
 // (No @packageDocumentation comment for this package)

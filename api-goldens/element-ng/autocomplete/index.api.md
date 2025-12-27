@@ -12,10 +12,6 @@ import { OnInit } from '@angular/core';
 export class SiAutocompleteDirective<T> {
     // (undocumented)
     get active(): SiAutocompleteOptionDirective<T> | undefined | null;
-    // (undocumented)
-    static ɵdir: i0.ɵɵDirectiveDeclaration<SiAutocompleteDirective<any>, "input[siAutocomplete]", ["siAutocomplete"], {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiAutocompleteDirective<any>, never>;
 }
 
 // @public (undocumented)
@@ -28,25 +24,13 @@ export class SiAutocompleteListboxDirective<T> implements OnInit {
     // (undocumented)
     readonly id: i0.InputSignal<string>;
     // (undocumented)
-    ngOnInit(): void;
-    // (undocumented)
     readonly siAutocompleteDefaultIndex: i0.InputSignal<number>;
     // (undocumented)
     readonly siAutocompleteOptionSubmitted: i0.OutputEmitterRef<T | undefined>;
-    // (undocumented)
-    static ɵdir: i0.ɵɵDirectiveDeclaration<SiAutocompleteListboxDirective<any>, "[siAutocompleteListboxFor]", ["siAutocompleteListbox"], { "id": { "alias": "id"; "required": false; "isSignal": true; }; "autocomplete": { "alias": "siAutocompleteListboxFor"; "required": true; "isSignal": true; }; "siAutocompleteDefaultIndex": { "alias": "siAutocompleteDefaultIndex"; "required": false; "isSignal": true; }; }, { "siAutocompleteOptionSubmitted": "siAutocompleteOptionSubmitted"; }, ["options"], never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiAutocompleteListboxDirective<any>, never>;
 }
 
 // @public (undocumented)
 export class SiAutocompleteModule {
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiAutocompleteModule, never>;
-    // (undocumented)
-    static ɵinj: i0.ɵɵInjectorDeclaration<SiAutocompleteModule>;
-    // (undocumented)
-    static ɵmod: i0.ɵɵNgModuleDeclaration<SiAutocompleteModule, never, [typeof SiAutocompleteDirective, typeof SiAutocompleteListboxDirective, typeof SiAutocompleteOptionDirective], [typeof SiAutocompleteDirective, typeof SiAutocompleteListboxDirective, typeof SiAutocompleteOptionDirective]>;
 }
 
 // @public (undocumented)
@@ -59,10 +43,6 @@ export class SiAutocompleteOptionDirective<T = unknown> implements Highlightable
     readonly id: i0.InputSignal<string>;
     // (undocumented)
     readonly value: i0.InputSignal<T | undefined>;
-    // (undocumented)
-    static ɵdir: i0.ɵɵDirectiveDeclaration<SiAutocompleteOptionDirective<any>, "[siAutocompleteOption]", ["siAutocompleteOption"], { "id": { "alias": "id"; "required": false; "isSignal": true; }; "disabledInput": { "alias": "disabled"; "required": false; "isSignal": true; }; "value": { "alias": "siAutocompleteOption"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiAutocompleteOptionDirective<any>, never>;
 }
 
 // (No @packageDocumentation comment for this package)

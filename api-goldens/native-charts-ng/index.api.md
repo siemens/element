@@ -9,12 +9,6 @@ import * as i1 from '@siemens/native-charts-ng/gauge';
 
 // @public (undocumented)
 class SiNativeChartsNgModule {
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiNativeChartsNgModule, never>;
-    // (undocumented)
-    static ɵinj: i0.ɵɵInjectorDeclaration<SiNativeChartsNgModule>;
-    // (undocumented)
-    static ɵmod: i0.ɵɵNgModuleDeclaration<SiNativeChartsNgModule, never, [typeof i1.SiNChartGaugeComponent], [typeof i1.SiNChartGaugeComponent]>;
 }
 export { SiNativeChartsNgModule }
 export { SiNativeChartsNgModule as SimplNativeChartsNgModule }

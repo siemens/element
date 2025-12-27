@@ -16,10 +16,6 @@ export class SiPopoverLegacyDirective implements OnInit, OnDestroy {
     hide(): void;
     readonly icon: _angular_core.InputSignal<string | undefined>;
     readonly isOpen: _angular_core.InputSignalWithTransform<boolean | undefined, unknown>;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
     readonly outsideClick: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly placement: _angular_core.InputSignal<"auto" | "start" | "end" | "top" | "bottom">;
     // (undocumented)
@@ -31,20 +27,10 @@ export class SiPopoverLegacyDirective implements OnInit, OnDestroy {
     readonly siPopoverLegacy: _angular_core.InputSignal<string | TemplateRef<any> | undefined>;
     readonly triggers: _angular_core.InputSignal<string>;
     updatePosition(): void;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiPopoverLegacyDirective, "[siPopoverLegacy]", ["si-popover"], { "siPopoverLegacy": { "alias": "siPopoverLegacy"; "required": false; "isSignal": true; }; "placement": { "alias": "placement"; "required": false; "isSignal": true; }; "triggers": { "alias": "triggers"; "required": false; "isSignal": true; }; "popoverTitle": { "alias": "popoverTitle"; "required": false; "isSignal": true; }; "containerClass": { "alias": "containerClass"; "required": false; "isSignal": true; }; "outsideClick": { "alias": "outsideClick"; "required": false; "isSignal": true; }; "icon": { "alias": "icon"; "required": false; "isSignal": true; }; "isOpen": { "alias": "isOpen"; "required": false; "isSignal": true; }; "popoverContext": { "alias": "popoverContext"; "required": false; "isSignal": true; }; }, { "shown": "shown"; "hidden": "hidden"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiPopoverLegacyDirective, never>;
 }
 
 // @public @deprecated (undocumented)
 export class SiPopoverLegacyModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiPopoverLegacyModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiPopoverLegacyModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiPopoverLegacyModule, never, [typeof SiPopoverLegacyDirective], [typeof SiPopoverLegacyDirective]>;
 }
 
 // (No @packageDocumentation comment for this package)

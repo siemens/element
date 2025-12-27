@@ -17,10 +17,6 @@ export interface MicrochartDonutSeries {
 export class SiMicrochartDonutComponent {
     readonly radius: _angular_core.InputSignalWithTransform<number, unknown>;
     readonly series: _angular_core.InputSignal<MicrochartDonutSeries[]>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiMicrochartDonutComponent, "si-microchart-donut", never, { "series": { "alias": "series"; "required": true; "isSignal": true; }; "radius": { "alias": "radius"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiMicrochartDonutComponent, never>;
 }
 
 // (No @packageDocumentation comment for this package)

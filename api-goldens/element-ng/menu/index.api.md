@@ -98,26 +98,14 @@ export abstract class SiMenuActionService {
 // @public (undocumented)
 export class SiMenuBarDirective {
     readonly disabled: i0.InputSignal<boolean | undefined>;
-    // (undocumented)
-    static ɵdir: i0.ɵɵDirectiveDeclaration<SiMenuBarDirective, "si-menu-bar", never, { "disabled": { "alias": "disabled"; "required": false; "isSignal": true; }; }, {}, never, never, true, [{ directive: typeof i1.CdkMenuBar; inputs: {}; outputs: {}; }, { directive: typeof i1.CdkTargetMenuAim; inputs: {}; outputs: {}; }]>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiMenuBarDirective, never>;
 }
 
 // @public (undocumented)
 export class SiMenuDirective {
-    // (undocumented)
-    static ɵdir: i0.ɵɵDirectiveDeclaration<SiMenuDirective, "si-menu", never, {}, {}, never, never, true, [{ directive: typeof i1.CdkMenu; inputs: {}; outputs: {}; }, { directive: typeof i1.CdkTargetMenuAim; inputs: {}; outputs: {}; }]>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiMenuDirective, never>;
 }
 
 // @public (undocumented)
 export class SiMenuDividerDirective {
-    // (undocumented)
-    static ɵdir: i0.ɵɵDirectiveDeclaration<SiMenuDividerDirective, "si-menu-divider", never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiMenuDividerDirective, never>;
 }
 
 // @public (undocumented)
@@ -126,52 +114,26 @@ export class SiMenuFactoryComponent {
     readonly actionParam: i0.InputSignal<unknown>;
     // (undocumented)
     readonly items: i0.InputSignal<readonly (MenuItem_2 | MenuItem)[] | undefined>;
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<SiMenuFactoryComponent, "si-menu-factory", never, { "items": { "alias": "items"; "required": false; "isSignal": true; }; "actionParam": { "alias": "actionParam"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiMenuFactoryComponent, never>;
 }
 
 // @public (undocumented)
 export class SiMenuHeaderDirective {
-    // (undocumented)
-    static ɵdir: i0.ɵɵDirectiveDeclaration<SiMenuHeaderDirective, "si-menu-header", never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiMenuHeaderDirective, never>;
 }
 
 // @public (undocumented)
 export class SiMenuItemCheckboxComponent extends SiMenuItemBase {
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<SiMenuItemCheckboxComponent, "si-menu-item-checkbox, button[si-menu-item-checkbox]", never, {}, {}, never, ["*"], true, [{ directive: typeof i1.CdkMenuItemCheckbox; inputs: { "cdkMenuItemChecked": "checked"; "cdkMenuItemDisabled": "disabled"; }; outputs: { "cdkMenuItemTriggered": "triggered"; }; }, { directive: typeof i1.CdkMenuTrigger; inputs: {}; outputs: {}; }]>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiMenuItemCheckboxComponent, never>;
 }
 
 // @public (undocumented)
 export class SiMenuItemComponent extends SiMenuItemBase {
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<SiMenuItemComponent, "si-menu-item, a[si-menu-item], button[si-menu-item]", never, {}, {}, never, ["*", ".end"], true, [{ directive: typeof i1.CdkMenuItem; inputs: { "cdkMenuItemDisabled": "disabled"; }; outputs: { "cdkMenuItemTriggered": "triggered"; }; }]>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiMenuItemComponent, never>;
 }
 
 // @public (undocumented)
 export class SiMenuItemRadioComponent extends SiMenuItemBase {
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<SiMenuItemRadioComponent, "si-menu-item-radio", never, {}, {}, never, ["*"], true, [{ directive: typeof i1.CdkMenuItemRadio; inputs: { "cdkMenuItemChecked": "checked"; "cdkMenuItemDisabled": "disabled"; }; outputs: { "cdkMenuItemTriggered": "triggered"; }; }, { directive: typeof i1.CdkMenuTrigger; inputs: {}; outputs: {}; }]>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiMenuItemRadioComponent, never>;
 }
 
 // @public (undocumented)
 export class SiMenuModule {
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiMenuModule, never>;
-    // (undocumented)
-    static ɵinj: i0.ɵɵInjectorDeclaration<SiMenuModule>;
-    // (undocumented)
-    static ɵmod: i0.ɵɵNgModuleDeclaration<SiMenuModule, never, [typeof SiMenuBarDirective, typeof SiMenuDirective, typeof SiMenuDividerDirective, typeof SiMenuFactoryComponent, typeof SiMenuHeaderDirective, typeof SiMenuItemCheckboxComponent, typeof SiMenuItemComponent, typeof SiMenuItemRadioComponent], [typeof SiMenuBarDirective, typeof SiMenuDirective, typeof SiMenuDividerDirective, typeof SiMenuFactoryComponent, typeof SiMenuHeaderDirective, typeof SiMenuItemCheckboxComponent, typeof SiMenuItemComponent, typeof SiMenuItemRadioComponent]>;
 }
 
 // (No @packageDocumentation comment for this package)

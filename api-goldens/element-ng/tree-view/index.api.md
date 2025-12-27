@@ -197,16 +197,6 @@ export class SiTreeViewComponent implements OnInit, OnChanges, OnDestroy, AfterV
     readonly items: _angular_core.InputSignal<TreeItem<any>[]>;
     readonly itemsVirtualizedChanged: _angular_core.OutputEmitterRef<ItemsVirtualizedArgs>;
     readonly loadChildren: _angular_core.OutputEmitterRef<LoadChildrenEventArgs>;
-    // (undocumented)
-    ngAfterViewChecked(): void;
-    // (undocumented)
-    ngAfterViewInit(): void;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
     readonly noActionsString: _angular_core.InputSignal<string>;
     readonly pageSize: _angular_core.InputSignalWithTransform<number, number>;
     readonly pagesVirtualized: _angular_core.InputSignalWithTransform<number, number>;
@@ -221,42 +211,18 @@ export class SiTreeViewComponent implements OnInit, OnChanges, OnDestroy, AfterV
     readonly treeItemFolderClicked: _angular_core.OutputEmitterRef<FolderStateEventArgs>;
     readonly treeItemFolderStateChanged: _angular_core.OutputEmitterRef<FolderStateEventArgs>;
     readonly treeItemsSelected: _angular_core.OutputEmitterRef<TreeItem<any>[]>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiTreeViewComponent, "si-tree-view", never, { "contextMenuItems": { "alias": "contextMenuItems"; "required": false; "isSignal": true; }; "childrenIndentation": { "alias": "childrenIndentation"; "required": false; "isSignal": true; }; "horizontalScrolling": { "alias": "horizontalScrolling"; "required": false; "isSignal": true; }; "compactMode": { "alias": "compactMode"; "required": false; "isSignal": true; }; "expandCollapseAll": { "alias": "expandCollapseAll"; "required": false; "isSignal": true; }; "expandAllTooltip": { "alias": "expandAllTooltip"; "required": false; "isSignal": true; }; "collapseAllTooltip": { "alias": "collapseAllTooltip"; "required": false; "isSignal": true; }; "icons": { "alias": "icons"; "required": false; "isSignal": true; }; "pageSize": { "alias": "pageSize"; "required": false; "isSignal": true; }; "pagesVirtualized": { "alias": "pagesVirtualized"; "required": false; "isSignal": true; }; "folderStateStart": { "alias": "folderStateStart"; "required": false; "isSignal": true; }; "isVirtualized": { "alias": "isVirtualized"; "required": false; "isSignal": true; }; "items": { "alias": "items"; "required": false; "isSignal": true; }; "selectedItem": { "alias": "selectedItem"; "required": false; "isSignal": true; }; "singleSelectMode": { "alias": "singleSelectMode"; "required": false; "isSignal": true; }; "enableDataField1": { "alias": "enableDataField1"; "required": false; "isSignal": true; }; "enableDataField2": { "alias": "enableDataField2"; "required": false; "isSignal": true; }; "enableStateIndicator": { "alias": "enableStateIndicator"; "required": false; "isSignal": true; }; "enableIcon": { "alias": "enableIcon"; "required": false; "isSignal": true; }; "enableContextMenuButton": { "alias": "enableContextMenuButton"; "required": false; "isSignal": true; }; "enableSelection": { "alias": "enableSelection"; "required": false; "isSignal": true; }; "deleteChildrenOnCollapse": { "alias": "deleteChildrenOnCollapse"; "required": false; "isSignal": true; }; "flatTree": { "alias": "flatTree"; "required": false; "isSignal": true; }; "groupedList": { "alias": "groupedList"; "required": false; "isSignal": true; }; "enableCheckbox": { "alias": "enableCheckbox"; "required": false; "isSignal": true; }; "enableOptionbox": { "alias": "enableOptionbox"; "required": false; "isSignal": true; }; "expandOnClick": { "alias": "expandOnClick"; "required": false; "isSignal": true; }; "inheritChecked": { "alias": "inheritChecked"; "required": false; "isSignal": true; }; "noActionsString": { "alias": "noActionsString"; "required": false; "isSignal": true; }; "ariaLabel": { "alias": "ariaLabel"; "required": false; "isSignal": true; }; "ariaLabelledBy": { "alias": "ariaLabelledBy"; "required": false; "isSignal": true; }; }, { "itemsVirtualizedChanged": "itemsVirtualizedChanged"; "treeItemFolderClicked": "treeItemFolderClicked"; "treeItemFolderStateChanged": "treeItemFolderStateChanged"; "treeItemClicked": "treeItemClicked"; "treeItemCheckboxClicked": "treeItemCheckboxClicked"; "loadChildren": "loadChildren"; "treeItemsSelected": "treeItemsSelected"; }, ["templates", "treeItemContentTemplate", "nextItems"], ["[cdkDropList], [siTreeViewItem]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiTreeViewComponent, never>;
 }
 
 // @public (undocumented)
 export class SiTreeViewItemComponent implements OnInit, OnDestroy, AfterViewInit, FocusableOption, DoCheck {
     focus(): void;
     getLabel(): string;
-    // (undocumented)
-    ngAfterViewInit(): void;
-    // (undocumented)
-    ngDoCheck(): void;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiTreeViewItemComponent, "si-tree-view-item", never, {}, {}, never, [":not(si-tree-view-item):not([dragPreview])"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiTreeViewItemComponent, never>;
 }
 
 // @public
 export class SiTreeViewItemDirective implements AfterViewInit, OnDestroy {
     // (undocumented)
-    ngAfterViewInit(): void;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
     static ngTemplateContextGuard(_dir: SiTreeViewItemDirective, ctx: unknown): ctx is TreeItemContext;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiTreeViewItemDirective, "[siTreeViewItem]", never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiTreeViewItemDirective, never>;
 }
 
 // @public @deprecated
@@ -267,20 +233,10 @@ export class SiTreeViewItemTemplateDirective {
     static ngTemplateContextGuard(dir: SiTreeViewItemTemplateDirective, ctx: any): ctx is {
         $implicit: TreeItem;
     };
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiTreeViewItemTemplateDirective, "[siTreeViewItemTemplate]", never, { "name": { "alias": "siTreeViewItemTemplate"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiTreeViewItemTemplateDirective, never>;
 }
 
 // @public (undocumented)
 export class SiTreeViewModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiTreeViewModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiTreeViewModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiTreeViewModule, never, [typeof SiTreeViewComponent, typeof SiTreeViewItemComponent, typeof SiTreeViewItemDirective, typeof SiTreeViewItemTemplateDirective], [typeof SiTreeViewComponent, typeof SiTreeViewItemComponent, typeof SiTreeViewItemDirective, typeof SiTreeViewItemTemplateDirective]>;
 }
 
 // @public (undocumented)

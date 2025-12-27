@@ -24,10 +24,6 @@ export class SiTabComponent extends SiTabBaseDirective implements OnDestroy {
     readonly canDeactivate: _angular_core.InputSignal<(() => boolean) | undefined>;
     // (undocumented)
     selectTab(retainFocus?: boolean): void;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiTabComponent, "si-tab", never, { "active": { "alias": "active"; "required": false; "isSignal": true; }; "canActivate": { "alias": "canActivate"; "required": false; "isSignal": true; }; "canDeactivate": { "alias": "canDeactivate"; "required": false; "isSignal": true; }; }, { "active": "activeChange"; }, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiTabComponent, never>;
 }
 
 // @public
@@ -36,19 +32,11 @@ export class SiTabLinkComponent extends SiTabBaseDirective {
     readonly active: _angular_core.Signal<boolean | undefined>;
     // (undocumented)
     selectTab(retainFocus?: boolean): void;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiTabLinkComponent, "a[si-tab][routerLink]", never, {}, {}, never, ["*"], true, [{ directive: typeof i1.RouterLinkActive; inputs: {}; outputs: {}; }]>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiTabLinkComponent, never>;
 }
 
 // @public
 export class SiTabsetComponent {
     constructor();
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiTabsetComponent, "si-tabset", never, {}, {}, ["tabPanels"], ["*", "router-outlet"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiTabsetComponent, never>;
 }
 
 // (No @packageDocumentation comment for this package)

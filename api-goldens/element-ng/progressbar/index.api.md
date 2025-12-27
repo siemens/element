@@ -18,20 +18,10 @@ export class SiProgressbarComponent {
     readonly max: _angular_core.InputSignal<number>;
     readonly progress: _angular_core.InputSignal<string | undefined>;
     readonly value: _angular_core.InputSignal<number | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiProgressbarComponent, "si-progressbar", never, { "ariaLabel": { "alias": "ariaLabel"; "required": false; "isSignal": true; }; "max": { "alias": "max"; "required": false; "isSignal": true; }; "value": { "alias": "value"; "required": false; "isSignal": true; }; "heading": { "alias": "heading"; "required": false; "isSignal": true; }; "progress": { "alias": "progress"; "required": false; "isSignal": true; }; "height": { "alias": "height"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiProgressbarComponent, never>;
 }
 
 // @public (undocumented)
 export class SiProgressbarModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiProgressbarModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiProgressbarModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiProgressbarModule, never, [typeof SiProgressbarComponent], [typeof SiProgressbarComponent]>;
 }
 
 // (No @packageDocumentation comment for this package)

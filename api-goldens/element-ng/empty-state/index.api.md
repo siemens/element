@@ -12,20 +12,10 @@ export class SiEmptyStateComponent {
     readonly content: i0.InputSignal<TranslatableString | undefined>;
     readonly heading: i0.InputSignal<TranslatableString>;
     readonly icon: i0.InputSignal<string>;
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<SiEmptyStateComponent, "si-empty-state", never, { "icon": { "alias": "icon"; "required": true; "isSignal": true; }; "heading": { "alias": "heading"; "required": true; "isSignal": true; }; "content": { "alias": "content"; "required": false; "isSignal": true; }; }, {}, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiEmptyStateComponent, never>;
 }
 
 // @public (undocumented)
 export class SiEmptyStateModule {
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiEmptyStateModule, never>;
-    // (undocumented)
-    static ɵinj: i0.ɵɵInjectorDeclaration<SiEmptyStateModule>;
-    // (undocumented)
-    static ɵmod: i0.ɵɵNgModuleDeclaration<SiEmptyStateModule, never, [typeof SiEmptyStateComponent], [typeof SiEmptyStateComponent]>;
 }
 
 // (No @packageDocumentation comment for this package)

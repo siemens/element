@@ -23,10 +23,6 @@ export class SiColorPickerComponent implements ControlValueAccessor {
     setDisabledState(isDisabled: boolean): void;
     // (undocumented)
     writeValue(value: string): void;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiColorPickerComponent, "si-color-picker", never, { "colorPalette": { "alias": "colorPalette"; "required": false; "isSignal": true; }; "color": { "alias": "color"; "required": false; "isSignal": true; }; "autoClose": { "alias": "autoClose"; "required": false; "isSignal": true; }; "disabledInput": { "alias": "disabled"; "required": false; "isSignal": true; }; "ariaLabel": { "alias": "ariaLabel"; "required": false; "isSignal": true; }; }, { "color": "colorChange"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiColorPickerComponent, never>;
 }
 
 // (No @packageDocumentation comment for this package)

@@ -39,10 +39,6 @@ export class SiDirectionality implements Directionality {
     get value(): Direction;
     // (undocumented)
     readonly valueSignal: i0.WritableSignal<Direction>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiDirectionality, never>;
-    // (undocumented)
-    static ɵprov: i0.ɵɵInjectableDeclaration<SiDirectionality>;
 }
 
 // @public (undocumented)
@@ -62,10 +58,6 @@ export class SiLocaleId extends String {
     toString(): string;
     // (undocumented)
     valueOf(): string;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiLocaleId, never>;
-    // (undocumented)
-    static ɵprov: i0.ɵɵInjectableDeclaration<SiLocaleId>;
 }
 
 // @public (undocumented)
@@ -78,10 +70,6 @@ export class SiLocaleService {
     // (undocumented)
     get locale(): string;
     readonly localePackageLoaded$: ReplaySubject<void>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiLocaleService, never>;
-    // (undocumented)
-    static ɵprov: i0.ɵɵInjectableDeclaration<SiLocaleService>;
 }
 
 // @public

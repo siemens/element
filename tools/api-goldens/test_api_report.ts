@@ -24,9 +24,7 @@ import { Collector } from '@microsoft/api-extractor/lib/collector/Collector';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import ts, {
-  ConstructorDeclaration,
-  GetAccessorDeclaration, MethodDeclaration, PropertyDeclaration, SetAccessorDeclaration } from 'typescript';
+import { ModifierFlags } from 'typescript';
 
 import { resolveTypePackages } from './interop_module_mappings.js';
 
@@ -37,12 +35,50 @@ import { resolveTypePackages } from './interop_module_mappings.js';
  * */
 const _origFetchAstModuleExportInfo = ExportAnalyzer.prototype.fetchAstModuleExportInfo;
 
+/** Angular static fields that are skipped */
+const _angularStaticFields = ['ɵcmp', 'ɵdir', 'ɵfac', 'ɵmod', 'ɵinj', 'ɵprov'];
+/** Angular lifecycle hooks, skipped. */
+const _angularLifecycleHooks = [
+  'ngOnInit',
+  'ngOnChanges',
+  'ngDoCheck',
+  'ngAfterContentInit',
+  'ngAfterContentChecked',
+  'ngAfterViewInit',
+  'ngAfterViewChecked',
+  'ngOnDestroy'
+];
+
 /**
  * Original definition of the `Collector#fetchApiItemMetadata` method.
  * We store the original function since we monkey-patch it later to mark
  * protected members as internal.
  * */
 const _origFetchApiItemMetadata = Collector.prototype.fetchApiItemMetadata;
+
+function skipAngular(astDeclaration: AstDeclaration): boolean {
+  // check if this is an Angular component/directive/module
+  if (astDeclaration.parent?.findChildrenWithName('ɵfac').length) {
+    // skip Angular component and factory
+    if ((astDeclaration.modifierFlags & ModifierFlags.Static) !== 0 &&
+        _angularStaticFields.includes(astDeclaration.astSymbol.localName)
+    ) {
+      return true;
+    }
+
+    // skip protected fields
+    if ((astDeclaration.modifierFlags & ModifierFlags.Protected) !== 0) {
+      return true;
+    }
+
+    // skip Angular life cycle hooks
+    if (_angularLifecycleHooks.includes(astDeclaration.astSymbol.localName)) {
+      return true;
+    }
+  }
+
+  return false;
+}
 
 /**
  * Builds an API report for the given entry-point file and compares
@@ -155,28 +191,17 @@ export async function testApiGolden(
   Collector.prototype.fetchApiItemMetadata = function (astDeclaration: AstDeclaration) {
     const metadata: ApiItemMetadata = _origFetchApiItemMetadata.apply(this, [astDeclaration]);
 
-    const declaration = astDeclaration.declaration;
-    if (
-      ts.isPropertyDeclaration(declaration) ||
-      ts.isMethodDeclaration(declaration) ||
-      ts.isGetAccessorDeclaration(declaration) ||
-      ts.isSetAccessorDeclaration(declaration) ||
-      ts.isConstructorDeclaration(declaration)
-    ) {
-      const isProtected = (declaration as (PropertyDeclaration | MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration | ConstructorDeclaration))
-        .modifiers?.some(modifier => modifier.kind === ts.SyntaxKind.ProtectedKeyword) ?? false;
-      if (isProtected) {
-        return new ApiItemMetadata({
-          effectiveReleaseTag: ReleaseTag.Internal,
-          declaredReleaseTag: ReleaseTag.Internal,
-          releaseTagSameAsParent: false,
-          isOverride: metadata.isOverride,
-          isSealed: metadata.isSealed,
-          isVirtual: metadata.isVirtual,
-          isEventProperty: metadata.isEventProperty,
-          isPreapproved: metadata.isPreapproved
-        });
-      }
+    if (skipAngular(astDeclaration)) {
+      return new ApiItemMetadata({
+        effectiveReleaseTag: ReleaseTag.Internal,
+        declaredReleaseTag: ReleaseTag.Internal,
+        releaseTagSameAsParent: false,
+        isOverride: metadata.isOverride,
+        isSealed: metadata.isSealed,
+        isVirtual: metadata.isVirtual,
+        isEventProperty: metadata.isEventProperty,
+        isPreapproved: metadata.isPreapproved
+      });
     }
 
     return metadata;

@@ -15,20 +15,10 @@ export class SiUnauthorizedPageComponent {
     readonly icon: _angular_core.InputSignal<string>;
     readonly link: _angular_core.InputSignal<Link | undefined>;
     readonly subHeading: _angular_core.InputSignal<TranslatableString | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiUnauthorizedPageComponent, "si-unauthorized-page", never, { "icon": { "alias": "icon"; "required": false; "isSignal": true; }; "heading": { "alias": "heading"; "required": false; "isSignal": true; }; "subHeading": { "alias": "subHeading"; "required": false; "isSignal": true; }; "description": { "alias": "description"; "required": false; "isSignal": true; }; "link": { "alias": "link"; "required": false; "isSignal": true; }; }, {}, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiUnauthorizedPageComponent, never>;
 }
 
 // @public (undocumented)
 export class SiUnauthorizedPageModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiUnauthorizedPageModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiUnauthorizedPageModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiUnauthorizedPageModule, never, [typeof SiUnauthorizedPageComponent], [typeof SiUnauthorizedPageComponent]>;
 }
 
 // (No @packageDocumentation comment for this package)

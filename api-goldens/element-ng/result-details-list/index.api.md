@@ -24,20 +24,10 @@ export type ResultDetailStepState = 'passed' | 'failed' | 'running' | 'not-suppo
 // @public (undocumented)
 export class SiResultDetailsListComponent {
     readonly steps: i0.InputSignal<ResultDetailStep[]>;
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<SiResultDetailsListComponent, "si-result-details-list", never, { "steps": { "alias": "steps"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiResultDetailsListComponent, never>;
 }
 
 // @public (undocumented)
 export class SiResultDetailsListModule {
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiResultDetailsListModule, never>;
-    // (undocumented)
-    static ɵinj: i0.ɵɵInjectorDeclaration<SiResultDetailsListModule>;
-    // (undocumented)
-    static ɵmod: i0.ɵɵNgModuleDeclaration<SiResultDetailsListModule, never, [typeof SiResultDetailsListComponent], [typeof SiResultDetailsListComponent]>;
 }
 
 // (No @packageDocumentation comment for this package)

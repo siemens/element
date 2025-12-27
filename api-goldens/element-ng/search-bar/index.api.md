@@ -20,12 +20,6 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
     readonly debounceTime: _angular_core.InputSignalWithTransform<number, unknown>;
     // (undocumented)
     readonly disabledInput: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
     readonly placeholder: _angular_core.InputSignal<string>;
     readonly prohibitedCharacters: _angular_core.InputSignal<string | undefined>;
     // (undocumented)
@@ -34,20 +28,10 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
     readonly showIcon: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly tabbable: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly value: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSearchBarComponent, "si-search-bar", never, { "debounceTime": { "alias": "debounceTime"; "required": false; "isSignal": true; }; "prohibitedCharacters": { "alias": "prohibitedCharacters"; "required": false; "isSignal": true; }; "placeholder": { "alias": "placeholder"; "required": false; "isSignal": true; }; "showIcon": { "alias": "showIcon"; "required": false; "isSignal": true; }; "tabbable": { "alias": "tabbable"; "required": false; "isSignal": true; }; "value": { "alias": "value"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "colorVariant": { "alias": "colorVariant"; "required": false; "isSignal": true; }; "disabledInput": { "alias": "disabled"; "required": false; "isSignal": true; }; "clearButtonAriaLabel": { "alias": "clearButtonAriaLabel"; "required": false; "isSignal": true; }; }, { "searchChange": "searchChange"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSearchBarComponent, never>;
 }
 
 // @public (undocumented)
 export class SiSearchBarModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSearchBarModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiSearchBarModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiSearchBarModule, never, [typeof SiSearchBarComponent], [typeof SiSearchBarComponent]>;
 }
 
 // (No @packageDocumentation comment for this package)
