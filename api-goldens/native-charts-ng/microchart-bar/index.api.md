@@ -21,10 +21,6 @@ export class SiMicrochartBarComponent {
     readonly series: _angular_core.InputSignal<MicrochartBarSeries>;
     // (undocumented)
     readonly width: _angular_core.InputSignal<number>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiMicrochartBarComponent, "si-microchart-bar", never, { "width": { "alias": "width"; "required": false; "isSignal": true; }; "height": { "alias": "height"; "required": false; "isSignal": true; }; "series": { "alias": "series"; "required": true; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiMicrochartBarComponent, never>;
 }
 
 // (No @packageDocumentation comment for this package)

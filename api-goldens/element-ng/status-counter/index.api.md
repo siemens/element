@@ -15,10 +15,6 @@ export class SiStatusCounterComponent {
     // (undocumented)
     readonly isDisabledOrCountZero: _angular_core.Signal<boolean>;
     readonly stackedIcon: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiStatusCounterComponent, "si-status-counter, si-icon-status", never, { "icon": { "alias": "icon"; "required": true; "isSignal": true; }; "stackedIcon": { "alias": "stackedIcon"; "required": false; "isSignal": true; }; "count": { "alias": "count"; "required": false; "isSignal": true; }; "color": { "alias": "color"; "required": false; "isSignal": true; }; "disabled": { "alias": "disabled"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiStatusCounterComponent, never>;
 }
 
 // (No @packageDocumentation comment for this package)

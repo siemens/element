@@ -18,10 +18,6 @@ import { TemplateRef } from '@angular/core';
 // @public
 export class SiHeaderDropdownComponent {
     constructor();
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiHeaderDropdownComponent, "si-header-dropdown", never, {}, {}, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiHeaderDropdownComponent, never>;
 }
 
 // @public
@@ -31,10 +27,6 @@ export class SiHeaderDropdownItemComponent {
     readonly checked: _angular_core.InputSignal<"" | "check" | "radio" | undefined>;
     readonly icon: _angular_core.InputSignal<string | undefined>;
     readonly iconBadge: _angular_core.InputSignal<string | number | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiHeaderDropdownItemComponent, "si-header-dropdown-item, a[si-header-dropdown-item], button[si-header-dropdown-item]", never, { "icon": { "alias": "icon"; "required": false; "isSignal": true; }; "badge": { "alias": "badge"; "required": false; "isSignal": true; }; "iconBadge": { "alias": "iconBadge"; "required": false; "isSignal": true; }; "badgeColor": { "alias": "badgeColor"; "required": false; "isSignal": true; }; "checked": { "alias": "checked"; "required": false; "isSignal": true; }; }, {}, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiHeaderDropdownItemComponent, never>;
 }
 
 // @public
@@ -45,18 +37,8 @@ export class SiHeaderDropdownTriggerDirective implements OnChanges, OnInit, OnDe
     readonly dropdown: _angular_core.InputSignal<TemplateRef<unknown>>;
     readonly dropdownData: _angular_core.InputSignal<unknown>;
     get isOpen(): boolean;
-    // (undocumented)
-    ngOnChanges(): void;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
     open(): void;
     readonly openChange: _angular_core.OutputEmitterRef<boolean>;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiHeaderDropdownTriggerDirective, "[siHeaderDropdownTriggerFor]", ["siHeaderDropdownTrigger"], { "dropdown": { "alias": "siHeaderDropdownTriggerFor"; "required": true; "isSignal": true; }; "dropdownData": { "alias": "dropdownData"; "required": false; "isSignal": true; }; }, { "openChange": "openChange"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiHeaderDropdownTriggerDirective, never>;
 }
 
 // (No @packageDocumentation comment for this package)

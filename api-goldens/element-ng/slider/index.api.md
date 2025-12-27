@@ -28,20 +28,10 @@ export class SiSliderComponent implements ControlValueAccessor, SiFormItemContro
     readonly step: _angular_core.InputSignalWithTransform<number, unknown>;
     readonly thumbIcon: _angular_core.InputSignal<string | undefined>;
     readonly value: _angular_core.ModelSignal<number | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSliderComponent, "si-slider", never, { "id": { "alias": "id"; "required": false; "isSignal": true; }; "value": { "alias": "value"; "required": false; "isSignal": true; }; "min": { "alias": "min"; "required": false; "isSignal": true; }; "max": { "alias": "max"; "required": false; "isSignal": true; }; "minLabel": { "alias": "minLabel"; "required": false; "isSignal": true; }; "maxLabel": { "alias": "maxLabel"; "required": false; "isSignal": true; }; "step": { "alias": "step"; "required": false; "isSignal": true; }; "thumbIcon": { "alias": "thumbIcon"; "required": false; "isSignal": true; }; "incrementLabel": { "alias": "incrementLabel"; "required": false; "isSignal": true; }; "decrementLabel": { "alias": "decrementLabel"; "required": false; "isSignal": true; }; "sliderLabel": { "alias": "sliderLabel"; "required": false; "isSignal": true; }; "labelledby": { "alias": "labelledby"; "required": false; "isSignal": true; }; "disabledInput": { "alias": "disabled"; "required": false; "isSignal": true; }; "errormessageId": { "alias": "errormessageId"; "required": false; "isSignal": true; }; }, { "value": "valueChange"; }, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSliderComponent, never>;
 }
 
 // @public (undocumented)
 export class SiSliderModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSliderModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiSliderModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiSliderModule, never, [typeof SiSliderComponent], [typeof SiSliderComponent]>;
 }
 
 // (No @packageDocumentation comment for this package)

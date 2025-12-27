@@ -30,20 +30,12 @@ export const ipV6Validator: (options: {
 export class SiIp4InputDirective extends SiIpInputDirective implements ControlValueAccessor, Validator {
     // (undocumented)
     validate(control: AbstractControl): ValidationErrors | null;
-    // (undocumented)
-    static ɵdir: i0.ɵɵDirectiveDeclaration<SiIp4InputDirective, "input[siIpV4]", ["siIpV4"], {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiIp4InputDirective, never>;
 }
 
 // @public
 export class SiIp6InputDirective extends SiIpInputDirective implements ControlValueAccessor, Validator {
     // (undocumented)
     validate(control: AbstractControl): ValidationErrors | null;
-    // (undocumented)
-    static ɵdir: i0.ɵɵDirectiveDeclaration<SiIp6InputDirective, "input[siIpV6]", ["siIpV6"], {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiIp6InputDirective, never>;
 }
 
 // (No @packageDocumentation comment for this package)

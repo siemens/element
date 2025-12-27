@@ -20,20 +20,10 @@ export const SI_COPYRIGHT_DETAILS: InjectionToken<CopyrightDetails>;
 // @public (undocumented)
 export class SiCopyrightNoticeComponent {
     readonly copyright: _angular_core.InputSignal<CopyrightDetails | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiCopyrightNoticeComponent, "si-copyright-notice", never, { "copyright": { "alias": "copyright"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiCopyrightNoticeComponent, never>;
 }
 
 // @public (undocumented)
 export class SiCopyrightNoticeModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiCopyrightNoticeModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiCopyrightNoticeModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiCopyrightNoticeModule, never, [typeof SiCopyrightNoticeComponent], [typeof SiCopyrightNoticeComponent]>;
 }
 
 // (No @packageDocumentation comment for this package)

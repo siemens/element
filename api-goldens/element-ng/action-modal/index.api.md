@@ -65,10 +65,6 @@ export type EditDiscardDialogResult = 'save' | 'discard' | 'cancel';
 // @public
 export class SiActionDialogService {
     showActionDialog<T extends ActionDialog>(dialog: T, diOptions?: ModalDependencyInjectionOptions): Observable<ActionDialogReturnType<T>>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiActionDialogService, never>;
-    // (undocumented)
-    static ɵprov: i0.ɵɵInjectableDeclaration<SiActionDialogService>;
 }
 
 // (No @packageDocumentation comment for this package)

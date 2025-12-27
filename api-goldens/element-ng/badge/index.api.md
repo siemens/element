@@ -14,10 +14,6 @@ export type BadgeType = StatusType | 'default' | 'inverse' | 'info-emphasis' | '
 export class SiBadgeComponent {
     readonly icon: _angular_core.InputSignal<string | undefined>;
     readonly type: _angular_core.InputSignal<BadgeType>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiBadgeComponent, "si-badge", never, { "icon": { "alias": "icon"; "required": false; "isSignal": true; }; "type": { "alias": "type"; "required": false; "isSignal": true; }; }, {}, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiBadgeComponent, never>;
 }
 
 // (No @packageDocumentation comment for this package)

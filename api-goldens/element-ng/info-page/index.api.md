@@ -16,10 +16,6 @@ export class SiInfoPageComponent {
     readonly instructions: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly link: _angular_core.InputSignal<Link | undefined>;
     readonly titleText: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiInfoPageComponent, "si-info-page", never, { "icon": { "alias": "icon"; "required": false; "isSignal": true; }; "iconColor": { "alias": "iconColor"; "required": false; "isSignal": true; }; "titleText": { "alias": "titleText"; "required": true; "isSignal": true; }; "copyText": { "alias": "copyText"; "required": false; "isSignal": true; }; "instructions": { "alias": "instructions"; "required": false; "isSignal": true; }; "link": { "alias": "link"; "required": false; "isSignal": true; }; }, {}, never, [".si-info-image", ".si-info-actions"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiInfoPageComponent, never>;
 }
 
 // (No @packageDocumentation comment for this package)

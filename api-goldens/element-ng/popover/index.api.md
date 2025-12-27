@@ -19,10 +19,6 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate-type
 export class SiPopoverBodyDirective {
     // (undocumented)
     readonly popover: PopoverComponent;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiPopoverBodyDirective, "si-popover-body", never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiPopoverBodyDirective, never>;
 }
 
 // @public (undocumented)
@@ -31,8 +27,6 @@ export class SiPopoverDirective implements OnDestroy {
     readonly context: _angular_core.InputSignal<unknown>;
     hide(): void;
     readonly icon: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    ngOnDestroy(): void;
     readonly placement: _angular_core.InputSignal<"auto" | "start" | "end" | "top" | "bottom">;
     // (undocumented)
     readonly placementInternal: _angular_core.Signal<"auto" | "start" | "end" | "top" | "bottom">;
@@ -41,20 +35,12 @@ export class SiPopoverDirective implements OnDestroy {
     readonly title: _angular_core.InputSignal<TranslatableString | undefined>;
     updatePosition(): void;
     readonly visibilityChange: _angular_core.OutputEmitterRef<void>;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiPopoverDirective, "[siPopover]", ["si-popover"], { "siPopover": { "alias": "siPopover"; "required": false; "isSignal": true; }; "placement": { "alias": "siPopoverPlacement"; "required": false; "isSignal": true; }; "title": { "alias": "siPopoverTitle"; "required": false; "isSignal": true; }; "containerClass": { "alias": "siPopoverContainerClass"; "required": false; "isSignal": true; }; "icon": { "alias": "siPopoverIcon"; "required": false; "isSignal": true; }; "context": { "alias": "siPopoverContext"; "required": false; "isSignal": true; }; }, { "visibilityChange": "siPopoverVisibilityChange"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiPopoverDirective, never>;
 }
 
 // @public (undocumented)
 export class SiPopoverTitleDirective {
     // (undocumented)
     readonly popover: PopoverComponent;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiPopoverTitleDirective, "si-popover-title", never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiPopoverTitleDirective, never>;
 }
 
 // (No @packageDocumentation comment for this package)

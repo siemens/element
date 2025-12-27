@@ -43,10 +43,6 @@ export class SiSplitComponent implements AfterContentInit, OnChanges {
     // (undocumented)
     gutterSize: number;
     // (undocumented)
-    ngAfterContentInit(): void;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
     get orientation(): SplitOrientation;
     set orientation(value: SplitOrientation);
     // (undocumented)
@@ -54,20 +50,10 @@ export class SiSplitComponent implements AfterContentInit, OnChanges {
     // (undocumented)
     readonly sizesChange: EventEmitter<number[]>;
     stateId?: string;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSplitComponent, "si-split", never, { "gutterSize": { "alias": "gutterSize"; "required": false; }; "orientation": { "alias": "orientation"; "required": false; }; "sizes": { "alias": "sizes"; "required": false; }; "stateId": { "alias": "stateId"; "required": false; }; }, { "sizesChange": "sizesChange"; }, ["parts"], ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSplitComponent, never>;
 }
 
 // @public (undocumented)
 export class SiSplitModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSplitModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiSplitModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiSplitModule, never, [typeof SiSplitComponent, typeof SiSplitPartComponent], [typeof SiSplitComponent, typeof SiSplitPartComponent]>;
 }
 
 // @public (undocumented)
@@ -106,8 +92,6 @@ export class SiSplitPartComponent implements OnChanges {
     static ngAcceptInputType_showHeader: unknown;
     // (undocumented)
     static ngAcceptInputType_size: unknown;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
     removeContentOnCollapse: boolean;
     scale: Scale;
     showCollapseButton: boolean;
@@ -117,10 +101,6 @@ export class SiSplitPartComponent implements OnChanges {
     readonly stateChange: EventEmitter<PartState>;
     stateId?: string;
     toggleCollapse(): void;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSplitPartComponent, "si-split-part", never, { "actions": { "alias": "actions"; "required": false; }; "collapseDirection": { "alias": "collapseDirection"; "required": false; }; "collapseIconClass": { "alias": "collapseIconClass"; "required": false; }; "collapseToMinSize": { "alias": "collapseToMinSize"; "required": false; }; "headerTemplate": { "alias": "headerTemplate"; "required": false; }; "heading": { "alias": "heading"; "required": false; }; "minSize": { "alias": "minSize"; "required": false; }; "removeContentOnCollapse": { "alias": "removeContentOnCollapse"; "required": false; }; "scale": { "alias": "scale"; "required": false; }; "showCollapseButton": { "alias": "showCollapseButton"; "required": false; }; "showHeader": { "alias": "showHeader"; "required": false; }; "collapseLabel": { "alias": "collapseLabel"; "required": false; }; "stateId": { "alias": "stateId"; "required": false; }; "size": { "alias": "size"; "required": false; }; "collapseOthers": { "alias": "collapseOthers"; "required": false; }; "expanded": { "alias": "expanded"; "required": false; }; }, { "collapseChanged": "collapseChanged"; "stateChange": "stateChange"; }, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSplitPartComponent, never>;
 }
 
 // @public (undocumented)
