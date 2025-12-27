@@ -31,20 +31,10 @@ export class SiFilterBarComponent {
     readonly filters: _angular_core.ModelSignal<Filter[]>;
     readonly resetFilters: _angular_core.OutputEmitterRef<void>;
     readonly resetText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiFilterBarComponent, "si-filter-bar", never, { "filterDefaultText": { "alias": "filterDefaultText"; "required": false; "isSignal": true; }; "filters": { "alias": "filters"; "required": false; "isSignal": true; }; "resetText": { "alias": "resetText"; "required": false; "isSignal": true; }; "allowReset": { "alias": "allowReset"; "required": false; "isSignal": true; }; "colorVariant": { "alias": "colorVariant"; "required": false; "isSignal": true; }; "disabled": { "alias": "disabled"; "required": false; "isSignal": true; }; "collapsedFiltersDescription": { "alias": "collapsedFiltersDescription"; "required": false; "isSignal": true; }; }, { "filters": "filtersChange"; "resetFilters": "resetFilters"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiFilterBarComponent, never>;
 }
 
 // @public (undocumented)
 export class SiFilterBarModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiFilterBarModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiFilterBarModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiFilterBarModule, never, [typeof SiFilterBarComponent], [typeof SiFilterBarComponent]>;
 }
 
 // @public (undocumented)
@@ -55,10 +45,6 @@ export class SiFilterPillComponent {
     readonly filter: _angular_core.InputSignal<Filter>;
     // (undocumented)
     readonly totalPills: _angular_core.InputSignal<number>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiFilterPillComponent, "si-filter-pill", never, { "filter": { "alias": "filter"; "required": true; "isSignal": true; }; "disabled": { "alias": "disabled"; "required": false; "isSignal": true; }; "totalPills": { "alias": "totalPills"; "required": false; "isSignal": true; }; }, { "deleteFilters": "deleteFilters"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiFilterPillComponent, never>;
 }
 
 // (No @packageDocumentation comment for this package)

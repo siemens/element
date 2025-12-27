@@ -38,24 +38,10 @@ export const SI_DATATABLE_CONFIG: SiDatatableConfig;
 // @public (undocumented)
 export class SiDatatableInteractionDirective implements OnDestroy, OnInit {
     readonly datatableInteractionAutoSelect: i0.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
-    // (undocumented)
-    static ɵdir: i0.ɵɵDirectiveDeclaration<SiDatatableInteractionDirective, "ngx-datatable[siDatatableInteraction]", ["si-datatable-interaction"], { "datatableInteractionAutoSelect": { "alias": "datatableInteractionAutoSelect"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiDatatableInteractionDirective, never>;
 }
 
 // @public (undocumented)
 export class SiDatatableModule {
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiDatatableModule, never>;
-    // (undocumented)
-    static ɵinj: i0.ɵɵInjectorDeclaration<SiDatatableModule>;
-    // (undocumented)
-    static ɵmod: i0.ɵɵNgModuleDeclaration<SiDatatableModule, never, [typeof SiDatatableInteractionDirective], [typeof SiDatatableInteractionDirective]>;
 }
 
 // (No @packageDocumentation comment for this package)

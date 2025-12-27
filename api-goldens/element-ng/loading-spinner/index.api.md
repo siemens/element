@@ -28,10 +28,6 @@ export class SiLoadingButtonComponent {
     readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly loading: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly type: _angular_core.InputSignal<"button" | "submit" | "reset">;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiLoadingButtonComponent, "si-loading-button", never, { "disabled": { "alias": "disabled"; "required": false; "isSignal": true; }; "loading": { "alias": "loading"; "required": false; "isSignal": true; }; "type": { "alias": "type"; "required": false; "isSignal": true; }; "ariaLabel": { "alias": "ariaLabel"; "required": false; "isSignal": true; }; "ariaLabelledBy": { "alias": "ariaLabelledBy"; "required": false; "isSignal": true; }; "buttonClass": { "alias": "buttonClass"; "required": false; "isSignal": true; }; }, {}, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiLoadingButtonComponent, never>;
 }
 
 // @public (undocumented)
@@ -39,10 +35,6 @@ export class SiLoadingService {
     readonly counter: BehaviorSubject<number>;
     startLoad(): void;
     stopLoad(): void;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiLoadingService, never>;
-    // (undocumented)
-    static ɵprov: _angular_core.ɵɵInjectableDeclaration<SiLoadingService>;
 }
 
 // @public (undocumented)
@@ -52,37 +44,17 @@ export class SiLoadingSpinnerComponent {
     readonly isBlockingSpinner: _angular_core.InputSignal<boolean | null>;
     // (undocumented)
     readonly isSpinnerOverlay: _angular_core.InputSignal<boolean | null>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiLoadingSpinnerComponent, "si-loading-spinner", never, { "isBlockingSpinner": { "alias": "isBlockingSpinner"; "required": false; "isSignal": true; }; "isSpinnerOverlay": { "alias": "isSpinnerOverlay"; "required": false; "isSignal": true; }; "ariaLabel": { "alias": "ariaLabel"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiLoadingSpinnerComponent, never>;
 }
 
 // @public (undocumented)
 export class SiLoadingSpinnerDirective implements OnInit, OnChanges, OnDestroy {
     readonly blocking: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly initialDelay: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    ngOnChanges(): void;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
     readonly siLoading: _angular_core.InputSignal<number | boolean>;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiLoadingSpinnerDirective, "[siLoading]", never, { "siLoading": { "alias": "siLoading"; "required": true; "isSignal": true; }; "blocking": { "alias": "blocking"; "required": false; "isSignal": true; }; "initialDelay": { "alias": "initialDelay"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiLoadingSpinnerDirective, never>;
 }
 
 // @public (undocumented)
 export class SiLoadingSpinnerModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiLoadingSpinnerModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiLoadingSpinnerModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiLoadingSpinnerModule, never, [typeof SiLoadingSpinnerComponent, typeof SiLoadingSpinnerDirective], [typeof SiLoadingSpinnerComponent, typeof SiLoadingSpinnerDirective]>;
 }
 
 // (No @packageDocumentation comment for this package)

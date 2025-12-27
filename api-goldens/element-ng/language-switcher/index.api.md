@@ -19,20 +19,10 @@ export class SiLanguageSwitcherComponent {
     readonly availableLanguages: i0.InputSignal<(string | IsoLanguageValue)[] | null>;
     readonly languageSwitcherLabel: i0.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly translationKey: i0.InputSignal<string>;
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<SiLanguageSwitcherComponent, "si-language-switcher", never, { "translationKey": { "alias": "translationKey"; "required": false; "isSignal": true; }; "languageSwitcherLabel": { "alias": "languageSwitcherLabel"; "required": false; "isSignal": true; }; "availableLanguages": { "alias": "availableLanguages"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiLanguageSwitcherComponent, never>;
 }
 
 // @public (undocumented)
 export class SiLanguageSwitcherModule {
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiLanguageSwitcherModule, never>;
-    // (undocumented)
-    static ɵinj: i0.ɵɵInjectorDeclaration<SiLanguageSwitcherModule>;
-    // (undocumented)
-    static ɵmod: i0.ɵɵNgModuleDeclaration<SiLanguageSwitcherModule, never, [typeof SiLanguageSwitcherComponent], [typeof SiLanguageSwitcherComponent]>;
 }
 
 // (No @packageDocumentation comment for this package)

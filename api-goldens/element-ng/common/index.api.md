@@ -59,10 +59,6 @@ export class BlinkService {
     pause(): void;
     readonly pulse$: rxjs.Observable<boolean>;
     resume(): void;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<BlinkService, never>;
-    // (undocumented)
-    static ɵprov: i0.ɵɵInjectableDeclaration<BlinkService>;
 }
 
 // @public @deprecated (undocumented)
@@ -235,10 +231,6 @@ export const responsivelyCheckDirection: (params: {
 // @public
 export class ScrollbarHelper {
     readonly width: number;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<ScrollbarHelper, never>;
-    // (undocumented)
-    static ɵprov: i0.ɵɵInjectableDeclaration<ScrollbarHelper>;
 }
 
 // @public (undocumented)
@@ -271,10 +263,6 @@ export type StatusType = 'success' | 'info' | 'warning' | 'danger' | 'caution' |
 export class TextMeasureService {
     getFontStyle(element: HTMLElement, overrides?: FontStyleOverride): string;
     measureText(text: string, fontRef?: HTMLElement | string, overrides?: FontStyleOverride): number;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<TextMeasureService, never>;
-    // (undocumented)
-    static ɵprov: i0.ɵɵInjectableDeclaration<TextMeasureService>;
 }
 
 // @public

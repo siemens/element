@@ -28,16 +28,6 @@ export class SiStatusBarComponent implements DoCheck, OnDestroy, OnChanges {
     readonly muteButton: _angular_core.InputSignal<boolean | undefined>;
     readonly muteButtonText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly muteToggle: _angular_core.OutputEmitterRef<void>;
-    // (undocumented)
-    ngDoCheck(): void;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiStatusBarComponent, "si-status-bar", never, { "items": { "alias": "items"; "required": true; "isSignal": true; }; "blink": { "alias": "blink"; "required": false; "isSignal": true; }; "muteButton": { "alias": "muteButton"; "required": false; "isSignal": true; }; "muteButtonText": { "alias": "muteButtonText"; "required": false; "isSignal": true; }; "allOkText": { "alias": "allOkText"; "required": false; "isSignal": true; }; "compact": { "alias": "compact"; "required": false; "isSignal": true; }; "blinkPulse": { "alias": "blinkPulse"; "required": false; "isSignal": true; }; "expandButtonText": { "alias": "expandButtonText"; "required": false; "isSignal": true; }; "collapseButtonText": { "alias": "collapseButtonText"; "required": false; "isSignal": true; }; }, { "muteToggle": "muteToggle"; }, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiStatusBarComponent, never>;
 }
 
 // @public (undocumented)
@@ -56,20 +46,10 @@ export class SiStatusBarItemComponent {
     readonly value: _angular_core.InputSignal<number | TranslatableString>;
     // (undocumented)
     readonly valueOnly: _angular_core.InputSignalWithTransform<boolean | undefined, unknown>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiStatusBarItemComponent, "si-status-bar-item", never, { "status": { "alias": "status"; "required": false; "isSignal": true; }; "value": { "alias": "value"; "required": true; "isSignal": true; }; "heading": { "alias": "heading"; "required": true; "isSignal": true; }; "color": { "alias": "color"; "required": false; "isSignal": true; }; "blink": { "alias": "blink"; "required": false; "isSignal": true; }; "valueOnly": { "alias": "valueOnly"; "required": false; "isSignal": true; }; "clickable": { "alias": "clickable"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiStatusBarItemComponent, never>;
 }
 
 // @public (undocumented)
 export class SiStatusBarModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiStatusBarModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiStatusBarModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiStatusBarModule, never, [typeof SiStatusBarComponent], [typeof SiStatusBarComponent]>;
 }
 
 // @public

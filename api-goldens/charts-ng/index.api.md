@@ -422,8 +422,6 @@ export class SiChartCartesianComponent extends SiChartComponent implements OnCha
     getSeriesMarker(seriesName: string): string;
     getSeriesMarkerSvg(seriesName: string): string;
     // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
     refreshSeries(isLive?: boolean, dzToSet?: DataZoomRange): void;
     readonly series: _angular_core.InputSignal<CartesianChartSeries[] | undefined>;
     readonly stacked: _angular_core.InputSignal<boolean>;
@@ -433,10 +431,6 @@ export class SiChartCartesianComponent extends SiChartComponent implements OnCha
     readonly xAxis: _angular_core.InputSignal<ChartXAxis | ChartXAxis[] | undefined>;
     readonly yAxis: _angular_core.InputSignal<ChartYAxis | ChartYAxis[] | undefined>;
     readonly zoomMode: _angular_core.InputSignal<boolean | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChartCartesianComponent, "si-chart-cartesian", never, { "series": { "alias": "series"; "required": false; "isSignal": true; }; "subChartGrids": { "alias": "subChartGrids"; "required": false; "isSignal": true; }; "yAxis": { "alias": "yAxis"; "required": false; "isSignal": true; }; "xAxis": { "alias": "xAxis"; "required": false; "isSignal": true; }; "tooltipFormatter": { "alias": "tooltipFormatter"; "required": false; "isSignal": true; }; "stacked": { "alias": "stacked"; "required": false; "isSignal": true; }; "zoomMode": { "alias": "zoomMode"; "required": false; "isSignal": true; }; }, {}, never, ["[slot=timeRangeBar]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChartCartesianComponent, never>;
 }
 
 // @public (undocumented)
@@ -444,10 +438,6 @@ export class SiChartCircleComponent extends SiChartComponent {
     changeMultiValues(updateValues: CircleValueUpdate[]): void;
     changeSingleValue(index: number, valueIndex: number, value: number): void;
     readonly series: _angular_core.InputSignal<CircleChartSeries[] | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChartCircleComponent, "si-chart-circle", never, { "series": { "alias": "series"; "required": false; "isSignal": true; }; }, {}, never, ["[slot=timeRangeBar]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChartCircleComponent, never>;
 }
 
 // @public (undocumented)
@@ -473,14 +463,6 @@ export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDes
     getSeriesColorBySeriesName(seriesName: string): string | undefined;
     getVisibleRange(): DataZoomEvent | undefined;
     readonly maxEntries: _angular_core.InputSignal<number>;
-    // (undocumented)
-    ngAfterViewInit(skipZoom?: boolean): void;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
     readonly options: _angular_core.InputSignal<EChartOption | undefined>;
     readonly palette: _angular_core.InputSignal<string | undefined>;
     readonly pointer: _angular_core.OutputEmitterRef<AxisPointerEvent>;
@@ -510,10 +492,6 @@ export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDes
     readonly zoomSliderBrush: _angular_core.InputSignal<boolean>;
     readonly zoomSliderRealtime: _angular_core.InputSignal<boolean>;
     readonly zoomSliderShadow: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChartComponent, "si-chart", never, { "options": { "alias": "options"; "required": false; "isSignal": true; }; "additionalOptions": { "alias": "additionalOptions"; "required": false; "isSignal": true; }; "title": { "alias": "title"; "required": false; "isSignal": true; }; "subTitle": { "alias": "subTitle"; "required": false; "isSignal": true; }; "showLegend": { "alias": "showLegend"; "required": false; "isSignal": true; }; "showCustomLegend": { "alias": "showCustomLegend"; "required": false; "isSignal": true; }; "renderer": { "alias": "renderer"; "required": false; "isSignal": true; }; "zoomSlider": { "alias": "zoomSlider"; "required": false; "isSignal": true; }; "zoomSliderShadow": { "alias": "zoomSliderShadow"; "required": false; "isSignal": true; }; "zoomSliderRealtime": { "alias": "zoomSliderRealtime"; "required": false; "isSignal": true; }; "zoomSliderBrush": { "alias": "zoomSliderBrush"; "required": false; "isSignal": true; }; "zoomInside": { "alias": "zoomInside"; "required": false; "isSignal": true; }; "maxEntries": { "alias": "maxEntries"; "required": false; "isSignal": true; }; "visibleEntries": { "alias": "visibleEntries"; "required": false; "isSignal": true; }; "visibleRange": { "alias": "visibleRange"; "required": false; "isSignal": true; }; "autoZoomSeriesIndex": { "alias": "autoZoomSeriesIndex"; "required": false; "isSignal": true; }; "theme": { "alias": "theme"; "required": false; "isSignal": true; }; "themeCustomization": { "alias": "themeCustomization"; "required": false; "isSignal": true; }; "palette": { "alias": "palette"; "required": false; "isSignal": true; }; "axisPointer": { "alias": "axisPointer"; "required": false; "isSignal": true; }; "dataZoomRange": { "alias": "dataZoomRange"; "required": false; "isSignal": true; }; "dataZoomMinValueSpan": { "alias": "dataZoomMinValueSpan"; "required": false; "isSignal": true; }; "dataZoomMaxValueSpan": { "alias": "dataZoomMaxValueSpan"; "required": false; "isSignal": true; }; "dataZoomFilterMode": { "alias": "dataZoomFilterMode"; "required": false; "isSignal": true; }; "customLegendAction": { "alias": "customLegendAction"; "required": false; "isSignal": true; }; "selectedItem": { "alias": "selectedItem"; "required": false; "isSignal": true; }; "eChartContainerHeight": { "alias": "eChartContainerHeight"; "required": false; "isSignal": true; }; "externalZoomSlider": { "alias": "externalZoomSlider"; "required": false; "isSignal": true; }; "externalXAxisFormatter": { "alias": "externalXAxisFormatter"; "required": false; "isSignal": true; }; "showTimeRangeBar": { "alias": "showTimeRangeBar"; "required": false; "isSignal": true; }; }, { "showLegend": "showLegendChange"; "visibleEntries": "visibleEntriesChange"; "visibleRange": "visibleRangeChange"; "dataZoom": "dataZoom"; "pointer": "pointer"; "selectionChanged": "selectionChanged"; "chartSeriesClick": "chartSeriesClick"; "chartGridResized": "chartGridResized"; "customLegendMultiLineInfoEvent": "customLegendMultiLineInfoEvent"; "timeRangeChange": "timeRangeChange"; }, never, ["[slot=timeRangeBar]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChartComponent, never>;
 }
 
 // @public (undocumented)
@@ -530,8 +508,6 @@ export class SiChartGaugeComponent extends SiChartComponent implements OnChanges
     // (undocumented)
     readonly minValue: _angular_core.InputSignal<number>;
     // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
     readonly responsiveSplitSteps: _angular_core.InputSignal<boolean>;
     readonly segments: _angular_core.InputSignal<number[]>;
     setValue(value: number): void;
@@ -544,10 +520,6 @@ export class SiChartGaugeComponent extends SiChartComponent implements OnChanges
     // (undocumented)
     readonly value: _angular_core.InputSignal<number>;
     readonly valueFormatter: _angular_core.InputSignal<((val: number) => string) | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChartGaugeComponent, "si-chart-gauge", never, { "minValue": { "alias": "minValue"; "required": false; "isSignal": true; }; "maxValue": { "alias": "maxValue"; "required": false; "isSignal": true; }; "value": { "alias": "value"; "required": false; "isSignal": true; }; "splitSteps": { "alias": "splitSteps"; "required": false; "isSignal": true; }; "responsiveSplitSteps": { "alias": "responsiveSplitSteps"; "required": false; "isSignal": true; }; "unit": { "alias": "unit"; "required": false; "isSignal": true; }; "unitsOnSplit": { "alias": "unitsOnSplit"; "required": false; "isSignal": true; }; "labelFormatter": { "alias": "labelFormatter"; "required": false; "isSignal": true; }; "valueFormatter": { "alias": "valueFormatter"; "required": false; "isSignal": true; }; "minNumberOfDecimals": { "alias": "minNumberOfDecimals"; "required": false; "isSignal": true; }; "maxNumberOfDecimals": { "alias": "maxNumberOfDecimals"; "required": false; "isSignal": true; }; "axisNumberOfDecimals": { "alias": "axisNumberOfDecimals"; "required": false; "isSignal": true; }; "hideAxisLabels": { "alias": "hideAxisLabels"; "required": false; "isSignal": true; }; "segments": { "alias": "segments"; "required": false; "isSignal": true; }; "colors": { "alias": "colors"; "required": false; "isSignal": true; }; }, {}, never, ["[slot=timeRangeBar]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChartGaugeComponent, never>;
 }
 
 // @public (undocumented)
@@ -556,10 +528,6 @@ export class SiChartProgressBarComponent extends SiChartComponent {
     changeSingleValue(valueIndex: number, value: number): void;
     readonly labelPosition: _angular_core.InputSignal<string | undefined>;
     readonly series: _angular_core.InputSignal<ProgressBarChartSeries[] | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChartProgressBarComponent, "si-chart-progress-bar", never, { "series": { "alias": "series"; "required": false; "isSignal": true; }; "labelPosition": { "alias": "labelPosition"; "required": false; "isSignal": true; }; }, {}, never, ["[slot=timeRangeBar]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChartProgressBarComponent, never>;
 }
 
 // @public (undocumented)
@@ -568,10 +536,6 @@ export class SiChartProgressComponent extends SiChartComponent {
     changeSingleValue(index: number, percent: number): void;
     readonly dataAngle: _angular_core.InputSignal<number>;
     readonly series: _angular_core.InputSignal<ProgressChartSeries[] | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChartProgressComponent, "si-chart-progress", never, { "series": { "alias": "series"; "required": false; "isSignal": true; }; "dataAngle": { "alias": "dataAngle"; "required": false; "isSignal": true; }; }, {}, never, ["[slot=timeRangeBar]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChartProgressComponent, never>;
 }
 
 // @public (undocumented)
@@ -581,20 +545,10 @@ export class SiChartSankeyComponent extends SiChartComponent {
     readonly toolTip: _angular_core.InputSignal<boolean>;
     // (undocumented)
     readonly tooltip: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChartSankeyComponent, "si-chart-sankey", never, { "series": { "alias": "series"; "required": false; "isSignal": true; }; "toolTip": { "alias": "toolTip"; "required": false; "isSignal": true; }; "tooltip": { "alias": "tooltip"; "required": false; "isSignal": true; }; }, {}, never, ["[slot=timeRangeBar]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChartSankeyComponent, never>;
 }
 
 // @public (undocumented)
 class SiChartsNgModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChartsNgModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiChartsNgModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiChartsNgModule, never, [typeof SiChartCartesianComponent, typeof SiChartCircleComponent, typeof SiChartComponent, typeof SiChartGaugeComponent, typeof SiChartProgressBarComponent, typeof SiChartProgressComponent, typeof SiChartSankeyComponent, typeof SiChartSunburstComponent, typeof SiCustomLegendComponent], [typeof SiChartCartesianComponent, typeof SiChartCircleComponent, typeof SiChartComponent, typeof SiChartGaugeComponent, typeof SiChartProgressBarComponent, typeof SiChartProgressComponent, typeof SiChartSankeyComponent, typeof SiChartSunburstComponent, typeof SiCustomLegendComponent]>;
 }
 export { SiChartsNgModule }
 export { SiChartsNgModule as SimplChartsNgModule }
@@ -606,10 +560,6 @@ export class SiChartSunburstComponent extends SiChartComponent {
     readonly toolTip: _angular_core.InputSignal<boolean>;
     // (undocumented)
     readonly tooltip: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChartSunburstComponent, "si-chart-sunburst", never, { "series": { "alias": "series"; "required": false; "isSignal": true; }; "toolTip": { "alias": "toolTip"; "required": false; "isSignal": true; }; "tooltip": { "alias": "tooltip"; "required": false; "isSignal": true; }; }, {}, never, ["[slot=timeRangeBar]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChartSunburstComponent, never>;
 }
 
 // @public (undocumented)
@@ -625,10 +575,6 @@ export class SiCustomLegendComponent {
     readonly textColor: _angular_core.InputSignal<string | undefined>;
     readonly title: _angular_core.InputSignal<string | undefined>;
     readonly titleColor: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiCustomLegendComponent, "si-custom-legend", never, { "customLegend": { "alias": "customLegend"; "required": false; "isSignal": true; }; "title": { "alias": "title"; "required": false; "isSignal": true; }; "subTitle": { "alias": "subTitle"; "required": false; "isSignal": true; }; "titleColor": { "alias": "titleColor"; "required": false; "isSignal": true; }; "subTitleColor": { "alias": "subTitleColor"; "required": false; "isSignal": true; }; "textColor": { "alias": "textColor"; "required": false; "isSignal": true; }; }, { "legendIconClickEvent": "legendIconClickEvent"; "legendClickEvent": "legendClickEvent"; "legendHoverStartEvent": "legendHoverStartEvent"; "legendHoverEndEvent": "legendHoverEndEvent"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiCustomLegendComponent, never>;
 }
 
 // @public (undocumented)

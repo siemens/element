@@ -17,26 +17,14 @@ import { Type } from '@angular/core';
 // @public (undocumented)
 export class SiTooltipDirective implements OnDestroy {
     readonly isDisabled: i0.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    ngOnDestroy(): void;
     readonly placement: i0.InputSignal<"auto" | "top" | "start" | "end" | "bottom">;
     readonly siTooltip: i0.InputSignal<TemplateRef<any> | TranslatableString>;
     readonly tooltipContext: i0.InputSignal<unknown>;
     readonly triggers: i0.InputSignal<"" | "focus" | undefined>;
-    // (undocumented)
-    static ɵdir: i0.ɵɵDirectiveDeclaration<SiTooltipDirective, "[siTooltip]", never, { "siTooltip": { "alias": "siTooltip"; "required": false; "isSignal": true; }; "placement": { "alias": "placement"; "required": false; "isSignal": true; }; "triggers": { "alias": "triggers"; "required": false; "isSignal": true; }; "isDisabled": { "alias": "isDisabled"; "required": false; "isSignal": true; }; "tooltipContext": { "alias": "tooltipContext"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiTooltipDirective, never>;
 }
 
 // @public (undocumented)
 export class SiTooltipModule {
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiTooltipModule, never>;
-    // (undocumented)
-    static ɵinj: i0.ɵɵInjectorDeclaration<SiTooltipModule>;
-    // (undocumented)
-    static ɵmod: i0.ɵɵNgModuleDeclaration<SiTooltipModule, never, [typeof SiTooltipDirective], [typeof SiTooltipDirective]>;
 }
 
 // (No @packageDocumentation comment for this package)

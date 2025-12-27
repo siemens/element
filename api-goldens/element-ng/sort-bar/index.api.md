@@ -12,25 +12,13 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate';
 // @public (undocumented)
 export class SiSortBarComponent implements OnInit {
     readonly defaultSortCriteria: i0.InputSignal<string | number>;
-    // (undocumented)
-    ngOnInit(): void;
     readonly sortChange: i0.OutputEmitterRef<HttpParams>;
     readonly sortCriteria: i0.InputSignal<SortCriteria[]>;
     readonly sortTitle: i0.InputSignal<TranslatableString>;
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<SiSortBarComponent, "si-sort-bar", never, { "sortTitle": { "alias": "sortTitle"; "required": false; "isSignal": true; }; "sortCriteria": { "alias": "sortCriteria"; "required": true; "isSignal": true; }; "defaultSortCriteria": { "alias": "defaultSortCriteria"; "required": true; "isSignal": true; }; }, { "sortChange": "sortChange"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiSortBarComponent, never>;
 }
 
 // @public (undocumented)
 export class SiSortBarModule {
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiSortBarModule, never>;
-    // (undocumented)
-    static ɵinj: i0.ɵɵInjectorDeclaration<SiSortBarModule>;
-    // (undocumented)
-    static ɵmod: i0.ɵɵNgModuleDeclaration<SiSortBarModule, never, [typeof SiSortBarComponent], [typeof SiSortBarComponent]>;
 }
 
 // @public (undocumented)

@@ -63,19 +63,9 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
     readonly disableBackdrop: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly enableMobile: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly mode: _angular_core.InputSignal<SidePanelMode>;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
     readonly size: _angular_core.InputSignal<SidePanelSize>;
     readonly toggleItemLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     toggleSidePanel(): void;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSidePanelComponent, "si-side-panel", never, { "collapsible": { "alias": "collapsible"; "required": false; "isSignal": true; }; "collapsed": { "alias": "collapsed"; "required": false; "isSignal": true; }; "mode": { "alias": "mode"; "required": false; "isSignal": true; }; "size": { "alias": "size"; "required": false; "isSignal": true; }; "toggleItemLabel": { "alias": "toggleItemLabel"; "required": false; "isSignal": true; }; "breakpoints": { "alias": "breakpoints"; "required": false; "isSignal": true; }; "enableMobile": { "alias": "enableMobile"; "required": false; "isSignal": true; }; "disableBackdrop": { "alias": "disableBackdrop"; "required": false; "isSignal": true; }; }, { "collapsed": "collapsedChange"; "closed": "closed"; "contentResize": "contentResize"; }, never, ["si-side-panel-content, element-side-panel-content", "*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSidePanelComponent, never>;
 }
 
 // @public (undocumented)
@@ -89,8 +79,6 @@ export class SiSidePanelContentComponent implements OnInit {
     readonly exitFullscreenLabel: _angular_core.InputSignal<TranslatableString>;
     readonly heading: _angular_core.InputSignal<TranslatableString>;
     readonly navigateConfig: _angular_core.InputSignal<SidePanelNavigateConfig | undefined>;
-    // (undocumented)
-    ngOnInit(): void;
     readonly primaryActions: _angular_core.InputSignal<(MenuItem | ContentActionBarMainItem)[]>;
     readonly searchable: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly searchEvent: _angular_core.OutputEmitterRef<string>;
@@ -100,20 +88,10 @@ export class SiSidePanelContentComponent implements OnInit {
     readonly statusActions: _angular_core.InputSignal<StatusItem[]>;
     toggleFullscreen(): void;
     readonly toggleItemLabel: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSidePanelContentComponent, "si-side-panel-content", never, { "collapsibleInput": { "alias": "collapsible"; "required": false; "isSignal": true; }; "heading": { "alias": "heading"; "required": false; "isSignal": true; }; "primaryActions": { "alias": "primaryActions"; "required": false; "isSignal": true; }; "secondaryActions": { "alias": "secondaryActions"; "required": false; "isSignal": true; }; "statusActions": { "alias": "statusActions"; "required": false; "isSignal": true; }; "searchable": { "alias": "searchable"; "required": false; "isSignal": true; }; "searchPlaceholder": { "alias": "searchPlaceholder"; "required": false; "isSignal": true; }; "closeButtonLabel": { "alias": "closeButtonLabel"; "required": false; "isSignal": true; }; "toggleItemLabel": { "alias": "toggleItemLabel"; "required": false; "isSignal": true; }; "enterFullscreenLabel": { "alias": "enterFullscreenLabel"; "required": false; "isSignal": true; }; "exitFullscreenLabel": { "alias": "exitFullscreenLabel"; "required": false; "isSignal": true; }; "showMobileDrawerBadge": { "alias": "showMobileDrawerBadge"; "required": false; "isSignal": true; }; "displayMode": { "alias": "displayMode"; "required": false; "isSignal": true; }; "navigateConfig": { "alias": "navigateConfig"; "required": false; "isSignal": true; }; }, { "searchEvent": "searchEvent"; }, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSidePanelContentComponent, never>;
 }
 
 // @public (undocumented)
 export class SiSidePanelModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSidePanelModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiSidePanelModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiSidePanelModule, never, [typeof SiSidePanelComponent, typeof SiSidePanelContentComponent], [typeof SiSidePanelComponent, typeof SiSidePanelContentComponent]>;
 }
 
 // @public (undocumented)
@@ -133,10 +111,6 @@ export class SiSidePanelService {
     showTemporaryContent(portal: Portal<any> | undefined): Observable<void>;
     toggle(): void;
     toggleFullscreen(): void;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSidePanelService, never>;
-    // (undocumented)
-    static ɵprov: _angular_core.ɵɵInjectableDeclaration<SiSidePanelService>;
 }
 
 // @public

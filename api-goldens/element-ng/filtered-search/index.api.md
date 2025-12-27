@@ -83,10 +83,6 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     readonly lazyValueProvider: _angular_core.InputSignal<((criterionName: string, typed: string | string[]) => Observable<OptionType[]>) | undefined>;
     readonly maxCriteria: _angular_core.InputSignal<number | undefined>;
     readonly maxCriteriaOptions: _angular_core.InputSignal<number>;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    ngOnInit(): void;
     readonly onlySelectValue: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly optionsInScrollableView: _angular_core.InputSignal<number>;
     readonly placeholder: _angular_core.InputSignal<string>;
@@ -100,20 +96,10 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     readonly strictValue: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly submitButtonLabel: _angular_core.InputSignal<TranslatableString>;
     readonly typeaheadOptionsLimit: _angular_core.InputSignal<number>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiFilteredSearchComponent, "si-filtered-search", never, { "doSearchOnInputChange": { "alias": "doSearchOnInputChange"; "required": false; "isSignal": true; }; "lazyCriterionProvider": { "alias": "lazyCriterionProvider"; "required": false; "isSignal": true; }; "lazyValueProvider": { "alias": "lazyValueProvider"; "required": false; "isSignal": true; }; "disabled": { "alias": "disabled"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "strictCriterion": { "alias": "strictCriterion"; "required": false; "isSignal": true; }; "strictValue": { "alias": "strictValue"; "required": false; "isSignal": true; }; "onlySelectValue": { "alias": "onlySelectValue"; "required": false; "isSignal": true; }; "lazyLoadingDebounceTime": { "alias": "lazyLoadingDebounceTime"; "required": false; "isSignal": true; }; "searchDebounceTime": { "alias": "searchDebounceTime"; "required": false; "isSignal": true; }; "placeholder": { "alias": "placeholder"; "required": false; "isSignal": true; }; "optionsInScrollableView": { "alias": "optionsInScrollableView"; "required": false; "isSignal": true; }; "searchCriteria": { "alias": "searchCriteria"; "required": false; "isSignal": true; }; "criteria": { "alias": "criteria"; "required": false; "isSignal": true; }; "exclusiveCriteria": { "alias": "exclusiveCriteria"; "required": false; "isSignal": true; }; "maxCriteria": { "alias": "maxCriteria"; "required": false; "isSignal": true; }; "maxCriteriaOptions": { "alias": "maxCriteriaOptions"; "required": false; "isSignal": true; }; "searchLabel": { "alias": "searchLabel"; "required": false; "isSignal": true; }; "clearButtonLabel": { "alias": "clearButtonLabel"; "required": false; "isSignal": true; }; "submitButtonLabel": { "alias": "submitButtonLabel"; "required": false; "isSignal": true; }; "itemCountText": { "alias": "itemCountText"; "required": false; "isSignal": true; }; "colorVariant": { "alias": "colorVariant"; "required": false; "isSignal": true; }; "disableFreeTextSearch": { "alias": "disableFreeTextSearch"; "required": false; "isSignal": true; }; "typeaheadOptionsLimit": { "alias": "typeaheadOptionsLimit"; "required": false; "isSignal": true; }; "disableSelectionByColonAndSemicolon": { "alias": "disableSelectionByColonAndSemicolon"; "required": false; "isSignal": true; }; "freeTextCriterion": { "alias": "freeTextCriterion"; "required": false; "isSignal": true; }; "searchForFreeTextLabel": { "alias": "searchForFreeTextLabel"; "required": false; "isSignal": true; }; }, { "doSearch": "doSearch"; "searchCriteria": "searchCriteriaChange"; "interceptDisplayedCriteria": "interceptDisplayedCriteria"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiFilteredSearchComponent, never>;
 }
 
 // @public (undocumented)
 export class SiFilteredSearchModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiFilteredSearchModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiFilteredSearchModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiFilteredSearchModule, never, [typeof SiFilteredSearchComponent], [typeof SiFilteredSearchComponent]>;
 }
 
 // @public

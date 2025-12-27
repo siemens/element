@@ -19,10 +19,6 @@ export class SiMicrochartProgressComponent {
     // (undocumented)
     readonly barWidth: _angular_core.InputSignal<number>;
     readonly series: _angular_core.InputSignal<MicrochartProgressSeries>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiMicrochartProgressComponent, "si-microchart-progress", never, { "series": { "alias": "series"; "required": true; "isSignal": true; }; "barWidth": { "alias": "barWidth"; "required": false; "isSignal": true; }; "barHeight": { "alias": "barHeight"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiMicrochartProgressComponent, never>;
 }
 
 // (No @packageDocumentation comment for this package)

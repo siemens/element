@@ -55,8 +55,6 @@ export class PresetMatchFilterPipe implements PipeTransform {
     // (undocumented)
     transform(value: string, term: string): boolean;
     // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<PresetMatchFilterPipe, never>;
-    // (undocumented)
     static ɵpipe: _angular_core.ɵɵPipeDeclaration<PresetMatchFilterPipe, "presetMatchFilter", true>;
 }
 
@@ -80,10 +78,6 @@ export interface ResolvedDateRange {
 export class SiDateRangeCalculationService {
     removeTime(date: Date): Date;
     resolveDateRangeFilter(filter: DateRangeFilter, options?: ResolveDateRangeOptions): ResolvedDateRange;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiDateRangeCalculationService, never>;
-    // (undocumented)
-    static ɵprov: _angular_core.ɵɵInjectableDeclaration<SiDateRangeCalculationService>;
 }
 
 // @public (undocumented)
@@ -100,8 +94,6 @@ export class SiDateRangeFilterComponent implements OnChanges {
     readonly enableTimeSelection: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly fromLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly hideAdvancedMode: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
     readonly nowLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly presetLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly presetList: _angular_core.InputSignal<DateRangePreset[] | undefined>;
@@ -118,20 +110,10 @@ export class SiDateRangeFilterComponent implements OnChanges {
     readonly unitLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly valueLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly withinLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiDateRangeFilterComponent, "si-date-range-filter", never, { "range": { "alias": "range"; "required": true; "isSignal": true; }; "presetList": { "alias": "presetList"; "required": false; "isSignal": true; }; "presetSearch": { "alias": "presetSearch"; "required": false; "isSignal": true; }; "enableTimeSelection": { "alias": "enableTimeSelection"; "required": false; "isSignal": true; }; "basicMode": { "alias": "basicMode"; "required": false; "isSignal": true; }; "reverseInputFields": { "alias": "reverseInputFields"; "required": false; "isSignal": true; }; "showApplyButton": { "alias": "showApplyButton"; "required": false; "isSignal": true; }; "hideAdvancedMode": { "alias": "hideAdvancedMode"; "required": false; "isSignal": true; }; "refLabel": { "alias": "refLabel"; "required": false; "isSignal": true; }; "fromLabel": { "alias": "fromLabel"; "required": false; "isSignal": true; }; "toLabel": { "alias": "toLabel"; "required": false; "isSignal": true; }; "rangeLabel": { "alias": "rangeLabel"; "required": false; "isSignal": true; }; "todayLabel": { "alias": "todayLabel"; "required": false; "isSignal": true; }; "nowLabel": { "alias": "nowLabel"; "required": false; "isSignal": true; }; "dateLabel": { "alias": "dateLabel"; "required": false; "isSignal": true; }; "previewLabel": { "alias": "previewLabel"; "required": false; "isSignal": true; }; "datePlaceholder": { "alias": "datePlaceholder"; "required": false; "isSignal": true; }; "beforeLabel": { "alias": "beforeLabel"; "required": false; "isSignal": true; }; "afterLabel": { "alias": "afterLabel"; "required": false; "isSignal": true; }; "withinLabel": { "alias": "withinLabel"; "required": false; "isSignal": true; }; "valueLabel": { "alias": "valueLabel"; "required": false; "isSignal": true; }; "unitLabel": { "alias": "unitLabel"; "required": false; "isSignal": true; }; "searchLabel": { "alias": "searchLabel"; "required": false; "isSignal": true; }; "presetLabel": { "alias": "presetLabel"; "required": false; "isSignal": true; }; "advancedLabel": { "alias": "advancedLabel"; "required": false; "isSignal": true; }; "applyLabel": { "alias": "applyLabel"; "required": false; "isSignal": true; }; "datepickerConfig": { "alias": "datepickerConfig"; "required": false; "isSignal": true; }; }, { "range": "rangeChange"; "applyClicked": "applyClicked"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiDateRangeFilterComponent, never>;
 }
 
 // @public (undocumented)
 export class SiDateRangeFilterModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiDateRangeFilterModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiDateRangeFilterModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiDateRangeFilterModule, never, [typeof SiDateRangeFilterComponent], [typeof SiDateRangeFilterComponent]>;
 }
 
 // (No @packageDocumentation comment for this package)

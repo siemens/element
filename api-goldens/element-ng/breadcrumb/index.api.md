@@ -28,25 +28,11 @@ export interface EnumeratedBreadcrumbItem extends BreadcrumbItem {
 export class SiBreadcrumbComponent implements OnChanges, OnDestroy {
     readonly ariaLabel: i0.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly items: i0.InputSignal<BreadcrumbItem[]>;
-    // (undocumented)
-    ngOnChanges(): void;
-    // (undocumented)
-    ngOnDestroy(): void;
     readonly showRootAsText: i0.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<SiBreadcrumbComponent, "si-breadcrumb", never, { "items": { "alias": "items"; "required": true; "isSignal": true; }; "showRootAsText": { "alias": "showRootAsText"; "required": false; "isSignal": true; }; "ariaLabel": { "alias": "ariaLabel"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiBreadcrumbComponent, never>;
 }
 
 // @public (undocumented)
 export class SiBreadcrumbModule {
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiBreadcrumbModule, never>;
-    // (undocumented)
-    static ɵinj: i0.ɵɵInjectorDeclaration<SiBreadcrumbModule>;
-    // (undocumented)
-    static ɵmod: i0.ɵɵNgModuleDeclaration<SiBreadcrumbModule, never, [typeof SiBreadcrumbComponent], [typeof SiBreadcrumbComponent]>;
 }
 
 // (No @packageDocumentation comment for this package)

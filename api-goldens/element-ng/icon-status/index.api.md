@@ -13,12 +13,6 @@ export const SiIconStatusComponent: typeof SiStatusCounterComponent;
 
 // @public @deprecated (undocumented)
 export class SiIconStatusModule {
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiIconStatusModule, never>;
-    // (undocumented)
-    static ɵinj: i0.ɵɵInjectorDeclaration<SiIconStatusModule>;
-    // (undocumented)
-    static ɵmod: i0.ɵɵNgModuleDeclaration<SiIconStatusModule, never, [typeof i1.SiStatusCounterComponent], [typeof i1.SiStatusCounterComponent]>;
 }
 
 // (No @packageDocumentation comment for this package)

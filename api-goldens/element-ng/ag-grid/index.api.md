@@ -24,13 +24,7 @@ export class AgDateInputComponent implements IDateComp, OnDestroy {
     // (undocumented)
     getGui(): HTMLElement;
     // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
     setDate(date: Date | null): void;
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<AgDateInputComponent, "si-ag-date-input", never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<AgDateInputComponent, never>;
 }
 
 // @public
@@ -41,10 +35,6 @@ export class AgNoRowsOverlayComponent {
         heading: string;
         content?: string;
     }): void;
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<AgNoRowsOverlayComponent, "si-ag-no-rows-overlay", never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<AgNoRowsOverlayComponent, never>;
 }
 
 // @public
