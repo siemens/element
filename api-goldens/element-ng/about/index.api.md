@@ -40,25 +40,13 @@ export class SiAboutComponent implements OnInit {
     readonly imprintLink: _angular_core.InputSignal<Link | undefined>;
     readonly licenseInfo: _angular_core.InputSignal<LicenseInfo>;
     readonly links: _angular_core.InputSignal<Link[]>;
-    // (undocumented)
-    ngOnInit(): void;
     readonly privacyLink: _angular_core.InputSignal<Link | undefined>;
     readonly subheading: _angular_core.InputSignal<string[] | undefined>;
     readonly termsLink: _angular_core.InputSignal<Link | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiAboutComponent, "si-about", never, { "aboutTitle": { "alias": "aboutTitle"; "required": true; "isSignal": true; }; "licenseInfo": { "alias": "licenseInfo"; "required": true; "isSignal": true; }; "icon": { "alias": "icon"; "required": false; "isSignal": true; }; "iconName": { "alias": "iconName"; "required": false; "isSignal": true; }; "appName": { "alias": "appName"; "required": true; "isSignal": true; }; "subheading": { "alias": "subheading"; "required": false; "isSignal": true; }; "acceptableUsePolicyLink": { "alias": "acceptableUsePolicyLink"; "required": false; "isSignal": true; }; "imprintLink": { "alias": "imprintLink"; "required": false; "isSignal": true; }; "privacyLink": { "alias": "privacyLink"; "required": false; "isSignal": true; }; "cookieNoticeLink": { "alias": "cookieNoticeLink"; "required": false; "isSignal": true; }; "termsLink": { "alias": "termsLink"; "required": false; "isSignal": true; }; "links": { "alias": "links"; "required": false; "isSignal": true; }; "copyrightDetails": { "alias": "copyrightDetails"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiAboutComponent, never>;
 }
 
 // @public (undocumented)
 export class SiAboutModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiAboutModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiAboutModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiAboutModule, never, [typeof SiAboutComponent], [typeof SiAboutComponent]>;
 }
 
 // (No @packageDocumentation comment for this package)

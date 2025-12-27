@@ -58,10 +58,6 @@ export class SiThemeService {
     readonly themeNames$: Observable<string[]>;
     get themeNames(): string[];
     updateProperty(name: string, value: string, type: keyof ThemeColorSchemes): void;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiThemeService, never>;
-    // (undocumented)
-    static ɵprov: i0.ɵɵInjectableDeclaration<SiThemeService>;
 }
 
 // @public

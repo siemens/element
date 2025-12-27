@@ -61,10 +61,6 @@ export class ModalRef<T = never, CT = any> {
 // @public (undocumented)
 export class SiModalService {
     show<T, CT = any>(content: TemplateRef<any> | (new (...args: any[]) => T), config: ModalOptions<T>, closeValue?: CT): ModalRef<T, CT>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiModalService, never>;
-    // (undocumented)
-    static ɵprov: i0.ɵɵInjectableDeclaration<SiModalService>;
 }
 
 // (No @packageDocumentation comment for this package)

@@ -47,14 +47,8 @@ export class SiToastNotificationService implements OnDestroy {
     constructor();
     activeToasts: SiToast[];
     hideToastNotification(toast?: SiToast): void;
-    // (undocumented)
-    ngOnDestroy(): void;
     queueToastNotification(state: ToastStateName, title: string, message: string, disableAutoClose?: boolean, disableManualClose?: boolean, action?: Link): SiToast;
     showToastNotification(toast: SiToast): SiToast;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiToastNotificationService, never>;
-    // (undocumented)
-    static ɵprov: i0.ɵɵInjectableDeclaration<SiToastNotificationService>;
 }
 
 // @public (undocumented)

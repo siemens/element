@@ -17,17 +17,7 @@ export class SiStatusToggleComponent implements ControlValueAccessor, OnInit, On
     readonly disabled: _angular_core.InputSignal<boolean>;
     readonly itemClick: _angular_core.OutputEmitterRef<string | number>;
     readonly items: _angular_core.InputSignal<StatusToggleItem[]>;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
     readonly value: _angular_core.ModelSignal<string | number | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiStatusToggleComponent, "si-status-toggle", never, { "items": { "alias": "items"; "required": true; "isSignal": true; }; "disabled": { "alias": "disabled"; "required": false; "isSignal": true; }; "value": { "alias": "value"; "required": false; "isSignal": true; }; }, { "value": "valueChange"; "itemClick": "itemClick"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiStatusToggleComponent, never>;
 }
 
 // @public

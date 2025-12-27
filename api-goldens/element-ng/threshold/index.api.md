@@ -19,8 +19,6 @@ export class SiThresholdComponent implements OnChanges {
     readonly maxSteps: _angular_core.InputSignal<number>;
     readonly maxValue: _angular_core.InputSignal<number>;
     readonly minValue: _angular_core.InputSignal<number>;
-    // (undocumented)
-    ngOnChanges(): void;
     readonly options: _angular_core.InputSignal<SelectOption<unknown>[]>;
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly readonlyConditions: _angular_core.InputSignalWithTransform<boolean, unknown>;
@@ -32,20 +30,10 @@ export class SiThresholdComponent implements OnChanges {
     get valid(): boolean;
     readonly validation: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly validChange: _angular_core.OutputEmitterRef<boolean>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiThresholdComponent, "si-threshold", never, { "options": { "alias": "options"; "required": false; "isSignal": true; }; "thresholdSteps": { "alias": "thresholdSteps"; "required": false; "isSignal": true; }; "unit": { "alias": "unit"; "required": false; "isSignal": true; }; "minValue": { "alias": "minValue"; "required": false; "isSignal": true; }; "maxValue": { "alias": "maxValue"; "required": false; "isSignal": true; }; "stepSize": { "alias": "stepSize"; "required": false; "isSignal": true; }; "maxSteps": { "alias": "maxSteps"; "required": false; "isSignal": true; }; "validation": { "alias": "validation"; "required": false; "isSignal": true; }; "canAddRemoveSteps": { "alias": "canAddRemoveSteps"; "required": false; "isSignal": true; }; "horizontalLayout": { "alias": "horizontalLayout"; "required": false; "isSignal": true; }; "showDecIncButtons": { "alias": "showDecIncButtons"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "readonlyConditions": { "alias": "readonlyConditions"; "required": false; "isSignal": true; }; "deleteAriaLabel": { "alias": "deleteAriaLabel"; "required": false; "isSignal": true; }; "addAriaLabel": { "alias": "addAriaLabel"; "required": false; "isSignal": true; }; "inputAriaLabel": { "alias": "inputAriaLabel"; "required": false; "isSignal": true; }; "statusAriaLabel": { "alias": "statusAriaLabel"; "required": false; "isSignal": true; }; }, { "thresholdSteps": "thresholdStepsChange"; "validChange": "validChange"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiThresholdComponent, never>;
 }
 
 // @public (undocumented)
 export class SiThresholdModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiThresholdModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiThresholdModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiThresholdModule, never, [typeof SiThresholdComponent], [typeof SiThresholdComponent]>;
 }
 
 // @public

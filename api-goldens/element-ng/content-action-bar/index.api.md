@@ -25,27 +25,15 @@ export type ContentActionBarMainItem = (MenuItemAction | MenuItemCheckbox | Menu
 export class SiContentActionBarComponent implements AfterViewInit {
     readonly actionParam: _angular_core.InputSignal<any>;
     readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    ngAfterViewInit(): void;
     readonly preventIconsInDropdownMenus: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly primaryActions: _angular_core.InputSignal<readonly (MenuItem | ContentActionBarMainItem)[] | undefined>;
     readonly secondaryActions: _angular_core.InputSignal<readonly (MenuItem | MenuItem_2)[] | undefined>;
     readonly toggleItemLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly viewType: _angular_core.InputSignal<ViewType>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiContentActionBarComponent, "si-content-action-bar", never, { "primaryActions": { "alias": "primaryActions"; "required": false; "isSignal": true; }; "secondaryActions": { "alias": "secondaryActions"; "required": false; "isSignal": true; }; "actionParam": { "alias": "actionParam"; "required": false; "isSignal": true; }; "viewType": { "alias": "viewType"; "required": false; "isSignal": true; }; "toggleItemLabel": { "alias": "toggleItemLabel"; "required": false; "isSignal": true; }; "preventIconsInDropdownMenus": { "alias": "preventIconsInDropdownMenus"; "required": false; "isSignal": true; }; "disabled": { "alias": "disabled"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiContentActionBarComponent, never>;
 }
 
 // @public (undocumented)
 export class SiContentActionBarModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiContentActionBarModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiContentActionBarModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiContentActionBarModule, never, [typeof SiContentActionBarComponent], [typeof SiContentActionBarComponent]>;
 }
 
 // @public

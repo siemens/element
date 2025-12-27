@@ -23,33 +23,17 @@ export interface PasswordPolicy {
 
 // @public (undocumented)
 export class SiPasswordStrengthComponent implements AfterViewInit {
-    // (undocumented)
-    ngAfterViewInit(): void;
     readonly showVisibilityIcon: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiPasswordStrengthComponent, "si-password-strength", never, { "showVisibilityIcon": { "alias": "showVisibilityIcon"; "required": false; "isSignal": true; }; }, {}, ["passwordStrengthDirective", "passwordInput"], ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiPasswordStrengthComponent, never>;
 }
 
 // @public (undocumented)
 export class SiPasswordStrengthDirective implements Validator {
     readonly passwordStrengthChanged: _angular_core.OutputEmitterRef<number | void>;
     readonly siPasswordStrength: _angular_core.InputSignal<PasswordPolicy>;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiPasswordStrengthDirective, "[siPasswordStrength]", never, { "siPasswordStrength": { "alias": "siPasswordStrength"; "required": false; "isSignal": true; }; }, { "passwordStrengthChanged": "passwordStrengthChanged"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiPasswordStrengthDirective, never>;
 }
 
 // @public (undocumented)
 export class SiPasswordStrengthModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiPasswordStrengthModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiPasswordStrengthModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiPasswordStrengthModule, never, [typeof SiPasswordStrengthComponent, typeof SiPasswordStrengthDirective], [typeof SiPasswordStrengthComponent, typeof SiPasswordStrengthDirective]>;
 }
 
 // (No @packageDocumentation comment for this package)

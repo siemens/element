@@ -273,10 +273,6 @@ export const provideIconConfig: (config: IconConfig) => Provider;
 // @public
 export class SiIconComponent {
     readonly icon: _angular_core.InputSignal<string>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiIconComponent, "si-icon", never, { "icon": { "alias": "icon"; "required": true; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiIconComponent, never>;
 }
 
 // @public @deprecated (undocumented)
@@ -287,30 +283,16 @@ export class SiIconLegacyComponent {
     readonly size: _angular_core.InputSignal<string>;
     readonly stackedColor: _angular_core.InputSignal<string | undefined>;
     readonly stackedIcon: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiIconLegacyComponent, "si-icon-legacy", never, { "icon": { "alias": "icon"; "required": false; "isSignal": true; }; "color": { "alias": "color"; "required": false; "isSignal": true; }; "stackedIcon": { "alias": "stackedIcon"; "required": false; "isSignal": true; }; "stackedColor": { "alias": "stackedColor"; "required": false; "isSignal": true; }; "alt": { "alias": "alt"; "required": false; "isSignal": true; }; "size": { "alias": "size"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiIconLegacyComponent, never>;
 }
 
 // @public (undocumented)
 export class SiIconModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiIconModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiIconModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiIconModule, never, [typeof SiIconComponent, typeof SiIconLegacyComponent], [typeof SiIconComponent, typeof SiIconLegacyComponent]>;
 }
 
 // @public (undocumented)
 export class SiStatusIconComponent {
     // (undocumented)
     readonly status: _angular_core.InputSignal<EntityStatusType>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiStatusIconComponent, "si-status-icon", never, { "status": { "alias": "status"; "required": true; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiStatusIconComponent, never>;
 }
 
 // @public

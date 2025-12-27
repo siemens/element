@@ -50,10 +50,6 @@ export class SiAiMessageComponent {
     readonly loading: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
     readonly secondaryActionsLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiAiMessageComponent, "si-ai-message", never, { "content": { "alias": "content"; "required": false; "isSignal": true; }; "contentFormatter": { "alias": "contentFormatter"; "required": false; "isSignal": true; }; "loading": { "alias": "loading"; "required": false; "isSignal": true; }; "actions": { "alias": "actions"; "required": false; "isSignal": true; }; "secondaryActions": { "alias": "secondaryActions"; "required": false; "isSignal": true; }; "actionParam": { "alias": "actionParam"; "required": false; "isSignal": true; }; "secondaryActionsLabel": { "alias": "secondaryActionsLabel"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiAiMessageComponent, never>;
 }
 
 // @public
@@ -63,10 +59,6 @@ export class SiAttachmentListComponent {
     readonly removable: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly remove: _angular_core.OutputEmitterRef<Attachment>;
     readonly removeLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiAttachmentListComponent, "si-attachment-list", never, { "attachments": { "alias": "attachments"; "required": false; "isSignal": true; }; "alignment": { "alias": "alignment"; "required": false; "isSignal": true; }; "removable": { "alias": "removable"; "required": false; "isSignal": true; }; "removeLabel": { "alias": "removeLabel"; "required": false; "isSignal": true; }; }, { "remove": "remove"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiAttachmentListComponent, never>;
 }
 
 // @public
@@ -74,23 +66,11 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
     constructor();
     readonly colorVariant: _angular_core.InputSignal<string>;
     focus(): void;
-    // (undocumented)
-    ngAfterContentInit(): void;
-    // (undocumented)
-    ngOnDestroy(): void;
     readonly noAutoScroll: _angular_core.InputSignalWithTransform<boolean, string | boolean>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChatContainerComponent, "si-chat-container", never, { "colorVariant": { "alias": "colorVariant"; "required": false; "isSignal": true; }; "noAutoScroll": { "alias": "noAutoScroll"; "required": false; "isSignal": true; }; }, {}, never, ["*", "si-inline-notification", "si-chat-input,[siChatContainerInput]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChatContainerComponent, never>;
 }
 
 // @public
 export class SiChatContainerInputDirective {
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiChatContainerInputDirective, "[siChatContainerInput]", never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChatContainerInputDirective, never>;
 }
 
 // @public
@@ -112,8 +92,6 @@ export class SiChatInputComponent implements AfterViewInit {
     readonly label: _angular_core.InputSignal<string>;
     readonly maxFileSize: _angular_core.InputSignal<number>;
     readonly maxLength: _angular_core.InputSignal<number | undefined>;
-    // (undocumented)
-    ngAfterViewInit(): void;
     readonly placeholder: _angular_core.InputSignal<TranslatableString_2>;
     readonly removeAttachmentLabel: _angular_core.InputSignal<TranslatableString_2>;
     readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
@@ -126,26 +104,14 @@ export class SiChatInputComponent implements AfterViewInit {
     readonly sendButtonLabel: _angular_core.InputSignal<TranslatableString_2>;
     readonly sending: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly value: _angular_core.ModelSignal<string>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChatInputComponent, "si-chat-input", never, { "value": { "alias": "value"; "required": false; "isSignal": true; }; "placeholder": { "alias": "placeholder"; "required": false; "isSignal": true; }; "disabled": { "alias": "disabled"; "required": false; "isSignal": true; }; "sending": { "alias": "sending"; "required": false; "isSignal": true; }; "interruptible": { "alias": "interruptible"; "required": false; "isSignal": true; }; "maxLength": { "alias": "maxLength"; "required": false; "isSignal": true; }; "disclaimer": { "alias": "disclaimer"; "required": false; "isSignal": true; }; "actions": { "alias": "actions"; "required": false; "isSignal": true; }; "secondaryActions": { "alias": "secondaryActions"; "required": false; "isSignal": true; }; "allowAttachments": { "alias": "allowAttachments"; "required": false; "isSignal": true; }; "accept": { "alias": "accept"; "required": false; "isSignal": true; }; "maxFileSize": { "alias": "maxFileSize"; "required": false; "isSignal": true; }; "attachments": { "alias": "attachments"; "required": false; "isSignal": true; }; "label": { "alias": "label"; "required": false; "isSignal": true; }; "actionParam": { "alias": "actionParam"; "required": false; "isSignal": true; }; "sendButtonLabel": { "alias": "sendButtonLabel"; "required": false; "isSignal": true; }; "sendButtonIcon": { "alias": "sendButtonIcon"; "required": false; "isSignal": true; }; "interruptButtonLabel": { "alias": "interruptButtonLabel"; "required": false; "isSignal": true; }; "autoFocus": { "alias": "autoFocus"; "required": false; "isSignal": true; }; "attachFileLabel": { "alias": "attachFileLabel"; "required": false; "isSignal": true; }; "removeAttachmentLabel": { "alias": "removeAttachmentLabel"; "required": false; "isSignal": true; }; "secondaryActionsLabel": { "alias": "secondaryActionsLabel"; "required": false; "isSignal": true; }; }, { "value": "valueChange"; "attachments": "attachmentsChange"; "send": "send"; "interrupt": "interrupt"; "fileError": "fileError"; }, never, ["*", "[siChatInputDisclaimer]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChatInputComponent, never>;
 }
 
 // @public
 export class SiChatInputDisclaimerDirective {
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiChatInputDisclaimerDirective, "[siChatInputDisclaimer]", never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChatInputDisclaimerDirective, never>;
 }
 
 // @public
 export class SiChatMessageActionDirective {
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiChatMessageActionDirective, "[siChatMessageAction]", never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChatMessageActionDirective, never>;
 }
 
 // @public
@@ -153,10 +119,6 @@ export class SiChatMessageComponent {
     readonly actionsPosition: _angular_core.InputSignal<"bottom" | "side">;
     readonly alignment: _angular_core.InputSignal<"start" | "end">;
     readonly loading: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChatMessageComponent, "si-chat-message", never, { "loading": { "alias": "loading"; "required": false; "isSignal": true; }; "alignment": { "alias": "alignment"; "required": false; "isSignal": true; }; "actionsPosition": { "alias": "actionsPosition"; "required": false; "isSignal": true; }; }, {}, never, ["si-icon,si-avatar,img", "si-attachment-list,si-badge", "*", "[siChatMessageAction]"], true, [{ directive: typeof i1.SiResponsiveContainerDirective; inputs: {}; outputs: {}; }]>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChatMessageComponent, never>;
 }
 
 // @public
@@ -169,10 +131,6 @@ export class SiUserMessageComponent {
     readonly contentFormatter: _angular_core.InputSignal<((text: string) => string | Node) | undefined>;
     readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
     readonly secondaryActionsLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiUserMessageComponent, "si-user-message", never, { "content": { "alias": "content"; "required": false; "isSignal": true; }; "contentFormatter": { "alias": "contentFormatter"; "required": false; "isSignal": true; }; "actions": { "alias": "actions"; "required": false; "isSignal": true; }; "secondaryActions": { "alias": "secondaryActions"; "required": false; "isSignal": true; }; "attachments": { "alias": "attachments"; "required": false; "isSignal": true; }; "actionParam": { "alias": "actionParam"; "required": false; "isSignal": true; }; "secondaryActionsLabel": { "alias": "secondaryActionsLabel"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiUserMessageComponent, never>;
 }
 
 // (No @packageDocumentation comment for this package)

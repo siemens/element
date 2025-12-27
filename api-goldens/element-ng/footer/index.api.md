@@ -11,20 +11,10 @@ import { Link } from '@siemens/element-ng/link';
 export class SiFooterComponent {
     readonly copyright: i0.InputSignal<string>;
     readonly links: i0.InputSignal<Link[] | undefined>;
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<SiFooterComponent, "si-footer", never, { "copyright": { "alias": "copyright"; "required": true; "isSignal": true; }; "links": { "alias": "links"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiFooterComponent, never>;
 }
 
 // @public (undocumented)
 export class SiFooterModule {
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiFooterModule, never>;
-    // (undocumented)
-    static ɵinj: i0.ɵɵInjectorDeclaration<SiFooterModule>;
-    // (undocumented)
-    static ɵmod: i0.ɵɵNgModuleDeclaration<SiFooterModule, never, [typeof SiFooterComponent], [typeof SiFooterComponent]>;
 }
 
 // (No @packageDocumentation comment for this package)

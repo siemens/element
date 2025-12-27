@@ -46,8 +46,6 @@ export class SiPhoneNumberInputComponent implements ControlValueAccessor, Valida
     readonly id: _angular_core.InputSignal<string>;
     // (undocumented)
     readonly labelledby: _angular_core.InputSignal<string>;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
     readonly phoneNumberAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly placeholderForSearch: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     // (undocumented)
@@ -58,20 +56,10 @@ export class SiPhoneNumberInputComponent implements ControlValueAccessor, Valida
     readonly supportedCountries: _angular_core.InputSignal<readonly string[] | null | undefined>;
     // (undocumented)
     readonly valueChange: _angular_core.OutputEmitterRef<PhoneDetails>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiPhoneNumberInputComponent, "si-phone-number-input", never, { "id": { "alias": "id"; "required": false; "isSignal": true; }; "country": { "alias": "country"; "required": false; "isSignal": true; }; "defaultCountry": { "alias": "defaultCountry"; "required": false; "isSignal": true; }; "placeholderForSearch": { "alias": "placeholderForSearch"; "required": false; "isSignal": true; }; "searchNoResultsFoundLabel": { "alias": "searchNoResultsFoundLabel"; "required": false; "isSignal": true; }; "selectCountryAriaLabel": { "alias": "selectCountryAriaLabel"; "required": false; "isSignal": true; }; "phoneNumberAriaLabel": { "alias": "phoneNumberAriaLabel"; "required": false; "isSignal": true; }; "supportedCountries": { "alias": "supportedCountries"; "required": false; "isSignal": true; }; "labelledby": { "alias": "labelledby"; "required": false; "isSignal": true; }; "disabledInput": { "alias": "disabled"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "errormessageId": { "alias": "errormessageId"; "required": false; "isSignal": true; }; }, { "country": "countryChange"; "valueChange": "valueChange"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiPhoneNumberInputComponent, never>;
 }
 
 // @public (undocumented)
 export class SiPhoneNumberInputModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiPhoneNumberInputModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiPhoneNumberInputModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiPhoneNumberInputModule, never, [typeof SiPhoneNumberInputComponent], [typeof SiPhoneNumberInputComponent]>;
 }
 
 // (No @packageDocumentation comment for this package)

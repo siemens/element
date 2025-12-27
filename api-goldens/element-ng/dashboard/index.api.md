@@ -38,15 +38,9 @@ export class SiDashboardCardComponent extends SiCardComponent implements OnDestr
     readonly expandChange: _angular_core.OutputEmitterRef<boolean>;
     readonly expandText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly isExpanded: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
-    ngOnDestroy(): void;
     restore(): void;
     readonly restoreText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly showMenubar: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiDashboardCardComponent, "si-dashboard-card", never, { "restoreText": { "alias": "restoreText"; "required": false; "isSignal": true; }; "expandText": { "alias": "expandText"; "required": false; "isSignal": true; }; "enableExpandInteraction": { "alias": "enableExpandInteraction"; "required": false; "isSignal": true; }; "showMenubar": { "alias": "showMenubar"; "required": false; "isSignal": true; }; }, { "expandChange": "expandChange"; }, never, ["[headerIcon]", "[body]", "[footer]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiDashboardCardComponent, never>;
 }
 
 // @public (undocumented)
@@ -57,26 +51,12 @@ export class SiDashboardComponent implements OnChanges, AfterViewInit {
     readonly heading: _angular_core.InputSignal<string | undefined>;
     readonly hideMenubar: _angular_core.InputSignalWithTransform<boolean, unknown>;
     get isExpanded(): boolean;
-    // (undocumented)
-    ngAfterViewInit(): void;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
     restore(): void;
     readonly sticky: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiDashboardComponent, "si-dashboard", never, { "heading": { "alias": "heading"; "required": false; "isSignal": true; }; "enableExpandInteractions": { "alias": "enableExpandInteractions"; "required": false; "isSignal": true; }; "sticky": { "alias": "sticky"; "required": false; "isSignal": true; }; "hideMenubar": { "alias": "hideMenubar"; "required": false; "isSignal": true; }; }, {}, never, ["[menubar]", "[dashboard]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiDashboardComponent, never>;
 }
 
 // @public (undocumented)
 export class SiDashboardModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiDashboardModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiDashboardModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiDashboardModule, never, [typeof SiDashboardCardComponent, typeof SiDashboardComponent], [typeof SiDashboardCardComponent, typeof SiDashboardComponent]>;
 }
 
 // @public (undocumented)
@@ -84,20 +64,12 @@ export class SiDashboardService {
     readonly cards$: rxjs.Observable<SiDashboardCardComponent[]>;
     register(card: SiDashboardCardComponent): void;
     unregister(card: SiDashboardCardComponent): void;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiDashboardService, never>;
-    // (undocumented)
-    static ɵprov: _angular_core.ɵɵInjectableDeclaration<SiDashboardService>;
 }
 
 // @public
 export class SiLinkWidgetComponent extends SiWidgetBaseComponent<Link[]> {
     readonly numberOfLinks: _angular_core.InputSignal<number>;
     readonly showLinkIcons: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiLinkWidgetComponent, "si-link-widget", never, { "showLinkIcons": { "alias": "showLinkIcons"; "required": false; "isSignal": true; }; "numberOfLinks": { "alias": "numberOfLinks"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiLinkWidgetComponent, never>;
 }
 
 // @public
@@ -109,10 +81,6 @@ export class SiListWidgetBodyComponent extends SiWidgetBaseComponent<SiListWidge
     readonly search: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly searchPlaceholderLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly sort: _angular_core.InputSignal<SortOrder | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiListWidgetBodyComponent, "si-list-widget-body", never, { "link": { "alias": "link"; "required": false; "isSignal": true; }; "searchPlaceholderLabel": { "alias": "searchPlaceholderLabel"; "required": false; "isSignal": true; }; "sort": { "alias": "sort"; "required": false; "isSignal": true; }; "search": { "alias": "search"; "required": false; "isSignal": true; }; "compareFn": { "alias": "compareFn"; "required": false; "isSignal": true; }; "filterFn": { "alias": "filterFn"; "required": false; "isSignal": true; }; "numberOfLinks": { "alias": "numberOfLinks"; "required": false; "isSignal": true; }; "searchText": { "alias": "searchText"; "required": false; "isSignal": true; }; }, { "searchText": "searchTextChange"; }, never, ["[empty-state]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiListWidgetBodyComponent, never>;
 }
 
 // @public
@@ -130,10 +98,6 @@ export class SiListWidgetComponent extends SiWidgetBaseComponent<SiListWidgetIte
     readonly sortAscendingLabel: _angular_core.InputSignal<TranslatableString>;
     // (undocumented)
     readonly sortDescendingLabel: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiListWidgetComponent, "si-list-widget", never, { "heading": { "alias": "heading"; "required": false; "isSignal": true; }; "link": { "alias": "link"; "required": false; "isSignal": true; }; "searchPlaceholderLabel": { "alias": "searchPlaceholderLabel"; "required": false; "isSignal": true; }; "sortAscendingLabel": { "alias": "sortAscendingLabel"; "required": false; "isSignal": true; }; "sortDescendingLabel": { "alias": "sortDescendingLabel"; "required": false; "isSignal": true; }; "sort": { "alias": "sort"; "required": false; "isSignal": true; }; "search": { "alias": "search"; "required": false; "isSignal": true; }; "compareFn": { "alias": "compareFn"; "required": false; "isSignal": true; }; "filterFn": { "alias": "filterFn"; "required": false; "isSignal": true; }; "numberOfLinks": { "alias": "numberOfLinks"; "required": false; "isSignal": true; }; "accentLine": { "alias": "accentLine"; "required": false; "isSignal": true; }; }, { "sort": "sortChange"; }, never, ["[empty-state]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiListWidgetComponent, never>;
 }
 
 // @public
@@ -149,20 +113,12 @@ export interface SiListWidgetItem {
 
 // @public
 export class SiListWidgetItemComponent extends SiWidgetBaseComponent<SiListWidgetItem> {
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiListWidgetItemComponent, "si-list-widget-item", never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiListWidgetItemComponent, never>;
 }
 
 // @public (undocumented)
 export class SiTimelineWidgetBodyComponent extends SiWidgetBaseComponent<SiTimelineWidgetItem[]> {
     readonly numberOfItems: _angular_core.InputSignal<number>;
     readonly showDescription: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiTimelineWidgetBodyComponent, "si-timeline-widget-body", never, { "numberOfItems": { "alias": "numberOfItems"; "required": false; "isSignal": true; }; "showDescription": { "alias": "showDescription"; "required": false; "isSignal": true; }; }, {}, never, ["[empty-state]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiTimelineWidgetBodyComponent, never>;
 }
 
 // @public (undocumented)
@@ -174,10 +130,6 @@ export class SiTimelineWidgetComponent extends SiWidgetBaseComponent<SiTimelineW
     readonly primaryActions: _angular_core.InputSignal<(MenuItem | ContentActionBarMainItem)[]>;
     readonly secondaryActions: _angular_core.InputSignal<(MenuItem | MenuItem_2)[]>;
     readonly showDescription: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiTimelineWidgetComponent, "si-timeline-widget", never, { "heading": { "alias": "heading"; "required": false; "isSignal": true; }; "primaryActions": { "alias": "primaryActions"; "required": false; "isSignal": true; }; "secondaryActions": { "alias": "secondaryActions"; "required": false; "isSignal": true; }; "link": { "alias": "link"; "required": false; "isSignal": true; }; "numberOfItems": { "alias": "numberOfItems"; "required": false; "isSignal": true; }; "showDescription": { "alias": "showDescription"; "required": false; "isSignal": true; }; "accentLine": { "alias": "accentLine"; "required": false; "isSignal": true; }; }, {}, never, ["[empty-state]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiTimelineWidgetComponent, never>;
 }
 
 // @public
@@ -197,10 +149,6 @@ export interface SiTimelineWidgetItem {
 export class SiTimelineWidgetItemComponent extends SiWidgetBaseComponent<SiTimelineWidgetItem> implements OnInit, OnChanges {
     readonly ariaLabelDropdown: TranslatableString;
     readonly showDescription: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiTimelineWidgetItemComponent, "si-timeline-widget-item", never, { "showDescription": { "alias": "showDescription"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiTimelineWidgetItemComponent, never>;
 }
 
 // @public
@@ -209,10 +157,6 @@ export class SiValueWidgetBodyComponent extends SiWidgetBaseComponent<Translatab
     readonly icon: _angular_core.InputSignal<string | undefined>;
     readonly status: _angular_core.InputSignal<EntityStatusType | undefined>;
     readonly unit: _angular_core.InputSignal<TranslatableString | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiValueWidgetBodyComponent, "si-value-widget-body", never, { "unit": { "alias": "unit"; "required": false; "isSignal": true; }; "icon": { "alias": "icon"; "required": false; "isSignal": true; }; "status": { "alias": "status"; "required": false; "isSignal": true; }; "description": { "alias": "description"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiValueWidgetBodyComponent, never>;
 }
 
 // @public
@@ -235,10 +179,6 @@ export class SiValueWidgetComponent {
     readonly status: _angular_core.InputSignal<EntityStatusType | undefined>;
     readonly unit: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly value: _angular_core.InputSignal<TranslatableString | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiValueWidgetComponent, "si-value-widget", never, { "heading": { "alias": "heading"; "required": false; "isSignal": true; }; "primaryActions": { "alias": "primaryActions"; "required": false; "isSignal": true; }; "secondaryActions": { "alias": "secondaryActions"; "required": false; "isSignal": true; }; "value": { "alias": "value"; "required": false; "isSignal": true; }; "unit": { "alias": "unit"; "required": false; "isSignal": true; }; "icon": { "alias": "icon"; "required": false; "isSignal": true; }; "status": { "alias": "status"; "required": false; "isSignal": true; }; "description": { "alias": "description"; "required": false; "isSignal": true; }; "link": { "alias": "link"; "required": false; "isSignal": true; }; "disableAutoLoadingIndicator": { "alias": "disableAutoLoadingIndicator"; "required": false; "isSignal": true; }; "showLoadingIndicator": { "alias": "showLoadingIndicator"; "required": false; "isSignal": true; }; "initialLoadingIndicatorDebounceTime": { "alias": "initialLoadingIndicatorDebounceTime"; "required": false; "isSignal": true; }; "imgSrc": { "alias": "imgSrc"; "required": false; "isSignal": true; }; "imgAlt": { "alias": "imgAlt"; "required": false; "isSignal": true; }; "imgDir": { "alias": "imgDir"; "required": false; "isSignal": true; }; "imgObjectFit": { "alias": "imgObjectFit"; "required": false; "isSignal": true; }; "imgObjectPosition": { "alias": "imgObjectPosition"; "required": false; "isSignal": true; }; "accentLine": { "alias": "accentLine"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiValueWidgetComponent, never>;
 }
 
 // @public

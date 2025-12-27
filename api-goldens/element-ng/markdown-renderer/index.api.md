@@ -14,10 +14,6 @@ export const getMarkdownRenderer: (sanitizer: DomSanitizer) => ((text: string) =
 export class SiMarkdownRendererComponent {
     constructor();
     readonly text: i0.InputSignal<string>;
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<SiMarkdownRendererComponent, "si-markdown-renderer", never, { "text": { "alias": "text"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiMarkdownRendererComponent, never>;
 }
 
 // (No @packageDocumentation comment for this package)

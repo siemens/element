@@ -29,8 +29,6 @@ export class SiNumberInputComponent implements OnChanges, ControlValueAccessor, 
     readonly inputId: _angular_core.InputSignal<string>;
     readonly maxInput: _angular_core.InputSignalWithTransform<number | undefined, unknown>;
     readonly minInput: _angular_core.InputSignalWithTransform<number | undefined, unknown>;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
     readonly placeholder: _angular_core.InputSignal<TranslatableString | undefined>;
     // (undocumented)
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
@@ -40,20 +38,10 @@ export class SiNumberInputComponent implements OnChanges, ControlValueAccessor, 
     readonly value: _angular_core.InputSignal<number | undefined>;
     // (undocumented)
     readonly valueChange: _angular_core.OutputEmitterRef<number | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiNumberInputComponent, "si-number-input", never, { "minInput": { "alias": "min"; "required": false; "isSignal": true; }; "maxInput": { "alias": "max"; "required": false; "isSignal": true; }; "step": { "alias": "step"; "required": false; "isSignal": true; }; "value": { "alias": "value"; "required": false; "isSignal": true; }; "unit": { "alias": "unit"; "required": false; "isSignal": true; }; "showButtons": { "alias": "showButtons"; "required": false; "isSignal": true; }; "ariaLabel": { "alias": "aria-label"; "required": false; "isSignal": true; }; "inputId": { "alias": "inputId"; "required": false; "isSignal": true; }; "disabledInput": { "alias": "disabled"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "placeholder": { "alias": "placeholder"; "required": false; "isSignal": true; }; "errormessageId": { "alias": "errormessageId"; "required": false; "isSignal": true; }; }, { "valueChange": "valueChange"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiNumberInputComponent, never>;
 }
 
 // @public (undocumented)
 export class SiNumberInputModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiNumberInputModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiNumberInputModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiNumberInputModule, never, [typeof SiNumberInputComponent], [typeof SiNumberInputComponent]>;
 }
 
 // (No @packageDocumentation comment for this package)
