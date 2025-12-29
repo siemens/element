@@ -5,6 +5,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
+import { getBypassValue, isBypassTranslation } from './si-bypass-translate';
 import { SiTranslateService, TranslationResult } from './si-translate.service';
 
 const arrayToRecord = (keys: string[]): Record<string, string> =>
@@ -58,6 +59,9 @@ export class SiNoTranslateService extends SiTranslateService {
     };
 
     if (typeof keys === 'string') {
+      if (isBypassTranslation(keys)) {
+        return getBypassValue(keys) as TranslationResult<T>;
+      }
       return translateKey(keys) as TranslationResult<T>;
     } else {
       const translatedKeys = keys.map(translateKey);

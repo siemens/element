@@ -9,6 +9,7 @@ import { RouterTestingHarness } from '@angular/router/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { SiTranslateNgxTService } from '@siemens/element-translate-ng/ngx-translate/si-translate-ngxt.service';
 import {
+  bypassTranslation,
   injectSiTranslateService,
   SiTranslatePipe,
   t
@@ -134,6 +135,11 @@ describe('SiTranslateNgxT', () => {
       translateLoader$.next({ 'KEY-1': 'VALUE-2' });
       expect(service.translateSync('KEY-1')).toBe('VALUE-2');
       expect(service.translateSync('KEY-2')).toBe('default-value');
+    });
+
+    it('should bypass translation value', () => {
+      const result = service.translateSync(bypassTranslation('KEY-1'));
+      expect(result).toBe('KEY-1');
     });
 
     describe('with loaded translations', () => {
