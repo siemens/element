@@ -277,7 +277,6 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
   private overlay = inject(Overlay);
   private elementRef = inject<ElementRef<HTMLInputElement>>(ElementRef);
   private injector = inject(Injector);
-  private autoComplete = inject<SiAutocompleteDirective<TypeaheadMatch>>(SiAutocompleteDirective);
 
   private $typeahead = new ReplaySubject<TypeaheadArray>(1);
   private componentRef?: ComponentRef<SiTypeaheadComponent>;
@@ -432,20 +431,6 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
     if (this.typeaheadCloseOnEsc()) {
       this.clearTimer();
       this.canBeOpen.set(false);
-    }
-  }
-
-  @HostListener('keydown.space', ['$event'])
-  protected onKeydownSpace(event: Event): void {
-    if (this.typeaheadMultiSelect()) {
-      // Avoid space character to be inserted into the input field
-      event.preventDefault();
-      const value = this.autoComplete.active?.value();
-      if (value) {
-        this.selectMatch(value);
-        // this forces change detection in the typeahead component.
-        this.selectionCounter.update(v => v + 1);
-      }
     }
   }
 
