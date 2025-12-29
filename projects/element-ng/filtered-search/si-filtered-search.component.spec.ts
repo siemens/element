@@ -40,7 +40,6 @@ import { SiFilteredSearchHarness } from './testing/si-filtered-search.harness';
     [disabled]="disabled"
     [disableFreeTextSearch]="disableFreeTextSearch"
     [freeTextCriterion]="freeTextCriterion"
-    [readonly]="readonly"
     [placeholder]="placeholder"
     [lazyLoadingDebounceTime]="lazyLoadingDebounceTime"
     [lazyCriterionProvider]="lazyCriterionProvider"
@@ -67,7 +66,6 @@ class TestHostComponent {
   disabled!: boolean;
   disableFreeTextSearch = false;
   freeTextCriterion?: CriterionDefinition;
-  readonly!: boolean;
   placeholder = '';
 
   // eslint-disable-next-line @angular-eslint/prefer-signals
@@ -175,8 +173,8 @@ describe('SiFilteredSearchComponent', () => {
       expect(await filteredSearch.clearButtonVisible()).toBeFalsy();
     });
 
-    it('should not show button when in read-only mode', async () => {
-      component.readonly = true;
+    it('should not show button when in disabled mode', async () => {
+      component.disabled = true;
       component.searchCriteria.set({ criteria: [], value: 'TEXT_KEY' });
 
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
@@ -236,8 +234,8 @@ describe('SiFilteredSearchComponent', () => {
       component.searchCriteria.set({ criteria: [{ name: 'foo', value: 'bar' }], value: '' });
     });
 
-    it('should not show button when in read-only mode', async () => {
-      component.readonly = true;
+    it('should not show button when in disabled mode', async () => {
+      component.disabled = true;
 
       const criteria = await loader.getAllHarnesses(SiFilteredSearchCriterionHarness);
       expect(await criteria[0].clearButtonVisible()).toBeFalsy();
@@ -1536,8 +1534,8 @@ describe('SiFilteredSearchComponent', () => {
     ]);
     component.searchCriteria.set({
       criteria: [
-        { name: 'company', label: 'Company', options: ['Foo', 'Bar'] },
-        { name: 'Location', label: 'Location', options: ['Munich', 'Zug'] }
+        { name: 'company', value: ['Foo', 'Bar'] },
+        { name: 'Location', value: ['Munich', 'Zug'] }
       ],
       value: ''
     });
@@ -1749,7 +1747,7 @@ describe('SiFilteredSearchComponent', () => {
         }
       ]);
       component.searchCriteria.set({
-        criteria: [{ name: 'highLimit', label: 'High Limit [°C]', value: '123', operator: '>' }],
+        criteria: [{ name: 'highLimit', value: '123', operator: '>' }],
         value: ''
       });
 
@@ -1799,7 +1797,7 @@ describe('SiFilteredSearchComponent', () => {
         }
       ]);
       component.searchCriteria.set({
-        criteria: [{ name: 'highLimit', label: 'High Limit [°C]', value: '123', operator: '>' }],
+        criteria: [{ name: 'highLimit', value: '123', operator: '>' }],
         value: ''
       });
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);

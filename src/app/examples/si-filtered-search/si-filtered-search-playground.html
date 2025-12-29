@@ -8,7 +8,6 @@
         placeholder="Just start typing or click in the input field..."
         searchLabel="search"
         [disabled]="configForm.value.disabled!"
-        [readonly]="configForm.value.readonly!"
         [criteria]="[
           {
             name: 'country',
@@ -88,11 +87,6 @@
     <div class="card-body">
       <form [formGroup]="configForm">
         <div class="row">
-          <div class="col-sm-3">
-            <si-form-item label="Readonly">
-              <input type="checkbox" class="form-check-input" formControlName="readonly" />
-            </si-form-item>
-          </div>
           <div class="col-sm-3">
             <si-form-item label="Disabled">
               <input type="checkbox" class="form-check-input" formControlName="disabled" />
