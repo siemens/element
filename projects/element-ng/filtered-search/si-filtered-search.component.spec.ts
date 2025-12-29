@@ -1102,7 +1102,7 @@ describe('SiFilteredSearchComponent', () => {
       await criteriaValue?.focus();
       await criteriaValue?.sendKeys('Z');
       await tick();
-      await criteriaValue?.sendKeys(' ');
+      await criteriaValue?.sendKeys(TestKey.ENTER);
 
       expect(component.filteredSearch().searchCriteria()).toEqual({
         criteria: [jasmine.objectContaining({ name: 'location', value: ['Munich'] })],
@@ -1132,7 +1132,7 @@ describe('SiFilteredSearchComponent', () => {
       await criteriaValue?.clearText();
       await criteriaValue?.sendKeys('K');
       await tick();
-      await criteriaValue?.sendKeys(' ');
+      await criteriaValue?.sendKeys(TestKey.ENTER);
       expect(component.searchCriteria()).toEqual({
         criteria: [
           jasmine.objectContaining({ name: 'location', value: ['Munich', 'Zug', 'Karlsruhe'] })
