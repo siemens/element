@@ -7,6 +7,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 import {
+  ApiReportVariant,
   ConsoleMessageId,
   Extractor,
   ExtractorConfig,
@@ -15,12 +16,11 @@ import {
   ExtractorMessageId,
   IConfigFile
 } from '@microsoft/api-extractor';
-import { ReleaseTag } from '@microsoft/api-extractor-model';
 import { AstDeclaration } from '@microsoft/api-extractor/lib/analyzer/AstDeclaration';
 import { AstModule } from '@microsoft/api-extractor/lib/analyzer/AstModule';
 import { ExportAnalyzer } from '@microsoft/api-extractor/lib/analyzer/ExportAnalyzer';
-import { ApiItemMetadata } from '@microsoft/api-extractor/lib/collector/ApiItemMetadata';
 import { Collector } from '@microsoft/api-extractor/lib/collector/Collector';
+import { ApiReportGenerator } from '@microsoft/api-extractor/lib/generators/ApiReportGenerator';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
@@ -50,11 +50,10 @@ const _angularLifecycleHooks = [
 ];
 
 /**
- * Original definition of the `Collector#fetchApiItemMetadata` method.
- * We store the original function since we monkey-patch it later to mark
- * protected members as internal.
- * */
-const _origFetchApiItemMetadata = Collector.prototype.fetchApiItemMetadata;
+ * Original definition of private static `ApiReportGenerator#_shouldIncludeDeclaration` for
+ * monkey patching to skip Angular related stuff.
+ */
+const _orig_shouldIncludeDeclaration = (ApiReportGenerator as any)._shouldIncludeDeclaration;
 
 function skipAngular(astDeclaration: AstDeclaration): boolean {
   // check if this is an Angular component/directive/module
@@ -186,26 +185,20 @@ export async function testApiGolden(
     return info;
   };
 
-  // This patches the `Collector` of `api-extractor` so that we can mark protected
-  // members as internal. This prevents them from appearing in the API report.
-  Collector.prototype.fetchApiItemMetadata = function (astDeclaration: AstDeclaration) {
-    const metadata: ApiItemMetadata = _origFetchApiItemMetadata.apply(this, [astDeclaration]);
-
-    if (skipAngular(astDeclaration)) {
-      return new ApiItemMetadata({
-        effectiveReleaseTag: ReleaseTag.Internal,
-        declaredReleaseTag: ReleaseTag.Internal,
-        releaseTagSameAsParent: false,
-        isOverride: metadata.isOverride,
-        isSealed: metadata.isSealed,
-        isVirtual: metadata.isVirtual,
-        isEventProperty: metadata.isEventProperty,
-        isPreapproved: metadata.isPreapproved
-      });
-    }
-
-    return metadata;
-  };
+  // Patch the report generator to skip some Angular related stuff
+  (ApiReportGenerator as any)._shouldIncludeDeclaration = function (
+     collector: Collector,
+     astDeclaration: AstDeclaration,
+     reportVariant: ApiReportVariant
+  ): boolean {
+   if (skipAngular(astDeclaration)) {
+     return false;
+   }
+   return _orig_shouldIncludeDeclaration.apply(
+     ApiReportGenerator,
+     [collector, astDeclaration, reportVariant]
+   );
+  }
 
   const reportTmpOutPath = path.join(
     tempDir,
