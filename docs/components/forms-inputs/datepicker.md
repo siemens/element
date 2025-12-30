@@ -106,7 +106,7 @@ import {
 
 ### Datepicker without time
 
-The Datepicker component can be added to any view. Bidirectional binding of the date
+The datepicker component can be added to any view. Bidirectional binding of the date
 object is provided by the `date` property. The configuration is handled by the `config`
 object as documented in the API.
 
