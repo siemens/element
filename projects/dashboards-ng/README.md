@@ -61,7 +61,7 @@ import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
     BrowserModule,
 
     // Import this library
-    SiDashboardsNgModule.forRoot({})
+    SiDashboardsNgModule
   ],
   providers: [
     provideNgxTranslateForElement()
@@ -244,16 +244,10 @@ providers: [..., { provide: DEFAULT_WIDGET_STORAGE_TOKEN, useValue: localStorage
 
 For persistence in a backend service, you should implement your own
 [SiWidgetStorage](https://github.com/siemens/element/blob/main/projects/dashboards-ng/src/model/si-widget-storage.ts) and provide it in
-the library module definition.
+your module providers or application config.
 
 ```ts
-SiDashboardsNgModule.forRoot({
-  config: {},
-  dashboardApi: {
-    provide: SiWidgetStorage,
-    useClass: CustomWidgetStorage
-  }
-});
+providers: [{ provide: SI_WIDGET_STORE, useClass: CustomWidgetStorage }];
 ```
 
 ### Configuration
@@ -262,8 +256,8 @@ The dashboard is configurable through the Angular inputs of the exposed componen
 the usage of the configuration object `Config`, which includes a `GridConfig` and including
 the [GridStackOptions](https://github.com/siemens/element/blob/main/projects/dashboards-ng/src/model/gridstack.model.ts).
 
-To configure all dashboard instances, you can leverage dependency injection when importing
-the `SiDashboardsNgModule` using `SiDashboardsNgModule.forRoot({...})`.
+To configure all dashboard instances, you can leverage dependency injection by providing
+the `SI_DASHBOARD_CONFIGURATION` token in your providers.
 Alternatively, you have the option to configure individual dashboard instances by setting
 the input property `SiFlexibleDashboardComponent.config = {...}`.
 
