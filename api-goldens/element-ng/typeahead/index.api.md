@@ -86,7 +86,7 @@ export class SiTypeaheadModule {
 }
 
 // @public
-export type Typeahead = TypeaheadArray | TypeaheadObservable;
+export type Typeahead = TypeaheadArray | TypeaheadObservable | TypeaheadOptionSource;
 
 // @public
 export type TypeaheadArray = TypeaheadOption[];
@@ -139,6 +139,11 @@ export interface TypeaheadOptionItemContext {
     match: TypeaheadMatch;
     // (undocumented)
     query: string;
+}
+
+// @public
+export interface TypeaheadOptionSource {
+    getOptionsForSearch(search: string): Observable<TypeaheadArray>;
 }
 
 // (No @packageDocumentation comment for this package)
