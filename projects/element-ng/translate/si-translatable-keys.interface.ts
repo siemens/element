@@ -149,7 +149,6 @@ export interface SiTranslatableKeys {
   'SI_LAUNCHPAD.FAVORITE_APPS'?: string;
   'SI_LAUNCHPAD.SHOW_LESS'?: string;
   'SI_LAUNCHPAD.SHOW_MORE'?: string;
-  'SI_LAUNCHPAD.SUBTITLE'?: string;
   'SI_LAUNCHPAD.SUB_TITLE'?: string;
   'SI_LAUNCHPAD.TITLE'?: string;
   'SI_LIST_DETAILS.BACK'?: string;

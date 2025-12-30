@@ -12,6 +12,7 @@ import {
   provideZonelessChangeDetection
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import {
   SiHeaderDropdownComponent,
   SiHeaderDropdownItemComponent,
@@ -102,7 +103,7 @@ describe('SiApplicationHeaderComponent', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        providers: [provideZonelessChangeDetection()]
+        providers: [provideZonelessChangeDetection(), provideNoopAnimations()]
       });
     });
 
@@ -218,7 +219,7 @@ describe('SiApplicationHeaderComponent', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        providers: [provideZonelessChangeDetection()]
+        providers: [provideZonelessChangeDetection(), provideNoopAnimations()]
       });
     });
 
@@ -306,7 +307,8 @@ describe('SiApplicationHeaderComponent', () => {
       TestBed.configureTestingModule({
         providers: [
           { provide: BreakpointObserver, useExisting: BreakpointObserverMock },
-          provideZonelessChangeDetection()
+          provideZonelessChangeDetection(),
+          provideNoopAnimations()
         ]
       });
     });
@@ -356,7 +358,7 @@ describe('SiApplicationHeaderComponent', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        providers: [provideZonelessChangeDetection()]
+        providers: [provideZonelessChangeDetection(), provideNoopAnimations()]
       });
     });
 

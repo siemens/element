@@ -48,6 +48,8 @@ export interface AppBase {
   favorite?: boolean;
   /** Whether the app should be marked as external. */
   external?: boolean;
+  /** Whether the app is disabled and cannot be interacted with. */
+  disabled?: boolean;
 }
 
 export type App = AppLink | AppRouterLink;

@@ -31,7 +31,9 @@ import { SiApplicationHeaderComponent } from '../si-application-header.component
   host: {
     class: 'focus-inside',
     '[class.active]': 'active()',
-    '[class.action]': 'action()'
+    '[class.action]': 'action()',
+    '[class.disabled]': 'disabled()',
+    '[attr.tabindex]': 'disabled() ? -1 : null'
   }
 })
 export class SiLaunchpadAppComponent {
@@ -45,6 +47,8 @@ export class SiLaunchpadAppComponent {
   readonly favorite = model(false);
   /** @defaultValue false */
   readonly action = input(false, { transform: booleanAttribute });
+  /** @defaultValue false */
+  readonly disabled = input(false, { transform: booleanAttribute });
   readonly iconUrl = input<string>();
   readonly iconClass = input<string>();
 
@@ -54,12 +58,16 @@ export class SiLaunchpadAppComponent {
 
   @HostListener('keydown.space', ['$event'])
   protected favoriteClicked(event: Event): void {
+    if (this.disabled()) return;
+
     event.stopPropagation();
     event.preventDefault();
     this.favorite.update(old => !old);
   }
 
   @HostListener('click') protected click(): void {
+    if (this.disabled()) return;
+
     this.header.closeLaunchpad();
   }
 }
