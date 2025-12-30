@@ -1,5 +1,9 @@
 @use '@siemens/element-theme/src/styles/variables';
 
+:host {
+  --loading-spinner-size: 24px;
+}
+
 // Overwrite some of Bootstrap's dropdown styling.
 .dropdown-menu {
   display: block;
@@ -11,6 +15,10 @@
   overflow-y: auto;
   overflow-x: hidden;
   max-block-size: 100%;
+
+  &.empty-loading {
+    min-block-size: 176px;
+  }
 }
 
 // Make matching segments bold.
@@ -26,4 +34,9 @@
   span {
     white-space: pre-wrap;
   }
+}
+
+:host::ng-deep .blocking-spinner {
+  // stylelint-disable-next-line declaration-no-important
+  background: variables.$element-base-1 !important;
 }
