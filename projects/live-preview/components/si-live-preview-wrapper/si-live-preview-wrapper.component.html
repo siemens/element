@@ -1,14 +1,29 @@
-<si-live-preview-renderer
-  #renderer
-  [hidden]="loadReact || loadVue || loadJs"
-  [template]="template"
-  [exampleUrl]="exampleUrl"
-  (templateFromComponent)="sendMessage('templateFromComponent', $event)"
-  (logClear)="sendMessage('clear')"
-  (logMessage)="sendMessage('log', $event)"
-  (logRenderingError)="sendMessage('error', $event)"
-  (inProgress)="sendMessage('progress', $event)"
-  (supportsLandscapeMode)="sendMessage('landscapeMode', $event)"
-/>
+@if (enableJitMode) {
+  <si-live-preview-jit-renderer
+    #renderer
+    [hidden]="loadReact || loadVue || loadJs"
+    [template]="template"
+    [exampleUrl]="exampleUrl"
+    (templateFromComponent)="sendMessage('templateFromComponent', $event)"
+    (logClear)="sendMessage('clear')"
+    (logMessage)="sendMessage('log', $event)"
+    (logRenderingError)="sendMessage('error', $event)"
+    (inProgress)="sendMessage('progress', $event)"
+    (supportsLandscapeMode)="sendMessage('landscapeMode', $event)"
+  />
+} @else {
+  <si-live-preview-renderer
+    #renderer
+    [hidden]="loadReact || loadVue || loadJs"
+    [template]="template"
+    [exampleUrl]="exampleUrl"
+    (templateFromComponent)="sendMessage('templateFromComponent', $event)"
+    (logClear)="sendMessage('clear')"
+    (logMessage)="sendMessage('log', $event)"
+    (logRenderingError)="sendMessage('error', $event)"
+    (inProgress)="sendMessage('progress', $event)"
+    (supportsLandscapeMode)="sendMessage('landscapeMode', $event)"
+  />
+}
 
 <div #webcomponentRenderer></div>

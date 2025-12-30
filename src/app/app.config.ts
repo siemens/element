@@ -5,6 +5,8 @@
 /// <reference types="node" />
 // only link node types here to prevent them from being used in other files
 
+declare const jitMode: boolean;
+
 import { registerLocaleData } from '@angular/common';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import {
@@ -33,7 +35,8 @@ import {
   SiLivePreviewLocaleApi,
   SiLivePreviewThemeApi,
   SiLivePreviewModule,
-  SiLivePreviewRoutingModule
+  SiLivePreviewRoutingModule,
+  provideEnableJitMode
 } from '@siemens/live-preview';
 import { lastValueFrom, Observable, take } from 'rxjs';
 
@@ -156,6 +159,7 @@ export const APP_CONFIG: ApplicationConfig = {
     provideNgxTranslateForElement(),
     provideSiDatatableConfig(),
     provideIconConfig({ disableSvgIcons: false }),
-    provideSiUiState()
+    provideSiUiState(),
+    provideEnableJitMode(jitMode)
   ]
 };
