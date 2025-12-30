@@ -79,6 +79,7 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
     // (undocumented)
     ngOnDestroy(): void;
     readonly noAutoScroll: _angular_core.InputSignalWithTransform<boolean, string | boolean>;
+    scrollToBottom(): void;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChatContainerComponent, "si-chat-container", never, { "colorVariant": { "alias": "colorVariant"; "required": false; "isSignal": true; }; "noAutoScroll": { "alias": "noAutoScroll"; "required": false; "isSignal": true; }; }, {}, never, ["*", "si-inline-notification", "si-chat-input,[siChatContainerInput]"], true, never>;
     // (undocumented)
