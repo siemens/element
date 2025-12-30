@@ -23,11 +23,11 @@ import {
   SimpleChanges,
   TemplateRef
 } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { SiAutocompleteDirective } from '@siemens/element-ng/autocomplete';
 import { t, TranslatableString } from '@siemens/element-translate-ng/translate';
-import { isObservable, ReplaySubject, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { catchError, isObservable, ReplaySubject, Subscription, timer } from 'rxjs';
+import { map, share, switchMap, takeUntil } from 'rxjs/operators';
 
 import { SiTypeaheadComponent } from './si-typeahead.component';
 import {
@@ -35,7 +35,8 @@ import {
   TypeaheadArray,
   TypeaheadMatch,
   TypeaheadOption,
-  TypeaheadOptionItemContext
+  TypeaheadOptionItemContext,
+  TypeaheadOptionSource
 } from './si-typeahead.model';
 import { typeaheadSearch } from './si-typeahead.search';
 import { SiTypeaheadSorting } from './si-typeahead.sorting';
@@ -287,6 +288,18 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
 
   private overlayRef?: OverlayRef;
 
+  private loadingSubscription?: Subscription;
+
+  /**
+   * Indicates whether the typeahead is currently loading.
+   * When using {@link TypeaheadOptionSource}, this is controlled by the `isLoading()` method
+   * or automatically set to `true` while fetching options.
+   *
+   * @internal
+   * @defaultValue false
+   */
+  readonly typeaheadLoading = signal(false);
+
   /**
    * Indicates that the typeahead can be potentially open.
    * This signal is typically `true` when the input is focussed.
@@ -312,7 +325,8 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
     computed(() => ({
       matchAllTokens: this.typeaheadMatchAllTokens(),
       disableTokenizing: !this.typeaheadTokenize(),
-      skipProcessing: !this.typeaheadProcess()
+      skipProcessing: !this.typeaheadProcess(),
+      lazy: !(Array.isArray(this.siTypeahead()) || isObservable(this.siTypeahead()))
     }))
   );
   private readonly processedSearch = computed(() => {
@@ -365,7 +379,10 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
       if (
         this.canBeOpen() &&
         this.query().length >= this.typeaheadMinLength() &&
-        (matches.length || (this.typeaheadCreateOption() && this.query().length))
+        // Ensure that we have content to show: matches, create option or loading indicator
+        (matches.length ||
+          (this.typeaheadCreateOption() && this.query().length) ||
+          this.typeaheadLoading())
       ) {
         const escapedQuery = this.escapeRegex(this.query());
         const equalsExp = new RegExp(`^${escapedQuery}$`, 'i');
@@ -375,11 +392,7 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
         if (fullMatches.length > 0) {
           this.typeaheadOnFullMatch.emit(fullMatches[0]);
         }
-        if (matches.length || this.typeaheadCreateOption()) {
-          this.loadComponent();
-        } else {
-          this.removeComponent();
-        }
+        this.loadComponent();
       } else {
         this.removeComponent();
       }
@@ -390,11 +403,20 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.siTypeahead) {
       this.sourceSubscription?.unsubscribe();
+      this.loadingSubscription?.unsubscribe();
       const typeahead = this.siTypeahead();
-      if (isObservable(typeahead)) {
-        this.sourceSubscription = typeahead.subscribe(this.$typeahead);
-      } else {
+
+      if (Array.isArray(typeahead)) {
+        // Handle TypeaheadArray
         this.$typeahead.next(typeahead);
+        this.typeaheadLoading.set(false);
+      } else if (isObservable(typeahead)) {
+        // Handle TypeaheadObservable
+        this.sourceSubscription = typeahead.subscribe(this.$typeahead);
+        this.typeaheadLoading.set(false);
+      } else if (typeof typeahead === 'function') {
+        // Handle TypeaheadOptionSource
+        this.handleTypeaheadOptionSource(typeahead);
       }
     }
   }
@@ -437,8 +459,40 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
   ngOnDestroy(): void {
     this.clearTimer();
     this.sourceSubscription?.unsubscribe();
+    this.loadingSubscription?.unsubscribe();
 
     this.overlayRef?.dispose();
+  }
+
+  /**
+   * Handles TypeaheadOptionSource by subscribing to query changes and fetching options.
+   * Manages loading state automatically or uses custom isLoading() observable if provided.
+   */
+  private handleTypeaheadOptionSource(source: TypeaheadOptionSource): void {
+    this.sourceSubscription = new Subscription();
+    const queryObservable = toObservable(this.query, { injector: this.injector });
+    const resultObservable = queryObservable.pipe(
+      switchMap(query => source(query)),
+      // Catch errors by the source observable to prevent endless spinner. Showing the error is not our responsibility.
+      catchError(e => {
+        console.error(e);
+        return [];
+      }),
+      share()
+    );
+
+    this.sourceSubscription.add(
+      queryObservable
+        .pipe(switchMap(() => timer(500).pipe(takeUntil(resultObservable))))
+        .subscribe(() => this.typeaheadLoading.set(true))
+    );
+
+    this.sourceSubscription.add(
+      resultObservable.subscribe(result => {
+        this.$typeahead.next(result);
+        this.typeaheadLoading.set(false);
+      })
+    );
   }
 
   // Dynamically create the typeahead component and then set the matches and the query.

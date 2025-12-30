@@ -8,9 +8,15 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ChangeDetectionStrategy, Component, TemplateRef, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject, of, Subject, throwError } from 'rxjs';
 
-import { SiTypeaheadDirective, Typeahead, TypeaheadMatch, TypeaheadOptionItemContext } from '.';
+import {
+  SiTypeaheadDirective,
+  Typeahead,
+  TypeaheadMatch,
+  TypeaheadOptionItemContext,
+  TypeaheadOptionSource
+} from '.';
 import { SiTypeaheadInputHarness } from './testing/si-typeahead-input.harness';
 import { SiTypeaheadHarness } from './testing/si-typeahead.harness';
 
@@ -271,6 +277,62 @@ describe('SiTypeaheadDirective', () => {
     await input.typeText('tes');
     await tick(0);
     expect(await input.getItems()).toEqual(['test']);
+  });
+
+  describe('with option source loading state', () => {
+    let optionsSubject: Subject<string[]>;
+    let source: TypeaheadOptionSource;
+
+    beforeEach(() => {
+      optionsSubject = new Subject<string[]>();
+      source = jasmine.createSpy().and.returnValue(optionsSubject);
+      wrapperComponent.items = source;
+    });
+
+    it('should show empty loading state until options arrive', async () => {
+      const input = await loader.getHarness(SiTypeaheadInputHarness);
+      await input.typeText('tes');
+      jasmine.clock().tick(500);
+      expect(await input.isEmptyLoading()).toBeTrue();
+
+      optionsSubject.next(testItems);
+      expect(source).toHaveBeenCalledWith('tes');
+      expect(await input.getItems()).toEqual(['test']);
+      expect(await input.isEmptyLoading()).toBeFalse();
+    });
+
+    it('should show loading spinner when options are visible', async () => {
+      const input = await loader.getHarness(SiTypeaheadInputHarness);
+      await input.typeText('tes');
+      optionsSubject.next(testItems);
+      await input.typeText('test');
+      jasmine.clock().tick(500);
+      await fixture.whenStable();
+      // Flush the spinner attach scheduled by SiLoadingSpinnerDirective spinner$ timer.
+      // See si-loading-spinner.directive.ts:82-93 where the delayed timer emits.
+      jasmine.clock().tick(0);
+      expect(await input.hasLoadingSpinner()).toBeTrue();
+      expect(await input.isEmptyLoading()).toBeFalse();
+      optionsSubject.next(testItems);
+      expect(await input.hasLoadingSpinner()).toBeFalse();
+    });
+
+    it('should stop loading when source errors', async () => {
+      const errorSource = jasmine
+        .createSpy()
+        .and.returnValue(throwError(() => new Error('source error')));
+      wrapperComponent.items = errorSource;
+      const consoleSpy = spyOn(console, 'error');
+
+      const input = await loader.getHarness(SiTypeaheadInputHarness);
+      await input.typeText('tes');
+      await tick(0);
+
+      expect(errorSource).toHaveBeenCalledWith('tes');
+      expect(consoleSpy).toHaveBeenCalled();
+      expect(await input.getItems()).toBeNull();
+      expect(await input.isEmptyLoading()).toBeFalse();
+    });
   });
 
   it('s on top', async () => {
