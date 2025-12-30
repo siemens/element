@@ -13,7 +13,8 @@ import {
   renameAttribute,
   renameElementTag,
   renameIdentifier,
-  removeSymbol
+  removeSymbol,
+  removeImportSymbols
 } from '../../utils/index.js';
 import { getElementMigrationData } from '../data/index.js';
 
@@ -115,6 +116,34 @@ export const elementMigrationRule = (options: { path: string }): Rule => {
             attributeSelector: change.attributeSelector,
             names: change.names
           });
+        }
+      }
+
+      if (migrationData.importRemovalChanges) {
+        printer ??= ts.createPrinter();
+
+        for (const change of migrationData.importRemovalChanges) {
+          const importChanges = removeImportSymbols({
+            sourceFile,
+            modulePattern: change.module,
+            symbolNames: change.symbolNames
+          });
+
+          for (const importChange of importChanges) {
+            recorder ??= tree.beginUpdate(filePath);
+
+            recorder.remove(importChange.start, importChange.width);
+            if (importChange.newImportDeclaration) {
+              recorder.insertLeft(
+                importChange.start,
+                printer.printNode(
+                  EmitHint.Unspecified,
+                  importChange.newImportDeclaration,
+                  sourceFile
+                )
+              );
+            }
+          }
         }
       }
 
