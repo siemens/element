@@ -131,6 +131,24 @@ export class SiTypeaheadInputHarness extends ComponentHarness {
     return overlay.getItemLabels(filter);
   }
 
+  /** Whether the typeahead overlay shows the empty loading state. */
+  async isEmptyLoading(): Promise<boolean> {
+    const overlay = await this.typeaheadOverlay();
+    if (!overlay) {
+      return false;
+    }
+    return overlay.isEmptyLoading();
+  }
+
+  /** Whether the typeahead overlay shows a loading spinner. */
+  async hasLoadingSpinner(): Promise<boolean> {
+    const overlay = await this.typeaheadOverlay();
+    if (!overlay) {
+      return false;
+    }
+    return overlay.hasLoadingSpinner();
+  }
+
   /**
    * Get the dimensions of the typeahead overlay.
    * @returns the dimensions of the typeahead overlay or null in case the overlay is not visible.
