@@ -13,12 +13,6 @@ export const provideNgLocalizeForElement: () => (EnvironmentProviders | Provider
 
 // @public
 export class SiTranslateNgLocalizeModule {
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiTranslateNgLocalizeModule, never>;
-    // (undocumented)
-    static ɵinj: i0.ɵɵInjectorDeclaration<SiTranslateNgLocalizeModule>;
-    // (undocumented)
-    static ɵmod: i0.ɵɵNgModuleDeclaration<SiTranslateNgLocalizeModule, never, never, never>;
 }
 
 // (No @packageDocumentation comment for this package)

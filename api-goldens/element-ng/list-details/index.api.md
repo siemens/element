@@ -16,27 +16,15 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
 export class SiDetailsPaneBodyComponent {
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiDetailsPaneBodyComponent, "si-details-pane-body", never, {}, {}, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiDetailsPaneBodyComponent, never>;
 }
 
 // @public (undocumented)
 export class SiDetailsPaneComponent {
     constructor();
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiDetailsPaneComponent, "si-details-pane", never, {}, {}, ["routerOutlet"], ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiDetailsPaneComponent, never>;
 }
 
 // @public (undocumented)
 export class SiDetailsPaneFooterComponent {
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiDetailsPaneFooterComponent, "si-details-pane-footer", never, {}, {}, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiDetailsPaneFooterComponent, never>;
 }
 
 // @public (undocumented)
@@ -46,10 +34,6 @@ export class SiDetailsPaneHeaderComponent {
     readonly backButtonUrl: _angular_core.InputSignal<string>;
     readonly hideBackButton: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly title: _angular_core.InputSignal<TranslatableString | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiDetailsPaneHeaderComponent, "si-details-pane-header", never, { "title": { "alias": "title"; "required": false; "isSignal": true; }; "hideBackButton": { "alias": "hideBackButton"; "required": false; "isSignal": true; }; "backButtonText": { "alias": "backButtonText"; "required": false; "isSignal": true; }; "backButtonUrl": { "alias": "backButtonUrl"; "required": false; "isSignal": true; }; }, {}, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiDetailsPaneHeaderComponent, never>;
 }
 
 // @public (undocumented)
@@ -62,42 +46,20 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
     readonly listWidth: _angular_core.ModelSignal<number>;
     readonly minDetailsSize: _angular_core.InputSignal<number>;
     readonly minListSize: _angular_core.InputSignal<number>;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
     readonly stateId: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiListDetailsComponent, "si-list-details", never, { "expandBreakpoint": { "alias": "expandBreakpoint"; "required": false; "isSignal": true; }; "detailsActive": { "alias": "detailsActive"; "required": false; "isSignal": true; }; "disableResizing": { "alias": "disableResizing"; "required": false; "isSignal": true; }; "listWidth": { "alias": "listWidth"; "required": false; "isSignal": true; }; "minListSize": { "alias": "minListSize"; "required": false; "isSignal": true; }; "minDetailsSize": { "alias": "minDetailsSize"; "required": false; "isSignal": true; }; "stateId": { "alias": "stateId"; "required": false; "isSignal": true; }; }, { "detailsActive": "detailsActiveChange"; "listWidth": "listWidthChange"; }, never, ["si-list-pane", "si-details-pane"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiListDetailsComponent, never>;
 }
 
 // @public (undocumented)
 export class SiListPaneBodyComponent {
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiListPaneBodyComponent, "si-list-pane-body", never, {}, {}, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiListPaneBodyComponent, never>;
 }
 
 // @public (undocumented)
 export class SiListPaneComponent {
     constructor();
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiListPaneComponent, "si-list-pane", never, {}, {}, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiListPaneComponent, never>;
 }
 
 // @public (undocumented)
 export class SiListPaneHeaderComponent {
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiListPaneHeaderComponent, "si-list-pane-header", never, {}, {}, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiListPaneHeaderComponent, never>;
 }
 
 // (No @packageDocumentation comment for this package)

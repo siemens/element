@@ -70,10 +70,6 @@ export interface SiColumnSelectionDialogConfig {
 // @public (undocumented)
 export class SiColumnSelectionDialogService {
     showColumnSelectionDialog(dialogConfig: SiColumnSelectionDialogConfig, diOptions?: ModalDependencyInjectionOptions): Observable<ColumnSelectionDialogResult>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiColumnSelectionDialogService, never>;
-    // (undocumented)
-    static ɵprov: i0.ɵɵInjectableDeclaration<SiColumnSelectionDialogService>;
 }
 
 // (No @packageDocumentation comment for this package)
