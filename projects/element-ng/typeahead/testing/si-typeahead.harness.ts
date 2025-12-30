@@ -11,6 +11,9 @@ import { SiTypeaheadItemHarness } from './si-typeahead-item.harness';
 export class SiTypeaheadHarness extends ComponentHarness {
   static hostSelector = 'si-typeahead';
 
+  private readonly list = this.locatorFor('ul.typeahead');
+  private readonly loadingSpinner = this.locatorForOptional('.loading');
+
   /**
    * Gets the currently shown items (empty list if the typeahead is closed).
    * @param filter - Optionally filters which items are included.
@@ -33,5 +36,15 @@ export class SiTypeaheadHarness extends ComponentHarness {
    */
   async getDimensions(): Promise<ElementDimensions> {
     return (await this.host()).getDimensions();
+  }
+
+  /** Whether the typeahead shows the loading state with no matches. */
+  async isEmptyLoading(): Promise<boolean> {
+    return (await this.list()).hasClass('empty-loading');
+  }
+
+  /** Whether a loading spinner is visible in the overlay. */
+  async hasLoadingSpinner(): Promise<boolean> {
+    return !!(await this.loadingSpinner());
   }
 }
