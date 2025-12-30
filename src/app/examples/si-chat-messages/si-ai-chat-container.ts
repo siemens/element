@@ -10,12 +10,14 @@ import {
   MessageAction,
   SiAiChatContainerComponent,
   SiChatInputComponent,
-  UserChatMessage
+  UserChatMessage,
+  PromptSuggestion
 } from '@siemens/element-ng/chat-messages';
 import { FileUploadError } from '@siemens/element-ng/file-uploader';
 import { SiToastNotificationService } from '@siemens/element-ng/toast-notification';
 import { LOG_EVENT } from '@siemens/live-preview';
 import hljs from 'highlight.js';
+import katex from 'katex';
 
 @Component({
   selector: 'app-sample',
@@ -41,6 +43,23 @@ export class SampleComponent {
       }
     }
     return undefined;
+  };
+
+  // Optional: LaTeX rendering with KaTeX
+  // This function returns rendered HTML for LaTeX math expressions.
+  // The returned HTML is sanitized before insertion.
+  // Make sure to include KaTeX styles in your application.
+  // Add to styles in angular.json: "node_modules/katex/dist/katex.min.css"
+  readonly latexRenderer = (latex: string, displayMode: boolean): string | undefined => {
+    try {
+      return katex.renderToString(latex, {
+        displayMode,
+        throwOnError: false,
+        output: 'html'
+      });
+    } catch {
+      return undefined;
+    }
   };
 
   readonly preAttachedFiles: ChatInputAttachment[] = [
@@ -138,16 +157,29 @@ Let me examine the structure and provide guidance.`,
   readonly interrupting = signal(false);
   readonly inputValue = signal('');
 
+  readonly promptSuggestionsByCategory: Record<string, PromptSuggestion[]> = {
+    Maintenance: [
+      { text: 'Schedule preventive maintenance tasks' },
+      { text: 'Generate maintenance reports' },
+      { text: 'Track equipment downtime' }
+    ],
+    Analytics: [
+      { text: 'Analyze performance metrics' },
+      { text: 'Generate data visualizations' },
+      { text: 'Create predictive models' }
+    ],
+    Troubleshooting: [
+      { text: 'Debug connection issues' },
+      { text: 'Investigate performance bottlenecks' },
+      { text: 'Resolve configuration errors' }
+    ]
+  };
+
   inputActions: MessageAction[] = [
     {
-      label: 'Text formatting',
-      icon: 'element-brush',
-      action: () => this.logEvent('Text formatting clicked')
-    },
-    {
-      label: 'Message templates',
-      icon: 'element-template',
-      action: () => this.logEvent('Templates clicked')
+      label: 'Clear messages',
+      icon: 'element-delete',
+      action: () => this.onClearMessages()
     }
   ];
 
@@ -178,6 +210,11 @@ Let me examine the structure and provide guidance.`,
       action: (_message: AiChatMessage) => this.logEvent('Copy AI message')
     }
   ];
+
+  onClearMessages(): void {
+    this.logEvent('Clear messages clicked');
+    this.messages.set([]);
+  }
 
   onMessageSent(event: { content: string; attachments: ChatInputAttachment[] }): void {
     this.logEvent(`Message sent: "${event.content}" with ${event.attachments.length} attachments`);

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, input, model, output } from '@angular/core';
+import { Component, computed, input, model, output } from '@angular/core';
 import { SiActionCardComponent } from '@siemens/element-ng/card';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiResponsiveContainerDirective } from '@siemens/element-ng/resize-observer';
@@ -55,18 +55,39 @@ export class SiAiWelcomeScreenComponent {
   readonly selectedCategory = model<string | undefined>(undefined);
 
   /**
-   * The list of prompt suggestions
+   * The list of prompt suggestions, either as an array or a record mapping category labels to suggestion arrays
    * @defaultValue []
    */
-  readonly promptSuggestions = input<PromptSuggestion[]>([]);
+  readonly promptSuggestions = input<PromptSuggestion[] | Record<string, PromptSuggestion[]>>([]);
+
+  /**
+   * Computed list of filtered prompt suggestions based on selected category
+   */
+  protected readonly filteredPromptSuggestions = computed(() => {
+    const suggestions = this.promptSuggestions();
+    const selected = this.selectedCategory();
+
+    // If suggestions is an array, return as-is (no filtering)
+    if (Array.isArray(suggestions)) {
+      return suggestions;
+    }
+
+    // If suggestions is a record and a category is selected, return that category's suggestions
+    if (selected && suggestions[selected]) {
+      return suggestions[selected];
+    }
+
+    // If no category selected, return all suggestions flattened
+    return Object.values(suggestions).flat();
+  });
 
   /**
    * Emitted when a prompt suggestion is clicked
    */
   readonly promptSelected = output<PromptSuggestion>();
 
-  protected onCategoryClick(categoryId: string): void {
-    this.selectedCategory.set(categoryId);
+  protected onCategoryClick(categoryLabel: string): void {
+    this.selectedCategory.set(categoryLabel);
   }
 
   protected onPromptClick(suggestion: PromptSuggestion): void {

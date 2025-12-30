@@ -1,14 +1,18 @@
-<si-chat-container [colorVariant]="colorVariant()" [noAutoScroll]="noAutoScroll()">
+<si-chat-container [colorVariant]="colorVariant()" [noAutoScroll]="noAutoScroll() || isEmpty()">
   @if (isEmpty()) {
-    <div
-      class="messages-empty-state d-flex flex-column align-items-center justify-content-center h-100 text-center p-6"
+    <si-ai-welcome-screen
+      [categories]="promptCategories()"
+      [selectedCategory]="selectedCategory()"
+      [promptSuggestions]="promptSuggestions()"
+      (selectedCategoryChange)="selectedCategory.set($event)"
+      (promptSelected)="onPromptSelected($event)"
     >
-      <si-empty-state
-        [icon]="aiIcon()"
-        [heading]="emptyStateTitle()"
-        [content]="emptyStateDescription()"
-      />
-    </div>
+      <p class="h1 mb-0 text-white">
+        <strong>{{ greeting() | translate }}</strong>
+      </p>
+      <p class="h1 mb-0 text-white">{{ welcomeMessage() | translate }}</p>
+      <ng-content select="[welcomeScreen]" />
+    </si-ai-welcome-screen>
   }
 
   @if (displayMessages() !== undefined) {

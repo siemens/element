@@ -94,7 +94,7 @@ The **si-ai-chat-container** component provides a complete AI chat interface, it
 
 ### Initial Screen
 
-When initially displaying a chat interface use the initial **si-welcome-screen** component that displays when there are no messages. It can be slotted into the **si-chat-container** component. It accepts prompt suggestions as an input.
+The AI chat container includes a built-in initial welcome screen component that displays when there are no messages. It can be slotted into the **si-chat-container** component. It accepts prompt suggestions as an input.
 
 <si-docs-component example="si-chat-messages/si-ai-welcome-screen" height="600"></si-docs-component>
 

@@ -12,11 +12,11 @@ export const provideSiTranslatableOverrides: (values: SiTranslatableKeys) => Pro
 // @public (undocumented)
 export interface SiTranslatableKeys {
     // (undocumented)
-    'SI_AI_CHAT_CONTAINER.EMPTY_STATE_DESCRIPTION'?: string;
-    // (undocumented)
-    'SI_AI_CHAT_CONTAINER.EMPTY_STATE_TITLE'?: string;
-    // (undocumented)
     'SI_AI_CHAT_CONTAINER.SECONDARY_ACTIONS'?: string;
+    // (undocumented)
+    'SI_AI_CHAT_CONTAINER.WELCOME_GREETING'?: string;
+    // (undocumented)
+    'SI_AI_CHAT_CONTAINER.WELCOME_MESSAGE'?: string;
     // (undocumented)
     'SI_AI_MESSAGE.SECONDARY_ACTIONS'?: string;
     // (undocumented)

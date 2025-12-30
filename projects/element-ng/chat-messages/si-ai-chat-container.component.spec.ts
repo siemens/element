@@ -69,8 +69,8 @@ describe('SiAiChatContainerComponent', () => {
     fixture.componentRef.setInput('messages', []);
     fixture.detectChanges();
 
-    const emptyState = debugElement.query(By.css('si-empty-state'));
-    expect(emptyState).toBeTruthy();
+    const welcomeScreen = debugElement.query(By.css('si-ai-welcome-screen'));
+    expect(welcomeScreen).toBeTruthy();
   });
 
   it('should not render empty state when messages exist', () => {
@@ -84,8 +84,8 @@ describe('SiAiChatContainerComponent', () => {
     fixture.componentRef.setInput('messages', messages);
     fixture.detectChanges();
 
-    const emptyState = debugElement.query(By.css('si-empty-state'));
-    expect(emptyState).toBeFalsy();
+    const welcomeScreen = debugElement.query(By.css('si-ai-welcome-screen'));
+    expect(welcomeScreen).toBeFalsy();
   });
 
   it('should render user messages', () => {
@@ -249,34 +249,34 @@ describe('SiAiChatContainerComponent', () => {
     expect(aiMessages.length).toBe(1);
   });
 
-  it('should render empty state with custom title', () => {
-    const customTitle = 'No messages yet';
+  it('should render welcome screen with custom greeting', () => {
+    const customGreeting = 'Hello there!';
     fixture.componentRef.setInput('messages', []);
-    fixture.componentRef.setInput('emptyStateTitle', customTitle);
+    fixture.componentRef.setInput('greeting', customGreeting);
     fixture.detectChanges();
 
-    const emptyState = debugElement.query(By.css('si-empty-state'));
-    expect(emptyState.componentInstance.heading()).toBe(customTitle);
+    const welcomeScreen = debugElement.query(By.css('si-ai-welcome-screen'));
+    expect(welcomeScreen.nativeElement.textContent).toContain(customGreeting);
   });
 
-  it('should render empty state with custom description', () => {
-    const customDescription = 'Start by sending a message';
+  it('should render welcome screen with custom welcome message', () => {
+    const customMessage = 'How can I help you today?';
     fixture.componentRef.setInput('messages', []);
-    fixture.componentRef.setInput('emptyStateDescription', customDescription);
+    fixture.componentRef.setInput('welcomeMessage', customMessage);
     fixture.detectChanges();
 
-    const emptyState = debugElement.query(By.css('si-empty-state'));
-    expect(emptyState.componentInstance.content()).toBe(customDescription);
+    const welcomeScreen = debugElement.query(By.css('si-ai-welcome-screen'));
+    expect(welcomeScreen.nativeElement.textContent).toContain(customMessage);
   });
 
-  it('should use custom AI icon in empty state', () => {
-    const customIcon = 'element-robot';
+  it('should display prompt suggestions in welcome screen', () => {
+    const suggestions = [{ text: 'What can you do?' }];
     fixture.componentRef.setInput('messages', []);
-    fixture.componentRef.setInput('aiIcon', customIcon);
+    fixture.componentRef.setInput('promptSuggestions', suggestions);
     fixture.detectChanges();
 
-    const emptyState = debugElement.query(By.css('si-empty-state'));
-    expect(emptyState.componentInstance.icon()).toBe(customIcon);
+    const welcomeScreen = debugElement.query(By.css('si-ai-welcome-screen'));
+    expect(welcomeScreen.nativeElement.textContent).toContain('What can you do?');
   });
 
   it('should handle AI message with actions', () => {
