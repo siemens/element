@@ -236,16 +236,23 @@ export function* renameIdentifier({
           replace
         );
 
-        if (!importSpecifiers) {
+        const shouldProcess =
+          importSpecifiers !== undefined || renamingInstruction.propertyAccessOnly === true;
+
+        if (!shouldProcess) {
           continue;
         }
 
-        yield {
-          start: importSpecifiers.name.getStart(),
-          width: importSpecifiers.name.getWidth(),
-          newNode: ts.factory.createIdentifier(replaceWith)
-        };
+        if (importSpecifiers) {
+          yield {
+            start: importSpecifiers.name.getStart(),
+            width: importSpecifiers.name.getWidth(),
+            newNode: ts.factory.createIdentifier(replaceWith)
+          };
+        }
+
         if (
+          importSpecifiers &&
           renamingInstruction.toModule &&
           !node.moduleSpecifier.text.endsWith('@simpl/element-ng') &&
           index === 0
@@ -263,16 +270,25 @@ export function* renameIdentifier({
         }
 
         const visitor = function* (visitedNode: ts.Node): Generator<ChangeInstruction> {
-          if (ts.isIdentifier(visitedNode) && visitedNode.text === replace) {
+          if (ts.isPropertyAccessExpression(visitedNode) && visitedNode.name.text === replace) {
+            yield {
+              start: visitedNode.name.getStart(),
+              width: visitedNode.name.getWidth(),
+              newNode: ts.factory.createIdentifier(replaceWith)
+            };
+          } else if (
+            ts.isIdentifier(visitedNode) &&
+            visitedNode.text === replace &&
+            !ts.isPropertyAccessExpression(visitedNode.parent)
+          ) {
             yield {
               start: visitedNode.getStart(),
               width: visitedNode.getWidth(),
               newNode: ts.factory.createIdentifier(replaceWith)
             };
-          } else {
-            for (const child of visitedNode.getChildren()) {
-              yield* visitor(child);
-            }
+          }
+          for (const child of visitedNode.getChildren()) {
+            yield* visitor(child);
           }
         };
 
