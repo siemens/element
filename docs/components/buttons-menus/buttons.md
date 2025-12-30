@@ -30,16 +30,26 @@ Buttons can be primary, secondary, or tertiary, regardless of their semantic mea
 - **Secondary buttons** are less visually striking but still important (e.g. Cancel or Edit).
 - **Tertiary buttons** are for lower-priority actions that need to be noticeable but not distracting.
 
-### Categories
+### Types
 
-Buttons can have text or a combination of text and labels, or they can be purely icon-based.
-When the button contains only an icon, it adopts a circular shape.
+Buttons support three content types:
+
+- Text only
+- Text with icon
+- Icon-only
 
 <si-docs-component example="buttons/buttoncategories" editor="false" height="150"></si-docs-component>
 
-The circular variant also includes a ghost button style.
-Ghost buttons are subtle and blend into the interface, used for low-priority or optional actions.
-They signal availability without drawing attention, ideal for less critical or contextual options.
+Icon-only buttons adapt their shape based on layout constraints and visual context.
+
+**Circular buttons** are used when the button is placed inside a circular container (e.g., pills) or in unconstrained,
+free-form contexts for standalone actions (e.g., overlays, floating controls).
+The circular shape signals a self-contained action and visually separates it from structured layouts.
+
+**Square buttons** are used in structured layouts where consistent alignment is required (e.g., inputs, tables, cards).
+The rectangular shape anchors the action to the surrounding layout and scales better when multiple actions are placed side by side.
+
+![Button icon](images/button-icon.png)
 
 ### Button link
 
