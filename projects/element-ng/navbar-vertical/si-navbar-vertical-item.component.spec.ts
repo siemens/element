@@ -27,10 +27,15 @@ describe('SiNavbarVerticalItemComponent', () => {
 
   const mockNavbar = {
     collapsed: signal(false),
+    textOnly: signal(false),
     itemTriggered: jasmine.createSpy('itemTriggered')
   };
 
   beforeEach(async () => {
+    mockNavbar.collapsed.set(false);
+    mockNavbar.textOnly.set(false);
+    mockNavbar.itemTriggered.calls.reset();
+
     await TestBed.configureTestingModule({
       imports: [TestHostComponent],
       providers: [
@@ -84,7 +89,7 @@ describe('SiNavbarVerticalItemComponent', () => {
           label: 'Test',
           href: '#',
           badge,
-          badgeColor: 'primary'
+          badgeColor: 'info'
         });
         fixture.detectChanges();
 
@@ -103,7 +108,7 @@ describe('SiNavbarVerticalItemComponent', () => {
           label: 'Test',
           href: '#',
           badge,
-          badgeColor: 'primary'
+          badgeColor: 'info'
         });
         fixture.detectChanges();
 
@@ -141,7 +146,7 @@ describe('SiNavbarVerticalItemComponent', () => {
           label: 'Test',
           href: '#',
           badge,
-          badgeColor: 'primary'
+          badgeColor: 'info'
         });
         fixture.detectChanges();
 
@@ -152,59 +157,63 @@ describe('SiNavbarVerticalItemComponent', () => {
     });
   });
 
-  describe('badge-text behavior (collapsed view)', () => {
-    it('should display badge-text with formatted value when icon is present', () => {
+  describe('badge behavior (collapsed view)', () => {
+    it('should display badge with collapsed class when navbar is collapsed', () => {
+      // Set navbar to collapsed mode
+      mockNavbar.collapsed.set(true);
+
       component.item.set({
         type: 'link',
         label: 'Test',
         href: '#',
         icon: 'element-test',
-        badge: 250
+        badge: 250,
+        badgeColor: 'info'
       });
       fixture.detectChanges();
 
-      const badgeTextElement = fixture.nativeElement.querySelector('.badge-text');
-      expect(badgeTextElement).toBeTruthy();
-      expect(badgeTextElement.textContent.trim()).toBe('+99');
+      const badgeElement = fixture.nativeElement.querySelector('.badge');
+      expect(badgeElement).toBeTruthy();
+      expect(badgeElement.classList.contains('badge-collapsed')).toBe(true);
+      expect(badgeElement.textContent.trim()).toBe('+99');
     });
 
-    it('should not display badge-text when no icon is present', () => {
+    it('should not display badge when navbar is textOnly', () => {
+      // Set navbar to textOnly mode
+      mockNavbar.textOnly.set(true);
+
       component.item.set({
         type: 'link',
         label: 'Test',
         href: '#',
-        badge: 5
+        badge: 5,
+        badgeColor: 'info'
       });
       fixture.detectChanges();
 
-      const badgeTextElement = fixture.nativeElement.querySelector('.badge-text');
-      expect(badgeTextElement).toBeFalsy();
+      const badgeElement = fixture.nativeElement.querySelector('.badge');
+      expect(badgeElement).toBeFalsy();
     });
 
-    it('should hide item title when navbar is collapsed', () => {
+    it('should display badge when navbar is not textOnly', () => {
+      // Ensure navbar is not in textOnly mode
+      mockNavbar.textOnly.set(false);
+
       component.item.set({
         type: 'link',
-        label: 'Test Item',
+        label: 'Test',
         href: '#',
-        badge: 5
+        badge: 5,
+        badgeColor: 'info'
       });
-
-      // Initially expanded
-      mockNavbar.collapsed.set(false);
       fixture.detectChanges();
 
-      let titleElement = fixture.nativeElement.querySelector('.item-title');
-      expect(titleElement.classList.contains('visually-hidden')).toBe(false);
-
-      // Switch to collapsed mode
-      mockNavbar.collapsed.set(true);
-      fixture.detectChanges();
-
-      titleElement = fixture.nativeElement.querySelector('.item-title');
-      expect(titleElement.classList.contains('visually-hidden')).toBe(true);
+      const badgeElement = fixture.nativeElement.querySelector('.badge');
+      expect(badgeElement).toBeTruthy();
+      expect(badgeElement.textContent.trim()).toBe('5');
     });
 
-    it('should format badge-text values consistently with main badge', () => {
+    it('should format badge values consistently with main badge', () => {
       const testCases = [
         { badge: 4, expected: '4' },
         { badge: 44, expected: '44' },
@@ -221,13 +230,14 @@ describe('SiNavbarVerticalItemComponent', () => {
           label: 'Test',
           href: '#',
           icon: 'element-test',
-          badge
+          badge,
+          badgeColor: 'info'
         });
         fixture.detectChanges();
 
-        const badgeTextElement = fixture.nativeElement.querySelector('.badge-text');
-        expect(badgeTextElement).toBeTruthy();
-        expect(badgeTextElement.textContent.trim()).toBe(expected);
+        const badgeElement = fixture.nativeElement.querySelector('.badge');
+        expect(badgeElement).toBeTruthy();
+        expect(badgeElement.textContent.trim()).toBe(expected);
       });
     });
   });

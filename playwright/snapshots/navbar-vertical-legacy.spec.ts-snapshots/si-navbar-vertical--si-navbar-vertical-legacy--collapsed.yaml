@@ -12,7 +12,7 @@
   - button "Documentation"
   - link "Energy & Sustainability":
     - /url: "#/viewer/viewer/energy"
-  - link "4 Test Coverage":
+  - link "Test Coverage 4":
     - /url: "#/viewer/viewer/coverage"
 - main:
   - heading "Here is a title" [level=2]
