@@ -17,10 +17,27 @@ export type TypeaheadArray = TypeaheadOption[];
  * An observable of a {@link TypeaheadArray} (array of {@link TypeaheadOption}).
  */
 export type TypeaheadObservable = Observable<TypeaheadArray>;
+
+/**
+ * Defines a source of options for the {@link SiTypeaheadDirective}.
+ * Use it for server-side pre-filtering.
+ *
+ * @experimental
+ */
+export interface TypeaheadOptionSource {
+  /**
+   * This function will be called, whenever the search value is updated by the user.
+   *
+   * A loading indicator is shown when this function was called
+   * until the Observable completes.
+   */
+  getOptionsForSearch(search: string): Observable<TypeaheadArray>;
+}
+
 /**
  * Either a {@link TypeaheadObservable} (observable of a {@link TypeaheadArray}) or a {@link TypeaheadArray}.
  */
-export type Typeahead = TypeaheadArray | TypeaheadObservable;
+export type Typeahead = TypeaheadArray | TypeaheadObservable | TypeaheadOptionSource;
 
 /**
  * A segment of a {@link TypeaheadMatch}, which is a matching or non-matching segment of a typeahead option.

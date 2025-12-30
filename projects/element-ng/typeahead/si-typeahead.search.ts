@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { computed, Signal } from '@angular/core';
+import { computed, Signal, untracked } from '@angular/core';
 
 export interface SearchOptions<T> {
   /** The text that will be used for searching. */
@@ -44,6 +44,13 @@ export interface SearchConfig {
    *  ('independently' also slightly changes sorting behavior in the same way.)
    */
   matchAllTokens: 'no' | 'once' | 'separately' | 'independently';
+  /**
+   * When enabled, the search output will only be updated, if the options are changed.
+   * Query changes will not trigger an update.
+   *
+   * Use this when lazy loading the options, so the search need to wait, until the options are loaded.
+   */
+  lazy?: boolean;
 }
 
 /**
@@ -71,13 +78,21 @@ export const typeaheadSearch = <T>(
 ): Signal<Match<T>[]> => computed(() => new TypeaheadSearch<T>(options, query, config()).matches());
 
 class TypeaheadSearch<T> {
-  readonly matches = computed<Match<T>[]>(() => this.search(this.datasource(), this.query()));
+  readonly matches = computed<Match<T>[]>(() => this.search(this.datasource(), this.readQuery()));
 
   constructor(
     private readonly datasource: () => SearchOptions<T>[],
     private readonly query: () => string,
     private readonly options: SearchConfig
   ) {}
+
+  private readQuery(): string {
+    if (this.options.lazy) {
+      return untracked(() => this.query());
+    } else {
+      return this.query();
+    }
+  }
 
   private escapeRegex(query: string): string {
     return query.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
