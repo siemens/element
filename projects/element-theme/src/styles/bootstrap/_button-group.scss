@@ -52,6 +52,11 @@
     margin-inline-start: -1px;
   }
 
+  .btn-icon {
+    inline-size: unset;
+    padding-inline: calc(#{map.get(spacers.$spacers, 2)} - var(--btn-border-width, 0px));
+  }
+
   // Dropdown toggle styling for split buttons
   .btn.dropdown-toggle {
     inline-size: 24px;
