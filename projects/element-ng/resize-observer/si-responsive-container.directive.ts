@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Directive, ElementRef, inject, input, OnDestroy, OnInit, signal } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { DestroyRef, Directive, ElementRef, inject, input, OnInit, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { ResizeObserverService } from './resize-observer.service';
 
@@ -40,7 +40,7 @@ export const BOOTSTRAP_BREAKPOINTS: Breakpoints = {
   },
   exportAs: 'siResponsiveContainer'
 })
-export class SiResponsiveContainerDirective implements OnInit, OnDestroy {
+export class SiResponsiveContainerDirective implements OnInit {
   /** @defaultValue false */
   readonly xs = signal(false);
   /** @defaultValue false */
@@ -58,19 +58,15 @@ export class SiResponsiveContainerDirective implements OnInit, OnDestroy {
   readonly resizeThrottle = input(100);
   readonly breakpoints = input<Breakpoints>();
 
-  private subs?: Subscription;
-
+  private destroyRef = inject(DestroyRef);
   private element = inject(ElementRef);
   private service = inject(ResizeObserverService);
 
   ngOnInit(): void {
-    this.subs = this.service
+    this.service
       .observe(this.element.nativeElement, this.resizeThrottle(), true)
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(event => this.setResponsiveSize(event.width, event.height));
-  }
-
-  ngOnDestroy(): void {
-    this.subs?.unsubscribe();
   }
 
   private setResponsiveSize(width: number, height: number): void {
