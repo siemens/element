@@ -2,8 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { AsyncPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
 import {
@@ -52,20 +52,22 @@ import { delay, of } from 'rxjs';
     SiHeaderBrandDirective,
     SiLaunchpadFactoryComponent,
     SiSystemBannerComponent,
-    AsyncPipe,
     SiHeaderLogoDirective
   ],
-  templateUrl: './content-tile-layout-full-scroll-vertical-nav.html'
+  templateUrl: './content-tile-layout-full-scroll-vertical-nav.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
-  collapsed = true;
-  mode: SidePanelMode = 'scroll';
-  size: SidePanelSize = 'regular';
-  protected hideSystembanner = of(true).pipe(delay(navigator.webdriver ? 15000 : 5000));
+  private readonly logEvent = inject(LOG_EVENT);
+  protected readonly shouldBlink = !navigator.webdriver;
+  protected readonly hideSystemBanner = toSignal(
+    of(true).pipe(delay(navigator.webdriver ? 15000 : 5000))
+  );
+  protected readonly collapsed = signal(true);
+  protected readonly mode = signal<SidePanelMode>('scroll');
+  protected readonly size = signal<SidePanelSize>('regular');
 
-  logEvent = inject(LOG_EVENT);
-
-  menuItems: NavbarVerticalItem[] = [
+  protected readonly menuItems: NavbarVerticalItem[] = [
     {
       type: 'group',
       label: 'Home',
@@ -106,7 +108,7 @@ export class SampleComponent {
     }
   ];
 
-  statusItems: StatusBarItem[] = [
+  protected readonly statusItems: StatusBarItem[] = [
     { title: 'Emergency', status: 'danger', value: 4, action: item => this.logEvent(item) },
     { title: 'Life safety', status: 'danger', value: 0, action: item => this.logEvent(item) },
     { title: 'Security', status: 'danger', value: 0 },
@@ -115,21 +117,19 @@ export class SampleComponent {
     { title: 'Success', status: 'success', value: 200, action: item => this.logEvent(item) }
   ];
 
-  shouldBlink = !navigator.webdriver;
-
-  counter(i: number): undefined[] {
+  protected counter(i: number): undefined[] {
     return new Array(i);
   }
 
-  toggle(): void {
-    this.collapsed = !this.collapsed;
+  protected toggle(): void {
+    this.collapsed.update(value => !value);
   }
 
-  toggleMode(): void {
-    this.mode = this.mode === 'over' ? 'scroll' : 'over';
+  protected toggleMode(): void {
+    this.mode.update(value => (value === 'over' ? 'scroll' : 'over'));
   }
 
-  changeSize(): void {
-    this.size = this.size === 'regular' ? 'wide' : 'regular';
+  protected changeSize(): void {
+    this.size.update(value => (value === 'regular' ? 'wide' : 'regular'));
   }
 }
