@@ -1,0 +1,38 @@
+<mgl-map
+  class="h-100"
+  [style]="api"
+  [zoom]="[4]"
+  [center]="[20, 42]"
+  [canvasContextAttributes]="{ preserveDrawingBuffer: true }"
+>
+  <mgl-control mglNavigation position="bottom-right" />
+  @for (point of points(); track point) {
+    <!--
+      Only use this if you really need to use HTML/Angular component to render your symbol.
+      These markers are slow compared to a Layer of symbol because they're not rendered using WebGL.
+    -->
+    <mgl-marker [lngLat]="[point.lon, point.lat]">
+      <div
+        class="marker"
+        style="
+          background-color: var(--element-ui-0);
+          -webkit-mask-image: url(assets/default-marker-icon.svg);
+          mask-image: url(assets/default-marker-icon.svg);
+          width: 50px;
+          height: 60px;
+        "
+        (click)="logEvent(point.name)"
+        >{{ point.name }}</div
+      >
+    </mgl-marker>
+  }
+</mgl-map>
+<div class="card mt-5 e2e-ignore">
+  <div class="card-body">
+    <button type="button" class="btn btn-secondary me-4" (click)="refresh()">
+      Refresh points
+    </button>
+    <button type="button" class="btn btn-secondary me-4" (click)="select()">Select point</button>
+    <button type="button" class="btn btn-secondary me-4" (click)="clear()">Clear map</button>
+  </div>
+</div>

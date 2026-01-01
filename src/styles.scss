@@ -6,6 +6,8 @@
 @use '@siemens/element-theme/src/styles/variables/semantic-tokens';
 @use '@siemens/element-theme/src/styles/variables/utilities';
 @use '@siemens/live-preview/styles/live-preview';
+// MapLibre GL CSS
+@use '@siemens/element-ng/maplibre/styles/maplibre-gl';
 
 // Seems like an esbuild problem what we need to solve here.
 // Without this flag-icon would emit two icons with the same name although they are located in different directories.
