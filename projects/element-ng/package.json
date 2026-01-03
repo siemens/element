@@ -36,6 +36,7 @@
     "@siemens/element-translate-ng": "48.9.0",
     "@siemens/element-theme": "48.9.0",
     "@siemens/ngx-datatable": "22 - 25",
+    "ag-grid-community": "^34.3.1",
     "flag-icons": "^7.3.2",
     "google-libphonenumber": "^3.2.40",
     "ngx-image-cropper": "^9.0.0"
@@ -57,6 +58,9 @@
       "optional": true
     },
     "google-libphonenumber": {
+      "optional": true
+    },
+    "ag-grid-community": {
       "optional": true
     }
   }
