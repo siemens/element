@@ -18,6 +18,7 @@ import {
 } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { provideSiAgGridConfig } from '@siemens/element-ng/ag-grid';
 import { provideSiUiState } from '@siemens/element-ng/common';
 import { provideSiDatatableConfig } from '@siemens/element-ng/datatable';
 import { SiFormlyModule } from '@siemens/element-ng/formly';
@@ -156,6 +157,7 @@ export const APP_CONFIG: ApplicationConfig = {
     provideNgxTranslateForElement(),
     provideSiDatatableConfig(),
     provideIconConfig({ disableSvgIcons: false }),
-    provideSiUiState()
+    provideSiUiState(),
+    provideSiAgGridConfig()
   ]
 };
