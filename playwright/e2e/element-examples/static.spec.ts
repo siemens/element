@@ -116,3 +116,10 @@ test('si-chat-messages/si-chat-message', ({ si }) => si.static());
 test('si-chat-messages/si-attachment-list', ({ si }) => si.static());
 test('si-chat-messages/si-chat-input', ({ si }) => si.static());
 test('si-chat-messages/si-chat-container', ({ si }) => si.static());
+test('ag-grid/ag-grid-empty-state', async ({ si }) => {
+  await si.static({ disabledA11yRules: ['aria-required-children'] });
+});
+test('ag-grid/ag-grid-pagination', ({ si }) => si.static());
+test('ag-grid/ag-grid-row-pinning', ({ si }) => si.static());
+test('ag-grid/ag-grid-column-pinning', ({ si }) => si.static());
+test('ag-grid/ag-grid-loading-skeleton', ({ si }) => si.static());
