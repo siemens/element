@@ -1,0 +1,15 @@
+- text: Loading...
+- grid:
+  - rowgroup:
+    - row "ID Name Role Company Age":
+      - columnheader "ID"
+      - columnheader "Name"
+      - columnheader "Role"
+      - columnheader "Company"
+      - columnheader "Age"
+  - rowgroup
+  - rowgroup
+  - rowgroup
+  - rowgroup
+  - heading "No data to display" [level=3]
+  - paragraph: There are currently no rows to display in this table.

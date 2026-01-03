@@ -1,0 +1,105 @@
+- text: Loading...
+- grid:
+  - rowgroup:
+    - row "ID Name Role Age Company Date of Joining":
+      - columnheader "ID"
+      - columnheader "Name"
+      - columnheader "Role"
+      - columnheader "Age"
+      - columnheader "Company"
+      - columnheader "Date of Joining"
+    - row "Max Meier 1 Open Filter Menu Open Filter Menu Open calendar Open Filter Menu":
+      - gridcell
+      - gridcell "Max Meier 1 Open Filter Menu":
+        - textbox "Name Filter Input"
+        - button "Open Filter Menu"
+      - gridcell
+      - gridcell "Open Filter Menu":
+        - spinbutton "Age Filter Input"
+        - button "Open Filter Menu"
+      - gridcell
+      - gridcell "Open calendar Open Filter Menu":
+        - textbox
+        - button "Open calendar"
+        - button "Open Filter Menu"
+  - rowgroup:
+    - row /1 Max Meier 1 Installer \d+ years Great Company 1 \d+-\d+-\d+/:
+      - gridcell "1"
+      - gridcell "Max Meier 1"
+      - gridcell "Installer"
+      - gridcell /\d+ years/
+      - gridcell "Great Company 1"
+      - gridcell /\d+-\d+-\d+/
+    - row /\d+ Max Meier \d+ Engineer \d+ years Great Company 0 \d+-\d+-\d+/:
+      - gridcell /\d+/
+      - gridcell /Max Meier \d+/
+      - gridcell "Engineer"
+      - gridcell /\d+ years/
+      - gridcell "Great Company 0"
+      - gridcell /\d+-\d+-\d+/
+    - row /\d+ Max Meier \d+ Installer \d+ years Great Company 1 \d+-\d+-\d+/:
+      - gridcell /\d+/
+      - gridcell /Max Meier \d+/
+      - gridcell "Installer"
+      - gridcell /\d+ years/
+      - gridcell "Great Company 1"
+      - gridcell /\d+-\d+-\d+/
+    - row /\d+ Max Meier \d+ Manager \d+ years Great Company 2 \d+-\d+-\d+/:
+      - gridcell /\d+/
+      - gridcell /Max Meier \d+/
+      - gridcell "Manager"
+      - gridcell /\d+ years/
+      - gridcell "Great Company 2"
+      - gridcell /\d+-\d+-\d+/
+    - row /\d+ Max Meier \d+ Designer \d+ years Great Company 3 \d+-\d+-\d+/:
+      - gridcell /\d+/
+      - gridcell /Max Meier \d+/
+      - gridcell "Designer"
+      - gridcell /\d+ years/
+      - gridcell "Great Company 3"
+      - gridcell /\d+-\d+-\d+/
+    - row /\d+ Max Meier \d+ Analyst \d+ years Great Company 4 \d+-\d+-\d+/:
+      - gridcell /\d+/
+      - gridcell /Max Meier \d+/
+      - gridcell "Analyst"
+      - gridcell /\d+ years/
+      - gridcell "Great Company 4"
+      - gridcell /\d+-\d+-\d+/
+    - row /\d+ Max Meier \d+ Engineer \d+ years Great Company 0 \d+-\d+-\d+/:
+      - gridcell /\d+/
+      - gridcell /Max Meier \d+/
+      - gridcell "Engineer"
+      - gridcell /\d+ years/
+      - gridcell "Great Company 0"
+      - gridcell /\d+-\d+-\d+/
+    - row /\d+ Max Meier \d+ Installer \d+ years Great Company 1 \d+-\d+-\d+/:
+      - gridcell /\d+/
+      - gridcell /Max Meier \d+/
+      - gridcell "Installer"
+      - gridcell /\d+ years/
+      - gridcell "Great Company 1"
+      - gridcell /\d+-\d+-\d+/
+    - row /\d+ Max Meier \d+ Manager \d+ years Great Company 2 \d+-\d+-\d+/:
+      - gridcell /\d+/
+      - gridcell /Max Meier \d+/
+      - gridcell "Manager"
+      - gridcell /\d+ years/
+      - gridcell "Great Company 2"
+      - gridcell /\d+-\d+-\d+/
+    - row /\d+ Max Meier \d+ Designer \d+ years Great Company 3 \d+-\d+-\d+/:
+      - gridcell /\d+/
+      - gridcell /Max Meier \d+/
+      - gridcell "Designer"
+      - gridcell /\d+ years/
+      - gridcell "Great Company 3"
+      - gridcell /\d+-\d+-\d+/
+    - row /\d+ Max Meier \d+ Analyst \d+ years Great Company 4 \d+-\d+-\d+/:
+      - gridcell /\d+/
+      - gridcell /Max Meier \d+/
+      - gridcell "Analyst"
+      - gridcell /\d+ years/
+      - gridcell "Great Company 4"
+      - gridcell /\d+-\d+-\d+/
+  - rowgroup
+  - rowgroup
+  - rowgroup
