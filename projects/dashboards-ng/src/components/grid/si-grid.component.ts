@@ -16,7 +16,7 @@ import {
   Type,
   viewChild
 } from '@angular/core';
-import { SiLoadingService, SiLoadingSpinnerDirective } from '@siemens/element-ng/loading-spinner';
+import { SiLoadingSpinnerDirective } from '@siemens/element-ng/loading-spinner';
 import { ModalOptions, SiModalService } from '@siemens/element-ng/modal';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -42,7 +42,7 @@ import { SiWidgetInstanceEditorDialogComponent } from '../widget-instance-editor
   imports: [SiGridstackWrapperComponent, SiLoadingSpinnerDirective, AsyncPipe],
   templateUrl: './si-grid.component.html',
   styleUrl: './si-grid.component.scss',
-  providers: [SiGridService, SiLoadingService]
+  providers: [SiGridService]
 })
 export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
   private storeSubscription?: Subscription;
@@ -174,14 +174,6 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
   readonly gridStackWrapper = viewChild.required(SiGridstackWrapperComponent);
 
   /**
-   * Service used to indicate load and save indication.
-   * @deprecated Use `isLoading` instead.
-   *
-   * @defaultValue inject(SiLoadingService)
-   */
-  loadingService = inject(SiLoadingService);
-
-  /**
    * Indication for load and save operations.
    */
   readonly isLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -220,7 +212,6 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
   ngOnDestroy(): void {
     this.storeSubscription?.unsubscribe();
     this.isLoading.complete();
-    this.loadingService.counter.complete();
   }
 
   /**
@@ -247,7 +238,6 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     this.isLoading.next(true);
-    this.loadingService.counter.next(1);
     // Update position information
     const widgets = this.updateWidgetPositions(this.visibleWidgetInstances$.value);
 
@@ -264,12 +254,10 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
           this.editable.set(false);
           this.gridService.editable$.next(this.editableInternal);
           this.isLoading.next(false);
-          this.loadingService.counter.next(0);
         },
         error: (err: any) => {
           console.error('Saving dashboard configuration failed.', err);
           this.isLoading.next(false);
-          this.loadingService.counter.next(0);
         }
       });
   }
@@ -411,7 +399,6 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
     // subscription. To handle this, we use the boolean marker `initialLoad`.
     this.initialLoad = true;
     this.isLoading.next(true);
-    this.loadingService.counter.next(1);
     this.storeSubscription = this.widgetStorage.load(this.dashboardId()).subscribe({
       next: widgets => {
         this.visibleWidgetInstances$.next(widgets);
@@ -419,13 +406,11 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
         if (this.initialLoad) {
           this.initialLoad = false;
           this.isLoading.next(false);
-          this.loadingService.counter.next(0);
         }
       },
       error: err => {
         console.error('Loading dashboard configuration failed', err);
         this.isLoading.next(false);
-        this.loadingService.counter.next(0);
       }
     });
   }
