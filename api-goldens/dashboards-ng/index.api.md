@@ -30,7 +30,6 @@ import { OutputEmitterRef } from '@angular/core';
 import { Provider } from '@angular/core';
 import { SiDashboardComponent } from '@siemens/element-ng/dashboard';
 import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
-import { SiLoadingService } from '@siemens/element-ng/loading-spinner';
 import { SimpleChanges } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TemplateRef } from '@angular/core';
@@ -220,8 +219,6 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
     readonly hideProgressIndicator: _angular_core.InputSignal<boolean>;
     readonly isLoading: BehaviorSubject<boolean>;
     readonly isModified: _angular_core.OutputEmitterRef<boolean>;
-    // @deprecated
-    loadingService: SiLoadingService;
     // (undocumented)
     ngOnChanges(changes: SimpleChanges): void;
     // (undocumented)
