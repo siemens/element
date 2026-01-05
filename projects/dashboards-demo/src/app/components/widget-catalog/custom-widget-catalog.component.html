@@ -28,7 +28,7 @@
   <button type="button" class="btn btn-secondary" (click)="onCancel()">{{
     'DASHBOARD.WIDGET_LIBRARY.CANCEL' | translate
   }}</button>
-  <button type="button" class="btn btn-primary" [disabled]="!selected" (click)="onAddWidget()">{{
+  <button type="button" class="btn btn-primary" [disabled]="!selected()" (click)="onAddWidget()">{{
     'DASHBOARD.WIDGET_LIBRARY.ADD' | translate
   }}</button>
 </div>
