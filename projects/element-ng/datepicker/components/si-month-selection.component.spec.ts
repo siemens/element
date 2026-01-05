@@ -36,13 +36,13 @@ class WrapperComponent {
   readonly focusedDate = signal(new Date(2022, 2, 26));
   readonly startDate = signal(new Date(2022, 2, 25));
   readonly months = signal(getLocaleMonthNames('en'));
-  readonly minDate = signal<Date | undefined>(undefined);
-  readonly maxDate = signal<Date | undefined>(undefined);
+  readonly minDate = signal<Date | undefined>(undefined as Date | undefined);
+  readonly maxDate = signal<Date | undefined>(undefined as Date | undefined);
   view?: string;
   activeMonth?: Date;
   cancelled = false;
 
-  selectionChange(selection?: Date): void {
+  selectionChange(selection: Date | null): void {
     if (selection) {
       this.startDate.set(selection);
       this.focusedDate.set(selection);
@@ -95,7 +95,7 @@ describe('SiMonthSelectionComponent', () => {
   it('should mark active date', () => {
     const expected = wrapperComponent.months().at(wrapperComponent.focusedDate().getMonth());
     const activeCell = helper.getEnabledCellWithText(expected!);
-    expect(activeCell?.hasAttribute('cdkfocusinitial')).toBeTrue();
+    expect(activeCell?.hasAttribute('cdkfocusinitial')).toBe(true);
   });
 
   it('should focus active date', () => {
@@ -194,9 +194,7 @@ describe('SiMonthSelectionComponent', () => {
       let index = 0;
       monthCells.forEach(cell => {
         const label = cell.getAttribute('aria-label');
-        const expected = `${
-          wrapperComponent.months()[index]
-        } ${wrapperComponent.focusedDate().getFullYear()}`;
+        const expected = `${wrapperComponent.months()[index]} ${wrapperComponent.focusedDate().getFullYear()}`;
 
         expect(label).toBe(expected);
         index++;
@@ -216,7 +214,7 @@ describe('SiMonthSelectionComponent', () => {
       calendarBodyElement.dispatchEvent(generateKeyEvent('Escape'));
       fixture.detectChanges();
 
-      expect(wrapperComponent.cancelled).toBeTrue();
+      expect(wrapperComponent.cancelled).toBe(true);
     });
 
     it('should decrement month on left arrow press', () => {

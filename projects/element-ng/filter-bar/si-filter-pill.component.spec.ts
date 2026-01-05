@@ -55,7 +55,7 @@ describe('SiFilterPillComponent', () => {
       title: 'Last Name',
       description: 'Your Last Name'
     };
-    const spyEvent = spyOn(component, 'deleteFilters');
+    const spyEvent = vi.spyOn(component, 'deleteFilters');
     fixture.detectChanges();
     element.querySelector<HTMLElement>('[aria-label="Remove"]')?.click();
     fixture.detectChanges();

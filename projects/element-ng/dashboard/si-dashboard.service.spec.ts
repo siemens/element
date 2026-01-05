@@ -18,24 +18,22 @@ describe('SiDashboardService', () => {
     service = TestBed.inject(TestService);
   });
 
-  it('should initially have no cards registered', (done: DoneFn) => {
+  it('should initially have no cards registered', async () => {
     service.cards$.subscribe(cards => {
       expect(cards).toEqual([]);
-      done();
     });
   });
 
-  it('should emit cards on registration', (done: DoneFn) => {
+  it('should emit cards on registration', async () => {
     const card = {} as SiDashboardCardComponent;
     service.register(card);
     service.cards$.subscribe(cards => {
       expect(cards.length).toBe(1);
       expect(cards[0]).toBe(card);
-      done();
     });
   });
 
-  it('should emit cards on unregistration', (done: DoneFn) => {
+  it('should emit cards on unregistration', async () => {
     const card1 = { name: '1' } as any as SiDashboardCardComponent;
     const card2 = { name: '2' } as any as SiDashboardCardComponent;
     service.register(card1);
@@ -44,7 +42,6 @@ describe('SiDashboardService', () => {
     service.cards$.subscribe(cards => {
       expect(cards.length).toBe(1);
       expect(cards[0]).toBe(card2);
-      done();
     });
   });
 });

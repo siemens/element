@@ -57,19 +57,17 @@ describe('SiLocaleService', () => {
       expect(service.config.availableLocales!.length).toBe(1);
       expect(service.config.availableLocales![0]).toBe('en');
       expect(service.config.defaultLocale).toBe('en');
-      expect(service.config.dynamicLanguageChange).toBeFalse();
-      expect(service.config.fallbackEnabled).toBeFalse();
+      expect(service.config.dynamicLanguageChange).toBe(false);
+      expect(service.config.fallbackEnabled).toBe(false);
       expect(service.config.localeInitializer).toBeDefined();
     });
 
-    it('should have a default locale initializer resolves on en', (done: DoneFn) => {
+    it('should have a default locale initializer resolves on en', async () => {
       expect(service.config.localeInitializer).toBeDefined();
       if (service.config.localeInitializer) {
-        service.config.localeInitializer('en').then(() => {
-          done();
-        });
+        await service.config.localeInitializer('en').then(() => {});
       } else {
-        fail();
+        throw new Error();
       }
     });
   });
@@ -169,11 +167,11 @@ describe('SiLocaleService', () => {
       providers: [{ provide: SI_LOCALE_CONFIG, useValue: config }, provideZonelessChangeDetection()]
     });
     service = TestBed.inject(SiLocaleService);
-    expect(service.hasLocale('de')).toBeTrue();
-    expect(service.hasLocale('dex')).toBeFalse();
-    expect(service.hasLocale('')).toBeFalse();
-    expect(service.hasLocale()).toBeFalse();
-    expect(service.hasLocale(undefined)).toBeFalse();
+    expect(service.hasLocale('de')).toBe(true);
+    expect(service.hasLocale('dex')).toBe(false);
+    expect(service.hasLocale('')).toBe(false);
+    expect(service.hasLocale()).toBe(false);
+    expect(service.hasLocale(undefined)).toBe(false);
   });
 
   describe('with default configuration', () => {
@@ -201,7 +199,7 @@ describe('SiLocaleService', () => {
       translate = TestBed.inject(TranslateService);
     });
 
-    it('should change the locale at translate service', (done: DoneFn) => {
+    it('should change the locale at translate service', async () => {
       let count = 1;
       translate.onLangChange.subscribe((event: { lang: any }) => {
         if (count === 1) {
@@ -212,14 +210,13 @@ describe('SiLocaleService', () => {
         } else if (count === 2) {
           // after the change
           expect(event.lang).toBe('de');
-          done();
         } else {
-          fail();
+          throw new Error();
         }
       });
     });
 
-    it('should change the locale following the translate service changes', (done: DoneFn) => {
+    it('should change the locale following the translate service changes', async () => {
       let count = 1;
       service.locale$.subscribe((locale: string) => {
         if (count === 1) {
@@ -229,9 +226,8 @@ describe('SiLocaleService', () => {
         } else if (count === 2) {
           // after the change
           expect(locale).toBe('de');
-          done();
         } else {
-          fail();
+          throw new Error();
         }
       });
       translate.onLangChange.subscribe(() => {
@@ -283,7 +279,7 @@ describe('SiLocaleService', () => {
     expect(service.locale).toBe('fr');
   });
 
-  it('shall use the default locale if new locale is not supported by localeInitializer', (done: DoneFn) => {
+  it('shall use the default locale if new locale is not supported by localeInitializer', async () => {
     const config: SiLocaleConfig = {
       availableLocales: ['de', 'fr', 'en'],
       defaultLocale: 'fr',
@@ -316,9 +312,8 @@ describe('SiLocaleService', () => {
         // after setting the locale to en, which is not supported by
         // the localeInitializer the default locale should be set
         expect(locale).toBe('fr');
-        done();
       } else {
-        fail();
+        throw new Error();
       }
     });
     service.locale = 'en';

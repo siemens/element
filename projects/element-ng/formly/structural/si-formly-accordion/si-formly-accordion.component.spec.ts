@@ -127,7 +127,7 @@ describe('formly accordion type', () => {
 
     // check if default is open
     if (fieldGroups) {
-      expect(fieldGroups[0].props?.opened).toBeTrue();
+      expect(fieldGroups[0].props?.opened).toBe(true);
     }
 
     clickOnHeader(1, fixture.nativeElement);
@@ -135,8 +135,8 @@ describe('formly accordion type', () => {
 
     // check if property changes when clicking on panel
     if (fieldGroups) {
-      expect(fieldGroups[0].props?.opened).toBeFalse();
-      expect(fieldGroups[1].props?.opened).toBeTrue();
+      expect(fieldGroups[0].props?.opened).toBe(false);
+      expect(fieldGroups[1].props?.opened).toBe(true);
     }
   });
 });

@@ -32,9 +32,20 @@ import { SiTabsetLegacyComponent } from './si-tabset-legacy.component';
 })
 class TestComponent {
   tabButtonMaxWidth?: number;
-  protected tabsObject: { heading: string; closable?: boolean }[] = [];
+  protected tabsObject: {
+    heading: string;
+    closable?: boolean;
+  }[] = [];
 
-  set tabs(value: ({ heading: string; closable?: true } | string)[]) {
+  set tabs(
+    value: (
+      | {
+          heading: string;
+          closable?: true;
+        }
+      | string
+    )[]
+  ) {
     this.tabsObject = value.map(tab => {
       if (typeof tab === 'string') {
         return { heading: tab };
@@ -98,12 +109,12 @@ describe('SiTabset', () => {
   });
 
   beforeEach(async () => {
-    jasmine.clock().install();
-    jasmine.clock().mockDate();
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date());
   });
 
   afterEach(() => {
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should be possible to create a tabComponent instance', async () => {
@@ -113,7 +124,7 @@ describe('SiTabset', () => {
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
 
-    jasmine.clock().tick(1000);
+    vi.advanceTimersByTime(1000);
     await fixture.whenStable();
 
     expect(getLength()).toEqual(1);
@@ -126,12 +137,12 @@ describe('SiTabset', () => {
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
 
-    jasmine.clock().tick(1000);
+    vi.advanceTimersByTime(1000);
     await fixture.whenStable();
 
-    expect(getActive(0)).toBeTrue();
-    expect(getActive(1)).toBeFalse();
-    expect(getActive(2)).toBeFalse();
+    expect(getActive(0)).toBe(true);
+    expect(getActive(1)).toBe(false);
+    expect(getActive(2)).toBe(false);
     expect(getLength()).toEqual(3);
   });
 
@@ -164,7 +175,7 @@ describe('SiTabset', () => {
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
 
-    jasmine.clock().tick(1000);
+    vi.advanceTimersByTime(1000);
     await fixture.whenStable();
 
     expect(getActive(0)).toEqual(true);
@@ -178,13 +189,13 @@ describe('SiTabset', () => {
   });
 
   it('should should emit selectedTabIndexChange event', async () => {
-    spyOn(component.selectedTabIndexChange, 'emit');
+    vi.spyOn(component.selectedTabIndexChange, 'emit');
     testComponent.tabs = ['1', '2', '3'];
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
 
     component.selectedTabIndex = 2;
-    jasmine.clock().tick(1000);
+    vi.advanceTimersByTime(1000);
     await fixture.whenStable();
     expect(component.selectedTabIndexChange.emit).toHaveBeenCalledTimes(2); // the first call is caused by adding the tabs
   });
@@ -193,7 +204,7 @@ describe('SiTabset', () => {
     testComponent.tabs = ['Tab 1 name extender', 'Tab 1 name extender', 'Tab 1 name extender'];
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
-    const preventDefault = jasmine.createSpy('preventDefault');
+    const preventDefault = vi.fn();
 
     fixture.debugElement
       .query(By.css('.tab-container-buttonbar'))
@@ -240,14 +251,14 @@ describe('SiTabset', () => {
     await fixture.whenStable();
     if (document.hasFocus()) {
       getElement(0).nativeElement.focus();
-      jasmine.clock().tick(500);
+      vi.advanceTimersByTime(500);
       await fixture.whenStable();
       focusNext();
-      jasmine.clock().tick(500);
+      vi.advanceTimersByTime(500);
       await fixture.whenStable();
       expect(document.activeElement).toBe(getElement(1).nativeElement);
       (document.activeElement! as HTMLElement).blur();
-      jasmine.clock().tick(500);
+      vi.advanceTimersByTime(500);
       await fixture.whenStable();
 
       expect(getElement(0).attributes.tabindex).toBe('0');
@@ -284,22 +295,22 @@ describe('SiTabset', () => {
     testComponent.tabs = ['1', '2', { heading: '3', closable: true }, '4'];
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
-    jasmine.clock().tick(500);
+    vi.advanceTimersByTime(500);
     await fixture.whenStable();
-    const closeSpy = spyOn(testComponent, 'closeTriggered').and.callThrough();
+    const closeSpy = vi.spyOn(testComponent, 'closeTriggered');
     getElement(3).nativeElement.click();
-    jasmine.clock().tick(500);
+    vi.advanceTimersByTime(500);
     await fixture.whenStable();
 
     getElement(2).query(By.css('.element-cancel')).nativeElement.click();
-    jasmine.clock().tick(500);
+    vi.advanceTimersByTime(500);
     await fixture.whenStable();
 
-    expect(closeSpy).toHaveBeenCalledWith(jasmine.objectContaining({ heading: '3' }));
+    expect(closeSpy).toHaveBeenCalledWith(expect.objectContaining({ heading: '3' }));
     expect(getElement(2).nativeElement).toBe(document.activeElement);
 
     focusPrevious();
-    jasmine.clock().tick(500);
+    vi.advanceTimersByTime(500);
     await fixture.whenStable();
     expect(getElement(1).nativeElement).toBe(document.activeElement);
   });
@@ -308,19 +319,19 @@ describe('SiTabset', () => {
     testComponent.tabs = ['1', '2', { heading: '3', closable: true }, '4'];
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
-    jasmine.clock().tick(500);
+    vi.advanceTimersByTime(500);
     await fixture.whenStable();
-    const closeSpy = spyOn(testComponent, 'closeTriggered').and.callThrough();
+    const closeSpy = vi.spyOn(testComponent, 'closeTriggered');
     getElement(2).nativeElement.click();
-    jasmine.clock().tick(500);
+    vi.advanceTimersByTime(500);
     await fixture.whenStable();
     getElement(2).query(By.css('.element-cancel')).nativeElement.click();
-    jasmine.clock().tick(500);
+    vi.advanceTimersByTime(500);
     await fixture.whenStable();
-    expect(closeSpy).toHaveBeenCalledWith(jasmine.objectContaining({ heading: '3' }));
+    expect(closeSpy).toHaveBeenCalledWith(expect.objectContaining({ heading: '3' }));
     expect(getElement(2).nativeElement).toBe(document.activeElement);
     focusPrevious();
-    jasmine.clock().tick(500);
+    vi.advanceTimersByTime(500);
     await fixture.whenStable();
     expect(getElement(1).nativeElement).toBe(document.activeElement);
   });

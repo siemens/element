@@ -59,7 +59,7 @@ describe('SiGridstackWrapperComponent', () => {
       gridService.widgetCatalog.set([TEST_WIDGET]);
       host.widgets = TEST_WIDGET_CONFIGS;
       const gridStackWrapper = host.gridStackWrapper();
-      spyOn(gridStackWrapper!, 'mount');
+      vi.spyOn(gridStackWrapper!, 'mount');
       fixture.detectChanges();
 
       expect(gridStackWrapper!.mount).toHaveBeenCalled();
@@ -93,7 +93,7 @@ describe('SiGridstackWrapperComponent', () => {
       host.widgets = [...host.widgets, TEST_WIDGET_CONFIG_2];
 
       const gridStackWrapper = host.gridStackWrapper();
-      spyOn(gridStackWrapper!, 'mount');
+      vi.spyOn(gridStackWrapper!, 'mount');
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
@@ -106,7 +106,7 @@ describe('SiGridstackWrapperComponent', () => {
 
     it('should unmount removed grid items', async () => {
       host.widgets = [TEST_WIDGET_CONFIG_1];
-      spyOn(host.gridStackWrapper()!, 'unmount').and.callThrough();
+      vi.spyOn(host.gridStackWrapper()!, 'unmount');
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
@@ -157,24 +157,26 @@ describe('SiGridstackWrapperComponent', () => {
     });
   });
 
-  it('should emit gridstack events', (done: DoneFn) => {
+  it('should emit gridstack events', async () => {
     fixture = TestBed.createComponent(HostComponent);
     host = fixture.componentInstance;
     fixture.detectChanges();
 
     const events = ['added', 'removed'];
     let index = 0;
-    host.gridStackWrapper()?.gridEvent.subscribe(wrapperEvent => {
-      expect(wrapperEvent.event.type).toBe(events[index]);
-      index++;
-      if (index === events.length) {
-        done();
-      }
-    });
-    events.forEach(eventName => {
-      const event = new CustomEvent(eventName, { bubbles: false, detail: {} });
-      //@ts-ignore
-      host.gridStackWrapper()?.grid.el.dispatchEvent(event);
+    await new Promise<void>(resolve => {
+      host.gridStackWrapper()?.gridEvent.subscribe(wrapperEvent => {
+        expect(wrapperEvent.event.type).toBe(events[index]);
+        index++;
+        if (index === events.length) {
+          resolve();
+        }
+      });
+      events.forEach(eventName => {
+        const event = new CustomEvent(eventName, { bubbles: false, detail: {} });
+        //@ts-ignore
+        host.gridStackWrapper()?.grid.el.dispatchEvent(event);
+      });
     });
   });
 });

@@ -21,7 +21,7 @@ import { SiTimelineWidgetComponent } from './si-timeline-widget.component';
 })
 class TestHostComponent {
   items?: SiTimelineWidgetItem[];
-  numberOfItems?: number;
+  numberOfItems = 6;
   showDescription = true;
 }
 

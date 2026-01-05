@@ -30,6 +30,7 @@ export class SiChartSunburstComponent extends SiChartComponent {
     const series = this.series();
     this.actualOptions = {
       series: series ? [{ type: 'sunburst', ...series }] : [],
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
       tooltip: { show: this.toolTip() || this.tooltip() }
     };
 

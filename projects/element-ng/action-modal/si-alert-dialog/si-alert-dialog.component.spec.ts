@@ -35,7 +35,7 @@ describe('SiAlertDialogComponent', () => {
 
   it('should emit result on confirm', () => {
     expect(component).toBeTruthy();
-    spyOn(modalRef, 'hide');
+    vi.spyOn(modalRef, 'hide');
     element.querySelector<HTMLElement>('.btn-primary')?.click();
     expect(modalRef.hide).toHaveBeenCalledWith('confirm');
   });

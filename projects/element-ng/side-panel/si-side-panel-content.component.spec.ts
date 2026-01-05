@@ -41,7 +41,7 @@ describe('SiSidePanelContentComponent', () => {
   });
 
   it('should toggle side panel on click', () => {
-    spyOn(sidePanelService, 'toggle');
+    vi.spyOn(sidePanelService, 'toggle');
     const toggleBtnEl: HTMLElement | null = element.querySelector('.collapse-toggle button');
     toggleBtnEl?.click();
     fixture.detectChanges();

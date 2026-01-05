@@ -35,14 +35,14 @@ describe('SiDeleteConfirmationDialogComponent', () => {
 
   it('should emit result on delete', () => {
     expect(component).toBeTruthy();
-    spyOn(modalRef, 'hide');
+    vi.spyOn(modalRef, 'hide');
     element.querySelector<HTMLElement>('.btn-danger')?.click();
     expect(modalRef.hide).toHaveBeenCalledWith('delete');
   });
 
   it('should emit result on cancel', () => {
     expect(component).toBeTruthy();
-    spyOn(modalRef, 'hide');
+    vi.spyOn(modalRef, 'hide');
     element.querySelector<HTMLElement>('.btn-secondary')?.click();
     expect(modalRef.hide).toHaveBeenCalledWith('cancel');
   });

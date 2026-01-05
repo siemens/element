@@ -138,29 +138,12 @@
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
+            "runner": "vitest",
             "tsConfig": "projects/element-ng/tsconfig.spec.json",
-            "karmaConfig": "projects/element-ng/karma.conf.cjs",
-            "exclude": ["projects/element-ng/schematics/**"],
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "projects/element-ng/assets/images",
-                "output": "assets"
-              }
-            ],
-            "stylePreprocessorOptions": {
-              "includePaths": ["node_modules/"]
-            },
-            "styles": [
-              "projects/element-theme/src/theme.scss",
-              "projects/element-ng/test-styles.scss"
-            ],
-            "codeCoverageExclude": [
-              "projects/element-ng/**/*.module.ts",
-              "projects/element-ng/**/testing/**/*.ts"
-            ]
+            "buildTarget": "element-ng:build",
+            "exclude": ["projects/element-ng/schematics/**"]
           }
         },
         "lint": {
@@ -186,17 +169,11 @@
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
+            "runner": "vitest",
             "tsConfig": "projects/element-translate-ng/tsconfig.spec.json",
-            "karmaConfig": "projects/element-translate-ng/karma.conf.cjs",
-            "stylePreprocessorOptions": {
-              "includePaths": ["node_modules/"]
-            },
-            "codeCoverageExclude": [
-              "projects/element-translate-ng/**/*.module.ts",
-              "projects/element-translate-ng/**/testing/**/*.ts"
-            ]
+            "buildTarget": "element-translate-ng:build"
           }
         },
         "lint": {
@@ -250,11 +227,11 @@
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
+            "runner": "vitest",
             "tsConfig": "projects/charts-ng/tsconfig.spec.json",
-            "karmaConfig": "projects/charts-ng/karma.conf.cjs",
-            "codeCoverageExclude": ["projects/charts-ng/src/**/*.module.ts"]
+            "buildTarget": "charts-ng:build"
           }
         },
         "lint": {
@@ -280,11 +257,11 @@
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
+            "runner": "vitest",
             "tsConfig": "projects/native-charts-ng/tsconfig.spec.json",
-            "karmaConfig": "projects/native-charts-ng/karma.conf.cjs",
-            "codeCoverageExclude": ["projects/native-charts-ng/src/**/*.module.ts"]
+            "buildTarget": "native-charts-ng:build"
           }
         },
         "lint": {
@@ -313,11 +290,11 @@
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
+            "runner": "vitest",
             "tsConfig": "projects/maps-ng/tsconfig.spec.json",
-            "karmaConfig": "projects/maps-ng/karma.conf.cjs",
-            "codeCoverageExclude": ["projects/maps-ng/src/**/*.module.ts"]
+            "buildTarget": "maps-ng:build"
           }
         },
         "lint": {
@@ -343,12 +320,11 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "builderMode": "browser",
+            "runner": "vitest",
             "tsConfig": "projects/dashboards-ng/tsconfig.spec.json",
-            "karmaConfig": "projects/dashboards-ng/karma.conf.cjs",
-            "codeCoverageExclude": ["projects/dashboards-ng/src/**/*.module.ts"]
+            "buildTarget": "dashboards-ng:build"
           }
         },
         "lint": {

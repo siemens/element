@@ -106,10 +106,23 @@ class TestRoutingComponent {
   readonly tabButtonMaxWidth = signal<number | undefined>(undefined);
   readonly wrapperWidth = signal(200);
   protected readonly tabsObject = signal<
-    { heading: string; closable?: boolean; routerLinkUrl?: string }[]
+    {
+      heading: string;
+      closable?: boolean;
+      routerLinkUrl?: string;
+    }[]
   >([]);
 
-  set tabs(value: ({ heading: string; closable?: true; routerLinkUrl?: string } | string)[]) {
+  set tabs(
+    value: (
+      | {
+          heading: string;
+          closable?: true;
+          routerLinkUrl?: string;
+        }
+      | string
+    )[]
+  ) {
     this.tabsObject.set(
       value.map(tab => {
         if (typeof tab === 'string') {
@@ -134,7 +147,7 @@ describe('SiTabset', () => {
   const detectSizeChange = (): void => {
     fixture.detectChanges();
     MockResizeObserver.triggerResize({});
-    jasmine.clock().tick(200);
+    vi.advanceTimersByTime(200);
     fixture.detectChanges();
   };
 
@@ -148,14 +161,14 @@ describe('SiTabset', () => {
     testComponent = fixture.componentInstance;
     loader = TestbedHarnessEnvironment.loader(fixture);
     tabsetHarness = await loader.getHarness(SiTabsetHarness);
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000;
+    vi.setConfig({ testTimeout: 1000000 });
   });
 
-  beforeEach(() => jasmine.clock().install());
+  beforeEach(() => vi.useFakeTimers());
 
   afterEach(() => {
     restoreResizeObserver();
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should be possible to create a tabComponent instance', async () => {
@@ -175,9 +188,9 @@ describe('SiTabset', () => {
   it('should be possible to add a few tabs to the tabComponent', async () => {
     testComponent.tabs = [{ heading: '1', active: true }, '2', '3'];
     fixture.detectChanges();
-    expect(await tabsetHarness.isTabItemActive(0)).toBeTrue();
-    expect(await tabsetHarness.isTabItemActive(1)).toBeFalse();
-    expect(await tabsetHarness.isTabItemActive(2)).toBeFalse();
+    expect(await tabsetHarness.isTabItemActive(0)).toBe(true);
+    expect(await tabsetHarness.isTabItemActive(1)).toBe(false);
+    expect(await tabsetHarness.isTabItemActive(2)).toBe(false);
     expect(await tabsetHarness.getTabItemsLength()).toEqual(3);
   });
 
@@ -204,14 +217,14 @@ describe('SiTabset', () => {
     testComponent.tabs = [{ heading: '1', active: true }, '2', '3'];
     testComponent.wrapperWidth.set(300);
     detectSizeChange();
-    jasmine.clock().tick(10);
+    vi.advanceTimersByTime(10);
     fixture.detectChanges();
     const button = await tabsetHarness.getTabItemButtonAt(0);
     await button.focus();
-    jasmine.clock().tick(10);
+    vi.advanceTimersByTime(10);
     fixture.detectChanges();
     await tabsetHarness.focusNext();
-    jasmine.clock().tick(10);
+    vi.advanceTimersByTime(10);
     fixture.detectChanges();
 
     expect(await (await tabsetHarness.getTabItemButtonAt(1)).isFocused()).toBe(true);
@@ -251,14 +264,14 @@ describe('SiTabset', () => {
     ];
     testComponent.wrapperWidth.set(300);
     fixture.detectChanges();
-    expect(await tabsetHarness.isTabVisible(3)).toBeFalse();
+    expect(await tabsetHarness.isTabVisible(3)).toBe(false);
     expect(await tabsetHarness.getOptionsMenuButton()).toBeDefined();
     testComponent.wrapperWidth.set(500);
     detectSizeChange();
     fixture.detectChanges();
-    jasmine.clock().tick(10);
+    vi.advanceTimersByTime(10);
     expect(await tabsetHarness.getOptionsMenuButton()).toBeNull();
-    expect(await tabsetHarness.isTabVisible(3)).toBeTrue();
+    expect(await tabsetHarness.isTabVisible(3)).toBe(true);
   });
 
   it('should always scroll active tab into view', async () => {
@@ -273,37 +286,37 @@ describe('SiTabset', () => {
       { heading: 'Tab 7', active: true }
     ];
     testComponent.tabs = tabs;
-    jasmine.clock().tick(100);
+    vi.advanceTimersByTime(100);
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     testComponent.wrapperWidth.set(300);
-    jasmine.clock().tick(100);
+    vi.advanceTimersByTime(100);
 
     fixture.detectChanges();
     expect(await tabsetHarness.getOptionsMenuButton()).toBeDefined();
-    expect(await tabsetHarness.isTabVisible(6)).toBeTrue();
-    expect(await tabsetHarness.isTabVisible(0)).toBeFalse();
+    expect(await tabsetHarness.isTabVisible(6)).toBe(true);
+    expect(await tabsetHarness.isTabVisible(0)).toBe(false);
 
     tabs[0].active = true;
     tabs[6].active = false;
     fixture.changeDetectorRef.markForCheck();
     // need to tick twice to allow for scrollIntoView to complete
-    jasmine.clock().tick(0);
+    vi.advanceTimersByTime(0);
     fixture.detectChanges();
 
-    jasmine.clock().tick(0);
+    vi.advanceTimersByTime(0);
     fixture.detectChanges();
-    expect(await tabsetHarness.isTabVisible(0)).toBeTrue();
-    expect(await tabsetHarness.isTabVisible(6)).toBeFalse();
+    expect(await tabsetHarness.isTabVisible(0)).toBe(true);
+    expect(await tabsetHarness.isTabVisible(6)).toBe(false);
   });
 
   it('should emit tab close event for closable tab and preserve active tab', async () => {
     testComponent.tabs = ['1', '2', { heading: '3', closable: true }, '4'];
     fixture.detectChanges();
-    const closeSpy = spyOn(testComponent, 'closeTriggered').and.callThrough();
+    const closeSpy = vi.spyOn(testComponent, 'closeTriggered');
     await (await tabsetHarness.getTabItemButtonAt(3)).click();
     await (await tabsetHarness.getCloseButtonForTabAt(0)).click();
-    expect(closeSpy).toHaveBeenCalledWith(jasmine.objectContaining({ heading: '3' }));
+    expect(closeSpy).toHaveBeenCalledWith(expect.objectContaining({ heading: '3' }));
     expect(await (await tabsetHarness.getTabItemButtonAt(2)).getAttribute('tabindex')).toBe('0');
     await (await tabsetHarness.getTabItemButtonAt(2)).focus();
     await tabsetHarness.pressArrowLeft();
@@ -323,7 +336,7 @@ describe('SiTabset', () => {
     expect(await (await tabsetHarness.getTabItemButtonAt(4)).getAttribute('aria-selected')).toBe(
       'true'
     );
-    jasmine.clock().tick(0);
+    vi.advanceTimersByTime(0);
     fixture.detectChanges();
     expect(await tabsetHarness.isTabVisible(0)).toBe(false);
   });
@@ -357,7 +370,7 @@ describe('SiTabset', () => {
     testComponent.tabs = [];
     fixture.detectChanges();
     testComponent.tabs = ['1', { heading: '2', active: true }, '3'];
-    expect(await tabsetHarness.isTabFocussable(1)).toBeTrue();
+    expect(await tabsetHarness.isTabFocussable(1)).toBe(true);
   });
 
   it('should not change active if canDeactivate returns false', async () => {
@@ -366,18 +379,18 @@ describe('SiTabset', () => {
       { heading: '2', closable: true, canDeactivate: () => false }
     ];
     fixture.detectChanges();
-    expect(await tabsetHarness.isTabItemActive(0)).toBeTrue();
-    expect(await tabsetHarness.isTabItemActive(1)).toBeFalse();
+    expect(await tabsetHarness.isTabItemActive(0)).toBe(true);
+    expect(await tabsetHarness.isTabItemActive(1)).toBe(false);
 
     (await tabsetHarness.getTabItemButtonAt(1)).click();
     fixture.detectChanges();
-    expect(await tabsetHarness.isTabItemActive(0)).toBeFalse();
-    expect(await tabsetHarness.isTabItemActive(1)).toBeTrue();
+    expect(await tabsetHarness.isTabItemActive(0)).toBe(false);
+    expect(await tabsetHarness.isTabItemActive(1)).toBe(true);
 
     (await tabsetHarness.getTabItemButtonAt(0)).click();
     fixture.detectChanges();
-    expect(await tabsetHarness.isTabItemActive(0)).toBeFalse();
-    expect(await tabsetHarness.isTabItemActive(1)).toBeTrue();
+    expect(await tabsetHarness.isTabItemActive(0)).toBe(false);
+    expect(await tabsetHarness.isTabItemActive(1)).toBe(true);
   });
 
   it('should not change active if canActivate returns false', async () => {
@@ -386,13 +399,13 @@ describe('SiTabset', () => {
       { heading: '2', closable: true, canActivate: () => false }
     ];
     fixture.detectChanges();
-    expect(await tabsetHarness.isTabItemActive(0)).toBeTrue();
-    expect(await tabsetHarness.isTabItemActive(1)).toBeFalse();
+    expect(await tabsetHarness.isTabItemActive(0)).toBe(true);
+    expect(await tabsetHarness.isTabItemActive(1)).toBe(false);
 
     (await tabsetHarness.getTabItemButtonAt(1)).click();
     fixture.detectChanges();
-    expect(await tabsetHarness.isTabItemActive(0)).toBeTrue();
-    expect(await tabsetHarness.isTabItemActive(1)).toBeFalse();
+    expect(await tabsetHarness.isTabItemActive(0)).toBe(true);
+    expect(await tabsetHarness.isTabItemActive(1)).toBe(false);
   });
 });
 
@@ -424,9 +437,9 @@ describe('SiTabset Routing', () => {
     tabsetHarness = await loader.getHarness(SiTabsetHarness);
   });
 
-  beforeEach(() => jasmine.clock().install());
+  beforeEach(() => vi.useFakeTimers());
 
-  afterEach(() => jasmine.clock().uninstall());
+  afterEach(() => vi.useRealTimers());
 
   it('should render router link tab', async () => {
     testComponent.tabs = [
@@ -438,7 +451,7 @@ describe('SiTabset Routing', () => {
     ];
     fixture.detectChanges();
     (await tabsetHarness.getTabItemButtonAt(1)).click();
-    jasmine.clock().tick(100);
+    vi.advanceTimersByTime(100);
     fixture.detectChanges();
     expect(await (await tabsetHarness.getTabContent()).text()).toBe('Content by routing');
   });

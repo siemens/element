@@ -102,7 +102,7 @@ describe('ColumnDialogComponent', () => {
   it('should create backup data', () => {
     component.columns.set(cloneData());
 
-    const backupSpy: jasmine.Spy = spyOn(component as any, 'setupColumnData');
+    const backupSpy = vi.spyOn(component as any, 'setupColumnData');
 
     fixture.detectChanges();
 
@@ -110,7 +110,7 @@ describe('ColumnDialogComponent', () => {
   });
 
   it('should emit result on submit', () => {
-    spyOn(modalRef, 'hide');
+    vi.spyOn(modalRef, 'hide');
     component.columns.set(cloneData());
     fixture.detectChanges();
 
@@ -124,7 +124,7 @@ describe('ColumnDialogComponent', () => {
   });
 
   it('should emit result on cancel', () => {
-    spyOn(modalRef, 'hide');
+    vi.spyOn(modalRef, 'hide');
     component.columns.set(headerData.map(i => ({ ...i })));
     fixture.detectChanges();
 
@@ -138,7 +138,7 @@ describe('ColumnDialogComponent', () => {
   });
 
   it('should emit result on restore default', () => {
-    const spy = spyOn(modalRef.hidden, 'next');
+    const spy = vi.spyOn(modalRef.hidden, 'next');
     component.columns.set(headerData);
     componentRef.setInput('restoreEnabled', true);
     fixture.detectChanges();
@@ -149,10 +149,10 @@ describe('ColumnDialogComponent', () => {
     expect(modalRef.hidden.next).toHaveBeenCalledWith({
       type: 'restoreDefault',
       columns: component.columns(),
-      updateColumns: jasmine.any(Function)
+      updateColumns: expect.any(Function)
     });
 
-    spy.calls.mostRecent().args[0]!.updateColumns!([]);
+    vi.mocked(spy).mock.lastCall![0]!.updateColumns!([]);
     expect(component.columns()).toEqual([]);
     expect((component as any).visibleIds).toEqual([]);
   });
@@ -165,7 +165,7 @@ describe('ColumnDialogComponent', () => {
   });
 
   it('should emit result on visibility change', () => {
-    spyOn(modalRef.hidden, 'next');
+    vi.spyOn(modalRef.hidden, 'next');
     component.columns.set(cloneData());
     fixture.detectChanges();
 
@@ -191,7 +191,7 @@ describe('ColumnDialogComponent', () => {
 
     expect(
       Array.from(dragItems).every(dragItem => dragItem.classList.contains('cdk-drag-disabled'))
-    ).toBeFalse();
+    ).toBe(false);
   });
 
   it('should not force columns to be draggable if previous/next are', () => {
@@ -210,7 +210,7 @@ describe('ColumnDialogComponent', () => {
       dragItems
         .slice(1, dragItems.length - 1)
         .every(dragItem => !dragItem.classList.contains('cdk-drag-disabled'))
-    ).toBeFalse();
+    ).toBe(false);
   });
 
   it('should move items on drop', () => {
@@ -230,7 +230,7 @@ describe('ColumnDialogComponent', () => {
   });
 
   it('should rename a column', async () => {
-    const spy = spyOn(modalRef.hidden, 'next');
+    const spy = vi.spyOn(modalRef.hidden, 'next');
     component.columns.set(cloneData());
     fixture.detectChanges();
     document
@@ -245,8 +245,8 @@ describe('ColumnDialogComponent', () => {
     inputField.dispatchEvent(new Event('input'));
     expect(spy).toHaveBeenCalledWith({
       type: 'instant',
-      columns: jasmine.arrayContaining([
-        jasmine.objectContaining({
+      columns: expect.arrayContaining([
+        expect.objectContaining({
           id: 'firstRow',
           title: 'New Column Name'
         })
@@ -260,7 +260,7 @@ describe('ColumnDialogComponent', () => {
   });
 
   it('should toggle edit mode with keyboard', async () => {
-    const spy = spyOn(modalRef.hidden, 'next');
+    const spy = vi.spyOn(modalRef.hidden, 'next');
     component.columns.set(cloneData());
     fixture.autoDetectChanges();
     document

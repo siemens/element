@@ -34,14 +34,14 @@ describe('SiConnectionStrengthComponent', () => {
       component.setInput('value', 'none');
       fixture.detectChanges();
 
-      expect(element.querySelector('svg')!.classList.contains('none')).toBeTrue();
+      expect(element.querySelector('svg')!.classList.contains('none')).toBe(true);
     });
 
     it('should display other value', () => {
       component.setInput('value', 'low');
       fixture.detectChanges();
 
-      expect(element.querySelector('svg')!.classList.contains('none')).toBeFalse();
+      expect(element.querySelector('svg')!.classList.contains('none')).toBe(false);
     });
   });
 
@@ -54,21 +54,21 @@ describe('SiConnectionStrengthComponent', () => {
       component.setInput('value', 'none');
       fixture.detectChanges();
 
-      expect(element.querySelector('svg')!.classList.contains('none')).toBeTrue();
+      expect(element.querySelector('svg')!.classList.contains('none')).toBe(true);
     });
 
     it('should display other value', () => {
       component.setInput('value', 'low');
       fixture.detectChanges();
 
-      expect(element.querySelector('svg')!.classList.contains('none')).toBeFalse();
+      expect(element.querySelector('svg')!.classList.contains('none')).toBe(false);
     });
 
     it('should display none if an incorrect value is set', () => {
       component.setInput('value', undefined);
       fixture.detectChanges();
 
-      expect(element.querySelector('svg')!.classList.contains('none')).toBeTrue();
+      expect(element.querySelector('svg')!.classList.contains('none')).toBe(true);
     });
   });
 });

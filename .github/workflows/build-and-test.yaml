@@ -88,8 +88,8 @@ jobs:
       - run: bun run --bun lint:scss
       - run: bun run --bun lint:ng
       - run: bun run --bun lint:playwright:eslint
-      - run: bun run --bun translate:test -- --watch=false --progress=false --code-coverage
-      - run: bun run --bun lib:test -- --watch=false --progress=false --code-coverage
+      - run: bun run --bun translate:test -- --watch=false --progress=false --coverage
+      - run: bun run --bun lib:test -- --watch=false --progress=false --coverage
       - run: bun run --bun schematics:test:bun
       - run: bun run --bun charts:test -- --watch=false --progress=false
       - run: bun run --bun dashboards:test -- --watch=false --progress=false

@@ -28,7 +28,7 @@ describe('SiTreeViewUtils', () => {
     it('should call setTreeItemDefaults', () => {
       utils.addChildItem(parent, { label: 'child' });
 
-      expect(parent.children).toHaveSize(1);
+      expect(parent.children).toHaveLength(1);
       checkDefaults(parent.children![0]);
     });
   });
@@ -71,7 +71,7 @@ describe('SiTreeViewUtils', () => {
       const parentWithoutChild: TreeItem = { label: 'parentWithoutChild', level: 2 };
       utils.addChildItems(parentWithoutChild, children);
 
-      expect(parentWithoutChild.children).toHaveSize(children.length);
+      expect(parentWithoutChild.children).toHaveLength(children.length);
       expect(parentWithoutChild.children![0].label).toBe('Child 1');
       expect(parentWithoutChild.children![1].label).toBe('Child 2');
     });
@@ -79,7 +79,7 @@ describe('SiTreeViewUtils', () => {
     it('should append child at the end', () => {
       utils.addChildItems(parent, children);
 
-      expect(parent.children).toHaveSize(initialChildSize + children.length);
+      expect(parent.children).toHaveLength(initialChildSize + children.length);
       expect(parent.children!.at(-2)!.label).toBe('Child 1');
       expect(parent.children!.at(-1)!.label).toBe('Child 2');
     });
@@ -87,7 +87,7 @@ describe('SiTreeViewUtils', () => {
     it('should append child at the beginning', () => {
       utils.addChildItems(parent, children, 0);
 
-      expect(parent.children).toHaveSize(initialChildSize + children.length);
+      expect(parent.children).toHaveLength(initialChildSize + children.length);
       expect(parent.children![0].label).toBe('Child 1');
       expect(parent.children![1].label).toBe('Child 2');
     });
@@ -95,7 +95,7 @@ describe('SiTreeViewUtils', () => {
     it('should append child at the backwards', () => {
       utils.addChildItems(parent, children, -1);
 
-      expect(parent.children).toHaveSize(initialChildSize + children.length);
+      expect(parent.children).toHaveLength(initialChildSize + children.length);
       expect(parent.children![1].label).toBe('Child 1');
       expect(parent.children![2].label).toBe('Child 2');
     });
@@ -103,7 +103,7 @@ describe('SiTreeViewUtils', () => {
     it('should append child in between', () => {
       utils.addChildItems(parent, children, 1);
 
-      expect(parent.children).toHaveSize(initialChildSize + children.length);
+      expect(parent.children).toHaveLength(initialChildSize + children.length);
       expect(parent.children![1].label).toBe('Child 1');
       expect(parent.children![2].label).toBe('Child 2');
     });

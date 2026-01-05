@@ -70,8 +70,8 @@ describe('SiHeaderDropdown', () => {
     it('should open overlay', async () => {
       await trigger1Harness.toggle();
 
-      expect(await trigger1Harness.isOpen()).toBeTrue();
-      expect(await trigger1Harness.isDesktop()).toBeTrue();
+      expect(await trigger1Harness.isOpen()).toBe(true);
+      expect(await trigger1Harness.isDesktop()).toBe(true);
     });
 
     it('should close all on outside click', async () => {
@@ -81,9 +81,9 @@ describe('SiHeaderDropdown', () => {
         .then(dropdown => dropdown.getTrigger('Item 1-2'));
       await trigger2Harness.toggle();
 
-      expect(await trigger2Harness.isOpen()).toBeTrue();
+      expect(await trigger2Harness.isOpen()).toBe(true);
       document.getElementById('outside-button')!.click();
-      expect(await trigger1Harness.isOpen()).toBeFalse();
+      expect(await trigger1Harness.isOpen()).toBe(false);
     });
 
     it('should close only current on toggle click', async () => {
@@ -92,18 +92,18 @@ describe('SiHeaderDropdown', () => {
       const trigger2Harness = await dropdown1.getTrigger('Item 1-2');
       await trigger2Harness.toggle();
 
-      expect(await trigger2Harness.isOpen()).toBeTrue();
+      expect(await trigger2Harness.isOpen()).toBe(true);
 
       await trigger2Harness.toggle();
-      expect(await trigger2Harness.isOpen()).toBeFalse();
-      expect(await dropdown1.isOpen()).toBeTrue();
+      expect(await trigger2Harness.isOpen()).toBe(false);
+      expect(await dropdown1.isOpen()).toBe(true);
     });
 
     it('should close on resize', async () => {
       await trigger1Harness.toggle();
-      expect(await trigger1Harness.isOpen()).toBeTrue();
+      expect(await trigger1Harness.isOpen()).toBe(true);
       fixture.componentInstance.inlineDropdown.next(false);
-      expect(await trigger1Harness.isOpen()).toBeFalse();
+      expect(await trigger1Harness.isOpen()).toBe(false);
     });
 
     it('should close on item click', async () => {
@@ -113,16 +113,19 @@ describe('SiHeaderDropdown', () => {
         .then(dropdown => dropdown.getItem('Item 1-1'))
         .then(item => item.click());
 
-      expect(await trigger1Harness.isOpen()).toBeFalse();
+      expect(await trigger1Harness.isOpen()).toBe(false);
     });
 
     it('should emit only once on close', async () => {
       await trigger1Harness.toggle();
-      const openChangeSpy = spyOn(fixture.componentInstance.trigger1().openChange, 'emit');
+      const openChangeSpy = vi.spyOn(fixture.componentInstance.trigger1().openChange, 'emit');
       const dropdown1 = await trigger1Harness.getDropdown();
       const trigger2Harness = await dropdown1.getTrigger('Item 1-2');
       await trigger2Harness.toggle();
-      const openChangeTrigger2Spy = spyOn(fixture.componentInstance.trigger2().openChange, 'emit');
+      const openChangeTrigger2Spy = vi.spyOn(
+        fixture.componentInstance.trigger2().openChange,
+        'emit'
+      );
 
       await trigger2Harness
         .getDropdown()
@@ -139,8 +142,8 @@ describe('SiHeaderDropdown', () => {
     it('should open inline in mobile view', async () => {
       await trigger1Harness.toggle();
 
-      expect(await trigger1Harness.isOpen()).toBeTrue();
-      expect(await trigger1Harness.isDesktop()).toBeFalse();
+      expect(await trigger1Harness.isOpen()).toBe(true);
+      expect(await trigger1Harness.isDesktop()).toBe(false);
     });
 
     it('should close only current on toggle click', async () => {
@@ -149,18 +152,18 @@ describe('SiHeaderDropdown', () => {
       const trigger2Harness = await dropdown1.getTrigger('Item 1-2');
       await trigger2Harness.toggle();
 
-      expect(await trigger2Harness.isOpen()).toBeTrue();
+      expect(await trigger2Harness.isOpen()).toBe(true);
 
       await trigger2Harness.toggle();
-      expect(await trigger2Harness.isOpen()).toBeFalse();
-      expect(await dropdown1.isOpen()).toBeTrue();
+      expect(await trigger2Harness.isOpen()).toBe(false);
+      expect(await dropdown1.isOpen()).toBe(true);
     });
 
     it('should close on resize', async () => {
       await trigger1Harness.toggle();
-      expect(await trigger1Harness.isOpen()).toBeTrue();
+      expect(await trigger1Harness.isOpen()).toBe(true);
       fixture.componentInstance.inlineDropdown.next(true);
-      expect(await trigger1Harness.isOpen()).toBeFalse();
+      expect(await trigger1Harness.isOpen()).toBe(false);
     });
 
     it('should close on item click', async () => {
@@ -170,7 +173,7 @@ describe('SiHeaderDropdown', () => {
         .then(dropdown => dropdown.getItem('Item 1-1'))
         .then(item => item.click());
 
-      expect(await trigger1Harness.isOpen()).toBeFalse();
+      expect(await trigger1Harness.isOpen()).toBe(false);
     });
   });
 });

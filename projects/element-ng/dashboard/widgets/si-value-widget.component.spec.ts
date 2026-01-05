@@ -5,6 +5,7 @@
 import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
+import { Link } from '@siemens/element-ng/link';
 import { MenuItem } from '@siemens/element-ng/menu';
 
 import { SiValueWidgetComponent } from './si-value-widget.component';
@@ -30,6 +31,7 @@ class TestHostComponent {
   secondaryActions: MenuItem[] = [];
   heading = '';
   enableExpandInteraction = false;
+  simplActionLink?: Link;
 }
 
 describe('SiValueWidgetComponent', () => {

@@ -42,7 +42,7 @@ describe('SiToastNotificationService', () => {
       'Success!',
       'A successful event has occurred.'
     );
-    spyOn(toast.hidden!, 'next');
+    vi.spyOn(toast.hidden!, 'next');
     expect(service.activeToasts.length).toBe(1);
 
     toast.close!();
@@ -62,24 +62,24 @@ describe('SiToastNotificationService', () => {
   });
 
   it('automatically closes toast after a while', () => {
-    jasmine.clock().install();
+    vi.useFakeTimers();
     service.queueToastNotification('success', 'Toast 1', 'Message 1');
     expect(service.activeToasts.length).toBe(1);
 
-    jasmine.clock().tick(6000);
+    vi.advanceTimersByTime(6000);
 
     expect(service.activeToasts.length).toBe(0);
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should respect the disableAutoClose flag', () => {
-    jasmine.clock().install();
+    vi.useFakeTimers();
     service.queueToastNotification('success', 'Toast 1', 'Message 1', true);
     expect(service.activeToasts.length).toBe(1);
 
-    jasmine.clock().tick(6000);
+    vi.advanceTimersByTime(6000);
 
     expect(service.activeToasts.length).toBe(1);
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 });

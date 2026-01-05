@@ -42,7 +42,7 @@ describe('SiInfoPageComponent', () => {
 
   it('should invoke navigation on button press', () => {
     const router = TestBed.inject(Router);
-    spyOn(router, 'navigateByUrl');
+    vi.spyOn(router, 'navigateByUrl');
     component.setInput('titleText', 'Title');
     component.setInput('link', { title: 'Go home', link: '/home' });
     fixture.detectChanges();

@@ -142,7 +142,7 @@ describe('SiChatContainerComponent', () => {
   });
 
   it('should cleanup observers on destroy', () => {
-    const ngOnDestroySpy = spyOn(component, 'ngOnDestroy').and.callThrough();
+    const ngOnDestroySpy = vi.spyOn(component, 'ngOnDestroy');
     component.ngOnDestroy();
     expect(ngOnDestroySpy).toHaveBeenCalled();
   });
@@ -150,7 +150,7 @@ describe('SiChatContainerComponent', () => {
   it('should call ngAfterContentInit', () => {
     const newFixture = TestBed.createComponent(SiChatContainerComponent);
     const newComponent = newFixture.componentInstance;
-    const ngAfterContentInitSpy = spyOn(newComponent, 'ngAfterContentInit').and.callThrough();
+    const ngAfterContentInitSpy = vi.spyOn(newComponent, 'ngAfterContentInit');
     newComponent.ngAfterContentInit();
     expect(ngAfterContentInitSpy).toHaveBeenCalled();
   });

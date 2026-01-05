@@ -5,6 +5,7 @@
 import { Component, inject, provideZonelessChangeDetection, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import type { Mock } from 'vitest';
 
 import { SiSliderComponent } from './si-slider.component';
 
@@ -29,7 +30,7 @@ class HostComponent {
   step = 1;
   min = 0;
   max = 100;
-  sliderChanged = (value: number): void => {};
+  sliderChanged = (value: number | undefined): void => {};
 }
 
 @Component({
@@ -53,7 +54,7 @@ describe('SiSliderComponent', () => {
     const button = element.querySelector(target);
     button!.dispatchEvent(new MouseEvent('mousedown'));
     if (ticks) {
-      jasmine.clock().tick(ticks);
+      vi.advanceTimersByTime(ticks);
     }
     button!.dispatchEvent(new MouseEvent('mouseup'));
   };
@@ -78,11 +79,11 @@ describe('SiSliderComponent', () => {
   );
 
   beforeEach(() => {
-    jasmine.clock().install();
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   describe('direct usage', () => {
@@ -99,7 +100,7 @@ describe('SiSliderComponent', () => {
       component.value.set(50);
       fixture.detectChanges();
       await fixture.whenStable();
-      spyOn(component, 'sliderChanged');
+      vi.spyOn(component, 'sliderChanged');
 
       fakeClick('.increment-button');
       expect(component.sliderChanged).toHaveBeenCalledWith(51);
@@ -120,19 +121,19 @@ describe('SiSliderComponent', () => {
       component.value.set(50);
       fixture.detectChanges();
       await fixture.whenStable();
-      spyOn(component, 'sliderChanged');
+      vi.spyOn(component, 'sliderChanged');
 
       fakeClick('.increment-button', 2500);
-      const spy = component.sliderChanged as jasmine.Spy;
-      expect(spy.calls.count()).toBeGreaterThan(8);
-      expect(spy.calls.mostRecent().args).toBeGreaterThan(55);
+      const spy = component.sliderChanged as Mock;
+      expect(vi.mocked(spy).mock.calls.length).toBeGreaterThan(8);
+      expect(vi.mocked(spy).mock.lastCall).toBeGreaterThan(55);
     });
 
     it('should support short press decrements', async () => {
       component.value.set(50);
       fixture.detectChanges();
       await fixture.whenStable();
-      spyOn(component, 'sliderChanged');
+      vi.spyOn(component, 'sliderChanged');
 
       fakeClick('.decrement-button');
       expect(component.sliderChanged).toHaveBeenCalledWith(49);
@@ -152,19 +153,19 @@ describe('SiSliderComponent', () => {
     it('should support long press decrements', async () => {
       fixture.detectChanges();
       await fixture.whenStable();
-      spyOn(component, 'sliderChanged');
+      vi.spyOn(component, 'sliderChanged');
 
       fakeClick('.decrement-button', 2500);
-      const spy = component.sliderChanged as jasmine.Spy;
-      expect(spy.calls.count()).toBeGreaterThan(8);
-      expect(spy.calls.mostRecent().args[0]).toBeLessThan(45);
+      const spy = component.sliderChanged as Mock;
+      expect(vi.mocked(spy).mock.calls.length).toBeGreaterThan(8);
+      expect(vi.mocked(spy).mock.lastCall![0]).toBeLessThan(45);
     });
 
     it('should support upper default limit', async () => {
       component.value.set(100);
       fixture.detectChanges();
       await fixture.whenStable();
-      spyOn(component, 'sliderChanged');
+      vi.spyOn(component, 'sliderChanged');
 
       fakeClick('.increment-button');
       expect(component.sliderChanged).not.toHaveBeenCalledWith(100);
@@ -174,7 +175,7 @@ describe('SiSliderComponent', () => {
       component.value.set(200);
       fixture.detectChanges();
       await fixture.whenStable();
-      spyOn(component, 'sliderChanged');
+      vi.spyOn(component, 'sliderChanged');
       expect(getValueIndicator().style.insetInlineStart).toBe('100%');
       expect(getThumbHandle().style.insetInlineStart).toBe('100%');
 
@@ -187,7 +188,7 @@ describe('SiSliderComponent', () => {
       component.value.set(2020);
       fixture.detectChanges();
       await fixture.whenStable();
-      spyOn(component, 'sliderChanged');
+      vi.spyOn(component, 'sliderChanged');
 
       fakeClick('.increment-button');
       expect(component.sliderChanged).not.toHaveBeenCalledWith(2020);
@@ -197,7 +198,7 @@ describe('SiSliderComponent', () => {
       component.value.set(0);
       fixture.detectChanges();
       await fixture.whenStable();
-      spyOn(component, 'sliderChanged');
+      vi.spyOn(component, 'sliderChanged');
 
       fakeClick('.decrement-button');
       expect(component.sliderChanged).not.toHaveBeenCalledWith(0);
@@ -207,7 +208,7 @@ describe('SiSliderComponent', () => {
       component.value.set(-10);
       fixture.detectChanges();
       await fixture.whenStable();
-      spyOn(component, 'sliderChanged');
+      vi.spyOn(component, 'sliderChanged');
       expect(getValueIndicator().style.insetInlineStart).toBe('0%');
       expect(getThumbHandle().style.insetInlineStart).toBe('0%');
 
@@ -220,7 +221,7 @@ describe('SiSliderComponent', () => {
       component.value.set(-2020);
       fixture.detectChanges();
       await fixture.whenStable();
-      spyOn(component, 'sliderChanged');
+      vi.spyOn(component, 'sliderChanged');
 
       fakeClick('.decrement-button');
       expect(component.sliderChanged).not.toHaveBeenCalledWith(-2020);
@@ -305,8 +306,8 @@ describe('SiSliderComponent', () => {
 
       expect(getValueIndicator().style.insetInlineStart).toBe('50%');
       expect(getThumbHandle().style.insetInlineStart).toBe('50%');
-      expect(element.querySelector<HTMLButtonElement>('.decrement-button')?.disabled).toBeTrue();
-      expect(element.querySelector<HTMLButtonElement>('.increment-button')?.disabled).toBeTrue();
+      expect(element.querySelector<HTMLButtonElement>('.decrement-button')?.disabled).toBe(true);
+      expect(element.querySelector<HTMLButtonElement>('.increment-button')?.disabled).toBe(true);
     });
   });
 
@@ -330,7 +331,7 @@ describe('SiSliderComponent', () => {
 
       fakeClick('.decrement-button');
       await fixture.whenStable();
-      expect(component.form.controls.slider.touched).toBeTrue();
+      expect(component.form.controls.slider.touched).toBe(true);
     });
 
     it('updates the value in the form', async () => {
@@ -345,8 +346,8 @@ describe('SiSliderComponent', () => {
       component.form.controls.slider.disable();
       fixture.detectChanges();
 
-      expect(element.querySelector<HTMLButtonElement>('.decrement-button')?.disabled).toBeTrue();
-      expect(element.querySelector<HTMLButtonElement>('.increment-button')?.disabled).toBeTrue();
+      expect(element.querySelector<HTMLButtonElement>('.decrement-button')?.disabled).toBe(true);
+      expect(element.querySelector<HTMLButtonElement>('.increment-button')?.disabled).toBe(true);
     });
 
     it('should handle undefined value on change', () => {

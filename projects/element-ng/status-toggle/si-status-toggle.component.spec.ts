@@ -140,20 +140,20 @@ describe('SiStatusToggleComponent', () => {
       fixture.detectChanges();
 
       const container = element.querySelector<HTMLElement>('.status-toggle-container')!;
-      expect(container).toHaveClass('disabled');
+      expect(container.classList.contains('disabled')).toBe(true);
     });
 
     it('should be able to disable a single button (3th)', () => {
       fixture.detectChanges();
       const items = element.querySelectorAll('.status-toggle-item');
-      expect(items[2]).toHaveClass('disabled');
+      expect(items[2].classList.contains('disabled')).toBe(true);
     });
 
     if ('TouchEvent' in window) {
       it('should emit clicked button value with touch', () => {
         fixture.detectChanges();
 
-        spyOn(component.toggle().itemClick, 'emit');
+        vi.spyOn(component.toggle().itemClick, 'emit');
 
         touchClick(fixture, element.querySelectorAll<HTMLElement>('.status-toggle-item')[1], true);
         expect(component.toggle().value()).toEqual('B');
@@ -164,7 +164,7 @@ describe('SiStatusToggleComponent', () => {
     it('should emit clicked button value with mouse', () => {
       fixture.detectChanges();
 
-      spyOn(component.toggle().itemClick, 'emit');
+      vi.spyOn(component.toggle().itemClick, 'emit');
 
       touchClick(fixture, element.querySelectorAll<HTMLElement>('.status-toggle-item')[1], false);
       expect(component.toggle().value()).toEqual('B');
@@ -200,7 +200,7 @@ describe('SiStatusToggleComponent', () => {
       fixture.detectChanges();
 
       const container = element.querySelector<HTMLElement>('.status-toggle-container')!;
-      expect(container).toHaveClass('disabled');
+      expect(container.classList.contains('disabled')).toBe(true);
     });
   });
 });

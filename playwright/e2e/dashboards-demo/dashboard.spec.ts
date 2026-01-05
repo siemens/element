@@ -90,10 +90,10 @@ test.describe('dashboard', () => {
     });
 
     await expect(contact).toBeVisible();
-    await expect(contact).not.toHaveClass(/active/);
+    await expect(contact.classList.contains(/active/)).toBe(false);
 
     contact.click();
-    await expect(contact).toHaveClass(/active/);
+    await expect(contact.classList.contains(/active/)).toBe(true);
 
     const next = page.getByText('Next', {
       exact: true

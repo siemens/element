@@ -129,3 +129,22 @@ export const enterValue = (input: HTMLInputElement, value: string): void => {
 export const dispatchEvents = (element: HTMLElement, events: string[]): void => {
   events.forEach(e => element.dispatchEvent(new Event(e)));
 };
+
+describe('CalendarTestHelper', () => {
+  it('should be defined', () => {
+    expect(CalendarTestHelper).toBeDefined();
+  });
+
+  it('should generate key events', () => {
+    const event = generateKeyEvent('Enter');
+    expect(event.key).toBe('Enter');
+  });
+
+  it('should dispatch events', () => {
+    const element = document.createElement('div');
+    const spy = vi.fn();
+    element.addEventListener('click', spy);
+    dispatchEvents(element, ['click']);
+    expect(spy).toHaveBeenCalled();
+  });
+});

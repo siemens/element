@@ -27,7 +27,7 @@ class HostComponent {
   max = 100;
   placeholder?: string;
   readonly input = viewChild.required<SiNumberInputComponent>('input');
-  valueChange(any: number): void {}
+  valueChange(any: number | undefined): void {}
 }
 
 @Component({
@@ -37,7 +37,7 @@ class HostComponent {
   </form>`
 })
 class FormHostComponent {
-  required?: boolean;
+  required = false;
   min?: number;
   max?: number;
   readonly form = inject(FormBuilder).group({ input: 10 });
@@ -59,7 +59,7 @@ describe('SiNumberInputComponent', () => {
     const button = element.querySelector(target);
     button!.dispatchEvent(new MouseEvent('mousedown'));
     if (ticks) {
-      jasmine.clock().tick(ticks);
+      vi.advanceTimersByTime(ticks);
     }
     button!.dispatchEvent(new MouseEvent('mouseup'));
   };
@@ -72,11 +72,11 @@ describe('SiNumberInputComponent', () => {
     element.querySelector<HTMLInputElement>('input')?.valueAsNumber;
 
   beforeEach(() => {
-    jasmine.clock().install();
+    vi.useFakeTimers();
   });
 
   afterEach(() => {
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   beforeEach(() =>
@@ -106,7 +106,7 @@ describe('SiNumberInputComponent', () => {
     it('should support short press increments', () => {
       component.value = 50;
       fixture.detectChanges();
-      const spy = spyOn(component, 'valueChange');
+      const spy = vi.spyOn(component, 'valueChange');
 
       fakeClick('.inc');
       expect(spy).toHaveBeenCalledWith(51);
@@ -125,17 +125,17 @@ describe('SiNumberInputComponent', () => {
     it('should support long press increments', () => {
       component.value = 50;
       fixture.detectChanges();
-      const spy = spyOn(component, 'valueChange');
+      const spy = vi.spyOn(component, 'valueChange');
 
       fakeClick('.inc', 2500);
-      expect(spy.calls.count()).toBeGreaterThan(8);
-      expect(spy.calls.mostRecent().args).toBeGreaterThan(55);
+      expect(vi.mocked(spy).mock.calls.length).toBeGreaterThan(8);
+      expect(vi.mocked(spy).mock.lastCall).toBeGreaterThan(55);
     });
 
     it('should support short press decrements', () => {
       component.value = 50;
       fixture.detectChanges();
-      const spy = spyOn(component, 'valueChange');
+      const spy = vi.spyOn(component, 'valueChange');
 
       fakeClick('.dec');
       expect(spy).toHaveBeenCalledWith(49);
@@ -153,11 +153,11 @@ describe('SiNumberInputComponent', () => {
 
     it('should support long press decrements', () => {
       fixture.detectChanges();
-      const spy = spyOn(component, 'valueChange');
+      const spy = vi.spyOn(component, 'valueChange');
 
       fakeClick('.dec', 2500);
-      expect(spy.calls.count()).toBeGreaterThan(8);
-      expect(spy.calls.mostRecent().args[0]).toBeLessThan(45);
+      expect(vi.mocked(spy).mock.calls.length).toBeGreaterThan(8);
+      expect(vi.mocked(spy).mock.lastCall![0]).toBeLessThan(45);
     });
 
     it('should not go beyond upper limit', () => {
@@ -171,7 +171,7 @@ describe('SiNumberInputComponent', () => {
       component.max = 200;
       component.value = 150;
       fixture.detectChanges();
-      const spy = spyOn(component, 'valueChange');
+      const spy = vi.spyOn(component, 'valueChange');
 
       fakeClick('.inc');
       expect(spy).toHaveBeenCalledWith(151);
@@ -188,7 +188,7 @@ describe('SiNumberInputComponent', () => {
       component.min = -200;
       component.value = -150;
       fixture.detectChanges();
-      const spy = spyOn(component, 'valueChange');
+      const spy = vi.spyOn(component, 'valueChange');
 
       expect(decButton()?.disabled).toBeFalsy();
       fakeClick('.dec');
@@ -237,7 +237,7 @@ describe('SiNumberInputComponent', () => {
 
       fakeClick('.dec');
 
-      expect(component.form.controls.input.touched).toBeTrue();
+      expect(component.form.controls.input.touched).toBe(true);
     });
 
     it('updates the value in the form', () => {

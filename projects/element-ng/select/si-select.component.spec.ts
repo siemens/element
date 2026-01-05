@@ -19,13 +19,13 @@ import {
 } from './index';
 import { SiSelectSelectionStrategy } from './selection/si-select-selection-strategy';
 
-const OPTIONS_LIST: readonly SelectOptionLegacy[] = [
+const OPTIONS_LIST: SelectOptionLegacy[] = [
   { id: 'good', icon: 'element-face-happy', title: 'Good' },
   { id: 'average', icon: 'element-face-neutral', title: 'Average' },
   { id: 'poor', icon: 'element-face-unhappy', title: 'Poor' }
 ];
 
-const OPTIONS_LIST_NEXT: readonly SelectOption<number>[] = [
+const OPTIONS_LIST_NEXT: SelectOption<number>[] = [
   { type: 'option', value: 0, icon: 'element-face-happy', label: 'Good' },
   { type: 'option', value: 1, icon: 'element-face-neutral', label: 'Average' },
   { type: 'option', value: 2, icon: 'element-face-unhappy', label: 'Poor' }
@@ -67,7 +67,7 @@ class TestHostComponent {
   readonly selectionStrategy = viewChild.required(SiSelectSelectionStrategy);
 
   value?: string;
-  options?: readonly SelectOptionLegacy[] = OPTIONS_LIST;
+  options?: SelectOptionLegacy[] = OPTIONS_LIST;
   disabled = false;
   readonly = false;
   hasFilter = false;
@@ -118,7 +118,7 @@ class TestHostMultiComponent {
   readonly selectComponent = viewChild.required(SiSelectComponent);
 
   values?: string[];
-  options?: readonly SelectItem<string>[] = [
+  options?: SelectItem<string>[] = [
     { type: 'option', value: 'good', label: 'Good' },
     { type: 'option', value: 'average', label: 'Average' },
     { type: 'option', value: 'poor', label: 'Poor' }
@@ -153,7 +153,7 @@ class TestHostMultiComponent {
   `
 })
 class TestHostCustomActionComponent {
-  options?: readonly SelectOptionLegacy[] = OPTIONS_LIST;
+  options?: SelectOptionLegacy[] = OPTIONS_LIST;
   actionClick(): void {}
 }
 
@@ -353,7 +353,7 @@ describe('SiSelectComponent', () => {
         fixture.detectChanges();
         await selectHarness.open();
         const item = await selectHarness.getList().then(list => list!.getItemByText('c'));
-        expect(await item.isActive()).toBeTrue();
+        expect(await item.isActive()).toBe(true);
       });
 
       it('should apply current filter when options are applied', async () => {
@@ -469,7 +469,7 @@ describe('SiSelectComponent', () => {
 
     it('sets the disabled state', async () => {
       component.form.disable();
-      expect(component.valueDirective().disabled()).toBeTrue();
+      expect(component.valueDirective().disabled()).toBe(true);
       expect(await selectHarness.getTabindex()).toBe('-1');
     });
   });
@@ -615,7 +615,7 @@ describe('SiSelectComponent', () => {
     });
 
     it('should close drop down on custom action click', async () => {
-      spyOn(component, 'actionClick');
+      vi.spyOn(component, 'actionClick');
 
       await selectHarness.clickActionByText({ text: 'close' });
       expect(await selectHarness.getList()).toBeNull();
@@ -623,7 +623,7 @@ describe('SiSelectComponent', () => {
     });
 
     it("shouldn't close drop down on custom action click", async () => {
-      spyOn(component, 'actionClick');
+      vi.spyOn(component, 'actionClick');
       await selectHarness.clickActionByText({ text: 'nothing' });
       expect(await selectHarness.getList()).toBeTruthy();
       expect(component.actionClick).toHaveBeenCalled();

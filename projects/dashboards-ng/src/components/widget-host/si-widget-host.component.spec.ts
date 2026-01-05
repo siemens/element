@@ -71,65 +71,63 @@ describe('SiWidgetHostComponent', () => {
 
       it('should instantiate and attach widget instance', async () => {
         fixture.detectChanges();
-        jasmine.clock().install();
-        jasmine.clock().tick(0);
+        vi.useFakeTimers();
+        vi.advanceTimersByTime(0);
         await fixture.whenStable();
         expect(component.widgetHost().length).toBe(1);
-        jasmine.clock().uninstall();
+        vi.useRealTimers();
       });
 
       it('should not create widget instance without widget', async () => {
         gridService.widgetCatalog.set([]);
-        jasmine.clock().install();
-        jasmine.clock().tick(0);
+        vi.useFakeTimers();
+        vi.advanceTimersByTime(0);
         await fixture.whenStable();
         expect(component.widgetHost().length).toBe(0);
-        jasmine.clock().uninstall();
+        vi.useRealTimers();
       });
 
       it('#editAction should call onEdit', async () => {
         fixture.detectChanges();
-        jasmine.clock().install();
-        jasmine.clock().tick(0);
+        vi.useFakeTimers();
+        vi.advanceTimersByTime(0);
         await fixture.whenStable();
-        jasmine.clock().uninstall();
-        const spy = spyOn(component, 'onEdit');
+        vi.useRealTimers();
+        const spy = vi.spyOn(component, 'onEdit');
         ((component.editAction as MenuItemAction).action! as (param?: any) => void)();
 
         expect(spy).toHaveBeenCalled();
       });
 
-      it('#onEdit() should emit #widgetConfig', (done: DoneFn) => {
+      it('#onEdit() should emit #widgetConfig', async () => {
         fixture.detectChanges();
 
         component.edit.subscribe(emittedConfig => {
           expect(emittedConfig).toEqual(TEST_WIDGET_CONFIG_0);
-          done();
         });
         component.onEdit();
       });
 
       it('#removeAction should call onRemove', async () => {
         fixture.detectChanges();
-        jasmine.clock().install();
-        jasmine.clock().tick(0);
+        vi.useFakeTimers();
+        vi.advanceTimersByTime(0);
         await fixture.whenStable();
-        jasmine.clock().uninstall();
-        const spy = spyOn(component, 'onRemove');
+        vi.useRealTimers();
+        const spy = vi.spyOn(component, 'onRemove');
         ((component.removeAction as MenuItemAction).action! as (param?: any) => void)();
 
         expect(spy).toHaveBeenCalled();
       });
 
-      it('#onRemove() should restore card and emit widget config id', (done: DoneFn) => {
+      it('#onRemove() should restore card and emit widget config id', async () => {
         fixture.detectChanges();
         component.card().expand();
-        const spy = spyOn(component.card(), 'restore');
+        const spy = vi.spyOn(component.card(), 'restore');
 
         component.remove.subscribe(emittedId => {
           expect(emittedId).toEqual(TEST_WIDGET_CONFIG_0.id);
           expect(spy).toHaveBeenCalled();
-          done();
         });
         component.onRemove();
         actionDialogService.result.next('delete');
@@ -137,8 +135,8 @@ describe('SiWidgetHostComponent', () => {
 
       describe('#setupEditable()', () => {
         it('should setup default edit actions with widgets edit actions', async () => {
-          jasmine.clock().install();
-          jasmine.clock().tick(0);
+          vi.useFakeTimers();
+          vi.advanceTimersByTime(0);
           await fixture.whenStable();
           expect(component.primaryActions.length).toBe(0);
           fixture.changeDetectorRef.markForCheck();
@@ -148,13 +146,13 @@ describe('SiWidgetHostComponent', () => {
           expect((component.primaryActions[0] as MenuItem).title).toBe('Hello User');
           expect(component.primaryActions[1]).toBe(component.editAction);
           expect(component.primaryActions[2]).toBe(component.removeAction);
-          expect(component.widgetInstance!.editable).toBeTrue();
-          jasmine.clock().uninstall();
+          expect(component.widgetInstance!.editable).toBe(true);
+          vi.useRealTimers();
         });
 
         it('should setup default edit actions without widgets edit actions', async () => {
-          jasmine.clock().install();
-          jasmine.clock().tick(0);
+          vi.useFakeTimers();
+          vi.advanceTimersByTime(0);
           await fixture.whenStable();
           component.widgetInstance!.primaryEditActions = undefined;
           expect(component.primaryActions.length).toBe(0);
@@ -163,8 +161,8 @@ describe('SiWidgetHostComponent', () => {
           expect(component.primaryActions.length).toBe(2);
           expect(component.primaryActions[0]).toBe(component.editAction);
           expect(component.primaryActions[1]).toBe(component.removeAction);
-          expect(component.widgetInstance!.editable).toBeTrue();
-          jasmine.clock().uninstall();
+          expect(component.widgetInstance!.editable).toBe(true);
+          vi.useRealTimers();
         });
       });
     });

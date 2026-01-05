@@ -213,7 +213,7 @@ describe('SiTreeViewComponentWithDragDrop', () => {
   });
 
   it('shall not move item into its own child', () => {
-    spyOn(console, 'error');
+    vi.spyOn(console, 'error');
     fixture.componentInstance.items[0].state = 'expanded';
     fixture.detectChanges();
     runOnPushChangeDetection(fixture);

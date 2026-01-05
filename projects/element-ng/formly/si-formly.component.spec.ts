@@ -11,7 +11,7 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormGroup, FormRecord, ReactiveFormsModule } from '@angular/forms';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
-import { FormlyFieldConfig } from '@ngx-formly/core';
+import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 import { SiTranslateService } from '@siemens/element-ng/translate';
 import { provideMockTranslateServiceBuilder } from '@siemens/element-translate-ng/translate';
@@ -37,7 +37,7 @@ class WrapperComponent {
   readonly formly = viewChild.required(SiFormlyComponent<Record<string, any>>);
   schema?: JSONSchema7;
   form?: FormGroup<any>;
-  fields?: FormlyFieldConfig[];
+  fields: FormlyFieldConfig[] = [];
   labelWidth?: number;
   formChanged(): void {}
   model?: any;
@@ -51,7 +51,13 @@ describe('ElementFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, FormlyBootstrapModule, SiFormlyModule, WrapperComponent],
+      imports: [
+        ReactiveFormsModule,
+        FormlyBootstrapModule,
+        FormlyModule.forRoot(),
+        SiFormlyModule,
+        WrapperComponent
+      ],
       providers: [
         provideMockTranslateServiceBuilder(
           () =>
@@ -71,7 +77,7 @@ describe('ElementFormComponent', () => {
     fixture = TestBed.createComponent(WrapperComponent);
     wrapperComponent = fixture.componentInstance;
     element = fixture.nativeElement;
-    spyOn(wrapperComponent, 'formChanged');
+    vi.spyOn(wrapperComponent, 'formChanged');
     fixture.detectChanges();
     component = wrapperComponent.formly();
   });

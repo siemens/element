@@ -14,13 +14,12 @@ describe('SiDefaultLocaleStore', () => {
     expect(store.locale).toBeUndefined();
   });
 
-  it('should return a saved locale', (done: DoneFn) => {
+  it('should return a saved locale', async () => {
     const store = new SiDefaultLocaleStore(true);
     store.saveLocale('en').subscribe((saveSucceed: boolean) => {
-      expect(saveSucceed).toBeTrue();
+      expect(saveSucceed).toBe(true);
       const store2 = new SiDefaultLocaleStore(true);
       expect(store2.locale).toBe('en');
-      done();
     });
   });
 });

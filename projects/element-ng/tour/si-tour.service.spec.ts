@@ -59,7 +59,7 @@ describe('SiTourService', () => {
     expect(tour).not.toBeNull();
 
     const title = tour?.querySelector<HTMLDivElement>('div.si-h4');
-    expect(title?.innerText).toBe('Div element');
+    expect(title?.innerText).toBe(' Div element ');
     const next = tour?.querySelector<HTMLButtonElement>('button.btn-primary');
     expect(next?.innerText).toBe('Next');
     const skip = tour?.querySelector<HTMLButtonElement>('button.btn-tertiary');

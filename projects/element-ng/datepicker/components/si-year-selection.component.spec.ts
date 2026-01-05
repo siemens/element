@@ -32,8 +32,8 @@ import { CalendarTestHelper, generateKeyEvent } from './test-helper.spec';
 class WrapperComponent {
   readonly focusedDate = signal(new Date(2022, 2, 26));
   readonly selectedDate = signal(new Date(2022, 2, 25));
-  readonly minDate = signal<Date | undefined>(undefined);
-  readonly maxDate = signal<Date | undefined>(undefined);
+  readonly minDate = signal<Date | undefined>(undefined as Date | undefined);
+  readonly maxDate = signal<Date | undefined>(undefined as Date | undefined);
   cancelled = false;
   selectionChange(selection: Date | null): void {
     if (selection) {
@@ -81,7 +81,7 @@ describe('SiYearSelectionComponent', () => {
 
   it('should mark active date', () => {
     const activeCell = helper.getEnabledCellWithText('2022');
-    expect(activeCell?.hasAttribute('cdkfocusinitial')).toBeTrue();
+    expect(activeCell?.hasAttribute('cdkfocusinitial')).toBe(true);
   });
 
   describe('with previous button', () => {
@@ -178,7 +178,7 @@ describe('SiYearSelectionComponent', () => {
       calendarBodyElement.dispatchEvent(generateKeyEvent('Escape'));
       fixture.detectChanges();
 
-      expect(wrapperComponent.cancelled).toBeTrue();
+      expect(wrapperComponent.cancelled).toBe(true);
     });
 
     it('should decrement year on left arrow press', () => {
@@ -268,7 +268,7 @@ describe('SiYearSelectionComponent', () => {
         fixture.detectChanges();
 
         const activeCell = helper.getEnabledCellWithText('2022');
-        expect(activeCell?.hasAttribute('cdkfocusinitial')).toBeTrue();
+        expect(activeCell?.hasAttribute('cdkfocusinitial')).toBe(true);
       });
     });
   });
@@ -293,7 +293,7 @@ describe('SiYearSelectionComponent', () => {
         fixture.detectChanges();
 
         const activeCell = helper.getEnabledCellWithText('2022');
-        expect(activeCell?.hasAttribute('cdkfocusinitial')).toBeTrue();
+        expect(activeCell?.hasAttribute('cdkfocusinitial')).toBe(true);
       });
     });
   });

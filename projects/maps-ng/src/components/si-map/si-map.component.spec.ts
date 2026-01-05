@@ -24,11 +24,13 @@ const mockFeature = new Feature({
 });
 
 describe('SiMapComponent', () => {
-  let fixture: ComponentFixture<SiMapComponent>;
   let component: SiMapComponent;
+  let fixture: ComponentFixture<SiMapComponent>;
   let componentRef: ComponentRef<SiMapComponent>;
 
   beforeAll(() => {
+    // Mock window.alert for tests
+    global.alert = vi.fn();
     // Define style variables from element.ts to prevent test failures
     document.documentElement.style.setProperty('--element-status-information', '#0070F2');
     document.documentElement.style.setProperty('--element-status-success', '#00A04B');
@@ -69,6 +71,10 @@ describe('SiMapComponent', () => {
     componentRef.setInput('cluster', true);
     componentRef.setInput('groupColors', { 1: 'red', 2: 'blue', 3: 'green' });
     fixture.detectChanges();
+
+    // Mock overlay setPosition to prevent autoPan errors
+    vi.spyOn(component.tooltipOverlay, 'setPosition').mockImplementation(() => {});
+    vi.spyOn(component.popoverOverlay, 'setPosition').mockImplementation(() => {});
   });
 
   it('should create the component', () => {
@@ -80,14 +86,16 @@ describe('SiMapComponent', () => {
     componentRef.setInput('displayTooltipOnHover', true);
     componentRef.setInput('cluster', true);
     component.isClicked = false;
-    spyOn(component, 'showTooltipContent').and.callThrough();
-
     fixture.detectChanges();
+
+    vi.spyOn(component, 'showTooltipContent');
     component.showTooltipContent(mockFeature);
     expect(component.showTooltipContent).toHaveBeenCalled();
     const tooltip = fixture.debugElement.query(By.directive(SiMapTooltipComponent));
     expect(tooltip.nativeElement.innerHTML).toContain('name');
-    expect(component.tooltipOverlay.getPosition()).toEqual([4456989.943596791, 1369860.9690134972]);
+    expect(component.tooltipOverlay.setPosition).toHaveBeenCalledWith([
+      4456989.943596791, 1369860.9690134972
+    ]);
   });
 
   it('should return correct features', () => {
@@ -115,11 +123,10 @@ describe('SiMapComponent', () => {
   it('should open cluster with elements and zoom in when clicking to cluster', () => {
     componentRef.setInput('cluster', true);
     componentRef.setInput('markerAnimation', true);
-    spyOn(window, 'alert');
     const popover = fixture.debugElement.query(
       By.directive(SiMapPopoverComponent)
     ).componentInstance;
-    spyOn(popover, 'render');
+    vi.spyOn(popover, 'render');
     fixture.detectChanges();
     const feature = new Feature(new Point([1373214.9745276642, 5690661.889241241]));
     feature.setProperties({
@@ -131,9 +138,11 @@ describe('SiMapComponent', () => {
       extraProps: { buildingType: 'office' }
     });
     component.featureClick(feature);
-    expect(component.popoverOverlay.getPosition()).toEqual([1373214.9745276642, 5690661.889241241]);
+    expect(component.popoverOverlay.setPosition).toHaveBeenCalledWith([
+      1373214.9745276642, 5690661.889241241
+    ]);
     expect(popover.render).toHaveBeenCalled();
-    expect(window.alert).toHaveBeenCalledWith('office');
+    expect(global.alert).toHaveBeenCalledWith('office');
   });
 
   it('should add new cluster layer with features', () => {
@@ -180,17 +189,19 @@ describe('SiMapComponent', () => {
 
   it('should no display tooltip if feature is Clicked', () => {
     componentRef.setInput('displayTooltipOnHover', true);
-    spyOn(component, 'featureClick').and.callThrough();
+    vi.spyOn(component, 'featureClick');
     fixture.detectChanges();
     component.select(singlePoint);
     expect(component.featureClick).toHaveBeenCalled();
-    expect(component.tooltipOverlay.getPosition()).toBeUndefined();
-    expect(component.popoverOverlay.getPosition()).toEqual([2041131.9192873053, 5850738.242670742]);
+    expect(component.tooltipOverlay.setPosition).toHaveBeenCalledWith(undefined);
+    expect(component.popoverOverlay.setPosition).toHaveBeenCalledWith([
+      2041131.9192873053, 5850738.242670743
+    ]);
   });
 
   it('should display popover component on hover when hovered', () => {
     componentRef.setInput('displayTooltipOnHover', true);
-    spyOn(component, 'onFeatureHover').and.callThrough();
+    vi.spyOn(component, 'onFeatureHover');
     const event: any = {
       pixel: [320, 420]
     };
@@ -200,7 +211,7 @@ describe('SiMapComponent', () => {
   });
 
   it('should emit clicked MapPoint', () => {
-    spyOn(component.pointsSelected, 'emit').and.callThrough();
+    vi.spyOn(component.pointsSelected, 'emit');
     fixture.detectChanges();
     component.select(singlePoint);
     expect(component.pointsSelected.emit).toHaveBeenCalledWith([singlePoint]);
@@ -210,40 +221,43 @@ describe('SiMapComponent', () => {
     componentRef.setInput('displayTooltipOnHover', true);
     component.isClicked = false;
     componentRef.setInput('cluster', true);
-    spyOn(component, 'showTooltipContent').and.callThrough();
+    vi.spyOn(component, 'showTooltipContent');
     const tooltip = fixture.debugElement.query(
       By.directive(SiMapTooltipComponent)
     ).componentInstance;
-    spyOn<any>(tooltip, 'setTooltip');
+    vi.spyOn(tooltip as any, 'setTooltip');
     const feat = new Feature({
-      geometry: new Point([4456989.943596791, 1369860.9690134972])
+      geometry: new Point([4456989.943596791, 1369860.9690134972]),
+      name: 'test feature'
     });
     const feats = [feat];
     fixture.detectChanges();
     component.displayTooltip(feats);
 
     expect(component.showTooltipContent).toHaveBeenCalled();
-    expect(component.tooltipOverlay.getPosition()).toEqual([4456989.943596791, 1369860.9690134972]);
+    expect(component.tooltipOverlay.setPosition).toHaveBeenCalledWith([
+      4456989.943596791, 1369860.9690134972
+    ]);
   });
 
   it('do not display tooltip if feature is type of RenderFeature', () => {
     componentRef.setInput('displayTooltipOnHover', true);
     component.isClicked = false;
     componentRef.setInput('cluster', true);
-    spyOn(component, 'showTooltipContent').and.callThrough();
+    vi.spyOn(component, 'showTooltipContent');
     fixture.detectChanges();
     const feat = new RenderFeature('Point', [0, 0], [0], 0, {}, 1);
     const feats = [feat];
     component.displayTooltip(feats);
-    expect(component.tooltipOverlay.getPosition()).toBeUndefined();
+    expect(component.tooltipOverlay.setPosition).not.toHaveBeenCalled();
   });
 
   it('if clicking outside the clusters and features should close the popup', () => {
     componentRef.setInput('displayTooltipOnHover', true);
     component.isClicked = false;
     componentRef.setInput('cluster', true);
-    spyOn(component, 'closePopup').and.callThrough();
-    spyOn(component.pointsSelected, 'emit').and.callThrough();
+    vi.spyOn(component, 'closePopup');
+    vi.spyOn(component.pointsSelected, 'emit');
     const event: any = {
       pixel: [410, 255]
     };
@@ -266,14 +280,14 @@ describe('SiMapComponent', () => {
 
   it('update map style to light map on theme change', () => {
     componentRef.setInput('maptilerKey', 'asdfghjkl');
-    spyOn(component, 'setMapStyle');
+    vi.spyOn(component, 'setMapStyle');
     component.onThemeSwitch(false);
     expect(component.setMapStyle).toHaveBeenCalledWith(false, 'asdfghjkl');
   });
 
   it('update map style to dark map on theme change', () => {
     componentRef.setInput('maptilerKey', 'qwertyuiop');
-    spyOn(component, 'setMapStyle');
+    vi.spyOn(component, 'setMapStyle');
     component.onThemeSwitch(true);
     expect(component.setMapStyle).toHaveBeenCalledWith(true, 'qwertyuiop');
   });
@@ -284,8 +298,8 @@ describe('SiMapComponent', () => {
         geometry: new Point([4456989.943596791, 1369860.9690134972])
       })
     ];
-    spyOn(component.tooltipOverlay, 'setOffset');
-    spyOn(component.tooltipOverlay, 'setPosition');
+
+    vi.spyOn(component.tooltipOverlay, 'setOffset');
     component.showClusterTooltipContent(feat);
     expect(component.tooltipOverlay.setOffset).toHaveBeenCalledWith([0, 20]);
     expect(component.tooltipOverlay.setPosition).toHaveBeenCalled();

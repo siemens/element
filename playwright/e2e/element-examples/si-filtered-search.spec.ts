@@ -63,7 +63,9 @@ test.describe('filtered search', () => {
     ).toBeFocused();
     await page.keyboard.press('Control+KeyA');
     await page.keyboard.type('H');
-    await expect(page.getByRole('option', { name: 'Karlsruhe' })).toHaveClass(/active/);
+    await expect(page.getByRole('option', { name: 'Karlsruhe' }).classList.contains(/active/)).toBe(
+      true
+    );
     await page.keyboard.type('annover');
     await page.keyboard.press('Enter');
     await expect(freeTextSearch).toBeFocused();

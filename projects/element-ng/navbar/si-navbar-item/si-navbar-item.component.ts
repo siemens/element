@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
   Component,
@@ -31,7 +31,6 @@ import { SiNavbarPrimaryComponent } from '../si-navbar-primary/si-navbar-primary
   imports: [
     SiLinkDirective,
     SiTranslatePipe,
-    NgClass,
     NgTemplateOutlet,
     SiHeaderDropdownComponent,
     SiHeaderDropdownItemsFactoryComponent,

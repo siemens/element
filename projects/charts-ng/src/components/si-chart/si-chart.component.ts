@@ -787,6 +787,7 @@ export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDes
         ? this.getThemeCustomValue(['externalZoomSlider', 'grid'], {})
         : this.getThemeCustomValue(['dataZoom', 'grid'], {});
 
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
       if (this.showTimeRangeBar()) {
         const timeBarOptions = this.getThemeCustomValue(['timeRangeBar'], {});
         if (customOptions.height && customOptions.bottom) {

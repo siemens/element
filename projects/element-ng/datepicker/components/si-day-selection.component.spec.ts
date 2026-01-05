@@ -48,19 +48,21 @@ import { CalendarTestHelper, generateKeyEvent } from './test-helper.spec';
 class SingleSelectComponent {
   readonly focusedDate = signal(new Date('2022-03-26'));
   readonly startDate = signal(new Date('2022-03-25'));
-  readonly endDate = signal<Date | unknown>(null);
+  readonly endDate = signal<Date | undefined>(undefined);
   readonly minDate = signal(new Date('2021-03-01'));
-  readonly maxDate = signal<Date | unknown>(new Date('2023-03-31'));
+  readonly maxDate = signal<Date | undefined>(new Date('2023-03-31'));
   readonly enableDateRange = signal(false);
   readonly hideWeekNumbers = signal(false);
-  readonly weekStartDay = signal('monday');
+  readonly weekStartDay = signal<'monday' | 'sunday'>('monday');
 
   activeMonth: Date | undefined;
   view?: 'month' | 'year';
 
-  selectionChange(selection: Date): void {
-    this.focusedDate.set(selection);
-    this.startDate.set(selection);
+  selectionChange(selection: Date | null): void {
+    if (selection) {
+      this.focusedDate.set(selection);
+      this.startDate.set(selection);
+    }
   }
 
   activeMonthChange(current: Date): void {
@@ -93,15 +95,16 @@ class SingleSelectComponent {
 })
 class RangeSelectComponent {
   readonly focusedDate = signal(new Date('2022-03-26'));
-  readonly startDate = signal<Date | unknown>(null);
-  readonly endDate = signal<Date | unknown>(null);
+  readonly startDate = signal<Date | undefined>(undefined);
+  readonly endDate = signal<Date | undefined>(undefined);
   readonly minDate = signal(new Date('2021-03-01'));
-  readonly maxDate = signal<Date | unknown>(new Date('2023-03-31'));
+  readonly maxDate = signal<Date | undefined>(new Date('2023-03-31'));
   readonly hideWeekNumbers = signal(false);
-  readonly weekStartDay = signal('monday');
+  readonly weekStartDay = signal<'monday' | 'sunday'>('monday');
   activeMonth: Date | undefined;
 
-  selectionChange(selection: Date): void {
+  selectionChange(selection: Date | null): void {
+    if (!selection) return;
     if (
       this.startDate() === undefined ||
       (this.startDate() !== undefined && this.endDate() !== undefined)
@@ -178,7 +181,7 @@ describe('SiDaySelectionComponent', () => {
 
       const selectedElement = element.querySelector('.selected')!;
       expect(selectedElement.innerHTML.trim()).toBe('31');
-      expect(isSameDate(wrapperComponent.focusedDate(), new Date('2022-03-31'))).toBeTrue();
+      expect(isSameDate(wrapperComponent.focusedDate(), new Date('2022-03-31'))).toBe(true);
     });
 
     it('should focus active date', () => {
@@ -239,7 +242,7 @@ describe('SiDaySelectionComponent', () => {
         wrapperComponent.focusedDate.set(new Date(2022, month, 1));
         fixture.detectChanges();
 
-        expect(helper.getCells()).toHaveSize(cellsCount);
+        expect(helper.getCells()).toHaveLength(cellsCount);
       }
     });
 
@@ -451,7 +454,7 @@ describe('SiDaySelectionComponent', () => {
       });
 
       it('should go to today', () => {
-        const pipeSpy = spyOn(DatePipe.prototype, 'transform');
+        const pipeSpy = vi.spyOn(DatePipe.prototype, 'transform');
 
         (element.querySelector('.today-button') as HTMLElement)!.click();
         fixture.detectChanges();
@@ -460,12 +463,12 @@ describe('SiDaySelectionComponent', () => {
 
         expect(pipeSpy).toHaveBeenCalledTimes(2);
 
-        const month = pipeSpy.calls.argsFor(0);
-        expect(isSameMonth(month[0] as Date, today)).toBeTrue();
+        const month = vi.mocked(pipeSpy).mock.calls[0];
+        expect(isSameMonth(month[0] as Date, today)).toBe(true);
         expect(month[1] as string).toBe('MMMM');
 
-        const year = pipeSpy.calls.argsFor(1);
-        expect(isSameYear(year[0] as Date, today)).toBeTrue();
+        const year = vi.mocked(pipeSpy).mock.calls[1];
+        expect(isSameYear(year[0] as Date, today)).toBe(true);
         expect(year[1] as string).toBe('yyyy');
 
         const activeCell = helper
@@ -473,7 +476,7 @@ describe('SiDaySelectionComponent', () => {
           .querySelector('[cdkfocusinitial]') as HTMLElement;
         expect(activeCell).toBeTruthy();
         expect(activeCell.innerHTML.trim()).toBe(today.getDate().toString());
-        expect(isSameDate(wrapperComponent.focusedDate(), today)).toBeTrue();
+        expect(isSameDate(wrapperComponent.focusedDate(), today)).toBe(true);
       });
 
       it('should disable today button after click', async () => {
@@ -513,7 +516,7 @@ describe('SiDaySelectionComponent', () => {
           .querySelector('[cdkfocusinitial]') as HTMLElement;
         expect(activeCell).toBeTruthy();
         expect(activeCell.innerHTML.trim()).toBe(today.getDate().toString());
-        expect(isSameDate(wrapperComponent.focusedDate(), today)).toBeTrue();
+        expect(isSameDate(wrapperComponent.focusedDate(), today)).toBe(true);
       });
     });
 
@@ -543,12 +546,12 @@ describe('SiDaySelectionComponent', () => {
         expect(helper.getCells().at(6)?.innerHTML.trim()).toBe('5');
       });
 
-      it('weekStart should be saturday', () => {
-        wrapperComponent.weekStartDay.set('saturday');
+      it('weekStart should be monday', () => {
+        wrapperComponent.weekStartDay.set('monday');
         fixture.detectChanges();
 
         const headers = helper.getCalendarHeaders();
-        expect(headers.at(0)?.textContent!.trim()).toBe('Sat');
+        expect(headers.at(0)?.textContent!.trim()).toBe('Mon');
         expect(helper.getCells().at(0)?.innerHTML.trim()).toBe('26');
         expect(helper.getCells().at(6)?.innerHTML.trim()).toBe('4');
       });
@@ -572,7 +575,7 @@ describe('SiDaySelectionComponent', () => {
       let selectedElements = helper.queryAsArray('.selected')!;
       expect(selectedElements.length).toBe(1);
       expect(selectedElements.at(-1)!.innerHTML.trim()).toBe('16');
-      expect(isSameDate(rangeWrapperComponent.focusedDate(), new Date('2022-03-16'))).toBeTrue();
+      expect(isSameDate(rangeWrapperComponent.focusedDate(), new Date('2022-03-16'))).toBe(true);
 
       selectDate(31);
 

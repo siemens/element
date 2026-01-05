@@ -84,7 +84,7 @@ describe('SiChangePasswordComponent', () => {
     enterValue(confirmPassword, 'NewSecret123!');
     fixture.detectChanges();
 
-    const spy = spyOn(component.instance.changePasswordRequested, 'emit');
+    const spy = vi.spyOn(component.instance.changePasswordRequested, 'emit');
     const changeButton = fixture.nativeElement.querySelector('button[type="submit"].btn-primary');
     changeButton.click();
     fixture.detectChanges();
@@ -100,11 +100,11 @@ describe('SiChangePasswordComponent', () => {
     fixture.detectChanges();
 
     const changeButton = fixture.nativeElement.querySelector('button[type="submit"].btn-primary');
-    expect(changeButton.disabled).toBeTrue();
+    expect(changeButton.disabled).toBe(true);
   });
 
   it('should emit back event on back button click and reset the form', () => {
-    const spy = spyOn(component.instance.back, 'emit');
+    const spy = vi.spyOn(component.instance.back, 'emit');
     const backButton = fixture.nativeElement.querySelector('button[type="button"].btn-secondary');
     const newPassword: HTMLInputElement = fixture.nativeElement.querySelector(
       'input[formControlName="newPassword"]'

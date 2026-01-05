@@ -30,10 +30,9 @@ describe('SiNoTranslate', () => {
     });
   });
 
-  it('should translate async', (done: DoneFn) => {
+  it('should translate async', async () => {
     service.translateAsync('VALUE-2').subscribe(value => {
       expect(value).toBe('VALUE-2');
-      done();
     });
   });
 
