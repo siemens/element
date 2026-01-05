@@ -27,21 +27,30 @@ jobs:
         with:
           fetch-depth: 0 # semantic-release needs this
           token: ${{ secrets.ELEMENT_BOT_GITHUB_TOKEN }} # Otherwise, branch protection rules are not bypassed.
-      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+      - uses: oven-sh/setup-bun@v1
         with:
-          node-version: lts/krypton
-          cache: 'npm'
+          bun-version: '1.3.13'
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: dist
           path: dist
-      - run: npm ci --prefer-offline --no-audit
+      - run: |
+          rm .npmrc
+          echo '[install.scopes]' >> bunfig.toml
+          echo '"@simpl" = { token = "$SIEMENS_NPM_TOKEN", url = "https://code.siemens.com/api/v4/packages/npm/" }' >> bunfig.toml
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun
+      - run: bun install --prefer-offline --no-audit
+        env:
+          SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
       - id: before_release
         run: |
           BEFORE_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
           echo "before_tag=$BEFORE_TAG" >> $GITHUB_OUTPUT
-      - run: npm run release:copy-license
-      - run: npx semantic-release
+      - run: bun run --bun release:copy-license
+      - run: bunx --bun semantic-release
         env:
           SKIP_COMMIT: ${{ github.ref_name == 'next' && 'true' || '' }}
           GIT_AUTHOR_NAME: 'Siemens Element Bot'
