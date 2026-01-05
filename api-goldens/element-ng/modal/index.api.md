@@ -31,8 +31,6 @@ export interface ModalOptions<T = Record<string, any>> extends ModalDependencyIn
     ariaLabelledBy?: string;
     class?: string;
     ignoreBackdropClick?: boolean;
-    // @deprecated
-    initialState?: Partial<T>;
     inputValues?: Record<string, unknown>;
     keyboard?: boolean;
     messageInsteadOfAutoHide?: boolean;

@@ -34,12 +34,6 @@ export interface ModalDependencyInjectionOptions {
 
 export interface ModalOptions<T = Record<string, any>> extends ModalDependencyInjectionOptions {
   /**
-   * Assign all values to the target component using `Object.assign(component, initialState)`.
-   *
-   * @deprecated Use {@link inputValues} instead.
-   */
-  initialState?: Partial<T>;
-  /**
    * Use this to assign values to either `@Input()` or `input()` fields of the provided component.
    * If a template is used, the values are available in the template context.
    */
@@ -148,7 +142,6 @@ export class SiModalService {
     if (modalRef.contentRef instanceof TemplateRef) {
       modalRef.viewRef = modalRef.contentRef.createEmbeddedView({
         modalRef,
-        ...modalRef.data.initialState,
         ...modalRef.data.inputValues
       });
       this.appRef.attachView(modalRef.viewRef);
@@ -159,7 +152,6 @@ export class SiModalService {
       environmentInjector: modalRef.data.environmentInjector ?? this.environmentInjector,
       elementInjector: injector
     });
-    Object.assign(modalRef.componentRef.instance as any, modalRef.data?.initialState);
     // set initial @Input() / input()
     for (const [key, value] of Object.entries(modalRef.data?.inputValues ?? {})) {
       modalRef.componentRef?.setInput(key, value);

@@ -49,7 +49,7 @@ export class SampleComponent implements OnDestroy {
     this.parentRef = this.modalService.show(
       template,
       {
-        initialState: { someThing: 'some context' },
+        inputValues: { someThing: 'some context' },
         ignoreBackdropClick: false,
         keyboard: true,
         animated: true,
