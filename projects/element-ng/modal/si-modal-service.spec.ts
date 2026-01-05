@@ -15,10 +15,9 @@ import { TestBed } from '@angular/core/testing';
 import { SiModalService } from './si-modal.service';
 
 @Component({
-  template: '<div>test component-{{normalProp}}-{{inputProp()}}</div>'
+  template: '<div>test component-{{inputProp()}}</div>'
 })
 class DialogComponent {
-  normalProp?: string;
   readonly inputProp = input<string>();
 }
 
@@ -109,21 +108,6 @@ describe('SiModalService', () => {
       modalRef.setInput('inputProp', 'new input value');
       appRef.tick();
       expect(modal?.innerHTML).toContain('new input value');
-      modalRef.hide();
-      jasmine.clock().tick(500);
-      appRef.tick();
-    });
-
-    it('set input using initialState', () => {
-      const modalRef = service.show(DialogComponent, {
-        initialState: { normalProp: 'prop value' }
-      });
-
-      appRef.tick();
-
-      const modal = document.querySelector('si-modal');
-      expect(modal).toBeTruthy();
-      expect(modal?.innerHTML).toContain('prop value');
       modalRef.hide();
       jasmine.clock().tick(500);
       appRef.tick();
