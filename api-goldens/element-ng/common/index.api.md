@@ -16,7 +16,6 @@ import { OverlayRef } from '@angular/cdk/overlay';
 import { PositionStrategy } from '@angular/cdk/overlay';
 import { Provider } from '@angular/core';
 import * as rxjs from 'rxjs';
-import { TrackByFunction } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 import { Type } from '@angular/core';
 
@@ -75,12 +74,6 @@ export const BOUNDING_RECT_WINDOW: {
         right: number;
     };
 };
-
-// @public @deprecated
-export const buildTrackByIdentity: <T>() => TrackByFunction<T>;
-
-// @public @deprecated
-export const buildTrackByIndex: <T>() => TrackByFunction<T>;
 
 // @public
 export function calculateOverlayArrowPosition(change: ConnectedOverlayPositionChange, overlay: ElementRef, anchor?: ElementRef): OverlayArrowPosition;
