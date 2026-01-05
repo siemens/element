@@ -97,7 +97,6 @@ export class SiTreeViewItemComponent
   });
 
   protected readonly stickyEndItems = this.treeViewComponent.horizontalScrolling;
-  private displayFolderState = this.treeViewComponent.hasAnyChildren;
 
   protected icons = this.treeViewComponent.computedIcons;
 
@@ -211,7 +210,7 @@ export class SiTreeViewItemComponent
 
   protected get showFolderStateStart(): boolean {
     return (
-      this.displayFolderState &&
+      this.treeViewComponent.hasAnyChildren &&
       this.treeViewComponent.folderStateStart() &&
       !this.treeViewComponent.flatTree() &&
       (!!this.isGroupedItem || !this.siTreeViewService.groupedList)
@@ -219,7 +218,7 @@ export class SiTreeViewItemComponent
   }
 
   protected get showFolderStateEnd(): boolean {
-    return this.displayFolderState && !this.showFolderStateStart;
+    return this.treeViewComponent.hasAnyChildren && !this.showFolderStateStart;
   }
 
   protected get isExpanding(): boolean {
