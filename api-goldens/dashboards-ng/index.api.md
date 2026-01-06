@@ -20,14 +20,12 @@ import { Injector } from '@angular/core';
 import { InputSignal } from '@angular/core';
 import { MenuItem } from '@siemens/element-ng/common';
 import { MenuItem as MenuItem_2 } from '@siemens/element-ng/menu';
-import { ModuleWithProviders } from '@angular/core';
 import { NavigationExtras } from '@angular/router';
 import { Observable } from 'rxjs';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { OutputEmitterRef } from '@angular/core';
-import { Provider } from '@angular/core';
 import { SiDashboardComponent } from '@siemens/element-ng/dashboard';
 import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
 import { SimpleChanges } from '@angular/core';
@@ -141,13 +139,8 @@ export const SI_WIDGET_ID_PROVIDER: InjectionToken<SiWidgetIdProvider>;
 // @public
 export const SI_WIDGET_STORE: InjectionToken<SiWidgetStorage>;
 
-// @public
+// @public (undocumented)
 class SiDashboardsNgModule {
-    // @deprecated (undocumented)
-    static forRoot({ config, dashboardApi }: {
-        config?: Config;
-        dashboardApi?: Provider;
-    }): ModuleWithProviders<SiDashboardsNgModule>;
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiDashboardsNgModule, never>;
     // (undocumented)
