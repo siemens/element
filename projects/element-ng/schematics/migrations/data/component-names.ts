@@ -6,6 +6,7 @@ export interface ComponentNamesInstruction {
   module: RegExp;
   toModule?: string;
   symbolRenamings: { replace: string; replaceWith: string }[];
+  propertyAccessOnly?: boolean;
 }
 
 export const COMPONENT_NAMES_MIGRATION: ComponentNamesInstruction[] = [
@@ -85,5 +86,19 @@ export const COMPONENT_NAMES_MIGRATION: ComponentNamesInstruction[] = [
       { replace: 'SiPopoverNextModule', replaceWith: 'SiPopoverModule' }
     ],
     toModule: '@siemens/element-ng/popover'
+  },
+
+  // Resize observer property to signal replacements
+  {
+    module: /@(siemens|simpl)\/element-ng(\/resize-observer)?/,
+    propertyAccessOnly: true,
+    symbolRenamings: [
+      { replace: 'isXs', replaceWith: 'xs()' },
+      { replace: 'isSm', replaceWith: 'sm()' },
+      { replace: 'isMd', replaceWith: 'md()' },
+      { replace: 'isLg', replaceWith: 'lg()' },
+      { replace: 'isXl', replaceWith: 'xl()' },
+      { replace: 'isXxl', replaceWith: 'xxl()' }
+    ]
   }
 ];
