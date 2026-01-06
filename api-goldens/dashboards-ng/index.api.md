@@ -41,9 +41,6 @@ export type Config = {
     grid?: GridConfig;
 };
 
-// @public @deprecated (undocumented)
-export const CONFIG_TOKEN: InjectionToken<Config>;
-
 // @public
 export const createWidgetConfig: (widget: Widget) => Omit<WidgetConfig, "id">;
 
