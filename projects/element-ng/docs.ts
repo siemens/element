@@ -87,7 +87,6 @@ export * from './tour';
 export * from './translate';
 export * from './tree-view';
 export * from './typeahead';
-export * from './unauthorized-page';
 export * from './wizard';
 export { CdkOverlayOrigin, CdkConnectedOverlay } from '@angular/cdk/overlay';
 export { CdkTrapFocus } from '@angular/cdk/a11y';

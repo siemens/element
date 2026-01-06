@@ -48,7 +48,6 @@ import { SiThresholdModule } from '@siemens/element-ng/threshold';
 import { SiTooltipModule } from '@siemens/element-ng/tooltip';
 import { SiTreeViewModule } from '@siemens/element-ng/tree-view';
 import { SiTypeaheadModule } from '@siemens/element-ng/typeahead';
-import { SiUnauthorizedPageModule } from '@siemens/element-ng/unauthorized-page';
 import { SiWizardModule } from '@siemens/element-ng/wizard';
 import { SomeOtherModule} from '@simpl/element-ng/some-other-module';
 
@@ -105,7 +104,6 @@ import { SomeOtherModule} from '@simpl/element-ng/some-other-module';
     SiTooltipModule,
     SiTreeViewModule,
     SiTypeaheadModule,
-    SiUnauthorizedPageModule,
     SiWizardModule
 ],
   template: ''
