@@ -154,7 +154,7 @@ describe('SiLinkDirective', () => {
   });
 
   it('updates active class on isActive change', async () => {
-    const changeSpy = spyOn(component, 'activeChange');
+    const changeSpy = vi.spyOn(component, 'activeChange');
     component.link = { action: () => {} };
     component.cdRef.markForCheck();
     fixture.detectChanges();

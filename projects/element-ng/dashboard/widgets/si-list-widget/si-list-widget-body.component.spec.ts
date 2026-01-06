@@ -24,7 +24,7 @@ import { SiListWidgetItem } from './si-list-widget-item.component';
 })
 class TestHostComponent {
   items?: SiListWidgetItem[];
-  numberOfLinks?: number;
+  numberOfLinks = 6;
   sort?: SortOrder;
   search = false;
 }

@@ -41,7 +41,7 @@ describe('SiSummaryChipComponent', () => {
     fixture.detectChanges();
 
     expect(element.querySelector('.si-body')?.textContent).toContain('test label');
-    expect(element.querySelector('.si-body')).toHaveClass('visually-hidden');
+    expect(element.querySelector('.si-body')!.classList.contains('visually-hidden')).toBe(true);
   });
 
   it('should display selected state', () => {
@@ -54,19 +54,19 @@ describe('SiSummaryChipComponent', () => {
   it('should toggle selected state on click', () => {
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.selected()).toBeFalse();
+    expect(fixture.componentInstance.selected()).toBe(false);
 
     element.querySelector('div')?.click();
-    expect(fixture.componentInstance.selected()).toBeTrue();
+    expect(fixture.componentInstance.selected()).toBe(true);
   });
 
   it('should not toggle selected state on click when disabled', () => {
     componentRef.setInput('disabled', true);
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.selected()).toBeFalse();
+    expect(fixture.componentInstance.selected()).toBe(false);
 
     element.querySelector('div')?.click();
-    expect(fixture.componentInstance.selected()).toBeFalse();
+    expect(fixture.componentInstance.selected()).toBe(false);
   });
 });

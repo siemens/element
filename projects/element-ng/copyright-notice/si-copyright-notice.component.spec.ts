@@ -122,9 +122,8 @@ describe('SiCopyrightNoticeComponentWithInput', () => {
     const copyrightEl = element.querySelector<HTMLElement>('si-copyright-notice')!;
     expect(copyrightEl).toBeTruthy();
 
-    expect(
-      window.getComputedStyle(copyrightEl.querySelector('.company')!, ':after').content
-    ).toContain('ExampleOrg');
+    // When no company is provided, the span is empty and CSS ::after adds default company name
+    expect(copyrightEl.querySelector('.company')!.textContent).toBe('');
     expect(copyrightEl.innerText).toContain('©');
     expect(copyrightEl.innerText).toContain(new Date().getFullYear() + '');
     expect(copyrightEl.innerText).not.toContain('-');

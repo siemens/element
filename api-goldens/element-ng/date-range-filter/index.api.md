@@ -10,7 +10,7 @@ import { DatepickerInputConfig } from '@siemens/element-ng/datepicker';
 import { DateRange } from '@siemens/element-ng/datepicker';
 import { OnChanges } from '@angular/core';
 import { PipeTransform } from '@angular/core';
-import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
+import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SimpleChanges } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
@@ -88,36 +88,36 @@ export class SiDateRangeCalculationService {
 
 // @public (undocumented)
 export class SiDateRangeFilterComponent implements OnChanges {
-    readonly advancedLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly afterLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly advancedLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly afterLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly applyClicked: _angular_core.OutputEmitterRef<void>;
-    readonly applyLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly applyLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly basicMode: _angular_core.InputSignal<"input" | "calendar">;
-    readonly beforeLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly dateLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly beforeLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly dateLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly datepickerConfig: _angular_core.InputSignal<DatepickerInputConfig | undefined>;
-    readonly datePlaceholder: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly datePlaceholder: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly enableTimeSelection: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly fromLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly fromLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly hideAdvancedMode: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     ngOnChanges(changes: SimpleChanges): void;
-    readonly nowLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly presetLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly nowLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly presetLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly presetList: _angular_core.InputSignal<DateRangePreset[] | undefined>;
     readonly presetSearch: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly previewLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly previewLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly range: _angular_core.ModelSignal<DateRangeFilter>;
-    readonly rangeLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly refLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly rangeLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly refLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly reverseInputFields: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly searchLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly searchLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly showApplyButton: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly todayLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly toLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly unitLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly valueLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
-    readonly withinLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly todayLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly toLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly unitLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly valueLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly withinLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiDateRangeFilterComponent, "si-date-range-filter", never, { "range": { "alias": "range"; "required": true; "isSignal": true; }; "presetList": { "alias": "presetList"; "required": false; "isSignal": true; }; "presetSearch": { "alias": "presetSearch"; "required": false; "isSignal": true; }; "enableTimeSelection": { "alias": "enableTimeSelection"; "required": false; "isSignal": true; }; "basicMode": { "alias": "basicMode"; "required": false; "isSignal": true; }; "reverseInputFields": { "alias": "reverseInputFields"; "required": false; "isSignal": true; }; "showApplyButton": { "alias": "showApplyButton"; "required": false; "isSignal": true; }; "hideAdvancedMode": { "alias": "hideAdvancedMode"; "required": false; "isSignal": true; }; "refLabel": { "alias": "refLabel"; "required": false; "isSignal": true; }; "fromLabel": { "alias": "fromLabel"; "required": false; "isSignal": true; }; "toLabel": { "alias": "toLabel"; "required": false; "isSignal": true; }; "rangeLabel": { "alias": "rangeLabel"; "required": false; "isSignal": true; }; "todayLabel": { "alias": "todayLabel"; "required": false; "isSignal": true; }; "nowLabel": { "alias": "nowLabel"; "required": false; "isSignal": true; }; "dateLabel": { "alias": "dateLabel"; "required": false; "isSignal": true; }; "previewLabel": { "alias": "previewLabel"; "required": false; "isSignal": true; }; "datePlaceholder": { "alias": "datePlaceholder"; "required": false; "isSignal": true; }; "beforeLabel": { "alias": "beforeLabel"; "required": false; "isSignal": true; }; "afterLabel": { "alias": "afterLabel"; "required": false; "isSignal": true; }; "withinLabel": { "alias": "withinLabel"; "required": false; "isSignal": true; }; "valueLabel": { "alias": "valueLabel"; "required": false; "isSignal": true; }; "unitLabel": { "alias": "unitLabel"; "required": false; "isSignal": true; }; "searchLabel": { "alias": "searchLabel"; "required": false; "isSignal": true; }; "presetLabel": { "alias": "presetLabel"; "required": false; "isSignal": true; }; "advancedLabel": { "alias": "advancedLabel"; "required": false; "isSignal": true; }; "applyLabel": { "alias": "applyLabel"; "required": false; "isSignal": true; }; "datepickerConfig": { "alias": "datepickerConfig"; "required": false; "isSignal": true; }; }, { "range": "rangeChange"; "applyClicked": "applyClicked"; }, never, never, true, never>;
     // (undocumented)

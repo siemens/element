@@ -139,7 +139,7 @@ describe('SiFilterBarComponent', () => {
 
     const resetButton = element.querySelector('button') as HTMLButtonElement;
 
-    expect(resetButton?.disabled).toBeTrue();
+    expect(resetButton?.disabled).toBe(true);
   });
 
   it('should show empty indicator when no filters are active', () => {
@@ -149,7 +149,7 @@ describe('SiFilterBarComponent', () => {
   });
 
   it('should emit a change event when modified', () => {
-    spyOn(component, 'filtersChange').and.callThrough();
+    vi.spyOn(component, 'filtersChange');
     component.filters.set([
       {
         filterName: 'city',
@@ -202,7 +202,7 @@ describe('SiFilterBarComponent', () => {
   });
 
   it('should emit a change event when modified from inside', () => {
-    spyOn(component, 'filtersChange').and.callThrough();
+    vi.spyOn(component, 'filtersChange');
     component.filters.set([
       {
         filterName: 'city',
@@ -232,7 +232,7 @@ describe('SiFilterBarComponent', () => {
   });
 
   it('should emit a change event when modified from filter group while using responsive', async () => {
-    spyOn(component, 'filtersChange').and.callThrough();
+    vi.spyOn(component, 'filtersChange');
     component.width = 650;
     component.filters.set([
       {

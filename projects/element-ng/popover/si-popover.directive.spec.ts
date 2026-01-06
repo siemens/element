@@ -52,11 +52,11 @@ describe('SiPopoverNextDirective', () => {
   });
 
   it('should open/close on click', async () => {
-    jasmine.clock().install();
+    vi.useFakeTimers();
     fixture.detectChanges();
 
-    fixture.nativeElement.querySelector('button').click();
-    jasmine.clock().tick(10);
+    fixture.nativeElement.querySelector('button')!.click();
+    vi.advanceTimersByTime(10);
     await fixture.whenStable();
 
     const popover = document.querySelector('.popover')!;
@@ -64,28 +64,25 @@ describe('SiPopoverNextDirective', () => {
     expect(popover.innerHTML).toContain('test popover content');
 
     // Closes on button click
-    fixture.nativeElement.querySelector('button').click();
+    fixture.nativeElement.querySelector('button')!.click();
     await fixture.whenStable();
 
     expect(document.querySelector('.popover')).toBeFalsy();
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should not emit hidden event if popover overlay is closed', () => {
-    const hiddenSpy = spyOn(
-      wrapperComponent.popoverOverlay()!.visibilityChange,
-      'emit'
-    ).and.callThrough();
+    const hiddenSpy = vi.spyOn(wrapperComponent.popoverOverlay()!.visibilityChange, 'emit');
     wrapperComponent.popoverOverlay()?.hide();
     expect(hiddenSpy).not.toHaveBeenCalled();
   });
 
   it('should close on ESC press', async () => {
-    jasmine.clock().install();
+    vi.useFakeTimers();
     fixture.detectChanges();
 
-    fixture.nativeElement.querySelector('button').click();
-    jasmine.clock().tick(10);
+    fixture.nativeElement.querySelector('button')!.click();
+    vi.advanceTimersByTime(10);
     await fixture.whenStable();
     const popover = document.querySelector('.popover')!;
     expect(popover).toBeTruthy();
@@ -95,15 +92,15 @@ describe('SiPopoverNextDirective', () => {
     await fixture.whenStable();
 
     expect(document.querySelector('.popover')).toBeFalsy();
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should close on outside click', async () => {
-    jasmine.clock().install();
+    vi.useFakeTimers();
     fixture.detectChanges();
 
-    fixture.nativeElement.querySelector('button').click();
-    jasmine.clock().tick(10);
+    fixture.nativeElement.querySelector('button')!.click();
+    vi.advanceTimersByTime(10);
     await fixture.whenStable();
     const popover = document.querySelector('.popover')!;
     expect(popover).toBeTruthy();
@@ -113,14 +110,14 @@ describe('SiPopoverNextDirective', () => {
     await fixture.whenStable();
 
     expect(document.querySelector('.popover')).toBeFalsy();
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should not close if click starts on the popover', async () => {
-    jasmine.clock().install();
+    vi.useFakeTimers();
     fixture.detectChanges();
 
-    fixture.nativeElement.querySelector('button').click();
+    fixture.nativeElement.querySelector('button')!.click();
     await fixture.whenStable();
     const popover = document.querySelector('.popover')!;
     expect(popover).toBeTruthy();
@@ -128,18 +125,18 @@ describe('SiPopoverNextDirective', () => {
 
     popover.dispatchEvent(new MouseEvent('pointerdown', { bubbles: true, cancelable: true }));
     document.body.dispatchEvent(new MouseEvent('pointerup', { bubbles: true, cancelable: true }));
-    jasmine.clock().tick(10);
+    vi.advanceTimersByTime(10);
     await fixture.whenStable();
 
     expect(document.querySelector('.popover')).toBeTruthy();
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should not close if click ends on the popover', async () => {
-    jasmine.clock().install();
+    vi.useFakeTimers();
     fixture.detectChanges();
 
-    fixture.nativeElement.querySelector('button').click();
+    fixture.nativeElement.querySelector('button')!.click();
     await fixture.whenStable();
     const popover = document.querySelector('.popover')!;
     expect(popover).toBeTruthy();
@@ -147,30 +144,30 @@ describe('SiPopoverNextDirective', () => {
 
     document.body.dispatchEvent(new MouseEvent('pointerdown', { bubbles: true, cancelable: true }));
     popover.dispatchEvent(new MouseEvent('pointerup', { bubbles: true, cancelable: true }));
-    jasmine.clock().tick(10);
+    vi.advanceTimersByTime(10);
     await fixture.whenStable();
 
     expect(document.querySelector('.popover')).toBeTruthy();
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should focus on the popover wrapper', async () => {
-    jasmine.clock().install();
+    vi.useFakeTimers();
     fixture.detectChanges();
 
-    fixture.nativeElement.querySelector('button').click();
+    fixture.nativeElement.querySelector('button')!.click();
     await fixture.whenStable();
 
     const popover = document.querySelector('.popover')!;
     expect(popover).toBeTruthy();
     expect(popover.innerHTML).toContain('test popover content');
 
-    jasmine.clock().tick(10);
+    vi.advanceTimersByTime(10);
     await fixture.whenStable();
 
     expect(document.activeElement).toBe(document.querySelector('.popover'));
 
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 });
 
@@ -185,18 +182,18 @@ describe('with custom template', () => {
   });
 
   it('should focus on the first interactive element', async () => {
-    jasmine.clock().install();
+    vi.useFakeTimers();
     fixture.detectChanges();
 
-    fixture.nativeElement.querySelector('button').click();
+    fixture.nativeElement.querySelector('button')!.click();
     await fixture.whenStable();
     const popover = document.querySelector('.popover')!;
     expect(popover).toBeTruthy();
 
-    jasmine.clock().tick(10);
+    vi.advanceTimersByTime(10);
     await fixture.whenStable();
 
     expect(document.activeElement).toBe(document.querySelector('#input-1'));
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 });

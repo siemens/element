@@ -52,7 +52,7 @@ class WrapperComponent {
   );
   readonly inputElement = viewChild.required<ElementRef<HTMLInputElement>>('input');
   passwordStrengthConfig = { ...passwordStrengthValue };
-  passwordStrengthChangedFunc = jasmine.createSpy('passwordStrengthChanged', (event: any) => {});
+  passwordStrengthChangedFunc = vi.fn((event: any) => {});
 }
 
 describe('SiPasswordStrengthDirective', () => {
@@ -88,20 +88,20 @@ describe('SiPasswordStrengthDirective', () => {
 
     expect(element.classList.length).toBe(0);
     expect(wrapperComponent.passwordStrengthChangedFunc).not.toHaveBeenCalledWith(
-      jasmine.any(Number)
+      expect.any(Number)
     );
 
     setInput('f');
 
     expect(element.classList.length).not.toBe(0);
     expect(wrapperComponent.passwordStrengthChangedFunc).toHaveBeenCalledWith(-4);
-    wrapperComponent.passwordStrengthChangedFunc.calls.reset();
+    wrapperComponent.passwordStrengthChangedFunc.mockClear();
 
     setInput('');
 
     expect(element.classList.length).toBe(0);
     expect(wrapperComponent.passwordStrengthChangedFunc).not.toHaveBeenCalledWith(
-      jasmine.any(Number)
+      expect.any(Number)
     );
   });
 
@@ -110,11 +110,11 @@ describe('SiPasswordStrengthDirective', () => {
 
     setInput('f');
 
-    expect(element.classList.contains('bad')).toBeTrue();
+    expect(element.classList.contains('bad')).toBe(true);
 
     setInput('');
 
-    expect(element.classList.contains('bad')).toBeFalse();
+    expect(element.classList.contains('bad')).toBe(false);
     expect(wrapperComponent.passwordStrengthChangedFunc).toHaveBeenCalledWith(-4);
   });
 
@@ -123,11 +123,11 @@ describe('SiPasswordStrengthDirective', () => {
 
     setInput('f3');
 
-    expect(element.classList.contains('weak')).toBeTrue();
+    expect(element.classList.contains('weak')).toBe(true);
 
     setInput('');
 
-    expect(element.classList.contains('weak')).toBeFalse();
+    expect(element.classList.contains('weak')).toBe(false);
     expect(wrapperComponent.passwordStrengthChangedFunc).toHaveBeenCalledWith(-3);
   });
 
@@ -136,11 +136,11 @@ describe('SiPasswordStrengthDirective', () => {
 
     setInput('s3K');
 
-    expect(element.classList.contains('medium')).toBeTrue();
+    expect(element.classList.contains('medium')).toBe(true);
 
     setInput('');
 
-    expect(element.classList.contains('medium')).toBeFalse();
+    expect(element.classList.contains('medium')).toBe(false);
     expect(wrapperComponent.passwordStrengthChangedFunc).toHaveBeenCalledWith(-2);
   });
 
@@ -149,11 +149,11 @@ describe('SiPasswordStrengthDirective', () => {
 
     setInput('s3K!');
 
-    expect(element.classList.contains('good')).toBeTrue();
+    expect(element.classList.contains('good')).toBe(true);
 
     setInput('');
 
-    expect(element.classList.contains('good')).toBeFalse();
+    expect(element.classList.contains('good')).toBe(false);
     expect(wrapperComponent.passwordStrengthChangedFunc).toHaveBeenCalledWith(-1);
   });
 
@@ -162,11 +162,11 @@ describe('SiPasswordStrengthDirective', () => {
 
     setInput('s3K!TEst');
 
-    expect(element.classList.contains('strong')).toBeTrue();
+    expect(element.classList.contains('strong')).toBe(true);
 
     setInput('');
 
-    expect(element.classList.contains('strong')).toBeFalse();
+    expect(element.classList.contains('strong')).toBe(false);
     expect(wrapperComponent.passwordStrengthChangedFunc).toHaveBeenCalledWith(0);
   });
 
@@ -182,7 +182,7 @@ describe('SiPasswordStrengthDirective', () => {
     fixture.detectChanges();
 
     setInput('s3K! TEst');
-    expect(element.classList.contains('strong')).toBeTrue();
+    expect(element.classList.contains('strong')).toBe(true);
   });
 
   it('should allow setting minRequiredPolicies', () => {
@@ -191,7 +191,7 @@ describe('SiPasswordStrengthDirective', () => {
 
     // skip the uppercase
     setInput('s3K!test');
-    expect(element.classList.contains('strong')).toBeTrue();
+    expect(element.classList.contains('strong')).toBe(true);
   });
 
   it('should show the icon, toggle', () => {

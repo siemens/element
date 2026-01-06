@@ -47,11 +47,11 @@ describe('SiExplicitLegalAcknowledgeComponent', () => {
     fixture.detectChanges();
 
     const acceptButton = fixture.nativeElement.querySelector('button[type="button"].btn-primary');
-    expect(acceptButton.disabled).toBeTrue();
+    expect(acceptButton.disabled).toBe(true);
   });
 
   it('should emit back event when the back button is clicked', () => {
-    const spy = spyOn(component.instance.back, 'emit');
+    const spy = vi.spyOn(component.instance.back, 'emit');
 
     const backButton = fixture.nativeElement.querySelector('button[type="button"].btn-secondary');
     backButton.click();
@@ -61,7 +61,7 @@ describe('SiExplicitLegalAcknowledgeComponent', () => {
   });
 
   it('should emit accept event when the accept button is clicked', () => {
-    const spy = spyOn(component.instance.accept, 'emit');
+    const spy = vi.spyOn(component.instance.accept, 'emit');
 
     const acceptButton = fixture.nativeElement.querySelector('button[type="button"].btn-primary');
     acceptButton.click();

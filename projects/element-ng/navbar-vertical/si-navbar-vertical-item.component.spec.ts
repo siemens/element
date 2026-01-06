@@ -27,7 +27,7 @@ describe('SiNavbarVerticalItemComponent', () => {
 
   const mockNavbar = {
     collapsed: signal(false),
-    itemTriggered: jasmine.createSpy('itemTriggered')
+    itemTriggered: vi.fn()
   };
 
   beforeEach(async () => {

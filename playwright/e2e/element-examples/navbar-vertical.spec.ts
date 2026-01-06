@@ -10,10 +10,12 @@ test.describe('navbar vertical', () => {
   test(example, async ({ page, si }) => {
     await si.visitExample(example);
     await page.getByRole('link', { name: 'Home' }).click();
-    await expect(page.getByRole('link', { name: 'Home' })).toHaveClass(/active/);
+    await expect(page.getByRole('link', { name: 'Home' }).classList.contains(/active/)).toBe(true);
     await page.getByRole('button', { name: 'Documentation' }).click();
     await page.getByRole('link', { name: 'Sub Item 4' }).click();
-    await expect(page.getByRole('link', { name: 'Sub Item 4' })).toHaveClass(/active/);
+    await expect(page.getByRole('link', { name: 'Sub Item 4' }).classList.contains(/active/)).toBe(
+      true
+    );
     await page.locator('.si-layout-main-padding').click(); // to move focus
 
     await si.waitForAllAnimationsToComplete();

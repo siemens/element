@@ -41,7 +41,7 @@ describe('SiUnauthorizedPageComponent', () => {
 
   it('should invoke navigation on button press', () => {
     const router = TestBed.inject(Router);
-    spyOn(router, 'navigateByUrl');
+    vi.spyOn(router, 'navigateByUrl');
     fixture.componentRef.setInput('link', { title: 'Go home', link: '/home' });
     fixture.detectChanges();
 

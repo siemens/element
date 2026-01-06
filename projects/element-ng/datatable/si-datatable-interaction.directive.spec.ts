@@ -33,7 +33,7 @@ import { SI_DATATABLE_CONFIG, SiDatatableModule } from '.';
   `
 })
 class WrapperComponent {
-  selectionType = 'multi';
+  selectionType: 'single' | 'multi' | 'multiClick' | 'cell' | undefined = 'multi';
   virtualization = false;
   datatableInteractionAutoSelect = false;
   selected: any[] = [];
@@ -88,11 +88,11 @@ describe('SiDatatableInteractionDirective', () => {
   let wrapperComponent: WrapperComponent;
   let wrapperElement: HTMLElement;
 
-  beforeEach(() => jasmine.clock().install());
-  afterEach(() => jasmine.clock().uninstall());
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
 
   const refresh = async (): Promise<void> => {
-    jasmine.clock().tick(10000);
+    vi.advanceTimersByTime(10000);
     fixture.detectChanges();
     await fixture.whenStable();
   };
@@ -268,7 +268,7 @@ describe('SiDatatableInteractionDirective', () => {
 
     // Skip test when browser is not focussed to prevent failures.
     if (document.hasFocus()) {
-      expect(wrapperComponent.selected).toHaveSize(0);
+      expect(wrapperComponent.selected).toHaveLength(0);
 
       const row = getTableElement().querySelector(
         '.datatable-row-wrapper > .datatable-body-row'
@@ -293,7 +293,7 @@ describe('SiDatatableInteractionDirective', () => {
 
     // Skip test when browser is not focussed to prevent failures.
     if (document.hasFocus()) {
-      expect(wrapperComponent.selected).toHaveSize(0);
+      expect(wrapperComponent.selected).toHaveLength(0);
 
       const table = getTableElement();
 
@@ -308,7 +308,7 @@ describe('SiDatatableInteractionDirective', () => {
 
       await refresh();
 
-      expect(wrapperComponent.selected).toHaveSize(0);
+      expect(wrapperComponent.selected).toHaveLength(0);
 
       table.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
 

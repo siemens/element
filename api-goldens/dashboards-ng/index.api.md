@@ -27,7 +27,7 @@ import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { OutputEmitterRef } from '@angular/core';
 import { SiDashboardComponent } from '@siemens/element-ng/dashboard';
-import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
+import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SimpleChanges } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TemplateRef } from '@angular/core';
@@ -181,7 +181,7 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
     ngOnInit(): void;
     readonly pageTitle: _angular_core.Signal<string | undefined>;
     readonly primaryEditActions$: BehaviorSubject<(MenuItem | DashboardToolbarItem)[]>;
-    readonly searchPlaceholder: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly searchPlaceholder: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly secondaryEditActions$: BehaviorSubject<(MenuItem | DashboardToolbarItem)[]>;
     readonly showEditButtonLabel: _angular_core.InputSignal<boolean>;
     showWidgetCatalog(): void;
@@ -234,7 +234,7 @@ export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void;
     // (undocumented)
     ngOnInit(): void;
-    readonly searchPlaceholder: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly searchPlaceholder: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     widgetCatalog: Widget[];
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiWidgetCatalogComponent, "si-widget-catalog", never, { "searchPlaceholder": { "alias": "searchPlaceholder"; "required": false; "isSignal": true; }; }, { "closed": "closed"; }, never, never, true, never>;

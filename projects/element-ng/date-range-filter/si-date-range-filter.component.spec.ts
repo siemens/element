@@ -126,7 +126,7 @@ describe('SiDateRangeFilterComponent', () => {
     const to = new Date();
     const from = new Date(to.getTime() - 2 * ONE_DAY);
 
-    expect(advancedMode()).toBeTrue();
+    expect(advancedMode()).toBe(true);
     expect(rangeInputValue()).toBe(2);
     expect(rangeSelectContent()).toBe('Days');
     expect(preview()).toEqual(rangeText(from, to));
@@ -139,7 +139,7 @@ describe('SiDateRangeFilterComponent', () => {
     const from = new Date();
     const to = new Date(from.getTime() + 2 * ONE_DAY);
 
-    expect(advancedMode()).toBeTrue();
+    expect(advancedMode()).toBe(true);
     expect(rangeInputValue()).toBe(2);
     expect(rangeSelectContent()).toBe('Days');
     expect(preview()).toEqual(rangeText(from, to));
@@ -158,7 +158,7 @@ describe('SiDateRangeFilterComponent', () => {
     await fixture.whenStable();
 
     expect(preview()).toEqual(rangeText(from, to));
-    expect(advancedMode()).toBeFalse();
+    expect(advancedMode()).toBe(false);
     expect(date2string(component.range.point1 as Date)).toEqual(date2string(from));
     expect(date2string(component.range.point2 as Date)).toEqual(date2string(to));
     expect(component.range.range).toBeUndefined();
@@ -173,7 +173,7 @@ describe('SiDateRangeFilterComponent', () => {
     const from = new Date();
     const to = new Date(from.getTime() + 2 * ONE_DAY);
 
-    expect(advancedMode()).toBeTrue();
+    expect(advancedMode()).toBe(true);
     expect(preview()).toEqual(rangeText(from, to));
     expect(component.range.point1).toEqual('now');
     expect(component.range.point2).toEqual(2 * ONE_DAY);
@@ -190,7 +190,7 @@ describe('SiDateRangeFilterComponent', () => {
     const from = new Date(now.getTime() - 2 * ONE_DAY);
     const to = new Date(now.getTime() + 2 * ONE_DAY);
 
-    expect(advancedMode()).toBeTrue();
+    expect(advancedMode()).toBe(true);
     expect(preview()).toEqual(rangeText(from, to));
     expect(component.range.point1).toEqual('now');
     expect(component.range.point2).toEqual(2 * ONE_DAY);
@@ -198,7 +198,7 @@ describe('SiDateRangeFilterComponent', () => {
   });
 
   it('allows selecting two dates', async () => {
-    jasmine.clock().install();
+    vi.useFakeTimers();
     component.inputMode = true;
     await fixture.whenStable();
     toggleMode();
@@ -209,7 +209,7 @@ describe('SiDateRangeFilterComponent', () => {
 
     dateInput('point1', '05/13/2023');
     dateInput('point2', '08/14/2023');
-    jasmine.clock().tick(200);
+    vi.advanceTimersByTime(200);
     await fixture.whenStable();
 
     const from = new Date('2023-05-13');
@@ -219,7 +219,7 @@ describe('SiDateRangeFilterComponent', () => {
     expect(date2string(component.range.point1 as Date)).toEqual(date2string(from));
     expect(date2string(component.range.point2 as Date)).toEqual(date2string(to));
     expect(component.range.range).toBeUndefined();
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('allows selecting presets', async () => {

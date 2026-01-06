@@ -89,7 +89,7 @@ describe('SiSortBarComponent', () => {
     expect(getIconByIndex(1)?.classList).toContain('element-sort-down');
   });
 
-  it('should successfully trigger the sort-change event', (done: DoneFn) => {
+  it('should successfully trigger the sort-change event', async () => {
     fixture.detectChanges();
     const sortDirectionAfter = getIconByIndex(1)?.classList.contains('element-sort-up')
       ? 'desc'
@@ -97,7 +97,6 @@ describe('SiSortBarComponent', () => {
     component.sortChange.subscribe((e: HttpParams) => {
       expect(e.get('sort')).toBe('street');
       expect(e.get('order')).toBe(sortDirectionAfter);
-      done();
     });
     getItemByIndex(1)?.click();
   });

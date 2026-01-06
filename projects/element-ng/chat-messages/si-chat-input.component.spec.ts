@@ -210,7 +210,7 @@ describe('SiChatInputComponent', () => {
 
     const textarea = debugElement.query(By.css('textarea'));
     const event = new KeyboardEvent('keydown', { key: 'Enter', shiftKey: true });
-    spyOn(event, 'preventDefault');
+    vi.spyOn(event, 'preventDefault');
     textarea.nativeElement.dispatchEvent(event);
 
     expect(emittedCount).toBe(0);
@@ -232,7 +232,7 @@ describe('SiChatInputComponent', () => {
 
     const textarea = debugElement.query(By.css('textarea'));
     const event = new KeyboardEvent('keydown', { key: 'Enter', shiftKey: false });
-    spyOn(event, 'preventDefault');
+    vi.spyOn(event, 'preventDefault');
     textarea.nativeElement.dispatchEvent(event);
 
     expect(emittedCount).toBe(1);

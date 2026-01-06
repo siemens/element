@@ -40,8 +40,10 @@ describe('SiSummaryWidgetComponent', () => {
     componentRef.setInput('color', 'status-warning');
     fixture.detectChanges();
 
-    expect(element.querySelector('si-icon div')).toHaveClass('element-manual-filled');
-    expect(element.querySelector('si-icon')).toHaveClass('status-warning');
+    expect(element.querySelector('si-icon div')!.classList.contains('element-manual-filled')).toBe(
+      true
+    );
+    expect(element.querySelector('si-icon')!.classList.contains('status-warning')).toBe(true);
   });
 
   it('should display selected state', () => {
@@ -54,29 +56,29 @@ describe('SiSummaryWidgetComponent', () => {
   it('should toggle selected state on click', () => {
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.selected()).toBeFalse();
+    expect(fixture.componentInstance.selected()).toBe(false);
 
     element.querySelector('div')?.click();
-    expect(fixture.componentInstance.selected()).toBeTrue();
+    expect(fixture.componentInstance.selected()).toBe(true);
   });
 
   it('should not toggle selected state on click when disabled', () => {
     componentRef.setInput('disabled', true);
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.selected()).toBeFalse();
+    expect(fixture.componentInstance.selected()).toBe(false);
 
     element.querySelector('div')?.click();
-    expect(fixture.componentInstance.selected()).toBeFalse();
+    expect(fixture.componentInstance.selected()).toBe(false);
   });
 
   it('should not toggle selected state on click when readonly', () => {
     componentRef.setInput('readonly', true);
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.selected()).toBeFalse();
+    expect(fixture.componentInstance.selected()).toBe(false);
 
     element.querySelector('div')?.click();
-    expect(fixture.componentInstance.selected()).toBeFalse();
+    expect(fixture.componentInstance.selected()).toBe(false);
   });
 });

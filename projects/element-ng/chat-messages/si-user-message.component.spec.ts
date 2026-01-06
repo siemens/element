@@ -128,7 +128,7 @@ describe('SiUserMessageComponent', () => {
   });
 
   it('should call action with actionParam', () => {
-    const actionSpy = jasmine.createSpy('action');
+    const actionSpy = vi.fn();
     const actions: MessageAction[] = [
       {
         label: 'Edit',

@@ -155,6 +155,6 @@ describe('TreeItem and tree-helpers', () => {
     selectItemsBetween(treeRoot, treeRoot[0], treeRoot[1]);
 
     expect(treeRoot[0].selected).toBeFalsy();
-    expect(treeRoot[1].selected).toBeTrue();
+    expect(treeRoot[1].selected).toBe(true);
   });
 });

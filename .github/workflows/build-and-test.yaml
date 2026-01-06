@@ -27,23 +27,29 @@ jobs:
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0 # We need this for commit-lint
-      - uses: actions/setup-node@v6
+      - uses: oven-sh/setup-bun@v1
         with:
-          node-version: lts/krypton
-          cache: 'npm'
-      - run: npm config set //code.siemens.com/api/v4/packages/npm/:_authToken $SIEMENS_NPM_TOKEN
+          bun-version: '1.3.5'
+      - run: |
+          rm .npmrc
+          echo '[install.scopes]' >> bunfig.toml
+          echo '"@simpl" = { token = "$SIEMENS_NPM_TOKEN", url = "https://code.siemens.com/api/v4/packages/npm/" }' >> bunfig.toml
+      - run: bun install --prefer-offline --no-audit --include=optional
         env:
           SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
-      - run: npm ci --prefer-offline --no-audit --include=optional
-      - run: npm run lint:commit
-      - run: npm run build:all
-      - run: npm run prepare-brand
-      - run: npm run build:all:update-translatable-keys # Output is needed in dist for providing default translations
+      - uses: actions/cache/save@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun
+      - run: bun run --bun lint:commit
+      - run: bun run --bun build:all:bun
+      - run: bun run --bun prepare-brand
+      - run: bun run --bun build:all:update-translatable-keys:bun # Output is needed in dist for providing default translations
       - run: git diff --exit-code "projects/**/*-translatable-keys.interface.ts"
-      - run: npm run build:examples -- --define="maptilerKey='$MAPTILER_KEY'" --define="maptilerUrl='$MAPTILER_URL'"
-      - run: npm run dashboards-demo:build:demo -- --progress=false
-      - run: npm run dashboards-demo:build:webcomponents -- --progress=false
-      - run: npm run dashboards-demo:build:mfe -- --progress=false
+      - run: bun run --bun build:examples -- --define="maptilerKey='$MAPTILER_KEY'" --define="maptilerUrl='$MAPTILER_URL'"
+      - run: bun run --bun dashboards-demo:build:demo -- --progress=false
+      - run: bun run --bun dashboards-demo:build:webcomponents -- --progress=false
+      - run: bun run --bun dashboards-demo:build:mfe -- --progress=false
       - uses: actions/upload-artifact@v6
         with:
           name: dist
@@ -60,25 +66,34 @@ jobs:
       - build
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: oven-sh/setup-bun@v1
         with:
-          node-version: lts/krypton
-          cache: 'npm'
+          bun-version: '1.3.5'
+      - run: |
+          rm .npmrc
+          echo '[install.scopes]' >> bunfig.toml
+          echo '"@simpl" = { token = "$SIEMENS_NPM_TOKEN", url = "https://code.siemens.com/api/v4/packages/npm/" }' >> bunfig.toml
       - uses: actions/download-artifact@v7
         with:
           name: dist
           path: dist
-      - run: npm ci --prefer-offline --no-audit
-      - run: npm run lint:format
-      - run: npm run lint:scss
-      - run: npm run lint:ng
-      - run: npm run lint:playwright:eslint
-      - run: npm run translate:test -- --watch=false --progress=false --code-coverage
-      - run: npm run lib:test -- --watch=false --progress=false --code-coverage
-      - run: npm run schematics:test
-      - run: npm run charts:test -- --watch=false --progress=false
-      - run: npm run dashboards:test -- --watch=false --progress=false
-      - run: npm run maps:test -- --watch=false --progress=false
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun
+      - run: bun install --prefer-offline --no-audit --include=optional
+        env:
+          SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
+      - run: bun run --bun lint:format
+      - run: bun run --bun lint:scss
+      - run: bun run --bun lint:ng
+      - run: bun run --bun lint:playwright:eslint
+      - run: bun run --bun translate:test -- --watch=false --progress=false --coverage
+      - run: bun run --bun lib:test -- --watch=false --progress=false --coverage
+      - run: bun run --bun schematics:test:bun
+      - run: bun run --bun charts:test -- --watch=false --progress=false
+      - run: bun run --bun dashboards:test -- --watch=false --progress=false
+      - run: bun run --bun maps:test -- --watch=false --progress=false
       - uses: actions/upload-artifact@v6
         with:
           name: coverage-reports
@@ -142,21 +157,27 @@ jobs:
       - build
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: oven-sh/setup-bun@v1
         with:
-          node-version: lts/krypton
-          cache: 'npm'
+          bun-version: '1.3.5'
       - uses: actions/download-artifact@v7
         with:
           name: dist
           path: dist
-      - run: npm config set //code.siemens.com/api/v4/packages/npm/:_authToken $SIEMENS_NPM_TOKEN
+      - run: |
+          rm .npmrc
+          echo '[install.scopes]' >> bunfig.toml
+          echo '"@simpl" = { token = "$SIEMENS_NPM_TOKEN", url = "https://code.siemens.com/api/v4/packages/npm/" }' >> bunfig.toml
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun
+      - run: bun install --prefer-offline --no-audit --include=optional
         env:
           SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
-      - run: npm ci --prefer-offline --no-audit --include=optional
-      - run: npm run prepare-brand
-      - run: npm run build:examples:aot -- --define="maptilerKey='$MAPTILER_KEY'" --define="maptilerUrl='$MAPTILER_URL'"
-      - run: npm run api-goldens:test
+      - run: bun run --bun prepare-brand
+      - run: bun run --bun build:examples:aot -- --define="maptilerKey='$MAPTILER_KEY'" --define="maptilerUrl='$MAPTILER_URL'"
+      - run: bun run --bun api-goldens:test:bun
 
   e2e:
     runs-on: ubuntu-24.04
@@ -179,17 +200,23 @@ jobs:
       - uses: actions/checkout@v6
         with:
           lfs: true
-      - uses: actions/setup-node@v6
+      - uses: oven-sh/setup-bun@v1
         with:
-          node-version: lts/krypton
-          cache: 'npm'
+          bun-version: '1.3.5'
       - uses: actions/download-artifact@v7
         with:
           name: dist
           path: dist
-      # Not injecting the token will exclude the brand packages, but this is fine for e2e tests.
-      - run: npm ci --prefer-offline --no-audit --include=optional
-      - run: npx playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+      - run: |
+          rm .npmrc
+          echo '[install.scopes]' >> bunfig.toml
+          echo '"@simpl" = { token = "$SIEMENS_NPM_TOKEN", url = "https://code.siemens.com/api/v4/packages/npm/" }' >> bunfig.toml
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun
+      - run: bun install --prefer-offline --no-audit --include=optional
+      - run: PLAYWRIGHT_isBun=true PW_DISABLE_TS_ESM=1 bunx --bun playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
       - uses: actions/upload-artifact@v6
         if: ${{ !cancelled() }}
         with:
@@ -203,15 +230,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
+      - uses: oven-sh/setup-bun@v1
         with:
-          node-version: lts/krypton
+          bun-version: '1.3.5'
       - uses: actions/download-artifact@v7
         with:
           path: all-blob-reports
           pattern: blob-report-*
           merge-multiple: true
-      - run: npx playwright merge-reports --reporter html ./all-blob-reports
+      - run: PLAYWRIGHT_isBun=true PW_DISABLE_TS_ESM=1 bunx --bun playwright merge-reports --reporter html ./all-blob-reports
       - uses: actions/upload-artifact@v6
         with:
           name: html-report--attempt-${{ github.run_attempt }}
@@ -239,24 +266,30 @@ jobs:
         with:
           name: coverage-reports
           path: dist/coverage
-      - uses: actions/setup-node@v6
+      - uses: oven-sh/setup-bun@v1
         with:
-          node-version: lts/krypton
-          cache: 'npm'
-      - run: npm config set //code.siemens.com/api/v4/packages/npm/:_authToken $SIEMENS_NPM_TOKEN
+          bun-version: '1.3.5'
+      - run: |
+          rm .npmrc
+          echo '[install.scopes]' >> bunfig.toml
+          echo '"@simpl" = { token = "$SIEMENS_NPM_TOKEN", url = "https://code.siemens.com/api/v4/packages/npm/" }' >> bunfig.toml
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun
+      - run: bun install --prefer-offline --no-audit --include=optional
         env:
           SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
-      - run: npm ci --prefer-offline --no-audit --include=optional
       - run: cp dist/element-examples/favicon.png docs/_src/favicon.png
       - run: uv sync
         env:
           UV_INDEX_CODE_DOCS_THEME_USERNAME: ${{ secrets.SIEMENS_NPM_USER }}
           UV_INDEX_CODE_DOCS_THEME_PASSWORD: ${{ secrets.SIEMENS_NPM_TOKEN }}
-      - run: npm run docs:build:generate
+      - run: bun run --bun docs:build:generate
         env:
           EXAMPLES_BASE: /element-examples/
         if: ${{ github.ref == 'refs/heads/main' }}
-      - run: npm run docs:build:api
+      - run: bun run --bun docs:build:api
         env:
           EXAMPLES_BASE: /element-examples/
         if: ${{ github.ref != 'refs/heads/main' }}

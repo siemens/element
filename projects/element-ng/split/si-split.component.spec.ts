@@ -420,9 +420,9 @@ describe('SiSplitComponent', () => {
             await TestBed.inject(SI_UI_STATE_SERVICE).load<Record<string, any>>('split-test');
 
           expect(uiStateMock).toBeDefined();
-          expect(uiStateMock!.one.expanded).toBeFalse();
-          expect(uiStateMock!.two.expanded).toBeTrue();
-          expect(uiStateMock!.three.expanded).toBeTrue();
+          expect(uiStateMock!.one.expanded).toBe(false);
+          expect(uiStateMock!.two.expanded).toBe(true);
+          expect(uiStateMock!.three.expanded).toBe(true);
         });
       });
 

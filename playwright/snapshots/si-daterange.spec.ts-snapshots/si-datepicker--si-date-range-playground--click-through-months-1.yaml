@@ -161,8 +161,15 @@
 - switch "Consider time" [checked]
 - text: Consider time from
 - group:
-  - textbox "Hours"
-  - textbox "Minutes"
+  - textbox "Hours":
+    - /placeholder: hh
+    - text: ""
+  - textbox "Minutes":
+    - /placeholder: mm
+    - text: ""
+  - combobox "Period":
+    - option "AM" [selected]
+    - option "PM"
 - button "Previous"
 - button "February"
 - button /\d+/
@@ -278,5 +285,12 @@
 - button "Today"
 - text: to
 - group:
-  - textbox "Hours"
-  - textbox "Minutes"
+  - textbox "Hours":
+    - /placeholder: hh
+    - text: ""
+  - textbox "Minutes":
+    - /placeholder: mm
+    - text: ""
+  - combobox "Period":
+    - option "AM" [selected]
+    - option "PM"

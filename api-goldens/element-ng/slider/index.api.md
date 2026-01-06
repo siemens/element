@@ -6,25 +6,25 @@
 
 import * as _angular_core from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
-import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
+import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SiFormItemControl } from '@siemens/element-ng/form';
 
 // @public (undocumented)
 export class SiSliderComponent implements ControlValueAccessor, SiFormItemControl {
-    readonly decrementLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly decrementLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     // (undocumented)
     readonly disabledInput: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly errormessageId: _angular_core.InputSignal<string>;
     // (undocumented)
     readonly id: _angular_core.InputSignal<string>;
-    readonly incrementLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly incrementLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     // (undocumented)
     readonly labelledby: _angular_core.InputSignal<string>;
     readonly max: _angular_core.InputSignalWithTransform<number, unknown>;
     readonly maxLabel: _angular_core.InputSignal<string>;
     readonly min: _angular_core.InputSignalWithTransform<number, unknown>;
     readonly minLabel: _angular_core.InputSignal<string>;
-    readonly sliderLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly sliderLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly step: _angular_core.InputSignalWithTransform<number, unknown>;
     readonly thumbIcon: _angular_core.InputSignal<string | undefined>;
     readonly value: _angular_core.ModelSignal<number | undefined>;

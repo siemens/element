@@ -50,10 +50,9 @@ jobs:
           ref: ${{ steps.check.outputs.target-ref }}
           lfs: true
 
-      - uses: actions/setup-node@v6
+      - uses: oven-sh/setup-bun@v1
         with:
-          node-version: lts/krypton
-          cache: 'npm'
+          bun-version: '1.3.5'
 
       - name: Get latest workflow run
         id: get-workflow
@@ -130,22 +129,19 @@ jobs:
           path: dist
           run-id: ${{ steps.get-workflow.outputs.workflow-run-id }}
           github-token: ${{ github.token }}
-      # Not injecting the token will exclude the brand packages, but this is fine for e2e tests.
-      - run: npm ci --prefer-offline --no-audit --include=optional
-
+      - run: |
+          rm .npmrc
+          echo '[install.scopes]' >> bunfig.toml
+          echo '"@simpl" = { token = "$SIEMENS_NPM_TOKEN", url = "https://code.siemens.com/api/v4/packages/npm/" }' >> bunfig.toml
+      - uses: actions/cache/restore@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun
+      - run: bun install --prefer-offline --no-audit --include=optional
       - name: Update VRTs
         run: |
-          # Remove existing snapshots to ensure we generate fresh ones
-          if [ -d "playwright/snapshots" ]; then
-            echo "Removing existing snapshots to ensure fresh generation..."
-            rm -rf playwright/snapshots
-          fi
-
-          # Create snapshots directory
-          mkdir -p playwright/snapshots
-
           echo "Starting fresh snapshot generation..."
-          npx playwright test --update-snapshots=all
+          PLAYWRIGHT_isBun=true PW_DISABLE_TS_ESM=1 bunx --bun playwright test --update-snapshots=all
 
           # Verify that snapshots were generated
           if [ ! -d "playwright/snapshots" ] || [ -z "$(ls -A playwright/snapshots 2>/dev/null)" ]; then

@@ -27,7 +27,7 @@ describe('SiIconComponent', () => {
     component.setInput('icon', 'element-person');
     fixture.detectChanges();
     const icon = fixture.nativeElement.querySelector('.element-person');
-    const aria = fixture.nativeElement.querySelector('span').getAttribute('aria-label');
+    const aria = fixture.nativeElement.querySelector('span')!.getAttribute('aria-label');
     expect(icon.classList).toContain('element-person');
     expect(aria).toBe('person');
   });
@@ -43,7 +43,7 @@ describe('SiIconComponent', () => {
   it('should set alt text', () => {
     component.setInput('alt', 'alternative text');
     fixture.detectChanges();
-    const aria = fixture.nativeElement.querySelector('span').getAttribute('aria-label');
+    const aria = fixture.nativeElement.querySelector('span')!.getAttribute('aria-label');
     expect(aria).toContain('alternative text');
   });
 

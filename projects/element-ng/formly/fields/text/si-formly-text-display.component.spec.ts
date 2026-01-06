@@ -12,6 +12,7 @@ import {
   provideMockTranslateServiceBuilder,
   SiTranslateService
 } from '@siemens/element-ng/translate';
+import type { Mock } from 'vitest';
 
 import { SiFormlyTextDisplayComponent } from './si-formly-text-display.component';
 
@@ -30,11 +31,11 @@ class FormlyTestComponent {
 
 describe('formly text-display-type', () => {
   let fixture: ComponentFixture<FormlyTestComponent>;
-  let translateSpy: jasmine.Spy<(value: any, ...args: any[]) => any>;
+  let translateSpy: Mock;
   let component: FormlyTestComponent;
 
   beforeEach(() => {
-    translateSpy = jasmine.createSpy().and.callFake((value: any) => value);
+    translateSpy = vi.fn().mockImplementation((value: any) => value);
     TestBed.overrideComponent(SiFormlyTextDisplayComponent, {
       add: {
         providers: [

@@ -9,6 +9,7 @@ import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiLinkActionService } from '@siemens/element-ng/link';
+import type { MockedObject } from 'vitest';
 
 import { SiMenuModule } from './si-menu.module';
 import { SiMenuItemHarness } from './testing/si-menu.harness';
@@ -70,7 +71,12 @@ class TestLegacyObjectComponent {
 }
 
 // preparing for <si-context-menu-object> with new item type, which should have the same test scenario
-const withObjectType = <ItemType extends MenuItem, ComponentType extends { items: ItemType[] }>(
+const withObjectType = <
+  ItemType extends MenuItem,
+  ComponentType extends {
+    items: ItemType[];
+  }
+>(
   siContextMenuType: 'legacy-object',
   componentType: new (...args: any) => ComponentType
 ): void => {
@@ -86,7 +92,12 @@ const withObjectType = <ItemType extends MenuItem, ComponentType extends { items
     beforeEach(() => {
       TestBed.configureTestingModule({
         providers: [
-          { provide: SiLinkActionService, useValue: jasmine.createSpyObj(['emit']) },
+          {
+            provide: SiLinkActionService,
+            useValue: {
+              emit: vi.fn()
+            }
+          },
           provideZonelessChangeDetection()
         ]
       });
@@ -97,19 +108,21 @@ const withObjectType = <ItemType extends MenuItem, ComponentType extends { items
 
     it('should toggle checkbox', async () => {
       const checkboxIndex = 2;
-      const spy = spyOn(
-        fixture.componentInstance.items[checkboxIndex] as { action: (action?: any) => void },
+      const spy = vi.spyOn(
+        fixture.componentInstance.items[checkboxIndex] as {
+          action: (action?: any) => void;
+        },
         'action'
-      ).and.callThrough();
+      );
 
       await toggle();
       const checkMenuItem = await rootLoader.getHarness(SiMenuItemHarness.with({ text: 'check' }));
-      expect(await checkMenuItem.isChecked()).toBeTrue();
+      expect(await checkMenuItem.isChecked()).toBe(true);
       await checkMenuItem.click();
       await toggle();
       expect(
         await (await rootLoader.getHarness(SiMenuItemHarness.with({ text: 'check' }))).isChecked()
-      ).toBeFalse();
+      ).toBe(false);
       expect(spy).toHaveBeenCalledWith('action!');
     });
 
@@ -118,20 +131,20 @@ const withObjectType = <ItemType extends MenuItem, ComponentType extends { items
       let radioItems = await rootLoader.getAllHarnesses(
         SiMenuItemHarness.with({ text: /radio\d+/ })
       );
-      expect(await radioItems[0].isChecked()).toBeFalse();
-      expect(await radioItems[1].isChecked()).toBeTrue();
+      expect(await radioItems[0].isChecked()).toBe(false);
+      expect(await radioItems[1].isChecked()).toBe(true);
 
       await radioItems[0].click();
       await toggle();
       radioItems = await rootLoader.getAllHarnesses(SiMenuItemHarness.with({ text: /radio\d+/ }));
-      expect(await radioItems[0].isChecked()).toBeTrue();
-      expect(await radioItems[1].isChecked()).toBeFalse();
+      expect(await radioItems[0].isChecked()).toBe(true);
+      expect(await radioItems[1].isChecked()).toBe(false);
     });
 
     it('should have submenu', async () => {
       await toggle();
       const menuItem = await rootLoader.getHarness(SiMenuItemHarness.with({ text: 'children' }));
-      expect(await menuItem.hasSubmenu()).toBeTrue();
+      expect(await menuItem.hasSubmenu()).toBe(true);
       await menuItem.hover();
 
       const menu = await menuItem.getSubmenu();
@@ -141,7 +154,7 @@ const withObjectType = <ItemType extends MenuItem, ComponentType extends { items
     it('should have icon', async () => {
       await toggle();
       const menuItem = await rootLoader.getHarness(SiMenuItemHarness.with({ text: 'radio1' }));
-      expect(await menuItem.hasIcon('element-test-icon')).toBeTrue();
+      expect(await menuItem.hasIcon('element-test-icon')).toBe(true);
     });
 
     it('should have badge', async () => {
@@ -153,25 +166,27 @@ const withObjectType = <ItemType extends MenuItem, ComponentType extends { items
     it('should be disabled', async () => {
       await toggle();
       const menuItem = await rootLoader.getHarness(SiMenuItemHarness.with({ text: 'first item' }));
-      expect(await menuItem.isDisabled()).toBeTrue();
+      expect(await menuItem.isDisabled()).toBe(true);
     });
 
     it('should update on object mutation', async () => {
       const disabledIndex = 1;
       await toggle();
       const menuItem = await rootLoader.getHarness(SiMenuItemHarness.with({ text: 'first item' }));
-      expect(await menuItem.isDisabled()).toBeTrue();
+      expect(await menuItem.isDisabled()).toBe(true);
       if (!fixture.componentInstance.items[disabledIndex].type) {
         fixture.componentInstance.items[disabledIndex].disabled = false;
         fixture.changeDetectorRef.markForCheck();
       }
-      expect(await menuItem.isDisabled()).toBeFalse();
+      expect(await menuItem.isDisabled()).toBe(false);
     });
 
     it('should trigger an action', async () => {
       const actionIndex = 6;
-      const spy = spyOn(
-        fixture.componentInstance.items[actionIndex] as { action: (action?: any) => void },
+      const spy = vi.spyOn(
+        fixture.componentInstance.items[actionIndex] as {
+          action: (action?: any) => void;
+        },
         'action'
       );
       await toggle();
@@ -184,7 +199,7 @@ const withObjectType = <ItemType extends MenuItem, ComponentType extends { items
       const actionIndex = 7;
       const actionService = TestBed.inject(
         SiLinkActionService
-      ) as jasmine.SpyObj<SiLinkActionService>;
+      ) as MockedObject<SiLinkActionService>;
 
       await toggle();
       const menuItem = await rootLoader.getHarness(

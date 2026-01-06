@@ -8,16 +8,18 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
 import { SiTranslateService } from '@siemens/element-ng/translate';
 import { provideMockTranslateServiceBuilder } from '@siemens/element-translate-ng/translate';
 import { of } from 'rxjs';
+import type { MockedObject } from 'vitest';
 
 import { SiFormlyTranslateExtension } from './si-formly-translate.extension';
 
 describe('Formly translations', () => {
   let extension: SiFormlyTranslateExtension;
-  let mockTranslationService: jasmine.SpyObj<SiTranslateService>;
+  let mockTranslationService: MockedObject<SiTranslateService>;
 
   beforeEach(() => {
-    mockTranslationService = jasmine.createSpyObj<SiTranslateService>(['translateAsync']);
-    mockTranslationService.translateAsync.and.returnValue(of('translated'));
+    mockTranslationService = {
+      translateAsync: vi.fn().mockReturnValue(of('translated'))
+    } as any;
     TestBed.configureTestingModule({
       providers: [
         provideMockTranslateServiceBuilder(() => mockTranslationService),
@@ -59,8 +61,8 @@ describe('Formly translations', () => {
       }
     };
     extension.prePopulate(cfg);
-    expect(mockTranslationService.translateAsync.calls.argsFor(0)).toEqual(['foo']);
-    expect(mockTranslationService.translateAsync.calls.argsFor(1)).toEqual(['bar']);
+    expect(vi.mocked(mockTranslationService.translateAsync).mock.calls[0]).toEqual(['foo']);
+    expect(vi.mocked(mockTranslationService.translateAsync).mock.calls[1]).toEqual(['bar']);
 
     expect(cfg.expressions).toBeTruthy();
     expect(cfg.expressions?.['props.label']).toBeTruthy();
@@ -76,7 +78,7 @@ describe('Formly translations', () => {
       }
     };
     extension.prePopulate(cfg);
-    expect(cfg.props?.['_translated']).toBeTrue(); //eslint-disable-line @typescript-eslint/dot-notation
+    expect(cfg.props?.['_translated']).toBe(true); //eslint-disable-line @typescript-eslint/dot-notation
   });
 
   it('should translate a label', () => {
@@ -127,10 +129,10 @@ describe('Formly translations', () => {
       }
     };
     extension.prePopulate(cfg);
-    expect(mockTranslationService.translateAsync.calls.argsFor(0)).toEqual(['l1']);
-    expect(mockTranslationService.translateAsync.calls.argsFor(1)).toEqual(['l2']);
-    expect(mockTranslationService.translateAsync.calls.argsFor(2)).toEqual(['l3']);
-    expect(mockTranslationService.translateAsync.calls.argsFor(3)).toEqual(['l4']);
+    expect(vi.mocked(mockTranslationService.translateAsync).mock.calls[0]).toEqual(['l1']);
+    expect(vi.mocked(mockTranslationService.translateAsync).mock.calls[1]).toEqual(['l2']);
+    expect(vi.mocked(mockTranslationService.translateAsync).mock.calls[2]).toEqual(['l3']);
+    expect(vi.mocked(mockTranslationService.translateAsync).mock.calls[3]).toEqual(['l4']);
 
     expect(cfg.expressions?.['props.options.0.label']).toBeTruthy();
     expect(cfg.expressions?.['props.options.1.label']).toBeTruthy();

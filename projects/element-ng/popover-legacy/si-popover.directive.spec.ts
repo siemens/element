@@ -38,13 +38,13 @@ describe('SiPopoverDirective', () => {
   it('should open on click', async () => {
     fixture.detectChanges();
 
-    fixture.nativeElement.querySelector('button').click();
+    fixture.nativeElement.querySelector('button')!.click();
     await fixture.whenStable();
 
     expect(document.querySelector('.popover')).toBeTruthy();
     expect(document.querySelector('.popover')?.innerHTML).toContain('test popover content');
 
-    fixture.nativeElement.querySelector('button').click();
+    fixture.nativeElement.querySelector('button')!.click();
     await fixture.whenStable();
 
     expect(document.querySelector('.popover')).toBeFalsy();
@@ -70,7 +70,7 @@ describe('SiPopoverDirective', () => {
   });
 
   it('should not emit hidden event if popover overlay is closed', () => {
-    const hiddenSpy = spyOn(wrapperComponent.popoverOverlay()!.hidden, 'emit').and.callThrough();
+    const hiddenSpy = vi.spyOn(wrapperComponent.popoverOverlay()!.hidden, 'emit');
     wrapperComponent.popoverOverlay()?.hide();
     expect(hiddenSpy).not.toHaveBeenCalled();
   });

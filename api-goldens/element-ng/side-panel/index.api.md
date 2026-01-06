@@ -17,7 +17,7 @@ import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { Portal } from '@angular/cdk/portal';
-import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
+import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SimpleChanges } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
@@ -70,7 +70,7 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
     // (undocumented)
     ngOnInit(): void;
     readonly size: _angular_core.InputSignal<SidePanelSize>;
-    readonly toggleItemLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly toggleItemLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     toggleSidePanel(): void;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSidePanelComponent, "si-side-panel", never, { "collapsible": { "alias": "collapsible"; "required": false; "isSignal": true; }; "collapsed": { "alias": "collapsed"; "required": false; "isSignal": true; }; "mode": { "alias": "mode"; "required": false; "isSignal": true; }; "size": { "alias": "size"; "required": false; "isSignal": true; }; "toggleItemLabel": { "alias": "toggleItemLabel"; "required": false; "isSignal": true; }; "breakpoints": { "alias": "breakpoints"; "required": false; "isSignal": true; }; "enableMobile": { "alias": "enableMobile"; "required": false; "isSignal": true; }; "disableBackdrop": { "alias": "disableBackdrop"; "required": false; "isSignal": true; }; }, { "collapsed": "collapsedChange"; "closed": "closed"; "contentResize": "contentResize"; }, never, ["si-side-panel-content, element-side-panel-content", "*"], true, never>;

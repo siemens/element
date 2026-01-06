@@ -71,13 +71,13 @@ describe('SiInlineNotificationComponent', () => {
     fixture.detectChanges();
 
     expect(element.querySelector<HTMLElement>('.alert strong')!.innerText).toBe(
-      'translated=>MSG.HEADING-{"param":"something"}:'
+      'translated=>MSG.HEADING-{"param":"something"}: '
     );
     expect(element.querySelector<HTMLElement>('div > span:not(.icon)')!.innerText).toBe(
       'translated=>MSG.MESSAGE-{"param":"something"}'
     );
     expect(element.querySelector<HTMLElement>('a')!.innerText).toBe(
-      'translated=>MSG.ACTION-{"param":"something"}'
+      ' translated=>MSG.ACTION-{"param":"something"} '
     );
     expect(element.querySelector('.alert.alert-danger')!.innerHTML).toBeDefined();
   });

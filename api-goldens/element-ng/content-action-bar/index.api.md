@@ -14,7 +14,7 @@ import { MenuItemGroup } from '@siemens/element-ng/menu';
 import { MenuItemLink } from '@siemens/element-ng/menu';
 import { MenuItemRadio } from '@siemens/element-ng/menu';
 import { MenuItemRouterLink } from '@siemens/element-ng/menu';
-import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
+import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
 export type ContentActionBarMainItem = (MenuItemAction | MenuItemCheckbox | MenuItemLink | MenuItemRouterLink | MenuItemGroup) & {
@@ -30,7 +30,7 @@ export class SiContentActionBarComponent implements AfterViewInit {
     readonly preventIconsInDropdownMenus: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly primaryActions: _angular_core.InputSignal<readonly (MenuItem | ContentActionBarMainItem)[] | undefined>;
     readonly secondaryActions: _angular_core.InputSignal<readonly (MenuItem | MenuItem_2)[] | undefined>;
-    readonly toggleItemLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly toggleItemLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly viewType: _angular_core.InputSignal<ViewType>;
     // (undocumented)
     static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiContentActionBarComponent, "si-content-action-bar", never, { "primaryActions": { "alias": "primaryActions"; "required": false; "isSignal": true; }; "secondaryActions": { "alias": "secondaryActions"; "required": false; "isSignal": true; }; "actionParam": { "alias": "actionParam"; "required": false; "isSignal": true; }; "viewType": { "alias": "viewType"; "required": false; "isSignal": true; }; "toggleItemLabel": { "alias": "toggleItemLabel"; "required": false; "isSignal": true; }; "preventIconsInDropdownMenus": { "alias": "preventIconsInDropdownMenus"; "required": false; "isSignal": true; }; "disabled": { "alias": "disabled"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;

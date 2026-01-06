@@ -35,21 +35,21 @@ describe('SiEditDiscardDialogComponent', () => {
 
   it('should emit result on save', () => {
     expect(component).toBeTruthy();
-    spyOn(modalRef, 'hide');
+    vi.spyOn(modalRef, 'hide');
     element.querySelector<HTMLElement>('.btn-primary')?.click();
     expect(modalRef.hide).toHaveBeenCalledWith('save');
   });
 
   it('should emit result on discard', () => {
     expect(component).toBeTruthy();
-    spyOn(modalRef, 'hide');
+    vi.spyOn(modalRef, 'hide');
     element.querySelector<HTMLElement>('.btn-danger')?.click();
     expect(modalRef.hide).toHaveBeenCalledWith('discard');
   });
 
   it('should emit result on cancel', () => {
     expect(component).toBeTruthy();
-    spyOn(modalRef, 'hide');
+    vi.spyOn(modalRef, 'hide');
     element.querySelector<HTMLElement>('.btn-secondary')?.click();
     expect(modalRef.hide).toHaveBeenCalledWith('cancel');
   });

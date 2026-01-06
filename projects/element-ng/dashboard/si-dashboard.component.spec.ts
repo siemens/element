@@ -68,8 +68,10 @@ describe('SiDashboardComponent', () => {
   const frameResizeObserver = new Subject<ElementDimensions>();
 
   beforeEach(async () => {
-    const resizeSpy = jasmine.createSpyObj('ResizeObserverService', ['observe']);
-    resizeSpy.observe.and.callFake((e: Element, t: number, i: boolean, im?: boolean) => {
+    const resizeSpy = {
+      observe: vi.fn().mockName('ResizeObserverService.observe')
+    };
+    resizeSpy.observe.mockImplementation((e: Element, t: number, i: boolean, im?: boolean) => {
       if (e === element.querySelector('dashboard')) {
         return dashboardResizeObserver;
       }
@@ -104,12 +106,12 @@ describe('SiDashboardComponent', () => {
 
     it('should show expand menu', () => {
       component.cardComponents().forEach(c => {
-        expect(c.enableExpandInteractionComputed()).toBeTrue();
+        expect(c.enableExpandInteractionComputed()).toBe(true);
       });
     });
 
     it('should register on cards and call dashboard expand when card expand is invoked', () => {
-      const expandSpy = spyOn(component.dashboard(), 'expand').and.callThrough();
+      const expandSpy = vi.spyOn(component.dashboard(), 'expand');
       component.cardComponents().forEach(c => {
         c.expand();
         expect(expandSpy).toHaveBeenCalledWith(c);
@@ -117,19 +119,19 @@ describe('SiDashboardComponent', () => {
     });
 
     it('should trigger dashboard restoreDashboard when card restore is invoked', () => {
-      const expandSpy = spyOn<any>(component.dashboard(), 'restoreDashboard').and.callThrough();
+      const expandSpy = vi.spyOn(component.dashboard() as any, 'restoreDashboard');
 
       component.cardComponents().at(-1)!.restore();
       expect(expandSpy).toHaveBeenCalled();
-      expect(component.cardComponents().at(-1)!.hide).toBeFalse();
+      expect(component.cardComponents().at(-1)!.hide).toBe(false);
     });
   });
 
   it('resize should trigger setDashboardFrameEndPadding on resize', () => {
-    const setPaddingSpy = spyOn<SiDashboardComponent, any>(
+    const setPaddingSpy = vi.spyOn<SiDashboardComponent, any>(
       component.dashboard(),
       'setDashboardFrameEndPadding'
-    ).and.callThrough();
+    );
     dashboardResizeObserver.next({ width: 100, height: 100 });
     frameResizeObserver.next({ width: 104, height: 104 });
 
@@ -139,7 +141,7 @@ describe('SiDashboardComponent', () => {
   it('#expand() shall expand a card', () => {
     let expandDiv = fixture.debugElement.queryAll(By.css('div.position-relative'))[0];
     expect(expandDiv).toBeDefined();
-    expect(expandDiv.classes['d-none']).toBeTrue();
+    expect(expandDiv.classes['d-none']).toBe(true);
 
     const card = component.cardComponents().at(-1)!;
     expect(card).toBeDefined();

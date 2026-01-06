@@ -117,7 +117,9 @@ describe('SiPillsInputComponent', () => {
       componentElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'arrowLeft' }));
       fixture.detectChanges();
       await fixture.whenStable();
-      expect(componentElement.querySelectorAll('si-input-pill')[1]).toHaveClass('active');
+      expect(
+        componentElement.querySelectorAll('si-input-pill')[1].classList.contains('active')
+      ).toBe(true);
 
       componentElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'backspace' }));
       fixture.detectChanges();
@@ -156,16 +158,16 @@ describe('SiPillsInputComponent', () => {
     });
 
     it('should update on blur', async () => {
-      jasmine.clock().install();
+      vi.useFakeTimers();
       csvInputElement.value = 'a,b';
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      jasmine.clock().tick(100);
+      vi.advanceTimersByTime(100);
       csvInputElement.dispatchEvent(new InputEvent('input'));
       csvInputElement.dispatchEvent(new FocusEvent('blur'));
-      jasmine.clock().tick(500);
+      vi.advanceTimersByTime(500);
       await fixture.whenStable();
-      jasmine.clock().uninstall();
+      vi.useRealTimers();
       expect(component.csvValue).toEqual(['a', 'b']);
     });
   });

@@ -54,12 +54,12 @@ describe('SiAutocompleteDirective', () => {
   });
 
   beforeEach(() => {
-    jasmine.clock().install();
-    jasmine.clock().mockDate();
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date());
   });
 
   afterEach(() => {
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should be navigable', async () => {
@@ -112,8 +112,8 @@ describe('SiAutocompleteDirective', () => {
     testComponent.showList = true;
     testComponent.hasValues = false;
     fixture.detectChanges();
-    const spy = spyOn(testComponent, 'submitted');
-    const spyError = spyOn(ErrorHandler.prototype, 'handleError').and.callThrough();
+    const spy = vi.spyOn(testComponent, 'submitted');
+    const spyError = vi.spyOn(ErrorHandler.prototype, 'handleError');
 
     await fixture.whenStable();
     const input = fixture.debugElement.query(By.css('input'));
@@ -137,19 +137,19 @@ describe('SiAutocompleteDirective', () => {
       fixture.debugElement
         .queryAll(By.directive(SiAutocompleteOptionDirective))
         .filter(option => option.classes.active)
-    ).toHaveSize(0);
+    ).toHaveLength(0);
     testComponent.defaultIndex = 0;
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
     await fixture.whenStable();
 
-    jasmine.clock().tick(0);
+    vi.advanceTimersByTime(0);
     await fixture.whenStable();
     expect(
       fixture.debugElement
         .queryAll(By.directive(SiAutocompleteOptionDirective))
         .filter(option => option.classes.active)
-    ).toHaveSize(1);
+    ).toHaveLength(1);
     testComponent.defaultIndex = 1;
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();

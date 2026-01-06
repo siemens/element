@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-/* eslint-disable @angular-eslint/no-conflicting-lifecycle */
 import { NgClass, NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
