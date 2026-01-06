@@ -174,13 +174,6 @@ export interface WidgetConfig {
   isNotRemovable?: boolean;
   immutable?: boolean;
   /**
-   * Widget instance editor components can use this property to indicate an invalid configuration.
-   * True if the config is invalid. False, undefined or null indicate a valid configuration.
-   *
-   * @deprecated Use the statusChanges emitter to notify about configuration status changes.
-   */
-  invalid?: boolean;
-  /**
    * Optional configuration for an image to be displayed on the widget instance.
    */
   image?: WidgetImage;

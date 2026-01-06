@@ -325,8 +325,6 @@ export interface WidgetConfig {
     image?: WidgetImage;
     // (undocumented)
     immutable?: boolean;
-    // @deprecated
-    invalid?: boolean;
     // (undocumented)
     isNotRemovable?: boolean;
     minHeight?: number;

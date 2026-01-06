@@ -2,9 +2,9 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { WidgetConfig, WidgetInstanceEditor } from '@siemens/dashboards-ng';
+import { WidgetConfig, WidgetConfigStatus, WidgetInstanceEditor } from '@siemens/dashboards-ng';
 
 @Component({
   selector: 'app-note-widget-editor',
@@ -13,7 +13,7 @@ import { WidgetConfig, WidgetInstanceEditor } from '@siemens/dashboards-ng';
 })
 export class NoteWidgetEditorComponent implements WidgetInstanceEditor, OnInit {
   @Input() config!: WidgetConfig | Omit<WidgetConfig, 'id'>;
-  readonly statusChanges = new EventEmitter<Partial<WidgetConfig>>();
+  readonly statusChanges = output<Partial<WidgetConfigStatus>>();
 
   protected heading = '';
   protected message = '';
@@ -26,6 +26,6 @@ export class NoteWidgetEditorComponent implements WidgetInstanceEditor, OnInit {
   onChange(): void {
     this.config!.heading = this.heading ?? '';
     this.config!.payload.message = this.message ?? '';
-    this.statusChanges.emit({ invalid: this.config!.heading.trim().length === 0 });
+    this.statusChanges.emit({ invalid: this.config!.heading.trim().length === 0, modified: true });
   }
 }
