@@ -142,7 +142,7 @@ Instead, work with responsive design and prefer line wrapping for very important
 ### Navigation buttons
 
 There are cases in which a navigation links shall look like buttons. For example,
-the link in the unauthorized page looks like a primary button to raise attention
+the link in the info page looks like a primary button to raise attention
 and let the user navigate to a next page.
 
 For these cases, use a `<a>` element styled as a button.
