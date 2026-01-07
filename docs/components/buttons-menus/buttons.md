@@ -78,7 +78,9 @@ where a regular button would be too bulky.
 | -------------------|--------------|---------------------------------------------------------|
 | Padding left/right | `$spacing-l` |                                                         |
 | Padding top/bottom | `$spacing-s` |                                                         |
-| Spacing(margin)    | `$spacing-l` | Spacing between buttons and other components/containers |
+| Padding left/right | `$spacing-6` |                                                         |
+| Padding top/bottom | `$spacing-2` |                                                         |
+| Spacing(margin)    | `$spacing-6` | Spacing between buttons and other components/containers |
 | Min-width          | 100px        | Minimum width of button irrespective of text length     |
 
 #### Icon buttons
