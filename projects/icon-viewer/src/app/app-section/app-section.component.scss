@@ -1,0 +1,19 @@
+@use '../../variables';
+
+:host {
+  inline-size: 100%;
+  display: block;
+}
+
+h2 {
+  display: block;
+}
+
+.icon-grid {
+  padding-inline: calc(0.2 * variables.$base-size);
+  inline-size: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, calc(6 * variables.$base-size));
+  grid-template-rows: repeat(auto-fill, calc(6 * variables.$base-size));
+  grid-gap: calc(0.4 * variables.$base-size);
+}
