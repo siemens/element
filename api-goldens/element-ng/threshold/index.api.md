@@ -7,7 +7,6 @@
 import * as _angular_core from '@angular/core';
 import { OnChanges } from '@angular/core';
 import { SelectOption } from '@siemens/element-ng/select';
-import { SelectOptionLegacy } from '@siemens/element-ng/select';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
@@ -22,7 +21,7 @@ export class SiThresholdComponent implements OnChanges {
     readonly minValue: _angular_core.InputSignal<number>;
     // (undocumented)
     ngOnChanges(): void;
-    readonly options: _angular_core.InputSignal<SelectOptionLegacy[] | SelectOption<unknown>[]>;
+    readonly options: _angular_core.InputSignal<SelectOption<unknown>[]>;
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly readonlyConditions: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly showDecIncButtons: _angular_core.InputSignalWithTransform<boolean, unknown>;

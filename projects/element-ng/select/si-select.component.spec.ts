@@ -10,19 +10,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SiSelectHarness } from '@siemens/element-ng/select/testing';
 
-import {
-  SelectOption,
-  SelectOptionLegacy,
-  SelectItem,
-  SiSelectComponent,
-  SiSelectModule
-} from './index';
+import { SelectOption, SelectItem, SiSelectComponent, SiSelectModule } from './index';
 import { SiSelectSelectionStrategy } from './selection/si-select-selection-strategy';
 
-const OPTIONS_LIST: readonly SelectOptionLegacy[] = [
-  { id: 'good', icon: 'element-face-happy', title: 'Good' },
-  { id: 'average', icon: 'element-face-neutral', title: 'Average' },
-  { id: 'poor', icon: 'element-face-unhappy', title: 'Poor' }
+const OPTIONS_LIST: readonly SelectOption<string>[] = [
+  { type: 'option', value: 'good', icon: 'element-face-happy', label: 'Good' },
+  { type: 'option', value: 'average', icon: 'element-face-neutral', label: 'Average' },
+  { type: 'option', value: 'poor', icon: 'element-face-unhappy', label: 'Poor' }
 ];
 
 const OPTIONS_LIST_NEXT: readonly SelectOption<number>[] = [
@@ -67,7 +61,7 @@ class TestHostComponent {
   readonly selectionStrategy = viewChild.required(SiSelectSelectionStrategy);
 
   value?: string;
-  options?: readonly SelectOptionLegacy[] = OPTIONS_LIST;
+  options?: readonly SelectOption<string>[] = OPTIONS_LIST;
   disabled = false;
   readonly = false;
   hasFilter = false;
@@ -153,7 +147,7 @@ class TestHostMultiComponent {
   `
 })
 class TestHostCustomActionComponent {
-  options?: readonly SelectOptionLegacy[] = OPTIONS_LIST;
+  options?: readonly SelectOption<string>[] = OPTIONS_LIST;
   actionClick(): void {}
 }
 
@@ -314,10 +308,10 @@ describe('SiSelectComponent', () => {
       beforeEach(async () => {
         hostComponent.hasFilter = true;
         hostComponent.options = [
-          { id: 'a', title: 'a' },
-          { id: 'b', title: 'b' },
-          { id: 'c', title: 'c' },
-          { id: 'ab', title: 'ab' }
+          { type: 'option', value: 'a', label: 'a' },
+          { type: 'option', value: 'b', label: 'b' },
+          { type: 'option', value: 'c', label: 'c' },
+          { type: 'option', value: 'ab', label: 'ab' }
         ];
         hostComponent.value = 'a';
         fixture.changeDetectorRef.markForCheck();
@@ -359,7 +353,10 @@ describe('SiSelectComponent', () => {
       it('should apply current filter when options are applied', async () => {
         await selectHarness.open();
         await selectHarness.getList().then(list => list!.sendKeys('c'));
-        hostComponent.options = [...hostComponent.options!, { id: 'aaa', title: 'aaa' }];
+        hostComponent.options = [
+          ...hostComponent.options!,
+          { type: 'option', value: 'aaa', label: 'aaa' }
+        ];
         fixture.changeDetectorRef.markForCheck();
         fixture.detectChanges();
         const items = await selectHarness.getList().then(list => list!.getAllItemTexts());
@@ -518,7 +515,7 @@ describe('SiSelectComponent', () => {
       (fixture.debugElement.nativeElement as HTMLElement).style.width = '200px';
       const initialSelection = Object.assign([], hostComponent.values);
       await selectHarness.clickItemsByText(
-        OPTIONS_LIST.filter(i => !initialSelection?.includes(i.id)).map(i => i.title)
+        OPTIONS_LIST.filter(i => !initialSelection?.includes(i.value)).map(i => i.label ?? '')
       );
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();

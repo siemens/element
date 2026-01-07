@@ -5,7 +5,7 @@
 import { NgClass } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
-import { SelectOption, SelectOptionLegacy } from '@siemens/element-ng/select';
+import { SelectOption } from '@siemens/element-ng/select';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 @Component({
@@ -19,7 +19,7 @@ import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
           [icon]="opt.icon"
           [ngClass]="[(!opt.disabled && color()) || '']"
         />
-        @if (opt.type === 'option' && opt.stackedIcon) {
+        @if (opt.stackedIcon) {
           <si-icon class="icon me-2" [icon]="opt.stackedIcon" [ngClass]="opt.stackedIconColor" />
         }
       </i>
@@ -30,28 +30,21 @@ import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 })
 export class SiReadonlyThresholdOptionComponent {
   readonly value = input.required<string>();
-  readonly options = input.required<SelectOptionLegacy[] | SelectOption<unknown>[]>();
+  readonly options = input.required<SelectOption<unknown>[]>();
 
   protected readonly option = computed(() => {
     const options = this.options();
     const value = this.value();
     if (value && options) {
-      return options.find(opt => (opt.type === 'option' ? opt.value === value : opt.id === value));
+      return options.find(opt => opt.value === value);
     }
     return undefined;
   });
 
   protected readonly color = computed(() => {
     const option = this.option();
-    return !option || option.disabled
-      ? undefined
-      : option.type === 'option'
-        ? option.iconColor
-        : option.color;
+    return !option || option.disabled ? undefined : option.iconColor;
   });
 
-  protected readonly label = computed(() => {
-    const option = this.option();
-    return option?.type === 'option' ? option.label : option?.title;
-  });
+  protected readonly label = computed(() => this.option()?.label);
 }
