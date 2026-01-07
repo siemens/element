@@ -1,4 +1,4 @@
-- button "undefined element-data-7"
+- button "Selected color element-data-7"
 - grid:
   - row "element-data-1 element-data-2 element-data-3 element-data-4 element-data-5 element-data-6 element-data-7 element-data-8":
     - gridcell "element-data-1":

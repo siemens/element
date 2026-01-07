@@ -5,7 +5,9 @@
   class="input-color-box"
   type="button"
   [class.is-open]="isOverlayOpen()"
-  [attr.aria-label]="(ariaLabel() | translate) + ' ' + color()"
+  [attr.aria-label]="
+    ariaLabel() ? (ariaLabel() | translate: { color: color() ?? '' }) : (color() ?? null)
+  "
   [disabled]="disabled()"
   (keydown.arrowDown)="openOverlay()"
   (blur)="blur()"
