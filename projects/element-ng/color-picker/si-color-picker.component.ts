@@ -19,7 +19,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { elementOk } from '@siemens/element-icons';
 import { isRTL } from '@siemens/element-ng/common';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 /**
  * The Element data color palette is used as default.
@@ -93,8 +93,15 @@ export class SiColorPickerComponent implements ControlValueAccessor {
 
   /**
    * Aria label for the color input button.
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_COLOR_PICKER.SELECTED_LABEL:Selected color {{color}}`)
+   * ```
    */
-  readonly ariaLabel = input<TranslatableString>();
+  readonly ariaLabel = input(
+    t(() => $localize`:@@SI_COLOR_PICKER.SELECTED_LABEL:Selected color {{color}}`)
+  );
 
   private onChange: (value: string) => void = () => {};
   private onTouched: () => void = () => {};

@@ -6,11 +6,11 @@
 
 import * as _angular_core from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
-import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
 export class SiColorPickerComponent implements ControlValueAccessor {
-    readonly ariaLabel: _angular_core.InputSignal<TranslatableString | undefined>;
+    readonly ariaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly autoClose: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly color: _angular_core.ModelSignal<string | undefined>;
     readonly colorPalette: _angular_core.InputSignal<string[]>;
