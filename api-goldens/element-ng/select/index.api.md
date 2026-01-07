@@ -43,16 +43,6 @@ export interface SelectOption<T> {
     value: T;
 }
 
-// @public @deprecated (undocumented)
-export interface SelectOptionLegacy {
-    color?: string;
-    disabled?: boolean;
-    icon?: string;
-    id: string;
-    title: TranslatableString;
-    type?: undefined;
-}
-
 // @public
 export interface SelectOptionSource<TValue> {
     compareOptions?(a: SelectOption<TValue>, b: SelectOption<TValue>): number;
@@ -94,7 +84,7 @@ export class SiSelectComponent<T> implements SiFormItemControl {
     readonly placeholder: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSelectComponent<any>, "si-select", never, { "id": { "alias": "id"; "required": false; "isSignal": true; }; "ariaLabel": { "alias": "ariaLabel"; "required": false; "isSignal": true; }; "labelledbyInput": { "alias": "labelledby"; "required": false; "isSignal": true; }; "filterPlaceholder": { "alias": "filterPlaceholder"; "required": false; "isSignal": true; }; "noResultsFoundLabel": { "alias": "noResultsFoundLabel"; "required": false; "isSignal": true; }; "placeholder": { "alias": "placeholder"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "errormessageId": { "alias": "errormessageId"; "required": false; "isSignal": true; }; "hasFilter": { "alias": "hasFilter"; "required": false; "isSignal": true; }; }, { "dropdownClose": "dropdownClose"; "openChange": "openChange"; }, ["optionTemplate", "groupTemplate", "actionsTemplate"], never, true, never>;
+    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSelectComponent<any>, "si-select", never, { "id": { "alias": "id"; "required": false; "isSignal": true; }; "ariaLabel": { "alias": "ariaLabel"; "required": false; "isSignal": true; }; "labelledbyInput": { "alias": "labelledby"; "required": false; "isSignal": true; }; "filterPlaceholder": { "alias": "filterPlaceholder"; "required": false; "isSignal": true; }; "noResultsFoundLabel": { "alias": "noResultsFoundLabel"; "required": false; "isSignal": true; }; "placeholder": { "alias": "placeholder"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "errormessageId": { "alias": "errormessageId"; "required": false; "isSignal": true; }; "hasFilter": { "alias": "hasFilter"; "required": false; "isSignal": true; }; }, { "openChange": "openChange"; }, ["optionTemplate", "groupTemplate", "actionsTemplate"], never, true, never>;
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSelectComponent<any>, never>;
 }
@@ -175,7 +165,7 @@ export class SiSelectOptionTemplateDirective {
 export class SiSelectSimpleOptionsDirective<T = string> extends SiSelectOptionsStrategyBase<T> {
     // (undocumented)
     readonly allRows: _angular_core.Signal<SelectItem<T>[]>;
-    readonly options: _angular_core.InputSignal<(SelectOptionLegacy | SelectItem<T>)[] | null | undefined>;
+    readonly options: _angular_core.InputSignal<SelectItem<T>[] | null | undefined>;
     readonly optionsEqual: _angular_core.InputSignal<(a: T, b: T) => boolean>;
     // (undocumented)
     static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiSelectSimpleOptionsDirective<any>, "si-select[options]", never, { "options": { "alias": "options"; "required": false; "isSignal": true; }; "optionsEqual": { "alias": "optionEqualCheckFn"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;

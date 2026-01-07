@@ -4,24 +4,6 @@
  */
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
-/**
- * @deprecated Use {@link SelectOption} instead.
- */
-export interface SelectOptionLegacy {
-  /** Defines this to be the deprecated option. */
-  type?: undefined;
-  /** Identifies the option, will be used as `value` for the component */
-  id: string;
-  /** Title to display */
-  title: TranslatableString;
-  /** Optional icon to display */
-  icon?: string;
-  /** Optional color class for the icon */
-  color?: string;
-  /** Is the option disabled? */
-  disabled?: boolean;
-}
-
 /** A select option group */
 export interface SelectGroup<T> {
   /** Defines this to be a group. */
