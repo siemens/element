@@ -193,6 +193,7 @@ nav:
     - Code of Conduct:                    'CODE_OF_CONDUCT.md'
     - Developer guide:                    'DEVELOPER.md'
   - Changelog:                            'CHANGELOG.md'
+  - Icons:                                'icons.md'
 
 theme:
   name: code-siemens-code-docs-theme
@@ -212,6 +213,7 @@ theme:
         icon: siemens/element/element-theme-auto
         name: Switch to dark mode
   favicon: '_src/favicon.png'
+  custom_dir: projects/icon-viewer/theme
   features:
     - navigation.tabs
     - page.toc
