@@ -1,0 +1,102 @@
+/* stylelint-disable color-no-hex */
+@use '../../variables';
+
+:host {
+  &.floating {
+    position: fixed;
+    background-color: var(--page-background-color, #fff);
+    z-index: 1;
+    border-radius: calc(0.5 * variables.$base-size);
+    padding: calc(0.5 * variables.$base-size);
+    box-shadow:
+      0 0 calc(0.4 * variables.$base-size) rgb(0 0 0 / 10%),
+      0 calc(0.4 * variables.$base-size) calc(0.8 * variables.$base-size) rgb(0 0 0 / 20%);
+
+    &.dark-theme {
+      background-color: var(--page-background-color, #000028);
+    }
+
+    .toggle-button {
+      margin-block-end: 0;
+    }
+
+    .search-container {
+      position: relative;
+    }
+  }
+
+  &.dark-theme .search {
+    border: #696969 solid calc(0.125 * variables.$base-size);
+  }
+}
+
+h1 {
+  display: inline-block;
+  margin-block-end: calc(1 * variables.$base-size);
+}
+
+svg {
+  block-size: 1em;
+  line-height: 1em;
+}
+
+.toggle-button {
+  display: block;
+  font-size: calc(2 * variables.$base-size);
+  float: inline-end;
+  margin-block-end: calc(0.5 * variables.$base-size);
+}
+
+.search-clear-button {
+  position: absolute;
+  inset-inline-end: calc(0.125 * variables.$base-size);
+  padding: 0;
+  margin: 0;
+  margin-block-start: calc(0.25 * variables.$base-size);
+  inline-size: calc(1.5 * variables.$base-size);
+  block-size: calc(1.5 * variables.$base-size);
+  font-size: calc(1.5 * variables.$base-size);
+  opacity: 0.45;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.search {
+  inline-size: 100%;
+  font-size: calc(1 * variables.$base-size);
+  border: #d3d3d3 solid calc(0.125 * variables.$base-size);
+  border-radius: calc(0.25 * variables.$base-size);
+  padding: calc(0.125 * variables.$base-size);
+  margin-block-start: calc(0.125 * variables.$base-size);
+  color: unset;
+  background-color: unset;
+
+  &.short {
+    float: inline-start;
+    inline-size: calc(100% - (6.5 * variables.$base-size) - (0.125 * variables.$base-size));
+    font-size: calc(0.9 * variables.$base-size);
+    padding: calc(0.1 * variables.$base-size);
+    margin-block-start: calc(0.24 * variables.$base-size);
+
+    &.has-no-filled {
+      inline-size: calc(100% - (4.5 * variables.$base-size) - (0.25 * variables.$base-size));
+    }
+
+    + .search-clear-button {
+      inset-inline-end: calc(
+        (0.125 * variables.$base-size) + (6.5 * variables.$base-size) +
+          (0.125 * variables.$base-size)
+      );
+    }
+  }
+
+  &:placeholder-shown + .search-clear-button {
+    display: none;
+  }
+}
+
+.button-link {
+  color: unset;
+  cursor: pointer;
+}

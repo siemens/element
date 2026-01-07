@@ -12,6 +12,7 @@
 # icon preview documentation
 docs/_src/fonts
 docs/_src/style
+docs/_src/icon-viewer
 
 # dependencies
 /node_modules

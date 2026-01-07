@@ -1,0 +1,38 @@
+/* stylelint-disable color-no-hex */
+@use '../variables';
+
+:host {
+  position: relative;
+  display: block;
+  inline-size: 100%;
+  background-color: var(--page-background-color, #fff);
+
+  &.dark-theme {
+    background-color: var(--page-background-color, #000028);
+  }
+}
+
+.icon-content {
+  display: grid;
+  grid-template-columns: max-content auto;
+  grid-template-rows: auto min-content;
+  inline-size: 100%;
+
+  &.floating-menu {
+    margin-block-start: 200px;
+  }
+}
+
+.icon-container {
+  grid-row: 1 / 3;
+  grid-column: 2;
+
+  &.categorized {
+    max-block-size: calc(60vh - 105px);
+    overflow-y: auto;
+  }
+}
+
+.list {
+  overflow-y: hidden;
+}

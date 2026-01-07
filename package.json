@@ -51,6 +51,8 @@
     "docs:serve": "uv run mkdocs serve",
     "docs:serve:api": "cross-env DOCS_COMPOSER=true uv run mkdocs serve",
     "docs:serve:generate": "cross-env DOCS_COMPOSER=true DOCS_COMPOSER_GENERATE=true uv run mkdocs serve",
+    "icon-viewer:build-docs": "ng build icon-viewer --configuration=production",
+    "icon-viewer:serve": "ng serve icon-viewer",
     "live-preview:build": "ng build live-preview && cpy LICENSE.md \"./dist/@siemens/live-preview/\"",
     "prepare": "husky; exit 0",
     "prepare-brand": "cpy --flat node_modules/@simpl/brand/assets/favicon/sie-favicon_internet_64px.png docs/_src --rename=favicon.png && cpy --flat node_modules/@simpl/brand/assets/favicon/sie-favicon_internet_64px.png src --rename=favicon.png && cpy --flat node_modules/@simpl/brand/assets/favicon/sie-favicon_internet_64px.png projects/dashboards-demo/src --rename=favicon.png && cpy --flat node_modules/@simpl/brand/assets/favicon/sie-favicon_internet_64px.png projects/dashboards-demo/mfe/src --rename=favicon.png",
@@ -84,7 +86,8 @@
     "projects/maps-ng",
     "projects/native-charts-ng",
     "projects/dashboards-ng",
-    "projects/dashboards-demo"
+    "projects/dashboards-demo",
+    "projects/icon-viewer"
   ],
   "dependencies": {
     "@angular-architects/module-federation": "20.0.0",
@@ -101,6 +104,7 @@
     "@ngx-formly/bootstrap": "6.3.12",
     "@ngx-formly/core": "6.3.12",
     "@ngx-translate/core": "16.0.4",
+    "@siemens/element-icons": "^1.0.0",
     "@siemens/ngx-datatable": "25.0.0",
     "ag-grid-angular": "^34.3.1",
     "ag-grid-community": "^34.3.1",
