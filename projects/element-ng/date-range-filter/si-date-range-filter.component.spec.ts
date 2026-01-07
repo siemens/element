@@ -271,6 +271,21 @@ describe('SiDateRangeFilterComponent', () => {
     expect(component.range.range).toBeUndefined();
   });
 
+  it('switches from simple mode to advanced mode', async () => {
+    const point1 = new Date('2023-05-13');
+    const point2 = new Date('2023-08-14');
+    component.range = { point1, point2 };
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    toggleMode();
+    await fixture.whenStable();
+
+    expect(date2string(component.range.point1 as Date)).toEqual(date2string(point1));
+    expect(component.range.point2).toEqual(point2.getTime() - point1.getTime());
+    expect(component.range.range).toBe('after');
+  });
+
   it('allows selecting presets in simple mode', async () => {
     component.range = {
       point1: new Date('2023-05-13'),

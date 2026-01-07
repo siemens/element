@@ -395,7 +395,7 @@ export class SiDateRangeFilterComponent implements OnChanges {
       this.point2range.set(rangeVal.range ?? 'before');
       this.point2offset.set(
         rangeVal.point2 instanceof Date
-          ? Math.round(this.point1date().getTime() - rangeVal.point2.getTime())
+          ? Math.abs(Math.round(this.point1date().getTime() - rangeVal.point2.getTime()))
           : rangeVal.point2
       );
     }
@@ -428,6 +428,7 @@ export class SiDateRangeFilterComponent implements OnChanges {
       this.point2offset.set(
         Math.abs(calculatedRange.end.getTime() - calculatedRange.start.getTime())
       );
+      this.updateRange();
     } else {
       this.updateSimpleMode(this.range());
     }
@@ -435,10 +436,6 @@ export class SiDateRangeFilterComponent implements OnChanges {
 
   private updateSimpleMode(newRange: DateRangeFilter): void {
     if (this.inputMode()) {
-      this.range.update(oldRange => ({
-        ...oldRange,
-        point1: newRange.point1
-      }));
       // input mode supports `now`, so point1 needs to remain unchanged
       if (newRange.point1 === 'now') {
         this.point1Now.set(true);
@@ -450,16 +447,22 @@ export class SiDateRangeFilterComponent implements OnChanges {
       const calculatedRange = this.resolve(newRange, true);
       this.point2Mode.set('date');
       this.point2date.set(calculatedRange.end);
-      this.range.update(oldRange => ({
-        ...oldRange,
-        range: undefined,
-        point2: calculatedRange.end
-      }));
+      this.updateRange();
     } else {
       this.point1Now.set(false);
       this.updateDateRange(newRange);
       this.updateFromDateRange();
     }
+  }
+
+  private updateRange(): void {
+    const point2isDate = this.point2Mode() === 'date';
+    const newRange: DateRangeFilter = {
+      point1: this.point1Now() ? 'now' : this.point1date(),
+      point2: point2isDate ? this.point2date() : this.point2offset(),
+      range: point2isDate ? undefined : this.point2range()
+    };
+    this.range.update(old => ({ ...old, ...newRange }));
   }
 
   protected updateFromDateRange(dateRange?: DateRange): void {
@@ -470,26 +473,17 @@ export class SiDateRangeFilterComponent implements OnChanges {
     const startDate = range.start ?? this.getDateNow();
     const endDate = range.end ?? this.getDateNow();
     this.point1date.set(startDate);
-    this.point2date.set(startDate);
-    this.range.set({
-      point1: startDate,
-      point2: endDate,
-      range: undefined
-    });
+    this.point2date.set(endDate);
     this.point2Mode.set('date');
     this.point2offset.set(0);
+    this.updateRange();
   }
 
   protected point1Changed(): void {
     if (this.point1Now()) {
-      this.range.update(oldRange => ({ ...oldRange, point1: 'now' }));
       this.point1date.set(this.getDateNow());
-      if (this.point2Mode() !== 'date') {
-        this.point2range.set(this.point2range() ?? 'before');
-      }
-    } else {
-      this.range.update(oldRange => ({ ...oldRange, point1: this.point1date() ?? new Date(NaN) }));
     }
+    this.updateRange();
   }
 
   protected point2Changed(): void {
@@ -502,27 +496,15 @@ export class SiDateRangeFilterComponent implements OnChanges {
           );
         }
       }
-      this.range.update(oldRange => ({
-        ...oldRange,
-        range: undefined,
-        point2: this.point2date()
-      }));
     } else {
-      this.range.update(oldRange => ({
-        ...oldRange,
-        range: this.point2range()
-      }));
       if (this.range().point2 instanceof Date) {
         const calculatedRange = this.resolve(this.range());
         this.point2offset.set(
           Math.round(calculatedRange.end.getTime() - calculatedRange.start.getTime())
         );
       }
-      this.range.update(oldRange => ({
-        ...oldRange,
-        point2: this.point2offset()
-      }));
     }
+    this.updateRange();
   }
 
   protected selectPresetItem(event: Event, item: DateRangePreset): void {
