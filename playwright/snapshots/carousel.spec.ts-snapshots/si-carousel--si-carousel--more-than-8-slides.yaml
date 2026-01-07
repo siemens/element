@@ -1,0 +1,23 @@
+- region:
+  - group: /Total users Latest \d+ days \d+,\d+ ↑ \d+% from last month Revenue Monthly \$\d+,\d+ ↑ 8% from last month Conversion This quarter \d+\.\d+% ↓ 0\.5% from last month/
+  - button "Previous slide"
+  - button "Slide 1 of 9"
+  - button "Slide 2 of 9"
+  - button "Slide 3 of 9"
+  - button "Slide 4 of 9"
+  - button "Slide 5 of 9"
+  - button "Slide 6 of 9"
+  - button "Slide 7 of 9"
+  - button "Slide 8 of 9"
+  - button "Slide 9 of 9"
+  - button "Next slide"
+- text: Settings
+- checkbox "Auto play"
+- text: Auto play
+- checkbox "Slide show mode"
+- text: Slide show mode
+- checkbox "Without page controls"
+- text: Without page controls Auto play duration (ms)
+- spinbutton "Auto play duration (ms)": /\d+/
+- text: Extra slides
+- spinbutton "Extra slides": "5"

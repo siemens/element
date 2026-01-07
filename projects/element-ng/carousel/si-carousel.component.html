@@ -1,0 +1,109 @@
+<div class="carousel-body d-flex flex-grow-1 align-items-center gap-2 min-h-0">
+  <div #viewport class="carousel-viewport flex-grow-1 align-self-stretch" tabindex="0">
+    <div class="carousel-track h-100">
+      <ng-content />
+    </div>
+  </div>
+</div>
+@if ((!hidePageControls() || autoPlay()) && totalPages() > 1) {
+  <div
+    class="position-relative d-flex justify-content-center align-items-center mt-4"
+    (siResizeObserver)="onResize($event)"
+  >
+    @if (!hidePageControls()) {
+      <div #pageControl class="d-flex align-items-center gap-2">
+        <button
+          type="button"
+          class="btn btn-icon btn-tertiary-ghost flex-shrink-0"
+          [aria-label]="previousButtonAriaLabel() | translate"
+          (click)="previous()"
+        >
+          <si-icon [icon]="icons.elementLeft2"
+        /></button>
+        <div class="d-flex align-items-center">
+          <div
+            #dotBtn
+            class="btn btn-tertiary-ghost btn-icon btn-sm pe-none"
+            [class.opacity-0]="totalPages() <= 5"
+            [class.position-absolute]="totalPages() <= 5"
+          >
+            <span class="carousel-pager-small-dot d-block rounded-circle"></span>
+          </div>
+          <div
+            class="d-flex overflow-hidden"
+            [style.width.px]="dotBtn.clientWidth * (totalPages() > 5 ? 5 : totalPages())"
+          >
+            <div
+              class="d-flex page-buttons"
+              [style.transform]="'translateX(-' + edgeLeftIndex() * dotBtn.clientWidth + 'px)'"
+            >
+              @for (page of items(); track page) {
+                <button
+                  type="button"
+                  class="btn btn-tertiary-ghost focus-inside btn-icon btn-sm d-flex align-items-center justify-content-center"
+                  [aria-label]="
+                    slidePageAriaLabel() | translate: { page: $index + 1, total: totalPages() }
+                  "
+                  [tabIndex]="$index >= edgeLeftIndex() && $index <= edgeRightIndex() ? 0 : -1"
+                  [aria-current]="currentPage() === $index ? 'true' : 'false'"
+                  (click)="goToSlide($index)"
+                  ><span
+                    class="carousel-pager-dot d-block"
+                    [class.active]="currentPage() === $index"
+                    [class.rounded-circle]="currentPage() !== $index"
+                  ></span
+                ></button>
+              }
+            </div>
+          </div>
+          <div
+            #dotBtn
+            class="btn btn-tertiary-ghost btn-icon btn-sm pe-none"
+            [class.opacity-0]="totalPages() <= 5"
+            [class.position-absolute]="totalPages() <= 5"
+          >
+            <span class="carousel-pager-small-dot d-block rounded-circle"></span>
+          </div>
+        </div>
+        <button
+          type="button"
+          class="btn btn-icon btn-tertiary-ghost flex-shrink-0"
+          [aria-label]="nextButtonAriaLabel() | translate"
+          (click)="next()"
+        >
+          <si-icon [icon]="icons.elementRight2"
+        /></button>
+      </div>
+    }
+
+    @if (autoPlay()) {
+      <div
+        #playPauseBtn
+        class="position-absolute top-0 end-0"
+        [class.invisible]="insufficientSpace()"
+      >
+        <button
+          type="button"
+          class="btn btn-tertiary-ghost ms-2"
+          [aria-label]="(isPaused() ? playButtonLabel() : pauseButtonLabel()) | translate"
+          (click)="toggleAutoPlay()"
+        >
+          <si-icon class="icon" [icon]="isPaused() ? icons.elementPlay : icons.elementPause" />
+          <span aria-hidden="true">{{
+            (isPaused() ? playButtonLabel() : pauseButtonLabel()) | translate
+          }}</span>
+        </button>
+      </div>
+      @if (insufficientSpace()) {
+        <button
+          type="button"
+          class="btn btn-icon btn-tertiary-ghost flex-shrink-0 align-items-center position-absolute top-0 end-0 ms-2"
+          [aria-label]="(isPaused() ? playButtonLabel() : pauseButtonLabel()) | translate"
+          (click)="toggleAutoPlay()"
+        >
+          <si-icon [icon]="isPaused() ? icons.elementPlay : icons.elementPause" />
+        </button>
+      }
+    }
+  </div>
+}
