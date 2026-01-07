@@ -515,6 +515,7 @@ export class SiDateRangeFilterComponent implements OnChanges {
         : { point1: 'now', range: 'before', point2: item.offset };
     if (this.advancedMode()) {
       this.updateFromRange(newRange);
+      this.updateRange();
     } else {
       this.updateSimpleMode(newRange);
     }
