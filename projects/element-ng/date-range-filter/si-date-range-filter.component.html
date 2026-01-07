@@ -41,17 +41,16 @@
   }
 }
 <form class="main-form d-flex flex-column flex-fill">
-  @if (advancedMode || inputMode()) {
+  @if (advancedMode() || inputMode()) {
     <div class="advanced-form px-6 py-4">
       @if (!reverseInputFields()) {
         <ng-container *ngTemplateOutlet="formReferencePoint" />
       }
 
       <div class="mb-8">
-        @if (point2Mode === 'date') {
+        @if (point2Mode() === 'date') {
           <ng-container *ngTemplateOutlet="formPoint2Date" />
-        }
-        @if (point2Mode === 'duration') {
+        } @else if (point2Mode() === 'duration') {
           <ng-container *ngTemplateOutlet="formPoint2Duration" />
         }
       </div>
@@ -69,7 +68,7 @@
     />
   }
 
-  @if (advancedMode || !hideAdvancedMode()) {
+  @if (advancedMode() || !hideAdvancedMode()) {
     <label class="form-switch form-check ms-6">
       <input
         type="checkbox"
@@ -132,7 +131,7 @@
   <div class="mb-8">
     <label class="d-block">
       <span class="form-label">{{
-        (advancedMode ? refLabel() : reverseInputFields() ? toLabel() : fromLabel()) | translate
+        (advancedMode() ? refLabel() : reverseInputFields() ? toLabel() : fromLabel()) | translate
       }}</span>
       <si-calendar-button class="w-100">
         <input
@@ -142,7 +141,7 @@
           required
           siDatepicker
           [siDatepickerConfig]="datepickerConfigInternal()"
-          [disabled]="point1Now"
+          [disabled]="point1Now()"
           [placeholder]="datePlaceholder() | translate"
           [(ngModel)]="point1date"
           (ngModelChange)="point1Changed()"
