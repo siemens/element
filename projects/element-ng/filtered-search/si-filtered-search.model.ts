@@ -58,7 +58,7 @@ export interface CriterionDefinition {
   /**
    * Optional configuration object for the datepicker.
    */
-  datepickerConfig?: DatepickerInputConfig;
+  datepickerConfig?: Omit<DatepickerInputConfig, 'enableDateRange' | 'enableTwoMonthDateRange'>;
   /**
    * Limit criterion options to the predefined ones.
    */
