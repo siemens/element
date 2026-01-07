@@ -1,0 +1,132 @@
+<div class="d-flex flex-column p-5" [class.h-100]="slideShowMode()">
+  <si-carousel
+    [autoPlay]="autoPlay() ? autoPlayDuration() : false"
+    [hidePageControls]="withoutPageControls()"
+  >
+    @if (slideShowMode()) {
+      @for (item of [totalUsers, revenue, conversion]; track $index) {
+        <!-- In slide show mode each card is displayed individually as a carousel item -->
+        <div siCarouselItem>
+          <ng-container *ngTemplateOutlet="item" />
+        </div>
+      }
+    } @else {
+      <div siCarouselItem>
+        <div class="d-flex flex-column flex-sm-row gap-5 h-100">
+          @for (item of [totalUsers, revenue, conversion]; track $index) {
+            <div class="flex-fill">
+              <ng-container *ngTemplateOutlet="item" />
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    @for (item of [1, 2, 3]; track $index) {
+      <div siCarouselItem>
+        <si-card [heading]="'Placeholder slide ' + ($index + 1)">
+          <p body class="card-body card-text">Placeholder carousel slide {{ $index + 1 }}</p>
+        </si-card>
+      </div>
+    }
+
+    @for (item of additionalItems(); track $index) {
+      <div siCarouselItem>
+        <si-card [heading]="'Additional Item ' + ($index + 1)">
+          <p body class="card-body card-text">Placeholder carousel item {{ $index + 1 }}</p>
+        </si-card>
+      </div>
+    }
+  </si-carousel>
+
+  @if (!slideShowMode()) {
+    <si-card heading="Settings" class="e2e-ignore mt-4" style="height: 150px">
+      <div class="card-body pt-1" body>
+        <div class="row">
+          <div class="col-sm-4">
+            <si-form-item label="Auto play">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="auto-play"
+                [(ngModel)]="autoPlay"
+              />
+            </si-form-item>
+          </div>
+          <div class="col-sm-4">
+            <si-form-item label="Slide show mode">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="slide-show-mode"
+                [(ngModel)]="slideShowMode"
+              />
+            </si-form-item>
+          </div>
+          <div class="col-sm-4">
+            <si-form-item label="Without page controls">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="without-page-controls"
+                [(ngModel)]="withoutPageControls"
+              />
+            </si-form-item>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <si-form-item label="Auto play duration (ms)">
+              <input
+                type="number"
+                min="500"
+                step="500"
+                class="form-control"
+                id="auto-play-duration"
+                [(ngModel)]="autoPlayDuration"
+              />
+            </si-form-item>
+          </div>
+          <div class="col-sm-3">
+            <si-form-item label="Extra slides">
+              <input
+                type="number"
+                min="0"
+                max="10"
+                class="form-control"
+                id="additional-items"
+                [(ngModel)]="additionalItemsCount"
+              />
+            </si-form-item>
+          </div>
+        </div>
+      </div>
+    </si-card>
+  }
+</div>
+
+<!-- KPI cards-->
+<ng-template #totalUsers>
+  <si-card heading="Total users" subHeading="Latest 30 days">
+    <div body class="card-body card-text">
+      <div class="display-6 fw-bold">12,450</div>
+      <div class="text-secondary">&uarr; 15% from last month</div>
+    </div>
+  </si-card>
+</ng-template>
+<ng-template #revenue>
+  <si-card heading="Revenue" subHeading="Monthly">
+    <div body class="card-body card-text">
+      <div class="display-6 fw-bold">$24,580</div>
+      <div class="text-secondary">&uarr; 8% from last month</div>
+    </div>
+  </si-card>
+</ng-template>
+<ng-template #conversion>
+  <si-card heading="Conversion" subHeading="This quarter">
+    <div body class="card-body card-text">
+      <div class="display-6 fw-bold">3.24%</div>
+      <div class="text-secondary">&darr; 0.5% from last month</div>
+    </div>
+  </si-card>
+</ng-template>
