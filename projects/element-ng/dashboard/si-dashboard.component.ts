@@ -10,14 +10,17 @@ import {
   ChangeDetectorRef,
   Component,
   computed,
+  contentChildren,
   DestroyRef,
   DOCUMENT,
+  effect,
   ElementRef,
   inject,
   input,
   OnChanges,
   signal,
   SimpleChanges,
+  untracked,
   viewChild
 } from '@angular/core';
 import { outputToObservable, takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -31,7 +34,6 @@ import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-
 import { Subject, takeUntil } from 'rxjs';
 
 import { SiDashboardCardComponent } from './si-dashboard-card.component';
-import { SiDashboardService } from './si-dashboard.service';
 
 const FIX_SCROLL_PADDING_RESIZE_OBSERVER_THROTTLE = 10;
 
@@ -40,7 +42,6 @@ const FIX_SCROLL_PADDING_RESIZE_OBSERVER_THROTTLE = 10;
   imports: [PortalModule, SiTranslatePipe],
   templateUrl: './si-dashboard.component.html',
   styleUrl: './si-dashboard.component.scss',
-  providers: [SiDashboardService],
   host: { class: 'si-layout-fixed-height' }
 })
 export class SiDashboardComponent implements OnChanges, AfterViewInit {
@@ -88,7 +89,7 @@ export class SiDashboardComponent implements OnChanges, AfterViewInit {
   private scrollPosition: [number, number] = [0, 0];
 
   private readonly reinitCards$ = new Subject<void>();
-  private cards: SiDashboardCardComponent[] = [];
+  private readonly cards = computed(() => this.cardsComponents());
   private readonly expandedPortalOutlet = viewChild.required('expandedPortalOutlet', {
     read: CdkPortalOutlet
   });
@@ -99,19 +100,22 @@ export class SiDashboardComponent implements OnChanges, AfterViewInit {
   private dashboardDimensions?: ElementDimensions;
 
   private scroller = inject(ViewportScroller);
-  private dashboardService = inject(SiDashboardService);
   private resizeObserver = inject(ResizeObserverService);
   private scrollbarHelper = inject(ScrollbarHelper);
   private cdRef = inject(ChangeDetectorRef);
   private document = inject(DOCUMENT);
   private readonly hideMenubarInternal = signal(false);
+  private readonly cardsComponents = contentChildren(SiDashboardCardComponent, {
+    descendants: true
+  });
 
   constructor() {
-    this.dashboardService.cards$
-      .pipe(takeUntilDestroyed())
-      .subscribe(cards => this.subscribeToCards(cards));
-
     this.destroyRef.onDestroy(() => this.reinitCards$.complete());
+    effect(() => {
+      if (this.cards().length) {
+        untracked(() => this.initCards());
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges<this>): void {
@@ -131,15 +135,10 @@ export class SiDashboardComponent implements OnChanges, AfterViewInit {
       .subscribe(dims => this.setDashboardFrameEndPadding(dims, this.dashboardDimensions));
   }
 
-  private subscribeToCards(cards: SiDashboardCardComponent[]): void {
-    this.cards = cards;
-    this.initCards();
-  }
-
   private initCards(): void {
     this.reinitCards$.next();
 
-    for (const card of this.cards) {
+    for (const card of this.cards()) {
       // We only enforce expand if the dashboard value is true, otherwise we would remove the individual
       // card settings.
       const enableExpandInteractions = this.enableExpandInteractions();
@@ -195,7 +194,7 @@ export class SiDashboardComponent implements OnChanges, AfterViewInit {
    */
   public restore(): void {
     // Restore all cards
-    for (const card of this.cards) {
+    for (const card of this.cards()) {
       if (card.isExpanded()) {
         card.restore();
       }
@@ -233,7 +232,7 @@ export class SiDashboardComponent implements OnChanges, AfterViewInit {
   }
 
   private toggleCardsHide(expand: boolean): void {
-    for (const card of this.cards) {
+    for (const card of this.cards()) {
       card.hide = !card.isExpanded() && expand;
     }
   }
