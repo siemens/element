@@ -12,6 +12,13 @@ export interface SiTranslatableKeys {
   'SI_ATTACHMENT_LIST.REMOVE_ATTACHMENT'?: string;
   'SI_BREADCRUMB'?: string;
   'SI_BREADCRUMB_ROUTER_LABEL'?: string;
+  'SI_CAROUSEL.NEXT'?: string;
+  'SI_CAROUSEL.PAUSE'?: string;
+  'SI_CAROUSEL.PLAY'?: string;
+  'SI_CAROUSEL.PREVIOUS'?: string;
+  'SI_CAROUSEL.ROLE_DESCRIPTION'?: string;
+  'SI_CAROUSEL.SLIDE_PAGE'?: string;
+  'SI_CAROUSEL.SLIDE_ROLE_DESCRIPTION'?: string;
   'SI_CHANGE_PASSWORD.BACK'?: string;
   'SI_CHANGE_PASSWORD.CHANGE'?: string;
   'SI_CHANGE_PASSWORD.CHANGE_FACTORY_PASSWORD'?: string;

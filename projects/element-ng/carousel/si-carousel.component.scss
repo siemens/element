@@ -1,0 +1,50 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+@use '@siemens/element-theme/src/styles/variables/spacers';
+
+:host {
+  --si-carousel-gap: #{map.get(spacers.$spacers, 6)};
+
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+}
+
+.carousel-viewport {
+  min-block-size: 0;
+  overflow-y: hidden;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.page-buttons {
+  transition: transform variables.$element-default-transition-duration ease;
+}
+
+.carousel-track {
+  display: flex;
+  gap: var(--si-carousel-gap);
+}
+
+.carousel-pager-dot {
+  inline-size: 0.375rem;
+  block-size: 0.375rem;
+  background-color: variables.$element-ui-3;
+  transition: background-color variables.$element-default-transition-duration ease;
+
+  &.active {
+    transition:
+      inline-size variables.$element-default-transition-duration ease,
+      background-color variables.$element-default-transition-duration ease;
+    inline-size: 0.75rem;
+    background-color: variables.$element-ui-0;
+    border-radius: 6.25rem;
+  }
+}
+
+.carousel-pager-small-dot {
+  background-color: variables.$element-ui-3;
+  inline-size: 0.25rem;
+  block-size: 0.25rem;
+}
