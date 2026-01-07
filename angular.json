@@ -835,6 +835,82 @@
           "defaultConfiguration": "development"
         }
       }
+    },
+    "icon-viewer": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/icon-viewer",
+      "sourceRoot": "projects/icon-viewer/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "outputPath": { "base": "dist/@siemens/icon-viewer", "browser": "" },
+            "index": "projects/icon-viewer/src/index.html",
+            "browser": "projects/icon-viewer/src/main.ts",
+            "tsConfig": "projects/icon-viewer/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/icon-viewer/src/favicon.png",
+              {
+                "glob": "element-icon-metadata.json",
+                "input": "node_modules/@siemens/element-icons/dist",
+                "output": "/"
+              },
+              {
+                "glob": "siemens-element-icons.min.css",
+                "input": "node_modules/@siemens/element-icons/dist/style",
+                "output": "/"
+              },
+              {
+                "glob": "*",
+                "input": "node_modules/@siemens/element-icons/dist/fonts",
+                "output": "/fonts"
+              }
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["node_modules/"]
+            }
+          },
+          "configurations": {
+            "production": {
+              "assets": [],
+              "outputPath": { "base": "docs/_src/icon-viewer", "browser": "" },
+              "optimization": false,
+              "outputHashing": "none",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": false
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "buildTarget": "icon-viewer:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "icon-viewer:build:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/icon-viewer/**/*.ts",
+              "projects/icon-viewer/src/**/*.html"
+            ],
+            "eslintConfig": "projects/icon-viewer/eslint.config.js"
+          }
+        }
+      }
     }
   },
   "version": 1,

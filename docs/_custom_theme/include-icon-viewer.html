@@ -1,0 +1,37 @@
+<script src="../_src/icon-viewer/main.js" type="module"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const iconViewer = document.getElementsByTagName('SI-ICON-VIEWER')[0];
+    if (!iconViewer) return;
+    iconViewer.addEventListener('categoriesReceived', categoriesEvent => {
+      const categories = categoriesEvent.detail;
+      const previousItems = document.getElementsByClassName('icon-viewer-toc-nav-item');
+      if (previousItems) {
+        Array.from(previousItems).forEach(item => item.remove());
+      }
+
+      // #toc-nav is not unique. It exists in both primary and secondary sidebar.
+      const nav = document.querySelector('.md-sidebar--secondary #toc-nav');
+      if (!nav || !categories.length) return;
+      const templateItem = nav.firstElementChild;
+
+      if (!templateItem) return;
+      debugger;
+      categories.forEach(category => {
+        const newItem = templateItem.cloneNode(true);
+
+        newItem.classList.add('icon-viewer-toc-nav-item');
+
+        const newHrefItem = newItem.firstElementChild;
+
+        if (newHrefItem) {
+          newHrefItem.textContent = category.title;
+          newHrefItem.title = category.title;
+          newHrefItem.href = '#' + category.title;
+        }
+
+        nav.append(newItem);
+      });
+    });
+  });
+</script>

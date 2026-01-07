@@ -29,6 +29,8 @@ projects/element-theme/ @siemens/siemens-element-owners @dr-itz
 
 projects/element-docs-builder/ @siemens/siemens-element-owners @Killusions @spliffone
 
+projects/icon-viewer/ @siemens/siemens-element-owners @spliffone
+
 projects/element-ng/filtered-search/ @siemens/siemens-element-owners @chintankavathia @spliffone
 api-goldens/element-ng/filtered-search/ @siemens/siemens-element-owners @chintankavathia @spliffone
 projects/element-ng/data-range-filter/ @siemens/siemens-element-owners @dr-itz @spliffone

@@ -1,0 +1,9 @@
+<i class="icon-preview" [class.icon-no-margin]="!iconsMargin()" [class]="iconClass()"></i>
+<div class="text">
+  <div class="name" [class.copied]="copied()">
+    {{ displayText() }}
+  </div>
+  @if (displayTags() && iconTags()) {
+    <div class="tags">{{ iconTags() }}</div>
+  }
+</div>

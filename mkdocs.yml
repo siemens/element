@@ -170,6 +170,7 @@ nav:
       - About:                            'components/pages/about.md'
       - Info Page:                        'components/pages/info-page.md'
       - Landing Page:                     'components/pages/landing-page.md'
+  - Icons:                                'icons.md'
   - Patterns:
     - Overview:                           'patterns/index.md'
     - Backdrop:                           'patterns/backdrop.md'
@@ -212,6 +213,7 @@ theme:
         icon: siemens/element/element-theme-auto
         name: Switch to dark mode
   favicon: '_src/favicon.png'
+  custom_dir: docs/_custom_theme
   features:
     - navigation.tabs
     - page.toc
