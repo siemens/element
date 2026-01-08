@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -18,7 +17,7 @@ import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-
 
 @Component({
   selector: 'si-summary-chip',
-  imports: [NgClass, SiIconComponent, SiTranslatePipe],
+  imports: [SiIconComponent, SiTranslatePipe],
   templateUrl: './si-summary-chip.component.html',
   styleUrl: './si-summary-chip.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
