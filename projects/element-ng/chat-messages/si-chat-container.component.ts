@@ -198,6 +198,20 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
   }
 
   /**
+   * Scrolls to the top of the messages container immediately.
+   */
+  public scrollToTop(): void {
+    const container = this.messagesContainer();
+    if (!container) {
+      return;
+    }
+
+    const element = container.nativeElement;
+    element.scrollTop = 0;
+    this.isUserAtBottom = false;
+  }
+
+  /**
    * Focuses the messages container element.
    */
   public focus(): void {

@@ -68,6 +68,7 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
     focus(): void;
     readonly noAutoScroll: _angular_core.InputSignalWithTransform<boolean, string | boolean>;
     scrollToBottom(): void;
+    scrollToTop(): void;
 }
 
 // @public
