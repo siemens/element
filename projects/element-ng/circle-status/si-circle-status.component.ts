@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -29,7 +28,7 @@ import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'si-circle-status',
-  imports: [NgClass, SiIconComponent, SiTranslatePipe],
+  imports: [SiIconComponent, SiTranslatePipe],
   templateUrl: './si-circle-status.component.html',
   styleUrl: './si-circle-status.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

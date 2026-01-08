@@ -7,11 +7,10 @@
 >
   <div
     #bg
-    class="bg"
+    [class]="`bg ${backgroundClass()}`"
     [class.pulse]="blinkOn()"
     [class.deprecated-color]="!status()"
     [class.contrast-fix]="contrastFix()"
-    [ngClass]="backgroundClass()"
     [style.background-color]="color()"
   ></div>
   @if (!status()) {
@@ -20,12 +19,8 @@
   @let iconConfig = statusIcon();
   @if (iconConfig) {
     <span class="status-icon icon-stack indicator">
-      <si-icon class="status-icon" [ngClass]="iconConfig.color" [icon]="iconConfig.icon" />
-      <si-icon
-        class="status-icon"
-        [ngClass]="iconConfig.stackedColor"
-        [icon]="iconConfig.stacked"
-      />
+      <si-icon [class]="`status-icon ${iconConfig.color}`" [icon]="iconConfig.icon" />
+      <si-icon [class]="`status-icon ${iconConfig.stackedColor}`" [icon]="iconConfig.stacked" />
     </span>
   }
   @let eventIconValue = eventIcon();
