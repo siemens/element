@@ -1,6 +1,6 @@
 <si-file-dropzone
   #dropZone
-  [ngClass]="autoUpload() ? 'mb-8' : 'mb-4'"
+  [class]="autoUpload() ? 'mb-8' : 'mb-4'"
   [uploadTextFileSelect]="uploadTextFileSelect()"
   [uploadDropText]="uploadDropText()"
   [multiple]="maxFiles() > 1"
@@ -20,11 +20,7 @@
 
 <div class="file-list">
   @for (file of files; track file) {
-    <div
-      class="file d-flex"
-      [ngClass]="autoUpload() ? 'mb-8' : 'mb-4'"
-      [class.fade-out]="file.fadeOut"
-    >
+    <div [class]="`file d-flex ${autoUpload() ? 'mb-8' : 'mb-4'}`" [class.fade-out]="file.fadeOut">
       <si-icon class="icon align-self-center ms-6 me-4" [icon]="icons.elementDocument" />
       <div class="flex-fill overflow-hidden">
         <div class="file-info">
