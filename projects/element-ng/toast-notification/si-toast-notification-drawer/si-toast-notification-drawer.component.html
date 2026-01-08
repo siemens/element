@@ -1,9 +1,9 @@
 @for (toast of toasts() | async; track toast) {
   <si-toast-notification
-    @toastTrigger
     class="position-relative"
+    animate.enter="toast-enter"
+    animate.leave="toast-leave"
     [toast]="toast"
-    [@.disabled]="animationsDisabled"
     (paused)="paused.emit(toast)"
     (resumed)="resumed.emit(toast)"
   />
