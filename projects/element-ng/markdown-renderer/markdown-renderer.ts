@@ -107,6 +107,20 @@ export const getMarkdownRenderer = (
     if (processOpts.allowCodeBlocks) {
       const codeBlockMap = new Map<string, string>();
 
+      // Match code blocks with 4 or more backticks (for displaying nested code blocks)
+      // Only matches at line start (after optional whitespace), not after > prefix
+      result = result.replace(
+        /(^|\n)([\s]*)(````+)([^\n]*)\n?([\s\S]*?)\n?\s*\3/gm,
+        (match, prefix, indent, backticks, language, content) => {
+          const placeholder = `--CODE-BLOCK-${Math.random().toString(36).substring(2, 15)}--`;
+          // Don't process content as markdown - keep it as plain text for code display
+          const cacheKey = createCodeBlockCacheKey(language.trim(), content, false);
+          codeBlockPlaceholderMap.set(placeholder, cacheKey);
+          codeBlockMap.set(placeholder, `<!--CODE-BLOCK-PLACEHOLDER-${placeholder}-->`);
+          return prefix + indent + placeholder;
+        }
+      );
+
       // Match standard code blocks (3 backticks)
       // Only matches at line start (after optional whitespace), not after > prefix
       // Add temporary closing marker for incomplete code blocks during streaming
