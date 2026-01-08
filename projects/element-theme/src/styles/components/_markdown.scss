@@ -112,16 +112,24 @@
   > *:last-child {
     // stylelint-disable-next-line declaration-no-important
     margin-block-end: 0 !important;
+
+    &.code-wrapper > pre {
+      // stylelint-disable-next-line declaration-no-important
+      margin-block-end: 0 !important;
+    }
+
+    &.table-wrapper > table {
+      // stylelint-disable-next-line declaration-no-important
+      margin-block-end: 0 !important;
+    }
   }
 
   .table-wrapper {
     position: relative;
     inline-size: max-content;
     max-inline-size: 100%;
-    // stylelint-disable-next-line declaration-no-important
-    margin-block-start: map.get(variables.$spacers, 6) !important;
-    // stylelint-disable-next-line declaration-no-important
-    margin-block-end: 0 !important;
+    margin-block-start: map.get(variables.$spacers, 6);
+    margin-block-end: map.get(variables.$spacers, 6);
   }
 
   .download-table-btn {
@@ -187,6 +195,7 @@
     block-size: max-content;
     overflow-y: visible;
     overflow-x: visible; // TODO: Support formulas wider than the container (currently not possible because it will create horizontal scrollbars)
+    margin-block-end: map.get(variables.$spacers, 6);
 
     .katex-display {
       inline-size: max-content;
