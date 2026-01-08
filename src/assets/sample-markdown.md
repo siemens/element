@@ -118,3 +118,5 @@ Display math uses double dollar signs for block equations:
 $$
 \int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}
 $$
+
+UML is not supported in this markdown component.
