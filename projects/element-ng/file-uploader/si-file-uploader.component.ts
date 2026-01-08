@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import {
   HttpClient,
   HttpErrorResponse,
@@ -89,7 +88,6 @@ interface ExtUploadFile extends UploadFile {
 @Component({
   selector: 'si-file-uploader',
   imports: [
-    NgClass,
     SiStatusIconComponent,
     SiFileDropzoneComponent,
     SiIconComponent,
