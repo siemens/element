@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -22,7 +21,7 @@ export type AvatarSize = 'tiny' | 'xsmall' | 'small' | 'regular' | 'large' | 'xl
 
 @Component({
   selector: 'si-avatar',
-  imports: [NgClass, SiIconComponent],
+  imports: [SiIconComponent],
   templateUrl: './si-avatar.component.html',
   styleUrl: './si-avatar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
