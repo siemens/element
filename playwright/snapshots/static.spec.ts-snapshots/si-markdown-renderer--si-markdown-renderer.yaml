@@ -10,12 +10,9 @@
   - text: You can use inline code like
   - code: console.log('Hello World')
   - text: "or multi-line code blocks:"
-- paragraph:
-  - button "Copy"
-  - code: "function calculateSum(a, b) { return a + b; } const result = calculateSum(5, 3); console.log(`Result: ${result}`);"
-- paragraph
+- button "Copy"
+- code: "function calculateSum(a, b) { return a + b; } const result = calculateSum(5, 3); console.log(`Result: ${result}`);"
 - separator
-- paragraph
 - heading "Formatting Options" [level=2]
 - paragraph: Here's a paragraph explaining the formatting options available.
 - paragraph: "Another paragraph with different formatting elements:"
@@ -42,9 +39,7 @@
   - text: "Links are also automatically detected:"
   - link "https://angular.io":
     - /url: https://angular.io
-- paragraph
 - separator
-- paragraph
 - heading "Lists and Bullets" [level=2]
 - paragraph: "Here are the key features:"
 - list:
@@ -62,10 +57,9 @@
   - listitem: First, analyze the requirements
   - listitem: Then, implement the solution
   - listitem: Finally, test the implementation
-- paragraph
 - separator
-- blockquote: This is a blockquote that demonstrates how quoted text appears in the markdown content component.
-- paragraph
+- blockquote:
+  - paragraph: This is a blockquote that demonstrates how quoted text appears in the markdown content component.
 - paragraph: This paragraph follows the blockquotes to demonstrate proper paragraph separation.
 - paragraph: This is a separate paragraph created by double line breaks.
 - list:
@@ -76,100 +70,89 @@
   - listitem: First ordered item
   - listitem: Second ordered item
 - paragraph: Final paragraph to show proper spacing.
-- paragraph
 - separator
-- paragraph
 - heading "Images" [level=2]
 - paragraph: "Images can be included as follows:"
-- paragraph:
-  - img "Building Image"
-- paragraph
 - separator
-- paragraph
 - heading "Tables" [level=2]
 - paragraph: "Tables are also supported:"
-- paragraph:
-  - button "Download CSV"
-  - table:
-    - rowgroup:
-      - row "Feature Examples Status Notes":
-        - columnheader "Feature":
-          - paragraph: Feature
-        - columnheader "Examples":
-          - paragraph: Examples
-        - columnheader "Status":
-          - paragraph: Status
-        - columnheader "Notes":
-          - paragraph: Notes
-    - rowgroup:
-      - row "Basic content Alice Johnson Bob Smith ✓ Complete Simple text and line breaks":
-        - cell "Basic content":
-          - paragraph:
-            - strong: Basic content
-        - cell "Alice Johnson Bob Smith":
-          - paragraph: Alice Johnson Bob Smith
-        - cell "✓ Complete":
-          - paragraph: ✓ Complete
-        - cell "Simple text and line breaks":
-          - paragraph: Simple text and line breaks
-      - row "Formatting Bold and italic Plus code and multiline code ✓ Complete Multiple markdown formats":
-        - cell "Formatting":
-          - paragraph:
-            - emphasis: Formatting
-        - cell "Bold and italic Plus code and multiline code":
-          - paragraph:
-            - strong: Bold
-            - text: and
-            - emphasis: italic
-            - text: Plus
-            - code: code
-            - text: and
-            - code: multiline code
-        - cell "✓ Complete":
-          - paragraph: ✓ Complete
-        - cell "Multiple markdown formats":
-          - paragraph: Multiple markdown formats
-      - row "Lists in cells First item Second item Third item ✓ Complete Bullet lists work properly":
-        - cell "Lists in cells":
-          - paragraph: Lists in cells
-        - cell "First item Second item Third item":
-          - list:
-            - listitem: First item
-            - listitem: Second item
-            - listitem: Third item
-        - cell "✓ Complete":
-          - paragraph: ✓ Complete
-        - cell "Bullet lists work properly":
-          - paragraph: Bullet lists work properly
-      - 'row "Escaped pipes grep \"text|pattern\" awk ''{print 2}'' ✓ Complete Use | for literal pipes"':
-        - cell "Escaped pipes":
-          - paragraph: Escaped pipes
-        - 'cell "grep \"text|pattern\" awk ''{print 2}''"':
-          - paragraph: "grep \"text|pattern\" awk '{print 2}'"
-        - cell "✓ Complete":
-          - paragraph: ✓ Complete
-        - cell "Use | for literal pipes":
-          - paragraph: Use | for literal pipes
-      - row "Line breaks Line 1 Line 2 Line 3 ✓ Complete Uses <br> tags":
-        - cell "Line breaks":
-          - paragraph: Line breaks
-        - cell "Line 1 Line 2 Line 3":
-          - paragraph: Line 1 Line 2 Line 3
-        - cell "✓ Complete":
-          - paragraph: ✓ Complete
-        - cell "Uses <br> tags":
-          - paragraph:
-            - text: Uses
-            - code: <br>
-            - text: tags
-  - text: This paragraph appears after the tables to demonstrate proper spacing.
-- paragraph
+- button "Download CSV"
+- table:
+  - rowgroup:
+    - row "Feature Examples Status Notes":
+      - columnheader "Feature":
+        - paragraph: Feature
+      - columnheader "Examples":
+        - paragraph: Examples
+      - columnheader "Status":
+        - paragraph: Status
+      - columnheader "Notes":
+        - paragraph: Notes
+  - rowgroup:
+    - row "Basic content Alice Johnson Bob Smith ✓ Complete Simple text and line breaks":
+      - cell "Basic content":
+        - paragraph:
+          - strong: Basic content
+      - cell "Alice Johnson Bob Smith":
+        - paragraph: Alice Johnson Bob Smith
+      - cell "✓ Complete":
+        - paragraph: ✓ Complete
+      - cell "Simple text and line breaks":
+        - paragraph: Simple text and line breaks
+    - row "Formatting Bold and italic Plus code and multiline code ✓ Complete Multiple markdown formats":
+      - cell "Formatting":
+        - paragraph:
+          - emphasis: Formatting
+      - cell "Bold and italic Plus code and multiline code":
+        - paragraph:
+          - strong: Bold
+          - text: and
+          - emphasis: italic
+          - text: Plus
+          - code: code
+          - text: and
+          - code: multiline code
+      - cell "✓ Complete":
+        - paragraph: ✓ Complete
+      - cell "Multiple markdown formats":
+        - paragraph: Multiple markdown formats
+    - row "Lists in cells First item Second item Third item ✓ Complete Bullet lists work properly":
+      - cell "Lists in cells":
+        - paragraph: Lists in cells
+      - cell "First item Second item Third item":
+        - list:
+          - listitem: First item
+          - listitem: Second item
+          - listitem: Third item
+      - cell "✓ Complete":
+        - paragraph: ✓ Complete
+      - cell "Bullet lists work properly":
+        - paragraph: Bullet lists work properly
+    - 'row "Escaped pipes grep \"text|pattern\" awk ''{print 2}'' ✓ Complete Use | for literal pipes"':
+      - cell "Escaped pipes":
+        - paragraph: Escaped pipes
+      - 'cell "grep \"text|pattern\" awk ''{print 2}''"':
+        - paragraph: "grep \"text|pattern\" awk '{print 2}'"
+      - cell "✓ Complete":
+        - paragraph: ✓ Complete
+      - cell "Use | for literal pipes":
+        - paragraph: Use | for literal pipes
+    - row "Line breaks Line 1 Line 2 Line 3 ✓ Complete Uses <br> tags":
+      - cell "Line breaks":
+        - paragraph: Line breaks
+      - cell "Line 1 Line 2 Line 3":
+        - paragraph: Line 1 Line 2 Line 3
+      - cell "✓ Complete":
+        - paragraph: ✓ Complete
+      - cell "Uses <br> tags":
+        - paragraph:
+          - text: Uses
+          - code: <br>
+          - text: tags
+- paragraph: This paragraph appears after the tables to demonstrate proper spacing.
 - separator
-- paragraph
 - heading "Math Expressions" [level=2]
 - paragraph: LaTeX math expressions are supported for mathematical notation.
 - paragraph: "Inline math can be written like this: or the quadratic formula ."
 - paragraph: "/You can escape dollar signs with a backslash to show literal prices: \\$\\d+, \\$\\d+, \\$\\d+\\./"
 - paragraph: "Display math uses double dollar signs for block equations:"
-- paragraph
-- paragraph
