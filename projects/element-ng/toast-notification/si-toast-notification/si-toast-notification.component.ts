@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import { Component, computed, HostListener, inject, input, output, signal } from '@angular/core';
 import {
   addIcons,
@@ -18,7 +17,7 @@ import { SI_TOAST_AUTO_HIDE_DELAY, SiToast } from '../si-toast.model';
 
 @Component({
   selector: 'si-toast-notification',
-  imports: [NgClass, SiLinkModule, SiIconComponent, SiStatusIconComponent, SiTranslatePipe],
+  imports: [SiLinkModule, SiIconComponent, SiStatusIconComponent, SiTranslatePipe],
   templateUrl: './si-toast-notification.component.html',
   styleUrl: './si-toast-notification.component.scss'
 })
