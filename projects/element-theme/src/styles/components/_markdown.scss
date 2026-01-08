@@ -1,6 +1,7 @@
 @use 'sass:map';
 
 @use '../variables';
+@use '../bootstrap/buttons' as buttons;
 
 @use './markdown-hljs-theme';
 
@@ -56,6 +57,7 @@
     padding-block: map.get(variables.$spacers, 4);
     padding-inline: map.get(variables.$spacers, 4);
     border-radius: variables.$element-radius-1;
+    vertical-align: middle;
     overflow-x: auto;
     margin-inline: 0;
     inline-size: max-content;
@@ -63,6 +65,7 @@
     box-sizing: border-box;
 
     code {
+      vertical-align: middle;
       background-color: transparent;
       padding-block: 0;
       padding-inline: 0;
@@ -72,6 +75,10 @@
     p {
       margin-block: 0;
     }
+  }
+
+  .code-wrapper.has-copy-button pre {
+    min-block-size: buttons.$btn-circle-size-sm;
   }
 
   .copy-code-btn {
@@ -174,11 +181,19 @@
   }
 
   .latex-display-wrapper {
-    display: block;
-    margin-block: map.get(variables.$spacers, 4);
-    overflow-x: auto;
-    max-inline-size: 100%;
+    display: flex;
     text-align: center;
+    inline-size: max-content;
+    block-size: max-content;
+    overflow-y: visible;
+    overflow-x: visible; // TODO: Support formulas wider than the container (currently not possible because it will create horizontal scrollbars)
+
+    .katex-display {
+      inline-size: max-content;
+      overflow: visible;
+      // stylelint-disable-next-line declaration-no-important
+      box-sizing: content-box !important;
+    }
 
     .katex,
     .katex * {
