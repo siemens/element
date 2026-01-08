@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CdkPortalOutlet, Portal, PortalModule } from '@angular/cdk/portal';
 import { isPlatformBrowser } from '@angular/common';
 import {
@@ -66,14 +65,7 @@ import { SidePanelMode, SidePanelSize } from './side-panel.model';
     '[class.rpanel-resize-xl]': 'isXl()',
     '[class.rpanel-resize-xxl]': 'isXxl()',
     '[class.rpanel-resize-xxxl]': 'isXxxl()'
-  },
-  animations: [
-    trigger('backdrop', [
-      state('show', style({ 'opacity': '1' })),
-      state('hide', style({ 'opacity': '0' })),
-      transition('* <=> *', [animate('0.15s linear')])
-    ])
-  ]
+  }
 })
 export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
   /**
