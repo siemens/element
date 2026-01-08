@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 /* eslint-disable @angular-eslint/no-conflicting-lifecycle */
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -63,7 +63,6 @@ let idCounter = 1;
 @Component({
   selector: 'si-status-bar',
   imports: [
-    NgClass,
     NgTemplateOutlet,
     SiIconComponent,
     SiStatusBarItemComponent,

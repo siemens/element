@@ -6,12 +6,12 @@
 <div
   #thebar
   aria-busy="true"
+  [class]="responsiveMode ? `responsive-${responsiveMode}` : ''"
   [class.responsive]="responsiveMode"
   [class.expanded]="expanded()"
   [class.compact]="responsiveMode || compact()"
   [class.pulse-off]="blinkOnOff() === false"
   [class.pulse-on]="blinkOnOff()"
-  [ngClass]="responsiveMode ? 'responsive-' + responsiveMode : ''"
 >
   <div
     class="status-bar-wrapper rounded-2"
