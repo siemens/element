@@ -9,7 +9,7 @@
       [style.--toast-timer-duration.s]="toastTimeoutInSeconds()"
     ></div>
   }
-  <div class="bar" [ngClass]="statusColor()"></div>
+  <div [class]="`bar ${statusColor()}`"></div>
   <si-status-icon class="icon" [status]="status()" />
 
   <div class="toast-content px-4">
