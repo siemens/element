@@ -6,9 +6,9 @@
 
 import * as _angular_core from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
+import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SiTranslateService } from '@siemens/element-translate-ng/translate';
-import { TranslatableString } from '@siemens/element-translate-ng/translate';
+import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
 
 // @public
 export const getMarkdownRenderer: (sanitizer: DomSanitizer, options?: MarkdownRendererOptions) => ((text: string) => Node);
@@ -25,10 +25,10 @@ export interface MarkdownRendererOptions {
 // @public
 export class SiMarkdownRendererComponent {
     constructor();
-    readonly copyButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly copyButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly disableCopyButton: _angular_core.InputSignal<boolean>;
     readonly disableDownloadButton: _angular_core.InputSignal<boolean>;
-    readonly downloadButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly downloadButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly latexRenderer: _angular_core.InputSignal<((latex: string, displayMode: boolean) => string | undefined) | undefined>;
     readonly syntaxHighlighter: _angular_core.InputSignal<((code: string, language?: string) => string | undefined) | undefined>;
     readonly text: _angular_core.InputSignal<string>;
