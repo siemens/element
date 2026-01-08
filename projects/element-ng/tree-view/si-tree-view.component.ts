@@ -19,7 +19,6 @@ import {
   contentChild,
   contentChildren,
   ElementRef,
-  HostListener,
   inject,
   INJECTOR,
   input,
@@ -118,7 +117,14 @@ const rootDefaults: TreeItem = {
     SiTreeViewItemHeightService,
     SiTreeViewService,
     SiTreeViewVirtualizationService
-  ]
+  ],
+  host: {
+    '(document:keyup.shift)': 'onKeyUpShift()',
+    '(document:keyup.control)': 'onKeyUpCtrl()',
+    '(document:keyup.meta)': 'onKeyUpMeta()',
+    '(document:mouseleave)': 'onMouseLeave()',
+    '(keydown)': 'handleKeydown($event)'
+  }
 })
 export class SiTreeViewComponent
   implements OnInit, OnChanges, OnDestroy, AfterViewInit, AfterViewChecked
@@ -901,7 +907,6 @@ export class SiTreeViewComponent
     }
   }
 
-  @HostListener('document:keyup.shift')
   protected onKeyUpShift(): void {
     if (this._multiSelectionActive) {
       this._multiSelectionActive = false;
@@ -909,7 +914,6 @@ export class SiTreeViewComponent
     }
   }
 
-  @HostListener('document:keyup.control')
   protected onKeyUpCtrl(): void {
     if (this._multiSelectionActive) {
       this._multiSelectionActive = false;
@@ -917,7 +921,6 @@ export class SiTreeViewComponent
     }
   }
 
-  @HostListener('document:keyup.meta')
   protected onKeyUpMeta(): void {
     if (this._multiSelectionActive) {
       this._multiSelectionActive = false;
@@ -925,7 +928,6 @@ export class SiTreeViewComponent
     }
   }
 
-  @HostListener('document:mouseleave')
   protected onMouseLeave(): void {
     if (this._multiSelectionActive) {
       this._multiSelectionActive = false;
@@ -933,7 +935,6 @@ export class SiTreeViewComponent
     }
   }
 
-  @HostListener('keydown', ['$event'])
   protected handleKeydown(event: KeyboardEvent): void {
     this.keyManager.onKeydown(event);
   }
