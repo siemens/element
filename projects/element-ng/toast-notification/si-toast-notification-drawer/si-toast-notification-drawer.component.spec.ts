@@ -4,7 +4,6 @@
  */
 import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable, Subject } from 'rxjs';
 
 import { SiToast } from '../si-toast.model';
@@ -26,7 +25,7 @@ describe('SiToastNotificationDrawerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, TestHostComponent],
+      imports: [TestHostComponent],
       providers: [provideZonelessChangeDetection()]
     }).compileComponents();
   });
