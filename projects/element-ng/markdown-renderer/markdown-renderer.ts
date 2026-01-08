@@ -243,6 +243,11 @@ export const getMarkdownRenderer = (
 
     // Step 7: Process links (both formats, can contain inline code)
     if (processOpts.allowLinks) {
+      result = result.replace(/<(https?:\/\/[^\s>]+)>/g, (match, url) => {
+        const sanitizedUrl = sanitizeUrl(url, sanitizer);
+        return `<a href="${sanitizedUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(url)}</a>`;
+      });
+
       // Images: ![alt](url)
       result = result.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, url) => {
         const sanitizedUrl = sanitizeUrl(url, sanitizer);
