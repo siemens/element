@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 import { A11yModule } from '@angular/cdk/a11y';
-import { NgClass } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -22,7 +21,7 @@ import { ModalRef } from './modalref';
 
 @Component({
   selector: 'si-modal',
-  imports: [A11yModule, NgClass],
+  imports: [A11yModule],
   templateUrl: './si-modal.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
