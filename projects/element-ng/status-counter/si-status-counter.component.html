@@ -1,14 +1,14 @@
 @let iconValue = icon();
 <span class="icon icon-stack">
   <si-icon
-    [ngClass]="isDisabledOrCountZero() ? undefined : color()"
+    [class]="isDisabledOrCountZero() ? undefined : color()"
     [class.inactive]="isDisabledOrCountZero()"
     [icon]="iconValue"
   />
   @let stackedValue = stackedIcon();
   @if (stackedValue) {
     <si-icon
-      [ngClass]="isDisabledOrCountZero() ? 'inactive-contrast' : color() + '-contrast'"
+      [class]="isDisabledOrCountZero() ? 'inactive-contrast' : `${color()}-contrast`"
       [icon]="stackedValue"
     />
   }

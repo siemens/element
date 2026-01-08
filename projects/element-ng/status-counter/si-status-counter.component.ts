@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -15,7 +14,7 @@ import { SiIconComponent } from '@siemens/element-ng/icon';
 
 @Component({
   selector: 'si-status-counter, si-icon-status',
-  imports: [NgClass, SiIconComponent],
+  imports: [SiIconComponent],
   templateUrl: './si-status-counter.component.html',
   styleUrl: './si-status-counter.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
