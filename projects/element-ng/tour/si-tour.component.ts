@@ -11,10 +11,10 @@ import {
   ElementRef,
   HostListener,
   inject,
-  OnDestroy,
   signal,
   viewChild
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   calculateOverlayArrowPosition,
   isRTL,
@@ -22,7 +22,6 @@ import {
 } from '@siemens/element-ng/common';
 import { addIcons, elementCancel, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
-import { Subscription } from 'rxjs';
 
 import { PositionChange, SI_TOUR_TOKEN, TourAction, TourStepInternal } from './si-tour-token.model';
 
@@ -36,7 +35,7 @@ import { PositionChange, SI_TOUR_TOKEN, TourAction, TourStepInternal } from './s
     '[attr.data-step-id]': 'step()?.step?.id'
   }
 })
-export class SiTourComponent implements OnDestroy {
+export class SiTourComponent {
   protected readonly positionClass = signal('');
   protected readonly arrowPos = signal<OverlayArrowPosition | undefined>(undefined);
   protected readonly step = signal<TourStepInternal | undefined>(undefined);
@@ -52,14 +51,13 @@ export class SiTourComponent implements OnDestroy {
   protected progressText = t(() => $localize`:@@SI_TOUR.PROGRESS: {{step}} of {{total}}`);
 
   private elementRef: ElementRef<HTMLElement> = inject(ElementRef);
-  private subscription?: Subscription;
   private prevFocus: Element | null = null;
 
   private readonly focusTrap = viewChild<CdkTrapFocus>('focusTrap');
   private document = inject(DOCUMENT);
 
   constructor() {
-    this.subscription = this.tourToken.currentStep.subscribe(step => {
+    this.tourToken.currentStep.pipe(takeUntilDestroyed()).subscribe(step => {
       this.step.set(step);
       this.show.set(false);
       // prevents flickering during overlay reposition and arrow direction change
@@ -68,13 +66,9 @@ export class SiTourComponent implements OnDestroy {
         this.ensureFocused();
       }, 50);
     });
-    this.subscription.add(
-      this.tourToken.positionChange.subscribe(update => this.updatePosition(update))
-    );
-  }
-
-  ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
+    this.tourToken.positionChange
+      .pipe(takeUntilDestroyed())
+      .subscribe(update => this.updatePosition(update));
   }
 
   protected action(action: TourAction): void {
