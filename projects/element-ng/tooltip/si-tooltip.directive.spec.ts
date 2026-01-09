@@ -71,6 +71,7 @@ describe('SiTooltipDirective', () => {
       expect(document.querySelector('.tooltip')).toBeFalsy();
 
       jasmine.clock().tick(500);
+      fixture.detectChanges();
       expect(document.querySelector('.tooltip')).toBeTruthy();
 
       button.dispatchEvent(new MouseEvent('mouseleave'));
