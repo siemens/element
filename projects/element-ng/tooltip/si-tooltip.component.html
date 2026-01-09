@@ -1,24 +1,30 @@
-<div
-  class="tooltip show position-relative"
-  role="tooltip"
-  [id]="id()"
-  [class]="tooltipPositionClass()"
->
+@if (isVisible()) {
   <div
-    class="tooltip-arrow"
-    [style.left.px]="arrowPos()?.left"
-    [style.right.px]="arrowPos()?.right"
-  ></div>
-  <div class="tooltip-inner">
-    @if (tooltipText()) {
-      <div class="si-body">{{ tooltipText() | translate }}</div>
-    } @else if (tooltipTemplate()) {
-      <ng-template
-        [ngTemplateOutlet]="tooltipTemplate()"
-        [ngTemplateOutletContext]="tooltipContext()"
-      />
-    } @else if (tooltipComponent()) {
-      <ng-container [ngComponentOutlet]="tooltipComponent()" />
-    }
+    class="tooltip show position-relative"
+    role="tooltip"
+    animate.leave="tooltip-leave"
+    [id]="id()"
+    [class]="tooltipPositionClass()"
+    (animationstart)="onAnimationstart($event)"
+    (animationend)="onAnimationend($event)"
+    (transitionend)="onTransitionend($event)"
+  >
+    <div
+      class="tooltip-arrow"
+      [style.left.px]="arrowPos()?.left"
+      [style.right.px]="arrowPos()?.right"
+    ></div>
+    <div class="tooltip-inner">
+      @if (tooltipText()) {
+        <div class="si-body">{{ tooltipText() | translate }}</div>
+      } @else if (tooltipTemplate()) {
+        <ng-template
+          [ngTemplateOutlet]="tooltipTemplate()"
+          [ngTemplateOutletContext]="tooltipContext()"
+        />
+      } @else if (tooltipComponent()) {
+        <ng-container [ngComponentOutlet]="tooltipComponent()" />
+      }
+    </div>
   </div>
-</div>
+}
