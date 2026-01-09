@@ -27,7 +27,7 @@
     [typeaheadMinLength]="0"
     [typeaheadOptionsLimit]="maxCriteriaOptions()"
     [typeaheadAutoSelectIndex]="value?.length ? 0 : -1"
-    [readOnly]="readonly() || onlySelectValue() || definition().onlySelectValue"
+    [readOnly]="onlySelectValue() || definition().onlySelectValue"
     [typeaheadOptionsInScrollableView]="optionsInScrollableView()"
     [attr.aria-label]="searchLabel() | translate"
     (keydown)="valueFilterKeys($event)"
