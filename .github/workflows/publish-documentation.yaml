@@ -1,31 +1,308 @@
 name: Publish Documentation
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      deploy_as_release:
+        description: 'Deploy as release version (e.g., v1.2.3) - will deploy the docs as if this is a release with this version'
+        required: false
+        type: string
+        default: ''
+      force_deploy:
+        description: 'Force deployment even on non-main branches (for testing)'
+        required: false
+        type: boolean
+        default: false
+      skip_build:
+        description: 'Skip build-and-test job (use existing artifacts)'
+        required: false
+        type: boolean
+        default: false
+  workflow_call:
+    inputs:
+      deploy_as_release:
+        description: 'Deploy as release version (e.g., v1.2.3) - will deploy the docs as if this is a release with this version'
+        required: false
+        type: string
+        default: ''
+      skip_build:
+        description: 'Skip build-and-test job (assumes artifacts already exist)'
+        required: false
+        type: boolean
+        default: false
+
+env:
+  PYTHON_VERSION: '3.11'
+  NODE_VERSION: '20'
+  VERSIONED_BUCKET_NAME: simpl-element-release
+  CLOUDFRONT_DOMAIN: d2uqfzn4lxgtwv.cloudfront.net
 
 jobs:
   build-and-test:
+    if: ${{ !inputs.skip_build && github.event.inputs.skip_build != 'true' }}
     uses: ./.github/workflows/build-and-test.yaml
     secrets:
       SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
       SIEMENS_NPM_USER: ${{ secrets.SIEMENS_NPM_USER }}
       MAPTILER_KEY: ${{ secrets.MAPTILER_KEY }}
 
-  publish-documentation:
+  # Simple deployment for main branch (no versioning)
+  publish-documentation-main:
     runs-on: ubuntu-24.04
-    permissions:
-      pages: write
-      id-token: write
     needs:
       - build-and-test
+    if: >-
+      ${{
+        needs.build-and-test.result == 'success' &&
+        github.ref == format('refs/heads/{0}', github.event.repository.default_branch) &&
+        !inputs.deploy_as_release
+      }}
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
     steps:
-      - uses: actions/configure-pages@v5
-      - uses: actions/download-artifact@v7
+      - name: Download documentation artifact
+        uses: actions/download-artifact@v7
         with:
           name: pages
           path: dist/design
-      - uses: actions/upload-pages-artifact@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
         with:
           path: 'dist/design'
-      - uses: actions/deploy-pages@v4
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+
+  determine-documentation-versions:
+    needs:
+      - build-and-test
+    if: ${{ always() && (needs.build-and-test.result == 'success' || inputs.skip_build) && inputs.deploy_as_release }}
+    permissions:
+      contents: read
+    runs-on: ubuntu-24.04
+    outputs:
+      deploy_major: ${{ steps.deploy.outputs.deploy_major }}
+      major_version: ${{ steps.deploy.outputs.major_version }}
+      version: ${{ steps.deploy.outputs.version }}
+      should_deploy: ${{ steps.deploy.outputs.should_deploy }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine deployment targets
+        id: deploy
+        run: |
+          # Initialize all outputs
+          DEPLOY_MAJOR="false"
+          MAJOR_VERSION=""
+          VERSION=""
+          SHOULD_DEPLOY="false"
+
+          DEPLOY_AS_RELEASE="${{ github.event.inputs.deploy_as_release || inputs.deploy_as_release }}"
+
+          # Validate and extract version info
+          if [[ -n "$DEPLOY_AS_RELEASE" ]]; then
+            # Ensure version starts with 'v'
+            if [[ ! "$DEPLOY_AS_RELEASE" =~ ^v[0-9]+\.[0-9]+\.[0-9]+.*$ ]]; then
+              echo "Error: Deploy as release version must be in format 'v1.2.3' or 'v1.2.3-suffix'"
+              echo "Provided: '$DEPLOY_AS_RELEASE'"
+              exit 1
+            fi
+
+            VERSION="${DEPLOY_AS_RELEASE#v}"
+            MAJOR_VERSION="v$(echo "$VERSION" | cut -d. -f1)"
+
+            # Check if it's a pre-release (contains -, like v1.0.0-rc1)
+            IS_PRERELEASE="false"
+            if [[ "$VERSION" =~ -.*$ ]]; then
+              IS_PRERELEASE="true"
+            fi
+
+            # Deploy to major version except for pre/next/rc releases
+            if [[ "$IS_PRERELEASE" == "false" ]]; then
+              DEPLOY_MAJOR="true"
+              SHOULD_DEPLOY="true"
+            fi
+          fi
+
+          echo "deploy_major=$DEPLOY_MAJOR" >> $GITHUB_OUTPUT
+          echo "major_version=$MAJOR_VERSION" >> $GITHUB_OUTPUT
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "should_deploy=$SHOULD_DEPLOY" >> $GITHUB_OUTPUT
+
+          echo "DEPLOYMENT PLAN"
+          echo "==============="
+          echo "Branch: ${{ github.ref }}"
+          echo "Trigger: ${{ github.event_name }}"
+          echo "Major ($MAJOR_VERSION): $DEPLOY_MAJOR"
+
+  # Versioned deployment for releases (S3 only, not GitHub Pages)
+  publish-documentation-release:
+    runs-on: ubuntu-24.04
+    needs:
+      - build-and-test
+      - determine-documentation-versions
+    # always() is required because build-and-test may be skipped (when skip_build=true)
+    # We still want to run if determine-documentation-versions succeeded
+    if: >-
+      ${{
+        always() &&
+        needs.determine-documentation-versions.result == 'success' &&
+        needs.determine-documentation-versions.outputs.should_deploy == 'true'
+      }}
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download documentation artifact
+        uses: actions/download-artifact@v7
+        with:
+          name: pages
+          path: new-docs
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v5.1.1
+        with:
+          role-to-assume: arn:aws:iam::974483672234:role/simpl-element-release
+          role-session-name: element-release-docs
+          aws-region: eu-west-1
+
+      - name: Download existing versions from S3
+        run: |
+          mkdir -p deploy-site
+
+          # Download all existing documentation from S3 (as backup/source of truth)
+          echo "Downloading existing versions from S3..."
+          aws s3 cp s3://${{ env.VERSIONED_BUCKET_NAME }}/ deploy-site/ --recursive --quiet || echo "No existing versions found"
+
+      - name: Update with new version(s)
+        run: |
+          # Deploy to major version directory
+          MAJOR_VERSION="${{ needs.determine-documentation-versions.outputs.major_version }}"
+
+          echo "Updating /$MAJOR_VERSION/..."
+          # Remove old version to ensure clean deployment
+          rm -rf "deploy-site/$MAJOR_VERSION"
+          mkdir -p "deploy-site/$MAJOR_VERSION"
+          cp -r new-docs/* "deploy-site/$MAJOR_VERSION/"
+
+          # Add base tag to docs HTML files only (exclude element-examples, dashboards-demo, coverage)
+          find "deploy-site/$MAJOR_VERSION" -name "*.html" -type f \
+            ! -path "*/element-examples/*" \
+            ! -path "*/dashboards-demo/*" \
+            ! -path "*/coverage/*" \
+            -exec sed -i.bak "s|<head>|<head>\n  <base href=\"/$MAJOR_VERSION/\">|" {} \;
+
+          find "deploy-site/$MAJOR_VERSION" -name "*.bak" -type f -delete
+
+      - name: Generate versions.json
+        run: |
+          # Generate versions.json from actual folder structure in deploy-site
+          echo "Generating versions.json from deploy-site folder structure..."
+
+          VERSIONS='[]'
+
+          # Add preview as a redirect to element.siemens.io
+          echo "Adding: preview (redirect to https://element.siemens.io)"
+          VERSIONS=$(echo "$VERSIONS" | jq '. += [{"version": "https://element.siemens.io", "title": "Preview", "aliases": []}]')
+
+          # Find all version-specific folders (v1, v2, v48, etc.)
+          for version_dir in deploy-site/v*/; do
+            if [[ -d "$version_dir" ]]; then
+              version_name=$(basename "$version_dir")
+              version_num=$(echo "$version_name" | sed 's/^v//')
+              echo "Found: $version_name"
+              VERSIONS=$(echo "$VERSIONS" | jq --arg version "$version_name" --arg title "v$version_num" '. += [{"version": $version, "title": $title, "aliases": []}]')
+            fi
+          done
+
+          # Sort versions using the merge-versions.mjs script's sort logic
+          # Create a temporary script to sort the versions
+          cat > sort-versions.mjs << 'EOFSCRIPT'
+          import { readFileSync, writeFileSync } from 'fs';
+
+          const sortKey = (version) => {
+            // Preview (URL) comes first
+            if (version.startsWith('http')) return [0, 0];
+
+            const match = version.match(/^v(\d+)(?:\D|$)/);
+            if (match) {
+              return [1, -parseInt(match[1], 10)];
+            }
+
+            return [2, version];
+          };
+
+          const sortVersions = (versions) => {
+            return versions.sort((a, b) => {
+              const [groupA, valueA] = sortKey(a.version);
+              const [groupB, valueB] = sortKey(b.version);
+
+              if (groupA !== groupB) return groupA - groupB;
+              if (valueA === valueA) return 0;
+              return valueA < valueB ? -1 : 1;
+            });
+          };
+
+          const versions = JSON.parse(readFileSync(process.argv[2], 'utf-8'));
+          const sorted = sortVersions(versions);
+          writeFileSync(process.argv[3], JSON.stringify(sorted, null, 2));
+          console.log('Sorted versions:', sorted.map(v => v.version).join(', '));
+          EOFSCRIPT
+
+          echo "$VERSIONS" > unsorted-versions.json
+          node sort-versions.mjs unsorted-versions.json deploy-site/versions.json
+
+          echo "Generated versions.json:"
+          cat deploy-site/versions.json
+
+      - name: Update canonical URLs
+        run: |
+          SITE_URL="https://element.siemens.io/"
+
+          # Update canonical URLs for version directories
+          MAJOR_VERSION="${{ needs.determine-documentation-versions.outputs.major_version }}"
+          VERSION_URL="${SITE_URL}${MAJOR_VERSION}/"
+
+          find "deploy-site/$MAJOR_VERSION" -name "*.html" -type f -exec sed -i.bak \
+            -e "s|<link rel=\"canonical\" href=\"https://element.siemens.io/|<link rel=\"canonical\" href=\"${VERSION_URL}|g" \
+            {} \;
+
+          # Clean up backup files
+          find deploy-site -name "*.bak" -type f -delete 2>/dev/null || true
+
+      - name: Upload to S3
+        run: |
+          echo "Uploading versioned documentation to S3..."
+
+          MAJOR_VERSION="${{ needs.determine-documentation-versions.outputs.major_version }}"
+          echo "Uploading /$MAJOR_VERSION/..."
+          if [[ ! -d "deploy-site/$MAJOR_VERSION" ]]; then
+            echo "Error: deploy-site/$MAJOR_VERSION directory does not exist"
+            exit 1
+          fi
+          aws s3 sync --quiet --no-progress --delete "deploy-site/$MAJOR_VERSION/" "s3://${{ env.VERSIONED_BUCKET_NAME }}/$MAJOR_VERSION/"
+
+          # Upload versions.json with short cache-control for quick updates
+          if [[ ! -f "deploy-site/versions.json" ]]; then
+            echo "Error: deploy-site/versions.json file does not exist"
+            exit 1
+          fi
+          aws s3 cp deploy-site/versions.json s3://${{ env.VERSIONED_BUCKET_NAME }}/versions.json \
+            --cache-control "max-age=60,public"
+
+          echo "Uploaded versioned documentation to S3 at s3://${{ env.VERSIONED_BUCKET_NAME }}/"
