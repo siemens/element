@@ -392,15 +392,15 @@ export const getMarkdownRenderer = (
     let i = 0;
 
     while (i < lines.length) {
-      // Check if line looks like a table row
-      if (lines[i].match(/^\|.+\|$/)) {
+      // Check if line looks like a table row (starts with |, may or may not end with |)
+      if (lines[i].match(/^\|.+/)) {
         const tableLines: string[] = [];
         let hasSeparator = false;
 
         // Collect table lines
-        while (i < lines.length && lines[i].match(/^\|.+\|$/)) {
+        while (i < lines.length && lines[i].match(/^\|.+/)) {
           const line = lines[i];
-          if (line.match(/^\|\s*[-:]+.*\|$/)) {
+          if (line.match(/^\|\s*[-:]+/)) {
             hasSeparator = true;
           } else {
             tableLines.push(line);
