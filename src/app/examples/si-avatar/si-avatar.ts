@@ -2,13 +2,14 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SiAvatarComponent } from '@siemens/element-ng/avatar';
 
 @Component({
   selector: 'app-sample',
   imports: [SiAvatarComponent],
   templateUrl: './si-avatar.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

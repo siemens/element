@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
-import { Component, OnInit, TemplateRef, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, TemplateRef, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiCircleStatusComponent } from '@siemens/element-ng/circle-status';
 import { StatusType } from '@siemens/element-ng/common';
@@ -29,7 +29,8 @@ import { NgxDatatableModule, SelectionType, TableColumn } from '@siemens/ngx-dat
     SiFormValidationTooltipDirective
   ],
   templateUrl: './datatable.html',
-  styleUrl: './datatable.scss'
+  styleUrl: './datatable.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnInit {
   readonly statusCellTempl = viewChild.required('statusCellTempl', {

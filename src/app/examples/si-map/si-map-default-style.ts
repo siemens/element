@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, viewChild } from '@angular/core';
 import { LOG_EVENT } from '@siemens/live-preview';
 import { MapPoint, SiMapComponent } from '@siemens/maps-ng';
 import { mockPoints } from 'src/app/mocks/points.mock';
@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-sample',
   imports: [SiMapComponent],
   templateUrl: './si-map-default-style.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'h-100 d-flex flex-column p-5' }
 })
 export class SampleComponent {

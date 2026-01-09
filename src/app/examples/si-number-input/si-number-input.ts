@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { JsonPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiFormItemComponent } from '@siemens/element-ng/form';
 import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
@@ -12,6 +12,7 @@ import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
   selector: 'app-sample',
   imports: [FormsModule, SiFormItemComponent, SiNumberInputComponent, JsonPipe],
   templateUrl: './si-number-input.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

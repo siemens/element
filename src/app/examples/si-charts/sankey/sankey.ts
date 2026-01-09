@@ -2,14 +2,15 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, HostListener } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener } from '@angular/core';
 import { EChartOption, SankeySeriesOption, SiChartSankeyComponent } from '@siemens/charts-ng';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 
 @Component({
   selector: 'app-sample',
   imports: [SiChartSankeyComponent, SiResizeObserverDirective],
-  templateUrl: './sankey.html'
+  templateUrl: './sankey.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   title = 'Sankey Chart';

@@ -2,14 +2,15 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, HostListener } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener } from '@angular/core';
 import { EChartOption, SiChartSunburstComponent, SunburstSeriesOption } from '@siemens/charts-ng';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 
 @Component({
   selector: 'app-sample',
   imports: [SiChartSunburstComponent, SiResizeObserverDirective],
-  templateUrl: './sunburst.html'
+  templateUrl: './sunburst.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   title = 'Sunburst Chart';

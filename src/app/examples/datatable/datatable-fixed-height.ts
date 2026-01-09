@@ -2,7 +2,13 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  OnDestroy
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
@@ -23,7 +29,8 @@ import { CorporateEmployee, DataService, Page, PageRequest } from './data.servic
   ],
   templateUrl: './datatable-fixed-height.html',
   styleUrl: './datatable.scss',
-  providers: [DataService]
+  providers: [DataService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnDestroy {
   tableConfig = SI_DATATABLE_CONFIG;
@@ -36,6 +43,7 @@ export class SampleComponent implements OnDestroy {
   subscription?: Subscription;
 
   private dataService = inject(DataService);
+  private cdRef = inject(ChangeDetectorRef);
 
   constructor() {
     this.page.size = Math.floor(
@@ -55,6 +63,7 @@ export class SampleComponent implements OnDestroy {
       this.page = pagedData.page;
       this.rows = pagedData.data;
       this.isLoading = false;
+      this.cdRef.markForCheck();
     });
   }
 
