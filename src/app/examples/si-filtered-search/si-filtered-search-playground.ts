@@ -25,7 +25,6 @@ export class SampleComponent implements OnInit {
   readonly logEvent = inject(LOG_EVENT);
 
   protected readonly configForm = new FormGroup({
-    readonly: new FormControl(false, { nonNullable: true }),
     disabled: new FormControl(false, { nonNullable: true }),
     doSearchOnInputChange: new FormControl(true, { nonNullable: true }),
     disableFreeTextSearch: new FormControl(false, { nonNullable: true }),

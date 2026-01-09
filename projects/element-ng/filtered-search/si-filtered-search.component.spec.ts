@@ -40,7 +40,6 @@ import { SiFilteredSearchHarness } from './testing/si-filtered-search.harness';
     [disabled]="disabled"
     [disableFreeTextSearch]="disableFreeTextSearch"
     [freeTextCriterion]="freeTextCriterion"
-    [readonly]="readonly"
     [placeholder]="placeholder"
     [lazyLoadingDebounceTime]="lazyLoadingDebounceTime"
     [lazyCriterionProvider]="lazyCriterionProvider"
@@ -67,7 +66,6 @@ class TestHostComponent {
   disabled!: boolean;
   disableFreeTextSearch = false;
   freeTextCriterion?: CriterionDefinition;
-  readonly!: boolean;
   placeholder = '';
 
   // eslint-disable-next-line @angular-eslint/prefer-signals
@@ -175,14 +173,6 @@ describe('SiFilteredSearchComponent', () => {
       expect(await filteredSearch.clearButtonVisible()).toBeFalsy();
     });
 
-    it('should not show button when in read-only mode', async () => {
-      component.readonly = true;
-      component.searchCriteria.set({ criteria: [], value: 'TEXT_KEY' });
-
-      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
-      expect(await filteredSearch.clearButtonVisible()).toBeFalsy();
-    });
-
     it('should delete current criterion and edit last one', async () => {
       const spy = spyOn(component, 'doSearch');
       component.searchCriteria.set({
@@ -234,13 +224,6 @@ describe('SiFilteredSearchComponent', () => {
   describe('with delete criterion', () => {
     beforeEach(() => {
       component.searchCriteria.set({ criteria: [{ name: 'foo', value: 'bar' }], value: '' });
-    });
-
-    it('should not show button when in read-only mode', async () => {
-      component.readonly = true;
-
-      const criteria = await loader.getAllHarnesses(SiFilteredSearchCriterionHarness);
-      expect(await criteria[0].clearButtonVisible()).toBeFalsy();
     });
 
     it('should clear criterion when clicked', async () => {

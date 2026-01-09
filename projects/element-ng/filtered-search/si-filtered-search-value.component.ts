@@ -50,7 +50,6 @@ export class SiFilteredSearchValueComponent implements OnInit {
   readonly value = model.required<CriterionValue>();
   readonly definition = input.required<InternalCriterionDefinition>();
   readonly disabled = input.required<boolean>();
-  readonly readonly = input.required<boolean>();
   readonly onlySelectValue = input.required<boolean>();
   readonly maxCriteriaOptions = input.required<number>();
   readonly optionsInScrollableView = input.required<number>();
@@ -120,10 +119,6 @@ export class SiFilteredSearchValueComponent implements OnInit {
   }
 
   edit(field?: 'value' | 'operator'): void {
-    if (this.readonly()) {
-      return;
-    }
-
     this.active.set(true);
     this.hasPendingFocus = true;
 
