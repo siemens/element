@@ -2,7 +2,10 @@
   class="tooltip show position-relative"
   role="tooltip"
   [id]="id()"
+  [class.tooltip-leave]="isHiding()"
   [class]="tooltipPositionClass()"
+  (transitionstart)="onTransitionstart($event)"
+  (transitionend)="onTransitionend($event)"
 >
   <div
     class="tooltip-arrow"

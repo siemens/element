@@ -34,6 +34,7 @@ class TooltipRef {
   ) {}
 
   private subscription?: Subscription;
+  private tooltipComponentRef?: ComponentRef<TooltipComponent>;
 
   show(content: TranslatableString | TemplateRef<any> | Type<any>, tooltipContext?: unknown): void {
     if (this.overlayRef.hasAttached()) {
@@ -41,20 +42,29 @@ class TooltipRef {
     }
 
     const toolTipPortal = new ComponentPortal(TooltipComponent, undefined, this.injector);
-    const tooltipRef: ComponentRef<TooltipComponent> = this.overlayRef.attach(toolTipPortal);
+    this.tooltipComponentRef = this.overlayRef.attach(toolTipPortal);
 
-    tooltipRef.setInput('tooltip', content);
-    tooltipRef.setInput('id', this.describedBy);
-    tooltipRef.setInput('tooltipContext', tooltipContext);
+    this.tooltipComponentRef.instance.tooltipRef = this;
+    this.tooltipComponentRef.setInput('tooltip', content);
+    this.tooltipComponentRef.setInput('id', this.describedBy);
+    this.tooltipComponentRef.setInput('tooltipContext', tooltipContext);
 
     const positionStrategy = getPositionStrategy(this.overlayRef);
     this.subscription?.unsubscribe();
     this.subscription = positionStrategy?.positionChanges.subscribe(change =>
-      tooltipRef.instance.updateTooltipPosition(change, this.element)
+      this.tooltipComponentRef!.instance.updateTooltipPosition(change, this.element)
     );
   }
 
   hide(): void {
+    if (this.tooltipComponentRef?.instance.isOpening()) {
+      this.detach();
+      return;
+    }
+    this.tooltipComponentRef?.instance.hide();
+  }
+
+  detach(): void {
     this.overlayRef.detach();
     this.subscription?.unsubscribe();
   }
