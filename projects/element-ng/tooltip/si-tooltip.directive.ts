@@ -6,7 +6,6 @@ import {
   booleanAttribute,
   Directive,
   ElementRef,
-  HostListener,
   inject,
   input,
   OnDestroy,
@@ -21,7 +20,12 @@ import { SiTooltipService, TooltipRef } from './si-tooltip.service';
   selector: '[siTooltip]',
   providers: [SiTooltipService],
   host: {
-    '[attr.aria-describedby]': 'describedBy'
+    '[attr.aria-describedby]': 'describedBy',
+    '(focus)': 'focusIn()',
+    '(mouseenter)': 'show()',
+    '(touchstart)': 'hide()',
+    '(focusout)': 'hide()',
+    '(mouseleave)': 'hide()'
   }
 })
 export class SiTooltipDirective implements OnDestroy {
@@ -56,7 +60,7 @@ export class SiTooltipDirective implements OnDestroy {
   protected describedBy = `__tooltip_${SiTooltipDirective.idCounter++}`;
 
   private tooltipRef?: TooltipRef;
-  private showTimeout?: number;
+  private showTimeout?: ReturnType<typeof setTimeout>;
   private tooltipService = inject(SiTooltipService);
   private elementRef = inject(ElementRef);
 
@@ -67,7 +71,7 @@ export class SiTooltipDirective implements OnDestroy {
 
   private clearShowTimeout(): void {
     if (this.showTimeout) {
-      window.clearTimeout(this.showTimeout);
+      clearTimeout(this.showTimeout);
       this.showTimeout = undefined;
     }
   }
@@ -82,7 +86,7 @@ export class SiTooltipDirective implements OnDestroy {
 
     const delay = immediate ? 0 : 500;
 
-    this.showTimeout = window.setTimeout(() => {
+    this.showTimeout = setTimeout(() => {
       this.tooltipRef ??= this.tooltipService.createTooltip({
         describedBy: this.describedBy,
         element: this.elementRef,
@@ -92,19 +96,14 @@ export class SiTooltipDirective implements OnDestroy {
     }, delay);
   }
 
-  @HostListener('focus')
   protected focusIn(): void {
     this.showTooltip(true);
   }
 
-  @HostListener('mouseenter')
   protected show(): void {
     this.showTooltip(false);
   }
 
-  @HostListener('touchstart')
-  @HostListener('focusout')
-  @HostListener('mouseleave')
   protected hide(): void {
     this.clearShowTimeout();
     this.tooltipRef?.hide();
