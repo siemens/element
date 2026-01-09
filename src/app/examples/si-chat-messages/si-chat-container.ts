@@ -2,7 +2,14 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, signal, TemplateRef, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+  TemplateRef,
+  viewChild
+} from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import {
   SiChatContainerComponent,
@@ -48,7 +55,8 @@ interface ChatMessage {
     SiChatMessageActionDirective,
     SiAttachmentListComponent
   ],
-  templateUrl: './si-chat-container.html'
+  templateUrl: './si-chat-container.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   private logEvent = inject(LOG_EVENT);

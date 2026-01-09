@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-sample',
@@ -12,6 +12,7 @@ import { Component } from '@angular/core';
     <h1 class="si-display-bold">Display Bold</h1>
     <h1 class="si-display">Display</h1>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {}

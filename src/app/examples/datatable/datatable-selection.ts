@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
@@ -13,7 +13,8 @@ import { NgxDatatableModule, SelectionType } from '@siemens/ngx-datatable';
   selector: 'app-sample',
   imports: [NgxDatatableModule, SiDatatableModule, SiCardComponent, SiFormModule, FormsModule],
   templateUrl: './datatable-selection.html',
-  styleUrl: './datatable.scss'
+  styleUrl: './datatable.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   tableConfig = SI_DATATABLE_CONFIG;

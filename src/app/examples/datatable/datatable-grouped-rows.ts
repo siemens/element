@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, OnInit, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, viewChild } from '@angular/core';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiIconModule } from '@siemens/element-ng/icon';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
@@ -12,7 +12,8 @@ import { DatatableComponent, NgxDatatableModule, TableColumn } from '@siemens/ng
   selector: 'app-sample',
   imports: [NgxDatatableModule, SiDatatableModule, SiResizeObserverModule, SiIconModule],
   standalone: true,
-  templateUrl: './datatable-grouped-rows.html'
+  templateUrl: './datatable-grouped-rows.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnInit {
   readonly table = viewChild.required(DatatableComponent);

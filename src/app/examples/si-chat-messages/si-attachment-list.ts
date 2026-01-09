@@ -2,14 +2,15 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, TemplateRef, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, TemplateRef, viewChild } from '@angular/core';
 import { SiAttachmentListComponent, Attachment } from '@siemens/element-ng/chat-messages';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
   selector: 'app-sample',
   imports: [SiAttachmentListComponent],
-  templateUrl: './si-attachment-list.html'
+  templateUrl: './si-attachment-list.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

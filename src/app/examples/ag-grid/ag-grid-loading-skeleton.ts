@@ -2,7 +2,13 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, DestroyRef, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  inject
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef } from 'ag-grid-community';
@@ -21,6 +27,7 @@ import { TableData, TableDataService } from '../../mocks/table-data.mock';
     [paginationPageSize]="20"
     (gridReady)="onGridReady()"
   />`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'p-5'
   }
@@ -28,6 +35,7 @@ import { TableData, TableDataService } from '../../mocks/table-data.mock';
 export class SampleComponent {
   private destroyRef = inject(DestroyRef);
   private readonly tableDataService = inject(TableDataService);
+  private cdRef = inject(ChangeDetectorRef);
   rowData: TableData[] = Array.from({ length: 10 }, () => ({})) as TableData[];
 
   defaultColDef: ColDef<TableData> = {
@@ -55,6 +63,7 @@ export class SampleComponent {
         };
         // Update data
         this.rowData = sampleRowData;
+        this.cdRef.markForCheck();
       });
   }
 }

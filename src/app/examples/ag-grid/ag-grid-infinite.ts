@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { LOG_EVENT } from '@siemens/live-preview';
 import { AgGridAngular } from 'ag-grid-angular';
 import {
@@ -32,6 +32,7 @@ import { TableData, TableDataService } from '../../mocks/table-data.mock';
       (gridReady)="onGridReady($event)"
     />
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'p-5'
   }

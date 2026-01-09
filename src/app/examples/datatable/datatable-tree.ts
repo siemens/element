@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { NgxDatatableModule, TableColumn } from '@siemens/ngx-datatable';
 
@@ -10,7 +10,8 @@ import { NgxDatatableModule, TableColumn } from '@siemens/ngx-datatable';
   selector: 'app-sample',
   imports: [NgxDatatableModule, SiDatatableModule],
   templateUrl: './datatable-tree.html',
-  styleUrl: './datatable.scss'
+  styleUrl: './datatable.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnInit {
   rows: any[] = [];

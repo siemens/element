@@ -2,7 +2,14 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { AfterViewInit, Component, input, OnInit, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  AfterViewInit,
+  Component,
+  input,
+  OnInit,
+  viewChild
+} from '@angular/core';
 import { MapPoint, MapPointMetaData, SiMapComponent } from '@siemens/maps-ng';
 import { FeatureLike } from 'ol/Feature';
 import { fromLonLat } from 'ol/proj';
@@ -30,7 +37,8 @@ interface MapPointCustom extends MapPointMetaData {
         <td>{{ mapPoint().shapeType }}</td>
       </tr>
     </table>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CustomPopoverComponent {
   readonly mapPoint = input.required<MapPointCustom>();
