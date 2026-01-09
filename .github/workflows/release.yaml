@@ -16,6 +16,9 @@ jobs:
       - build-and-test
     permissions:
       id-token: write
+    outputs:
+      new_release: ${{ steps.check_release.outputs.new_release }}
+      release_tag: ${{ steps.check_release.outputs.release_tag }}
     steps:
       - uses: actions/checkout@v6
         with:
@@ -30,6 +33,13 @@ jobs:
           name: dist
           path: dist
       - run: npm ci --prefer-offline --no-audit
+
+      - name: Get tag before semantic-release
+        id: before_release
+        run: |
+          BEFORE_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          echo "before_tag=$BEFORE_TAG" >> $GITHUB_OUTPUT
+
       - run: npx semantic-release
         env:
           SKIP_COMMIT: ${{ github.ref_name == 'next' && 'true' || '' }}
@@ -38,3 +48,28 @@ jobs:
           GIT_COMMITTER_NAME: 'Siemens Element Bot'
           GIT_COMMITTER_EMAIL: 'simpl.si@siemens.com'
           GITHUB_TOKEN: ${{ secrets.ELEMENT_BOT_GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Check if new release was created
+        id: check_release
+        run: |
+          AFTER_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          BEFORE_TAG="${{ steps.before_release.outputs.before_tag }}"
+
+          if [[ -n "$AFTER_TAG" && "$AFTER_TAG" != "$BEFORE_TAG" ]]; then
+            echo "release_tag=$AFTER_TAG" >> $GITHUB_OUTPUT
+            echo "new_release=true" >> $GITHUB_OUTPUT
+          else
+            echo "new_release=false" >> $GITHUB_OUTPUT
+            echo "release_tag=" >> $GITHUB_OUTPUT
+          fi
+
+  trigger-documentation:
+    uses: ./.github/workflows/publish-documentation.yaml
+    needs:
+      - publish
+      - build-and-test
+    if: success() && needs.publish.outputs.new_release == 'true'
+    with:
+      deploy_as_release: ${{ needs.publish.outputs.release_tag }}
+      skip_build: true
