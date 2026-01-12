@@ -27,11 +27,10 @@
   </si-split>
 } @else {
   <div
-    class="list-details d-flex flex-row"
+    #listDetailsContainer
+    [class]="`list-details d-flex flex-row ${detailsExpandedAnimation()}`"
     [class.gap-6]="hasLargeSize()"
-    [class.details-active]="detailsActive() && !hasLargeSize()"
-    [@detailsExpanded]="detailsExpandedAnimation()"
-    (@detailsExpanded.done)="detailsExpandedAnimationDone()"
+    (transitionend)="detailsExpandedAnimationDone($event)"
   >
     <ng-container *ngTemplateOutlet="listTemplate" />
     <ng-container *ngTemplateOutlet="detailsTemplate" />

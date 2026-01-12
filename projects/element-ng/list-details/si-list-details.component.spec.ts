@@ -13,7 +13,6 @@ import {
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule, provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, RouterLink, RouterOutlet } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { of, Subject } from 'rxjs';
@@ -164,7 +163,7 @@ describe('ListDetailsComponent', () => {
       });
 
       await TestBed.configureTestingModule({
-        imports: [WrapperComponent, NoopAnimationsModule],
+        imports: [WrapperComponent],
         providers: [
           {
             provide: ResizeObserverService,
@@ -229,7 +228,7 @@ describe('ListDetailsComponent', () => {
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
         await fixture.whenStable();
         fixture.detectChanges();
-        expect(component.listDetails.detailsExpandedAnimation()).toBe('collapsed');
+        expect(getListDetails().classList).toContain('collapsed');
       });
 
       it('should be "expanded" when detailsActive & small', async () => {
@@ -237,14 +236,14 @@ describe('ListDetailsComponent', () => {
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
         await fixture.whenStable();
         fixture.detectChanges();
-        expect(component.listDetails.detailsExpandedAnimation()).toBe('expanded');
+        expect(getListDetails().classList).toContain('expanded');
       });
 
       it('should be "disabled" when in large mode regardless of detailsActive', async () => {
         component.detailsActive = true;
         await fixture.whenStable();
         fixture.detectChanges();
-        expect(component.listDetails.detailsExpandedAnimation()).toBe('disabled');
+        expect(getListDetails().classList).toContain('disabled');
       });
     });
 
@@ -442,7 +441,6 @@ describe('ListDetailsComponent', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         providers: [
-          provideNoopAnimations(),
           provideRouter([
             {
               path: 'list',
@@ -491,8 +489,6 @@ describe('ListDetailsComponent', () => {
       expect(debugElement.query(By.css('.list-details')).classes['details-active']).toBeTrue();
       debugElement.query(By.css('.si-details-header-back')).nativeElement.click();
       routerHarness.detectChanges();
-      await routerHarness.fixture.whenStable();
-      jasmine.clock().tick(10);
       await routerHarness.fixture.whenStable();
       expect(debugElement.query(By.css('si-empty'))).toBeTruthy();
       expect(debugElement.query(By.css('.list-details')).classes['details-active']).toBeFalsy();

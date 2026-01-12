@@ -27,12 +27,19 @@
   &:not(.expanded) {
     .list-details {
       inline-size: 200%;
-      transform-origin: top left;
       margin-inline-start: 0;
+      transform-origin: top left;
+      transition: margin-inline-start 0.5s ease-in-out;
 
       &.details-active {
         margin-inline-start: -100%;
       }
+    }
+  }
+
+  &.animations-disabled {
+    .list-details {
+      transition: none;
     }
   }
 }
