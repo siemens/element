@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 import { A11yModule } from '@angular/cdk/a11y';
-import { NgClass } from '@angular/common';
 import {
   booleanAttribute,
   Component,
@@ -140,7 +139,7 @@ class RangeSelectionStrategy extends SelectionStrategy {
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: '[si-calendar-body]',
-  imports: [NgClass, A11yModule, SiCalendarDateCellDirective],
+  imports: [A11yModule, SiCalendarDateCellDirective],
   templateUrl: './si-calendar-body.component.html',
   host: {
     class: 'si-calendar-body'
