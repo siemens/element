@@ -583,9 +583,38 @@ export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDes
   }
 
   /**
-   * Re-render the whole chart.
+   * Switch theme using echarts api, which does not need reloading the whole chart.
    */
   @HostListener('window:theme-switch')
+  themeSwitch(): void {
+    if (!this.chart) {
+      return;
+    }
+
+    this.applyTheme();
+    this.chart.setTheme(this.activeTheme);
+
+    // Since color palette is set thorugh options, it needs to be set again.
+    this.applyPalette();
+    this.themeChanged();
+    this.applyStyles();
+    this.applyTitles();
+
+    setTimeout(() => {
+      this.applyColorsToCustomLegends();
+    });
+    this.chart.setOption(this.actualOptions);
+
+    if (this.externalZoomSlider()) {
+      this.extZoomSliderChart.setTheme(this.activeTheme);
+      this.extZoomSliderChart.setOption(this.extZoomSliderOptions);
+    }
+    this.cdRef.markForCheck();
+  }
+
+  /**
+   * Re-render the whole chart.
+   */
   resetChart(): void {
     this.applyTheme();
 
