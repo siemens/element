@@ -9,7 +9,9 @@
 </span>
 <div class="item-end ps-2 d-flex me-n3 ms-auto gap-1">
   @if (badge()) {
-    <span class="mx-0 me-1 ms-2 badge" [ngClass]="'bg-' + badgeColor()">{{ badge() }}</span>
+    <span [class]="`mx-0 me-1 ms-2 badge${badgeColor() ? ` bg-${badgeColor()}` : ''}`">{{
+      badge()
+    }}</span>
   }
   @if (checked() === 'check') {
     <si-icon [icon]="icons.elementOk" />
