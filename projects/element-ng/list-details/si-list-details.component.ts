@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
@@ -17,7 +16,8 @@ import {
   OnDestroy,
   OnInit,
   signal,
-  SimpleChanges
+  SimpleChanges,
+  viewChild
 } from '@angular/core';
 import { areAnimationsDisabled } from '@siemens/element-ng/common';
 import {
@@ -37,32 +37,17 @@ import { BehaviorSubject, Subject, Subscription } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'si-layout-inner list-details-layout d-flex flex-column',
+    '[class.animations-disabled]': 'animationsGloballyDisabled',
     '[class.expanded]': 'hasLargeSize()',
     '[style.opacity]': 'opacity()'
-  },
-  animations: [
-    trigger('detailsExpanded', [
-      state(
-        'collapsed',
-        style({
-          marginInlineStart: '0'
-        })
-      ),
-      state(
-        'expanded',
-        style({
-          marginInlineStart: '-100%'
-        })
-      ),
-      transition('collapsed <=> expanded', [animate('0.5s ease-in-out')])
-    ])
-  ]
+  }
 })
 export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
   private resizeSubs?: Subscription;
   private elementRef = inject(ElementRef);
   private resizeObserver = inject(ResizeObserverService);
-  private readonly animationsGloballyDisabled = areAnimationsDisabled();
+  private readonly listDetailsContainer = viewChild.required<ElementRef>('listDetailsContainer');
+  protected readonly animationsGloballyDisabled = areAnimationsDisabled();
 
   /**
    * A numeric value defining the minimum width in px, which the component needs
@@ -142,8 +127,8 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
   /** @internal */
   readonly detailsExpandedAnimation = computed(() => {
-    if (!this.animationsGloballyDisabled && !this.hasLargeSize()) {
-      return this.detailsActive() ? 'expanded' : 'collapsed';
+    if (!this.hasLargeSize()) {
+      return this.detailsActive() ? 'details-active expanded' : 'collapsed';
     } else {
       return 'disabled';
     }
@@ -192,12 +177,19 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
   /** @internal */
   detailsBackClicked(options?: { animationDone?: () => void }): void {
     this.detailsActive.set(false);
-    // This callback is used to route after the animation is done.
-    this.animationDone = options?.animationDone;
+    // Directly call the done callback if animations are disabled.
+    if (this.animationsGloballyDisabled) {
+      options?.animationDone?.();
+    } else {
+      // This callback is used to route after the animation is done.
+      this.animationDone = options?.animationDone;
+    }
   }
 
-  protected detailsExpandedAnimationDone(): void {
-    if (this.animationDone) {
+  protected detailsExpandedAnimationDone(event: TransitionEvent): void {
+    // Since the 'transitionend' event bubbles up from child elements,
+    // ensure the event target is the container itself.
+    if (this.animationDone && this.listDetailsContainer().nativeElement === event.target) {
       this.animationDone();
       this.animationDone = undefined;
     }
