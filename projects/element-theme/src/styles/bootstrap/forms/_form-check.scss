@@ -197,6 +197,42 @@ $form-check-label-start: $form-check-size + map.get(spacers.$spacers, 4);
 }
 
 // button group
+.btn-group {
+  label:has(.btn-check) {
+    position: relative;
+  }
+
+  .btn-check:has(+ label) {
+    // button width based on inline padding + icon font size
+    $btn-inline-size: calc(map.get(spacers.$spacers, 5) * 2 + 1.5rem);
+
+    position: relative;
+    inline-size: $btn-inline-size;
+    // TODO: fix block-size calculation after introducing .btn-icon
+    block-size: calc(variables.$btn-padding-y + 1.5rem);
+
+    + .btn {
+      &:first-of-type {
+        margin-inline-start: calc($btn-inline-size * -1);
+      }
+
+      &:not(:first-of-type) {
+        margin-inline-start: calc(($btn-inline-size + 1px) * -1); // add 1px for border
+      }
+    }
+  }
+
+  .btn-check {
+    cursor: pointer;
+    clip: auto;
+    pointer-events: all;
+    opacity: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    z-index: 3;
+  }
+}
+
 .btn-check {
   position: absolute;
   clip: rect(0, 0, 0, 0);

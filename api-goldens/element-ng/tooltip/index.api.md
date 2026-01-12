@@ -20,10 +20,6 @@ export class SiTooltipDirective implements OnDestroy {
     readonly placement: i0.InputSignal<"auto" | "top" | "start" | "end" | "bottom">;
     readonly siTooltip: i0.InputSignal<TemplateRef<any> | TranslatableString>;
     readonly tooltipContext: i0.InputSignal<unknown>;
-    // (undocumented)
-    static ɵdir: i0.ɵɵDirectiveDeclaration<SiTooltipDirective, "[siTooltip]", never, { "siTooltip": { "alias": "siTooltip"; "required": false; "isSignal": true; }; "placement": { "alias": "placement"; "required": false; "isSignal": true; }; "isDisabled": { "alias": "isDisabled"; "required": false; "isSignal": true; }; "tooltipContext": { "alias": "tooltipContext"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiTooltipDirective, never>;
 }
 
 // @public (undocumented)

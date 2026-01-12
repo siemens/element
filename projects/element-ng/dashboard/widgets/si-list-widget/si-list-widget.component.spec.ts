@@ -122,12 +122,8 @@ describe('SiListWidgetComponent', () => {
     ];
     fixture.detectChanges();
 
-    let action: HTMLButtonElement | undefined = undefined;
-    element.querySelectorAll('button').forEach(btn => {
-      if (btn.getAttribute('title') === 'Sort descending') {
-        action = btn;
-      }
-    });
+    const action = element.querySelectorAll('si-content-action-bar button')[0] as HTMLButtonElement;
+
     expect(action).toBeDefined();
     action!.click();
     fixture.detectChanges();
@@ -136,11 +132,6 @@ describe('SiListWidgetComponent', () => {
     expect(items.length).toBe(4);
     expect(items.item(0).textContent).toContain('item_3');
 
-    element.querySelectorAll('button').forEach(btn => {
-      if (btn.getAttribute('title') === 'Sort ascending') {
-        action = btn;
-      }
-    });
     expect(action).toBeDefined();
     action!.click();
     fixture.detectChanges();
