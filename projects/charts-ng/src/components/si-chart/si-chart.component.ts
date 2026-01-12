@@ -614,6 +614,7 @@ export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDes
 
   /**
    * Re-render the whole chart.
+   * @deprecated The method is deprecated and should not be used directly by the consumer.
    */
   resetChart(): void {
     this.applyTheme();
