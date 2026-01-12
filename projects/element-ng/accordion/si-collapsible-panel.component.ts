@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 import { animate, query, style, transition, trigger } from '@angular/animations';
-import { NgClass } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -29,7 +28,7 @@ let controlIdCounter = 1;
 
 @Component({
   selector: 'si-collapsible-panel',
-  imports: [NgClass, SiIconComponent, SiTranslatePipe],
+  imports: [SiIconComponent, SiTranslatePipe],
   templateUrl: './si-collapsible-panel.component.html',
   styleUrl: './si-collapsible-panel.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
