@@ -1,0 +1,11 @@
+@if (header.launchpad()) {
+  <button
+    type="button"
+    [class]="`header-item focus-inside d-${header.expandBreakpoint()}-none`"
+    (click)="header.openLaunchpad()"
+  >
+    <si-icon class="icon pe-5" [icon]="icons.elementThumbnails" />
+    {{ header.launchpadLabel() | translate }}
+  </button>
+}
+<ng-content />

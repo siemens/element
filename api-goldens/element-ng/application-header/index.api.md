@@ -114,7 +114,7 @@ export class SiHeaderCollapsibleActionsComponent implements OnDestroy {
 export class SiHeaderLogoDirective implements OnInit {
 }
 
-// @public (undocumented)
+// @public
 export class SiHeaderNavigationComponent implements OnDestroy {
     constructor();
 }
