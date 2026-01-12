@@ -468,6 +468,7 @@ export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDes
     readonly pointer: _angular_core.OutputEmitterRef<AxisPointerEvent>;
     refreshSeries(isLive?: boolean, dzToSet?: DataZoomRange): void;
     readonly renderer: _angular_core.InputSignal<"canvas" | "svg">;
+    // @deprecated
     resetChart(): void;
     resize(): void;
     readonly selectedItem: _angular_core.InputSignal<SelectedLegendItem>;
@@ -482,6 +483,7 @@ export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDes
     readonly subTitle: _angular_core.InputSignal<string | undefined>;
     readonly theme: _angular_core.InputSignal<any>;
     readonly themeCustomization: _angular_core.InputSignal<any>;
+    themeSwitch(): void;
     readonly timeRangeChange: _angular_core.OutputEmitterRef<number>;
     readonly title: _angular_core.InputSignal<string | undefined>;
     toggleSeriesVisibility(name: string, visible: boolean): void;
