@@ -1,15 +1,13 @@
 <header
-  class="application-header"
-  [ngClass]="'expand-' + expandBreakpoint()"
+  [class]="`application-header expand-${expandBreakpoint()}`"
   [class.show-navigation]="mobileNavigationExpanded()"
 >
   @if (launchpad()) {
     <button
       type="button"
-      class="header-toggle focus-inside"
+      [class]="`header-toggle focus-inside d-${expandBreakpoint()}-block`"
       [class.show]="launchpadOpen()"
       [class.d-none]="hasNavigation()"
-      [ngClass]="'d-' + expandBreakpoint() + '-block'"
       [attr.aria-expanded]="launchpadOpen()"
       [attr.aria-label]="launchpadLabel() | translate"
       [attr.aria-controls]="id + '-launchpad'"
@@ -60,8 +58,7 @@
 
 @if (openDropdownCount() || launchpadOpen()) {
   <div
-    class="modal-backdrop"
-    [ngClass]="launchpadOpen() ? 'd-block' : 'd-' + expandBreakpoint() + '-none'"
+    [class]="`modal-backdrop ${launchpadOpen() ? 'd-block' : `d-${expandBreakpoint()}-none`}`"
     (click)="backdropClicked()"
   ></div>
 }

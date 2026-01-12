@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import { Component, inject, OnDestroy } from '@angular/core';
 import { addIcons, elementThumbnails, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
@@ -11,21 +10,8 @@ import { SiApplicationHeaderComponent } from './si-application-header.component'
 
 @Component({
   selector: 'si-header-navigation',
-  imports: [NgClass, SiTranslatePipe, SiIconComponent],
-  template: `
-    @if (header.launchpad()) {
-      <button
-        class="header-item focus-inside"
-        type="button"
-        [ngClass]="'d-' + header.expandBreakpoint() + '-none'"
-        (click)="header.openLaunchpad()"
-      >
-        <si-icon class="icon pe-5" [icon]="icons.elementThumbnails" />
-        {{ header.launchpadLabel() | translate }}
-      </button>
-    }
-    <ng-content />
-  `,
+  imports: [SiTranslatePipe, SiIconComponent],
+  templateUrl: './si-header-navigation.component.html',
   host: { class: 'header-navigation', role: 'navigation' }
 })
 export class SiHeaderNavigationComponent implements OnDestroy {

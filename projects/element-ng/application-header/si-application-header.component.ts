@@ -4,7 +4,7 @@
  */
 import { A11yModule, CdkTrapFocus } from '@angular/cdk/a11y';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -36,7 +36,7 @@ import { map, skip, takeUntil } from 'rxjs/operators';
 /** Root component for the application header. */
 @Component({
   selector: 'si-application-header',
-  imports: [SiTranslatePipe, NgClass, A11yModule, NgTemplateOutlet, SiIconComponent],
+  imports: [SiTranslatePipe, A11yModule, NgTemplateOutlet, SiIconComponent],
   templateUrl: './si-application-header.component.html',
   styleUrl: './si-application-header.component.scss',
   providers: [{ provide: SI_HEADER_WITH_DROPDOWNS, useExisting: SiApplicationHeaderComponent }],
