@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import { booleanAttribute, Component, computed, input, model, OnChanges } from '@angular/core';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { AccentLineType } from '@siemens/element-ng/common';
@@ -28,7 +27,6 @@ import { SiListWidgetItem } from './si-list-widget-item.component';
 @Component({
   selector: 'si-list-widget',
   imports: [
-    NgClass,
     SiCardComponent,
     SiIconComponent,
     SiLinkDirective,

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { AsyncPipe, NgClass, NgTemplateOutlet } from '@angular/common';
+import { AsyncPipe, NgTemplateOutlet } from '@angular/common';
 import {
   Component,
   ComponentRef,
@@ -37,7 +37,7 @@ import { setupWidgetInstance } from '../../widget-loader';
 
 @Component({
   selector: 'si-widget-host',
-  imports: [SiDashboardCardComponent, AsyncPipe, NgClass, NgTemplateOutlet],
+  imports: [SiDashboardCardComponent, AsyncPipe, NgTemplateOutlet],
   templateUrl: './si-widget-host.component.html',
   styleUrl: './si-widget-host.component.scss',
   host: {

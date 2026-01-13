@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import { Component, computed } from '@angular/core';
 import { addIcons, elementRight2, SiIconComponent } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
@@ -39,7 +38,7 @@ export interface SiListWidgetItem {
  */
 @Component({
   selector: 'si-list-widget-item',
-  imports: [NgClass, SiIconComponent, SiLinkDirective, SiTranslatePipe],
+  imports: [SiIconComponent, SiLinkDirective, SiTranslatePipe],
   templateUrl: './si-list-widget-item.component.html',
   host: {
     class: 'list-group-item d-flex align-items-center',

@@ -4,7 +4,6 @@
  */
 import { A11yModule } from '@angular/cdk/a11y';
 import { CdkMenuTrigger } from '@angular/cdk/menu';
-import { NgClass } from '@angular/common';
 import { Component, inject, input, OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, RouterLink } from '@angular/router';
 import { SiIconComponent } from '@siemens/element-ng/icon';
@@ -112,15 +111,7 @@ export interface SiTimelineWidgetItem {
  */
 @Component({
   selector: 'si-timeline-widget-item',
-  imports: [
-    SiIconComponent,
-    SiTranslatePipe,
-    NgClass,
-    A11yModule,
-    RouterLink,
-    SiMenuModule,
-    CdkMenuTrigger
-  ],
+  imports: [SiIconComponent, SiTranslatePipe, A11yModule, RouterLink, SiMenuModule, CdkMenuTrigger],
   templateUrl: './si-timeline-widget-item.component.html',
   host: {
     role: 'listitem'
