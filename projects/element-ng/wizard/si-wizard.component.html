@@ -58,15 +58,13 @@
     @for (item of activeSteps(); track item.index) {
       <div class="step">
         <div
-          class="line previous"
+          [class]="['line', 'previous', getStateClass(item.index)]"
           [class.dashed]="$first && item.index > 0"
           [class.vertical]="verticalLayout()"
           [class.spacer]="$first && item.index === 0"
-          [ngClass]="getStateClass(item.index)"
         ></div>
         <a
-          class="focus-none"
-          [ngClass]="getStateClass(item.index)"
+          [class]="['focus-none', getStateClass(item.index)]"
           [attr.aria-current]="getAriaCurrent(item.index)"
           [attr.href]="!canActivate(item.index) || !currentStep?.isNextNavigable() ? null : '#'"
           (click)="activateStep($event, item.index)"
@@ -98,9 +96,8 @@
         </a>
         @if (item.index + 1 < stepCount) {
           <div
-            class="line"
+            [class]="['line', getStateClass(item.index + 1)]"
             [class.vertical]="verticalLayout()"
-            [ngClass]="getStateClass(item.index + 1)"
             [class.dashed]="$last"
           ></div>
         }
