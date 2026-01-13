@@ -67,11 +67,9 @@
           }
         </div>
         @if (treeItem.badge) {
-          <span
-            class="badge flex-shrink-0"
-            [ngClass]="'bg-' + (treeItem.badgeColor || 'default')"
-            >{{ treeItem.badge }}</span
-          >
+          <span class="badge flex-shrink-0" [class]="`bg-${treeItem.badgeColor || 'default'}`">{{
+            treeItem.badge
+          }}</span>
         }
       </div>
       <div
@@ -100,7 +98,7 @@
               <i
                 aria-hidden="true"
                 class="si-tree-view-item-icon si-tree-view-menu-btn"
-                [ngClass]="icons().itemMenu"
+                [class]="icons().itemMenu"
               ></i>
             </div>
           </div>
@@ -152,7 +150,7 @@
 
 <ng-template #checkboxOrOption let-classNames="classNames">
   @if (showCheckOrOptionBox) {
-    <a class="input-box" tabindex="-1" [ngClass]="classNames">
+    <a class="input-box" tabindex="-1" [class]="classNames">
       <input
         class="form-check-input"
         tabindex="-1"
@@ -187,7 +185,7 @@
     @if (isExpanding) {
       <si-loading-spinner [@.disabled]="true" />
     } @else {
-      <i aria-hidden="true" [class]="toggleIcon" [ngClass]="folderStateClass"></i>
+      <i aria-hidden="true" [class]="`${toggleIcon} ${folderStateClass}`"></i>
     }
   </a>
 </ng-template>

@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SelectOption } from '@siemens/element-ng/select';
@@ -10,17 +9,13 @@ import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-readonly-threshold-option',
-  imports: [NgClass, SiTranslatePipe, SiIconComponent],
+  imports: [SiTranslatePipe, SiIconComponent],
   template: `@let opt = option();
     @if (opt && opt.icon) {
       <i class="icon-stack">
-        <si-icon
-          class="icon me-2"
-          [icon]="opt.icon"
-          [ngClass]="[(!opt.disabled && color()) || '']"
-        />
+        <si-icon class="icon me-2" [class]="color()" [icon]="opt.icon" />
         @if (opt.stackedIcon) {
-          <si-icon class="icon me-2" [icon]="opt.stackedIcon" [ngClass]="opt.stackedIconColor" />
+          <si-icon class="icon me-2" [class]="opt.stackedIconColor" [icon]="opt.stackedIcon" />
         }
       </i>
     }

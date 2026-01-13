@@ -9,10 +9,14 @@
       <si-icon
         class="icon me-2"
         [icon]="item.icon"
-        [ngClass]="[(!item.disabled && item.iconColor) || '']"
+        [class]="!item.disabled && item.iconColor ? item.iconColor : ''"
       />
       @if (item.stackedIcon) {
-        <si-icon class="icon me-2" [icon]="item.stackedIcon" [ngClass]="item.stackedIconColor" />
+        <si-icon
+          class="icon me-2"
+          [class]="item.stackedIconColor ?? ''"
+          [icon]="item.stackedIcon"
+        />
       }
     </i>
   }

@@ -16,9 +16,9 @@
           <div class="py-4 my-4">&#8203;</div>
         }
         <div class="line">
-          <div class="segment" [ngClass]="colors()[$index - 1]"></div>
+          <div class="segment" [class]="colors()[$index - 1]"></div>
           <div class="dot"></div>
-          <div class="segment" [ngClass]="colors()[$index]"></div>
+          <div class="segment" [class]="colors()[$index]"></div>
         </div>
         <div class="d-flex align-items-center text-nowrap m-4">
           <si-number-input
@@ -61,7 +61,7 @@
       @if (!canAddRemoveSteps() || readonly() || readonlyConditions()) {
         <div class="py-4 my-4">&#8203;</div>
       }
-      <div class="line" [ngClass]="colors()[$index]">
+      <div class="line" [class]="colors()[$index]">
         <div class="segment"></div>
       </div>
       @if (!readonly() && !readonlyConditions()) {
@@ -91,7 +91,7 @@
   <div class="ths-value d-flex align-items-center startend">
     <div class="py-4 my-4">&#8203;</div>
     <div class="line">
-      <div class="segment" [ngClass]="color"></div>
+      <div class="segment" [class]="color"></div>
     </div>
   </div>
 </ng-template>
