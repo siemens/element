@@ -1,13 +1,12 @@
 <div class="backdrop"></div>
 <div
   #focusTrap="cdkTrapFocus"
-  class="tour-content popover position-relative"
   role="dialog"
   aria-labelledby="__si-tour-step-title"
   cdkTrapFocus
   cdkTrapFocusAutoCapture
+  [class]="['tour-content', 'popover', 'position-relative', positionClass()]"
   [class.show]="show()"
-  [ngClass]="positionClass()"
 >
   @if (arrowPos()) {
     <div

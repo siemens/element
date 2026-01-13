@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 import { A11yModule, CdkTrapFocus } from '@angular/cdk/a11y';
-import { NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -28,7 +27,7 @@ import { PositionChange, SI_TOUR_TOKEN, TourAction, TourStepInternal } from './s
 
 @Component({
   selector: 'si-tour',
-  imports: [A11yModule, NgClass, SiIconComponent, SiTranslatePipe],
+  imports: [A11yModule, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-tour.component.html',
   styleUrl: './si-tour.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
