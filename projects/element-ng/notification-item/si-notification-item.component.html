@@ -96,7 +96,7 @@
 <ng-template #content>
   <div class="d-flex flex-column gap-3 text-body">
     <span class="si-body text-secondary">{{ timeStamp() | translate }}</span>
-    <span [ngClass]="unread() ? 'si-h5-bold' : 'si-h5'">{{ heading() | translate }}</span>
+    <span [class.si-h5-bold]="unread()" [class.si-h5]="!unread()">{{ heading() | translate }}</span>
     @if (description()) {
       <span class="si-body">{{ description() | translate }}</span>
     }
