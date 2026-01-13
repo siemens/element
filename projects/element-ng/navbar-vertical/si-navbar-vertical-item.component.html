@@ -14,7 +14,7 @@
   <ng-content />
 </div>
 @if (formattedBadge()) {
-  <span class="badge" [ngClass]="'bg-' + item().badgeColor">
+  <span [class]="['badge', item().badgeColor ? `bg-${item().badgeColor}` : '']">
     {{ formattedBadge() }}
   </span>
 }
