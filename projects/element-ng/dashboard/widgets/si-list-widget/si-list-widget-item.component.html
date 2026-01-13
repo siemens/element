@@ -1,9 +1,7 @@
 @let valueObject = value();
 @if (!showLoadingIndicator() && valueObject) {
   @if (valueObject.badge) {
-    <span class="mx-0 badge me-4" [ngClass]="badgeColor()">{{
-      valueObject.badge | translate
-    }}</span>
+    <span class="mx-0 badge me-4" [class]="badgeColor()">{{ valueObject.badge | translate }}</span>
   }
   <span class="me-auto">
     @if (!isLink()) {

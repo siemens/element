@@ -27,7 +27,7 @@
           <button
             type="button"
             class="d-flex btn"
-            [ngClass]="action.customClass ?? 'btn-tertiary'"
+            [class]="action.customClass ?? 'btn-tertiary'"
             [class.btn-circle]="action.iconOnly"
             [class.btn-sm]="action.iconOnly"
             (click)="action.action(action)"

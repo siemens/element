@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import { Component, computed, input, OnChanges } from '@angular/core';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { AccentLineType, MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
@@ -19,7 +18,6 @@ import { SiTimelineWidgetItem } from './si-timeline-widget-item.component';
 @Component({
   selector: 'si-timeline-widget',
   imports: [
-    NgClass,
     SiLinkDirective,
     SiCardComponent,
     SiTimelineWidgetBodyComponent,
