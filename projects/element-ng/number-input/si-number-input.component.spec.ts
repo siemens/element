@@ -4,7 +4,7 @@
  */
 import { Component, inject, provideZonelessChangeDetection, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SiNumberInputComponent } from './si-number-input.component';
 
@@ -304,6 +304,33 @@ describe('SiNumberInputComponent', () => {
         const input = numberInput.querySelector<HTMLInputElement>('input[type="number"]');
         expect(input).toBeTruthy();
         expect(input!.getAttribute('disabled')).toBeDefined();
+      });
+    });
+
+    describe('combining value output and form control', () => {
+      @Component({
+        imports: [ReactiveFormsModule, SiNumberInputComponent],
+        template: `<si-number-input
+          [formControl]="control"
+          (valueChange)="onValueChange($event)"
+        />`
+      })
+      class ValueChangesHostComponent {
+        readonly control = new FormControl<number | undefined>(5);
+        onValueChange(value: number | undefined): void {}
+      }
+
+      it('should emit valueChange when writing to form control', () => {
+        // eslint-disable-next-line @typescript-eslint/no-shadow
+        const fixture = TestBed.createComponent(ValueChangesHostComponent);
+        // eslint-disable-next-line @typescript-eslint/no-shadow
+        const component = fixture.componentInstance;
+        fixture.detectChanges();
+
+        const spy = spyOn(component, 'onValueChange');
+
+        component.control.setValue(10);
+        expect(spy).toHaveBeenCalledWith(10);
       });
     });
   });

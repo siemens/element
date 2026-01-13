@@ -5,15 +5,13 @@
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   computed,
   ElementRef,
-  inject,
   input,
+  model,
   numberAttribute,
   OnChanges,
-  output,
   signal,
   SimpleChanges,
   viewChild
@@ -98,8 +96,8 @@ export class SiNumberInputComponent
    * @defaultValue 1
    */
   readonly step = input<number | 'any'>(1);
-  /** The value */
-  readonly value = input<number>();
+  /** The value as a two-way bindable signal model */
+  readonly value = model<number | undefined>();
   /** Optional unit label */
   readonly unit = input<string>();
   /**
@@ -137,8 +135,6 @@ export class SiNumberInputComponent
    */
   readonly placeholder = input<TranslatableString>();
 
-  readonly valueChange = output<number | undefined>();
-
   readonly inputElement = viewChild.required<ElementRef<HTMLInputElement>>('inputElement');
 
   /**
@@ -170,10 +166,8 @@ export class SiNumberInputComponent
     return maxVal === undefined || isNaN(maxVal) ? undefined : maxVal;
   });
   protected readonly icons = addIcons({ elementMinus, elementPlus });
-  private internalValue?: number;
   private autoUpdate$ = timer(400, 80);
   private autoUpdateSubs?: Subscription;
-  private changeDetectorRef = inject(ChangeDetectorRef);
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.value) {
@@ -211,7 +205,7 @@ export class SiNumberInputComponent
   writeValue(value: number | undefined): void {
     this.writeValueToInput(value);
     this.updateStepButtons();
-    this.changeDetectorRef.markForCheck();
+    this.value.set(value);
   }
 
   /** @internal */
@@ -228,10 +222,9 @@ export class SiNumberInputComponent
     const value = this.inputElement().nativeElement.value
       ? this.inputElement().nativeElement.valueAsNumber
       : undefined;
-    this.internalValue = value;
+    this.value.set(value);
     this.updateStepButtons();
     this.onChange(value);
-    this.valueChange.emit(value);
   }
 
   protected autoUpdateStart(event: Event, isIncrement: boolean): void {
@@ -257,9 +250,10 @@ export class SiNumberInputComponent
     const stepValue = this.step();
     const step = typeof stepValue === 'number' ? stepValue : 1;
     const max = this.max();
-    this.canInc = max == null || this.internalValue == null || this.internalValue + step <= max;
+    const currentValue = this.value();
+    this.canInc = max == null || currentValue == null || currentValue + step <= max;
     const min = this.min();
-    this.canDec = min == null || this.internalValue == null || this.internalValue - step >= min;
+    this.canDec = min == null || currentValue == null || currentValue - step >= min;
     if (!this.canInc || !this.canDec) {
       this.autoUpdateStop();
     }
@@ -277,6 +271,5 @@ export class SiNumberInputComponent
 
   private writeValueToInput(value: number | undefined): void {
     this.inputElement().nativeElement.value = value == null ? '' : value.toString();
-    this.internalValue = value;
   }
 }
