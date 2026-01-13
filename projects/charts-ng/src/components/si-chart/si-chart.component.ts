@@ -595,8 +595,8 @@ export class SiChartComponent implements AfterViewInit, OnChanges, OnInit, OnDes
     this.chart.setTheme(this.activeTheme);
 
     // Since color palette is set thorugh options, it needs to be set again.
-    this.applyPalette();
     this.themeChanged();
+    this.applyPalette();
     this.applyStyles();
     this.applyTitles();
 
