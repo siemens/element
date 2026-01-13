@@ -4,7 +4,7 @@
  */
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -27,7 +27,7 @@ import { SiPopoverDirective } from './si-popover.directive';
 
 @Component({
   selector: 'si-popover',
-  imports: [NgClass, NgTemplateOutlet, SiIconComponent, SiTranslatePipe],
+  imports: [NgTemplateOutlet, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-popover.component.html',
   host: {
     '[id]': 'this.popoverDirective().popoverId'
