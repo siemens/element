@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import { booleanAttribute, Component, input } from '@angular/core';
 import { StatusType } from '@siemens/element-ng/common';
 import { SiStatusIconComponent } from '@siemens/element-ng/icon';
@@ -11,7 +10,7 @@ import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-
 
 @Component({
   selector: 'si-inline-notification',
-  imports: [NgClass, SiLinkDirective, SiTranslatePipe, SiStatusIconComponent],
+  imports: [SiLinkDirective, SiTranslatePipe, SiStatusIconComponent],
   templateUrl: './si-inline-notification.component.html',
   styleUrl: './si-inline-notification.component.scss'
 })
