@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -24,8 +23,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiNumberInputComponent,
     SiFormItemComponent,
     SiWizardComponent,
-    SiWizardStepComponent,
-    NgClass
+    SiWizardStepComponent
   ],
   templateUrl: './si-wizard-playground.html',
   changeDetection: ChangeDetectionStrategy.OnPush

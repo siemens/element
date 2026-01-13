@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -42,7 +42,7 @@ interface StepItem {
 
 @Component({
   selector: 'si-wizard',
-  imports: [NgClass, SiIconComponent, SiResizeObserverDirective, SiTranslatePipe, NgTemplateOutlet],
+  imports: [SiIconComponent, SiResizeObserverDirective, SiTranslatePipe, NgTemplateOutlet],
   templateUrl: './si-wizard.component.html',
   styleUrl: './si-wizard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
