@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
-import { NgClass, NgComponentOutlet, NgTemplateOutlet } from '@angular/common';
+import { NgComponentOutlet, NgTemplateOutlet } from '@angular/common';
 import {
   Component,
   computed,
@@ -19,7 +19,7 @@ import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-
 
 @Component({
   selector: 'si-tooltip',
-  imports: [NgClass, NgTemplateOutlet, SiTranslatePipe, NgComponentOutlet],
+  imports: [NgTemplateOutlet, SiTranslatePipe, NgComponentOutlet],
   templateUrl: './si-tooltip.component.html'
 })
 export class TooltipComponent {

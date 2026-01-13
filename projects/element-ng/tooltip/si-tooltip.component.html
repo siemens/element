@@ -1,8 +1,7 @@
 <div
-  class="tooltip show position-relative"
   role="tooltip"
+  [class]="['tooltip', 'show', 'position-relative', tooltipPositionClass()]"
   [id]="id()"
-  [ngClass]="tooltipPositionClass()"
 >
   <div
     class="tooltip-arrow"
