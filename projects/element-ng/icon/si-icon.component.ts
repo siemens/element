@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -57,10 +56,9 @@ export const provideIconConfig = (config: IconConfig): Provider => ({
  */
 @Component({
   selector: 'si-icon',
-  imports: [NgClass],
   template: ` <div
     aria-hidden="true"
-    [ngClass]="svgIcon() ? '' : fontIcon()"
+    [class]="svgIcon() ? '' : fontIcon()"
     [innerHTML]="svgIcon()"
   ></div>`,
   styles: `
