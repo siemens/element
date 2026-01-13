@@ -7,12 +7,14 @@
   @if (item.icon) {
     <i class="icon-stack">
       <si-icon
-        class="icon me-2"
+        [class]="`icon me-2${!item.disabled && item.iconColor ? ` ${item.iconColor}` : ''}`"
         [icon]="item.icon"
-        [ngClass]="[(!item.disabled && item.iconColor) || '']"
       />
       @if (item.stackedIcon) {
-        <si-icon class="icon me-2" [icon]="item.stackedIcon" [ngClass]="item.stackedIconColor" />
+        <si-icon
+          [class]="`icon me-2${item.stackedIconColor ? ` ${item.stackedIconColor}` : ''}`"
+          [icon]="item.stackedIcon"
+        />
       }
     </i>
   }
