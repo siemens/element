@@ -29,9 +29,8 @@
       selectCountryAriaLabel() | translate
     }}</span>
     <span
-      class="fi"
       aria-hidden="true"
-      [ngClass]="'fi-' + ((selectedCountry?.isoCode | lowercase) ?? 'xx')"
+      [class]="`fi fi-${(selectedCountry?.isoCode | lowercase) ?? 'xx'}`"
     ></span>
     @if (selectedCountry) {
       <span class="si-body ms-4" [id]="id() + '-value'">
@@ -62,7 +61,7 @@
       />
     </ng-template>
     <ng-template #optionTemplate let-option>
-      <span class="fi me-5" [ngClass]="'fi-' + (option.value.isoCode | lowercase)"></span>
+      <span aria-hidden="true" [class]="`fi me-5 fi-${(option.value.isoCode | lowercase)}`"></span>
       {{ option.value.name }} +{{ option.value.countryCode }}
     </ng-template>
   </button>
