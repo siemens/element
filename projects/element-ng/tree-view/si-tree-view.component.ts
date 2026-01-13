@@ -8,7 +8,6 @@
  */
 import { FocusKeyManager } from '@angular/cdk/a11y';
 import { CdkScrollableModule } from '@angular/cdk/scrolling';
-import { NgClass } from '@angular/common';
 import {
   AfterViewChecked,
   AfterViewInit,
@@ -103,13 +102,7 @@ const rootDefaults: TreeItem = {
  */
 @Component({
   selector: 'si-tree-view',
-  imports: [
-    NgClass,
-    SiTranslatePipe,
-    SiTreeViewItemComponent,
-    CdkScrollableModule,
-    SiTreeViewItemDirective
-  ],
+  imports: [SiTranslatePipe, SiTreeViewItemComponent, CdkScrollableModule, SiTreeViewItemDirective],
   templateUrl: './si-tree-view.component.html',
   styleUrl: './si-tree-view.component.scss',
   providers: [

@@ -4,7 +4,7 @@
  */
 import { FocusableOption } from '@angular/cdk/a11y';
 import { CdkContextMenuTrigger, CdkMenuTrigger } from '@angular/cdk/menu';
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -48,7 +48,6 @@ import {
   imports: [
     CdkContextMenuTrigger,
     CdkMenuTrigger,
-    NgClass,
     NgTemplateOutlet,
     SiIconComponent,
     SiLoadingSpinnerComponent,
