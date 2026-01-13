@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 /* eslint-disable @angular-eslint/prefer-output-emitter-ref */
-import { NgClass } from '@angular/common';
 import {
   AfterViewInit,
   booleanAttribute,
@@ -60,7 +59,7 @@ const SCROLL_INCREMENT = 55;
  */
 @Component({
   selector: 'si-tabset-legacy',
-  imports: [NgClass, SiIconComponent, SiResizeObserverDirective, SiTranslatePipe],
+  imports: [SiIconComponent, SiResizeObserverDirective, SiTranslatePipe],
   templateUrl: './si-tabset-legacy.component.html',
   styleUrl: './si-tabset-legacy.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

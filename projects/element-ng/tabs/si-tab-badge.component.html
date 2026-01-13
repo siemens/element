@@ -2,7 +2,7 @@
 @if (badgeContent === true) {
   <span class="badge-dot"></span>
 } @else if (badgeContent && badgeColor()) {
-  <span class="badge" [ngClass]="'bg-' + badgeColor()">
+  <span class="badge" [class]="`bg-${badgeColor() || 'default'}`">
     {{ badgeContent ?? '' | translate }}
   </span>
 } @else if (badgeContent && !badgeColor()) {

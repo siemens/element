@@ -12,7 +12,7 @@ import { OnDestroy } from '@angular/core';
 import { QueryList } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
-// @public (undocumented)
+// @public
 export interface SiTabDeselectionEvent {
     cancel: () => void;
     tabIndex: number;

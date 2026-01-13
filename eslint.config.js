@@ -109,6 +109,12 @@ export const templateConfig = defineConfig({
   files: ['**/*.html'],
   rules: {
     '@angular-eslint/template/prefer-ngsrc': ['off'],
+    '@angular-eslint/template/no-duplicate-attributes': [
+      'error',
+      {
+        'ignore': ['class']
+      }
+    ],
     '@angular-eslint/template/no-inline-styles': ['off'],
     '@angular-eslint/template/interactive-supports-focus': ['off'],
     '@angular-eslint/template/prefer-template-literal': ['off'],

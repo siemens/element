@@ -23,8 +23,8 @@
     <span
       class="si-tree-view-header-btn si-tree-view-header-root"
       tabindex="0"
+      [class]="computedIcons().headerHome"
       [class.disabled]="headerShowsRoot"
-      [ngClass]="computedIcons().headerHome"
       (click)="onFlatTreeNavigateHome()"
       (keydown.enter)="onFlatTreeNavigateHome()"
     ></span>
@@ -32,8 +32,8 @@
       <span
         class="si-tree-view-header-btn"
         tabindex="0"
+        [class]="computedIcons().headerArrow"
         [class.disabled]="headerShowsRoot"
-        [ngClass]="computedIcons().headerArrow"
         (click)="onFlatTreeNavigateUp()"
         (keydown.enter)="onFlatTreeNavigateUp()"
       ></span>

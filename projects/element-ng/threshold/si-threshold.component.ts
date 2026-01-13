@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
   Component,
@@ -42,7 +42,6 @@ export interface ThresholdStep {
   selector: 'si-threshold',
   imports: [
     FormsModule,
-    NgClass,
     NgTemplateOutlet,
     SiIconComponent,
     SiNumberInputComponent,
