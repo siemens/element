@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -28,7 +27,7 @@ import { StatusToggleItem } from './status-toggle.model';
 
 @Component({
   selector: 'si-status-toggle',
-  imports: [NgClass, SiIconComponent, SiTranslatePipe],
+  imports: [SiIconComponent, SiTranslatePipe],
   templateUrl: './si-status-toggle.component.html',
   styleUrl: './si-status-toggle.component.scss',
   providers: [

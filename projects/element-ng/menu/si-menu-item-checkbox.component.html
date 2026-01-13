@@ -11,7 +11,7 @@
   </span>
   <div class="item-end ms-2 d-flex me-n3 gap-1">
     @if (badge()) {
-      <span class="mx-0 badge" [ngClass]="'bg-' + badgeColor()">{{ badge() }}</span>
+      <span class="mx-0 badge" [class]="`bg-${badgeColor()}`">{{ badge() }}</span>
     }
     @if (checked && !hideCheckmark) {
       <si-icon class="icon" [icon]="icons.elementOk" />

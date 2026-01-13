@@ -1,5 +1,5 @@
 @if (resizableParts() && hasLargeSize) {
-  <div class="main-detail-layout d-flex flex-column" [ngClass]="containerClass()">
+  <div class="main-detail-layout d-flex flex-column" [class]="containerClass()">
     <ng-container *ngTemplateOutlet="headingTemplate" />
     <si-split
       class="w-100 flex-grow-1"
@@ -31,7 +31,7 @@
 } @else {
   <div
     class="main-detail-layout d-flex flex-column"
-    [ngClass]="containerClass()"
+    [class]="containerClass()"
     [class.large-size]="hasLargeSize"
   >
     <ng-container *ngTemplateOutlet="headingTemplate" />
@@ -69,7 +69,7 @@
 <ng-template #mainTemplate let-customClass="customClass">
   <div
     class="main-container d-flex flex-column"
-    [ngClass]="[mainContainerClass(), customClass ? customClass : '']"
+    [class]="[mainContainerClass(), customClass ? customClass : '']"
     [style.max-inline-size]="maxMainSize"
   >
     <div class="main-search-actions d-flex align-items-center">
@@ -85,7 +85,7 @@
 <ng-template #detailTemplate let-customClass="customClass">
   <div
     class="detail-container d-flex flex-column"
-    [ngClass]="[detailContainerClass(), customClass ? customClass : '']"
+    [class]="[detailContainerClass(), customClass ? customClass : '']"
     [style.max-inline-size]="maxDetailSize"
     [attr.inert]="preventFocusDetails ? '' : null"
   >
