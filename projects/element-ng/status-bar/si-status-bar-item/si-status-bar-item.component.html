@@ -9,9 +9,9 @@
     #bg
     role="none"
     class="bg focus-sub-inside"
+    [class]="background()"
     [class.custom-color]="color()"
     [class.contrast-fix]="contrastFix()"
-    [ngClass]="background()"
     [class.d-none]="!value()"
     [style.background-color]="blink() && color() ? color() : null"
   ></div>
@@ -23,8 +23,8 @@
     ></div>
   } @else {
     <span class="indicator icon me-4 icon-stack">
-      <si-icon [ngClass]="value() ? icon.color : 'indicator-disabled'" [icon]="icon.icon" />
-      <si-icon [ngClass]="value() ? icon.stackedColor : 'text-inverse'" [icon]="icon.stacked" />
+      <si-icon [class]="value() ? icon.color : 'indicator-disabled'" [icon]="icon.icon" />
+      <si-icon [class]="value() ? icon.stackedColor : 'text-inverse'" [icon]="icon.stacked" />
     </span>
   }
   <div class="overflow-hidden">

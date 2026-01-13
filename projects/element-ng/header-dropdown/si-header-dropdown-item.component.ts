@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, HostListener, inject, input } from '@angular/core';
 import {
   addIcons,
@@ -20,7 +19,7 @@ import { SI_HEADER_WITH_DROPDOWNS } from './si-header.model';
  */
 @Component({
   selector: 'si-header-dropdown-item, a[si-header-dropdown-item], button[si-header-dropdown-item]',
-  imports: [NgClass, SiIconComponent],
+  imports: [SiIconComponent],
   templateUrl: './si-header-dropdown-item.component.html',
   styleUrl: './si-header-dropdown-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

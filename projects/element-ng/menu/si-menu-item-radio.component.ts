@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkMenuItemRadio, CdkMenuTrigger } from '@angular/cdk/menu';
-import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { addIcons, elementRecordFilled, SiIconComponent } from '@siemens/element-ng/icon';
 
@@ -11,7 +10,7 @@ import { SiMenuItemBase } from './si-menu-item-base.directive';
 
 @Component({
   selector: 'si-menu-item-radio',
-  imports: [NgClass, SiIconComponent],
+  imports: [SiIconComponent],
   templateUrl: './si-menu-item-radio.component.html',
   styleUrl: './si-menu-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
