@@ -1,31 +1,42 @@
-/* stylelint-disable color-no-hex */
-
 @use '../../styles/variables';
+@use '@siemens/element-theme/src/styles/variables' as element-vars;
 
-// Codeflask/prism theme with Atom One Light colors
+// Codeflask/prism theme using Element Design System tokens
+// Automatically adapts to light and dark themes
+// Token mapping matches markdown syntax highlighting:
+// - Default text: element-text-primary
+// - Keywords: element-data-purple-2
+// - Operators: element-data-plum-2
+// - Variables: element-data-6
+// - Functions: element-text-caution
+// - Strings: element-text-warning
+// - Numbers: element-text-success
+// - Constants: element-data-13
+// - Comments: element-data-green-3
+// - Punctuation: element-data-17
+// - Tags: element-data-5
+// - Types: element-data-4
+// - Invalid: element-data-10
 
 // stylelint-disable selector-class-pattern
 
-$default: #000;
+$default: element-vars.$element-text-primary;
 $background: variables.$live-preview-editor-background-color;
 $background-readonly: variables.$live-preview-editor-background-color;
-$purple: #a626a4;
-$yellow: #986801;
-$yellow2: #c18401;
-$red: #e45649;
-$blue: #4078f2;
-$blue2: #0184bc;
-$green: #50a14f;
-$gray: #a0a1a7;
-$lines-color: #999;
-$lines-background: #eee;
-
-// join the dark side, we have cookies!
-$default-dark: #bcbcbc;
-$background-dark: variables.$live-preview-editor-background-color;
-$background-readonly-dark: variables.$live-preview-editor-background-color;
-$lines-color-dark: #eee;
-$lines-background-dark: #666;
+$purple: element-vars.$element-data-purple-2;
+$caution: element-vars.$element-text-caution;
+$warning: element-vars.$element-text-warning;
+$success: element-vars.$element-text-success;
+$data-5: element-vars.$element-data-5;
+$data-6: element-vars.$element-data-6;
+$data-4: element-vars.$element-data-4;
+$data-13: element-vars.$element-data-13;
+$data-10: element-vars.$element-data-10;
+$data-plum-2: element-vars.$element-data-plum-2;
+$comment: element-vars.$element-data-green-3;
+$punctuation: element-vars.$element-data-17;
+$lines-color: element-vars.$element-text-disabled;
+$lines-background: element-vars.$element-base-4;
 
 :host ::ng-deep {
   .readonly .codeflask {
@@ -68,7 +79,7 @@ $lines-background-dark: #666;
     .codeflask__textarea {
       z-index: 1;
       color: transparent;
-      caret-color: #000;
+      caret-color: $default;
     }
 
     &.codeflask--has-line-numbers::before {
@@ -85,170 +96,109 @@ $lines-background-dark: #666;
   }
 
   .token {
+    // Comments
     &.comment,
     &.prolog,
     &.doctype,
     &.cdata {
-      color: $gray;
+      color: $comment;
       font-style: italic;
     }
 
+    // Punctuation
     &.punctuation {
-      color: $default;
+      color: $punctuation;
     }
 
+    // Constants and keywords
     &.constant,
     &.symbol,
     &.keyword {
       color: $purple;
     }
 
+    // Built-in functions
     &.builtin {
-      color: $blue2;
+      color: $data-4;
     }
 
+    // Properties
     &.property {
-      color: $yellow;
+      color: $data-6;
     }
 
+    // Tags (HTML/XML)
     &.tag {
-      color: $red;
+      color: $data-5;
     }
 
+    // Booleans
     &.boolean {
-      color: $yellow;
+      color: $data-13;
     }
 
+    // Numbers
     &.number {
-      color: $yellow;
+      color: $success;
     }
 
+    // Attribute names
     &.attr-name {
-      color: $yellow;
+      color: $data-6;
     }
 
+    // Attribute values
     &.attr-value {
-      color: $green;
+      color: $warning;
     }
 
+    // Strings
     &.string,
     &.char {
-      color: $green;
+      color: $warning;
     }
 
+    // Functions
     &.function {
-      color: $blue;
+      color: $caution;
     }
 
+    // Class names and types
     &.class-name {
-      color: $yellow2;
+      color: $data-4;
     }
 
+    // Variables, regex, important
     &.regex,
     &.important,
     &.variable {
-      color: #e90;
+      color: $data-6;
     }
 
+    // Bold and important
     &.important,
     &.bold {
       font-weight: variables.$live-preview-font-weight-semibold;
     }
 
+    // Italic
     &.italic {
       font-style: italic;
     }
 
+    // Entity
     &.entity {
       cursor: help;
     }
 
+    // Insertions (diffs)
     &.inserted {
-      color: #690;
+      color: $comment;
     }
 
+    // Deletions (diffs)
     &.deleted {
-      color: #905;
+      color: $data-10;
     }
   }
-}
-
-@mixin code-dark {
-  code[class*='language-'],
-  pre[class*='language-'] {
-    color: $default-dark;
-  }
-
-  .token.punctuation {
-    color: $default-dark;
-  }
-
-  .codeflask {
-    background-color: $background-dark;
-
-    &.codeflask--has-line-numbers::before {
-      background: $lines-background-dark;
-    }
-
-    pre,
-    code {
-      color: $default-dark;
-    }
-
-    .codeflask__textarea {
-      caret-color: #fff;
-    }
-  }
-
-  .readonly .codeflask {
-    background-color: $background-readonly-dark;
-  }
-
-  .codeflask__lines {
-    color: $lines-color-dark;
-  }
-}
-
-@mixin code-light {
-  code[class*='language-'],
-  pre[class*='language-'] {
-    color: $default;
-  }
-
-  .token.punctuation {
-    color: $default;
-  }
-
-  .codeflask {
-    background-color: $background;
-
-    &.codeflask--has-line-numbers::before {
-      background: $lines-background;
-    }
-
-    pre,
-    code {
-      color: $default;
-    }
-
-    .codeflask__textarea {
-      caret-color: #000;
-    }
-  }
-
-  .readonly .codeflask {
-    background-color: $background-readonly;
-  }
-
-  .codeflask__lines {
-    color: $lines-color;
-  }
-}
-
-:host ::ng-deep {
-  @include code-light;
-}
-
-:host-context(.app--dark) :host ::ng-deep {
-  @include code-dark;
 }
