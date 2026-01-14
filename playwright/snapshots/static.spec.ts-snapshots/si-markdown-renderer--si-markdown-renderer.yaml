@@ -10,7 +10,8 @@
   - text: You can use inline code like
   - code: console.log('Hello World')
   - text: "or multi-line code blocks:"
-- button "Copy"
+- text: javascript
+- button "Copy code"
 - code: "function calculateSum(a, b) { return a + b; } const result = calculateSum(5, 3); console.log(`Result: ${result}`);"
 - separator
 - heading "Formatting Options" [level=2]
@@ -76,7 +77,6 @@
 - separator
 - heading "Tables" [level=2]
 - paragraph: "Tables are also supported:"
-- button "Download CSV"
 - table:
   - rowgroup:
     - row "Feature Examples Status Notes":
@@ -149,6 +149,7 @@
           - text: Uses
           - code: <br>
           - text: tags
+- button "Download CSV"
 - paragraph: This paragraph appears after the tables to demonstrate proper spacing.
 - separator
 - heading "Math Expressions" [level=2]
@@ -156,3 +157,4 @@
 - paragraph: "Inline math can be written like this: or the quadratic formula ."
 - paragraph: "/You can escape dollar signs with a backslash to show literal prices: \\$\\d+, \\$\\d+, \\$\\d+\\./"
 - paragraph: "Display math uses double dollar signs for block equations:"
+- paragraph: UML is not supported in this markdown component.
