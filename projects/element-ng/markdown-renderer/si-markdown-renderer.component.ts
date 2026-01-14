@@ -65,10 +65,10 @@ export class SiMarkdownRendererComponent {
    * Label for the copy button.
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_MARKDOWN_RENDERER.COPY:Copy`)
+   * t(() => $localize`:@@SI_MARKDOWN_RENDERER.COPY_CODE:Copy code`)
    * ```
    */
-  readonly copyButtonLabel = input(t(() => $localize`:@@SI_MARKDOWN_RENDERER.COPY:Copy`));
+  readonly copyButtonLabel = input(t(() => $localize`:@@SI_MARKDOWN_RENDERER.COPY_CODE:Copy code`));
 
   /**
    * Label for the download CSV button.

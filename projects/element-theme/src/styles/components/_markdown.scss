@@ -18,7 +18,7 @@
 
   code {
     color: variables.$element-text-primary;
-    background-color: variables.$element-ui-4;
+    background-color: variables.$element-base-1-hover;
     padding-block: map.get(variables.$spacers, 1);
     padding-inline: map.get(variables.$spacers, 2);
     border-radius: variables.$element-radius-1;
@@ -47,21 +47,41 @@
   }
 
   .code-wrapper {
-    position: relative;
-    inline-size: max-content;
-    max-inline-size: 100%;
+    display: flex;
+    flex-direction: column;
+    inline-size: 100%;
+    margin-block: map.get(variables.$spacers, 4);
+    background-color: transparent;
+    border: 1px solid variables.$element-ui-4;
+    border-radius: variables.$element-radius-2;
+    overflow: hidden;
+  }
+
+  .code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: map.get(variables.$spacers, 4);
+    padding-block: map.get(variables.$spacers, 5);
+    padding-inline: map.get(variables.$spacers, 6);
+    padding-block-end: 0;
+  }
+
+  .code-language {
+    font-weight: variables.$si-font-weight-semibold;
   }
 
   pre {
-    background-color: variables.$element-ui-4;
-    padding-block: map.get(variables.$spacers, 4);
-    padding-inline: map.get(variables.$spacers, 4);
-    border-radius: variables.$element-radius-1;
+    background-color: transparent;
+    padding-block: map.get(variables.$spacers, 5);
+    padding-inline: map.get(variables.$spacers, 6);
+    border-radius: 0;
     vertical-align: middle;
     overflow-x: auto;
     margin-inline: 0;
-    inline-size: max-content;
-    max-inline-size: 100%;
+    margin-block: 0;
+    inline-size: 100%;
+    font-size: variables.$si-font-size-caption;
     box-sizing: border-box;
 
     code {
@@ -77,18 +97,17 @@
     }
   }
 
-  .code-wrapper.has-copy-button pre {
-    min-block-size: buttons.$btn-circle-size-sm;
+  .copy-code-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: map.get(variables.$spacers, 2);
+    margin-inline-start: auto;
+    padding-block: map.get(variables.$spacers, 1);
+    padding-inline: map.get(variables.$spacers, 2);
   }
 
-  .copy-code-btn {
-    position: absolute;
-    inset-block-start: 0;
-    inset-inline-end: 0;
-    border-start-start-radius: 0;
-    border-start-end-radius: 0;
-    border-end-end-radius: 0;
-    z-index: 1;
+  .copy-code-btn .icon {
+    margin-block: 0;
   }
 
   em {
