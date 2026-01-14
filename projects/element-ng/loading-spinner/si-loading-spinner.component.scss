@@ -1,6 +1,7 @@
 @use '@siemens/element-theme/src/styles/variables';
 
 $loading-spinner-size: 64px;
+$duration: variables.element-transition-duration(0.2s);
 
 @keyframes spinner-fade {
   0% {
@@ -9,6 +10,20 @@ $loading-spinner-size: 64px;
 
   100% {
     opacity: 0.05;
+  }
+}
+
+:host {
+  opacity: 1;
+  transition: opacity $duration ease-in;
+
+  @starting-style {
+    opacity: 0;
+  }
+
+  &.spinner-leave {
+    opacity: 0;
+    transition: opacity $duration ease-out;
   }
 }
 
