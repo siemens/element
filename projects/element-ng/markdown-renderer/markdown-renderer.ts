@@ -265,7 +265,7 @@ export const getMarkdownRenderer = (
       // Auto-detect URLs
       result = result.replace(/(?<!["'=(])\b(https?:\/\/[^\s<]+[^\s<.,;!?"')\]])/g, match => {
         const sanitizedUrl = sanitizeUrl(match, sanitizer);
-        return `<a href="${sanitizedUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(match)}</a>`;
+        return `<a class="link-text" href="${sanitizedUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(match)}</a>`;
       });
     }
 
@@ -644,7 +644,7 @@ export const getMarkdownRenderer = (
 
       // Sanitize the link text
       const sanitizedText = domSanitizer.sanitize(SecurityContext.HTML, linkText) ?? '';
-      const linkHtml = `<a href="${sanitizedUrl}" target="_blank" rel="noopener noreferrer">${sanitizedText}</a>`;
+      const linkHtml = `<a class="link-text" class="link-text" href="${sanitizedUrl}" target="_blank" rel="noopener noreferrer">${sanitizedText}</a>`;
       result = result.replace(placeholder, linkHtml);
     });
 
