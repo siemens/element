@@ -329,11 +329,18 @@ export const getMarkdownRenderer = (
             ? options.translateSync(options.copyCodeButton)
             : options.copyCodeButton;
           const buttonLabel = escapeHtml(translatedLabel);
-          copyButton = `<button type="button" class="btn btn-circle btn-sm btn-tertiary element-copy copy-code-btn" data-code-id="${codeId}" aria-label="${buttonLabel}"></button>`;
+          copyButton = `<button type="button" class="btn btn-tertiary btn-sm copy-code-btn" data-code-id="${codeId}" aria-label="${buttonLabel}"><i class="icon element-copy" aria-hidden="true"></i><span class="copy-code-label">${buttonLabel}</span></button>`;
         }
 
-        const wrapperClass = copyButton ? 'code-wrapper has-copy-button' : 'code-wrapper';
-        return `<div class="${wrapperClass}">${copyButton}<pre><code id="${codeId}">${sanitized}</code></pre></div>`;
+        const languageLabel = language
+          ? `<span class="code-language">${escapeHtml(language)}</span>`
+          : '';
+        const headerContent =
+          copyButton || languageLabel
+            ? `<div class="code-header">${languageLabel}${copyButton}</div>`
+            : '';
+        const wrapperClass = headerContent ? 'code-wrapper has-header' : 'code-wrapper';
+        return `<div class="${wrapperClass}">${headerContent}<pre><code id="${codeId}">${sanitized}</code></pre></div>`;
       }
     );
   };
