@@ -576,10 +576,10 @@ export const getMarkdownRenderer = (
           ? options.translateSync(options.downloadTableButton)
           : options.downloadTableButton;
         const buttonLabel = escapeHtml(translatedLabel);
-        downloadButton = `<button type="button" class="btn btn-circle btn-sm btn-tertiary element-download download-table-btn" data-table-id="${tableId}" data-table-index="${tableIndex}" aria-label="${buttonLabel}"></button>`;
+        downloadButton = `<button type="button" class="btn btn-circle btn-sm btn-tertiary download-table-btn" data-table-id="${tableId}" data-table-index="${tableIndex}" aria-label="${buttonLabel}"><i class="icon element-download" aria-hidden="true"></i></button>`;
       }
 
-      return `<div class="table-wrapper">${downloadButton}${tableHtml}</div>`;
+      return `<div class="table-wrapper"><div class="table-scroll-container">${tableHtml}</div>${downloadButton}</div>`;
     });
   };
 
