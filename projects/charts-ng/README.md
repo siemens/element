@@ -17,25 +17,7 @@ You also have to install the peer dependencies of Element Charts.
 npm install echarts --save
 ```
 
-Import the library to your Angular `AppModule`, mostly residing in your
-`src/app/app.modules.ts` file as follows:
-
-```ts
-// [...]
-
-// Import this library
-import { SiChartsNgModule } from '@siemens/charts-ng';
-
-@NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule, SiChartsNgModule],
-  providers: [],
-  bootstrap: [AppComponent]
-})
-export class AppModule {}
-```
-
-Starting with v49, Element Charts uses separate entry points for each component.
+Element Charts uses separate entry points for each component.
 Import components directly from their specific entry points:
 
 ```ts
