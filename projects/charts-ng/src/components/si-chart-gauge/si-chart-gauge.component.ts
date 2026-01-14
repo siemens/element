@@ -358,18 +358,12 @@ export class SiChartGaugeComponent extends SiChartComponent implements OnChanges
   private valueFormatterInternal(): (val: number) => string {
     const unit = this.unit();
     const valueFormatter = this.valueFormatter();
-    const labelFormatter = this.labelFormatter();
 
     const formattedUnit = unit ? (unit.length > 5 ? `\n{unit|${unit}}` : ` {unit|${unit}}`) : '';
 
     return (value: number): string => {
       if (valueFormatter) {
         return `{value|${valueFormatter(value)}}${formattedUnit}`;
-      }
-      // DEPRECATED: Use the new input `valueFormatter` to format the value.
-      // labelFormatter should be removed from here in future versions.
-      if (labelFormatter) {
-        return labelFormatter(value);
       }
       return `{value|${this.numberFormat().format(value)}}${formattedUnit}`;
     };
