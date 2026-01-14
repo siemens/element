@@ -8,8 +8,24 @@ on:
         required: true
         default: 'main'
         type: string
+      regenerate_all:
+        description: 'Regenerate all snapshots (removes existing ones first)'
+        required: false
+        default: false
+        type: boolean
   pull_request:
     types: [opened, synchronize, reopened]
+  workflow_call:
+    inputs:
+      ref:
+        description: 'Branch name to run against'
+        required: true
+        type: string
+      regenerate_all:
+        description: 'Regenerate all snapshots (removes existing ones first)'
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   vrt-update:
@@ -18,7 +34,7 @@ jobs:
     # PR from non-collaborators requires a manual re-run from collaborators which
     # makes run_attempt > 1 on first attempt causing the workflow to run.
     # So we always skip if the PR is not from a collaborator.
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.run_attempt > 1 && contains(fromJSON('["COLLABORATOR", "MEMBER", "OWNER"]'), github.event.pull_request.author_association))
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'workflow_call' || (github.event_name == 'pull_request' && github.run_attempt > 1 && contains(fromJSON('["COLLABORATOR", "MEMBER", "OWNER"]'), github.event.pull_request.author_association))
     steps:
       - name: Check execution conditions and set target ref
         id: check
@@ -135,16 +151,17 @@ jobs:
 
       - name: Update VRTs
         run: |
-          # Remove existing snapshots to ensure we generate fresh ones
-          if [ -d "playwright/snapshots" ]; then
-            echo "Removing existing snapshots to ensure fresh generation..."
-            rm -rf playwright/snapshots
+          if [ "${{ github.event.inputs.regenerate_all }}" = "true" ]; then
+            echo "Regenerate all flag is set - removing existing snapshots..."
+            if [ -d "playwright/snapshots" ]; then
+              rm -rf playwright/snapshots
+            fi
+            mkdir -p playwright/snapshots
+            echo "Starting fresh snapshot generation..."
+          else
+            echo "Updating only changed snapshots..."
           fi
 
-          # Create snapshots directory
-          mkdir -p playwright/snapshots
-
-          echo "Starting fresh snapshot generation..."
           npx playwright test --update-snapshots=all
 
           # Verify that snapshots were generated
@@ -153,7 +170,7 @@ jobs:
             exit 1
           fi
 
-          echo "Snapshots generated successfully:"
+          echo "Snapshots updated successfully:"
           find playwright/snapshots -type f -name "*.png" | head -10
         env:
           PLAYWRIGHT_CONTAINER: true
