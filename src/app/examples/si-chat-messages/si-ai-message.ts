@@ -24,7 +24,7 @@ export class SampleComponent {
   private translate = injectSiTranslateService();
 
   protected markdownRenderer = getMarkdownRenderer(this.sanitizer, {
-    copyCodeButton: 'SI_MARKDOWN_RENDERER.COPY',
+    copyCodeButton: 'SI_MARKDOWN_RENDERER.COPY_CODE',
     downloadTableButton: 'SI_MARKDOWN_RENDERER.DOWNLOAD',
     translateSync: this.translate.translateSync.bind(this.translate),
     // Optional: Syntax highlighting with highlight.js
