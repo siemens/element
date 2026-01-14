@@ -4,7 +4,6 @@
  */
 import { ComponentRef, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { SiLoadingSpinnerComponent as TestComponent } from './index';
 
@@ -14,7 +13,7 @@ describe('SiLoadingSpinnerComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [TestComponent, NoopAnimationsModule],
+      imports: [TestComponent],
       providers: [provideZonelessChangeDetection()]
     })
   );
