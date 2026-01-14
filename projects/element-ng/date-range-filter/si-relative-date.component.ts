@@ -8,8 +8,8 @@ import {
   Component,
   computed,
   input,
+  model,
   OnChanges,
-  output,
   signal,
   SimpleChanges
 } from '@angular/core';
@@ -44,14 +44,12 @@ interface OffsetOption extends SelectOption<string> {
 })
 export class SiRelativeDateComponent implements OnChanges {
   /** @defaultValue 0 */
-  readonly value = input(0);
+  readonly value = model(0);
   /** @defaultValue false */
   readonly enableTimeSelection = input(false, { transform: booleanAttribute });
   readonly valueLabel = input.required<string>();
   readonly unitLabel = input.required<string>();
-  readonly valueChange = output<number>();
 
-  protected readonly internalValue = signal(0);
   protected readonly offset = signal(0);
   protected readonly unit = signal('days');
   private readonly fullOffsetList: OffsetOption[] = [
@@ -100,9 +98,7 @@ export class SiRelativeDateComponent implements OnChanges {
   );
 
   ngOnChanges(changes: SimpleChanges): void {
-    const value = this.value();
-    if (changes.value && value !== this.internalValue()) {
-      this.internalValue.set(value);
+    if (changes.value) {
       this.calculateOffset();
     }
   }
@@ -117,7 +113,7 @@ export class SiRelativeDateComponent implements OnChanges {
 
     for (let i = offsetList.length - 1; i >= 0; i--) {
       const item = offsetList[i];
-      const raw = this.internalValue() / item.offset;
+      const raw = this.value() / item.offset;
       const rounded = Math.round(raw);
       if (rounded > 0 && Math.abs(raw - rounded) < 0.001) {
         this.offset.set(rounded);
@@ -132,15 +128,15 @@ export class SiRelativeDateComponent implements OnChanges {
   protected updateValue(offset: number): void {
     this.offset.set(offset);
     const item = this.offsetList().find(x => x.value === this.unit())!;
-    this.internalValue.set(offset * item.offset);
-    this.valueChange.emit(this.internalValue());
+    const nextValue = offset * item.offset;
+    this.value.set(nextValue);
   }
 
   protected changeUnit(newUnit: string): void {
     this.unit.set(newUnit);
     const item = this.offsetList().find(x => x.value === this.unit())!;
-    this.offset.set(Math.max(1, Math.round(this.internalValue() / item.offset)));
-    this.internalValue.set(this.offset() * item.offset);
-    this.valueChange.emit(this.internalValue());
+    const roundedOffset = Math.max(1, Math.round(this.value() / item.offset));
+    this.offset.set(roundedOffset);
+    this.value.set(roundedOffset * item.offset);
   }
 }

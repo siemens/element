@@ -20,10 +20,9 @@ const ONE_DAY = ONE_MINUTE * 60 * 24;
   imports: [SiRelativeDateComponent],
   template: `<si-relative-date
     [enableTimeSelection]="enableTimeSelection"
-    [value]="value()"
     [unitLabel]="unitLabel"
     [valueLabel]="valueLabel"
-    (valueChange)="value.set($event)"
+    [(value)]="value"
   /> `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
