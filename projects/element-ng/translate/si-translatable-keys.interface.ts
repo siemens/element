@@ -171,7 +171,7 @@ export interface SiTranslatableKeys {
   'SI_LOGIN_BASIC.USERNAME'?: string;
   'SI_LOGIN_SINGLE-SIGN-ON.LOGIN_SIGN_UP'?: string;
   'SI_MAIN_DETAIL_CONTAINER.BACK'?: string;
-  'SI_MARKDOWN_RENDERER.COPY'?: string;
+  'SI_MARKDOWN_RENDERER.COPY_CODE'?: string;
   'SI_MARKDOWN_RENDERER.DOWNLOAD'?: string;
   'SI_NAVBAR.OPEN_LAUNCHPAD'?: string;
   'SI_NAVBAR.TOGGLE_NAVIGATION'?: string;

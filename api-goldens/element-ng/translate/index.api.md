@@ -346,7 +346,7 @@ export interface SiTranslatableKeys {
     // (undocumented)
     'SI_MAIN_DETAIL_CONTAINER.BACK'?: string;
     // (undocumented)
-    'SI_MARKDOWN_RENDERER.COPY'?: string;
+    'SI_MARKDOWN_RENDERER.COPY_CODE'?: string;
     // (undocumented)
     'SI_MARKDOWN_RENDERER.DOWNLOAD'?: string;
     // (undocumented)
