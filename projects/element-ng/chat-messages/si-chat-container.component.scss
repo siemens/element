@@ -88,13 +88,3 @@
   // stylelint-disable-next-line declaration-no-important
   display: none !important;
 }
-
-// In mobile mode the inline-notification is massive compared to the scrollable area
-:host-context(.si-container-xs, .si-container-sm) ::ng-deep {
-  si-inline-notification {
-    .alert,
-    .alert-link {
-      font-size: variables.$si-font-size-body;
-    }
-  }
-}

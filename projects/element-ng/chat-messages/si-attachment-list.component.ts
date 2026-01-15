@@ -2,26 +2,12 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { booleanAttribute, Component, inject, input, output, TemplateRef } from '@angular/core';
+import { booleanAttribute, Component, inject, input, output } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiModalService } from '@siemens/element-ng/modal';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
-/**
- * Attachment item interface for file attachments in chat messages, used by {@link SiAttachmentListComponent} and inside {@link SiUserMessageComponent} as well as {@link SiChatInputComponent}.
- *
- * @see {@link SiAttachmentListComponent} for the attachment list component
- * @see {@link SiUserMessageComponent} for the user message
- * @see {@link SiChatInputComponent} for the chat input component
- *
- * @experimental
- */
-export interface Attachment {
-  /** File name */
-  name: string;
-  /** Optionally show a preview of the attachment by providing a template that is shown in a modal when clicked (optional) */
-  previewTemplate?: TemplateRef<any> | (() => TemplateRef<any>);
-}
+import { Attachment } from './chat-message.model';
 
 /**
  * Attachment list component for displaying file attachments in chat messages.
