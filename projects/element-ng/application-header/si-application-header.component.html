@@ -8,9 +8,9 @@
       [class]="`header-toggle focus-inside d-${expandBreakpoint()}-block`"
       [class.show]="launchpadOpen()"
       [class.d-none]="hasNavigation()"
-      [attr.aria-expanded]="launchpadOpen()"
-      [attr.aria-label]="launchpadLabel() | translate"
-      [attr.aria-controls]="id + '-launchpad'"
+      [aria-expanded]="launchpadOpen()"
+      [aria-label]="launchpadLabel() | translate"
+      [aria-controls]="id + '-launchpad'"
       (click)="toggleLaunchpad()"
     >
       <si-icon [icon]="icons.elementThumbnails" />
@@ -22,9 +22,9 @@
       type="button"
       class="header-toggle focus-inside"
       [class.show]="mobileNavigationExpanded()"
-      [attr.aria-expanded]="mobileNavigationExpanded()"
-      [attr.aria-label]="toggleNavigation | translate"
-      [attr.aria-controls]="id + '-navigation-wrapper'"
+      [aria-expanded]="mobileNavigationExpanded()"
+      [aria-label]="toggleNavigation | translate"
+      [aria-controls]="id + '-navigation-wrapper'"
       (click)="toggleMobileNavigationExpanded()"
     >
       <si-icon [icon]="icons.elementMenu" />

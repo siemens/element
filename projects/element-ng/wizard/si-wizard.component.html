@@ -65,7 +65,7 @@
         ></div>
         <a
           [class]="['focus-none', getStateClass(item.index)]"
-          [attr.aria-current]="getAriaCurrent(item.index)"
+          [aria-current]="getAriaCurrent(item.index)"
           [attr.href]="!canActivate(item.index) || !currentStep?.isNextNavigable() ? null : '#'"
           (click)="activateStep($event, item.index)"
         >
@@ -90,7 +90,7 @@
             class="title si-h5"
             [class.text-center]="!verticalLayout()"
             [class.px-6]="!verticalLayout()"
-            [attr.aria-disabled]="getAriaDisabled(item.index)"
+            [aria-disabled]="getAriaDisabled(item.index)"
             >{{ item.step.heading() | translate }}</div
           >
         </a>
@@ -119,7 +119,7 @@
         <button
           type="button"
           class="btn btn-sm btn-circle btn-secondary mt-2 mb-4"
-          [attr.aria-label]="cancelText() | translate"
+          [aria-label]="cancelText() | translate"
         >
           <si-icon [icon]="icons.elementCancel" />
         </button>
@@ -136,7 +136,7 @@
         <button
           type="button"
           class="btn btn-tertiary"
-          [attr.aria-label]="cancelText() | translate"
+          [aria-label]="cancelText() | translate"
           (click)="wizardCancel.emit()"
         >
           {{ cancelText() | translate }}
@@ -148,7 +148,7 @@
           class="btn btn-secondary"
           [class.d-none]="index === 0"
           [class.end]="index !== 0"
-          [attr.aria-label]="backText() | translate"
+          [aria-label]="backText() | translate"
           (click)="back(1)"
         >
           {{ backText() | translate }}
@@ -157,7 +157,7 @@
         <button
           type="button"
           class="btn btn-primary"
-          [attr.aria-label]="nextText() | translate"
+          [aria-label]="nextText() | translate"
           [disabled]="!currentStep?.isValid()"
           [class.d-none]="index === steps().length - 1"
           [class.end]="index === 0"
@@ -189,7 +189,7 @@
         <button
           type="button"
           class="btn btn-secondary btn-circle mb-2"
-          [attr.aria-label]="backText() | translate"
+          [aria-label]="backText() | translate"
         >
           <si-icon class="flip-rtl" [icon]="icons.elementLeft4" />
         </button>
@@ -207,14 +207,14 @@
           type="button"
           class="btn btn-primary btn-circle mb-2"
           [disabled]="!currentStep?.isValid()"
-          [attr.aria-label]="nextText() | translate"
+          [aria-label]="nextText() | translate"
         >
           <si-icon class="flip-rtl" [icon]="icons.elementRight4" />
         </button>
         <div
           class="si-h5 text-primary"
           [class.text-muted]="!currentStep?.isValid()"
-          [attr.aria-disabled]="!currentStep?.isValid()"
+          [aria-disabled]="!currentStep?.isValid()"
           >{{ nextText() | translate }}</div
         >
       </div>

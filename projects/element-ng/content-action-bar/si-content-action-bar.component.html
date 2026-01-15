@@ -6,7 +6,7 @@
         si-content-action-bar-toggle
         type="button"
         [icon]="icons.elementOptionsVertical"
-        [attr.aria-label]="toggleItemLabel() | translate"
+        [aria-label]="toggleItemLabel() | translate"
         (click)="expand()"
       ></button>
     }
@@ -142,7 +142,7 @@
               [attr.data-id]="primaryAction.id"
               [siLink]="primaryAction"
               [icon]="primaryAction.icon"
-              [attr.aria-label]="primaryAction.title | translate"
+              [aria-label]="primaryAction.title | translate"
               [badge]="primaryAction.badge"
               [actionParam]="actionParam()"
               [iconBadgeDot]="primaryAction.badgeDot"
@@ -164,7 +164,7 @@
               [attr.data-id]="primaryAction.id"
               [siLink]="primaryAction"
               [icon]="primaryAction.icon"
-              [attr.aria-label]="primaryAction.title | translate"
+              [aria-label]="primaryAction.title | translate"
               [badge]="primaryAction.badge"
               [actionParam]="actionParam()"
               [iconBadgeDot]="primaryAction.badgeDot"
@@ -183,7 +183,7 @@
           si-content-action-bar-toggle
           cdkMenuItem
           [icon]="icons.elementOptionsVertical"
-          [attr.aria-label]="toggleItemLabel() | translate"
+          [aria-label]="toggleItemLabel() | translate"
           [cdkMenuTriggerFor]="secondaryActionsMenu"
           [disabled]="disabled()"
         ></button>
@@ -194,7 +194,7 @@
           si-content-action-bar-toggle
           cdkMenuItem
           [icon]="icons.elementCancel"
-          [attr.aria-label]="toggleItemLabel() | translate"
+          [aria-label]="toggleItemLabel() | translate"
           [disabled]="disabled()"
           (cdkMenuItemTriggered)="collapse()"
         >
@@ -208,7 +208,7 @@
       [icon]="icons.elementOptionsVertical"
       [cdkMenuTriggerFor]="mobile"
       [disabled]="disabled()"
-      [attr.aria-label]="toggleItemLabel() | translate"
+      [aria-label]="toggleItemLabel() | translate"
     >
     </button>
   </div>
@@ -221,7 +221,7 @@
     [icon]="icons.elementOptionsVertical"
     [cdkMenuTriggerFor]="mobile"
     [disabled]="disabled()"
-    [attr.aria-label]="toggleItemLabel() | translate"
+    [aria-label]="toggleItemLabel() | translate"
   >
   </button>
 }

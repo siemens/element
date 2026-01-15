@@ -27,12 +27,12 @@
           role="tab"
           class="nav-link focus-inside px-5"
           [class.pe-3]="tab.closable"
-          [attr.aria-controls]="tab.id"
+          [aria-controls]="tab.id"
           [id]="tab.tabId"
           [style.max-width.px]="tabButtonMaxWidth"
           [tabindex]="!tab.disabled && tab.active() && focusedTabIndex === undefined ? 0 : -1"
           [class.active]="tab.active()"
-          [attr.aria-selected]="tab.active()"
+          [aria-selected]="tab.active()"
           [class.disabled]="tab.disabled"
           (click)="selectTab(tab)"
           (keydown.arrowLeft)="focusPrevious()"
@@ -47,7 +47,7 @@
               class="icon"
               [attr.role]="tab.iconAltText ? 'img' : 'presentation'"
               [icon]="tab.icon"
-              [attr.aria-label]="(tab.iconAltText | translate) ?? undefined"
+              [aria-label]="(tab.iconAltText | translate) ?? undefined"
             />
           }
           @if (tab.badgeContent === true) {

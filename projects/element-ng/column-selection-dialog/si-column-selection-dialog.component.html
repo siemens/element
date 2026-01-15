@@ -3,7 +3,7 @@
   <button
     type="button"
     class="btn btn-circle btn-sm btn-ghost"
-    [attr.aria-label]="cancelBtnName() | translate"
+    [aria-label]="cancelBtnName() | translate"
     (click)="cancelColumnSelection()"
   >
     <si-icon [icon]="icons.elementCancel" />
@@ -16,7 +16,7 @@
     cdkListboxMultiple
     cdkDropList
     [cdkListboxValue]="visibleIds"
-    [attr.aria-label]="listAriaLabel() | translate: translationParams"
+    [aria-label]="listAriaLabel() | translate: translationParams"
     (cdkListboxValueChange)="updateVisibility()"
     (cdkDropListDropped)="drop($event)"
   >

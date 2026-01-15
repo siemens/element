@@ -45,7 +45,7 @@ import { Subscription, timer } from 'rxjs';
   host: {
     role: 'group',
     '[class.disabled]': 'disabled()',
-    '[attr.aria-labelledby]': 'labelledby()'
+    '[aria-labelledby]': 'labelledby()'
   }
 })
 export class SiSliderComponent implements ControlValueAccessor, SiFormItemControl {

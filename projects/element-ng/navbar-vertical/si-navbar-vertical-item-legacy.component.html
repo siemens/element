@@ -23,7 +23,7 @@
       [si-navbar-vertical-item]="item()"
       [siNavbarVerticalGroupTriggerFor]="group"
       [activeOverride]="mainLink.active"
-      [attr.aria-label]="toggleButtonLabel() + ' ' + item().title | translate"
+      [aria-label]="toggleButtonLabel() + ' ' + item().title | translate"
       [(expanded)]="expanded"
     >
       {{ item().title | translate }}

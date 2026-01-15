@@ -27,7 +27,7 @@ import { filter, skip, take, takeUntil } from 'rxjs/operators';
 
 import { SI_HEADER_WITH_DROPDOWNS } from './si-header.model';
 
-@Component({ template: '', host: { '[attr.aria-owns]': 'ariaOwns()' } })
+@Component({ template: '', host: { '[aria-owns]': 'ariaOwns()' } })
 class SiHeaderAnchorComponent {
   readonly ariaOwns = input<string>();
 }
@@ -87,10 +87,10 @@ export class SiHeaderDropdownTriggerDirective implements OnChanges, OnInit, OnDe
     `si-navbar-dropdown-trigger-${SiHeaderDropdownTriggerDirective.idCounter++}`;
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  @HostBinding('class.show') @HostBinding('attr.aria-expanded') protected _isOpen = false;
+  @HostBinding('class.show') @HostBinding('aria-expanded') protected _isOpen = false;
 
   /** @internal */
-  @HostBinding('attr.aria-controls') readonly ariaControls =
+  @HostBinding('aria-controls') readonly ariaControls =
     `si-navbar-dropdown-${SiHeaderDropdownTriggerDirective.idCounter}`;
 
   private headerAnchorComponentRef?: ComponentRef<SiHeaderAnchorComponent>;

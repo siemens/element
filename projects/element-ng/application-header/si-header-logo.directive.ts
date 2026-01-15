@@ -18,7 +18,7 @@ import {
   selector: 'si-header-logo, [siHeaderLogo]',
   host: {
     class: 'header-logo px-6 focus-inside',
-    '[attr.aria-label]': 'logoText()'
+    '[aria-label]': 'logoText()'
   }
 })
 export class SiHeaderLogoDirective implements OnInit {

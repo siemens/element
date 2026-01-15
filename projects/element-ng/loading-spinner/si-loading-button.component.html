@@ -4,9 +4,9 @@
   [class.loading]="loading()"
   [class.disabled]="loading()"
   [disabled]="disabled()"
-  [attr.aria-disabled]="disabled() || loading()"
-  [attr.aria-label]="ariaLabel() | translate"
-  [attr.aria-labelledby]="ariaLabelledBy()"
+  [aria-disabled]="disabled() || loading()"
+  [aria-label]="ariaLabel() | translate"
+  [aria-labelledby]="ariaLabelledBy()"
   [attr.tabindex]="loading() ? '-1' : null"
   (click)="handleClick($event)"
 >

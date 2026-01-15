@@ -49,7 +49,7 @@ import { SiDatepickerDirective } from './si-datepicker.directive';
       name="open-calendar"
       type="button"
       class="btn btn-circle btn-tertiary btn-xs position-absolute end-0 top-0 me-2 mt-2"
-      [attr.aria-label]="ariaLabel() | translate"
+      [aria-label]="ariaLabel() | translate"
       [disabled]="disabled()"
       (click)="show()"
     >

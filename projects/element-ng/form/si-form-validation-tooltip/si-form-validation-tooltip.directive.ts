@@ -41,7 +41,7 @@ import {
   selector: '[siFormValidationTooltip]',
   providers: [SiTooltipService],
   host: {
-    '[attr.aria-describedby]': 'describedBy'
+    '[aria-describedby]': 'describedBy'
   }
 })
 export class SiFormValidationTooltipDirective implements OnDestroy, DoCheck {

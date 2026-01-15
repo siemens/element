@@ -48,14 +48,14 @@ import {
     role: 'listbox',
     'aria-orientation': 'horizontal',
     '[class.disabled]': 'disabled()',
-    '[attr.aria-disabled]': 'disabled()',
+    '[aria-disabled]': 'disabled()',
     '[class.readonly]': 'readonly()',
-    '[attr.aria-readonly]': 'readonly()',
+    '[aria-readonly]': 'readonly()',
     // using attr so that tabindex is removed if not defined
     '[attr.tabindex]': 'tabindex()',
-    '[attr.aria-activedescendant]': 'activeDescendant()',
-    '[attr.aria-labelledby]': 'labelledby()',
-    '[attr.aria-describedby]': 'errormessageId()'
+    '[aria-activedescendant]': 'activeDescendant()',
+    '[aria-labelledby]': 'labelledby()',
+    '[aria-describedby]': 'errormessageId()'
   }
 })
 export class SiPillsInputComponent implements OnInit, ControlValueAccessor, SiFormItemControl {

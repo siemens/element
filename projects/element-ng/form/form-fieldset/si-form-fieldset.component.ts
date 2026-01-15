@@ -76,7 +76,7 @@ export class SiFormFieldsetComponent implements DoCheck {
       this.required() || (this.hasOnlyRadios() && this.formItems().every(item => item.required()))
   );
 
-  @HostBinding('attr.aria-labelledby')
+  @HostBinding('aria-labelledby')
   protected labelId = `__si-form-fieldset-label-${SiFormFieldsetComponent.labelIdCounter++}`;
 
   ngDoCheck(): void {

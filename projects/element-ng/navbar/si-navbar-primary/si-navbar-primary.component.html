@@ -13,7 +13,7 @@
   </si-header-brand>
 
   @if (primaryItems().length) {
-    <si-header-navigation [attr.aria-label]="ariaLabelMainMenu()">
+    <si-header-navigation [aria-label]="ariaLabelMainMenu()">
       @for (item of primaryItems(); track $index) {
         @if (item.items) {
           <button
@@ -46,7 +46,7 @@
     </si-header-navigation>
   }
   @if (navItemCount() || account()) {
-    <si-header-actions [attr.aria-label]="ariaLabelSecondaryMenu()">
+    <si-header-actions [aria-label]="ariaLabelSecondaryMenu()">
       @if (navItemCount()) {
         @if (navItemCount() === 1) {
           <ng-container *ngTemplateOutlet="actions" />

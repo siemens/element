@@ -1,11 +1,11 @@
 <div class="d-flex p-4" (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
-  <div class="flex-fill overflow-hidden" [attr.aria-label]="column().title">
+  <div class="flex-fill overflow-hidden" [aria-label]="column().title">
     @if (editing) {
       <input
         #title
         type="text"
         class="form-control w-100"
-        [attr.aria-label]="renameInputLabel()"
+        [aria-label]="renameInputLabel()"
         [value]="column().title"
         (input)="updateTitle(title.value)"
         (keydown.enter)="stopEdit()"

@@ -1,7 +1,7 @@
 <span
   [class]="`d-inline-block position-relative ${icon() ?? ''} ${color() ?? ''} ${size()}`"
-  [attr.aria-label]="altText() ? (altText() | translate) : null"
-  [attr.aria-hidden]="!altText()"
+  [aria-label]="altText() ? (altText() | translate) : null"
+  [aria-hidden]="!altText()"
   [attr.role]="altText() ? 'img' : 'presentation'"
 >
   @if (stackedIcon()) {

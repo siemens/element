@@ -12,7 +12,7 @@
               ? 'btn-secondary'
               : 'btn-circle btn-sm btn-tertiary element-edit'
           "
-          [attr.aria-label]="labelEdit | translate"
+          [aria-label]="labelEdit | translate"
           [attr.title]="!showEditButtonLabelDesktop ? (labelEdit | translate) : undefined"
           [disabled]="disabled()"
           (click)="onEdit()"

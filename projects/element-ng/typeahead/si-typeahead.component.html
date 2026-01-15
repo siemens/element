@@ -21,7 +21,7 @@
   class="typeahead dropdown-menu"
   [siAutocompleteListboxFor]="autocompleteDirective"
   [siAutocompleteDefaultIndex]="parent.typeaheadAutoSelectIndex()"
-  [attr.aria-label]="parent.typeaheadAutocompleteListLabel() | translate"
+  [aria-label]="parent.typeaheadAutocompleteListLabel() | translate"
   (siAutocompleteOptionSubmitted)="selectMatch($event)"
 >
   <!-- Loop through every match and bind events, the mousedown prevent default is to prevent the host from losing focus on click -->
@@ -30,8 +30,8 @@
       #typeaheadMatch
       class="dropdown-item"
       [siAutocompleteOption]="match"
-      [attr.aria-label]="match.text"
-      [attr.aria-selected]="multiselect() ? match.itemSelected : null"
+      [aria-label]="match.text"
+      [aria-selected]="multiselect() ? match.itemSelected : null"
       (click)="$event.stopPropagation()"
       (mousedown)="$event.preventDefault()"
     >

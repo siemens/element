@@ -6,7 +6,7 @@
           type="button"
           class="attachment-main focus-inside d-flex align-items-center flex-grow-1 min-width-0"
           [attr.title]="attachment.name"
-          [attr.aria-label]="attachment.name"
+          [aria-label]="attachment.name"
           (click)="openPreview($event, attachment)"
           (keydown.enter)="openPreview($event, attachment)"
           (keydown.space)="openPreview($event, attachment)"
@@ -45,7 +45,7 @@
         <button
           type="button"
           class="btn btn-ghost btn-circle btn-sm expand-button flex-shrink-0 ms-auto align-self-center focus-inside"
-          [attr.aria-label]="(removeLabel() | translate) + ' ' + attachment.name"
+          [aria-label]="(removeLabel() | translate) + ' ' + attachment.name"
           (click)="remove.emit(attachment); $event.stopPropagation()"
         >
           <si-icon class="icon" icon="element-delete" />

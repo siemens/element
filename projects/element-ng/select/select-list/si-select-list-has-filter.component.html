@@ -7,7 +7,7 @@
       class="form-control ps-9 border-0 rounded-2 bg-base-0"
       [placeholder]="filterPlaceholder() | translate"
       [id]="baseId() + 'filter-input'"
-      [attr.aria-labelledby]="baseId() + '-aria-label' + ' ' + labelledby()"
+      [aria-labelledby]="baseId() + '-aria-label' + ' ' + labelledby()"
       (input)="input()"
     />
     <si-icon
@@ -24,7 +24,7 @@
   tabindex="-1"
   [siAutocompleteListboxFor]="siAutocomplete"
   [siAutocompleteDefaultIndex]="initIndex()"
-  [attr.aria-labelledby]="baseId() + '-aria-label' + ' ' + labelledby()"
+  [aria-labelledby]="baseId() + '-aria-label' + ' ' + labelledby()"
   (siAutocompleteOptionSubmitted)="select($event)"
 >
   @for (item of rows(); track item; let index = $index) {
@@ -33,7 +33,7 @@
         role="group"
         class="ps-0"
         aria-disabled="false"
-        [attr.aria-labelledby]="baseId() + '-' + index + '-group-header'"
+        [aria-labelledby]="baseId() + '-' + index + '-group-header'"
       >
         <div class="dropdown-header" [id]="baseId() + '-' + index + '-group-header'">
           <ng-container

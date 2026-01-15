@@ -28,7 +28,7 @@
     [typeaheadOptionsLimit]="maxCriteriaOptions()"
     [readOnly]="readonly() || onlySelectValue()"
     [typeaheadOptionsInScrollableView]="optionsInScrollableView()"
-    [attr.aria-label]="searchLabel() | translate"
+    [aria-label]="searchLabel() | translate"
     (keydown.backspace)="valueBackspace()"
     (keydown.enter)="valueEnter()"
     (typeaheadOnSelect)="valueTypeaheadSelect($event)"

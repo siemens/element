@@ -73,7 +73,7 @@ import { CountryInfo, PhoneDetails } from './si-phone-number-input.models';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     'role': 'group',
-    '[attr.aria-labelledby]': 'labelledby()',
+    '[aria-labelledby]': 'labelledby()',
     '[attr.id]': 'id()',
     '[class.disabled]': 'disabled()',
     '[class.readonly]': 'readonly()',

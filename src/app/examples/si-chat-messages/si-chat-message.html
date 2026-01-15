@@ -11,7 +11,7 @@
         class="btn btn-ghost btn-circle btn-sm"
         siChatMessageAction
         [disabled]="action.disabled"
-        [attr.aria-label]="action.label | translate"
+        [aria-label]="action.label | translate"
         (click)="action.action('message-1', action)"
       >
         <si-icon [icon]="action.icon" />
@@ -22,7 +22,7 @@
       class="btn btn-ghost btn-circle btn-sm"
       siChatMessageAction
       [cdkMenuTriggerFor]="secondaryActionsMenu"
-      [attr.aria-label]="secondaryActionsLabel | translate"
+      [aria-label]="secondaryActionsLabel | translate"
       [attr.title]="secondaryActionsLabel | translate"
     >
       <si-icon icon="element-optionsVertical" />
@@ -43,7 +43,7 @@
           class="btn btn-ghost btn-circle btn-sm"
           siChatMessageAction
           [disabled]="action.disabled"
-          [attr.aria-label]="action.label | translate"
+          [aria-label]="action.label | translate"
         >
           <si-icon [icon]="action.icon" />
         </button>

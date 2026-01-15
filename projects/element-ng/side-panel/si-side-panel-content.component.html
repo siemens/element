@@ -26,7 +26,7 @@
           [preserveFragment]="navigateConfig.extras?.preserveFragment"
           [skipLocationChange]="navigateConfig.extras?.skipLocationChange"
           [replaceUrl]="navigateConfig.extras?.replaceUrl"
-          [attr.aria-label]="navigateConfig.label | translate"
+          [aria-label]="navigateConfig.label | translate"
         >
           <si-icon class="icon" icon="element-export" />
           <span class="visually-hidden">
@@ -41,7 +41,7 @@
           [href]="navigateConfig.href"
           [target]="navigateConfig.target"
           [attr.rel]="navigateConfig.target === '_blank' ? 'noopener noreferrer' : null"
-          [attr.aria-label]="navigateConfig.label | translate"
+          [aria-label]="navigateConfig.label | translate"
         >
           <si-icon class="icon" icon="element-export" />
           <span class="visually-hidden">
@@ -56,9 +56,7 @@
         class="fullscreen-button btn btn-circle btn-sm btn-ghost auto-hide"
         [class.ms-4]="collapsible()"
         [class.mx-4]="!collapsible() || service.isTemporaryOpen()"
-        [attr.aria-label]="
-          (isFullscreen() ? exitFullscreenLabel() : enterFullscreenLabel()) | translate
-        "
+        [aria-label]="(isFullscreen() ? exitFullscreenLabel() : enterFullscreenLabel()) | translate"
         [tabindex]="focusable() ? '0' : '-1'"
         (click)="toggleFullscreen()"
       >
@@ -68,7 +66,7 @@
     <button
       type="button"
       class="close-button btn btn-circle btn-sm btn-ghost me-4"
-      [attr.aria-label]="closeButtonLabel() | translate"
+      [aria-label]="closeButtonLabel() | translate"
       [tabindex]="focusable() ? '0' : '-1'"
       (click)="toggleSidePanel($event)"
     >
@@ -78,7 +76,7 @@
       <button
         type="button"
         class="side-panel-collapse-toggle btn btn-circle btn-sm btn-ghost mx-4"
-        [attr.aria-label]="toggleItemLabel() | translate"
+        [aria-label]="toggleItemLabel() | translate"
         (click)="toggleSidePanel($event)"
       >
         <si-icon
@@ -97,7 +95,7 @@
         @if (!dp.disabled) {
           <a
             class="rpanel-statusaction position-relative focus-inside"
-            [attr.aria-label]="!isCollapsed ? '' : (dp.title | translate)"
+            [aria-label]="!isCollapsed ? '' : (dp.title | translate)"
             [siLink]="dp"
           >
             <si-icon class="icon" [icon]="dp.icon!" />

@@ -57,7 +57,7 @@ import { DatepickerInputConfig, getDatepickerFormat } from './si-datepicker.mode
     '[attr.disabled]': 'disabled() || null',
     '[attr.readonly]': 'readonly() || null',
     '[class.readonly]': 'readonly()',
-    '[attr.aria-describedby]': 'errormessageId()',
+    '[aria-describedby]': 'errormessageId()',
     '[value]': 'dateString()'
   },
   exportAs: 'siDateInput'

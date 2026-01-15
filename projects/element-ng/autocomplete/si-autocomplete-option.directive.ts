@@ -20,7 +20,7 @@ import { AUTOCOMPLETE_LISTBOX } from './si-autocomplete.model';
   host: {
     role: 'option',
     '[id]': 'id()',
-    '[attr.aria-disabled]': 'disabledInput()'
+    '[aria-disabled]': 'disabledInput()'
   },
   exportAs: 'siAutocompleteOption'
 })

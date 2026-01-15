@@ -1,4 +1,4 @@
-<nav role="navigation" [attr.aria-label]="ariaLabel() | translate">
+<nav role="navigation" [aria-label]="ariaLabel() | translate">
   <ol #breadcrumb class="breadcrumb" (siResizeObserver)="resetBreadcrumb()">
     @for (item of itemsShown; track $index; let isFirst = $first) {
       @if (!breadcrumbShortened || item.level !== ellipsesLevel) {
@@ -68,8 +68,8 @@
     [class.text-secondary]="item.lastItem"
     [siLink]="item"
     [exactMatch]="true"
-    [attr.aria-label]="item.title"
-    [attr.aria-disabled]="!item.link && !item.href && !item.action"
+    [aria-label]="item.title"
+    [aria-disabled]="!item.link && !item.href && !item.action"
   >
     @if (item.level === 0) {
       <si-icon class="icon flip-rtl" [icon]="icons.elementBreadcrumbRoot" />
@@ -85,8 +85,8 @@
     role="button"
     aria-haspopup="true"
     tabindex="0"
-    [attr.aria-controls]="controlId + item.level"
-    [attr.aria-expanded]="breadcrumbDropdownOpen === item.level"
+    [aria-controls]="controlId + item.level"
+    [aria-expanded]="breadcrumbDropdownOpen === item.level"
     (keydown.enter)="toggleBreadcrumbDropdown(item.level)"
     (click)="toggleBreadcrumbDropdown(item.level)"
     >{{ title }}...</div
@@ -102,7 +102,7 @@
     [class.disable-router-link]="!item.link && !item.action && !item.href"
     [siLink]="item"
     [exactMatch]="true"
-    [attr.aria-disabled]="!item.link && !item.action && !item.href"
+    [aria-disabled]="!item.link && !item.action && !item.href"
     >{{ item.title }}</a
   >
 </ng-template>

@@ -51,7 +51,7 @@
         <button
           type="button"
           class="btn btn-ghost btn-circle btn-sm"
-          [attr.aria-label]="attachFileLabel() | translate"
+          [aria-label]="attachFileLabel() | translate"
           [disabled]="disabled()"
           (click)="fileInput.click()"
         >
@@ -66,7 +66,7 @@
               type="button"
               class="btn btn-ghost btn-circle btn-sm"
               [disabled]="action.disabled"
-              [attr.aria-label]="action.label | translate"
+              [aria-label]="action.label | translate"
               (click)="action.action(actionParam(), action)"
             >
               <si-icon [icon]="action.icon" />
@@ -78,7 +78,7 @@
               type="button"
               class="btn btn-ghost btn-circle btn-sm"
               [cdkMenuTriggerFor]="secondaryActionsMenu"
-              [attr.aria-label]="secondaryActionsLabel() | translate"
+              [aria-label]="secondaryActionsLabel() | translate"
               [attr.title]="secondaryActionsLabel() | translate"
             >
               <si-icon icon="element-optionsVertical" />
@@ -99,7 +99,7 @@
       type="button"
       class="btn btn-ghost btn-circle btn-sm"
       [disabled]="buttonDisabled()"
-      [attr.aria-label]="buttonLabel() | translate"
+      [aria-label]="buttonLabel() | translate"
       (click)="onButtonClick()"
     >
       <si-icon class="text-primary" [icon]="buttonIcon()" />

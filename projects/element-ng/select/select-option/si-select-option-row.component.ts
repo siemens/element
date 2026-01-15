@@ -23,7 +23,7 @@ import { SelectOption } from '../si-select.types';
   host: {
     class: 'dropdown-item focus-none pe-4 gap-4',
     '[class.disabled]': '!!this.option().disabled',
-    '[attr.aria-selected]': 'selected()',
+    '[aria-selected]': 'selected()',
     '[attr.data-id]': 'this.option().value'
   }
 })

@@ -26,8 +26,8 @@ import { PopoverComponent } from './si-popover.component';
 @Directive({
   selector: '[siPopover]',
   host: {
-    '[attr.aria-expanded]': 'isOpen()',
-    '[attr.aria-controls]': 'popoverId'
+    '[aria-expanded]': 'isOpen()',
+    '[aria-controls]': 'popoverId'
   },
   exportAs: 'si-popover'
 })

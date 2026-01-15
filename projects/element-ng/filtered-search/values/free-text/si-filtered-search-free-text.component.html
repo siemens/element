@@ -12,7 +12,7 @@
     #freeTextInput
     type="text"
     class="px-4 py-0 border-0 focus-inside"
-    [attr.aria-label]="searchLabel() | translate"
+    [aria-label]="searchLabel() | translate"
     [disabled]="disabled()"
     [value]="criterionValue().value"
     (input)="freeTextValueChange($event)"

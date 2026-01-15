@@ -34,7 +34,7 @@ import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
 @Component({
   selector: 'si-navbar-flyout-anchor',
   template: '',
-  host: { '[attr.aria-owns]': 'groupId()' }
+  host: { '[aria-owns]': 'groupId()' }
 })
 class SiNavbarFlyoutAnchorComponent {
   readonly groupId = input<string>();
@@ -46,8 +46,8 @@ class SiNavbarFlyoutAnchorComponent {
     class: 'dropdown-toggle',
     '[id]': 'id',
     '[class.show]': 'expanded()',
-    '[attr.aria-controls]': 'groupId',
-    '[attr.aria-expanded]': 'expanded()'
+    '[aria-controls]': 'groupId',
+    '[aria-expanded]': 'expanded()'
   }
 })
 export class SiNavbarVerticalGroupTriggerDirective implements OnInit {
