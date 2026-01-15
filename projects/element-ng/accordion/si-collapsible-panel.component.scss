@@ -86,8 +86,6 @@
 
 .collapsible-content {
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
   background: variables.$element-base-1;
   border-end-start-radius: var(--__radius);
   border-end-end-radius: var(--__radius);
@@ -95,5 +93,19 @@
   &.full-height {
     // cannot use class overflow-auto, as it is using !important which is breaking the animation
     overflow: auto;
+  }
+}
+
+.content-motion {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows variables.element-transition-duration(0.5s) ease-in;
+
+  @starting-style {
+    grid-template-rows: 0fr;
+  }
+
+  &.content-leave {
+    grid-template-rows: 0fr;
   }
 }
