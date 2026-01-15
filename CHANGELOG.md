@@ -1,3 +1,21 @@
+# [48.10.0](https://github.com/siemens/element/compare/v48.9.0...v48.10.0) (2026-01-15)
+
+
+### Features
+
+* **ag-grid:** add Element theme for AG Grid ([4cfe0ef](https://github.com/siemens/element/commit/4cfe0efa257e8e8ba43170f43c71fc696c7f8704))
+* **charts:** theme change without reloading the chart ([4cbfd82](https://github.com/siemens/element/commit/4cbfd82225846da19187659f84ee28fa3b9c5601))
+
+
+### Bug Fixes
+
+* **select:** maintain filtered rows when updating all rows ([29d3337](https://github.com/siemens/element/commit/29d3337ebfca9108e232bd1844b0f1b91a0e0b8f))
+
+
+### DEPRECATIONS
+
+* **charts:** The method `SiChartComponent.resetChart` is deprecated and should not be used by the consumer directly.
+
 # [48.9.0](https://github.com/siemens/element/compare/v48.8.0...v48.9.0) (2025-12-19)
 
 
