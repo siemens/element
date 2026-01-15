@@ -9,7 +9,7 @@ import { By, DomSanitizer } from '@angular/platform-browser';
 import { getMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
 import { MenuItem } from '@siemens/element-ng/menu';
 
-import { MessageAction } from './message-action.model';
+import { MessageAction } from './chat-message.model';
 import { SiAiMessageComponent as TestComponent } from './si-ai-message.component';
 
 describe('SiAiMessageComponent', () => {
