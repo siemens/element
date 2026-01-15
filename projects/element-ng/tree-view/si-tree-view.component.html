@@ -37,8 +37,6 @@
         (click)="onFlatTreeNavigateUp()"
         (keydown.enter)="onFlatTreeNavigateUp()"
       ></span>
-    }
-    @if (lastBreadCrumbItem) {
       <span class="text-center text-truncate">{{ lastBreadCrumbItem.label | translate }}</span>
     }
   </div>
