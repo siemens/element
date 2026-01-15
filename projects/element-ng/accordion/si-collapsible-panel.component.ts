@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { animate, query, style, transition, trigger } from '@angular/animations';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -13,10 +12,11 @@ import {
   input,
   model,
   output,
+  signal,
   viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { areAnimationsDisabled, BackgroundColorVariant } from '@siemens/element-ng/common';
+import { BackgroundColorVariant } from '@siemens/element-ng/common';
 import { addIcons, elementDown2, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { filter } from 'rxjs';
@@ -36,28 +36,9 @@ let controlIdCounter = 1;
     '[class]': 'colorVariant()',
     '[class.opened]': 'opened()',
     '[class.hcollapsed]': 'hcollapsed()',
-    '[class.full-height]': 'fullHeight()'
-  },
-  animations: [
-    trigger('showHide', [
-      transition('*=>hide', [
-        style({ overflow: 'hidden' }),
-        query(
-          ':leave',
-          [style({ blockSize: '*' }), animate('0.5s ease', style({ blockSize: '0' }))],
-          { optional: true }
-        )
-      ]),
-      transition('*=>show', [
-        style({ overflow: 'hidden' }),
-        query(
-          ':enter',
-          [style({ blockSize: '0' }), animate('0.5s ease', style({ blockSize: '*' }))],
-          { optional: true }
-        )
-      ])
-    ])
-  ]
+    '[class.full-height]': 'fullHeight()',
+    '[style.--element-animations-enabled]': 'disableAnimation() ? "0" : undefined'
+  }
 })
 export class SiCollapsiblePanelComponent {
   /**
@@ -128,13 +109,13 @@ export class SiCollapsiblePanelComponent {
   protected headerId = this.controlId + '-header';
   protected isHCollapsible = false;
   protected readonly icons = addIcons({ elementDown2 });
+  protected readonly disableAnimation = signal(false);
 
   private readonly accordionService = inject(SiAccordionService, { optional: true });
   private readonly accordionHCollapseService = inject(SiAccordionHCollapseService, {
     optional: true
   });
-  private enableAnimation = true;
-  private readonly animationsGloballyDisabled = areAnimationsDisabled();
+  /** Restore the content scroll position between open/close of the panel. */
   private lastScrollPos = 0;
   private readonly contentRef = viewChild.required<ElementRef<HTMLElement>>('content');
 
@@ -148,13 +129,6 @@ export class SiCollapsiblePanelComponent {
       .subscribe(() => this.openClose(false));
   }
 
-  protected get showHide(): string {
-    if (this.enableAnimation && !this.animationsGloballyDisabled) {
-      return this.opened() ? 'show' : 'hide';
-    }
-    return 'disabled';
-  }
-
   /**
    * Expand/collapse panel.
    * @param open - indicate the panel shall open or close
@@ -162,13 +136,15 @@ export class SiCollapsiblePanelComponent {
    */
   openClose(open: boolean, enableAnimation = true): void {
     this.opened.set(open);
-    this.enableAnimation = enableAnimation;
+    this.disableAnimation.set(!enableAnimation);
 
     if (open) {
+      // Restore scroll position after opening
       setTimeout(() => {
         this.contentRef().nativeElement.scrollTop = this.lastScrollPos;
       });
     } else {
+      // Save scroll position before closing
       this.lastScrollPos = this.contentRef().nativeElement.scrollTop;
     }
   }
