@@ -86,7 +86,46 @@ These are not treated as errors and do not require a separate notification.
 
 ## Code ---
 
-Use the chat container with the chat messages to build chat message interfaces.
+The **si-ai-chat-container** component provides a complete AI chat interface, it should be inserted into a layout with fixed height, if no fixed height is provided, please set a height in pixels.
+
+<si-docs-component example="si-chat-messages/si-ai-chat-container" height="750"></si-docs-component>
+
+<si-docs-api component="SiAiChatContainerComponent"></si-docs-api>
+
+### Initial Screen
+
+The AI chat container includes a built-in initial welcome screen component that displays when there are no messages. It can be slotted into the **si-chat-container** component. It accepts prompt suggestions as an input.
+
+<si-docs-component example="si-chat-messages/si-ai-welcome-screen" height="600"></si-docs-component>
+
+<si-docs-api component="SiAiWelcomeScreenComponent"></si-docs-api>
+
+#### Prompt Suggestions
+
+Prompt suggestions can be provided as either:
+
+- A simple array of suggestions (no categories)
+- A record mapping category labels to arrays of suggestions
+
+When using a record, categories are automatically displayed as filter pills.
+
+```typescript
+// Simple array (no categories)
+promptSuggestions = [
+  { text: 'How do I optimize performance?' },
+  { text: 'What are best practices?' }
+];
+
+// Record with categories
+promptSuggestions = {
+  'All prompts': [{ text: 'How do I optimize performance?' }, { text: 'What are best practices?' }],
+  'Maintenance': [{ text: 'Schedule preventive maintenance' }, { text: 'Track equipment downtime' }]
+};
+```
+
+### Base Chat Container
+
+Use this base container with the chat messages to build custom chat message interfaces.
 
 The **si-chat-container** component is a wrapper component, it has slots for
 [chat messages](../../components/chat-messages/chat-message.md) and a
