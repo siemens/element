@@ -118,6 +118,7 @@ test('si-chat-messages/si-attachment-list', ({ si }) => si.static());
 test('si-chat-messages/si-chat-input', ({ si }) => si.static());
 test('si-chat-messages/si-chat-container', ({ si }) => si.static());
 test('si-chat-messages/si-ai-welcome-screen', ({ si }) => si.static());
+test('si-chat-messages/si-ai-chat-container', ({ si }) => si.static());
 test('ag-grid/ag-grid-empty-state', async ({ si }) => {
   await si.static({ disabledA11yRules: ['aria-required-children'] });
 });
