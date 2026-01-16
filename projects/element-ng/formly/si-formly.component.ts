@@ -61,6 +61,7 @@ export class SiFormlyComponent<
    *
    * @defaultValue []
    */
+  // eslint-disable-next-line @angular-eslint/prefer-signal-model
   readonly fields = input<FormlyFieldConfig[]>([]);
 
   readonly fieldsChange = output<FormlyFieldConfig[]>();

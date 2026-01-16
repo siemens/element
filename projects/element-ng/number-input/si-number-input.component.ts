@@ -99,6 +99,7 @@ export class SiNumberInputComponent
    */
   readonly step = input<number | 'any'>(1);
   /** The value */
+  // eslint-disable-next-line @angular-eslint/prefer-signal-model
   readonly value = input<number>();
   /** Optional unit label */
   readonly unit = input<string>();

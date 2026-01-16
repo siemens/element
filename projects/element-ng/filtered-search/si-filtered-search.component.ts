@@ -465,7 +465,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
 
     // Check if this matches the freeTextCriterion
     const freeTextDef = this.internalFreeTextCriterion();
-    if (freeTextDef && freeTextDef.name === criterionValue.name) {
+    if (freeTextDef?.name === criterionValue.name) {
       return freeTextDef;
     }
 

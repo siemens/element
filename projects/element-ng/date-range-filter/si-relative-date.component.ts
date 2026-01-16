@@ -44,6 +44,7 @@ interface OffsetOption extends SelectOption<string> {
 })
 export class SiRelativeDateComponent implements OnChanges {
   /** @defaultValue 0 */
+  // eslint-disable-next-line @angular-eslint/prefer-signal-model
   readonly value = input(0);
   /** @defaultValue false */
   readonly enableTimeSelection = input(false, { transform: booleanAttribute });
