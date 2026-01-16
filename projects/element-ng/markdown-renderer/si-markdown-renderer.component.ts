@@ -2,7 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, computed, effect, inject, input, ElementRef } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Component, computed, effect, inject, input, ElementRef, PLATFORM_ID } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { injectSiTranslateService, t } from '@siemens/element-translate-ng/translate';
 
@@ -20,6 +21,9 @@ export class SiMarkdownRendererComponent {
   private sanitizer = inject(DomSanitizer);
   private hostElement = inject(ElementRef<HTMLElement>);
   private translateService = injectSiTranslateService();
+  private platformId = inject(PLATFORM_ID);
+  private isBrowser = isPlatformBrowser(this.platformId);
+  private doc = inject(DOCUMENT);
 
   /**
    * The markdown text to transform and display
@@ -93,7 +97,7 @@ export class SiMarkdownRendererComponent {
       translateSync: this.translateService.translateSync.bind(this.translateService)
     };
 
-    return getMarkdownRenderer(this.sanitizer, options);
+    return getMarkdownRenderer(this.sanitizer, options, this.doc, this.isBrowser);
   });
 
   constructor() {
