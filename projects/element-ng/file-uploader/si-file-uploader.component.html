@@ -60,7 +60,7 @@
             class="btn btn-circle btn-sm btn-tertiary me-4"
             [disabled]="!uploadEnabled"
             [title]="uploadButtonText() | translate"
-            [attr.aria-label]="uploadButtonText() | translate"
+            [aria-label]="uploadButtonText() | translate"
             (click)="retryUpload(file)"
           >
             <si-icon [icon]="icons.elementRedo" />
@@ -71,7 +71,7 @@
             type="button"
             class="btn btn-circle btn-sm btn-ghost"
             [title]="removeButtonText() | translate"
-            [attr.aria-label]="removeButtonText() | translate"
+            [aria-label]="removeButtonText() | translate"
             (click)="removeFile($index)"
           >
             <si-icon [icon]="icons.elementDelete" />
@@ -82,7 +82,7 @@
             type="button"
             class="btn btn-circle btn-sm btn-tertiary"
             [title]="cancelButtonText() | translate"
-            [attr.aria-label]="cancelButtonText() | translate"
+            [aria-label]="cancelButtonText() | translate"
             (click)="cancelUpload(file)"
           >
             <si-icon [icon]="icons.elementCancel" />

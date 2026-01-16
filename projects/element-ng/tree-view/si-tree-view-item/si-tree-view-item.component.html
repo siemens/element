@@ -158,7 +158,7 @@
         [indeterminate]="this.treeItem.checked === 'indeterminate' ? true : null"
         [checked]="this.treeItem.checked === 'checked'"
         [disabled]="!treeItem.selectable"
-        [attr.aria-label]="treeItem.label | translate"
+        [aria-label]="treeItem.label | translate"
         (click)="onBoxClicked()"
       />
     </a>

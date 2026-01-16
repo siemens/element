@@ -11,11 +11,11 @@ import { CompareAdapter } from './si-compare-adapter';
   selector: '[siCalendarDateCell]',
   host: {
     class: 'si-calendar-date-cell',
-    '[attr.aria-disabled]': 'cell().disabled',
+    '[aria-disabled]': 'cell().disabled',
     '[class.disabled]': 'cell().disabled',
-    '[attr.aria-label]': 'cell().ariaLabel',
+    '[aria-label]': 'cell().ariaLabel',
     '[class.today]': 'this.cell().isToday',
-    '[attr.aria-current]': 'this.cell().isToday ? "date" : null'
+    '[aria-current]': 'this.cell().isToday ? "date" : null'
   }
 })
 export class SiCalendarDateCellDirective {

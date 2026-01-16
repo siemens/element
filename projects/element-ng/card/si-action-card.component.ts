@@ -27,9 +27,9 @@ import { SiCardBaseDirective } from './si-card-base.directive';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'action-card',
-    '[attr.aria-pressed]': 'selectable() ? (selected() ? "true" : "false") : undefined',
-    '[attr.aria-labelledby]': 'heading() ? headingId : undefined',
-    '[attr.aria-describedby]': 'subHeading() ? `${subHeadingId} ${contentId}` : contentId',
+    '[aria-pressed]': 'selectable() ? (selected() ? "true" : "false") : undefined',
+    '[aria-labelledby]': 'heading() ? headingId : undefined',
+    '[aria-describedby]': 'subHeading() ? `${subHeadingId} ${contentId}` : contentId',
     '[class.selected]': 'selectable() && selected()',
     '(click)': 'selectable() ? selected.set(!selected()) : null'
   }

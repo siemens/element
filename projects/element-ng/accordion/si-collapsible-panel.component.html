@@ -6,10 +6,10 @@
   [class.open]="opened()"
   [class.disabled]="disabled()"
   [title]="hcollapsed() ? (heading() | translate) : ''"
-  [attr.aria-expanded]="opened() && !hcollapsed()"
-  [attr.aria-disabled]="disabled()"
-  [attr.aria-controls]="controlId"
-  [attr.aria-label]="hcollapsed() ? (heading() | translate) : ''"
+  [aria-expanded]="opened() && !hcollapsed()"
+  [aria-disabled]="disabled()"
+  [aria-controls]="controlId"
+  [aria-label]="hcollapsed() ? (heading() | translate) : ''"
   (keydown)="keydown($event)"
   (click)="doToggle($event)"
 >
@@ -42,7 +42,7 @@
   [id]="controlId"
   [class]="`collapsible-content ${contentBgClasses()}`"
   [@showHide]="showHide"
-  [attr.aria-labelledby]="headerId"
+  [aria-labelledby]="headerId"
   [class.full-height]="fullHeight()"
 >
   @if (opened()) {

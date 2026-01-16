@@ -18,10 +18,10 @@
         <button
           type="button"
           class="btn btn-circle btn-sm btn-ghost"
-          [attr.aria-label]="
+          [aria-label]="
             (collapsed() ? navbarExpandButtonText() : navbarCollapseButtonText()) | translate
           "
-          [attr.aria-expanded]="!collapsed()"
+          [aria-expanded]="!collapsed()"
           (click)="toggleCollapse()"
         >
           <si-icon
@@ -45,7 +45,7 @@
         <button
           type="button"
           class="btn-search bg-base-0 p-2 mx-4 mobile navbar-vertical-no-collapse text-secondary"
-          [attr.aria-label]="searchPlaceholder() | translate"
+          [aria-label]="searchPlaceholder() | translate"
           (click)="expandForSearch()"
         >
           <si-icon class="icon" [icon]="icons.elementSearch" />

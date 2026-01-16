@@ -2,7 +2,7 @@
   cdkMonitorSubtreeFocus
   class="criteria pill-group"
   [class.disabled]="disabled()"
-  [attr.aria-disabled]="disabled()"
+  [aria-disabled]="disabled()"
   [class.invalid-criterion]="invalidCriterion()"
   (cdkFocusChange)="focusChange($event)"
 >
@@ -27,7 +27,7 @@
           [readOnly]="false"
           [typeaheadScrollable]="true"
           [typeaheadOptionsInScrollableView]="optionsInScrollableView()"
-          [attr.aria-label]="searchLabel() | translate"
+          [aria-label]="searchLabel() | translate"
           [attr.size]="longestOperatorLength()"
           [ngModel]="value().operator"
           (ngModelChange)="operatorUpdate($event)"
@@ -122,7 +122,7 @@
       <button
         type="button"
         class="btn btn-circle btn-xs btn-ghost focus-inside"
-        [attr.aria-label]="clearButtonLabel() | translate"
+        [aria-label]="clearButtonLabel() | translate"
         [disabled]="disabled()"
         (click)="clear()"
         (mousedown)="$event.preventDefault()"

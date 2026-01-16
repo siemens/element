@@ -19,17 +19,17 @@ export class SiAutocompleteDirective<T> {
   /** @internal */
   listbox?: SiAutocompleteListboxDirective<T>;
 
-  @HostBinding('attr.aria-activedescendant')
+  @HostBinding('aria-activedescendant')
   protected get activeDescendant(): string {
     return this.listbox?.active?.id() ?? '';
   }
 
-  @HostBinding('attr.aria-controls')
+  @HostBinding('aria-controls')
   protected get ariaControls(): string | undefined {
     return this.listbox?.id();
   }
 
-  @HostBinding('attr.aria-expanded')
+  @HostBinding('aria-expanded')
   protected get expanded(): boolean {
     return !!this.listbox;
   }

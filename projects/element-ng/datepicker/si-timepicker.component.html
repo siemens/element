@@ -17,8 +17,8 @@
         class="form-control hide-feedback-icon"
         type="text"
         inputmode="numeric"
-        [attr.aria-label]="config.ariaLabel | translate"
-        [attr.aria-describedby]="errormessageId()"
+        [aria-label]="config.ariaLabel | translate"
+        [aria-describedby]="errormessageId()"
         [attr.maxlength]="config.maxLength"
         [formControl]="timeControls.controls[config.name]"
         [name]="config.name"
@@ -37,8 +37,8 @@
       <select
         #inputPart
         class="form-control"
-        [attr.aria-label]="meridiansAriaLabel() | translate"
-        [attr.aria-describedby]="errormessageId()"
+        [aria-label]="meridiansAriaLabel() | translate"
+        [aria-describedby]="errormessageId()"
         [class.readonly]="readonly()"
         [disabled]="disabled()"
         (change)="toggleMeridian()"

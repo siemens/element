@@ -80,7 +80,7 @@ import { DatepickerInputConfig, DateRange } from './si-datepicker.model';
     role: 'group',
     '[class.disabled]': 'disabled()',
     '[class.readonly]': 'readonly()',
-    '[attr.aria-labelledby]': 'labelledby'
+    '[aria-labelledby]': 'labelledby'
   },
   hostDirectives: [
     {

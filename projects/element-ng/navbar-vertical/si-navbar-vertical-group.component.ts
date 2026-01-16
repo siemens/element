@@ -29,7 +29,7 @@ import { SI_NAVBAR_VERTICAL } from './si-navbar-vertical.provider';
   host: {
     role: 'group',
     '[id]': 'groupTrigger.groupId',
-    '[attr.aria-labelledby]': 'groupTrigger.id',
+    '[aria-labelledby]': 'groupTrigger.id',
     '[class.dropdown-menu]': 'flyout',
     '[@collapse]': 'state() ?? "collapsed"'
   },

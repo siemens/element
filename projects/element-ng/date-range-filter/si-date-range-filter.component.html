@@ -7,7 +7,7 @@
         class="btn btn-tertiary dropdown-toggle m-5 flex-grow-1"
         cdkOverlayOrigin
         [class.show]="presetOpen()"
-        [attr.aria-expanded]="presetOpen()"
+        [aria-expanded]="presetOpen()"
         (click)="presetOpen.set(true)"
       >
         {{ presetLabel() | translate }}
@@ -112,7 +112,7 @@
       [(ngModel)]="presetFilter"
     />
   }
-  <ul class="overflow-auto" cdkListbox [attr.aria-label]="presetLabel() | translate">
+  <ul class="overflow-auto" cdkListbox [aria-label]="presetLabel() | translate">
     @for (item of filteredPresetList(); track $index) {
       @if (item.label | translate | presetMatchFilter: presetFilter()) {
         <li
@@ -176,7 +176,7 @@
         required
         siDatepicker
         [siDatepickerConfig]="datepickerConfigInternal()"
-        [attr.aria-label]="dateLabel() | translate"
+        [aria-label]="dateLabel() | translate"
         [placeholder]="datePlaceholder() | translate"
         [(ngModel)]="point2date"
         (ngModelChange)="point2Changed()"

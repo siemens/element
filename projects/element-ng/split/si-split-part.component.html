@@ -10,7 +10,7 @@
             type="button"
             class="si-split-button"
             [title]="action.tooltip || ''"
-            [attr.aria-label]="action.tooltip"
+            [aria-label]="action.tooltip"
             (click)="action.click($event)"
           >
             <si-icon [icon]="action.iconClass" />
@@ -23,7 +23,7 @@
         <button
           type="button"
           class="si-split-button"
-          [attr.aria-label]="collapseLabel | translate"
+          [aria-label]="collapseLabel | translate"
           (click)="toggleCollapse()"
         >
           <si-icon class="collapse-icon" [icon]="collapseIconClass" />

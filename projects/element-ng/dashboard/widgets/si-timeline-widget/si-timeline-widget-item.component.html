@@ -51,7 +51,7 @@
             [preserveFragment]="action.extras?.preserveFragment"
             [skipLocationChange]="action.extras?.skipLocationChange"
             [replaceUrl]="action.extras?.replaceUrl"
-            [attr.aria-label]="action.label | translate"
+            [aria-label]="action.label | translate"
             [class.btn-circle]="action.iconOnly"
             [class.btn-sm]="action.iconOnly"
           >
@@ -67,7 +67,7 @@
             class="d-flex btn btn-ghost"
             [href]="action.href"
             [target]="action.target"
-            [attr.aria-label]="action.label | translate"
+            [aria-label]="action.label | translate"
             [class.btn-circle]="action.iconOnly"
             [class.btn-sm]="action.iconOnly"
           >
@@ -82,7 +82,7 @@
           <button
             type="button"
             class="btn btn-circle btn-sm btn-tertiary element-options-vertical"
-            [attr.aria-label]="ariaLabelDropdown | translate"
+            [aria-label]="ariaLabelDropdown | translate"
             [cdkMenuTriggerFor]="actionMenu"
           ></button>
 

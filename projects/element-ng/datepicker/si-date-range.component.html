@@ -6,7 +6,7 @@
   [ngModel]="value()?.start ?? null"
   [siDatepickerConfig]="siDatepickerConfig()"
   [placeholder]="startDatePlaceholder() | translate"
-  [attr.aria-label]="startDatePlaceholder() | translate"
+  [aria-label]="startDatePlaceholder() | translate"
   [errormessageId]="errormessageId()"
   [disabled]="disabled()"
   [readonly]="readonly()"
@@ -21,7 +21,7 @@
   [ngModel]="value()?.end ?? null"
   [siDatepickerConfig]="siDatepickerConfig()"
   [placeholder]="endDatePlaceholder() | translate"
-  [attr.aria-label]="endDatePlaceholder() | translate"
+  [aria-label]="endDatePlaceholder() | translate"
   [errormessageId]="errormessageId()"
   [disabled]="disabled()"
   [readonly]="readonly()"
@@ -31,7 +31,7 @@
   #button
   type="button"
   class="btn btn-circle btn-tertiary btn-xs"
-  [attr.aria-label]="ariaLabelCalendarButton() | translate"
+  [aria-label]="ariaLabelCalendarButton() | translate"
   [disabled]="disabled() || readonly()"
   (click)="show()"
 >

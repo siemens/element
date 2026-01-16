@@ -33,10 +33,10 @@ import { SI_TABSET } from './si-tabs-tokens';
     '[class.pe-3]': 'closable()',
     '[class.active]': 'active()',
     '[attr.id]': "'tab-' + tabId",
-    '[attr.aria-selected]': 'active()',
-    '[attr.aria-disabled]': 'disabledTab()',
+    '[aria-selected]': 'active()',
+    '[aria-disabled]': 'disabledTab()',
     '[attr.tabindex]': 'tabset.focusKeyManager.activeItem === this && !disabledTab() ? 0 : -1',
-    '[attr.aria-controls]': "'content-' + tabId",
+    '[aria-controls]': "'content-' + tabId",
     '(keydown.delete)': 'closeTab($event)'
   }
 })

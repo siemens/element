@@ -82,7 +82,7 @@
         <button
           type="button"
           [attr.title]="editorCollapsed ? 'Show editor' : 'Hide editor'"
-          [attr.aria-label]="editorCollapsed ? 'Show editor' : 'Hide editor'"
+          [aria-label]="editorCollapsed ? 'Show editor' : 'Hide editor'"
           (click)="toggleCollapse()"
         >
           <svg class="collapse-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -134,7 +134,7 @@
           type="button"
           class="btn-command rtl-selection"
           [title]="isRTL ? 'Right-to-left layout' : 'Left-to-right layout'"
-          [attr.aria-label]="isRTL ? 'Right-to-left layout' : 'Left-to-right layout'"
+          [aria-label]="isRTL ? 'Right-to-left layout' : 'Left-to-right layout'"
           (click)="toggleRTL()"
         >
           {{ isRTL ? 'RTL' : 'LTR' }}

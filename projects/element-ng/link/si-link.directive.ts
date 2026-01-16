@@ -37,7 +37,7 @@ export const SI_LINK_DEFAULT_NAVIGATION_EXTRA = new InjectionToken<NavigationExt
     '[attr.href]': 'href()',
     '[attr.target]': 'target()',
     '[attr.title]': 'title()',
-    '[attr.aria-current]': 'isAriaCurrent()',
+    '[aria-current]': 'isAriaCurrent()',
     '[class]': 'active() ? activeClass() : null'
   },
   exportAs: 'siLink'

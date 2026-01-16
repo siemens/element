@@ -4,7 +4,7 @@
   [id]="baseId() + '-listbox'"
   [cdkListboxMultiple]="selectionStrategy.allowMultiple"
   [cdkListboxValue]="selectionStrategy.arrayValue()"
-  [attr.aria-labelledby]="baseId() + '-aria-label' + ' ' + labelledby()"
+  [aria-labelledby]="baseId() + '-aria-label' + ' ' + labelledby()"
   (cdkListboxValueChange)="listBoxValueChange($event)"
   (click)="closeOverlayIfSingle()"
   (keydown.enter)="closeOverlayIfSingle()"
@@ -16,7 +16,7 @@
         role="group"
         class="ps-0"
         aria-disabled="false"
-        [attr.aria-labelledby]="baseId() + '-' + index + '-group-header'"
+        [aria-labelledby]="baseId() + '-' + index + '-group-header'"
       >
         <span class="dropdown-header" [id]="baseId() + '-' + index + '-group-header'">
           <ng-container

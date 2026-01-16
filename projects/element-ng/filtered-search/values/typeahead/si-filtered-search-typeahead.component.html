@@ -29,7 +29,7 @@
     [typeaheadAutoSelectIndex]="value?.length ? 0 : -1"
     [readOnly]="readonly() || onlySelectValue() || definition().onlySelectValue"
     [typeaheadOptionsInScrollableView]="optionsInScrollableView()"
-    [attr.aria-label]="searchLabel() | translate"
+    [aria-label]="searchLabel() | translate"
     (keydown)="valueFilterKeys($event)"
     (keydown.backspace)="valueBackspace()"
     (keydown.enter)="valueEnter()"

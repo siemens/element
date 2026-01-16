@@ -6,7 +6,7 @@
           <button
             type="button"
             class="btn btn-circle btn-sm btn-ghost m-4"
-            [attr.aria-label]="deleteAriaLabel() | translate"
+            [aria-label]="deleteAriaLabel() | translate"
             (click)="deleteStep($index)"
           >
             <si-icon [icon]="icons.elementDelete" />
@@ -52,7 +52,7 @@
           type="button"
           class="btn btn-circle btn-sm btn-secondary m-4"
           [disabled]="maxSteps() && $count >= maxSteps()"
-          [attr.aria-label]="addAriaLabel() | translate"
+          [aria-label]="addAriaLabel() | translate"
           (click)="addStep($index)"
         >
           <si-icon [icon]="icons.elementPlus" />

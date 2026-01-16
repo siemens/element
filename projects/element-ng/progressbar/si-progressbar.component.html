@@ -16,11 +16,11 @@
   <div
     class="progress-bar"
     role="progressbar"
-    [attr.aria-valuemin]="0"
-    [attr.aria-valuemax]="max()"
-    [attr.aria-valuenow]="value()"
-    [attr.aria-valuetext]="value() !== undefined ? percent().toFixed(0) + '%' : null"
-    [attr.aria-label]="ariaLabel() | translate"
+    [aria-valuemin]="0"
+    [aria-valuemax]="max()"
+    [aria-valuenow]="value()"
+    [aria-valuetext]="value() !== undefined ? percent().toFixed(0) + '%' : null"
+    [aria-label]="ariaLabel() | translate"
     [style.width.%]="percent()"
   >
   </div>

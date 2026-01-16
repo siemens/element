@@ -21,7 +21,7 @@ import { SiTooltipService, TooltipRef } from './si-tooltip.service';
   selector: '[siTooltip]',
   providers: [SiTooltipService],
   host: {
-    '[attr.aria-describedby]': 'describedBy'
+    '[aria-describedby]': 'describedBy'
   }
 })
 export class SiTooltipDirective implements OnDestroy {

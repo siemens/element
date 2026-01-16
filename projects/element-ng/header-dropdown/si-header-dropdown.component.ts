@@ -30,7 +30,7 @@ import { SI_HEADER_DROPDOWN_OPTIONS } from './si-header.model';
     class: 'dropdown-menu position-static',
     role: 'group',
     '[id]': 'trigger.ariaControls',
-    '[attr.aria-labelledby]': 'trigger.id'
+    '[aria-labelledby]': 'trigger.id'
   }
 })
 export class SiHeaderDropdownComponent {

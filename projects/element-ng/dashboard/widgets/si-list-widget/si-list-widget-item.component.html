@@ -22,7 +22,7 @@
       <button
         type="button"
         class="btn btn-circle btn-sm btn-tertiary ms-4 p-2"
-        [attr.aria-label]="valueObject.action.title | translate"
+        [aria-label]="valueObject.action.title | translate"
         [siLink]="valueObject.action"
       >
         @if (valueObject.actionIcon) {
@@ -33,7 +33,7 @@
       <a
         class="ms-4 p-2"
         [siLink]="valueObject.action"
-        [attr.aria-label]="valueObject.action.title | translate"
+        [aria-label]="valueObject.action.title | translate"
       >
         @if (valueObject.actionIcon) {
           <si-icon class="icon" [icon]="valueObject.actionIcon" />

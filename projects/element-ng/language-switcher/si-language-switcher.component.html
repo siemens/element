@@ -1,6 +1,6 @@
 <select
   class="si-h5 language-switcher-select"
-  [attr.aria-label]="languageSwitcherLabel() | translate"
+  [aria-label]="languageSwitcherLabel() | translate"
   (change)="switchLanguage($event.target)"
 >
   @for (language of availableIsoLanguages(); track language.value) {

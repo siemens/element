@@ -3,9 +3,9 @@
   type="button"
   class="header-toggle focus-inside"
   [class.show]="mobileExpanded()"
-  [attr.aria-expanded]="mobileExpanded()"
-  [attr.aria-label]="mobileToggleLabel() | translate"
-  [attr.aria-controls]="id + '-content'"
+  [aria-expanded]="mobileExpanded()"
+  [aria-label]="mobileToggleLabel() | translate"
+  [aria-controls]="id + '-content'"
   (click)="toggleMobileExpanded()"
 >
   <si-icon [icon]="icons.elementOptionsVertical" [class.badge-dot]="badgeCount()" />

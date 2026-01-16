@@ -47,7 +47,7 @@
     [readonly]="readonly()"
     [disabled]="disabled()"
     [placeholder]="placeholder()"
-    [attr.aria-label]="searchLabel() | translate"
+    [aria-label]="searchLabel() | translate"
     [value]="searchValue"
     (focus)="freeTextFocus()"
     (input)="freeTextInput($event)"
@@ -65,7 +65,7 @@
       type="button"
       class="btn btn-circle btn-xs btn-ghost mx-2"
       [disabled]="disabled()"
-      [attr.aria-label]="clearButtonLabel() | translate"
+      [aria-label]="clearButtonLabel() | translate"
       (click)="deleteAllCriteria($event)"
     >
       <si-icon [icon]="icons.elementCancel" />
@@ -78,7 +78,7 @@
     type="button"
     class="search-button btn btn-circle btn-xs btn-secondary focus-inside"
     [disabled]="disabled()"
-    [attr.aria-label]="submitButtonLabel() | translate"
+    [aria-label]="submitButtonLabel() | translate"
     (click)="submit()"
   >
     <si-icon [icon]="icons.elementSearch" />

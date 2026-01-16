@@ -33,7 +33,7 @@
       class="tab-content"
       role="tabpanel"
       [id]="'content-' + activeTab.tabId"
-      [attr.aria-labelledby]="'tab-' + activeTab.tabId"
+      [aria-labelledby]="'tab-' + activeTab.tabId"
     >
       @if (tabContent) {
         <ng-container [ngTemplateOutlet]="tabContent" />

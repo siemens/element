@@ -64,7 +64,7 @@ import {
     '[class.si-tree-ellipsis]': 'treeViewComponent.horizontalScrolling()',
     '[class.si-tree-view-top-level-item]':
       '!treeViewComponent.compactMode() && (treeViewComponent.flatTree() || (treeItem.level ?? 0) < 1)',
-    '[attr.aria-haspopup]': 'isContextMenuButtonVisible()',
+    '[aria-haspopup]': 'isContextMenuButtonVisible()',
     '(contextmenu)': 'onContextMenu($event)',
     '(keydown)': 'onKeydown($event)'
   }
@@ -106,32 +106,32 @@ export class SiTreeViewItemComponent
   private nextSiblingElement!: HTMLElement;
   protected readonly menuTrigger = viewChild(CdkMenuTrigger);
 
-  @HostBinding('attr.aria-level')
+  @HostBinding('aria-level')
   protected get ariaLevel(): number {
     return (this.treeItem.level ?? 0) + 1;
   }
 
-  @HostBinding('attr.aria-setsize')
+  @HostBinding('aria-setsize')
   protected get ariaSetsize(): number {
     return this.treeItem.parent?.children?.length ?? 1;
   }
 
-  @HostBinding('attr.aria-posinset')
+  @HostBinding('aria-posinset')
   protected ariaPosinset?: number;
 
-  @HostBinding('attr.aria-selected')
+  @HostBinding('aria-selected')
   protected get ariaSelected(): boolean | null {
     return this.enableSelection() && this.treeItem.selectable ? !!this.treeItem.selected : null;
   }
 
-  @HostBinding('attr.aria-checked')
+  @HostBinding('aria-checked')
   protected get ariaChecked(): boolean | null {
     return this.showCheckOrOptionBox && this.treeItem.selectable
       ? this.treeItem.checked === 'checked'
       : null;
   }
 
-  @HostBinding('attr.aria-expanded')
+  @HostBinding('aria-expanded')
   protected get ariaExpanded(): boolean | null {
     if (this.treeItem.state === 'leaf') {
       return null;

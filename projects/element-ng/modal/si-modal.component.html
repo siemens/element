@@ -13,7 +13,7 @@
     aria-modal="true"
     [class.fade]="modalRef.data.animated !== false"
     [class.show]="show()"
-    [attr.aria-labelledby]="titleId"
+    [aria-labelledby]="titleId"
   >
     <div cdkTrapFocus cdkTrapFocusAutoCapture [class]="`modal-dialog ${dialogClass}`">
       <div class="modal-content">

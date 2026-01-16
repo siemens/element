@@ -92,7 +92,7 @@ const dateWithTime = (base: Date, time: Date): Date =>
     role: 'group',
     class: 'form-custom-control',
     '[class.readonly]': 'readonly()',
-    '[attr.aria-labelledby]': 'labelledby'
+    '[aria-labelledby]': 'labelledby'
   }
 })
 export class SiTimepickerComponent implements ControlValueAccessor, Validator, SiFormItemControl {

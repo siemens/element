@@ -4,7 +4,7 @@
       class="btn btn-sm btn-circle btn-tertiary element-expand-all"
       type="button"
       [title]="expandAllTooltip() | translate"
-      [attr.aria-label]="expandAllTooltip() | translate"
+      [aria-label]="expandAllTooltip() | translate"
       (click)="expandAll()"
     >
     </button>
@@ -12,7 +12,7 @@
       class="btn btn-sm btn-circle btn-tertiary ms-4 element-collapse-all"
       type="button"
       [title]="collapseAllTooltip() | translate"
-      [attr.aria-label]="collapseAllTooltip() | translate"
+      [aria-label]="collapseAllTooltip() | translate"
       (click)="collapseAll()"
     >
     </button>
@@ -46,9 +46,9 @@
   cdkScrollable
   class="si-tree-view focus-inside"
   role="tree"
-  [attr.aria-multiselectable]="!singleSelectMode()"
-  [attr.aria-label]="ariaLabel() ? (ariaLabel() | translate) : undefined"
-  [attr.aria-labelledby]="ariaLabelledBy()"
+  [aria-multiselectable]="!singleSelectMode()"
+  [aria-label]="ariaLabel() ? (ariaLabel() | translate) : undefined"
+  [aria-labelledby]="ariaLabelledBy()"
   [class.si-tree-horizontal-scroll]="horizontalScrolling()"
   [class.si-tree-view-flat]="flatTree()"
   [class.si-tree-expand-collapse]="!flatTree() && expandCollapseAll()"
