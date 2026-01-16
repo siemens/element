@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { DOCUMENT } from '@angular/common';
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By, DomSanitizer } from '@angular/platform-browser';
@@ -20,7 +21,8 @@ describe('SiUserMessageComponent', () => {
     fixture = TestBed.createComponent(TestComponent);
     debugElement = fixture.debugElement;
     const sanitizer = TestBed.inject(DomSanitizer);
-    markdownRenderer = getMarkdownRenderer(sanitizer);
+    const doc = TestBed.inject(DOCUMENT);
+    markdownRenderer = getMarkdownRenderer(sanitizer, undefined, doc, true);
   });
 
   it('should render markdown content', () => {
