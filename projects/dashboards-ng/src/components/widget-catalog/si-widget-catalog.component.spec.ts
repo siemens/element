@@ -6,6 +6,7 @@ import { DebugElement, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ModalRef } from '@siemens/element-ng/modal';
+import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
 
 import { TEST_WIDGET } from '../../../test/test-widget/test-widget';
 import { createTestingWidget, TestingModule } from '../../../test/testing.module';
@@ -211,8 +212,11 @@ describe('SiWidgetCatalogComponent', () => {
       searchInput.dispatchEvent(new Event('input'));
       fixture.detectChanges();
 
+      const searchBarEl = fixture.debugElement.query(By.css('si-search-bar'));
+      const searchBarComponent = searchBarEl.componentInstance as SiSearchBarComponent;
+      const debounceTime = searchBarComponent.debounceTime();
       // cannot use jasmine.clock here.
-      await new Promise(resolve => setTimeout(resolve, 400)); // wait for debounce time
+      await new Promise(resolve => setTimeout(resolve, debounceTime + 1)); // wait for debounce time + extra 1 ms to avoid flaky test
       await fixture.whenStable();
 
       expect(buttonsByName('Next').length).toBe(1);
