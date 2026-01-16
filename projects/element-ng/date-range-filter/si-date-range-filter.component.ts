@@ -379,7 +379,7 @@ export class SiDateRangeFilterComponent implements OnChanges {
 
   private rangeChanged(oldRange: DateRangeFilter | undefined, newRange: DateRangeFilter): boolean {
     return (
-      !oldRange ||
+      !oldRange || // eslint-disable-line @typescript-eslint/prefer-optional-chain
       oldRange.point1 !== newRange.point1 ||
       oldRange.point2 !== newRange.point2 ||
       oldRange.range !== newRange.range
