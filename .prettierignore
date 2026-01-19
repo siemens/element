@@ -14,5 +14,3 @@ docs/**/dynamic-forms.md
 
 # Ignore test files in schematics
 **/schematics/**/files/**
-
-docs/_src/confetti.browser.min.js
