@@ -16,7 +16,6 @@
       [lazyValueProvider]="lazyValueProvider()"
       [maxCriteriaOptions]="maxCriteriaOptions()"
       [optionsInScrollableView]="optionsInScrollableView()"
-      [readonly]="readonly()"
       [searchLabel]="searchLabel()"
       [onlySelectValue]="onlySelectValue()"
       [searchDebounceTime]="searchDebounceTime()"
@@ -32,7 +31,7 @@
     class="value-input ps-2 me-2 flex-grow-1"
     typeaheadOptionField="translatedLabel"
     [siTypeahead]="dataSource"
-    [typeaheadMinLength]="readonly() ? 1 : 0"
+    [typeaheadMinLength]="0"
     [typeaheadOptionsLimit]="typeaheadOptionsLimit()"
     [typeaheadScrollable]="true"
     [typeaheadOptionsInScrollableView]="optionsInScrollableView()"
@@ -44,7 +43,6 @@
         ? searchForFreeTextLabel()
         : undefined
     "
-    [readonly]="readonly()"
     [disabled]="disabled()"
     [placeholder]="placeholder()"
     [attr.aria-label]="searchLabel() | translate"
@@ -59,7 +57,7 @@
   />
 </div>
 <!-- clear all searchCriteria -->
-@if ((values.length || searchValue.length) && !readonly()) {
+@if (values.length || searchValue.length) {
   <div class="clear-button-container">
     <button
       type="button"

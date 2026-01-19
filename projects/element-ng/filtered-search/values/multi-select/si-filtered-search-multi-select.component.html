@@ -26,7 +26,7 @@
     [siTypeahead]="options() ?? []"
     [typeaheadMinLength]="0"
     [typeaheadOptionsLimit]="maxCriteriaOptions()"
-    [readOnly]="readonly() || onlySelectValue()"
+    [readOnly]="onlySelectValue()"
     [typeaheadOptionsInScrollableView]="optionsInScrollableView()"
     [attr.aria-label]="searchLabel() | translate"
     (keydown.backspace)="valueBackspace()"
