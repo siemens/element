@@ -8,10 +8,8 @@ import * as i0 from '@angular/core';
 import * as i1 from '@siemens/native-charts-ng/gauge';
 
 // @public (undocumented)
-class SiNativeChartsNgModule {
+export class SiNativeChartsNgModule {
 }
-export { SiNativeChartsNgModule }
-export { SiNativeChartsNgModule as SimplNativeChartsNgModule }
 
 
 export * from "@siemens/native-charts-ng/gauge";

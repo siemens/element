@@ -293,7 +293,7 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
 export { SingleAxisComponentOption }
 
 // @public (undocumented)
-interface SiSeriesOption {
+export interface SiSeriesOption {
     // (undocumented)
     customLegendToolTip?: string;
     // (undocumented)
@@ -301,8 +301,6 @@ interface SiSeriesOption {
     // (undocumented)
     visible?: boolean;
 }
-export { SiSeriesOption }
-export { SiSeriesOption as SimplSeriesOption }
 
 export { SunburstSeriesOption }
 

@@ -16,10 +16,8 @@ import * as i8 from '@siemens/charts-ng/sunburst';
 import * as i9 from '@siemens/charts-ng/custom-legend';
 
 // @public @deprecated (undocumented)
-class SiChartsNgModule {
+export class SiChartsNgModule {
 }
-export { SiChartsNgModule }
-export { SiChartsNgModule as SimplChartsNgModule }
 
 
 export * from "@siemens/charts-ng/cartesian";

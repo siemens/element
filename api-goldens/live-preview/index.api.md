@@ -336,12 +336,10 @@ export abstract class SiLivePreviewLocaleApi {
 }
 
 // @public
-class SiLivePreviewModule {
+export class SiLivePreviewModule {
     // (undocumented)
     static forRoot(config: SiLivePreviewConfig, isMobile?: boolean): ModuleWithProviders<SiLivePreviewModule>;
 }
-export { SiLivePreviewModule }
-export { SiLivePreviewModule as SimplLivePreviewModule }
 
 // @public (undocumented)
 export class SiLivePreviewQrComponent implements AfterViewInit, OnDestroy, OnChanges {
@@ -388,10 +386,8 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
 }
 
 // @public (undocumented)
-class SiLivePreviewRoutingModule {
+export class SiLivePreviewRoutingModule {
 }
-export { SiLivePreviewRoutingModule }
-export { SiLivePreviewRoutingModule as SimplLivePreviewRoutingModule }
 
 // @public (undocumented)
 export abstract class SiLivePreviewThemeApi {

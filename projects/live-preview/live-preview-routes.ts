@@ -56,5 +56,3 @@ export const livePreviewRoutes: Routes = [
   exports: [RouterModule]
 })
 export class SiLivePreviewRoutingModule {}
-
-export { SiLivePreviewRoutingModule as SimplLivePreviewRoutingModule };
