@@ -14,9 +14,6 @@ import { SimpleChanges } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 import { TypeaheadOption } from '@siemens/element-ng/typeahead';
 
-// @public @deprecated (undocumented)
-export type Criterion = CriterionValue & CriterionDefinition;
-
 // @public
 export interface CriterionDefinition {
     datepickerConfig?: DatepickerInputConfig;
@@ -58,7 +55,7 @@ export type OptionType = string | OptionCriterion;
 
 // @public
 export interface SearchCriteria {
-    criteria: (CriterionValue & Criterion)[];
+    criteria: CriterionValue[];
     value: string;
 }
 
@@ -67,7 +64,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     constructor();
     readonly clearButtonLabel: _angular_core.InputSignal<TranslatableString>;
     readonly colorVariant: _angular_core.InputSignal<BackgroundColorVariant>;
-    readonly criteria: _angular_core.InputSignal<Criterion[] | CriterionDefinition[]>;
+    readonly criteria: _angular_core.InputSignal<CriterionDefinition[]>;
     deleteAllCriteria(event?: MouseEvent): void;
     readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly disableFreeTextSearch: _angular_core.InputSignalWithTransform<boolean, unknown>;
@@ -78,7 +75,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     readonly freeTextCriterion: _angular_core.InputSignal<CriterionDefinition | undefined>;
     readonly interceptDisplayedCriteria: _angular_core.OutputEmitterRef<DisplayedCriteriaEventArgs>;
     readonly itemCountText: _angular_core.InputSignal<TranslatableString>;
-    readonly lazyCriterionProvider: _angular_core.InputSignal<((typed: string, searchCriteria?: SearchCriteria) => Observable<Criterion[] | CriterionDefinition[]>) | undefined>;
+    readonly lazyCriterionProvider: _angular_core.InputSignal<((typed: string, searchCriteria?: SearchCriteria) => Observable<CriterionDefinition[]>) | undefined>;
     readonly lazyLoadingDebounceTime: _angular_core.InputSignal<number>;
     readonly lazyValueProvider: _angular_core.InputSignal<((criterionName: string, typed: string | string[]) => Observable<OptionType[]>) | undefined>;
     readonly maxCriteria: _angular_core.InputSignal<number | undefined>;
@@ -86,8 +83,6 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     readonly onlySelectValue: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly optionsInScrollableView: _angular_core.InputSignal<number>;
     readonly placeholder: _angular_core.InputSignal<string>;
-    // @deprecated
-    readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly searchCriteria: _angular_core.ModelSignal<SearchCriteria>;
     readonly searchDebounceTime: _angular_core.InputSignal<number>;
     readonly searchForFreeTextLabel: _angular_core.InputSignal<TranslatableString>;

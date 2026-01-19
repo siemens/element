@@ -43,7 +43,6 @@ import {
 } from './si-filtered-search-helper';
 import { SiFilteredSearchValueComponent } from './si-filtered-search-value.component';
 import {
-  Criterion,
   CriterionDefinition,
   CriterionValue,
   DisplayedCriteriaEventArgs,
@@ -89,12 +88,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
    * In addition to lazy loaded value, you can also lazy load the criteria itself
    */
   readonly lazyCriterionProvider =
-    input<
-      (
-        typed: string,
-        searchCriteria?: SearchCriteria
-      ) => Observable<Criterion[] | CriterionDefinition[]>
-    >();
+    input<(typed: string, searchCriteria?: SearchCriteria) => Observable<CriterionDefinition[]>>();
   /**
    * In many cases, your application defines the criteria, but the values need
    * to be loaded from a server. In this case you can provide a function that
@@ -174,7 +168,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
    *
    * @defaultValue []
    */
-  readonly criteria = input<Criterion[] | CriterionDefinition[]>([]);
+  readonly criteria = input<CriterionDefinition[]>([]);
   /**
    * Opt-in to search for each criterion only once.
    *
@@ -358,10 +352,8 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
   private readonly strictCriterionOrValue = computed(() => {
     return this.strictCriterion() || this.isStrictOrOnlySelectValue();
   });
-  private readonly lazyLoadedCriteria = signal<Criterion[] | CriterionDefinition[] | undefined>(
-    undefined
-  );
 
+  private readonly lazyLoadedCriteria = signal<CriterionDefinition[] | undefined>(undefined);
   private readonly loadedCriteria = computed(() => {
     const lazyLoadedCriteria = this.lazyLoadedCriteria();
     if (lazyLoadedCriteria) {
@@ -444,7 +436,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
    * Returns undefined if no config was found.
    */
   private findCriterionConfig(
-    criterionValue: Criterion | CriterionValue
+    criterionValue: CriterionValue
   ): InternalCriterionDefinition | undefined {
     const config = this.internalCriterionDefinitions.find(ic => ic.name === criterionValue.name);
 
@@ -470,8 +462,8 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
           this.findCriterionConfig(c) ??
           ({
             name: c.name,
-            label: c.label ?? c.name,
-            translatedLabel: c.label ?? c.name
+            label: c.name,
+            translatedLabel: c.name
           } as InternalCriterionDefinition);
 
         let value = c.value ?? '';

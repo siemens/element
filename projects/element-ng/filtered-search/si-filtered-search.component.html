@@ -31,6 +31,7 @@
     class="value-input ps-2 me-2 flex-grow-1"
     typeaheadOptionField="translatedLabel"
     [siTypeahead]="dataSource"
+    [typeaheadMinLength]="0"
     [typeaheadOptionsLimit]="typeaheadOptionsLimit()"
     [typeaheadScrollable]="true"
     [typeaheadOptionsInScrollableView]="optionsInScrollableView()"
