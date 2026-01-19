@@ -2,13 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  provideZonelessChangeDetection,
-  SimpleChange,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, SimpleChange, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ChartXAxis, ChartYAxis, EChartOption } from '@siemens/charts-ng/common';
 
@@ -42,13 +36,6 @@ class TestHostComponent {
   subTitle?: string;
 }
 describe('SiChartBarLineComponent', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
-  });
-
   const getOption = (component: SiChartCartesianComponent): any =>
     component.chart.getOption() as any;
 

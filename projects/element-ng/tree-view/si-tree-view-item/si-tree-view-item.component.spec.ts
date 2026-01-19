@@ -3,13 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkDragDrop, CdkDropList, DragDropModule } from '@angular/cdk/drag-drop';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DebugElement,
-  provideZonelessChangeDetection,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, DebugElement, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
@@ -127,8 +121,7 @@ describe('SiTreeViewComponentWithDragDrop', () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-      imports: [SiTreeViewModule, DragDropModule, WrapperComponent],
-      providers: [provideZonelessChangeDetection()]
+      imports: [SiTreeViewModule, DragDropModule, WrapperComponent]
     });
   });
 

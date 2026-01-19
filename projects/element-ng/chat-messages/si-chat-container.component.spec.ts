@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { DebugElement, Component, provideZonelessChangeDetection } from '@angular/core';
+import { DebugElement, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -27,12 +27,7 @@ describe('SiChatContainerComponent', () => {
   let debugElement: DebugElement;
   let component: SiChatContainerComponent;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [SiChatContainerComponent],
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
-
+  beforeEach(() => {
     fixture = TestBed.createComponent(SiChatContainerComponent);
     debugElement = fixture.debugElement;
     component = fixture.componentInstance;

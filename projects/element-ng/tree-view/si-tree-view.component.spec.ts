@@ -8,7 +8,6 @@ import {
   Component,
   DebugElement,
   inject,
-  provideZonelessChangeDetection,
   viewChild
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -127,8 +126,7 @@ describe('SiTreeViewComponent', () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-      imports: [SiLoadingSpinnerModule, NoopAnimationsModule, SiTreeViewModule, WrapperComponent],
-      providers: [provideZonelessChangeDetection()]
+      imports: [SiLoadingSpinnerModule, NoopAnimationsModule, SiTreeViewModule, WrapperComponent]
     });
   });
 

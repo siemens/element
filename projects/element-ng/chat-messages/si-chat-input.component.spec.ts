@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { DebugElement, provideZonelessChangeDetection } from '@angular/core';
+import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -22,7 +22,7 @@ describe('SiChatInputComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TestComponent],
-      providers: [provideNoopAnimations(), provideZonelessChangeDetection()]
+      providers: [provideNoopAnimations()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestComponent);

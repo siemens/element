@@ -5,13 +5,7 @@
 import { DOWN_ARROW, ENTER } from '@angular/cdk/keycodes';
 import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  provideZonelessChangeDetection,
-  TemplateRef,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, TemplateRef, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { BehaviorSubject, of } from 'rxjs';
@@ -102,11 +96,7 @@ describe('SiTypeaheadDirective', () => {
 
   const testList = ['sweet', 'home', 'alabama', 'where', 'the', 'skies', 'are', 'so', 'blue'];
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [SiTypeaheadDirective, FormsModule, WrapperComponent],
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
+  beforeEach(() => {
     fixture = TestBed.createComponent(WrapperComponent);
     wrapperComponent = fixture.componentInstance;
     wrapperElement = fixture.nativeElement;

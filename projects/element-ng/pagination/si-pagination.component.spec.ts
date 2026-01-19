@@ -2,8 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { CommonModule } from '@angular/common';
-import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiPaginationComponent as TestComponent } from '.';
@@ -20,13 +18,6 @@ describe('SiPaginationComponent', () => {
   const getSeparators = (): NodeListOf<HTMLElement> => element.querySelectorAll('.separator');
   const getCurrentItem = (): HTMLElement =>
     element.querySelector('.page-item.active') as HTMLElement;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [CommonModule, TestComponent],
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
-  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestComponent);

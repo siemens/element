@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiSidePanelModule } from './si-side-panel.module';
@@ -23,8 +23,7 @@ describe('SiSidePanelContentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SiSidePanelModule, TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
+      imports: [SiSidePanelModule, TestHostComponent]
     }).compileComponents();
   });
 

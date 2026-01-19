@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiMarkdownRendererComponent as TestComponent } from './si-markdown-renderer.component';
@@ -11,12 +10,7 @@ describe('SiMarkdownRendererComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
   let hostElement: HTMLElement;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [TestComponent],
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
-
+  beforeEach(() => {
     fixture = TestBed.createComponent(TestComponent);
     hostElement = fixture.nativeElement;
   });

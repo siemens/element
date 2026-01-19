@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { DebugElement, provideZonelessChangeDetection, TemplateRef } from '@angular/core';
+import { DebugElement, TemplateRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiModalService } from '@siemens/element-ng/modal';
@@ -21,10 +21,7 @@ describe('SiAttachmentListComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [TestComponent],
-      providers: [
-        { provide: SiModalService, useValue: modalServiceSpy },
-        provideZonelessChangeDetection()
-      ]
+      providers: [{ provide: SiModalService, useValue: modalServiceSpy }]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestComponent);

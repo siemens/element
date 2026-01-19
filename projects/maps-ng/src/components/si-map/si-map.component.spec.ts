@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ComponentRef, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
@@ -50,7 +50,7 @@ describe('SiMapComponent', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
       imports: [SiMapModule, TranslateModule.forRoot()],
-      providers: [MapService, provideZonelessChangeDetection()]
+      providers: [MapService]
     })
   );
 

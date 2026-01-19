@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, provideZonelessChangeDetection, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -72,8 +72,7 @@ describe('SiSliderComponent', () => {
         SiSliderComponent,
         FormHostComponent,
         HostComponent
-      ],
-      providers: [provideZonelessChangeDetection()]
+      ]
     }).compileComponents()
   );
 

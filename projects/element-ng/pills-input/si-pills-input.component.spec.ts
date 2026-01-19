@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, provideZonelessChangeDetection } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
@@ -37,8 +37,7 @@ describe('SiPillsInputComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SiPillsInputModule, FormsModule, TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
+      imports: [SiPillsInputModule, FormsModule, TestHostComponent]
     });
   });
 

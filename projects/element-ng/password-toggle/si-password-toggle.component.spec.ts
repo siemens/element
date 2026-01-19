@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, input, provideZonelessChangeDetection } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
@@ -26,8 +26,7 @@ describe('SiPasswordToggleComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule, SiPasswordToggleModule, TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
+      imports: [FormsModule, SiPasswordToggleModule, TestHostComponent]
     });
   });
 

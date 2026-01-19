@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, input, provideZonelessChangeDetection, viewChild } from '@angular/core';
+import { Component, input, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
@@ -63,8 +63,7 @@ describe('SiWizardComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [SiResizeObserverModule, TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
+      imports: [SiResizeObserverModule, TestHostComponent]
     })
   );
 

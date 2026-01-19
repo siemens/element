@@ -2,14 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import {
-  ApplicationRef,
-  Component,
-  input,
-  provideZonelessChangeDetection,
-  TemplateRef,
-  viewChild
-} from '@angular/core';
+import { ApplicationRef, Component, input, TemplateRef, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { SiModalService } from './si-modal.service';
@@ -39,8 +32,7 @@ describe('SiModalService', () => {
   beforeEach(() => {
     jasmine.clock().install();
     TestBed.configureTestingModule({
-      imports: [DialogComponent, DialogTemplateComponent],
-      providers: [provideZonelessChangeDetection()]
+      imports: [DialogComponent, DialogTemplateComponent]
     }).compileComponents();
 
     service = TestBed.inject(SiModalService);

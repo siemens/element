@@ -2,13 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  provideZonelessChangeDetection,
-  SimpleChange,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, SimpleChange, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { SiChartGaugeComponent } from './si-chart-gauge.component';
@@ -35,13 +29,6 @@ class TestHostComponent {
 }
 
 describe('SiChartGaugeComponent', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
-  });
-
   const getOption = (component: SiChartGaugeComponent): any => component.chart.getOption() as any;
 
   const createChartWithTestData = (): any => {

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, provideZonelessChangeDetection, viewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
@@ -49,9 +49,6 @@ describe('SiSearchBarComponent', () => {
     }
 
     beforeEach(() => {
-      TestBed.configureTestingModule({
-        providers: [provideZonelessChangeDetection()]
-      }).compileComponents();
       fixture = TestBed.createComponent(TestComponent);
       testComponent = fixture.componentInstance;
       component = fixture.componentInstance.searchBar();
@@ -165,10 +162,6 @@ describe('SiSearchBarComponent', () => {
     }
 
     beforeEach(() => {
-      TestBed.configureTestingModule({
-        imports: [TestComponent],
-        providers: [provideZonelessChangeDetection()]
-      }).compileComponents();
       fixture = TestBed.createComponent(TestComponent);
       testComponent = fixture.componentInstance;
       component = fixture.componentInstance.searchBar();

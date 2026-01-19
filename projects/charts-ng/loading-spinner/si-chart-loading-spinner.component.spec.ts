@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiChartLoadingSpinnerComponent as TestComponent } from './si-chart-loading-spinner.component';
@@ -10,13 +9,6 @@ import { SiChartLoadingSpinnerComponent as TestComponent } from './si-chart-load
 describe('SiLoadingSpinnerComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
   let component: TestComponent;
-
-  beforeEach(() =>
-    TestBed.configureTestingModule({
-      imports: [TestComponent],
-      providers: [provideZonelessChangeDetection()]
-    })
-  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestComponent);

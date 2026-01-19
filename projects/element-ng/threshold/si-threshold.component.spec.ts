@@ -4,7 +4,7 @@
  */
 import { HarnessLoader, parallel } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SelectOption } from '@siemens/element-ng/select';
@@ -93,13 +93,6 @@ describe('SiThresholdComponent', () => {
     });
     return calculatedColors;
   };
-
-  beforeEach(() =>
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
-    })
-  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);

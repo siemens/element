@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -38,8 +38,7 @@ describe('SiCollapsiblePanel', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, SiCollapsiblePanelComponent, TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
+      imports: [NoopAnimationsModule, SiCollapsiblePanelComponent, TestHostComponent]
     }).compileComponents();
   });
 

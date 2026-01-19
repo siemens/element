@@ -2,14 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  provideZonelessChangeDetection,
-  signal,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, NgControl } from '@angular/forms';
 
@@ -60,13 +53,6 @@ describe('SiDateInputDirective', () => {
   };
 
   const dateInput = (): HTMLInputElement => element.querySelector<HTMLInputElement>('input')!;
-
-  beforeEach(() =>
-    TestBed.configureTestingModule({
-      imports: [WrapperComponent],
-      providers: [provideZonelessChangeDetection()]
-    })
-  );
 
   beforeEach(async () => {
     fixture = TestBed.createComponent(WrapperComponent);

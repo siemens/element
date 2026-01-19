@@ -7,7 +7,6 @@ import {
   ChangeDetectorRef,
   Component,
   inject,
-  provideZonelessChangeDetection,
   viewChild
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -80,8 +79,7 @@ describe('SiFormContainerComponent', () => {
             validationErrorMapper: { minlength: 'custom-length-message' }
           }),
           TestHostComponent
-        ],
-        providers: [provideZonelessChangeDetection()]
+        ]
       }).compileComponents();
     });
 
@@ -166,13 +164,6 @@ describe('SiFormContainerComponent', () => {
 
   describe('with nested form containers', () => {
     let fixture: ComponentFixture<TestHostWithNestingComponent>;
-
-    beforeEach(async () => {
-      await TestBed.configureTestingModule({
-        imports: [TestHostWithNestingComponent],
-        providers: [provideZonelessChangeDetection()]
-      }).compileComponents();
-    });
 
     beforeEach(() => {
       fixture = TestBed.createComponent(TestHostWithNestingComponent);

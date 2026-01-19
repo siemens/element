@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { DebugElement, provideZonelessChangeDetection } from '@angular/core';
+import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By, DomSanitizer } from '@angular/platform-browser';
 import { getMarkdownRenderer } from '@siemens/element-ng/markdown-renderer';
@@ -14,12 +14,7 @@ describe('SiAiMessageComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
   let debugElement: DebugElement;
   let markdownRenderer: (text: string) => string | Node;
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [TestComponent],
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
-
+  beforeEach(() => {
     fixture = TestBed.createComponent(TestComponent);
     debugElement = fixture.debugElement;
     const sanitizer = TestBed.inject(DomSanitizer);

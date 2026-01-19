@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, DOCUMENT, Injectable, provideZonelessChangeDetection } from '@angular/core';
+import { Component, DOCUMENT, Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
@@ -67,7 +67,7 @@ describe('SiTranslateNgxT', () => {
           ]),
           HostComponent
         ],
-        providers: [RootTestService, provideZonelessChangeDetection()]
+        providers: [RootTestService]
       });
     });
 
@@ -102,8 +102,7 @@ describe('SiTranslateNgxT', () => {
               } as TranslateLoader
             }
           })
-        ],
-        providers: [provideZonelessChangeDetection()]
+        ]
       });
     });
     beforeEach(() => {

@@ -4,13 +4,7 @@
  */
 import { HttpErrorResponse, HttpHeaders, provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  provideZonelessChangeDetection,
-  SimpleChange,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, SimpleChange, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { runOnPushChangeDetection } from '../test-helpers/change-detection.helper';
@@ -88,7 +82,7 @@ describe('SiFileUploaderComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [TestHostComponent],
-      providers: [provideHttpClient(), provideHttpClientTesting(), provideZonelessChangeDetection()]
+      providers: [provideHttpClient(), provideHttpClientTesting()]
     });
     httpMock = TestBed.inject(HttpTestingController);
   });

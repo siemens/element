@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ComponentRef, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SiIconModule } from '@siemens/element-ng/icon';
 
@@ -20,8 +20,7 @@ describe('SiStatusCounterComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SiIconModule, TestComponent],
-      providers: [provideZonelessChangeDetection()]
+      imports: [SiIconModule, TestComponent]
     }).compileComponents();
   });
 

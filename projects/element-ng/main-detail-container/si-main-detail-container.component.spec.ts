@@ -8,7 +8,6 @@ import {
   Component,
   DebugElement,
   inject,
-  provideZonelessChangeDetection,
   viewChild
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -103,8 +102,7 @@ describe('MainDetailContainerComponent', () => {
         {
           provide: ResizeObserverService,
           useValue: resizeSpy
-        },
-        provideZonelessChangeDetection()
+        }
       ]
     }).compileComponents();
 

@@ -9,7 +9,6 @@ import {
   ChangeDetectorRef,
   Component,
   inject,
-  provideZonelessChangeDetection,
   signal,
   viewChild
 } from '@angular/core';
@@ -105,8 +104,7 @@ describe('SiFilteredSearchComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
+      imports: [NoopAnimationsModule, TestHostComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestHostComponent);
@@ -2305,7 +2303,6 @@ describe('SiFilteredSearchComponent - With translation', () => {
     TestBed.configureTestingModule({
       imports: [TestHostComponent],
       providers: [
-        provideZonelessChangeDetection(),
         provideNoopAnimations(),
         provideMockTranslateServiceBuilder(
           () =>

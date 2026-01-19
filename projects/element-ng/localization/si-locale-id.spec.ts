@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { LOCALE_ID, provideZonelessChangeDetection } from '@angular/core';
+import { LOCALE_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { SiLocaleId } from './si-locale-id';
@@ -20,8 +20,7 @@ describe('SiLocaleId', () => {
     TestBed.configureTestingModule({
       providers: [
         { provide: LOCALE_ID, useClass: SiLocaleId, deps: [SiLocaleService] },
-        { provide: SiLocaleService, useClass: SiLocaleServiceMock },
-        provideZonelessChangeDetection()
+        { provide: SiLocaleService, useClass: SiLocaleServiceMock }
       ]
     });
     localeId = TestBed.inject(LOCALE_ID).toString();

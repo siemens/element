@@ -2,13 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import {
-  Component,
-  ElementRef,
-  provideZonelessChangeDetection,
-  signal,
-  viewChild
-} from '@angular/core';
+import { Component, ElementRef, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Subscription } from 'rxjs';
 
@@ -57,10 +51,6 @@ describe('ResizeObserverService', () => {
 
   beforeEach(() => {
     mockResizeObserver();
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
-    });
     service = TestBed.inject(ResizeObserverService);
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;

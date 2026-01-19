@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, DebugElement, provideZonelessChangeDetection, viewChild } from '@angular/core';
+import { Component, DebugElement, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -87,8 +87,7 @@ describe('SiTabset', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SiTabsLegacyModule, TestComponent],
-      providers: [provideZonelessChangeDetection()]
+      imports: [SiTabsLegacyModule, TestComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestComponent);

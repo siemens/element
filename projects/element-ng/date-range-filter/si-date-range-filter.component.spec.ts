@@ -4,12 +4,7 @@
  */
 import { MediaMatcher } from '@angular/cdk/layout';
 import { formatDate } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  provideZonelessChangeDetection,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TestScheduler } from 'rxjs/testing';
@@ -90,7 +85,6 @@ describe('SiDateRangeFilterComponent', () => {
     TestBed.configureTestingModule({
       imports: [TestHostComponent],
       providers: [
-        provideZonelessChangeDetection(),
         {
           provide: MediaMatcher,
           useValue: {

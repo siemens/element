@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ApplicationRef, provideZonelessChangeDetection } from '@angular/core';
+import { ApplicationRef } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Subject } from 'rxjs';
@@ -22,8 +22,7 @@ describe('SiActionDialogService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule],
-      providers: [provideZonelessChangeDetection()]
+      imports: [NoopAnimationsModule]
     }).compileComponents();
     service = TestBed.inject(SiActionDialogService);
     appRef = TestBed.inject(ApplicationRef);

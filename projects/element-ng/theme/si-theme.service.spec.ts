@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -26,11 +25,7 @@ describe('SiThemeService', () => {
         }) as any
     );
     TestBed.configureTestingModule({
-      providers: [
-        TestService,
-        { provide: SiThemeStore, useValue: store },
-        provideZonelessChangeDetection()
-      ]
+      providers: [TestService, { provide: SiThemeStore, useValue: store }]
     });
     service = TestBed.inject(TestService);
     service.resolvedColorScheme$.subscribe(themeSwitchSpy);

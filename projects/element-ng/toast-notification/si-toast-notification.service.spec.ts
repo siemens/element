@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { SiToastNotificationService } from './si-toast-notification.service';
@@ -12,7 +11,7 @@ describe('SiToastNotificationService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [SiToastNotificationService, provideZonelessChangeDetection()]
+      providers: [SiToastNotificationService]
     });
   });
 

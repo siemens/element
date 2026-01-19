@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Component, provideZonelessChangeDetection, viewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
@@ -37,7 +37,7 @@ describe('SiGridstackWrapperComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HostComponent],
-      providers: [SiActionDialogService, SiGridService, provideZonelessChangeDetection()]
+      providers: [SiActionDialogService, SiGridService]
     }).compileComponents();
     gridService = TestBed.inject(SiGridService);
     gridService.widgetCatalog.set([]);

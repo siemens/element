@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, ElementRef, provideZonelessChangeDetection, viewChild } from '@angular/core';
+import { Component, ElementRef, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, RouterModule, RouterOutlet, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -84,8 +84,7 @@ describe('SiBreadcrumbRouterComponent', () => {
         {
           provide: SI_BREADCRUMB_RESOLVER_SERVICE,
           useClass: SiBreadcrumbDefaultResolverService
-        },
-        provideZonelessChangeDetection()
+        }
       ]
     }).compileComponents();
   });

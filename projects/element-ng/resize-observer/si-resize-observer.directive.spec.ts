@@ -2,13 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import {
-  Component,
-  ElementRef,
-  provideZonelessChangeDetection,
-  signal,
-  viewChild
-} from '@angular/core';
+import { Component, ElementRef, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ElementDimensions } from './index';
@@ -57,10 +51,6 @@ describe('SiResizeObserverDirective', () => {
 
   beforeEach(() => {
     mockResizeObserver();
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
-    });
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     spy = spyOn(component, 'resizeHandler');
@@ -114,13 +104,6 @@ describe('SiResizeObserverDirective with emitInitial=false', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let component: TestHostComponent;
   let spy: jasmine.Spy<(dim: ElementDimensions) => void>;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
-  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);

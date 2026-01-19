@@ -2,13 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  provideZonelessChangeDetection,
-  signal,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiFormItemComponent } from './si-form-item.component';
@@ -34,13 +28,6 @@ describe('SiFormItemComponent', () => {
   const getLabel = (): HTMLElement | null => {
     return fixture.nativeElement.querySelector('label');
   };
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
-  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);

@@ -5,7 +5,7 @@
 import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { CommonModule } from '@angular/common';
-import { Component, provideZonelessChangeDetection, viewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SiSelectHarness } from '@siemens/element-ng/select/testing';
@@ -161,8 +161,7 @@ describe('SiSelectComponent', () => {
 
     beforeEach(async () => {
       TestBed.configureTestingModule({
-        imports: [SiSelectModule, TestHostComponent],
-        providers: [provideZonelessChangeDetection()]
+        imports: [SiSelectModule, TestHostComponent]
       });
 
       const typedFixture = TestBed.createComponent(TestHostComponent);
@@ -374,8 +373,7 @@ describe('SiSelectComponent', () => {
 
     beforeEach(async () => {
       TestBed.configureTestingModule({
-        imports: [SiSelectModule, TestHostNumberComponent],
-        providers: [provideZonelessChangeDetection()]
+        imports: [SiSelectModule, TestHostNumberComponent]
       });
 
       const typedFixture = TestBed.createComponent(TestHostNumberComponent);
@@ -429,14 +427,7 @@ describe('SiSelectComponent', () => {
 
     beforeEach(async () => {
       TestBed.configureTestingModule({
-        imports: [
-          CommonModule,
-          FormsModule,
-          ReactiveFormsModule,
-          SiSelectModule,
-          FormHostComponent
-        ],
-        providers: [provideZonelessChangeDetection()]
+        imports: [CommonModule, FormsModule, ReactiveFormsModule, SiSelectModule, FormHostComponent]
       });
 
       const typedFixture = TestBed.createComponent(FormHostComponent);
@@ -476,8 +467,7 @@ describe('SiSelectComponent', () => {
 
     beforeEach(async () => {
       TestBed.configureTestingModule({
-        imports: [SiSelectModule, TestHostMultiComponent],
-        providers: [provideZonelessChangeDetection()]
+        imports: [SiSelectModule, TestHostMultiComponent]
       });
 
       const typedFixture = TestBed.createComponent(TestHostMultiComponent);
@@ -601,9 +591,6 @@ describe('SiSelectComponent', () => {
     let component: TestHostCustomActionComponent;
 
     beforeEach(async () => {
-      TestBed.configureTestingModule({
-        providers: [provideZonelessChangeDetection()]
-      }).compileComponents();
       const typedFixture = TestBed.createComponent(TestHostCustomActionComponent);
       fixture = typedFixture;
       loader = TestbedHarnessEnvironment.loader(fixture);

@@ -5,12 +5,7 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Injectable,
-  provideZonelessChangeDetection
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Injectable } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   SiHeaderDropdownComponent,
@@ -99,12 +94,6 @@ describe('SiApplicationHeaderComponent', () => {
     class TestHostComponent {}
 
     let fixture: ComponentFixture<TestHostComponent>;
-
-    beforeEach(() => {
-      TestBed.configureTestingModule({
-        providers: [provideZonelessChangeDetection()]
-      });
-    });
 
     beforeEach(async () => {
       fixture = TestBed.createComponent(TestHostComponent);
@@ -216,12 +205,6 @@ describe('SiApplicationHeaderComponent', () => {
     let component: TestHostComponent;
     let actionItem1Harness: SiHeaderItemHarness;
 
-    beforeEach(() => {
-      TestBed.configureTestingModule({
-        providers: [provideZonelessChangeDetection()]
-      });
-    });
-
     beforeEach(async () => {
       fixture = TestBed.createComponent(TestHostComponent);
       component = fixture.componentInstance;
@@ -304,10 +287,7 @@ describe('SiApplicationHeaderComponent', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        providers: [
-          { provide: BreakpointObserver, useExisting: BreakpointObserverMock },
-          provideZonelessChangeDetection()
-        ]
+        providers: [{ provide: BreakpointObserver, useExisting: BreakpointObserverMock }]
       });
     });
 
@@ -353,12 +333,6 @@ describe('SiApplicationHeaderComponent', () => {
       `
     })
     class TestHostComponent {}
-
-    beforeEach(() => {
-      TestBed.configureTestingModule({
-        providers: [provideZonelessChangeDetection()]
-      });
-    });
 
     beforeEach(async () => {
       const fixture = TestBed.createComponent(TestHostComponent);

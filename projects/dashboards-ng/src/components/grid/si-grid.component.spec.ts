@@ -2,14 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import {
-  Component,
-  OnInit,
-  output,
-  OutputEmitterRef,
-  provideZonelessChangeDetection,
-  SimpleChange
-} from '@angular/core';
+import { Component, OnInit, output, OutputEmitterRef, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
@@ -58,7 +51,6 @@ describe('SiGridComponent', () => {
       providers: [
         { provide: SiWidgetStorage, useClass: SiDefaultWidgetStorage },
         { provide: SI_DASHBOARD_CONFIGURATION, useValue: {} },
-        provideZonelessChangeDetection(),
         SiActionDialogService
       ]
     })
@@ -251,8 +243,7 @@ describe('SiGridComponent with custom id resolver', () => {
           }
         },
         { provide: SI_DASHBOARD_CONFIGURATION, useValue: {} },
-        SiActionDialogService,
-        provideZonelessChangeDetection()
+        SiActionDialogService
       ]
     })
       .overrideComponent(SiGridComponent, {
