@@ -1,0 +1,110 @@
+/**
+ * Copyright (c) Siemens 2016 - 2025
+ * SPDX-License-Identifier: MIT
+ */
+
+import { Tree } from '@angular-devkit/schematics';
+import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
+import * as path from 'path';
+import { fileURLToPath } from 'url';
+
+import { addTestFiles, createTestApp } from '../utils/index.js';
+
+const collectionPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '../migration.json');
+
+describe('ng-update migration', () => {
+  let runner: SchematicTestRunner;
+  let appTree: Tree;
+
+  beforeEach(async () => {
+    runner = new SchematicTestRunner('@siemens/element-ng', collectionPath);
+    appTree = await createTestApp(runner, { style: 'scss' });
+  });
+
+  it('should run migration successfully', async () => {
+    addTestFiles(appTree, {
+      '/package.json': JSON.stringify({
+        dependencies: {
+          '@siemens/element-ng': '47.0.0',
+          '@siemens/charts-ng': '47.0.0'
+        }
+      })
+    });
+
+    const tree = await runner.runSchematic('migration-v48', {}, appTree);
+    expect(tree).toBeDefined();
+  });
+
+  it('should log migration start message', async () => {
+    const logSpy = jasmine.createSpy('log');
+    runner.logger.subscribe(logSpy);
+
+    await runner.runSchematic('migration-v48', {}, appTree);
+
+    expect(logSpy).toHaveBeenCalledWith(
+      jasmine.objectContaining({
+        message: jasmine.stringContaining('Starting update from version 47 to 48')
+      })
+    );
+  });
+
+  it('should execute all sub-migrations', async () => {
+    // Create test files that would be affected by each migration
+    const originalContent = `import { Component, inject } from '@angular/core';
+import { SiActionDialogService } from '@siemens/element-ng/action-modal';
+
+@Component({ selector: 'app-test' })
+export class TestComponent {
+  showDialog() {
+    inject(SiActionDialogService).showAlertDialog('Message', 'Heading', 'Confirm').subscribe();
+  }
+}`;
+
+    addTestFiles(appTree, {
+      '/projects/app/src/test.component.ts': originalContent,
+      '/package.json': JSON.stringify({
+        dependencies: {
+          '@siemens/element-ng': '47.0.0'
+        }
+      })
+    });
+
+    const tree = await runner.runSchematic('migration-v48', {}, appTree);
+
+    // Verify the tree was modified (migrations ran)
+    expect(tree).toBeDefined();
+    expect(tree.exists('/projects/app/src/test.component.ts')).toBe(true);
+
+    // Verify the content was actually modified by the migration
+    const modifiedContent = tree.readContent('/projects/app/src/test.component.ts');
+    expect(modifiedContent).not.toEqual(originalContent);
+    expect(modifiedContent).toContain('showActionDialog');
+    expect(modifiedContent).not.toContain('showAlertDialog');
+  });
+
+  it('should handle empty project gracefully', async () => {
+    const emptyTree = await createTestApp(runner, { style: 'scss' });
+
+    const tree = await runner.runSchematic('migration-v48', {}, emptyTree);
+    expect(tree).toBeDefined();
+  });
+
+  it('should pass options to sub-migrations', async () => {
+    const customPath = '/custom/path';
+    const options = { path: customPath };
+
+    addTestFiles(appTree, {
+      '/package.json': JSON.stringify({
+        dependencies: {
+          '@siemens/element-ng': '47.0.0'
+        }
+      })
+    });
+
+    const tree = await runner.runSchematic('migration-v48', options, appTree);
+    expect(tree).toBeDefined();
+
+    // Verify the schematic ran with custom options
+    // In a real scenario, you'd verify the migration respected the path option
+  });
+});

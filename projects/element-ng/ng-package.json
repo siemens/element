@@ -1,7 +1,12 @@
 {
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/@siemens/element-ng",
-  "assets": ["assets", "schematics/collection.json", "schematics/**/schema.json"],
+  "assets": [
+    "assets",
+    "schematics/collection.json",
+    "schematics/migration.json",
+    "schematics/**/schema.json"
+  ],
   "lib": {
     "entryFile": "public-api.ts"
   }

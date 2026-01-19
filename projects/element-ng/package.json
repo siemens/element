@@ -24,6 +24,19 @@
   "ng-add": {
     "save": "dependencies"
   },
+  "ng-update": {
+    "packageGroup": [
+      "@siemens/charts-ng",
+      "@siemens/dashboards-ng",
+      "@siemens/element-ng",
+      "@siemens/element-theme",
+      "@siemens/element-translate-ng",
+      "@siemens/live-preview",
+      "@siemens/maps-ng",
+      "@siemens/native-charts-ng"
+    ],
+    "migrations": "./schematics/migration.json"
+  },
   "peerDependencies": {
     "@angular/animations": "21",
     "@angular/cdk": "21",
