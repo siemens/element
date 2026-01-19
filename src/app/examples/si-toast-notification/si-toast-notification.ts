@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { StatusType } from '@siemens/element-ng/common';
 import { Link } from '@siemens/element-ng/link';
-import { SiToastNotificationService, ToastStateName } from '@siemens/element-ng/toast-notification';
+import { SiToastNotificationService } from '@siemens/element-ng/toast-notification';
 import { LOG_EVENT } from '@siemens/live-preview';
 
 @Component({
@@ -19,7 +20,7 @@ export class SampleComponent {
   private toastNotificationService = inject(SiToastNotificationService);
 
   showToast(
-    state: ToastStateName,
+    state: StatusType,
     title: string,
     message: string,
     disableAutoClose?: boolean,
@@ -39,12 +40,7 @@ export class SampleComponent {
     toast.hidden?.subscribe(() => this.logEvent('toast hidden'));
   }
 
-  showActionableToast(
-    state: ToastStateName,
-    title: string,
-    message: string,
-    linkTitle: string
-  ): void {
+  showActionableToast(state: StatusType, title: string, message: string, linkTitle: string): void {
     this.showToast(state, title, message, undefined, undefined, undefined, {
       title: linkTitle,
       action: () => this.onAction()
