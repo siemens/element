@@ -2,13 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  provideZonelessChangeDetection,
-  SimpleChange,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, SimpleChange, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { SiChartProgressBarComponent } from './si-chart-progress-bar.component';
@@ -35,13 +29,6 @@ class TestHostComponent {
   labelPosition?: string;
 }
 describe('SiChartProgressBarComponent', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
-  });
-
   const getOption = (component: TestHostComponent): any =>
     component.chartProgressBarComponent().chart.getOption() as any;
 

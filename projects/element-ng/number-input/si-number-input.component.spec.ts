@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, provideZonelessChangeDetection, viewChild } from '@angular/core';
+import { Component, inject, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -88,8 +88,7 @@ describe('SiNumberInputComponent', () => {
         FormHostComponent,
         HostComponent,
         AttributeComponent
-      ],
-      providers: [provideZonelessChangeDetection()]
+      ]
     })
   );
 

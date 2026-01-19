@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { SiDashboardCardComponent } from './si-dashboard-card.component';
@@ -13,7 +12,7 @@ describe('SiDashboardService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [{ provide: TestService }, provideZonelessChangeDetection()]
+      providers: [{ provide: TestService }]
     }).compileComponents();
     service = TestBed.inject(TestService);
   });

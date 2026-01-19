@@ -2,13 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  provideZonelessChangeDetection,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 
@@ -70,8 +64,7 @@ describe('SiPasswordStrengthDirective', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SiPasswordStrengthModule, FormsModule, WrapperComponent],
-      providers: [provideZonelessChangeDetection()]
+      imports: [SiPasswordStrengthModule, FormsModule, WrapperComponent]
     }).compileComponents();
   });
 

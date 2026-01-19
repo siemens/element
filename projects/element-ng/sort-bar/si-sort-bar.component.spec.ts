@@ -3,12 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { HttpParams } from '@angular/common/http';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  provideZonelessChangeDetection,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiSortBarComponent } from './si-sort-bar.component';
@@ -49,13 +44,6 @@ describe('SiSortBarComponent', () => {
 
   const getIconByIndex = (itemIndex: number): HTMLElement | null =>
     getItemByIndex(itemIndex)?.querySelector('.icon div') ?? null;
-
-  beforeEach(() =>
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
-    })
-  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);

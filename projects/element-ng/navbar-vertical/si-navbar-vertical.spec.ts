@@ -5,7 +5,7 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, Injectable, provideZonelessChangeDetection } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter, Router } from '@angular/router';
@@ -88,7 +88,6 @@ describe('SiNavbarVertical', () => {
     await TestBed.configureTestingModule({
       imports: [SiNavbarVerticalComponent, NoopAnimationsModule, TestHostComponent],
       providers: [
-        provideZonelessChangeDetection(),
         provideSiUiState({ store: SynchronousMockStore }),
         provideRouter([
           {

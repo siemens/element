@@ -4,13 +4,7 @@
  */
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  provideZonelessChangeDetection,
-  signal,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiDatepickerComponent, SiDatepickerModule } from '.';
@@ -58,10 +52,6 @@ describe('SiDatepickerComponent', () => {
   };
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
     jasmine.clock().mockDate(new Date('2023-12-31'));
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;

@@ -11,7 +11,6 @@ import {
   OnInit,
   output,
   OutputEmitterRef,
-  provideZonelessChangeDetection,
   SimpleChange,
   Type
 } from '@angular/core';
@@ -118,8 +117,7 @@ describe('SiFlexibleDashboardComponent', () => {
       await TestBed.configureTestingModule({
         providers: [
           { provide: SI_WIDGET_STORE, useClass: TestWidgetStorage },
-          { provide: SI_DASHBOARD_CONFIGURATION, useValue: {} },
-          provideZonelessChangeDetection()
+          { provide: SI_DASHBOARD_CONFIGURATION, useValue: {} }
         ],
         imports: [SiFlexibleDashboardComponent],
         schemas: [NO_ERRORS_SCHEMA]

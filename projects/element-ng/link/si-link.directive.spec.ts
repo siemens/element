@@ -2,13 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  inject,
-  provideZonelessChangeDetection
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
@@ -63,8 +57,7 @@ describe('SiLinkDirective', () => {
             ({
               translateAsync: (keys, params) => of(`translated=>${keys}-${JSON.stringify(params)}`)
             }) as SiTranslateService
-        ),
-        provideZonelessChangeDetection()
+        )
       ]
     }).compileComponents();
   });
@@ -232,8 +225,7 @@ describe('SiLinkDirective', () => {
             {
               provide: SI_LINK_DEFAULT_NAVIGATION_EXTRA,
               useValue: { preserveFragment: false, queryParamsHandling: '' }
-            },
-            provideZonelessChangeDetection()
+            }
           ]
         });
 

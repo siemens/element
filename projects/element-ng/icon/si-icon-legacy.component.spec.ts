@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ComponentRef, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiIconLegacyComponent as TestComponent } from './si-icon-legacy.component';
@@ -10,13 +10,6 @@ import { SiIconLegacyComponent as TestComponent } from './si-icon-legacy.compone
 describe('SiIconComponent', () => {
   let component: ComponentRef<TestComponent>;
   let fixture: ComponentFixture<TestComponent>;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [TestComponent],
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
-  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestComponent);

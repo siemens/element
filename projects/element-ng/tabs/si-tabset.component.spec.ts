@@ -4,7 +4,7 @@
  */
 import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, provideZonelessChangeDetection, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, RouterLink, RouterOutlet } from '@angular/router';
 
@@ -142,7 +142,7 @@ describe('SiTabset', () => {
     mockResizeObserver();
     await TestBed.configureTestingModule({
       imports: [TestComponent],
-      providers: [provideRouter([]), provideZonelessChangeDetection()]
+      providers: [provideRouter([])]
     }).compileComponents();
     fixture = TestBed.createComponent(TestComponent);
     testComponent = fixture.componentInstance;
@@ -411,8 +411,7 @@ describe('SiTabset Routing', () => {
             path: 'tab-route',
             component: SiTabRouteComponent
           }
-        ]),
-        provideZonelessChangeDetection()
+        ])
       ]
     }).compileComponents();
   });

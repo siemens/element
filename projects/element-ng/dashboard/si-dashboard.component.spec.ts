@@ -8,7 +8,6 @@ import {
   ChangeDetectorRef,
   Component,
   inject,
-  provideZonelessChangeDetection,
   signal,
   viewChild,
   viewChildren
@@ -82,8 +81,7 @@ describe('SiDashboardComponent', () => {
         {
           provide: ResizeObserverService,
           useValue: resizeSpy
-        },
-        provideZonelessChangeDetection()
+        }
       ]
     }).compileComponents();
   });

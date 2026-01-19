@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 import { TestScheduler } from 'rxjs/testing';
@@ -39,11 +39,6 @@ describe('SiListWidgetComponent', () => {
   beforeEach(() => {
     testScheduler = new TestScheduler((actual, expected) => {
       expect(actual).toEqual(expected);
-    });
-
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
     });
   });
 

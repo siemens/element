@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, provideZonelessChangeDetection, SimpleChange, viewChild } from '@angular/core';
+import { Component, SimpleChange, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { SiChartCircleComponent } from './si-chart-circle.component';
@@ -28,13 +28,6 @@ class TestHostComponent {
   subTitle?: string;
 }
 describe('SiChartCircleComponent', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
-  });
-
   const getOption = (component: SiChartCircleComponent): any => component.chart.getOption() as any;
 
   const createChartWithTestData = async (showLegend = false): Promise<any> => {

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ComponentRef, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { enterValue } from '@siemens/element-ng/datepicker/components/test-helper.spec';
 
@@ -19,13 +19,6 @@ const passwordStrengthValue = {
 describe('SiChangePasswordComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
   let component: ComponentRef<TestComponent>;
-
-  beforeEach(() =>
-    TestBed.configureTestingModule({
-      imports: [TestComponent],
-      providers: [provideZonelessChangeDetection()]
-    })
-  );
 
   beforeEach(async () => {
     fixture = TestBed.createComponent(TestComponent);

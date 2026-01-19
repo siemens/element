@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, provideZonelessChangeDetection } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiTooltipModule } from './si-tooltip.module';
@@ -30,8 +30,7 @@ describe('SiTooltipDirective', () => {
 
     beforeEach(async () => {
       await TestBed.configureTestingModule({
-        imports: [SiTooltipModule, TestHostComponent],
-        providers: [provideZonelessChangeDetection()]
+        imports: [SiTooltipModule, TestHostComponent]
       }).compileComponents();
     });
 
@@ -103,13 +102,6 @@ describe('SiTooltipDirective', () => {
     class TestHostComponent {
       tooltipContext = {};
     }
-
-    beforeEach(async () => {
-      await TestBed.configureTestingModule({
-        imports: [TestHostComponent],
-        providers: [provideZonelessChangeDetection()]
-      }).compileComponents();
-    });
 
     beforeEach(() => {
       jasmine.clock().install();

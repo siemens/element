@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, provideZonelessChangeDetection, viewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiPopoverDirective } from './si-popover.directive';
@@ -41,8 +41,7 @@ describe('SiPopoverNextDirective', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HostComponent, CustomTemplateHostComponent],
-      providers: [provideZonelessChangeDetection()]
+      imports: [HostComponent, CustomTemplateHostComponent]
     }).compileComponents();
   });
 
@@ -178,9 +177,6 @@ describe('with custom template', () => {
   let fixture: ComponentFixture<CustomTemplateHostComponent>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
     fixture = TestBed.createComponent(CustomTemplateHostComponent);
   });
 

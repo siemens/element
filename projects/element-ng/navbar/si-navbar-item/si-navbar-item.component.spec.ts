@@ -2,14 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  provideZonelessChangeDetection,
-  signal,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiNavbarPrimaryComponent } from '@siemens/element-ng/navbar';
@@ -45,8 +38,7 @@ describe('SiNavbarItemComponent', () => {
             header: signal({ closeMobileMenus: NEVER }),
             navItemCount: signal(0)
           }
-        },
-        provideZonelessChangeDetection()
+        }
       ]
     })
   );

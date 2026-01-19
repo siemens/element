@@ -4,13 +4,7 @@
  */
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  provideZonelessChangeDetection,
-  signal,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -58,9 +52,6 @@ describe('SiDateRangeComponent', () => {
     element.querySelector<HTMLElement>('[aria-label="Open calendar"]')!;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
     fixture = TestBed.createComponent(WrapperComponent);
     component = fixture.componentInstance.siDateRangeComponent();
     element = fixture.nativeElement;
@@ -280,9 +271,6 @@ describe('SiDateRangeComponent within form', () => {
     element.querySelector<HTMLElement>('[aria-label="Open calendar"]')!;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
     fixture = TestBed.createComponent(FormWrapperComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;

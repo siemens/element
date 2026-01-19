@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, provideZonelessChangeDetection, SimpleChange, viewChild } from '@angular/core';
+import { Component, SimpleChange, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { SunburstSeriesOption } from '@siemens/charts-ng/common';
 
@@ -27,13 +27,6 @@ class TestHostComponent {
 }
 
 describe('SiChartSunburstComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
-  });
-
   const getOption = (component: SiChartSunburstComponent): any =>
     component.chart.getOption() as any;
 

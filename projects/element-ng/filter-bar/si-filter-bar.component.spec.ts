@@ -2,13 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  provideZonelessChangeDetection,
-  signal,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Filter, SiFilterBarComponent } from './index';
@@ -49,13 +43,6 @@ describe('SiFilterBarComponent', () => {
 
   const removeButtons = (): HTMLElement[] =>
     Array.from(element.querySelectorAll<HTMLElement>('[aria-label="Remove"]'));
-
-  beforeEach(() =>
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents()
-  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);

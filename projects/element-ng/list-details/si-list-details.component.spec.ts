@@ -8,7 +8,6 @@ import {
   Component,
   DebugElement,
   inject,
-  provideZonelessChangeDetection,
   ViewChild
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -168,8 +167,7 @@ describe('ListDetailsComponent', () => {
           {
             provide: ResizeObserverService,
             useValue: resizeSpy
-          },
-          provideZonelessChangeDetection()
+          }
         ]
       }).compileComponents();
 
@@ -458,8 +456,7 @@ describe('ListDetailsComponent', () => {
                 }
               ]
             }
-          ]),
-          provideZonelessChangeDetection()
+          ])
         ]
       });
     });

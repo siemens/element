@@ -7,8 +7,7 @@ import {
   ChangeDetectorRef,
   Component,
   inject,
-  Injectable,
-  provideZonelessChangeDetection
+  Injectable
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { injectSiTranslateService, t } from '@siemens/element-translate-ng/translate';
@@ -89,8 +88,7 @@ describe('SiTranslatePipe', () => {
       TestBed.configureTestingModule({
         imports: [TestComponent],
         providers: [
-          provideMockTranslateServiceBuilder(injector => injector.get(SiAsyncTranslateService)),
-          provideZonelessChangeDetection()
+          provideMockTranslateServiceBuilder(injector => injector.get(SiAsyncTranslateService))
         ]
       }).compileComponents();
     });
@@ -143,8 +141,7 @@ describe('SiTranslatePipe', () => {
                 translate: (key: string, params: Record<string, any>) =>
                   `translated=>${key}-${JSON.stringify(params)}`
               }) as SiTranslateService
-          ),
-          provideZonelessChangeDetection()
+          )
         ]
       }).compileComponents();
     });
@@ -177,13 +174,6 @@ describe('SiTranslatePipe', () => {
     let fixture: ComponentFixture<TestComponent>;
     let component: TestComponent;
     let nativeElement: HTMLElement;
-
-    beforeEach(() => {
-      TestBed.configureTestingModule({
-        imports: [TestComponent],
-        providers: [provideZonelessChangeDetection()]
-      }).compileComponents();
-    });
 
     beforeEach(() => {
       fixture = TestBed.createComponent(TestComponent);

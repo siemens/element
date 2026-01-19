@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, provideZonelessChangeDetection, SimpleChange, viewChild } from '@angular/core';
+import { Component, SimpleChange, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { SankeySeriesOption } from '@siemens/charts-ng/common';
 
@@ -26,13 +26,6 @@ class TestHostComponent {
   subTitle?: string;
 }
 describe('SiChartSankeyComponent', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
-  });
-
   const getOption = (component: SiChartSankeyComponent): any => component.chart.getOption() as any;
 
   const createChartWithTestData = async (): Promise<any> => {

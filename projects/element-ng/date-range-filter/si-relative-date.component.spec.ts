@@ -2,12 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  provideZonelessChangeDetection,
-  signal
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { t } from '@siemens/element-translate-ng/translate';
 
@@ -50,8 +45,7 @@ describe('SiRelativeDateComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [SiRelativeDateComponent, TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
+      imports: [SiRelativeDateComponent, TestHostComponent]
     })
   );
 

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { CdkPortal, PortalModule } from '@angular/cdk/portal';
-import { Component, provideZonelessChangeDetection, viewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { SiSidePanelService } from './si-side-panel.service';
@@ -25,7 +25,7 @@ describe('SiSidePanelService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [PortalModule, MockComponent],
-      providers: [SiSidePanelService, provideZonelessChangeDetection()]
+      providers: [SiSidePanelService]
     }).compileComponents();
   });
 

@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, provideZonelessChangeDetection } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiSkipLinkTargetDirective } from './si-skip-link-target.directive';
@@ -20,10 +20,6 @@ describe('SkipLinksComponent', () => {
   let fixture: ComponentFixture<TestHostComponent>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
-    });
     fixture = TestBed.createComponent(TestHostComponent);
     fixture.detectChanges();
   });

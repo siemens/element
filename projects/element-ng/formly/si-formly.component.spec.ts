@@ -2,12 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  provideZonelessChangeDetection,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormGroup, FormRecord, ReactiveFormsModule } from '@angular/forms';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
@@ -61,8 +56,7 @@ describe('ElementFormComponent', () => {
               translateAsync: (key: string, params: Record<string, any>) =>
                 of(`translated=>${key}-${JSON.stringify(params)}`)
             }) as SiTranslateService
-        ),
-        provideZonelessChangeDetection()
+        )
       ]
     }).compileComponents();
   });

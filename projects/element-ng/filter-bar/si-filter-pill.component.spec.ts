@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Filter } from './filter';
@@ -27,8 +27,7 @@ describe('SiFilterPillComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [SiFilterPillComponent, TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
+      imports: [SiFilterPillComponent, TestHostComponent]
     })
   );
 

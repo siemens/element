@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MenuItem } from '@siemens/element-ng/menu';
 
@@ -42,13 +42,6 @@ describe('SiElectrontitlebarComponent', () => {
     element.querySelector<HTMLButtonElement>('[aria-label="Forward"]')!;
   const backButton = (): HTMLButtonElement =>
     element.querySelector<HTMLButtonElement>('[aria-label="Back"]')!;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
-  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);

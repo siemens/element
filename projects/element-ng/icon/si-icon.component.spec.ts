@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, provideZonelessChangeDetection, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiThemeService } from '@siemens/element-ng/theme';
@@ -36,10 +36,7 @@ describe('SiSvgIconComponent', () => {
     describe('with enabled svg icons', () => {
       beforeEach(async () => {
         TestBed.configureTestingModule({
-          providers: [
-            provideIconConfig({ disableSvgIcons: false }),
-            provideZonelessChangeDetection()
-          ]
+          providers: [provideIconConfig({ disableSvgIcons: false })]
         });
         fixture = TestBed.createComponent(TestHostComponent);
         component = fixture.componentInstance;
@@ -108,10 +105,7 @@ describe('SiSvgIconComponent', () => {
     });
 
     describe('with disabled svg icons', () => {
-      beforeEach(async () => {
-        TestBed.configureTestingModule({
-          providers: [provideZonelessChangeDetection()]
-        }).compileComponents();
+      beforeEach(() => {
         fixture = TestBed.createComponent(TestHostComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -168,9 +162,6 @@ describe('SiSvgIconComponent', () => {
     let component: TestHostComponent;
     let iconService: IconService;
     beforeEach(() => {
-      TestBed.configureTestingModule({
-        providers: [provideZonelessChangeDetection()]
-      }).compileComponents();
       fixture = TestBed.createComponent(TestHostComponent);
       component = fixture.componentInstance;
       iconService = TestBed.inject(IconService);

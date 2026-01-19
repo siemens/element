@@ -4,7 +4,7 @@
  */
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, provideZonelessChangeDetection, viewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs';
 
@@ -52,13 +52,6 @@ describe('SiHeaderDropdown', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let loader: HarnessLoader;
   let trigger1Harness: SiHeaderDropdownTriggerHarness;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
-    });
-  });
 
   beforeEach(async () => {
     fixture = TestBed.createComponent(TestHostComponent);

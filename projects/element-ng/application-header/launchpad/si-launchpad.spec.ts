@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, provideZonelessChangeDetection } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiApplicationHeaderComponent } from '../si-application-header.component';
@@ -33,10 +33,7 @@ describe('SiLaunchpad', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [TestHostComponent],
-      providers: [
-        { provide: SiApplicationHeaderComponent, useValue: {} },
-        provideZonelessChangeDetection()
-      ]
+      providers: [{ provide: SiApplicationHeaderComponent, useValue: {} }]
     }).compileComponents();
   });
 
