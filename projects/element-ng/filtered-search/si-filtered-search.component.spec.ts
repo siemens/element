@@ -1519,8 +1519,8 @@ describe('SiFilteredSearchComponent', () => {
     ]);
     component.searchCriteria.set({
       criteria: [
-        { name: 'company', label: 'Company', options: ['Foo', 'Bar'] },
-        { name: 'Location', label: 'Location', options: ['Munich', 'Zug'] }
+        { name: 'company', value: ['Foo', 'Bar'] },
+        { name: 'Location', value: ['Munich', 'Zug'] }
       ],
       value: ''
     });
@@ -1732,7 +1732,7 @@ describe('SiFilteredSearchComponent', () => {
         }
       ]);
       component.searchCriteria.set({
-        criteria: [{ name: 'highLimit', label: 'High Limit [°C]', value: '123', operator: '>' }],
+        criteria: [{ name: 'highLimit', value: '123', operator: '>' }],
         value: ''
       });
 
@@ -1782,7 +1782,7 @@ describe('SiFilteredSearchComponent', () => {
         }
       ]);
       component.searchCriteria.set({
-        criteria: [{ name: 'highLimit', label: 'High Limit [°C]', value: '123', operator: '>' }],
+        criteria: [{ name: 'highLimit', value: '123', operator: '>' }],
         value: ''
       });
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);

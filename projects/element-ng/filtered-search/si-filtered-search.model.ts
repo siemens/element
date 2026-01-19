@@ -77,13 +77,6 @@ export interface CriterionDefinition {
 }
 
 /**
- * @deprecated Use one the more specific types instead:
- * - {@link CriterionValue} for the output value of the FilteredSearch, containing the user input.
- * - {@link CriterionDefinition} for the definition of criteria so the [criteria] input of the {@link SiFilteredSearchComponent}.
- */
-export type Criterion = CriterionValue & CriterionDefinition;
-
-/**
  * Type for options
  */
 export type OptionType = string | OptionCriterion;
@@ -121,7 +114,7 @@ export interface SearchCriteria {
    * The selected criteria of the filtered search. Each criteria has a name
    * and a value.
    */
-  criteria: (CriterionValue & Criterion)[];
+  criteria: CriterionValue[];
   /**
    * Additional unstructured free text, which the user entered in the search.
    */
