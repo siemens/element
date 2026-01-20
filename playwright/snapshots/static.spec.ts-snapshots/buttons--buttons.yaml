@@ -49,10 +49,10 @@
 - heading "Icon button sizing" [level=4]
 - button "default icon button"
 - button "default circle button"
+- button "default icon button"
+- button "default circle button"
 - button "small icon button"
 - button "small circle button"
-- button "extra small icon button"
-- button "extra small circle button"
 - heading "Button links" [level=4]
 - link "Primary Link":
   - /url: "#"

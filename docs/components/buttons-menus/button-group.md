@@ -88,7 +88,7 @@ The default height size is `32px`, matching the default button height.
 
 A large size at `40px` is also available for layouts that require increased prominence or touch-friendly targets.
 
-A `28px` small size supports dense, desktop-focused interfaces.
+A `24px` small size supports dense, desktop-focused interfaces.
 Avoid using it in touch contexts (mobile or tablet) where larger tap areas are required.
 
 ### Responsive behavior

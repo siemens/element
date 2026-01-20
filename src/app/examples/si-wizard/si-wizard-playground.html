@@ -49,14 +49,14 @@
             <div class="d-flex align-items-center">
               <button
                 type="button"
-                class="btn btn-circle btn-xs btn-tertiary icon element-left-2 flip-rtl align-self-center"
+                class="btn btn-circle btn-sm btn-tertiary icon element-left-2 flip-rtl align-self-center"
                 aria-label="Previous step"
                 (click)="wizard().back()"
               ></button>
               <span class="px-2">{{ wizard().index + 1 }} / {{ wizard().stepCount }}</span>
               <button
                 type="button"
-                class="btn btn-circle btn-xs btn-tertiary icon element-right-2 flip-rtl align-self-center"
+                class="btn btn-circle btn-sm btn-tertiary icon element-right-2 flip-rtl align-self-center"
                 aria-label="Next step"
                 [disabled]="!canNext()"
                 (click)="wizard().next()"

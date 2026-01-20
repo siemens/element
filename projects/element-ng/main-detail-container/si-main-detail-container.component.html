@@ -91,11 +91,7 @@
   >
     <div class="detail-heading-actions d-flex align-items-center">
       @if (!this.hasLargeSize && !this.hideBackButton()) {
-        <button
-          type="button"
-          class="btn btn-circle btn-sm btn-secondary"
-          (click)="detailsBackClicked()"
-        >
+        <button type="button" class="btn btn-circle btn-secondary" (click)="detailsBackClicked()">
           <si-icon [icon]="icons.elementBack" />
           <span class="visually-hidden">{{ detailsBackButtonText() | translate }}</span>
         </button>

@@ -8,18 +8,19 @@
 
 @use 'sass:map';
 
-$btn-circle-font-size-default: 32px !default;
-$btn-circle-font-size-sm: 24px !default;
-$btn-circle-size-default: 40px !default;
-$btn-circle-size-sm: 32px !default;
-$btn-circle-size-xs: 24px !default;
+$btn-icon-font-size-default: 24px !default;
+$btn-icon-font-size-lg: 32px !default;
+$btn-icon-font-size-sm: 24px !default;
+$btn-icon-size-default: 32px !default;
+$btn-icon-size-lg: 40px !default;
+$btn-icon-size-sm: 24px !default;
 
 // there are some non .btn buttons used in element
 button {
   color: semantic-tokens.$element-text-primary;
 }
 
-@mixin button-circle-size($btn-size, $font-size) {
+@mixin button-icon-size($btn-size, $font-size) {
   inline-size: $btn-size;
   block-size: $btn-size;
   font-size: $font-size;
@@ -170,17 +171,16 @@ button {
 
 .btn-circle,
 .btn-icon {
-  &,
+  & {
+    @include button-icon-size($btn-icon-size-default, $btn-icon-font-size-default);
+  }
+
   &.btn-lg {
-    @include button-circle-size($btn-circle-size-default, $btn-circle-font-size-default);
+    @include button-icon-size($btn-icon-size-lg, $btn-icon-font-size-lg);
   }
 
   &.btn-sm {
-    @include button-circle-size($btn-circle-size-sm, $btn-circle-font-size-sm);
-  }
-
-  &.btn-xs {
-    @include button-circle-size($btn-circle-size-xs, $btn-circle-font-size-sm);
+    @include button-icon-size($btn-icon-size-sm, $btn-icon-font-size-sm);
   }
 
   .icon {
@@ -210,12 +210,12 @@ button {
 
 .btn-sm {
   font-size: bootstrap-variables.$btn-font-size-sm;
-  line-height: 1;
+  line-height: map.get(spacers.$spacers, 4);
 }
 
 // this is for compatibility so that old markup looks ok-ish
 .btn-close {
-  @include button-circle-size($btn-circle-size-sm, $btn-circle-font-size-sm);
+  @include button-icon-size($btn-icon-size-default, $btn-icon-font-size-default);
 
   font-weight: typography.$si-font-weight-normal;
 

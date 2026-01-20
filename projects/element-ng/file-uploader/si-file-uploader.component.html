@@ -57,7 +57,7 @@
         @if (file.status === 'error') {
           <button
             type="button"
-            class="btn btn-circle btn-sm btn-tertiary me-4"
+            class="btn btn-circle btn-tertiary me-4"
             [disabled]="!uploadEnabled"
             [title]="uploadButtonText() | translate"
             [attr.aria-label]="uploadButtonText() | translate"
@@ -69,7 +69,7 @@
         @if (file.status === 'added' || file.status === 'error' || file.status === 'invalid') {
           <button
             type="button"
-            class="btn btn-circle btn-sm btn-ghost"
+            class="btn btn-circle btn-ghost"
             [title]="removeButtonText() | translate"
             [attr.aria-label]="removeButtonText() | translate"
             (click)="removeFile($index)"
@@ -80,7 +80,7 @@
         @if (file.status === 'uploading' || file.status === 'queued') {
           <button
             type="button"
-            class="btn btn-circle btn-sm btn-tertiary"
+            class="btn btn-circle btn-tertiary"
             [title]="cancelButtonText() | translate"
             [attr.aria-label]="cancelButtonText() | translate"
             (click)="cancelUpload(file)"

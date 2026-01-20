@@ -8,9 +8,7 @@
           type="button"
           class="btn ms-auto"
           [class]="
-            showEditButtonLabelDesktop
-              ? 'btn-secondary'
-              : 'btn-circle btn-sm btn-tertiary element-edit'
+            showEditButtonLabelDesktop ? 'btn-secondary' : 'btn-circle btn-tertiary element-edit'
           "
           [attr.aria-label]="labelEdit | translate"
           [attr.title]="!showEditButtonLabelDesktop ? (labelEdit | translate) : undefined"
