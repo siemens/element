@@ -76,6 +76,10 @@ $btn-size-sm: 24px !default;
     &.btn-lg {
       inline-size: $btn-size-lg;
     }
+
+    &.btn-sm {
+      inline-size: $btn-size-sm;
+    }
   }
 
   // Dropdown toggle styling for split buttons
