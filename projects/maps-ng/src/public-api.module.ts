@@ -10,5 +10,3 @@ import { SiMapModule } from './components/si-map/index';
   exports: [SiMapModule]
 })
 export class SiMapsNgModule {}
-
-export { SiMapsNgModule as SimplMapsNgModule };

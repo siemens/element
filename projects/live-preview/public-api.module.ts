@@ -35,5 +35,3 @@ export class SiLivePreviewModule {
     };
   }
 }
-
-export { SiLivePreviewModule as SimplLivePreviewModule };

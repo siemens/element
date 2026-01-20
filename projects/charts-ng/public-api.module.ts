@@ -44,5 +44,3 @@ import { SiChartSunburstComponent } from '@siemens/charts-ng/sunburst';
   ]
 })
 export class SiChartsNgModule {}
-
-export { SiChartsNgModule as SimplChartsNgModule };

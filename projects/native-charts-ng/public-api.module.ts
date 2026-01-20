@@ -10,5 +10,3 @@ import { SiNChartGaugeComponent } from '@siemens/native-charts-ng/gauge';
   exports: [SiNChartGaugeComponent]
 })
 export class SiNativeChartsNgModule {}
-
-export { SiNativeChartsNgModule as SimplNativeChartsNgModule };
