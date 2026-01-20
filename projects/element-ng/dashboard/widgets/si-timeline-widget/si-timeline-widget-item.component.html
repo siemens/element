@@ -29,7 +29,6 @@
             class="d-flex btn"
             [class]="action.customClass ?? 'btn-tertiary'"
             [class.btn-circle]="action.iconOnly"
-            [class.btn-sm]="action.iconOnly"
             (click)="action.action(action)"
           >
             @if (action.icon) {
@@ -53,7 +52,6 @@
             [replaceUrl]="action.extras?.replaceUrl"
             [attr.aria-label]="action.label | translate"
             [class.btn-circle]="action.iconOnly"
-            [class.btn-sm]="action.iconOnly"
           >
             @if (action.icon) {
               <si-icon class="icon" [icon]="action.icon" />
@@ -69,7 +67,6 @@
             [target]="action.target"
             [attr.aria-label]="action.label | translate"
             [class.btn-circle]="action.iconOnly"
-            [class.btn-sm]="action.iconOnly"
           >
             @if (action.icon) {
               <si-icon class="icon" [icon]="action.icon" />
@@ -81,7 +78,7 @@
         } @else if (action.type === 'menu') {
           <button
             type="button"
-            class="btn btn-circle btn-sm btn-tertiary element-options-vertical"
+            class="btn btn-circle btn-tertiary element-options-vertical"
             [attr.aria-label]="ariaLabelDropdown | translate"
             [cdkMenuTriggerFor]="actionMenu"
           ></button>

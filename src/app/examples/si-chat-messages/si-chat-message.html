@@ -8,7 +8,7 @@
     @for (action of actions; track $index) {
       <button
         type="button"
-        class="btn btn-ghost btn-circle btn-sm"
+        class="btn btn-ghost btn-circle"
         siChatMessageAction
         [disabled]="action.disabled"
         [attr.aria-label]="action.label | translate"
@@ -19,7 +19,7 @@
     }
     <button
       type="button"
-      class="btn btn-ghost btn-circle btn-sm"
+      class="btn btn-ghost btn-circle"
       siChatMessageAction
       [cdkMenuTriggerFor]="secondaryActionsMenu"
       [attr.aria-label]="secondaryActionsLabel | translate"
@@ -40,7 +40,7 @@
       @for (action of actions; track $index) {
         <button
           type="button"
-          class="btn btn-ghost btn-circle btn-sm"
+          class="btn btn-ghost btn-circle"
           siChatMessageAction
           [disabled]="action.disabled"
           [attr.aria-label]="action.label | translate"

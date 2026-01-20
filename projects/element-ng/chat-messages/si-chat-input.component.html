@@ -50,7 +50,7 @@
 
         <button
           type="button"
-          class="btn btn-ghost btn-circle btn-sm"
+          class="btn btn-ghost btn-circle"
           [attr.aria-label]="attachFileLabel() | translate"
           [disabled]="disabled()"
           (click)="fileInput.click()"
@@ -64,7 +64,7 @@
           @for (action of actions(); track $index) {
             <button
               type="button"
-              class="btn btn-ghost btn-circle btn-sm"
+              class="btn btn-ghost btn-circle"
               [disabled]="action.disabled"
               [attr.aria-label]="action.label | translate"
               (click)="action.action(actionParam(), action)"
@@ -76,7 +76,7 @@
           @if (secondaryActions().length > 0) {
             <button
               type="button"
-              class="btn btn-ghost btn-circle btn-sm"
+              class="btn btn-ghost btn-circle"
               [cdkMenuTriggerFor]="secondaryActionsMenu"
               [attr.aria-label]="secondaryActionsLabel() | translate"
               [attr.title]="secondaryActionsLabel() | translate"
@@ -97,7 +97,7 @@
 
     <button
       type="button"
-      class="btn btn-ghost btn-circle btn-sm"
+      class="btn btn-ghost btn-circle"
       [disabled]="buttonDisabled()"
       [attr.aria-label]="buttonLabel() | translate"
       (click)="onButtonClick()"

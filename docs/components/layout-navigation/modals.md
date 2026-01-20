@@ -79,7 +79,7 @@ import { viewChild } from '@angular/core';
         <h4 class="modal-title">Modal</h4>
         <button
           type="button"
-          class="btn btn-circle btn-sm btn-ghost element-cancel"
+          class="btn btn-circle btn-ghost element-cancel"
           aria-label="Close modal"
           (click)="modalRef.hide('cancel')"
         ></button>
