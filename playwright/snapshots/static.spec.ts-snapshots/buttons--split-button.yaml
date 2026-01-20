@@ -1,8 +1,8 @@
 - group "Split button primary":
-  - button " Button"
+  - button "Button"
   - button "Dropdown toggle"
 - group "Split button secondary":
-  - button " Button"
+  - button "Button"
   - button "Dropdown toggle"
 - group "Split button primary label only":
   - button "Button"
