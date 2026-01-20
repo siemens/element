@@ -36,4 +36,7 @@ export class SiLivePreviewModule {
   }
 }
 
+/**
+ * @deprecated Use {@link SiLivePreviewModule} instead. The `Simpl` prefix is deprecated and will be removed in v51.
+ */
 export { SiLivePreviewModule as SimplLivePreviewModule };

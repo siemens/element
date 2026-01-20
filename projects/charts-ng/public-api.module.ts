@@ -45,4 +45,7 @@ import { SiChartSunburstComponent } from '@siemens/charts-ng/sunburst';
 })
 export class SiChartsNgModule {}
 
+/**
+ * @deprecated Use {@link SiChartsNgModule} instead. The `Simpl` prefix is deprecated and will be removed in v51.
+ */
 export { SiChartsNgModule as SimplChartsNgModule };

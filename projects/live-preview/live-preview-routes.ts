@@ -57,4 +57,7 @@ export const livePreviewRoutes: Routes = [
 })
 export class SiLivePreviewRoutingModule {}
 
+/**
+ * @deprecated Use {@link SiLivePreviewRoutingModule} instead. The `Simpl` prefix is deprecated and will be removed in v51.
+ */
 export { SiLivePreviewRoutingModule as SimplLivePreviewRoutingModule };
