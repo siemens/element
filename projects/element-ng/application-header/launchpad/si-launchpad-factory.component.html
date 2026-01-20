@@ -59,6 +59,7 @@
                     [preserveFragment]="app.extras?.preserveFragment"
                     [skipLocationChange]="app.extras?.skipLocationChange"
                     [replaceUrl]="app.extras?.replaceUrl"
+                    (keydown)="handleAppsNavigation($event, $event.currentTarget)"
                     (favoriteChange)="toggleFavorite(app, $event)"
                   >
                     <span app-name>{{ app.name | translate }}</span>
@@ -77,6 +78,7 @@
                     [external]="app.external"
                     [iconUrl]="app.iconUrl"
                     [iconClass]="app.iconClass"
+                    (keydown)="handleAppsNavigation($event, $event.currentTarget)"
                     (favoriteChange)="toggleFavorite(app, $event)"
                   >
                     <span app-name>{{ app.name | translate }}</span>

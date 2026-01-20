@@ -13,6 +13,7 @@ import {
   output
 } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
+import { correctKeyRTL } from '@siemens/element-ng/common';
 import { addIcons, elementCancel, elementDown2, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLinkModule } from '@siemens/element-ng/link';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -139,6 +140,10 @@ export class SiLaunchpadFactoryComponent {
   protected readonly activatedRoute = inject(ActivatedRoute, { optional: true });
   private header = inject(SiApplicationHeaderComponent);
 
+  // Navigation constants for keyboard arrow navigation
+  private readonly rowTolerance = 10;
+  private readonly leftTolerance = 20;
+
   protected closeLaunchpad(): void {
     this.header.closeLaunchpad();
   }
@@ -153,5 +158,120 @@ export class SiLaunchpadFactoryComponent {
 
   protected isCategories(items: App[] | AppCategory[]): items is AppCategory[] {
     return items.some(item => 'apps' in item);
+  }
+
+  protected handleAppsNavigation(event: KeyboardEvent, element: EventTarget | null): void {
+    const correctedKey = correctKeyRTL(event.key);
+
+    if (
+      !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(correctedKey) ||
+      !element ||
+      !(element instanceof HTMLElement)
+    ) {
+      return;
+    }
+
+    const appContainer = element.closest('.d-flex');
+    if (!appContainer) return;
+
+    const enabledApps = Array.from(
+      appContainer.querySelectorAll(':scope > a[si-launchpad-app]')
+    ) as HTMLElement[];
+
+    const currentIndex = enabledApps.indexOf(element);
+    if (currentIndex === -1) return;
+
+    let targetIndex: number;
+
+    if (correctedKey === 'ArrowLeft' || correctedKey === 'ArrowRight') {
+      // Horizontal navigation within the same row
+      const direction = correctedKey === 'ArrowLeft' ? -1 : 1;
+      targetIndex = (currentIndex + direction + enabledApps.length) % enabledApps.length;
+    } else {
+      // Vertical navigation between rows
+      targetIndex = this.getVerticalTargetIndex(
+        enabledApps,
+        currentIndex,
+        correctedKey === 'ArrowUp'
+      );
+    }
+
+    enabledApps[targetIndex]?.focus();
+    event.preventDefault();
+  }
+
+  private getVerticalTargetIndex(apps: HTMLElement[], currentIndex: number, isUp: boolean): number {
+    // Cache all bounding rects to avoid multiple expensive DOM calls
+    const appRects = apps.map(app => ({
+      element: app,
+      rect: app.getBoundingClientRect()
+    }));
+
+    const currentRect = appRects[currentIndex].rect;
+
+    // Check if layout is single column (mobile/narrow screen)
+    const alignedApps = appRects.filter(
+      ({ rect }) => Math.abs(rect.left - currentRect.left) <= this.leftTolerance
+    );
+
+    // Single column: use sequential navigation
+    if (alignedApps.length >= apps.length) {
+      const direction = isUp ? -1 : 1;
+      const targetIndex = currentIndex + direction;
+
+      return targetIndex < 0 ? apps.length - 1 : targetIndex >= apps.length ? 0 : targetIndex;
+    }
+
+    // Grid layout: use spatial navigation
+    const currentRowKey = Math.round(currentRect.top / this.rowTolerance) * this.rowTolerance;
+
+    // Group apps by rows (excluding current app for target selection)
+    const rowGroups = new Map<number, typeof appRects>();
+    let hasMultipleRows = false;
+
+    appRects.forEach((appRect, index) => {
+      const rowKey = Math.round(appRect.rect.top / this.rowTolerance) * this.rowTolerance;
+
+      if (rowKey !== currentRowKey) {
+        hasMultipleRows = true;
+      }
+
+      if (index !== currentIndex) {
+        if (!rowGroups.has(rowKey)) {
+          rowGroups.set(rowKey, []);
+        }
+        rowGroups.get(rowKey)!.push(appRect);
+      }
+    });
+
+    // Single row: no vertical movement
+    if (!hasMultipleRows) {
+      return currentIndex;
+    }
+
+    // Find target row and closest app
+    const sortedRowKeys = Array.from(rowGroups.keys()).sort((a, b) => a - b);
+    const currentRowIndex = sortedRowKeys.indexOf(currentRowKey);
+
+    const targetRowKey = isUp
+      ? currentRowIndex > 0
+        ? sortedRowKeys[currentRowIndex - 1]
+        : sortedRowKeys[sortedRowKeys.length - 1]
+      : currentRowIndex < sortedRowKeys.length - 1
+        ? sortedRowKeys[currentRowIndex + 1]
+        : sortedRowKeys[0];
+
+    const targetRowApps = rowGroups.get(targetRowKey) ?? [];
+
+    if (targetRowApps.length === 0) return currentIndex;
+
+    // Find closest app horizontally in target row
+    const closestApp = targetRowApps.reduce((closest, app) =>
+      Math.abs(app.rect.left - currentRect.left) < Math.abs(closest.rect.left - currentRect.left)
+        ? app
+        : closest
+    );
+
+    return apps.indexOf(closestApp.element);
   }
 }
