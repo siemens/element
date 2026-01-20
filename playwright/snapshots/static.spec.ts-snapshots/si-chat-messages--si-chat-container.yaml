@@ -25,6 +25,5 @@
 - textbox "Chat message input":
   - /placeholder: Enter a command, question or topic…
 - button "Attach file"
-- button "Text formatting"
-- button "Message templates"
+- button "Clear messages"
 - button "Send"
