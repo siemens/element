@@ -57,7 +57,7 @@
 }
 
 .fullscreen-button {
-  display: var(--fullscreen-button-display);
+  display: var(--fullscreen-button-display, inline-flex);
 }
 
 .collapse-toggle {
