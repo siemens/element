@@ -109,4 +109,7 @@ export interface SiSeriesOption {
   visible?: boolean;
 }
 
+/**
+ * @deprecated Use {@link SiSeriesOption} instead. The `Simpl` prefix is deprecated and will be removed in v51.
+ */
 export type { SiSeriesOption as SimplSeriesOption };
