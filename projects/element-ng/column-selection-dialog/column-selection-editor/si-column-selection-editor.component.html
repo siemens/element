@@ -26,7 +26,7 @@
   <div class="d-flex align-items-center flex-shrink-0">
     @if (columnVisibilityConfigurable()) {
       <span
-        class="btn btn-circle btn-sm btn-tertiary ms-4"
+        class="btn btn-circle btn-tertiary ms-4"
         [class.text-primary]="!column().disabled"
         [class.disabled]="column().disabled"
         (click)="toggleVisibility()"
@@ -36,7 +36,7 @@
     }
     <span
       cdkDragHandle
-      class="btn btn-circle btn-sm btn-tertiary ms-4"
+      class="btn btn-circle btn-tertiary ms-4"
       [class.disabled]="column().disabled"
       [class.pe-none]="!column().draggable"
     >

@@ -28,7 +28,7 @@
           @for (action of message.actions; track $index) {
             <button
               type="button"
-              class="btn btn-ghost btn-circle btn-sm"
+              class="btn btn-ghost btn-circle"
               siChatMessageAction
               [attr.aria-label]="action.label"
               (click)="action.action(message, action)"
@@ -77,7 +77,7 @@
     <h4 class="modal-title" id="sample-modal-title">{{ attachment.name }}</h4>
     <button
       type="button"
-      class="btn btn-circle btn-sm btn-ghost element-cancel"
+      class="btn btn-circle btn-ghost element-cancel"
       aria-label="Close modal"
       (click)="modalRef.hide('cancel')"
     >

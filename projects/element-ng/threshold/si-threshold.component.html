@@ -5,7 +5,7 @@
         @if (canAddRemoveSteps() && !readonly() && !readonlyConditions()) {
           <button
             type="button"
-            class="btn btn-circle btn-sm btn-ghost m-4"
+            class="btn btn-circle btn-ghost m-4"
             [attr.aria-label]="deleteAriaLabel() | translate"
             (click)="deleteStep($index)"
           >
@@ -50,7 +50,7 @@
       @if (canAddRemoveSteps() && !readonly() && !readonlyConditions()) {
         <button
           type="button"
-          class="btn btn-circle btn-sm btn-secondary m-4"
+          class="btn btn-circle btn-secondary m-4"
           [disabled]="maxSteps() && $count >= maxSteps()"
           [attr.aria-label]="addAriaLabel() | translate"
           (click)="addStep($index)"

@@ -14,7 +14,7 @@
     @if (displayMode() === 'navigate' && navigateConfig) {
       @if (navigateConfig.type === 'router-link') {
         <a
-          class="btn btn-circle btn-sm btn-ghost auto-hide"
+          class="btn btn-circle btn-ghost auto-hide"
           [class.ms-4]="collapsible()"
           [class.mx-4]="!collapsible() || service.isTemporaryOpen()"
           [routerLink]="navigateConfig.routerLink"
@@ -35,7 +35,7 @@
         >
       } @else if (navigateConfig.type === 'link') {
         <a
-          class="btn btn-circle btn-sm btn-ghost auto-hide"
+          class="btn btn-circle btn-ghost auto-hide"
           [class.ms-4]="collapsible()"
           [class.mx-4]="!collapsible()"
           [href]="navigateConfig.href"
@@ -53,7 +53,7 @@
     @if (displayMode() === 'overlay') {
       <button
         type="button"
-        class="fullscreen-button btn btn-circle btn-sm btn-ghost auto-hide"
+        class="fullscreen-button btn btn-circle btn-ghost auto-hide"
         [class.ms-4]="collapsible()"
         [class.mx-4]="!collapsible() || service.isTemporaryOpen()"
         [attr.aria-label]="
@@ -67,7 +67,7 @@
     }
     <button
       type="button"
-      class="close-button btn btn-circle btn-sm btn-ghost me-4"
+      class="close-button btn btn-circle btn-ghost me-4"
       [attr.aria-label]="closeButtonLabel() | translate"
       [tabindex]="focusable() ? '0' : '-1'"
       (click)="toggleSidePanel($event)"
@@ -77,7 +77,7 @@
     <div class="collapse-toggle">
       <button
         type="button"
-        class="side-panel-collapse-toggle btn btn-circle btn-sm btn-ghost mx-4"
+        class="side-panel-collapse-toggle btn btn-circle btn-ghost mx-4"
         [attr.aria-label]="toggleItemLabel() | translate"
         (click)="toggleSidePanel($event)"
       >

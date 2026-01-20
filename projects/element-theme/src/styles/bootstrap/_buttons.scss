@@ -8,18 +8,19 @@
 
 @use 'sass:map';
 
-$btn-circle-font-size-default: 32px !default;
-$btn-circle-font-size-sm: 24px !default;
-$btn-circle-size-default: 40px !default;
-$btn-circle-size-sm: 32px !default;
-$btn-circle-size-xs: 24px !default;
+$btn-icon-font-size-default: 24px !default;
+$btn-icon-font-size-lg: 32px !default;
+$btn-icon-font-size-sm: 24px !default;
+$btn-icon-size-default: 32px !default;
+$btn-icon-size-lg: 40px !default;
+$btn-icon-size-sm: 24px !default;
 
 // there are some non .btn buttons used in element
 button {
   color: semantic-tokens.$element-text-primary;
 }
 
-@mixin button-circle-size($btn-size, $font-size) {
+@mixin button-icon-size($btn-size, $font-size) {
   inline-size: $btn-size;
   block-size: $btn-size;
   font-size: $font-size;
@@ -63,14 +64,6 @@ button {
   .icon {
     margin-block: -#{map.get(spacers.$spacers, 2)};
     margin-inline: -#{map.get(spacers.$spacers, 2)} #{map.get(spacers.$spacers, 2)};
-  }
-
-  &.btn-icon {
-    padding-inline: calc(#{map.get(spacers.$spacers, 2)} - var(--btn-border-width, 0px));
-
-    .icon {
-      margin-inline: 0;
-    }
   }
 }
 
@@ -156,26 +149,38 @@ button {
   }
 }
 
-// Circle Buttons
+// Icon buttons with circle variant
 // --------------
-:is(.btn-circle, .btn-close) {
-  padding: 0 !important; // stylelint-disable-line declaration-no-important
-  border-radius: 50%;
+.btn:is(.btn-circle, .btn-icon, .btn-close) {
+  display: inline-flex;
+  padding: 0;
   flex-shrink: 0;
+
+  .icon {
+    margin-inline: 0;
+  }
+}
+
+.btn-icon {
+  border-radius: semantic-tokens.$element-button-radius;
 }
 
 .btn-circle {
-  &,
+  border-radius: 50%;
+}
+
+.btn-circle,
+.btn-icon {
+  & {
+    @include button-icon-size($btn-icon-size-default, $btn-icon-font-size-default);
+  }
+
   &.btn-lg {
-    @include button-circle-size($btn-circle-size-default, $btn-circle-font-size-default);
+    @include button-icon-size($btn-icon-size-lg, $btn-icon-font-size-lg);
   }
 
   &.btn-sm {
-    @include button-circle-size($btn-circle-size-sm, $btn-circle-font-size-sm);
-  }
-
-  &.btn-xs {
-    @include button-circle-size($btn-circle-size-xs, $btn-circle-font-size-sm);
+    @include button-icon-size($btn-icon-size-sm, $btn-icon-font-size-sm);
   }
 
   .icon {
@@ -185,11 +190,17 @@ button {
 }
 
 .btn-circle.btn-ghost,
+.btn-icon.btn-ghost,
 .btn-close {
   --btn-bg: transparent;
   --btn-bg-hover: #{semantic-tokens.$element-action-secondary-hover};
   --btn-color: #{semantic-tokens.$element-ui-2};
   --btn-color-hover: #{semantic-tokens.$element-ui-1};
+}
+
+.btn-close.btn-tertiary {
+  --btn-color: #{semantic-tokens.$element-action-secondary-text};
+  --btn-color-hover: #{semantic-tokens.$element-action-secondary-text-hover};
 }
 
 .btn-lg {
@@ -199,19 +210,18 @@ button {
 
 .btn-sm {
   font-size: bootstrap-variables.$btn-font-size-sm;
-  line-height: 1;
+  line-height: map.get(spacers.$spacers, 4);
 }
 
 // this is for compatibility so that old markup looks ok-ish
 .btn-close {
-  @include button-circle-size($btn-circle-size-sm, $btn-circle-font-size-sm);
+  @include button-icon-size($btn-icon-size-default, $btn-icon-font-size-default);
 
   font-weight: typography.$si-font-weight-normal;
 
   &::before {
     content: '\002715';
     font-size: 1rem;
-    margin-block-start: 2px;
   }
 
   > * {

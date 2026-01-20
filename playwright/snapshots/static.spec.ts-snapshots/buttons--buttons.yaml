@@ -4,44 +4,65 @@
 - button "Secondary"
 - button "Warning"
 - button "Danger"
-- button "Input"
 - button "Tertiary"
 - button "Warning"
 - button "Danger"
+- heading "Buttons with icons" [level=4]
 - button "Default"
 - button "Warning"
 - button "Danger"
 - button "Secondary"
-- button /\d+\.\d+\.\d+ - \d+\.\d+\.\d+/
 - button "Tertiary"
+- heading "Input buttons" [level=4]
+- button "Input"
+- button /\d+\.\d+\.\d+ - \d+\.\d+\.\d+/
+- heading "Icon buttons" [level=4]
 - button "clock"
 - button "bath"
 - button "library"
-- button "badge"
-- button "badge"
-- button "badge"
-- button "badge"
-- button "badge"
-- button "badge"
+- button "secondary badge"
+- button "secondary warning badge"
+- button "secondary danger badge"
+- button "tertiary badge"
+- button "tertiary warning badge"
+- button "tertiary danger badge"
 - button "delete"
+- button "close"
+- button "close"
+- heading "Circle buttons" [level=4]
 - button "clock"
 - button "bath"
 - button "library"
-- button "badge"
-- button "badge"
+- button "secondary badge"
+- button "secondary warning badge"
+- button "secondary danger badge"
+- button "tertiary badge"
+- button "tertiary warning badge"
+- button "tertiary danger badge"
 - button "delete"
-- button "btn-sm"
-- button "default"
-- button "btn-lg"
-- link "Go back":
+- button "close"
+- button "close"
+- heading "Button sizing" [level=4]
+- button "Large"
+- button "Default"
+- button "Small"
+- heading "Icon button sizing" [level=4]
+- button "default icon button"
+- button "default circle button"
+- button "default icon button"
+- button "default circle button"
+- button "small icon button"
+- button "small circle button"
+- heading "Button links" [level=4]
+- link "Primary Link":
   - /url: "#"
-- link "Go back":
+- link "Warning Link":
   - /url: "#"
-- link "Go back":
+- link "Danger Link":
   - /url: "#"
-- link "Go back":
+- link "Secondary Link":
   - /url: "#"
-- link "Go back":
+- link "Tertiary Link":
   - /url: "#"
-- checkbox "Disable all buttons"
+- switch "Disable all buttons"
 - text: Disable all buttons

@@ -23,7 +23,7 @@ import { environment } from 'src/environments/environment';
           </div>
           <button
             type="button"
-            class="btn btn-circle btn-sm btn-ghost me-2 align-self-center"
+            class="btn btn-circle btn-ghost me-2 align-self-center"
             aria-label="Show details"
             (click)="pointClick(point)"
           >

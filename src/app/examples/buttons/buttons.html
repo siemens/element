@@ -1,177 +1,296 @@
-<div class="p-5 bg-base-1">
-  <div class="d-flex flex-wrap align-items-center gap-4 mb-6">
-    <button type="button" class="btn btn-primary" [disabled]="disabled">Default</button>
-    <button type="button" class="btn btn-warning" [disabled]="disabled">Warning</button>
-    <button type="button" class="btn btn-danger" [disabled]="disabled">Danger</button>
-    <button type="button" class="btn btn-secondary" [disabled]="disabled">Secondary</button>
-    <button type="button" class="btn btn-secondary-warning" [disabled]="disabled"> Warning </button>
-    <button type="button" class="btn btn-secondary-danger" [disabled]="disabled">Danger</button>
-    <button type="button" class="btn btn-input" [disabled]="disabled">Input</button>
-    <button type="button" class="btn btn-tertiary" [disabled]="disabled">Tertiary</button>
-    <button type="button" class="btn btn-tertiary-warning" [disabled]="disabled"> Warning </button>
-    <button type="button" class="btn btn-tertiary-danger" [disabled]="disabled">Danger</button>
+<div class="d-flex flex-column p-5 h-100">
+  <div class="mb-6">
+    <div class="d-flex flex-wrap align-items-center gap-4 mb-6">
+      <button type="button" class="btn btn-primary" [disabled]="disabled">Default</button>
+      <button type="button" class="btn btn-warning" [disabled]="disabled">Warning</button>
+      <button type="button" class="btn btn-danger" [disabled]="disabled">Danger</button>
+      <button type="button" class="btn btn-secondary" [disabled]="disabled">Secondary</button>
+      <button type="button" class="btn btn-secondary-warning" [disabled]="disabled">
+        Warning
+      </button>
+      <button type="button" class="btn btn-secondary-danger" [disabled]="disabled">Danger</button>
+      <button type="button" class="btn btn-tertiary" [disabled]="disabled">Tertiary</button>
+      <button type="button" class="btn btn-tertiary-warning" [disabled]="disabled">
+        Warning
+      </button>
+      <button type="button" class="btn btn-tertiary-danger" [disabled]="disabled">Danger</button>
+    </div>
+
+    <h4 class="mb-4">Buttons with icons</h4>
+    <div class="d-flex flex-wrap align-items-center gap-4 mb-6">
+      <button type="button" class="btn btn-primary" [disabled]="disabled">
+        <i aria-hidden="true" class="icon element-ok-filled"></i>Default
+      </button>
+      <button type="button" class="btn btn-warning" [disabled]="disabled">
+        <i aria-hidden="true" class="icon element-alarm-filled"></i>Warning
+      </button>
+      <button type="button" class="btn btn-danger" [disabled]="disabled">
+        <i aria-hidden="true" class="icon element-delete-filled"></i>Danger
+      </button>
+      <button type="button" class="btn btn-secondary" [disabled]="disabled">
+        <i aria-hidden="true" class="icon element-upload"></i>Secondary
+      </button>
+      <button type="button" class="btn btn-tertiary" [disabled]="disabled">
+        <i aria-hidden="true" class="icon element-upload"></i>Tertiary
+      </button>
+    </div>
+
+    <h4 class="mb-4">Input buttons</h4>
+    <div class="d-flex flex-wrap align-items-center gap-4 mb-6">
+      <button type="button" class="btn btn-input" [disabled]="disabled">Input</button>
+      <button type="button" class="btn btn-input dropdown-toggle" [disabled]="disabled">
+        <i aria-hidden="true" class="icon element-calendar"></i>24.8.2023 - 31.8.2023
+        <i aria-hidden="true" class="dropdown-caret icon element-down-2"></i>
+      </button>
+    </div>
+
+    <h4 class="mb-4">Icon buttons</h4>
+    <div class="d-flex flex-wrap align-items-center gap-4 mb-6">
+      <button
+        type="button"
+        class="btn btn-icon btn-primary element-clock"
+        aria-label="clock"
+        [disabled]="disabled"
+      ></button>
+
+      <button
+        type="button"
+        class="btn btn-icon btn-warning element-bath"
+        aria-label="bath"
+        [disabled]="disabled"
+      ></button>
+
+      <button
+        type="button"
+        class="btn btn-icon btn-danger element-library"
+        aria-label="library"
+        [disabled]="disabled"
+      ></button>
+
+      <button
+        type="button"
+        class="btn btn-icon btn-secondary element-badge"
+        aria-label="secondary badge"
+        [disabled]="disabled"
+      ></button>
+
+      <button
+        type="button"
+        class="btn btn-icon btn-secondary-warning element-badge"
+        aria-label="secondary warning badge"
+        [disabled]="disabled"
+      ></button>
+
+      <button
+        type="button"
+        class="btn btn-icon btn-secondary-danger element-badge"
+        aria-label="secondary danger badge"
+        [disabled]="disabled"
+      ></button>
+
+      <button
+        type="button"
+        class="btn btn-icon btn-tertiary element-badge"
+        aria-label="tertiary badge"
+        [disabled]="disabled"
+      ></button>
+
+      <button
+        type="button"
+        class="btn btn-icon btn-tertiary-warning element-badge"
+        aria-label="tertiary warning badge"
+        [disabled]="disabled"
+      ></button>
+
+      <button
+        type="button"
+        class="btn btn-icon btn-tertiary-danger element-badge"
+        aria-label="tertiary danger badge"
+        [disabled]="disabled"
+      ></button>
+
+      <button
+        type="button"
+        class="btn btn-icon btn-ghost element-delete"
+        aria-label="delete"
+        [disabled]="disabled"
+      ></button>
+
+      <button
+        type="button"
+        class="btn btn-close btn-tertiary"
+        aria-label="close"
+        [disabled]="disabled"
+      ></button>
+
+      <button type="button" class="btn btn-close" aria-label="close" [disabled]="disabled"></button>
+    </div>
+
+    <h4 class="mb-4">Circle buttons</h4>
+    <div class="d-flex flex-wrap align-items-center gap-4 mb-6">
+      <button
+        type="button"
+        class="btn btn-circle btn-primary element-clock"
+        aria-label="clock"
+        [disabled]="disabled"
+      ></button>
+
+      <button
+        type="button"
+        class="btn btn-circle btn-warning element-bath"
+        aria-label="bath"
+        [disabled]="disabled"
+      ></button>
+
+      <button
+        type="button"
+        class="btn btn-circle btn-danger element-library"
+        aria-label="library"
+        [disabled]="disabled"
+      ></button>
+
+      <button
+        type="button"
+        class="btn btn-circle btn-secondary element-badge"
+        aria-label="secondary badge"
+        [disabled]="disabled"
+      ></button>
+
+      <button
+        type="button"
+        class="btn btn-circle btn-secondary-warning element-badge"
+        aria-label="secondary warning badge"
+        [disabled]="disabled"
+      ></button>
+
+      <button
+        type="button"
+        class="btn btn-circle btn-secondary-danger element-badge"
+        aria-label="secondary danger badge"
+        [disabled]="disabled"
+      ></button>
+
+      <button
+        type="button"
+        class="btn btn-circle btn-tertiary element-badge"
+        aria-label="tertiary badge"
+        [disabled]="disabled"
+      ></button>
+
+      <button
+        type="button"
+        class="btn btn-circle btn-tertiary-warning element-badge"
+        aria-label="tertiary warning badge"
+        [disabled]="disabled"
+      ></button>
+
+      <button
+        type="button"
+        class="btn btn-circle btn-tertiary-danger element-badge"
+        aria-label="tertiary danger badge"
+        [disabled]="disabled"
+      ></button>
+
+      <button
+        type="button"
+        class="btn btn-circle btn-ghost element-delete"
+        aria-label="delete"
+        [disabled]="disabled"
+      ></button>
+
+      <button
+        type="button"
+        class="btn btn-circle btn-close btn-tertiary"
+        aria-label="close"
+        [disabled]="disabled"
+      ></button>
+
+      <button
+        type="button"
+        class="btn btn-circle btn-close"
+        aria-label="close"
+        [disabled]="disabled"
+      ></button>
+    </div>
+
+    <h4 class="mb-4">Button sizing</h4>
+    <div class="d-flex flex-wrap align-items-center gap-4 mb-6">
+      <button type="button" class="btn btn-secondary btn-lg" [disabled]="disabled">Large</button>
+      <button type="button" class="btn btn-secondary" [disabled]="disabled">Default</button>
+      <button type="button" class="btn btn-secondary btn-sm" [disabled]="disabled">Small</button>
+    </div>
+
+    <h4 class="mb-4">Icon button sizing</h4>
+    <div class="d-flex flex-wrap align-items-center gap-4 mb-6">
+      <button
+        type="button"
+        class="btn btn-icon btn-lg btn-secondary element-minus"
+        aria-label="default icon button"
+        [disabled]="disabled"
+      ></button>
+      <button
+        type="button"
+        class="btn btn-icon btn-lg btn-circle btn-secondary element-plus"
+        aria-label="default circle button"
+        [disabled]="disabled"
+      ></button>
+      <button
+        type="button"
+        class="btn btn-icon btn-secondary element-minus"
+        aria-label="default icon button"
+        [disabled]="disabled"
+      ></button>
+      <button
+        type="button"
+        class="btn btn-icon btn-circle btn-secondary element-plus"
+        aria-label="default circle button"
+        [disabled]="disabled"
+      ></button>
+      <button
+        type="button"
+        class="btn btn-icon btn-sm btn-secondary element-minus"
+        aria-label="small icon button"
+        [disabled]="disabled"
+      ></button>
+      <button
+        type="button"
+        class="btn btn-icon btn-circle btn-sm btn-secondary element-plus"
+        aria-label="small circle button"
+        [disabled]="disabled"
+      ></button>
+    </div>
+
+    <h4 class="mb-4">Button links</h4>
+    <div class="d-flex flex-wrap align-items-center gap-4">
+      <a class="btn btn-primary" href="#">
+        <i aria-hidden="true" class="icon element-link"></i>Primary Link
+      </a>
+      <a class="btn btn-warning" href="#">
+        <i aria-hidden="true" class="icon element-link"></i>Warning Link
+      </a>
+      <a class="btn btn-danger" href="#">
+        <i aria-hidden="true" class="icon element-link"></i>Danger Link
+      </a>
+      <a class="btn btn-secondary" href="#">
+        <i aria-hidden="true" class="icon element-link"></i>Secondary Link
+      </a>
+      <a class="btn btn-tertiary" href="#">
+        <i aria-hidden="true" class="icon element-link"></i>Tertiary Link
+      </a>
+    </div>
   </div>
 
-  <div class="d-flex flex-wrap align-items-center gap-4 mb-6">
-    <button type="button" class="btn btn-primary" [disabled]="disabled">
-      <i aria-hidden="true" class="icon element-alarm-filled"></i>Default
-    </button>
-    <button type="button" class="btn btn-warning" [disabled]="disabled">
-      <i aria-hidden="true" class="icon element-alarm-filled"></i>Warning
-    </button>
-    <button type="button" class="btn btn-danger" [disabled]="disabled">
-      <i aria-hidden="true" class="icon element-delete-filled"></i>Danger
-    </button>
-    <button type="button" class="btn btn-secondary" [disabled]="disabled">
-      <i aria-hidden="true" class="icon element-upload"></i>Secondary
-    </button>
-    <button type="button" class="btn btn-input dropdown-toggle" [disabled]="disabled">
-      <i aria-hidden="true" class="icon element-calendar"></i>24.8.2023 - 31.8.2023
-      <i aria-hidden="true" class="dropdown-caret icon element-down-2"></i>
-    </button>
-    <button type="button" class="btn btn-tertiary" [disabled]="disabled">
-      <i aria-hidden="true" class="icon element-upload"></i>Tertiary
-    </button>
+  <div class="d-inline-block bg-base-1 p-5 mt-auto rounded-3 e2e-ignore">
+    <div class="form-check form-switch">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        role="switch"
+        id="backdrop-switch"
+        [checked]="disabled"
+        (change)="disabled = !disabled"
+      />
+      <label for="backdrop-switch" class="form-check-label">Disable all buttons</label>
+    </div>
   </div>
-
-  <div class="d-flex flex-wrap align-items-center gap-4 mb-6">
-    <button
-      type="button"
-      class="btn btn-circle btn-lg btn-primary element-clock"
-      aria-label="clock"
-      [disabled]="disabled"
-    ></button>
-
-    <button
-      type="button"
-      class="btn btn-circle btn-lg btn-warning element-bath"
-      aria-label="bath"
-      [disabled]="disabled"
-    ></button>
-
-    <button
-      type="button"
-      class="btn btn-circle btn-lg btn-danger element-library"
-      aria-label="library"
-      [disabled]="disabled"
-    ></button>
-
-    <button
-      type="button"
-      class="btn btn-circle btn-lg btn-secondary element-badge"
-      aria-label="badge"
-      [disabled]="disabled"
-    ></button>
-
-    <button
-      type="button"
-      class="btn btn-circle btn-lg btn-secondary-warning element-badge"
-      aria-label="badge"
-      [disabled]="disabled"
-    ></button>
-
-    <button
-      type="button"
-      class="btn btn-circle btn-lg btn-secondary-danger element-badge"
-      aria-label="badge"
-      [disabled]="disabled"
-    ></button>
-
-    <button
-      type="button"
-      class="btn btn-circle btn-lg btn-tertiary element-badge"
-      aria-label="badge"
-      [disabled]="disabled"
-    ></button>
-
-    <button
-      type="button"
-      class="btn btn-circle btn-lg btn-tertiary-warning element-badge"
-      aria-label="badge"
-      [disabled]="disabled"
-    ></button>
-
-    <button
-      type="button"
-      class="btn btn-circle btn-lg btn-tertiary-danger element-badge"
-      aria-label="badge"
-      [disabled]="disabled"
-    ></button>
-
-    <button
-      type="button"
-      class="btn btn-circle btn-lg btn-ghost element-delete"
-      aria-label="delete"
-      [disabled]="disabled"
-    ></button>
-  </div>
-
-  <div class="d-flex flex-wrap align-items-center gap-4 mb-6">
-    <button
-      type="button"
-      class="btn btn-circle btn-sm btn-primary element-clock"
-      aria-label="clock"
-      [disabled]="disabled"
-    ></button>
-
-    <button
-      type="button"
-      class="btn btn-circle btn-sm btn-warning element-bath"
-      aria-label="bath"
-      [disabled]="disabled"
-    ></button>
-
-    <button
-      type="button"
-      class="btn btn-circle btn-sm btn-danger element-library"
-      aria-label="library"
-      [disabled]="disabled"
-    ></button>
-
-    <button
-      type="button"
-      class="btn btn-circle btn-sm btn-secondary element-badge"
-      aria-label="badge"
-      [disabled]="disabled"
-    ></button>
-
-    <button
-      type="button"
-      class="btn btn-circle btn-sm btn-tertiary element-badge"
-      aria-label="badge"
-      [disabled]="disabled"
-    ></button>
-
-    <button
-      type="button"
-      class="btn btn-circle btn-sm btn-ghost element-delete"
-      aria-label="delete"
-      [disabled]="disabled"
-    ></button>
-  </div>
-
-  <div class="d-flex flex-wrap align-items-center gap-4 mb-6">
-    <button type="button" class="btn btn-secondary btn-sm" [disabled]="disabled">btn-sm</button>
-    <button type="button" class="btn btn-secondary" [disabled]="disabled">default</button>
-    <button type="button" class="btn btn-secondary btn-lg" [disabled]="disabled">btn-lg</button>
-  </div>
-
-  <div class="d-flex flex-wrap align-items-center gap-4">
-    <a class="btn btn-primary" href="#">Go back</a>
-    <a class="btn btn-warning" href="#">Go back</a>
-    <a class="btn btn-danger" href="#">Go back</a>
-    <a class="btn btn-secondary" href="#">Go back</a>
-    <a class="btn btn-tertiary" href="#">Go back</a>
-  </div>
-</div>
-
-<div class="form-check m-4 e2e-ignore">
-  <input
-    type="checkbox"
-    class="form-check-input"
-    id="disable-button"
-    [value]="disabled"
-    (change)="disabled = !disabled"
-  />
-  <label class="form-check-label" for="disable-button">Disable all buttons</label>
 </div>

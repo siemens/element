@@ -61,7 +61,7 @@
   <div class="clear-button-container">
     <button
       type="button"
-      class="btn btn-circle btn-xs btn-ghost mx-2"
+      class="btn btn-circle btn-sm btn-ghost mx-2"
       [disabled]="disabled()"
       [attr.aria-label]="clearButtonLabel() | translate"
       (click)="deleteAllCriteria($event)"
@@ -74,7 +74,7 @@
 @if (!disabled()) {
   <button
     type="button"
-    class="search-button btn btn-circle btn-xs btn-secondary focus-inside"
+    class="search-button btn btn-circle btn-sm btn-secondary focus-inside"
     [disabled]="disabled()"
     [attr.aria-label]="submitButtonLabel() | translate"
     (click)="submit()"

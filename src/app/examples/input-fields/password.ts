@@ -4,6 +4,7 @@
  */
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { SiFormItemComponent } from '@siemens/element-ng/form';
 import {
   SiPasswordStrengthComponent,
   SiPasswordStrengthDirective
@@ -14,6 +15,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
 @Component({
   selector: 'app-sample',
   imports: [
+    SiFormItemComponent,
     SiPasswordStrengthComponent,
     SiPasswordStrengthDirective,
     SiPasswordToggleComponent,

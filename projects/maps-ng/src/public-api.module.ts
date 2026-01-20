@@ -11,4 +11,7 @@ import { SiMapModule } from './components/si-map/index';
 })
 export class SiMapsNgModule {}
 
+/**
+ * @deprecated Use {@link SiMapsNgModule} instead. The `Simpl` prefix is deprecated and will be removed in v51.
+ */
 export { SiMapsNgModule as SimplMapsNgModule };
