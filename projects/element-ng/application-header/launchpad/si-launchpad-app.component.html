@@ -3,14 +3,22 @@
 } @else if (iconClass()) {
   <si-icon class="app-icon" [icon]="iconClass()!" />
 }
-<div class="si-h5 text-truncate mw-100">
-  <ng-content select="[app-name]" />
-  @if (external()) {
-    <si-icon class="icon mt-n2" [icon]="icons.elementExport" />
-  }
-</div>
-<div class="si-body text-truncate mw-100">
-  <ng-content select="[app-systemName]" />
+<div class="app-text">
+  <div class="si-h4 d-flex align-items-center mw-100">
+    <span class="text-truncate">
+      <ng-content select="[app-name]" />
+    </span>
+    @if (external()) {
+      <si-icon
+        class="icon external-icon ms-1 mt-1"
+        [icon]="icons.elementExport"
+        [attr.aria-label]="externalLinkText() | translate"
+      />
+    }
+  </div>
+  <div class="si-body text-secondary mt-2 text-truncate mw-100">
+    <ng-content select="[app-systemName]" />
+  </div>
 </div>
 @if (enableFavoriteToggle()) {
   <si-icon
