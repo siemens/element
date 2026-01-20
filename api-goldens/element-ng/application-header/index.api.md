@@ -135,15 +135,15 @@ export class SiHeaderSiemensLogoComponent extends SiHeaderLogoDirective {
 // @public (undocumented)
 export class SiLaunchpadFactoryComponent {
     readonly apps: _angular_core.InputSignal<App[] | AppCategory[]>;
-    readonly closeText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly closeText: _angular_core.InputSignal<TranslatableString>;
     readonly enableFavorites: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly favoriteAppsText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly favoriteAppsText: _angular_core.InputSignal<TranslatableString>;
     // (undocumented)
     readonly favoriteChange: _angular_core.OutputEmitterRef<FavoriteChangeEvent>;
-    readonly showLessAppsText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    readonly showMoreAppsText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    readonly subtitleText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    readonly titleText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly showLessAppsText: _angular_core.InputSignal<TranslatableString>;
+    readonly showMoreAppsText: _angular_core.InputSignal<TranslatableString>;
+    readonly subtitleText: _angular_core.InputSignal<TranslatableString | undefined>;
+    readonly titleText: _angular_core.InputSignal<TranslatableString>;
 }
 
 // (No @packageDocumentation comment for this package)
