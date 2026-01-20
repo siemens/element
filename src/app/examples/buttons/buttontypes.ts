@@ -7,10 +7,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 @Component({
   selector: 'app-sample',
   templateUrl: './buttontypes.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {
-    class: 'bg-base-1'
-  }
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   disabled = false;
