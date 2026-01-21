@@ -7,9 +7,9 @@
 import * as _angular_core from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { OnInit } from '@angular/core';
-import * as _siemens_element_translate_ng_translate_types from '@siemens/element-translate-ng/translate-types';
 import { SiFormItemControl } from '@siemens/element-ng/form';
 import { Signal } from '@angular/core';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
 export class SiPillsInputComponent implements OnInit, ControlValueAccessor, SiFormItemControl {
@@ -34,7 +34,7 @@ export class SiPillsInputComponent implements OnInit, ControlValueAccessor, SiFo
     readonly id: _angular_core.InputSignal<string>;
     // (undocumented)
     protected input(): void;
-    readonly inputElementAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate_types.TranslatableString>;
+    readonly inputElementAriaLabel: _angular_core.InputSignal<TranslatableString>;
     // (undocumented)
     protected readonly inputId: _angular_core.Signal<string>;
     // (undocumented)
@@ -53,7 +53,7 @@ export class SiPillsInputComponent implements OnInit, ControlValueAccessor, SiFo
     protected onTouched: () => void;
     // (undocumented)
     protected readonly pills: _angular_core.WritableSignal<string[]>;
-    readonly placeholder: _angular_core.InputSignal<string | undefined>;
+    readonly placeholder: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     protected remove(index: number, focus?: boolean): void;
