@@ -28,7 +28,6 @@ import {
 import { SiSplitComponent, SiSplitPartComponent } from '@siemens/element-ng/split';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 
-/** @experimental */
 @Component({
   selector: 'si-list-details',
   imports: [NgTemplateOutlet, SiSplitComponent, SiSplitPartComponent],

@@ -4,7 +4,6 @@
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-/** @experimental */
 @Component({
   selector: 'si-details-pane-footer',
   imports: [],

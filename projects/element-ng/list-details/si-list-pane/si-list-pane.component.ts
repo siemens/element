@@ -7,7 +7,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { SiListDetailsComponent } from '../si-list-details.component';
 
-/** @experimental */
 @Component({
   selector: 'si-list-pane',
   templateUrl: './si-list-pane.component.html',
