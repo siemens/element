@@ -7,19 +7,19 @@
 import * as _angular_core from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { OnInit } from '@angular/core';
-import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SiFormItemControl } from '@siemens/element-ng/form';
 import { Signal } from '@angular/core';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
 export class SiPillsInputComponent implements OnInit, ControlValueAccessor, SiFormItemControl {
     readonly disabledInput: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly errormessageId: _angular_core.InputSignal<string>;
     readonly id: _angular_core.InputSignal<string>;
-    readonly inputElementAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly inputElementAriaLabel: _angular_core.InputSignal<TranslatableString>;
     // (undocumented)
     readonly labelledby: _angular_core.InputSignal<string>;
-    readonly placeholder: _angular_core.InputSignal<string | undefined>;
+    readonly placeholder: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
 }
 
