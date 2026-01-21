@@ -70,7 +70,6 @@ export class SiIp6InputDirective
       return;
     }
 
-    // TODO: Restore cursor position
     const ipv6 = splitIpV6Sections({
       type,
       input: value,
@@ -79,5 +78,15 @@ export class SiIp6InputDirective
       cidr: this.cidr()
     });
     this.renderer.setProperty(this.inputEl, 'value', ipv6.value);
+
+    if (type === 'insert') {
+      const el = this.elementRef.nativeElement;
+      if (value?.length === pos) {
+        el.setSelectionRange(ipv6.value.length, ipv6.value.length);
+      } else {
+        const newPos = pos + ipv6.cursorDelta;
+        el.setSelectionRange(newPos, newPos);
+      }
+    }
   }
 }
