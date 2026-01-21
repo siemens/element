@@ -1,12 +1,57 @@
 @use '@siemens/element-theme/src/styles/variables';
 @use 'sass:map';
 
-:host {
-  display: flex;
-  align-items: center;
+$duration: variables.element-transition-duration(0.2s);
+%enter-transition {
+  transition: opacity $duration ease-out;
+  transition-delay: 0.2s;
+
+  @starting-style {
+    opacity: 0;
+  }
+}
+%leave-transition {
+  transition:
+    opacity $duration ease-in,
+    padding $duration ease-in;
+  opacity: 0;
+
+  @starting-style {
+    opacity: 1;
+  }
 }
 
-si-navbar-vertical-divider {
-  flex: 1;
-  margin-block: 0;
+:host {
+  block-size: 40px;
+  display: grid;
+  align-items: center;
+  grid-template-areas: 'stack';
+  transition: block-size $duration ease;
+
+  &.collapsed {
+    block-size: 13px;
+    transition: block-size $duration ease;
+
+    .content {
+      padding-block: 0;
+    }
+  }
+
+  > * {
+    // During collapse the divider and header text should overlap
+    grid-area: stack;
+  }
+}
+
+.si-h5 {
+  padding: map.get(variables.$spacers, 5);
+}
+
+.content,
+.divider {
+  @extend %enter-transition;
+}
+.content-leave,
+.divider-leave {
+  @extend %leave-transition;
 }
