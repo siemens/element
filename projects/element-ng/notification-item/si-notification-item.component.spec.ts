@@ -106,7 +106,7 @@ describe('SiNotificationItemComponent', () => {
   it('should display the quick actions', () => {
     component.quickActions = [
       {
-        type: 'action-circle-button',
+        type: 'action-icon-button',
         action: () => {},
         ariaLabel: 'Action',
         icon: 'element-plant'
