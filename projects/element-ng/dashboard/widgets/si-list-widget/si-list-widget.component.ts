@@ -3,16 +3,11 @@
  * SPDX-License-Identifier: MIT
  */
 import { booleanAttribute, Component, computed, input, model, OnChanges } from '@angular/core';
+import { elementRight2, elementSortDown, elementSortUp } from '@siemens/element-icons';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { AccentLineType } from '@siemens/element-ng/common';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
-import {
-  addIcons,
-  SiIconComponent,
-  elementRight2,
-  elementSortDown,
-  elementSortUp
-} from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 

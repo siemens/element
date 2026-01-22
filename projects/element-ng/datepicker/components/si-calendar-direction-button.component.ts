@@ -10,7 +10,8 @@ import {
   input,
   output
 } from '@angular/core';
-import { addIcons, elementLeft2, elementRight2, SiIconComponent } from '@siemens/element-ng/icon';
+import { elementLeft2, elementRight2 } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 
 export type Direction = 'left' | 'right';
 

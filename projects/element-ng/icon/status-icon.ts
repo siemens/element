@@ -3,9 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 import { InjectionToken } from '@angular/core';
-import { EntityStatusType, StatusIcon } from '@siemens/element-ng/common';
-import { t } from '@siemens/element-translate-ng/translate';
-
 import {
   elementCircleFilled,
   elementOctagonFilled,
@@ -18,7 +15,10 @@ import {
   elementStateQuestionMark,
   elementStateTick,
   elementTriangleFilled
-} from './element-icons';
+} from '@siemens/element-icons';
+import { EntityStatusType, StatusIcon } from '@siemens/element-ng/common';
+import { t } from '@siemens/element-translate-ng/translate';
+
 import { addIcons } from './si-icons';
 
 /**

@@ -20,14 +20,9 @@ import {
   viewChild,
   viewChildren
 } from '@angular/core';
+import { elementCancel, elementLeft3, elementRight3 } from '@siemens/element-icons';
 import { isRTL, WebComponentContentChildren } from '@siemens/element-ng/common';
-import {
-  addIcons,
-  elementCancel,
-  elementLeft3,
-  elementRight3,
-  SiIconComponent
-} from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { asyncScheduler, Subscription } from 'rxjs';

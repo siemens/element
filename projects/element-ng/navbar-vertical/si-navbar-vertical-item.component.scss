@@ -10,7 +10,7 @@
   background: none;
   border: 0;
   font-size: variables.$si-font-size-body;
-  padding-block: map.get(variables.$spacers, 4);
+  padding-block: map.get(variables.$spacers, 5);
   padding-inline: 0 map.get(variables.$spacers, 5);
   min-inline-size: 0;
   min-block-size: 40px;
@@ -21,11 +21,11 @@
     margin-inline-start: map.get(variables.$spacers, 5);
   }
 
-  .icon {
+  .icon-lg {
     margin-inline-start: map.get(variables.$spacers, 5);
   }
 
-  .icon + .item-title {
+  .icon-lg + .item-title {
     margin-inline-start: map.get(variables.$spacers, 4);
   }
 
@@ -116,7 +116,7 @@
   padding-inline: map.get(variables.$spacers, 5);
 
   .item-title,
-  .icon {
+  .icon-lg {
     display: none;
   }
 
@@ -137,7 +137,7 @@
       display: block;
     }
 
-    .icon {
+    .icon-lg {
       display: block;
     }
   }

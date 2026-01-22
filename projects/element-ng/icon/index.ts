@@ -8,4 +8,4 @@ export { addIcons } from './si-icons';
 export * from './si-icon.component';
 export * from './si-icon-legacy.component';
 export * from './si-status-icon.component';
-export * from './element-icons';
+export { elementCheckedImageShape } from './element-icons';

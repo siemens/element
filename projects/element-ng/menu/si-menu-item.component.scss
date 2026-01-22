@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   flex: 1;
-  min-inline-size: 24px;
+  min-inline-size: variables.$si-icon-font-size;
 }
 
 .item-title,
@@ -26,11 +26,11 @@
   }
 
   .icon {
-    margin-inline: -#{map.get(variables.$spacers, 2)};
+    margin-inline: 0;
   }
 
   .item-end {
-    margin-inline-end: -#{map.get(variables.$spacers, 2)} !important; // stylelint-disable-line declaration-no-important
+    margin-inline-end: 0 !important; // stylelint-disable-line declaration-no-important
   }
 
   .item-title {
@@ -45,7 +45,7 @@
   }
 
   .icon + .item-title {
-    padding-inline-start: map.get(variables.$spacers, 4);
+    padding-inline-start: map.get(variables.$spacers, 2);
   }
 
   .item-end .submenu {

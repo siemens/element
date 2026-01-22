@@ -36,6 +36,7 @@ import {
   ValidatorFn,
   Validators
 } from '@angular/forms';
+import { elementCalendar } from '@siemens/element-icons';
 import {
   positionBottomCenter,
   positionBottomEnd,
@@ -45,7 +46,7 @@ import {
   positionTopStart
 } from '@siemens/element-ng/common';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
-import { addIcons, elementCalendar, SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { is12HourFormat } from './date-time-helper';

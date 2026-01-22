@@ -14,12 +14,13 @@ import {
   signal,
   viewChild
 } from '@angular/core';
+import { elementCancel } from '@siemens/element-icons';
 import {
   calculateOverlayArrowPosition,
   isRTL,
   OverlayArrowPosition
 } from '@siemens/element-ng/common';
-import { addIcons, elementCancel, SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 import { Subscription } from 'rxjs';
 

@@ -4,15 +4,13 @@
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
-  addIcons,
-  element2dEditor,
+  elementAccount,
   elementAlarmFilled,
   elementAlarmTick,
   elementCancel,
-  elementUser,
-  SiIconModule,
-  SiIconComponent
-} from '@siemens/element-ng/icon';
+  elementUser
+} from '@siemens/element-icons';
+import { addIcons, SiIconModule, SiIconComponent } from '@siemens/element-ng/icon';
 
 @Component({
   selector: 'app-sample',
@@ -26,7 +24,7 @@ export class SampleComponent {
   icons = addIcons({
     elementUser,
     elementCancel,
-    element2dEditor,
+    elementAccount,
     elementAlarmFilled,
     elementAlarmTick
   });

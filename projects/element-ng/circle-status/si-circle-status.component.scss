@@ -1,7 +1,7 @@
 @use '@siemens/element-theme/src/styles/variables';
 
 $si-circle-status-size-regular: 40px;
-$si-circle-status-indicator-size-regular: 24px;
+$si-circle-status-indicator-size-regular: variables.$si-icon-font-size;
 $si-circle-status-bullet-size-regular: 10px;
 $si-circle-status-size-small: 32px;
 $si-circle-status-indicator-size-small: 16px;
@@ -61,8 +61,8 @@ $si-circle-status-bullet-size-small: 8px;
     }
 
     .indicator {
-      inset-block-start: -9px;
-      inset-inline-end: -13px;
+      inset-block-start: -7px;
+      inset-inline-end: -11px;
     }
 
     &.small {

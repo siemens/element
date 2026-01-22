@@ -13,7 +13,8 @@ import {
   output
 } from '@angular/core';
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
-import { addIcons, elementCancel, elementDown2, SiIconComponent } from '@siemens/element-ng/icon';
+import { elementCancel, elementDown2 } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLinkModule } from '@siemens/element-ng/link';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 

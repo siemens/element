@@ -14,7 +14,8 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { addIcons, elementBack, SiIconComponent } from '@siemens/element-ng/icon';
+import { elementBack } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiDetailsPaneComponent } from '../si-details-pane/si-details-pane.component';

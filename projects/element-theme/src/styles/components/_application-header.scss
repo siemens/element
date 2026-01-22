@@ -120,9 +120,7 @@
 .header-toggle {
   color: semantic-tokens.$element-text-primary;
   border: 0;
-  line-height: 0;
-  padding: map.get(spacers.$spacers, 4);
-  font-size: 32px;
+  padding: map.get(spacers.$spacers, 5);
   background-color: transparent; // remove default button style
 
   &:is(:hover, .show, :active) {
@@ -149,7 +147,7 @@
   border: 0;
   white-space: nowrap;
 
-  .icon {
+  .icon-lg {
     margin-block: -3px;
 
     ~ .item-title {

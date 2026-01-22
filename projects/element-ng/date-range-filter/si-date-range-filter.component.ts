@@ -23,6 +23,7 @@ import {
   SimpleChanges
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { elementDown2 } from '@siemens/element-icons';
 import {
   DatepickerConfig,
   DatepickerInputConfig,
@@ -32,7 +33,7 @@ import {
   SiDatepickerComponent,
   SiDatepickerDirective
 } from '@siemens/element-ng/datepicker';
-import { addIcons, elementDown2, SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';

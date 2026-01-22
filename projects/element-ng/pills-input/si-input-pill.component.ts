@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, input, output } from '@angular/core';
-import { addIcons, elementCancel, SiIconComponent } from '@siemens/element-ng/icon';
+import { elementCancel } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 
 @Component({
   selector: 'si-input-pill',

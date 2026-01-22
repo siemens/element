@@ -14,7 +14,8 @@ import {
   viewChildren
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { addIcons, elementDelete, elementPlus, SiIconComponent } from '@siemens/element-ng/icon';
+import { elementDelete, elementPlus } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
 import {
   SelectOption,

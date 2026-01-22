@@ -14,8 +14,9 @@ import {
   signal,
   viewChild
 } from '@angular/core';
+import { elementSearch } from '@siemens/element-icons';
 import { SiAutocompleteDirective, SiAutocompleteModule } from '@siemens/element-ng/autocomplete';
-import { addIcons, elementSearch, SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLoadingSpinnerComponent } from '@siemens/element-ng/loading-spinner';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 

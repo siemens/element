@@ -17,9 +17,7 @@ import {
   untracked,
   viewChild
 } from '@angular/core';
-import { WebComponentContentChildren } from '@siemens/element-ng/common';
 import {
-  addIcons,
   elementCancel,
   elementChecked,
   elementCheckedFilled,
@@ -27,9 +25,10 @@ import {
   elementNotChecked,
   elementRadioChecked,
   elementRight4,
-  elementWarningFilled,
-  SiIconComponent
-} from '@siemens/element-ng/icon';
+  elementWarningFilled
+} from '@siemens/element-icons';
+import { WebComponentContentChildren } from '@siemens/element-ng/common';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 

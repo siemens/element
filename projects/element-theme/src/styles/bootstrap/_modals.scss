@@ -1,6 +1,7 @@
 @use '../variables/spacers';
 @use '../variables/typography';
 @use '../variables/zindex';
+@use '../variables/si-vars';
 @use './functions';
 @use './mixins/backdrop';
 @use './mixins/breakpoints';
@@ -86,7 +87,7 @@
   }
 
   .icon {
-    font-size: 2rem;
+    font-size: si-vars.$si-icon-font-size-lg;
     margin-inline-end: map.get(spacers.$spacers, 4);
   }
 
