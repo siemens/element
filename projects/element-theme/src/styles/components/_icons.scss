@@ -9,6 +9,10 @@
   font-size: variables.$si-icon-font-size-small;
 }
 
+.icon-large {
+  font-size: variables.$si-icon-font-size-large;
+}
+
 .spinning {
   animation: 1.5s linear infinite spinner-border;
 }

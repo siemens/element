@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, computed, HostListener, inject, input, output, signal } from '@angular/core';
+import { elementCancel } from '@siemens/element-icons';
 import {
   addIcons,
-  elementCancel,
   SiIconComponent,
   SiStatusIconComponent,
   STATUS_ICON_CONFIG

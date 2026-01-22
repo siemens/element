@@ -4,12 +4,8 @@
  */
 import { HttpParams } from '@angular/common/http';
 import { Component, input, OnInit, output } from '@angular/core';
-import {
-  addIcons,
-  elementSortDown,
-  elementSortUp,
-  SiIconComponent
-} from '@siemens/element-ng/icon';
+import { elementSortDown, elementSortUp } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 export interface SortCriteria {

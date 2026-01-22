@@ -23,15 +23,8 @@ import {
   SimpleChanges,
   viewChild
 } from '@angular/core';
-import {
-  addIcons,
-  elementCancel,
-  elementDelete,
-  elementDocument,
-  elementRedo,
-  SiIconComponent,
-  SiStatusIconComponent
-} from '@siemens/element-ng/icon';
+import { elementCancel, elementDelete, elementDocument, elementRedo } from '@siemens/element-icons';
+import { addIcons, SiIconComponent, SiStatusIconComponent } from '@siemens/element-ng/icon';
 import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
 import { SiProgressbarComponent } from '@siemens/element-ng/progressbar';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';

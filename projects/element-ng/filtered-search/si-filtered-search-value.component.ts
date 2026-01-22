@@ -16,7 +16,8 @@ import {
   viewChild
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { addIcons, elementCancel, SiIconComponent } from '@siemens/element-ng/icon';
+import { elementCancel } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTypeaheadDirective } from '@siemens/element-ng/typeahead';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { Observable } from 'rxjs';

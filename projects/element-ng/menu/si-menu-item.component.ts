@@ -4,7 +4,8 @@
  */
 import { CdkMenuItem, CdkMenuTrigger } from '@angular/cdk/menu';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { addIcons, elementRight2, SiIconComponent } from '@siemens/element-ng/icon';
+import { elementRight2 } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 
 import { SiMenuItemBase } from './si-menu-item-base.directive';
 

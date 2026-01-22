@@ -23,8 +23,9 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
+import { elementCancel, elementSearch } from '@siemens/element-icons';
 import { BackgroundColorVariant, isRTL } from '@siemens/element-ng/common';
-import { addIcons, elementCancel, elementSearch, SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTypeaheadDirective, TypeaheadOption } from '@siemens/element-ng/typeahead';
 import {
   injectSiTranslateService,
