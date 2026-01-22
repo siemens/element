@@ -4,6 +4,7 @@
  */
 import { CdkPortal, PortalModule } from '@angular/cdk/portal';
 import { ChangeDetectionStrategy, Component, inject, OnDestroy, viewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
 import {
@@ -57,7 +58,8 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiHeaderDropdownComponent,
     SiHeaderDropdownTriggerDirective,
     SiLaunchpadFactoryComponent,
-    SiHeaderLogoDirective
+    SiHeaderLogoDirective,
+    FormsModule
   ],
   templateUrl: './si-fixed-height-layout-side-panel.html',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -173,7 +175,7 @@ export class SampleComponent implements OnDestroy {
     { title: 'Success', status: 'success', value: 200, action: item => this.logEvent(item) }
   ];
 
-  statusBarCompact = false;
+  statusBarCompact: 'large' | 'compact' = 'large';
 
   primaryActions = [{ title: 'Toggle panel', action: () => this.sidePanelService.open() }];
 

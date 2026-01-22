@@ -16,13 +16,9 @@ import {
   SimpleChanges,
   viewChild
 } from '@angular/core';
+import { elementRight4 } from '@siemens/element-icons';
 import { BlinkService, EntityStatusType, StatusIcon } from '@siemens/element-ng/common';
-import {
-  addIcons,
-  elementRight4,
-  SiIconComponent,
-  STATUS_ICON_CONFIG
-} from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent, STATUS_ICON_CONFIG } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { Observable, Subscription } from 'rxjs';
 

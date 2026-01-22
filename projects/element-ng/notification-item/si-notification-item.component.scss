@@ -85,8 +85,8 @@
       margin-inline-end: map.get(variables.$spacers, 4);
       // timestamp plus center alignment to heading
       margin-block-start: calc(
-        variables.$si-font-size-body * variables.$si-line-height-body +
-          map.get(variables.$spacers, 1)
+        #{variables.$si-font-size-body} * #{variables.$si-line-height-body} +
+          map.get(variables.$spacers, 2)
       );
     }
 
@@ -94,7 +94,7 @@
       inline-size: 0;
       // timestamp plus spacer
       margin-block-start: calc(
-        variables.$si-font-size-body * variables.$si-line-height-body +
+        #{variables.$si-font-size-body} * #{variables.$si-line-height-body} +
           map.get(variables.$spacers, 3)
       );
 

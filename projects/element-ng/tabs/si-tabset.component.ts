@@ -16,8 +16,9 @@ import {
   signal
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { elementOptions } from '@siemens/element-icons';
 import { isRTL } from '@siemens/element-ng/common';
-import { addIcons, elementOptions, SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiMenuDirective, SiMenuItemComponent } from '@siemens/element-ng/menu';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
 
