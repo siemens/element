@@ -3,12 +3,6 @@
 @use '@siemens/element-theme/src/styles/all-variables';
 
 .app-switcher {
-  position: fixed;
-  inset-block-start: calc(
-    variables.$si-application-header-height + 1px /* header border compensation */ +
-      variables.$si-titlebar-spacing + variables.$si-system-banner-spacing
-  );
-  inset-inline: 0;
   min-block-size: 200px;
   max-block-size: calc(
     100vh - variables.$si-application-header-height - variables.$si-titlebar-spacing -
@@ -17,7 +11,6 @@
   padding: map.get(variables.$spacers, 6);
   display: flex;
   flex-direction: column;
-  z-index: variables.$zindex-launchpad;
   background-color: variables.$element-base-1;
 
   @include all-variables.media-breakpoint-up(lg) {

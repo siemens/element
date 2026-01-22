@@ -2,4 +2,40 @@
 
 .modal-backdrop {
   z-index: variables.$zindex-application-header-backdrop;
+  opacity: 1;
+  transition: opacity variables.element-transition-duration(0.15s) linear;
+
+  @starting-style {
+    opacity: 0;
+  }
+
+  &.backdrop-leave {
+    opacity: 0;
+  }
+}
+
+.launchpad-container {
+  position: fixed;
+  inset-inline: 0;
+  inset-block-start: calc(
+    variables.$si-application-header-height + 1px /* header border compensation */ +
+      variables.$si-titlebar-spacing + variables.$si-system-banner-spacing
+  );
+  z-index: variables.$zindex-launchpad;
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity variables.element-transition-duration(0.5s) ease,
+    transform variables.element-transition-duration(0.5s) ease;
+
+  @starting-style {
+    opacity: 0;
+    transform: translateY(-120px);
+  }
+
+  &.launchpad-leave {
+    opacity: 0;
+    transform: translateY(-120px);
+    transition-duration: variables.element-transition-duration(0.25s);
+  }
 }
