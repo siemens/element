@@ -14,18 +14,23 @@
 - paragraph: Access all your apps
 - button "Close launchpad"
 - text: Favorites
-- link "Water":
+- link "Water Remove from favorites":
   - /url: .
+  - text: ""
 - button "Show less"
 - text: Phishing Apps
-- link "Water":
+- link "Water Remove from favorites":
   - /url: .
+  - text: ""
 - text: Other Apps
-- link "Assets":
+- link "Assets Add to favorites":
   - /url: .
-- link "Rocket":
+  - text: ""
+- link "Rocket Add to favorites":
   - /url: .
-- link "Statistics":
+  - text: ""
+- link "Statistics Add to favorites":
   - /url: .
+  - text: ""
 - link "Add more":
   - /url: https://example.org

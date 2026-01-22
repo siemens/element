@@ -5,48 +5,64 @@
 - paragraph: Switch applications
 - button "Close launchpad"
 - text: Favorites
-- link "Assets System name":
+- link "Assets System name Remove from favorites":
   - /url: .
-- link "Statistics System name":
+  - text: ""
+- link "Statistics System name Remove from favorites":
   - /url: "#/viewer/viewer/stats"
-- link "Rocket System name":
+  - text: ""
+- link "Rocket System name Remove from favorites":
   - /url: .
+  - text: ""
 - button "Show less"
-- link "Assets System name":
+- link "Assets System name Remove from favorites":
   - /url: .
-- link "Fischbach System name":
+  - text: ""
+- link "Fischbach System name Add to favorites":
   - /url: .
-- link "Statistics System name":
+  - text: ""
+- link "Statistics System name Remove from favorites":
   - /url: "#/viewer/viewer/stats"
-- link "Rocket System name":
-  - /url: .
-- link "This is a really long name External application System name":
+  - text: ""
+- link "Rocket System name Remove from favorites":
   - /url: .
   - text: ""
-- link "App name 1 External application System name":
+- link "This is a really long name External application System name Add to favorites":
   - /url: .
   - text: ""
-- link "App name 2 System name":
-  - /url: .
-- link "App name 3 System name":
-  - /url: .
-- link "This is a really long name External application System name":
+- link "App name 1 External application System name Add to favorites":
   - /url: .
   - text: ""
-- link "App name 4 System name":
+- link "App name 2 System name Add to favorites":
   - /url: .
-- link "App name 5 System name":
+  - text: ""
+- link "App name 3 System name Add to favorites":
   - /url: .
-- link "App name 6 This is a really long name":
+  - text: ""
+- link "This is a really long name External application System name Add to favorites":
   - /url: .
-- link "App name 7 System name":
+  - text: ""
+- link "App name 4 System name Add to favorites":
   - /url: .
-- link "App name 8 System name":
+  - text: ""
+- link "App name 5 System name Add to favorites":
   - /url: .
-- link "App name 9 System name":
+  - text: ""
+- link "App name 6 This is a really long name Add to favorites":
   - /url: .
-- link /App name \d+ System name/:
+  - text: ""
+- link "App name 7 System name Add to favorites":
   - /url: .
+  - text: ""
+- link "App name 8 System name Add to favorites":
+  - /url: .
+  - text: ""
+- link "App name 9 System name Add to favorites":
+  - /url: .
+  - text: ""
+- link /App name \d+ System name Add to favorites/:
+  - /url: .
+  - text: ""
 - heading "Launchpad Configuration" [level=2]
 - paragraph: Configure your launchpad settings and test different display modes.
 - text: Enable Favorites Show favorite apps at the top

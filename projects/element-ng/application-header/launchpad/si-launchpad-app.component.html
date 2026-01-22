@@ -25,6 +25,7 @@
     class="favorite-icon"
     [class.is-favorite]="favorite()"
     [icon]="favorite() ? icons.elementFavoritesFilled : icons.elementFavorites"
+    [attr.aria-label]="(favorite() ? removeFavoriteText() : addFavoriteText()) | translate"
     (click)="favoriteClicked($event)"
   />
 }

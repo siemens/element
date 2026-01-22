@@ -60,6 +60,28 @@ export class SiLaunchpadAppComponent {
   readonly externalLinkText = input<TranslatableString>(
     t(() => $localize`:@@SI_LAUNCHPAD.EXTERNAL_LINK:External application`)
   );
+  /**
+   * Aria-label for the favorite toggle icon when the app is marked as favorite.
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_LAUNCHPAD.REMOVE_FAVORITE:Remove from favorites`)
+   * ```
+   */
+  readonly removeFavoriteText = input<TranslatableString>(
+    t(() => $localize`:@@SI_LAUNCHPAD.REMOVE_FAVORITE:Remove from favorites`)
+  );
+  /**
+   * Aria-label for the favorite toggle icon when the app is not marked as favorite.
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_LAUNCHPAD.ADD_FAVORITE:Add to favorites`)
+   * ```
+   */
+  readonly addFavoriteText = input<TranslatableString>(
+    t(() => $localize`:@@SI_LAUNCHPAD.ADD_FAVORITE:Add to favorites`)
+  );
 
   protected readonly icons = addIcons({ elementExport, elementFavorites, elementFavoritesFilled });
 

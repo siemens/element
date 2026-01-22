@@ -292,6 +292,8 @@ export interface SiTranslatableKeys {
     // (undocumented)
     'SI_LANGUAGE_SWITCHER.LABEL'?: string;
     // (undocumented)
+    'SI_LAUNCHPAD.ADD_FAVORITE'?: string;
+    // (undocumented)
     'SI_LAUNCHPAD.CLOSE'?: string;
     // (undocumented)
     'SI_LAUNCHPAD.DEFAULT_CATEGORY_TITLE'?: string;
@@ -299,6 +301,8 @@ export interface SiTranslatableKeys {
     'SI_LAUNCHPAD.EXTERNAL_LINK'?: string;
     // (undocumented)
     'SI_LAUNCHPAD.FAVORITE_APPS'?: string;
+    // (undocumented)
+    'SI_LAUNCHPAD.REMOVE_FAVORITE'?: string;
     // (undocumented)
     'SI_LAUNCHPAD.SHOW_LESS'?: string;
     // (undocumented)
