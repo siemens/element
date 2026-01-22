@@ -98,18 +98,12 @@
         siSelectAction
         type="button"
         class="btn btn-link"
-        aria-label="clear"
         [disabled]="disableClearButton()"
         (click)="actionsFormControl.setValue([])"
         >Clear selection</button
       >
       @if (searchText && !containActionOption(searchText)) {
-        <button
-          siSelectAction
-          type="button"
-          class="btn btn-link"
-          aria-label="create"
-          (click)="createOption(searchText)"
+        <button siSelectAction type="button" class="btn btn-link" (click)="createOption(searchText)"
           >Create "{{ searchText }}" item</button
         >
       }
@@ -117,7 +111,6 @@
         siSelectAction
         type="button"
         class="btn btn-link"
-        aria-label="close"
         [selectActionAutoClose]="true"
         (click)="logEvent('Close action')"
         >Close</button
