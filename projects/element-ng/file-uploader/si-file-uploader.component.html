@@ -34,7 +34,7 @@
             [class.text-danger]="file.status === 'error'"
           >
             <si-status-icon
-              class="icon-small my-n2 me-2"
+              class="icon-sm my-n2 me-2"
               [status]="file.status === 'invalid' ? 'warning' : 'danger'"
             />
             {{ file.errorText | translate }}

@@ -89,7 +89,7 @@ export class SampleComponent {
       props: {
         label: 'Icon input',
         icon: 'element-link',
-        iconSize: 24, // defaults to 24px
+        iconSize: 20, // defaults to 20px
         iconTooltip: 'Translatable Text like "foo.bar.SOME_KEY"'
       }
     },

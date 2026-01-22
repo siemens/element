@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { Component, inject, OnDestroy } from '@angular/core';
-import { addIcons, elementThumbnails, SiIconComponent } from '@siemens/element-ng/icon';
+import { elementThumbnails } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiApplicationHeaderComponent } from './si-application-header.component';

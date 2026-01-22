@@ -6,7 +6,8 @@ import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { CommonModule } from '@angular/common';
 import { booleanAttribute, Component, inject, input } from '@angular/core';
 import { ActivatedRoute, RouterModule, type NavigationExtras } from '@angular/router';
-import { addIcons, elementOptionsVertical, SiIconComponent } from '@siemens/element-ng/icon';
+import { elementOptionsVertical } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiMenuFactoryComponent, type MenuItem } from '@siemens/element-ng/menu';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 

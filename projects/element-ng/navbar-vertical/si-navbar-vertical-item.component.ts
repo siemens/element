@@ -12,8 +12,9 @@ import {
   OnInit
 } from '@angular/core';
 import { RouterLinkActive } from '@angular/router';
+import { elementDown2 } from '@siemens/element-icons';
 import { MenuItem } from '@siemens/element-ng/common';
-import { addIcons, elementDown2, SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLinkDirective } from '@siemens/element-ng/link';
 
 import { SiNavbarVerticalGroupTriggerDirective } from './si-navbar-vertical-group-trigger.directive';

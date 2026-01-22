@@ -83,7 +83,7 @@ $blink-transition-duration: variables.$element-default-transition-duration;
   }
 
   si-icon {
-    margin-block-start: -4px;
+    margin-block-start: 0;
     transition: transform variables.element-transition-duration(0.4s);
   }
 }

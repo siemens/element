@@ -89,7 +89,7 @@ export class SiIconComponent {
    *
    * @example
    * ```ts
-   * import { elementUser } from '@simpl/element-icons/ionic';
+   * import { elementUser } from '@siemens/element-icons';
    *
    * @Component({template: `
    *   <si-icon [icon]="icons.elementUser" />

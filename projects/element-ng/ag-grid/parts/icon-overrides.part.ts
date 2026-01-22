@@ -39,7 +39,7 @@ import {
   elementUp2,
   elementUp4,
   elementZoom
-} from '@siemens/element-ng/icon';
+} from '@siemens/element-icons';
 import { iconOverrides } from 'ag-grid-community';
 
 /**

@@ -23,14 +23,9 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
+import { elementDoubleLeft, elementDoubleRight, elementSearch } from '@siemens/element-icons';
 import { MenuItem, SI_UI_STATE_SERVICE } from '@siemens/element-ng/common';
-import {
-  addIcons,
-  elementDoubleLeft,
-  elementDoubleRight,
-  elementSearch,
-  SiIconComponent
-} from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
 import { SiSkipLinkTargetDirective } from '@siemens/element-ng/skip-links';
