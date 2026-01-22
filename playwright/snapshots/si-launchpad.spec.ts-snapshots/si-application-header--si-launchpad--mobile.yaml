@@ -2,18 +2,52 @@
   - button "Launchpad" [expanded]
   - link "Siemens logo":
     - /url: "#/"
-- paragraph: Launchpad
-- paragraph: Access all your apps
-- text: Favorite apps
-- link "Fischbach":
+- paragraph: Switch applications
+- button "Close launchpad"
+- text: Favorites
+- link "Assets System name":
+  - /url: .
+- link "Fischbach System name":
+  - /url: .
+- link "Statistics System name":
+  - /url: "#/viewer/viewer/stats"
+- link "Rocket System name":
   - /url: .
 - button "Show less"
-- link "Assets":
+- link "Assets System name":
   - /url: .
-- link "Fischbach":
+- link "Fischbach System name":
   - /url: .
-- link "Rocket":
-  - /url: .
-- link "Statistics":
+- link "Statistics System name":
   - /url: "#/viewer/viewer/stats"
-- button "Close launchpad"
+- link "Rocket System name":
+  - /url: .
+- link "App name This is a really long name":
+  - /url: .
+- link "App name Opens in a new tab System name":
+  - /url: .
+  - text: ""
+- link "App name System name":
+  - /url: .
+- link "App name System name":
+  - /url: .
+- link "This is a really long name Opens in a new tab System name":
+  - /url: .
+  - text: ""
+- link "App name System name":
+  - /url: .
+- link "App name System name":
+  - /url: .
+- link "App name System name":
+  - /url: .
+- link "App name System name":
+  - /url: .
+- heading "Launchpad Configuration" [level=2]
+- paragraph: Configure your launchpad settings and test different display modes.
+- text: Enable Favorites Show favorite apps at the top
+- switch "Enable Favorites Show favorite apps at the top" [checked]
+- text: Enable Categories Group apps into organized categories
+- switch "Enable Categories Group apps into organized categories"
+- paragraph:
+  - strong: "Demo note:"
+  - text: Click the header icon to open the launchpad and test your settings
