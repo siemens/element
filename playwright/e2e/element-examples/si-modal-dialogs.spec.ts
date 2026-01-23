@@ -55,17 +55,16 @@ test.describe('si-modal-dialogs', () => {
     await si.visitExample(example);
 
     await page.getByText('Many columns').first().click();
-    await expect(page.locator('.modal-body')).toBeVisible();
+    // Ensure everything is in place for the mouse interactions.
+    await expect(page.locator('.modal-body')).toHaveBoundingBox({ x: 274, y: 116 });
 
     await page.getByRole('option', { name: 'Row 5' }).locator('.cdk-drag-handle').hover();
     await page.mouse.down();
-    // PW is sometimes faster than Angular. So we need to make sure events arrive.
-    await page.mouse.move(600, 280, { steps: 5 }); // CDK will only create a preview if the element is actually moved.
-    await expect(page.locator('.cdk-drag-preview')).toBeVisible(); // We need to wait for the CDK creating the element.
-    await page.mouse.move(700, 380, { steps: 5 }); // After the element is created, we can move it the actual position.
-    // Those rules are triggered because of the draggable element.
-    // This is not relevant, as only no-sr user will drag elements.
+    await page.mouse.move(700, 510, { steps: 5 });
+    // Ensure it is at the correct place before taking the screenshot.
+    await expect(page.locator('.cdk-drag-preview')).toHaveBoundingBox({ x: 273, y: 484 });
     await si.runVisualAndA11yTests('dragging', {
+      // Those rules are triggered because of the draggable element.
       axeRulesSet: [
         { id: 'aria-input-field-name', enabled: false },
         { id: 'aria-required-parent', enabled: false },
