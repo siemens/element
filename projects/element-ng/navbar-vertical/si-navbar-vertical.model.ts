@@ -20,6 +20,10 @@ export interface NavbarVerticalItemBase {
    * without `bg-` prefix.
    */
   badgeColor?: string;
+  /**
+   * Keep subtle badges visible when navbar is collapsed.
+   */
+  showSubtleBadgeCollapsed?: boolean;
 }
 
 /** Use this type to create a group that can hold multiple items. */

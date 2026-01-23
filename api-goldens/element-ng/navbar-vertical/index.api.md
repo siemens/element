@@ -33,6 +33,7 @@ export interface NavbarVerticalItemBase {
     icon?: string;
     id?: string;
     label: TranslatableString;
+    showSubtleBadgeCollapsed?: boolean;
 }
 
 // @public (undocumented)

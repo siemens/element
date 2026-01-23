@@ -16,7 +16,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
-  menuItems: MenuItem[] = [
+  menuItems: (MenuItem & { showSubtleBadgeCollapsed?: boolean })[] = [
     {
       title: 'Home',
       id: 'home',
@@ -58,7 +58,8 @@ export class SampleComponent {
       link: 'coverage',
       tooltip: 'Test Coverage',
       badge: 4,
-      badgeColor: 'danger'
+      badgeColor: 'danger',
+      showSubtleBadgeCollapsed: true
     }
   ];
 

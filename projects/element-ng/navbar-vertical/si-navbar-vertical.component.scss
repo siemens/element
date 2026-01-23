@@ -155,7 +155,8 @@ si-search-bar {
   :host {
     &.nav-collapsed {
       .btn-search {
-        display: block;
+        display: flex;
+        inline-size: 100%;
       }
     }
   }
