@@ -379,7 +379,10 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
     if (open) {
       this.isHidden.set(false);
     }
-    setTimeout(() => this.doOpenClose(open));
+    setTimeout(() => {
+      this.doOpenClose(open);
+      this.cdRef.markForCheck();
+    });
   }
 
   private doOpenClose(open: boolean): void {
