@@ -109,7 +109,7 @@ describe('SiLaunchpad', () => {
         await harness.toggleMore();
         const categories = await harness.getCategories();
         expect(categories).toHaveSize(2);
-        expect(await categories[0].getName()).toBe('Favorite apps');
+        expect(await categories[0].getName()).toBe('Favorites');
         expect(await categories[1].getName()).toBe(null);
         expect(await harness.getApp('A-1').then(app => app.isFavorite())).toBeTrue();
         expect(await harness.getFavoriteCategory().then(category => category.getApps())).toHaveSize(

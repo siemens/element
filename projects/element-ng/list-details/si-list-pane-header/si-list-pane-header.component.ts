@@ -4,7 +4,6 @@
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-/** @experimental */
 @Component({
   selector: 'si-list-pane-header',
   templateUrl: './si-list-pane-header.component.html',

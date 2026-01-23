@@ -47,8 +47,8 @@ export class SiNavbarVerticalItemHarness extends ComponentHarness {
   async isFlyout(): Promise<boolean> {
     const groupId = await this.host().then(host => host.getAttribute('aria-controls'));
     return this.documentRootLocatorFactory()
-      .locatorFor(`#${groupId}`)()
-      .then(flyout => flyout.hasClass('dropdown-menu'));
+      .locatorForOptional(`#${groupId} .dropdown-menu`)()
+      .then(flyout => !!flyout);
   }
 
   async isActive(): Promise<boolean> {

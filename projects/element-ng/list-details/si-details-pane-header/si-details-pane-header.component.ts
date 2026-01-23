@@ -20,7 +20,6 @@ import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-transla
 import { SiDetailsPaneComponent } from '../si-details-pane/si-details-pane.component';
 import { SiListDetailsComponent } from '../si-list-details.component';
 
-/** @experimental */
 @Component({
   selector: 'si-details-pane-header',
   imports: [SiTranslatePipe, SiIconComponent],

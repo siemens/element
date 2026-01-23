@@ -1,32 +1,44 @@
 @use 'sass:map';
 @use '@siemens/element-theme/src/styles/variables';
+@use '@siemens/element-theme/src/styles/all-variables';
 
 :host {
   display: flex;
   align-items: center;
   flex-flow: column nowrap;
   position: relative;
-  padding-block: map.get(variables.$spacers, 7);
+  padding-block: map.get(variables.$spacers, 8);
   inline-size: 152px;
   max-inline-size: 152px;
-  padding-inline: map.get(variables.$spacers, 2);
+  padding-inline: map.get(variables.$spacers, 4);
   color: variables.$element-text-primary;
   border-radius: variables.$element-radius-2;
-
-  &.active {
-    border: 1px solid variables.$element-ui-0;
-    background-color: variables.$element-base-1-hover;
-  }
 
   &.action {
     color: variables.$element-action-primary;
   }
 
+  &.active,
   &:hover {
     color: variables.$element-text-primary;
     text-decoration: none;
+  }
+
+  &.active {
+    background-color: variables.$element-base-1-selected;
+  }
+
+  &:hover {
     background-color: variables.$element-base-1-hover;
   }
+}
+
+.app-text {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  max-inline-size: 100%;
+  overflow: hidden;
 }
 
 .app-icon {
@@ -49,12 +61,43 @@
 .favorite-icon {
   font-size: 20px;
   position: absolute;
-  inset-inline-end: 22px;
-  inset-block-start: 10px;
+  inset-inline-end: 14px;
+  inset-block-start: 14px;
   padding: map.get(variables.$spacers, 1);
   color: variables.$element-text-primary;
 }
 
+.external-icon {
+  font-size: 16px;
+}
+
 .is-favorite {
   color: variables.$element-status-caution;
+}
+
+@include all-variables.media-breakpoint-down(md) {
+  :host {
+    flex-flow: row nowrap;
+    inline-size: 100%;
+    max-inline-size: 100%;
+    padding: map.get(variables.$spacers, 4);
+
+    &:has(.favorite-icon) {
+      padding-inline-end: map.get(variables.$spacers, 9);
+    }
+  }
+
+  .app-icon {
+    margin-block-end: 0;
+    margin-inline-end: map.get(variables.$spacers, 4);
+  }
+
+  .app-text {
+    align-items: start;
+  }
+
+  .favorite-icon {
+    inset-inline-end: map.get(variables.$spacers, 4);
+    inset-block-start: map.get(variables.$spacers, 4);
+  }
 }

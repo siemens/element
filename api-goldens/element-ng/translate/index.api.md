@@ -296,6 +296,8 @@ export interface SiTranslatableKeys {
     // (undocumented)
     'SI_LAUNCHPAD.DEFAULT_CATEGORY_TITLE'?: string;
     // (undocumented)
+    'SI_LAUNCHPAD.EXTERNAL_LINK'?: string;
+    // (undocumented)
     'SI_LAUNCHPAD.FAVORITE_APPS'?: string;
     // (undocumented)
     'SI_LAUNCHPAD.SHOW_LESS'?: string;
@@ -303,8 +305,6 @@ export interface SiTranslatableKeys {
     'SI_LAUNCHPAD.SHOW_MORE'?: string;
     // (undocumented)
     'SI_LAUNCHPAD.SUB_TITLE'?: string;
-    // (undocumented)
-    'SI_LAUNCHPAD.SUBTITLE'?: string;
     // (undocumented)
     'SI_LAUNCHPAD.TITLE'?: string;
     // (undocumented)

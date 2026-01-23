@@ -20,6 +20,6 @@
 - combobox "Select with actions" [expanded]
 - listbox "Select with actions":
   - option "New option"
-- button "clear": Clear selection
-- button "create": Create "New optio" item
-- button "close": Close
+- button "Clear selection"
+- button "Create \"New optio\" item"
+- button "Close"

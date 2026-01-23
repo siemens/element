@@ -1,12 +1,12 @@
 @use 'sass:map';
-
 @use '@siemens/element-theme/src/styles/variables';
+@use '@siemens/element-theme/src/styles/all-variables';
 
 .app-switcher {
   position: fixed;
   inset-block-start: calc(
-    variables.$si-application-header-height + variables.$si-titlebar-spacing +
-      variables.$si-system-banner-spacing
+    variables.$si-application-header-height + 1px /* header border compensation */ +
+      variables.$si-titlebar-spacing + variables.$si-system-banner-spacing
   );
   inset-inline: 0;
   min-block-size: 200px;
@@ -14,13 +14,40 @@
     100vh - variables.$si-application-header-height - variables.$si-titlebar-spacing -
       variables.$si-system-banner-spacing
   );
+  padding: map.get(variables.$spacers, 6);
   display: flex;
   flex-direction: column;
   z-index: variables.$zindex-launchpad;
   background-color: variables.$element-base-1;
-  box-shadow: variables.$element-elevation-inset-1;
+
+  @include all-variables.media-breakpoint-up(lg) {
+    padding-block: map.get(variables.$spacers, 6);
+    padding-inline: map.get(variables.$spacers, 8);
+  }
+}
+
+.apps-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .apps-scroll {
   overflow-y: auto;
+  // Prevent scrollbar from overlapping items on mobile
+  padding-inline-end: map.get(variables.$spacers, 6);
+  margin-inline-end: map.get(variables.$spacers, 6) * -1;
+}
+
+.btn-show-all {
+  margin-block-start: map.get(variables.$spacers, 6);
+  margin-block-end: map.get(variables.$spacers, 4);
+
+  &.show {
+    margin-block-end: map.get(variables.$spacers, 8);
+  }
+
+  &.show:has(+ div .launchpad-category-title) {
+    margin-block-end: 0;
+  }
 }
