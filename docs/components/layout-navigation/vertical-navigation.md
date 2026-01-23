@@ -60,8 +60,12 @@ Use either method individually or combine them, but avoid overuse, as it can mak
 
 ### Badges (optional)
 
-Items can also include [badges](../status-notifications/badges.md) to provide users with quick, at-a-glance information,
-such as notifications or counts. For sub menus, badges should only be used on child elements.
+Items can include [badges](../status-notifications/badges.md) to provide users with quick, at-a-glance information.
+For submenus, badges are used only on child items. The parent item does not display a badge, except in the collapsed state.
+
+When collapsed, numeric badges are shown in a compact form.
+If the badge contains text, it is displayed as a simple dot to indicate that something requires attention.
+Badges can be fully hidden in the collapsed state if needed.
 
 ![Vertical navigation with badges](images/vertical-navigation-badges.png)
 
