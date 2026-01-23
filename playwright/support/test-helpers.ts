@@ -6,7 +6,7 @@ import AxeBuilder from '@axe-core/playwright';
 import {
   test as baseTest,
   type ElementHandle,
-  expect,
+  expect as baseExpect,
   type Page,
   type TestInfo,
   Locator
@@ -15,7 +15,33 @@ import axe from 'axe-core';
 
 import { expectNoA11yViolations } from '../reporters/playwright-axe-reporter';
 
-export { expect } from '@playwright/test';
+export const expect = baseExpect.extend({
+  async toHaveBoundingBox(locator: Locator, boundingBox: { x: number; y: number }) {
+    const expectation = baseExpect.poll(async () => {
+      const box = await locator.boundingBox();
+      if (!box) {
+        return undefined;
+      }
+      return { x: Math.round(box.x), y: Math.round(box.y) };
+    });
+    try {
+      await expectation.toEqual(boundingBox);
+      return {
+        pass: !this.isNot,
+        name: 'toHaveBoundingBox',
+        message: () =>
+          `Expected bounding box for ${locator.toString()} not to be ${JSON.stringify(boundingBox)}`
+      };
+    } catch (e: any) {
+      return {
+        name: 'toHaveBoundingBox',
+        message: () => e.message as string,
+        actual: e.actual,
+        pass: this.isNot
+      };
+    }
+  }
+});
 
 const SI_EXAMPLE_NAME_ID = 'siExampleName';
 
