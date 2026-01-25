@@ -57,8 +57,10 @@ test.describe('si-select', () => {
     await si.runVisualAndA11yTests('filter-opened');
     await selectFormControlInput.pressSequentially('Bad');
     await page.keyboard.press('ArrowDown');
+    await expect(page.getByRole('option', { name: 'Bad', exact: true })).toContainClass('active');
     await si.runVisualAndA11yTests('filter-searched');
     await page.keyboard.press('Enter');
+    await expect(formControlSelect).not.toHaveAttribute('aria-expanded', 'true');
     await si.runVisualAndA11yTests('filter-selected');
 
     await formControlSelect.click();
@@ -85,6 +87,7 @@ test.describe('si-select', () => {
     await page.getByRole('button', { name: 'create' }).click();
     await selectInputWithActions.focus();
     await page.keyboard.press('Backspace');
+    await expect(page.getByRole('button', { name: 'New optio' })).toBeVisible();
     await si.runVisualAndA11yTests('actions-option-created');
   });
 

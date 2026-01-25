@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import {
   booleanAttribute,
   Component,
@@ -18,7 +17,7 @@ import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-
 
 @Component({
   selector: 'si-status-bar-item',
-  imports: [NgClass, SiIconComponent, SiTranslatePipe],
+  imports: [SiIconComponent, SiTranslatePipe],
   templateUrl: './si-status-bar-item.component.html',
   styleUrl: './si-status-bar-item.component.scss',
   host: {

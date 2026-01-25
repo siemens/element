@@ -12,7 +12,7 @@ import {
   SiNotificationItemComponent,
   type NotificationItemQuickAction,
   type NotificationItemActionButton,
-  type NotificationItemActionCircleButton,
+  type NotificationItemActionIconButton,
   type NotificationItemMenu,
   type NotificationItemLink
 } from '@siemens/element-ng/notification-item';
@@ -50,19 +50,19 @@ export class SampleComponent {
 
   quickActions: NotificationItemQuickAction[] = [
     {
-      type: 'action-circle-button',
+      type: 'action-icon-button',
       icon: 'element-checkbox-checked',
       ariaLabel: 'Read',
       action: () => this.logEvent('Read')
     },
     {
-      type: 'action-circle-button',
+      type: 'action-icon-button',
       icon: 'element-archive',
       ariaLabel: 'Archive',
       action: () => this.logEvent('Archive')
     },
     {
-      type: 'action-circle-button',
+      type: 'action-icon-button',
       icon: 'element-delete',
       ariaLabel: 'Delete',
       action: () => this.logEvent('Delete')
@@ -106,8 +106,8 @@ export class SampleComponent {
     ]
   };
 
-  circleButton: NotificationItemActionCircleButton = {
-    type: 'action-circle-button',
+  iconButton: NotificationItemActionIconButton = {
+    type: 'action-icon-button',
     icon: 'element-share',
     ariaLabel: 'Share',
     action: () => this.logEvent('Share')
