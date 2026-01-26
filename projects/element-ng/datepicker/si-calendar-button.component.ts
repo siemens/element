@@ -9,7 +9,6 @@ import {
   Component,
   contentChild,
   DestroyRef,
-  DoCheck,
   ElementRef,
   inject,
   input,
@@ -58,12 +57,10 @@ import { SiDatepickerDirective } from './si-datepicker.directive';
   styles: ':host {--si-action-icon-offset: 24px;}',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'd-inline-block position-relative form-control-wrapper',
-    '[class.ng-invalid]': 'showValidationMessages()',
-    '[class.ng-touched]': 'showValidationMessages()'
+    class: 'd-inline-block position-relative form-control-wrapper'
   }
 })
-export class SiCalendarButtonComponent implements OnInit, AfterContentInit, DoCheck {
+export class SiCalendarButtonComponent implements OnInit, AfterContentInit {
   /**
    * Aria label for the calendar toggle button.
    *
@@ -87,9 +84,6 @@ export class SiCalendarButtonComponent implements OnInit, AfterContentInit, DoCh
   private readonly focusMonitor = inject(FocusMonitor);
   private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
-  // Add classes here to enable error messages in si-form-item
-  protected readonly showValidationMessages = signal(false);
-
   ngOnInit(): void {
     // Monitor input state changes and update the button accordingly
     this.datepicker().stateChange.subscribe(() => this.updateState());
@@ -103,11 +97,6 @@ export class SiCalendarButtonComponent implements OnInit, AfterContentInit, DoCh
           }
         });
       });
-  }
-
-  ngDoCheck(): void {
-    const control = this.ngControl()?.control;
-    this.showValidationMessages.set(!!control?.touched && !!control?.invalid);
   }
 
   ngAfterContentInit(): void {
