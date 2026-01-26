@@ -54,12 +54,10 @@ test.describe('si-form', () => {
     // verify that all errors are linked
 
     await expect(await si.getDescription(name)).toHaveText(
-      'A minimum length of 3 characters is required.  A name must start with an uppercase letter.'
+      'Min. 3 characters  A name must start with an uppercase letter.'
     );
     await expect(await si.getDescription(phoneNumberInput)).toHaveText('Invalid phone number');
-    await expect(await si.getDescription(page.getByLabel('Day of birth'))).toHaveText(
-      'A value is required.'
-    );
+    await expect(await si.getDescription(page.getByLabel('Day of birth'))).toHaveText('Required');
     const travelDate = page.getByRole('group', { name: 'Travel Date' });
     await expect(await si.getDescription(travelDate.getByLabel('Start date'))).toHaveText(
       'Travel date is required.'
@@ -78,13 +76,13 @@ test.describe('si-form', () => {
     );
     await expect(await si.getDescription(firstClass)).toHaveText('You deserve better!');
     await expect(await si.getDescription(page.getByLabel('Fellow passengers'))).toHaveText(
-      'The value is too small'
+      'Min. 2'
     );
     await expect(
       await si.getDescription(page.getByLabel('I confirm that I accept all and everything.'))
     ).toHaveText('You need to accept all terms before joining.');
     await expect(
       await si.getDescription(page.getByLabel('I confirm that I do not care about my privacy.'))
-    ).toHaveText('A value is required.');
+    ).toHaveText('Required');
   });
 });

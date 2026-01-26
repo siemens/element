@@ -240,7 +240,8 @@ describe('SiTimepickerComponent', () => {
       expect(component.time.errors).toEqual({
         maxTime: {
           actual: new Date('2021-01-12 17:23:58.435'),
-          max: new Date('2021-01-12 16:23:58.435')
+          max: new Date('2021-01-12 16:23:58.435'),
+          maxString: '04:23 PM'
         }
       });
     });
@@ -256,7 +257,8 @@ describe('SiTimepickerComponent', () => {
       expect(component.time.errors).toEqual({
         maxTime: {
           actual: new Date('2021-01-12 18:23:58.500'),
-          max: new Date('2021-01-12 16:23:58.435')
+          max: new Date('2021-01-12 16:23:58.435'),
+          maxString: '04:23:58.435 PM'
         }
       });
     });
@@ -272,7 +274,8 @@ describe('SiTimepickerComponent', () => {
       expect(component.time.errors).toEqual({
         minTime: {
           actual: new Date('2021-01-12 15:23:58.435'),
-          min: new Date('2021-01-12 16:23:58.435')
+          min: new Date('2021-01-12 16:23:58.435'),
+          minString: '04:23 PM'
         }
       });
     });

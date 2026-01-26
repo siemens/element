@@ -33,16 +33,16 @@ describe('SiFormValidationTooltipDirective', () => {
     await harness.hover();
     await harness.focus();
     await harness.blur();
-    expect(await harness.getTooltip()).toBe('A value is required.');
+    expect(await harness.getTooltip()).toBe('Required');
   });
 
   it('should show tooltip when hovered or focused', async () => {
     fixture.componentInstance.control.markAsTouched();
     await harness.focus();
-    expect(await harness.getTooltip()).toBe('A value is required.');
+    expect(await harness.getTooltip()).toBe('Required');
     await harness.hover();
     await harness.mouseAway();
-    expect(await harness.getTooltip()).toBe('A value is required.');
+    expect(await harness.getTooltip()).toBe('Required');
     await harness.blur();
     expect(await harness.getTooltip()).toBeFalsy();
   });
@@ -50,7 +50,7 @@ describe('SiFormValidationTooltipDirective', () => {
   it('should hide tooltip when control becomes valid', async () => {
     fixture.componentInstance.control.markAsTouched();
     await harness.hover();
-    expect(await harness.getTooltip()).toBe('A value is required.');
+    expect(await harness.getTooltip()).toBe('Required');
     await harness.sendKeys('Lorem ipsum');
     expect(await harness.getTooltip()).toBeFalsy();
   });
@@ -58,7 +58,7 @@ describe('SiFormValidationTooltipDirective', () => {
   it('should hide tooltip when control becomes untouched', async () => {
     fixture.componentInstance.control.markAsTouched();
     await harness.hover();
-    expect(await harness.getTooltip()).toBe('A value is required.');
+    expect(await harness.getTooltip()).toBe('Required');
     fixture.componentInstance.control.markAsUntouched();
     expect(await harness.getTooltip()).toBeFalsy();
   });

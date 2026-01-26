@@ -20,7 +20,7 @@ export const SI_FORM_VALIDATION_TOOLTIP_DATA = new InjectionToken<Signal<SiFormE
     }
   `,
   host: {
-    'class': 'd-flex flex-column gap-2'
+    'class': 'd-flex flex-column gap-2 text-start'
   }
 })
 export class SiFormValidationTooltipComponent {

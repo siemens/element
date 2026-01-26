@@ -234,9 +234,17 @@ export interface SiTranslatableKeys {
     // (undocumented)
     'SI_FORM_CONTAINER.ERROR.DATE_FORMAT'?: string;
     // (undocumented)
+    'SI_FORM_CONTAINER.ERROR.DATE_FORMAT_END'?: string;
+    // (undocumented)
+    'SI_FORM_CONTAINER.ERROR.DATE_FORMAT_START'?: string;
+    // (undocumented)
     'SI_FORM_CONTAINER.ERROR.EMAIL'?: string;
     // (undocumented)
+    'SI_FORM_CONTAINER.ERROR.END_BEFORE_START'?: string;
+    // (undocumented)
     'SI_FORM_CONTAINER.ERROR.HOURS'?: string;
+    // (undocumented)
+    'SI_FORM_CONTAINER.ERROR.INVALID_PHONE'?: string;
     // (undocumented)
     'SI_FORM_CONTAINER.ERROR.IPV4'?: string;
     // (undocumented)
@@ -265,6 +273,12 @@ export interface SiTranslatableKeys {
     'SI_FORM_CONTAINER.ERROR.NUMBER_FORMAT'?: string;
     // (undocumented)
     'SI_FORM_CONTAINER.ERROR.PATTERN'?: string;
+    // (undocumented)
+    'SI_FORM_CONTAINER.ERROR.PHONE_COUNTRY'?: string;
+    // (undocumented)
+    'SI_FORM_CONTAINER.ERROR.RANGE_AFTER_MAX_DATE'?: string;
+    // (undocumented)
+    'SI_FORM_CONTAINER.ERROR.RANGE_BEFORE_MIN_DATE'?: string;
     // (undocumented)
     'SI_FORM_CONTAINER.ERROR.REQUIRED'?: string;
     // (undocumented)
