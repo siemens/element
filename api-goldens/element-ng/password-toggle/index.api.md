@@ -5,12 +5,11 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
-import { DoCheck } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
-export class SiPasswordToggleComponent implements DoCheck {
+export class SiPasswordToggleComponent {
     readonly hideLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     get inputType(): string;
     readonly showLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;

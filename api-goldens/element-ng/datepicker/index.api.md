@@ -12,7 +12,6 @@ import * as _angular_forms from '@angular/forms';
 import { ComponentRef } from '@angular/core';
 import { ConnectionPositionPair } from '@angular/cdk/overlay';
 import { ControlValueAccessor } from '@angular/forms';
-import { DoCheck } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { FocusOrigin } from '@angular/cdk/a11y';
 import { FormControl } from '@angular/forms';
@@ -297,7 +296,7 @@ export const previousMonth: (date: Date) => Date;
 export type RangeType = 'START' | 'END' | undefined;
 
 // @public
-export class SiCalendarButtonComponent implements OnInit, AfterContentInit, DoCheck {
+export class SiCalendarButtonComponent implements OnInit, AfterContentInit {
     readonly ariaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
 }
 
