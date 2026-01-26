@@ -1,6 +1,8 @@
 @use 'sass:map';
 @use '@siemens/element-theme/src/styles/variables';
 
+$transition-duration: variables.$element-default-transition-duration;
+
 :host(.navbar-vertical-item) {
   display: flex;
   align-items: center;
@@ -25,11 +27,12 @@
   }
 
   .icon {
+    position: absolute;
     margin-inline-start: map.get(variables.$spacers, 5);
   }
 
   .icon + .item-title {
-    margin-inline-start: map.get(variables.$spacers, 5);
+    margin-inline-start: map.get(variables.$spacers, 5) + map.get(variables.$spacers, 4) + 24px;
   }
 
   &.show .badge:not(.badge-collapsed) {
@@ -86,12 +89,36 @@
   }
 }
 
+.dropdown-caret {
+  opacity: 1;
+  inline-size: 24px;
+  transform-origin: center;
+  transition:
+    opacity calc($transition-duration / 2) calc($transition-duration / 2) ease,
+    inline-size calc($transition-duration / 2) ease,
+    transform $transition-duration;
+}
+
+.item-title {
+  opacity: 1;
+  transition: opacity calc($transition-duration / 2) calc($transition-duration / 2) ease;
+}
+
 :host-context(.nav-collapsed) :is(.dropdown-caret) {
-  display: none;
+  opacity: 0;
+  inline-size: 0;
+  transition:
+    opacity 0s,
+    inline-size calc($transition-duration / 2) ease;
 }
 
 :host-context(.nav-collapsed) :is(.item-title) {
   opacity: 0;
+  transition: opacity calc($transition-duration / 2) ease;
+}
+
+:host-context(.nav-collapsed) :is(.icon) {
+  animation: none;
 }
 
 // Hide subtle badges (non-emphasis) in collapsed state by default
@@ -128,7 +155,7 @@
     }
 
     .icon {
-      display: block;
+      display: flex;
     }
   }
 
@@ -142,21 +169,22 @@
   margin-inline: auto 0;
   transform: translate(0, 0);
   transition:
-    transform 0.5s ease-out,
-    opacity 0.5s ease-out,
-    visibility 0.5s ease-out,
-    block-size 0.5s ease-out,
-    min-inline-size 0.5s ease-out,
-    border-radius 0.5s ease-out,
-    line-height 0.5s ease-out,
-    padding 0.5s ease-out,
-    font-weight 0.5s ease-out,
-    color 0.2s ease-out,
-    font-size 0.2s ease-out;
+    transform $transition-duration ease-out,
+    opacity $transition-duration ease-out,
+    visibility $transition-duration ease-out,
+    block-size $transition-duration ease-out,
+    min-inline-size $transition-duration ease-out,
+    border-radius $transition-duration ease-out,
+    line-height $transition-duration ease-out,
+    padding $transition-duration ease-out,
+    font-weight $transition-duration ease-out,
+    color calc($transition-duration / 2) ease-out,
+    font-size calc($transition-duration / 2) ease-out;
 }
 
 .badge-collapsed:not(.dropdown-item .badge) {
   position: absolute;
+  // Values calculated for smooth badge positioning during navbar collapse/expand
   inset-inline-end: 12px;
   transform: translate(6px, -9px);
   block-size: 14px;

@@ -259,10 +259,7 @@ describe('SiNavbarVerticalItemComponent', () => {
       TestBed.resetTestingModule();
       await TestBed.configureTestingModule({
         imports: [TestHostWithBadgeVisibilityComponent],
-        providers: [
-          { provide: SI_NAVBAR_VERTICAL, useValue: mockNavbar },
-          provideZonelessChangeDetection()
-        ]
+        providers: [{ provide: SI_NAVBAR_VERTICAL, useValue: mockNavbar }]
       }).compileComponents();
 
       badgeTestFixture = TestBed.createComponent(TestHostWithBadgeVisibilityComponent);
