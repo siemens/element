@@ -50,15 +50,21 @@ button {
   }
 
   // If the case of a link looking like a button <a class="btn btn-primary" href="#" target="_blank">Go Back</a>,
-  // the hover effect from the <a> element needs to be reset.
-  &:hover {
+  // the hover/active effect from the <a> element needs to be reset.
+  &:is(:hover, :active) {
     text-decoration: none;
   }
 
-  &:not(:is(:disabled, .disabled)):is(:active, .active, :hover, .hover) {
+  &:not(:is(:disabled, .disabled)):is(:hover, .hover) {
     color: var(--btn-color-hover, inherit);
     background: var(--btn-bg-hover, inherit);
     border-color: var(--btn-border-color-hover);
+  }
+
+  &:not(:is(:disabled, .disabled)):is(:active, .active) {
+    color: var(--btn-color-active, inherit);
+    background: var(--btn-bg-active, inherit);
+    border-color: var(--btn-border-color-active);
   }
 
   .icon {
@@ -74,22 +80,28 @@ button {
 .btn-primary {
   --btn-bg: #{semantic-tokens.$element-action-primary};
   --btn-bg-hover: #{semantic-tokens.$element-action-primary-hover};
+  --btn-bg-active: #{semantic-tokens.$element-action-primary-active};
   --btn-color: #{semantic-tokens.$element-action-primary-text};
   --btn-color-hover: #{semantic-tokens.$element-action-primary-text};
+  --btn-color-active: #{semantic-tokens.$element-action-primary-text};
 }
 
 .btn-danger {
   --btn-bg: #{semantic-tokens.$element-action-danger};
   --btn-bg-hover: #{semantic-tokens.$element-action-danger-hover};
+  --btn-bg-active: #{semantic-tokens.$element-action-danger-active};
   --btn-color: #{semantic-tokens.$element-action-danger-text};
   --btn-color-hover: #{semantic-tokens.$element-action-danger-text};
+  --btn-color-active: #{semantic-tokens.$element-action-danger-text};
 }
 
 .btn-warning {
   --btn-bg: #{semantic-tokens.$element-action-warning};
   --btn-bg-hover: #{semantic-tokens.$element-action-warning-hover};
+  --btn-bg-active: #{semantic-tokens.$element-action-warning-active};
   --btn-color: #{semantic-tokens.$element-action-warning-text};
   --btn-color-hover: #{semantic-tokens.$element-action-warning-text};
+  --btn-color-active: #{semantic-tokens.$element-action-warning-text};
 }
 
 .btn-secondary,
@@ -97,11 +109,14 @@ button {
 .btn-secondary-danger {
   --btn-bg: #{semantic-tokens.$element-action-secondary};
   --btn-bg-hover: #{semantic-tokens.$element-action-secondary-hover};
+  --btn-bg-active: #{semantic-tokens.$element-action-secondary-active};
   --btn-color: #{semantic-tokens.$element-action-secondary-text};
   --btn-color-hover: #{semantic-tokens.$element-action-secondary-text-hover};
+  --btn-color-active: #{semantic-tokens.$element-action-primary-active};
   --btn-border-width: 1px;
   --btn-border-color: #{semantic-tokens.$element-action-secondary-border};
   --btn-border-color-hover: #{semantic-tokens.$element-action-secondary-border-hover};
+  --btn-border-color-active: #{semantic-tokens.$element-action-secondary-border-active};
 }
 
 .btn-tertiary,
@@ -109,37 +124,46 @@ button {
 .btn-tertiary-danger {
   --btn-bg: transparent;
   --btn-bg-hover: #{semantic-tokens.$element-action-secondary-hover};
+  --btn-bg-active: #{semantic-tokens.$element-action-secondary-active};
   --btn-color: #{semantic-tokens.$element-action-secondary-text};
   --btn-color-hover: #{semantic-tokens.$element-action-secondary-text-hover};
+  --btn-color-active: #{semantic-tokens.$element-action-primary-active};
 }
 
 .btn-secondary-warning,
 .btn-tertiary-warning {
   --btn-bg-hover: #{semantic-tokens.$element-action-warning-hover};
+  --btn-bg-active: #{semantic-tokens.$element-action-warning-active};
   --btn-color: #{semantic-tokens.$element-action-secondary-warning};
   --btn-color-hover: #{semantic-tokens.$element-action-warning-text};
+  --btn-color-active: #{semantic-tokens.$element-action-warning-text};
   --btn-border-color: #{semantic-tokens.$element-action-secondary-warning};
   --btn-border-color-hover: #{semantic-tokens.$element-action-warning-hover};
+  --btn-border-color-active: #{semantic-tokens.$element-action-warning-active};
 }
 
 .btn-secondary-danger,
 .btn-tertiary-danger {
   --btn-bg-hover: #{semantic-tokens.$element-action-danger-hover};
+  --btn-bg-active: #{semantic-tokens.$element-action-danger-active};
   --btn-color: #{semantic-tokens.$element-action-secondary-danger};
   --btn-color-hover: #{semantic-tokens.$element-action-danger-text};
+  --btn-color-active: #{semantic-tokens.$element-action-danger-text};
   --btn-border-color: #{semantic-tokens.$element-action-secondary-danger};
   --btn-border-color-hover: #{semantic-tokens.$element-action-danger-hover};
+  --btn-border-color-active: #{semantic-tokens.$element-action-danger-active};
 }
 
 .btn-link {
   --btn-color: #{bootstrap-variables.$btn-link-color};
   --btn-color-hover: #{bootstrap-variables.$btn-link-hover-color};
+  --btn-color-active: #{semantic-tokens.$element-action-primary-active};
   font-weight: typography.$si-font-weight-body;
   justify-content: flex-start;
   text-decoration: bootstrap-variables.$link-decoration;
   padding: 0;
 
-  &:hover {
+  &:is(:hover, :active) {
     text-decoration: bootstrap-variables.$link-hover-decoration;
   }
 
@@ -193,14 +217,18 @@ button {
 .btn-icon.btn-ghost,
 .btn-close {
   --btn-bg: transparent;
-  --btn-bg-hover: #{semantic-tokens.$element-action-secondary-hover};
-  --btn-color: #{semantic-tokens.$element-ui-2};
-  --btn-color-hover: #{semantic-tokens.$element-ui-1};
+  --btn-bg-hover: #{variables.$element-base-1-hover};
+  --btn-bg-active: #{variables.$element-base-1-selected};
+  --btn-color: #{semantic-tokens.$element-ui-1};
+  --btn-color-active: #{semantic-tokens.$element-ui-1};
 }
 
 .btn-close.btn-tertiary {
+  --btn-bg-hover: #{semantic-tokens.$element-action-secondary-hover};
+  --btn-bg-active: #{semantic-tokens.$element-action-secondary-active};
   --btn-color: #{semantic-tokens.$element-action-secondary-text};
   --btn-color-hover: #{semantic-tokens.$element-action-secondary-text-hover};
+  --btn-color-active: #{semantic-tokens.$element-action-primary-active};
 }
 
 .btn-lg {
@@ -233,11 +261,14 @@ button {
 .btn-input {
   --btn-bg: #{bootstrap-variables.$input-bg};
   --btn-bg-hover: #{bootstrap-variables.$input-bg};
+  --btn-bg-active: #{bootstrap-variables.$input-bg};
   --btn-color: #{bootstrap-variables.$input-color};
   --btn-color-hover: #{bootstrap-variables.$input-color};
+  --btn-color-active: #{bootstrap-variables.$input-color};
   --btn-border-width: 1px;
   --btn-border-color: #{semantic-tokens.$element-ui-2};
   --btn-border-color-hover: #{semantic-tokens.$element-ui-1};
+  --btn-border-color-active: #{semantic-tokens.$element-ui-1};
 
   @include typography.si-font(
     typography.$si-font-size-body,

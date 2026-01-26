@@ -102,11 +102,11 @@
 
   &:checked + .btn,
   + .btn:hover {
-    color: semantic-tokens.$element-action-secondary-text-hover;
+    color: semantic-tokens.$element-ui-0-hover;
   }
 
   &:checked + .btn {
-    background: semantic-tokens.$element-action-secondary-hover;
+    background: semantic-tokens.$element-action-secondary-active;
     border-color: semantic-tokens.$element-action-secondary-border-hover;
     z-index: 2;
 
