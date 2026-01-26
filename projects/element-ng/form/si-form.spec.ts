@@ -179,7 +179,7 @@ describe('SiForm', () => {
     it('should render globally translated validation messages', async () => {
       fixture.componentInstance.form.markAllAsTouched();
       const field = await loader.getHarness(SiFormItemHarness.with({ label: 'Input' }));
-      expect(await field.getErrorMessages()).toEqual(['A value is required.']);
+      expect(await field.getErrorMessages()).toEqual(['Required']);
     });
 
     it('should have a required indicator', async () => {
