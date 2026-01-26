@@ -16,46 +16,74 @@ import { SiFormValidationErrorMapper } from './si-form-validation-error.model';
  * @internal
  */
 export const buildDefaults = (): SiFormValidationErrorMapper => ({
-  min: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.MIN:The value is too small`),
-  max: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.MAX:The value is too large.`),
-  required: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.REQUIRED:A value is required.`),
-  requiredTrue: t(
-    () => $localize`:@@SI_FORM_CONTAINER.ERROR.REQUIRED_TRUE:The value should be true.`
+  // Phone number specific
+  notSupportedPhoneNumberCountry: t(
+    () => $localize`:@@SI_FORM_CONTAINER.ERROR.PHONE_COUNTRY:Unsupported country/region code`
   ),
-  email: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.EMAIL:The email is not valid.`),
-  minlength: t(
-    () =>
-      $localize`:@@SI_FORM_CONTAINER.ERROR.MIN_LENGTH:The minimum number of characters is not met.`
+  invalidPhoneNumberFormat: t(
+    () => $localize`:@@SI_FORM_CONTAINER.ERROR.INVALID_PHONE:Invalid phone number`
   ),
+  // IP address specific
+  ipv4Address: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.IPV4:Invalid IPv4 address`),
+  ipv6Address: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.IPV6:Invalid IPv6 address`),
+  // Min / max
+  max: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.MAX:Max. {{max}}`),
+  min: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.MIN:Min. {{min}}`),
   maxlength: t(
-    () =>
-      $localize`:@@SI_FORM_CONTAINER.ERROR.MAX_LENGTH:A maximum number of characters is exceeded.`
+    () => $localize`:@@SI_FORM_CONTAINER.ERROR.MAX_LENGTH:Max. {{requiredLength}} characters`
   ),
-  ipv4Address: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.IPV4:Invalid IPv4 address.`),
-  ipv6Address: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.IPV6:Invalid IPv6 address.`),
+  minlength: t(
+    () => $localize`:@@SI_FORM_CONTAINER.ERROR.MIN_LENGTH:Min. {{requiredLength}} characters`
+  ),
+  // Date specific
+  dateFormat: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.DATE_FORMAT:Invalid date`),
+  endBeforeStart: t(
+    () => $localize`:@@SI_FORM_CONTAINER.ERROR.END_BEFORE_START:End date before start date`
+  ),
+  invalidEndDateFormat: t(
+    () => $localize`:@@SI_FORM_CONTAINER.ERROR.DATE_FORMAT_END:Invalid end date`
+  ),
+  invalidStartDateFormat: t(
+    () => $localize`:@@SI_FORM_CONTAINER.ERROR.DATE_FORMAT_START:Invalid start date`
+  ),
+  maxDate: t(
+    () => $localize`:@@SI_FORM_CONTAINER.ERROR.MAX_DATE:Date prior to {{maxString}} required`
+  ),
+  minDate: t(
+    () => $localize`:@@SI_FORM_CONTAINER.ERROR.MIN_DATE:Date after {{minString}} required`
+  ),
+  maxTime: t(
+    () => $localize`:@@SI_FORM_CONTAINER.ERROR.MAX_TIME:Time prior to {{maxString}} required`
+  ),
+  minTime: t(
+    () => $localize`:@@SI_FORM_CONTAINER.ERROR.MIN_TIME:Time after {{minString}} required`
+  ),
+  rangeAfterMaxDate: t(
+    () =>
+      $localize`:@@SI_FORM_CONTAINER.ERROR.RANGE_AFTER_MAX_DATE:Period prior to {{maxString}} required`
+  ),
+  rangeBeforeMinDate: t(
+    () =>
+      $localize`:@@SI_FORM_CONTAINER.ERROR.RANGE_BEFORE_MIN_DATE:Period after {{minString}} required`
+  ),
+  // Time units
+  hours: t(
+    () => $localize`:@@SI_FORM_CONTAINER.ERROR.HOURS:Integer between 0 and {{max}} required`
+  ),
+  minutes: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.MINUTES:Integer between 0 and 59 required`),
+  seconds: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.SECONDS:Integer between 0 and 59 required`),
+  milliseconds: t(
+    () => $localize`:@@SI_FORM_CONTAINER.ERROR.MILLISECONDS:Integer between 0 and 999 required`
+  ),
+  // Various
+  email: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.EMAIL:Invalid email address`),
+  numberFormat: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.NUMBER_FORMAT:Number required`),
   pattern: t(
     () =>
       $localize`:@@SI_FORM_CONTAINER.ERROR.PATTERN:The value does not match the predefined pattern.`
   ),
-  numberFormat: t(
-    () => $localize`:@@SI_FORM_CONTAINER.ERROR.NUMBER_FORMAT:The value is not a valid number.`
-  ),
-  dateFormat: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.DATE_FORMAT:Invalid date format.`),
-  maxDate: t(
-    () => $localize`:@@SI_FORM_CONTAINER.ERROR.MAX_DATE:The date is too far in the future.`
-  ),
-  minDate: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.MIN_DATE:The date is too far in the past.`),
-  maxTime: t(
-    () => $localize`:@@SI_FORM_CONTAINER.ERROR.MAX_TIME:The time is too far in the future.`
-  ),
-  minTime: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.MIN_TIME:The time is too far in the past.`),
-  hours: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.HOURS:The hours are not valid.`),
-
-  minutes: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.MINUTES:The minutes are not valid.`),
-  seconds: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.SECONDS:The seconds are not valid.`),
-  milliseconds: t(
-    () => $localize`:@@SI_FORM_CONTAINER.ERROR.MILLISECONDS:The milliseconds are not valid.`
-  )
+  required: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.REQUIRED:Required`),
+  requiredTrue: t(() => $localize`:@@SI_FORM_CONTAINER.ERROR.REQUIRED_TRUE:Required`)
 });
 
 /**

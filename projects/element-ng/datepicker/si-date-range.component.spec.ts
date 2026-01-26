@@ -342,6 +342,7 @@ describe('SiDateRangeComponent within form', () => {
       expect(component.form.controls.dateRange.errors).toEqual({
         rangeBeforeMinDate: {
           min: component.config().minDate,
+          minString: '2/1/2023',
           start: new Date(2023, 0, 1),
           end: null
         }
@@ -359,6 +360,7 @@ describe('SiDateRangeComponent within form', () => {
       expect(component.form.controls.dateRange.errors).toEqual({
         rangeBeforeMinDate: {
           min: component.config().minDate,
+          minString: '2/1/2023',
           start: null,
           end: new Date(2023, 0, 1)
         }
@@ -376,6 +378,7 @@ describe('SiDateRangeComponent within form', () => {
       expect(component.form.controls.dateRange.errors).toEqual({
         rangeAfterMaxDate: {
           max: component.config().maxDate,
+          maxString: '1/1/2023',
           start: new Date(2023, 1, 1),
           end: null
         }
@@ -393,6 +396,7 @@ describe('SiDateRangeComponent within form', () => {
       expect(component.form.controls.dateRange.errors).toEqual({
         rangeAfterMaxDate: {
           max: component.config().maxDate,
+          maxString: '1/1/2023',
           start: null,
           end: new Date(2023, 1, 1)
         }

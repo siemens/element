@@ -670,13 +670,23 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
     }
   }
 
+  protected formatTime(time: Date): string {
+    const options: Intl.DateTimeFormatOptions = {
+      hour: '2-digit',
+      minute: this.showMinutes() ? '2-digit' : undefined,
+      second: this.showSeconds() ? '2-digit' : undefined,
+      hour12: this.use12HourClock(),
+      fractionalSecondDigits: this.showMilliseconds() ? 3 : undefined
+    };
+    return new Intl.DateTimeFormat(this.locale, options).format(time);
+  }
   protected validateMin(control: AbstractControl): ValidationErrors | null {
     const current = control.value;
     let min = this.min();
     if (control.value instanceof Date && min) {
       min = dateWithTime(current, min);
       if (current < min) {
-        return { minTime: { actual: current, min: min } };
+        return { minTime: { actual: current, min: min, minString: this.formatTime(min) } };
       }
     }
     return null;
@@ -689,7 +699,7 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
     if (control.value instanceof Date && max) {
       max = dateWithTime(current, max);
       if (current > max) {
-        error.maxTime = { actual: current, max: max };
+        error.maxTime = { actual: current, max: max, maxString: this.formatTime(max) };
       }
     }
     return Object.keys(error).length ? error : null;
