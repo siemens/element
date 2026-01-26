@@ -5,16 +5,21 @@
   - button "Tenant 1"
   - button "5 Notifications" [expanded]
   - group "5 Notifications":
+    - text: ""
     - button "Dismiss all"
+    - text: ""
     - link "Security Alert - Unusual login detected link":
       - /url: https://www.siemens.com
       - text: Just now Security Alert - Unusual login detected A new login from Germany was detected on your account. If this wasn't you, please review your security settings immediately.
+    - text: ""
     - link "System Maintenance - Scheduled downtime link":
       - /url: https://www.siemens.com
       - text: One month ago System Maintenance - Scheduled downtime Planned maintenance window completed successfully. All systems are now operational and performance has been improved.
+    - text: ""
     - link "Team Update - Sarah joined your project link":
       - /url: https://www.siemens.com
       - text: /\d+\.\d+\.\d+ \d+:\d+ Team Update - Sarah joined your project Sarah Miller has been added to the Industrial IoT Analytics project and has access to all shared resources\./
+    - text: ""
     - link "Report Ready - Monthly analytics available link":
       - /url: https://www.siemens.com
       - text: /\d+\.\d+\.\d+ \d+:\d+ Report Ready - Monthly analytics available Your February performance report is ready for download\. Click to view insights and key metrics for this period\./
