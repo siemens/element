@@ -141,6 +141,7 @@
     "@types/google-libphonenumber": "7.4.30",
     "@types/jasmine": "5.1.15",
     "@types/node": "24.10.9",
+    "@vitest/browser-playwright": "^4.0.18",
     "angular-eslint": "21.1.0",
     "axe-html-reporter": "2.2.11",
     "concat": "1.0.3",
@@ -155,6 +156,7 @@
     "husky": "9.1.7",
     "jasmine": "5.13.0",
     "jasmine-core": "5.13.0",
+    "jsdom": "^27.4.0",
     "karma": "6.4.4",
     "karma-chrome-launcher": "3.2.0",
     "karma-coverage": "2.2.1",
@@ -176,7 +178,8 @@
     "stylelint-use-logical-spec": "5.0.1",
     "tsx": "4.21.0",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.54.0"
+    "typescript-eslint": "8.54.0",
+    "vitest": "^4.0.18"
   },
   "optionalDependencies": {
     "@simpl/brand": "2.3.0",
