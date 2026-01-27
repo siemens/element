@@ -1,4 +1,3 @@
-- heading "Single-select" [level=4]
 - group "Basic radio toggle button group":
   - radio "Day" [checked]
   - text: ""
@@ -17,6 +16,22 @@
   - radio "One pane" [checked]
   - radio "Two panes"
   - radio "Three panes"
+- heading "Multi-select" [level=4]
+- group "Status filter":
+  - checkbox "Read" [checked]
+  - text: ""
+  - checkbox "Unread"
+  - text: ""
+  - checkbox "Archived" [checked]
+  - text: ""
+  - checkbox "Deleted"
+  - text: ""
+- group "Technology filter":
+  - checkbox "JavaScript" [checked]
+  - checkbox "Mobile"
+  - checkbox "Cloud" [checked]
+  - checkbox "AI/ML"
+  - checkbox "Network"
 - heading "Sizing" [level=4]
 - group "Basic radio toggle button group":
   - radio "Large" [checked]
@@ -25,6 +40,10 @@
   - text: ""
   - radio "Size"
   - text: ""
+- group "Layout selection toggle":
+  - radio "Happy"
+  - radio "Neutral"
+  - radio "Unhappy"
 - group "Basic radio toggle button group":
   - radio "Default" [checked]
   - text: ""
@@ -32,6 +51,10 @@
   - text: ""
   - radio "Size"
   - text: ""
+- group "Layout selection toggle":
+  - radio "Happy"
+  - radio "Neutral"
+  - radio "Unhappy"
 - group "Basic radio toggle button group":
   - radio "Small" [checked]
   - text: ""
@@ -39,11 +62,7 @@
   - text: ""
   - radio "Size"
   - text: ""
-- heading "Multi-select" [level=4]
-- group "Basic checkbox toggle button group":
-  - checkbox "€"
-  - text: ""
-  - checkbox "€€"
-  - text: ""
-  - checkbox "€€€"
-  - text: ""
+- group "Layout selection toggle":
+  - radio "Happy"
+  - radio "Neutral"
+  - radio "Unhappy"
