@@ -32,66 +32,28 @@ export class SampleComponent implements OnInit {
       label: 'Home',
       id: 'home',
       icon: 'element-home',
-      routerLink: 'home',
-      badge: 'New',
-      badgeColor: 'default'
-    },
-    {
-      type: 'router-link',
-      label: 'Menu item',
-      id: 'menu-item',
-      icon: 'element-special-object',
-      routerLink: 'menu-item'
+      routerLink: 'home'
     },
     { type: 'header', label: 'Modules' },
+    {
+      type: 'router-link',
+      label: 'Energy & sustainability',
+      icon: 'element-trend',
+      routerLink: 'energy'
+    },
     {
       type: 'group',
       label: 'User management',
       id: 'user-management',
       icon: 'element-user-group',
-      badge: 6,
-      badgeColor: 'danger-emphasis',
       children: [
         {
           type: 'router-link',
           label: 'Sub item',
-          routerLink: 'subItem',
-          badge: 1,
-          badgeColor: 'info'
+          routerLink: 'subItem'
         },
-        {
-          type: 'router-link',
-          label: 'Sub item 2',
-          routerLink: 'subItem2',
-          badge: 3,
-          badgeColor: 'danger-emphasis'
-        },
-        {
-          type: 'router-link',
-          label: 'Sub item 3',
-          routerLink: 'subItem3',
-          badge: 2,
-          badgeColor: 'warning'
-        }
-      ]
-    },
-    {
-      type: 'group',
-      label: 'Documentation',
-      id: 'documentation',
-      icon: 'element-document',
-      badge: 1,
-      badgeColor: 'info-emphasis',
-      children: [
-        { type: 'router-link', label: 'Sub item 4', routerLink: 'subItem4' },
-        {
-          type: 'router-link',
-          label: 'Sub item 5',
-          routerLink: 'subItem5',
-          badge: 1,
-          badgeColor: 'info-emphasis'
-        },
-        { type: 'router-link', label: 'Sub item 6', routerLink: 'subItem6' }
+        { type: 'router-link', label: 'Sub item 2', routerLink: 'subItem2' },
+        { type: 'router-link', label: 'Sub item 3', routerLink: 'subItem3' }
       ]
     },
     {
@@ -102,6 +64,17 @@ export class SampleComponent implements OnInit {
     },
     { type: 'divider' },
     {
+      type: 'group',
+      label: 'Documentation',
+      id: 'documentation',
+      icon: 'element-document',
+      children: [
+        { type: 'router-link', label: 'Sub item 4', routerLink: 'subItem4' },
+        { type: 'router-link', label: 'Sub item 5', routerLink: 'subItem5' },
+        { type: 'router-link', label: 'Sub item 6', routerLink: 'subItem6' }
+      ]
+    },
+    {
       // AVOID USING `type: 'action'`.
       // Actions inside the navbar are an indication for a code smell.
       // Use `type: 'router-link'` instead whenever possible.
@@ -109,18 +82,10 @@ export class SampleComponent implements OnInit {
       label: 'Action',
       icon: 'element-warning',
       active: false,
-      action: () => this.logEvent('Callback for action called'),
-      badge: 'Hot',
-      badgeColor: 'danger'
-    },
-    {
-      type: 'router-link',
-      label: 'Energy & sustainability',
-      icon: 'element-trend',
-      routerLink: 'energy',
-      badge: 100,
-      badgeColor: 'success',
-      showSubtleBadgeCollapsed: true
+      action: item => {
+        item.active = true;
+        this.logEvent('Callback for action called');
+      }
     }
   ];
 

@@ -115,7 +115,7 @@ export class SampleComponent implements OnInit {
       label: 'Test coverage',
       icon: 'element-diagnostic',
       routerLink: 'coverage',
-      badge: 4,
+      badge: 'Text',
       badgeColor: 'danger-emphasis'
     },
     { type: 'header', label: 'Modules' },
@@ -124,9 +124,7 @@ export class SampleComponent implements OnInit {
       label: 'Emergencies',
       id: 'menu-item',
       icon: 'element-fire',
-      routerLink: 'menu-item',
-      badge: 'Hot',
-      badgeColor: 'danger-emphasis'
+      routerLink: 'menu-item'
     },
     {
       type: 'router-link',
