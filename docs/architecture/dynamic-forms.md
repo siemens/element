@@ -76,7 +76,7 @@ There are plenty of utilities custom-made for you to develop apps with dynamic f
 
 - `object-grid`
     - Wraps your fields in a configurable bootstrap grid.
-    - Use `gridConfig` property with props in [field config](https://formly.dev/docs/api/#formlyfieldconfig) to configure your grid.
+    - Use `gridConfig` property with props in [field config](https://formly.dev/docs/api/core/#formlyfieldconfig) to configure your grid.
 - `array`
     - Wraps your form array together with add/remove buttons if needed.
     - Expects a field array type to be provided within the fields input.
@@ -92,7 +92,7 @@ There are plenty of utilities custom-made for you to develop apps with dynamic f
 - `checkbox`
 - `button`
 
-    Use `btnType` property with props in [field config](https://formly.dev/docs/api/#formlyfieldconfig) to configure following supported button types:
+    Use `btnType` property with props in [field config](https://formly.dev/docs/api/core/#formlyfieldconfig) to configure following supported button types:
 
       - primary
       - secondary
@@ -103,14 +103,14 @@ There are plenty of utilities custom-made for you to develop apps with dynamic f
 - `boolean`
 - `date`
 
-    The following inputs can be passed as [field config](https://formly.dev/docs/api/#formlyfieldconfig) props:
+    The following inputs can be passed as [field config](https://formly.dev/docs/api/core/#formlyfieldconfig) props:
 
       - autoClose
       - dateConfig
 
 - `date-range`
 
-    The following inputs can be passed as [field config](https://formly.dev/docs/api/#formlyfieldconfig) props:
+    The following inputs can be passed as [field config](https://formly.dev/docs/api/core/#formlyfieldconfig) props:
 
       - ariaLabelCalendarButton
       - autoClose
@@ -123,7 +123,7 @@ There are plenty of utilities custom-made for you to develop apps with dynamic f
 
 - `datetime`
   
-    The following inputs can be passed as [field config](https://formly.dev/docs/api/#formlyfieldconfig) props:
+    The following inputs can be passed as [field config](https://formly.dev/docs/api/core/#formlyfieldconfig) props:
 
       - autoClose
       - dateConfig
@@ -133,7 +133,7 @@ There are plenty of utilities custom-made for you to develop apps with dynamic f
 - `integer`
 - `number`
 
-    The following inputs can be passed as [field config](https://formly.dev/docs/api/#formlyfieldconfig) props:
+    The following inputs can be passed as [field config](https://formly.dev/docs/api/core/#formlyfieldconfig) props:
 
       - numberStep
       - showButtons
@@ -141,7 +141,7 @@ There are plenty of utilities custom-made for you to develop apps with dynamic f
 
 - `password`
 
-    The following inputs can be passed as [field config](https://formly.dev/docs/api/#formlyfieldconfig) props:
+    The following inputs can be passed as [field config](https://formly.dev/docs/api/core/#formlyfieldconfig) props:
 
       - digits
       - lowerCase
@@ -150,17 +150,17 @@ There are plenty of utilities custom-made for you to develop apps with dynamic f
       - upperCase
 
 - `si-select`
-      - use `multi` property with props in [field config](https://formly.dev/docs/api/#formlyfieldconfig) to enable multi selection mode.
+      - use `multi` property with props in [field config](https://formly.dev/docs/api/core/#formlyfieldconfig) to enable multi selection mode.
 
 - `string`
 - `textdisplay`
-      - use `prefix` property with props in [field config](https://formly.dev/docs/api/#formlyfieldconfig) to add prefix before text.
-      - use `suffix` property with props in [field config](https://formly.dev/docs/api/#formlyfieldconfig) to add suffix after text.
+      - use `prefix` property with props in [field config](https://formly.dev/docs/api/core/#formlyfieldconfig) to add prefix before text.
+      - use `suffix` property with props in [field config](https://formly.dev/docs/api/core/#formlyfieldconfig) to add suffix after text.
 
 - `textarea`
 - `time`
 
-    The following inputs can be passed as [field config](https://formly.dev/docs/api/#formlyfieldconfig) props:
+    The following inputs can be passed as [field config](https://formly.dev/docs/api/core/#formlyfieldconfig) props:
 
       - hideLabels
       - showMeridian
@@ -180,7 +180,7 @@ There are plenty of utilities custom-made for you to develop apps with dynamic f
       - wraps your form field and label in a horizontal layout.
 - `icon-wrapper`
       - wraps your form field with an icon displayed at the end.
-      - The following inputs can be passed as [field config](https://formly.dev/docs/api/#formlyfieldconfig) props:
+      - The following inputs can be passed as [field config](https://formly.dev/docs/api/core/#formlyfieldconfig) props:
         - `icon`
             - the icon to be displayed at the end of the form field.
         - `iconSize`
