@@ -1,0 +1,17 @@
+@if (showTitle()) {
+  <h2 [attr.id]="sectionId()">
+    {{ category().title }}
+  </h2>
+}
+<div class="icon-grid">
+  @for (icon of category().members; track icon.name) {
+    <app-icon-container
+      [icon]="icon"
+      [iconsMargin]="iconsMargin()"
+      [showFilled]="showFilled()"
+      [displayTags]="displayTags()"
+      [class.dark-theme]="darkTheme()"
+      [class.dark]="dark()"
+    />
+  }
+</div>

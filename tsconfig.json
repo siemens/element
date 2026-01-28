@@ -110,6 +110,9 @@
       "path": "./projects/dashboards-demo/webcomponents/tsconfig.app.json"
     },
     {
+      "path": "./projects/icon-viewer/tsconfig.app.json"
+    },
+    {
       "path": "./playwright/tsconfig.json"
     }
   ]

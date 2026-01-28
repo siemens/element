@@ -1,0 +1,62 @@
+/* stylelint-disable color-no-hex */
+@use '../../../variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background-color: var(--light-background-color, #f4f4f6);
+  border-radius: calc(0.25 * variables.$base-size);
+  cursor: pointer;
+  transition: transform 0.25s;
+  padding-block: calc(0.8 * variables.$base-size);
+  padding-inline: calc(0.25 * variables.$base-size);
+  gap: calc(0.5 * variables.$base-size);
+
+  &.dark {
+    background-color: var(--dark-background-color, #23233c);
+
+    &:not(.dark-theme) {
+      color: var(--dark-text-color, #fff);
+    }
+  }
+
+  &:not(.dark).dark-theme {
+    color: var(--light-text-color, #212121);
+  }
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.icon-preview {
+  font-size: calc(2.4 * variables.$base-size);
+
+  &.icon-no-margin {
+    font-size: calc(1.8 * variables.$base-size);
+    padding: calc(0.3 * variables.$base-size);
+  }
+}
+
+.name {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: calc(0.7 * variables.$base-size);
+  line-height: 1;
+  cursor: text;
+
+  &.copied {
+    color: var(--success-text-color, #27bf66);
+  }
+}
+
+.tags {
+  padding-block-start: calc(0.125 * variables.$base-size);
+  font-size: calc(0.6 * variables.$base-size);
+  line-height: 1;
+}
+
+.text {
+  min-block-size: calc(0.7 * 2 * variables.$base-size);
+}
