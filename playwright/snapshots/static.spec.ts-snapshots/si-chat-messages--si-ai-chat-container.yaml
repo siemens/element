@@ -4,16 +4,16 @@
   - button "dataset.csv"
 - paragraph: Can you help me analyze these files?
 - paragraph: I'm having trouble understanding the data structure and need assistance with the implementation.
-- button "Export message"
+- button "Copy message"
 - paragraph: I'd be happy to help you analyze your files! I can see you've shared a Python script and a CSV dataset.
 - paragraph: Let me examine the structure and provide guidance.
-- button "Add to list"
-- button "Export response"
+- button "Good response"
+- button "Copy response"
 - button "Retry response"
 - button "More actions"
 - paragraph: Perfect! What should I focus on first
 - paragraph: I also want to make sure the performance is optimized for large datasets since this will be used in production with potentially millions of rows?
-- button "Export message"
+- button "Copy message"
 - paragraph: Great question! When analyzing large datasets, it's crucial to focus on...
 - alert: Info AI responses are for demonstration purposes.
 - group:

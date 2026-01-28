@@ -7,12 +7,15 @@
 import { AfterContentInit } from '@angular/core';
 import { AfterViewInit } from '@angular/core';
 import * as _angular_core from '@angular/core';
+import { BackgroundColorVariant } from '@siemens/element-ng/common';
 import { ElementRef } from '@angular/core';
 import { FileUploadError } from '@siemens/element-ng/file-uploader';
 import * as i1 from '@siemens/element-ng/resize-observer';
+import { isSignal } from '@angular/core';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { OnDestroy } from '@angular/core';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
+import { Signal } from '@angular/core';
 import { SiModalService } from '@siemens/element-ng/modal';
 import { TemplateRef } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
@@ -20,9 +23,23 @@ import { TranslatableString as TranslatableString_2 } from '@siemens/element-tra
 import { UploadFile } from '@siemens/element-ng/file-uploader';
 
 // @public
+export interface AiChatMessage extends BaseChatMessage {
+    actions?: MessageAction[];
+    content: string | Signal<string>;
+    type: 'ai';
+}
+
+// @public
 export interface Attachment {
     name: string;
     previewTemplate?: TemplateRef<any> | (() => TemplateRef<any>);
+}
+
+// @public
+export interface BaseChatMessage {
+    content?: string | Signal<string>;
+    loading?: boolean | Signal<boolean>;
+    type: 'user' | 'ai';
 }
 
 // @public
@@ -33,11 +50,63 @@ export interface ChatInputAttachment extends Attachment {
 }
 
 // @public
+export type ChatMessage = UserChatMessage | AiChatMessage | TemplateChatMessage;
+
+// @public
 export interface MessageAction {
     action: (actionParam: any, source: this) => void;
     disabled?: boolean;
     icon: string;
     label: TranslatableString;
+}
+
+// @public (undocumented)
+export interface PromptCategory {
+    // (undocumented)
+    label: string;
+}
+
+// @public (undocumented)
+export interface PromptSuggestion {
+    // (undocumented)
+    text: string;
+}
+
+// @public
+export class SiAiChatContainerComponent {
+    constructor();
+    readonly aiIcon: _angular_core.InputSignal<string>;
+    readonly colorVariant: _angular_core.InputSignal<BackgroundColorVariant>;
+    readonly copyCodeButtonLabel: _angular_core.InputSignal<TranslatableString_2>;
+    readonly disableCopyCodeButton: _angular_core.InputSignal<boolean>;
+    readonly disableDownloadTableButton: _angular_core.InputSignal<boolean>;
+    readonly disableInterrupt: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly downloadTableButtonLabel: _angular_core.InputSignal<TranslatableString_2>;
+    focus(): void;
+    readonly greeting: _angular_core.InputSignal<TranslatableString_2>;
+    readonly interrupting: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly latexRenderer: _angular_core.InputSignal<((latex: string, displayMode: boolean) => string | undefined) | undefined>;
+    readonly loading: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly messages: _angular_core.InputSignal<ChatMessage[] | undefined>;
+    readonly messageSent: _angular_core.OutputEmitterRef<{
+        content: string;
+        attachments: ChatInputAttachment[];
+    }>;
+    readonly noAutoScroll: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly promptSuggestions: _angular_core.InputSignal<PromptSuggestion[] | Record<string, PromptSuggestion[]>>;
+    scrollToBottom(): void;
+    readonly secondaryActionsLabel: _angular_core.InputSignal<TranslatableString_2>;
+    readonly sending: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly statusAction: _angular_core.InputSignal<{
+        title: string;
+        href: string;
+        target?: string;
+    } | undefined>;
+    readonly statusHeading: _angular_core.InputSignal<string | undefined>;
+    readonly statusMessage: _angular_core.InputSignal<string | undefined>;
+    readonly statusSeverity: _angular_core.InputSignal<"info" | "success" | "warning" | "danger" | "caution" | "critical" | undefined>;
+    readonly syntaxHighlighter: _angular_core.InputSignal<((code: string, language?: string) => string | undefined) | undefined>;
+    readonly welcomeMessage: _angular_core.InputSignal<TranslatableString_2>;
 }
 
 // @public
@@ -50,6 +119,14 @@ export class SiAiMessageComponent {
     readonly loading: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
     readonly secondaryActionsLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+}
+
+// @public
+export class SiAiWelcomeScreenComponent {
+    readonly categories: _angular_core.InputSignal<PromptCategory[]>;
+    readonly promptSelected: _angular_core.OutputEmitterRef<PromptSuggestion>;
+    readonly promptSuggestions: _angular_core.InputSignal<PromptSuggestion[] | Record<string, PromptSuggestion[]>>;
+    readonly selectedCategory: _angular_core.ModelSignal<string | undefined>;
 }
 
 // @public
@@ -67,6 +144,8 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
     readonly colorVariant: _angular_core.InputSignal<string>;
     focus(): void;
     readonly noAutoScroll: _angular_core.InputSignalWithTransform<boolean, string | boolean>;
+    scrollToBottom(): void;
+    scrollToTop(): void;
 }
 
 // @public
@@ -74,7 +153,8 @@ export class SiChatContainerInputDirective {
 }
 
 // @public
-export class SiChatInputComponent implements AfterViewInit {
+export class SiChatInputComponent implements AfterViewInit, OnDestroy {
+    constructor();
     readonly accept: _angular_core.InputSignal<string | undefined>;
     readonly actionParam: _angular_core.InputSignal<any>;
     readonly actions: _angular_core.InputSignal<MessageAction[]>;
@@ -88,11 +168,13 @@ export class SiChatInputComponent implements AfterViewInit {
     focus(): void;
     readonly interrupt: _angular_core.OutputEmitterRef<void>;
     readonly interruptButtonLabel: _angular_core.InputSignal<TranslatableString_2>;
-    readonly interruptible: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly interruptible: _angular_core.ModelSignal<boolean>;
     readonly label: _angular_core.InputSignal<string>;
     readonly maxFileSize: _angular_core.InputSignal<number>;
     readonly maxLength: _angular_core.InputSignal<number | undefined>;
     readonly placeholder: _angular_core.InputSignal<TranslatableString_2>;
+    // (undocumented)
+    registerParent(sending: Signal<boolean>, interruptible: Signal<boolean>, sendListener?: () => void): void;
     readonly removeAttachmentLabel: _angular_core.InputSignal<TranslatableString_2>;
     readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
     readonly secondaryActionsLabel: _angular_core.InputSignal<TranslatableString_2>;
@@ -102,7 +184,7 @@ export class SiChatInputComponent implements AfterViewInit {
     }>;
     readonly sendButtonIcon: _angular_core.InputSignal<string>;
     readonly sendButtonLabel: _angular_core.InputSignal<TranslatableString_2>;
-    readonly sending: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly sending: _angular_core.ModelSignal<boolean>;
     readonly value: _angular_core.ModelSignal<string>;
 }
 
@@ -131,6 +213,20 @@ export class SiUserMessageComponent {
     readonly contentFormatter: _angular_core.InputSignal<((text: string) => string | Node) | undefined>;
     readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
     readonly secondaryActionsLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+}
+
+// @public
+export interface TemplateChatMessage {
+    template: TemplateRef<any>;
+    templateContext?: any;
+}
+
+// @public
+export interface UserChatMessage extends BaseChatMessage {
+    actions?: MessageAction[];
+    attachments?: Attachment[];
+    content: string;
+    type: 'user';
 }
 
 // (No @packageDocumentation comment for this package)

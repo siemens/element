@@ -1,0 +1,69 @@
+<si-chat-container [colorVariant]="colorVariant()" [noAutoScroll]="noAutoScroll() || isEmpty()">
+  @if (isEmpty()) {
+    <si-ai-welcome-screen
+      [categories]="promptCategories()"
+      [selectedCategory]="selectedCategory()"
+      [promptSuggestions]="promptSuggestions()"
+      (selectedCategoryChange)="selectedCategory.set($event)"
+      (promptSelected)="onPromptSelected($event)"
+    >
+      <p class="h1 mb-0 text-white">
+        <strong>{{ greeting() | translate }}</strong>
+      </p>
+      <p class="h1 mb-0 text-white">{{ welcomeMessage() | translate }}</p>
+      <ng-content select="[welcomeScreen]" />
+    </si-ai-welcome-screen>
+  }
+
+  @if (displayMessages() !== undefined) {
+    @for (message of displayMessages(); track $index) {
+      @if (isTemplateMessage(message)) {
+        <ng-container
+          [ngTemplateOutlet]="message.template"
+          [ngTemplateOutletContext]="message.templateContext ?? message"
+        />
+      } @else {
+        @if (message.type === 'user') {
+          <si-user-message
+            [class.last]="$last"
+            [content]="getContentValue(message.content)"
+            [attachments]="message.attachments || []"
+            [actions]="getMessagePrimaryActions(message)"
+            [secondaryActions]="getMessageSecondaryActions(message)"
+            [actionParam]="message"
+            [secondaryActionsLabel]="secondaryActionsLabel()"
+            [contentFormatter]="markdownRenderer()"
+          />
+        }
+
+        @if (message.type === 'ai') {
+          <si-ai-message
+            [content]="getContentValue(message.content)"
+            [loading]="
+              getLoadingState(message.loading, message.content, isLatestMessage(message), false)
+            "
+            [actions]="getMessagePrimaryActions(message)"
+            [secondaryActions]="getMessageSecondaryActions(message)"
+            [actionParam]="message"
+            [secondaryActionsLabel]="secondaryActionsLabel()"
+            [contentFormatter]="markdownRenderer()"
+          />
+        }
+      }
+    }
+  }
+
+  @if (statusSeverity() && statusMessage()) {
+    <si-inline-notification
+      class="mb-6 w-100 overflow-hidden"
+      [severity]="statusSeverity()!"
+      [heading]="statusHeading()"
+      [message]="statusMessage()!"
+      [action]="statusAction()"
+    />
+  }
+
+  <div siChatContainerInput class="w-100">
+    <ng-content select="si-chat-input" />
+  </div>
+</si-chat-container>

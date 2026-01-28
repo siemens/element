@@ -23,11 +23,12 @@ import {
  * scrolls to the bottom when new content is added, unless the user has scrolled up to view older messages.
  *
  * Use via content projection:
+ *
  * - Default content: Chat messages displayed in the scrollable messages container or something like an empty state.
  * - `si-inline-notification` selector: Notification component displayed above the input area
  * - `si-chat-input` or `[siChatContainerInput]` selector: Input controls for composing messages
  *
- * @see {@link SiChatInputComponent} for the chat input wrapper component
+ * @see {@link SiChatInputComponent} for the chat input component
  * @see {@link SiChatContainerInputDirective} for other input controls to slot in
  * @see {@link SiAiMessageComponent} for AI messages to slot in
  * @see {@link SiUserMessageComponent} for user messages (in AI chats) to slot in
@@ -50,6 +51,9 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
 
   private isUserAtBottom = true;
   private scrollTimeout: ReturnType<typeof setTimeout> | undefined;
+  private lastScrollTime = 0;
+  private pendingScroll = false;
+  private scrollDebounceMs = 7; // ~144fps
   private resizeObserver: ResizeObserver | undefined;
   private contentObserver: MutationObserver | undefined;
 
@@ -77,7 +81,7 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
   }
 
   ngAfterContentInit(): void {
-    this.scrollToBottom();
+    this.scrollToBottomDuringStreaming();
   }
 
   ngOnDestroy(): void {
@@ -92,7 +96,7 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
     }
   }
 
-  private scrollToBottom(): void {
+  private scrollToBottomDuringStreaming(): void {
     if (this.noAutoScroll() || !this.isUserAtBottom) {
       return;
     }
@@ -107,13 +111,28 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
   }
 
   private debouncedScrollToBottom(): void {
+    const now = Date.now();
+    const timeSinceLastScroll = now - this.lastScrollTime;
+
+    if (timeSinceLastScroll >= this.scrollDebounceMs) {
+      this.lastScrollTime = now;
+      this.scrollToBottomDuringStreaming();
+      this.pendingScroll = false;
+    } else {
+      this.pendingScroll = true;
+    }
+
     if (this.scrollTimeout) {
       clearTimeout(this.scrollTimeout);
     }
 
     this.scrollTimeout = setTimeout(() => {
-      this.scrollToBottom();
-    }, 100);
+      if (this.pendingScroll) {
+        this.lastScrollTime = Date.now();
+        this.scrollToBottomDuringStreaming();
+        this.pendingScroll = false;
+      }
+    }, this.scrollDebounceMs);
   }
 
   private setupResizeObserver(): void {
@@ -168,6 +187,29 @@ export class SiChatContainerComponent implements AfterContentInit, OnDestroy {
 
   protected onScroll(): void {
     this.checkIfUserAtBottom();
+  }
+
+  /**
+   * Scrolls to the bottom of the messages container immediately.
+   * This method forces a scroll even if the user has scrolled up.
+   */
+  public scrollToBottom(): void {
+    this.isUserAtBottom = true;
+    this.scrollToBottomDuringStreaming();
+  }
+
+  /**
+   * Scrolls to the top of the messages container immediately.
+   */
+  public scrollToTop(): void {
+    const container = this.messagesContainer();
+    if (!container) {
+      return;
+    }
+
+    const element = container.nativeElement;
+    element.scrollTop = 0;
+    this.isUserAtBottom = false;
   }
 
   /**

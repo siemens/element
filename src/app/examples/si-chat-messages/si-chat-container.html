@@ -1,6 +1,6 @@
 <div class="si-layout-fixed-height w-100 h-100">
-  <si-chat-container colorVariant="base-0">
-    @for (message of messages(); track message) {
+  <si-chat-container #chatContainer colorVariant="base-0">
+    @for (message of messages(); track $index) {
       @if (message.type === 'user') {
         <si-user-message
           [content]="message.content"
@@ -38,6 +38,16 @@
           }
         </si-chat-message>
       }
+    } @empty {
+      <si-ai-welcome-screen
+        [categories]="promptCategories"
+        [promptSuggestions]="filteredPromptSuggestions()"
+        [(selectedCategory)]="selectedCategory"
+        (promptSelected)="onPromptSelected($event)"
+      >
+        <p class="h1 mb-0 text-white"> <strong>Hello</strong>, </p>
+        <p class="h1 mb-0 text-white">how can I help you today?</p>
+      </si-ai-welcome-screen>
     }
 
     @if (
@@ -46,16 +56,18 @@
       <si-ai-message content="" [loading]="true" />
     }
 
-    <si-inline-notification
-      class="mb-6 w-100 overflow-hidden"
-      severity="info"
-      message="AI responses are for demonstration purposes."
-    />
+    @if (!firstMessageSent() && messages().length) {
+      <si-inline-notification
+        class="mb-6 w-100 overflow-hidden"
+        severity="info"
+        message="AI responses are for demonstration purposes."
+      />
+    }
 
     <si-chat-input
       class="w-100"
       accept="image/*,.pdf,.doc,.docx,.txt"
-      placeholder="Enter a command, question or topic..."
+      placeholder="Enter a command, question or topic…"
       disclaimer="The content is AI generated. Always verify the information for accuracy."
       [allowAttachments]="true"
       [actions]="inputActions"
@@ -68,7 +80,18 @@
       (send)="onMessageSent($event)"
       (interrupt)="onInterrupt()"
       (fileError)="onFileError($event)"
-    />
+    >
+      @if (messages().length) {
+        <button
+          type="button"
+          class="btn btn-tertiary btn-sm"
+          title="Show welcome screen"
+          (click)="onShowWelcomeScreen()"
+        >
+          Show Welcome Screen
+        </button>
+      }
+    </si-chat-input>
   </si-chat-container>
 </div>
 
