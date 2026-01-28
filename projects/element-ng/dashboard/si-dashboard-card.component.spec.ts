@@ -189,10 +189,10 @@ describe('SiDashboardCardComponent', () => {
     component.primaryActions = [{ title: 'Action' }];
     fixture.detectChanges();
     // Second element in content action bar is our expand actions
-    (element.querySelectorAll('si-content-action-bar .dropdown-item')[1] as HTMLElement).click();
+    element.querySelector<HTMLElement>('si-content-action-bar button[title="Expand"]')?.click();
     fixture.detectChanges();
     expect(component.card().isExpanded()).toBeTrue();
-    (element.querySelectorAll('si-content-action-bar .dropdown-item')[1] as HTMLElement).click();
+    element.querySelector<HTMLElement>('si-content-action-bar button[title="Restore"]')?.click();
     fixture.detectChanges();
     expect(component.card().isExpanded()).toBeFalse();
   });
@@ -201,10 +201,10 @@ describe('SiDashboardCardComponent', () => {
     component.enableExpandInteraction = true;
     component.secondaryActions = [{ title: 'Action' }];
     fixture.detectChanges();
-    (element.querySelector('si-content-action-bar .dropdown-item') as HTMLElement).click();
+    element.querySelector<HTMLElement>('si-content-action-bar button[title="Expand"]')?.click();
     fixture.detectChanges();
     expect(component.card().isExpanded()).toBeTrue();
-    (element.querySelector('si-content-action-bar .dropdown-item') as HTMLElement).click();
+    element.querySelector<HTMLElement>('si-content-action-bar button[title="Restore"]')?.click();
     fixture.detectChanges();
     expect(component.card().isExpanded()).toBeFalse();
   });

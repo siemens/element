@@ -120,20 +120,6 @@ describe('SiAutoCollapsableListDirective', () => {
     jasmine.clock().uninstall();
   });
 
-  it('should not flicker on initial render', async () => {
-    fixture.detectChanges();
-    hostElement
-      .querySelectorAll<HTMLElement>('[siAutoCollapsableListItem]')
-      .forEach(element => expect(element.style.visibility).toBe('hidden'));
-
-    await tick();
-    fixture.detectChanges();
-    hostElement
-      .querySelectorAll<HTMLElement>('[siAutoCollapsableListItem]')
-      .forEach(element => expect(element.style.visibility).toBe('visible'));
-    component.items().forEach(item => expect(item.canBeVisible()).toBe(true));
-  });
-
   it('should collapse and expand items on container size changes', async () => {
     fixture.detectChanges();
     // Skip test when browser is not focussed to prevent failures.

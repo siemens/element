@@ -5,9 +5,11 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
+import { ElementRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
+import { Signal } from '@angular/core';
 
 // @public (undocumented)
 export const BOOTSTRAP_BREAKPOINTS: Breakpoints;
@@ -35,11 +37,20 @@ export interface ElementDimensions {
 }
 
 // @public
+export const observeElementSize: <ReturnType = ResizeObserverEntry[]>(source: Source, opt?: ResizeSignalOptions<ReturnType>) => Signal<ReturnType>;
+
+// @public
 export class ResizeObserverService {
     constructor();
     // @deprecated
     _checkAll(): void;
     observe(element: Element, throttle: number, emitInitial?: boolean, emitImmediate?: boolean): Observable<ElementDimensions>;
+}
+
+// @public
+export interface ResizeSignalOptions<ReturnType = ResizeObserverEntry[]> {
+    box?: ResizeObserverBoxOptions;
+    mapFn?: (entries: ResizeObserverEntry[]) => ReturnType;
 }
 
 // @public
