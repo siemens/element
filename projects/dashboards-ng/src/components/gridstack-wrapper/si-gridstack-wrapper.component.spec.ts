@@ -4,6 +4,7 @@
  */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Component, viewChild } from '@angular/core';
+import { outputToObservable } from '@angular/core/rxjs-interop';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
@@ -14,6 +15,7 @@ import {
   TEST_WIDGET_CONFIG_2,
   TEST_WIDGET_CONFIGS
 } from 'projects/dashboards-ng/test/test-widget/test-widget';
+import { firstValueFrom, take, toArray } from 'rxjs';
 
 import { TestingModule } from '../../../test/testing.module';
 import { WidgetConfig } from '../../model/widgets.model';
@@ -157,24 +159,23 @@ describe('SiGridstackWrapperComponent', () => {
     });
   });
 
-  it('should emit gridstack events', (done: DoneFn) => {
+  it('should emit gridstack events', async () => {
     fixture = TestBed.createComponent(HostComponent);
     host = fixture.componentInstance;
     fixture.detectChanges();
 
     const events = ['added', 'removed'];
-    let index = 0;
-    host.gridStackWrapper()?.gridEvent.subscribe(wrapperEvent => {
-      expect(wrapperEvent.event.type).toBe(events[index]);
-      index++;
-      if (index === events.length) {
-        done();
-      }
-    });
+    const emittedEventsPromise = firstValueFrom(
+      outputToObservable(host.gridStackWrapper()!.gridEvent).pipe(take(events.length), toArray())
+    );
+
     events.forEach(eventName => {
       const event = new CustomEvent(eventName, { bubbles: false, detail: {} });
       //@ts-ignore
       host.gridStackWrapper()?.grid.el.dispatchEvent(event);
     });
+
+    const emittedEvents = await emittedEventsPromise;
+    expect(emittedEvents.map(e => e.event.type)).toEqual(events);
   });
 });
