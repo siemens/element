@@ -1,0 +1,103 @@
+@use 'sass:map';
+@use '@siemens/element-theme/src/styles/variables';
+
+:host {
+  display: block;
+}
+
+si-chat-message {
+  --chat-message-bubble-bg: transparent;
+  // Because of the transparent background we need to remove the padding
+  --chat-message-bubble-padding: 0;
+}
+
+// Loading spinner size adjustment (inherited from generic component)
+:host ::ng-deep si-loading-spinner {
+  --loading-spinner-size: 1.5em;
+}
+
+.tool-message-content {
+  display: flex;
+  flex-direction: column;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  overflow: hidden;
+  transition: inline-size variables.$element-default-transition-duration ease-out;
+
+  > * {
+    inline-size: 100%;
+    max-inline-size: 100%;
+    flex-shrink: 0;
+  }
+}
+
+.tool-name {
+  color: variables.$element-text-primary;
+  font-weight: variables.$si-font-weight-semibold;
+  margin-block-end: map.get(variables.$spacers, 3);
+  inline-size: 100%;
+  max-inline-size: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tool-data {
+  background-color: variables.$element-ui-4;
+  padding: map.get(variables.$spacers, 3);
+  border-radius: variables.$element-radius-1;
+  margin: 0;
+  max-block-size: 300px;
+  max-inline-size: 100%;
+  overflow: auto;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  font-family:
+    'SFMono-Regular', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  font-size: 0.875rem;
+  line-height: 1.4;
+
+  code {
+    // Because different font
+    font-size: 0.9em;
+    background: none;
+    padding: 0;
+    color: variables.$element-text-primary;
+    font-family: inherit;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+  }
+}
+
+si-collapsible-panel {
+  inline-size: 100%;
+  max-inline-size: 100%;
+  overflow: hidden;
+
+  ::ng-deep :has(> .loading-panel-header) {
+    inline-size: 100%;
+    padding-inline-end: map.get(variables.$spacers, 2);
+  }
+
+  ::ng-deep .collapsible-header {
+    inline-size: 100%;
+    max-inline-size: 100%;
+    overflow: hidden;
+  }
+
+  ::ng-deep .collapsible-content {
+    inline-size: 100%;
+    max-inline-size: 100%;
+    overflow: hidden;
+  }
+}
+
+si-collapsible-panel ::ng-deep .collapsible-header:has(.loading-panel-header) .dropdown-caret {
+  color: variables.$element-text-disabled;
+}
+
+.loading-panel-header {
+  inline-size: 100%;
+  min-inline-size: 75px;
+  margin-block-start: map.get(variables.$spacers, 1);
+}

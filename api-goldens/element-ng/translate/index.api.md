@@ -12,6 +12,12 @@ export const provideSiTranslatableOverrides: (values: SiTranslatableKeys) => Pro
 // @public (undocumented)
 export interface SiTranslatableKeys {
     // (undocumented)
+    'SI_AI_CHAT_CONTAINER.SECONDARY_ACTIONS'?: string;
+    // (undocumented)
+    'SI_AI_CHAT_CONTAINER.WELCOME_GREETING'?: string;
+    // (undocumented)
+    'SI_AI_CHAT_CONTAINER.WELCOME_MESSAGE'?: string;
+    // (undocumented)
     'SI_AI_MESSAGE.SECONDARY_ACTIONS'?: string;
     // (undocumented)
     'SI_ALERT_DIALOG.OK'?: string;
@@ -334,6 +340,10 @@ export interface SiTranslatableKeys {
     // (undocumented)
     'SI_MAIN_DETAIL_CONTAINER.BACK'?: string;
     // (undocumented)
+    'SI_MARKDOWN_RENDERER.COPY_CODE'?: string;
+    // (undocumented)
+    'SI_MARKDOWN_RENDERER.DOWNLOAD'?: string;
+    // (undocumented)
     'SI_NAVBAR.OPEN_LAUNCHPAD'?: string;
     // (undocumented)
     'SI_NAVBAR.TOGGLE_NAVIGATION'?: string;
@@ -431,6 +441,10 @@ export interface SiTranslatableKeys {
     'SI_THRESHOLD.STATUS'?: string;
     // (undocumented)
     'SI_TOAST.CLOSE'?: string;
+    // (undocumented)
+    'SI_TOOL_MESSAGE.INPUT_ARGUMENTS'?: string;
+    // (undocumented)
+    'SI_TOOL_MESSAGE.OUTPUT'?: string;
     // (undocumented)
     'SI_TOUR.BACK'?: string;
     // (undocumented)

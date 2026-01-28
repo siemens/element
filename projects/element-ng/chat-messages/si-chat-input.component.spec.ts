@@ -8,7 +8,7 @@ import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { FileUploadError, UploadFile } from '@siemens/element-ng/file-uploader';
 
-import { MessageAction } from './message-action.model';
+import { MessageAction } from './chat-message.model';
 import {
   ChatInputAttachment,
   SiChatInputComponent as TestComponent

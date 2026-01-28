@@ -2,13 +2,15 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   inject,
   signal,
   TemplateRef,
-  viewChild
+  viewChild,
+  PLATFORM_ID
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import {
@@ -21,7 +23,10 @@ import {
   MessageAction,
   SiChatMessageActionDirective,
   SiAttachmentListComponent,
-  Attachment
+  Attachment,
+  SiAiWelcomeScreenComponent,
+  PromptCategory,
+  PromptSuggestion
 } from '@siemens/element-ng/chat-messages';
 import { FileUploadError } from '@siemens/element-ng/file-uploader';
 import { SiIconComponent } from '@siemens/element-ng/icon';
@@ -32,7 +37,10 @@ import {
 } from '@siemens/element-ng/markdown-renderer';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { SiToastNotificationService } from '@siemens/element-ng/toast-notification';
+import { injectSiTranslateService } from '@siemens/element-translate-ng/translate';
 import { LOG_EVENT } from '@siemens/live-preview';
+import hljs from 'highlight.js';
+import katex from 'katex';
 
 interface ChatMessage {
   type: 'user' | 'ai' | 'custom';
@@ -53,7 +61,8 @@ interface ChatMessage {
     SiIconComponent,
     SiMarkdownRendererComponent,
     SiChatMessageActionDirective,
-    SiAttachmentListComponent
+    SiAttachmentListComponent,
+    SiAiWelcomeScreenComponent
   ],
   templateUrl: './si-chat-container.html',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -61,10 +70,54 @@ interface ChatMessage {
 export class SampleComponent {
   private logEvent = inject(LOG_EVENT);
   private readonly modalTemplate = viewChild<TemplateRef<any>>('modalTemplate');
+  private readonly chatContainer = viewChild<SiChatContainerComponent>('chatContainer');
   private sanitizer = inject(DomSanitizer);
   private readonly toastService = inject(SiToastNotificationService);
+  private translate = injectSiTranslateService();
+  private doc = inject(DOCUMENT);
+  private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
-  protected markdownRenderer = getMarkdownRenderer(this.sanitizer);
+  protected markdownRenderer = getMarkdownRenderer(
+    this.sanitizer,
+    {
+      copyCodeButton: 'SI_MARKDOWN_RENDERER.COPY_CODE',
+      downloadTableButton: 'SI_MARKDOWN_RENDERER.DOWNLOAD',
+      translateSync: this.translate.translateSync.bind(this.translate),
+      // Optional: Syntax highlighting with highlight.js
+      // This function returns highlighted HTML markup for the code content.
+      // The returned HTML is sanitized before insertion.
+      // Element provides a built-in highlight.js theme that adapts to light/dark mode.
+      // Make sure to include highlight.js as a dependency.
+      syntaxHighlighter: (code: string, language?: string): string | undefined => {
+        if (language && hljs.getLanguage(language)) {
+          try {
+            return hljs.highlight(code, { language }).value;
+          } catch {
+            // If highlighting fails, fall back to no highlighting
+          }
+        }
+        return undefined;
+      },
+      // Optional: LaTeX rendering with KaTeX
+      // This function returns rendered HTML for LaTeX math expressions.
+      // The returned HTML is sanitized before insertion.
+      // Make sure to include KaTeX styles in your application.
+      // Add to styles in angular.json: "node_modules/katex/dist/katex.min.css"
+      latexRenderer: (latex: string, displayMode: boolean): string | undefined => {
+        try {
+          return katex.renderToString(latex, {
+            displayMode,
+            throwOnError: false,
+            output: 'html'
+          });
+        } catch {
+          return undefined;
+        }
+      }
+    },
+    this.doc,
+    this.isBrowser
+  );
 
   readonly preAttachedFiles: ChatInputAttachment[] = [
     {
@@ -100,10 +153,10 @@ export class SampleComponent {
       ],
       actions: [
         {
-          label: 'Copy message',
+          label: 'Export message',
           icon: 'element-export',
           action: (message: ChatMessage) =>
-            this.logEvent(`Copy user message ${message.content.slice(0, 20)}...`)
+            this.logEvent(`Export user message ${message.content.slice(0, 20)}...`)
         }
       ]
     },
@@ -114,14 +167,14 @@ export class SampleComponent {
   Let me examine the structure and provide guidance.`,
       actions: [
         {
-          label: 'Good response',
+          label: 'Add to list',
           icon: 'element-plus',
-          action: (_message: ChatMessage) => this.logEvent('Thumbs up for AI message')
+          action: (_message: ChatMessage) => this.logEvent('Add AI message to list')
         },
         {
-          label: 'Copy response',
+          label: 'Export response',
           icon: 'element-export',
-          action: (_message: ChatMessage) => this.logEvent('Copy AI message')
+          action: (_message: ChatMessage) => this.logEvent('Export AI message')
         },
         {
           label: 'Retry response',
@@ -141,10 +194,10 @@ export class SampleComponent {
         'Perfect! What should I focus on first\n\nI also want to make sure the performance is optimized for large datasets since this will be used in production with potentially millions of rows?',
       actions: [
         {
-          label: 'Copy message',
+          label: 'Export message',
           icon: 'element-export',
           action: (_message: ChatMessage) =>
-            this.logEvent(`Copy user message ${_message.content.slice(0, 20)}...`)
+            this.logEvent(`Export user message ${_message.content.slice(0, 20)}...`)
         }
       ]
     },
@@ -160,26 +213,22 @@ export class SampleComponent {
   readonly disableInterrupt = signal(false);
   readonly interrupting = signal(false);
   readonly inputValue = signal('');
+  readonly firstMessageSent = signal(false);
 
   inputActions: MessageAction[] = [
     {
-      label: 'Text formatting',
-      icon: 'element-brush',
-      action: () => this.logEvent('Text formatting clicked')
-    },
-    {
-      label: 'Message templates',
-      icon: 'element-template',
-      action: () => this.logEvent('Templates clicked')
+      label: 'Clear messages',
+      icon: 'element-delete',
+      action: () => this.onClearMessages()
     }
   ];
 
   userActions: MessageAction[] = [
     {
-      label: 'Copy message',
+      label: 'Export message',
       icon: 'element-export',
       action: (_message: ChatMessage) =>
-        this.logEvent(`Copy user message ${_message.content.slice(0, 20)}...`)
+        this.logEvent(`Export user message ${_message.content.slice(0, 20)}...`)
     },
     {
       label: 'Delete message',
@@ -191,19 +240,61 @@ export class SampleComponent {
 
   aiActions: MessageAction[] = [
     {
-      label: 'Good response',
+      label: 'Add to list',
       icon: 'element-plus',
-      action: (_message: ChatMessage) => this.logEvent('Thumbs up for AI message')
+      action: (_message: ChatMessage) => this.logEvent('Add AI message to list')
     },
     {
-      label: 'Copy response',
+      label: 'Export response',
       icon: 'element-export',
-      action: (_message: ChatMessage) => this.logEvent('Copy AI message')
+      action: (_message: ChatMessage) => this.logEvent('Export AI message')
     }
   ];
 
+  readonly promptCategories: PromptCategory[] = [
+    { label: 'All prompts' },
+    { label: 'Maintenance' },
+    { label: 'Category 2' },
+    { label: 'Category 3' }
+  ];
+
+  readonly selectedCategory = signal<string>('All prompts');
+
+  readonly allPromptSuggestions: PromptSuggestion[] = [
+    { text: 'How do I optimize performance for large datasets?' },
+    { text: 'What are the best practices for data validation?' },
+    { text: 'Help me troubleshoot this error message' },
+    { text: 'Explain the difference between async and sync operations' }
+  ];
+
+  readonly filteredPromptSuggestions = signal<PromptSuggestion[]>(this.allPromptSuggestions);
+
+  onPromptSelected(suggestion: PromptSuggestion): void {
+    this.logEvent(`Prompt selected: ${suggestion.text}`);
+    this.inputValue.set('');
+    this.firstMessageSent.set(true);
+    this.onMessageSent({ content: suggestion.text, attachments: [] });
+  }
+
+  onClearMessages(): void {
+    this.logEvent('Clear messages clicked');
+    this.messages.set([]);
+    setTimeout(() => {
+      this.chatContainer()?.scrollToTop();
+    });
+  }
+
+  onShowWelcomeScreen(): void {
+    this.logEvent('Show welcome screen clicked');
+    this.messages.set([]);
+    setTimeout(() => {
+      this.chatContainer()?.scrollToTop();
+    });
+  }
+
   onMessageSent(event: { content: string; attachments: ChatInputAttachment[] }): void {
     this.logEvent(`Message sent: "${event.content}" with ${event.attachments.length} attachments`);
+    this.firstMessageSent.set(true);
     this.messages.update(current => [
       ...current,
       {
@@ -211,9 +302,9 @@ export class SampleComponent {
         content: event.content,
         actions: [
           {
-            label: 'Copy message',
+            label: 'Export message',
             icon: 'element-export',
-            action: () => this.logEvent('Copy user message')
+            action: () => this.logEvent('Export user message')
           }
         ],
         attachments: event.attachments.map(att => ({
@@ -223,6 +314,10 @@ export class SampleComponent {
       }
     ]);
     this.simulateAiResponse(event.content);
+
+    setTimeout(() => {
+      this.chatContainer()?.scrollToBottom();
+    }, 0);
   }
 
   onInterrupt(): void {
@@ -253,14 +348,14 @@ export class SampleComponent {
             content: response,
             actions: [
               {
-                label: 'Good response',
+                label: 'Add to list',
                 icon: 'element-plus',
-                action: () => this.logEvent('Thumbs up for AI message')
+                action: () => this.logEvent('Add AI message to list')
               },
               {
-                label: 'Copy response',
+                label: 'Export response',
                 icon: 'element-export',
-                action: () => this.logEvent('Copy AI message')
+                action: () => this.logEvent('Export AI message')
               }
             ]
           }

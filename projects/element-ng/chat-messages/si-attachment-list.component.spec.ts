@@ -7,10 +7,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiModalService } from '@siemens/element-ng/modal';
 
-import {
-  SiAttachmentListComponent as TestComponent,
-  Attachment
-} from './si-attachment-list.component';
+import { Attachment } from './chat-message.model';
+import { SiAttachmentListComponent as TestComponent } from './si-attachment-list.component';
 
 describe('SiAttachmentListComponent', () => {
   let fixture: ComponentFixture<TestComponent>;

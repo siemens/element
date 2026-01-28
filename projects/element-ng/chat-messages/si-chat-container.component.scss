@@ -20,6 +20,20 @@
     scroll-behavior: smooth;
   }
 
+  ::ng-deep &:has(si-ai-welcome-screen) {
+    inline-size: 100%;
+    // stylelint-disable-next-line declaration-no-important
+    padding-inline-start: 0 !important;
+    // stylelint-disable-next-line declaration-no-important
+    padding-inline-end: 0 !important;
+
+    .chat-input-area,
+    si-ai-welcome-screen {
+      padding-inline-start: map.get(variables.$spacers, 6);
+      padding-inline-end: map.get(variables.$spacers, 6);
+    }
+  }
+
   // Ensure the container can grow to fill available space
   min-block-size: 0;
   overflow-y: hidden;
@@ -27,7 +41,6 @@
 }
 
 .messages-container {
-  max-inline-size: 720px;
   overflow-y: auto;
   overflow-x: visible;
   gap: map.get(variables.$spacers, 9) + map.get(variables.$spacers, 4);
@@ -36,6 +49,14 @@
   ::ng-deep si-user-message:not(.last) {
     margin-block-end: -1 * (map.get(variables.$spacers, 9) + map.get(variables.$spacers, 4));
   }
+
+  ::ng-deep &:not(:has(si-ai-welcome-screen)) {
+    max-inline-size: 720px;
+  }
+
+  ::ng-deep &:has(si-ai-welcome-screen) {
+    inline-size: 100%;
+  }
 }
 
 .chat-input-area {
@@ -43,7 +64,10 @@
   align-self: center;
   overflow: visible;
   inline-size: 100%;
-  max-inline-size: 720px;
+
+  > ::ng-deep * {
+    max-inline-size: 720px;
+  }
 
   &:empty,
   &:has([sichatcontainerinput]:empty) {
@@ -63,14 +87,4 @@
 .chat-container:has(.messages-container:not(:empty)) .messages-empty-state {
   // stylelint-disable-next-line declaration-no-important
   display: none !important;
-}
-
-// In mobile mode the inline-notification is massive compared to the scrollable area
-:host-context(.si-container-xs, .si-container-sm) ::ng-deep {
-  si-inline-notification {
-    .alert,
-    .alert-link {
-      font-size: variables.$si-font-size-body;
-    }
-  }
 }

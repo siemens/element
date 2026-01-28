@@ -3,6 +3,9 @@
 // Auto-generated file. Run 'npx update-translatable-keys' to update.
 
 export interface SiTranslatableKeys {
+  'SI_AI_CHAT_CONTAINER.SECONDARY_ACTIONS'?: string;
+  'SI_AI_CHAT_CONTAINER.WELCOME_GREETING'?: string;
+  'SI_AI_CHAT_CONTAINER.WELCOME_MESSAGE'?: string;
   'SI_AI_MESSAGE.SECONDARY_ACTIONS'?: string;
   'SI_ALERT_DIALOG.OK'?: string;
   'SI_APPLICATION_HEADER.LAUNCHPAD'?: string;
@@ -165,6 +168,8 @@ export interface SiTranslatableKeys {
   'SI_LOGIN_BASIC.USERNAME'?: string;
   'SI_LOGIN_SINGLE-SIGN-ON.LOGIN_SIGN_UP'?: string;
   'SI_MAIN_DETAIL_CONTAINER.BACK'?: string;
+  'SI_MARKDOWN_RENDERER.COPY_CODE'?: string;
+  'SI_MARKDOWN_RENDERER.DOWNLOAD'?: string;
   'SI_NAVBAR.OPEN_LAUNCHPAD'?: string;
   'SI_NAVBAR.TOGGLE_NAVIGATION'?: string;
   'SI_NAVBAR_VERTICAL.COLLAPSE'?: string;
@@ -214,6 +219,8 @@ export interface SiTranslatableKeys {
   'SI_THRESHOLD.INPUT_LABEL'?: string;
   'SI_THRESHOLD.STATUS'?: string;
   'SI_TOAST.CLOSE'?: string;
+  'SI_TOOL_MESSAGE.INPUT_ARGUMENTS'?: string;
+  'SI_TOOL_MESSAGE.OUTPUT'?: string;
   'SI_TOUR.BACK'?: string;
   'SI_TOUR.CLOSE'?: string;
   'SI_TOUR.DONE'?: string;
