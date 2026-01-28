@@ -1,4 +1,4 @@
-# Notification Item
+# Notification item
 
 ## Usage ---
 
