@@ -17,6 +17,8 @@ import {
 import { calculateOverlayArrowPosition, OverlayArrowPosition } from '@siemens/element-ng/common';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
+import type { TooltipRef } from './si-tooltip.service';
+
 @Component({
   selector: 'si-tooltip',
   imports: [NgTemplateOutlet, SiTranslatePipe, NgComponentOutlet],
@@ -26,8 +28,14 @@ export class TooltipComponent {
   /** @defaultValue '' */
   readonly tooltip = input<TranslatableString | TemplateRef<any> | Type<any>>('');
 
+  /** @internal */
+  tooltipRef?: TooltipRef;
+
   protected readonly tooltipPositionClass = signal('');
   protected readonly arrowPos = signal<OverlayArrowPosition | undefined>(undefined);
+  protected readonly isHiding = signal(false);
+  /** @internal */
+  readonly isOpening = signal(true);
   /** @internal */
   readonly id = input('');
   readonly tooltipContext = input();
@@ -58,5 +66,26 @@ export class TooltipComponent {
     }
     const arrowPos = calculateOverlayArrowPosition(change, this.elementRef, anchor);
     this.arrowPos.set(arrowPos);
+  }
+
+  /** @internal */
+  hide(): void {
+    this.isHiding.set(true);
+  }
+
+  protected onTransitionstart(event: TransitionEvent): void {
+    if (event.propertyName === 'opacity' && !this.isHiding()) {
+      this.isOpening.set(true);
+    }
+  }
+
+  protected onTransitionend(event: TransitionEvent): void {
+    if (event.propertyName === 'opacity') {
+      if (this.isHiding()) {
+        this.tooltipRef?.detach();
+      } else {
+        this.isOpening.set(false);
+      }
+    }
   }
 }
