@@ -144,10 +144,12 @@ export interface SiTranslatableKeys {
   'SI_ICON_STATUS.UNKNOWN'?: string;
   'SI_ICON_STATUS.WARNING'?: string;
   'SI_LANGUAGE_SWITCHER.LABEL'?: string;
+  'SI_LAUNCHPAD.ADD_FAVORITE'?: string;
   'SI_LAUNCHPAD.CLOSE'?: string;
   'SI_LAUNCHPAD.DEFAULT_CATEGORY_TITLE'?: string;
   'SI_LAUNCHPAD.EXTERNAL_LINK'?: string;
   'SI_LAUNCHPAD.FAVORITE_APPS'?: string;
+  'SI_LAUNCHPAD.REMOVE_FAVORITE'?: string;
   'SI_LAUNCHPAD.SHOW_LESS'?: string;
   'SI_LAUNCHPAD.SHOW_MORE'?: string;
   'SI_LAUNCHPAD.SUB_TITLE'?: string;
