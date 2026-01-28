@@ -13,15 +13,16 @@
     - /url: "#/viewer/viewer/energy"
   - button "User management"
   - group "User management":
-    - link "Sub item 4":
+    - link "Sub item":
       - /url: "#/viewer/viewer/subItem"
     - link "Sub item 2":
       - /url: "#/viewer/viewer/subItem2"
     - link "Sub item 3":
       - /url: "#/viewer/viewer/subItem3"
-  - link "4 Test coverage":
+  - link "Test coverage":
     - /url: "#/viewer/viewer/coverage"
   - button "Documentation"
+  - group "Documentation"
   - button "Action"
 - main:
   - heading "Here is a title" [level=2]
