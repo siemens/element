@@ -62,14 +62,14 @@ export class SiFormItemComponent implements AfterContentInit, AfterContentChecke
     readonly disableErrorPrinting: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     readonly formErrorMapper: _angular_core.InputSignal<SiFormValidationErrorMapper | undefined>;
-    readonly label: _angular_core.InputSignal<TranslatableString | null | undefined>;
+    readonly label: _angular_core.InputSignal<TranslatableString>;
     readonly labelWidth: _angular_core.InputSignal<string | number | undefined>;
     readonly requiredInput: _angular_core.InputSignalWithTransform<boolean, unknown>;
 }
 
 // @public
 export interface SiFormItemControl {
-    readonly errormessageId?: string | Signal<string | undefined>;
+    readonly errormessageId: string | Signal<string>;
     readonly id?: string | Signal<string | undefined>;
     readonly isFormCheck?: boolean;
     readonly labelledby?: string | Signal<string | undefined> | null;

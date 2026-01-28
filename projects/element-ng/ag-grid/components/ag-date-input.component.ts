@@ -17,7 +17,7 @@ import { IDateComp, IDateParams } from 'ag-grid-community';
   selector: 'si-ag-date-input',
   imports: [FormsModule, SiDatepickerDirective, SiCalendarButtonComponent, SiFormItemComponent],
   template: `
-    <si-form-item>
+    <si-form-item label="">
       <si-calendar-button class="w-100">
         <input
           type="text"
