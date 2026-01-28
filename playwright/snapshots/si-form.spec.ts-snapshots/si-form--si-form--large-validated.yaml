@@ -1,5 +1,6 @@
 - text: Form
 - group "Role*":
+  - text: ""
   - button "More information about the role"
   - radio "Engineer"
   - text: Engineer
@@ -13,26 +14,37 @@
 - text: Phone number
 - group "Phone number":
   - combobox /Select Country Switzerland \+\d+/
-  - textbox "Enter phone number"
+  - textbox "Enter phone number":
+    - /placeholder: 21 234 56 78
+    - text: ""
 - text: Invalid phone number Day of birth*
 - textbox "Day of birth*"
 - button "Open calendar"
 - text: A value is required. Travel Date*
 - group "Travel Date*":
   - textbox "Start date"
+  - text: ""
   - textbox "End date"
   - button "Open calendar"
 - text: Travel date is required. Arrival
 - group "Arrival":
-  - textbox "Hours"
-  - textbox "Minutes"
+  - textbox "Hours":
+    - /placeholder: hh
+    - text: ""
+  - textbox "Minutes":
+    - /placeholder: mm
+    - text: ""
   - combobox "Period":
     - option "AM" [selected]
     - option "PM"
 - text: Departure
 - group "Departure":
-  - textbox "Hours"
-  - textbox "Minutes"
+  - textbox "Hours":
+    - /placeholder: hh
+    - text: ""
+  - textbox "Minutes":
+    - /placeholder: mm
+    - text: ""
   - combobox "Period":
     - option "AM" [selected]
     - option "PM"
@@ -40,8 +52,9 @@
 - combobox "Class of service"
 - text: You deserve better! Fellow passengers
 - spinbutton "Fellow passengers"
-- text: The value is too small
+- text: Min. 2
 - group "Accept terms":
+  - text: ""
   - checkbox "I confirm that I accept all and everything.*"
   - text: I confirm that I accept all and everything.*
   - button "More information about the terms"
@@ -52,6 +65,7 @@
 - button "Save"
 - text: Debugging
 - group "Actions":
+  - text: ""
   - checkbox "Disable form"
   - text: Disable form
   - checkbox "Readonly form"

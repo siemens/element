@@ -78,7 +78,7 @@ test.describe('si-form', () => {
     );
     await expect(await si.getDescription(firstClass)).toHaveText('You deserve better!');
     await expect(await si.getDescription(page.getByLabel('Fellow passengers'))).toHaveText(
-      'The value is too small'
+      'Min. 2'
     );
     await expect(
       await si.getDescription(page.getByLabel('I confirm that I accept all and everything.'))
