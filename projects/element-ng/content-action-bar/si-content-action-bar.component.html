@@ -25,8 +25,11 @@
                 type="button"
                 si-menu-item
                 [attr.data-id]="primaryAction.id"
-                [attr.title]="
+                [attr.aria-label]="
                   primaryAction.iconOnly ? (primaryAction.label | translate) : undefined
+                "
+                [siTooltip]="
+                  primaryAction.iconOnly && primaryAction.tooltip ? primaryAction.tooltip : ''
                 "
                 [badge]="primaryAction.badge"
                 [badgeColor]="primaryAction.badgeColor ?? 'secondary'"
@@ -45,8 +48,11 @@
                 type="button"
                 si-menu-item-checkbox
                 [attr.data-id]="primaryAction.id"
-                [attr.title]="
+                [attr.aria-label]="
                   primaryAction.iconOnly ? (primaryAction.label | translate) : undefined
+                "
+                [siTooltip]="
+                  primaryAction.iconOnly && primaryAction.tooltip ? primaryAction.tooltip : ''
                 "
                 [checked]="primaryAction.checked"
                 [badge]="primaryAction.badge"
@@ -67,8 +73,11 @@
                 type="button"
                 si-menu-item
                 [attr.data-id]="primaryAction.id"
-                [attr.title]="
+                [attr.aria-label]="
                   primaryAction.iconOnly ? (primaryAction.label | translate) : undefined
+                "
+                [siTooltip]="
+                  primaryAction.iconOnly && primaryAction.tooltip ? primaryAction.tooltip : ''
                 "
                 [badge]="primaryAction.badge"
                 [badgeColor]="primaryAction.badgeColor ?? 'secondary'"
@@ -90,8 +99,11 @@
               <a
                 si-menu-item
                 [attr.data-id]="primaryAction.id"
-                [attr.title]="
+                [attr.aria-label]="
                   primaryAction.iconOnly ? (primaryAction.label | translate) : undefined
+                "
+                [siTooltip]="
+                  primaryAction.iconOnly && primaryAction.tooltip ? primaryAction.tooltip : ''
                 "
                 [badge]="primaryAction.badge"
                 [badgeColor]="primaryAction.badgeColor ?? 'secondary'"
@@ -117,8 +129,11 @@
               <a
                 si-menu-item
                 [attr.data-id]="primaryAction.id"
-                [attr.title]="
+                [attr.aria-label]="
                   primaryAction.iconOnly ? (primaryAction.label | translate) : undefined
+                "
+                [siTooltip]="
+                  primaryAction.iconOnly && primaryAction.tooltip ? primaryAction.tooltip : ''
                 "
                 [badge]="primaryAction.badge"
                 [badgeColor]="primaryAction.badgeColor ?? 'secondary'"

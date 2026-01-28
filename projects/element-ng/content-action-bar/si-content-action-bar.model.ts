@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { TemplateRef } from '@angular/core';
 import {
   MenuItemAction,
   MenuItemCheckbox,
@@ -9,6 +10,7 @@ import {
   MenuItemLink,
   MenuItemRouterLink
 } from '@siemens/element-ng/menu';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 export type ViewType = 'collapsible' | 'expanded' | 'mobile';
 
@@ -18,4 +20,4 @@ export type ContentActionBarMainItem = (
   | MenuItemLink
   | MenuItemRouterLink
   | MenuItemGroup
-) & { iconOnly?: boolean };
+) & { iconOnly?: boolean; tooltip?: TranslatableString | TemplateRef<any> };

@@ -105,6 +105,7 @@ export class SiTreeViewItemComponent
   private indentLevel = this.treeItem.level ?? 0;
   private nextSiblingElement!: HTMLElement;
   protected readonly menuTrigger = viewChild(CdkMenuTrigger);
+  protected readonly labelElement = viewChild<ElementRef<HTMLElement>>('labelElement');
 
   @HostBinding('attr.aria-level')
   protected get ariaLevel(): number {
@@ -506,6 +507,14 @@ export class SiTreeViewItemComponent
    */
   getLabel(): string {
     return this.treeItem?.label ?? '';
+  }
+
+  /**
+   * Check if the label text is truncated.
+   */
+  isLabelTruncated(): boolean {
+    const label = this.labelElement()?.nativeElement;
+    return label ? label.scrollWidth > label.clientWidth : false;
   }
 
   /**

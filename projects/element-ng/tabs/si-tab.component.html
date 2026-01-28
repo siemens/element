@@ -1,6 +1,6 @@
 @let icon = this.icon();
 @if (icon) {
-  <si-icon class="tab-icon" [icon]="icon" [attr.title]="heading() | translate" />
+  <si-icon class="tab-icon" [icon]="icon" [attr.aria-label]="heading() | translate" />
 } @else {
   <span class="text-truncate">{{ heading() | translate }}</span>
 }
