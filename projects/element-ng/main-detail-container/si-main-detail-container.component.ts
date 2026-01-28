@@ -20,7 +20,8 @@ import {
   output,
   SimpleChanges
 } from '@angular/core';
-import { addIcons, elementBack, SiIconComponent } from '@siemens/element-ng/icon';
+import { elementBack } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import {
   BOOTSTRAP_BREAKPOINTS,
   ElementDimensions,

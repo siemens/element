@@ -11,7 +11,8 @@ import {
   output,
   viewChild
 } from '@angular/core';
-import { addIcons, elementUpload, SiIconComponent } from '@siemens/element-ng/icon';
+import { elementUpload } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { SiFileUploadDirective, FileUploadError } from './si-file-upload.directive';

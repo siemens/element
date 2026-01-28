@@ -20,11 +20,11 @@
     margin-inline-start: map.get(variables.$spacers, 5);
   }
 
-  .icon {
+  .icon-large {
     margin-inline-start: map.get(variables.$spacers, 5);
   }
 
-  .icon + .item-title {
+  .icon-large + .item-title {
     margin-inline-start: map.get(variables.$spacers, 5);
   }
 
@@ -85,7 +85,7 @@
   padding-inline: map.get(variables.$spacers, 5);
 
   .item-title,
-  .icon {
+  .icon-large {
     display: none;
   }
 

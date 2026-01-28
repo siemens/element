@@ -4,7 +4,8 @@
  */
 import { Component, contentChild, input, output, signal } from '@angular/core';
 import { NgControl } from '@angular/forms';
-import { addIcons, elementHide, elementShow, SiIconComponent } from '@siemens/element-ng/icon';
+import { elementHide, elementShow } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 @Component({

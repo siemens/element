@@ -9,7 +9,8 @@ import {
   input,
   TemplateRef
 } from '@angular/core';
-import { elementOk, addIcons, SiIconComponent } from '@siemens/element-ng/icon';
+import { elementOk } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 
 import { SiSelectOptionComponent } from '../select-option/si-select-option.component';
 import { SelectOption } from '../si-select.types';

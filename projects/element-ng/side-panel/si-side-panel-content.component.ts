@@ -17,19 +17,14 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { elementCancel, elementDoubleLeft, elementDoubleRight } from '@siemens/element-icons';
 import { SiAccordionHCollapseService } from '@siemens/element-ng/accordion';
 import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import {
   ContentActionBarMainItem,
   SiContentActionBarComponent
 } from '@siemens/element-ng/content-action-bar';
-import {
-  addIcons,
-  elementCancel,
-  elementDoubleLeft,
-  elementDoubleRight,
-  SiIconComponent
-} from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLinkDirective } from '@siemens/element-ng/link';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';

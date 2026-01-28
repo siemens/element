@@ -19,9 +19,10 @@ import {
   viewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { elementMinus, elementPlus } from '@siemens/element-icons';
 import { correctKeyRTL, isRTL, listenGlobal } from '@siemens/element-ng/common';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
-import { addIcons, elementMinus, elementPlus, SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 import { Subscription, timer } from 'rxjs';
 

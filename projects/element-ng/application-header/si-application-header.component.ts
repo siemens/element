@@ -17,17 +17,13 @@ import {
   TemplateRef,
   viewChild
 } from '@angular/core';
+import { elementMenu, elementThumbnails } from '@siemens/element-icons';
 import {
   HeaderWithDropdowns,
   SI_HEADER_WITH_DROPDOWNS,
   SiHeaderDropdownTriggerDirective
 } from '@siemens/element-ng/header-dropdown';
-import {
-  addIcons,
-  elementMenu,
-  elementThumbnails,
-  SiIconComponent
-} from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { BOOTSTRAP_BREAKPOINTS, Breakpoints } from '@siemens/element-ng/resize-observer';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 import { defer, of, Subject } from 'rxjs';
