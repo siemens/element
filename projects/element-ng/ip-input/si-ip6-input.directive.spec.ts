@@ -173,4 +173,46 @@ describe('SiIp6InputDirective', () => {
       });
     });
   });
+
+  describe('cursor positioning', () => {
+    it('should retain cursor position when typing in middle of section', () => {
+      input.value = '2001:0d0';
+      input.dispatchEvent(new InputEvent('input', { data: '0', inputType: 'insertText' }));
+      expect(input.value).toBe('2001:0D0');
+      expect(input.selectionStart).toBe(8);
+    });
+
+    it('should handle multiple section splits correctly', () => {
+      for (const c of '12345') {
+        input.value += c;
+        input.dispatchEvent(new InputEvent('input', { data: c, inputType: 'insertText' }));
+      }
+      expect(input.value).toBe('1234:5');
+      expect(input.selectionStart).toBe(6);
+    });
+
+    it('should retain cursor at end when typing at end', () => {
+      input.value = '2001:d';
+      input.dispatchEvent(new InputEvent('input', { data: 'd', inputType: 'insertText' }));
+      expect(input.value).toBe('2001:D');
+      expect(input.selectionStart).toBe(6);
+    });
+
+    it('should retain cursor position with zero compression', () => {
+      input.value = '::1';
+      input.dispatchEvent(new InputEvent('input', { data: '1', inputType: 'insertText' }));
+      expect(input.value).toBe('::1');
+      expect(input.selectionStart).toBe(3);
+    });
+
+    it('should handle cursor in CIDR section', () => {
+      component.cidr.set(true);
+      fixture.detectChanges();
+
+      input.value = '2001:db8::1/64';
+      input.dispatchEvent(new InputEvent('input', { data: '4', inputType: 'insertText' }));
+      expect(input.value).toBe('2001:DB8::1/64');
+      expect(input.selectionStart).toBe(14);
+    });
+  });
 });
