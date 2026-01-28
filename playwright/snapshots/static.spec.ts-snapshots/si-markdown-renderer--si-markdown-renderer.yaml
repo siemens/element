@@ -1,5 +1,5 @@
-- heading "AI Assistant Response" [level=2]:
-  - strong: AI Assistant Response
+- heading "Sample Markdown Content" [level=2]:
+  - strong: Sample Markdown Content
 - paragraph:
   - text: Here's a
   - strong: comprehensive example
@@ -10,9 +10,10 @@
   - text: You can use inline code like
   - code: console.log('Hello World')
   - text: "or multi-line code blocks:"
-- paragraph
+- text: javascript
+- button "Copy code"
 - code: "function calculateSum(a, b) { return a + b; } const result = calculateSum(5, 3); console.log(`Result: ${result}`);"
-- paragraph
+- separator
 - heading "Formatting Options" [level=2]
 - paragraph: Here's a paragraph explaining the formatting options available.
 - paragraph: "Another paragraph with different formatting elements:"
@@ -33,12 +34,13 @@
     - /url: https://element.siemens.io
   - text: for more information, as well as local links like
   - link "Internal Page":
-    - /url: "/#/internal-page"
+    - /url: /#/internal-page
   - text: .
 - paragraph:
   - text: "Links are also automatically detected:"
   - link "https://angular.io":
     - /url: https://angular.io
+- separator
 - heading "Lists and Bullets" [level=2]
 - paragraph: "Here are the key features:"
 - list:
@@ -47,6 +49,8 @@
   - listitem: Inline code highlighting
   - listitem: Bullet point lists
   - listitem: Blockquote support
+  - listitem: Or in the alternate format
+  - listitem: Another bullet point
 - paragraph: This paragraph appears after the list to show proper spacing.
 - heading "Ordered Lists" [level=2]
 - paragraph: "Step-by-step instructions:"
@@ -54,7 +58,9 @@
   - listitem: First, analyze the requirements
   - listitem: Then, implement the solution
   - listitem: Finally, test the implementation
-- blockquote: This is a blockquote that demonstrates how quoted text appears in the markdown content component.
+- separator
+- blockquote:
+  - paragraph: This is a blockquote that demonstrates how quoted text appears in the markdown content component.
 - paragraph: This paragraph follows the blockquotes to demonstrate proper paragraph separation.
 - paragraph: This is a separate paragraph created by double line breaks.
 - list:
@@ -65,20 +71,24 @@
   - listitem: First ordered item
   - listitem: Second ordered item
 - paragraph: Final paragraph to show proper spacing.
+- separator
+- heading "Images" [level=2]
+- paragraph: "Images can be included as follows:"
+- separator
 - heading "Tables" [level=2]
 - paragraph: "Tables are also supported:"
-- paragraph
 - table:
   - rowgroup:
     - row "Feature Examples Status Notes":
-      - cell "Feature":
+      - columnheader "Feature":
         - paragraph: Feature
-      - cell "Examples":
+      - columnheader "Examples":
         - paragraph: Examples
-      - cell "Status":
+      - columnheader "Status":
         - paragraph: Status
-      - cell "Notes":
+      - columnheader "Notes":
         - paragraph: Notes
+  - rowgroup:
     - row "Basic content Alice Johnson Bob Smith ✓ Complete Simple text and line breaks":
       - cell "Basic content":
         - paragraph:
@@ -118,11 +128,11 @@
         - paragraph: ✓ Complete
       - cell "Bullet lists work properly":
         - paragraph: Bullet lists work properly
-    - 'row "Escaped pipes grep \"text|pattern\" awk ''{print $1|$2}'' ✓ Complete Use | for literal pipes"':
+    - 'row "Escaped pipes grep \"text|pattern\" awk ''{print 2}'' ✓ Complete Use | for literal pipes"':
       - cell "Escaped pipes":
         - paragraph: Escaped pipes
-      - 'cell "grep \"text|pattern\" awk ''{print $1|$2}''"':
-        - paragraph: "grep \"text|pattern\" awk '{print $1|$2}'"
+      - 'cell "grep \"text|pattern\" awk ''{print 2}''"':
+        - paragraph: "grep \"text|pattern\" awk '{print 2}'"
       - cell "✓ Complete":
         - paragraph: ✓ Complete
       - cell "Use | for literal pipes":
@@ -139,5 +149,12 @@
           - text: Uses
           - code: <br>
           - text: tags
-- text: This paragraph appears after the tables to demonstrate proper spacing.
-- paragraph
+- button "Download CSV"
+- paragraph: This paragraph appears after the tables to demonstrate proper spacing.
+- separator
+- heading "Math Expressions" [level=2]
+- paragraph: LaTeX math expressions are supported for mathematical notation.
+- paragraph: "Inline math can be written like this: or the quadratic formula ."
+- paragraph: "/You can escape dollar signs with a backslash to show literal prices: \\$\\d+, \\$\\d+, \\$\\d+\\./"
+- paragraph: "Display math uses double dollar signs for block equations:"
+- paragraph: UML is not supported in this markdown component.
