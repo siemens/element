@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { TestBed } from '@angular/core/testing';
-import { of, throwError } from 'rxjs';
+import { firstValueFrom, of, throwError } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { SI_THEME_LOCAL_STORAGE_KEY, SiThemeStore } from './si-theme-store';
@@ -78,79 +78,64 @@ describe('SiThemeService', () => {
       store.saveTheme.and.callFake(() => of(true));
     });
 
-    it('setActiveTheme of unknown theme should return false', (done: DoneFn) => {
+    it('setActiveTheme of unknown theme should return false', async () => {
       setupTestBed();
-      service.setActiveTheme('any').subscribe(result => {
-        expect(result).toBeFalse();
-        done();
-      });
+      const result = await firstValueFrom(service.setActiveTheme('any'));
+      expect(result).toBeFalse();
     });
 
-    it('should initially return undefined as active theme', (done: DoneFn) => {
+    it('should initially return undefined as active theme', async () => {
       setupTestBed();
-      service.getActiveTheme().subscribe(result => {
-        expect(result).toBeUndefined();
-        done();
-      });
+      const result = await firstValueFrom(service.getActiveTheme());
+      expect(result).toBeUndefined();
     });
 
-    it('should use element as initial active theme', (done: DoneFn) => {
+    it('should use element as initial active theme', async () => {
       setupTestBed();
       expect(service.activeThemeName).toBe(ELEMENT_THEME_NAME);
       expect(service.hasTheme(ELEMENT_THEME_NAME)).toBeTrue();
       expect(service.themeNames.length).toBe(1);
-      service.getActiveTheme().subscribe(result => {
-        expect(result).toBeUndefined();
-        done();
-      });
+      const result = await firstValueFrom(service.getActiveTheme());
+      expect(result).toBeUndefined();
     });
 
-    it('getTheme should return element theme by name', (done: DoneFn) => {
+    it('getTheme should return element theme by name', async () => {
       setupTestBed();
-      service.getTheme(ELEMENT_THEME_NAME).subscribe(result => {
-        expect(result).toBeUndefined();
-        done();
-      });
+      const result = await firstValueFrom(service.getTheme(ELEMENT_THEME_NAME));
+      expect(result).toBeUndefined();
     });
 
-    it('getTheme should return undefined for unknown theme name', (done: DoneFn) => {
+    it('getTheme should return undefined for unknown theme name', async () => {
       setupTestBed();
-      service.getTheme('any').subscribe(result => {
-        expect(result).toBeUndefined();
-        done();
-      });
+      const result = await firstValueFrom(service.getTheme('any'));
+      expect(result).toBeUndefined();
     });
 
-    it('addOrUpdateTheme should saveTheme on store', (done: DoneFn) => {
+    it('addOrUpdateTheme should saveTheme on store', async () => {
       setupTestBed(false, store);
-      service.addOrUpdateTheme(theme).subscribe(ok => {
-        expect(ok).toBeTrue();
-        expect(store.saveTheme).toHaveBeenCalledTimes(1);
-        expect(store.saveTheme).toHaveBeenCalledWith(theme);
-        done();
-      });
+      const result = await firstValueFrom(service.addOrUpdateTheme(theme));
+      expect(result).toBeTrue();
+      expect(store.saveTheme).toHaveBeenCalledTimes(1);
+      expect(store.saveTheme).toHaveBeenCalledWith(theme);
     });
 
-    it('addOrUpdateTheme should return false on storage failure', (done: DoneFn) => {
+    it('addOrUpdateTheme should return false on storage failure', async () => {
       store.saveTheme.and.callFake(() => of(false));
       setupTestBed(false, store);
-      service.addOrUpdateTheme(theme).subscribe(ok => {
-        expect(ok).toBeFalse();
-        done();
-      });
+      const ok = await firstValueFrom(service.addOrUpdateTheme(theme));
+      expect(ok).toBeFalse();
     });
 
-    it('addOrUpdateTheme should return error on storage errors', (done: DoneFn) => {
+    it('addOrUpdateTheme should return error on storage errors', async () => {
       store.saveTheme.and.callFake(() => throwError(() => 'no network'));
       setupTestBed(false, store);
-      service.addOrUpdateTheme(theme).subscribe({
-        next: () => fail(),
-        error: error => {
-          expect(error).toBeDefined();
-          expect(error).toBe('no network');
-          done();
-        }
-      });
+      try {
+        await firstValueFrom(service.addOrUpdateTheme(theme));
+        fail('Should have thrown an error');
+      } catch (error) {
+        expect(error).toBeDefined();
+        expect(error).toBe('no network');
+      }
     });
   });
 
@@ -172,77 +157,64 @@ describe('SiThemeService', () => {
       store.loadTheme.and.callFake(() => of(theme));
     });
 
-    it('getActiveTheme should return other then element', (done: DoneFn) => {
+    it('getActiveTheme should return other then element', async () => {
       setupTestBed(false, store);
-      service.getActiveTheme().subscribe(result => {
-        expect(result).toBeDefined();
-        expect(result!.name).toBe('example');
-        done();
-      });
+      const result = await firstValueFrom(service.getActiveTheme());
+      expect(result).toBeDefined();
+      expect(result!.name).toBe('example');
     });
 
-    it('deleteTheme with unknown theme should return false', (done: DoneFn) => {
+    it('deleteTheme with unknown theme should return false', async () => {
       store.deleteTheme.and.callFake(() => of(true));
       setupTestBed(false, store);
-      service.deleteTheme('any').subscribe(result => {
-        expect(result).toBeFalse();
-        expect(store.deleteTheme).not.toHaveBeenCalled();
-        done();
-      });
+      const result = await firstValueFrom(service.deleteTheme('any'));
+      expect(result).toBeFalse();
+      expect(store.deleteTheme).not.toHaveBeenCalled();
     });
 
-    it('deleteTheme should call storage deleteTheme', (done: DoneFn) => {
+    it('deleteTheme should call storage deleteTheme', async () => {
       store.deleteTheme.and.callFake(() => of(true));
       setupTestBed(false, store);
-      service.deleteTheme(theme.name).subscribe(result => {
-        expect(result).toBeTrue();
-        expect(store.deleteTheme).toHaveBeenCalledWith(theme.name);
-        done();
-      });
+      const result = await firstValueFrom(service.deleteTheme(theme.name));
+      expect(result).toBeTrue();
+      expect(store.deleteTheme).toHaveBeenCalledWith(theme.name);
     });
 
-    it('deleteTheme should return false on storage failures', (done: DoneFn) => {
+    it('deleteTheme should return false on storage failures', async () => {
       store.deleteTheme.and.callFake(() => of(false));
       setupTestBed(false, store);
-      service.deleteTheme(theme.name).subscribe(result => {
-        expect(result).toBeFalse();
-        expect(store.deleteTheme).toHaveBeenCalledWith(theme.name);
-        done();
-      });
+      const result = await firstValueFrom(service.deleteTheme(theme.name));
+      expect(result).toBeFalse();
+      expect(store.deleteTheme).toHaveBeenCalledWith(theme.name);
     });
 
-    it('deleteTheme should return error on storage errors', (done: DoneFn) => {
+    it('deleteTheme should return error on storage errors', async () => {
       store.deleteTheme.and.callFake(() => throwError(() => 'no network'));
       setupTestBed(false, store);
-      service.deleteTheme(theme.name).subscribe({
-        next: () => fail(),
-        error: error => {
-          expect(error).toBeDefined();
-          expect(error).toBe('no network');
-          done();
-        }
-      });
+      try {
+        await firstValueFrom(service.deleteTheme(theme.name));
+        fail('Should have thrown an error');
+      } catch (error) {
+        expect(error).toBeDefined();
+        expect(error).toBe('no network');
+      }
     });
 
-    it('setActiveTheme with element should call deactive theme on storage', (done: DoneFn) => {
+    it('setActiveTheme with element should call deactive theme on storage', async () => {
       store.deactivateTheme.and.callFake(() => of(true));
       setupTestBed(false, store);
-      service.setActiveTheme(ELEMENT_THEME_NAME).subscribe(result => {
-        expect(result).toBeTrue();
-        expect(store.deactivateTheme).toHaveBeenCalledTimes(1);
-        done();
-      });
+      const result = await firstValueFrom(service.setActiveTheme(ELEMENT_THEME_NAME));
+      expect(result).toBeTrue();
+      expect(store.deactivateTheme).toHaveBeenCalledTimes(1);
     });
 
-    it('setActiveTheme should return false on theme on storage failure', (done: DoneFn) => {
+    it('setActiveTheme should return false on theme on storage failure', async () => {
       store.deactivateTheme.and.callFake(() => of(false));
       setupTestBed(false, store);
       expect(service.activeThemeName).toBe('example');
-      service.setActiveTheme(ELEMENT_THEME_NAME).subscribe(result => {
-        expect(result).toBeFalse();
-        expect(store.deactivateTheme).toHaveBeenCalledTimes(1);
-        done();
-      });
+      const result = await firstValueFrom(service.setActiveTheme(ELEMENT_THEME_NAME));
+      expect(result).toBeFalse();
+      expect(store.deactivateTheme).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -266,40 +238,31 @@ describe('SiThemeService', () => {
       setupTestBed(false, store);
     });
 
-    it('getTheme should return cached theme on second call', (done: DoneFn) => {
-      service
-        .getTheme('example')
-        .pipe(switchMap(() => service.getTheme('example')))
-        .subscribe(result => {
-          expect(result).toBeDefined();
-          expect(result!.name).toBe('example');
-          expect(store.loadTheme).toHaveBeenCalledTimes(1);
-          done();
-        });
+    it('getTheme should return cached theme on second call', async () => {
+      const result = await firstValueFrom(
+        service.getTheme('example').pipe(switchMap(() => service.getTheme('example')))
+      );
+      expect(result).toBeDefined();
+      expect(result!.name).toBe('example');
+      expect(store.loadTheme).toHaveBeenCalledTimes(1);
     });
 
-    it('getTheme should load theme from store', (done: DoneFn) => {
-      service.getTheme('example').subscribe(result => {
-        expect(result).toBeDefined();
-        expect(result!.name).toBe('example');
-        done();
-      });
+    it('getTheme should load theme from store', async () => {
+      const result = await firstValueFrom(service.getTheme('example'));
+      expect(result).toBeDefined();
+      expect(result!.name).toBe('example');
     });
 
-    it('setActiveTheme should invoke activateTheme on store', (done: DoneFn) => {
-      service.setActiveTheme(theme.name).subscribe(result => {
-        expect(result).toBeTrue();
-        expect(store.activateTheme).toHaveBeenCalledTimes(1);
-        done();
-      });
+    it('setActiveTheme should invoke activateTheme on store', async () => {
+      const result = await firstValueFrom(service.setActiveTheme(theme.name));
+      expect(result).toBeTrue();
+      expect(store.activateTheme).toHaveBeenCalledTimes(1);
     });
 
-    it('setActiveTheme of current active theme should return true', (done: DoneFn) => {
-      service.setActiveTheme(ELEMENT_THEME_NAME).subscribe(result => {
-        expect(result).toBeTrue();
-        expect(store.activateTheme).toHaveBeenCalledTimes(0);
-        done();
-      });
+    it('setActiveTheme of current active theme should return true', async () => {
+      const result = await firstValueFrom(service.setActiveTheme(ELEMENT_THEME_NAME));
+      expect(result).toBeTrue();
+      expect(store.activateTheme).toHaveBeenCalledTimes(0);
     });
   });
 });
