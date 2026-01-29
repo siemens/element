@@ -22,61 +22,12 @@
             <p class="text-secondary mb-6">
               Configure your launchpad settings and test different display modes.
             </p>
-
-            <div class="row g-4">
-              <div class="col-sm-12">
-                <si-form-item class="mb-0">
-                  <div
-                    class="form-check form-switch d-flex align-items-center p-5 bg-light rounded-3 h-100 bg-base-4"
-                  >
-                    <div class="flex-grow-1">
-                      <label for="favoritesSwitch" class="form-check-label fw-medium mb-1 d-block">
-                        Enable Favorites
-                        <div class="mt-1">
-                          <small class="text-secondary"> Show favorite apps at the top </small>
-                        </div>
-                      </label>
-                    </div>
-                    <input
-                      type="checkbox"
-                      class="form-check-input ms-3"
-                      role="switch"
-                      id="favoritesSwitch"
-                      [checked]="enableFavorites()"
-                      (change)="toggleFavorites($event)"
-                    />
-                  </div>
-                </si-form-item>
-              </div>
-
-              <div class="col-sm-12">
-                <si-form-item class="mb-0">
-                  <div
-                    class="form-check form-switch d-flex align-items-center p-5 bg-light rounded-3 h-100 bg-base-4"
-                  >
-                    <div class="flex-grow-1">
-                      <label for="categoriesSwitch" class="form-check-label fw-medium mb-1 d-block">
-                        Enable Categories
-                        <div class="mt-1">
-                          <small class="text-secondary">
-                            Group apps into organized categories
-                          </small>
-                        </div>
-                      </label>
-                    </div>
-                    <input
-                      type="checkbox"
-                      class="form-check-input ms-3"
-                      role="switch"
-                      id="categoriesSwitch"
-                      [checked]="enableCategories()"
-                      (change)="toggleCategories($event)"
-                    />
-                  </div>
-                </si-form-item>
-              </div>
-            </div>
-
+            <si-form-item class="form-switch" label="Enable Favorites">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="enableFavorites" />
+            </si-form-item>
+            <si-form-item class="form-switch" label="Enable Categories">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="enableCategories" />
+            </si-form-item>
             <div class="mt-5 pt-4 border-top">
               <p class="text-secondary mb-0">
                 <small>

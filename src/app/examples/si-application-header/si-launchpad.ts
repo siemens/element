@@ -108,14 +108,4 @@ export class SampleComponent {
       }
     }
   }
-
-  toggleFavorites(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    this.enableFavorites.set(target.checked);
-  }
-
-  toggleCategories(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    this.enableCategories.set(target.checked);
-  }
 }
