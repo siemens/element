@@ -94,12 +94,20 @@ The **si-chat-container** component is a wrapper component, it has slots for
 
 The slots are:
 
-- default -> chat messages or empty state
+- default -> chat messages or initial screen (`si-welcome-screen`)
 - `si-chat-input/siChatContainerInput (helper directive)` -> For the input (whether default or custom).
 - `si-inline-notification` -> Slotted above the input for displaying the status.
 
 <si-docs-component example="si-chat-messages/si-chat-container" height="600"></si-docs-component>
 
 <si-docs-api component="SiChatContainerComponent"></si-docs-api>
+
+### Initial Screen
+
+When initially displaying a chat interface use the initial **si-welcome-screen** component that displays when there are no messages. It can be slotted into the **si-chat-container** component. It accepts prompt suggestions as an input.
+
+<si-docs-component example="si-chat-messages/si-ai-welcome-screen" height="600"></si-docs-component>
+
+<si-docs-api component="SiAiWelcomeScreenComponent"></si-docs-api>
 
 <si-docs-types></si-docs-types>

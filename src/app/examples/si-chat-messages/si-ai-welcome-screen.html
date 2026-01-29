@@ -1,0 +1,11 @@
+<div class="p-5">
+  <si-ai-welcome-screen
+    [categories]="promptCategories"
+    [promptSuggestions]="currentPromptSuggestions()"
+    [(selectedCategory)]="selectedCategory"
+    (promptSelected)="onPromptSelected($event)"
+  >
+    <p class="h1 mb-0"> <strong>Hello</strong>, </p>
+    <p class="h1 mb-0">how can I help you today?</p>
+  </si-ai-welcome-screen>
+</div>

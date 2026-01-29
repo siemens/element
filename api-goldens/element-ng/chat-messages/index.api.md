@@ -40,6 +40,18 @@ export interface MessageAction {
     label: TranslatableString;
 }
 
+// @public (undocumented)
+export interface PromptCategory {
+    // (undocumented)
+    label: TranslatableString_2;
+}
+
+// @public (undocumented)
+export interface PromptSuggestion {
+    // (undocumented)
+    text: TranslatableString_2;
+}
+
 // @public
 export class SiAiMessageComponent {
     constructor();
@@ -50,6 +62,14 @@ export class SiAiMessageComponent {
     readonly loading: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly secondaryActions: _angular_core.InputSignal<MenuItem[]>;
     readonly secondaryActionsLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+}
+
+// @public
+export class SiAiWelcomeScreenComponent {
+    readonly categories: _angular_core.InputSignal<PromptCategory[]>;
+    readonly promptSelected: _angular_core.OutputEmitterRef<PromptSuggestion>;
+    readonly promptSuggestions: _angular_core.InputSignal<PromptSuggestion[]>;
+    readonly selectedCategory: _angular_core.ModelSignal<string | undefined>;
 }
 
 // @public
