@@ -16,6 +16,9 @@ jobs:
       - build-and-test
     permissions:
       id-token: write
+    outputs:
+      new_release: ${{ steps.check_release.outputs.new_release }}
+      release_tag: ${{ steps.check_release.outputs.release_tag }}
     steps:
       - uses: actions/checkout@v6
         with:
@@ -30,6 +33,12 @@ jobs:
           name: dist
           path: dist
       - run: npm ci --prefer-offline --no-audit
+
+      - id: before_release
+        run: |
+          BEFORE_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          echo "before_tag=$BEFORE_TAG" >> $GITHUB_OUTPUT
+
       - run: npx semantic-release
         env:
           GIT_AUTHOR_NAME: 'Siemens Element Bot'
@@ -37,3 +46,202 @@ jobs:
           GIT_COMMITTER_NAME: 'Siemens Element Bot'
           GIT_COMMITTER_EMAIL: 'simpl.si@siemens.com'
           GITHUB_TOKEN: ${{ secrets.ELEMENT_BOT_GITHUB_TOKEN }}
+
+      - id: check_release
+        run: |
+          AFTER_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          BEFORE_TAG="${{ steps.before_release.outputs.before_tag }}"
+
+          if [[ -n "$AFTER_TAG" && "$AFTER_TAG" != "$BEFORE_TAG" ]]; then
+            echo "release_tag=$AFTER_TAG" >> $GITHUB_OUTPUT
+            echo "new_release=true" >> $GITHUB_OUTPUT
+          else
+            echo "new_release=false" >> $GITHUB_OUTPUT
+            echo "release_tag=" >> $GITHUB_OUTPUT
+          fi
+
+  publish-documentation-release:
+    runs-on: ubuntu-24.04
+    needs:
+      - publish
+      - build-and-test
+    if: success() && needs.publish.outputs.new_release == 'true' && github.ref_name != 'next'
+    permissions:
+      id-token: write
+    env:
+      VERSIONED_BUCKET_NAME: simpl-element-release
+      CLOUDFRONT_DOMAIN: d2uqfzn4lxgtwv.cloudfront.net
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - id: deploy
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const deployAsRelease = "${{ needs.publish.outputs.release_tag }}";
+
+            if (!deployAsRelease) {
+              core.setFailed("deploy_as_release input is required");
+              return;
+            }
+
+            const versionRegex = /^v[0-9]+\.[0-9]+\.[0-9]+.*$/;
+            if (!versionRegex.test(deployAsRelease)) {
+              core.setFailed(`Error: Deploy as release version must be in format 'v1.2.3' or 'v1.2.3-suffix'\nProvided: '${deployAsRelease}'`);
+              return;
+            }
+
+            const version = deployAsRelease.substring(1);
+            const majorVersion = `v${version.split('.')[0]}`;
+            const isPrerelease = version.includes('-');
+
+            const deployMajor = !isPrerelease;
+            const shouldDeploy = deployMajor;
+
+            core.setOutput('deploy_major', deployMajor);
+            core.setOutput('major_version', majorVersion);
+            core.setOutput('version', version);
+            core.setOutput('should_deploy', shouldDeploy);
+
+            console.log('DEPLOYMENT PLAN');
+            console.log('===============');
+            console.log(`Branch: ${{ github.ref }}`);
+            console.log(`Trigger: ${{ github.event_name }}`);
+            console.log(`Major (${majorVersion}): ${deployMajor}`);
+
+            if (!shouldDeploy) {
+              core.setFailed("Skipping deployment (pre-release version)");
+            }
+
+      - uses: actions/download-artifact@v7
+        with:
+          name: pages
+          path: new-docs
+
+      - uses: aws-actions/configure-aws-credentials@v5.1.1
+        with:
+          role-to-assume: arn:aws:iam::974483672234:role/simpl-element-release
+          role-session-name: element-release-docs
+          aws-region: eu-west-1
+
+      - run: |
+          mkdir -p deploy-site
+
+          # List existing version directories from S3 (no download needed)
+          echo "Listing existing versions from S3..."
+          aws s3 ls s3://${{ env.VERSIONED_BUCKET_NAME }}/ || echo "No existing versions found"
+
+      - run: |
+          MAJOR_VERSION="${{ steps.deploy.outputs.major_version }}"
+
+          echo "Updating /$MAJOR_VERSION/..."
+          rm -rf "deploy-site/$MAJOR_VERSION"
+          mkdir -p "deploy-site/$MAJOR_VERSION"
+          cp -r new-docs/* "deploy-site/$MAJOR_VERSION/"
+
+      - run: |
+          # Generate versions.json from S3 directory listing (no download needed)
+          echo "Generating versions.json from S3 directory listing..."
+
+          # Collect all versions from S3
+          ALL_VERSIONS=()
+
+          # List all existing version-specific folders from S3 (v1, v2, v48, etc.)
+          # aws s3 ls lists directories with trailing slashes, e.g., "PRE v1/"
+          aws s3 ls s3://${{ env.VERSIONED_BUCKET_NAME }}/ | grep "PRE v" | awk '{print $2}' | sed 's/\/$//' > s3-versions.txt || true
+
+          # Add the currently deploying version to ensure it's included
+          MAJOR_VERSION="${{ steps.deploy.outputs.major_version }}"
+          echo "$MAJOR_VERSION" >> s3-versions.txt
+
+          # Read all versions and remove duplicates
+          while IFS= read -r version_name; do
+            if [[ -n "$version_name" ]]; then
+              ALL_VERSIONS+=("$version_name")
+            fi
+          done < s3-versions.txt
+
+          # Remove duplicates and sort versions in descending order
+          SORTED_VERSIONS=($(printf '%s\n' "${ALL_VERSIONS[@]}" | sort -u -t 'v' -k 2 -n -r))
+
+          # Find the highest version for "Latest"
+          LATEST_VERSION="${SORTED_VERSIONS[0]}"
+          echo "Latest version: $LATEST_VERSION"
+
+          # Build versions.json with correct order:
+          # 1. Latest (empty version string)
+          # 2. All versions in descending order (v48, v18, v17, etc.)
+          # 3. Preview (redirect to element.siemens.io)
+
+          VERSIONS='[]'
+
+          # Add Latest first (empty version string points to root)
+          latest_num=$(echo "$LATEST_VERSION" | sed 's/^v//')
+          echo "Adding: Latest (${latest_num}.x)"
+          VERSIONS=$(echo "$VERSIONS" | jq '. += [{"version": "", "title": "Latest"}]')
+
+          # Add all versions in descending order
+          for version_name in "${SORTED_VERSIONS[@]}"; do
+            version_num=$(echo "$version_name" | sed 's/^v//')
+            echo "Adding: $version_name (${version_num}.x)"
+            VERSIONS=$(echo "$VERSIONS" | jq --arg version "$version_name" --arg title "${version_num}.x" '. += [{"version": $version, "title": $title}]')
+          done
+
+          # Add Preview last
+          echo "Adding: Preview (redirect to https://element.siemens.io)"
+          VERSIONS=$(echo "$VERSIONS" | jq '. += [{"version": "https://element.siemens.io", "title": "Preview"}]')
+
+          # Write to deploy-site/versions.json
+          mkdir -p deploy-site
+          echo "$VERSIONS" | jq '.' > deploy-site/versions.json
+
+          echo "Generated versions.json:"
+          cat deploy-site/versions.json
+
+      - run: |
+          SITE_URL="https://element.siemens.io/"
+
+          # Update canonical URLs for version directories
+          MAJOR_VERSION="${{ steps.deploy.outputs.major_version }}"
+          VERSION_URL="${SITE_URL}${MAJOR_VERSION}/"
+
+          find "deploy-site/$MAJOR_VERSION" -name "*.html" -type f -exec sed -i.bak \
+            -e "s|<link rel=\"canonical\" href=\"https://element.siemens.io/|<link rel=\"canonical\" href=\"${VERSION_URL}|g" \
+            {} \;
+
+          # Clean up backup files
+          find deploy-site -name "*.bak" -type f -delete 2>/dev/null || true
+
+      - run: |
+          echo "Uploading versioned documentation to S3..."
+
+          MAJOR_VERSION="${{ steps.deploy.outputs.major_version }}"
+
+          # Upload versioned directory
+          echo "Uploading /$MAJOR_VERSION/..."
+          if [[ ! -d "deploy-site/$MAJOR_VERSION" ]]; then
+            echo "Error: deploy-site/$MAJOR_VERSION directory does not exist"
+            exit 1
+          fi
+          aws s3 sync --quiet --no-progress --delete "deploy-site/$MAJOR_VERSION/" "s3://${{ env.VERSIONED_BUCKET_NAME }}/$MAJOR_VERSION/"
+
+          # If on main branch, also copy to root (without version prefix in path)
+          if [[ "${{ github.ref }}" == "refs/heads/${{ github.event.repository.default_branch }}" ]]; then
+            echo "On main branch - copying /$MAJOR_VERSION/ to root..."
+            # Delete old files but exclude version directories and versions.json from sync and deletion
+            aws s3 sync --quiet --no-progress --delete "deploy-site/$MAJOR_VERSION/" "s3://${{ env.VERSIONED_BUCKET_NAME }}/" \
+              --exclude "v*" \
+              --exclude "versions.json"
+          fi
+
+          # Upload versions.json with short cache-control for quick updates
+          if [[ ! -f "deploy-site/versions.json" ]]; then
+            echo "Error: deploy-site/versions.json file does not exist"
+            exit 1
+          fi
+          aws s3 cp deploy-site/versions.json s3://${{ env.VERSIONED_BUCKET_NAME }}/versions.json \
+            --cache-control "max-age=60,public"
+
+          echo "Uploaded versioned documentation to S3 at s3://${{ env.VERSIONED_BUCKET_NAME }}/"
