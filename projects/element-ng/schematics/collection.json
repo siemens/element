@@ -12,18 +12,6 @@
       "factory": "./ng-add/index#ngAdd",
       "schema": "./ng-add/schema.json"
     },
-    "migrate-scss-imports-to-siemens": {
-      "description": "A migration schematic for updating SCSS imports from @simpl/* to @siemens/*",
-      "factory": "./scss-import-to-siemens-migration/index#scssImportMigration",
-      "schema": "./scss-import-to-siemens-migration/schema.json",
-      "aliases": ["scss-i-migration"]
-    },
-    "migrate-ts-imports-to-siemens": {
-      "description": "A migration schematic for updating TypeScript imports from @simpl/* to @siemens/*",
-      "factory": "./ts-import-to-siemens-migration/index#tsImportMigration",
-      "schema": "./ts-import-to-siemens-migration/schema.json",
-      "aliases": ["ts-i-migration"]
-    },
     "migrate-v47-to-v48": {
       "description": "A migration schematic for updating Element from v47 to v48",
       "factory": "./migrations/index#v47to48Migration",

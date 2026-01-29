@@ -26,4 +26,9 @@
     color: semantic-tokens.$element-action-secondary-text-hover;
     background: semantic-tokens.$element-action-secondary-hover;
   }
+
+  &:active::file-selector-button {
+    color: semantic-tokens.$element-action-primary-active;
+    background: semantic-tokens.$element-action-secondary-active;
+  }
 }

@@ -60,15 +60,9 @@ describe('SiLocaleService', () => {
       expect(service.config.localeInitializer).toBeDefined();
     });
 
-    it('should have a default locale initializer resolves on en', (done: DoneFn) => {
+    it('should have a default locale initializer resolves on en', async () => {
       expect(service.config.localeInitializer).toBeDefined();
-      if (service.config.localeInitializer) {
-        service.config.localeInitializer('en').then(() => {
-          done();
-        });
-      } else {
-        fail();
-      }
+      await service.config.localeInitializer!('en');
     });
   });
 
