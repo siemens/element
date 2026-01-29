@@ -1,5 +1,6 @@
 name: Release
 on:
+  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -49,16 +50,20 @@ jobs:
 
       - id: check_release
         run: |
-          AFTER_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
-          BEFORE_TAG="${{ steps.before_release.outputs.before_tag }}"
+          # TEMPORARY: Hardcoded simulation (REMOVE BEFORE MERGE)
+          echo "release_tag=v48.10.0" >> $GITHUB_OUTPUT
+          echo "new_release=true" >> $GITHUB_OUTPUT
 
-          if [[ -n "$AFTER_TAG" && "$AFTER_TAG" != "$BEFORE_TAG" ]]; then
-            echo "release_tag=$AFTER_TAG" >> $GITHUB_OUTPUT
-            echo "new_release=true" >> $GITHUB_OUTPUT
-          else
-            echo "new_release=false" >> $GITHUB_OUTPUT
-            echo "release_tag=" >> $GITHUB_OUTPUT
-          fi
+          # ORIGINAL CODE (restore before merge):
+          # AFTER_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          # BEFORE_TAG="${{ steps.before_release.outputs.before_tag }}"
+          # if [[ -n "$AFTER_TAG" && "$AFTER_TAG" != "$BEFORE_TAG" ]]; then
+          #   echo "release_tag=$AFTER_TAG" >> $GITHUB_OUTPUT
+          #   echo "new_release=true" >> $GITHUB_OUTPUT
+          # else
+          #   echo "new_release=false" >> $GITHUB_OUTPUT
+          #   echo "release_tag=" >> $GITHUB_OUTPUT
+          # fi
 
   publish-documentation-release:
     runs-on: ubuntu-24.04
@@ -227,8 +232,9 @@ jobs:
           fi
           aws s3 sync --quiet --no-progress --delete "deploy-site/$MAJOR_VERSION/" "s3://${{ env.VERSIONED_BUCKET_NAME }}/$MAJOR_VERSION/"
 
-          # If on main branch, also copy to root (without version prefix in path)
-          if [[ "${{ github.ref }}" == "refs/heads/${{ github.event.repository.default_branch }}" ]]; then
+          # If on main branch, also copy to root (without version prefix in path) (temporarily disabled)
+          # if [[ "${{ github.ref }}" == "refs/heads/${{ github.event.repository.default_branch }}" ]]; then
+          if true; then
             echo "On main branch - copying /$MAJOR_VERSION/ to root..."
             # Delete old files but exclude version directories and versions.json from sync and deletion
             aws s3 sync --quiet --no-progress --delete "deploy-site/$MAJOR_VERSION/" "s3://${{ env.VERSIONED_BUCKET_NAME }}/" \
