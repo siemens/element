@@ -43,8 +43,12 @@ export interface Widget {
   payload?: any;
 }
 
-/** Factory type that is either a {@link WidgetComponentTypeFactory}, {@link FederatedModule} or {@link WebComponent}. */
-export type WidgetComponentFactory = WidgetComponentTypeFactory | FederatedModule | WebComponent;
+/** Factory type that is either a {@link WidgetComponentTypeFactory}, {@link FederatedModule}, {@link FederatedBridgeModule} or {@link WebComponent}. */
+export type WidgetComponentFactory =
+  | WidgetComponentTypeFactory
+  | FederatedModule
+  | WebComponent
+  | FederatedBridgeModule;
 
 type CommonFactoryFields = {
   componentName: string;
@@ -77,9 +81,23 @@ type StandaloneOptions = WidgetComponentTypeBaseConfig & {
 
 export type WidgetComponentTypeFactory = CommonFactoryFields & (ModuleOptions | StandaloneOptions);
 
+/**
+ * Factory configuration for loading widget components from a federated module.
+ * Supports both Module Federation and Native Federation patterns for micro-frontend architectures.
+ * Use this when the widget component is hosted in a separate, independently deployed application.
+ */
 export type FederatedModule = CommonFactoryFields &
   LoadRemoteModuleOptions & {
-    factoryType: 'module-federation';
+    factoryType: 'module-federation' | 'native-federation';
+    [index: string]: any;
+  };
+
+/**
+ * Use this when having native federation shell and remote module is using module federation.
+ */
+export type FederatedBridgeModule = CommonFactoryFields &
+  LoadRemoteBridgeOptions & {
+    factoryType: 'native-federation-module-bridge';
     [index: string]: any;
   };
 
@@ -361,6 +379,20 @@ export type LoadRemoteModuleOptions =
   | LoadRemoteModuleScriptOptions
   | LoadRemoteModuleEsmOptions
   | LoadRemoteModuleManifestOptions;
+
+/**
+ * Definition is based on `@module-federation/enhanced` loadRemote options.
+ * We take it over into this file to prevent adding a hard dependency.
+ */
+export type LoadRemoteBridgeOptions = {
+  id: string;
+  options?:
+    | {
+        loadFactory?: boolean | undefined;
+        from: 'build' | 'runtime';
+      }
+    | undefined;
+};
 
 export type LoadRemoteModuleScriptOptions = {
   type?: 'script';

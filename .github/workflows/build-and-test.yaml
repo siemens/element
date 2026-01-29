@@ -41,9 +41,9 @@ jobs:
       - run: npm run build:all:update-translatable-keys # Output is needed in dist for providing default translations
       - run: git diff --exit-code "projects/**/*-translatable-keys.interface.ts"
       - run: npm run build:examples -- --define="maptilerKey='$MAPTILER_KEY'" --define="maptilerUrl='$MAPTILER_URL'"
-      - run: npm run dashboards-demo:build:demo -- --progress=false
-      - run: npm run dashboards-demo:build:webcomponents -- --progress=false
-      - run: npm run dashboards-demo:build:mfe -- --progress=false
+      - run: npm run dashboards-demo:build-all -- --progress=false
+      - run: npm run dashboards-demo:build-all:esm
+
       - uses: actions/upload-artifact@v6
         with:
           name: dist
@@ -262,6 +262,7 @@ jobs:
         if: ${{ github.ref != 'refs/heads/main' }}
       - run: mv dist/element-examples/ dist/design/
       - run: mv dist/dashboards-demo/ dist/design/
+      - run: mv dist/dashboards-demo-esm/ dist/design/
       - run: mv coverage-summary.json dist/design/
       - run: mv dist/coverage/ dist/design/
       - uses: actions/upload-artifact@v6

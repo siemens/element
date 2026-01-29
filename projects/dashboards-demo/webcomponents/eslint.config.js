@@ -7,10 +7,7 @@ export default defineConfig(
     files: ['**/*.ts'],
     languageOptions: {
       parserOptions: {
-        project: [
-          'projects/dashboards-demo/webcomponents/tsconfig.app.json',
-          'projects/dashboards-demo/webcomponents/tsconfig.spec.json'
-        ]
+        project: ['projects/dashboards-demo/webcomponents/tsconfig.app.json']
       }
     }
   },

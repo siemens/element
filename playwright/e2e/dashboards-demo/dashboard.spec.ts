@@ -34,7 +34,8 @@ test.describe('dashboard', () => {
     await si.visitExample(example, undefined);
     await openWidgetCatalog(page);
     await expect(page.getByText('Hello World')).toBeVisible();
-    await si.runVisualAndA11yTests('edit');
+    const stepName = test.info().project.metadata.isESM ? 'esm-edit' : 'edit';
+    await si.runVisualAndA11yTests(stepName);
   });
 
   test(example + 'empty', async ({ page, si }) => {
