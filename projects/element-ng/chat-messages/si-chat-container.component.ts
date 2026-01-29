@@ -23,7 +23,7 @@ import {
  * scrolls to the bottom when new content is added, unless the user has scrolled up to view older messages.
  *
  * Use via content projection:
- * - Default content: Chat messages displayed in the scrollable messages container or something like an empty state.
+ * - Default content: Chat messages displayed in the scrollable messages container or a welcome screen (empty state).
  * - `si-inline-notification` selector: Notification component displayed above the input area
  * - `si-chat-input` or `[siChatContainerInput]` selector: Input controls for composing messages
  *
