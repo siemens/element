@@ -120,7 +120,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "mkdocs-code-siemens-code-docs-theme", specifier = ">=7.7.0,<8", index = "https://code.siemens.com/api/v4/groups/3259/-/packages/pypi/simple" },
+    { name = "mkdocs-code-siemens-code-docs-theme", specifier = ">=7.8.0,<8", index = "https://code.siemens.com/api/v4/groups/3259/-/packages/pypi/simple" },
     { name = "mkdocs-element-docs-builder", editable = "projects/element-docs-builder" },
     { name = "mkdocs-minify-html-plugin", specifier = "==0.3.9" },
 ]
@@ -259,15 +259,15 @@ wheels = [
 
 [[package]]
 name = "mkdocs-code-siemens-code-docs-theme"
-version = "7.7.0"
+version = "7.8.0"
 source = { registry = "https://code.siemens.com/api/v4/groups/3259/-/packages/pypi/simple" }
 dependencies = [
     { name = "mkdocs" },
     { name = "mkdocs-material" },
 ]
-sdist = { url = "https://code.siemens.com/api/v4/groups/3259/-/packages/pypi/files/5466e241cd053e818300f964f74e70764f988156ba6d0eb042364be23828728b/mkdocs_code_siemens_code_docs_theme-7.7.0.tar.gz", hash = "sha256:5466e241cd053e818300f964f74e70764f988156ba6d0eb042364be23828728b" }
+sdist = { url = "https://code.siemens.com/api/v4/groups/3259/-/packages/pypi/files/e3b7946b001b72cb17cc129c7af2ad748812d34a200ef51265a6253fcbc30648/mkdocs_code_siemens_code_docs_theme-7.8.0.tar.gz", hash = "sha256:e3b7946b001b72cb17cc129c7af2ad748812d34a200ef51265a6253fcbc30648" }
 wheels = [
-    { url = "https://code.siemens.com/api/v4/groups/3259/-/packages/pypi/files/68573928ab9d3c5bf14ca954481629c9512c9c837d4f3cdc15fa72eb54f47bb7/mkdocs_code_siemens_code_docs_theme-7.7.0-py3-none-any.whl", hash = "sha256:68573928ab9d3c5bf14ca954481629c9512c9c837d4f3cdc15fa72eb54f47bb7" },
+    { url = "https://code.siemens.com/api/v4/groups/3259/-/packages/pypi/files/035a290de19b47fb31e9a91cc9c88083ce7baadde41f1a57b2237b8f59f080e3/mkdocs_code_siemens_code_docs_theme-7.8.0-py3-none-any.whl", hash = "sha256:035a290de19b47fb31e9a91cc9c88083ce7baadde41f1a57b2237b8f59f080e3" },
 ]
 
 [[package]]
@@ -297,7 +297,7 @@ wheels = [
 
 [[package]]
 name = "mkdocs-material"
-version = "9.6.16"
+version = "9.7.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "babel" },
@@ -312,9 +312,9 @@ dependencies = [
     { name = "pymdown-extensions" },
     { name = "requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/dd/84/aec27a468c5e8c27689c71b516fb5a0d10b8fca45b9ad2dd9d6e43bc4296/mkdocs_material-9.6.16.tar.gz", hash = "sha256:d07011df4a5c02ee0877496d9f1bfc986cfb93d964799b032dd99fe34c0e9d19", size = 4028828, upload-time = "2025-07-26T15:53:47.542Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/9c/3b/111b84cd6ff28d9e955b5f799ef217a17bc1684ac346af333e6100e413cb/mkdocs_material-9.7.0.tar.gz", hash = "sha256:602b359844e906ee402b7ed9640340cf8a474420d02d8891451733b6b02314ec", size = 4094546, upload-time = "2025-11-11T08:49:09.73Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/65/f4/90ad67125b4dd66e7884e4dbdfab82e3679eb92b751116f8bb25ccfe2f0c/mkdocs_material-9.6.16-py3-none-any.whl", hash = "sha256:8d1a1282b892fe1fdf77bfeb08c485ba3909dd743c9ba69a19a40f637c6ec18c", size = 9223743, upload-time = "2025-07-26T15:53:44.236Z" },
+    { url = "https://files.pythonhosted.org/packages/04/87/eefe8d5e764f4cf50ed91b943f8e8f96b5efd65489d8303b7a36e2e79834/mkdocs_material-9.7.0-py3-none-any.whl", hash = "sha256:da2866ea53601125ff5baa8aa06404c6e07af3c5ce3d5de95e3b52b80b442887", size = 9283770, upload-time = "2025-11-11T08:49:06.26Z" },
 ]
 
 [[package]]
