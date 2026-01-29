@@ -284,6 +284,19 @@ describe('SiWizardComponent', () => {
       expect(element.querySelector('.wizard-btn-container .back')).toBeFalsy();
       expect(element.querySelector('.wizard-btn-container .next')).toBeFalsy();
     });
+
+    it('should align save button to end on last step when navigation is hidden', async () => {
+      hostComponent.inlineNavigation = false;
+      await runOnPushChangeDetection(fixture);
+
+      // Navigate to the last step
+      component.next(hostComponent.steps.length - 1);
+      await runOnPushChangeDetection(fixture);
+
+      const saveButton = element.querySelector('.btn.save');
+      expect(saveButton).toBeTruthy();
+      expect(saveButton).toHaveClass('end');
+    });
   });
 
   describe('navigation buttons in footer', () => {
