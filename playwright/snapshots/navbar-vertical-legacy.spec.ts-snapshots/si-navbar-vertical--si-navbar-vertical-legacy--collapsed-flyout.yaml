@@ -9,17 +9,18 @@
   - button "expand"
   - button "Search..."
   - button "expand Home"
-  - button "Documentation"
-  - group "Documentation":
-    - link "Sub Item 4":
+  - group "expand Home"
+  - button "Documentation 6"
+  - group "Documentation 6":
+    - link "Sub Item 4 1":
       - /url: "#/viewer/viewer/subItem4"
-    - link "Sub Item 5":
+    - link "Sub Item 5 2":
       - /url: "#/viewer/viewer/subItem5"
-    - link "Sub Item 6":
+    - link "Sub Item 6 3":
       - /url: "#/viewer/viewer/subItem6"
   - link "Energy & Sustainability":
     - /url: "#/viewer/viewer/energy"
-  - link "4 Test Coverage":
+  - link "Test Coverage":
     - /url: "#/viewer/viewer/coverage"
 - main:
   - heading "Here is a title" [level=2]

@@ -12,9 +12,11 @@
   - link "Energy & sustainability":
     - /url: "#/viewer/viewer/energy"
   - button "User management"
-  - link "4 Test coverage":
+  - group "User management"
+  - link "Test coverage":
     - /url: "#/viewer/viewer/coverage"
   - button "Documentation"
+  - group "Documentation"
   - button "Action"
 - main:
   - heading "Here is a title" [level=2]
