@@ -18,10 +18,8 @@
     "INPUT_HELP_DESCRIPTION": "The content should be short and concise, optionally with links to more detailed information available elsewhere, or any other interactive element needed to complete the task.",
     "INSTALLER": "Installer",
     "INVALID_PHONE": "Invalid phone number",
-    "MINLENGTH": "A minimum length of {{requiredLength}} characters is required.",
     "NAME_REQUIRED": "Every good form needs a name!",
     "NAME": "Name",
-    "REQUIRED": "A value is required.",
     "ROLE": "Role",
     "SEARCH": "Search",
     "SELECT_COUNTRY": "Select Country"

@@ -126,4 +126,4 @@
   - option "checkbox"
 - checkbox "Enforce checkboxes"
 - text: Enforce checkboxes
-- tooltip "The minimum number of characters is not met. The value does not match the predefined pattern."
+- tooltip "Min. 2 characters The value does not match the predefined pattern."

@@ -83,12 +83,17 @@ describe('SiDatepickerDirective', () => {
   const getTestDate = (): Date => new Date('2022-03-12T05:30:20');
 
   beforeEach(() => {
+    jasmine.clock().install();
     fixture = TestBed.createComponent(WrapperComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
     rootLoader = TestbedHarnessEnvironment.documentRootLoader(fixture);
 
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    jasmine.clock().uninstall();
   });
 
   describe('with minDate and maxDate', () => {
@@ -106,7 +111,8 @@ describe('SiDatepickerDirective', () => {
 
       expect(component.validation().errors?.minDate).toEqual({
         actual: component.date(),
-        min: component.config().minDate
+        min: component.config().minDate,
+        minString: '3/12/2021, 12:00:00 AM'
       });
     });
 
@@ -115,7 +121,8 @@ describe('SiDatepickerDirective', () => {
 
       expect(component.validation().errors?.maxDate).toEqual({
         actual: component.date(),
-        max: component.config().maxDate
+        max: component.config().maxDate,
+        maxString: '3/12/2023, 12:00:00 AM'
       });
     });
   });
@@ -239,13 +246,11 @@ describe('SiDatepickerDirective', () => {
       getInput().focus();
       await fixture.whenStable();
       const picker = await rootLoader.getHarness(SiDatepickerComponentHarness);
-      jasmine.clock().install();
       await picker.selectCell({ text: '1' });
       jasmine.clock().tick(1000);
       await fixture.whenStable();
 
       expect(document.querySelector('si-datepicker-overlay')).toBeFalsy();
-      jasmine.clock().uninstall();
     });
 
     it('should close when switch of Consider Time', async () => {
@@ -256,12 +261,10 @@ describe('SiDatepickerDirective', () => {
       getInput().focus();
       await fixture.whenStable();
       const picker = await rootLoader.getHarness(SiDatepickerComponentHarness);
-      jasmine.clock().install();
       await (await picker.considerTimeSwitch()).toggle();
       jasmine.clock().tick(1000);
       await fixture.whenStable();
       expect(document.querySelector('si-datepicker-overlay')).toBeFalsy();
-      jasmine.clock().uninstall();
     });
   });
 });

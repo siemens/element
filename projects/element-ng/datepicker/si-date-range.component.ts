@@ -48,7 +48,7 @@ import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/for
 import { addIcons, elementCalendar, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
-import { getMaxDate, getMinDate, is12HourFormat } from './date-time-helper';
+import { is12HourFormat } from './date-time-helper';
 import { SiDateInputDirective } from './si-date-input.directive';
 import { SiDatepickerOverlayComponent } from './si-datepicker-overlay.component';
 import { CloseCause, SiDatepickerOverlayDirective } from './si-datepicker-overlay.directive';
@@ -398,10 +398,10 @@ export class SiDateRangeComponent
         errors[`invalid${type}DateFormat`] = formatError;
       }
       const minError = control.getError('minDate');
-      const siDatepickerConfig = this.siDatepickerConfig();
       if (minError) {
         errors.rangeBeforeMinDate = {
-          min: getMinDate(siDatepickerConfig.minDate),
+          min: minError.min,
+          minString: minError.minString,
           start: this.startInput().value,
           end: this.endInput().value
         };
@@ -409,7 +409,8 @@ export class SiDateRangeComponent
       const maxError = control.getError('maxDate');
       if (maxError) {
         errors.rangeAfterMaxDate = {
-          max: getMaxDate(siDatepickerConfig.maxDate),
+          max: maxError.max,
+          maxString: maxError.maxString,
           start: this.startInput().value,
           end: this.endInput().value
         };
