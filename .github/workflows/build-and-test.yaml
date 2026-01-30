@@ -244,6 +244,7 @@ jobs:
           node-version: lts/krypton
           cache: 'npm'
       - run: npm config set //code.siemens.com/api/v4/packages/npm/:_authToken $SIEMENS_NPM_TOKEN
+      - run: npm config set //code.siemens.com/api/v4/projects/516167/packages/npm/:_authToken $SIEMENS_NPM_TOKEN
         env:
           SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
       - run: npm ci --prefer-offline --no-audit --include=optional
