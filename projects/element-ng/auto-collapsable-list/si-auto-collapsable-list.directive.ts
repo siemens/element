@@ -6,9 +6,11 @@ import {
   AfterViewInit,
   booleanAttribute,
   ChangeDetectorRef,
+  computed,
   contentChild,
   contentChildren,
   Directive,
+  effect,
   ElementRef,
   inject,
   INJECTOR,
@@ -18,9 +20,8 @@ import {
   SimpleChanges
 } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { ResizeObserverService } from '@siemens/element-ng/resize-observer';
-import { BehaviorSubject, combineLatest, of, Subscription } from 'rxjs';
-import { auditTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
+import { observeElementSize } from '@siemens/element-ng/resize-observer';
+import { Subscription } from 'rxjs';
 
 import { SiAutoCollapsableListAdditionalContentDirective } from './si-auto-collapsable-list-additional-content.directive';
 import { SiAutoCollapsableListItemDirective } from './si-auto-collapsable-list-item.directive';
@@ -63,13 +64,27 @@ export class SiAutoCollapsableListDirective implements AfterViewInit, OnChanges,
     alias: 'siAutoCollapsableListContainerElement'
   });
 
-  private resizeSubscription?: Subscription;
   private disableInitSubscription?: Subscription;
   private readonly elementRef = inject(ElementRef);
-  private readonly resizeObserverService = inject(ResizeObserverService);
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
-  private readonly containerElementSubject = new BehaviorSubject<HTMLElement | null>(
-    this.elementRef.nativeElement
+  private readonly container = computed(
+    () => this.containerElement() ?? this.elementRef.nativeElement
+  );
+  private readonly containerSizeChange = observeElementSize(this.container, {
+    mapFn: e => e.at(0)?.contentBoxSize.at(0)?.inlineSize
+  });
+  private readonly containerSize = computed(() => {
+    const size = this.containerSizeChange() ?? this.container().clientWidth;
+    const { paddingInlineStart, paddingInlineEnd } = getComputedStyle(
+      this.containerElement() ?? this.elementRef.nativeElement
+    );
+    return size - parseFloat(paddingInlineStart) - parseFloat(paddingInlineEnd);
+  });
+  private readonly itemSizes = computed(() =>
+    this.items().map(item => ({
+      size: item.inlineSize(),
+      directive: item
+    }))
   );
 
   /**
@@ -78,6 +93,21 @@ export class SiAutoCollapsableListDirective implements AfterViewInit, OnChanges,
    */
   private computedGap = 0;
   private injector = inject(INJECTOR);
+
+  constructor() {
+    effect(() => {
+      if (!this.siAutoCollapsableList()) {
+        return;
+      }
+      const size = this.containerSize();
+      const itemSizes = this.itemSizes();
+      const additionalContents = this.additionalContent().map(item => item.inlineSize());
+      if (size && itemSizes) {
+        const overflowItemSize = this.overflowItem()?.inlineSize() ?? 0;
+        this.updateItemVisibility(size, overflowItemSize, itemSizes, additionalContents);
+      }
+    });
+  }
 
   ngAfterViewInit(): void {
     if (this.siAutoCollapsableList()) {
@@ -91,73 +121,18 @@ export class SiAutoCollapsableListDirective implements AfterViewInit, OnChanges,
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.siAutoCollapsableList) {
       const siAutoCollapsableList = this.siAutoCollapsableList();
-      if (!siAutoCollapsableList && this.resizeSubscription) {
+      if (!siAutoCollapsableList) {
         this.reset();
-      } else if (siAutoCollapsableList && !this.resizeSubscription && this.items()) {
-        this.setupResizeListener();
       }
-    }
-
-    if (changes.containerElement) {
-      this.containerElementSubject.next(this.containerElement() ?? this.elementRef.nativeElement);
     }
   }
 
   ngOnDestroy(): void {
-    this.resizeSubscription?.unsubscribe();
     this.disableInitSubscription?.unsubscribe();
-    this.containerElementSubject.complete();
   }
 
   private setupResizeListener(): void {
     this.disableInitSubscription?.unsubscribe();
-    const containerSize$ = this.containerElementSubject.pipe(
-      switchMap(element => this.resizeObserverService.observe(element!, 0, true, true)),
-      map(size => size.width),
-      distinctUntilChanged(),
-      map(size => {
-        const { paddingInlineStart, paddingInlineEnd } = getComputedStyle(
-          this.containerElement() ?? this.elementRef.nativeElement
-        );
-        return size - parseFloat(paddingInlineStart) - parseFloat(paddingInlineEnd);
-      })
-    );
-
-    const itemSizes$ = toObservable(this.items, { injector: this.injector }).pipe(
-      startWith(this.items()),
-      switchMap(items =>
-        !items.length
-          ? of([])
-          : combineLatest(
-              items.map(item =>
-                item.size$.pipe(
-                  map(size => ({
-                    size,
-                    directive: item
-                  }))
-                )
-              )
-            )
-      )
-    );
-    const additionalContentSizes$ = toObservable(this.additionalContent, {
-      injector: this.injector
-    }).pipe(
-      startWith(this.additionalContent()),
-      switchMap(additionalContent => combineLatest(additionalContent.map(item => item.size$))),
-      startWith([])
-    );
-
-    this.resizeSubscription = combineLatest([
-      containerSize$,
-      this.overflowItem()?.size$ ?? of(0),
-      itemSizes$,
-      additionalContentSizes$
-    ])
-      .pipe(auditTime(0))
-      .subscribe(([containerSize, overflowItemSize, items, additionalContentSizes]) =>
-        this.updateItemVisibility(containerSize, overflowItemSize, items, additionalContentSizes)
-      );
   }
 
   private updateItemVisibility(
@@ -202,8 +177,6 @@ export class SiAutoCollapsableListDirective implements AfterViewInit, OnChanges,
   }
 
   private reset(): void {
-    this.resizeSubscription?.unsubscribe();
-    this.resizeSubscription = undefined;
     this.disableInitSubscription = toObservable(this.items, { injector: this.injector }).subscribe(
       items =>
         queueMicrotask(() => {
