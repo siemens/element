@@ -106,7 +106,7 @@
     "ag-grid-community": "^34.3.1",
     "@softarc/native-federation-node": "^3.3.4",
     "echarts": "6.0.0",
-    "es-module-shims": "^1.5.12",
+    "es-module-shims": "^2.0.0",
     "flag-icons": "7.5.0",
     "google-libphonenumber": "3.2.44",
     "gridstack": "12.4.2",
