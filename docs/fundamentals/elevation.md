@@ -77,7 +77,7 @@ be accessed directly by using CSS utility classes.
 
 <si-docs-component example="elevation/elevation" height="120"></si-docs-component>
 
-### Sass Variables
+### Sass variables
 
 The shadow values for each _Element_ elevation level can also be alternatively
 used as SCSS variables within stylesheets. This also allows you to consume the
