@@ -253,6 +253,7 @@ jobs:
         env:
           UV_INDEX_CODE_DOCS_THEME_USERNAME: ${{ secrets.SIEMENS_NPM_USER }}
           UV_INDEX_CODE_DOCS_THEME_PASSWORD: ${{ secrets.SIEMENS_NPM_TOKEN }}
+      - run: npm run icon-viewer:build-docs
       - run: npm run docs:build:generate
         env:
           EXAMPLES_BASE: /element-examples/
