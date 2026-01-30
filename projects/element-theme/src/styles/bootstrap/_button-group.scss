@@ -78,6 +78,7 @@
 
 .btn-group .btn-check {
   + .btn {
+    cursor: pointer;
     background: transparent;
     color: semantic-tokens.$element-text-primary;
     padding-block: calc(variables.$btn-padding-y - 1px);
@@ -100,6 +101,7 @@
     }
   }
 
+  &:hover + .btn,
   &:checked + .btn,
   + .btn:hover {
     color: semantic-tokens.$element-ui-0-hover;

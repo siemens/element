@@ -15,10 +15,13 @@ import { MenuItemLink } from '@siemens/element-ng/menu';
 import { MenuItemRadio } from '@siemens/element-ng/menu';
 import { MenuItemRouterLink } from '@siemens/element-ng/menu';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
+import { TemplateRef } from '@angular/core';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
 export type ContentActionBarMainItem = (MenuItemAction | MenuItemCheckbox | MenuItemLink | MenuItemRouterLink | MenuItemGroup) & {
     iconOnly?: boolean;
+    tooltip?: TranslatableString | TemplateRef<any>;
 };
 
 // @public (undocumented)
