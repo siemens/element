@@ -24,7 +24,8 @@ import {
   viewChild,
   viewChildren
 } from '@angular/core';
-import { addIcons, elementCancel, SiIconComponent } from '@siemens/element-ng/icon';
+import { elementCancel } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { ModalRef } from '@siemens/element-ng/modal';
 import {
   injectSiTranslateService,

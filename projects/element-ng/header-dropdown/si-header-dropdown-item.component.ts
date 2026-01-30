@@ -3,13 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, HostListener, inject, input } from '@angular/core';
-import {
-  addIcons,
-  elementDown2,
-  elementOk,
-  elementRecordFilled,
-  SiIconComponent
-} from '@siemens/element-ng/icon';
+import { elementDown2, elementOk, elementRecordFilled } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 
 import { SiHeaderDropdownTriggerDirective } from './si-header-dropdown-trigger.directive';
 import { SI_HEADER_WITH_DROPDOWNS } from './si-header.model';

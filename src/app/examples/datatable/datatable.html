@@ -80,9 +80,11 @@
   <si-circle-status icon="element-plant" [status]="row.status" />
 </ng-template>
 <ng-template #otherStatusCellTempl let-value="value" let-row="row" ngx-datatable-cell-template>
-  <si-icon class="icon status-danger" icon="element-cancel-filled" />
-  <si-icon class="icon status-warning" icon="element-manual-filled" />
-  <si-icon class="icon status-danger" icon="element-alarm-filled" />
+  <div class="d-flex gap-1">
+    <si-icon class="icon status-danger" icon="element-cancel-filled" />
+    <si-icon class="icon status-warning" icon="element-manual-filled" />
+    <si-icon class="icon status-danger" icon="element-alarm-filled" />
+  </div>
 </ng-template>
 
 <ng-template #ageCellTempl let-value="value" let-row="row" ngx-datatable-cell-template>

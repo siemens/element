@@ -12,12 +12,6 @@
   background: transparent;
   padding: 0;
 
-  si-icon {
-    // We have to scale up the icon, so that the actual content takes the full size.
-    // It is initially 12px, but we want it to be 16px. (Those are just sample values, but the actual relation always stays the same, whatever actual value we use.)
-    transform: scale(math.div(16, 12));
-  }
-
   &:is(:hover, :active) {
     color: variables.$element-ui-1;
   }

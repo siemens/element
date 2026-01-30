@@ -16,12 +16,8 @@ import {
   viewChild,
   viewChildren
 } from '@angular/core';
-import {
-  addIcons,
-  elementBreadcrumbRoot,
-  elementRight2,
-  SiIconComponent
-} from '@siemens/element-ng/icon';
+import { elementBreadcrumbRoot, elementRight2 } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLinkDirective } from '@siemens/element-ng/link';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 import {

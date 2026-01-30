@@ -14,9 +14,10 @@ import {
   signal
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { elementDocument } from '@siemens/element-icons';
 import { SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
 import { CopyrightDetails, SiCopyrightNoticeComponent } from '@siemens/element-ng/copyright-notice';
-import { addIcons, elementDocument, SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 

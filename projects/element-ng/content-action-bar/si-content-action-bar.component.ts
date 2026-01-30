@@ -15,9 +15,10 @@ import {
   viewChild
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { elementCancel, elementOptionsVertical } from '@siemens/element-icons';
 import { SiAutoCollapsableListModule } from '@siemens/element-ng/auto-collapsable-list';
 import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
-import { addIcons, elementCancel, elementOptionsVertical } from '@siemens/element-ng/icon';
+import { addIcons } from '@siemens/element-ng/icon';
 import { SiLinkModule } from '@siemens/element-ng/link';
 import {
   MenuItem,
