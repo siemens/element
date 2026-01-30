@@ -171,7 +171,7 @@
     "prettier": "3.8.1",
     "semantic-release": "25.0.2",
     "semver": "7.7.3",
-    "stylelint": "16.26.1",
+    "stylelint": "17.1.0",
     "stylelint-scss": "7.0.0",
     "stylelint-use-logical-spec": "5.0.1",
     "tsx": "4.21.0",
