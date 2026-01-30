@@ -17,7 +17,7 @@ import {
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiLoadingSpinnerModule } from '@siemens/element-ng/loading-spinner';
-import { Observable, of } from 'rxjs';
+import { firstValueFrom, Observable, of, zip } from 'rxjs';
 
 import { TestingModule } from '../../../test/testing.module';
 import { SI_DASHBOARD_CONFIGURATION } from '../../model/configuration';
@@ -134,30 +134,17 @@ describe('SiFlexibleDashboardComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should create with additional menu items with actions that can be invoked', (done: DoneFn) => {
-      let count = 0;
-      actionCounter = 0;
-      expect(component).toBeTruthy();
+    it('should create with additional menu items with actions that can be invoked', async () => {
+      const [primaryMenuItems, secondaryMenuItems] = await firstValueFrom(
+        zip(component.primaryEditActions$, component.secondaryEditActions$)
+      );
 
-      component.primaryEditActions$?.subscribe(menuItems => {
-        expect(menuItems.length).toBe(2);
-        const action = (menuItems[1] as MenuItem).action as () => void;
-        action();
-        expect(actionCounter).toBe(1);
+      expect(primaryMenuItems.length).toBe(2);
+      const action = (primaryMenuItems[1] as MenuItem).action as () => void;
+      action();
+      expect(actionCounter).toBe(1);
 
-        count++;
-        if (count >= 2) {
-          done();
-        }
-      });
-
-      component.secondaryEditActions$?.subscribe(menuItems => {
-        expect(menuItems.length).toBe(2);
-        count++;
-        if (count >= 2) {
-          done();
-        }
-      });
+      expect(secondaryMenuItems.length).toBe(2);
     });
 
     it('#hideAddWidgetInstanceButton should remove the addWidgetInstanceAction action', () => {

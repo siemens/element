@@ -5,7 +5,7 @@
 import { TestBed } from '@angular/core/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SiTranslateNgxTModule } from '@siemens/element-translate-ng/ngx-translate';
-import { Observable, of, take } from 'rxjs';
+import { firstValueFrom, Observable, of, take, toArray } from 'rxjs';
 
 import { SiLocaleStore } from './si-locale-store';
 import { SI_LOCALE_CONFIG, SiLocaleConfig, SiLocaleService } from './si-locale.service';
@@ -192,42 +192,31 @@ describe('SiLocaleService', () => {
       translate = TestBed.inject(TranslateService);
     });
 
-    it('should change the locale at translate service', (done: DoneFn) => {
-      let count = 1;
-      translate.onLangChange.subscribe((event: { lang: any }) => {
-        if (count === 1) {
-          // the initial browser locale
-          expect(event.lang).toBe('en');
-          count++;
-          service.locale = 'de';
-        } else if (count === 2) {
-          // after the change
-          expect(event.lang).toBe('de');
-          done();
-        } else {
-          fail();
-        }
-      });
+    it('should change the locale at translate service', async () => {
+      const firstEvent = await firstValueFrom(translate.onLangChange);
+      // the initial browser locale
+      expect(firstEvent.lang).toBe('en');
+
+      const secondEventPromise = firstValueFrom(translate.onLangChange);
+      service.locale = 'de';
+
+      // after the change
+      const secondEvent = await secondEventPromise;
+      expect(secondEvent.lang).toBe('de');
     });
 
-    it('should change the locale following the translate service changes', (done: DoneFn) => {
-      let count = 1;
-      service.locale$.subscribe((locale: string) => {
-        if (count === 1) {
-          // the initial default locale
-          expect(locale).toBe('en');
-          count++;
-        } else if (count === 2) {
-          // after the change
-          expect(locale).toBe('de');
-          done();
-        } else {
-          fail();
-        }
-      });
-      translate.onLangChange.pipe(take(1)).subscribe(() => {
-        translate.use('de');
-      });
+    it('should change the locale following the translate service changes', async () => {
+      const localePromise = firstValueFrom(service.locale$.pipe(take(2), toArray()));
+
+      // wait for initial lang change to be processed
+      await firstValueFrom(translate.onLangChange);
+      translate.use('de');
+
+      const locales = await localePromise;
+      // the initial default locale
+      expect(locales[0]).toBe('en');
+      // after the change
+      expect(locales[1]).toBe('de');
     });
 
     it('should throw an error when setting an unknown locale', () => {
@@ -272,7 +261,7 @@ describe('SiLocaleService', () => {
     expect(service.locale).toBe('fr');
   });
 
-  it('shall use the default locale if new locale is not supported by localeInitializer', (done: DoneFn) => {
+  it('shall use the default locale if new locale is not supported by localeInitializer', async () => {
     const config: SiLocaleConfig = {
       availableLocales: ['de', 'fr', 'en'],
       defaultLocale: 'fr',
@@ -294,21 +283,16 @@ describe('SiLocaleService', () => {
       ]
     });
     service = TestBed.inject(SiLocaleService);
-    let count = 1;
-    service.locale$.subscribe((locale: string) => {
-      if (count === 1) {
-        // the initial default locale
-        expect(locale).toBe('de');
-        count++;
-      } else if (count === 2) {
-        // after setting the locale to en, which is not supported by
-        // the localeInitializer the default locale should be set
-        expect(locale).toBe('fr');
-        done();
-      } else {
-        fail();
-      }
-    });
+
+    const localePromise = firstValueFrom(service.locale$.pipe(take(2), toArray()));
+
     service.locale = 'en';
+
+    const locales = await localePromise;
+    // the initial default locale
+    expect(locales[0]).toBe('de');
+    // after setting the locale to en, which is not supported by
+    // the localeInitializer the default locale should be set
+    expect(locales[1]).toBe('fr');
   });
 });
