@@ -28,6 +28,7 @@ test.describe('filtered search', () => {
     // remove score criterion
     await page.keyboard.press('Shift+Tab');
     await page.keyboard.press('Shift+Tab');
+    await expect(page.locator('.criterion-value-text', { hasText: 'Good' })).toBeFocused();
     await page.keyboard.press('Enter');
     await expect(
       page.locator('.pill-group', { hasText: 'Score' }).getByRole('combobox')
