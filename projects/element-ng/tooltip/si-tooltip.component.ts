@@ -20,12 +20,15 @@ import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-
 @Component({
   selector: 'si-tooltip',
   imports: [NgTemplateOutlet, SiTranslatePipe, NgComponentOutlet],
-  templateUrl: './si-tooltip.component.html'
+  templateUrl: './si-tooltip.component.html',
+  styleUrl: './si-tooltip.component.scss',
+  host: {
+    'animate.leave': 'tooltip-leave'
+  }
 })
 export class TooltipComponent {
   /** @defaultValue '' */
   readonly tooltip = input<TranslatableString | TemplateRef<any> | Type<any>>('');
-
   protected readonly tooltipPositionClass = signal('');
   protected readonly arrowPos = signal<OverlayArrowPosition | undefined>(undefined);
   /** @internal */
