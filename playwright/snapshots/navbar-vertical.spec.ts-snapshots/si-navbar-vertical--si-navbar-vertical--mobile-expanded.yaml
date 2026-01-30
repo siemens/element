@@ -13,7 +13,8 @@
   - link "Energy & sustainability":
     - /url: "#/viewer/viewer/energy"
   - button "User management"
-  - link "Test coverage 4":
+  - group "User management"
+  - link "Test coverage":
     - /url: "#/viewer/viewer/coverage"
   - button "Documentation" [expanded]
   - group "Documentation":

@@ -86,7 +86,8 @@ export class SiNavbarVerticalItemGuardDirective {
     class: 'si-layout-inner',
     '[class.nav-collapsed]': 'collapsed()',
     '[class.nav-text-only]': 'textOnly()',
-    '[class.visible]': 'visible()'
+    '[class.visible]': 'visible()',
+    'animate.enter': 'component-enter'
   }
 })
 export class SiNavbarVerticalComponent implements OnChanges, OnInit {
