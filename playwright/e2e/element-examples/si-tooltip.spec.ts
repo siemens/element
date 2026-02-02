@@ -11,8 +11,13 @@ test.describe('Tooltip', () => {
     test(direction, async ({ page, si }) => {
       await si.visitExample(example);
 
-      await page.locator(`[placement="${direction}"]`).focus();
+      await page
+        .locator(`[aria-label="Tooltip placement"] button[placement="${direction}"]`)
+        .focus();
       await expect(page.locator('.tooltip')).toHaveCount(1);
+
+      await si.waitForAllAnimationsToComplete();
+      await page.waitForTimeout(100);
 
       await si.runVisualAndA11yTests(direction);
     });
