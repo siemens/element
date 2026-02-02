@@ -16,6 +16,9 @@ export const DOWNLOAD_WIDGET: Widget = environment.useModuleFederation
         remoteEntry: `${environment.mfeBaseUrl}/remoteEntry.js`,
         exposedModule: './Download',
         componentName: 'DownloadComponent'
+      },
+      defaults: {
+        height: 3
       }
     }
   : {
@@ -27,6 +30,9 @@ export const DOWNLOAD_WIDGET: Widget = environment.useModuleFederation
         remoteEntry: `${environment.mfeEsmBaseUrl}/remoteEntry.json`,
         exposedModule: './Download',
         componentName: 'DownloadComponent'
+      },
+      defaults: {
+        height: 3
       }
     };
 
@@ -40,6 +46,9 @@ export const UPLOAD_WIDGET: Widget = environment.useModuleFederation
         remoteEntry: `${environment.mfeBaseUrl}/remoteEntry.js`,
         exposedModule: './Upload',
         componentName: 'UploadComponent'
+      },
+      defaults: {
+        height: 3
       }
     }
   : {
@@ -49,5 +58,8 @@ export const UPLOAD_WIDGET: Widget = environment.useModuleFederation
         factoryType: 'native-federation-module-bridge',
         id: 'mfe/Upload',
         componentName: 'UploadComponent'
+      },
+      defaults: {
+        height: 3
       }
     };
