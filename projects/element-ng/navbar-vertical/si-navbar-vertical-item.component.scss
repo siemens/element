@@ -1,6 +1,8 @@
 @use 'sass:map';
 @use '@siemens/element-theme/src/styles/variables';
 
+$transition-duration: variables.$element-default-transition-duration;
+
 :host(.navbar-vertical-item) {
   display: flex;
   align-items: center;
@@ -87,9 +89,41 @@
   }
 }
 
-:host-context(.nav-collapsed) :is(.item-title, .dropdown-caret),
+.dropdown-caret {
+  opacity: 1;
+  transform-origin: center;
+  transition-property: opacity, inline-size, transform;
+  transition-duration:
+    calc($transition-duration / 2), calc($transition-duration / 2), $transition-duration;
+  transition-delay: calc($transition-duration / 2), 0s, 0s;
+  transition-timing-function: ease;
+}
+
+.item-title {
+  opacity: 1;
+  transition: opacity calc($transition-duration / 2) calc($transition-duration / 2) ease;
+}
+
+:host-context(.nav-collapsed) :is(.dropdown-caret) {
+  opacity: 0;
+  inline-size: 0;
+  transition:
+    opacity 0s,
+    inline-size calc($transition-duration / 2) ease;
+}
+
+:host-context(.nav-collapsed) :is(.item-title) {
+  opacity: 0;
+  transition: opacity calc($transition-duration / 2) ease;
+}
+
+:host-context(.nav-collapsed) :is(.icon) {
+  animation: none;
+}
+
 :host-context(.nav-collapsed).hide-badge-collapsed .badge {
-  display: none;
+  opacity: 0;
+  visibility: hidden;
 }
 
 :host-context(.link-with-items) > :host(button) {
@@ -118,7 +152,7 @@
     }
 
     .icon {
-      display: block;
+      display: flex;
     }
   }
 
@@ -130,12 +164,22 @@
 .badge {
   position: relative;
   margin-inline: auto 0;
+  transform: translate(0, 0);
+  transition-property:
+    transform, opacity, visibility, block-size, min-inline-size, border-radius, line-height,
+    padding, font-weight, color, font-size;
+  transition-duration:
+    $transition-duration, $transition-duration, $transition-duration, $transition-duration,
+    $transition-duration, $transition-duration, $transition-duration, $transition-duration,
+    $transition-duration, calc($transition-duration / 2), calc($transition-duration / 2);
+  transition-timing-function: ease-out;
 }
 
-.badge-collapsed {
+.badge-collapsed:not(.dropdown-item .badge) {
   position: absolute;
-  inset-block-start: map.get(variables.$spacers, 2);
-  inset-inline-end: map.get(variables.$spacers, 3);
+  // Values calculated for smooth badge positioning during navbar collapse/expand
+  inset-inline-end: 12px;
+  transform: translate(6px, -9px);
   block-size: 14px;
   min-inline-size: 14px;
   border-radius: 7px;
@@ -144,6 +188,11 @@
   padding-block: 0;
   padding-inline: map.get(variables.$spacers, 2);
   font-weight: variables.$si-font-weight-semibold;
+
+  :host(.dropdown-toggle) & {
+    inset-inline-end: 36px;
+    transform: translate(30px, -9px);
+  }
 
   &.badge-text-only {
     color: transparent;
