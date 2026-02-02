@@ -471,7 +471,7 @@
               "projects/dashboards-demo/src/**/*.ts",
               "projects/dashboards-demo/src/**/*.html"
             ],
-            "eslintConfig": "projects/dashboards-demo/eslint.config.js"
+            "eslintConfig": "projects/dashboards-demo/eslint.config.mjs"
           }
         },
         "esbuild": {
@@ -667,7 +667,7 @@
               "projects/dashboards-demo/webcomponents/**/*.ts",
               "projects/dashboards-demo/webcomponents/**/*.html"
             ],
-            "eslintConfig": "projects/dashboards-demo/webcomponents/eslint.config.js"
+            "eslintConfig": "projects/dashboards-demo/webcomponents/eslint.config.mjs"
           }
         }
       }
@@ -749,7 +749,7 @@
               "projects/dashboards-demo/mfe/**/*.ts",
               "projects/dashboards-demo/mfe/**/*.html"
             ],
-            "eslintConfig": "projects/dashboards-demo/mfe/eslint.config.js"
+            "eslintConfig": "projects/dashboards-demo/mfe/eslint.config.mjs"
           }
         },
         "esbuild": {
@@ -762,7 +762,7 @@
             "index": "projects/dashboards-demo/mfe/src/index.html",
             "browser": "projects/dashboards-demo/mfe/src/main.esm.ts",
             "polyfills": ["es-module-shims"],
-            "tsConfig": "projects/dashboards-demo/mfe/tsconfig.app.json",
+            "tsConfig": "projects/dashboards-demo/mfe/tsconfig.app.esm.json",
             "aot": true,
             "assets": [
               "projects/dashboards-demo/mfe/src/favicon.png",
@@ -780,7 +780,7 @@
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/dashboards-demo/mfe/tsconfig.app.json",
+              "tsConfig": "projects/dashboards-demo/mfe/tsconfig.app.esm.json",
               "crossOrigin": "use-credentials",
               "optimization": true,
               "outputHashing": "all",
