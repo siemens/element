@@ -30,6 +30,7 @@ export interface NavbarVerticalItemAction extends NavbarVerticalItemBase {
 export interface NavbarVerticalItemBase {
     badge?: string | number;
     badgeColor?: string;
+    hideBadgeWhenCollapsed?: boolean;
     icon?: string;
     id?: string;
     label: TranslatableString;
