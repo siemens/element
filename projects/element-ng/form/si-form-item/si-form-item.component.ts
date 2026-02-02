@@ -65,7 +65,7 @@ export class SiFormItemComponent
    * The label to be displayed in the form item.
    * It will be translated if a translation key is available.
    */
-  readonly label = input<TranslatableString | null>();
+  readonly label = input.required<TranslatableString>();
 
   /**
    * A custom width value to be applied to the label.
