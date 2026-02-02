@@ -1,0 +1,30 @@
+- link "Jump to Main content"
+- link "Jump to Navigation"
+- banner:
+  - link "Siemens logo":
+    - /url: "#/"
+  - heading "Navbar Vertical Badges Example" [level=1]
+- navigation:
+  - button "expand"
+  - button "Search..."
+  - link "Home":
+    - /url: "#/viewer/viewer/home"
+  - link "Text badge Info":
+    - /url: "#/viewer/viewer/text-badge"
+  - button "Group with badges 6"
+  - group "Group with badges 6":
+    - link "Sub item critical 1":
+      - /url: "#/viewer/viewer/sub-badge-1"
+    - link "Sub item info 2":
+      - /url: "#/viewer/viewer/sub-badge-2"
+    - link "Sub item warning 3":
+      - /url: "#/viewer/viewer/sub-badge-3"
+  - button "Group item"
+  - group "Group item"
+  - link "Subtle badge 5":
+    - /url: "#/viewer/viewer/success"
+  - link /Danger emphasis badge \+\d+/:
+    - /url: "#/viewer/viewer/danger"
+- main:
+  - heading "Badge Examples" [level=2]
+  - text: Content with path 'sub-badge-2'

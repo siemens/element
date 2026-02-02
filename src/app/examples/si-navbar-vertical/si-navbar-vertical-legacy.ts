@@ -24,13 +24,7 @@ export class SampleComponent {
       link: 'Home',
       tooltip: 'Home',
       items: [
-        {
-          title: 'Sub Item',
-          link: 'subItem',
-          tooltip: 'Sub Item 1',
-          badge: 4,
-          badgeColor: 'warning'
-        },
+        { title: 'Sub Item', link: 'subItem', tooltip: 'Sub Item 1' },
         { title: 'Sub Item 2', link: 'subItem2', tooltip: 'Sub Item 2' },
         { title: 'Sub Item 3', link: 'subItem3', tooltip: 'Sub Item 3' }
       ]
@@ -40,10 +34,30 @@ export class SampleComponent {
       id: 'documentation',
       icon: 'element-document',
       tooltip: 'Documentation',
+      badge: 6,
+      badgeColor: 'critical-emphasis',
       items: [
-        { title: 'Sub Item 4', link: 'subItem4', tooltip: 'Sub Item 4' },
-        { title: 'Sub Item 5', link: 'subItem5', tooltip: 'Sub Item 5' },
-        { title: 'Sub Item 6', link: 'subItem6', tooltip: 'Sub Item 6' }
+        {
+          title: 'Sub Item 4',
+          link: 'subItem4',
+          tooltip: 'Sub Item 4',
+          badge: 1,
+          badgeColor: 'critical-emphasis'
+        },
+        {
+          title: 'Sub Item 5',
+          link: 'subItem5',
+          tooltip: 'Sub Item 5',
+          badge: 2,
+          badgeColor: 'info'
+        },
+        {
+          title: 'Sub Item 6',
+          link: 'subItem6',
+          tooltip: 'Sub Item 6',
+          badge: 3,
+          badgeColor: 'warning'
+        }
       ]
     },
     {
@@ -56,9 +70,7 @@ export class SampleComponent {
       title: 'Test Coverage',
       icon: 'element-diagnostic',
       link: 'coverage',
-      tooltip: 'Test Coverage',
-      badge: 4,
-      badgeColor: 'danger'
+      tooltip: 'Test Coverage'
     }
   ];
 

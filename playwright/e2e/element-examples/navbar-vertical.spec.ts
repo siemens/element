@@ -59,3 +59,34 @@ test.describe('navbar vertical', () => {
     await si.runVisualAndA11yTests('mobile-expanded');
   });
 });
+
+test.describe('navbar vertical badges', () => {
+  const example = 'si-navbar-vertical/si-navbar-vertical-badges';
+
+  test(example + ' expanded', async ({ page, si }) => {
+    await si.visitExample(example);
+    await page.getByRole('link', { name: 'Home' }).click();
+    await expect(page.getByRole('link', { name: 'Home' })).toHaveClass(/active/);
+    await page.getByRole('button', { name: 'Group with badges' }).click();
+    await page.getByRole('link', { name: 'Sub item critical' }).click();
+    await expect(page.getByRole('link', { name: 'Sub item critical' })).toHaveClass(/active/);
+    await page.locator('.si-layout-main-padding').click(); // to move focus
+
+    await si.waitForAllAnimationsToComplete();
+    await si.runVisualAndA11yTests();
+  });
+
+  test(example + ' collapsed', async ({ page, si }) => {
+    await si.visitExample(example);
+
+    await page.getByLabel('collapse', { exact: true }).click();
+    await page.getByRole('button', { name: 'Group with badges' }).click();
+    await expect(page.getByRole('group', { name: 'Group with badges' })).toBeVisible();
+    await page.getByRole('link', { name: 'Sub item info' }).click();
+
+    await si.waitForAllAnimationsToComplete();
+    await si.runVisualAndA11yTests('collapsed');
+    await page.getByRole('button', { name: 'Group with badges' }).click();
+    await si.runVisualAndA11yTests('collapsed-flyout');
+  });
+});
