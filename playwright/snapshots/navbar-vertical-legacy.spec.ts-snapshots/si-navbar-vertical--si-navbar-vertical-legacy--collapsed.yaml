@@ -9,10 +9,12 @@
   - button "expand"
   - button "Search..."
   - button "expand Home"
-  - button "Documentation"
+  - group "expand Home"
+  - button "Documentation 6"
+  - group "Documentation 6"
   - link "Energy & Sustainability":
     - /url: "#/viewer/viewer/energy"
-  - link "4 Test Coverage":
+  - link "Test Coverage":
     - /url: "#/viewer/viewer/coverage"
 - main:
   - heading "Here is a title" [level=2]

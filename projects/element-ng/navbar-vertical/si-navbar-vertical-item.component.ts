@@ -42,7 +42,8 @@ type NavbarVerticalItemInteractive =
     'class': 'focus-inside',
     '[class.dropdown-item]': 'this.parent?.group?.flyout()',
     '[class.navbar-vertical-item]': '!this.parent?.group?.flyout()',
-    '[class.active]': 'active'
+    '[class.active]': 'active',
+    '[class.hide-badge-collapsed]': 'hideBadgeCollapsed()'
   }
 })
 export class SiNavbarVerticalItemComponent implements OnInit {
@@ -63,6 +64,21 @@ export class SiNavbarVerticalItemComponent implements OnInit {
   });
   private readonly routerLinkActive = inject(RouterLinkActive, { optional: true });
   private readonly siLink = inject(SiLinkDirective, { optional: true });
+
+  /**
+   * Hides the badge in collapsed state
+   */
+  protected readonly hideBadgeCollapsed = computed(() => {
+    return !!(this.item() as NavbarVerticalItemInteractive).hideBadgeWhenCollapsed;
+  });
+
+  /**
+   * Determines if the badge contains text-only content (not numeric)
+   */
+  protected readonly textOnlyBadge = computed(() => {
+    const badge = this.item().badge;
+    return badge ? typeof badge !== 'number' : false;
+  });
 
   /**
    * Formats badge value to limit display to "+99" for numbers greater than 99

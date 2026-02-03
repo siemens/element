@@ -50,9 +50,7 @@ export class SampleComponent implements OnInit {
         {
           type: 'router-link',
           label: 'Sub item',
-          routerLink: 'subItem',
-          badge: 4,
-          badgeColor: 'warning'
+          routerLink: 'subItem'
         },
         { type: 'router-link', label: 'Sub item 2', routerLink: 'subItem2' },
         { type: 'router-link', label: 'Sub item 3', routerLink: 'subItem3' }
@@ -62,9 +60,7 @@ export class SampleComponent implements OnInit {
       type: 'router-link',
       label: 'Test coverage',
       icon: 'element-diagnostic',
-      routerLink: 'coverage',
-      badge: 4,
-      badgeColor: 'danger'
+      routerLink: 'coverage'
     },
     { type: 'divider' },
     {

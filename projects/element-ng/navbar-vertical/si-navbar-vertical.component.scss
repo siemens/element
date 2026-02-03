@@ -10,6 +10,11 @@ $vertical-nav-transition-duration: all-variables.$element-default-transition-dur
   transition: padding-inline-start $vertical-nav-transition-duration;
   --si-layout-header-first-element-offset: 40px;
 
+  // Prevents initial animation on component load
+  &.component-enter {
+    transition: none;
+  }
+
   // This prevents applying the wrong padding-inline-start before the visible class is applied. This would trigger the animation
   &.ready:not(.visible) {
     padding-inline-start: 0 !important; // stylelint-disable-line declaration-no-important
@@ -28,7 +33,7 @@ nav {
   inset-block-end: 0;
   inset-inline-start: 0;
   inline-size: 0;
-  transition: inline-size all-variables.element-transition-duration(0.5s) ease;
+  transition: inline-size $vertical-nav-transition-duration ease;
 
   :host(.nav-collapsed) & {
     z-index: all-variables.$zindex-vertical-nav-collapsed;
@@ -64,9 +69,9 @@ nav {
   border-end-end-radius: all-variables.$border-radius;
 
   transition:
-    inline-size all-variables.element-transition-duration(0.5s) ease,
-    background-color all-variables.element-transition-duration(0.5s) ease,
-    box-shadow all-variables.element-transition-duration(0.5s) ease;
+    inline-size $vertical-nav-transition-duration ease,
+    background-color $vertical-nav-transition-duration ease,
+    box-shadow $vertical-nav-transition-duration ease;
 
   :host(:not(.nav-collapsed)) & {
     inline-size: $vertical-nav-width;
@@ -155,7 +160,8 @@ si-search-bar {
   :host {
     &.nav-collapsed {
       .btn-search {
-        display: block;
+        display: flex;
+        inline-size: 100%;
       }
     }
   }
