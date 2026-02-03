@@ -62,7 +62,6 @@
 </form>
 @if (registerNowLink) {
   <div class="si-body mt-8">
-    {{ registerNowIntroText() | translate }}
-    <a class="si-h5 ms-6" [siLink]="registerNowLink">{{ registerNowLink.title | translate }}</a>
+    <a class="si-h5" [siLink]="registerNowLink">{{ registerNowLink.title | translate }}</a>
   </div>
 }
