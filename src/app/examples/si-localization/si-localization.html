@@ -70,19 +70,13 @@
 >
 <si-form-container>
   <div si-form-container-content class="p-6">
-    <si-form-item>
-      <div class="form-check form-check-inline">
-        <input
-          type="checkbox"
-          class="form-check-input"
-          id="applyDatePattern"
-          [checked]="enableDatePattern"
-          (change)="toggleEnableCustomFormat()"
-        />
-        <label class="form-check-label" for="applyDatePattern"
-          >Enable custom date format pattern for the shortDate format.</label
-        >
-      </div>
+    <si-form-item label="Enable custom date format pattern for the shortDate format">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        [ngModel]="enableDatePattern"
+        (ngModelChange)="toggleEnableCustomFormat()"
+      />
     </si-form-item>
     <si-form-item label="Pattern">
       <div class="form-inline w-100">
@@ -92,7 +86,7 @@
           class="form-control flex-grow-1"
           [(ngModel)]="datePattern"
         />
-        <button type="button" class="ms-5 btn btn-secondary" (click)="applyDateFormat()"
+        <button type="button" class="mt-4 btn btn-secondary" (click)="applyDateFormat()"
           >Apply</button
         >
       </div>

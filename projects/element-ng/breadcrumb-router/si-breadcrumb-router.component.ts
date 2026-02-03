@@ -112,11 +112,11 @@ export class SiBreadcrumbRouterComponent implements OnInit, OnDestroy {
   private getUrl(route: ActivatedRouteSnapshot): string {
     let url = '';
     for (const routeSegment of route.pathFromRoot) {
-      const myUrl: string = routeSegment.url.map(o => o.toString()).join('/');
+      const segmentUrl = routeSegment.url.map(o => o.toString()).join('/');
       if (!url.endsWith('/')) {
         url = url + '/';
       }
-      url = url + myUrl;
+      url = url + segmentUrl;
     }
     return url;
   }

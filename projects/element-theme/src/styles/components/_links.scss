@@ -9,7 +9,7 @@ $si-link-icon-line-height: math.div(14em, 20);
 $si-link-icon-spacing: math.div(4em, 20);
 
 a:active {
-  color: semantic-tokens.$element-ui-0-hover;
+  color: semantic-tokens.$element-action-primary-active;
   text-decoration: underline;
 }
 

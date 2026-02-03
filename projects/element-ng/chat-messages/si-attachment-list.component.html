@@ -44,7 +44,7 @@
       @if (removable()) {
         <button
           type="button"
-          class="btn btn-ghost btn-circle expand-button flex-shrink-0 ms-auto align-self-center focus-inside"
+          class="btn btn-ghost btn-icon expand-button flex-shrink-0 ms-auto align-self-center focus-inside"
           [attr.aria-label]="(removeLabel() | translate) + ' ' + attachment.name"
           (click)="remove.emit(attachment); $event.stopPropagation()"
         >

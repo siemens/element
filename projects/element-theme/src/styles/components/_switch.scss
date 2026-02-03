@@ -59,6 +59,10 @@ $si-switch-knob-size: calc(#{$si-switch-size} - 2 * #{$si-switch-slider-margin})
         background-color: variables.$element-ui-0-hover;
       }
 
+      &:active {
+        background-color: variables.$element-action-primary-active;
+      }
+
       &:is(:disabled, .disabled) {
         background-color: $si-switch-background-on-color;
       }

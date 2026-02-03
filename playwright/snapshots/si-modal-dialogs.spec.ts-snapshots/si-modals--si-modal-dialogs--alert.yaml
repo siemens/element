@@ -18,6 +18,7 @@
 - heading "Column selection dialog without visibility toggle" [level=2]
 - button "Many columns"
 - dialog "Default alert":
+  - text: ""
   - button "OK"
   - text: Modal dialog with an icon in heading
   - button "OK"

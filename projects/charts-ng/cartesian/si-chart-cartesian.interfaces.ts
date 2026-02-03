@@ -65,6 +65,11 @@ export type MarkAreaData = NonNullable<MarkAreaComponentOption['data']>;
 export type MarkPointData = NonNullable<MarkPointComponentOption['data']>;
 export type MarkLineData = NonNullable<MarkLineComponentOption['data']>;
 
+/**
+ * @deprecated Use {@link SiLineSeriesOption}, {@link SiBarSeriesOption}, {@link SiHeatmapSeriesOption}
+ * {@link SiScatterSeriesOption}, {@link SiCandlestickSeriesOption} instead. The `Simpl` prefix is deprecated
+ * and will be removed in v51.
+ */
 export type {
   SiLineSeriesOption as SimplLineSeriesOption,
   SiBarSeriesOption as SimplBarSeriesOption,

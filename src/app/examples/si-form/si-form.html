@@ -209,22 +209,20 @@
                     }
                   </ul>
                 </si-form-item>
-                <si-form-item>
-                  <table class="table">
-                    <thead class="thead-dark">
-                      <tr>
-                        <th scope="col">Form Data</th>
-                        <th scope="col">Entity Data</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td style="white-space: pre-wrap">{{ form.getRawValue() | json }}</td>
-                        <td style="white-space: pre-wrap">{{ (entity | json) ?? 'undefined' }}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </si-form-item>
+                <table class="table">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">Form Data</th>
+                      <th scope="col">Entity Data</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="white-space: pre-wrap">{{ form.getRawValue() | json }}</td>
+                      <td style="white-space: pre-wrap">{{ (entity | json) ?? 'undefined' }}</td>
+                    </tr>
+                  </tbody>
+                </table>
               }
             </div>
           </si-form-container>

@@ -8,7 +8,7 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate';
 import { Subject } from 'rxjs';
 
 export interface SiToast {
-  state: ToastStateName;
+  state: StatusType;
   title: TranslatableString;
   message: TranslatableString;
   disableManualClose?: boolean;
@@ -20,7 +20,5 @@ export interface SiToast {
   hidden?: Subject<void>;
   closeAriaLabel?: TranslatableString;
 }
-
-export type ToastStateName = StatusType | 'connection';
 
 export const SI_TOAST_AUTO_HIDE_DELAY = 6000;

@@ -13,7 +13,6 @@
   },
   "homepage": "https://github.com/siemens/element",
   "bugs": "https://github.com/siemens/element/issues/new",
-  "type": "module",
   "dependencies": {
     "ngx-translate-multi-http-loader": "20.0.0"
   },

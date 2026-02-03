@@ -34,20 +34,25 @@ $element-radius-3: var(--element-radius-3);
 
 $element-action-primary: var(--element-action-primary);
 $element-action-primary-hover: var(--element-action-primary-hover);
+$element-action-primary-active: var(--element-action-primary-active);
 $element-action-primary-text: var(--element-action-primary-text);
 $element-action-secondary: var(--element-action-secondary);
 $element-action-secondary-hover: var(--element-action-secondary-hover);
+$element-action-secondary-active: var(--element-action-secondary-active);
 $element-action-secondary-text: var(--element-action-secondary-text);
 $element-action-secondary-text-hover: var(--element-action-secondary-text-hover);
 $element-action-secondary-border: var(--element-action-secondary-border);
 $element-action-secondary-border-hover: var(--element-action-secondary-border-hover);
+$element-action-secondary-border-active: var(--element-action-secondary-border-active);
 $element-action-secondary-warning: var(--element-action-secondary-warning);
 $element-action-secondary-danger: var(--element-action-secondary-danger);
 $element-action-warning: var(--element-action-warning);
 $element-action-warning-hover: var(--element-action-warning-hover);
+$element-action-warning-active: var(--element-action-warning-active);
 $element-action-warning-text: var(--element-action-warning-text);
 $element-action-danger: var(--element-action-danger);
 $element-action-danger-hover: var(--element-action-danger-hover);
+$element-action-danger-active: var(--element-action-danger-active);
 $element-action-danger-text: var(--element-action-danger-text);
 $element-action-disabled-opacity: var(--element-action-disabled-opacity);
 
@@ -88,6 +93,7 @@ $element-brand-logo: var(--element-brand-logo);
 $element-brand-logo-width: var(--element-brand-logo-width);
 $element-brand-logo-height: var(--element-brand-logo-height);
 $element-brand-logo-text: var(--element-brand-logo-text);
+$element-brand-ai-key-visual: var(--element-brand-ai-key-visual);
 
 $element-company-name: var(--element-company-name);
 

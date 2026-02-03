@@ -1,0 +1,5 @@
+@for (category of categories(); track category.id) {
+  <p>
+    <a [attr.href]="`#${idPrefix()}${category.title}`">{{ category.title }}</a>
+  </p>
+}

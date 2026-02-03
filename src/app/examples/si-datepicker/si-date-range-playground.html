@@ -1,25 +1,23 @@
 <div class="p-5">
   <div class="row justify-content-center">
-    <div class="col-xs-12 col-12 col-md-6 my-6">
-      <label for="si-daterange-input-1" class="form-label" [class.required]="required && !readonly"
-        >Date Range Input</label
-      >
-      <si-date-range
-        id="si-daterange-input-1"
-        [formControl]="dateRange"
-        [siDatepickerConfig]="config"
-        [startDatePlaceholder]="startPlaceholder"
-        [endDatePlaceholder]="endPlaceholder"
-        [required]="required"
-        [readonly]="readonly"
-        [autoClose]="autoClose"
-        (siDatepickerRangeChange)="logEvent('siDatepickerRangeChange', $event)"
-        (disabledTimeChange)="disabledTime = $event"
-      />
+    <div class="col-12">
+      <si-form-item label="Date Range Input">
+        <si-date-range
+          [formControl]="dateRange"
+          [siDatepickerConfig]="config"
+          [startDatePlaceholder]="startPlaceholder"
+          [endDatePlaceholder]="endPlaceholder"
+          [required]="required && !readonly"
+          [readonly]="readonly"
+          [autoClose]="autoClose"
+          (siDatepickerRangeChange)="logEvent('siDatepickerRangeChange', $event)"
+          (disabledTimeChange)="disabledTime = $event"
+        />
+      </si-form-item>
     </div>
   </div>
 
-  <div class="card mt-11 e2e-ignore">
+  <div class="card e2e-ignore">
     <div class="card-header">Control panel</div>
     <div class="card-body">
       <div class="row">

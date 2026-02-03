@@ -2,6 +2,8 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { firstValueFrom } from 'rxjs';
+
 import {
   SI_THEME_LOCAL_STORAGE_KEY,
   SiDefaultThemeStore,
@@ -22,40 +24,32 @@ describe('SiDefaultThemeStore', () => {
       store = new SiDefaultThemeStore(true);
     });
 
-    it('should initially have no active theme', (done: DoneFn) => {
-      store.loadActiveTheme().subscribe(theme => {
-        expect(theme).toBeUndefined();
-        done();
-      });
+    it('should initially have no active theme', async () => {
+      const theme = await firstValueFrom(store.loadActiveTheme());
+      expect(theme).toBeUndefined();
     });
 
-    it('should initially have no active theme', (done: DoneFn) => {
-      store.loadThemeNames().subscribe(names => {
-        expect(names).toBeDefined();
-        expect(names.length).toBe(0);
-        done();
-      });
+    it('should initially have no theme names', async () => {
+      const names = await firstValueFrom(store.loadThemeNames());
+      expect(names).toBeDefined();
+      expect(names.length).toBe(0);
     });
 
-    it('should return undefined for a name that does not exist', (done: DoneFn) => {
-      store.loadTheme('example').subscribe(theme => {
-        expect(theme).toBeUndefined();
-        done();
-      });
+    it('should return undefined for a name that does not exist', async () => {
+      const theme = await firstValueFrom(store.loadTheme('example'));
+      expect(theme).toBeUndefined();
     });
 
-    it('should save theme to local storage', (done: DoneFn) => {
+    it('should save theme to local storage', async () => {
       const theme: Theme = { name: 'test', schemes: {} };
-      store.saveTheme(theme).subscribe(result => {
-        expect(result).toBeTrue();
-        const stored = localStorage.getItem(SI_THEME_LOCAL_STORAGE_KEY);
-        expect(stored).toBeDefined();
-        expect(stored?.indexOf('test')).toBeGreaterThan(0);
-        done();
-      });
+      const result = await firstValueFrom(store.saveTheme(theme));
+      expect(result).toBeTrue();
+      const stored = localStorage.getItem(SI_THEME_LOCAL_STORAGE_KEY);
+      expect(stored).toBeDefined();
+      expect(stored?.indexOf('test')).toBeGreaterThan(0);
     });
 
-    it('should load theme from local storage', (done: DoneFn) => {
+    it('should load theme from local storage', async () => {
       const theme: Theme = { name: 'test', schemes: {} };
       const storage: ThemeStorage = {
         activeTheme: undefined,
@@ -63,14 +57,12 @@ describe('SiDefaultThemeStore', () => {
       };
       localStorage.setItem(SI_THEME_LOCAL_STORAGE_KEY, JSON.stringify(storage));
 
-      store.loadTheme('test').subscribe(loadedTheme => {
-        expect(loadedTheme).toBeDefined();
-        expect(loadedTheme?.name).toBe(theme.name);
-        done();
-      });
+      const loadedTheme = await firstValueFrom(store.loadTheme('test'));
+      expect(loadedTheme).toBeDefined();
+      expect(loadedTheme?.name).toBe(theme.name);
     });
 
-    it('should delete active theme from local storage', (done: DoneFn) => {
+    it('should delete active theme from local storage', async () => {
       const theme: Theme = { name: 'test', schemes: {} };
       const storage: ThemeStorage = {
         activeTheme: 'test',
@@ -78,81 +70,71 @@ describe('SiDefaultThemeStore', () => {
       };
       localStorage.setItem(SI_THEME_LOCAL_STORAGE_KEY, JSON.stringify(storage));
 
-      store.deleteTheme('test').subscribe(result => {
-        expect(result).toBeTrue();
-        const stored = localStorage.getItem(SI_THEME_LOCAL_STORAGE_KEY);
-        expect(stored).toBeDefined();
-        expect(stored?.indexOf('test')).toBeLessThan(0);
-        done();
-      });
+      const result = await firstValueFrom(store.deleteTheme('test'));
+      expect(result).toBeTrue();
+      const stored = localStorage.getItem(SI_THEME_LOCAL_STORAGE_KEY);
+      expect(stored).toBeDefined();
+      expect(stored?.indexOf('test')).toBeLessThan(0);
     });
 
-    it('should active existing theme', (done: DoneFn) => {
+    it('should active existing theme', async () => {
       const storage: ThemeStorage = {
         activeTheme: undefined,
         themes: { 'test': { name: 'test', schemes: {} } }
       };
       localStorage.setItem(SI_THEME_LOCAL_STORAGE_KEY, JSON.stringify(storage));
 
-      store.activateTheme('test').subscribe(result => {
-        expect(result).toBeTrue();
-        const storage2 = JSON.parse(
-          localStorage.getItem(SI_THEME_LOCAL_STORAGE_KEY)!
-        ) as ThemeStorage;
-        expect(storage2).toBeDefined();
-        expect(storage2.activeTheme).toBe('test');
-        done();
-      });
+      const result = await firstValueFrom(store.activateTheme('test'));
+      expect(result).toBeTrue();
+      const storage2 = JSON.parse(
+        localStorage.getItem(SI_THEME_LOCAL_STORAGE_KEY)!
+      ) as ThemeStorage;
+      expect(storage2).toBeDefined();
+      expect(storage2.activeTheme).toBe('test');
     });
 
-    it('should deactive existing theme', (done: DoneFn) => {
+    it('should deactive existing theme', async () => {
       const storage: ThemeStorage = {
         activeTheme: 'test',
         themes: { 'test': { name: 'test', schemes: {} } }
       };
       localStorage.setItem(SI_THEME_LOCAL_STORAGE_KEY, JSON.stringify(storage));
 
-      store.deactivateTheme().subscribe(result => {
-        expect(result).toBeTrue();
-        const storage2 = JSON.parse(
-          localStorage.getItem(SI_THEME_LOCAL_STORAGE_KEY)!
-        ) as ThemeStorage;
-        expect(storage2).toBeDefined();
-        expect(storage2.activeTheme).toBe(undefined);
-        done();
-      });
+      const result = await firstValueFrom(store.deactivateTheme());
+      expect(result).toBeTrue();
+      const storage2 = JSON.parse(
+        localStorage.getItem(SI_THEME_LOCAL_STORAGE_KEY)!
+      ) as ThemeStorage;
+      expect(storage2).toBeDefined();
+      expect(storage2.activeTheme).toBe(undefined);
     });
 
-    it('should load active theme', (done: DoneFn) => {
+    it('should load active theme', async () => {
       const storage: ThemeStorage = {
         activeTheme: 'test',
         themes: { 'test': { name: 'test', schemes: {} } }
       };
       localStorage.setItem(SI_THEME_LOCAL_STORAGE_KEY, JSON.stringify(storage));
 
-      store.loadActiveTheme().subscribe(theme => {
-        expect(theme).toBeDefined();
-        expect(theme?.name).toBe('test');
-        done();
-      });
+      const theme = await firstValueFrom(store.loadActiveTheme());
+      expect(theme).toBeDefined();
+      expect(theme?.name).toBe('test');
     });
 
-    it('should not be able to active none existing theme', (done: DoneFn) => {
+    it('should not be able to active none existing theme', async () => {
       const storage: ThemeStorage = {
         activeTheme: undefined,
         themes: {}
       };
       localStorage.setItem(SI_THEME_LOCAL_STORAGE_KEY, JSON.stringify(storage));
 
-      store.activateTheme('test').subscribe(result => {
-        expect(result).toBeFalse();
-        const storage2 = JSON.parse(
-          localStorage.getItem(SI_THEME_LOCAL_STORAGE_KEY)!
-        ) as ThemeStorage;
-        expect(storage2).toBeDefined();
-        expect(storage2.activeTheme).toBeUndefined();
-        done();
-      });
+      const result = await firstValueFrom(store.activateTheme('test'));
+      expect(result).toBeFalse();
+      const storage2 = JSON.parse(
+        localStorage.getItem(SI_THEME_LOCAL_STORAGE_KEY)!
+      ) as ThemeStorage;
+      expect(storage2).toBeDefined();
+      expect(storage2.activeTheme).toBeUndefined();
     });
   });
 
@@ -161,54 +143,40 @@ describe('SiDefaultThemeStore', () => {
       store = new SiDefaultThemeStore(false);
     });
 
-    it('loadActiveTheme shall return undefined', (done: DoneFn) => {
-      store.loadActiveTheme().subscribe(theme => {
-        expect(theme).toBeUndefined();
-        done();
-      });
+    it('loadActiveTheme shall return undefined', async () => {
+      const theme = await firstValueFrom(store.loadActiveTheme());
+      expect(theme).toBeUndefined();
     });
 
-    it('activateTheme on node shall return false', (done: DoneFn) => {
-      store.activateTheme('any').subscribe(result => {
-        expect(result).toBeFalse();
-        done();
-      });
+    it('activateTheme on node shall return false', async () => {
+      const result = await firstValueFrom(store.activateTheme('any'));
+      expect(result).toBeFalse();
     });
 
-    it('deactivateTheme on node shall return false', (done: DoneFn) => {
-      store.deactivateTheme().subscribe(result => {
-        expect(result).toBeFalse();
-        done();
-      });
+    it('deactivateTheme on node shall return false', async () => {
+      const result = await firstValueFrom(store.deactivateTheme());
+      expect(result).toBeFalse();
     });
 
-    it('loadThemeNames on node shall return []', (done: DoneFn) => {
-      store.loadThemeNames().subscribe(result => {
-        expect(result).toBeDefined();
-        expect(result.length).toBe(0);
-        done();
-      });
+    it('loadThemeNames on node shall return []', async () => {
+      const result = await firstValueFrom(store.loadThemeNames());
+      expect(result).toBeDefined();
+      expect(result.length).toBe(0);
     });
 
-    it('saveTheme on node shall return false', (done: DoneFn) => {
-      store.saveTheme({ name: 'test', schemes: {} }).subscribe(result => {
-        expect(result).toBeFalse();
-        done();
-      });
+    it('saveTheme on node shall return false', async () => {
+      const result = await firstValueFrom(store.saveTheme({ name: 'test', schemes: {} }));
+      expect(result).toBeFalse();
     });
 
-    it('loadTheme on node shall return undefined', (done: DoneFn) => {
-      store.loadTheme('any').subscribe(result => {
-        expect(result).toBeUndefined();
-        done();
-      });
+    it('loadTheme on node shall return undefined', async () => {
+      const result = await firstValueFrom(store.loadTheme('any'));
+      expect(result).toBeUndefined();
     });
 
-    it('deleteTheme on node shall return false', (done: DoneFn) => {
-      store.deleteTheme('any').subscribe(result => {
-        expect(result).toBeFalse();
-        done();
-      });
+    it('deleteTheme on node shall return false', async () => {
+      const result = await firstValueFrom(store.deleteTheme('any'));
+      expect(result).toBeFalse();
     });
   });
 });

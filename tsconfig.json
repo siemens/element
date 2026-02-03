@@ -13,7 +13,7 @@
     "noImplicitOverride": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "target": "es2022",
+    "target": "es2024",
     "strict": true,
     "allowUmdGlobalAccess": true,
     "isolatedModules": true,
@@ -108,6 +108,9 @@
     },
     {
       "path": "./projects/dashboards-demo/webcomponents/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/icon-viewer/tsconfig.app.json"
     },
     {
       "path": "./playwright/tsconfig.json"

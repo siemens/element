@@ -1,23 +1,19 @@
 @if (visible()) {
   @if (smallScreen() && !collapsed()) {
-    <div
-      class="modal-backdrop"
-      [@backdrop]="smallScreen() && !collapsed() ? 'show' : 'hide'"
-      (click)="toggleCollapse()"
-    ></div>
+    <div class="modal-backdrop" animate.leave="backdrop-leave" (click)="toggleCollapse()"></div>
   }
   <nav
     tabindex="-1"
     class="bg-base-1 focus-sub-inside"
+    [class.expanded]="!collapsed()"
     [siSkipLinkTarget]="skipLinkNavigationLabel()"
-    [@collapse]="collapsed() ? 'collapsed' : 'expanded'"
     [class.text-only]="textOnly()"
   >
     <div class="collapse-toggle ms-auto">
       <div class="mobile-drawer focus-inside navbar-vertical-no-collapse">
         <button
           type="button"
-          class="btn btn-circle btn-ghost"
+          class="btn btn-icon btn-ghost"
           [attr.aria-label]="
             (collapsed() ? navbarExpandButtonText() : navbarCollapseButtonText()) | translate
           "

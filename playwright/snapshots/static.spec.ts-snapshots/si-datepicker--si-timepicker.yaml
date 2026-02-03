@@ -1,15 +1,28 @@
 - text: Timepicker on date object
 - group "Timepicker on date object":
-  - textbox "Hours"
-  - textbox "Minutes"
-  - textbox "Seconds"
-  - textbox "Milliseconds"
+  - text: ""
+  - textbox "Hours":
+    - /placeholder: hh
+    - text: ""
+  - text: ""
+  - textbox "Minutes":
+    - /placeholder: mm
+    - text: ""
+  - text: ""
+  - textbox "Seconds":
+    - /placeholder: ss
+    - text: ""
+  - text: ""
+  - textbox "Milliseconds":
+    - /placeholder: ms
+    - text: ""
+  - text: ""
   - combobox "Period":
     - option "AM" [selected]
     - option "PM"
 - text: Control panel
 - strong: "Validation:"
-- text: "/\\{\"minTime\":\\{\"actual\":\"\\d+-\\d+-12T05:\\d+:\\d+\\.000Z\",\"min\":\"\\d+-\\d+-12T06:\\d+:\\d+\\.000Z\"\\}\\}/"
+- text: "/\\{\"minTime\":\\{\"actual\":\"\\d+-\\d+-12T05:\\d+:\\d+\\.000Z\",\"min\":\"\\d+-\\d+-12T06:\\d+:\\d+\\.000Z\",\"minString\":\"\\d+:\\d+:\\d+\\.\\d+ AM\"\\}\\}/"
 - checkbox "Show seconds" [checked]
 - text: Show seconds
 - checkbox "Show milliseconds" [checked]

@@ -20,7 +20,7 @@ import {
   SiTranslatePipe,
   t
 } from '@siemens/element-translate-ng/translate';
-import { Observable, of, Subject } from 'rxjs';
+import { firstValueFrom, Observable, of, Subject } from 'rxjs';
 
 import { SiTranslateNgxTModule } from './si-translate-ngxt.module';
 import {
@@ -165,50 +165,42 @@ describe('SiTranslateNgxT', () => {
         });
       });
 
-      it('should translate', (done: DoneFn) => {
-        (service.translate('KEY-1') as Observable<string>).subscribe(value => {
-          expect(value).toBe('VALUE-1');
-          done();
-        });
+      it('should translate', async () => {
+        const value = await firstValueFrom(service.translate('KEY-1') as Observable<string>);
+        expect(value).toBe('VALUE-1');
       });
 
-      it('should translate multiple keys', (done: DoneFn) => {
-        (service.translate(['KEY-1', 'KEY-3']) as Observable<Record<string, string>>).subscribe(
-          value => {
-            expect(value).toEqual({ 'KEY-1': 'VALUE-1', 'KEY-3': 'VALUE-3' });
-            done();
-          }
+      it('should translate multiple keys', async () => {
+        const value = await firstValueFrom(
+          service.translate(['KEY-1', 'KEY-3']) as Observable<Record<string, string>>
         );
+        expect(value).toEqual({ 'KEY-1': 'VALUE-1', 'KEY-3': 'VALUE-3' });
       });
 
-      it('should translate no keys', (done: DoneFn) => {
-        (service.translate([]) as Observable<Record<string, string>>).subscribe(value => {
-          expect(value).toEqual({});
-          done();
-        });
+      it('should translate no keys', async () => {
+        const value = await firstValueFrom(
+          service.translate([]) as Observable<Record<string, string>>
+        );
+        expect(value).toEqual({});
       });
 
-      it('should translate async', (done: DoneFn) => {
-        service.translateAsync('KEY-2').subscribe(value => {
-          expect(value).toBe('VALUE-2');
-          done();
-        });
+      it('should translate async', async () => {
+        const value = await firstValueFrom(service.translateAsync('KEY-2') as Observable<string>);
+        expect(value).toBe('VALUE-2');
       });
 
-      it('should translate async multiple keys', (done: DoneFn) => {
-        (
+      it('should translate async multiple keys', async () => {
+        const value = await firstValueFrom(
           service.translateAsync(['KEY-1', 'KEY-3']) as Observable<Record<string, string>>
-        ).subscribe(value => {
-          expect(value).toEqual({ 'KEY-1': 'VALUE-1', 'KEY-3': 'VALUE-3' });
-          done();
-        });
+        );
+        expect(value).toEqual({ 'KEY-1': 'VALUE-1', 'KEY-3': 'VALUE-3' });
       });
 
-      it('should translate async no keys', (done: DoneFn) => {
-        (service.translateAsync([]) as Observable<Record<string, string>>).subscribe(value => {
-          expect(value).toEqual({});
-          done();
-        });
+      it('should translate async no keys', async () => {
+        const value = await firstValueFrom(
+          service.translateAsync([]) as Observable<Record<string, string>>
+        );
+        expect(value).toEqual({});
       });
 
       it('should translate sync', () => {
@@ -226,13 +218,11 @@ describe('SiTranslateNgxT', () => {
         expect(service.translateSync([])).toEqual({});
       });
 
-      it('should use correct language', (done: DoneFn) => {
+      it('should use correct language', async () => {
         expect(service.availableLanguages).toEqual(['test']);
         expect(service.currentLanguage).toBe('test');
-        service.setCurrentLanguage('test').subscribe(() => {
-          expect(service.currentLanguage).toBe('test');
-          done();
-        });
+        await firstValueFrom(service.setCurrentLanguage('test'));
+        expect(service.currentLanguage).toBe('test');
       });
 
       it('should set default language', () => {
@@ -248,13 +238,11 @@ describe('SiTranslateNgxT', () => {
         expect(service.availableLanguages).toEqual(['test', 'another']);
       });
 
-      it('should set html lang attribute', (done: DoneFn) => {
+      it('should set html lang attribute', async () => {
         const documentRef = TestBed.inject(DOCUMENT);
         service.availableLanguages = ['test', 'another'];
-        service.setCurrentLanguage('test').subscribe(() => {
-          expect(documentRef.documentElement.getAttribute('lang')).toBe('test');
-          done();
-        });
+        await firstValueFrom(service.setCurrentLanguage('test'));
+        expect(documentRef.documentElement.getAttribute('lang')).toBe('test');
       });
     });
   });

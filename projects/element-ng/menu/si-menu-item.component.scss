@@ -78,12 +78,16 @@
   }
 
   &:hover,
-  &.hover,
+  &.hover {
+    color: variables.$element-action-secondary-text-hover;
+    background: variables.$element-action-secondary-hover;
+  }
+
   &:active,
   &.active,
   &[aria-expanded='true'] {
-    color: variables.$element-action-secondary-text-hover;
-    background: variables.$element-action-secondary-hover;
+    color: variables.$element-action-primary-active;
+    background: variables.$element-action-secondary-active;
   }
 
   &:disabled,

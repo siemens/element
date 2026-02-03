@@ -103,19 +103,19 @@ export class SampleComponent {
 
   quickActions: NotificationItemQuickAction[] = [
     {
-      type: 'action-circle-button',
+      type: 'action-icon-button',
       icon: 'element-checkbox-checked',
       ariaLabel: 'Read',
       action: () => this.logEvent('Read')
     },
     {
-      type: 'action-circle-button',
+      type: 'action-icon-button',
       icon: 'element-archive',
       ariaLabel: 'Archive',
       action: () => this.logEvent('Archive')
     },
     {
-      type: 'action-circle-button',
+      type: 'action-icon-button',
       icon: 'element-delete',
       ariaLabel: 'Delete',
       action: () => this.logEvent('Delete')

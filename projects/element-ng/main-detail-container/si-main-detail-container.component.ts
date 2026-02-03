@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -33,7 +33,6 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'si-main-detail-container',
   imports: [
-    NgClass,
     NgTemplateOutlet,
     SiSplitComponent,
     SiSplitPartComponent,

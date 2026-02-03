@@ -7,7 +7,6 @@
     "rootDir": "schematics",
     "outDir": "../../dist/@siemens/element-ng/schematics",
     "sourceMap": false,
-    "target": "es2022",
     "types": ["node"]
   },
   "include": ["schematics/**/*"],

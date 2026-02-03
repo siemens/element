@@ -151,7 +151,7 @@ Setup notes for Rancher Desktop on Windows:
 2. Download and install [Rancher Desktop](https://rancherdesktop.io/)
 3. Start Rancher Desktop and tick the "Enable networking tunnel" checkbox under File > Preferences > Network
 
-Unlike Podman, Rancher allows you to run `./vrt-local.sh` without any additional
+Unlike Podman, Rancher allows you to run `./e2e-local.sh` without any additional
 parameters.
 Note: In case of high CPU usage, there might be an issue with the Remote
 Desktop service or Vmmem using lots of CPU in idle state. If you don't need GUI

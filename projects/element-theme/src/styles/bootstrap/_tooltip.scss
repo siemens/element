@@ -13,10 +13,10 @@
   font-size: variables.$tooltip-font-size;
   // Allow breaking very long words so they don't overflow the tooltip's bounds
   word-wrap: break-word;
-  opacity: 0;
 
   &.show {
     opacity: variables.$tooltip-opacity;
+    transform: scale(1);
   }
 
   .tooltip-arrow {

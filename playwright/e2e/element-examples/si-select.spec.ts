@@ -46,7 +46,8 @@ test.describe('si-select', () => {
     await si.visitExample(example);
 
     await page.getByRole('checkbox', { name: 'With filter' }).check();
-    const formControlSelect = page.getByRole('combobox', { name: 'FormControl' });
+    // When filters are enabled, the dropdown content is also a combobox. So we must make sure to select real outer combobox.
+    const formControlSelect = page.getByRole('combobox', { name: 'FormControl' }).first();
     await formControlSelect.click();
 
     const selectFormControlInput = page.getByRole('combobox', { name: 'FormControl' }).nth(1);

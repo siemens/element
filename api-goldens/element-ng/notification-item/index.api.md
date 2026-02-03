@@ -20,7 +20,7 @@ export interface NotificationItemActionButton {
     type: 'action-button';
 }
 
-// @public
+// @public @deprecated
 export interface NotificationItemActionCircleButton extends NotificationItemBase {
     // (undocumented)
     action: (source: this) => void;
@@ -28,6 +28,16 @@ export interface NotificationItemActionCircleButton extends NotificationItemBase
     customClass?: string;
     // (undocumented)
     type: 'action-circle-button';
+}
+
+// @public
+export interface NotificationItemActionIconButton extends NotificationItemBase {
+    // (undocumented)
+    action: (source: this) => void;
+    // (undocumented)
+    customClass?: string;
+    // (undocumented)
+    type: 'action-icon-button';
 }
 
 // @public
@@ -67,10 +77,10 @@ export interface NotificationItemMenu {
 }
 
 // @public
-export type NotificationItemPrimaryAction = NotificationItemActionCircleButton | NotificationItemLinkIcon | NotificationItemRouterLinkIcon | NotificationItemMenu | NotificationItemActionButton;
+export type NotificationItemPrimaryAction = NotificationItemActionCircleButton | NotificationItemActionIconButton | NotificationItemLinkIcon | NotificationItemRouterLinkIcon | NotificationItemMenu | NotificationItemActionButton;
 
 // @public
-export type NotificationItemQuickAction = NotificationItemActionCircleButton | NotificationItemLinkIcon | NotificationItemRouterLinkIcon;
+export type NotificationItemQuickAction = NotificationItemActionCircleButton | NotificationItemActionIconButton | NotificationItemLinkIcon | NotificationItemRouterLinkIcon;
 
 // @public
 export interface NotificationItemRouterLink {

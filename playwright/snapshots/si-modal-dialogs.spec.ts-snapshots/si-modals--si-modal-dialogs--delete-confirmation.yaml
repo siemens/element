@@ -18,6 +18,7 @@
 - heading "Column selection dialog without visibility toggle" [level=2]
 - button "Many columns"
 - dialog "Delete scheduler":
+  - text: ""
   - button "Cancel"
   - text: /Delete "Scheduler \d+"\? This action cannot be undone/
   - button "Cancel"

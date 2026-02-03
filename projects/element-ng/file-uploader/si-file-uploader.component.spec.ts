@@ -349,13 +349,15 @@ describe('SiFileUploaderComponent', () => {
     httpMock.verify();
   });
 
-  it('should emit success response', (done: DoneFn) => {
-    component.fileUploader().uploadCompleted.subscribe(result => {
-      expect(result).toBeDefined();
-      expect(result.response).toBeDefined();
-      expect(result.error).toBeUndefined();
-      expect(result.response?.status).toBe(200);
-      done();
+  it('should emit success response', async () => {
+    const uploadResult = new Promise<void>(resolve => {
+      component.fileUploader().uploadCompleted.subscribe(result => {
+        expect(result).toBeDefined();
+        expect(result.response).toBeDefined();
+        expect(result.error).toBeUndefined();
+        expect(result.response?.status).toBe(200);
+        resolve();
+      });
     });
 
     handleFiles(createFileList(['matching.fmwr']));
@@ -366,6 +368,8 @@ describe('SiFileUploaderComponent', () => {
     const attachment = { id: 201, fileName: 'matching.fmwr' };
     const req = httpMock.expectOne('/api/attachments');
     req.flush(attachment);
+
+    await uploadResult;
     httpMock.verify();
   });
 
@@ -470,14 +474,16 @@ describe('SiFileUploaderComponent', () => {
     expect(getUploadButton().disabled).toBeFalsy();
   });
 
-  it('should retry and emit error response', (done: DoneFn) => {
-    component.fileUploader().uploadCompleted.subscribe(result => {
-      expect(result).toBeDefined();
-      expect(result.response).toBeUndefined();
-      expect(result.error).toBeDefined();
-      const errorResponse = result.error as HttpErrorResponse;
-      expect(errorResponse.status).toBe(400);
-      done();
+  it('should retry and emit error response', async () => {
+    const uploadResult = new Promise<void>(resolve => {
+      component.fileUploader().uploadCompleted.subscribe(result => {
+        expect(result).toBeDefined();
+        expect(result.response).toBeUndefined();
+        expect(result.error).toBeDefined();
+        const errorResponse = result.error as HttpErrorResponse;
+        expect(errorResponse.status).toBe(400);
+        resolve();
+      });
     });
 
     component.retries = 3;
@@ -488,6 +494,8 @@ describe('SiFileUploaderComponent', () => {
       const req = httpMock.expectOne('/api/attachments');
       req.flush({}, { status: 400, statusText: 'FAILED' });
     }
+
+    await uploadResult;
     httpMock.verify();
   });
 

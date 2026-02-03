@@ -34,7 +34,8 @@ test.describe('dashboard', () => {
     await si.visitExample(example, undefined);
     await openWidgetCatalog(page);
     await expect(page.getByText('Hello World')).toBeVisible();
-    await si.runVisualAndA11yTests('edit');
+    const stepName = test.info().project.metadata.isESM ? 'esm-edit' : 'edit';
+    await si.runVisualAndA11yTests(stepName);
   });
 
   test(example + 'empty', async ({ page, si }) => {
@@ -165,6 +166,55 @@ test.describe('dashboard', () => {
     await si.visitExample(customCatalog, undefined);
     await expect(page.getByText('Your own dashboard')).toBeVisible();
     await si.runVisualAndA11yTests('custom-catalog');
+  });
+
+  test(example + ' federated widgets', async ({ page, si }) => {
+    await si.visitExample(example, undefined);
+
+    // The widget names vary based on ESM mode
+    const isESM = test.info().project.metadata.isESM;
+    const downloadWidgetName = isESM
+      ? 'Download (native-federation)'
+      : 'Download (module-federation)';
+    const uploadWidgetName = isESM
+      ? 'Upload (module-federation on native-federation shell)'
+      : 'Upload (module-federation)';
+
+    // Add Download widget
+    await openWidgetCatalog(page);
+    const downloadWidget = page.getByRole('option', {
+      name: downloadWidgetName
+    });
+    await expect(downloadWidget).toBeVisible();
+    await downloadWidget.click();
+    const addBtn = page.getByText('Add', { exact: true });
+    await expect(addBtn).not.toBeDisabled();
+    await addBtn.click();
+    await expect(page.locator('si-widget-host', { hasText: 'Download' })).toBeVisible();
+
+    await expect(page.getByText('Add widget')).toBeVisible();
+    const addWidgetBtn = page.getByText('Add widget');
+    await addWidgetBtn.click();
+
+    // Add Upload widget
+    const uploadWidget = page.getByRole('option', {
+      name: uploadWidgetName
+    });
+    await expect(uploadWidget).toBeVisible();
+    await uploadWidget.click();
+    const addBtn2 = page.getByText('Add', { exact: true });
+    await expect(addBtn2).not.toBeDisabled();
+    await addBtn2.click();
+    await expect(page.locator('si-widget-host', { hasText: 'Upload' })).toBeVisible();
+
+    // Scroll to show both widgets
+    const uploadWidgetHost = page.locator('si-widget-host', {
+      hasText: 'Upload'
+    });
+    await uploadWidgetHost.scrollIntoViewIfNeeded();
+
+    const stepName = isESM ? 'native-federation-widgets' : 'module-federation-widgets';
+    await si.runVisualAndA11yTests(stepName);
   });
 
   const openWidgetCatalog = async (page: Page): Promise<void> => {

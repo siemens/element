@@ -5,6 +5,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   inject,
   signal,
   TemplateRef,
@@ -21,7 +22,10 @@ import {
   MessageAction,
   SiChatMessageActionDirective,
   SiAttachmentListComponent,
-  Attachment
+  Attachment,
+  SiAiWelcomeScreenComponent,
+  PromptCategory,
+  PromptSuggestion
 } from '@siemens/element-ng/chat-messages';
 import { FileUploadError } from '@siemens/element-ng/file-uploader';
 import { SiIconComponent } from '@siemens/element-ng/icon';
@@ -53,7 +57,8 @@ interface ChatMessage {
     SiIconComponent,
     SiMarkdownRendererComponent,
     SiChatMessageActionDirective,
-    SiAttachmentListComponent
+    SiAttachmentListComponent,
+    SiAiWelcomeScreenComponent
   ],
   templateUrl: './si-chat-container.html',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -63,6 +68,7 @@ export class SampleComponent {
   private readonly modalTemplate = viewChild<TemplateRef<any>>('modalTemplate');
   private sanitizer = inject(DomSanitizer);
   private readonly toastService = inject(SiToastNotificationService);
+  private readonly chatContainer = viewChild<SiChatContainerComponent>(SiChatContainerComponent);
 
   protected markdownRenderer = getMarkdownRenderer(this.sanitizer);
 
@@ -160,17 +166,13 @@ export class SampleComponent {
   readonly disableInterrupt = signal(false);
   readonly interrupting = signal(false);
   readonly inputValue = signal('');
+  readonly firstMessageSent = signal(false);
 
   inputActions: MessageAction[] = [
     {
-      label: 'Text formatting',
-      icon: 'element-brush',
-      action: () => this.logEvent('Text formatting clicked')
-    },
-    {
-      label: 'Message templates',
-      icon: 'element-template',
-      action: () => this.logEvent('Templates clicked')
+      label: 'Clear messages',
+      icon: 'element-delete',
+      action: () => this.onClearMessages()
     }
   ];
 
@@ -202,8 +204,67 @@ export class SampleComponent {
     }
   ];
 
+  readonly promptCategories: PromptCategory[] = [
+    { label: 'All prompts' },
+    { label: 'Maintenance' },
+    { label: 'Analytics' },
+    { label: 'Troubleshooting' }
+  ];
+
+  readonly selectedCategory = signal<string | undefined>('All prompts');
+
+  readonly promptSuggestions: Record<string, PromptSuggestion[]> = {
+    'All prompts': [
+      { text: 'How do I optimize performance for large datasets?' },
+      { text: 'What are the best practices for data validation?' },
+      { text: 'Help me troubleshoot this error message' },
+      { text: 'Explain the difference between async and sync operations' }
+    ],
+    'Maintenance': [
+      { text: 'How do I update system dependencies?' },
+      { text: 'What are best practices for database maintenance?' }
+    ],
+    'Analytics': [
+      { text: 'How do I visualize this data?' },
+      { text: 'What metrics should I track?' }
+    ],
+    'Troubleshooting': [
+      { text: 'Help me troubleshoot this error message' },
+      { text: 'Why is my query running slowly?' }
+    ]
+  };
+
+  readonly currentPromptSuggestions = computed(() => {
+    const category = this.selectedCategory() ?? 'All prompts';
+    return this.promptSuggestions[category] || [];
+  });
+
+  onPromptSelected(suggestion: PromptSuggestion): void {
+    this.logEvent(`Prompt selected: ${suggestion.text}`);
+    this.inputValue.set('');
+    this.firstMessageSent.set(true);
+    this.onMessageSent({ content: suggestion.text, attachments: [] });
+  }
+
+  onClearMessages(): void {
+    this.logEvent('Clear messages clicked');
+    this.messages.set([]);
+    setTimeout(() => {
+      this.chatContainer()?.scrollToTop();
+    });
+  }
+
+  onShowWelcomeScreen(): void {
+    this.logEvent('Show welcome screen clicked');
+    this.messages.set([]);
+    setTimeout(() => {
+      this.chatContainer()?.scrollToTop();
+    });
+  }
+
   onMessageSent(event: { content: string; attachments: ChatInputAttachment[] }): void {
     this.logEvent(`Message sent: "${event.content}" with ${event.attachments.length} attachments`);
+    this.firstMessageSent.set(true);
     this.messages.update(current => [
       ...current,
       {

@@ -52,6 +52,11 @@ $form-check-label-start: $form-check-size + map.get(spacers.$spacers, 4);
     background: semantic-tokens.$element-action-secondary-hover;
   }
 
+  &:is(:active, .active) {
+    border-color: semantic-tokens.$element-action-primary-active;
+    background: semantic-tokens.$element-action-secondary-active;
+  }
+
   &:is([disabled], .disabled) {
     border-color: semantic-tokens.$element-ui-3;
     background-color: semantic-tokens.$element-ui-5;
@@ -77,12 +82,17 @@ $form-check-label-start: $form-check-size + map.get(spacers.$spacers, 4);
   }
 
   &:is(:checked, .checked) {
-    background-color: semantic-tokens.$element-ui-0;
-    border-color: semantic-tokens.$element-ui-0;
+    background-color: semantic-tokens.$element-action-primary;
+    border-color: semantic-tokens.$element-action-primary;
 
     &:hover {
-      background-color: semantic-tokens.$element-ui-0-hover;
-      border-color: semantic-tokens.$element-ui-0-hover;
+      background-color: semantic-tokens.$element-action-primary-hover;
+      border-color: semantic-tokens.$element-action-primary-hover;
+    }
+
+    &:active {
+      background-color: semantic-tokens.$element-action-primary-active;
+      border-color: semantic-tokens.$element-action-primary-active;
     }
 
     &::after {
@@ -97,11 +107,11 @@ $form-check-label-start: $form-check-size + map.get(spacers.$spacers, 4);
   }
 
   &:indeterminate {
-    border-color: semantic-tokens.$element-ui-0;
+    border-color: semantic-tokens.$element-action-primary;
 
     &::after {
       mask-image: none;
-      background-color: semantic-tokens.$element-ui-0;
+      background-color: semantic-tokens.$element-action-primary;
       inline-size: 10px;
       block-size: 2px;
       opacity: 1;
@@ -110,10 +120,10 @@ $form-check-label-start: $form-check-size + map.get(spacers.$spacers, 4);
     }
 
     &:hover {
-      border-color: semantic-tokens.$element-ui-0-hover;
+      border-color: semantic-tokens.$element-action-primary-hover;
 
       &::after {
-        background-color: semantic-tokens.$element-ui-0-hover;
+        background-color: semantic-tokens.$element-action-primary-hover;
       }
     }
 
@@ -145,17 +155,25 @@ $form-check-label-start: $form-check-size + map.get(spacers.$spacers, 4);
   }
 
   &:checked {
-    border-color: semantic-tokens.$element-ui-0;
+    border-color: semantic-tokens.$element-action-primary;
 
     &::after {
-      background-color: semantic-tokens.$element-ui-0;
+      background-color: semantic-tokens.$element-action-primary;
     }
 
     &:hover {
-      border-color: semantic-tokens.$element-ui-0-hover;
+      border-color: semantic-tokens.$element-action-primary-hover;
 
       &::after {
-        background-color: semantic-tokens.$element-ui-0-hover;
+        background-color: semantic-tokens.$element-action-primary-hover;
+      }
+    }
+
+    &:active {
+      border-color: semantic-tokens.$element-action-primary-active;
+
+      &::after {
+        background-color: semantic-tokens.$element-action-primary-active;
       }
     }
 

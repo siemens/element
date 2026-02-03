@@ -84,7 +84,7 @@ describe('SiAttachmentListComponent', () => {
     fixture.componentRef.setInput('attachments', attachments);
     fixture.detectChanges();
 
-    const removeButtons = debugElement.queryAll(By.css('.btn-circle'));
+    const removeButtons = debugElement.queryAll(By.css('.btn-icon'));
     expect(removeButtons.length).toBe(0);
   });
 
@@ -95,7 +95,7 @@ describe('SiAttachmentListComponent', () => {
     fixture.componentRef.setInput('removable', true);
     fixture.detectChanges();
 
-    const removeButtons = debugElement.queryAll(By.css('.btn-circle'));
+    const removeButtons = debugElement.queryAll(By.css('.btn-icon'));
     expect(removeButtons.length).toBe(2);
   });
 
@@ -111,7 +111,7 @@ describe('SiAttachmentListComponent', () => {
     fixture.componentRef.setInput('removable', true);
     fixture.detectChanges();
 
-    const removeButton = debugElement.query(By.css('.btn-circle'));
+    const removeButton = debugElement.query(By.css('.btn-icon'));
     removeButton.nativeElement.click();
 
     expect(emittedName).toBe('file.txt');

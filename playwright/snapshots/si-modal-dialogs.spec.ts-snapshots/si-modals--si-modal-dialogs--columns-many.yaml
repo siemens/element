@@ -18,6 +18,7 @@
 - heading "Column selection dialog without visibility toggle" [level=2]
 - button "Many columns"
 - dialog "Customize columns":
+  - text: ""
   - button "Cancel"
   - paragraph: Customize view by selecting or ordering
   - listbox "List of possible columns. Items can be moved using Alt+ArrowUp or Alt+ArrowDown. Press Enter to rename supported items.":
@@ -26,8 +27,8 @@
     - option "Row 3 - not draggable" [disabled] [selected]
     - option "Row 4 - not draggable" [disabled]
     - option "Row 6" [disabled] [selected]
-    - option "Row 5" [selected]
     - option "Row 7" [selected]
+    - option "Row 5" [selected]
     - option "Row 8 M" [selected]
     - option "Row 9" [selected]
     - option /Row \d+/ [selected]

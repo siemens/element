@@ -1,12 +1,56 @@
 @use '@siemens/element-theme/src/styles/variables';
 @use 'sass:map';
 
+$transition-duration: variables.element-transition-duration(0.25s);
+
+%fade-transition {
+  opacity: 1;
+  transition: opacity $transition-duration $transition-duration ease-out;
+
+  @starting-style {
+    opacity: 0;
+  }
+}
+
 :host {
   display: flex;
   align-items: center;
+  block-size: 40px;
+  transition: block-size variables.$element-default-transition-duration ease-out;
+
+  &.collapsed {
+    block-size: 13px;
+  }
+
+  // Prevents initial animation on component load
+  &.component-enter {
+    transition: none;
+
+    .title,
+    .divider {
+      transition: none;
+    }
+  }
 }
 
-si-navbar-vertical-divider {
+.title {
+  position: absolute;
+  @extend %fade-transition;
+
+  &.title-leave {
+    opacity: 0;
+    transition: opacity $transition-duration ease-in;
+  }
+}
+
+.divider {
+  @extend %fade-transition;
+
   flex: 1;
   margin-block: 0;
+
+  &.divider-leave {
+    opacity: 0;
+    transition-delay: 0s;
+  }
 }

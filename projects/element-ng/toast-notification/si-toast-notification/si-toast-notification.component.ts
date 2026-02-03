@@ -32,11 +32,7 @@ export class SiToastNotificationComponent {
   protected readonly icons = addIcons({ elementCancel });
   protected readonly status = computed(() => {
     const toast = this.toast();
-    if (toast.state === 'connection') {
-      return 'danger';
-    } else {
-      return Object.keys(this.statusIcons).includes(toast.state) ? toast.state : 'info';
-    }
+    return Object.keys(this.statusIcons).includes(toast.state) ? toast.state : 'info';
   });
   protected readonly statusColor = computed(() => this.statusIcons[this.status()].color);
   protected readonly toastTimeoutInSeconds = computed(() => {

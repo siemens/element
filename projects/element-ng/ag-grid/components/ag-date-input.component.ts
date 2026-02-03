@@ -6,7 +6,6 @@
 import { Component, ElementRef, OnDestroy, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiCalendarButtonComponent, SiDatepickerDirective } from '@siemens/element-ng/datepicker';
-import { SiFormItemComponent } from '@siemens/element-ng/form';
 import { IDateComp, IDateParams } from 'ag-grid-community';
 
 /**
@@ -15,20 +14,18 @@ import { IDateComp, IDateParams } from 'ag-grid-community';
  */
 @Component({
   selector: 'si-ag-date-input',
-  imports: [FormsModule, SiDatepickerDirective, SiCalendarButtonComponent, SiFormItemComponent],
+  imports: [FormsModule, SiDatepickerDirective, SiCalendarButtonComponent],
   template: `
-    <si-form-item>
-      <si-calendar-button class="w-100">
-        <input
-          type="text"
-          class="form-control"
-          siDatepicker
-          [autoClose]="true"
-          [(ngModel)]="date"
-          (ngModelChange)="onDateChange()"
-        />
-      </si-calendar-button>
-    </si-form-item>
+    <si-calendar-button class="w-100">
+      <input
+        type="text"
+        class="form-control"
+        siDatepicker
+        [autoClose]="true"
+        [(ngModel)]="date"
+        (ngModelChange)="onDateChange()"
+      />
+    </si-calendar-button>
   `
 })
 export class AgDateInputComponent implements IDateComp, OnDestroy {

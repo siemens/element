@@ -20,7 +20,6 @@ export class SiTooltipDirective implements OnDestroy {
     readonly placement: i0.InputSignal<"auto" | "top" | "start" | "end" | "bottom">;
     readonly siTooltip: i0.InputSignal<TemplateRef<any> | TranslatableString>;
     readonly tooltipContext: i0.InputSignal<unknown>;
-    readonly triggers: i0.InputSignal<"" | "focus" | undefined>;
 }
 
 // @public (undocumented)

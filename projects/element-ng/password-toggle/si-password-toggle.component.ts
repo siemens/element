@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { Component, contentChild, DoCheck, input, output, signal } from '@angular/core';
+import { Component, contentChild, input, output, signal } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { addIcons, elementHide, elementShow, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
@@ -14,12 +14,10 @@ import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
   styleUrl: './si-password-toggle.component.scss',
   host: {
     class: 'form-control-wrapper',
-    '[class.ng-invalid]': 'isInvalid()',
-    '[class.ng-touched]': 'isTouched()',
     '[class.show-visibility-icon]': 'showVisibilityIcon()'
   }
 })
-export class SiPasswordToggleComponent implements DoCheck {
+export class SiPasswordToggleComponent {
   protected readonly ngControl = contentChild(NgControl);
   /**
    * Whether to show the visibility toggle icon.
@@ -55,18 +53,10 @@ export class SiPasswordToggleComponent implements DoCheck {
 
   protected readonly showPassword = signal<boolean>(false);
   protected readonly icons = addIcons({ elementHide, elementShow });
-  protected readonly isTouched = signal(false);
-  protected readonly isInvalid = signal(false);
 
   /** The `type` attribute for the `<input>` ('password' | 'text'). */
   get inputType(): string {
     return this.showPassword() ? 'text' : 'password';
-  }
-
-  ngDoCheck(): void {
-    const control = this.ngControl()?.control;
-    this.isTouched.set(!!control?.touched);
-    this.isInvalid.set(!!control?.invalid);
   }
 
   protected toggle(): void {

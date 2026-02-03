@@ -1,6 +1,6 @@
 <div class="h-100 d-flex flex-column justify-content-center align-items-center p-6">
   <ng-content select=".si-info-image">
-    <si-icon class="icon-size" [ngClass]="iconColor()" [icon]="icon()" />
+    <si-icon class="icon-size" [class]="iconColor()" [icon]="icon()" />
   </ng-content>
   <h1 class="my-9">{{ titleText() | translate }}</h1>
   @if (copyText()) {

@@ -24,6 +24,41 @@
   }
 }
 
+@mixin form-validation-state-selector-wrapper($state) {
+  @if ($state == 'invalid') {
+    &:has(.was-validated &:#{$state}),
+    &:has(.ng-touched.ng-#{$state}),
+    &:has(.is-#{$state}) {
+      @content;
+    }
+  } @else {
+    &.is-#{$state},
+    &:has(.is-#{$state}) {
+      @content;
+    }
+  }
+}
+
+// Apply common styles for form validation states
+@mixin form-validation-styles($state, $color, $icon) {
+  @if ($state and $icon) {
+    --si-feedback-icon: #{$icon};
+    --si-feedback-icon-offset: 1.5rem;
+  }
+
+  @if $color {
+    &:not(.no-validation):not(:hover),
+    &:not(.no-validation):focus {
+      --border-color: #{$color};
+    }
+  }
+
+  ~ .#{$state}-feedback {
+    display: flex !important; // stylelint-disable-line declaration-no-important
+    flex-direction: column;
+  }
+}
+
 %state-feedback {
   font-size: variables.$form-feedback-font-size;
   display: none;
@@ -39,44 +74,19 @@
     color: $text-color;
   }
 
-  :is(.form-control, .form-select, .form-control-wrapper) {
+  :is(.form-control, .form-select) {
     @include form-validation-state-selector($state) {
-      @if ($state and $icon) {
-        --si-feedback-icon: #{$icon};
-        --si-feedback-icon-offset: 1.5rem;
-      }
-
-      @if $color {
-        &:not(.no-validation):not(:hover),
-        &:not(.no-validation):focus {
-          --border-color: #{$color};
-        }
-      }
-
-      ~ .#{$state}-feedback {
-        display: flex !important; // stylelint-disable-line declaration-no-important
-        flex-direction: column;
-      }
+      @include form-validation-styles($state, $color, $icon);
     }
   }
 
-  .form-control-file {
-    @include form-validation-state-selector($state) {
-      ~ .#{$state}-feedback {
-        display: block;
-      }
+  .form-control-wrapper {
+    @include form-validation-state-selector-wrapper($state) {
+      @include form-validation-styles($state, $color, $icon);
     }
   }
 
-  .form-check-input {
-    @include form-validation-state-selector($state) {
-      ~ .#{$state}-feedback {
-        display: block;
-      }
-    }
-  }
-
-  .form-custom-control {
+  :is(.form-control-file, .form-check-input, .form-custom-control) {
     @include form-validation-state-selector($state) {
       ~ .#{$state}-feedback {
         display: block;
