@@ -6,7 +6,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormRecord } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { SiFormlyModule } from '@siemens/element-ng/formly';
 
@@ -96,7 +95,7 @@ describe('formly accordion type', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, SiFormlyModule, FormlyTestComponent]
+      imports: [SiFormlyModule, FormlyTestComponent]
     }).compileComponents();
   });
 

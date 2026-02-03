@@ -4,7 +4,6 @@
  */
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { SiLoadingSpinnerModule } from './si-loading-spinner.module';
 
@@ -35,7 +34,7 @@ describe('SiLoadingSpinnerDirective', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SiLoadingSpinnerModule, NoopAnimationsModule, TestHostComponent]
+      imports: [SiLoadingSpinnerModule, TestHostComponent]
     }).compileComponents();
   });
 

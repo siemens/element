@@ -7,7 +7,6 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { Component, Injectable } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter, Router } from '@angular/router';
 import {
   MenuItem,
@@ -86,7 +85,7 @@ describe('SiNavbarVertical', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SiNavbarVerticalComponent, NoopAnimationsModule, TestHostComponent],
+      imports: [SiNavbarVerticalComponent, TestHostComponent],
       providers: [
         provideSiUiState({ store: SynchronousMockStore }),
         provideRouter([

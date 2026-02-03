@@ -12,6 +12,7 @@ module.exports = withNativeFederation({
     'rxjs/testing',
     'rxjs/webSocket',
     // Use RegExp to skip ALL entry points!
+    /^@angular\/platform-browser\/animations/,
     /^@module-federation/,
     // Skip packages with assets that can't be bundled for browser
     'flag-icons'

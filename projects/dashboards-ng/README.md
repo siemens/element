@@ -36,7 +36,6 @@ providers: [
     },
     missingTranslationHandler: provideMissingTranslationHandlerForElement()
   }),
-  provideAnimations(),
   provideNgxTranslateForElement(),
   provideHttpClient(withInterceptorsFromDi())
 ];

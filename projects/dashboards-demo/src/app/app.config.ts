@@ -4,7 +4,6 @@
  */
 import { HttpBackend, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ApplicationConfig } from '@angular/core';
-import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withHashLocation } from '@angular/router';
 import { TranslateLoader, provideTranslateService } from '@ngx-translate/core';
 import {
@@ -48,8 +47,6 @@ export const appConfig: ApplicationConfig = {
         deps: [HttpBackend]
       }
     }),
-    // eslint-disable-next-line @typescript-eslint/no-deprecated
-    provideAnimations(),
     provideHttpClient(withInterceptorsFromDi()),
     provideNgxTranslateForElement()
   ]

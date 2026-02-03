@@ -7,7 +7,6 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Observable, of } from 'rxjs';
 
 import { SiSelectMultiValueDirective } from '../selection/si-select-multi-value.directive';
@@ -48,10 +47,6 @@ describe('SelectLazyOptionsDirective', () => {
   let component: TestHostComponent;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: [provideNoopAnimations()]
-    });
     fixture = TestBed.createComponent(TestHostComponent);
     loader = TestbedHarnessEnvironment.loader(fixture);
     component = fixture.componentInstance;
