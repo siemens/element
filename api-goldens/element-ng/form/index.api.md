@@ -77,7 +77,7 @@ export interface SiFormItemControl {
 
 // @public
 export class SiFormModule {
-    static withConfiguration({ validationErrorMapper }: {
+    static withConfiguration(input: {
         validationErrorMapper: SiFormValidationErrorMapper;
     }): ModuleWithProviders<SiFormModule>;
 }
