@@ -165,65 +165,85 @@ Color definitions (primitives) presented below are the hexadecimal values that
 we assign to a predefined set of colors. These primitives will be exclusively
 used as values for color tokens.
 
+<!-- markdownlint-disable MD033 -->
+<div class="color-grid" markdown>
+
+<div markdown>
 ### Brand
+--8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-brand-colors"
+</div>
 
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-brand"
-
+<div markdown>
 ### Deep-blue
+--8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-deep-blue-colors"
+</div>
 
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-deep-blue"
-
+<div markdown>
 ### Turquoise
+--8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-turquoise-colors"
+</div>
 
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-turquoise"
-
+<div markdown>
 ### Sand
+--8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-sand-colors"
+</div>
 
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-sand"
-
+<div markdown>
 ### Royal-blue
+--8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-royal-blue-colors"
+</div>
 
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-royal-blue"
-
+<div markdown>
 ### Blue
+--8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-blue-colors"
+</div>
 
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-blue"
-
+<div markdown>
 ### Interactive-coral
+--8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-interactive-coral-colors"
+</div>
 
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-interactive-coral"
-
+<div markdown>
 ### Plum
+--8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-plum-colors"
+</div>
 
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-plum"
-
+<div markdown>
 ### Purple
+--8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-purple-colors"
+</div>
 
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-purple"
-
+<div markdown>
 ### Orchid
+--8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-orchid-colors"
+</div>
 
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-orchid"
-
+<div markdown>
 ### Orange
+--8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-orange-colors"
+</div>
 
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-orange"
-
+<div markdown>
 ### Yellow
+--8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-yellow-colors"
+</div>
 
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-yellow"
-
+<div markdown>
 ### Red
+--8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-red-colors"
+</div>
 
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-red"
-
+<div markdown>
 ### Green
+--8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-green-colors"
+</div>
 
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-green"
-
+<div markdown>
 ### Avocado
+--8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-avocado-colors"
+</div>
 
---8<-- "docs/fundamentals/colors/si-ref.md:si-ref-color-data-avocado"
+</div>
 
 <style>
 si-docs-color {
