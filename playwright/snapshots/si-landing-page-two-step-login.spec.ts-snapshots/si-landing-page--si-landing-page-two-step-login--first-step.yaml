@@ -9,7 +9,6 @@
 - text: Username
 - textbox "Username": name@siemens.com
 - button "Next"
-- text: Don't have an account?
 - link "Register now":
   - /url: https://myid.siemens.com/help/
 - text: You agree to the
