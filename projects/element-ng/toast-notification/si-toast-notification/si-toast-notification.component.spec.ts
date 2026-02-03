@@ -4,7 +4,6 @@
  */
 import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { STATUS_ICON } from '@siemens/element-ng/common';
 import { Subject } from 'rxjs';
 
@@ -33,7 +32,7 @@ describe('SiToastNotificationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, SiToastNotificationComponent, TestHostComponent]
+      imports: [SiToastNotificationComponent, TestHostComponent]
     }).compileComponents();
   });
 

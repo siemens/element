@@ -16,7 +16,6 @@ import {
   provideAppInitializer,
   ɵLocaleDataIndex
 } from '@angular/core';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { TranslateLoader, provideTranslateService } from '@ngx-translate/core';
 import { provideSiAgGridConfig } from '@siemens/element-ng/ag-grid';
 import { provideSiUiState } from '@siemens/element-ng/common';
@@ -148,8 +147,6 @@ export const APP_CONFIG: ApplicationConfig = {
     { provide: SiLivePreviewThemeApi, useClass: LivePreviewThemeApiService },
     { provide: SiLivePreviewLocaleApi, useClass: LivePreviewLocaleApiService },
     { provide: HTTP_INTERCEPTORS, useExisting: FileUploadInterceptor, multi: true },
-    // eslint-disable-next-line @typescript-eslint/no-deprecated
-    provideAnimationsAsync(navigator.webdriver ? 'noop' : 'animations'),
     provideHttpClient(withInterceptorsFromDi()),
     provideTranslateService(
       // Npm dependencies

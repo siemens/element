@@ -38,7 +38,6 @@
     "migrations": "./schematics/migration.json"
   },
   "peerDependencies": {
-    "@angular/animations": "21",
     "@angular/cdk": "21",
     "@angular/common": "21",
     "@angular/core": "21",

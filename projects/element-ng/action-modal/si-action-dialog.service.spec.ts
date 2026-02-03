@@ -4,7 +4,6 @@
  */
 import { ApplicationRef } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Subject } from 'rxjs';
 
 import { SiActionDialogService } from './si-action-dialog.service';
@@ -21,9 +20,6 @@ describe('SiActionDialogService', () => {
   };
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule]
-    }).compileComponents();
     service = TestBed.inject(SiActionDialogService);
     appRef = TestBed.inject(ApplicationRef);
   });
