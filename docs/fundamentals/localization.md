@@ -15,7 +15,7 @@ most applications. For example, if you want to display a date in a compact forma
 You will get the format 'M/d/yy' (6/15/15) for English. If required, applications may extend and specialize the formats and pipes.
 
 The Angular pipes that uses the locale information like the [DatePipe](https://angular.dev/api/common/DatePipe), [CurrencyPipe](https://angular.dev/api/common/CurrencyPipe),
-[DecimalPipe](https://angular.dev/api/common/DecimalPipe) and [PercentPipe](https://angular.dev/api/common/PercentPipe) are pure pipes. Pure pipes ony re-render when
+[DecimalPipe](https://angular.dev/api/common/DecimalPipe) and [PercentPipe](https://angular.dev/api/common/PercentPipe) are pure pipes. Pure pipes only re-render when
 the inputs changes. This means they do not re-render when the `LOCALE_ID` changes. They load the `LOCALE_ID` only once at load time and caches the value.
 
 We recommend to follow the same behavior as users changes to locales are seldom. As a consequence we need to reload the web application on locale changes.
@@ -68,14 +68,14 @@ export const APP_CONFIG: ApplicationConfig = {
 };
 ```
 
-In addition, `fallbackEnabled` enable ngx-translate to use the translation from the `defaultLocale` language when a translate value is missing.
+In addition, `fallbackEnabled` enables ngx-translate to use the translation from the `defaultLocale` language when a translate value is missing.
 
 ## Persisting locales using SiLocaleStore
 
 Setting the `SiLocaleService.locale = 'fr'` changes the language and forces a reload of the browser window. The service uses
 the `SiLocaleStore` to persist the new locale. After reloading the application, the service uses the `SiLocaleStore` to load
-the changed locale. As default, a localStorage implementation is used. You can implement your own store to load and
-persis the user preferred locale from a setting backend that is shared across applications.
+the changed locale. By default, a localStorage implementation is used. You can implement your own store to load and
+persist the user preferred locale from a setting backend that is shared across applications.
 
 We implemented a [demo store](https://github.com/siemens/element/tree/main/src/app/examples/si-localization/demo-locale.service.ts)
 that loads a locale from a backend before the angular application initializes. The store is configured in the providers of the main

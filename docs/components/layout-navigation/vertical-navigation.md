@@ -80,7 +80,7 @@ If the height is not enough to show all the navigation menus, then a scrollbar w
 ### Usage
 
 ```ts
-import { SiNavbarVerticalComponent } from '@siemens/element-ng/vertical-navbar';
+import { SiNavbarVerticalComponent } from '@siemens/element-ng/navbar-vertical';
 
 @Component({
   imports: [

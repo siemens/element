@@ -15,7 +15,7 @@ helping users understand where they are and navigate back to higher levels.
 ### When to use
 
 - Use breadcrumbs when the user is most likely to have landed on the page from an external source.
-- Use for applications that have that have a large amount of content organized in a hierarchy of more than two levels.
+- Use for applications that have a large amount of content organized in a hierarchy of more than two levels.
 
 ### Best practices
 
@@ -77,7 +77,7 @@ will be used as a `routerLink`.
 ### Usage
 
 ```ts
-import { SiBreadcrumbRouterComponent } from '@siemens/element-ng/breadcrumb';
+import { SiBreadcrumbRouterComponent } from '@siemens/element-ng/breadcrumb-router';
 
 @Component({
   imports: [SiBreadcrumbRouterComponent,...]
