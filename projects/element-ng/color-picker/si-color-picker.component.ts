@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
+import { Grid, GridRow, GridCell, GridCellWidget } from '@angular/aria/grid';
 import { CdkConnectedOverlay, CdkOverlayOrigin } from '@angular/cdk/overlay';
 import {
   booleanAttribute,
@@ -16,7 +17,6 @@ import {
   viewChildren
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { isRTL } from '@siemens/element-ng/common';
 import { addIcons, elementOk, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
@@ -44,7 +44,16 @@ const defaultDataColors: string[] = [
 ];
 @Component({
   selector: 'si-color-picker',
-  imports: [SiIconComponent, SiTranslatePipe, CdkConnectedOverlay, CdkOverlayOrigin],
+  imports: [
+    Grid,
+    GridRow,
+    GridCell,
+    GridCellWidget,
+    SiIconComponent,
+    SiTranslatePipe,
+    CdkConnectedOverlay,
+    CdkOverlayOrigin
+  ],
   templateUrl: './si-color-picker.component.html',
   styleUrl: './si-color-picker.component.scss',
   providers: [
@@ -107,6 +116,14 @@ export class SiColorPickerComponent implements ControlValueAccessor {
   private readonly disabledNgControl = signal(false);
   private readonly numberOfColumns = 4;
   protected readonly disabled = computed(() => this.disabledInput() || this.disabledNgControl());
+  protected readonly rows = computed(() => {
+    const colors = this.colorPalette();
+    const result: string[][] = [];
+    for (let i = 0; i < colors.length; i += this.numberOfColumns) {
+      result.push(colors.slice(i, i + this.numberOfColumns));
+    }
+    return result;
+  });
   protected readonly isOverlayOpen = signal(false);
   protected readonly icons = addIcons({ elementOk });
 
@@ -114,37 +131,6 @@ export class SiColorPickerComponent implements ControlValueAccessor {
     if (!this.autoClose()) {
       this.onTouched();
     }
-  }
-
-  protected arrowDown(index: number, event: Event): void {
-    const nextIndex = index + this.numberOfColumns;
-    this.focusLabel(nextIndex);
-    event.preventDefault();
-  }
-
-  protected arrowUp(index: number, event: Event): void {
-    const prevIndex = index - this.numberOfColumns;
-    this.focusLabel(prevIndex);
-    event.preventDefault();
-  }
-
-  protected arrowLeft(index: number, event: Event): void {
-    const prevIndex = index + (isRTL() ? 1 : -1);
-    this.focusLabel(prevIndex);
-    event.preventDefault();
-  }
-
-  protected arrowRight(index: number, event: Event): void {
-    const prevIndex = index + (isRTL() ? -1 : +1);
-    this.focusLabel(prevIndex);
-    event.preventDefault();
-  }
-
-  private focusLabel(index: number): void {
-    const labels = this.swatchInputs();
-    const totalSwatches = labels.length;
-    const normalizedIndex = (index + totalSwatches) % totalSwatches;
-    labels[normalizedIndex].nativeElement.focus();
   }
 
   protected openOverlay(): void {

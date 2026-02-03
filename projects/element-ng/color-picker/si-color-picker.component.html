@@ -24,38 +24,44 @@
   (backdropClick)="overlayDetach()"
   (detach)="overlayDetach()"
 >
-  <div #colorPaletteRef role="grid" class="colors elevation-1 rounded-2 bg-base-1 p-4 mt-1">
-    <div role="row" class="d-flex flex-wrap gap-4">
-      @for (paint of colorPalette(); track $index) {
-        <div role="gridcell" class="swatch">
-          <input
-            #swatchInput
-            type="radio"
-            name="color"
-            class="btn-check"
-            [id]="paint"
-            [attr.aria-label]="paint"
-            [value]="paint"
-            [checked]="color() === paint"
-            (change)="selectColor(paint)"
-            (keydown.enter)="selectColor(paint)"
-            (keydown.arrowUp)="arrowUp($index, $event)"
-            (keydown.arrowDown)="arrowDown($index, $event)"
-            (keydown.arrowLeft)="arrowLeft($index, $event)"
-            (keydown.arrowRight)="arrowRight($index, $event)"
-            (keydown.tab)="overlayDetach()"
-          />
-          <label
-            class="color-box swatch-label"
-            [attr.for]="paint"
-            [style.background]="'var(--' + paint + ')'"
-          >
-            @if (color() === paint) {
-              <si-icon class="icon text-inverse" [icon]="icons.elementOk" />
-            }
-          </label>
-        </div>
-      }
-    </div>
+  <div
+    #colorPaletteRef
+    ngGrid
+    enableSelection="true"
+    colWrap="continuous"
+    selectionMode="explicit"
+    class="colors elevation-1 rounded-2 bg-base-1 p-4 mt-1 d-flex gap-4 flex-column"
+  >
+    @for (row of rows(); track $index) {
+      <div ngGridRow class="d-flex flex-wrap gap-4">
+        @for (paint of row; track paint) {
+          <div ngGridCell class="swatch" [selected]="color() === paint">
+            <input
+              #swatchInput
+              ngGridCellWidget
+              type="radio"
+              name="color"
+              class="btn-check"
+              [id]="paint"
+              [attr.aria-label]="paint"
+              [value]="paint"
+              [checked]="color() === paint"
+              (change)="selectColor(paint)"
+              (keydown.enter)="selectColor(paint)"
+              (keydown.tab)="overlayDetach()"
+            />
+            <label
+              class="color-box swatch-label"
+              [attr.for]="paint"
+              [style.background]="'var(--' + paint + ')'"
+            >
+              @if (color() === paint) {
+                <si-icon class="icon text-inverse" [icon]="icons.elementOk" />
+              }
+            </label>
+          </div>
+        }
+      </div>
+    }
   </div>
 </ng-template>
