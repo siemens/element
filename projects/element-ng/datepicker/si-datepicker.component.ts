@@ -284,10 +284,15 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
     nonNullable: true
   });
   /**
+   * Stores the current time value before a new time change is applied.
+   * Used to detect actual changes and avoid redundant updates.
+   */
+  private previousTime?: Date;
+  /**
    * Used to hold the last time when setting the time to disabled.
    * Value will be reset on enabling the time again.
    */
-  private previousTime?: Date;
+  private lastTimeBeforeDisable?: Date;
 
   /** Reference to the current day selection component. Shown when view === 'week' */
   private readonly daySelection = viewChild(SiDaySelectionComponent);
@@ -511,7 +516,13 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   protected timeSelected(newTime?: Date): void {
-    if (newTime == null || newTime === this.time.value) {
+    if (
+      newTime == null ||
+      (newTime.getHours() === this.previousTime?.getHours() &&
+        newTime.getMinutes() === this.previousTime.getMinutes() &&
+        newTime.getSeconds() === this.previousTime.getSeconds() &&
+        newTime.getMilliseconds() === this.previousTime.getMilliseconds())
+    ) {
       return;
     }
 
@@ -560,9 +571,10 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
         const newTime = new Date(
           Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0)
         );
+        this.lastTimeBeforeDisable = this.previousTime;
         this.timeSelected(newTime);
       } else if (this.previousTime) {
-        this.timeSelected(this.previousTime);
+        this.timeSelected(this.lastTimeBeforeDisable);
       } else {
         this.timeSelected(new Date());
       }
