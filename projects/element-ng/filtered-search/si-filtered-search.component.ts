@@ -517,11 +517,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     this.submit();
   }
 
-  protected deleteCriterion(
-    criterion: CriterionValue,
-    index: number,
-    event: { triggerSearch: boolean } | void
-  ): void {
+  protected deleteCriterion(index: number, event: { triggerSearch: boolean } | void): void {
     if (this.disabled()) {
       return;
     }
@@ -534,7 +530,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     });
     this.cdRef.detectChanges();
 
-    this.values = this.values.filter(v => v.value !== criterion);
+    this.values = this.values.filter((_, i) => i !== index);
     this.emitChangeEvent();
     this.allowedCriteriaCache = undefined;
     if (this.values.length !== index) {
