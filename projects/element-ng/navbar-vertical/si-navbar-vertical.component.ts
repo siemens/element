@@ -29,6 +29,7 @@ import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
 import { SiSkipLinkTargetDirective } from '@siemens/element-ng/skip-links';
+import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { SiNavbarVerticalDividerComponent } from './si-navbar-vertical-divider.component';
@@ -72,7 +73,8 @@ export class SiNavbarVerticalItemGuardDirective {
     SiNavbarVerticalItemLegacyComponent,
     SiSearchBarComponent,
     SiSkipLinkTargetDirective,
-    SiTranslatePipe
+    SiTranslatePipe,
+    SiTooltipDirective
   ],
   templateUrl: './si-navbar-vertical.component.html',
   styleUrl: './si-navbar-vertical.component.scss',

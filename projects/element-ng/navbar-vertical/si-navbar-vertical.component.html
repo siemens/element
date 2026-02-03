@@ -79,6 +79,7 @@
     @case ('group') {
       <button
         type="button"
+        placement="end"
         [si-navbar-vertical-item]="item"
         [stateId]="item.id"
         [siNavbarVerticalGroupTriggerFor]="group"
@@ -86,18 +87,28 @@
         [expanded]="
           (item.id ? uiStateExpandedItems()[item.id] : undefined) ?? item.expanded ?? false
         "
+        [siTooltip]="item.label | translate"
+        [isDisabled]="!collapsed()"
       >
         {{ item.label | translate }}
       </button>
     }
     @case ('action') {
-      <button type="button" [si-navbar-vertical-item]="item" [activeOverride]="item.active">
+      <button
+        type="button"
+        placement="end"
+        [si-navbar-vertical-item]="item"
+        [activeOverride]="item.active"
+        [siTooltip]="item.label | translate"
+        [isDisabled]="!collapsed()"
+      >
         {{ item.label | translate }}
       </button>
     }
     @case ('router-link') {
       <a
         routerLinkActive
+        placement="end"
         [routerLinkActiveOptions]="item.activeMatchOptions ?? { exact: false }"
         [si-navbar-vertical-item]="item"
         [routerLink]="item.routerLink"
@@ -109,12 +120,21 @@
         [preserveFragment]="item.extras?.preserveFragment"
         [skipLocationChange]="item.extras?.skipLocationChange"
         [replaceUrl]="item.extras?.replaceUrl"
+        [siTooltip]="item.label | translate"
+        [isDisabled]="!collapsed()"
       >
         {{ item.label | translate }}
       </a>
     }
     @case ('link') {
-      <a [si-navbar-vertical-item]="item" [href]="item.href" [target]="item.target">
+      <a
+        placement="end"
+        [si-navbar-vertical-item]="item"
+        [href]="item.href"
+        [target]="item.target"
+        [siTooltip]="item.label | translate"
+        [isDisabled]="!collapsed()"
+      >
         {{ item.label | translate }}
       </a>
     }
