@@ -19,5 +19,10 @@ export const SYMBOL_REMOVALS_MIGRATION: SymbolRemovalInstruction[] = [
     module: /@(siemens|simpl)\/maps-ng/,
     elementSelector: 'si-map',
     names: ['onResize']
+  },
+  {
+    module: /@(siemens|simpl)\/element-ng/,
+    elementSelector: 'si-landing-page',
+    names: ['registerNowIntroText']
   }
 ];

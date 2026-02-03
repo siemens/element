@@ -114,7 +114,6 @@ export class SiLoginBasicComponent implements OnInit {
     readonly loginButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly nextButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly passwordLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    readonly registerNowIntroText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly registerNowLink: _angular_core.InputSignal<Link | undefined>;
     readonly twoStep: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly usernameLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;

@@ -79,17 +79,6 @@ export class SiLoginBasicComponent implements OnInit {
    */
   readonly forgotPasswordLink = input<Link>();
   /**
-   * Text for register now.
-   *
-   * @defaultValue
-   * ```
-   * t(() => $localize`:@@SI_LOGIN_BASIC.REGISTER_NOW_INTRO:Don't have an account?`)
-   * ```
-   */
-  readonly registerNowIntroText = input(
-    t(() => $localize`:@@SI_LOGIN_BASIC.REGISTER_NOW_INTRO:Don't have an account?`)
-  );
-  /**
    * Config for Register Now link.
    */
   readonly registerNowLink = input<Link>();

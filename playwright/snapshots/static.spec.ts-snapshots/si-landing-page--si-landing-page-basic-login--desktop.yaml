@@ -14,7 +14,6 @@
 - link "Forgot password":
   - /url: https://myid.siemens.com/help/
 - button "Login"
-- text: Don't have an account?
 - link "Register now":
   - /url: https://myid.siemens.com/help/
 - text: Productive data You are about to connect to productive data. Please note that changes will take effect immediately.

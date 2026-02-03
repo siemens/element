@@ -15,7 +15,6 @@
 - link "Forgot password":
   - /url: "#/viewer/viewer"
 - button "Login"
-- text: Don't have an account?
 - link "Register now":
   - /url: "#/viewer/viewer"
 - text: Productive data You are about to connect to productive data. Please note that changes will take effect immediately

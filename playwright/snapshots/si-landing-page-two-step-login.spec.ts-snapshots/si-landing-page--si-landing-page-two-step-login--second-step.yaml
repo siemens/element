@@ -15,7 +15,6 @@
   - /url: https://myid.siemens.com/help/
 - button "Back"
 - button "Login"
-- text: Don't have an account?
 - link "Register now":
   - /url: https://myid.siemens.com/help/
 - text: You agree to the
