@@ -1,11 +1,12 @@
 <div
   role="button"
+  placement="start"
+  [siTooltip]="hcollapsed() && heading() ? (heading()! | translate) : ''"
   [class]="`collapsible-header focus-inside px-6 ${headerCssClasses()}`"
   [attr.tabindex]="disabled() ? '' : '0'"
   [id]="headerId"
   [class.open]="opened()"
   [class.disabled]="disabled()"
-  [title]="hcollapsed() ? (heading() | translate) : ''"
   [attr.aria-expanded]="opened() && !hcollapsed()"
   [attr.aria-disabled]="disabled()"
   [attr.aria-controls]="controlId"
