@@ -20,6 +20,8 @@
   "peerDependencies": {
     "@angular/common": "21",
     "@angular/core": "21",
+    "@siemens/element-translate-ng": "48.9.0",
+    "@siemens/element-theme": "48.9.0",
     "ol": "~10.6.0 || ~10.7.0",
     "ol-ext": "^4.0.24",
     "ol-mapbox-style": "^13.1.0"
