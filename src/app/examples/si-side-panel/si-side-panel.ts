@@ -2,7 +2,8 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
 import {
@@ -12,6 +13,7 @@ import {
   SiHeaderActionsDirective,
   SiHeaderActionItemComponent
 } from '@siemens/element-ng/application-header';
+import { SiFormItemComponent } from '@siemens/element-ng/form';
 import { ElementDimensions } from '@siemens/element-ng/resize-observer';
 import {
   SidePanelMode,
@@ -34,6 +36,8 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiCollapsiblePanelComponent,
     SiApplicationHeaderComponent,
     SiHeaderLogoDirective,
+    SiFormItemComponent,
+    FormsModule,
     SiHeaderActionsDirective,
     SiHeaderActionItemComponent
   ],
@@ -41,11 +45,11 @@ import { LOG_EVENT } from '@siemens/live-preview';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
-  collapsed = true;
-  mode: SidePanelMode = 'over';
-  size: SidePanelSize = 'regular';
-  displayMode: SidePanelDisplayMode = 'overlay';
-  disableBackdrop = false;
+  readonly collapsed = signal(true);
+  readonly mode = signal<SidePanelMode>('over');
+  readonly size = signal<SidePanelSize>('regular');
+  readonly displayMode = signal<SidePanelDisplayMode>('overlay');
+  readonly disableBackdrop = signal(false);
 
   navigateConfig: SidePanelNavigateConfig = {
     type: 'link',
@@ -57,21 +61,7 @@ export class SampleComponent {
   logEvent = inject(LOG_EVENT);
 
   toggle(): void {
-    this.collapsed = !this.collapsed;
-  }
-
-  toggleMode(): void {
-    this.mode = this.mode === 'over' ? 'scroll' : 'over';
-  }
-
-  changeSize(): void {
-    if (this.size === 'regular') {
-      this.size = 'wide';
-    } else if (this.size === 'wide') {
-      this.size = 'extended';
-    } else {
-      this.size = 'regular';
-    }
+    this.collapsed.update(value => !value);
   }
 
   contentResize(dim: ElementDimensions): void {
