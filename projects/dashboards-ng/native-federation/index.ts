@@ -3,9 +3,15 @@
  * SPDX-License-Identifier: MIT
  */
 import { loadRemoteModule } from '@angular-architects/native-federation';
-import { ComponentRef, EnvironmentInjector, Injector, ViewContainerRef, Type } from '@angular/core';
-import { FederatedModule, SetupComponentFn, widgetFactoryRegistry } from '@siemens/dashboards-ng';
-import { Observable, Subject } from 'rxjs';
+import { ComponentRef, EnvironmentInjector, Injector, ViewContainerRef } from '@angular/core';
+import {
+  FederatedModule,
+  FederatedModuleExports,
+  handleFederatedModuleLoad,
+  SetupComponentFn,
+  widgetFactoryRegistry
+} from '@siemens/dashboards-ng';
+import { Observable } from 'rxjs';
 
 const setupRemoteComponent = <T>(
   factory: FederatedModule,
@@ -13,33 +19,15 @@ const setupRemoteComponent = <T>(
   host: ViewContainerRef,
   injector: Injector,
   environmentInjector: EnvironmentInjector
-): Observable<ComponentRef<T>> => {
-  const result = new Subject<ComponentRef<T>>();
-
-  loadRemoteModule<Type<T>[]>(factory).then(
-    module => {
-      if (module) {
-        const componentType = module[factory[componentName]];
-        const widgetInstanceRef = host.createComponent<T>(componentType, {
-          injector,
-          environmentInjector
-        });
-        result.next(widgetInstanceRef);
-      }
-      result.complete();
-    },
-    rejection => {
-      const msg = rejection
-        ? `Loading widget module ${factory.exposedModule} failed with ${JSON.stringify(
-            rejection.toString()
-          )}`
-        : `Loading widget module ${factory.exposedModule} failed`;
-      result.error(msg);
-      result.complete();
-    }
-  );
-  return result;
-};
+): Observable<ComponentRef<T>> =>
+  handleFederatedModuleLoad({
+    loadPromise: loadRemoteModule<FederatedModuleExports<T>>(factory),
+    factory,
+    componentName,
+    host,
+    injector,
+    environmentInjector
+  });
 
 export const registerNativeFederatedWidgetLoader = (): void => {
   widgetFactoryRegistry.register('native-federation', setupRemoteComponent as SetupComponentFn);
