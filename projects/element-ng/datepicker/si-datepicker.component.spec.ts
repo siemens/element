@@ -133,6 +133,39 @@ describe('SiDatepickerComponent', () => {
     expect(component.changedDate!.getMonth()).toBe(11); // December
   });
 
+  it('should restore original time when consider time is disabled and then re-enabled', async () => {
+    const initialDate = new Date('2023-12-15T10:00:00');
+    component.date.set(initialDate);
+    await updateConfig({
+      ...component.config(),
+      disabledTime: false,
+      showTime: true,
+      showMinutes: true
+    });
+
+    enterValue(helper.getTimeInputHours(), '14');
+    enterValue(helper.getTimeInputMinutes(), '30');
+    helper.getTimeInputMinutes().dispatchEvent(new Event('blur'));
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const toggleTimeSwitch = await picker.considerTimeSwitch();
+    expect(await toggleTimeSwitch.isChecked()).toBeTrue();
+
+    // Disable consider time
+    await toggleTimeSwitch.toggle();
+    expect(component.config().disabledTime).toBeTrue();
+
+    // Re-enable consider time
+    await toggleTimeSwitch.toggle();
+    expect(component.config().disabledTime).toBeFalse();
+
+    // Verify that the original time is restored
+    expect(component.changedDate).toBeDefined();
+    expect(component.changedDate!.getHours()).toBe(14);
+    expect(component.changedDate!.getMinutes()).toBe(30);
+  });
+
   it('should ignore invalid dates', () => {
     component.date.set(new Date('*-*-*'));
     expect(() => fixture.detectChanges()).not.toThrow();
