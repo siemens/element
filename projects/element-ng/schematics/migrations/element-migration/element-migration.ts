@@ -13,15 +13,17 @@ import {
   renameAttribute,
   renameElementTag,
   renameIdentifier,
-  removeSymbol
+  removeSymbol,
+  patternReplacements
 } from '../../utils/index.js';
-import { getElementMigrationData } from '../data/index.js';
+import type { ElementMigrationData } from '../data/index.js';
 
-export const elementMigrationRule = (options: { path: string }): Rule => {
+export const elementMigrationRule = (
+  options: { path: string },
+  migrationData: ElementMigrationData
+): Rule => {
   return async (tree: Tree, context: SchematicContext) => {
     const tsSourceFiles = await discoverSourceFiles(tree, context, options.path);
-
-    const migrationData = getElementMigrationData();
 
     for (const filePath of tsSourceFiles) {
       const content = tree.read(filePath);
@@ -29,15 +31,52 @@ export const elementMigrationRule = (options: { path: string }): Rule => {
         continue;
       }
 
+      if (migrationData.patternReplacementsChanges) {
+        const sourceFile = ts.createSourceFile(
+          filePath,
+          content.toString(),
+          ts.ScriptTarget.Latest,
+          true
+        );
+
+        patternReplacements({
+          tree,
+          filePath,
+          sourceFile,
+          replacements: migrationData.patternReplacementsChanges
+        });
+      }
+
+      // Re-read content after pattern replacements
+      const updatedContent = tree.read(filePath);
+      if (!updatedContent) {
+        continue;
+      }
+
       const sourceFile = ts.createSourceFile(
         filePath,
-        content.toString(),
+        updatedContent.toString(),
         ts.ScriptTarget.Latest,
         true
       );
 
       let recorder: UpdateRecorder | undefined = undefined;
       let printer: ts.Printer | undefined = undefined;
+
+      if (migrationData.inputNameChanges) {
+        recorder ??= tree.beginUpdate(filePath);
+
+        for (const change of migrationData.inputNameChanges) {
+          renameApi({
+            tree,
+            recorder,
+            sourceFile,
+            filePath,
+            elementName: change.elementSelector,
+            apis: change.apiMappings
+          });
+        }
+      }
 
       // Remove the ifs when it grows a bit more and split into multiple functions
       if (migrationData.componentNameChanges) {
@@ -82,7 +121,8 @@ export const elementMigrationRule = (options: { path: string }): Rule => {
             sourceFile,
             filePath,
             fromName: change.replace,
-            toName: change.replaceWith
+            toName: change.replaceWith,
+            defaultAttributes: change.defaultAttributes
           });
         }
       }

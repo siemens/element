@@ -14,6 +14,7 @@ export interface SymbolRemovalInstruction {
 }
 
 export const SYMBOL_REMOVALS_MIGRATION: SymbolRemovalInstruction[] = [
+  // v47 to v48
   {
     module: /@(siemens|simpl)\/element-ng(\/accordion)?/,
     elementSelector: 'si-accordion',
@@ -61,9 +62,11 @@ export const SYMBOL_REMOVALS_MIGRATION: SymbolRemovalInstruction[] = [
     elementSelector: 'si-tree-view',
     names: ['disableFilledIcons', 'trackByFunction']
   },
+
+  // v48 to v49
   {
-    module: /@(siemens|simpl)\/charts-ng/,
-    elementSelector: 'si-chart-gauge',
-    names: ['numberOfDecimals']
+    module: /@(siemens|simpl)\/maps-ng/,
+    elementSelector: 'si-map',
+    names: ['onResize']
   }
 ];
