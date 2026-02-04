@@ -1,11 +1,11 @@
 <si-side-panel
   #sidePanel
-  [collapsed]="collapsed"
-  [mode]="mode"
-  [size]="size"
-  [disableBackdrop]="disableBackdrop"
+  [collapsed]="collapsed()"
+  [mode]="mode()"
+  [size]="size()"
+  [disableBackdrop]="disableBackdrop()"
   (contentResize)="contentResize($event)"
-  (closed)="collapsed = true"
+  (closed)="collapsed.set(true)"
 >
   <div class="has-navbar-fixed-top px-6">
     <si-application-header>
@@ -33,9 +33,10 @@
         class="btn-check"
         name="size"
         id="size-regular"
-        [checked]="size === 'regular'"
+        value="regular"
+        [(ngModel)]="size"
       />
-      <label class="btn" for="size-regular" (click)="size = 'regular'">
+      <label class="btn" for="size-regular">
         <i class="icon element-layout-pane-2-right" aria-hidden="true"></i>
         Regular
       </label>
@@ -44,9 +45,10 @@
         class="btn-check"
         name="size"
         id="size-wide"
-        [checked]="size === 'wide'"
+        value="wide"
+        [(ngModel)]="size"
       />
-      <label class="btn" for="size-wide" (click)="size = 'wide'">
+      <label class="btn" for="size-wide">
         <i class="icon element-layout-pane-2" aria-hidden="true"></i>
         Wide
       </label>
@@ -55,9 +57,10 @@
         class="btn-check"
         name="size"
         id="size-extended"
-        [checked]="size === 'extended'"
+        value="extended"
+        [(ngModel)]="size"
       />
-      <label class="btn" for="size-extended" (click)="size = 'extended'">
+      <label class="btn" for="size-extended">
         <i class="icon element-layout-pane-1" aria-hidden="true"></i>
         Extended
       </label>
@@ -69,9 +72,10 @@
         class="btn-check"
         name="displayMode"
         id="display-overlay"
-        [checked]="displayMode === 'overlay'"
+        value="overlay"
+        [(ngModel)]="displayMode"
       />
-      <label class="btn" for="display-overlay" (click)="displayMode = 'overlay'">
+      <label class="btn" for="display-overlay">
         <i class="icon element-zoom" aria-hidden="true"></i>
         Overlay
       </label>
@@ -80,9 +84,10 @@
         class="btn-check"
         name="displayMode"
         id="display-navigate"
-        [checked]="displayMode === 'navigate'"
+        value="navigate"
+        [(ngModel)]="displayMode"
       />
-      <label class="btn" for="display-navigate" (click)="displayMode = 'navigate'">
+      <label class="btn" for="display-navigate">
         <i class="icon element-export" aria-hidden="true"></i>
         Navigate
       </label>
@@ -93,9 +98,10 @@
         class="btn-check"
         name="mode"
         id="mode-over"
-        [checked]="mode === 'over'"
+        value="over"
+        [(ngModel)]="mode"
       />
-      <label class="btn" for="mode-over" (click)="mode = 'over'">
+      <label class="btn" for="mode-over">
         <i class="icon element-menu" aria-hidden="true"></i>
         Over
       </label>
@@ -104,9 +110,10 @@
         class="btn-check"
         name="mode"
         id="mode-scroll"
-        [checked]="mode === 'scroll'"
+        value="scroll"
+        [(ngModel)]="mode"
       />
-      <label class="btn" for="mode-scroll" (click)="mode = 'scroll'">
+      <label class="btn" for="mode-scroll">
         <i class="icon element-jump-to-list-item" aria-hidden="true"></i>
         Scroll
       </label>
@@ -141,27 +148,20 @@
         be clicked to close the side panel and can be disabled with the
         <code class="text-primary">disableBackdrop</code> input.
       </p>
-      <div class="form-check form-switch mt-8">
+      <si-form-item class="form-switch mt-8" label="disableBackdrop">
         <input
-          type="checkbox"
-          class="form-check-input"
-          role="switch"
           id="backdrop-switch"
-          [checked]="disableBackdrop"
-          (change)="disableBackdrop = !disableBackdrop"
+          class="form-check-input"
+          type="checkbox"
+          [(ngModel)]="disableBackdrop"
         />
-        <span class="bg-base-1 py-2 px-4 rounded-2">
-          <label for="backdrop-switch" class="form-check-label"
-            ><code class="text-body">disableBackdrop</code></label
-          >
-        </span>
-      </div>
+      </si-form-item>
     </div>
   </div>
 
   <si-side-panel-content
     heading="Title"
-    [displayMode]="displayMode"
+    [displayMode]="displayMode()"
     [navigateConfig]="navigateConfig"
   >
     <si-accordion>

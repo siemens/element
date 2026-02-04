@@ -215,6 +215,19 @@ $form-check-label-start: $form-check-size + map.get(spacers.$spacers, 4);
 }
 
 // button group
+.btn-group label:has(.btn-check) {
+  position: relative;
+
+  .btn-check {
+    inset: 0;
+    z-index: 3;
+    cursor: pointer;
+    opacity: 0;
+    clip: auto;
+    pointer-events: all;
+  }
+}
+
 .btn-check {
   position: absolute;
   clip: rect(0, 0, 0, 0);
