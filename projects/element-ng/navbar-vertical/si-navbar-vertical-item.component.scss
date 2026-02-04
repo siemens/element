@@ -10,7 +10,7 @@
   background: none;
   border: 0;
   font-size: variables.$si-font-size-body;
-  padding-block: map.get(variables.$spacers, 5);
+  padding-block: map.get(variables.$spacers, 4);
   padding-inline: 0 map.get(variables.$spacers, 5);
   min-inline-size: 0;
   min-block-size: 40px;
