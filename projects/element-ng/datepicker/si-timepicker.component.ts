@@ -354,10 +354,10 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
   }
 
   writeValue(obj?: Date | string): void {
-    if (this.isValidDate(obj)) {
-      this.setTime(this.parseTime(obj));
-    } else if (obj == null) {
-      this.setTime();
+    const time = this.parseTime(obj);
+    if (!time || this.isValidDate(time)) {
+      this.time = time;
+      this.updateUI(this.time);
     }
   }
 
@@ -454,7 +454,7 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
    * @param time - The new time to be set.
    */
   private setTime(time?: Date | undefined): void {
-    if (this.time !== time) {
+    if (this.time?.getTime() !== time?.getTime()) {
       this.time = time;
       this.updateUI(this.time);
       this.onChange(this.time);
