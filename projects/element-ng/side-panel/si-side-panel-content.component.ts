@@ -17,7 +17,14 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { elementCancel, elementDoubleLeft, elementDoubleRight } from '@siemens/element-icons';
+import {
+  elementCancel,
+  elementDoubleLeft,
+  elementDoubleRight,
+  elementExport,
+  elementPinch,
+  elementZoom
+} from '@siemens/element-icons';
 import { SiAccordionHCollapseService } from '@siemens/element-ng/accordion';
 import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import {
@@ -199,7 +206,14 @@ export class SiSidePanelContentComponent implements OnInit {
   protected readonly focusable = computed(
     () => !this.mobileSize() || !this.enableMobile() || !this.isCollapsed()
   );
-  protected readonly icons = addIcons({ elementCancel, elementDoubleLeft, elementDoubleRight });
+  protected readonly icons = addIcons({
+    elementCancel,
+    elementDoubleLeft,
+    elementDoubleRight,
+    elementExport,
+    elementPinch,
+    elementZoom
+  });
   /**
    * The $rpanel-transition-duration in the style is 0.5 seconds.
    * For the animation we need to wait until the resize is done.

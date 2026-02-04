@@ -28,7 +28,7 @@
           [replaceUrl]="navigateConfig.extras?.replaceUrl"
           [attr.aria-label]="navigateConfig.label | translate"
         >
-          <si-icon class="icon" icon="element-export" />
+          <si-icon class="icon" [icon]="icons.elementExport" />
           <span class="visually-hidden">
             {{ navigateConfig.label | translate }}
           </span></a
@@ -43,7 +43,7 @@
           [attr.rel]="navigateConfig.target === '_blank' ? 'noopener noreferrer' : null"
           [attr.aria-label]="navigateConfig.label | translate"
         >
-          <si-icon class="icon" icon="element-export" />
+          <si-icon class="icon" [icon]="icons.elementExport" />
           <span class="visually-hidden">
             {{ navigateConfig.label | translate }}
           </span></a
@@ -62,7 +62,7 @@
         [tabindex]="focusable() ? '0' : '-1'"
         (click)="toggleFullscreen()"
       >
-        <si-icon [icon]="isFullscreen() ? 'element-pinch' : 'element-zoom'" />
+        <si-icon [icon]="isFullscreen() ? icons.elementPinch : icons.elementZoom" />
       </button>
     }
     <button
