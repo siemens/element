@@ -20,8 +20,9 @@ import {
   viewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { elementCancel, elementSearch } from '@siemens/element-icons';
 import { BackgroundColorVariant } from '@siemens/element-ng/common';
-import { elementCancel, elementSearch, addIcons, SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';

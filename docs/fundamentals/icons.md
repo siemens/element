@@ -4,14 +4,6 @@
 
 **Icons** are graphical representations that symbolize objects, functions, processes, or concepts.
 
-!!! info "Element icons are not open source"
-
-    The Element icons have not (yet) been open-sourced and are only available to
-    Siemens employees. Without access to the Element icon library, the icons
-    shown in the documentation and the examples are likely not available to you.
-
-    We are working on making a subset of icons available to the public.
-
 ## Usage ---
 
 Icons are used to draw attention to high-priority elements or to convey information in a simple and recognizable manner.
@@ -19,8 +11,17 @@ If the necessity or clarity of an icon is uncertain, it is better to omit it.
 
 ![Icons](images/icons.png)
 
-Visit the [_Common Actions_](../fundamentals/ux-text-style-guide/frequent-app-functions.md/#common-actions) for further
+Visit the [common actions](../fundamentals/ux-text-style-guide/frequent-app-functions.md/#common-actions) for further
 definitions of a common icon usage.
+
+Icons are available in three predefined sizes.
+
+- **Small (16px):** Used in dense UI or compact contexts, such as labels or inline helper actions
+  (e.g., [help button](../components/buttons-menus/help-button.md)).
+- **Default (20px):** The most common size and pairs well with `body` and `body-bold` text.
+- **Large (24px):** Used for more prominent contexts and pairs well with `body-lg` and `body-bold-lg` text.
+
+Additional sizes may be created in 4px increments only when necessary.
 
 ### When to use icons
 
@@ -36,6 +37,31 @@ definitions of a common icon usage.
 - Prevent redundancy, such as adding icons to actions like "Save" and "Cancel," where the value of an icon is minimal.
 
 ## Design ---
+
+### Grid
+
+Icons are built on a square grid that defines proportions, alignment, and stroke behavior to ensure visual
+consistency and optical balance.
+
+They are constructed on a `32×32px` grid as a scalable foundation,
+with a built-in `2px` safe zone to preserve balance across all sizes.
+
+![Icon grid](images/icon-grid.png)
+
+The icon set is based on simple key shapes of squares, circles, and rectangles (portrait and landscape),
+which provide a consistent structural foundation.
+
+![Icon shapes](images/icon-shapes.png)
+
+Icons use a uniform `2px` stroke width.
+A flat front-facing style is preferred to avoid visual blur.
+
+![Icons perspective](images/icon-perspective.png)
+
+Rounded shapes have a consistent corner radius of `2px.`
+Additional radius adjustments may be applied to better reflect the real-world form of the object.
+
+![Icons radius](images/icon-radius.png)
 
 ### Style
 
@@ -59,7 +85,7 @@ For all other icons, provide labels at least once to ensure that users understan
 
 Position labels either below or to the right (RTL languages) of the icons based on available space.
 
-![Icons labels](images/icons-labels.png)
+![Icons labels](images/icon-labels.png)
 
 ### Composite icons
 

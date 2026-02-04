@@ -13,7 +13,7 @@
   )
 );
 
-@use '@simpl/element-icons/dist/style/simpl-element-icons';
+@use '@siemens/element-icons/dist/style/siemens-element-icons';
 
 @use '@siemens/element-theme/src/styles/themes';
 @include themes.make-theme(brand-light.$tokens, 'siemens-brand');

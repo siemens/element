@@ -138,7 +138,7 @@
 }
 
 .si-tree-view-item-icon {
-  padding-inline-end: map.get(variables.$spacers, 4);
+  padding-inline-end: map.get(variables.$spacers, 2);
 
   &.si-tree-view-item-icon-spacer {
     box-sizing: content-box;

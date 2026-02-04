@@ -23,4 +23,5 @@ $list-header-sorting-padding: map.get(variables.$spacers, 3) map.get(variables.$
   cursor: pointer;
   display: flex;
   align-items: center;
+  gap: map.get(variables.$spacers, 1);
 }

@@ -4,14 +4,9 @@
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { booleanAttribute, Component, input, output } from '@angular/core';
+import { elementLeft4, elementOptionsVertical, elementRight4 } from '@siemens/element-icons';
 import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
-import {
-  addIcons,
-  elementLeft4,
-  elementOptionsVertical,
-  elementRight4,
-  SiIconComponent
-} from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 

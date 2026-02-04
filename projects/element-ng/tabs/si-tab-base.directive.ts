@@ -18,7 +18,8 @@ import {
   untracked,
   viewChild
 } from '@angular/core';
-import { addIcons, elementCancel } from '@siemens/element-ng/icon';
+import { elementCancel } from '@siemens/element-icons';
+import { addIcons } from '@siemens/element-ng/icon';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SI_TABSET } from './si-tabs-tokens';

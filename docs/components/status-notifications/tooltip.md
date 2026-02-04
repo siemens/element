@@ -1,6 +1,6 @@
 # Tooltip
 
-**Tooltips** provide consice supplementary information when users hover over or focus
+**Tooltips** provide concise supplementary information when users hover over or focus
 on a UI element, typically buttons or icons.
 
 ## Usage ---

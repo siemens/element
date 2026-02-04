@@ -259,7 +259,7 @@ $wizard-vertical-divider-border-color: variables.$element-ui-4;
 
   .vertical-divider {
     border-inline-end: 1px solid $wizard-vertical-divider-border-color;
-    margin-block: -(map.get(variables.$spacers, 6));
+    margin-block: 0;
   }
 }
 

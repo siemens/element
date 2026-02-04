@@ -103,10 +103,14 @@ describe('SiBreadcrumbRouterComponent', () => {
     await runOnPushChangeDetection(fixture);
 
     expect(
-      (element.querySelector('.breadcrumb .item') as HTMLElement).querySelector('.icon')
+      (element.querySelector('.breadcrumb .item') as HTMLElement).querySelector(
+        '.icon-sm:not(.separator)'
+      )
     ).not.toBeNull();
     expect(
-      (element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).querySelector('.icon')
+      (element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).querySelector(
+        '.icon-sm:not(.separator)'
+      )
     ).toBeNull();
     expect((element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).innerText).toBe(
       routes[0].children![0].data?.title
@@ -119,10 +123,14 @@ describe('SiBreadcrumbRouterComponent', () => {
     await runOnPushChangeDetection(fixture);
 
     expect(
-      (element.querySelector('.breadcrumb .item') as HTMLElement).querySelector('.icon')
+      (element.querySelector('.breadcrumb .item') as HTMLElement).querySelector(
+        '.icon-sm:not(.separator)'
+      )
     ).not.toBeNull();
     expect(
-      (element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).querySelector('.icon')
+      (element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).querySelector(
+        '.icon-sm:not(.separator)'
+      )
     ).toBeNull();
     expect((element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).innerText).toBe(
       routes[0].children![0].data?.title
@@ -133,13 +141,19 @@ describe('SiBreadcrumbRouterComponent', () => {
     await runOnPushChangeDetection(fixture);
 
     expect(
-      (element.querySelector('.breadcrumb .item') as HTMLElement).querySelector('.icon')
+      (element.querySelector('.breadcrumb .item') as HTMLElement).querySelector(
+        '.icon-sm:not(.separator)'
+      )
     ).not.toBeNull();
     expect(
-      (element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).querySelector('.icon')
+      (element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).querySelector(
+        '.icon-sm:not(.separator)'
+      )
     ).toBeNull();
     expect(
-      (element.querySelectorAll('.breadcrumb .item')[2] as HTMLElement).querySelector('.icon')
+      (element.querySelectorAll('.breadcrumb .item')[2] as HTMLElement).querySelector(
+        '.icon-sm:not(.separator)'
+      )
     ).toBeNull();
     expect((element.querySelectorAll('.breadcrumb .item')[1] as HTMLElement).innerText).toBe(
       routes[0].children![1].data?.title

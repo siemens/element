@@ -16,8 +16,10 @@ import {
   viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { elementDown2 } from '@siemens/element-icons';
 import { BackgroundColorVariant } from '@siemens/element-ng/common';
-import { addIcons, elementDown2, SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
+import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { filter } from 'rxjs';
 
@@ -28,7 +30,7 @@ let controlIdCounter = 1;
 
 @Component({
   selector: 'si-collapsible-panel',
-  imports: [SiIconComponent, SiTranslatePipe],
+  imports: [SiIconComponent, SiTranslatePipe, SiTooltipDirective],
   templateUrl: './si-collapsible-panel.component.html',
   styleUrl: './si-collapsible-panel.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -22,7 +22,7 @@ mentioned capabilities are necessary.
 - When users need to make a choice among a list of options.
 - When there are more than 5 options to choose from.
 - When options can be logically grouped (e.g., countries, cities, etc.).
-- Use it in forms and for atribute selection.
+- Use it in forms and for attribute selection.
 
 ### Best practices
 

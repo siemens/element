@@ -8,9 +8,9 @@
 
 @use 'sass:map';
 
-$btn-icon-font-size-default: 24px !default;
-$btn-icon-font-size-lg: 32px !default;
-$btn-icon-font-size-sm: 24px !default;
+$btn-icon-font-size-default: variables.$si-icon-font-size !default;
+$btn-icon-font-size-lg: variables.$si-icon-font-size-lg !default;
+$btn-icon-font-size-sm: variables.$si-icon-font-size !default;
 $btn-icon-size-default: 32px !default;
 $btn-icon-size-lg: 40px !default;
 $btn-icon-size-sm: 24px !default;

@@ -5,8 +5,12 @@
   font-size: variables.$si-icon-font-size;
 }
 
-.icon-small {
-  font-size: variables.$si-icon-font-size-small;
+.icon-sm {
+  font-size: variables.$si-icon-font-size-sm;
+}
+
+.icon-lg {
+  font-size: variables.$si-icon-font-size-lg;
 }
 
 .spinning {

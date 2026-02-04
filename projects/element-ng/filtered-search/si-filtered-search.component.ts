@@ -23,8 +23,9 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
+import { elementCancel, elementSearch } from '@siemens/element-icons';
 import { BackgroundColorVariant, isRTL } from '@siemens/element-ng/common';
-import { addIcons, elementCancel, elementSearch, SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTypeaheadDirective, TypeaheadOption } from '@siemens/element-ng/typeahead';
 import {
   injectSiTranslateService,
@@ -516,11 +517,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     this.submit();
   }
 
-  protected deleteCriterion(
-    criterion: CriterionValue,
-    index: number,
-    event: { triggerSearch: boolean } | void
-  ): void {
+  protected deleteCriterion(index: number, event: { triggerSearch: boolean } | void): void {
     if (this.disabled()) {
       return;
     }
@@ -533,7 +530,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     });
     this.cdRef.detectChanges();
 
-    this.values = this.values.filter(v => v.value !== criterion);
+    this.values = this.values.filter((_, i) => i !== index);
     this.emitChangeEvent();
     this.allowedCriteriaCache = undefined;
     if (this.values.length !== index) {
