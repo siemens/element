@@ -15,7 +15,12 @@
 />
 
 @if (maxFilesReached) {
-  <si-inline-notification class="mb-4" severity="info" [message]="maxFilesReachedText()" />
+  <si-inline-notification
+    class="mb-4"
+    severity="info"
+    [message]="maxFilesReachedText()"
+    [translationParams]="{ maxFiles: maxFiles() }"
+  />
 }
 
 <div class="file-list">
