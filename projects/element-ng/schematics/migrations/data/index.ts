@@ -9,11 +9,24 @@ import { ELEMENT_SELECTORS_MIGRATION } from './element-selectors.js';
 import { OUTPUT_NAMES_MIGRATION } from './output-names.js';
 import { SYMBOL_REMOVALS_MIGRATION } from './symbol-removals.js';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const getElementMigrationData = () => ({
+export type ElementMigrationData = {
+  attributeSelectorChanges: typeof ATTRIBUTE_SELECTORS_MIGRATION;
+  componentNameChanges: typeof COMPONENT_NAMES_MIGRATION;
+  elementSelectorChanges: typeof ELEMENT_SELECTORS_MIGRATION;
+  symbolRemovalChanges: typeof SYMBOL_REMOVALS_MIGRATION;
+  outputNameChanges: typeof OUTPUT_NAMES_MIGRATION;
+};
+
+export const getElementMigrationData = (): ElementMigrationData => ({
   attributeSelectorChanges: ATTRIBUTE_SELECTORS_MIGRATION,
   componentNameChanges: COMPONENT_NAMES_MIGRATION,
   elementSelectorChanges: ELEMENT_SELECTORS_MIGRATION,
   symbolRemovalChanges: SYMBOL_REMOVALS_MIGRATION,
   outputNameChanges: OUTPUT_NAMES_MIGRATION
 });
+
+export type { ComponentNamesInstruction } from './component-names.js';
+export type { AttributeSelectorInstruction } from './attribute-selectors.js';
+export type { ElementSelectorInstruction } from './element-selectors.js';
+export type { OutputNamesInstruction } from './output-names.js';
+export type { SymbolRemovalInstruction } from './symbol-removals.js';
