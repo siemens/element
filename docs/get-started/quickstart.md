@@ -63,13 +63,13 @@ Select SCSS as the stylesheet format:
   Less            [ http://lesscss.org                                             ]
 ```
 
-Answer the following questions as desired. Note: We are not yet
-[Zoneless](https://angular.dev/guide/zoneless).
+Answer the following questions as desired. We recommend creating a zoneless application
+for better performance and a more modern Angular setup.
 
 ```sh
 ✔ Which stylesheet format would you like to use? Sass (SCSS)     [ https://sass-lang.com/documentation/syntax#scss ]
 ✔ Do you want to enable Server-Side Rendering (SSR) and Static Site Generation (SSG/Prerendering)? No
-✔ Do you want to create a 'zoneless' application without zone.js? No
+✔ Do you want to create a 'zoneless' application without zone.js? Yes
 ✔ Which AI tools do you want to configure with Angular best practices? https://angular.dev/ai/develop-with-ai None
 ```
 
@@ -110,11 +110,7 @@ Include the styles in your application's `styles.scss`:
 ```
 
 ```ts
-import {
-  ApplicationConfig,
-  provideBrowserGlobalErrorListeners,
-  provideZoneChangeDetection
-} from '@angular/core';
+import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideIconConfig } from '@siemens/element-ng/icon';
 
@@ -124,7 +120,6 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideIconConfig({ disableSvgIcons: false }),
     provideBrowserGlobalErrorListeners(),
-    provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes)
   ]
 };
