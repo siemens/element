@@ -108,10 +108,12 @@ export class SiFileUploaderComponent implements OnChanges {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or {{uploadTextFileSelect}}`)
    * ```
    */
-  readonly uploadDropText = input(t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or`));
+  readonly uploadDropText = input(
+    t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or {{uploadTextFileSelect}}`)
+  );
   /**
    * Text to describe the maximum file size.
    *

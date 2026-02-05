@@ -124,13 +124,12 @@ describe('SiFileUploaderComponent', () => {
 
   it('should pass text messages to drop zone', () => {
     component.uploadTextFileSelect = 'browse files';
-    component.uploadDropText = 'droppi droppi';
+    component.uploadDropText = 'droppi "{{uploadTextFileSelect}}" droppi';
     component.clearButtonText = 'Reset';
     component.uploadButtonText = 'Do it';
     fixture.detectChanges();
-    expect(element.querySelector('.select-file span')!.innerHTML).toContain('browse files');
-    expect(element.querySelector('.drag-and-drop-description')!.innerHTML).toContain(
-      'droppi droppi'
+    expect(element.querySelector<HTMLElement>('.drag-and-drop-description')!.innerText).toContain(
+      'droppi "browse files" droppi'
     );
     expect(getClearButton().innerHTML).toContain('Reset');
     expect(getUploadButton().innerHTML).toContain('Do it');
