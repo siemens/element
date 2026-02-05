@@ -15,13 +15,14 @@ import {
   renameIdentifier,
   removeSymbol
 } from '../../utils/index.js';
-import { getElementMigrationData } from '../data/index.js';
+import type { ElementMigrationData } from '../data/index.js';
 
-export const elementMigrationRule = (options: { path: string }): Rule => {
+export const elementMigrationRule = (
+  options: { path: string },
+  migrationData: ElementMigrationData
+): Rule => {
   return async (tree: Tree, context: SchematicContext) => {
     const tsSourceFiles = await discoverSourceFiles(tree, context, options.path);
-
-    const migrationData = getElementMigrationData();
 
     for (const filePath of tsSourceFiles) {
       const content = tree.read(filePath);
