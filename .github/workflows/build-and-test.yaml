@@ -166,8 +166,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shardIndex: [1, 2]
-        shardTotal: [2]
+        shardIndex: [1, 2, 3]
+        shardTotal: [3]
     steps:
       # As we are in another container, we need to install LFS manually.
       # See: https://github.com/orgs/community/discussions/160433
@@ -198,7 +198,7 @@ jobs:
           retention-days: 1
 
   e2e-merge-reports:
-    if: ${{ !cancelled() }}
+    if: ${{ always() && !cancelled() }}
     needs: [e2e]
     runs-on: ubuntu-latest
     steps:
@@ -217,6 +217,11 @@ jobs:
           name: html-report--attempt-${{ github.run_attempt }}
           path: playwright-report
           retention-days: 2
+      - name: Fail if any e2e test failed
+        if: ${{ needs.e2e.result != 'success' }}
+        run: |
+          echo "At least one end-to-end test shard failed; propagating failure to this job."
+          exit 1
 
   documentation:
     runs-on: ubuntu-24.04
