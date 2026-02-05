@@ -28,6 +28,7 @@ import {
   SiMenuActionService,
   SiMenuModule
 } from '@siemens/element-ng/menu';
+import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { SiContentActionBarToggleComponent } from './si-content-action-bar-toggle.component';
@@ -42,6 +43,7 @@ import { ContentActionBarMainItem, ViewType } from './si-content-action-bar.mode
     SiTranslatePipe,
     SiLinkModule,
     SiContentActionBarToggleComponent,
+    SiTooltipDirective,
     RouterLink
   ],
   templateUrl: './si-content-action-bar.component.html',
