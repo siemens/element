@@ -51,13 +51,14 @@
 </header>
 
 @if (launchpadOpen() && launchpad()) {
-  <div [id]="id + '-launchpad'">
+  <div class="launchpad-container" animate.leave="launchpad-leave" [id]="id + '-launchpad'">
     <ng-template [ngTemplateOutlet]="launchpad()!" [ngTemplateOutletInjector]="injector" />
   </div>
 }
 
 @if (openDropdownCount() || launchpadOpen()) {
   <div
+    animate.leave="backdrop-leave"
     [class]="`modal-backdrop ${launchpadOpen() ? 'd-block' : `d-${expandBreakpoint()}-none`}`"
     (click)="backdropClicked()"
   ></div>
