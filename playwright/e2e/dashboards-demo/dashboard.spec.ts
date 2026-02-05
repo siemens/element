@@ -148,7 +148,7 @@ test.describe('dashboard', () => {
     const editBtn = page.getByLabel('Edit');
     editBtn.click();
     const pieChart = page.getByText('Pie Chart', { exact: true }).locator('..');
-    pieChart.getByTitle('Remove').click();
+    pieChart.getByLabel('Remove').click();
     await page.waitForTimeout(100);
     await expect(page.locator('si-delete-confirmation-dialog')).toBeVisible();
     await si.runVisualAndA11yTests('delete-confirmation-dialog');
