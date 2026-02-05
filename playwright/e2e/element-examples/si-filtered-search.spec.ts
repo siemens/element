@@ -47,6 +47,11 @@ test.describe('filtered search', () => {
     ).toBeFocused();
     await page.keyboard.press('Control+KeyA');
     await page.keyboard.press('Backspace');
+    // There are currently two combox with the label "search". The input of the pill and the free text search.
+    // TODO: pill and free text should have different labels.
+    await expect(
+      page.locator('.pill-group').getByRole('combobox', { name: 'search' })
+    ).toHaveAttribute('aria-expanded', 'true');
     await si.runVisualAndA11yTests('typeahead-open');
     await page.keyboard.press('Backspace');
     await si.runVisualAndA11yTests('empty');

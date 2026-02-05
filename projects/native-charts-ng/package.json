@@ -19,7 +19,8 @@
   },
   "peerDependencies": {
     "@angular/common": "21",
-    "@angular/core": "21"
+    "@angular/core": "21",
+    "@siemens/element-theme": "48.9.0"
   },
   "exports": {
     "./docs.json": {

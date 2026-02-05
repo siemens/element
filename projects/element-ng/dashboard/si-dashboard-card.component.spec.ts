@@ -4,7 +4,6 @@
  */
 import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 
 import { SiDashboardCardComponent } from './index';
@@ -36,7 +35,7 @@ describe('SiDashboardCardComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [RouterModule, NoopAnimationsModule, TestHostComponent]
+      imports: [RouterModule, TestHostComponent]
     })
   );
 

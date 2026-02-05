@@ -7,5 +7,5 @@
     "types": ["@siemens/element-translate-ng/localize-types"]
   },
   "files": ["src/main.ts"],
-  "include": ["src/**/*.d.ts"]
+  "include": ["src/**/*.ts", "src/**/*.d.ts"]
 }

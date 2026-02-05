@@ -105,9 +105,19 @@ To run the E2E tests, use the following commands:
 ```shell
 # On linux the host parameter can be omitted
 npm run start -- --allowed-hosts true --host 0.0.0.0
+# Build all dashboards artifacts and start the server
+npm run dashboards-demo:build-and-run-all
+# Build all ESM dashboards artifacts and start the server
+npm run dashboards-demo:build-and-run-all:esm
 
 # Run the E2E tests on another terminal
 ./e2e-local.sh
+
+# Run tests for the webpack dashboards demo only
+./e2e-local.sh run '--project=dashboards-demo/*'
+
+# Run tests for the ESM dashboards demo only
+./e2e-local.sh run '--project=dashboards-demo-esm/*'
 
 # To update the test snapshots that requires updating append `update`
 ./e2e-local.sh update

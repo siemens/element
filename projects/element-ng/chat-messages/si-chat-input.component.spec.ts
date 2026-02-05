@@ -5,7 +5,6 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { FileUploadError, UploadFile } from '@siemens/element-ng/file-uploader';
 
 import { MessageAction } from './message-action.model';
@@ -21,8 +20,7 @@ describe('SiChatInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TestComponent],
-      providers: [provideNoopAnimations()]
+      imports: [TestComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestComponent);
