@@ -4,6 +4,7 @@
   class="app-switcher gap-6 g-5 g-sm-9 container-fluid"
   cdkTrapFocus
   cdkTrapFocusAutoCapture
+  siGrid
   (keydown.escape)="escape()"
 >
   @if (titleText()) {
@@ -43,6 +44,7 @@
                 @case ('router-link') {
                   <a
                     si-launchpad-app
+                    siGridCell
                     routerLinkActive="active"
                     [routerLinkActiveOptions]="app.activeMatchOptions ?? { exact: false }"
                     [enableFavoriteToggle]="enableFavorites() && !$any(app)._noFavorite"
@@ -69,6 +71,7 @@
                   <!--fallback for existing apps that do not have a type defined -->
                   <a
                     si-launchpad-app
+                    siGridCell
                     [enableFavoriteToggle]="enableFavorites() && !$any(app)._noFavorite"
                     [favorite]="!!app.favorite"
                     [href]="app.href"
@@ -91,6 +94,7 @@
 
       @if (enableFavorites() && first && hasFavorites()) {
         <button
+          siGridCell
           type="button"
           class="btn btn-link btn-show-all dropdown-toggle text-decoration-none"
           [class.show]="showAllApps"

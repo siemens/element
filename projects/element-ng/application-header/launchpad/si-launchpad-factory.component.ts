@@ -16,6 +16,7 @@ import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { elementCancel, elementDown2 } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLinkModule } from '@siemens/element-ng/link';
+import { SiGridCellDirective, SiGridDirective } from '@siemens/element-ng/navigation';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiApplicationHeaderComponent } from '../si-application-header.component';
@@ -31,6 +32,8 @@ export interface FavoriteChangeEvent {
   selector: 'si-launchpad-factory',
   imports: [
     A11yModule,
+    SiGridCellDirective,
+    SiGridDirective,
     SiLinkModule,
     SiTranslatePipe,
     SiLaunchpadAppComponent,
