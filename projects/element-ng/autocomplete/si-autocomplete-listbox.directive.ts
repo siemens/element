@@ -77,10 +77,10 @@ export class SiAutocompleteListboxDirective<T> implements OnInit {
     // For some reason, this is needed sometimes. Otherwise, one may get ExpressionChangedAfterItHasBeenCheckedError.
     queueMicrotask(() => {
       this.changeDetectorRef.markForCheck();
-      this.autocomplete().listbox = this;
+      this.autocomplete().listbox.set(this);
     });
     this.destroyRef.onDestroy(() => {
-      this.autocomplete().listbox = undefined;
+      this.autocomplete().listbox.set(undefined);
     });
   }
 
