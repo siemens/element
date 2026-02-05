@@ -6,6 +6,7 @@ import { NgTemplateOutlet } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   computed,
   inject,
@@ -40,6 +41,7 @@ import { ApiInfo, LicenseInfo } from './si-about-data.model';
 export class SiAboutComponent implements OnInit {
   private http = inject(HttpClient);
   private sanitizer = inject(DomSanitizer);
+  private cdRef = inject(ChangeDetectorRef);
 
   /**
    * Title shown above the about information.
@@ -116,6 +118,7 @@ export class SiAboutComponent implements OnInit {
           this.licenseApi.set([...data]);
           this.toggleLoadLicenseApi(this.licenseApi()[0]);
         }
+        this.cdRef.markForCheck();
       });
     }
   }
@@ -126,6 +129,7 @@ export class SiAboutComponent implements OnInit {
       this.http.get<ApiInfo[]>(apiInfo.href, { responseType: 'json' }).subscribe(files => {
         apiInfo.files = files;
         this.licenseApi.set([...licenseApi]);
+        this.cdRef.markForCheck();
       });
     }
     apiInfo.isOpen = !apiInfo.isOpen;
@@ -139,6 +143,7 @@ export class SiAboutComponent implements OnInit {
       this.http.get(apiInfo.href, { responseType: 'text' }).subscribe((content: string) => {
         apiInfo.content = content;
         this.licenseApi.set([...licenseApi]);
+        this.cdRef.markForCheck();
       });
     }
   }
