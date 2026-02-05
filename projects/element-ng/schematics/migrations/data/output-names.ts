@@ -11,10 +11,4 @@ export interface OutputNamesInstruction {
   apiMappings: { replace: string; replaceWith: string }[];
 }
 
-export const OUTPUT_NAMES_MIGRATION: OutputNamesInstruction[] = [
-  {
-    module: /@(siemens|simpl)\/element-ng(\/accordion)?/,
-    elementSelector: 'si-collapsible-panel',
-    apiMappings: [{ replace: '(toggle)', replaceWith: '(panelToggle)' }]
-  }
-];
+export const OUTPUT_NAMES_MIGRATION: OutputNamesInstruction[] = [];
