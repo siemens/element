@@ -32,10 +32,10 @@ export const getElementMigrationData = (): ElementMigrationData => ({
   patternReplacementsChanges: PATTERN_REPLACEMENTS_MIGRATION
 });
 
-export * from './component-names.js';
-export * from './attribute-selectors.js';
-export * from './element-selectors.js';
-export * from './input-names.js';
-export * from './output-names.js';
-export * from './pattern-replacements.js';
-export * from './symbol-removals.js';
+export type { ComponentNamesInstruction } from './component-names.js';
+export type { AttributeSelectorInstruction } from './attribute-selectors.js';
+export type { ElementSelectorInstruction } from './element-selectors.js';
+export type { InputNamesInstruction } from './input-names.js';
+export type { OutputNamesInstruction } from './output-names.js';
+export type { PatternReplacementsInstruction } from './pattern-replacements.js';
+export type { SymbolRemovalInstruction } from './symbol-removals.js';

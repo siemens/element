@@ -5,7 +5,7 @@
 
 import { Tree, SchematicContext, Rule, chain } from '@angular-devkit/schematics';
 
-import { getElementMigrationData } from './data/index.js';
+import { ElementMigrationData, getElementMigrationData } from './data/index.js';
 import { elementMigrationRule } from './element-migration/index.js';
 import { missingTranslateMigrationRule } from './ngx-translate/index.js';
 
@@ -23,9 +23,9 @@ export const v47to48Migration = (options: { path: string }): Rule => {
 export const v48to49Migration = (options: { path: string }): Rule => {
   return (tree: Tree, context: SchematicContext) => {
     context.logger.info('🚀 Starting migration from v48 to v49...');
-    const migrationData = getElementMigrationData();
+    const migrationData: ElementMigrationData = getElementMigrationData();
     return chain([
-      elementMigrationRule(options, migrationData),
+      elementMigrationRule({ ...options }, migrationData),
       missingTranslateMigrationRule(options)
     ])(tree, context);
   };

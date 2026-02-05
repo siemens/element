@@ -3,13 +3,15 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Tree } from '@angular-devkit/schematics';
+import { Tree, callRule } from '@angular-devkit/schematics';
 import { SchematicTestRunner } from '@angular-devkit/schematics/testing';
 import { readFileSync } from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 
 import { addTestFiles, createTestApp } from '../../utils/index.js';
+import { getElementMigrationTestData } from '../data/migration-test-data.js';
+import { elementMigrationRule } from './element-migration.js';
 
 const buildRelativeFromFile = (relativePath: string): string =>
   path.join(path.dirname(fileURLToPath(import.meta.url)), relativePath);
@@ -52,17 +54,31 @@ describe('to legacy migration', () => {
         }`
     });
 
-    const tree = await runner.runSchematic(
-      'migrate-v47-to-v48',
-      { path: 'projects/app/src' },
-      appTree
+    const migrationData = getElementMigrationTestData();
+    const context = runner.engine.createContext(
+      runner.engine.createSchematic(
+        'migrate-v47-to-v48',
+        runner.engine.createCollection(collectionPath)
+      )
     );
+
+    // Run elementMigrationRule directly with test data
+    const tree = await callRule(
+      elementMigrationRule({ path: 'projects/app/src' }, migrationData),
+      appTree,
+      context
+    ).toPromise();
+
+    if (!tree) {
+      throw new Error('elementMigrationRule returned undefined');
+    }
+
     for (const fileName of fileNames) {
       const expected = readFileSync(
         buildRelativeFromFile(path.join('files', 'expected.' + fileName)),
         'utf8'
       );
-      const actual = tree.readContent(path.join(basePath, fileName));
+      const actual = tree.read(path.join(basePath, fileName))?.toString('utf8');
       expect(actual).toEqual(expected);
     }
   };
