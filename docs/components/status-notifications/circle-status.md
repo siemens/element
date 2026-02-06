@@ -17,7 +17,7 @@ Circle status is available in two sizes: `Regular` or `Small`.
 
 ### When to use
 
-- On a [table](../lists-tables-trees/datatable.md) or [list](../lists-tables-trees/list-group.md)
+- On a [table](../lists-tables-trees/overview.md) or [list](../lists-tables-trees/list-group.md)
 - At the beginning (left side) of a row
 - Indicate the status on a type icon
 
