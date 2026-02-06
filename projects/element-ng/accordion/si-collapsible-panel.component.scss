@@ -99,7 +99,7 @@
 .content-motion {
   display: grid;
   grid-template-rows: 1fr;
-  transition: grid-template-rows variables.element-transition-duration(0.5s) ease-in;
+  transition: grid-template-rows variables.$element-default-transition-duration;
 
   @starting-style {
     grid-template-rows: 0fr;
@@ -107,5 +107,10 @@
 
   &.content-leave {
     grid-template-rows: 0fr;
+  }
+
+  :host(.full-height) & {
+    // Disables the animation on the inner content
+    display: flex;
   }
 }
