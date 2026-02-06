@@ -55,7 +55,7 @@
           [disabled]="disabled()"
           (click)="fileInput.click()"
         >
-          <si-icon icon="element-attachment" />
+          <si-icon [icon]="icons.elementAttachment" />
         </button>
       }
 
@@ -81,7 +81,7 @@
               [attr.aria-label]="secondaryActionsLabel() | translate"
               [attr.title]="secondaryActionsLabel() | translate"
             >
-              <si-icon icon="element-optionsVertical" />
+              <si-icon [icon]="icons.elementOptionsVertical" />
             </button>
 
             <ng-template #secondaryActionsMenu>

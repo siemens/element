@@ -7,6 +7,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FileUploadError, UploadFile } from '@siemens/element-ng/file-uploader';
 
+import { provideIconConfig } from '../icon';
 import { MessageAction } from './message-action.model';
 import {
   ChatInputAttachment,
@@ -20,7 +21,8 @@ describe('SiChatInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TestComponent]
+      imports: [TestComponent],
+      providers: [provideIconConfig({ disableSvgIcons: false })]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestComponent);
@@ -369,8 +371,9 @@ describe('SiChatInputComponent', () => {
     fixture.componentRef.setInput('interruptible', true);
     fixture.detectChanges();
 
-    const icon = debugElement.query(By.css('button si-icon'));
-    expect(icon.componentInstance.icon()).toBe('element-stop-filled');
+    expect(
+      debugElement.query(By.css('button[aria-label="Interrupt"] [data-icon="elementStopFilled"]'))
+    ).toBeTruthy();
   });
 
   it('should use interrupt button label when interruptible is true', () => {
@@ -481,8 +484,9 @@ describe('SiChatInputComponent', () => {
     fixture.detectChanges();
 
     expect((component as any).showInterruptButton()).toBe(false);
-    expect((component as any).buttonIcon()).toBe('element-send-filled');
-    expect((component as any).buttonLabel()).toContain('Send');
+    const sendButton = debugElement.query(By.css('button[aria-label="Send"]'));
+    expect(sendButton).toBeTruthy();
+    expect(sendButton.query(By.css('[data-icon="elementSendFilled"]'))).toBeTruthy();
   });
 
   it('should use interrupt mode when interruptible is true', () => {
@@ -490,7 +494,8 @@ describe('SiChatInputComponent', () => {
     fixture.detectChanges();
 
     expect((component as any).showInterruptButton()).toBe(true);
-    expect((component as any).buttonIcon()).toBe('element-stop-filled');
-    expect((component as any).buttonLabel()).toContain('Interrupt');
+    const interruptButton = debugElement.query(By.css('button[aria-label="Interrupt"]'));
+    expect(interruptButton).toBeTruthy();
+    expect(interruptButton.query(By.css('[data-icon="elementStopFilled"]'))).toBeTruthy();
   });
 });
