@@ -26,6 +26,11 @@ export class SiTooltipDirective implements OnDestroy {
 export class SiTooltipModule {
 }
 
+// @public
+export class SiTooltipOverlayDirective extends SiTooltipDirective {
+    readonly siTooltipOverlay: i0.InputSignalWithTransform<boolean | HTMLElement, boolean | "" | HTMLElement>;
+}
+
 // (No @packageDocumentation comment for this package)
 
 ```
