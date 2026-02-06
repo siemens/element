@@ -220,6 +220,8 @@ export interface SiTranslatableKeys {
     // (undocumented)
     'SI_FILTER_BAR.NO_FILTERS'?: string;
     // (undocumented)
+    'SI_FILTER_BAR.REMOVE_LABEL'?: string;
+    // (undocumented)
     'SI_FILTER_BAR.RESET_FILTERS'?: string;
     // (undocumented)
     'SI_FILTERED_SEARCH.CLEAR'?: string;

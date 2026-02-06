@@ -4,7 +4,7 @@
  */
 import { NgTemplateOutlet } from '@angular/common';
 import { booleanAttribute, Component, input, output } from '@angular/core';
-import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { Filter } from './filter';
 
@@ -26,6 +26,15 @@ export class SiFilterPillComponent {
   /** @defaultValue 0 */
   readonly totalPills = input(0);
 
+  /**
+   * Remove button label.
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_FILTER_BAR.REMOVE_LABEL:Remove`)
+   * ```
+   */
+  readonly removeButtonLabel = input(t(() => $localize`:@@SI_FILTER_BAR.REMOVE_LABEL:Remove`));
   /**
    * Output callback event which will provide you the name of the deleted filter
    * pill if a filter was deleted.

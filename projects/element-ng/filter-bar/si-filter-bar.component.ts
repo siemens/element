@@ -90,6 +90,16 @@ export class SiFilterBarComponent {
   );
 
   /**
+   * Pill remove button label.
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_FILTER_BAR.REMOVE_LABEL:Remove`)
+   * ```
+   */
+  readonly removeButtonLabel = input(t(() => $localize`:@@SI_FILTER_BAR.REMOVE_LABEL:Remove`));
+
+  /**
    * Output callback to be executed when the reset filter is clicked
    */
   readonly resetFilters = output<void>();
