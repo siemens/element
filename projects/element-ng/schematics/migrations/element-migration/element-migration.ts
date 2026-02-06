@@ -40,6 +40,21 @@ export const elementMigrationRule = (
       let recorder: UpdateRecorder | undefined = undefined;
       let printer: ts.Printer | undefined = undefined;
 
+      if (migrationData.inputNameChanges) {
+        recorder ??= tree.beginUpdate(filePath);
+
+        for (const change of migrationData.inputNameChanges) {
+          renameApi({
+            tree,
+            recorder,
+            sourceFile,
+            filePath,
+            elementName: change.elementSelector,
+            apis: change.apiMappings
+          });
+        }
+      }
+
       // Remove the ifs when it grows a bit more and split into multiple functions
       if (migrationData.componentNameChanges) {
         const changeInstructions = renameIdentifier({
@@ -83,7 +98,8 @@ export const elementMigrationRule = (
             sourceFile,
             filePath,
             fromName: change.replace,
-            toName: change.replaceWith
+            toName: change.replaceWith,
+            defaultAttributes: change.defaultAttributes
           });
         }
       }
