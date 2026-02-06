@@ -13,4 +13,11 @@ export interface SymbolRemovalInstruction {
   names: string[];
 }
 
-export const SYMBOL_REMOVALS_MIGRATION: SymbolRemovalInstruction[] = [];
+export const SYMBOL_REMOVALS_MIGRATION: SymbolRemovalInstruction[] = [
+  // v48 to v49
+  {
+    module: /@(siemens|simpl)\/maps-ng/,
+    elementSelector: 'si-map',
+    names: ['onResize']
+  }
+];

@@ -5,6 +5,11 @@
       "version": "48.9.0",
       "description": "Updates Siemens element to v48",
       "factory": "./ng-update/index#migrate"
+    },
+    "migration-v49": {
+      "version": "49.0.0",
+      "description": "Updates Siemens element to v49",
+      "factory": "./ng-update/index#migrateV49"
     }
   }
 }

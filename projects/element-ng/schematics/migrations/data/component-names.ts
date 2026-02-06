@@ -8,4 +8,22 @@ export interface ComponentNamesInstruction {
   symbolRenamings: { replace: string; replaceWith: string }[];
 }
 
-export const COMPONENT_NAMES_MIGRATION: ComponentNamesInstruction[] = [];
+export const COMPONENT_NAMES_MIGRATION: ComponentNamesInstruction[] = [
+  // v48 to v49
+  {
+    module: /@(siemens|simpl)\/dashboards-ng/,
+    symbolRenamings: [{ replace: 'CONFIG_TOKEN', replaceWith: 'SI_DASHBOARD_CONFIGURATION' }]
+  },
+  {
+    module: /@(siemens|simpl)\/element-ng(\/toast-notification)?/,
+    symbolRenamings: [{ replace: 'ToastStateName', replaceWith: 'StatusType' }],
+    toModule: '@siemens/element-ng/common'
+  },
+  {
+    module: /@(siemens|simpl)\/element-ng(\/(info-page|unauthorized-page))?/,
+    symbolRenamings: [
+      { replace: 'SiUnauthorizedPageComponent', replaceWith: 'SiInfoPageComponent' }
+    ],
+    toModule: '@siemens/element-ng/info-page'
+  }
+];
