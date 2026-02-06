@@ -340,8 +340,6 @@ export interface SiTranslatableKeys {
     // (undocumented)
     'SI_LOGIN_BASIC.PASSWORD'?: string;
     // (undocumented)
-    'SI_LOGIN_BASIC.REGISTER_NOW_INTRO'?: string;
-    // (undocumented)
     'SI_LOGIN_BASIC.USERNAME'?: string;
     // (undocumented)
     'SI_LOGIN_SINGLE-SIGN-ON.LOGIN_SIGN_UP'?: string;
