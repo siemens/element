@@ -11,4 +11,11 @@ export interface OutputNamesInstruction {
   apiMappings: { replace: string; replaceWith: string }[];
 }
 
-export const OUTPUT_NAMES_MIGRATION: OutputNamesInstruction[] = [];
+export const OUTPUT_NAMES_MIGRATION: OutputNamesInstruction[] = [
+    // v48 to v49
+  {
+    module: /@(siemens|simpl)\/element-ng(\/select)?/,
+    elementSelector: 'si-select',
+    apiMappings: [{ replace: 'dropdownClose', replaceWith: 'openChange' }]
+  }
+];

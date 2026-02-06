@@ -5,9 +5,12 @@
 import { normalize } from '@angular-devkit/core';
 import { SchematicsException, Tree } from '@angular-devkit/schematics';
 import { isAbsolute } from 'path/posix';
+import {
+  ComponentNamesInstruction,
+  PatternReplacementInstruction
+} from 'schematics/migrations/data';
 import ts from 'typescript';
 
-import { ComponentNamesInstruction } from '../migrations/data/component-names.js';
 import { SchematicsFileSystem } from './schematics-file-system.js';
 
 /**
@@ -227,41 +230,127 @@ export function* renameIdentifier({
         continue;
       }
 
-      for (const [
-        index,
-        { replace, replaceWith }
-      ] of renamingInstruction.symbolRenamings.entries()) {
-        const importSpecifiers = findImportSpecifier(
+      // Find all symbols from this import that need to be renamed/moved
+      const symbolsToProcess: {
+        importSpecifier: ts.ImportSpecifier;
+        replace: string;
+        replaceWith: string;
+      }[] = [];
+
+      for (const { replace, replaceWith } of renamingInstruction.symbolRenamings) {
+        const importSpecifier = findImportSpecifier(
           node.importClause.namedBindings.elements,
           replace
         );
 
-        if (!importSpecifiers) {
-          continue;
+        if (importSpecifier) {
+          symbolsToProcess.push({ importSpecifier, replace, replaceWith });
         }
+      }
+
+      if (symbolsToProcess.length === 0) {
+        continue;
+      }
+
+      const hasMultipleImports = node.importClause.namedBindings.elements.length > 1;
+      const allSymbolsBeingMigrated = symbolsToProcess.map(s => s.replace);
+      const otherImportsNotBeingMigrated = node.importClause.namedBindings.elements.filter(
+        el => !allSymbolsBeingMigrated.includes(el.name.text)
+      );
+
+      if (
+        renamingInstruction.toModule &&
+        hasMultipleImports &&
+        otherImportsNotBeingMigrated.length > 0 &&
+        !node.moduleSpecifier.text.endsWith('@simpl/element-ng')
+      ) {
+        // Split the import: keep non-migrated symbols in original import, move migrated symbols to new import
+
+        // Replace the entire import with remaining imports
+        const newImportClause = ts.factory.createImportClause(
+          false,
+          undefined,
+          ts.factory.createNamedImports(
+            otherImportsNotBeingMigrated.map(el =>
+              ts.factory.createImportSpecifier(false, el.propertyName, el.name)
+            )
+          )
+        );
+
+        const updatedImport = ts.factory.createImportDeclaration(
+          undefined,
+          newImportClause,
+          node.moduleSpecifier
+        );
 
         yield {
-          start: importSpecifiers.name.getStart(),
-          width: importSpecifiers.name.getWidth(),
-          newNode: ts.factory.createIdentifier(replaceWith)
+          start: node.getStart(),
+          width: node.getWidth(),
+          newNode: updatedImport
         };
-        if (
-          renamingInstruction.toModule &&
-          !node.moduleSpecifier.text.endsWith('@simpl/element-ng') &&
-          index === 0
-        ) {
-          const newPath = node.moduleSpecifier.text.replace(
-            renamingInstruction.module,
-            renamingInstruction.toModule
-          );
 
+        // Create new import with all migrated symbols (with their new names)
+        const newImport = ts.factory.createImportDeclaration(
+          undefined,
+          ts.factory.createImportClause(
+            false,
+            undefined,
+            ts.factory.createNamedImports(
+              symbolsToProcess.map(({ replaceWith }) =>
+                ts.factory.createImportSpecifier(
+                  false,
+                  undefined,
+                  ts.factory.createIdentifier(replaceWith)
+                )
+              )
+            )
+          ),
+          ts.factory.createStringLiteral(renamingInstruction.toModule, true)
+        );
+
+        yield {
+          start: node.getEnd(),
+          width: 0,
+          newNode: ts.factory.createIdentifier(
+            '\n' + ts.createPrinter().printNode(ts.EmitHint.Unspecified, newImport, sourceFile)
+          )
+        };
+      } else if (
+        renamingInstruction.toModule &&
+        !node.moduleSpecifier.text.endsWith('@simpl/element-ng')
+      ) {
+        // All symbols in this import are being migrated, so update the module path and rename symbols
+        for (const { importSpecifier, replaceWith } of symbolsToProcess) {
           yield {
-            start: node.moduleSpecifier.getStart(),
-            width: node.moduleSpecifier.getWidth(),
-            newNode: ts.factory.createStringLiteral(newPath, true)
+            start: importSpecifier.name.getStart(),
+            width: importSpecifier.name.getWidth(),
+            newNode: ts.factory.createIdentifier(replaceWith)
           };
         }
 
+        const newPath = node.moduleSpecifier.text.replace(
+          renamingInstruction.module,
+          renamingInstruction.toModule
+        );
+
+        yield {
+          start: node.moduleSpecifier.getStart(),
+          width: node.moduleSpecifier.getWidth(),
+          newNode: ts.factory.createStringLiteral(newPath, true)
+        };
+      } else {
+        // No module move, just rename the symbols in place
+        for (const { importSpecifier, replaceWith } of symbolsToProcess) {
+          yield {
+            start: importSpecifier.name.getStart(),
+            width: importSpecifier.name.getWidth(),
+            newNode: ts.factory.createIdentifier(replaceWith)
+          };
+        }
+      }
+
+      // Create a visitor to rename all occurrences of the symbols in the file
+      for (const { replace, replaceWith } of symbolsToProcess) {
         const visitor = function* (visitedNode: ts.Node): Generator<ChangeInstruction> {
           if (ts.isIdentifier(visitedNode) && visitedNode.text === replace) {
             yield {
@@ -285,6 +374,70 @@ export function* renameIdentifier({
     }
   }
 }
+
+export const patternReplacements = ({
+  tree,
+  filePath,
+  sourceFile,
+  replacements
+}: {
+  tree: Tree;
+  filePath: string;
+  sourceFile: ts.SourceFile;
+  replacements: PatternReplacementInstruction[];
+}): void => {
+  for (const patternInstruction of replacements) {
+    // Check if this file imports from the relevant module
+    const relevantImport = sourceFile.statements.find(
+      stmt =>
+        ts.isImportDeclaration(stmt) &&
+        ts.isStringLiteral(stmt.moduleSpecifier) &&
+        patternInstruction.module.test(stmt.moduleSpecifier.text)
+    ) as ts.ImportDeclaration | undefined;
+
+    if (!relevantImport) {
+      continue;
+    }
+
+    if (patternInstruction.requiresSymbols && patternInstruction.requiresSymbols.length > 0) {
+      const importedSymbols = getSymbols(relevantImport);
+      const hasRequiredSymbol = patternInstruction.requiresSymbols.some(requiredSymbol =>
+        importedSymbols.some(
+          specifier =>
+            specifier.name.text === requiredSymbol ||
+            specifier.propertyName?.text === requiredSymbol
+        )
+      );
+
+      if (!hasRequiredSymbol) {
+        continue;
+      }
+    }
+
+    const fileContent = tree.read(filePath)?.toString() ?? '';
+    let hasChanges = false;
+
+    for (const { pattern } of patternInstruction.patterns) {
+      if (pattern.test(fileContent)) {
+        hasChanges = true;
+        break;
+      }
+    }
+
+    if (hasChanges) {
+      let updatedContent = fileContent;
+
+      for (const { pattern, replacement } of patternInstruction.patterns) {
+        updatedContent = updatedContent.replace(pattern, replacement);
+      }
+
+      const patternRecorder = tree.beginUpdate(filePath);
+      patternRecorder.remove(0, fileContent.length);
+      patternRecorder.insertLeft(0, updatedContent);
+      tree.commitUpdate(patternRecorder);
+    }
+  }
+};
 
 export interface VisitFunctionCallOptions {
   sourceFile: ts.SourceFile;

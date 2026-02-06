@@ -20,6 +20,10 @@ export const COMPONENT_NAMES_MIGRATION: ComponentNamesInstruction[] = [
     toModule: '@siemens/element-ng/common'
   },
   {
+    module: /@(siemens|simpl)\/element-ng(\/filtered-search)?/,
+    symbolRenamings: [{ replace: 'Criterion', replaceWith: 'CriterionValue' }]
+  },
+  {
     module: /@(siemens|simpl)\/element-ng(\/(info-page|unauthorized-page))?/,
     symbolRenamings: [
       { replace: 'SiUnauthorizedPageComponent', replaceWith: 'SiInfoPageComponent' }

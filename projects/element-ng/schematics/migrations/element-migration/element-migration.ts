@@ -13,7 +13,8 @@ import {
   renameAttribute,
   renameElementTag,
   renameIdentifier,
-  removeSymbol
+  removeSymbol,
+  patternReplacements
 } from '../../utils/index.js';
 import type { ElementMigrationData } from '../data/index.js';
 
@@ -30,15 +31,52 @@ export const elementMigrationRule = (
         continue;
       }
 
+      if (migrationData.patternReplacementsChanges) {
+        const sourceFile = ts.createSourceFile(
+          filePath,
+          content.toString(),
+          ts.ScriptTarget.Latest,
+          true
+        );
+
+        patternReplacements({
+          tree,
+          filePath,
+          sourceFile,
+          replacements: migrationData.patternReplacementsChanges
+        });
+      }
+
+      // Re-read content after pattern replacements
+      const updatedContent = tree.read(filePath);
+      if (!updatedContent) {
+        continue;
+      }
+
       const sourceFile = ts.createSourceFile(
         filePath,
-        content.toString(),
+        updatedContent.toString(),
         ts.ScriptTarget.Latest,
         true
       );
 
       let recorder: UpdateRecorder | undefined = undefined;
       let printer: ts.Printer | undefined = undefined;
+
+      if (migrationData.inputNameChanges) {
+        recorder ??= tree.beginUpdate(filePath);
+
+        for (const change of migrationData.inputNameChanges) {
+          renameApi({
+            tree,
+            recorder,
+            sourceFile,
+            filePath,
+            elementName: change.elementSelector,
+            apis: change.apiMappings
+          });
+        }
+      }
 
       // Remove the ifs when it grows a bit more and split into multiple functions
       if (migrationData.componentNameChanges) {
@@ -83,7 +121,8 @@ export const elementMigrationRule = (
             sourceFile,
             filePath,
             fromName: change.replace,
-            toName: change.replaceWith
+            toName: change.replaceWith,
+            defaultAttributes: change.defaultAttributes
           });
         }
       }
