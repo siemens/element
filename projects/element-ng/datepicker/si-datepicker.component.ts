@@ -511,7 +511,7 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   protected timeSelected(newTime?: Date): void {
-    if (newTime == null || newTime === this.time.value) {
+    if (newTime == null) {
       return;
     }
 

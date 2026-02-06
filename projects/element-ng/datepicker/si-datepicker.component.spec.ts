@@ -15,7 +15,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiDatepickerComponent, SiDatepickerModule } from '.';
 import { runOnPushChangeDetection } from '../test-helpers';
-import { CalendarTestHelper, generateKeyEvent } from './components/test-helper.spec';
+import { CalendarTestHelper, enterValue, generateKeyEvent } from './components/test-helper.spec';
 import { today } from './date-time-helper';
 import { DatepickerConfig, DateRange } from './si-datepicker.model';
 import { SiCalendarCellHarness } from './testing/si-calendar-cell.harness';
@@ -113,6 +113,24 @@ describe('SiDatepickerComponent', () => {
 
     await toggleTimeSwitch.toggle();
     expect(component.config().disabledTime).toBeFalse();
+  });
+
+  it('should update date when only time is changed in timepicker', async () => {
+    const initialDate = new Date('2023-12-15T10:00:00');
+    component.date.set(initialDate);
+    await updateConfig({ ...component.config(), showTime: true, showMinutes: true });
+
+    enterValue(helper.getTimeInputHours(), '14');
+    enterValue(helper.getTimeInputMinutes(), '30');
+    helper.getTimeInputMinutes().dispatchEvent(new Event('blur'));
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(component.changedDate).toBeDefined();
+    expect(component.changedDate!.getHours()).toBe(14);
+    expect(component.changedDate!.getMinutes()).toBe(30);
+    expect(component.changedDate!.getDate()).toBe(15);
+    expect(component.changedDate!.getMonth()).toBe(11); // December
   });
 
   it('should ignore invalid dates', () => {
