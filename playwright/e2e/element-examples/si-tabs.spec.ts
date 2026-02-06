@@ -8,6 +8,7 @@ test.describe('si-tabs', () => {
   const example = 'si-tabs/si-tabs';
   const routingExample = 'si-tabs/si-tabs-routing';
   const iconsExample = 'si-tabs/si-tabs-icons';
+  const routingIconsExample = 'si-tabs/si-tabs-routing-icons';
 
   test(example, async ({ page, si }) => {
     await si.visitExample(example);
@@ -61,6 +62,17 @@ test.describe('si-tabs', () => {
 
   test(example + ' icons', async ({ page, si }) => {
     await si.visitExample(iconsExample);
+    await expect(page.getByRole('tab', { name: 'Lobby' })).toBeVisible();
+    await page.getByRole('tab', { name: 'Lobby' }).click();
+    await expect(page.getByText('Content for Lobby')).toBeVisible();
     await si.runVisualAndA11yTests('tabs-icons');
+  });
+
+  test(example + ' routing icons', async ({ page, si }) => {
+    await si.visitExample(routingIconsExample);
+    await expect(page.getByRole('tab', { name: 'Home' })).toBeVisible();
+    await page.getByRole('tab', { name: 'Home' }).click();
+    await expect(page.getByText('This is the home page')).toBeVisible();
+    await si.runVisualAndA11yTests('tabs-routing-icons');
   });
 });

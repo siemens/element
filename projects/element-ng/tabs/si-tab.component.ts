@@ -2,8 +2,17 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, input, model, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+  input,
+  model,
+  OnDestroy
+} from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
+import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { SiTabBadgeComponent } from './si-tab-badge.component';
@@ -31,9 +40,12 @@ import { SiTabBaseDirective } from './si-tab-base.directive';
   host: {
     '(click)': 'selectTabByUser()',
     '(keydown.enter)': 'selectTabByUser()'
-  }
+  },
+  hostDirectives: [SiTooltipDirective]
 })
 export class SiTabComponent extends SiTabBaseDirective implements OnDestroy {
+  private tooltipDirective = inject(SiTooltipDirective);
+
   /**
    * Whether the tab is active or not.
    * If set to `true`, the tab will be selected and its content will be displayed.
@@ -76,5 +88,10 @@ export class SiTabComponent extends SiTabBaseDirective implements OnDestroy {
   /** @internal */
   override deSelectTab(): void {
     this.active.set(false);
+  }
+
+  constructor() {
+    super();
+    effect(() => this.tooltipDirective.setTooltipContent(this.icon() ? this.heading() : ''));
   }
 }
