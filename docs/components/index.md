@@ -126,7 +126,7 @@ documentation.
 
 ## T
 
-- [Table & Datatable](lists-tables-trees/datatable.md)
+- [Table & Datatable](lists-tables-trees/overview.md)
 - [Tabs](layout-navigation/tabs.md)
 - [Text Area](forms-inputs/text-area.md)
 - [Threshold](forms-inputs/threshold.md)
