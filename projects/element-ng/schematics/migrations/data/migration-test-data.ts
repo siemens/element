@@ -8,6 +8,7 @@ import {
   ComponentNamesInstruction,
   ElementMigrationData,
   ElementSelectorInstruction,
+  InputNamesInstruction,
   OutputNamesInstruction,
   SymbolRemovalInstruction
 } from './index.js';
@@ -86,6 +87,18 @@ const COMPONENT_NAMES_MIGRATION: ComponentNamesInstruction[] = [
   {
     module: /@(siemens|simpl)\/dashboards-ng/,
     symbolRenamings: [{ replace: 'CONFIG_TOKEN', replaceWith: 'SI_DASHBOARD_CONFIGURATION' }]
+  },
+  {
+    module: /@(siemens|simpl)\/element-ng(\/toast-notification)?/,
+    symbolRenamings: [{ replace: 'ToastStateName', replaceWith: 'StatusType' }],
+    toModule: '@siemens/element-ng/common'
+  },
+  {
+    module: /@(siemens|simpl)\/element-ng(\/(info-page|unauthorized-page))?/,
+    symbolRenamings: [
+      { replace: 'SiUnauthorizedPageComponent', replaceWith: 'SiInfoPageComponent' }
+    ],
+    toModule: '@siemens/element-ng/info-page'
   }
 ];
 
@@ -103,7 +116,16 @@ const ELEMENT_SELECTORS_MIGRATION: ElementSelectorInstruction[] = [
   // next to current
   { replace: 'si-icon-next', replaceWith: 'si-icon' },
   { replace: 'si-tabset-next', replaceWith: 'si-tabset' },
-  { replace: 'si-tab-next', replaceWith: 'si-tab' }
+  { replace: 'si-tab-next', replaceWith: 'si-tab' },
+  // v48 to v49
+  {
+    replace: 'si-unauthorized-page',
+    replaceWith: 'si-info-page',
+    defaultAttributes: [
+      { name: 'icon', value: 'element-warning-filled' },
+      { name: 'iconColor', value: 'status-warning' }
+    ]
+  }
 ];
 
 const SYMBOL_REMOVALS_MIGRATION: SymbolRemovalInstruction[] = [
@@ -169,6 +191,31 @@ const OUTPUT_NAMES_MIGRATION: OutputNamesInstruction[] = [
   }
 ];
 
+const INPUT_NAMES_MIGRATION: InputNamesInstruction[] = [
+  // v48 to v49
+  {
+    module: /@(siemens|simpl)\/element-ng/,
+    elementSelector: 'si-filtered-search',
+    apiMappings: [{ replace: 'readonly', replaceWith: 'disabled' }]
+  },
+  {
+    module: /@(siemens|simpl)\/charts-ng/,
+    elementSelector: 'si-chart-gauge',
+    apiMappings: [
+      { replace: 'numberOfDecimals', replaceWith: ['minNumberOfDecimals', 'maxNumberOfDecimals'] }
+    ]
+  },
+  {
+    module: /@(siemens|simpl)\/element-ng(\/(info-page|unauthorized-page))?/,
+    elementSelector: 'si-unauthorized-page',
+    apiMappings: [
+      { replace: 'heading', replaceWith: 'titleText' },
+      { replace: 'subHeading', replaceWith: 'copyText' },
+      { replace: 'description', replaceWith: 'instructions' }
+    ]
+  }
+];
+
 /**
  * Stable migration data for testing.
  * This data is frozen and used for testing to ensure test stability.
@@ -179,5 +226,6 @@ export const getElementMigrationTestData = (): ElementMigrationData => ({
   componentNameChanges: COMPONENT_NAMES_MIGRATION,
   elementSelectorChanges: ELEMENT_SELECTORS_MIGRATION,
   symbolRemovalChanges: SYMBOL_REMOVALS_MIGRATION,
-  outputNameChanges: OUTPUT_NAMES_MIGRATION
+  outputNameChanges: OUTPUT_NAMES_MIGRATION,
+  inputNameChanges: INPUT_NAMES_MIGRATION
 });
