@@ -193,7 +193,7 @@
       "typescript": "$typescript"
     },
     "@simpl/brand": {
-      "@siemens/element-theme": ">1.0.0"
+      "@siemens/element-theme": "file:projects/element-theme"
     }
   }
 }
