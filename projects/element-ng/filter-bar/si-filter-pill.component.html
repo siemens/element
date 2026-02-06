@@ -22,7 +22,7 @@
     type="button"
     class="btn-remove element-cancel btn btn-circle btn-ghost focus-inside ms-0 btn-sm"
     role="button"
-    aria-label="Remove"
+    [attr.aria-label]="removeButtonLabel() | translate"
     [disabled]="disabled()"
     (keydown.enter)="deleteClicked()"
     (click)="deleteClicked()"

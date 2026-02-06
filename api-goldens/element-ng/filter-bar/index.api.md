@@ -29,6 +29,7 @@ export class SiFilterBarComponent {
     readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly filterDefaultText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly filters: _angular_core.ModelSignal<Filter[]>;
+    readonly removeButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly resetFilters: _angular_core.OutputEmitterRef<void>;
     readonly resetText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
 }
@@ -43,6 +44,7 @@ export class SiFilterPillComponent {
     // (undocumented)
     readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly filter: _angular_core.InputSignal<Filter>;
+    readonly removeButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     // (undocumented)
     readonly totalPills: _angular_core.InputSignal<number>;
 }

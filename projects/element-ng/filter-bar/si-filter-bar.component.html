@@ -6,6 +6,7 @@
         [totalPills]="$count"
         [filter]="filter"
         [disabled]="disabled()"
+        [removeButtonLabel]="removeButtonLabel()"
         (deleteFilters)="deleteFilters($event)"
       />
     </div>
@@ -27,6 +28,7 @@
       title: '',
       filterName: ''
     }"
+    [removeButtonLabel]="removeButtonLabel()"
     (deleteFilters)="deleteOverflowFilter()"
   />
   @if (allowReset() && this.filters().length) {
