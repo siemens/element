@@ -80,10 +80,9 @@ Answer the following questions as desired. Note: We are not yet
 - `@siemens/element-translate-ng` provides a facade for different translation
   libraries (or none), including `ngx-translate` and `@angular/localize`
 - `@angular/cdk` for support from the Angular component development kit
-- `@angular/animations` for better animations (an option to skip animations is available)
 
 ```sh
-npm install @siemens/element-ng @siemens/element-theme @siemens/element-translate-ng @angular/cdk @angular/animations
+npm install @siemens/element-ng @siemens/element-theme @siemens/element-translate-ng @angular/cdk
 ```
 
 > **Note:** The versions of the Angular packages need to correspond to the
@@ -110,15 +109,12 @@ Include the styles in your application's `styles.scss`:
 @use '@siemens/element-ng/element-ng';
 ```
 
-Provide animations support and enable SVG icon usage in the `app.config.ts`:
-
 ```ts
 import {
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
   provideZoneChangeDetection
 } from '@angular/core';
-import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 import { provideIconConfig } from '@siemens/element-ng/icon';
 
@@ -126,7 +122,6 @@ import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideAnimations(),
     provideIconConfig({ disableSvgIcons: false }),
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),

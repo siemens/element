@@ -13,7 +13,6 @@ import {
   viewChild
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule, provideNoopAnimations } from '@angular/platform-browser/animations';
 import { CriterionDefinition } from '@siemens/element-ng/filtered-search';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 import {
@@ -104,7 +103,7 @@ describe('SiFilteredSearchComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, TestHostComponent]
+      imports: [TestHostComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestHostComponent);
@@ -2303,7 +2302,6 @@ describe('SiFilteredSearchComponent - With translation', () => {
     TestBed.configureTestingModule({
       imports: [TestHostComponent],
       providers: [
-        provideNoopAnimations(),
         provideMockTranslateServiceBuilder(
           () =>
             ({

@@ -97,7 +97,10 @@
         @if (!dp.disabled) {
           <a
             class="rpanel-statusaction position-relative focus-inside"
-            [attr.aria-label]="!isCollapsed ? '' : (dp.title | translate)"
+            placement="start"
+            [attr.aria-label]="!isCollapsed() ? '' : (dp.title | translate)"
+            [siTooltip]="(dp.title | translate) || ''"
+            [isDisabled]="!isCollapsed()"
             [siLink]="dp"
           >
             <si-icon class="icon" [icon]="dp.icon!" />

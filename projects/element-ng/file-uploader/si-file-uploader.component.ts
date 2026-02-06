@@ -117,33 +117,33 @@ export class SiFileUploaderComponent implements OnChanges {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Maximum upload size`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Max. {{maxFileSize}} upload size.`)
    * ```
    */
   readonly maxFileSizeText = input(
-    t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Maximum upload size`)
+    t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Max. {{maxFileSize}} upload size.`)
   );
   /**
    * Error message shown when the maximum number of files are reached.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.MAX_FILE_REACHED:Maximum number of files reached`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.MAX_FILE_REACHED:Max. {{maxFiles}} files`)
    * ```
    */
   readonly maxFilesReachedText = input(
-    t(() => $localize`:@@SI_FILE_UPLOADER.MAX_FILE_REACHED:Maximum number of files reached`)
+    t(() => $localize`:@@SI_FILE_UPLOADER.MAX_FILE_REACHED:Max. {{maxFiles}} files`)
   );
   /**
    * Text for the accepted file types.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Accepted file types`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Accepted file types: {{accept}}.`)
    * ```
    */
   readonly acceptText = input(
-    t(() => $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Accepted file types`)
+    t(() => $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Accepted file types: {{accept}}.`)
   );
   /**
    * Text used inside the upload button.

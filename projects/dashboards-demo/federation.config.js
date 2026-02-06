@@ -17,6 +17,7 @@ module.exports = withNativeFederation({
     'rxjs/webSocket',
     '@siemens/ngx-datatable',
     // Use RegExp to skip ALL entry points!
+    /^@angular\/platform-browser\/animations/,
     /^@module-federation/,
     /^@ngx-formly/,
     /^ol/,

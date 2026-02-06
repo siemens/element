@@ -1,4 +1,4 @@
-- text: "/Drop files here or click to upload Maximum upload size: [\\d,.]+[bkmBKM]+\\. Accepted file types: image\\/\\*\\. siemens-healthineers-logo\\.svg [\\d,.]+[bkmBKM]+ Danger Upload failed/"
+- text: "/Drop files here or click to upload Max\\. [\\d,.]+[bkmBKM]+ upload size\\. Accepted file types: image\\/\\*\\. siemens-healthineers-logo\\.svg [\\d,.]+[bkmBKM]+ Danger Upload failed/"
 - button "Upload"
 - button "Remove"
 - text: /simpl-44x44\.png [\d,.]+[bkmBKM]+ \d+ %/

@@ -183,7 +183,7 @@
     (click)="onItemFolderClicked()"
   >
     @if (isExpanding) {
-      <si-loading-spinner [@.disabled]="true" />
+      <si-loading-spinner />
     } @else {
       <i aria-hidden="true" [class]="`${toggleIcon} ${folderStateClass}`"></i>
     }

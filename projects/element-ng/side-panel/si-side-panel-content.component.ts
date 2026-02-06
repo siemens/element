@@ -36,6 +36,7 @@ import { SiLinkDirective } from '@siemens/element-ng/link';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
+import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { timer } from 'rxjs';
 
@@ -57,7 +58,8 @@ export interface StatusItem extends MenuItemLegacy {
     SiLinkDirective,
     RouterLink,
     SiSearchBarComponent,
-    SiTranslatePipe
+    SiTranslatePipe,
+    SiTooltipDirective
   ],
   templateUrl: './si-side-panel-content.component.html',
   styleUrl: './si-side-panel-content.component.scss',

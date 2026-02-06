@@ -6,7 +6,6 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Link } from '@siemens/element-ng/link';
 
 import { LicenseInfo } from './si-about-data.model';
@@ -62,7 +61,7 @@ describe('SiAboutComponent', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
       imports: [TestHostComponent],
-      providers: [provideHttpClient(), provideNoopAnimations(), provideHttpClientTesting()]
+      providers: [provideHttpClient(), provideHttpClientTesting()]
     })
   );
 

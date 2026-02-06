@@ -9,9 +9,4 @@ export interface AttributeSelectorInstruction {
   replaceWith: string;
 }
 
-export const ATTRIBUTE_SELECTORS_MIGRATION: AttributeSelectorInstruction[] = [
-  // current to legacy
-  { replace: 'siPopover', replaceWith: 'siPopoverLegacy' },
-  // next to current
-  { replace: 'siPopoverNext', replaceWith: 'siPopover' }
-];
+export const ATTRIBUTE_SELECTORS_MIGRATION: AttributeSelectorInstruction[] = [];
