@@ -118,7 +118,11 @@ nav:
       - Wizard:                           'components/layout-navigation/wizard.md'
     - Lists, Tables & Trees:
       - List Group:                       'components/lists-tables-trees/list-group.md'
-      - Table & Datatable:                'components/lists-tables-trees/datatable.md'
+      - Table & Datatable:
+          - Overview:                     'components/lists-tables-trees/overview.md'
+          - Bootstrap Table:              'components/lists-tables-trees/bootstrap-table.md'
+          - Datatable:                    'components/lists-tables-trees/datatable.md'
+          - AG Grid:                      'components/lists-tables-trees/ag-grid.md'
       - Tree View:                        'components/lists-tables-trees/tree-view.md'
     - Progress Indications:
       - Progress Bar:                     'components/progress-indication/progress-bar.md'
