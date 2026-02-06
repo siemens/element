@@ -20,7 +20,7 @@ The **search bar** allows users to quickly find content using free text.
   quotes to search for exact matches).
 - The placement of the _Search Bar_ depends on the layout of the viewport. See
   the [list-details](../layout-navigation/list-details.md)
-  for placement guidance. See [data table](../lists-tables-trees/datatable.md)
+  for placement guidance. See [data table](../lists-tables-trees/overview.md)
   for search placement within a data table.
 
 ## Design ---

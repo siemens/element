@@ -5,7 +5,7 @@
 ## Usage ---
 
 Optimized for single-column layouts, it provides a simple and flexible way to display data.
-It follows the same styling as the [data table](../lists-tables-trees/datatable.md) but with a
+It follows the same styling as the [table](../lists-tables-trees/overview.md) but with a
 more lightweight implementation for basic data needs.
 
 The List Group is flexible and can contain various types of content, such as [badges](../status-notifications/badges.md),
@@ -34,7 +34,7 @@ The List Group is flexible and can contain various types of content, such as [ba
 ### List group item heights
 
 We added the CSS classes `.list-group-md` and `.list-group-lg` to align the height of the
-contained `list-group-item` elements with the supported heights of the [Datatable](datatable.md),
+contained `list-group-item` elements with the supported heights of the [Datatable](overview.md),
 
 - CSS class `.list-group-md` set a minimum height of `48px`.
 - CSS class `.list-group-lg` set a minimum height of `64px`.
