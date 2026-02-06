@@ -119,10 +119,14 @@ nav:
       - Tour:                             'components/layout-navigation/tour.md'
       - Vertical navigation:              'components/layout-navigation/vertical-navigation.md'
       - Wizard:                           'components/layout-navigation/wizard.md'
-    - Lists, tables & trees:
-      - List group:                       'components/lists-tables-trees/list-group.md'
-      - Table & datatable:                'components/lists-tables-trees/datatable.md'
-      - Tree view:                        'components/lists-tables-trees/tree-view.md'
+    - Lists, Tables & Trees:
+      - List Group:                       'components/lists-tables-trees/list-group.md'
+      - Table & Datatable:
+          - Overview:                     'components/lists-tables-trees/overview.md'
+          - Bootstrap Table:              'components/lists-tables-trees/bootstrap-table.md'
+          - Datatable:                    'components/lists-tables-trees/datatable.md'
+          - AG Grid:                      'components/lists-tables-trees/ag-grid.md'
+      - Tree View:                        'components/lists-tables-trees/tree-view.md'
     - Progress indications:
       - Progress bar:                     'components/progress-indication/progress-bar.md'
       - Result details list:              'components/progress-indication/result-details-list.md'
