@@ -17,6 +17,12 @@
           [disabledCropping]="disabledCropping"
           [roundImage]="roundedMask"
           [maxFileSize]="2048"
+          [resolutionLimits]="{
+            minHeight: 320,
+            maxHeight: 640,
+            minWidth: 320,
+            maxWidth: 640
+          }"
           [cropperMinWidth]="50"
           [cropperMaxWidth]="0"
           [cropperMinHeight]="50"
