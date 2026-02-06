@@ -16,6 +16,9 @@ jobs:
       - build-and-test
     permissions:
       id-token: write
+    outputs:
+      new_release: ${{ steps.check_release.outputs.new_release }}
+      release_tag: ${{ steps.check_release.outputs.release_tag }}
     steps:
       - uses: actions/checkout@v6
         with:
@@ -30,6 +33,12 @@ jobs:
           name: dist
           path: dist
       - run: npm ci --prefer-offline --no-audit
+
+      - id: before_release
+        run: |
+          BEFORE_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          echo "before_tag=$BEFORE_TAG" >> $GITHUB_OUTPUT
+
       - run: npx semantic-release
         env:
           SKIP_COMMIT: ${{ github.ref_name == 'next' && 'true' || '' }}
@@ -38,3 +47,147 @@ jobs:
           GIT_COMMITTER_NAME: 'Siemens Element Bot'
           GIT_COMMITTER_EMAIL: 'simpl.si@siemens.com'
           GITHUB_TOKEN: ${{ secrets.ELEMENT_BOT_GITHUB_TOKEN }}
+
+      - id: check_release
+        run: |
+          BEFORE_TAG="${{ steps.before_release.outputs.before_tag }}"
+          AFTER_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+
+          if [[ -n "$AFTER_TAG" && "$AFTER_TAG" != "$BEFORE_TAG" ]]; then
+            echo "release_tag=$AFTER_TAG" >> $GITHUB_OUTPUT
+            echo "new_release=true" >> $GITHUB_OUTPUT
+          else
+            echo "new_release=false" >> $GITHUB_OUTPUT
+            echo "release_tag=" >> $GITHUB_OUTPUT
+          fi
+
+  # Generates the versioned documentation and publishes it to S3.
+  # This job only runs after a successful release unless the release is on the "next" branch.
+  # In general, runs on main push to /latest/, while release branches (e.g., release/48.x) push to /v48/
+  # There are two special cases:
+  # 1. Release on a release branch while there is no new major release on main.
+  #    This happens, when we already merged breaking changes, but do a release for an older version before releasing from main.
+  #    In this case, we still want to update the /latest/ although we are on a release branch.
+  # 2. The first release of a new major version.
+  #    In this case, we need to move the existing /latest/ to the previous major version folder.
+  publish-documentation-release:
+    runs-on: ubuntu-24.04
+    needs:
+      - publish
+      - build-and-test
+    if: success() && needs.publish.outputs.new_release == 'true' && github.ref_name != 'next'
+    permissions:
+      id-token: write
+    env:
+      VERSIONED_BUCKET_NAME: simpl-element-release
+      CLOUDFRONT_DOMAIN: d2uqfzn4lxgtwv.cloudfront.net
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@v7
+        with:
+          name: pages
+          path: pages
+      - uses: aws-actions/configure-aws-credentials@v5.1.1
+        with:
+          role-to-assume: arn:aws:iam::974483672234:role/simpl-element-release
+          role-session-name: element-release-docs
+          aws-region: eu-west-1
+        # Prepare gathers the necessary information:
+        # - the version / major version we are releasing
+        # - to which directory we need to deploy (latest or v123)
+        # - latest-version.txt contains the current version of the "latest" object in the S3 bucket
+        # If we create a new major version, we also move the existing latest/ to the previous major version folder.
+        # This outputs three values:
+        # - major_version: the major version we are releasing (e.g., v49)
+        # - deploy_latest: whether we need to deploy to latest/ (true/false)
+        # - latest: the current version of latest/ before this release (e.g., v48)
+      - id: prepare
+        run: |
+          DEPLOY_RELEASE="${{ needs.publish.outputs.release_tag }}"
+          VERSION="${DEPLOY_RELEASE#v}"
+          MAJOR_VERSION="v${VERSION%%.*}"
+
+          echo "major_version=$MAJOR_VERSION" >> "$GITHUB_OUTPUT"
+
+          aws s3 cp "s3://${{ env.VERSIONED_BUCKET_NAME }}/latest-version.txt" latest-version.txt || true
+
+          LATEST_VERSION=""
+          if [[ -f latest-version.txt ]]; then
+            LATEST_VERSION=$(tr -d '\r\n' < latest-version.txt)
+          fi
+
+          DEPLOY_LATEST="false"
+
+          # if [[ "${{ github.ref_name }}" == "${{ github.event.repository.default_branch }}" ]]; then
+          if [[ "a" == "a" ]]; then
+            DEPLOY_LATEST="true"
+            if [[ -n "$LATEST_VERSION" && "$LATEST_VERSION" != "$MAJOR_VERSION" ]]; then
+              aws s3 sync --quiet --no-progress --delete \
+                "s3://${{ env.VERSIONED_BUCKET_NAME }}/latest/" \
+                "s3://${{ env.VERSIONED_BUCKET_NAME }}/$LATEST_VERSION/"
+            fi
+          elif [[ "$LATEST_VERSION" == "$MAJOR_VERSION" ]]; then
+            DEPLOY_LATEST="true"
+          fi
+
+          echo "deploy_latest=$DEPLOY_LATEST" >> "$GITHUB_OUTPUT"
+          echo "latest=$LATEST_VERSION" >> "$GITHUB_OUTPUT"
+
+          aws s3 ls s3://${{ env.VERSIONED_BUCKET_NAME }}/ | grep "PRE v" | awk '{print $2}' | sed 's/\/$//' | sed 's/^v//' > s3-versions.txt || true
+
+        # Generate versions.json based on the existing versions in S3 and the new release
+      - uses: actions/github-script@v7
+        name: Generate versions.json
+        with:
+          script: |
+            const fs = require('fs');
+
+            const rawVersions = fs
+              .readFileSync('s3-versions.txt', 'utf8')
+              .split(/\r?\n/)
+              .map(line => line.trim())
+              .filter(Boolean);
+
+            const payload = rawVersions
+              .sort((a, b) => Number(b) - Number(a))
+              .map(versionName => ({
+                version: `v${versionName}`,
+                title: `${versionName}.x`
+              }));
+
+            if (${{ steps.prepare.outputs.deploy_latest == 'true' }}) {
+              const majorVersion = "${{ steps.prepare.outputs.major_version }}";
+              const numericTitle = majorVersion.replace(/^v/i, '');
+              payload.unshift({ version: '', title: `${numericTitle}.x` });
+            } else {
+              const latestFallback = "${{ steps.prepare.outputs.latest }}";
+              const numericTitle = latestFallback.replace(/^v/i, '');
+              payload.unshift({ version: '', title: `${numericTitle}.x` });
+            }
+
+            fs.writeFileSync('versions.json', JSON.stringify(payload, null, 2));
+
+        # Uploads the generated documentation to the appropriate S3 bucket and path.
+      - run: |
+          SITE_URL="https://element.siemens.io/"
+
+          # Update canonical URLs to point to versioned URLs instead of root
+          # This ensures search engines index the correct versioned documentation (only one version)
+          MAJOR_VERSION="${{ steps.prepare.outputs.major_version }}"
+
+          if [[ "${{ steps.prepare.outputs.deploy_latest }}" == "true" ]]; then
+            aws s3 sync --quiet --no-progress --delete "pages/" "s3://${{ env.VERSIONED_BUCKET_NAME }}/latest/"
+            echo "$MAJOR_VERSION" > latest-version.txt
+            aws s3 cp latest-version.txt "s3://${{ env.VERSIONED_BUCKET_NAME }}/latest-version.txt"
+          else
+            aws s3 sync --quiet --no-progress --delete "pages/" "s3://${{ env.VERSIONED_BUCKET_NAME }}/$MAJOR_VERSION/"
+          fi
+
+          # Upload versions.json with short cache-control for quick updates
+          if [[ ! -f "deploy-site/versions.json" ]]; then
+            echo "Error: deploy-site/versions.json file does not exist"
+            exit 1
+          fi
+          aws s3 cp versions.json s3://${{ env.VERSIONED_BUCKET_NAME }}/versions.json
