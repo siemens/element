@@ -8,6 +8,7 @@ import {
   ElementRef,
   inject,
   input,
+  model,
   OnDestroy,
   TemplateRef
 } from '@angular/core';
@@ -36,7 +37,7 @@ export class SiTooltipDirective implements OnDestroy {
    *
    * @defaultValue ''
    */
-  readonly siTooltip = input<TranslatableString | TemplateRef<any>>('');
+  readonly siTooltip = model<TranslatableString | TemplateRef<any>>('');
 
   /**
    * The placement of the tooltip. One of 'top', 'start', end', 'bottom'
@@ -67,6 +68,14 @@ export class SiTooltipDirective implements OnDestroy {
   ngOnDestroy(): void {
     this.clearShowTimeout();
     this.tooltipRef?.destroy();
+  }
+
+  /**
+   * Update the tooltip content.
+   * Can be used by components that use the tooltip directive via `hostDirectives`.
+   */
+  setTooltipContent(content: TranslatableString | TemplateRef<any>): void {
+    this.siTooltip.set(content);
   }
 
   private clearShowTimeout(): void {
