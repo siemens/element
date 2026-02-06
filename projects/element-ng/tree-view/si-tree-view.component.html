@@ -60,7 +60,11 @@
     <div class="si-tree-view-root-ul">
       <ng-content select="[cdkDropList], [siTreeViewItem]" />
       @if (!treeItemContentTemplate()) {
-        <si-tree-view-item *siTreeViewItem="let index = index; let treeItem = treeItem" />
+        <si-tree-view-item
+          *siTreeViewItem="let index = index; let treeItem = treeItem"
+          #itemElement
+          [siTooltipOverlay]="itemElement.labelElement()?.nativeElement || false"
+        />
       }
     </div>
   }

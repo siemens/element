@@ -105,6 +105,7 @@ export class SiTreeViewItemComponent
   private indentLevel = this.treeItem.level ?? 0;
   private nextSiblingElement!: HTMLElement;
   protected readonly menuTrigger = viewChild(CdkMenuTrigger);
+  readonly labelElement = viewChild<ElementRef<HTMLElement>>('labelElement');
 
   @HostBinding('attr.aria-level')
   protected get ariaLevel(): number {
