@@ -134,16 +134,18 @@ describe('SiTreeViewComponentWithDragDrop', () => {
     fixture.detectChanges();
     runOnPushChangeDetection(fixture);
     expect(
-      debugElement.query(By.css('si-tree-view-item .si-tree-view-item-object-data div'))
-        .nativeElement.textContent
+      debugElement
+        .query(By.css('si-tree-view-item .si-tree-view-item-object-data div'))
+        .nativeElement.textContent.trim()
     ).toBe('Company1');
 
     fixture.componentInstance.items[0].label = 'Company4';
     fixture.detectChanges();
     runOnPushChangeDetection(fixture);
     expect(
-      debugElement.query(By.css('si-tree-view-item .si-tree-view-item-object-data div'))
-        .nativeElement.textContent
+      debugElement
+        .query(By.css('si-tree-view-item .si-tree-view-item-object-data div'))
+        .nativeElement.textContent.trim()
     ).toBe('Company4');
   });
   it('moves tree items within tree', async () => {
@@ -192,16 +194,18 @@ describe('SiTreeViewComponentWithDragDrop', () => {
     fixture.detectChanges();
     runOnPushChangeDetection(fixture);
     expect(
-      debugElement.query(By.css('si-tree-view-item .si-tree-view-item-object-data div'))
-        .nativeElement.textContent
+      debugElement
+        .query(By.css('si-tree-view-item .si-tree-view-item-object-data div'))
+        .nativeElement.textContent.trim()
     ).toBe('Company1');
 
     fixture.componentInstance.items[0].label = 'Company4';
     fixture.detectChanges();
     runOnPushChangeDetection(fixture);
     expect(
-      debugElement.query(By.css('si-tree-view-item .si-tree-view-item-object-data div'))
-        .nativeElement.textContent
+      debugElement
+        .query(By.css('si-tree-view-item .si-tree-view-item-object-data div'))
+        .nativeElement.textContent.trim()
     ).toBe('Company4');
   });
 
@@ -246,8 +250,9 @@ describe('SiTreeViewComponentWithDragDrop', () => {
     await fixture.whenStable();
     fixture.detectChanges();
     expect(
-      debugElement.query(By.css('si-tree-view-item .si-tree-view-item-object-data div'))
-        .nativeElement.textContent
+      debugElement
+        .query(By.css('si-tree-view-item .si-tree-view-item-object-data div'))
+        .nativeElement.textContent.trim()
     ).toBe('Company1');
 
     expect(debugElement.query(By.css('si-tree-view-item')).nativeElement.tabIndex).toBe(0);
@@ -259,8 +264,9 @@ describe('SiTreeViewComponentWithDragDrop', () => {
     });
     fixture.detectChanges();
     expect(
-      debugElement.query(By.css('si-tree-view-item .si-tree-view-item-object-data div'))
-        .nativeElement.textContent
+      debugElement
+        .query(By.css('si-tree-view-item .si-tree-view-item-object-data div'))
+        .nativeElement.textContent.trim()
     ).toBe('Company2');
     expect(debugElement.query(By.css('si-tree-view-item')).nativeElement.tabIndex).toBe(0);
   });

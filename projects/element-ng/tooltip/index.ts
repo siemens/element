@@ -4,4 +4,5 @@
  */
 export * from './si-tooltip.module';
 export * from './si-tooltip.directive';
+export * from './si-tooltip-overlay.directive';
 export * from './si-tooltip.service';

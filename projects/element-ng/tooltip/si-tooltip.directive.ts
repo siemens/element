@@ -62,7 +62,7 @@ export class SiTooltipDirective implements OnDestroy {
   private tooltipRef?: TooltipRef;
   private showTimeout?: ReturnType<typeof setTimeout>;
   private tooltipService = inject(SiTooltipService);
-  private elementRef = inject(ElementRef);
+  protected elementRef = inject(ElementRef);
 
   ngOnDestroy(): void {
     this.clearShowTimeout();
@@ -76,9 +76,11 @@ export class SiTooltipDirective implements OnDestroy {
     }
   }
 
-  private showTooltip(immediate = false): void {
-    const siTooltip = this.siTooltip();
-    if (this.isDisabled() || !siTooltip) {
+  protected showTooltipWithContent(
+    content: TranslatableString | TemplateRef<any>,
+    immediate = false
+  ): void {
+    if (this.isDisabled() || !content) {
       return;
     }
 
@@ -92,8 +94,12 @@ export class SiTooltipDirective implements OnDestroy {
         element: this.elementRef,
         placement: this.placement()
       });
-      this.tooltipRef.show(this.siTooltip(), this.tooltipContext());
+      this.tooltipRef.show(content, this.tooltipContext());
     }, delay);
+  }
+
+  private showTooltip(immediate = false): void {
+    this.showTooltipWithContent(this.siTooltip(), immediate);
   }
 
   protected focusIn(): void {

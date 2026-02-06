@@ -1,154 +1,396 @@
-<div class="p-5">
-  <section class="d-flex align-items-center gap-4 mb-5">
-    <div class="btn-group" role="group" aria-label="File operations">
-      <button
-        type="button"
-        class="btn btn-icon btn-primary"
-        siTooltip="Open file"
-        aria-label="Open file"
-      >
-        <si-icon icon="element-folder-open" />
-      </button>
-      <button type="button" class="btn btn-icon btn-primary" siTooltip="Save" aria-label="Save">
-        <si-icon icon="element-save" />
-      </button>
-      <button
-        type="button"
-        class="btn btn-icon btn-primary"
-        siTooltip="Download"
-        aria-label="Download"
-      >
-        <si-icon icon="element-download" />
-      </button>
-      <button type="button" class="btn btn-icon btn-primary" siTooltip="Share" aria-label="Share">
-        <si-icon icon="element-share" />
-      </button>
-    </div>
-    <div class="btn-group" role="group" aria-label="Basic actions">
-      <button type="button" class="btn btn-icon btn-secondary" siTooltip="Edit" aria-label="Edit">
-        <si-icon icon="element-edit" />
-      </button>
-      <button type="button" class="btn btn-icon btn-secondary" siTooltip="Copy" aria-label="Copy">
-        <si-icon icon="element-copy" />
-      </button>
-      <button
-        type="button"
-        class="btn btn-icon btn-secondary"
-        siTooltip="Delete"
-        aria-label="Delete"
-      >
-        <si-icon icon="element-delete" />
-      </button>
-    </div>
-    <div class="btn-group" role="group" aria-label="Template examples">
-      <button
-        #focusButton
-        type="button"
-        class="btn btn-icon btn-tertiary"
-        aria-label="Template HTML example"
-        [siTooltip]="tooltipTemplateHtml"
-      >
-        <si-icon icon="element-microwave-on" />
-      </button>
-      <button
-        type="button"
-        class="btn btn-icon btn-tertiary"
-        aria-label="Template example"
-        [siTooltip]="tooltipTemplate"
-      >
-        <si-icon icon="element-light-desk" />
-      </button>
-    </div>
-  </section>
-
-  <section class="mb-5">
-    <h4>Tooltip placement</h4>
-    <div class="btn-group" role="group" aria-label="Tooltip placement">
-      <button
-        type="button"
-        class="btn btn-icon btn-secondary"
-        siTooltip="Auto placement"
-        placement="auto"
-        aria-label="Auto placement"
-      >
-        <si-icon icon="element-language" />
-      </button>
-      <button
-        type="button"
-        class="btn btn-icon btn-secondary"
-        siTooltip="Top"
-        placement="top"
-        aria-label="Top"
-      >
-        <si-icon icon="element-up-2" />
-      </button>
-      <button
-        type="button"
-        class="btn btn-icon btn-secondary"
-        siTooltip="Bottom"
-        placement="bottom"
-        aria-label="Bottom"
-      >
-        <si-icon icon="element-down-2" />
-      </button>
-      <button
-        type="button"
-        class="btn btn-icon btn-secondary"
-        siTooltip="Start"
-        placement="start"
-        aria-label="Start"
-      >
-        <si-icon icon="element-left-2" />
-      </button>
-      <button
-        type="button"
-        class="btn btn-icon btn-secondary"
-        siTooltip="End"
-        placement="end"
-        aria-label="End"
-      >
-        <si-icon icon="element-right-2" />
-      </button>
-    </div>
-  </section>
-
-  <section class="mb-5">
-    <h4>Other examples</h4>
-    <div class="d-flex align-items-start gap-4" style="max-width: 300px">
-      <button
-        type="button"
-        class="btn btn-secondary mt-4 d-inline text-truncate"
-        siTooltip="A long time ago in a galaxy far, far away..."
-      >
-        A long time ago in a galaxy far, far away...
-      </button>
-      <si-tabset class="w-50">
-        <si-tab heading="Heading" icon="element-portfolio" siTooltip="Portfolio">
-          <p class="mt-4">Portfolio</p>
-        </si-tab>
-        <si-tab
-          heading="Heading"
-          icon="element-portfolio-kpi"
-          siTooltip="Sustainability portfolio KPI"
+<si-side-panel
+  #sidePanel
+  mode="over"
+  size="regular"
+  [collapsed]="collapsed"
+  [collapsible]="true"
+  (closed)="collapsed = true"
+>
+  <div class="has-navbar-fixed-top px-6">
+    <section class="d-flex align-items-center gap-4 mb-5 pt-6">
+      <div class="btn-group" role="group" aria-label="File operations">
+        <button
+          type="button"
+          class="btn btn-icon btn-primary"
+          siTooltip="Open file"
+          aria-label="Open file"
         >
-          <p class="mt-4">Performance</p>
-        </si-tab>
-        <si-tab
-          heading="Heading"
-          icon="element-sustainability"
-          siTooltip="Sustainability portfolio"
+          <si-icon icon="element-folder-open" />
+        </button>
+
+        <button type="button" class="btn btn-icon btn-primary" siTooltip="Save" aria-label="Save">
+          <si-icon icon="element-save" />
+        </button>
+        <button type="button" class="btn btn-icon btn-primary" siTooltip="Share" aria-label="Share">
+          <si-icon icon="element-share" />
+        </button>
+      </div>
+
+      <div class="btn-group" role="group" aria-label="Split button primary icon only">
+        <button
+          type="button"
+          class="btn btn-primary btn-icon"
+          siTooltip="Download"
+          aria-label="Download"
         >
-          <p class="mt-4">Sustainability</p>
-        </si-tab>
-      </si-tabset>
-    </div>
-  </section>
-</div>
+          <si-icon icon="element-download" />
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary btn-icon dropdown-toggle"
+          aria-label="Dropdown toggle"
+          [cdkMenuTriggerFor]="dropdownMenu"
+          [class.show]="splitOpen"
+          (cdkMenuOpened)="splitOpen = true"
+          (cdkMenuClosed)="splitOpen = false"
+        >
+          <si-icon class="dropdown-caret" icon="element-down-2" />
+        </button>
+      </div>
+
+      <ng-template #dropdownMenu>
+        <si-menu>
+          <si-menu-item icon="element-download">Download as PDF</si-menu-item>
+          <si-menu-item icon="element-export">Export as CSV</si-menu-item>
+          <si-menu-item icon="element-share">Share</si-menu-item>
+        </si-menu>
+      </ng-template>
+
+      <div class="btn-group" role="group" aria-label="Basic actions">
+        <button type="button" class="btn btn-icon btn-secondary" siTooltip="Edit" aria-label="Edit">
+          <si-icon icon="element-edit" />
+        </button>
+        <button type="button" class="btn btn-icon btn-secondary" siTooltip="Copy" aria-label="Copy">
+          <si-icon icon="element-copy" />
+        </button>
+        <button
+          type="button"
+          class="btn btn-icon btn-secondary"
+          siTooltip="Delete"
+          aria-label="Delete"
+        >
+          <si-icon icon="element-delete" />
+        </button>
+      </div>
+
+      <button
+        type="button"
+        class="btn btn-icon btn-secondary"
+        siTooltip="Open side panel"
+        aria-label="Open side panel"
+        (click)="toggle()"
+      >
+        <si-icon icon="element-double-left" />
+      </button>
+
+      <div class="d-flex align-items-center gap-1" role="group" aria-label="Template examples">
+        <button
+          type="button"
+          class="btn btn-circle btn-tertiary"
+          aria-label="Template HTML example"
+          [siTooltip]="tooltipTemplateHtml"
+        >
+          <si-icon icon="element-microwave-on" />
+        </button>
+        <button
+          #focusButton
+          type="button"
+          class="btn btn-circle btn-tertiary"
+          aria-label="Template example"
+          [siTooltip]="tooltipTemplate"
+        >
+          <si-icon icon="element-light-desk" />
+        </button>
+      </div>
+    </section>
+
+    <section class="mb-6">
+      <h4>Placement</h4>
+      <div class="btn-group" role="group" aria-label="Tooltip placement">
+        <button
+          type="button"
+          class="btn btn-icon btn-secondary"
+          siTooltip="Auto placement"
+          placement="auto"
+          aria-label="Auto placement"
+        >
+          <si-icon icon="element-language" />
+        </button>
+        <button
+          type="button"
+          class="btn btn-icon btn-secondary"
+          siTooltip="Top"
+          placement="top"
+          aria-label="Top"
+        >
+          <si-icon icon="element-up-2" />
+        </button>
+        <button
+          type="button"
+          class="btn btn-icon btn-secondary"
+          siTooltip="Bottom"
+          placement="bottom"
+          aria-label="Bottom"
+        >
+          <si-icon icon="element-down-2" />
+        </button>
+        <button
+          type="button"
+          class="btn btn-icon btn-secondary"
+          siTooltip="Start"
+          placement="start"
+          aria-label="Start"
+        >
+          <si-icon icon="element-left-2" />
+        </button>
+        <button
+          type="button"
+          class="btn btn-icon btn-secondary"
+          siTooltip="End"
+          placement="end"
+          aria-label="End"
+        >
+          <si-icon icon="element-right-2" />
+        </button>
+      </div>
+    </section>
+
+    <section class="mb-6">
+      <div class="row gx-4 gy-6">
+        <div class="col-md-3" style="max-width: 308px">
+          <h4>Truncated text</h4>
+          <div class="d-flex flex-column rounded-3 overflow-hidden">
+            <div class="p-6 pb-4 bg-base-1">
+              <si-search-bar placeholder="Search..." colorVariant="base-0" [showIcon]="true" />
+            </div>
+            <si-tree-view
+              ariaLabel="Company locations"
+              style="height: 200px"
+              [enableDataField1]="true"
+              [items]="treeItems"
+            />
+          </div>
+        </div>
+
+        <div class="col-md-9">
+          <h4>Charts</h4>
+          <div class="bg-base-1 rounded-3" style="width: 516px; height: 256px">
+            <si-chart-cartesian
+              style="width: 516px; height: 256px"
+              class="w-100"
+              [xAxis]="chartData.xAxis"
+              [yAxis]="chartData.yAxis"
+              [series]="chartData.series"
+              [showLegend]="chartData.showLegend"
+              [zoomSlider]="!chartData.zoomSlider"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-6">
+      <h4>Other examples</h4>
+      <div class="d-flex align-items-center gap-4 mb-6">
+        <button
+          type="button"
+          class="btn btn-secondary d-inline text-truncate"
+          siTooltip="A long time ago in a galaxy far, far away..."
+          style="max-width: 150px"
+          siTooltipOverlay
+        >
+          A long time ago in a galaxy far, far away...
+        </button>
+
+        <div class="btn-group" role="group" aria-label="Layout selection toggle">
+          <label>
+            <input
+              type="radio"
+              class="btn-check"
+              name="layoutRadio"
+              siTooltip="Map view"
+              aria-label="Map view"
+              checked
+            />
+            <span class="btn btn-icon">
+              <si-icon icon="element-location" />
+            </span>
+          </label>
+
+          <label>
+            <input
+              type="radio"
+              class="btn-check"
+              name="layoutRadio"
+              siTooltip="List view"
+              aria-label="List view"
+            />
+            <span class="btn btn-icon">
+              <si-icon icon="element-list" />
+            </span>
+          </label>
+
+          <label>
+            <input
+              type="radio"
+              class="btn-check"
+              name="layoutRadio"
+              siTooltip="Grid view"
+              aria-label="Grid view"
+            />
+            <span class="btn btn-icon">
+              <si-icon icon="element-special-object" />
+            </span>
+          </label>
+        </div>
+
+        <si-content-action-bar
+          toggleItemLabel="toggle"
+          viewType="expanded"
+          [actionParam]="{ row: 'first', someThingElse: 37 }"
+          [primaryActions]="primaryActionsIcons"
+        />
+
+        <div class="d-flex align-items-center gap-1" role="group" aria-label="Social actions">
+          <button type="button" class="btn btn-circle btn-ghost" aria-label="Like" siTooltip="Like">
+            <si-icon icon="element-thumbs-up" />
+          </button>
+          <button
+            type="button"
+            class="btn btn-circle btn-ghost"
+            aria-label="Dislike"
+            siTooltip="Dislike"
+          >
+            <si-icon icon="element-thumbs-down" />
+          </button>
+          <button
+            type="button"
+            class="btn btn-circle btn-ghost"
+            aria-label="Share"
+            siTooltip="Share"
+          >
+            <si-icon icon="element-share" />
+          </button>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-start gap-4" style="max-width: 575px">
+        <si-tabset class="w-50">
+          <si-tab heading="Overview" icon="element-home" siTooltip="Project overview">
+            <p class="mt-4"> Overview </p>
+          </si-tab>
+          <si-tab
+            heading="Sustainability"
+            icon="element-wind-power"
+            siTooltip="Sustainability metrics"
+          >
+            <p class="mt-4"> Sustainability </p>
+          </si-tab>
+          <si-tab heading="Performance" icon="element-rocket" siTooltip="Performance analytics">
+            <p class="mt-4"> Performance </p>
+          </si-tab>
+          <si-tab heading="Analytics" icon="element-trend" siTooltip="Analytics dashboard">
+            <p class="mt-4"> Analytics </p>
+          </si-tab>
+          <si-tab heading="Security" icon="element-security" siTooltip="Security monitoring">
+            <p class="mt-4"> Security </p>
+          </si-tab>
+          <si-tab heading="Reports" icon="element-report" siTooltip="Report generation">
+            <p class="mt-4"> Reports </p>
+          </si-tab>
+          <si-tab heading="Settings" icon="element-settings" siTooltip="Settings configuration">
+            <p class="mt-4"> Settings </p>
+          </si-tab>
+        </si-tabset>
+      </div>
+    </section>
+
+    <si-application-header>
+      <si-header-brand>
+        <a siHeaderLogo routerLink="/" class="d-none d-md-flex"></a>
+        <h1 class="application-name">Tooltip</h1>
+      </si-header-brand>
+
+      <si-header-actions>
+        <si-header-collapsible-actions #collapsibleActions>
+          <button
+            si-header-action-item
+            type="button"
+            icon="element-help"
+            aria-label="Support Center"
+            [siTooltip]="collapsibleActions.mobileExpanded() ? '' : 'Support Center'"
+            >Support</button
+          >
+          <button
+            type="button"
+            icon="element-mail"
+            si-header-action-item
+            aria-label="Messages"
+            [siTooltip]="collapsibleActions.mobileExpanded() ? '' : 'Messages'"
+            [badge]="true"
+          >
+            Messages
+          </button>
+          <button
+            si-header-action-item
+            type="button"
+            icon="element-user"
+            aria-label="User Preferences"
+            [siTooltip]="collapsibleActions.mobileExpanded() ? '' : 'User Preferences'"
+            >Preferences</button
+          >
+        </si-header-collapsible-actions>
+
+        <button
+          si-header-account-item
+          type="button"
+          name="Lars Vegas"
+          [siHeaderDropdownTriggerFor]="account"
+        >
+        </button>
+      </si-header-actions>
+    </si-application-header>
+  </div>
+
+  <si-side-panel-content heading="Tools" displayMode="overlay">
+    <si-accordion>
+      <si-collapsible-panel heading="Settings" icon="element-settings">
+        <div class="p-6"> Configuration and preferences </div>
+      </si-collapsible-panel>
+      <si-collapsible-panel heading="Documents" icon="element-document">
+        <div class="p-6"> File management and exports </div>
+      </si-collapsible-panel>
+      <si-collapsible-panel
+        heading="Notifications"
+        badge="3"
+        badgeColor="info"
+        icon="element-notification"
+      >
+        <div class="p-6"> Alerts and updates </div>
+      </si-collapsible-panel>
+      <si-collapsible-panel heading="Reports" icon="element-report">
+        <div class="p-6"> Analytics and insights </div>
+      </si-collapsible-panel>
+    </si-accordion>
+  </si-side-panel-content>
+</si-side-panel>
 
 <ng-template #tooltipTemplateHtml> Hello, <span [innerHtml]="html"></span> </ng-template>
+
 <ng-template #tooltipTemplate>
-  <div>
-    <si-icon class="si-display" icon="element-light-desk-filled" />
+  <div class="d-flex align-items-center flex-column">
+    <span class="fw-semibold">Tooltip template</span>
+    <small class="text-muted">Simple and informative</small>
   </div>
-  <div>I'm the tooltip template</div>
+</ng-template>
+
+<ng-template #account>
+  <si-header-dropdown>
+    <si-account-details
+      name="Lars Vegas"
+      email="lars.vegas@siemens.com"
+      company="Siemens AG"
+      userRole="Admin"
+    />
+  </si-header-dropdown>
 </ng-template>

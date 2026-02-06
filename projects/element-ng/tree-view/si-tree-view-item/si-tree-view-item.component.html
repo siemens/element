@@ -41,9 +41,13 @@
         >
           @if (!templates().length) {
             <ng-content select=":not(si-tree-view-item):not([dragPreview])"
-              ><div class="text-truncate" [class.si-h5]="enableSelection() && treeItem.selected">{{
-                treeItem.label | translate
-              }}</div></ng-content
+              ><div
+                #labelElement
+                class="text-truncate"
+                [class.si-h5]="enableSelection() && treeItem.selected"
+              >
+                {{ treeItem.label | translate }}
+              </div></ng-content
             >
           } @else {
             <div>
@@ -131,7 +135,7 @@
         [ngTemplateOutletContext]="{ classNames: 'form-check' }"
       />
 
-      <p class="mb-0">{{ treeItem.label | translate }}</p>
+      <p #labelElement class="mb-0">{{ treeItem.label | translate }}</p>
       @if (showFolderStateEnd) {
         <ng-container
           [ngTemplateOutlet]="toggleTemplate"
