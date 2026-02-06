@@ -1997,37 +1997,6 @@ describe('SiFilteredSearchComponent', () => {
       });
     });
 
-    // TODO: this is non-sense. Our interface does not allow empty value for options.
-    // TODO: remove with v47
-    it('should emit criterion with value = label from config', async () => {
-      component.doSearchOnInputChange = true;
-      component.criteria.set([
-        { name: 'company', label: 'Company', options: ['Foo', 'Bar'] },
-        { name: 'Location', label: 'Location', options: ['Munich', 'Zug'] },
-        {
-          name: 'country',
-          label: 'Country',
-          options: [{ value: 'DE', label: 'Germany' }, { label: 'Switzerland' } as any]
-        }
-      ]);
-      component.searchCriteria.set({
-        criteria: [{ name: 'country', value: 'Switzerland' }],
-        value: 'Max'
-      });
-      spyOn(component, 'doSearch');
-
-      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
-      const freeTextSearch = await filteredSearch.freeTextSearch();
-      await freeTextSearch.focus();
-      await freeTextSearch.sendKeys(':');
-      await tick();
-
-      expect(component.doSearch).toHaveBeenCalledWith({
-        criteria: jasmine.arrayContaining([{ name: 'country', value: 'Switzerland' }]),
-        value: ''
-      });
-    });
-
     it('should work when only value is defined', async () => {
       component.doSearchOnInputChange = true;
       component.criteria.set([

@@ -6,11 +6,12 @@
   <span class="modal-title" [id]="titleId()">{{ heading() | translate: translationParams() }}</span>
   <button
     type="button"
-    class="btn btn-circle btn-ghost element-cancel"
+    class="btn btn-circle btn-ghost"
     [attr.aria-label]="cancelBtnName() | translate"
     [disabled]="!!loading"
     (click)="modalRef.messageOrHide('cancel')"
   >
+    <si-icon [icon]="icons.elementCancel" />
   </button>
 </div>
 <div class="modal-body text-pre-wrap text-break">{{

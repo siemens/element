@@ -30,3 +30,13 @@ export const v48to49Migration = (options: { path: string }): Rule => {
     ])(tree, context);
   };
 };
+export const v48to49Migration = (options: { path: string }): Rule => {
+  return (tree: Tree, context: SchematicContext) => {
+    context.logger.info('🚀 Starting migration from v48 to v49...');
+    const migrationData: ElementMigrationData = getElementMigrationData();
+    return chain([
+      elementMigrationRule({ ...options }, migrationData),
+      missingTranslateMigrationRule(options)
+    ])(tree, context);
+  };
+};
