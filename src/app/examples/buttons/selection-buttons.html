@@ -1,56 +1,207 @@
-<h4>Single-select</h4>
-<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-  <input type="radio" class="btn-check" name="btnradio1" id="btnradio1-1" checked />
-  <label class="btn" for="btnradio1-1">Day</label>
+<div class="d-flex flex-wrap align-items-center gap-4 mb-6">
+  <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+    <input type="radio" class="btn-check" name="btnradio1" id="btnradio1-1" checked />
+    <label class="btn" for="btnradio1-1">Day</label>
 
-  <input type="radio" class="btn-check" name="btnradio1" id="btnradio1-2" />
-  <label class="btn" for="btnradio1-2">Week</label>
+    <input type="radio" class="btn-check" name="btnradio1" id="btnradio1-2" />
+    <label class="btn" for="btnradio1-2">Week</label>
 
-  <input type="radio" class="btn-check" name="btnradio1" id="btnradio1-3" />
-  <label class="btn" for="btnradio1-3">Month</label>
+    <input type="radio" class="btn-check" name="btnradio1" id="btnradio1-3" />
+    <label class="btn" for="btnradio1-3">Month</label>
+  </div>
+
+  <div class="btn-group" role="group" aria-label="Temperature mode selection">
+    <input type="radio" class="btn-check" name="btnradio2" id="btnradio2-1" checked />
+    <label class="btn" for="btnradio2-1">
+      <si-icon class="icon" icon="element-sun" />
+      Comfort
+    </label>
+
+    <input type="radio" class="btn-check" name="btnradio2" id="btnradio2-2" />
+    <label class="btn" for="btnradio2-2">
+      <si-icon class="icon" icon="element-precomfort" />
+      Pre-comfort
+    </label>
+
+    <input type="radio" class="btn-check" name="btnradio2" id="btnradio2-3" />
+    <label class="btn" for="btnradio2-3">
+      <si-icon class="icon" icon="element-economy" />
+      Economy
+    </label>
+  </div>
+
+  <div class="btn-group" role="group" aria-label="Layout selection">
+    <label>
+      <input
+        type="radio"
+        class="btn-check"
+        name="btnradio3"
+        siTooltip="One pane"
+        aria-label="One pane"
+        checked
+      />
+      <span class="btn btn-icon">
+        <si-icon class="icon" icon="element-layout-pane-1" />
+      </span>
+    </label>
+
+    <label>
+      <input
+        type="radio"
+        class="btn-check"
+        name="btnradio3"
+        siTooltip="Two panes"
+        aria-label="Two panes"
+      />
+      <span class="btn btn-icon">
+        <si-icon class="icon" icon="element-layout-pane-2" />
+      </span>
+    </label>
+
+    <label>
+      <input
+        type="radio"
+        class="btn-check"
+        name="btnradio3"
+        siTooltip="Three panes"
+        aria-label="Three panes"
+      />
+      <span class="btn btn-icon">
+        <si-icon class="icon" icon="element-layout-pane-3" />
+      </span>
+    </label>
+  </div>
 </div>
-<br /><br />
 
-<div class="btn-group" role="group" aria-label="Radio toggle button group with icon">
-  <input type="radio" class="btn-check" name="btnradio2" id="btnradio2-1" checked />
-  <label class="btn" for="btnradio2-1">
-    <i class="icon element-sun" aria-hidden="true"></i>
-    Comfort
+<h4>Multi-select</h4>
+<div class="mb-6">
+  <div class="btn-group" role="group" aria-label="Email status filter">
+    <input type="checkbox" class="btn-check" id="statuscheck1" checked />
+    <label class="btn" for="statuscheck1">
+      <si-icon class="icon" icon="element-ok" />
+      Read
+    </label>
+
+    <input type="checkbox" class="btn-check" id="statuscheck2" />
+    <label class="btn" for="statuscheck2">
+      <si-icon class="icon" icon="element-mail" />
+      Unread
+    </label>
+
+    <input type="checkbox" class="btn-check" id="statuscheck3" checked />
+    <label class="btn" for="statuscheck3">
+      <si-icon class="icon" icon="element-archive" />
+      Archived
+    </label>
+
+    <input type="checkbox" class="btn-check" id="statuscheck4" />
+    <label class="btn" for="statuscheck4">
+      <si-icon class="icon" icon="element-delete" />
+      Deleted
+    </label>
+  </div>
+</div>
+
+<div class="btn-group mb-6" role="group" aria-label="Category filter">
+  <label>
+    <input type="checkbox" class="btn-check" siTooltip="Garden" aria-label="Garden" checked />
+    <span class="btn btn-icon">
+      <si-icon class="icon" icon="element-garden" />
+    </span>
   </label>
 
-  <input type="radio" class="btn-check" name="btnradio2" id="btnradio2-2" />
-  <label class="btn" for="btnradio2-2">
-    <i class="icon element-precomfort" aria-hidden="true"></i>
-    Pre-comfort
+  <label>
+    <input type="checkbox" class="btn-check" siTooltip="Mobile" aria-label="Mobile" />
+    <span class="btn btn-icon">
+      <si-icon class="icon" icon="element-smartphone" />
+    </span>
   </label>
 
-  <input type="radio" class="btn-check" name="btnradio2" id="btnradio2-3" />
-  <label class="btn" for="btnradio2-3">
-    <i class="icon element-eco" aria-hidden="true"></i>
-    Economy
+  <label>
+    <input type="checkbox" class="btn-check" siTooltip="Cloud" aria-label="Cloud" checked />
+    <span class="btn btn-icon">
+      <si-icon class="icon" icon="element-cloud" />
+    </span>
+  </label>
+
+  <label>
+    <input type="checkbox" class="btn-check" siTooltip="AI" aria-label="AI" />
+    <span class="btn btn-icon">
+      <si-icon class="icon" icon="element-ai" />
+    </span>
+  </label>
+
+  <label>
+    <input type="checkbox" class="btn-check" siTooltip="Network" aria-label="Network" />
+    <span class="btn btn-icon">
+      <si-icon class="icon" icon="element-network" />
+    </span>
   </label>
 </div>
-<br /><br />
-
-<div class="btn-group" role="group" aria-label="Layout selection toggle">
-  <input type="radio" class="btn-check" name="btnradio3" id="btnradio3-1" checked />
-  <label class="btn btn-icon" for="btnradio3-1" aria-label="One pane">
-    <i class="icon element-layout-pane-1" aria-hidden="true"></i>
-  </label>
-
-  <input type="radio" class="btn-check" name="btnradio3" id="btnradio3-2" />
-  <label class="btn btn-icon" for="btnradio3-2" aria-label="Two panes">
-    <i class="icon element-layout-pane-2" aria-hidden="true"></i>
-  </label>
-
-  <input type="radio" class="btn-check" name="btnradio3" id="btnradio3-3" />
-  <label class="btn btn-icon" for="btnradio3-3" aria-label="Three panes">
-    <i class="icon element-layout-pane-3" aria-hidden="true"></i>
-  </label>
-</div>
-<br /><br />
 
 <h4>Sizing</h4>
+<div class="d-flex flex-wrap align-items-center gap-4 mb-6">
+  <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+    <input type="radio" class="btn-check" name="btnradio10" id="btnradio10-1" checked />
+    <label class="btn btn-lg" for="btnradio10-1">
+      <si-icon class="icon" icon="element-align-left" />
+      Large
+    </label>
+
+    <input type="radio" class="btn-check" name="btnradio10" id="btnradio10-2" />
+    <label class="btn btn-lg" for="btnradio10-2">
+      <si-icon class="icon" icon="element-align-horizontal-centers" />
+      Group
+    </label>
+
+    <input type="radio" class="btn-check" name="btnradio10" id="btnradio10-3" />
+    <label class="btn btn-lg" for="btnradio10-3">
+      <si-icon class="icon" icon="element-align-right" />
+      Size
+    </label>
+  </div>
+
+  <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+    <input type="radio" class="btn-check" name="btnradio11" id="btnradio11-1" checked />
+    <label class="btn" for="btnradio11-1">
+      <si-icon class="icon" icon="element-align-left" />
+      Default
+    </label>
+
+    <input type="radio" class="btn-check" name="btnradio11" id="btnradio11-2" />
+    <label class="btn" for="btnradio11-2">
+      <si-icon class="icon" icon="element-align-horizontal-centers" />
+      Group
+    </label>
+
+    <input type="radio" class="btn-check" name="btnradio11" id="btnradio11-3" />
+    <label class="btn" for="btnradio11-3">
+      <si-icon class="icon" icon="element-align-right" />
+      Size
+    </label>
+  </div>
+
+  <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+    <input type="radio" class="btn-check" name="btnradio12" id="btnradio12-1" checked />
+    <label class="btn btn-sm" for="btnradio12-1">
+      <si-icon class="icon" icon="element-align-left" />
+      Small
+    </label>
+
+    <input type="radio" class="btn-check" name="btnradio12" id="btnradio12-2" />
+    <label class="btn btn-sm" for="btnradio12-2">
+      <si-icon class="icon" icon="element-align-horizontal-centers" />
+      Group
+    </label>
+
+    <input type="radio" class="btn-check" name="btnradio12" id="btnradio12-3" />
+    <label class="btn btn-sm" for="btnradio12-3">
+      <si-icon class="icon" icon="element-align-right" />
+      Size
+    </label>
+  </div>
+</div>
+
 <div class="d-flex flex-wrap align-items-center gap-4 mb-6">
   <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
     <label>
@@ -98,14 +249,109 @@
   </div>
 </div>
 
-<h4>Multi-select</h4>
-<div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-  <input type="checkbox" class="btn-check" id="btncheck1" />
-  <label class="btn" for="btncheck1">€</label>
+<div class="d-flex flex-wrap align-items-center gap-4 mb-6">
+  <div class="btn-group" role="group" aria-label="Climate control mode">
+    <label>
+      <input
+        type="radio"
+        class="btn-check"
+        name="btnradio7"
+        siTooltip="Heating"
+        aria-label="Heating"
+      />
+      <span class="btn btn-lg btn-icon">
+        <si-icon class="icon" icon="element-sun" />
+      </span>
+    </label>
 
-  <input type="checkbox" class="btn-check" id="btncheck2" />
-  <label class="btn" for="btncheck2">€€</label>
+    <label>
+      <input type="radio" class="btn-check" name="btnradio7" siTooltip="Water" aria-label="Water" />
+      <span class="btn btn-lg btn-icon">
+        <si-icon class="icon" icon="element-water" />
+      </span>
+    </label>
 
-  <input type="checkbox" class="btn-check" id="btncheck3" />
-  <label class="btn" for="btncheck3">€€€</label>
+    <label>
+      <input
+        type="radio"
+        class="btn-check"
+        name="btnradio7"
+        siTooltip="Cooling"
+        aria-label="Cooling"
+      />
+      <span class="btn btn-lg btn-icon">
+        <si-icon class="icon" icon="element-cooling-state" />
+      </span>
+    </label>
+  </div>
+
+  <div class="btn-group" role="group" aria-label="Climate control mode">
+    <label>
+      <input
+        type="radio"
+        class="btn-check"
+        name="btnradio8"
+        siTooltip="Heating"
+        aria-label="Heating"
+      />
+      <span class="btn btn-icon">
+        <si-icon class="icon" icon="element-sun" />
+      </span>
+    </label>
+
+    <label>
+      <input type="radio" class="btn-check" name="btnradio8" siTooltip="Water" aria-label="Water" />
+      <span class="btn btn-icon">
+        <si-icon class="icon" icon="element-water" />
+      </span>
+    </label>
+
+    <label>
+      <input
+        type="radio"
+        class="btn-check"
+        name="btnradio8"
+        siTooltip="Cooling"
+        aria-label="Cooling"
+      />
+      <span class="btn btn-icon">
+        <si-icon class="icon" icon="element-cooling-state" />
+      </span>
+    </label>
+  </div>
+
+  <div class="btn-group" role="group" aria-label="Climate control mode">
+    <label>
+      <input
+        type="radio"
+        class="btn-check"
+        name="btnradio9"
+        siTooltip="Heating"
+        aria-label="Heating"
+      />
+      <span class="btn btn-sm btn-icon">
+        <si-icon class="icon" icon="element-sun" />
+      </span>
+    </label>
+
+    <label>
+      <input type="radio" class="btn-check" name="btnradio9" siTooltip="Water" aria-label="Water" />
+      <span class="btn btn-sm btn-icon">
+        <si-icon class="icon" icon="element-water" />
+      </span>
+    </label>
+
+    <label>
+      <input
+        type="radio"
+        class="btn-check"
+        name="btnradio9"
+        siTooltip="Cooling"
+        aria-label="Cooling"
+      />
+      <span class="btn btn-sm btn-icon">
+        <si-icon class="icon" icon="element-cooling-state" />
+      </span>
+    </label>
+  </div>
 </div>
