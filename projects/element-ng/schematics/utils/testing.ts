@@ -24,12 +24,14 @@ export const createTestApp = async (
     tree
   );
 
-  return runner.runExternalSchematic(
+  tree = await runner.runExternalSchematic(
     '@schematics/angular',
     'application',
     { name: 'second-app', ...appOptions },
     tree
   );
+
+  return tree;
 };
 
 const createWorkspace = (runner: SchematicTestRunner): Promise<UnitTestTree> => {

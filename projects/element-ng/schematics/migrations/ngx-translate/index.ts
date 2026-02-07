@@ -15,20 +15,15 @@ export const missingTranslateMigrationRule = (options: { path: string }): Rule =
   return async (tree: Tree, context: SchematicContext) => {
     context.logger.info('🔄 Migrating missing translate provider...');
 
-    const tsSourceFiles = await discoverSourceFiles(tree, context, options.path);
-
-    for (const filePath of tsSourceFiles) {
+    for await (const { path: filePath, sourceFile } of discoverSourceFiles(
+      tree,
+      context,
+      options.path
+    )) {
       let content = tree.readText(filePath);
       if (!content) {
         continue;
       }
-
-      const sourceFile = ts.createSourceFile(
-        filePath,
-        content.toString(),
-        ts.ScriptTarget.Latest,
-        true
-      );
 
       const pendingTransformations: Transformation[] = [];
       [
