@@ -63,26 +63,17 @@ Select SCSS as the stylesheet format:
   Less            [ http://lesscss.org                                             ]
 ```
 
-Answer the following questions as desired. Note: We are not yet
-[Zoneless](https://angular.dev/guide/zoneless).
-
-```sh
-✔ Which stylesheet format would you like to use? Sass (SCSS)     [ https://sass-lang.com/documentation/syntax#scss ]
-✔ Do you want to enable Server-Side Rendering (SSR) and Static Site Generation (SSG/Prerendering)? No
-✔ Do you want to create a 'zoneless' application without zone.js? No
-✔ Which AI tools do you want to configure with Angular best practices? https://angular.dev/ai/develop-with-ai None
-```
-
 ## Step 3 - Install Element npm packages
 
 - `@siemens/element-ng` provides the components
 - `@siemens/element-theme` provides global styles
+- `@siemens/element-icons` provides the icons
 - `@siemens/element-translate-ng` provides a facade for different translation
   libraries (or none), including `ngx-translate` and `@angular/localize`
 - `@angular/cdk` for support from the Angular component development kit
 
 ```sh
-npm install @siemens/element-ng @siemens/element-theme @siemens/element-translate-ng @angular/cdk
+npm install @siemens/element-ng @siemens/element-theme @siemens/element-translate-ng @siemens/element-icons @angular/cdk
 ```
 
 > **Note:** The versions of the Angular packages need to correspond to the
@@ -107,27 +98,6 @@ Include the styles in your application's `styles.scss`:
 
 // Use Element components
 @use '@siemens/element-ng/element-ng';
-```
-
-```ts
-import {
-  ApplicationConfig,
-  provideBrowserGlobalErrorListeners,
-  provideZoneChangeDetection
-} from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { provideIconConfig } from '@siemens/element-ng/icon';
-
-import { routes } from './app.routes';
-
-export const appConfig: ApplicationConfig = {
-  providers: [
-    provideIconConfig({ disableSvgIcons: false }),
-    provideBrowserGlobalErrorListeners(),
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes)
-  ]
-};
 ```
 
 Add Element components like the `<si-application-header>` to the `app.html` and
@@ -162,9 +132,9 @@ update the imports in the `app.ts` accordingly.
       </div>
     </div>
     <div class="dropdown-divider"></div>
-    <button si-header-dropdown-item icon="element-user" type="button">Profile</button>
+    <button si-header-dropdown-item type="button" [icon]="icons.elementUser">Profile</button>
     <div class="dropdown-divider"></div>
-    <button si-header-dropdown-item icon="element-logout" type="button">Logout</button>
+    <button si-header-dropdown-item type="button" [icon]="icons.elementLogout">Logout</button>
   </si-header-dropdown>
 </ng-template>
 ```
@@ -184,6 +154,8 @@ import {
   SiHeaderDropdownItemComponent,
   SiHeaderDropdownTriggerDirective
 } from '@siemens/element-ng/header-dropdown';
+import { addIcons } from '@siemens/element-ng/icon';
+import { elementLogout, elementUser } from '@siemens/element-icons';
 
 @Component({
   selector: 'app-root',
@@ -201,10 +173,52 @@ import {
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App {}
+export class App {
+  protected readonly icons = addIcons({
+    elementUser,
+    elementLogout
+  });
+}
 ```
 
-## Step 5 - Start the application
+## Step 5 - Add Siemens Theme (optional / only for Siemens Apps)
+
+If not already done, configure the Siemens Internal NPM registry.
+
+```
+npm config set @simpl:registry=https://code.siemens.com/api/v4/packages/npm/ -g
+```
+
+Install the Siemens brand package:
+
+```sh
+npm install @simpl/brand
+```
+
+Update the `styles.scss` to include the Siemens brand assets:
+
+```scss
+@use '@simpl/brand/assets/fonts/styles/siemens-sans';
+
+@use '@simpl/brand/dist/element-theme-siemens-brand-light' as brand-light;
+@use '@simpl/brand/dist/element-theme-siemens-brand-dark' as brand-dark;
+
+// This replaces the previous @use '@siemens/element-theme/src/theme' statement and needs to be added after the brand themes.
+@use '@siemens/element-theme/src/theme' with (
+  $element-theme-default: 'siemens-brand',
+  $element-themes: (
+    'siemens-brand',
+    'element'
+  )
+);
+
+// Create the an Element theme based on the Siemens brand tokens.
+@use '@siemens/element-theme/src/styles/themes';
+@include themes.make-theme(brand-light.$tokens, 'siemens-brand');
+@include themes.make-theme(brand-dark.$tokens, 'siemens-brand', true);
+```
+
+## Step 6 - Start the application
 
 Now you should be ready to start the application with Element. Go to the project
 directory and launch the server.
