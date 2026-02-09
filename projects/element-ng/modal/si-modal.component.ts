@@ -15,6 +15,7 @@ import {
   viewChild,
   DOCUMENT
 } from '@angular/core';
+import { areAnimationsDisabled } from '@siemens/element-ng/common';
 
 import { ModalRef } from './modalref';
 
@@ -31,6 +32,7 @@ import { ModalRef } from './modalref';
 })
 export class SiModalComponent implements OnInit, AfterViewInit, OnDestroy {
   protected readonly modalRef = inject(ModalRef<unknown, any>);
+  protected readonly isAnimated = !areAnimationsDisabled() && this.modalRef.data.animated !== false;
 
   protected readonly dialogClass = this.modalRef.dialogClass ?? '';
   protected readonly titleId = this.modalRef.data?.ariaLabelledBy ?? '';
@@ -136,6 +138,6 @@ export class SiModalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private animationTime(millis: number): number {
-    return this.modalRef?.data.animated !== false ? millis : 0;
+    return this.isAnimated ? millis : 0;
   }
 }
