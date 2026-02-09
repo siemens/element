@@ -91,7 +91,7 @@
   ],
   "dependencies": {
     "@angular-architects/module-federation": "20.0.0",
-    "@angular-architects/native-federation": "21.1.0",
+    "@angular-architects/native-federation": "21.1.1",
     "@angular/cdk": "21.0.6",
     "@angular/common": "21.0.8",
     "@angular/core": "21.0.8",
@@ -194,6 +194,10 @@
     },
     "@simpl/brand": {
       "@siemens/element-theme": "file:projects/element-theme"
+    },
+    "@angular-architects/native-federation": {
+      "@angular/build": "$@angular/build",
+      "@angular-devkit/build-angular": "$@angular-devkit/build-angular"
     }
   }
 }
