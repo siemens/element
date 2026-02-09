@@ -2,14 +2,16 @@
  * Copyright (c) Siemens 2016 - 2025
  * SPDX-License-Identifier: MIT
  */
-import { ComponentRef, EnvironmentInjector, Injector, ViewContainerRef, Type } from '@angular/core';
+import { ComponentRef, EnvironmentInjector, Injector, ViewContainerRef } from '@angular/core';
 import { ModuleFederation } from '@module-federation/runtime';
 import {
   FederatedBridgeModule,
+  FederatedModuleExports,
+  handleFederatedModuleLoad,
   SetupComponentFn,
   widgetFactoryRegistry
 } from '@siemens/dashboards-ng';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 
 function setupRemoteComponent<T>(
   this: ModuleFederation,
@@ -19,30 +21,14 @@ function setupRemoteComponent<T>(
   injector: Injector,
   environmentInjector: EnvironmentInjector
 ): Observable<ComponentRef<T>> {
-  const result = new Subject<ComponentRef<T>>();
-  this.loadRemote<Type<T>[]>(factory.id, factory.options).then(
-    module => {
-      if (module) {
-        const componentType = module[factory[componentName]];
-        const widgetInstanceRef = host.createComponent<T>(componentType, {
-          injector,
-          environmentInjector
-        });
-        result.next(widgetInstanceRef);
-      }
-      result.complete();
-    },
-    rejection => {
-      const msg = rejection
-        ? `Loading widget module ${factory.exposedModule} failed with ${JSON.stringify(
-            rejection.toString()
-          )}`
-        : `Loading widget module ${factory.exposedModule} failed`;
-      result.error(msg);
-      result.complete();
-    }
-  );
-  return result;
+  return handleFederatedModuleLoad({
+    loadPromise: this.loadRemote<FederatedModuleExports<T>>(factory.id, factory.options),
+    factory,
+    componentName,
+    host,
+    injector,
+    environmentInjector
+  });
 }
 
 /**

@@ -4,17 +4,20 @@
  */
 import { NgTemplateOutlet } from '@angular/common';
 import { booleanAttribute, Component, input, output } from '@angular/core';
+import { elementCancel } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 import { Filter } from './filter';
 
 @Component({
   selector: 'si-filter-pill',
-  imports: [NgTemplateOutlet, SiTranslatePipe],
+  imports: [NgTemplateOutlet, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-filter-pill.component.html',
   styleUrl: './si-filter-pill.component.scss'
 })
 export class SiFilterPillComponent {
+  protected readonly icons = addIcons({ elementCancel });
   /**
    * Settings of the filter pill.
    */

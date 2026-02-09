@@ -16,11 +16,17 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
+  elementAttachment,
+  elementOptionsVertical,
+  elementSendFilled,
+  elementStopFilled
+} from '@siemens/element-icons';
+import {
   SiFileUploadDirective,
   UploadFile,
   FileUploadError
 } from '@siemens/element-ng/file-uploader';
-import { SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
 import { SiTranslatePipe, TranslatableString, t } from '@siemens/element-translate-ng/translate';
 
@@ -89,6 +95,12 @@ export class SiChatInputComponent implements AfterViewInit {
   private readonly textInput = viewChild<ElementRef<HTMLTextAreaElement>>('textInput');
   private readonly projectedContent = viewChild<ElementRef>('projected');
   private readonly fileUploadDirective = viewChild(SiFileUploadDirective);
+  protected readonly icons = addIcons({
+    elementAttachment,
+    elementOptionsVertical,
+    elementSendFilled,
+    elementStopFilled
+  });
 
   /**
    * Current input value
@@ -205,9 +217,9 @@ export class SiChatInputComponent implements AfterViewInit {
   /**
    * Send button icon
    *
-   * @defaultValue 'element-send-filled'
+   * @defaultValue this.icons.elementSendFilled
    */
-  readonly sendButtonIcon = input('element-send-filled');
+  readonly sendButtonIcon = input(this.icons.elementSendFilled);
 
   /**
    * Interrupt button label
@@ -298,7 +310,7 @@ export class SiChatInputComponent implements AfterViewInit {
     return !this.canSend();
   });
   protected readonly buttonIcon = computed(() =>
-    this.showInterruptButton() ? 'element-stop-filled' : this.sendButtonIcon()
+    this.showInterruptButton() ? this.icons.elementStopFilled : this.sendButtonIcon()
   );
   protected readonly buttonLabel = computed(() =>
     this.showInterruptButton() ? this.interruptButtonLabel() : this.sendButtonLabel()
