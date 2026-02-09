@@ -26,7 +26,7 @@ Element covers three different implementations, each suited to different levels 
 - Left-align text and right-align numeric values. Don’t use center alignment.
 - Use hyphen (-) to represent empty values.
 - Use [empty state](../status-notifications/empty-state.md) to represent an empty table.
-- Don't use expandable rows with more than 1 levels.
+- Don't use expandable rows with more than 1 level.
 - When possible, avoid repeating the title in every cell of a given column.
 - Use [skeleton](../progress-indication/skeleton.md) to represent the loading state.
 
