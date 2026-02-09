@@ -13,7 +13,8 @@ import {
   renameAttribute,
   renameElementTag,
   renameIdentifier,
-  removeSymbol
+  removeSymbol,
+  typeBasedReplacements
 } from '../../utils/index.js';
 import type { ElementMigrationData } from '../data/index.js';
 
@@ -34,19 +35,6 @@ export const elementMigrationRule = (
 
       let recorder: UpdateRecorder | undefined = undefined;
       let printer: ts.Printer | undefined = undefined;
-
-      const visitor = (node: ts.Node): void => {
-        if (ts.isPropertyAccessExpression(node) && ts.isIdentifier(node.name)) {
-          const locationType = typeChecker.getTypeAtLocation(node.expression);
-          if (locationType.symbol?.name === 'SiResponsiveContainerDirective') {
-            console.log(node.expression.getText(), locationType.symbol.name, node.name.text);
-            // TODO: This successfully identifies property access on SiResponsiveContainerDirective. Now this need to be generalized an the actual transformation needs to be implemented.
-          }
-        }
-        node.forEachChild(visitor);
-      };
-
-      sourceFile.forEachChild(visitor);
 
       // Remove the ifs when it grows a bit more and split into multiple functions
       if (migrationData.componentNameChanges) {
@@ -123,6 +111,19 @@ export const elementMigrationRule = (
             elementName: change.elementSelector,
             attributeSelector: change.attributeSelector,
             names: change.names
+          });
+        }
+      }
+
+      if (migrationData.typeBasedReplacementChanges) {
+        recorder ??= tree.beginUpdate(filePath);
+
+        for (const change of migrationData.typeBasedReplacementChanges) {
+          typeBasedReplacements({
+            recorder,
+            sourceFile,
+            instruction: change,
+            typeChecker
           });
         }
       }
