@@ -4,20 +4,12 @@
  */
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import {
-  ComponentRef,
-  ElementRef,
-  inject,
-  Injectable,
-  Injector,
-  TemplateRef,
-  Type
-} from '@angular/core';
+import { ComponentRef, ElementRef, inject, Injectable, Injector } from '@angular/core';
 import { getOverlay, getPositionStrategy, positions } from '@siemens/element-ng/common';
-import { TranslatableString } from '@siemens/element-translate-ng/translate';
 import { Subscription } from 'rxjs';
 
 import { TooltipComponent } from './si-tooltip.component';
+import { SI_TOOLTIP_CONFIG, SiTooltipContent } from './si-tooltip.model';
 
 /**
  * TooltipRef is attached to a specific element.
@@ -29,23 +21,18 @@ class TooltipRef {
   constructor(
     private overlayRef: OverlayRef,
     private element: ElementRef,
-    private describedBy: string,
     private injector?: Injector
   ) {}
 
   private subscription?: Subscription;
 
-  show(content: TranslatableString | TemplateRef<any> | Type<any>, tooltipContext?: unknown): void {
+  show(): void {
     if (this.overlayRef.hasAttached()) {
       return;
     }
 
     const toolTipPortal = new ComponentPortal(TooltipComponent, undefined, this.injector);
     const tooltipRef: ComponentRef<TooltipComponent> = this.overlayRef.attach(toolTipPortal);
-
-    tooltipRef.setInput('tooltip', content);
-    tooltipRef.setInput('id', this.describedBy);
-    tooltipRef.setInput('tooltipContext', tooltipContext);
 
     const positionStrategy = getPositionStrategy(this.overlayRef);
     this.subscription?.unsubscribe();
@@ -82,12 +69,27 @@ export class SiTooltipService {
     element: ElementRef;
     placement: keyof typeof positions;
     injector?: Injector;
+    tooltip: () => SiTooltipContent;
+    tooltipContext: () => unknown;
   }): TooltipRef {
+    const injector = Injector.create({
+      parent: config.injector,
+      providers: [
+        {
+          provide: SI_TOOLTIP_CONFIG,
+          useValue: {
+            id: config.describedBy,
+            tooltip: config.tooltip,
+            tooltipContext: config.tooltipContext
+          }
+        }
+      ]
+    });
+
     return new TooltipRef(
       getOverlay(config.element, this.overlay, false, config.placement),
       config.element,
-      config.describedBy,
-      config.injector
+      injector
     );
   }
 }

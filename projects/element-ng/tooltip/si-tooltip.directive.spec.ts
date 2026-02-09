@@ -15,12 +15,13 @@ describe('SiTooltipDirective', () => {
 
     @Component({
       imports: [SiTooltipModule],
-      template: `<button type="button" siTooltip="test tooltip" [isDisabled]="isDisabled"
-        >Test</button
-      >`
+      template: `<button type="button" [siTooltip]="tooltipText" [isDisabled]="isDisabled">
+        Test
+      </button>`
     })
     class TestHostComponent {
       isDisabled = false;
+      tooltipText = 'test tooltip';
     }
 
     beforeEach(async () => {
@@ -76,6 +77,19 @@ describe('SiTooltipDirective', () => {
 
       button.dispatchEvent(new MouseEvent('mouseleave'));
       expect(document.querySelector('.tooltip')).toBeFalsy();
+    });
+
+    it('should update tooltip content while open', () => {
+      button.dispatchEvent(new Event('focus'));
+      jasmine.clock().tick(0);
+      fixture.detectChanges();
+      expect(document.querySelector('.tooltip')?.innerHTML).toContain('test tooltip');
+
+      component.tooltipText = 'updated tooltip';
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
+
+      expect(document.querySelector('.tooltip')?.innerHTML).toContain('updated tooltip');
     });
   });
 
