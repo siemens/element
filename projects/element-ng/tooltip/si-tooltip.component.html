@@ -1,7 +1,7 @@
 <div
   class="tooltip show position-relative"
   role="tooltip"
-  [id]="id()"
+  [id]="config.id"
   [class]="tooltipPositionClass()"
 >
   <div
@@ -15,10 +15,10 @@
     } @else if (tooltipTemplate()) {
       <ng-template
         [ngTemplateOutlet]="tooltipTemplate()"
-        [ngTemplateOutletContext]="tooltipContext()"
+        [ngTemplateOutletContext]="config.tooltipContext()"
       />
     } @else if (tooltipComponent()) {
-      <ng-container [ngComponentOutlet]="tooltipComponent()" />
+      <ng-container [ngComponentOutlet]="tooltipComponent()!" />
     }
   </div>
 </div>

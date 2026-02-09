@@ -90,9 +90,11 @@ export class SiTooltipDirective implements OnDestroy {
       this.tooltipRef ??= this.tooltipService.createTooltip({
         describedBy: this.describedBy,
         element: this.elementRef,
-        placement: this.placement()
+        placement: this.placement(),
+        tooltip: this.siTooltip,
+        tooltipContext: this.tooltipContext
       });
-      this.tooltipRef.show(this.siTooltip(), this.tooltipContext());
+      this.tooltipRef.show();
     }, delay);
   }
 
