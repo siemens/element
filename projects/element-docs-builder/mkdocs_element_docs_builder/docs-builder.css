@@ -219,3 +219,13 @@
   block-size: auto;
   position: static;
 }
+
+.icon {
+  font-size: 1.25rem;
+  color: var(--md-default-fg-color);
+}
+
+.icon-large {
+  font-size: 1.5rem;
+  color: var(--md-default-fg-color);
+}
