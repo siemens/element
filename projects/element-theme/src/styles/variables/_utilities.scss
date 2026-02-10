@@ -589,14 +589,22 @@ $utilities: (
   )
 );
 
+@function parent-selector($parent) {
+  @if ($parent) {
+    @return '&';
+  } @else {
+    @return '';
+  }
+}
+
 @mixin rtl {
   // for WebKit/Blink based browsers, not (yet) supporting :dir
-  [dir='rtl'] #{if(&, "&","")} {
+  [dir='rtl'] #{parent-selector(&)} {
     @content;
   }
 
   // Spec and Firefox
-  :dir(rtl) #{if(&, "&","")} {
+  :dir(rtl) #{parent-selector(&)} {
     @content;
   }
 }
