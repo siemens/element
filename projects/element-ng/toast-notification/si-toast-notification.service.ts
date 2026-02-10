@@ -6,7 +6,7 @@ import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { isPlatformBrowser } from '@angular/common';
 import { ComponentRef, inject, Injectable, Injector, OnDestroy, PLATFORM_ID } from '@angular/core';
-import { StatusType } from '@siemens/element-ng/common';
+import { isRTL, StatusType } from '@siemens/element-ng/common';
 import { Link } from '@siemens/element-ng/link';
 import { SiNoTranslateService, SiTranslateService } from '@siemens/element-translate-ng/translate';
 import { ReplaySubject, Subject } from 'rxjs';
@@ -98,6 +98,7 @@ export class SiToastNotificationService implements OnDestroy {
    * @param toast - The toast object of the toast to be shown, can also be constructed while calling this.
    */
   showToastNotification(toast: SiToast): SiToast {
+    this.overlayRef?.setDirection(isRTL() ? 'rtl' : 'ltr');
     toast.timeout ??= SI_TOAST_AUTO_HIDE_DELAY;
     toast.hidden ??= new Subject();
     toast.close = () => this.hideToastNotification(toast);
@@ -155,7 +156,7 @@ export class SiToastNotificationService implements OnDestroy {
 
   private addToastDrawer(): void {
     this.overlayRef = this.overlay.create({
-      positionStrategy: this.overlay.position().global().end('20px').bottom()
+      positionStrategy: this.overlay.position().global().end().bottom()
     });
     const portal = new ComponentPortal(
       SiToastNotificationDrawerComponent,

@@ -10,6 +10,10 @@ $toast-timing: cubic-bezier(0.175, 0.885, 0.32, 1.275);
   z-index: 2000;
 }
 
+:host {
+  padding-inline-end: 20px;
+}
+
 si-toast-notification {
   inset-inline-end: 0;
 }
