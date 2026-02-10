@@ -194,6 +194,7 @@ nav:
     - Code of Conduct:                    'CODE_OF_CONDUCT.md'
     - Developer guide:                    'DEVELOPER.md'
   - Changelog:                            'CHANGELOG.md'
+  - v49:                                  'release-49.md'
 
 theme:
   name: code-siemens-code-docs-theme
