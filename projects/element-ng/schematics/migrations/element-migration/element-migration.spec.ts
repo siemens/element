@@ -45,10 +45,10 @@ describe('to legacy migration', () => {
     addTestFiles(appTree, {
       '/package.json': `{
          "dependencies": {
-          "@simpl/element-ng": "47.0.3",
-          "@simpl/maps-ng": "47.0.3",
-          "@simpl/dashboards-ng": "47.0.3",
-          "@simpl/element-translate-ng": "47.0.3",
+          "@simpl/element-ng": "48.10.0",
+          "@simpl/maps-ng": "48.10.0",
+          "@simpl/dashboards-ng": "48.10.0",
+          "@simpl/element-translate-ng": "48.10.0",
           "some-other-dep": "1.2.3"
         }
         }`
