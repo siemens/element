@@ -15,8 +15,7 @@ export const v47to48Migration = (options: { path: string }): Rule => {
     context.logger.info('🚀 Starting migration from v47 to v48...');
     const migrationData: ElementMigrationData = getElementMigrationData();
     return chain([
-      elementMigrationRule({ ...options }, migrationData),
-      missingTranslateMigrationRule(options)
+      elementMigrationRule({ ...options }, migrationData)
     ])(tree, context);
   };
 };
