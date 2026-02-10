@@ -15,22 +15,29 @@
   (click)="doToggle($event)"
 >
   @let headerIcon = icon();
-  @if (headerIcon) {
-    <si-icon class="icon ms-n2 me-2" [icon]="headerIcon" [class.collapsed-icon]="isHCollapsible" />
-  }
-  @if (icon() && badge() !== undefined && badge() !== '') {
-    <span class="badge-text">
-      {{ badge() }}
-    </span>
-  }
+  <span class="position-relative">
+    @if (headerIcon) {
+      <si-icon
+        class="icon ms-n2 me-2"
+        [icon]="headerIcon"
+        [class.collapsed-icon]="isHCollapsible"
+      />
+
+      @if (formattedBadge()) {
+        <span class="badge-text">
+          {{ formattedBadge() }}
+        </span>
+      }
+    }
+  </span>
   <div class="si-h5 autohide">
     {{ heading() | translate }}
     <ng-content select="[si-panel-heading]" />
   </div>
 
-  @if (badge() !== undefined && badge() !== '') {
+  @if (formattedBadge()) {
     <span [class]="'badge autohide' + (badgeColor() ? ' bg-' + badgeColor() : '')">
-      {{ badge() }}
+      {{ formattedBadge() }}
     </span>
   }
   <span class="ms-auto overflow-hidden">

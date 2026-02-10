@@ -154,17 +154,23 @@
     <si-accordion [fullHeight]="true">
       <si-collapsible-panel
         heading="Properties"
-        badge="5"
         badgeColor="info"
         icon="element-settings"
         contentCssClasses="p-6"
+        [badge]="5"
       >
         And here we have some content
       </si-collapsible-panel>
       <si-collapsible-panel heading="Documents" icon="element-document" contentCssClasses="p-6">
         And this is the content
       </si-collapsible-panel>
-      <si-collapsible-panel heading="Graphics" icon="element-image" contentCssClasses="p-6">
+      <si-collapsible-panel
+        heading="Graphics"
+        badgeColor="warning"
+        icon="element-image"
+        contentCssClasses="p-6"
+        [badge]="100"
+      >
         Nothing to see here
       </si-collapsible-panel>
     </si-accordion>
