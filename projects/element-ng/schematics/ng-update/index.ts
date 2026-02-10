@@ -5,18 +5,11 @@
 
 import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 
-import { v47to48Migration, v48to49Migration } from '../migrations/index.js';
+import { updateToV49 } from '../migrations/index.js';
 
-export const migrate = (): Rule => {
-  return (tree: Tree, context: SchematicContext) => {
-    context.logger.info('🚀 Starting update from version 47 to 48...');
-    return v47to48Migration({ path: '/' })(tree, context);
-  };
-};
-
-export const migrateV49 = (): Rule => {
+export const migrateToV49 = (): Rule => {
   return (tree: Tree, context: SchematicContext) => {
     context.logger.info('🚀 Starting update from version 48 to 49...');
-    return v48to49Migration({ path: '/' })(tree, context);
+    return updateToV49({ path: '/' })(tree, context);
   };
 };

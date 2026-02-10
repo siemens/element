@@ -1,15 +1,10 @@
 {
-  "$schema": "../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
   "schematics": {
-    "migration-v48": {
-      "version": "48.9.0",
-      "description": "Updates Siemens element to v48",
-      "factory": "./ng-update/index#migrate"
-    },
     "migration-v49": {
       "version": "49.0.0",
       "description": "Updates Siemens element to v49",
-      "factory": "./ng-update/index#migrateV49"
+      "factory": "./ng-update/index#migrateToV49"
     }
   }
 }
