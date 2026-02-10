@@ -22,16 +22,7 @@ describe('ng-update migration', () => {
   });
 
   it('should run migration successfully', async () => {
-    addTestFiles(appTree, {
-      '/package.json': JSON.stringify({
-        dependencies: {
-          '@siemens/element-ng': '47.0.0',
-          '@siemens/charts-ng': '47.0.0'
-        }
-      })
-    });
-
-    const tree = await runner.runSchematic('migration-v48', {}, appTree);
+    const tree = await runner.runSchematic('migration-v49', {}, appTree);
     expect(tree).toBeDefined();
   });
 
@@ -39,11 +30,11 @@ describe('ng-update migration', () => {
     const logSpy = jasmine.createSpy('log');
     runner.logger.subscribe(logSpy);
 
-    await runner.runSchematic('migration-v48', {}, appTree);
+    await runner.runSchematic('migration-v49', {}, appTree);
 
     expect(logSpy).toHaveBeenCalledWith(
       jasmine.objectContaining({
-        message: jasmine.stringContaining('Starting update from version 47 to 48')
+        message: jasmine.stringContaining('Starting update from version 48 to 49')
       })
     );
   });
@@ -60,15 +51,10 @@ export class TestComponent {
 }`;
 
     addTestFiles(appTree, {
-      '/projects/app/src/test.component.ts': originalContent,
-      '/package.json': JSON.stringify({
-        dependencies: {
-          '@siemens/element-ng': '47.0.0'
-        }
-      })
+      '/projects/app/src/test.component.ts': originalContent
     });
 
-    const tree = await runner.runSchematic('migration-v48', {}, appTree);
+    const tree = await runner.runSchematic('migration-v49', {}, appTree);
 
     expect(tree).toBeDefined();
     expect(tree.exists('/projects/app/src/test.component.ts')).toBe(true);
@@ -79,7 +65,7 @@ export class TestComponent {
   it('should handle empty project gracefully', async () => {
     const emptyTree = await createTestApp(runner, { style: 'scss' });
 
-    const tree = await runner.runSchematic('migration-v48', {}, emptyTree);
+    const tree = await runner.runSchematic('migration-v49', {}, emptyTree);
     expect(tree).toBeDefined();
   });
 
@@ -87,15 +73,7 @@ export class TestComponent {
     const customPath = '/custom/path';
     const options = { path: customPath };
 
-    addTestFiles(appTree, {
-      '/package.json': JSON.stringify({
-        dependencies: {
-          '@siemens/element-ng': '47.0.0'
-        }
-      })
-    });
-
-    const tree = await runner.runSchematic('migration-v48', options, appTree);
+    const tree = await runner.runSchematic('migration-v49', options, appTree);
     expect(tree).toBeDefined();
 
     // Verify the schematic ran with custom options

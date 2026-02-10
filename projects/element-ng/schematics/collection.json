@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../hello-world/node_modules/@angular-devkit/schematics/collection-schema.json",
+  "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
   "schematics": {
     "simpl-siemens-migration": {
       "description": "A migration schematic for replacing @simpl/* packages with @siemens/*",
@@ -11,12 +11,6 @@
       "description": "A schematic to add the @siemens/element-ng to your project.",
       "factory": "./ng-add/index#ngAdd",
       "schema": "./ng-add/schema.json"
-    },
-    "migrate-v47-to-v48": {
-      "description": "A migration schematic for updating Element from v47 to v48",
-      "factory": "./migrations/index#v47to48Migration",
-      "schema": "./migrations/schema.json",
-      "aliases": ["v47-to-v48"]
     }
   }
 }

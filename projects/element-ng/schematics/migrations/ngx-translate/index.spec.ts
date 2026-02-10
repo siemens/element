@@ -13,12 +13,12 @@ import { addTestFiles, createTestApp } from '../../utils/index.js';
 const buildRelativeFromFile = (relativePath: string): string =>
   path.join(path.dirname(fileURLToPath(import.meta.url)), relativePath);
 
-const collectionPath = buildRelativeFromFile('../../collection.json');
+const collectionPath = buildRelativeFromFile('../../migration.json');
 
 describe('missing translate migration', () => {
   let runner: SchematicTestRunner;
   let appTree: Tree;
-  const name = 'migrate-v47-to-v48';
+  const name = 'migration-v49';
 
   beforeEach(async () => {
     runner = new SchematicTestRunner(name, collectionPath);
@@ -30,21 +30,8 @@ describe('missing translate migration', () => {
     expected: Record<string, string[]>
   ): Promise<void> => {
     addTestFiles(appTree, original);
-    addTestFiles(appTree, {
-      '/package.json': `{
-         "dependencies": {
-          "@simpl/element-ng": "48.9.0",
-          "@simpl/element-translate-ng": "48.9.0",
-          "@ngx-translate/core": "16.0.4"
-        }
-        }`
-    });
 
-    const tree = await runner.runSchematic(
-      'migrate-v47-to-v48',
-      { path: 'projects/app/src' },
-      appTree
-    );
+    const tree = await runner.runSchematic('migration-v49', { path: 'projects/app/src' }, appTree);
 
     for (const [fileName, expectedContent] of Object.entries(expected)) {
       const actual = tree.readText(fileName);

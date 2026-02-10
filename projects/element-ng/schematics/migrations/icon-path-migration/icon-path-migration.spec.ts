@@ -15,7 +15,7 @@ import { iconPathMigrationRule } from './icon-path-migration.js';
 const buildRelativeFromFile = (relativePath: string): string =>
   path.join(path.dirname(fileURLToPath(import.meta.url)), relativePath);
 
-const collectionPath = buildRelativeFromFile('../../collection.json');
+const collectionPath = buildRelativeFromFile('../../migration.json');
 
 describe('icon-path-migration', () => {
   let runner: SchematicTestRunner;
@@ -43,17 +43,13 @@ describe('icon-path-migration', () => {
     addTestFiles(appTree, {
       '/package.json': `{
          "dependencies": {
-          "@siemens/element-ng": "48.10.0",
           "@simpl/element-icons": "1.0.0"
         }
         }`
     });
 
     const context = runner.engine.createContext(
-      runner.engine.createSchematic(
-        'migrate-v47-to-v48',
-        runner.engine.createCollection(collectionPath)
-      )
+      runner.engine.createSchematic('migration-v49', runner.engine.createCollection(collectionPath))
     );
 
     const tree = await callRule(
@@ -100,17 +96,13 @@ describe('icon-path-migration', () => {
     addTestFiles(appTree, {
       '/package.json': JSON.stringify({
         dependencies: {
-          '@siemens/element-ng': '48.10.0',
           '@simpl/element-icons': '1.0.0'
         }
       })
     });
 
     const context = runner.engine.createContext(
-      runner.engine.createSchematic(
-        'migrate-v47-to-v48',
-        runner.engine.createCollection(collectionPath)
-      )
+      runner.engine.createSchematic('migration-v49', runner.engine.createCollection(collectionPath))
     );
 
     const tree = await callRule(
@@ -128,6 +120,5 @@ describe('icon-path-migration', () => {
 
     expect(packageJson.dependencies['@siemens/element-icons']).toBe('^1.0.0');
     expect(packageJson.dependencies['@simpl/element-icons']).toBeUndefined();
-    expect(packageJson.dependencies['@siemens/element-ng']).toBe('48.10.0');
   });
 });

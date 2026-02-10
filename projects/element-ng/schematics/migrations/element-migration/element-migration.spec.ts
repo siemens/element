@@ -16,12 +16,12 @@ import { elementMigrationRule } from './element-migration.js';
 const buildRelativeFromFile = (relativePath: string): string =>
   path.join(path.dirname(fileURLToPath(import.meta.url)), relativePath);
 
-const collectionPath = buildRelativeFromFile('../../collection.json');
+const collectionPath = buildRelativeFromFile('../../migration.json');
 
 describe('to legacy migration', () => {
   let runner: SchematicTestRunner;
   let appTree: Tree;
-  const name = 'migrate-v47-to-v48';
+  const name = 'migration-v49';
 
   beforeEach(async () => {
     runner = new SchematicTestRunner(name, collectionPath);
@@ -42,24 +42,9 @@ describe('to legacy migration', () => {
       )
     );
 
-    addTestFiles(appTree, {
-      '/package.json': `{
-         "dependencies": {
-          "@simpl/element-ng": "48.10.0",
-          "@simpl/maps-ng": "48.10.0",
-          "@simpl/dashboards-ng": "48.10.0",
-          "@simpl/element-translate-ng": "48.10.0",
-          "some-other-dep": "1.2.3"
-        }
-        }`
-    });
-
     const migrationData = getElementMigrationTestData();
     const context = runner.engine.createContext(
-      runner.engine.createSchematic(
-        'migrate-v47-to-v48',
-        runner.engine.createCollection(collectionPath)
-      )
+      runner.engine.createSchematic('migration-v49', runner.engine.createCollection(collectionPath))
     );
 
     // Run elementMigrationRule directly with test data
