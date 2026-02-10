@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { AfterViewInit, Component, EventEmitter, Input, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnDestroy } from '@angular/core';
 import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import { MenuItem } from '@siemens/element-ng/menu';
@@ -23,7 +23,7 @@ export class SiWebComponentWrapperComponent
     return this._editable ?? false;
   }
 
-  @Input() set editable(editable: boolean) {
+  set editable(editable: boolean) {
     this._editable = editable;
     if (this.webComponent) {
       this.webComponent.editable = editable;
@@ -43,7 +43,7 @@ export class SiWebComponentWrapperComponent
   override ngAfterViewInit(): void {
     super.ngAfterViewInit();
     this.webComponent?.addEventListener('configChange', this.webComponentEventListener);
-    this.webComponentHost.nativeElement.appendChild(this.webComponent);
+    this.webComponentHost().nativeElement.appendChild(this.webComponent);
   }
 
   ngOnDestroy(): void {

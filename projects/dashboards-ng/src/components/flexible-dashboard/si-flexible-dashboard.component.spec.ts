@@ -5,7 +5,6 @@
 import {
   Component,
   input,
-  Input,
   model,
   NO_ERRORS_SCHEMA,
   OnInit,
@@ -59,13 +58,13 @@ export class SiWidgetCatalogMockComponent extends SiWidgetCatalogComponent imple
   template: ''
 })
 export class SiDashboardToolbarStubComponent {
-  @Input() primaryEditActions: MenuItem[] = [];
-  @Input() secondaryEditActions: MenuItem[] = [];
-  @Input() disableSaveButton = false;
-  @Input() disabled = false;
-  @Input() editable = false;
-  @Input() hideEditButton = false;
-  @Input() showEditButtonLabel = false;
+  readonly primaryEditActions = input<MenuItem[]>([]);
+  readonly secondaryEditActions = input<MenuItem[]>([]);
+  readonly disableSaveButton = input(false);
+  readonly disabled = input(false);
+  readonly editable = input(false);
+  readonly hideEditButton = input(false);
+  readonly showEditButtonLabel = input(false);
 }
 
 @Component({
