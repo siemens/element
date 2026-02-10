@@ -20,14 +20,24 @@ describe('SiFormValidationTooltipDirective', () => {
     control = new FormControl('');
   }
 
+  const hoverDelay = 500;
   let fixture: ComponentFixture<TestHostComponent>;
   let harness: SiFormValidationTooltipHarness;
+  let inputElement: HTMLInputElement;
 
   beforeEach(async () => {
+    vi.useFakeTimers();
+    vi.setTimerTickMode('nextTimerAsync');
     fixture = TestBed.createComponent(TestHostComponent);
+    inputElement = fixture.nativeElement.querySelector('input')!;
+    vi.spyOn(inputElement, 'matches').mockReturnValue(true);
     harness = await TestbedHarnessEnvironment.loader(fixture).getHarness(
       SiFormValidationTooltipHarness
     );
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
   it('should show tooltip when control is hovered and becomes touched', async () => {
@@ -39,9 +49,11 @@ describe('SiFormValidationTooltipDirective', () => {
 
   it('should show tooltip when hovered or focused', async () => {
     fixture.componentInstance.control.markAsTouched();
+    await fixture.whenStable();
     await harness.focus();
     expect(await harness.getTooltip()).toBe('Required');
     await harness.hover();
+    await vi.advanceTimersByTimeAsync(hoverDelay);
     await harness.mouseAway();
     expect(await harness.getTooltip()).toBe('Required');
     await harness.blur();
@@ -50,7 +62,9 @@ describe('SiFormValidationTooltipDirective', () => {
 
   it('should hide tooltip when control becomes valid', async () => {
     fixture.componentInstance.control.markAsTouched();
+    await fixture.whenStable();
     await harness.hover();
+    await vi.advanceTimersByTimeAsync(hoverDelay);
     expect(await harness.getTooltip()).toBe('Required');
     await harness.sendKeys('Lorem ipsum');
     expect(await harness.getTooltip()).toBeFalsy();
@@ -58,9 +72,12 @@ describe('SiFormValidationTooltipDirective', () => {
 
   it('should hide tooltip when control becomes untouched', async () => {
     fixture.componentInstance.control.markAsTouched();
+    await fixture.whenStable();
     await harness.hover();
+    await vi.advanceTimersByTimeAsync(hoverDelay);
     expect(await harness.getTooltip()).toBe('Required');
     fixture.componentInstance.control.markAsUntouched();
+    await fixture.whenStable();
     expect(await harness.getTooltip()).toBeFalsy();
   });
 });

@@ -8,19 +8,19 @@ export class SiFormValidationTooltipHarness extends ComponentHarness {
   static readonly hostSelector = 'input';
 
   async hover(): Promise<void> {
-    this.host().then(host => host.hover());
+    await this.host().then(host => host.hover());
   }
 
   async mouseAway(): Promise<void> {
-    this.host().then(host => host.mouseAway());
+    await this.host().then(host => host.mouseAway());
   }
 
   async focus(): Promise<void> {
-    this.host().then(host => host.focus());
+    await this.host().then(host => host.focus());
   }
 
   async blur(): Promise<void> {
-    this.host().then(host => host.blur());
+    await this.host().then(host => host.blur());
   }
 
   async sendKeys(...keys: (string | TestKey)[]): Promise<void> {

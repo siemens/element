@@ -10,6 +10,15 @@ import { userEvent } from 'vitest/browser';
 import { SiTooltipModule } from './si-tooltip.module';
 
 describe('SiTooltipDirective', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setTimerTickMode('nextTimerAsync');
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   describe('with text', () => {
     let fixture: ComponentFixture<TestHostComponent>;
     let component: TestHostComponent;
@@ -28,55 +37,66 @@ describe('SiTooltipDirective', () => {
     }
 
     beforeEach(() => {
-      vi.useFakeTimers();
       fixture = TestBed.createComponent(TestHostComponent);
       component = fixture.componentInstance;
       button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
-      vi.spyOn(button, 'matches').mockReturnValue(true);
+      vi.spyOn(button, 'matches').mockImplementation(selector => selector === ':focus-visible');
       fixture.detectChanges();
     });
 
-    afterEach(() => {
-      vi.useRealTimers();
-    });
-
     it('should open on focus', async () => {
-      button.dispatchEvent(new Event('focus'));
-      // Focus should be immediate (no delay) but still need to tick for setTimeout(0)
-      vi.advanceTimersByTime(0);
+      button.dispatchEvent(new FocusEvent('focus'));
+      await vi.advanceTimersByTimeAsync(0);
       await fixture.whenStable();
 
       expect(document.querySelector('.tooltip')).toBeInTheDocument();
       expect(document.querySelector('.tooltip')).toHaveTextContent('test tooltip');
 
-      button.dispatchEvent(new Event('focusout'));
-      vi.advanceTimersByTime(500);
+      button.dispatchEvent(new FocusEvent('focusout'));
+      await vi.advanceTimersByTimeAsync(500);
+      await fixture.whenStable();
 
       expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
     });
 
-    it('should not show tooltip when disabled', () => {
+    it('should not show tooltip when disabled', async () => {
       component.isDisabled.set(true);
-      fixture.detectChanges();
+      await fixture.whenStable();
 
-      button.dispatchEvent(new Event('focus'));
+      button.dispatchEvent(new FocusEvent('focus'));
+      await fixture.whenStable();
+      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+    });
+
+    it('should cancel pending tooltip when disabled while waiting', async () => {
+      button.dispatchEvent(new MouseEvent('mouseenter'));
+      await vi.advanceTimersByTimeAsync(0);
+      await fixture.whenStable();
+      expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
+
+      component.isDisabled.set(true);
+      await fixture.whenStable();
+
+      await vi.advanceTimersByTimeAsync(500);
+      await fixture.whenStable();
       expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
     });
 
     it('should show tooltip on mouse over', async () => {
       button.dispatchEvent(new MouseEvent('mouseenter'));
-      // hover should have 500ms delay
       expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
 
-      vi.advanceTimersByTime(500);
+      await vi.advanceTimersByTimeAsync(500);
       await fixture.whenStable();
       expect(document.querySelector('.tooltip')).toBeInTheDocument();
 
       button.dispatchEvent(new MouseEvent('mouseleave'));
+      await fixture.whenStable();
       expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
     });
 
     it('should cancel the pending hover tooltip on focusout', async () => {
+      vi.setTimerTickMode('manual');
       await userEvent.hover(button);
       vi.advanceTimersByTime(250);
       await fixture.whenStable();
@@ -114,13 +134,13 @@ describe('SiTooltipDirective', () => {
     });
 
     it('should update tooltip content while open', async () => {
-      button.dispatchEvent(new Event('focus'));
-      vi.advanceTimersByTime(0);
+      button.dispatchEvent(new FocusEvent('focus'));
+      await vi.advanceTimersByTimeAsync(0);
       await fixture.whenStable();
       expect(document.querySelector('.tooltip')).toHaveTextContent('test tooltip');
 
       component.tooltipText.set('updated tooltip');
-      fixture.detectChanges();
+      await fixture.whenStable();
 
       expect(document.querySelector('.tooltip')).toHaveTextContent('updated tooltip');
     });
@@ -143,37 +163,32 @@ describe('SiTooltipDirective', () => {
     }
 
     beforeEach(() => {
-      vi.useFakeTimers();
       fixture = TestBed.createComponent(TestHostComponent);
       button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
-      vi.spyOn(button, 'matches').mockReturnValue(true);
+      vi.spyOn(button, 'matches').mockImplementation(selector => selector === ':focus-visible');
       fixture.detectChanges();
     });
 
-    afterEach(() => {
-      vi.useRealTimers();
-    });
-
     it('should render the template', async () => {
-      button.dispatchEvent(new Event('focus'));
-      vi.advanceTimersByTime(500);
+      button.dispatchEvent(new FocusEvent('focus'));
+      await vi.advanceTimersByTimeAsync(500);
       await fixture.whenStable();
       expect(document.querySelector('.tooltip')).toHaveTextContent('Template content');
-      button.dispatchEvent(new Event('focusout'));
-      vi.advanceTimersByTime(500);
+      button.dispatchEvent(new FocusEvent('focusout'));
+      await vi.advanceTimersByTimeAsync(500);
       await fixture.whenStable();
       expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
     });
 
     it('should render the template with context', async () => {
       fixture.componentInstance.tooltipContext.set({ tooltip: 'test' });
-      fixture.detectChanges();
-      button.dispatchEvent(new Event('focus'));
-      vi.advanceTimersByTime(500);
+      await fixture.whenStable();
+      button.dispatchEvent(new FocusEvent('focus'));
+      await vi.advanceTimersByTimeAsync(500);
       await fixture.whenStable();
       expect(document.querySelector('.tooltip')).toHaveTextContent('Template content test');
-      button.dispatchEvent(new Event('focusout'));
-      vi.advanceTimersByTime(500);
+      button.dispatchEvent(new FocusEvent('focusout'));
+      await vi.advanceTimersByTimeAsync(500);
       await fixture.whenStable();
       expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
     });
@@ -195,30 +210,25 @@ describe('SiTooltipDirective', () => {
     }
 
     beforeEach(() => {
-      vi.useFakeTimers();
       fixture = TestBed.createComponent(TestHostComponent);
       button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
-      vi.spyOn(button, 'matches').mockReturnValue(true);
+      vi.spyOn(button, 'matches').mockImplementation(selector => selector === ':focus-visible');
       fixture.detectChanges();
-    });
-
-    afterEach(() => {
-      vi.useRealTimers();
     });
 
     it('should close tooltip on scroll when custom close scroll strategy is provided', async () => {
       const overlay = TestBed.inject(Overlay);
       fixture.componentInstance.scrollStrategy.set(overlay.scrollStrategies.close());
-      fixture.detectChanges();
+      await fixture.whenStable();
 
-      button.dispatchEvent(new Event('focus'));
-      vi.advanceTimersByTime(0);
+      button.dispatchEvent(new FocusEvent('focus'));
+      await vi.advanceTimersByTimeAsync(0);
       await fixture.whenStable();
 
       expect(document.querySelector('.tooltip')).toBeInTheDocument();
 
       document.dispatchEvent(new Event('scroll', { bubbles: true }));
-      vi.advanceTimersByTime(0);
+      await vi.advanceTimersByTimeAsync(0);
       await fixture.whenStable();
 
       expect(document.querySelector('.tooltip')).not.toBeInTheDocument();
