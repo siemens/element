@@ -5,15 +5,15 @@
 
 import {
   AttributeSelectorInstruction,
-  ComponentNamesInstruction,
+  SymbolRenamingInstruction,
+  ComponentPropertyNamesInstruction,
   ElementMigrationData,
   ElementSelectorInstruction,
-  OutputNamesInstruction,
   SymbolRemovalInstruction,
   ClassMemberReplacementInstruction
 } from './index.js';
 
-const COMPONENT_NAMES_MIGRATION: ComponentNamesInstruction[] = [
+const SYMBOL_RENAMING_MIGRATION: SymbolRenamingInstruction[] = [
   {
     module: /@(siemens|simpl)\/element-ng(\/icon)?/,
     symbolRenamings: [
@@ -87,6 +87,18 @@ const COMPONENT_NAMES_MIGRATION: ComponentNamesInstruction[] = [
   {
     module: /@(siemens|simpl)\/dashboards-ng/,
     symbolRenamings: [{ replace: 'CONFIG_TOKEN', replaceWith: 'SI_DASHBOARD_CONFIGURATION' }]
+  },
+  {
+    module: /@(siemens|simpl)\/element-ng(\/toast-notification)?/,
+    symbolRenamings: [{ replace: 'ToastStateName', replaceWith: 'StatusType' }],
+    toModule: '@siemens/element-ng/common'
+  },
+  {
+    module: /@(siemens|simpl)\/element-ng(\/(info-page|unauthorized-page))?/,
+    symbolRenamings: [
+      { replace: 'SiUnauthorizedPageComponent', replaceWith: 'SiInfoPageComponent' }
+    ],
+    toModule: '@siemens/element-ng/info-page'
   }
 ];
 
@@ -104,7 +116,16 @@ const ELEMENT_SELECTORS_MIGRATION: ElementSelectorInstruction[] = [
   // next to current
   { replace: 'si-icon-next', replaceWith: 'si-icon' },
   { replace: 'si-tabset-next', replaceWith: 'si-tabset' },
-  { replace: 'si-tab-next', replaceWith: 'si-tab' }
+  { replace: 'si-tab-next', replaceWith: 'si-tab' },
+  // v48 to v49
+  {
+    replace: 'si-unauthorized-page',
+    replaceWith: 'si-info-page',
+    defaultAttributes: [
+      { name: 'icon', value: 'element-warning-filled' },
+      { name: 'iconColor', value: 'status-warning' }
+    ]
+  }
 ];
 
 const SYMBOL_REMOVALS_MIGRATION: SymbolRemovalInstruction[] = [
@@ -162,11 +183,35 @@ const SYMBOL_REMOVALS_MIGRATION: SymbolRemovalInstruction[] = [
   }
 ];
 
-const OUTPUT_NAMES_MIGRATION: OutputNamesInstruction[] = [
+const COMPONENT_PROPERTY_NAMES_MIGRATION: ComponentPropertyNamesInstruction[] = [
+  // Output name changes
   {
     module: /@(siemens|simpl)\/element-ng(\/accordion)?/,
     elementSelector: 'si-collapsible-panel',
-    apiMappings: [{ replace: '(toggle)', replaceWith: '(panelToggle)' }]
+    propertyMappings: [{ replace: '(toggle)', replaceWith: '(panelToggle)' }]
+  },
+  // Input name changes
+  // v48 to v49
+  {
+    module: /@(siemens|simpl)\/element-ng/,
+    elementSelector: 'si-filtered-search',
+    propertyMappings: [{ replace: 'readonly', replaceWith: 'disabled' }]
+  },
+  {
+    module: /@(siemens|simpl)\/charts-ng/,
+    elementSelector: 'si-chart-gauge',
+    propertyMappings: [
+      { replace: 'numberOfDecimals', replaceWith: ['minNumberOfDecimals', 'maxNumberOfDecimals'] }
+    ]
+  },
+  {
+    module: /@(siemens|simpl)\/element-ng(\/(info-page|unauthorized-page))?/,
+    elementSelector: 'si-unauthorized-page',
+    propertyMappings: [
+      { replace: 'heading', replaceWith: 'titleText' },
+      { replace: 'subHeading', replaceWith: 'copyText' },
+      { replace: 'description', replaceWith: 'instructions' }
+    ]
   }
 ];
 
@@ -192,9 +237,9 @@ const CLASS_MEMBER_REPLACEMENTS_MIGRATION: ClassMemberReplacementInstruction[] =
  */
 export const getElementMigrationTestData = (): ElementMigrationData => ({
   attributeSelectorChanges: ATTRIBUTE_SELECTORS_MIGRATION,
-  componentNameChanges: COMPONENT_NAMES_MIGRATION,
+  symbolRenamingChanges: SYMBOL_RENAMING_MIGRATION,
+  componentPropertyNameChanges: COMPONENT_PROPERTY_NAMES_MIGRATION,
   elementSelectorChanges: ELEMENT_SELECTORS_MIGRATION,
   symbolRemovalChanges: SYMBOL_REMOVALS_MIGRATION,
-  outputNameChanges: OUTPUT_NAMES_MIGRATION,
   classMemberReplacementChanges: CLASS_MEMBER_REPLACEMENTS_MIGRATION
 });

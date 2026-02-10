@@ -10,7 +10,7 @@ import { EmitHint } from 'typescript';
 import {
   classMemberReplacements,
   discoverSourceFiles,
-  renameApi,
+  renameComponentProperty,
   renameAttribute,
   renameElementTag,
   renameIdentifier,
@@ -36,11 +36,26 @@ export const elementMigrationRule = (
       let recorder: UpdateRecorder | undefined = undefined;
       let printer: ts.Printer | undefined = undefined;
 
+      if (migrationData.componentPropertyNameChanges) {
+        recorder ??= tree.beginUpdate(filePath);
+
+        for (const change of migrationData.componentPropertyNameChanges) {
+          renameComponentProperty({
+            tree,
+            recorder,
+            sourceFile,
+            filePath,
+            elementName: change.elementSelector,
+            properties: change.propertyMappings
+          });
+        }
+      }
+
       // Remove the ifs when it grows a bit more and split into multiple functions
-      if (migrationData.componentNameChanges) {
+      if (migrationData.symbolRenamingChanges) {
         const changeInstructions = renameIdentifier({
           sourceFile,
-          renamingInstructions: migrationData.componentNameChanges
+          renamingInstructions: migrationData.symbolRenamingChanges
         });
 
         for (const changeInstruction of changeInstructions) {
@@ -79,22 +94,8 @@ export const elementMigrationRule = (
             sourceFile,
             filePath,
             fromName: change.replace,
-            toName: change.replaceWith
-          });
-        }
-      }
-
-      if (migrationData.outputNameChanges) {
-        recorder ??= tree.beginUpdate(filePath);
-
-        for (const change of migrationData.outputNameChanges) {
-          renameApi({
-            tree,
-            recorder,
-            sourceFile,
-            filePath,
-            elementName: change.elementSelector,
-            apis: change.apiMappings
+            toName: change.replaceWith,
+            defaultAttributes: change.defaultAttributes
           });
         }
       }
