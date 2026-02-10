@@ -1,27 +1,27 @@
 - alert:
   - text: Info
-  - strong: "Update Available:"
+  - strong: Update Available
   - text: New software version 3.2.1 is now available for download.
   - link "Read More":
     - /url: https://www.lipsum.com/
 - alert:
   - text: Success
-  - strong: "Upload:"
+  - strong: Upload
   - text: Your document has been uploaded to the cloud. Action
 - alert:
   - text: Caution
-  - strong: "File operation:"
+  - strong: File operation
   - text: Deleting this folder will permanently remove all contained projects.
 - alert:
   - text: Warning
-  - strong: "Storage:"
+  - strong: Storage
   - text: Your storage space is running low. Please consider archiving old files. Action
 - alert:
   - text: Danger
-  - strong: "Access:"
+  - strong: Access
   - text: You do not have permission to access this resource. Action
 - alert:
   - text: Critical
-  - strong: "Data Loss:"
+  - strong: Data Loss
   - text: Disk array failure detected. Contact support immediately.
 - alert: Success Message without a heading
