@@ -147,6 +147,22 @@ describe('to legacy migration', () => {
     await checkTemplateMigration(['module-based.accordion-inline-template.ts']);
   });
 
+  it('should migrate ToastStateName to StatusType', async () => {
+    await checkTemplateMigration(['toast-state-name.ts']);
+  });
+
+  it('should migrate filtered search readonly attribute in inline templates', async () => {
+    await checkTemplateMigration(['filtered-search-inline-readonly.ts']);
+  });
+
+  it('should migrate unauthorized page component in inline templates', async () => {
+    await checkTemplateMigration(['unauthorized-page-inline.ts']);
+  });
+
+  it('should split numberOfDecimals into minNumberOfDecimals and maxNumberOfDecimals', async () => {
+    await checkTemplateMigration(['chart-gauge-decimals.ts']);
+  });
+
   it('should rename functions of classes', async () => {
     await checkTemplateMigration(['function-rename.ts']);
   });

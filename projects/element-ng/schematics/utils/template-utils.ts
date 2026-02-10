@@ -82,13 +82,15 @@ const renameElementTagInTemplate = ({
   offset,
   recorder,
   fromName,
-  toName
+  toName,
+  defaultAttributes
 }: {
   recorder: UpdateRecorder;
   template: string;
   offset: number;
   fromName: string;
   toName: string;
+  defaultAttributes?: { name: string; value: string }[];
 }): void => {
   findElement(template, element => element.name === fromName).forEach(el => {
     recorder.remove(el.startSourceSpan.start.offset + 1 + offset, fromName.length);
@@ -96,6 +98,17 @@ const renameElementTagInTemplate = ({
     if (el.endSourceSpan && el.startSourceSpan.start !== el.endSourceSpan.start) {
       recorder.remove(el.endSourceSpan?.start.offset + 2 + offset, fromName.length);
       recorder.insertLeft(el.endSourceSpan?.start.offset + 2 + offset, toName);
+    }
+
+    if (defaultAttributes && defaultAttributes.length > 0) {
+      const existingAttrNames = new Set(el.attrs.map(attr => attr.name));
+      const attrsToAdd = defaultAttributes.filter(attr => !existingAttrNames.has(attr.name));
+
+      if (attrsToAdd.length > 0) {
+        const insertPosition = el.startSourceSpan.start.offset + 1 + offset + toName.length;
+        const attrsString = attrsToAdd.map(attr => ` ${attr.name}="${attr.value}"`).join('');
+        recorder.insertLeft(insertPosition, attrsString);
+      }
     }
   });
 };
@@ -119,26 +132,66 @@ const renameAttributeInTemplate = ({
   });
 };
 
-const renameApiInTemplate = ({
+const renameComponentPropertyInTemplate = ({
   template,
   offset,
   recorder,
   elementName,
-  apis
+  properties
 }: {
   recorder: UpdateRecorder;
   template: string;
   offset: number;
   elementName: string;
-  apis: { replace: string; replaceWith: string }[];
+  properties: { replace: string; replaceWith: string | string[] }[];
 }): void => {
   findElement(template, element => element.name === elementName).forEach(el => {
-    for (const api of apis) {
+    for (const property of properties) {
       el.attrs
-        .filter(attr => attr.name === api.replace)
+        .filter(
+          attr =>
+            attr.name === property.replace ||
+            attr.name === `[${property.replace}]` ||
+            attr.name === `(${property.replace})`
+        )
         .forEach(attr => {
-          recorder.remove(attr.sourceSpan.start.offset + offset, api.replace.length);
-          recorder.insertLeft(attr.sourceSpan.start.offset + offset, api.replaceWith);
+          const hasBrackets = attr.name.startsWith('[') || attr.name.startsWith('(');
+          const isArray = Array.isArray(property.replaceWith);
+
+          if (isArray) {
+            const valueStart = attr.valueSpan?.start.offset;
+            const valueEnd = attr.valueSpan?.end.offset;
+
+            if (!valueStart || !valueEnd) {
+              return;
+            }
+
+            const value = template.substring(valueStart, valueEnd);
+            const attrLength = attr.sourceSpan.toString().length;
+
+            // Remove the original attribute
+            recorder.remove(attr.sourceSpan.start.offset + offset, attrLength);
+
+            // Insert new attributes
+            const newAttrs = (property.replaceWith as string[])
+              .map((newName: string) => {
+                const attrName = hasBrackets ? `[${newName}]` : newName;
+                return `${attrName}="${value}"`;
+              })
+              .join(' ');
+
+            recorder.insertLeft(attr.sourceSpan.start.offset + offset, newAttrs);
+          } else {
+            const newName = property.replaceWith as string;
+            if (hasBrackets) {
+              const startOffset = attr.sourceSpan.start.offset + offset + 1;
+              recorder.remove(startOffset, property.replace.length);
+              recorder.insertLeft(startOffset, newName);
+            } else {
+              recorder.remove(attr.sourceSpan.start.offset + offset, property.replace.length);
+              recorder.insertLeft(attr.sourceSpan.start.offset + offset, newName);
+            }
+          }
         });
     }
   });
@@ -187,6 +240,7 @@ interface RenameElementTagParams {
   recorder: UpdateRecorder;
   fromName: string;
   toName: string;
+  defaultAttributes?: { name: string; value: string }[];
 }
 
 export const renameElementTag = ({
@@ -195,7 +249,8 @@ export const renameElementTag = ({
   sourceFile,
   recorder,
   fromName,
-  toName
+  toName,
+  defaultAttributes
 }: RenameElementTagParams): void => {
   getInlineTemplates(sourceFile).forEach(template =>
     renameElementTagInTemplate({
@@ -203,7 +258,8 @@ export const renameElementTag = ({
       offset: template.getStart() + 1,
       toName,
       fromName,
-      recorder
+      recorder,
+      defaultAttributes
     })
   );
   getTemplateUrl(sourceFile).forEach(templateUrl => {
@@ -215,7 +271,8 @@ export const renameElementTag = ({
       offset: 0,
       toName,
       fromName,
-      recorder: templateRecorder
+      recorder: templateRecorder,
+      defaultAttributes
     });
     tree.commitUpdate(templateRecorder);
   });
@@ -253,40 +310,40 @@ export const renameAttribute = ({
   });
 };
 
-export const renameApi = ({
+export const renameComponentProperty = ({
   tree,
   filePath,
   sourceFile,
   recorder,
   elementName,
-  apis
+  properties
 }: {
   tree: Tree;
   filePath: string;
   sourceFile: ts.SourceFile;
   recorder: UpdateRecorder;
   elementName: string;
-  apis: { replace: string; replaceWith: string }[];
+  properties: { replace: string; replaceWith: string | string[] }[];
 }): void => {
   getInlineTemplates(sourceFile).forEach(template =>
-    renameApiInTemplate({
+    renameComponentPropertyInTemplate({
       template: sourceFile.text.substring(template.getStart() + 1, template.getEnd() - 1),
       offset: template.getStart() + 1,
       elementName,
       recorder,
-      apis
+      properties
     })
   );
   getTemplateUrl(sourceFile).forEach(templateUrl => {
     const templatePath = join(dirname(filePath), templateUrl);
     const templateContent = tree.read(templatePath)!.toString('utf-8');
     const templateRecorder = tree.beginUpdate(templatePath);
-    renameApiInTemplate({
+    renameComponentPropertyInTemplate({
       template: templateContent,
       offset: 0,
       elementName,
       recorder: templateRecorder,
-      apis
+      properties
     });
     tree.commitUpdate(templateRecorder);
   });
