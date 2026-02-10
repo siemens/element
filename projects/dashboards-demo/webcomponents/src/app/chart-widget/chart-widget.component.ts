@@ -4,7 +4,7 @@
  */
 
 import { AsyncPipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 import { SiChartCartesianComponent } from '@siemens/charts-ng/cartesian';
 import { WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
@@ -25,7 +25,7 @@ export interface WidgetChartCartesianConfig {
   templateUrl: './chart-widget.component.html'
 })
 export class ChartWidgetComponent implements OnInit, WidgetInstance {
-  @Input() config!: WidgetConfig;
+  readonly config = input.required<WidgetConfig>();
   primaryActions: ContentActionBarMainItem[] = [
     { type: 'action', label: 'Print', action: () => alert('do print') }
   ];
@@ -45,7 +45,7 @@ export class ChartWidgetComponent implements OnInit, WidgetInstance {
   }
 
   get cartesianConfig(): WidgetChartCartesianConfig {
-    return this.config.payload.config as WidgetChartCartesianConfig;
+    return this.config().payload.config as WidgetChartCartesianConfig;
   }
 
   private getCartesianChartData(): Observable<CartesianChartData> {
