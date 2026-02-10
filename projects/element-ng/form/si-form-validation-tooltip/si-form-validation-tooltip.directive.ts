@@ -6,7 +6,6 @@ import {
   Directive,
   DoCheck,
   ElementRef,
-  HostListener,
   inject,
   Injector,
   input,
@@ -58,34 +57,21 @@ export class SiFormValidationTooltipDirective implements OnDestroy, DoCheck {
   private readonly errors = signal<SiFormError[]>([]);
   private currentErrors: ValidationErrors | null = null;
   private touched: boolean | null = null;
-
-  // Use a counter to track how many events are matched that keep the tooltip active.
-  // Active means we are listening to error changes.
-  private activationCount = 0;
   protected readonly describedBy = `__si-form-validation-tooltip-${SiFormValidationTooltipDirective.idCounter++}`;
 
   ngDoCheck(): void {
-    if (
-      this.activationCount &&
-      (this.currentErrors !== this.ngControl.errors || this.touched !== this.ngControl.touched)
-    ) {
-      this.currentErrors = this.ngControl.errors;
-      this.touched = this.ngControl.touched;
+    const nextErrors = this.ngControl.errors;
+    const nextTouched = this.ngControl.touched;
+
+    if (this.currentErrors !== nextErrors || this.touched !== nextTouched) {
+      this.currentErrors = nextErrors;
+      this.touched = nextTouched;
       this.updateErrors();
     }
   }
 
   ngOnDestroy(): void {
     this.destroyTooltip();
-  }
-
-  @HostListener('focus')
-  @HostListener('mouseenter')
-  protected increaseActivation(): void {
-    this.activationCount++;
-    if (this.activationCount === 1) {
-      this.updateErrors();
-    }
   }
 
   private updateErrors(): void {
@@ -98,32 +84,28 @@ export class SiFormValidationTooltipDirective implements OnDestroy, DoCheck {
       )
       .filter(error => !!error.message);
 
-    if (!this.tooltipRef && errors.length && this.ngControl.touched) {
-      this.tooltipRef = this.tooltipService.createTooltip({
-        placement: 'auto',
-        element: this.elementRef,
-        describedBy: this.describedBy,
-        injector: Injector.create({
-          providers: [{ provide: SI_FORM_VALIDATION_TOOLTIP_DATA, useValue: this.errors }]
-        }),
-        tooltip: () => SiFormValidationTooltipComponent,
-        tooltipContext: () => undefined
-      });
-      this.tooltipRef.show();
-    } else if (this.tooltipRef && (!errors.length || this.ngControl.pristine)) {
+    const shouldShow = errors.length > 0 && !!this.ngControl.touched;
+
+    if (shouldShow) {
+      this.createTooltip();
+    } else {
       this.destroyTooltip();
     }
 
     this.errors.set(errors);
   }
 
-  @HostListener('blur')
-  @HostListener('mouseleave')
-  protected decreaseActivation(): void {
-    this.activationCount--;
-    if (!this.activationCount) {
-      this.destroyTooltip();
-    }
+  private createTooltip(): void {
+    this.tooltipRef ??= this.tooltipService.createTooltip({
+      placement: 'auto',
+      element: this.elementRef,
+      describedBy: this.describedBy,
+      injector: Injector.create({
+        providers: [{ provide: SI_FORM_VALIDATION_TOOLTIP_DATA, useValue: this.errors }]
+      }),
+      tooltip: () => SiFormValidationTooltipComponent,
+      tooltipContext: () => undefined
+    });
   }
 
   private destroyTooltip(): void {
