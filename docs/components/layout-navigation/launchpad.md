@@ -58,14 +58,14 @@ To unstar an app the user simply clicks on the **star**-icon again.
 
 Both concepts of **Categories** and **Favorites** can be mixed if necessary.
 
-### Launch of external app (optional)
+### Open app in separate tab (optional)
 
 ![Launchpad external app](images/launchpad-usage-external-app.png)
 
-> 1. Launch of external app
+> 1. Open app in separate tab
 
-External apps must be indicated with an additional `element-export` icon and opened in a new browser-tab.
-The origin tab remains open to allow a fast and easy return to the previous app.
+Apps opening in a separate tab must be marked by an additional `element-export` icon.
+The original tab remains open to allow a fast and easy return to the current app.
 
 ### Responsive behavior
 
