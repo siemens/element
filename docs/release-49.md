@@ -98,7 +98,7 @@ For almost a year, we've been busy reworking our icons from both technical and
 visual perspectives. With Element v49, those efforts have now reached
 production-ready state.
 
-### Open Sourcing
+### Open sourcing
 
 The most notable change is that almost all Element icons are now available
 under an MIT license on [GitHub](https://github.com/siemens/element-icons) and
@@ -164,7 +164,7 @@ approach.
 Read the [icon documentation](https://element.siemens.io/fundamentals/icons/)
 for more details checkout our [list of icons](https://element.siemens.io/icons/).
 
-## Finalizing the Open Source transition
+## Finalizing the open source transition
 
 With Element v48, we released our first open source version of Element.
 With Element v49, we now completed the transition to open source.
@@ -198,7 +198,7 @@ This includes:
 Element v49 now supports [Angular's zoneless](https://angular.dev/guide/zoneless#) change detection,
 allowing applications to remove the `zone.js` polyfill and benefit from improved performance and reduced bundle sizes.
 
-## Native Federation support for Flexible Dashboards
+## Native federation support for flexible dashboards
 
 Flexible dashboards now support **native federation**.
 
@@ -210,7 +210,7 @@ Three integration modes are now available for loading remote widgets through mic
 | **Native Federation** | ESM-based, bundler-agnostic :sparkles:  |
 | **Hybrid/Bridge**     | Native host + Module Federation remotes |
 
-### New Entry Points
+### New entry points
 
 Two new entry points have been added to `@siemens/dashboards-ng`:
 
