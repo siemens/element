@@ -57,6 +57,7 @@ test.describe('si-select', () => {
 
     await si.runVisualAndA11yTests('filter-opened');
     await selectFormControlInput.pressSequentially('Bad');
+    await expect(page.getByRole('option')).toHaveText(['Bad', 'Very bad']);
     await page.keyboard.press('ArrowDown');
     await expect(page.getByRole('option', { name: 'Bad', exact: true })).toContainClass('active');
     await si.runVisualAndA11yTests('filter-searched');
