@@ -764,8 +764,12 @@ describe('SiTreeViewComponent', () => {
     component.treeViewComponent().scrollItemIntoView(component.items[99]);
     fixture.detectChanges();
     expect(
-      element.querySelector(`.si-tree-view-root-ul
-    si-tree-view-item:last-child .si-tree-view-item-object-data`)?.textContent
+      element
+        .querySelector(
+          `.si-tree-view-root-ul
+    si-tree-view-item:last-child .si-tree-view-item-object-data`
+        )
+        ?.textContent?.trim()
     ).toBe('Test100');
   });
 

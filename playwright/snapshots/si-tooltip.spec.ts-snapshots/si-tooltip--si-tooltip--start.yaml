@@ -1,26 +1,64 @@
+- button "Toggle"
+- button "Settings"
+- button "Documents"
+- button "Notifications"
+- button "Reports"
 - group "File operations":
   - button "Open file"
   - button "Save"
-  - button "Download"
   - button "Share"
+- group "Split button primary icon only":
+  - button "Download"
+  - button "Dropdown toggle"
 - group "Basic actions":
   - button "Edit"
   - button "Copy"
   - button "Delete"
+- button "Open side panel"
 - group "Template examples":
   - button "Template HTML example"
   - button "Template example"
-- heading "Tooltip placement" [level=4]
+- heading "Placement" [level=4]
 - group "Tooltip placement":
   - button "Auto placement"
   - button "Top"
   - button "Bottom"
   - button "Start"
   - button "End"
+- heading "Truncated text" [level=4]
+- textbox "Search..."
+- tree "Company locations":
+  - treeitem "This is a really really long tree item label" [level=1]
+  - treeitem "Tree item label" [level=1]
+  - treeitem "This is a really really long tree item label" [level=1]
+  - treeitem "Tree item label" [level=1]
+- heading "Charts" [level=4]
 - heading "Other examples" [level=4]
 - button "A long time ago in a galaxy far, far away..."
+- group "Layout selection toggle":
+  - radio "Map view" [checked]
+  - radio "List view"
+  - radio "Grid view"
+- menubar:
+  - menuitem "Download"
+  - menuitem "Share"
+  - menuitem "Copy"
+- group "Social actions":
+  - button "Like"
+  - button "Dislike"
+  - button "Share"
 - tablist:
   - tab
   - tab
   - tab
+  - tab
+  - tab
+  - tab
+  - tab
+- banner:
+  - heading "Tooltip" [level=1]
+  - button "Support Center"
+  - button "Messages"
+  - button "User Preferences"
+  - button "Lars Vegas"
 - tooltip "Start"
