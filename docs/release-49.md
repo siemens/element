@@ -1,7 +1,7 @@
 # Welcome Element 49!
 
 We are excited to announce the release of Element 49,
-a major step forward toward one Siemens Design Language (SDL).
+a major step forward toward one [Siemens Design Language (SDL)](https://design-language.siemens.io/).
 
 Highlights of this release include:
 
