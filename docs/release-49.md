@@ -24,19 +24,14 @@ consistent visual feedback during user interaction.
 
 ### Vertical navbar: badge behavior alignment
 
-As part of the iX and Element alignment, the vertical navigation component has
-been updated to unify badge behavior and visual consistency across both
-libraries. Badges now maintain their color regardless of the navbar collapsed state.
+The vertical navigation component now features unified badge behavior and visual consistency between both iX and Element.
+Badges now maintain their color regardless of the navbar collapsed state.
 
 ![image](navbar.png)
 
 ### Launchpad: visual alignment and responsive improvements
 
-As part of the ongoing alignment between iX and Element, the Launchpad
-component has been updated to match the latest shared styling guidelines.
-
-In addition, the Launchpad now provides improved responsive behavior, making it
-easier to use on smaller screens.
+The launchpad component has been updated to match the SDL styling guidelines, including improved responsive behavior on smaller screens.
 
 ![image](launchpad.png)
 
@@ -86,7 +81,7 @@ All button sizes now follow the same specifications:
 Tooltips have been updated to follow consistent interaction patterns in line
 with accessibility guidelines.
 
-Tooltips now always appear on hover and focus, providing better support for keyboards.
+Tooltips now always appear on hover and focus, providing better support for keyboard navigation.
 
 ## Language packs
 
@@ -166,7 +161,7 @@ However, we will update all our documentation and examples to use the new SVG
 icons. For new code, we recommend using SVG icons over the classic font
 approach.
 
-Read the [Icon Documentation](https://element.siemens.io/fundamentals/icons/)
+Read the [icon documentation](https://element.siemens.io/fundamentals/icons/)
 for more details checkout our [list of icons](https://element.siemens.io/icons/).
 
 ## Finalizing the Open Source transition
@@ -205,15 +200,15 @@ allowing applications to remove the `zone.js` polyfill and benefit from improved
 
 ## Native Federation support for Flexible Dashboards
 
-Flexible dashboards now support **Native Federation**.
+Flexible dashboards now support **native federation**.
 
 Three integration modes are now available for loading remote widgets through micro frontend:
 
-| Mode | Description |
-|------|-------------|
-| **Module Federation** | Webpack-based federation (existing) |
-| **Native Federation** | ESM-based, bundler-agnostic :sparkles: |
-| **Hybrid/Bridge** | Native host + Module Federation remotes |
+| Mode                  | Description                             |
+| --------------------- | --------------------------------------- |
+| **Module Federation** | Webpack-based federation (existing)     |
+| **Native Federation** | ESM-based, bundler-agnostic :sparkles:  |
+| **Hybrid/Bridge**     | Native host + Module Federation remotes |
 
 ### New Entry Points
 
