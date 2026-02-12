@@ -16,27 +16,23 @@ import { IconService } from './si-icons';
 
 /**
  * Global configuration for icons.
- *
- * @experimental
  */
 export interface IconConfig {
   /**
    * If true, the si-icon component will always render the icon font instead of the svg.
    *
-   * @defaultValue true
+   * @defaultValue false
    */
   disableSvgIcons?: boolean;
 }
 
 const ICON_CONFIG = new InjectionToken<IconConfig>('ICON_CONFIG', {
   providedIn: 'root',
-  factory: () => ({ disableSvgIcons: true })
+  factory: () => ({ disableSvgIcons: false })
 });
 
 /**
  * Configure how Element handles icons. Provide only once in your global configuration.
- *
- * @experimental
  */
 export const provideIconConfig = (config: IconConfig): Provider => ({
   provide: ICON_CONFIG,
@@ -51,8 +47,6 @@ export const provideIconConfig = (config: IconConfig): Provider => ({
  *
  * The content of this component is hidden in the a11y tree.
  * If needed, the consumer must set proper labels.
- *
- * @experimental
  */
 @Component({
   selector: 'si-icon',

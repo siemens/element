@@ -174,10 +174,10 @@ describe('SiBreadcrumbComponent', () => {
 
     fixture.detectChanges();
 
-    const rootClasses = element
+    const iconElement = element
       .querySelector('.breadcrumb')!
-      .querySelector('.breadcrumb li:first-child si-icon div')!.classList;
-    expect(rootClasses.contains('element-breadcrumb-root')).toBeTruthy();
+      .querySelector('.breadcrumb li:first-child si-icon[data-icon="elementBreadcrumbRoot"]');
+    expect(iconElement).toBeTruthy();
   });
 
   it('should update items on change', () => {

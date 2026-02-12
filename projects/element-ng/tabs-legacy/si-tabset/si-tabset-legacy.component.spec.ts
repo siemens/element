@@ -290,7 +290,7 @@ describe('SiTabset', () => {
     jasmine.clock().tick(500);
     await fixture.whenStable();
 
-    getElement(2).query(By.css('.element-cancel')).nativeElement.click();
+    getElement(2).query(By.css('si-icon[data-icon="elementCancel"]')).nativeElement.click();
     jasmine.clock().tick(500);
     await fixture.whenStable();
 
@@ -313,7 +313,7 @@ describe('SiTabset', () => {
     getElement(2).nativeElement.click();
     jasmine.clock().tick(500);
     await fixture.whenStable();
-    getElement(2).query(By.css('.element-cancel')).nativeElement.click();
+    getElement(2).query(By.css('si-icon[data-icon="elementCancel"]')).nativeElement.click();
     jasmine.clock().tick(500);
     await fixture.whenStable();
     expect(closeSpy).toHaveBeenCalledWith(jasmine.objectContaining({ heading: '3' }));
@@ -328,10 +328,10 @@ describe('SiTabset', () => {
     testComponent.tabs = ['1', { heading: '2', closable: true }];
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
-    let closeIcon = getElement(0).nativeElement.querySelector('.element-cancel');
+    let closeIcon = getElement(0).nativeElement.querySelector('si-icon[data-icon="elementCancel"]');
     fixture.detectChanges();
     expect(closeIcon).toBeFalsy();
-    closeIcon = getElement(1).nativeElement.querySelector('.element-cancel');
+    closeIcon = getElement(1).nativeElement.querySelector('si-icon[data-icon="elementCancel"]');
     fixture.detectChanges();
     expect(closeIcon).toBeTruthy();
   });

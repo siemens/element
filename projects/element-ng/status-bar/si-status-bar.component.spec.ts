@@ -88,15 +88,15 @@ describe('SiStatusBarComponent', () => {
     component.muteButton = true;
     fixture.detectChanges();
 
-    const mute = element.querySelector('.mute-button > si-icon div') as HTMLElement;
+    const mute = element.querySelector('.mute-button > si-icon') as HTMLElement;
     expect(mute).toBeTruthy();
-    expect(mute.classList.contains('element-sound-on')).toBeTrue();
+    expect(mute.getAttribute('data-icon')).toBe('elementSoundOn');
 
     component.muteButton = false;
     // uninstall clock before doing runOnPushChangeDetection
     jasmine.clock().uninstall();
     await runOnPushChangeDetection(fixture);
-    expect(mute.classList.contains('element-sound-on')).toBeFalse();
+    expect(mute.getAttribute('data-icon')).not.toBe('elementSoundOn');
   });
 
   describe('responsive mode', () => {

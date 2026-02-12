@@ -21,7 +21,6 @@ import { provideSiAgGridConfig } from '@siemens/element-ng/ag-grid';
 import { provideSiUiState } from '@siemens/element-ng/common';
 import { provideSiDatatableConfig } from '@siemens/element-ng/datatable';
 import { SiFormlyModule } from '@siemens/element-ng/formly';
-import { provideIconConfig } from '@siemens/element-ng/icon';
 import {
   SI_LOCALE_CONFIG,
   SiLocaleConfig,
@@ -160,7 +159,6 @@ export const APP_CONFIG: ApplicationConfig = {
     ),
     provideNgxTranslateForElement(),
     provideSiDatatableConfig(),
-    provideIconConfig({ disableSvgIcons: false }),
     provideSiUiState(),
     provideSiAgGridConfig()
   ]

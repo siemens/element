@@ -140,10 +140,6 @@ describe('SiTabset', () => {
 
   beforeEach(async () => {
     mockResizeObserver();
-    await TestBed.configureTestingModule({
-      imports: [TestComponent],
-      providers: [provideRouter([])]
-    }).compileComponents();
     fixture = TestBed.createComponent(TestComponent);
     testComponent = fixture.componentInstance;
     loader = TestbedHarnessEnvironment.loader(fixture);
