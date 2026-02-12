@@ -1,3 +1,13 @@
+## [48.10.1](https://github.com/siemens/element/compare/v48.10.0...v48.10.1) (2026-02-12)
+
+
+### Bug Fixes
+
+* **datepicker:** update date even on changing only time ([1c59830](https://github.com/siemens/element/commit/1c59830623b786b4341b45b132b218fc0dc87f46)), closes [#1431](https://github.com/siemens/element/issues/1431)
+* **datepicker:** update date even on changing only time ([c55aa24](https://github.com/siemens/element/commit/c55aa249c42fd804cc20aa901920f32e6fd4acec)), closes [#1443](https://github.com/siemens/element/issues/1443)
+* **pills-input:** only show placeholder text when a string is provided ([1986cdb](https://github.com/siemens/element/commit/1986cdbed6fdbd113c1eaaeb37c6ba2c6eee7880))
+* **tree-view:** use hasAnyChildren from parent to determine inline padding ([b693936](https://github.com/siemens/element/commit/b69393698ec9601a76ecc460a005c57a90c344ad))
+
 # [48.10.0](https://github.com/siemens/element/compare/v48.9.0...v48.10.0) (2026-01-15)
 
 
