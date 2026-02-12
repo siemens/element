@@ -175,6 +175,7 @@
           <button
             type="button"
             class="btn btn-primary save"
+            [class.end]="hideNavigation()"
             [disabled]="!currentStep?.isValid() || !currentStep?.isNextNavigable()"
             (click)="save()"
             >{{ saveText() | translate }}</button
