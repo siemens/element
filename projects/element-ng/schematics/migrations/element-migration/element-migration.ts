@@ -9,6 +9,7 @@ import { discoverSourceFiles } from '../../utils/index.js';
 import type { ElementMigrationData } from '../data/index.js';
 import {
   applyAttributeSelectorMigration,
+  applyElementClassMigration,
   applyClassMemberReplacementMigration,
   applyComponentPropertyNameMigration,
   applyElementSelectorMigration,
@@ -40,6 +41,7 @@ export const elementMigrationRule = (
         attributeSelectorChanges,
         elementSelectorChanges,
         symbolRemovalChanges,
+        elementClassChanges,
         classMemberReplacementChanges
       } = migrationData;
 
@@ -48,6 +50,7 @@ export const elementMigrationRule = (
       applyAttributeSelectorMigration(migrationContext, attributeSelectorChanges);
       applyElementSelectorMigration(migrationContext, elementSelectorChanges);
       applySymbolRemovalMigration(migrationContext, symbolRemovalChanges);
+      applyElementClassMigration(migrationContext, elementClassChanges);
       applyClassMemberReplacementMigration(migrationContext, classMemberReplacementChanges);
 
       tree.commitUpdate(recorder);
