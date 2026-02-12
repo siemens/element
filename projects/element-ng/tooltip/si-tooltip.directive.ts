@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+import { isPlatformBrowser } from '@angular/common';
 import {
   booleanAttribute,
   Directive,
@@ -9,6 +10,7 @@ import {
   inject,
   input,
   OnDestroy,
+  PLATFORM_ID,
   TemplateRef
 } from '@angular/core';
 import { positions } from '@siemens/element-ng/common';
@@ -21,7 +23,7 @@ import { SiTooltipService, TooltipRef } from './si-tooltip.service';
   providers: [SiTooltipService],
   host: {
     '[attr.aria-describedby]': 'describedBy',
-    '(focus)': 'focusIn()',
+    '(focus)': 'focusIn($event)',
     '(mouseenter)': 'show()',
     '(touchstart)': 'hide()',
     '(focusout)': 'hide()',
@@ -63,6 +65,7 @@ export class SiTooltipDirective implements OnDestroy {
   private showTimeout?: ReturnType<typeof setTimeout>;
   private tooltipService = inject(SiTooltipService);
   private elementRef = inject(ElementRef);
+  private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   ngOnDestroy(): void {
     this.clearShowTimeout();
@@ -98,8 +101,10 @@ export class SiTooltipDirective implements OnDestroy {
     }, delay);
   }
 
-  protected focusIn(): void {
-    this.showTooltip(true);
+  protected focusIn(event: FocusEvent): void {
+    if (this.isBrowser && (event.target as Element).matches(':focus-visible')) {
+      this.showTooltip(true);
+    }
   }
 
   protected show(): void {

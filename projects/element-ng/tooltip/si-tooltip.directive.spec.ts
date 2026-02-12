@@ -35,6 +35,7 @@ describe('SiTooltipDirective', () => {
       fixture = TestBed.createComponent(TestHostComponent);
       component = fixture.componentInstance;
       button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+      spyOn(button, 'matches').and.returnValue(true);
       fixture.detectChanges();
     });
 
@@ -112,6 +113,7 @@ describe('SiTooltipDirective', () => {
       jasmine.clock().install();
       fixture = TestBed.createComponent(TestHostComponent);
       button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+      spyOn(button, 'matches').and.returnValue(true);
       fixture.detectChanges();
     });
 
