@@ -98,7 +98,7 @@ export const tsConfig = defineConfig({
       'error',
       {
         'source': 'string',
-        'content': 'Copyright (c) Siemens 2016 - 2025\nSPDX-License-Identifier: MIT'
+        'content': 'Copyright (c) Siemens 2016 - 2026\nSPDX-License-Identifier: MIT'
       }
     ]
   }
