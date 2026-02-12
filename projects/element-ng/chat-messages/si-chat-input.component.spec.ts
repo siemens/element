@@ -7,7 +7,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FileUploadError, UploadFile } from '@siemens/element-ng/file-uploader';
 
-import { provideIconConfig } from '../icon';
 import { MessageAction } from './message-action.model';
 import {
   ChatInputAttachment,
@@ -19,12 +18,7 @@ describe('SiChatInputComponent', () => {
   let debugElement: DebugElement;
   let component: TestComponent;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [TestComponent],
-      providers: [provideIconConfig({ disableSvgIcons: false })]
-    }).compileComponents();
-
+  beforeEach(() => {
     fixture = TestBed.createComponent(TestComponent);
     debugElement = fixture.debugElement;
     component = fixture.componentInstance;

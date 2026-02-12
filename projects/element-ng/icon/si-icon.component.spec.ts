@@ -111,6 +111,9 @@ describe('SiSvgIconComponent', () => {
 
     describe('with disabled svg icons', () => {
       beforeEach(() => {
+        TestBed.configureTestingModule({
+          providers: [provideIconConfig({ disableSvgIcons: true })]
+        });
         fixture = TestBed.createComponent(TestHostComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
