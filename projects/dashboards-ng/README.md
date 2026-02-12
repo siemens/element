@@ -374,4 +374,4 @@ Here is the [demo](https://github.com/siemens/element/blob/main/projects/dashboa
 
 Code and documentation Copyright (c) Siemens 2016 - 2026
 
-See [LICENSE.md](https://github.com/siemens/element/blob/main/LICENSE.md).
+MIT, see [LICENSE.md](https://github.com/siemens/element/blob/main/LICENSE.md).
