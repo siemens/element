@@ -10,7 +10,8 @@ import {
   ElementMigrationData,
   ElementSelectorInstruction,
   SymbolRemovalInstruction,
-  ClassMemberReplacementInstruction
+  ClassMemberReplacementInstruction,
+  ElementClassChangeInstruction
 } from './index.js';
 
 const SYMBOL_RENAMING_MIGRATION: SymbolRenamingInstruction[] = [
@@ -230,6 +231,35 @@ const CLASS_MEMBER_REPLACEMENTS_MIGRATION: ClassMemberReplacementInstruction[] =
   }
 ];
 
+const ELEMENT_CLASS_CHANGES_MIGRATION: ElementClassChangeInstruction[] = [
+  // btn-circle with btn-sm should have btn-sm removed
+  {
+    requiredClasses: ['btn', 'btn-circle', 'btn-sm'],
+    removeClasses: ['btn-sm'],
+    addClasses: []
+  },
+  // btn-circle with btn-xs should migrate to btn-sm
+  {
+    requiredClasses: ['btn', 'btn-circle', 'btn-xs'],
+    removeClasses: ['btn-xs'],
+    addClasses: ['btn-sm']
+  },
+  // btn-circle without size modifier should get btn-lg
+  {
+    requiredClasses: ['btn', 'btn-circle'],
+    excludedClasses: ['btn-lg', 'btn-sm', 'btn-xs'],
+    removeClasses: [],
+    addClasses: ['btn-lg']
+  },
+  // Non-circle buttons with btn-xs should migrate to btn-sm
+  {
+    requiredClasses: ['btn', 'btn-xs'],
+    excludedClasses: ['btn-circle'],
+    removeClasses: ['btn-xs'],
+    addClasses: ['btn-sm']
+  }
+];
+
 /**
  * Stable migration data for testing.
  * This data is frozen and used for testing to ensure test stability.
@@ -237,9 +267,10 @@ const CLASS_MEMBER_REPLACEMENTS_MIGRATION: ClassMemberReplacementInstruction[] =
  */
 export const getElementMigrationTestData = (): ElementMigrationData => ({
   attributeSelectorChanges: ATTRIBUTE_SELECTORS_MIGRATION,
-  symbolRenamingChanges: SYMBOL_RENAMING_MIGRATION,
+  classMemberReplacementChanges: CLASS_MEMBER_REPLACEMENTS_MIGRATION,
   componentPropertyNameChanges: COMPONENT_PROPERTY_NAMES_MIGRATION,
+  elementClassChanges: ELEMENT_CLASS_CHANGES_MIGRATION,
   elementSelectorChanges: ELEMENT_SELECTORS_MIGRATION,
   symbolRemovalChanges: SYMBOL_REMOVALS_MIGRATION,
-  classMemberReplacementChanges: CLASS_MEMBER_REPLACEMENTS_MIGRATION
+  symbolRenamingChanges: SYMBOL_RENAMING_MIGRATION
 });

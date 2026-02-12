@@ -151,4 +151,8 @@ describe('to legacy migration', () => {
   it('should rename functions of classes', async () => {
     await checkTemplateMigration(['function-rename.ts']);
   });
+
+  it('should migrate element classes in inline template', async () => {
+    await checkTemplateMigration(['element-class-inline-template.ts']);
+  });
 });
