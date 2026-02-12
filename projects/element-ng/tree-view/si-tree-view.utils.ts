@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import type { CheckboxState, TreeItem, TreeItemFolderState } from './si-tree-view.model';

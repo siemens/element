@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { ConfigurableFocusTrap, ConfigurableFocusTrapFactory } from '@angular/cdk/a11y';

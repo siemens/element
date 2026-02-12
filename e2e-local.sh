@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright (c) Siemens 2016 - 2025
+# Copyright (c) Siemens 2016 - 2026
 # SPDX-License-Identifier: MIT
 
 cd $(dirname $0)

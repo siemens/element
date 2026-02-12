@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { Column } from '@siemens/element-ng/column-selection-dialog';

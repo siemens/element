@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { Injectable, Injector } from '@angular/core';

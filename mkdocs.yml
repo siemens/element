@@ -8,7 +8,7 @@ repo_name: 'siemens/element'
 repo_url: 'https://github.com/siemens/element'
 edit_uri: 'blob/main/docs/'
 
-copyright: '&copy; Siemens 2016-2025'
+copyright: '&copy; Siemens 2016-2026'
 
 strict: true
 
