@@ -61,20 +61,7 @@ export const provideIconConfig = (config: IconConfig): Provider => ({
     [class]="svgIcon() ? '' : fontIcon()"
     [innerHTML]="svgIcon()"
   ></div>`,
-  styles: `
-    :host {
-      display: inline-flex;
-      font-weight: normal;
-      vertical-align: middle;
-      line-height: 1;
-
-      ::ng-deep svg {
-        display: block;
-        block-size: 1em;
-        fill: currentColor;
-      }
-    }
-  `,
+  styleUrl: './si-icon.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[attr.data-icon]': 'icon()'
