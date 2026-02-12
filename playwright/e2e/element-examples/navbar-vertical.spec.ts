@@ -34,6 +34,32 @@ test.describe('navbar vertical', () => {
     await si.runVisualAndA11yTests('collapsed-flyout');
   });
 
+  test('it should show tooltip only on keyboard interaction', async ({ page, si }) => {
+    await si.visitExample(example);
+    await page.getByLabel('collapse', { exact: true }).click();
+    await expect(page.getByLabel('expand', { exact: true })).toBeVisible();
+    await si.waitForAllAnimationsToComplete();
+    const userManagement = page.getByRole('button', { name: 'User management' });
+    const tooltip = page.getByRole('tooltip', { name: 'User management' });
+    const group = page.getByRole('group', { name: 'User management' });
+
+    // This checks the tooltip is visible when using the keyboard
+    await userManagement.focus();
+    await userManagement.press('Enter');
+    await expect(group.getByRole('link', { name: 'Sub item', exact: true })).toBeFocused();
+    await group.press('Escape');
+    await expect(tooltip).toBeVisible();
+    await expect(userManagement).toBeFocused();
+
+    // This check the tooltip is not visible whe using the mouse
+    await userManagement.click();
+    await group.hover();
+    await expect(tooltip).not.toBeVisible();
+    await page.getByRole('main').click(); // outside click to hide flyout
+    await expect(userManagement).toBeFocused();
+    await expect(tooltip).not.toBeVisible();
+  });
+
   test(example + ' mobile collapsed', async ({ page, si }) => {
     await page.setViewportSize({ width: 570, height: 600 });
     await si.visitExample(example, false);
