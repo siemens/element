@@ -3,135 +3,54 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Rule, SchematicContext, Tree, UpdateRecorder } from '@angular-devkit/schematics';
-import * as ts from 'typescript';
-import { EmitHint } from 'typescript';
+import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 
-import {
-  classMemberReplacements,
-  discoverSourceFiles,
-  renameComponentProperty,
-  renameAttribute,
-  renameElementTag,
-  renameIdentifier,
-  removeSymbol
-} from '../../utils/index.js';
+import { discoverSourceFiles } from '../../utils/index.js';
 import type { ElementMigrationData } from '../data/index.js';
+import {
+  applyAttributeSelectorMigration,
+  applyClassMemberReplacementMigration,
+  applyComponentPropertyNameMigration,
+  applyElementSelectorMigration,
+  applySymbolRemovalMigration,
+  applySymbolRenamingMigration
+} from '../utilities/index.js';
 
 export const elementMigrationRule = (
   options: { path: string },
   migrationData: ElementMigrationData
 ): Rule => {
   return async (tree: Tree, context: SchematicContext) => {
-    for await (const { path: filePath, sourceFile, typeChecker } of discoverSourceFiles(
-      tree,
-      context,
-      options.path
-    )) {
-      const content = tree.read(filePath);
-      if (!content) {
+    for await (const discoveredSourceFile of discoverSourceFiles(tree, context, options.path)) {
+      if (!tree.read(discoveredSourceFile.path)) {
         continue;
       }
 
-      let recorder: UpdateRecorder | undefined = undefined;
-      let printer: ts.Printer | undefined = undefined;
+      const recorder = tree.beginUpdate(discoveredSourceFile.path);
 
-      if (migrationData.componentPropertyNameChanges) {
-        recorder ??= tree.beginUpdate(filePath);
+      const migrationContext = {
+        tree,
+        discoveredSourceFile,
+        recorder
+      };
 
-        for (const change of migrationData.componentPropertyNameChanges) {
-          renameComponentProperty({
-            tree,
-            recorder,
-            sourceFile,
-            filePath,
-            elementName: change.elementSelector,
-            properties: change.propertyMappings
-          });
-        }
-      }
+      const {
+        componentPropertyNameChanges,
+        symbolRenamingChanges,
+        attributeSelectorChanges,
+        elementSelectorChanges,
+        symbolRemovalChanges,
+        classMemberReplacementChanges
+      } = migrationData;
 
-      // Remove the ifs when it grows a bit more and split into multiple functions
-      if (migrationData.symbolRenamingChanges) {
-        const changeInstructions = renameIdentifier({
-          sourceFile,
-          renamingInstructions: migrationData.symbolRenamingChanges
-        });
+      applyComponentPropertyNameMigration(migrationContext, componentPropertyNameChanges);
+      applySymbolRenamingMigration(migrationContext, symbolRenamingChanges);
+      applyAttributeSelectorMigration(migrationContext, attributeSelectorChanges);
+      applyElementSelectorMigration(migrationContext, elementSelectorChanges);
+      applySymbolRemovalMigration(migrationContext, symbolRemovalChanges);
+      applyClassMemberReplacementMigration(migrationContext, classMemberReplacementChanges);
 
-        for (const changeInstruction of changeInstructions) {
-          recorder ??= tree.beginUpdate(filePath);
-          printer ??= ts.createPrinter();
-          recorder.remove(changeInstruction.start, changeInstruction.width);
-          recorder.insertLeft(
-            changeInstruction.start,
-            printer.printNode(EmitHint.Unspecified, changeInstruction.newNode, sourceFile)
-          );
-        }
-      }
-
-      if (migrationData.attributeSelectorChanges) {
-        recorder ??= tree.beginUpdate(filePath);
-
-        for (const change of migrationData.attributeSelectorChanges) {
-          renameAttribute({
-            tree,
-            recorder,
-            sourceFile,
-            filePath,
-            fromName: change.replace,
-            toName: change.replaceWith
-          });
-        }
-      }
-
-      if (migrationData.elementSelectorChanges) {
-        recorder ??= tree.beginUpdate(filePath);
-
-        for (const change of migrationData.elementSelectorChanges) {
-          renameElementTag({
-            tree,
-            recorder,
-            sourceFile,
-            filePath,
-            fromName: change.replace,
-            toName: change.replaceWith,
-            defaultAttributes: change.defaultAttributes
-          });
-        }
-      }
-
-      if (migrationData.symbolRemovalChanges) {
-        recorder ??= tree.beginUpdate(filePath);
-
-        for (const change of migrationData.symbolRemovalChanges) {
-          removeSymbol({
-            tree,
-            recorder,
-            sourceFile,
-            filePath,
-            elementName: change.elementSelector,
-            attributeSelector: change.attributeSelector,
-            names: change.names
-          });
-        }
-      }
-
-      if (migrationData.classMemberReplacementChanges) {
-        recorder ??= tree.beginUpdate(filePath);
-
-        for (const change of migrationData.classMemberReplacementChanges) {
-          classMemberReplacements({
-            recorder,
-            sourceFile,
-            instruction: change,
-            typeChecker
-          });
-        }
-      }
-
-      if (recorder) {
-        tree.commitUpdate(recorder);
-      }
+      tree.commitUpdate(recorder);
     }
 
     return tree;

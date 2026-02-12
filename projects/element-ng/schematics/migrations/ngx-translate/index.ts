@@ -7,9 +7,17 @@ import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
 import { EmitHint } from 'typescript';
 
-import { applyImport, discoverSourceFiles, visitStaticFunctionCalls } from '../../utils/index.js';
+import { applyImport, discoverSourceFiles, getImportSpecifiers } from '../../utils/index.js';
 
 type Transformation = { start: number; end: number; replacement: string };
+
+interface VisitFunctionCallOptions {
+  sourceFile: ts.SourceFile;
+  moduleSpecifier: string | RegExp;
+  className?: string;
+  functionName: string;
+  visitor: (node: ts.CallExpression) => void;
+}
 
 export const missingTranslateMigrationRule = (options: { path: string }): Rule => {
   return async (tree: Tree, context: SchematicContext) => {
@@ -142,4 +150,66 @@ const createTranslateMethodCallTransformation = (
       .createPrinter()
       .printNode(EmitHint.Expression, updatedCall, node.getSourceFile())
   };
+};
+
+/**
+ * Visits all function static call nodes that match the given module, class, and function names.
+ * This function handles nested calls, so it will find `ClassName.method()`.
+ * If className is not provided, it will search for standalone function calls (e.g., `functionName()`).
+ */
+export const visitStaticFunctionCalls = ({
+  sourceFile,
+  moduleSpecifier,
+  className,
+  functionName,
+  visitor
+}: VisitFunctionCallOptions): void => {
+  // Get all import specifiers from the module
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+  const importSpecifierName = className || functionName;
+  const allImportSpecifiers = getImportSpecifiers(sourceFile, moduleSpecifier, importSpecifierName);
+  if (allImportSpecifiers.length === 0) {
+    return;
+  }
+
+  // Get the local names (including aliases) for the imported class or function
+  const localNames = allImportSpecifiers.map(spec => spec.name.text);
+
+  // Recursive visitor function that traverses all nodes including nested function call arguments
+  const visit = (node: ts.Node): void => {
+    if (ts.isCallExpression(node)) {
+      const expression = node.expression;
+
+      if (className) {
+        // Handle PropertyAccessExpression (e.g. Class.method())
+        if (ts.isPropertyAccessExpression(expression)) {
+          const propertyName = expression.name.text;
+
+          // Check if the method name matches
+          if (propertyName === functionName) {
+            const objectExpression = expression.expression;
+            // Case 1: Static call - ClassName.method()
+            if (ts.isIdentifier(objectExpression)) {
+              if (localNames.includes(objectExpression.text)) {
+                visitor(node);
+              }
+            }
+          }
+        }
+      } else {
+        // Handle standalone function calls (e.g., functionName())
+        if (ts.isIdentifier(expression)) {
+          if (localNames.includes(expression.text)) {
+            visitor(node);
+          }
+        }
+      }
+    }
+
+    // Recursively visit all children
+    ts.forEachChild(node, visit);
+  };
+
+  // Start visiting from the source file
+  ts.forEachChild(sourceFile, visit);
 };
