@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { DOWN_ARROW, ENTER, UP_ARROW } from '@angular/cdk/keycodes';

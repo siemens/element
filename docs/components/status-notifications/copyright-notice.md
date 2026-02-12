@@ -24,7 +24,7 @@ import { SiCopyrightNoticeComponent } from '@siemens/element-ng/copyright-notice
       useValue: {
           company: 'Your Company',  // Defaults to `Sample Company`
           startYear: 2021,
-          lastUpdateYear: 2025
+          lastUpdateYear: 2026
       }
     }
   ]
