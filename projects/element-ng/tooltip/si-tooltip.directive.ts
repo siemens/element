@@ -25,7 +25,8 @@ import { SiTooltipService, TooltipRef } from './si-tooltip.service';
     '(mouseenter)': 'show()',
     '(touchstart)': 'hide()',
     '(focusout)': 'hide()',
-    '(mouseleave)': 'hide()'
+    '(mouseleave)': 'hide()',
+    '(pointerdown)': 'pointerDown()'
   }
 })
 export class SiTooltipDirective implements OnDestroy {
@@ -63,6 +64,7 @@ export class SiTooltipDirective implements OnDestroy {
   private showTimeout?: ReturnType<typeof setTimeout>;
   private tooltipService = inject(SiTooltipService);
   private elementRef = inject(ElementRef);
+  private isPointerDown = false;
 
   ngOnDestroy(): void {
     this.clearShowTimeout();
@@ -95,11 +97,16 @@ export class SiTooltipDirective implements OnDestroy {
         tooltipContext: this.tooltipContext
       });
       this.tooltipRef.show();
+      this.isPointerDown = false;
     }, delay);
   }
 
   protected focusIn(): void {
-    this.showTooltip(true);
+    this.showTooltip(!this.isPointerDown);
+  }
+
+  protected pointerDown(): void {
+    this.isPointerDown = true;
   }
 
   protected show(): void {
@@ -109,5 +116,6 @@ export class SiTooltipDirective implements OnDestroy {
   protected hide(): void {
     this.clearShowTimeout();
     this.tooltipRef?.hide();
+    this.isPointerDown = false;
   }
 }
