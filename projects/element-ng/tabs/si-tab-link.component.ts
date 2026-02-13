@@ -2,10 +2,11 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { SiIconComponent } from '@siemens/element-ng/icon';
+import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 import { startWith } from 'rxjs/operators';
 
@@ -32,13 +33,10 @@ import { SiTabBaseDirective } from './si-tab-base.directive';
   styleUrl: './si-tab.component.scss',
   providers: [{ provide: SiTabBaseDirective, useExisting: SiTabLinkComponent }],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  hostDirectives: [
-    {
-      directive: RouterLinkActive
-    }
-  ]
+  hostDirectives: [RouterLinkActive, SiTooltipDirective]
 })
 export class SiTabLinkComponent extends SiTabBaseDirective {
+  private tooltipDirective = inject(SiTooltipDirective);
   private router = inject(Router);
   /** @internal */
   routerLink = inject(RouterLink, { self: true });
@@ -58,5 +56,10 @@ export class SiTabLinkComponent extends SiTabBaseDirective {
       });
     }
     super.selectTab(retainFocus);
+  }
+
+  constructor() {
+    super();
+    effect(() => this.tooltipDirective.setTooltipContent(this.icon() ? this.heading() : ''));
   }
 }

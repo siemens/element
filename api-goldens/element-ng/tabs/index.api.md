@@ -9,6 +9,7 @@ import { ElementRef } from '@angular/core';
 import { FocusableOption } from '@angular/cdk/a11y';
 import { FocusKeyManager } from '@angular/cdk/a11y';
 import * as i1 from '@angular/router';
+import * as i2 from '@siemens/element-ng/tooltip';
 import { OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { RouterLinkActive } from '@angular/router';
@@ -19,6 +20,7 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public
 export class SiTabComponent extends SiTabBaseDirective implements OnDestroy {
+    constructor();
     readonly active: _angular_core.ModelSignal<boolean>;
     readonly canActivate: _angular_core.InputSignal<(() => boolean) | undefined>;
     readonly canDeactivate: _angular_core.InputSignal<(() => boolean) | undefined>;
@@ -28,6 +30,7 @@ export class SiTabComponent extends SiTabBaseDirective implements OnDestroy {
 
 // @public
 export class SiTabLinkComponent extends SiTabBaseDirective {
+    constructor();
     // (undocumented)
     readonly active: _angular_core.Signal<boolean | undefined>;
     // (undocumented)
