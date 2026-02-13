@@ -1,16 +1,22 @@
 - tree "Company locations":
   - treeitem "Company1 Smart Infrastructure" [expanded] [level=1]:
+    - text: ""
     - paragraph: Smart Infrastructure
   - treeitem "Milano MIL Details" [level=2]:
+    - text: ""
     - paragraph: MIL
     - paragraph: Details
   - treeitem "Chicago CHI" [level=2]:
+    - text: ""
     - paragraph: CHI
   - treeitem "Pune PUN" [level=2] [selected]:
+    - text: ""
     - paragraph: PUN
   - treeitem "Zug ZG" [level=2]:
+    - text: ""
     - paragraph: ZG
   - treeitem "Company2 GG We don't care about your privacy" [level=1]:
+    - text: ""
     - paragraph: GG
     - paragraph: We don't care about your privacy
 - text: A complex example that allows playing with various settings of a si-tree-view.

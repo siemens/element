@@ -10,7 +10,9 @@
 - navigation:
   - button "expand"
   - button "Home"
+  - group "Home"
   - button "Documentation"
+  - group "Documentation"
   - link "Energy & Operations":
     - /url: "#/viewer/viewer/energy"
   - link "Test Coverage":

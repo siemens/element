@@ -8,7 +8,9 @@
 - navigation:
   - button "collapse" [expanded]
   - button "Home"
+  - group "Home"
   - button "Documentation"
+  - group "Documentation"
   - text: All the rest
   - link "Energy & Operations":
     - /url: "#/viewer/viewer/energy"

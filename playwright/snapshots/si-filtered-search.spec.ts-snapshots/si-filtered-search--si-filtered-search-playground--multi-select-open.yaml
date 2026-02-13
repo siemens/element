@@ -3,7 +3,7 @@
 - text: /Event = 2\/\d+\/\d+, \d+:\d+:\d+ AM/
 - button "clear"
 - text: Score
-- combobox "search"
+- combobox "search" [expanded]
 - button "clear"
 - combobox "search"
 - button "clear"

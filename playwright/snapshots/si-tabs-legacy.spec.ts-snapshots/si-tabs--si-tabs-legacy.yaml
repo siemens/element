@@ -2,6 +2,7 @@
   - tab /Reception \d+/ [selected]
   - tab "Conference room"
   - tab "Lobby Hall":
+    - text: ""
     - img "Hall"
   - tab "Pantry 1"
   - tab "Washroom 2"

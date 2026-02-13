@@ -19,8 +19,10 @@
 - text: With filter
 - listbox "Select with custom template":
   - group "Beer":
+    - text: ""
     - option "Beer 1 (Alc.:5%)"
     - option "Beer 2 (Alc.:7%)" [selected]
   - group "Wine":
+    - text: ""
     - option /Red wine \(Alc\.:\d+%\)/
     - option /White wine \(Alc\.:\d+%\)/

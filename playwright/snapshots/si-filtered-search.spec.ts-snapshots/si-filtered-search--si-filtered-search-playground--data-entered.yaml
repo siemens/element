@@ -4,7 +4,7 @@
 - button "clear"
 - text: Score Good
 - button "clear"
-- combobox "search"
+- combobox "search" [expanded]
 - button "clear"
 - button "Submit search"
 - text: Control panel
