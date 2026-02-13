@@ -55,11 +55,11 @@ test.describe('dashboard', () => {
     const helloWorld = page.getByRole('option', {
       name: 'Hello World'
     });
-    helloWorld.click();
+    await helloWorld.click();
     const next = page.getByText('Next', {
       exact: true
     });
-    next.click();
+    await next.click();
     await page.waitForTimeout(1000); // Wait for 1 second to allow the page to stabilize
 
     const title = page.getByRole('textbox', { name: 'Title' });
@@ -72,12 +72,12 @@ test.describe('dashboard', () => {
 
     await title.fill('Dashboard World');
     await si.runVisualAndA11yTests('hello-world-editor');
-    addBtn.click();
+    await addBtn.click();
 
     await page.waitForTimeout(1000);
     await expect(page.getByText('Dashboard World', { exact: true })).toBeVisible();
 
-    page.getByText('Dashboard World', { exact: true }).scrollIntoViewIfNeeded();
+    await page.getByText('Dashboard World', { exact: true }).scrollIntoViewIfNeeded();
 
     await si.runVisualAndA11yTests('hello-world');
   });
@@ -93,13 +93,13 @@ test.describe('dashboard', () => {
     await expect(contact).toBeVisible();
     await expect(contact).not.toHaveClass(/active/);
 
-    contact.click();
+    await contact.click();
     await expect(contact).toHaveClass(/active/);
 
     const next = page.getByText('Next', {
       exact: true
     });
-    next.click();
+    await next.click();
     await page.waitForTimeout(1000); // Wait for 1 second to allow the page to stabilize
 
     const nextStepBtn = page.getByText('Next', {
@@ -117,7 +117,7 @@ test.describe('dashboard', () => {
     await lastName.fill('Dolor Sit');
     await lastName.press('Tab');
     await expect(nextStepBtn).not.toBeDisabled();
-    nextStepBtn.click();
+    await nextStepBtn.click();
     await expect(page.getByText('Company Information')).toBeVisible();
 
     const addBtn = page.getByText('Add', {
@@ -128,12 +128,12 @@ test.describe('dashboard', () => {
 
     await si.runVisualAndA11yTests('contact-editor-step-2');
     const jobTitle = page.getByRole('textbox', { name: 'Job title' });
-    jobTitle.fill('Software Engineer');
+    await jobTitle.fill('Software Engineer');
 
     await expect(addBtn).not.toBeDisabled();
-    addBtn.click();
+    await addBtn.click();
 
-    page
+    await page
       .locator('si-widget-host', {
         hasText: 'Lorem Ipsum Dolor Sit'
       })
@@ -146,9 +146,9 @@ test.describe('dashboard', () => {
     await si.visitExample(example, undefined);
     await expect(page.getByLabel('Edit')).toBeVisible();
     const editBtn = page.getByLabel('Edit');
-    editBtn.click();
+    await editBtn.click();
     const pieChart = page.getByText('Pie Chart', { exact: true }).locator('..');
-    pieChart.getByLabel('Remove').click();
+    await pieChart.getByLabel('Remove').click();
     await page.waitForTimeout(100);
     await expect(page.locator('si-delete-confirmation-dialog')).toBeVisible();
     await si.runVisualAndA11yTests('delete-confirmation-dialog');
@@ -156,7 +156,8 @@ test.describe('dashboard', () => {
     const deleteBtn = page.locator('si-delete-confirmation-dialog').getByText('Remove', {
       exact: true
     });
-    deleteBtn.click();
+    await deleteBtn.click();
+    await expect(page.locator('.modal-backdrop')).not.toBeVisible();
     await expect(page.getByText('Pie Chart', { exact: true })).not.toBeVisible();
 
     await si.runVisualAndA11yTests('delete');
@@ -220,9 +221,9 @@ test.describe('dashboard', () => {
   const openWidgetCatalog = async (page: Page): Promise<void> => {
     await expect(page.getByLabel('Edit')).toBeVisible();
     const editBtn = page.getByLabel('Edit');
-    editBtn.click();
+    await editBtn.click();
     await expect(page.getByText('Add widget')).toBeVisible();
     const addWidgetBtn = page.getByText('Add widget');
-    addWidgetBtn.click();
+    await addWidgetBtn.click();
   };
 });
