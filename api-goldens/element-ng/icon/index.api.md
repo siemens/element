@@ -5,7 +5,6 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
-import * as _angular_platform_browser from '@angular/platform-browser';
 import { EntityStatusType } from '@siemens/element-ng/common';
 import { InjectionToken } from '@angular/core';
 import { Provider } from '@angular/core';

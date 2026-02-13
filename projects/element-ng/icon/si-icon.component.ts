@@ -56,15 +56,12 @@ export const provideIconConfig = (config: IconConfig): Provider => ({
  */
 @Component({
   selector: 'si-icon',
-  template: ` <div
-    aria-hidden="true"
-    [class]="svgIcon() ? '' : fontIcon()"
-    [innerHTML]="svgIcon()"
-  ></div>`,
+  template: ` <div aria-hidden="true" [class]="svgIcon() ? 'svg-element-icon' : fontIcon()"></div>`,
   styleUrl: './si-icon.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[attr.data-icon]': 'icon()'
+    '[attr.data-icon]': 'icon()',
+    '[style.--svg-element-icon]': 'svgIcon()'
   }
 })
 export class SiIconComponent {
@@ -94,9 +91,14 @@ export class SiIconComponent {
   private readonly config = inject(ICON_CONFIG);
   private readonly iconService = inject(IconService);
 
-  protected readonly svgIcon = computed(() =>
-    this.config.disableSvgIcons ? undefined : this.iconService.getIcon(this.icon())
-  );
+  protected readonly svgIcon = computed(() => {
+    const icon = this.config.disableSvgIcons ? undefined : this.iconService.getIcon(this.icon());
+    if (!icon) {
+      return undefined;
+    }
+
+    return `url("${icon.replace(/"/g, '\\"')}")`;
+  });
 
   /** Icon class, which is ensured to be kebab-case. */
   protected readonly fontIcon = computed(() =>
