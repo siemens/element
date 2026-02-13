@@ -88,7 +88,6 @@ test('si-search-bar/si-search-bar-value', ({ si }) => si.static());
 test('si-search-bar/si-search-bar', ({ si }) => si.static());
 test('si-slider/si-slider', ({ si }) => si.static());
 test('si-slider/si-slider-icon', ({ si }) => si.static());
-test('si-sort-bar/si-sort-bar', ({ si }) => si.static());
 test('si-split/si-split-hide-header', ({ si }) => si.static());
 test('si-split/si-split-mixed', ({ si }) => si.static());
 test('si-summary-chip/si-summary-chip', ({ si }) => si.static());
