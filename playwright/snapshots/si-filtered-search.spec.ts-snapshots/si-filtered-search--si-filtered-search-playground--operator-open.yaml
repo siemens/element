@@ -1,7 +1,7 @@
 - text: Filtered Search Location Munich
 - button "clear"
 - text: Event
-- combobox "search"
+- combobox "search" [expanded]
 - textbox "search": /2\/\d+\/\d+, \d+:\d+:\d+ AM/
 - button "clear"
 - combobox "search"

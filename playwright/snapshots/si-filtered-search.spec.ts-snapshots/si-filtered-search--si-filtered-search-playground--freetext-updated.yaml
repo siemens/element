@@ -2,7 +2,7 @@
 - button "clear"
 - text: updated free text
 - button "clear"
-- combobox "search"
+- combobox "search" [expanded]
 - button "clear"
 - button "Submit search"
 - text: Control panel

@@ -1,7 +1,7 @@
 - text: Date Range Input*
-- group:
+- group "Date Range Input*":
   - textbox /Start dd[\d,.]+[bkmBKM]+\.yyyy/: /3\/1\/\d+, 7:\d+ AM/
-  - text: "-"
+  - text: ""
   - textbox /End dd[\d,.]+[bkmBKM]+\.yyyy/: /3\/6\/\d+, 7:\d+ AM/
   - button "Open calendar"
 - text: Control panel

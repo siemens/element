@@ -15,6 +15,9 @@
       - link "Level 3":
         - /url: "#/viewer/viewer/root/level1/level2/level3"
     - listitem:
+      - link "Level 4":
+        - /url: "#/viewer/viewer/root/level1/level2/level3/level4"
+    - listitem:
       - button "..."
     - listitem:
       - button "Level 8 thisHasALongNonSepa..."
@@ -35,6 +38,9 @@
     - listitem:
       - link "Level 3":
         - /url: "#/viewer/viewer/root/level1/level2/level3"
+    - listitem:
+      - link "Level 4":
+        - /url: "#/viewer/viewer/root/level1/level2/level3/level4"
     - listitem:
       - button "..."
     - listitem:

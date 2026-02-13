@@ -2,7 +2,7 @@
   - strong: Hello
   - text: ","
 - paragraph: how can I help you today?
-- checkbox "All prompts"
+- checkbox "All prompts" [checked]
 - checkbox "Maintenance"
 - checkbox "Analytics"
 - checkbox "Troubleshooting"

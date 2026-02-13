@@ -1,4 +1,8 @@
+- link "Step 1":
+  - /url: "#"
 - text: Step 2
+- link "Step 3":
+  - /url: "#"
 - heading "Step 2" [level=1]
 - text: Content with full height
 - button "Cancel"

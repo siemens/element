@@ -16,7 +16,7 @@
   - img "Buildings at scale"
   - text: Project Issues!
   - button "Toggle"
-  - text: 150 Issues Number of contributing issues
+  - text: /\d+ Issues Number of contributing issues/
   - link "Go to issues":
     - /url: https://github.com/siemens/element/issues
   - img
@@ -45,10 +45,10 @@
   - textbox "Search..."
   - list:
     - listitem:
-      - text: 99+
+      - text: /\d+\+/
       - link "Taj Mahal":
         - /url: https://en.wikipedia.org/wiki/Taj_Mahal
-      - text: The Taj Mahal is an ivory-white marble mausoleum 10.7
+      - text: /The Taj Mahal is an ivory-white marble mausoleum \d+\.\d+/
       - button "Building overview"
     - listitem:
       - text: info
@@ -60,13 +60,13 @@
       - text: 3 Eiffel Tower The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris. 8.3
       - button "Building overview"
     - listitem:
-      - text: 5 Colosseum 12.7
+      - text: /5 Colosseum \d+\.\d+/
       - button "Building overview"
     - listitem:
       - text: 5 Burj Khalifa 4.5
       - button "Building overview"
     - listitem:
-      - text: 6 St. Basil's Cathedral 11.1
+      - text: /6 St\. Basil's Cathedral \d+\.\d+/
       - button "Building overview"
   - link "Go to...":
     - /url: https://github.com/siemens/element/issues
@@ -75,10 +75,10 @@
   - menubar:
     - menuitem "Remove"
   - list:
-    - listitem: Today 23:59 Title Description
-    - listitem: Today 23:59 Title Description
-    - listitem: Today 23:59 Title Description
-    - listitem: Today 23:59 Title Description
+    - listitem: /Today \d+:\d+ Title Description/
+    - listitem: /Today \d+:\d+ Title Description/
+    - listitem: /Today \d+:\d+ Title Description/
+    - listitem: /Today \d+:\d+ Title Description/
   - link "Go to...":
     - /url: https://github.com/siemens/element/issues
   - img

@@ -133,12 +133,18 @@
 - link "List group item heading 3 days ago Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit. Donec id elit non mi porta.":
   - /url: "#"
   - heading "List group item heading" [level=3]
+  - text: ""
   - paragraph: Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
+  - text: ""
 - link "List group item heading 3 days ago Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit. Donec id elit non mi porta.":
   - /url: "#"
   - heading "List group item heading" [level=3]
+  - text: ""
   - paragraph: Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
+  - text: ""
 - link "List group item heading 3 days ago Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit. Donec id elit non mi porta.":
   - /url: "#"
   - heading "List group item heading" [level=3]
+  - text: ""
   - paragraph: Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.
+  - text: ""

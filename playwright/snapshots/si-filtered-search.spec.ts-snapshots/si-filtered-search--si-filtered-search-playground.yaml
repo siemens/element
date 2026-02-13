@@ -1,5 +1,7 @@
 - text: Filtered Search Location Munich
+- button "clear" [disabled]
 - combobox "search" [disabled]
+- button "clear" [disabled]
 - text: Control panel
 - checkbox "Disabled" [checked]
 - text: Disabled

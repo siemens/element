@@ -8,11 +8,15 @@
   - option "last year"
   - option "past month"
 - text: From
-- textbox "From Open calendar"
+- textbox "From Open calendar":
+  - /placeholder: Select date
+  - text: ""
 - button "Open calendar"
 - checkbox "Today"
 - text: Today To
-- textbox "Date": /4\/5\/\d+/
+- textbox "Date":
+  - /placeholder: Select date
+  - text: /4\/5\/\d+/
 - button "Open calendar"
 - switch "Advanced"
 - text: "/Advanced Preview: 4\\/5\\/\\d+ - 8\\/\\d+\\/\\d+/"

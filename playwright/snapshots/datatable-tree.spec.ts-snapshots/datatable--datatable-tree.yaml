@@ -8,6 +8,7 @@
     - row /expanded First 1 Engineer \d+/:
       - cell "expanded First 1":
         - button "expanded"
+        - text: ""
       - cell "Engineer"
       - cell /\d+/
     - row /First \d+/:
@@ -17,95 +18,114 @@
     - row /collapsed First 2 Installer \d+/:
       - cell "collapsed First 2":
         - button "collapsed"
+        - text: ""
       - cell "Installer"
       - cell /\d+/
     - row /collapsed First 3 Engineer \d+/:
       - cell "collapsed First 3":
         - button "collapsed"
+        - text: ""
       - cell "Engineer"
       - cell /\d+/
     - row /collapsed First 4 Installer \d+/:
       - cell "collapsed First 4":
         - button "collapsed"
+        - text: ""
       - cell "Installer"
       - cell /\d+/
     - row /collapsed First 5 Engineer \d+/:
       - cell "collapsed First 5":
         - button "collapsed"
+        - text: ""
       - cell "Engineer"
       - cell /\d+/
     - row /collapsed First 6 Installer \d+/:
       - cell "collapsed First 6":
         - button "collapsed"
+        - text: ""
       - cell "Installer"
       - cell /\d+/
     - row /collapsed First 7 Engineer \d+/:
       - cell "collapsed First 7":
         - button "collapsed"
+        - text: ""
       - cell "Engineer"
       - cell /\d+/
     - row /collapsed First 8 Installer \d+/:
       - cell "collapsed First 8":
         - button "collapsed"
+        - text: ""
       - cell "Installer"
       - cell /\d+/
     - row /collapsed First 9 Engineer \d+/:
       - cell "collapsed First 9":
         - button "collapsed"
+        - text: ""
       - cell "Engineer"
       - cell /\d+/
     - row /collapsed First \d+ Installer \d+/:
       - cell /collapsed First \d+/:
         - button "collapsed"
+        - text: ""
       - cell "Installer"
       - cell /\d+/
     - row /collapsed First \d+ Engineer \d+/:
       - cell /collapsed First \d+/:
         - button "collapsed"
+        - text: ""
       - cell "Engineer"
       - cell /\d+/
     - row /collapsed First \d+ Installer \d+/:
       - cell /collapsed First \d+/:
         - button "collapsed"
+        - text: ""
       - cell "Installer"
       - cell /\d+/
     - row /collapsed First \d+ Engineer \d+/:
       - cell /collapsed First \d+/:
         - button "collapsed"
+        - text: ""
       - cell "Engineer"
       - cell /\d+/
     - row /collapsed First \d+ Installer \d+/:
       - cell /collapsed First \d+/:
         - button "collapsed"
+        - text: ""
       - cell "Installer"
       - cell /\d+/
     - row /collapsed First \d+ Engineer \d+/:
       - cell /collapsed First \d+/:
         - button "collapsed"
+        - text: ""
       - cell "Engineer"
       - cell /\d+/
     - row /collapsed First \d+ Installer \d+/:
       - cell /collapsed First \d+/:
         - button "collapsed"
+        - text: ""
       - cell "Installer"
       - cell /\d+/
     - row /collapsed First \d+ Engineer \d+/:
       - cell /collapsed First \d+/:
         - button "collapsed"
+        - text: ""
       - cell "Engineer"
       - cell /\d+/
     - row /collapsed First \d+ Installer \d+/:
       - cell /collapsed First \d+/:
         - button "collapsed"
+        - text: ""
       - cell "Installer"
       - cell /\d+/
     - row /collapsed First \d+ Engineer \d+/:
       - cell /collapsed First \d+/:
         - button "collapsed"
+        - text: ""
       - cell "Engineer"
       - cell /\d+/
     - row /collapsed First \d+ Installer \d+/:
       - cell /collapsed First \d+/:
         - button "collapsed"
+        - text: ""
       - cell "Installer"
       - cell /\d+/

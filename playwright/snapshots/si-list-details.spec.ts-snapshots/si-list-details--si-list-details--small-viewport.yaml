@@ -68,3 +68,16 @@
       - cell /Max Meier \d+/
       - cell "Installer"
       - cell "Great Company 3"
+- button "Back"
+- text: Title
+- tablist:
+  - tab "Overview" [selected]
+  - tab "History"
+  - tab "Advanced" [disabled]
+- tabpanel "Overview"
+- menubar:
+  - menuitem "Edit"
+  - menuitem "Refresh"
+- text: No entity selected.
+- button "Discard"
+- button "Save"

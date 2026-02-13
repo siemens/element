@@ -33,7 +33,7 @@
     - /url: https://element.siemens.io
   - text: for more information, as well as local links like
   - link "Internal Page":
-    - /url: "/#/internal-page"
+    - /url: /#/internal-page
   - text: .
 - paragraph:
   - text: "Links are also automatically detected:"

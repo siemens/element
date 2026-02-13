@@ -3,7 +3,9 @@
 - button "Create centered modal"
 - button "Create modal with icon"
 - button "Create nested modal"
+- button "Create modal with custom component"
 - dialog "Modal":
+  - text: ""
   - heading "Modal" [level=4]
   - button "Close modal"
   - text: This is the body.

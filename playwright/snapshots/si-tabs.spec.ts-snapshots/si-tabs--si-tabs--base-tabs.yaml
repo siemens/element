@@ -7,3 +7,5 @@
   - tab "Deselectable"
 - tabpanel /Reception \d+/:
   - paragraph: Content for Reception
+- checkbox "Allow Lobby tab activation" [checked]
+- text: Allow Lobby tab activation

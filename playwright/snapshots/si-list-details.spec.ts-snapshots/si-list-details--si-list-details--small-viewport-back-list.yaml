@@ -68,3 +68,16 @@
       - cell /Max Meier \d+/
       - cell "Installer"
       - cell "Great Company 3"
+- button "Back"
+- text: Title
+- tablist:
+  - tab "Overview" [selected]
+  - tab "History"
+  - tab "Advanced" [disabled]
+- tabpanel "Overview"
+- menubar:
+  - menuitem "Edit"
+  - menuitem "Refresh"
+- text: "{ \"id\": 0, \"name\": \"Max Meier 0\", \"role\": \"Engineer\", \"company\": \"Great Company 0\", \"age\": 0 }"
+- button "Discard"
+- button "Save"

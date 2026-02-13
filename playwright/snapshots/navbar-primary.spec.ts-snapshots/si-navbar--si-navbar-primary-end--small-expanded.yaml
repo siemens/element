@@ -4,6 +4,7 @@
   - button "Toggle actions" [expanded]
   - link "Messages":
     - /url: "#/viewer/viewer/messages"
+    - text: ""
   - button "Help" [expanded]
   - group "Help":
     - link "Help":

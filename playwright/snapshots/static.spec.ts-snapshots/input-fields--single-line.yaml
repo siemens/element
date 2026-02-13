@@ -1,10 +1,12 @@
 - heading "Vertical" [level=4]
 - text: Name
-- textbox "Name"
+- textbox "Name":
+  - /placeholder: Placeholder
 - text: Message Disabled input
 - textbox "Disabled input" [disabled]: This is the value
 - text: Disabled input (empty with placeholder)
-- textbox "Disabled input (empty with placeholder)" [disabled]
+- textbox "Disabled input (empty with placeholder)" [disabled]:
+  - /placeholder: Not visible
 - text: Placeholder text not displayed for disabled input Readonly input
 - textbox "Readonly input": This is the value
 - text: Name
@@ -16,7 +18,8 @@
 - text: Error Message
 - heading "Horizontal" [level=4]
 - text: Name
-- textbox "Name"
+- textbox "Name":
+  - /placeholder: Placeholder
 - text: Message Name
 - textbox "Name": This is valid
 - text: Name

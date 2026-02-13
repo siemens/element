@@ -4,7 +4,9 @@
 - button "Hey there" [expanded]
 - region "Hey there": And here we have some content
 - button "Another one"
+- region "Another one"
 - button "Number three"
+- region "Number three"
 - banner:
   - link "Siemens logo":
     - /url: "#/"
