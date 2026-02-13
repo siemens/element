@@ -19,6 +19,11 @@ describe('SiSvgIconComponent', () => {
     let component: TestHostComponent;
     let fixture: ComponentFixture<TestHostComponent>;
 
+    const getIconHostStyle = (): string =>
+      (fixture.nativeElement.querySelector('si-icon') as HTMLElement).style.getPropertyValue(
+        '--svg-element-icon'
+      );
+
     @Component({
       imports: [SiIconComponent],
       template: ` <si-icon [icon]="icon()" />`
@@ -60,7 +65,7 @@ describe('SiSvgIconComponent', () => {
         });
 
         it('should load icon', () => {
-          expect(document.getElementById('svg-2')).toBeTruthy();
+          expect(getIconHostStyle()).toContain('svg-2');
         });
 
         it('should load icon override from theme', () => {
@@ -74,7 +79,7 @@ describe('SiSvgIconComponent', () => {
             }
           });
           fixture.detectChanges();
-          expect(document.getElementById('svg-oem')).toBeTruthy();
+          expect(getIconHostStyle()).toContain('svg-oem');
         });
       });
 
@@ -85,7 +90,7 @@ describe('SiSvgIconComponent', () => {
         });
 
         it('should load icon', () => {
-          expect(document.getElementById('svg')).toBeTruthy();
+          expect(getIconHostStyle()).toContain('svg');
         });
 
         it('should load icon override from theme', () => {
@@ -99,7 +104,7 @@ describe('SiSvgIconComponent', () => {
             }
           });
           fixture.detectChanges();
-          expect(document.getElementById('svg-oem')).toBeTruthy();
+          expect(getIconHostStyle()).toContain('svg-oem');
         });
       });
     });
@@ -114,7 +119,7 @@ describe('SiSvgIconComponent', () => {
       it('should always use the icon-font', () => {
         component.icon.set('element-svg');
         fixture.detectChanges();
-        expect(document.getElementById('svg')).toBeFalsy();
+        expect(getIconHostStyle()).toBe('');
         expect(fixture.debugElement.query(By.css('.element-svg'))).toBeTruthy();
       });
     });

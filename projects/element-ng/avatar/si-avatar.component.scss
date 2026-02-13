@@ -67,14 +67,7 @@ img {
   inset-inline-end: var(--indicator-offset-x);
   font-size: var(--indicator-size);
 
-  .drop-shadow {
-    ::ng-deep {
-      svg {
-        filter: drop-shadow(1px 0 0 variables.$element-base-1)
-          drop-shadow(-1px 0 0 variables.$element-base-1)
-          drop-shadow(0 1px 0 variables.$element-base-1)
-          drop-shadow(0 -1px 0 variables.$element-base-1);
-      }
-    }
-  }
+  filter: drop-shadow(1px 0 0 variables.$element-base-1)
+    drop-shadow(-1px 0 0 variables.$element-base-1) drop-shadow(0 1px 0 variables.$element-base-1)
+    drop-shadow(0 -1px 0 variables.$element-base-1);
 }

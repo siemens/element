@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { isPlatformBrowser } from '@angular/common';
-import { EventEmitter, inject, Injectable, PLATFORM_ID, signal, DOCUMENT } from '@angular/core';
-import { DomSanitizer, Meta, SafeHtml } from '@angular/platform-browser';
+import { DOCUMENT, EventEmitter, inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
+import { Meta } from '@angular/platform-browser';
 import { Observable, of, ReplaySubject, throwError } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 
@@ -75,7 +75,7 @@ export class SiThemeService {
    * {}
    * ```
    */
-  readonly themeIcons = signal<Record<string, SafeHtml>>({});
+  readonly themeIcons = signal<Record<string, string>>({});
 
   private themes: Map<string, Theme> = new Map();
   private darkMediaQuery?: MediaQueryList;
@@ -87,7 +87,6 @@ export class SiThemeService {
     inject(SiThemeStore, { optional: true }) ?? new SiDefaultThemeStore(this.isBrowser);
   private meta = inject(Meta);
   private document = inject(DOCUMENT);
-  private domSanitizer = inject(DomSanitizer);
 
   constructor() {
     this.resolvedColorScheme$.subscribe(scheme => (this._resolvedColorScheme = scheme));
@@ -377,9 +376,7 @@ export class SiThemeService {
     }
 
     this.themeIcons.set(
-      Object.fromEntries(
-        Object.entries(theme?.icons ?? {}).map(([key, icon]) => [key, this.parseDataSvgIcon(icon)])
-      )
+      Object.fromEntries(Object.entries(theme?.icons ?? {}).map(([key, icon]) => [key, icon]))
     );
     this.themeChange.emit(theme);
   }
@@ -466,19 +463,5 @@ export class SiThemeService {
         }
       })
     );
-  }
-
-  private parseDataSvgIcon(icon: string): SafeHtml {
-    // This method is currently a copy of parseDataSvgIcon in si-icon.registry.ts.
-    // Those are likely to diverge in the future, as this version will get support for other formats like:
-    // - URLs
-    // - Plain SVG data
-    // - Promises to enable lazy icon loading using import()
-    const parsed = /^data:image\/svg\+xml;utf8,(.*)$/.exec(icon);
-    if (!parsed) {
-      console.error('Failed to parse icon', icon);
-      return '';
-    }
-    return this.domSanitizer.bypassSecurityTrustHtml(parsed[1]);
   }
 }
