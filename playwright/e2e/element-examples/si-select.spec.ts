@@ -11,26 +11,25 @@ test.describe('si-select', () => {
   test(example, async ({ page, si }) => {
     await si.visitExample(example);
 
-    await page.getByRole('combobox', { name: 'FormControl' }).click();
-    await si.runVisualAndA11yTests('form-select');
-    await page.locator('.cdk-overlay-backdrop').click({ position: { x: 0, y: 0 }, force: true });
+    const testCases = [
+      { name: 'FormControl', testName: 'form-select' },
+      { name: 'Multi select', testName: 'multi-select' },
+      { name: 'Multi-select with groups', testName: 'multi-select-with-groups' },
+      { name: 'Select with custom template', testName: 'custom-template' },
+      { name: 'Select with actions', testName: 'actions' }
+    ];
 
-    await page.getByRole('combobox', { name: 'Multi select' }).click();
-    await si.runVisualAndA11yTests('multi-select');
-    await page.locator('.cdk-overlay-backdrop').click({ position: { x: 0, y: 0 }, force: true });
+    for (const { name, testName } of testCases) {
+      await page.getByRole('combobox', { name }).click();
+      await expect(page.getByRole('listbox', { name })).toBeVisible();
+      await si.runVisualAndA11yTests(testName);
 
-    await page.getByRole('combobox', { name: 'Multi-select with groups' }).click();
-    await si.runVisualAndA11yTests('multi-select-with-groups');
-    await page.locator('.cdk-overlay-backdrop').click({ position: { x: 0, y: 0 }, force: true });
+      if (name === 'Select with actions') {
+        await page.getByRole('button', { name: 'clear' }).click();
+      }
 
-    await page.getByRole('combobox', { name: 'Select with custom template' }).click();
-    await si.runVisualAndA11yTests('custom-template');
-    await page.locator('.cdk-overlay-backdrop').click({ position: { x: 0, y: 0 }, force: true });
-
-    await page.getByRole('combobox', { name: 'Select with actions' }).click();
-    await si.runVisualAndA11yTests('actions');
-    await page.getByRole('button', { name: 'clear' }).click();
-    await page.locator('.cdk-overlay-backdrop').click({ position: { x: 0, y: 0 }, force: true });
+      await page.locator('.cdk-overlay-backdrop').click({ position: { x: 0, y: 0 }, force: true });
+    }
 
     await page.locator('h4').first().click();
 
