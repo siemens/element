@@ -30,6 +30,7 @@ jobs:
           name: dist
           path: dist
       - run: npm ci --prefer-offline --no-audit
+      - run: npm run release:copy-license
       - run: npx semantic-release
         env:
           SKIP_COMMIT: ${{ github.ref_name == 'next' && 'true' || '' }}
