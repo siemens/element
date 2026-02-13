@@ -2,6 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+/* eslint-disable @typescript-eslint/no-deprecated */
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { SiSortBarComponent } from '@siemens/element-ng/sort-bar';
 import { LOG_EVENT } from '@siemens/live-preview';
@@ -9,7 +10,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
 @Component({
   selector: 'app-sample',
   imports: [SiSortBarComponent],
-  templateUrl: './si-sort-bar.html',
+  templateUrl: './si-sort-bar-deprecated.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })

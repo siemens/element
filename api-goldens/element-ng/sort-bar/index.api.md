@@ -9,7 +9,7 @@ import * as i0 from '@angular/core';
 import { OnInit } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 export class SiSortBarComponent implements OnInit {
     readonly defaultSortCriteria: i0.InputSignal<string | number>;
     readonly sortChange: i0.OutputEmitterRef<HttpParams>;
@@ -17,7 +17,7 @@ export class SiSortBarComponent implements OnInit {
     readonly sortTitle: i0.InputSignal<TranslatableString>;
 }
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 export class SiSortBarModule {
 }
 

@@ -13,6 +13,11 @@ export interface SortCriteria {
   key: number | string;
 }
 
+/**
+ * @deprecated SiSortBarComponent originate from the older design system and do not align with current
+ * design guidelines. No known use case exists for this component.
+ * It will be removed in v50.
+ */
 @Component({
   selector: 'si-sort-bar',
   imports: [SiIconComponent, SiTranslatePipe],
