@@ -176,4 +176,6 @@ actions, or status indicators.
 
 <si-docs-api component="SiSidePanelContentComponent"></si-docs-api>
 
+<si-docs-api injectable="SiSidePanelService"></si-docs-api>
+
 <si-docs-types></si-docs-types>
