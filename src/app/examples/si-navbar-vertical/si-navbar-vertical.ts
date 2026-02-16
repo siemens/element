@@ -82,10 +82,7 @@ export class SampleComponent implements OnInit {
       label: 'Action',
       icon: 'element-warning',
       active: false,
-      action: item => {
-        item.active = true;
-        this.logEvent('Callback for action called');
-      }
+      action: () => this.logEvent('Callback for action called')
     }
   ];
 

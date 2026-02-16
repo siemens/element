@@ -103,6 +103,7 @@ export class SiNavbarVerticalGroupTriggerDirective implements OnInit {
   hideFlyout(): void {
     if (this.flyout()) {
       this.flyout.set(false);
+      this.active.set(false);
       this.flyoutAnchorComponentRef?.destroy();
       this.flyoutAnchorComponentRef = undefined;
       this.attachInline();
