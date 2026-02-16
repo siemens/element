@@ -13,7 +13,9 @@
 - button "Properties 5" [expanded]
 - region "Properties 5": And here we have some content
 - button "Documents"
-- button "Graphics"
+- region "Documents"
+- button /Graphics \+\d+/
+- region /Graphics \+\d+/
 - banner:
   - link "Siemens logo":
     - /url: "#/"

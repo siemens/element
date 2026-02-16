@@ -103,6 +103,20 @@ export class SiCollapsiblePanelComponent {
    */
   readonly panelToggle = output<boolean>();
 
+  /**
+   * Formats badge value to limit display to "+99" for numbers greater than 99
+   */
+  protected readonly formattedBadge = computed(() => {
+    const badge = this.badge();
+    if (!badge && badge !== 0) {
+      return '';
+    }
+    if (typeof badge === 'number') {
+      return badge > 99 ? '+99' : badge.toString();
+    }
+    return badge.toString();
+  });
+
   protected readonly hcollapsed = computed(
     () => this.accordionHCollapseService?.hcollapsed() ?? false
   );

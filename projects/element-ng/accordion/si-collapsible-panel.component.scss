@@ -16,6 +16,14 @@
     }
   }
 
+  .badge-text {
+    position: absolute;
+    inset-inline-end: -2px;
+    inset-inline-start: unset;
+    inset-block-start: -5px;
+    margin-inline-end: unset;
+  }
+
   &.hcollapsed {
     background: variables.$element-base-1;
 
