@@ -1,3 +1,10 @@
+## [48.10.2](https://github.com/siemens/element/compare/v48.10.1...v48.10.2) (2026-02-16)
+
+
+### Bug Fixes
+
+* **wizard:** align save button correctly when hideNavigation is true ([62c9da8](https://github.com/siemens/element/commit/62c9da881bc017e72937af27b8cdfc80f5db5518)), closes [#1507](https://github.com/siemens/element/issues/1507)
+
 ## [48.10.1](https://github.com/siemens/element/compare/v48.10.0...v48.10.1) (2026-02-12)
 
 
