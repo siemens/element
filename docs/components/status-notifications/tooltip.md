@@ -5,11 +5,21 @@ on a UI element, typically buttons or icons.
 
 ## Usage ---
 
-Tooltips are overlay components that briefly appear over other content to provide additional context. They are triggered by hover or focus, making them particularly useful for desktop interactions.
+Tooltips briefly appear over other content to provide additional context.
+They are triggered by **hover or focus**, making them particularly useful for desktop interactions.
+
 Since tooltips are temporary and generally not accessible on touch devices,
 **they should not contain critical or primary information.**
 
 ![Tooltip](images/tooltip.png)
+
+Tooltips are applied to controls that rely solely on an icon, such as [icon buttons](../buttons-menus/buttons.md),
+[icon-only tabs](../layout-navigation/tabs.md), [application header](../layout-navigation/application-header.md) and collapsed versions of [vertical navigation](../layout-navigation/vertical-navigation.md) and the [side panel](../layout-navigation/side-panel.md).
+
+They may also reveal truncated text **only when the element is focusable**, for example a
+[tree node](../lists-tables-trees/tree-view.md).
+
+![Tooltip](images/tooltip-examples.png)
 
 ### When to use
 
@@ -19,12 +29,14 @@ Since tooltips are temporary and generally not accessible on touch devices,
 ### Best practices
 
 - Keep text brief.
-- Text should rarely exceed min. width of tooltip display box.
-- Tooltips are display-only and **must not** contain clickable elements.
-- Use sparingly. Avoid overloading the interface with too many tooltips.
-- Use tooltips only on interactive, **keyboard-focusable** elements to ensure accessibility.
+- Do not include interactive elements.
+- Use sparingly to reduce visual noise.
+- Apply tooltips only to interactive, keyboard-focusable elements.
+- Never add tooltips on disabled elements.
 - When implementing tooltips on touch devices, ensure they appear on tap and that this interaction
   does not conflict with other functionalities.
+- Always use the tooltip component, not the browser’s native tooltip.
+- Use a 500ms show delay and dismiss on pointer leave or focus loss.
 
 ## Design ---
 
