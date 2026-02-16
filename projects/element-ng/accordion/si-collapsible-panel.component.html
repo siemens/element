@@ -7,6 +7,7 @@
   [id]="headerId"
   [class.open]="opened()"
   [class.disabled]="disabled()"
+  [class.mb-4]="hcollapsed()"
   [attr.aria-expanded]="opened() && !hcollapsed()"
   [attr.aria-disabled]="disabled()"
   [attr.aria-controls]="controlId"
@@ -16,7 +17,11 @@
 >
   @let headerIcon = icon();
   @if (headerIcon) {
-    <si-icon class="icon ms-n2 me-2" [icon]="headerIcon" [class.collapsed-icon]="isHCollapsible" />
+    <si-icon
+      class="icon-lg ms-n2 me-2"
+      [icon]="headerIcon"
+      [class.collapsed-icon]="isHCollapsible"
+    />
   }
   @if (icon() && badge() !== undefined && badge() !== '') {
     <span class="badge-text">

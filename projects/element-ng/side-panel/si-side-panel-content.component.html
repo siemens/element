@@ -103,9 +103,9 @@
             [isDisabled]="!isCollapsed()"
             [siLink]="dp"
           >
-            <si-icon class="icon" [icon]="dp.icon!" />
+            <si-icon class="icon-lg" [icon]="dp.icon!" />
             @if (dp.overlayIcon) {
-              <si-icon class="icon position-absolute" [icon]="dp.overlayIcon" />
+              <si-icon class="icon-lg position-absolute" [icon]="dp.overlayIcon" />
             }
             <span class="ms-2 auto-hide">{{ dp.title | translate }}</span>
           </a>

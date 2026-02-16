@@ -50,6 +50,7 @@
 .collapsible-header {
   display: flex;
   align-items: center;
+  min-block-size: 48px;
   background: variables.$element-base-1;
   color: variables.$element-text-primary;
   padding-block: map.get(variables.$spacers, 5);
