@@ -21,7 +21,7 @@ test.describe('si-select', () => {
 
     for (const { name, testName } of testCases) {
       await page.getByRole('combobox', { name }).click();
-      await expect(page.getByRole('listbox', { name })).toBeVisible();
+      await page.getByRole('listbox', { name }).hover();
       await si.runVisualAndA11yTests(testName);
 
       if (name === 'Select with actions') {
