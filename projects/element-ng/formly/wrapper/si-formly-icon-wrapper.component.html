@@ -4,8 +4,8 @@
   </div>
   @if (props.icon) {
     <div
-      class="wrapper-icon"
-      [style]="'font-size: ' + (props.iconSize ? props.iconSize : 24) + 'px'"
+      class="wrapper-icon icon"
+      [style.font-size.px]="props.iconSize"
       [siTooltip]="props.iconTooltip | translate"
     >
       <si-icon [icon]="props.icon" />

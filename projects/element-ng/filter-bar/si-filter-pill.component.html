@@ -20,12 +20,13 @@
 <ng-template #remove>
   <button
     type="button"
-    class="btn-remove element-cancel btn btn-circle btn-ghost focus-inside ms-0 btn-xs"
+    class="btn-remove btn btn-circle btn-ghost focus-inside ms-0 btn-sm"
     role="button"
     aria-label="Remove"
     [disabled]="disabled()"
     (keydown.enter)="deleteClicked()"
     (click)="deleteClicked()"
   >
+    <si-icon [icon]="icons.elementCancel" />
   </button>
 </ng-template>

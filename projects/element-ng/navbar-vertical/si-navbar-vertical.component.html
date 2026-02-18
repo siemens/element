@@ -1,23 +1,19 @@
 @if (visible()) {
   @if (smallScreen() && !collapsed()) {
-    <div
-      class="modal-backdrop"
-      [@backdrop]="smallScreen() && !collapsed() ? 'show' : 'hide'"
-      (click)="toggleCollapse()"
-    ></div>
+    <div class="modal-backdrop" animate.leave="backdrop-leave" (click)="toggleCollapse()"></div>
   }
   <nav
     tabindex="-1"
     class="bg-base-1 focus-sub-inside"
+    [class.expanded]="!collapsed()"
     [siSkipLinkTarget]="skipLinkNavigationLabel()"
-    [@collapse]="collapsed() ? 'collapsed' : 'expanded'"
     [class.text-only]="textOnly()"
   >
     <div class="collapse-toggle ms-auto">
       <div class="mobile-drawer focus-inside navbar-vertical-no-collapse">
         <button
           type="button"
-          class="btn btn-circle btn-sm btn-ghost"
+          class="btn btn-icon btn-ghost"
           [attr.aria-label]="
             (collapsed() ? navbarExpandButtonText() : navbarCollapseButtonText()) | translate
           "
@@ -44,7 +40,7 @@
         />
         <button
           type="button"
-          class="btn-search bg-base-0 p-2 mx-4 mobile navbar-vertical-no-collapse text-secondary"
+          class="btn-search bg-base-0 p-3 mx-4 mobile navbar-vertical-no-collapse text-secondary"
           [attr.aria-label]="searchPlaceholder() | translate"
           (click)="expandForSearch()"
         >
@@ -83,6 +79,7 @@
     @case ('group') {
       <button
         type="button"
+        placement="end"
         [si-navbar-vertical-item]="item"
         [stateId]="item.id"
         [siNavbarVerticalGroupTriggerFor]="group"
@@ -90,18 +87,28 @@
         [expanded]="
           (item.id ? uiStateExpandedItems()[item.id] : undefined) ?? item.expanded ?? false
         "
+        [siTooltip]="item.label | translate"
+        [isDisabled]="!collapsed()"
       >
         {{ item.label | translate }}
       </button>
     }
     @case ('action') {
-      <button type="button" [si-navbar-vertical-item]="item" [activeOverride]="item.active">
+      <button
+        type="button"
+        placement="end"
+        [si-navbar-vertical-item]="item"
+        [activeOverride]="item.active"
+        [siTooltip]="item.label | translate"
+        [isDisabled]="!collapsed()"
+      >
         {{ item.label | translate }}
       </button>
     }
     @case ('router-link') {
       <a
         routerLinkActive
+        placement="end"
         [routerLinkActiveOptions]="item.activeMatchOptions ?? { exact: false }"
         [si-navbar-vertical-item]="item"
         [routerLink]="item.routerLink"
@@ -113,12 +120,21 @@
         [preserveFragment]="item.extras?.preserveFragment"
         [skipLocationChange]="item.extras?.skipLocationChange"
         [replaceUrl]="item.extras?.replaceUrl"
+        [siTooltip]="item.label | translate"
+        [isDisabled]="!collapsed()"
       >
         {{ item.label | translate }}
       </a>
     }
     @case ('link') {
-      <a [si-navbar-vertical-item]="item" [href]="item.href" [target]="item.target">
+      <a
+        placement="end"
+        [si-navbar-vertical-item]="item"
+        [href]="item.href"
+        [target]="item.target"
+        [siTooltip]="item.label | translate"
+        [isDisabled]="!collapsed()"
+      >
         {{ item.label | translate }}
       </a>
     }

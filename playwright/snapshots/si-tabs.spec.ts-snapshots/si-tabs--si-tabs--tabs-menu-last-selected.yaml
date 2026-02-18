@@ -9,3 +9,5 @@
   - paragraph: Uncheck to prevent switching to another tab.
   - checkbox "Enable tab switching" [checked]
   - text: Enable tab switching
+- checkbox "Allow Lobby tab activation" [checked]
+- text: Allow Lobby tab activation

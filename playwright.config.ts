@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { devices, type PlaywrightTestConfig } from '@playwright/test';
@@ -7,11 +7,14 @@ import { devices, type PlaywrightTestConfig } from '@playwright/test';
 const isContainer = !!process.env.PLAYWRIGHT_CONTAINER;
 const port = process.env.PORT ?? '4200';
 const dashboardsPort = process.env.DASHBOARDS_PORT ?? '4201';
+const dashboardsEsmPort = process.env.DASHBOARDS_ESM_PORT ?? '4204';
 const localAddress = process.env.LOCAL_ADDRESS ?? 'localhost';
 const onDifferentLocalAddress = localAddress !== 'localhost';
 const isCI = !!process.env.CI;
 const webServerCommand = 'npx http-server dist/element-examples -s -p 4200 -a 127.0.0.1';
 const dashboardsServerCommand = 'npx http-server dist/dashboards-demo -s -p 4201 -a 127.0.0.1';
+const dashboardsEsmServerCommand =
+  'npx http-server dist/dashboards-demo-esm -s -p 4204 -a 127.0.0.1';
 let isA11y =
   !!process.env.PLAYWRIGHT_isa11y && process.env.PLAYWRIGHT_isa11y.toLocaleLowerCase() !== 'false';
 let isVrt =
@@ -26,7 +29,9 @@ let projectsToRun = [
   `element-examples/chromium/light`,
   `element-examples/chromium/dark`,
   `dashboards-demo/chromium/light`,
-  `dashboards-demo/chromium/dark`
+  `dashboards-demo/chromium/dark`,
+  `dashboards-demo-esm/chromium/light`,
+  `dashboards-demo-esm/chromium/dark`
 ];
 
 // Check if only one is run using the command-line arguments. Do not use for any other reason because this won't be set for runner subprocesses.
@@ -147,7 +152,7 @@ const config: PlaywrightTestConfig = {
     },
     {
       name: `dashboards-demo/chromium/light`,
-      metadata: { theme: 'light', isA11y, isVrt },
+      metadata: { theme: 'light', isA11y, isVrt, isESM: false },
       use: {
         baseURL: `http://${localAddress}:${dashboardsPort}`
       },
@@ -155,9 +160,25 @@ const config: PlaywrightTestConfig = {
     },
     {
       name: `dashboards-demo/chromium/dark`,
-      metadata: { theme: 'dark', skipAriaSnapshot: true, isA11y, isVrt },
+      metadata: { theme: 'dark', skipAriaSnapshot: true, isA11y, isVrt, isESM: false },
       use: {
         baseURL: `http://${localAddress}:${dashboardsPort}`
+      },
+      testDir: './playwright/e2e/dashboards-demo'
+    },
+    {
+      name: `dashboards-demo-esm/chromium/light`,
+      metadata: { theme: 'light', isA11y, isVrt, isESM: true },
+      use: {
+        baseURL: `http://${localAddress}:${dashboardsEsmPort}`
+      },
+      testDir: './playwright/e2e/dashboards-demo'
+    },
+    {
+      name: `dashboards-demo-esm/chromium/dark`,
+      metadata: { theme: 'dark', skipAriaSnapshot: true, isA11y, isVrt, isESM: true },
+      use: {
+        baseURL: `http://${localAddress}:${dashboardsEsmPort}`
       },
       testDir: './playwright/e2e/dashboards-demo'
     }
@@ -178,6 +199,15 @@ const config: PlaywrightTestConfig = {
               {
                 command: dashboardsServerCommand,
                 url: `http://${localAddress}:${dashboardsPort}`,
+                reuseExistingServer: !isCI
+              }
+            ]
+          : []),
+        ...(projectsToRun.find(project => project.startsWith('dashboards-demo-esm/chromium'))
+          ? [
+              {
+                command: dashboardsEsmServerCommand,
+                url: `http://${localAddress}:${dashboardsEsmPort}`,
                 reuseExistingServer: !isCI
               }
             ]

@@ -1,10 +1,10 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiEmptyStateModule } from '@siemens/element-ng/empty-state';
 import { Filter, SiFilterBarComponent } from '@siemens/element-ng/filter-bar';
@@ -66,6 +66,7 @@ import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.s
   ],
   templateUrl: './si-list-details.html',
   providers: [DataService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'si-layout-fixed-height'
   }
@@ -74,6 +75,7 @@ export class SampleComponent {
   logEvent = inject(LOG_EVENT);
 
   private dataService = inject(DataService);
+  private cdRef = inject(ChangeDetectorRef);
 
   /**
    * List details
@@ -207,6 +209,7 @@ export class SampleComponent {
       this.rows = rows;
 
       this.isLoading--;
+      this.cdRef.markForCheck();
     });
   }
 }

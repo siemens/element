@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { AfterViewInit, Component, OnDestroy } from '@angular/core';
@@ -55,7 +55,7 @@ export class SiWebComponentEditorWrapperComponent
     this.webComponent?.addEventListener('stateChange', this.webComponentStateChangeListener);
     this.webComponent?.addEventListener('statusChanges', this.webComponentStatusChangesListener);
     this.webComponent?.addEventListener('configChange', this.webComponentEventListener);
-    this.webComponentHost.nativeElement.appendChild(this.webComponent);
+    this.webComponentHost().nativeElement.appendChild(this.webComponent);
   }
 
   ngOnDestroy(): void {

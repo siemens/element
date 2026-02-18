@@ -1,9 +1,44 @@
-<si-application-header [launchpad]="launchpad">
-  <si-header-brand>
-    <a siHeaderLogo routerLink="/"></a>
-  </si-header-brand>
-</si-application-header>
+<div class="has-navbar-fixed-top">
+  <si-application-header [launchpad]="launchpad">
+    <si-header-brand>
+      <a siHeaderLogo routerLink="/"></a>
+    </si-header-brand>
+  </si-application-header>
 
-<ng-template #launchpad>
-  <si-launchpad-factory enableFavorites [apps]="apps" (favoriteChange)="updateFavorite($event)" />
-</ng-template>
+  <ng-template #launchpad>
+    <si-launchpad-factory
+      [apps]="apps()"
+      [enableFavorites]="enableFavorites()"
+      (favoriteChange)="updateFavorite($event)"
+    />
+  </ng-template>
+
+  <div class="container-fluid p-6 e2e-ignore">
+    <div class="row">
+      <div class="col-12 col-lg-6">
+        <div class="card border-0 shadow-sm">
+          <div class="card-body p-6">
+            <h2 class="si-h3 mb-4">Launchpad Configuration</h2>
+            <p class="text-secondary mb-6">
+              Configure your launchpad settings and test different display modes.
+            </p>
+            <si-form-item class="form-switch" label="Enable Favorites">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="enableFavorites" />
+            </si-form-item>
+            <si-form-item class="form-switch" label="Enable Categories">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="enableCategories" />
+            </si-form-item>
+            <div class="mt-5 pt-4 border-top">
+              <p class="text-secondary mb-0">
+                <small>
+                  <strong>Demo note:</strong> Click the header icon to open the launchpad and test
+                  your settings
+                </small>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

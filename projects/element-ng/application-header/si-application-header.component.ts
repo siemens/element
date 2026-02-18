@@ -1,10 +1,10 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { A11yModule, CdkTrapFocus } from '@angular/cdk/a11y';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -17,17 +17,13 @@ import {
   TemplateRef,
   viewChild
 } from '@angular/core';
+import { elementMenu, elementThumbnails } from '@siemens/element-icons';
 import {
   HeaderWithDropdowns,
   SI_HEADER_WITH_DROPDOWNS,
   SiHeaderDropdownTriggerDirective
 } from '@siemens/element-ng/header-dropdown';
-import {
-  addIcons,
-  elementMenu,
-  elementThumbnails,
-  SiIconComponent
-} from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { BOOTSTRAP_BREAKPOINTS, Breakpoints } from '@siemens/element-ng/resize-observer';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 import { defer, of, Subject } from 'rxjs';
@@ -36,7 +32,7 @@ import { map, skip, takeUntil } from 'rxjs/operators';
 /** Root component for the application header. */
 @Component({
   selector: 'si-application-header',
-  imports: [SiTranslatePipe, NgClass, A11yModule, NgTemplateOutlet, SiIconComponent],
+  imports: [SiTranslatePipe, A11yModule, NgTemplateOutlet, SiIconComponent],
   templateUrl: './si-application-header.component.html',
   styleUrl: './si-application-header.component.scss',
   providers: [{ provide: SI_HEADER_WITH_DROPDOWNS, useExisting: SiApplicationHeaderComponent }],
@@ -148,9 +144,6 @@ export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDest
       this.dropdownOpened();
       this.closeMobileMenus.next();
       this.launchpadOpen.set(true);
-      this.inlineDropdown
-        .pipe(skip(1), takeUntil(this.closeMobileMenus))
-        .subscribe(() => this.closeMobileMenus.next());
     }
   }
 

@@ -8,47 +8,28 @@
 # review when someone opens a pull request.
 * @siemens/siemens-element-owners
 
-projects/charts-ng/* @siemens/siemens-element-owners @akashsonune @dr-itz
-api-goldens/charts-ng/* @siemens/siemens-element-owners @akashsonune @dr-itz
-projects/native-charts-ng/* @siemens/siemens-element-owners @akashsonune @dr-itz
-api-goldens/native-charts-ng/* @siemens/siemens-element-owners @akashsonune @dr-itz
-src/app/examples/si-charts/* @siemens/siemens-element-owners @akashsonune @dr-itz
+api-goldens/charts-ng/ @siemens/siemens-element-owners @akashsonune @dr-itz
 
-projects/maps-ng/* @siemens/siemens-element-owners @dr-itz @spliffone
-api-goldens/maps-ng/* @siemens/siemens-element-owners @dr-itz @spliffone
-src/app/examples/si-map/* @siemens/siemens-element-owners @dr-itz @spliffone
+api-goldens/native-charts-ng/ @siemens/siemens-element-owners @akashsonune @dr-itz
 
-projects/dashboards-ng/* @siemens/siemens-element-owners @chintankavathia
-api-goldens/dashboards-ng/* @siemens/siemens-element-owners @chintankavathia
-projects/dashboards-demo/* @siemens/siemens-element-owners @chintankavathia
+api-goldens/maps-ng/ @siemens/siemens-element-owners @dr-itz @spliffone
 
-projects/live-preview/* @siemens/siemens-element-owners @dr-itz @chintankavathia
-api-goldens/live-preview/* @siemens/siemens-element-owners @dr-itz @chintankavathia
+api-goldens/dashboards-ng/ @siemens/siemens-element-owners @chintankavathia
 
-projects/element-theme/* @siemens/siemens-element-owners @dr-itz
+api-goldens/live-preview/ @siemens/siemens-element-owners @dr-itz @chintankavathia
 
-projects/element-docs-builder/* @siemens/siemens-element-owners @Killusions @spliffone
+api-goldens/element-ng/filtered-search/ @siemens/siemens-element-owners @chintankavathia @spliffone
+api-goldens/element-ng/data-range-filter/ @siemens/siemens-element-owners @dr-itz @spliffone
+api-goldens/element-ng/datepicker/ @siemens/siemens-element-owners @dr-itz @spliffone
+api-goldens/element-ng/landing-page/ @siemens/siemens-element-owners @dauriamarco
+api-goldens/element-ng/ip-input/ @siemens/siemens-element-owners @spliffone
+api-goldens/element-ng/formly/ @siemens/siemens-element-owners @chintankavathia
+api-goldens/element-ng/threshold/ @siemens/siemens-element-owners @dr-itz
+api-goldens/element-ng/tour/ @siemens/siemens-element-owners @dr-itz
 
-projects/element-ng/filtered-search/* @siemens/siemens-element-owners @chintankavathia @spliffone
-api-goldens/element-ng/filtered-search/* @siemens/siemens-element-owners @chintankavathia @spliffone
-projects/element-ng/data-range-filter/* @siemens/siemens-element-owners @dr-itz @spliffone
-api-goldens/element-ng/data-range-filter/* @siemens/siemens-element-owners @dr-itz @spliffone
-projects/element-ng/datepicker/* @siemens/siemens-element-owners @dr-itz @spliffone
-api-goldens/element-ng/datepicker/* @siemens/siemens-element-owners @dr-itz @spliffone
-projects/element-ng/schematics/* @siemens/siemens-element-owners @mistrykaran91
-projects/element-ng/landing-page/* @siemens/siemens-element-owners @dauriamarco
-api-goldens/element-ng/landing-page/* @siemens/siemens-element-owners @dauriamarco
-projects/element-ng/ip-input/* @siemens/siemens-element-owners @spliffone
-api-goldens/element-ng/ip-input/* @siemens/siemens-element-owners @spliffone
-projects/element-ng/formly/* @siemens/siemens-element-owners @chintankavathia
-api-goldens/element-ng/formly/* @siemens/siemens-element-owners @chintankavathia
-projects/element-ng/threshold/* @siemens/siemens-element-owners @dr-itz
-api-goldens/element-ng/threshold/* @siemens/siemens-element-owners @dr-itz
-projects/element-ng/tour/* @siemens/siemens-element-owners @dr-itz
-api-goldens/element-ng/tour/* @siemens/siemens-element-owners @dr-itz
+playwright/ @siemens/siemens-element-owners @siemens/siemens-element-members
+docs/ @siemens/siemens-element-owners @siemens/siemens-element-members
+src/ @siemens/siemens-element-owners @siemens/siemens-element-members
+projects/ @siemens/siemens-element-owners @siemens/siemens-element-members
 
-playwright/* @siemens/siemens-element-owners @siemens/siemens-element-members
-docs/* @siemens/siemens-element-owners @siemens/siemens-element-members
-src/* @siemens/siemens-element-owners @siemens/siemens-element-members
-
-tools/semantic-release/* @siemens/siemens-element-owners @ljanner
+tools/semantic-release/ @siemens/siemens-element-owners @ljanner

@@ -1,9 +1,9 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { AsyncPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { SiAccordionComponent, SiCollapsiblePanelComponent } from '@siemens/element-ng/accordion';
 import {
@@ -55,7 +55,8 @@ import { delay, of } from 'rxjs';
     AsyncPipe,
     SiHeaderLogoDirective
   ],
-  templateUrl: './content-tile-layout-full-scroll-vertical-nav.html'
+  templateUrl: './content-tile-layout-full-scroll-vertical-nav.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   collapsed = true;

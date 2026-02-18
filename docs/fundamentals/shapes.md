@@ -38,12 +38,7 @@ Radius is set for all 4 sides unless specified otherwise.
 
 ## Code ---
 
-All Element shape variants are accessible as `rounded-` CSS utility classes.
-
-Besides that, the full range of [Bootstrap's border utilities](https://getbootstrap.com/docs/5.1/utilities/borders/#border-radius)
-can be used. Since `rounded-2` is the default shape for _Element_, it is also
-mapped to Bootstrap's shorthand `rounded` CSS class, as well as all side utility
-classes.
+All Element shape variants are accessible as `rounded-` CSS utility classes, see [border radius](./styles/borders.md#radius).
 
 <si-docs-component example="shapes/shapes" height="300"></si-docs-component>
 

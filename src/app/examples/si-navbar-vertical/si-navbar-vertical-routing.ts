@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
@@ -20,6 +20,12 @@ import { provideExampleRoutes } from '@siemens/live-preview';
   template: `This is the home page`
 })
 export class HomeComponent {}
+
+@Component({
+  selector: 'app-menu-item',
+  template: `This is a sample menu item page`
+})
+export class MenuItemComponent {}
 
 @Component({
   selector: 'app-energy',
@@ -62,6 +68,10 @@ export const ROUTES: Route[] = [
     path: 'home',
     component: HomeComponent
   },
+  {
+    path: 'menu-item',
+    component: MenuItemComponent
+  },
   { path: 'energy', component: EnergyComponent },
   {
     path: 'coverage',
@@ -100,20 +110,27 @@ export class SampleComponent implements OnInit {
       icon: 'element-home',
       routerLink: 'home'
     },
-    { type: 'header', label: 'Modules' },
-    {
-      type: 'router-link',
-      label: 'Energy & sustainability',
-      icon: 'element-trend',
-      routerLink: 'energy'
-    },
     {
       type: 'router-link',
       label: 'Test coverage',
       icon: 'element-diagnostic',
       routerLink: 'coverage',
-      badge: 4,
-      badgeColor: 'danger'
+      badge: 'Text',
+      badgeColor: 'danger-emphasis'
+    },
+    { type: 'header', label: 'Modules' },
+    {
+      type: 'router-link',
+      label: 'Emergencies',
+      id: 'menu-item',
+      icon: 'element-fire',
+      routerLink: 'menu-item'
+    },
+    {
+      type: 'router-link',
+      label: 'Energy & sustainability',
+      icon: 'element-trend',
+      routerLink: 'energy'
     }
   ];
 

@@ -1,8 +1,7 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { SiGridService } from './si-grid.service';
@@ -12,7 +11,7 @@ describe('SiGridService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [SiGridService, provideZonelessChangeDetection()]
+      providers: [SiGridService]
     });
     service = TestBed.inject(SiGridService);
   });

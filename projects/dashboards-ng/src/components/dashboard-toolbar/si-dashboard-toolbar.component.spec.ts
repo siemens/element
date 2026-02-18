@@ -1,8 +1,7 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
@@ -15,8 +14,7 @@ describe('SiDashboardToolbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SiTranslateModule, SiDashboardToolbarComponent],
-      providers: [provideZonelessChangeDetection()]
+      imports: [SiTranslateModule, SiDashboardToolbarComponent]
     }).compileComponents();
   });
 

@@ -1,13 +1,13 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import { Component, computed, input, OnChanges } from '@angular/core';
+import { elementRight2 } from '@siemens/element-icons';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { AccentLineType, MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
-import { addIcons, elementRight2, SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -19,7 +19,6 @@ import { SiTimelineWidgetItem } from './si-timeline-widget-item.component';
 @Component({
   selector: 'si-timeline-widget',
   imports: [
-    NgClass,
     SiLinkDirective,
     SiCardComponent,
     SiTimelineWidgetBodyComponent,

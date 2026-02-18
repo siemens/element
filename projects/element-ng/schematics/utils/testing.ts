@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { Tree } from '@angular-devkit/schematics';
@@ -24,12 +24,14 @@ export const createTestApp = async (
     tree
   );
 
-  return runner.runExternalSchematic(
+  tree = await runner.runExternalSchematic(
     '@schematics/angular',
     'application',
     { name: 'second-app', ...appOptions },
     tree
   );
+
+  return tree;
 };
 
 const createWorkspace = (runner: SchematicTestRunner): Promise<UnitTestTree> => {

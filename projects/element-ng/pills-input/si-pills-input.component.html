@@ -17,7 +17,7 @@
       class="focus-none"
       [id]="inputId()"
       [attr.aria-label]="inputElementAriaLabel() | translate"
-      [placeholder]="!pills().length ? placeholder() : ''"
+      [placeholder]="(!pills().length ? (placeholder() ?? '') : '') | translate"
       [value]="inputValue"
       (keydown.enter)="keydownEnter($event)"
       (keydown.backspace)="keydownBackspace($event)"

@@ -1,6 +1,6 @@
 <si-file-dropzone
   #dropZone
-  [ngClass]="autoUpload() ? 'mb-8' : 'mb-4'"
+  [class]="autoUpload() ? 'mb-8' : 'mb-4'"
   [uploadTextFileSelect]="uploadTextFileSelect()"
   [uploadDropText]="uploadDropText()"
   [multiple]="maxFiles() > 1"
@@ -15,16 +15,17 @@
 />
 
 @if (maxFilesReached) {
-  <si-inline-notification class="mb-4" severity="info" [message]="maxFilesReachedText()" />
+  <si-inline-notification
+    class="mb-4"
+    severity="info"
+    [message]="maxFilesReachedText()"
+    [translationParams]="{ maxFiles: maxFiles() }"
+  />
 }
 
 <div class="file-list">
   @for (file of files; track file) {
-    <div
-      class="file d-flex"
-      [ngClass]="autoUpload() ? 'mb-8' : 'mb-4'"
-      [class.fade-out]="file.fadeOut"
-    >
+    <div [class]="`file d-flex ${autoUpload() ? 'mb-8' : 'mb-4'}`" [class.fade-out]="file.fadeOut">
       <si-icon class="icon align-self-center ms-6 me-4" [icon]="icons.elementDocument" />
       <div class="flex-fill overflow-hidden">
         <div class="file-info">
@@ -38,7 +39,7 @@
             [class.text-danger]="file.status === 'error'"
           >
             <si-status-icon
-              class="icon-small my-n2 me-2"
+              class="icon-sm my-n2 me-2"
               [status]="file.status === 'invalid' ? 'warning' : 'danger'"
             />
             {{ file.errorText | translate }}
@@ -61,7 +62,7 @@
         @if (file.status === 'error') {
           <button
             type="button"
-            class="btn btn-circle btn-sm btn-tertiary me-4"
+            class="btn btn-circle btn-tertiary me-4"
             [disabled]="!uploadEnabled"
             [title]="uploadButtonText() | translate"
             [attr.aria-label]="uploadButtonText() | translate"
@@ -73,7 +74,7 @@
         @if (file.status === 'added' || file.status === 'error' || file.status === 'invalid') {
           <button
             type="button"
-            class="btn btn-circle btn-sm btn-ghost"
+            class="btn btn-circle btn-ghost"
             [title]="removeButtonText() | translate"
             [attr.aria-label]="removeButtonText() | translate"
             (click)="removeFile($index)"
@@ -84,7 +85,7 @@
         @if (file.status === 'uploading' || file.status === 'queued') {
           <button
             type="button"
-            class="btn btn-circle btn-sm btn-tertiary"
+            class="btn btn-circle btn-tertiary"
             [title]="cancelButtonText() | translate"
             [attr.aria-label]="cancelButtonText() | translate"
             (click)="cancelUpload(file)"

@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, provideZonelessChangeDetection } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -55,9 +55,6 @@ describe('SiNotificationItemComponent', () => {
   let element: HTMLElement;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
@@ -109,7 +106,7 @@ describe('SiNotificationItemComponent', () => {
   it('should display the quick actions', () => {
     component.quickActions = [
       {
-        type: 'action-circle-button',
+        type: 'action-icon-button',
         action: () => {},
         ariaLabel: 'Action',
         icon: 'element-plant'

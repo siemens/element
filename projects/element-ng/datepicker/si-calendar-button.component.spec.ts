@@ -1,13 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  provideZonelessChangeDetection,
-  signal
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DatepickerInputConfig, SiDatepickerDirective } from '@siemens/element-ng/datepicker';
@@ -52,10 +47,6 @@ describe('SiCalendarButtonComponent', () => {
 
   beforeEach(async () => {
     jasmine.clock().mockDate(new Date('2023-12-31'));
-    TestBed.configureTestingModule({
-      imports: [WrapperComponent],
-      providers: [provideZonelessChangeDetection()]
-    });
     fixture = TestBed.createComponent(WrapperComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

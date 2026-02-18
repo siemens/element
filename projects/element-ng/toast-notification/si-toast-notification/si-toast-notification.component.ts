@@ -1,12 +1,11 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import { Component, computed, HostListener, inject, input, output, signal } from '@angular/core';
+import { elementCancel } from '@siemens/element-icons';
 import {
   addIcons,
-  elementCancel,
   SiIconComponent,
   SiStatusIconComponent,
   STATUS_ICON_CONFIG
@@ -18,7 +17,7 @@ import { SI_TOAST_AUTO_HIDE_DELAY, SiToast } from '../si-toast.model';
 
 @Component({
   selector: 'si-toast-notification',
-  imports: [NgClass, SiLinkModule, SiIconComponent, SiStatusIconComponent, SiTranslatePipe],
+  imports: [SiLinkModule, SiIconComponent, SiStatusIconComponent, SiTranslatePipe],
   templateUrl: './si-toast-notification.component.html',
   styleUrl: './si-toast-notification.component.scss'
 })
@@ -33,11 +32,7 @@ export class SiToastNotificationComponent {
   protected readonly icons = addIcons({ elementCancel });
   protected readonly status = computed(() => {
     const toast = this.toast();
-    if (toast.state === 'connection') {
-      return 'danger';
-    } else {
-      return Object.keys(this.statusIcons).includes(toast.state) ? toast.state : 'info';
-    }
+    return Object.keys(this.statusIcons).includes(toast.state) ? toast.state : 'info';
   });
   protected readonly statusColor = computed(() => this.statusIcons[this.status()].color);
   protected readonly toastTimeoutInSeconds = computed(() => {

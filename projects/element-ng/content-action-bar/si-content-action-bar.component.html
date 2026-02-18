@@ -25,9 +25,8 @@
                 type="button"
                 si-menu-item
                 [attr.data-id]="primaryAction.id"
-                [attr.title]="
-                  primaryAction.iconOnly ? (primaryAction.label | translate) : undefined
-                "
+                [attr.aria-label]="primaryAction.label | translate"
+                [siTooltip]="primaryAction.iconOnly ? (primaryAction.label | translate) : ''"
                 [badge]="primaryAction.badge"
                 [badgeColor]="primaryAction.badgeColor ?? 'secondary'"
                 [disabled]="primaryAction.disabled || disabled()"
@@ -45,9 +44,8 @@
                 type="button"
                 si-menu-item-checkbox
                 [attr.data-id]="primaryAction.id"
-                [attr.title]="
-                  primaryAction.iconOnly ? (primaryAction.label | translate) : undefined
-                "
+                [attr.aria-label]="primaryAction.label | translate"
+                [siTooltip]="primaryAction.iconOnly ? (primaryAction.label | translate) : ''"
                 [checked]="primaryAction.checked"
                 [badge]="primaryAction.badge"
                 [badgeColor]="primaryAction.badgeColor ?? 'secondary'"
@@ -67,9 +65,8 @@
                 type="button"
                 si-menu-item
                 [attr.data-id]="primaryAction.id"
-                [attr.title]="
-                  primaryAction.iconOnly ? (primaryAction.label | translate) : undefined
-                "
+                [attr.aria-label]="primaryAction.label | translate"
+                [siTooltip]="primaryAction.iconOnly ? (primaryAction.label | translate) : ''"
                 [badge]="primaryAction.badge"
                 [badgeColor]="primaryAction.badgeColor ?? 'secondary'"
                 [disabled]="primaryAction.disabled || disabled()"
@@ -90,9 +87,8 @@
               <a
                 si-menu-item
                 [attr.data-id]="primaryAction.id"
-                [attr.title]="
-                  primaryAction.iconOnly ? (primaryAction.label | translate) : undefined
-                "
+                [attr.aria-label]="primaryAction.label | translate"
+                [siTooltip]="primaryAction.iconOnly ? (primaryAction.label | translate) : ''"
                 [badge]="primaryAction.badge"
                 [badgeColor]="primaryAction.badgeColor ?? 'secondary'"
                 [disabled]="primaryAction.disabled || disabled()"
@@ -117,9 +113,8 @@
               <a
                 si-menu-item
                 [attr.data-id]="primaryAction.id"
-                [attr.title]="
-                  primaryAction.iconOnly ? (primaryAction.label | translate) : undefined
-                "
+                [attr.aria-label]="primaryAction.label | translate"
+                [siTooltip]="primaryAction.iconOnly ? (primaryAction.label | translate) : ''"
                 [badge]="primaryAction.badge"
                 [badgeColor]="primaryAction.badgeColor ?? 'secondary'"
                 [disabled]="primaryAction.disabled || disabled()"

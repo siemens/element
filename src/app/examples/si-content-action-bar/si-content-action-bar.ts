@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   ContentActionBarMainItem,
   SiContentActionBarComponent
@@ -14,6 +14,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
   selector: 'app-sample',
   imports: [SiContentActionBarComponent],
   templateUrl: './si-content-action-bar.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {

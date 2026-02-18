@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { expect, test } from '../../support/test-helpers';
@@ -47,6 +47,11 @@ test.describe('filtered search', () => {
     ).toBeFocused();
     await page.keyboard.press('Control+KeyA');
     await page.keyboard.press('Backspace');
+    // There are currently two combox with the label "search". The input of the pill and the free text search.
+    // TODO: pill and free text should have different labels.
+    await expect(
+      page.locator('.pill-group').getByRole('combobox', { name: 'search' })
+    ).toHaveAttribute('aria-expanded', 'true');
     await si.runVisualAndA11yTests('typeahead-open');
     await page.keyboard.press('Backspace');
     await si.runVisualAndA11yTests('empty');
@@ -65,6 +70,7 @@ test.describe('filtered search', () => {
     await page.keyboard.type('H');
     await expect(page.getByRole('option', { name: 'Karlsruhe' })).toHaveClass(/active/);
     await page.keyboard.type('annover');
+    await expect(page.getByRole('option').first()).not.toBeVisible(); // Ensures that the view was updated by Angular after typing.
     await page.keyboard.press('Enter');
     await expect(freeTextSearch).toBeFocused();
     await freeTextSearch.fill('Building:House');

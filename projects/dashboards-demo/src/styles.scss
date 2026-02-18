@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 $siemens-font-path: '~@simpl/brand/assets/fonts' !default;
-$icon-font-path: '~@simpl/element-icons/dist/fonts' !default;
+$icon-font-path: '~@siemens/element-icons/fonts' !default;
 
 @use '@simpl/brand/assets/fonts/styles/siemens-sans' with (
   $siemens-font-path: $siemens-font-path
@@ -18,7 +18,7 @@ $icon-font-path: '~@simpl/element-icons/dist/fonts' !default;
   )
 );
 
-@use '@simpl/element-icons/dist/style/simpl-element-icons' with (
+@use '@siemens/element-icons/dist/style/siemens-element-icons' with (
   $font-path: $icon-font-path
 );
 

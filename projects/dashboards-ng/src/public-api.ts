@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 export * from './components/flexible-dashboard/si-flexible-dashboard.component';
@@ -14,6 +14,7 @@ export * from './model/widgets.model';
 export * from './model/si-dashboard-toolbar.model';
 export * from './model/si-widget-id-provider';
 export * from './widget-loader';
+export * from './services/federation-loader.util';
 
 export * from '@siemens/dashboards-ng/translate';
 export * from './public-api.module';

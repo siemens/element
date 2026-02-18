@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import {
@@ -78,17 +78,6 @@ export class SiLoginBasicComponent implements OnInit {
    * Config for Forgot Password link.
    */
   readonly forgotPasswordLink = input<Link>();
-  /**
-   * Text for register now.
-   *
-   * @defaultValue
-   * ```
-   * t(() => $localize`:@@SI_LOGIN_BASIC.REGISTER_NOW_INTRO:Don't have an account?`)
-   * ```
-   */
-  readonly registerNowIntroText = input(
-    t(() => $localize`:@@SI_LOGIN_BASIC.REGISTER_NOW_INTRO:Don't have an account?`)
-  );
   /**
    * Config for Register Now link.
    */

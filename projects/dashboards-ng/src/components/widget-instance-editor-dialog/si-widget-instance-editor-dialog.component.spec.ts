@@ -1,11 +1,13 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { DebugElement, provideZonelessChangeDetection } from '@angular/core';
+import { DebugElement } from '@angular/core';
+import { outputToObservable } from '@angular/core/rxjs-interop';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ModalRef } from '@siemens/element-ng/modal';
+import { firstValueFrom } from 'rxjs';
 
 import { TEST_WIDGET } from '../../../test/test-widget/test-widget';
 import { TestingModule } from '../../../test/testing.module';
@@ -25,7 +27,7 @@ describe('SiWidgetInstanceEditorDialogComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TestingModule, SiWidgetInstanceEditorDialogComponent],
-      providers: [{ provide: ModalRef, useValue: new ModalRef() }, provideZonelessChangeDetection()]
+      providers: [{ provide: ModalRef, useValue: new ModalRef() }]
     }).compileComponents();
   });
 
@@ -48,24 +50,21 @@ describe('SiWidgetInstanceEditorDialogComponent', () => {
     expect(component.widget()).toBeDefined();
   });
 
-  it('should setup custom editor', (done: DoneFn) => {
-    component.editorSetupCompleted.subscribe(_ => {
-      expect(
-        fixture.debugElement.query(By.css('.si-layout-fixed-height')).children[0].nativeElement
-          .tagName
-      ).toBe('SI-TEST-WIDGET-EDITOR');
-      done();
-    });
-
+  it('should setup custom editor', async () => {
     fixture.componentRef.setInput('widget', TEST_WIDGET);
     fixture.componentRef.setInput('widgetConfig', {
       ...createWidgetConfig(TEST_WIDGET),
       id: 'testId'
     });
     fixture.detectChanges();
+    await firstValueFrom(outputToObservable(component.editorSetupCompleted));
+    expect(
+      fixture.debugElement.query(By.css('.si-layout-fixed-height')).children[0].nativeElement
+        .tagName
+    ).toBe('SI-TEST-WIDGET-EDITOR');
   });
 
-  it('#onCancel() should emit undefined on closed', (done: DoneFn) => {
+  it('#onCancel() should emit undefined on closed', async () => {
     fixture.componentRef.setInput('widget', TEST_WIDGET);
     fixture.componentRef.setInput('widgetConfig', {
       ...createWidgetConfig(TEST_WIDGET),
@@ -73,23 +72,21 @@ describe('SiWidgetInstanceEditorDialogComponent', () => {
     });
     fixture.detectChanges();
 
-    component.closed.subscribe(wd => {
-      expect(wd).toBeUndefined();
-      done();
-    });
+    const closedPromise = firstValueFrom(outputToObservable(component.closed));
     buttonsByName('Cancel')[0].nativeElement.click();
+    const wd = await closedPromise;
+    expect(wd).toBeUndefined();
   });
 
-  it('#onSave() should emit widget config on closed', (done: DoneFn) => {
+  it('#onSave() should emit widget config on closed', async () => {
     const widgetConfig = { ...createWidgetConfig(TEST_WIDGET), id: 'testId' };
     fixture.componentRef.setInput('widget', TEST_WIDGET);
     fixture.componentRef.setInput('widgetConfig', widgetConfig);
     fixture.detectChanges();
 
-    component.closed.subscribe(wd => {
-      expect(wd).toEqual(widgetConfig);
-      done();
-    });
+    const closedPromise = firstValueFrom(outputToObservable(component.closed));
     buttonsByName('Save')[0].nativeElement.click();
+    const wd = await closedPromise;
+    expect(wd).toEqual(widgetConfig);
   });
 });

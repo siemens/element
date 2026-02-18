@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { LOG_EVENT } from '@siemens/live-preview';
 
@@ -15,7 +15,8 @@ import {
 @Component({
   selector: 'app-sample',
   imports: [SiIconComponent, SiPopoverDirective, SiPopoverTitleDirective, SiPopoverBodyDirective],
-  templateUrl: './si-popover.html'
+  templateUrl: './si-popover.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   logEvent = inject(LOG_EVENT);

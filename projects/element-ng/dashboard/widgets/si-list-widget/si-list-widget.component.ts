@@ -1,19 +1,13 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import { booleanAttribute, Component, computed, input, model, OnChanges } from '@angular/core';
+import { elementRight2, elementSortDown, elementSortUp } from '@siemens/element-icons';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { AccentLineType } from '@siemens/element-ng/common';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
-import {
-  addIcons,
-  SiIconComponent,
-  elementRight2,
-  elementSortDown,
-  elementSortUp
-} from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
@@ -28,7 +22,6 @@ import { SiListWidgetItem } from './si-list-widget-item.component';
 @Component({
   selector: 'si-list-widget',
   imports: [
-    NgClass,
     SiCardComponent,
     SiIconComponent,
     SiLinkDirective,

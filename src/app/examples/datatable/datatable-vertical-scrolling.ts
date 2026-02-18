@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, OnInit, TemplateRef, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, TemplateRef, viewChild } from '@angular/core';
 import { SiCircleStatusModule } from '@siemens/element-ng/circle-status';
 import { StatusType } from '@siemens/element-ng/common';
 import { SiDatatableModule } from '@siemens/element-ng/datatable';
@@ -22,7 +22,8 @@ import { DatatableComponent, NgxDatatableModule, TableColumn } from '@siemens/ng
     SiCircleStatusModule
   ],
   templateUrl: './datatable-vertical-scrolling.html',
-  styleUrl: './datatable.scss'
+  styleUrl: './datatable.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnInit {
   readonly table = viewChild(DatatableComponent);

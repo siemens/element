@@ -1,15 +1,16 @@
 @use '../variables/semantic-tokens';
+@use '../variables/si-vars';
 
 @use 'sass:math';
 // so that @extend works
 @use '../bootstrap/reboot';
 
-$si-link-icon-size: math.div(20em, 14);
-$si-link-icon-line-height: math.div(14em, 20);
-$si-link-icon-spacing: math.div(4em, 20);
+$si-link-icon-size: math.div(16em, 14);
+$si-link-icon-line-height: math.div(14em, 16);
+$si-link-icon-spacing: math.div(4em, 16);
 
 a:active {
-  color: semantic-tokens.$element-ui-0-hover;
+  color: semantic-tokens.$element-action-primary-active;
   text-decoration: underline;
 }
 
@@ -23,17 +24,9 @@ a:active {
 }
 
 .link-icon {
-  font-size: $si-link-icon-size !important; // stylelint-disable-line declaration-no-important
+  font-size: si-vars.$si-icon-font-size-sm !important; // stylelint-disable-line declaration-no-important
   line-height: $si-link-icon-line-height !important; // stylelint-disable-line declaration-no-important
-  margin-block-start: -(math.div(20em - 14em, 2 * 20) + math.div(2.5em, 20));
-  margin-block-end: math.div(20em - 14em, -2 * 20);
+  margin-block-start: -(math.div(16em - 14em, 2 * 16) + math.div(2.5em, 16));
+  margin-block-end: math.div(16em - 14em, -2 * 16);
   vertical-align: middle;
-}
-
-.link-start {
-  margin-inline-end: $si-link-icon-spacing;
-}
-
-.link-end {
-  margin-inline-start: $si-link-icon-spacing;
 }

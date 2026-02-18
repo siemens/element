@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { expect, test } from '../../support/test-helpers';
@@ -11,26 +11,25 @@ test.describe('si-select', () => {
   test(example, async ({ page, si }) => {
     await si.visitExample(example);
 
-    await page.getByRole('combobox', { name: 'FormControl' }).click();
-    await si.runVisualAndA11yTests('form-select');
-    await page.locator('.cdk-overlay-backdrop').click({ position: { x: 0, y: 0 }, force: true });
+    const testCases = [
+      { name: 'FormControl', testName: 'form-select' },
+      { name: 'Multi select', testName: 'multi-select' },
+      { name: 'Multi-select with groups', testName: 'multi-select-with-groups' },
+      { name: 'Select with custom template', testName: 'custom-template' },
+      { name: 'Select with actions', testName: 'actions' }
+    ];
 
-    await page.getByRole('combobox', { name: 'Multi select' }).click();
-    await si.runVisualAndA11yTests('multi-select');
-    await page.locator('.cdk-overlay-backdrop').click({ position: { x: 0, y: 0 }, force: true });
+    for (const { name, testName } of testCases) {
+      await page.getByRole('combobox', { name }).click();
+      await page.getByRole('listbox', { name }).hover();
+      await si.runVisualAndA11yTests(testName);
 
-    await page.getByRole('combobox', { name: 'Multi-select with groups' }).click();
-    await si.runVisualAndA11yTests('multi-select-with-groups');
-    await page.locator('.cdk-overlay-backdrop').click({ position: { x: 0, y: 0 }, force: true });
+      if (name === 'Select with actions') {
+        await page.getByRole('button', { name: 'clear' }).click();
+      }
 
-    await page.getByRole('combobox', { name: 'Select with custom template' }).click();
-    await si.runVisualAndA11yTests('custom-template');
-    await page.locator('.cdk-overlay-backdrop').click({ position: { x: 0, y: 0 }, force: true });
-
-    await page.getByRole('combobox', { name: 'Select with actions' }).click();
-    await si.runVisualAndA11yTests('actions');
-    await page.getByRole('button', { name: 'clear' }).click();
-    await page.locator('.cdk-overlay-backdrop').click({ position: { x: 0, y: 0 }, force: true });
+      await page.locator('.cdk-overlay-backdrop').click({ position: { x: 0, y: 0 }, force: true });
+    }
 
     await page.locator('h4').first().click();
 
@@ -46,7 +45,8 @@ test.describe('si-select', () => {
     await si.visitExample(example);
 
     await page.getByRole('checkbox', { name: 'With filter' }).check();
-    const formControlSelect = page.getByRole('combobox', { name: 'FormControl' });
+    // When filters are enabled, the dropdown content is also a combobox. So we must make sure to select real outer combobox.
+    const formControlSelect = page.getByRole('combobox', { name: 'FormControl' }).first();
     await formControlSelect.click();
 
     const selectFormControlInput = page.getByRole('combobox', { name: 'FormControl' }).nth(1);
@@ -56,9 +56,12 @@ test.describe('si-select', () => {
 
     await si.runVisualAndA11yTests('filter-opened');
     await selectFormControlInput.pressSequentially('Bad');
+    await expect(page.getByRole('option')).toHaveText(['Bad', 'Very bad']);
     await page.keyboard.press('ArrowDown');
+    await expect(page.getByRole('option', { name: 'Bad', exact: true })).toContainClass('active');
     await si.runVisualAndA11yTests('filter-searched');
     await page.keyboard.press('Enter');
+    await expect(formControlSelect).not.toHaveAttribute('aria-expanded', 'true');
     await si.runVisualAndA11yTests('filter-selected');
 
     await formControlSelect.click();
@@ -85,6 +88,7 @@ test.describe('si-select', () => {
     await page.getByRole('button', { name: 'create' }).click();
     await selectInputWithActions.focus();
     await page.keyboard.press('Backspace');
+    await expect(page.getByRole('button', { name: 'New optio' })).toBeVisible();
     await si.runVisualAndA11yTests('actions-option-created');
   });
 

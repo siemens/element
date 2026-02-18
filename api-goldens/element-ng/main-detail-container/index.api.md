@@ -27,29 +27,13 @@ export class SiMainDetailContainerComponent implements OnInit, OnChanges, OnDest
     readonly mainContainerWidth: _angular_core.ModelSignal<number | "default">;
     readonly minDetailSize: _angular_core.InputSignal<number>;
     readonly minMainSize: _angular_core.InputSignal<number>;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
     readonly resizableParts: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly stateId: _angular_core.InputSignal<string | undefined>;
     readonly truncateHeading: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiMainDetailContainerComponent, "si-main-detail-container", never, { "largeLayoutBreakpoint": { "alias": "largeLayoutBreakpoint"; "required": false; "isSignal": true; }; "detailsActive": { "alias": "detailsActive"; "required": false; "isSignal": true; }; "heading": { "alias": "heading"; "required": false; "isSignal": true; }; "truncateHeading": { "alias": "truncateHeading"; "required": false; "isSignal": true; }; "detailsHeading": { "alias": "detailsHeading"; "required": false; "isSignal": true; }; "resizableParts": { "alias": "resizableParts"; "required": false; "isSignal": true; }; "hideBackButton": { "alias": "hideBackButton"; "required": false; "isSignal": true; }; "detailsBackButtonText": { "alias": "detailsBackButtonText"; "required": false; "isSignal": true; }; "containerClass": { "alias": "containerClass"; "required": false; "isSignal": true; }; "mainContainerClass": { "alias": "mainContainerClass"; "required": false; "isSignal": true; }; "detailContainerClass": { "alias": "detailContainerClass"; "required": false; "isSignal": true; }; "mainContainerWidth": { "alias": "mainContainerWidth"; "required": false; "isSignal": true; }; "minMainSize": { "alias": "minMainSize"; "required": false; "isSignal": true; }; "minDetailSize": { "alias": "minDetailSize"; "required": false; "isSignal": true; }; "stateId": { "alias": "stateId"; "required": false; "isSignal": true; }; }, { "hasLargeSizeChange": "hasLargeSizeChange"; "detailsActive": "detailsActiveChange"; "mainContainerWidth": "mainContainerWidthChange"; }, never, ["[slot=mainSearch]", "[slot=mainActions]", "[slot=mainData]", "[slot=detailActions]", "[slot=details]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiMainDetailContainerComponent, never>;
 }
 
 // @public (undocumented)
 export class SiMainDetailContainerModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiMainDetailContainerModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiMainDetailContainerModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiMainDetailContainerModule, never, [typeof SiMainDetailContainerComponent], [typeof SiMainDetailContainerComponent]>;
 }
 
 // (No @packageDocumentation comment for this package)

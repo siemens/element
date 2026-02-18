@@ -1,12 +1,12 @@
 <div
-  class="collapsible-header focus-inside px-6"
   role="button"
-  [ngClass]="headerCssClasses()"
+  placement="start"
+  [siTooltip]="hcollapsed() && heading() ? (heading()! | translate) : ''"
+  [class]="`collapsible-header focus-inside px-6 ${headerCssClasses()}`"
   [attr.tabindex]="disabled() ? '' : '0'"
   [id]="headerId"
   [class.open]="opened()"
   [class.disabled]="disabled()"
-  [title]="hcollapsed() ? (heading() | translate) : ''"
   [attr.aria-expanded]="opened() && !hcollapsed()"
   [attr.aria-disabled]="disabled()"
   [attr.aria-controls]="controlId"
@@ -29,7 +29,7 @@
   </div>
 
   @if (badge() !== undefined && badge() !== '') {
-    <span class="badge autohide" [ngClass]="'bg-' + badgeColor()">
+    <span [class]="'badge autohide' + (badgeColor() ? ' bg-' + badgeColor() : '')">
       {{ badge() }}
     </span>
   }
@@ -39,18 +39,18 @@
 </div>
 <div
   #content
-  class="collapsible-content"
   role="region"
   [id]="controlId"
-  [ngClass]="contentBgClasses()"
-  [@showHide]="showHide"
+  [class]="`collapsible-content ${contentBgClasses()}`"
   [attr.aria-labelledby]="headerId"
   [class.full-height]="fullHeight()"
 >
   @if (opened()) {
-    <div>
-      <div [ngClass]="contentCssClasses()">
-        <ng-content />
+    <div class="content-motion" animate.leave="content-leave">
+      <div class="overflow-hidden">
+        <div [class]="contentCssClasses()">
+          <ng-content />
+        </div>
       </div>
     </div>
   }

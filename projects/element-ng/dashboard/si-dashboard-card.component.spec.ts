@@ -1,15 +1,9 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  provideZonelessChangeDetection,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 
 import { SiDashboardCardComponent } from './index';
@@ -41,8 +35,7 @@ describe('SiDashboardCardComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [RouterModule, NoopAnimationsModule, TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
+      imports: [RouterModule, TestHostComponent]
     })
   );
 
@@ -165,7 +158,7 @@ describe('SiDashboardCardComponent', () => {
       expect(contentActionBar).toBeNull();
       component.enableExpandInteraction = true;
       fixture.detectChanges();
-      contentActionBar = element.querySelector('[title="Expand"]');
+      contentActionBar = element.querySelector('[aria-label="Expand"]');
       expect(contentActionBar).not.toBeNull();
     });
   });
@@ -182,10 +175,14 @@ describe('SiDashboardCardComponent', () => {
   it('expand and restore on click', () => {
     component.enableExpandInteraction = true;
     fixture.detectChanges();
-    (element.querySelector('si-content-action-bar .dropdown-item') as HTMLElement).click();
+    element
+      .querySelector<HTMLElement>('si-content-action-bar button[aria-label="Expand"]')!
+      .click();
     fixture.detectChanges();
     expect(component.card().isExpanded()).toBeTrue();
-    (element.querySelector('si-content-action-bar .dropdown-item') as HTMLElement).click();
+    element
+      .querySelector<HTMLElement>('si-content-action-bar button[aria-label="Restore"]')!
+      .click();
     fixture.detectChanges();
     expect(component.card().isExpanded()).toBeFalse();
   });
@@ -195,10 +192,14 @@ describe('SiDashboardCardComponent', () => {
     component.primaryActions = [{ title: 'Action' }];
     fixture.detectChanges();
     // Second element in content action bar is our expand actions
-    (element.querySelectorAll('si-content-action-bar .dropdown-item')[1] as HTMLElement).click();
+    element
+      .querySelector<HTMLElement>('si-content-action-bar button[aria-label="Expand"]')!
+      .click();
     fixture.detectChanges();
     expect(component.card().isExpanded()).toBeTrue();
-    (element.querySelectorAll('si-content-action-bar .dropdown-item')[1] as HTMLElement).click();
+    element
+      .querySelector<HTMLElement>('si-content-action-bar button[aria-label="Restore"]')!
+      .click();
     fixture.detectChanges();
     expect(component.card().isExpanded()).toBeFalse();
   });
@@ -207,10 +208,14 @@ describe('SiDashboardCardComponent', () => {
     component.enableExpandInteraction = true;
     component.secondaryActions = [{ title: 'Action' }];
     fixture.detectChanges();
-    (element.querySelector('si-content-action-bar .dropdown-item') as HTMLElement).click();
+    element
+      .querySelector<HTMLElement>('si-content-action-bar button[aria-label="Expand"]')!
+      .click();
     fixture.detectChanges();
     expect(component.card().isExpanded()).toBeTrue();
-    (element.querySelector('si-content-action-bar .dropdown-item') as HTMLElement).click();
+    element
+      .querySelector<HTMLElement>('si-content-action-bar button[aria-label="Restore"]')!
+      .click();
     fixture.detectChanges();
     expect(component.card().isExpanded()).toBeFalse();
   });

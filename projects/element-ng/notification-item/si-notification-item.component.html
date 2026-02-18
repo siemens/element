@@ -84,6 +84,9 @@
     @case ('action-circle-button') {
       <ng-container *ngTemplateOutlet="actionButton; context: { $implicit: action }" />
     }
+    @case ('action-icon-button') {
+      <ng-container *ngTemplateOutlet="actionButton; context: { $implicit: action }" />
+    }
     @case ('router-link') {
       <ng-container *ngTemplateOutlet="routerLink; context: { $implicit: action }" />
     }
@@ -96,7 +99,7 @@
 <ng-template #content>
   <div class="d-flex flex-column gap-3 text-body">
     <span class="si-body text-secondary">{{ timeStamp() | translate }}</span>
-    <span [ngClass]="unread() ? 'si-h5-bold' : 'si-h5'">{{ heading() | translate }}</span>
+    <span [class.si-h5-bold]="unread()" [class.si-h5]="!unread()">{{ heading() | translate }}</span>
     @if (description()) {
       <span class="si-body">{{ description() | translate }}</span>
     }
@@ -109,7 +112,7 @@
 <ng-template #actionButton let-action>
   <button
     type="button"
-    class="btn btn-ghost btn-sm btn-circle"
+    class="btn btn-ghost btn-icon"
     [attr.aria-label]="action.ariaLabel"
     (click)="action.action(action)"
   >
@@ -119,7 +122,7 @@
 
 <ng-template #routerLink let-action>
   <a
-    class="btn btn-ghost btn-sm p-2 btn-circle"
+    class="btn btn-ghost p-2 btn-icon"
     [routerLink]="action.routerLink"
     [queryParams]="action.extras?.queryParams"
     [queryParamsHandling]="action.extras?.queryParamsHandling"
@@ -137,7 +140,7 @@
 
 <ng-template #link let-action>
   <a
-    class="btn btn-ghost btn-sm p-2 btn-circle"
+    class="btn btn-ghost p-2 btn-icon"
     [href]="action.href"
     [target]="action.target"
     [attr.aria-label]="action.ariaLabel"
@@ -149,7 +152,7 @@
 <ng-template #menu let-action>
   <button
     type="button"
-    class="btn btn-ghost btn-circle btn-sm"
+    class="btn btn-ghost btn-icon"
     [attr.aria-label]="heading() + ' dropdown'"
     [cdkMenuTriggerFor]="actionMenu"
   >

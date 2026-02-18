@@ -1,36 +1,45 @@
 - text: Form
 - group "Role*":
+  - text: ""
+  - button "More information about the role"
   - radio "Engineer"
   - text: Engineer
   - radio "Installer"
   - text: Installer
 - text: Name*
+- button "More information about the name"
 - textbox "Name*"
 - text: Description
 - textbox "Description"
 - text: Phone number
 - group "Phone number":
   - combobox /Select Country Switzerland \+\d+/
-  - textbox "Enter phone number"
+  - textbox "Enter phone number":
+    - /placeholder: 21 234 56 78
 - text: Day of birth*
 - textbox "Day of birth*"
 - button "Open calendar"
 - text: Travel Date*
 - group "Travel Date*":
   - textbox "Start date"
+  - text: ""
   - textbox "End date"
   - button "Open calendar"
 - text: Arrival
 - group "Arrival":
-  - textbox "Hours"
-  - textbox "Minutes"
+  - textbox "Hours":
+    - /placeholder: hh
+  - textbox "Minutes":
+    - /placeholder: mm
   - combobox "Period":
     - option "AM" [selected]
     - option "PM"
 - text: Departure
 - group "Departure":
-  - textbox "Hours"
-  - textbox "Minutes"
+  - textbox "Hours":
+    - /placeholder: hh
+  - textbox "Minutes":
+    - /placeholder: mm
   - combobox "Period":
     - option "AM" [selected]
     - option "PM"
@@ -39,14 +48,17 @@
 - text: Fellow passengers
 - spinbutton "Fellow passengers"
 - group "Accept terms":
+  - text: ""
   - checkbox "I confirm that I accept all and everything.*"
   - text: I confirm that I accept all and everything.*
+  - button "More information about the terms"
   - checkbox "I confirm that I do not care about my privacy.*"
   - text: I confirm that I do not care about my privacy.*
 - button "Cancel"
 - button "Save"
 - text: Debugging
 - group "Actions":
+  - text: ""
   - checkbox "Disable form"
   - text: Disable form
   - checkbox "Readonly form"

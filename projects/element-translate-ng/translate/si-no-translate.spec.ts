@@ -1,9 +1,9 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { firstValueFrom } from 'rxjs';
 
 import { injectSiTranslateService } from './si-translate.inject';
 import { getBrowserLanguage, SiTranslateService } from './si-translate.service';
@@ -12,9 +12,6 @@ describe('SiNoTranslate', () => {
   let service: SiTranslateService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [provideZonelessChangeDetection()]
-    });
     service = TestBed.runInInjectionContext(() => injectSiTranslateService());
   });
 
@@ -30,11 +27,9 @@ describe('SiNoTranslate', () => {
     });
   });
 
-  it('should translate async', (done: DoneFn) => {
-    service.translateAsync('VALUE-2').subscribe(value => {
-      expect(value).toBe('VALUE-2');
-      done();
-    });
+  it('should translate async', async () => {
+    const value = await firstValueFrom(service.translateAsync('VALUE-2'));
+    expect(value).toBe('VALUE-2');
   });
 
   it('should translate sync', () => {

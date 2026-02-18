@@ -39,20 +39,10 @@ export class SiWizardComponent {
     readonly verticalMaxSize: _angular_core.InputSignal<string | undefined>;
     readonly verticalMinSize: _angular_core.InputSignal<string | undefined>;
     readonly wizardCancel: _angular_core.OutputEmitterRef<void>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiWizardComponent, "si-wizard", never, { "backText": { "alias": "backText"; "required": false; "isSignal": true; }; "nextText": { "alias": "nextText"; "required": false; "isSignal": true; }; "hideNavigation": { "alias": "hideNavigation"; "required": false; "isSignal": true; }; "saveText": { "alias": "saveText"; "required": false; "isSignal": true; }; "hideSave": { "alias": "hideSave"; "required": false; "isSignal": true; }; "completionText": { "alias": "completionText"; "required": false; "isSignal": true; }; "cancelText": { "alias": "cancelText"; "required": false; "isSignal": true; }; "hasCancel": { "alias": "hasCancel"; "required": false; "isSignal": true; }; "enableCompletionPage": { "alias": "enableCompletionPage"; "required": false; "isSignal": true; }; "completionPageVisibleTime": { "alias": "completionPageVisibleTime"; "required": false; "isSignal": true; }; "stepIcon": { "alias": "stepIcon"; "required": false; "isSignal": true; }; "stepActiveIcon": { "alias": "stepActiveIcon"; "required": false; "isSignal": true; }; "stepCompletedIcon": { "alias": "stepCompletedIcon"; "required": false; "isSignal": true; }; "stepFailedIcon": { "alias": "stepFailedIcon"; "required": false; "isSignal": true; }; "verticalLayout": { "alias": "verticalLayout"; "required": false; "isSignal": true; }; "inlineNavigation": { "alias": "inlineNavigation"; "required": false; "isSignal": true; }; "showStepNumbers": { "alias": "showStepNumbers"; "required": false; "isSignal": true; }; "showVerticalDivider": { "alias": "showVerticalDivider"; "required": false; "isSignal": true; }; "verticalMinSize": { "alias": "verticalMinSize"; "required": false; "isSignal": true; }; "verticalMaxSize": { "alias": "verticalMaxSize"; "required": false; "isSignal": true; }; }, { "completionAction": "completionAction"; "wizardCancel": "wizardCancel"; }, ["steps"], ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiWizardComponent, never>;
 }
 
 // @public (undocumented)
 export class SiWizardModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiWizardModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiWizardModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiWizardModule, never, [typeof SiWizardComponent, typeof SiWizardStepComponent], [typeof SiWizardComponent, typeof SiWizardStepComponent]>;
 }
 
 // @public (undocumented)
@@ -72,10 +62,6 @@ export class SiWizardStepComponent {
     readonly next: _angular_core.OutputEmitterRef<void>;
     // (undocumented)
     readonly save: _angular_core.OutputEmitterRef<void>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiWizardStepComponent, "si-wizard-step", never, { "heading": { "alias": "heading"; "required": false; "isSignal": true; }; "isValid": { "alias": "isValid"; "required": false; "isSignal": true; }; "isNextNavigable": { "alias": "isNextNavigable"; "required": false; "isSignal": true; }; "failed": { "alias": "failed"; "required": false; "isSignal": true; }; }, { "next": "next"; "back": "back"; "save": "save"; }, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiWizardStepComponent, never>;
 }
 
 // (No @packageDocumentation comment for this package)

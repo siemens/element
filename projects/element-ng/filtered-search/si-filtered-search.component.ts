@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import {
@@ -23,8 +23,9 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
+import { elementCancel, elementSearch } from '@siemens/element-icons';
 import { BackgroundColorVariant, isRTL } from '@siemens/element-ng/common';
-import { addIcons, elementCancel, elementSearch, SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTypeaheadDirective, TypeaheadOption } from '@siemens/element-ng/typeahead';
 import {
   injectSiTranslateService,
@@ -43,7 +44,6 @@ import {
 } from './si-filtered-search-helper';
 import { SiFilteredSearchValueComponent } from './si-filtered-search-value.component';
 import {
-  Criterion,
   CriterionDefinition,
   CriterionValue,
   DisplayedCriteriaEventArgs,
@@ -89,12 +89,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
    * In addition to lazy loaded value, you can also lazy load the criteria itself
    */
   readonly lazyCriterionProvider =
-    input<
-      (
-        typed: string,
-        searchCriteria?: SearchCriteria
-      ) => Observable<Criterion[] | CriterionDefinition[]>
-    >();
+    input<(typed: string, searchCriteria?: SearchCriteria) => Observable<CriterionDefinition[]>>();
   /**
    * In many cases, your application defines the criteria, but the values need
    * to be loaded from a server. In this case you can provide a function that
@@ -108,15 +103,6 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
    * @defaultValue false
    */
   readonly disabled = input(false, { transform: booleanAttribute });
-  /**
-   * Do not allow changes. Search can still be triggered.
-   *
-   * @deprecated Use {@link disabled} instead.
-   *
-   * @defaultValue false
-   */
-  readonly readonly = input(false, { transform: booleanAttribute });
-
   /**
    * Limit criteria to the predefined ones.
    *
@@ -183,7 +169,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
    *
    * @defaultValue []
    */
-  readonly criteria = input<Criterion[] | CriterionDefinition[]>([]);
+  readonly criteria = input<CriterionDefinition[]>([]);
   /**
    * Opt-in to search for each criterion only once.
    *
@@ -367,10 +353,8 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
   private readonly strictCriterionOrValue = computed(() => {
     return this.strictCriterion() || this.isStrictOrOnlySelectValue();
   });
-  private readonly lazyLoadedCriteria = signal<Criterion[] | CriterionDefinition[] | undefined>(
-    undefined
-  );
 
+  private readonly lazyLoadedCriteria = signal<CriterionDefinition[] | undefined>(undefined);
   private readonly loadedCriteria = computed(() => {
     const lazyLoadedCriteria = this.lazyLoadedCriteria();
     if (lazyLoadedCriteria) {
@@ -394,8 +378,6 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
       };
     }
   );
-
-  private readonly isReadOnly = computed(() => this.readonly() || this.disabled());
 
   constructor() {
     this.dataSource = this.typeaheadInputChange.pipe(
@@ -455,7 +437,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
    * Returns undefined if no config was found.
    */
   private findCriterionConfig(
-    criterionValue: Criterion | CriterionValue
+    criterionValue: CriterionValue
   ): InternalCriterionDefinition | undefined {
     const config = this.internalCriterionDefinitions.find(ic => ic.name === criterionValue.name);
 
@@ -465,7 +447,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
 
     // Check if this matches the freeTextCriterion
     const freeTextDef = this.internalFreeTextCriterion();
-    if (freeTextDef && freeTextDef.name === criterionValue.name) {
+    if (freeTextDef?.name === criterionValue.name) {
       return freeTextDef;
     }
 
@@ -481,8 +463,8 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
           this.findCriterionConfig(c) ??
           ({
             name: c.name,
-            label: c.label ?? c.name,
-            translatedLabel: c.label ?? c.name
+            label: c.name,
+            translatedLabel: c.name
           } as InternalCriterionDefinition);
 
         let value = c.value ?? '';
@@ -521,7 +503,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
    * Deletes all currently selected criteria and effectively resets the filtered search.
    */
   deleteAllCriteria(event?: MouseEvent): void {
-    if (this.isReadOnly()) {
+    if (this.disabled()) {
       return;
     }
     event?.stopPropagation();
@@ -535,12 +517,8 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     this.submit();
   }
 
-  protected deleteCriterion(
-    criterion: CriterionValue,
-    index: number,
-    event: { triggerSearch: boolean } | void
-  ): void {
-    if (this.isReadOnly()) {
+  protected deleteCriterion(index: number, event: { triggerSearch: boolean } | void): void {
+    if (this.disabled()) {
       return;
     }
 
@@ -552,7 +530,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     });
     this.cdRef.detectChanges();
 
-    this.values = this.values.filter(v => v.value !== criterion);
+    this.values = this.values.filter((_, i) => i !== index);
     this.emitChangeEvent();
     this.allowedCriteriaCache = undefined;
     if (this.values.length !== index) {

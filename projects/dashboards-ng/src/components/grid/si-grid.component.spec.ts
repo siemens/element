@@ -1,15 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  Component,
-  OnInit,
-  output,
-  OutputEmitterRef,
-  provideZonelessChangeDetection,
-  SimpleChange
-} from '@angular/core';
+import { Component, OnInit, output, OutputEmitterRef, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
@@ -58,7 +51,6 @@ describe('SiGridComponent', () => {
       providers: [
         { provide: SiWidgetStorage, useClass: SiDefaultWidgetStorage },
         { provide: SI_DASHBOARD_CONFIGURATION, useValue: {} },
-        provideZonelessChangeDetection(),
         SiActionDialogService
       ]
     })
@@ -81,41 +73,29 @@ describe('SiGridComponent', () => {
     expect(widgetStorageLoadSpy).toHaveBeenCalled();
   });
 
-  it('#edit() should change editable state to true', (done: DoneFn) => {
+  it('#edit() should change editable state to true', () => {
     expect(component.editable()).toBeFalse();
-    component.editable.subscribe(editable => {
-      expect(editable).toBeTrue();
-      expect(component.editable()).toBeTrue();
-      done();
-    });
     component.edit();
+    expect(component.editable()).toBeTrue();
   });
 
-  it('#cancel() should change editable state to false', (done: DoneFn) => {
+  it('#cancel() should change editable state to false', () => {
     fixture.componentRef.setInput('editable', true);
     fixture.detectChanges();
     expect(component.editable()).toBeTrue();
-    component.editable.subscribe(editable => {
-      expect(editable).toBeFalse();
-      expect(component.editable()).toBeFalse();
-      done();
-    });
     component.cancel();
+    expect(component.editable()).toBeFalse();
   });
 
   describe('#save()', () => {
-    it('should change editable state to false', (done: DoneFn) => {
+    it('should change editable state to false', async () => {
       fixture.componentRef.setInput('editable', true);
       fixture.detectChanges();
       expect(component.editable()).toBeTrue();
       const spy = spyOn(widgetStorage, 'save').and.callThrough();
-      component.editable.subscribe(editable => {
-        expect(editable).toBeFalse();
-        expect(component.editable()).toBeFalse();
-        done();
-      });
       component.save();
       expect(spy).toHaveBeenCalled();
+      expect(component.editable()).toBeFalse();
     });
   });
 
@@ -251,8 +231,7 @@ describe('SiGridComponent with custom id resolver', () => {
           }
         },
         { provide: SI_DASHBOARD_CONFIGURATION, useValue: {} },
-        SiActionDialogService,
-        provideZonelessChangeDetection()
+        SiActionDialogService
       ]
     })
       .overrideComponent(SiGridComponent, {

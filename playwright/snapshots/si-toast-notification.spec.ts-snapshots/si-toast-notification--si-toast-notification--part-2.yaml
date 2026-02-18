@@ -8,6 +8,17 @@
 - button "Manual close only"
 - button "Auto close only"
 - button "Hide all"
+- text: Info
+- paragraph: Window opened
+- paragraph: Window in Lab 5 opened on purpose
+- paragraph:
+  - link "Acknowledge":
+    - /url: ""
+- button "Close"
+- text: Info
 - paragraph: Filter dirty
 - paragraph: Replace filter within 2 weeks
 - button "Close"
+- text: Info
+- paragraph: Update installed
+- paragraph: Computer restarts in 5 seconds

@@ -2,7 +2,7 @@
   <ng-content />
 </div>
 @if (!hideClose()) {
-  <span class="ms-2 btn btn-circle btn-xs btn-ghost" aria-hidden="true" (click)="deletePill.emit()">
+  <span class="ms-2 btn btn-circle btn-sm btn-ghost" aria-hidden="true" (click)="deletePill.emit()">
     <si-icon [icon]="icons.elementCancel" />
   </span>
 }

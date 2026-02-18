@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, input, OnInit } from '@angular/core';
 import { WidgetConfig, WidgetConfigEvent, WidgetInstance } from '@siemens/dashboards-ng';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import { MenuItem } from '@siemens/element-ng/menu';
@@ -12,8 +12,8 @@ import { MenuItem } from '@siemens/element-ng/menu';
   templateUrl: './note-widget.component.html'
 })
 export class NoteWidgetComponent implements WidgetInstance, OnInit {
-  @Input() config!: WidgetConfig;
-  @Input() editable = false;
+  readonly config = input.required<WidgetConfig>();
+  editable = false;
 
   primaryActions: ContentActionBarMainItem[] = [
     {

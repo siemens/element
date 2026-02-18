@@ -1,18 +1,10 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { CdkPortal, PortalModule } from '@angular/cdk/portal';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  provideZonelessChangeDetection,
-  signal,
-  SimpleChange,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, SimpleChange, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { Subject } from 'rxjs';
 
 import { ElementDimensions, ResizeObserverService } from '../resize-observer';
@@ -65,9 +57,7 @@ describe('SiSidePanelComponent', () => {
         {
           provide: ResizeObserverService,
           useValue: resizeSpy
-        },
-        provideZonelessChangeDetection(),
-        provideNoopAnimations()
+        }
       ]
     }).compileComponents();
   });

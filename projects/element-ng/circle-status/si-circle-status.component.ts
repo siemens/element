@@ -1,8 +1,7 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -17,19 +16,15 @@ import {
   SimpleChanges,
   viewChild
 } from '@angular/core';
+import { elementRight4 } from '@siemens/element-icons';
 import { BlinkService, EntityStatusType, StatusIcon } from '@siemens/element-ng/common';
-import {
-  addIcons,
-  elementRight4,
-  SiIconComponent,
-  STATUS_ICON_CONFIG
-} from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent, STATUS_ICON_CONFIG } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'si-circle-status',
-  imports: [NgClass, SiIconComponent, SiTranslatePipe],
+  imports: [SiIconComponent, SiTranslatePipe],
   templateUrl: './si-circle-status.component.html',
   styleUrl: './si-circle-status.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

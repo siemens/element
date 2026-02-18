@@ -1,9 +1,9 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, provideZonelessChangeDetection } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
@@ -23,9 +23,6 @@ describe('SiFormValidationTooltipDirective', () => {
   let harness: SiFormValidationTooltipHarness;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
     fixture = TestBed.createComponent(TestHostComponent);
     harness = await TestbedHarnessEnvironment.loader(fixture).getHarness(
       SiFormValidationTooltipHarness
@@ -36,16 +33,16 @@ describe('SiFormValidationTooltipDirective', () => {
     await harness.hover();
     await harness.focus();
     await harness.blur();
-    expect(await harness.getTooltip()).toBe('A value is required.');
+    expect(await harness.getTooltip()).toBe('Required');
   });
 
   it('should show tooltip when hovered or focused', async () => {
     fixture.componentInstance.control.markAsTouched();
     await harness.focus();
-    expect(await harness.getTooltip()).toBe('A value is required.');
+    expect(await harness.getTooltip()).toBe('Required');
     await harness.hover();
     await harness.mouseAway();
-    expect(await harness.getTooltip()).toBe('A value is required.');
+    expect(await harness.getTooltip()).toBe('Required');
     await harness.blur();
     expect(await harness.getTooltip()).toBeFalsy();
   });
@@ -53,7 +50,7 @@ describe('SiFormValidationTooltipDirective', () => {
   it('should hide tooltip when control becomes valid', async () => {
     fixture.componentInstance.control.markAsTouched();
     await harness.hover();
-    expect(await harness.getTooltip()).toBe('A value is required.');
+    expect(await harness.getTooltip()).toBe('Required');
     await harness.sendKeys('Lorem ipsum');
     expect(await harness.getTooltip()).toBeFalsy();
   });
@@ -61,7 +58,7 @@ describe('SiFormValidationTooltipDirective', () => {
   it('should hide tooltip when control becomes untouched', async () => {
     fixture.componentInstance.control.markAsTouched();
     await harness.hover();
-    expect(await harness.getTooltip()).toBe('A value is required.');
+    expect(await harness.getTooltip()).toBe('Required');
     fixture.componentInstance.control.markAsUntouched();
     expect(await harness.getTooltip()).toBeFalsy();
   });

@@ -23,6 +23,19 @@
   - button "Start"
   - button "Middle"
   - button "End"
+- heading "With icons" [level=4]
+- group "Primary group with icon and text":
+  - button "Edit"
+  - button "Copy"
+  - button "Delete"
+- group "Secondary group with icon and text":
+  - button "Edit"
+  - button "Copy"
+  - button "Delete"
+- group "Tertiary group with icon and text":
+  - button "Edit"
+  - button "Copy"
+  - button "Delete"
 - group "Primary group":
   - button "Edit"
   - button "Copy"
@@ -35,16 +48,20 @@
   - button "Edit"
   - button "Copy"
   - button "Delete"
+- group "Ghost group":
+  - button "Edit"
+  - button "Copy"
+  - button "Delete"
 - heading "Sizing" [level=4]
-- group "Large group":
+- group "Large group with icon and text":
   - button "Large"
   - button "Group"
   - button "Size"
-- group "Default group":
+- group "Default group with icon and text":
   - button "Default"
   - button "Group"
   - button "Size"
-- group "Small group":
+- group "Small group with icon and text":
   - button "Small"
   - button "Group"
   - button "Size"
@@ -60,15 +77,15 @@
   - button "Small"
   - button "Group"
   - button "Size"
-- group "Large group":
-  - button "Large"
-  - button "Group"
-  - button "Size"
-- group "Default group":
-  - button "Default"
-  - button "Group"
-  - button "Size"
-- group "Small group":
-  - button "Small"
-  - button "Group"
-  - button "Size"
+- group "Large icon group":
+  - button "Edit"
+  - button "Copy"
+  - button "Delete"
+- group "Default icon group":
+  - button "Edit"
+  - button "Copy"
+  - button "Delete"
+- group "Small icon group":
+  - button "Edit"
+  - button "Copy"
+  - button "Delete"

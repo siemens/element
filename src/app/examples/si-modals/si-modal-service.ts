@@ -1,8 +1,15 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, Injector, OnDestroy, TemplateRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  Injector,
+  OnDestroy,
+  TemplateRef
+} from '@angular/core';
 import { SiStatusIconComponent } from '@siemens/element-ng/icon';
 import { ModalRef, SiModalService } from '@siemens/element-ng/modal';
 import { LOG_EVENT } from '@siemens/live-preview';
@@ -13,6 +20,7 @@ import { AppTableComponent } from './app-table.component';
   selector: 'app-sample',
   imports: [SiStatusIconComponent],
   templateUrl: './si-modal-service.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent implements OnDestroy {

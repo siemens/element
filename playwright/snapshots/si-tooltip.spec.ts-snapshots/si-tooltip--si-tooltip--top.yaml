@@ -1,9 +1,26 @@
-- button "Tooltip on top"
-- button "Tooltip on end"
-- button "Tooltip auto"
-- button "Tooltip on start"
-- button "Tooltip on bottom"
-- button "Dismissible tooltip"
-- button "Tooltip template html"
-- button "Tooltip template"
-- tooltip "Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+- group "File operations":
+  - button "Open file"
+  - button "Save"
+  - button "Download"
+  - button "Share"
+- group "Basic actions":
+  - button "Edit"
+  - button "Copy"
+  - button "Delete"
+- group "Template examples":
+  - button "Template HTML example"
+  - button "Template example"
+- heading "Tooltip placement" [level=4]
+- group "Tooltip placement":
+  - button "Auto placement"
+  - button "Top"
+  - button "Bottom"
+  - button "Start"
+  - button "End"
+- heading "Other examples" [level=4]
+- button "A long time ago in a galaxy far, far away..."
+- tablist:
+  - tab
+  - tab
+  - tab
+- tooltip "Top"

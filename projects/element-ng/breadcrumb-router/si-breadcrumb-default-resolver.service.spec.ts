@@ -1,9 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { provideZonelessChangeDetection } from '@angular/core';
 import { inject, TestBed } from '@angular/core/testing';
 import { UrlSegment } from '@angular/router';
 import { BreadcrumbItem } from '@siemens/element-ng/breadcrumb';
@@ -21,11 +20,7 @@ interface FakeActivatedRouteSnapshot {
 describe('BreadcrumbDefaultResolverService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        SiBreadcrumbDefaultResolverService,
-        provideHttpClientTesting(),
-        provideZonelessChangeDetection()
-      ]
+      providers: [SiBreadcrumbDefaultResolverService, provideHttpClientTesting()]
     });
   });
 

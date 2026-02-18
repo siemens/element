@@ -1,10 +1,11 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
-import { SiIconComponent } from '@siemens/element-ng/icon';
+import { elementCancel } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLoadingButtonComponent } from '@siemens/element-ng/loading-spinner';
 import { ModalRef } from '@siemens/element-ng/modal';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -43,4 +44,5 @@ export class SiAlertDialogComponent {
 
   protected modalRef = inject(ModalRef<SiAlertDialogComponent, AlertDialogResult>);
   protected loading$ = this.modalRef.message.pipe(take(1));
+  protected readonly icons = addIcons({ elementCancel });
 }

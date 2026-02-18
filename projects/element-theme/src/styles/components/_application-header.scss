@@ -31,8 +31,9 @@
   align-items: stretch;
   border-block-end: 1px solid semantic-tokens.$element-ui-4;
 
-  // hide border when mobile styles are applied and either the dropdown-menu or header-toggle is shown
-  &:has(.dropdown-menu.show, .header-toggle.show) {
+  // hide border when mobile styles are applied and either the dropdown-menu is shown or navigation is expanded
+  &:has(.dropdown-menu.show),
+  &.show-navigation {
     border-block-end: none;
   }
 
@@ -119,9 +120,7 @@
 .header-toggle {
   color: semantic-tokens.$element-text-primary;
   border: 0;
-  line-height: 0;
-  padding: map.get(spacers.$spacers, 4);
-  font-size: 32px;
+  padding: map.get(spacers.$spacers, 5);
   background-color: transparent; // remove default button style
 
   &:is(:hover, .show, :active) {
@@ -148,7 +147,7 @@
   border: 0;
   white-space: nowrap;
 
-  .icon {
+  .icon-lg {
     margin-block: -3px;
 
     ~ .item-title {

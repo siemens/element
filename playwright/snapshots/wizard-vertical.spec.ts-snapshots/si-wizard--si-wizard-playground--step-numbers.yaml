@@ -1,3 +1,15 @@
+- link "4 Step 4":
+  - /url: "#"
+- link "5 Step 5":
+  - /url: "#"
+- link "6 Step 6":
+  - /url: "#"
+- link "7 Step 7":
+  - /url: "#"
+- link "8 Step 8":
+  - /url: "#"
+- link "9 Step 9":
+  - /url: "#"
 - link /\d+ Step \d+/:
   - /url: "#"
 - text: /\d+ Step \d+/

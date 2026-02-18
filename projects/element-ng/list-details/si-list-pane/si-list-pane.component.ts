@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, ElementRef, inject } from '@angular/core';
@@ -7,7 +7,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { SiListDetailsComponent } from '../si-list-details.component';
 
-/** @experimental */
 @Component({
   selector: 'si-list-pane',
   templateUrl: './si-list-pane.component.html',

@@ -1,4 +1,4 @@
-# Content Action Bar
+# Content action bar
 
 <!-- markdownlint-disable MD033 -->
 

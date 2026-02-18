@@ -1,17 +1,18 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { isPlatformBrowser } from '@angular/common';
 import { ComponentRef, inject, Injectable, Injector, OnDestroy, PLATFORM_ID } from '@angular/core';
+import { isRTL, StatusType } from '@siemens/element-ng/common';
 import { Link } from '@siemens/element-ng/link';
 import { SiNoTranslateService, SiTranslateService } from '@siemens/element-translate-ng/translate';
 import { ReplaySubject, Subject } from 'rxjs';
 
 import { SiToastNotificationDrawerComponent } from './si-toast-notification-drawer/si-toast-notification-drawer.component';
-import { SI_TOAST_AUTO_HIDE_DELAY, SiToast, ToastStateName } from './si-toast.model';
+import { SI_TOAST_AUTO_HIDE_DELAY, SiToast } from './si-toast.model';
 
 @Injectable({ providedIn: 'root' })
 export class SiToastNotificationService implements OnDestroy {
@@ -73,7 +74,7 @@ export class SiToastNotificationService implements OnDestroy {
    * @returns the toast object
    */
   queueToastNotification(
-    state: ToastStateName,
+    state: StatusType,
     title: string,
     message: string,
     disableAutoClose?: boolean,
@@ -97,6 +98,7 @@ export class SiToastNotificationService implements OnDestroy {
    * @param toast - The toast object of the toast to be shown, can also be constructed while calling this.
    */
   showToastNotification(toast: SiToast): SiToast {
+    this.overlayRef?.setDirection(isRTL() ? 'rtl' : 'ltr');
     toast.timeout ??= SI_TOAST_AUTO_HIDE_DELAY;
     toast.hidden ??= new Subject();
     toast.close = () => this.hideToastNotification(toast);
@@ -154,7 +156,7 @@ export class SiToastNotificationService implements OnDestroy {
 
   private addToastDrawer(): void {
     this.overlayRef = this.overlay.create({
-      positionStrategy: this.overlay.position().global().end('20px').bottom()
+      positionStrategy: this.overlay.position().global().end().bottom()
     });
     const portal = new ComponentPortal(
       SiToastNotificationDrawerComponent,

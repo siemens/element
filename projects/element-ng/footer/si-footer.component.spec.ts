@@ -1,13 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  provideZonelessChangeDetection,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { Link } from '@siemens/element-ng/link';
@@ -42,7 +37,7 @@ describe('SiFooterComponent', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
       imports: [TestHostComponent],
-      providers: [provideRouter([]), provideZonelessChangeDetection()]
+      providers: [provideRouter([])]
     })
   );
 

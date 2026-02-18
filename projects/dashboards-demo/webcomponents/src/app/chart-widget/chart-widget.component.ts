@@ -1,11 +1,11 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 
 import { AsyncPipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
-import { SimplChartsNgModule } from '@siemens/charts-ng';
+import { Component, input, OnInit } from '@angular/core';
+import { SiChartCartesianComponent } from '@siemens/charts-ng/cartesian';
 import { WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import { MenuItem } from '@siemens/element-ng/menu';
@@ -21,11 +21,11 @@ export interface WidgetChartCartesianConfig {
 
 @Component({
   selector: 'app-chart-widget',
-  imports: [SimplChartsNgModule, SiResizeObserverModule, AsyncPipe],
+  imports: [SiChartCartesianComponent, SiResizeObserverModule, AsyncPipe],
   templateUrl: './chart-widget.component.html'
 })
 export class ChartWidgetComponent implements OnInit, WidgetInstance {
-  @Input() config!: WidgetConfig;
+  readonly config = input.required<WidgetConfig>();
   primaryActions: ContentActionBarMainItem[] = [
     { type: 'action', label: 'Print', action: () => alert('do print') }
   ];
@@ -45,7 +45,7 @@ export class ChartWidgetComponent implements OnInit, WidgetInstance {
   }
 
   get cartesianConfig(): WidgetChartCartesianConfig {
-    return this.config.payload.config as WidgetChartCartesianConfig;
+    return this.config().payload.config as WidgetChartCartesianConfig;
   }
 
   private getCartesianChartData(): Observable<CartesianChartData> {

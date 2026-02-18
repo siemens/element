@@ -43,16 +43,6 @@ export interface SelectOption<T> {
     value: T;
 }
 
-// @public @deprecated (undocumented)
-export interface SelectOptionLegacy {
-    color?: string;
-    disabled?: boolean;
-    icon?: string;
-    id: string;
-    title: TranslatableString;
-    type?: undefined;
-}
-
 // @public
 export interface SelectOptionSource<TValue> {
     compareOptions?(a: SelectOption<TValue>, b: SelectOption<TValue>): number;
@@ -65,26 +55,16 @@ export interface SelectOptionSource<TValue> {
 // @public (undocumented)
 export class SiSelectActionDirective {
     readonly selectActionAutoClose: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiSelectActionDirective, "[siSelectAction]", ["si-select-action"], { "selectActionAutoClose": { "alias": "selectActionAutoClose"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSelectActionDirective, never>;
 }
 
 // @public (undocumented)
 export class SiSelectActionsDirective {
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiSelectActionsDirective, "[siSelectActions]", ["si-select-actions"], {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSelectActionsDirective, never>;
 }
 
 // @public (undocumented)
 export class SiSelectComponent<T> implements SiFormItemControl {
     readonly ariaLabel: _angular_core.InputSignal<string | null>;
     close(): void;
-    // @deprecated
-    readonly dropdownClose: _angular_core.OutputEmitterRef<void>;
     readonly errormessageId: _angular_core.InputSignal<string>;
     readonly filterPlaceholder: _angular_core.InputSignal<TranslatableString>;
     readonly hasFilter: _angular_core.InputSignalWithTransform<boolean, unknown>;
@@ -95,10 +75,6 @@ export class SiSelectComponent<T> implements SiFormItemControl {
     readonly openChange: _angular_core.OutputEmitterRef<boolean>;
     readonly placeholder: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSelectComponent<any>, "si-select", never, { "id": { "alias": "id"; "required": false; "isSignal": true; }; "ariaLabel": { "alias": "ariaLabel"; "required": false; "isSignal": true; }; "labelledbyInput": { "alias": "labelledby"; "required": false; "isSignal": true; }; "filterPlaceholder": { "alias": "filterPlaceholder"; "required": false; "isSignal": true; }; "noResultsFoundLabel": { "alias": "noResultsFoundLabel"; "required": false; "isSignal": true; }; "placeholder": { "alias": "placeholder"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "errormessageId": { "alias": "errormessageId"; "required": false; "isSignal": true; }; "hasFilter": { "alias": "hasFilter"; "required": false; "isSignal": true; }; }, { "dropdownClose": "dropdownClose"; "openChange": "openChange"; }, ["optionTemplate", "groupTemplate", "actionsTemplate"], never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSelectComponent<any>, never>;
 }
 
 // @public
@@ -107,18 +83,12 @@ export class SiSelectGroupTemplateDirective {
     static ngTemplateContextGuard<T = any>(directive: SiSelectGroupTemplateDirective, context: unknown): context is {
         $implicit: SelectGroup<T>;
     };
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiSelectGroupTemplateDirective, "[siSelectGroupTemplate]", never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSelectGroupTemplateDirective, never>;
 }
 
 // @public (undocumented)
 export class SiSelectLazyOptionsDirective<T> implements SiSelectOptionsStrategy<T>, OnDestroy {
     constructor();
     readonly loading: _angular_core.WritableSignal<boolean>;
-    // (undocumented)
-    ngOnDestroy(): void;
     // (undocumented)
     onFilter(filterInput?: string): void;
     // (undocumented)
@@ -127,71 +97,39 @@ export class SiSelectLazyOptionsDirective<T> implements SiSelectOptionsStrategy<
     readonly optionSource: _angular_core.InputSignal<SelectOptionSource<T>>;
     readonly rows: _angular_core.WritableSignal<SelectItem<T>[]>;
     readonly selectedRows: _angular_core.WritableSignal<SelectOption<T>[]>;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiSelectLazyOptionsDirective<any>, "si-select[optionSource]", never, { "optionSource": { "alias": "optionSource"; "required": true; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSelectLazyOptionsDirective<any>, never>;
 }
 
 // @public (undocumented)
 export class SiSelectListHasFilterComponent<T> extends SiSelectListBase<T> implements OnInit {
     constructor();
     readonly filterPlaceholder: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
-    ngOnInit(): void;
     readonly noResultsFoundLabel: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSelectListHasFilterComponent<any>, "si-select-list-has-filter", never, { "filterPlaceholder": { "alias": "filterPlaceholder"; "required": true; "isSignal": true; }; "noResultsFoundLabel": { "alias": "noResultsFoundLabel"; "required": true; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSelectListHasFilterComponent<any>, never>;
 }
 
 // @public (undocumented)
 export class SiSelectModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSelectModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiSelectModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiSelectModule, never, [typeof SiSelectActionDirective, typeof SiSelectActionsDirective, typeof SiSelectComponent, typeof SiSelectGroupTemplateDirective, typeof SiSelectMultiValueDirective, typeof SiSelectOptionTemplateDirective, typeof SiSelectSimpleOptionsDirective, typeof SiSelectSingleValueDirective], [typeof SiSelectActionDirective, typeof SiSelectActionsDirective, typeof SiSelectComponent, typeof SiSelectGroupTemplateDirective, typeof SiSelectMultiValueDirective, typeof SiSelectOptionTemplateDirective, typeof SiSelectSimpleOptionsDirective, typeof SiSelectSingleValueDirective]>;
 }
 
 // @public
 export class SiSelectMultiValueDirective<T> extends SiSelectSelectionStrategy<T, T[]> {
     readonly allowMultiple = true;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiSelectMultiValueDirective<any>, "si-select[multi]", never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSelectMultiValueDirective<any>, never>;
 }
 
 // @public
 export class SiSelectOptionTemplateDirective {
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiSelectOptionTemplateDirective, "[siSelectOptionTemplate]", never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSelectOptionTemplateDirective, never>;
 }
 
 // @public
 export class SiSelectSimpleOptionsDirective<T = string> extends SiSelectOptionsStrategyBase<T> {
     // (undocumented)
     readonly allRows: _angular_core.Signal<SelectItem<T>[]>;
-    readonly options: _angular_core.InputSignal<(SelectOptionLegacy | SelectItem<T>)[] | null | undefined>;
+    readonly options: _angular_core.InputSignal<SelectItem<T>[] | null | undefined>;
     readonly optionsEqual: _angular_core.InputSignal<(a: T, b: T) => boolean>;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiSelectSimpleOptionsDirective<any>, "si-select[options]", never, { "options": { "alias": "options"; "required": false; "isSignal": true; }; "optionsEqual": { "alias": "optionEqualCheckFn"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSelectSimpleOptionsDirective<any>, never>;
 }
 
 // @public
 export class SiSelectSingleValueDirective<T> extends SiSelectSelectionStrategy<T, T> {
     allowMultiple: boolean;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiSelectSingleValueDirective<any>, "si-select:not([multi])", never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSelectSingleValueDirective<any>, never>;
 }
 
 // (No @packageDocumentation comment for this package)

@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, input, provideZonelessChangeDetection, viewChild } from '@angular/core';
+import { Component, input, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
@@ -63,8 +63,7 @@ describe('SiWizardComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [SiResizeObserverModule, TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
+      imports: [SiResizeObserverModule, TestHostComponent]
     })
   );
 
@@ -284,6 +283,19 @@ describe('SiWizardComponent', () => {
       fixture.detectChanges();
       expect(element.querySelector('.wizard-btn-container .back')).toBeFalsy();
       expect(element.querySelector('.wizard-btn-container .next')).toBeFalsy();
+    });
+
+    it('should align save button to end on last step when navigation is hidden', async () => {
+      hostComponent.inlineNavigation = false;
+      await runOnPushChangeDetection(fixture);
+
+      // Navigate to the last step
+      component.next(hostComponent.steps.length - 1);
+      await runOnPushChangeDetection(fixture);
+
+      const saveButton = element.querySelector('.btn.save');
+      expect(saveButton).toBeTruthy();
+      expect(saveButton).toHaveClass('end');
     });
   });
 

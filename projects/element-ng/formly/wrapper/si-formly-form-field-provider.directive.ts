@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { Directive, OnChanges, computed, input } from '@angular/core';
@@ -14,6 +14,7 @@ export class SiFormlyFormFieldProviderDirective implements SiFormItemControl, On
   readonly field = input.required<FormlyFieldConfig>();
 
   readonly id = computed(() => this.field().id);
+  readonly errormessageId = computed(() => `${this.field().id}-errormessage`);
   isFormCheck?: boolean;
   readonly labelledby = computed(() => {
     const fieldValue = this.field();

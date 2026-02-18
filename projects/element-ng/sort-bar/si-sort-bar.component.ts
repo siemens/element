@@ -1,15 +1,11 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { HttpParams } from '@angular/common/http';
 import { Component, input, OnInit, output } from '@angular/core';
-import {
-  addIcons,
-  elementSortDown,
-  elementSortUp,
-  SiIconComponent
-} from '@siemens/element-ng/icon';
+import { elementSortDown, elementSortUp } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 export interface SortCriteria {
@@ -17,6 +13,11 @@ export interface SortCriteria {
   key: number | string;
 }
 
+/**
+ * @deprecated SiSortBarComponent originate from the older design system and do not align with current
+ * design guidelines. No known use case exists for this component.
+ * It will be removed in v50.
+ */
 @Component({
   selector: 'si-sort-bar',
   imports: [SiIconComponent, SiTranslatePipe],

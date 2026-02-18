@@ -1,8 +1,7 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
@@ -44,7 +43,7 @@ import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-
  */
 @Component({
   selector: 'si-icon-legacy',
-  imports: [NgClass, SiTranslatePipe],
+  imports: [SiTranslatePipe],
   templateUrl: './si-icon-legacy.component.html',
   styles: ':host, span { line-height: 1; }',
   changeDetection: ChangeDetectionStrategy.OnPush

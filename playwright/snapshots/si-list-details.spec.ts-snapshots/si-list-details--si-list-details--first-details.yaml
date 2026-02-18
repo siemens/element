@@ -60,7 +60,7 @@
 - tablist:
   - tab "Overview" [selected]
   - tab "History"
-  - tab "Advanced"
+  - tab "Advanced" [disabled]
 - tabpanel "Overview"
 - menubar:
   - menuitem "Edit"

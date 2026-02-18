@@ -98,7 +98,7 @@ export const tsConfig = defineConfig({
       'error',
       {
         'source': 'string',
-        'content': 'Copyright (c) Siemens 2016 - 2025\nSPDX-License-Identifier: MIT'
+        'content': 'Copyright (c) Siemens 2016 - 2026\nSPDX-License-Identifier: MIT'
       }
     ]
   }
@@ -109,6 +109,12 @@ export const templateConfig = defineConfig({
   files: ['**/*.html'],
   rules: {
     '@angular-eslint/template/prefer-ngsrc': ['off'],
+    '@angular-eslint/template/no-duplicate-attributes': [
+      'error',
+      {
+        'ignore': ['class']
+      }
+    ],
     '@angular-eslint/template/no-inline-styles': ['off'],
     '@angular-eslint/template/interactive-supports-focus': ['off'],
     '@angular-eslint/template/prefer-template-literal': ['off'],

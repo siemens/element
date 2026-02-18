@@ -1,12 +1,16 @@
 - text:   Company1
 - tree "Company locations":
   - treeitem "Milano MIL" [level=2]:
+    - text: ""
     - paragraph: MIL
   - treeitem "Chicago CHI" [level=2]:
+    - text: ""
     - paragraph: CHI
   - treeitem "Pune PUN" [level=2] [selected]:
+    - text: ""
     - paragraph: PUN
   - treeitem "Zug ZG" [level=2]:
+    - text: ""
     - paragraph: ZG
 - text: A complex example that allows playing with various settings of a si-tree-view.
 - separator

@@ -1,0 +1,90 @@
+- group "Basic radio toggle button group":
+  - radio "Day" [checked]
+  - text: ""
+  - radio "Week"
+  - text: ""
+  - radio "Month"
+  - text: ""
+- group "Temperature mode selection":
+  - radio "Comfort" [checked]
+  - text: ""
+  - radio "Pre-comfort"
+  - text: ""
+  - radio "Economy"
+  - text: ""
+- group "Layout selection":
+  - radio "One pane" [checked]
+  - radio "Two panes"
+  - radio "Three panes"
+- heading "Multi-select" [level=4]
+- group "Email status filter":
+  - checkbox "Read" [checked]
+  - text: ""
+  - checkbox "Unread"
+  - text: ""
+  - checkbox "Archived" [checked]
+  - text: ""
+  - checkbox "Deleted"
+  - text: ""
+- group "Category filter":
+  - checkbox "Garden" [checked]
+  - checkbox "Mobile"
+  - checkbox "Cloud" [checked]
+  - checkbox "AI"
+  - checkbox "Network"
+- heading "Sizing" [level=4]
+- group "Basic radio toggle button group":
+  - radio "Large" [checked]
+  - text: ""
+  - radio "Group"
+  - text: ""
+  - radio "Size"
+  - text: ""
+- group "Basic radio toggle button group":
+  - radio "Default" [checked]
+  - text: ""
+  - radio "Group"
+  - text: ""
+  - radio "Size"
+  - text: ""
+- group "Basic radio toggle button group":
+  - radio "Small" [checked]
+  - text: ""
+  - radio "Group"
+  - text: ""
+  - radio "Size"
+  - text: ""
+- group "Basic radio toggle button group":
+  - radio "Large" [checked]
+  - text: ""
+  - radio "Group"
+  - text: ""
+  - radio "Size"
+  - text: ""
+- group "Basic radio toggle button group":
+  - radio "Default" [checked]
+  - text: ""
+  - radio "Group"
+  - text: ""
+  - radio "Size"
+  - text: ""
+- group "Basic radio toggle button group":
+  - radio "Small" [checked]
+  - text: ""
+  - radio "Group"
+  - text: ""
+  - radio "Size"
+  - text: ""
+- group "Climate control mode":
+  - radio "Heating"
+  - radio "Water"
+  - radio "Cooling"
+- group "Climate control mode":
+  - radio "Heating"
+  - radio "Water"
+  - radio "Cooling"
+- group "Climate control mode":
+  - radio "Heating"
+  - radio "Water"
+  - radio "Cooling"
+- tooltip "One pane"

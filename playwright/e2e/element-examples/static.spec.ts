@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { test } from '../../support/test-helpers';
@@ -38,8 +38,8 @@ test('si-connection-strength/si-connection-strength', ({ si }) => si.static());
 test('si-content-action-bar/si-content-action-bar-states', ({ si }) => si.static());
 test('si-content-action-bar/si-content-action-bar', ({ si }) => si.static());
 test('si-copyright-notice/si-copyright-notice', ({ si }) => si.static());
-test('si-card/bootstrap-card-grid', ({ si }) => si.static());
-test('si-card/bootstrap-card-group', ({ si }) => si.static());
+test('si-card/card-grid', ({ si }) => si.static());
+test('si-card/card-group', ({ si }) => si.static());
 test('si-card/si-card-multiple', ({ si }) => si.static());
 test('si-card/si-card-accent', ({ si }) => si.static());
 test('si-card/si-card', ({ si }) => si.static());
@@ -88,7 +88,6 @@ test('si-search-bar/si-search-bar-value', ({ si }) => si.static());
 test('si-search-bar/si-search-bar', ({ si }) => si.static());
 test('si-slider/si-slider', ({ si }) => si.static());
 test('si-slider/si-slider-icon', ({ si }) => si.static());
-test('si-sort-bar/si-sort-bar', ({ si }) => si.static());
 test('si-split/si-split-hide-header', ({ si }) => si.static());
 test('si-split/si-split-mixed', ({ si }) => si.static());
 test('si-summary-chip/si-summary-chip', ({ si }) => si.static());
@@ -101,7 +100,10 @@ test('si-wizard/si-wizard-dynamical', ({ si }) => si.static());
 test('si-wizard/si-wizard', ({ si }) => si.static());
 test('si-system-banner/si-system-banner', ({ si }) => si.static());
 test('spacing/spacing', ({ si }) => si.static());
-test('typography/bootstrap', ({ si }) => si.static());
+test('text/text-font-size', ({ si }) => si.static());
+test('text/text-font-weight', ({ si }) => si.static());
+test('text/text-line-height', ({ si }) => si.static());
+test('typography/semantic-elements', ({ si }) => si.static());
 test('typography/color-variants', ({ si }) => si.static());
 test('typography/type-styles', ({ si }) => si.static());
 test('typography/display-styles', ({ si }) => si.static());
@@ -114,6 +116,7 @@ test('si-chat-messages/si-chat-message', ({ si }) => si.static());
 test('si-chat-messages/si-attachment-list', ({ si }) => si.static());
 test('si-chat-messages/si-chat-input', ({ si }) => si.static());
 test('si-chat-messages/si-chat-container', ({ si }) => si.static());
+test('si-chat-messages/si-ai-welcome-screen', ({ si }) => si.static());
 test('ag-grid/ag-grid-empty-state', async ({ si }) => {
   await si.static({ disabledA11yRules: ['aria-required-children'] });
 });

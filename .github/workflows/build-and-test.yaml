@@ -41,9 +41,9 @@ jobs:
       - run: npm run build:all:update-translatable-keys # Output is needed in dist for providing default translations
       - run: git diff --exit-code "projects/**/*-translatable-keys.interface.ts"
       - run: npm run build:examples -- --define="maptilerKey='$MAPTILER_KEY'" --define="maptilerUrl='$MAPTILER_URL'"
-      - run: npm run dashboards-demo:build:demo -- --progress=false
-      - run: npm run dashboards-demo:build:webcomponents -- --progress=false
-      - run: npm run dashboards-demo:build:mfe -- --progress=false
+      - run: npm run dashboards-demo:build-all -- --progress=false
+      - run: npm run dashboards-demo:build-all:esm
+
       - uses: actions/upload-artifact@v6
         with:
           name: dist
@@ -244,6 +244,7 @@ jobs:
           node-version: lts/krypton
           cache: 'npm'
       - run: npm config set //code.siemens.com/api/v4/packages/npm/:_authToken $SIEMENS_NPM_TOKEN
+      - run: npm config set //code.siemens.com/api/v4/projects/516167/packages/npm/:_authToken $SIEMENS_NPM_TOKEN
         env:
           SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
       - run: npm ci --prefer-offline --no-audit --include=optional
@@ -252,6 +253,7 @@ jobs:
         env:
           UV_INDEX_CODE_DOCS_THEME_USERNAME: ${{ secrets.SIEMENS_NPM_USER }}
           UV_INDEX_CODE_DOCS_THEME_PASSWORD: ${{ secrets.SIEMENS_NPM_TOKEN }}
+      - run: npm run icon-viewer:build-docs
       - run: npm run docs:build:generate
         env:
           EXAMPLES_BASE: /element-examples/
@@ -262,6 +264,7 @@ jobs:
         if: ${{ github.ref != 'refs/heads/main' }}
       - run: mv dist/element-examples/ dist/design/
       - run: mv dist/dashboards-demo/ dist/design/
+      - run: mv dist/dashboards-demo-esm/ dist/design/
       - run: mv coverage-summary.json dist/design/
       - run: mv dist/coverage/ dist/design/
       - uses: actions/upload-artifact@v6
@@ -295,7 +298,7 @@ jobs:
         with:
           name: coverage-reports
           path: coverage-reports
-      - uses: aws-actions/configure-aws-credentials@v5.1.1
+      - uses: aws-actions/configure-aws-credentials@v6.0.0
         with:
           role-to-assume: arn:aws:iam::974483672234:role/simpl-element-preview
           role-session-name: element-preview

@@ -1,0 +1,6 @@
+/**
+ * Copyright (c) Siemens 2016 - 2026
+ * SPDX-License-Identifier: MIT
+ */
+export * from './si-chart-progress-bar.component';
+export * from './si-chart-progress-bar.interface';

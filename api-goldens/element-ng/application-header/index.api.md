@@ -74,10 +74,6 @@ export class SiAccountDetailsComponent {
     readonly email: _angular_core.InputSignal<string | undefined>;
     readonly name: _angular_core.InputSignal<string>;
     readonly userRole: _angular_core.InputSignal<TranslatableString | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiAccountDetailsComponent, "si-account-details", never, { "name": { "alias": "name"; "required": true; "isSignal": true; }; "company": { "alias": "company"; "required": false; "isSignal": true; }; "email": { "alias": "email"; "required": false; "isSignal": true; }; "userRole": { "alias": "userRole"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiAccountDetailsComponent, never>;
 }
 
 // @public
@@ -87,12 +83,6 @@ export class SiApplicationHeaderComponent implements HeaderWithDropdowns, OnDest
     readonly launchpad: _angular_core.InputSignal<TemplateRef<void> | undefined>;
     // (undocumented)
     readonly launchpadLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiApplicationHeaderComponent, "si-application-header", never, { "expandBreakpoint": { "alias": "expandBreakpoint"; "required": false; "isSignal": true; }; "launchpad": { "alias": "launchpad"; "required": false; "isSignal": true; }; "launchpadLabel": { "alias": "launchpadLabel"; "required": false; "isSignal": true; }; }, {}, never, ["si-header-brand, element-header-brand", "si-header-navigation, element-header-navigation", "si-header-actions, element-header-actions"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiApplicationHeaderComponent, never>;
 }
 
 // @public
@@ -100,110 +90,60 @@ export class SiHeaderAccountItemComponent extends SiHeaderActionIconItemBase {
     readonly imageUrl: _angular_core.InputSignal<string | undefined>;
     readonly initials: _angular_core.InputSignal<string | undefined>;
     readonly name: _angular_core.InputSignal<string>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiHeaderAccountItemComponent, "button[si-header-account-item]", never, { "name": { "alias": "name"; "required": true; "isSignal": true; }; "initials": { "alias": "initials"; "required": false; "isSignal": true; }; "imageUrl": { "alias": "imageUrl"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiHeaderAccountItemComponent, never>;
 }
 
 // @public
 export class SiHeaderActionItemComponent extends SiHeaderActionIconItemBase {
     readonly icon: _angular_core.InputSignal<string>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiHeaderActionItemComponent, "button[si-header-action-item], a[si-header-action-item]", never, { "icon": { "alias": "icon"; "required": true; "isSignal": true; }; }, {}, never, ["si-avatar", "*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiHeaderActionItemComponent, never>;
 }
 
 // @public (undocumented)
 export class SiHeaderActionsDirective {
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiHeaderActionsDirective, "si-header-actions", never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiHeaderActionsDirective, never>;
 }
 
 // @public (undocumented)
 export class SiHeaderBrandDirective {
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiHeaderBrandDirective, "si-header-brand", never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiHeaderBrandDirective, never>;
 }
 
 // @public
 export class SiHeaderCollapsibleActionsComponent implements OnDestroy {
     readonly mobileToggleLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiHeaderCollapsibleActionsComponent, "si-header-collapsible-actions", never, { "mobileToggleLabel": { "alias": "mobileToggleLabel"; "required": false; "isSignal": true; }; }, {}, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiHeaderCollapsibleActionsComponent, never>;
 }
 
 // @public
 export class SiHeaderLogoDirective implements OnInit {
-    // (undocumented)
-    ngOnInit(): void;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiHeaderLogoDirective, "si-header-logo, [siHeaderLogo]", never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiHeaderLogoDirective, never>;
 }
 
-// @public (undocumented)
+// @public
 export class SiHeaderNavigationComponent implements OnDestroy {
     constructor();
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiHeaderNavigationComponent, "si-header-navigation", never, {}, {}, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiHeaderNavigationComponent, never>;
 }
 
 // @public
 export class SiHeaderNavigationItemComponent {
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiHeaderNavigationItemComponent, "button[si-header-navigation-item], a[si-header-navigation-item]", never, {}, {}, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiHeaderNavigationItemComponent, never>;
 }
 
 // @public (undocumented)
 export class SiHeaderSelectionItemComponent extends SiHeaderActionItemBase {
     readonly open: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiHeaderSelectionItemComponent, "button[si-header-selection-item]", never, { "open": { "alias": "open"; "required": false; "isSignal": true; }; }, {}, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiHeaderSelectionItemComponent, never>;
 }
 
 // @public @deprecated
 export class SiHeaderSiemensLogoComponent extends SiHeaderLogoDirective {
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiHeaderSiemensLogoComponent, "si-header-siemens-logo, [si-header-siemens-logo]", never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiHeaderSiemensLogoComponent, never>;
 }
 
 // @public (undocumented)
 export class SiLaunchpadFactoryComponent {
     readonly apps: _angular_core.InputSignal<App[] | AppCategory[]>;
-    readonly closeText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly closeText: _angular_core.InputSignal<TranslatableString>;
     readonly enableFavorites: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    readonly favoriteAppsText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly favoriteAppsText: _angular_core.InputSignal<TranslatableString>;
     // (undocumented)
     readonly favoriteChange: _angular_core.OutputEmitterRef<FavoriteChangeEvent>;
-    readonly showLessAppsText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    readonly showMoreAppsText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    readonly subtitleText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    readonly titleText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiLaunchpadFactoryComponent, "si-launchpad-factory", never, { "closeText": { "alias": "closeText"; "required": false; "isSignal": true; }; "titleText": { "alias": "titleText"; "required": false; "isSignal": true; }; "subtitleText": { "alias": "subtitleText"; "required": false; "isSignal": true; }; "apps": { "alias": "apps"; "required": true; "isSignal": true; }; "enableFavorites": { "alias": "enableFavorites"; "required": false; "isSignal": true; }; "favoriteAppsText": { "alias": "favoriteAppsText"; "required": false; "isSignal": true; }; "showMoreAppsText": { "alias": "showMoreAppsText"; "required": false; "isSignal": true; }; "showLessAppsText": { "alias": "showLessAppsText"; "required": false; "isSignal": true; }; }, { "favoriteChange": "favoriteChange"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiLaunchpadFactoryComponent, never>;
+    readonly showLessAppsText: _angular_core.InputSignal<TranslatableString>;
+    readonly showMoreAppsText: _angular_core.InputSignal<TranslatableString>;
+    readonly subtitleText: _angular_core.InputSignal<TranslatableString | undefined>;
+    readonly titleText: _angular_core.InputSignal<TranslatableString>;
 }
 
 // (No @packageDocumentation comment for this package)

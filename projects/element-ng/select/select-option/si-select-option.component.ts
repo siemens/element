@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input, TemplateRef } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
@@ -12,13 +12,7 @@ import { SelectOption } from '../si-select.types';
 
 @Component({
   selector: 'si-select-option',
-  imports: [
-    NgClass,
-    NgTemplateOutlet,
-    SiIconComponent,
-    SiTranslatePipe,
-    SiSelectOptionTemplateDirective
-  ],
+  imports: [NgTemplateOutlet, SiIconComponent, SiTranslatePipe, SiSelectOptionTemplateDirective],
   templateUrl: './si-select-option.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {

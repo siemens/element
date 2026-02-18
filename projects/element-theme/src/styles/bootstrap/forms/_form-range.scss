@@ -31,6 +31,16 @@ $thumb-size: 24px !default;
       semantic-tokens.$element-action-secondary-hover 36%
     );
   }
+
+  &:active {
+    border-color: semantic-tokens.$element-action-primary-active;
+    background: radial-gradient(
+      circle,
+      semantic-tokens.$element-action-primary-active 0%,
+      semantic-tokens.$element-action-primary-active 35%,
+      semantic-tokens.$element-action-secondary-active 36%
+    );
+  }
 }
 
 .form-range {

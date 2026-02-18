@@ -7,7 +7,7 @@
     >
     <button
       type="button"
-      class="btn btn-circle btn-xs btn-tertiary"
+      class="btn btn-icon btn-sm btn-tertiary"
       [class.unfocused]="!hasFocus()"
       [attr.aria-label]="ariaLabelBack() | translate"
       [disabled]="!canGoBack()"
@@ -17,7 +17,7 @@
     </button>
     <button
       type="button"
-      class="btn btn-circle btn-xs btn-tertiary"
+      class="btn btn-icon btn-sm btn-tertiary"
       [class.unfocused]="!hasFocus()"
       [attr.aria-label]="ariaLabelForward() | translate"
       [disabled]="!canGoForward()"
@@ -28,7 +28,7 @@
     @if (menuItems().length > 0) {
       <button
         type="button"
-        class="btn btn-circle electron-title-bar-btn btn-tertiary btn-xs"
+        class="btn btn-icon electron-title-bar-btn btn-tertiary btn-sm"
         [class.unfocused]="!hasFocus()"
         [attr.aria-label]="ariaLabelMenu() | translate"
         [cdkMenuTriggerFor]="menu"

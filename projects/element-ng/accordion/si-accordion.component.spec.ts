@@ -1,16 +1,9 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  provideZonelessChangeDetection,
-  signal,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { SiAccordionComponent } from './si-accordion.component';
 import { SiCollapsiblePanelComponent } from './si-collapsible-panel.component';
@@ -38,8 +31,7 @@ describe('SiAccordion', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
+      imports: [TestHostComponent]
     }).compileComponents();
   });
 

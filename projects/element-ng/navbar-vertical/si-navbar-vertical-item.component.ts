@@ -1,8 +1,7 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -13,8 +12,9 @@ import {
   OnInit
 } from '@angular/core';
 import { RouterLinkActive } from '@angular/router';
+import { elementDown2 } from '@siemens/element-icons';
 import { MenuItem } from '@siemens/element-ng/common';
-import { addIcons, elementDown2, SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLinkDirective } from '@siemens/element-ng/link';
 
 import { SiNavbarVerticalGroupTriggerDirective } from './si-navbar-vertical-group-trigger.directive';
@@ -35,7 +35,7 @@ type NavbarVerticalItemInteractive =
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'a[si-navbar-vertical-item], button[si-navbar-vertical-item]',
-  imports: [NgClass, SiIconComponent],
+  imports: [SiIconComponent],
   templateUrl: './si-navbar-vertical-item.component.html',
   styleUrl: './si-navbar-vertical-item.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -43,7 +43,8 @@ type NavbarVerticalItemInteractive =
     'class': 'focus-inside',
     '[class.dropdown-item]': 'this.parent?.group?.flyout()',
     '[class.navbar-vertical-item]': '!this.parent?.group?.flyout()',
-    '[class.active]': 'active'
+    '[class.active]': 'active',
+    '[class.hide-badge-collapsed]': 'hideBadgeCollapsed()'
   }
 })
 export class SiNavbarVerticalItemComponent implements OnInit {
@@ -64,6 +65,21 @@ export class SiNavbarVerticalItemComponent implements OnInit {
   });
   private readonly routerLinkActive = inject(RouterLinkActive, { optional: true });
   private readonly siLink = inject(SiLinkDirective, { optional: true });
+
+  /**
+   * Hides the badge in collapsed state
+   */
+  protected readonly hideBadgeCollapsed = computed(
+    () => !!(this.item() as NavbarVerticalItemInteractive).hideBadgeWhenCollapsed
+  );
+
+  /**
+   * Determines if the badge contains text-only content (not numeric)
+   */
+  protected readonly textOnlyBadge = computed(() => {
+    const badge = this.item().badge;
+    return badge ? typeof badge !== 'number' : false;
+  });
 
   /**
    * Formats badge value to limit display to "+99" for numbers greater than 99

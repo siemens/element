@@ -29,5 +29,5 @@
   - option "Value 9"
   - option /Value \d+/
   - option /Value \d+/
-- button "clear": Clear selection
-- button "close": Close
+- button "Clear selection"
+- button "Close"

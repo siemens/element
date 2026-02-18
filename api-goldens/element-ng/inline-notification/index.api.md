@@ -19,20 +19,10 @@ export class SiInlineNotificationComponent {
     readonly translationParams: _angular_core.InputSignal<{
         [key: string]: any;
     } | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiInlineNotificationComponent, "si-inline-notification", never, { "severity": { "alias": "severity"; "required": true; "isSignal": true; }; "heading": { "alias": "heading"; "required": false; "isSignal": true; }; "message": { "alias": "message"; "required": true; "isSignal": true; }; "action": { "alias": "action"; "required": false; "isSignal": true; }; "translationParams": { "alias": "translationParams"; "required": false; "isSignal": true; }; "embedded": { "alias": "embedded"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiInlineNotificationComponent, never>;
 }
 
 // @public (undocumented)
 export class SiInlineNotificationModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiInlineNotificationModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiInlineNotificationModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiInlineNotificationModule, never, [typeof SiInlineNotificationComponent], [typeof SiInlineNotificationComponent]>;
 }
 
 // (No @packageDocumentation comment for this package)

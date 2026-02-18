@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import {
@@ -17,7 +17,6 @@ import { Subscription } from 'rxjs';
 
 import { SiListDetailsComponent } from '../si-list-details.component';
 
-/** @experimental */
 @Component({
   selector: 'si-details-pane',
   imports: [],

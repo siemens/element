@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import {
@@ -11,20 +11,16 @@ import {
   input,
   model
 } from '@angular/core';
-import {
-  addIcons,
-  elementExport,
-  elementFavorites,
-  elementFavoritesFilled,
-  SiIconComponent
-} from '@siemens/element-ng/icon';
+import { elementExport, elementFavorites, elementFavoritesFilled } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
+import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiApplicationHeaderComponent } from '../si-application-header.component';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'a[si-launchpad-app]',
-  imports: [SiIconComponent],
+  imports: [SiIconComponent, SiTranslatePipe],
   templateUrl: './si-launchpad-app.component.html',
   styleUrl: './si-launchpad-app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -45,8 +41,20 @@ export class SiLaunchpadAppComponent {
   readonly favorite = model(false);
   /** @defaultValue false */
   readonly action = input(false, { transform: booleanAttribute });
+
   readonly iconUrl = input<string>();
   readonly iconClass = input<string>();
+  /**
+   * Aria-label for the external link icon.
+   *
+   * @defaultValue
+   * ```
+   * t(() => $localize`:@@SI_LAUNCHPAD.EXTERNAL_LINK:External application`)
+   * ```
+   */
+  readonly externalLinkText = input<TranslatableString>(
+    t(() => $localize`:@@SI_LAUNCHPAD.EXTERNAL_LINK:External application`)
+  );
 
   protected readonly icons = addIcons({ elementExport, elementFavorites, elementFavoritesFilled });
 

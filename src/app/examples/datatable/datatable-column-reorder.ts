@@ -1,8 +1,14 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, DestroyRef, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  inject
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   Column,
@@ -18,7 +24,8 @@ import { NgxDatatableModule, TableColumn } from '@siemens/ngx-datatable';
   selector: 'app-sample',
   imports: [NgxDatatableModule, SiDatatableModule, SiResizeObserverModule],
   templateUrl: './datatable-column-reorder.html',
-  styleUrl: './datatable.scss'
+  styleUrl: './datatable.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   tableConfig = SI_DATATABLE_CONFIG;
@@ -72,6 +79,7 @@ export class SampleComponent {
   private originalModalColumns = this.modalColumns.map(col => ({ ...col }));
   private originalColumns = this.columns.map(col => ({ ...col }));
   private destroyer = inject(DestroyRef);
+  private cdRef = inject(ChangeDetectorRef);
 
   constructor() {
     for (let i = 1; i <= 250; i++) {
@@ -126,6 +134,7 @@ export class SampleComponent {
             result.updateColumns?.(this.modalColumns);
             break;
         }
+        this.cdRef.markForCheck();
       });
   }
 }

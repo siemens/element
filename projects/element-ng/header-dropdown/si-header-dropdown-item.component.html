@@ -9,13 +9,15 @@
 </span>
 <div class="item-end ps-2 d-flex me-n3 ms-auto gap-1">
   @if (badge()) {
-    <span class="mx-0 me-1 ms-2 badge" [ngClass]="'bg-' + badgeColor()">{{ badge() }}</span>
+    <span class="mx-0 me-1 ms-2 badge" [class]="`bg-${badgeColor() || 'default'}`">{{
+      badge()
+    }}</span>
   }
   @if (checked() === 'check') {
     <si-icon [icon]="icons.elementOk" />
   }
   @if (checked() === 'radio') {
-    <si-icon class="icon-small me-2" [icon]="icons.elementRecordFilled" />
+    <si-icon class="icon-sm me-2" [icon]="icons.elementRecordFilled" />
   }
   @if (ownTrigger) {
     <si-icon class="dropdown-caret m-0 ps-0" [icon]="icons.elementDown2" />

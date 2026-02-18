@@ -1,8 +1,7 @@
 <div class="d-flex flex-column h-100 gap-6">
   <div class="d-flex flex-column flex-grow-1">
     <si-wizard
-      class="h-100 overflow-auto m-8"
-      [ngClass]="{ 'card': configForm.value.cardWizard }"
+      [class]="['h-100', 'overflow-auto', 'm-8', configForm.value.cardWizard ? 'card' : '']"
       [enableCompletionPage]="configForm.value.enableCompletionPage!"
       [completionPageVisibleTime]="configForm.value.completionPageVisibleTime!"
       [hasCancel]="configForm.value.hasCancel!"
@@ -50,14 +49,14 @@
             <div class="d-flex align-items-center">
               <button
                 type="button"
-                class="btn btn-circle btn-xs btn-tertiary icon element-left-2 flip-rtl align-self-center"
+                class="btn btn-circle btn-sm btn-tertiary icon element-left-2 flip-rtl align-self-center"
                 aria-label="Previous step"
                 (click)="wizard().back()"
               ></button>
               <span class="px-2">{{ wizard().index + 1 }} / {{ wizard().stepCount }}</span>
               <button
                 type="button"
-                class="btn btn-circle btn-xs btn-tertiary icon element-right-2 flip-rtl align-self-center"
+                class="btn btn-circle btn-sm btn-tertiary icon element-right-2 flip-rtl align-self-center"
                 aria-label="Next step"
                 [disabled]="!canNext()"
                 (click)="wizard().next()"

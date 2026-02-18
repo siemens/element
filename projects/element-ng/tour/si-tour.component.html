@@ -1,13 +1,12 @@
 <div class="backdrop"></div>
 <div
   #focusTrap="cdkTrapFocus"
-  class="tour-content popover position-relative"
   role="dialog"
   aria-labelledby="__si-tour-step-title"
   cdkTrapFocus
   cdkTrapFocusAutoCapture
+  [class]="['tour-content', 'popover', 'position-relative', positionClass()]"
   [class.show]="show()"
-  [ngClass]="positionClass()"
 >
   @if (arrowPos()) {
     <div
@@ -29,7 +28,7 @@
       </div>
       <button
         type="button"
-        class="btn btn-circle btn-sm btn-ghost mt-4 me-5"
+        class="btn btn-circle btn-ghost mt-4 me-5"
         [attr.aria-label]="ariaLabelClose | translate"
         (click)="action('cancel')"
       >

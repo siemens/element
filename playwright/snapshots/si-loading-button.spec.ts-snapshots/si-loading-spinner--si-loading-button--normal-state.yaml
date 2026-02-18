@@ -8,5 +8,6 @@
 - button "Default"
 - button "clock"
 - button "clock"
+- text: Control panel
 - checkbox "Toggle loading"
 - text: Toggle loading

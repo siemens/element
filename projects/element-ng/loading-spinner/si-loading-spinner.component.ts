@@ -1,16 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { animate, style, transition, trigger } from '@angular/animations';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  HostBinding,
-  inject,
-  InjectionToken,
-  input
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, InjectionToken, input } from '@angular/core';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 export const LOADING_SPINNER_BLOCKING = new InjectionToken<boolean>('isBlockingSpinner');
@@ -22,15 +14,11 @@ export const LOADING_SPINNER_OVERLAY = new InjectionToken<boolean>('isSpinnerOve
   templateUrl: './si-loading-spinner.component.html',
   styleUrl: './si-loading-spinner.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [
-    trigger('fadeAnimation', [
-      transition(':enter', [style({ opacity: 0 }), animate('200ms ease-in')]),
-      transition(':leave', animate('200ms ease-out', style({ opacity: 0 })))
-    ])
-  ]
+  host: {
+    'animate.leave': 'spinner-leave'
+  }
 })
 export class SiLoadingSpinnerComponent {
-  @HostBinding('@fadeAnimation') protected fadeAnimation = '';
   /**
    * @defaultValue
    * ```

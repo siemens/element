@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 // dummy modules since @siedlerchr/types-ol-ext@3.6.0 is broken for ol 10

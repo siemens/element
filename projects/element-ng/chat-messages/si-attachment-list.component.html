@@ -44,11 +44,11 @@
       @if (removable()) {
         <button
           type="button"
-          class="btn btn-ghost btn-circle btn-sm expand-button flex-shrink-0 ms-auto align-self-center focus-inside"
+          class="btn btn-ghost btn-icon expand-button flex-shrink-0 ms-auto align-self-center focus-inside"
           [attr.aria-label]="(removeLabel() | translate) + ' ' + attachment.name"
           (click)="remove.emit(attachment); $event.stopPropagation()"
         >
-          <si-icon class="icon" icon="element-delete" />
+          <si-icon class="icon" [icon]="icons.elementDelete" />
         </button>
       }
     </div>

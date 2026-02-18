@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { CdkDragHandle } from '@angular/cdk/drag-drop';
@@ -14,14 +14,8 @@ import {
   output,
   viewChild
 } from '@angular/core';
-import {
-  addIcons,
-  elementHide,
-  elementLock,
-  elementMenu,
-  elementShow,
-  SiIconComponent
-} from '@siemens/element-ng/icon';
+import { elementHide, elementLock, elementMenu, elementShow } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 
 import { Column } from '../si-column-selection-dialog.types';
 

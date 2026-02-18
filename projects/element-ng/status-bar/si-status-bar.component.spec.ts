@@ -1,15 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  inject,
-  provideZonelessChangeDetection,
-  signal
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, inject, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import {
@@ -44,13 +37,6 @@ describe('SiStatusBarComponent', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let component: TestHostComponent;
   let element: HTMLElement;
-
-  beforeEach(() =>
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
-    })
-  );
 
   beforeEach(() => {
     mockResizeObserver();
@@ -102,15 +88,15 @@ describe('SiStatusBarComponent', () => {
     component.muteButton = true;
     fixture.detectChanges();
 
-    const mute = element.querySelector('.mute-button > si-icon div') as HTMLElement;
+    const mute = element.querySelector('.mute-button > si-icon') as HTMLElement;
     expect(mute).toBeTruthy();
-    expect(mute.classList.contains('element-sound-on')).toBeTrue();
+    expect(mute.getAttribute('data-icon')).toBe('elementSoundOn');
 
     component.muteButton = false;
     // uninstall clock before doing runOnPushChangeDetection
     jasmine.clock().uninstall();
     await runOnPushChangeDetection(fixture);
-    expect(mute.classList.contains('element-sound-on')).toBeFalse();
+    expect(mute.getAttribute('data-icon')).not.toBe('elementSoundOn');
   });
 
   describe('responsive mode', () => {

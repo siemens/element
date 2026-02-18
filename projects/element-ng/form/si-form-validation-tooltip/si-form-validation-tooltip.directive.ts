@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import {
@@ -105,9 +105,11 @@ export class SiFormValidationTooltipDirective implements OnDestroy, DoCheck {
         describedBy: this.describedBy,
         injector: Injector.create({
           providers: [{ provide: SI_FORM_VALIDATION_TOOLTIP_DATA, useValue: this.errors }]
-        })
+        }),
+        tooltip: () => SiFormValidationTooltipComponent,
+        tooltipContext: () => undefined
       });
-      this.tooltipRef.show(SiFormValidationTooltipComponent);
+      this.tooltipRef.show();
     } else if (this.tooltipRef && (!errors.length || this.ngControl.pristine)) {
       this.destroyTooltip();
     }

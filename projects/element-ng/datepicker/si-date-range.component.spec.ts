@@ -1,16 +1,10 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  provideZonelessChangeDetection,
-  signal,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -58,9 +52,6 @@ describe('SiDateRangeComponent', () => {
     element.querySelector<HTMLElement>('[aria-label="Open calendar"]')!;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
     fixture = TestBed.createComponent(WrapperComponent);
     component = fixture.componentInstance.siDateRangeComponent();
     element = fixture.nativeElement;
@@ -280,9 +271,6 @@ describe('SiDateRangeComponent within form', () => {
     element.querySelector<HTMLElement>('[aria-label="Open calendar"]')!;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
     fixture = TestBed.createComponent(FormWrapperComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
@@ -354,6 +342,7 @@ describe('SiDateRangeComponent within form', () => {
       expect(component.form.controls.dateRange.errors).toEqual({
         rangeBeforeMinDate: {
           min: component.config().minDate,
+          minString: '2/1/2023',
           start: new Date(2023, 0, 1),
           end: null
         }
@@ -371,6 +360,7 @@ describe('SiDateRangeComponent within form', () => {
       expect(component.form.controls.dateRange.errors).toEqual({
         rangeBeforeMinDate: {
           min: component.config().minDate,
+          minString: '2/1/2023',
           start: null,
           end: new Date(2023, 0, 1)
         }
@@ -388,6 +378,7 @@ describe('SiDateRangeComponent within form', () => {
       expect(component.form.controls.dateRange.errors).toEqual({
         rangeAfterMaxDate: {
           max: component.config().maxDate,
+          maxString: '1/1/2023',
           start: new Date(2023, 1, 1),
           end: null
         }
@@ -405,6 +396,7 @@ describe('SiDateRangeComponent within form', () => {
       expect(component.form.controls.dateRange.errors).toEqual({
         rangeAfterMaxDate: {
           max: component.config().maxDate,
+          maxString: '1/1/2023',
           start: null,
           end: new Date(2023, 1, 1)
         }

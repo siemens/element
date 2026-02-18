@@ -1,14 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  inject,
-  provideZonelessChangeDetection
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormRecord, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -51,8 +45,7 @@ describe('formly time-type', () => {
           ]
         }),
         FormlyTestComponent
-      ],
-      providers: [provideZonelessChangeDetection()]
+      ]
     }).compileComponents();
   });
 

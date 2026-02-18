@@ -15,7 +15,7 @@
         heading="Security Warning - High priority alert"
         [description]="description"
         [itemLink]="itemLink"
-        [primaryAction]="showPrimaryAction ? circleButton : undefined"
+        [primaryAction]="showPrimaryAction ? iconButton : undefined"
         [quickActions]="showQuickActions ? quickActions : undefined"
         [unread]="unread"
       >
@@ -68,14 +68,14 @@
         <button
           quick-actions
           type="button"
-          class="btn btn-circle btn-sm btn-primary element-ok"
+          class="btn btn-icon btn-primary element-ok"
           aria-label="Approve request"
           (click)="logEvent('Approve request')"
         ></button>
         <button
           quick-actions
           type="button"
-          class="btn btn-circle btn-sm btn-secondary-danger element-cancel"
+          class="btn btn-icon btn-secondary-danger element-cancel"
           aria-label="Reject request"
           (click)="logEvent('Reject request')"
         ></button>
@@ -110,7 +110,7 @@
         <button
           action
           type="button"
-          class="btn btn-circle btn-sm btn-secondary element-light"
+          class="btn btn-circle btn-secondary element-light"
           aria-label="View achievement details"
           (click)="logEvent('View achievement')"
         ></button>

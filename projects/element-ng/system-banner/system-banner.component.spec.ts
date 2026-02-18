@@ -1,9 +1,7 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
-import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiSystemBannerComponent } from './system-banner.component';
@@ -11,13 +9,6 @@ import { SiSystemBannerComponent } from './system-banner.component';
 describe('SiSystemBannerComponent', () => {
   let component: SiSystemBannerComponent;
   let fixture: ComponentFixture<SiSystemBannerComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [SiSystemBannerComponent, NgClass],
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
-  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SiSystemBannerComponent);

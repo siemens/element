@@ -1,16 +1,17 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { SiLoadingService, SiLoadingSpinnerDirective } from '@siemens/element-ng/loading-spinner';
 
 @Component({
   selector: 'app-sample',
   imports: [CommonModule, SiCardComponent, SiLoadingSpinnerDirective],
-  templateUrl: './si-loading-spinner-delay.html'
+  templateUrl: './si-loading-spinner-delay.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   protected loadingService = inject(SiLoadingService);

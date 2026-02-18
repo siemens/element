@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CopyrightDetails, SI_COPYRIGHT_DETAILS } from '@siemens/element-ng/copyright-notice';
 
@@ -30,8 +30,7 @@ describe('SiCopyrightNoticeComponent', () => {
             startYear: 2012,
             lastUpdateYear: 2019
           }
-        },
-        provideZonelessChangeDetection()
+        }
       ]
     }).compileComponents();
 
@@ -82,11 +81,7 @@ describe('SiCopyrightNoticeComponentWithInput', () => {
   let fixture: ComponentFixture<WrapperWithInputComponent>;
   let element: HTMLElement;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
-
+  beforeEach(() => {
     fixture = TestBed.createComponent(WrapperWithInputComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;

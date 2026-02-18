@@ -28,10 +28,6 @@ export class DummyAppSampleComponent {
 
 // @public (undocumented)
 export class LandscapeSupportService {
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<LandscapeSupportService, never>;
-    // (undocumented)
-    static ɵprov: i0.ɵɵInjectableDeclaration<LandscapeSupportService>;
 }
 
 // @public (undocumented)
@@ -59,26 +55,14 @@ export class SiDummyComponent {
     activeRoute: ActivatedRoute;
     // (undocumented)
     path: string;
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<SiDummyComponent, "si-dummy", never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiDummyComponent, never>;
 }
 
 // @public (undocumented)
 export class SiExampleOverviewComponent implements OnInit, OnDestroy {
     // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
-    // (undocumented)
     resetSearchBar(): void;
     // (undocumented)
     toggleCollapse(): void;
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<SiExampleOverviewComponent, "si-example-overview", never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiExampleOverviewComponent, never>;
 }
 
 // @public (undocumented)
@@ -124,10 +108,6 @@ export class SiExampleViewerComponent {
     ticketBaseUrl: string;
     // (undocumented)
     vueTemplate: string;
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<SiExampleViewerComponent, "si-example-viewer", never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiExampleViewerComponent, never>;
 }
 
 // @public (undocumented)
@@ -198,12 +178,6 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
     // (undocumented)
     newMsgs: boolean;
     // (undocumented)
-    ngAfterViewInit(): void;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    ngOnInit(): void;
-    // (undocumented)
     onFullscreenChange(): void;
     // (undocumented)
     openTab(): void;
@@ -257,10 +231,6 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
     readonly typescriptElem: i0.Signal<ElementRef<any>>;
     // (undocumented)
     webcomponents: boolean | undefined;
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<SiLivePreviewComponent, "si-live-preview", never, { "baseUrl": { "alias": "baseUrl"; "required": false; }; "example": { "alias": "example"; "required": false; }; "template": { "alias": "template"; "required": false; }; "theme": { "alias": "theme"; "required": false; }; "locale": { "alias": "locale"; "required": false; }; "isRTL": { "alias": "isRTL"; "required": false; }; "ticketBaseUrl": { "alias": "ticketBaseUrl"; "required": false; }; "templateReact": { "alias": "templateReact"; "required": false; }; "templateVue": { "alias": "templateVue"; "required": false; }; "templateJs": { "alias": "templateJs"; "required": false; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiLivePreviewComponent, never>;
 }
 
 // @public
@@ -324,10 +294,6 @@ export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
     // (undocumented)
     readonly logRenderingError: i0.OutputEmitterRef<any>;
     // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    ngOnInit(): void;
-    // (undocumented)
     openQrMenu(): void;
     // (undocumented)
     readonly previewIframe: i0.Signal<ElementRef<any> | undefined>;
@@ -349,10 +315,6 @@ export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
     toggleLandscape(): void;
     // (undocumented)
     toggleTheme(): void;
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<SiLivePreviewIframeComponent, "si-live-preview-iframe", never, { "baseUrl": { "alias": "baseUrl"; "required": false; }; "exampleUrl": { "alias": "exampleUrl"; "required": false; }; "template": { "alias": "template"; "required": false; }; "ticketLinkBug": { "alias": "ticketLinkBug"; "required": false; }; "ticketLinkFeature": { "alias": "ticketLinkFeature"; "required": false; }; "isFullscreen": { "alias": "isFullscreen"; "required": false; }; "iFrameHeight": { "alias": "iFrameHeight"; "required": false; }; "iFrameWidth": { "alias": "iFrameWidth"; "required": false; }; "theme": { "alias": "theme"; "required": false; }; "locale": { "alias": "locale"; "required": false; }; "isRTL": { "alias": "isRTL"; "required": false; }; "loadReact": { "alias": "loadReact"; "required": false; }; "loadVue": { "alias": "loadVue"; "required": false; }; "loadJs": { "alias": "loadJs"; "required": false; }; "reactVueTemplate": { "alias": "reactVueTemplate"; "required": false; }; }, { "templateFromComponent": "templateFromComponent"; "logClear": "logClear"; "logMessage": "logMessage"; "logRenderingError": "logRenderingError"; "inProgress": "inProgress"; "themeChange": "themeChange"; "localeChange": "localeChange"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiLivePreviewIframeComponent, never>;
 }
 
 // @public (undocumented)
@@ -377,12 +339,6 @@ export abstract class SiLivePreviewLocaleApi {
 class SiLivePreviewModule {
     // (undocumented)
     static forRoot(config: SiLivePreviewConfig, isMobile?: boolean): ModuleWithProviders<SiLivePreviewModule>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiLivePreviewModule, never>;
-    // (undocumented)
-    static ɵinj: i0.ɵɵInjectorDeclaration<SiLivePreviewModule>;
-    // (undocumented)
-    static ɵmod: i0.ɵɵNgModuleDeclaration<SiLivePreviewModule, never, [typeof SiExampleViewerComponent, typeof SiExampleOverviewComponent], [typeof SiExampleOverviewComponent, typeof SiExampleViewerComponent]>;
 }
 export { SiLivePreviewModule }
 export { SiLivePreviewModule as SimplLivePreviewModule }
@@ -392,12 +348,6 @@ export class SiLivePreviewQrComponent implements AfterViewInit, OnDestroy, OnCha
     // (undocumented)
     readonly closed: i0.OutputEmitterRef<void>;
     // (undocumented)
-    ngAfterViewInit(): void;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
     qrImg: string;
     // (undocumented)
     qrShort: boolean;
@@ -405,10 +355,6 @@ export class SiLivePreviewQrComponent implements AfterViewInit, OnDestroy, OnCha
     url?: string;
     // (undocumented)
     urlShort?: string;
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<SiLivePreviewQrComponent, "si-live-preview-qr", never, { "url": { "alias": "url"; "required": false; }; "urlShort": { "alias": "urlShort"; "required": false; }; }, { "closed": "closed"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiLivePreviewQrComponent, never>;
 }
 
 // @public (undocumented)
@@ -426,10 +372,6 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
     // (undocumented)
     readonly logRenderingError: i0.OutputEmitterRef<any>;
     // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
     readonly react: i0.Signal<ElementRef<any>>;
     // (undocumented)
     recompile(): void;
@@ -443,20 +385,10 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
     template: string;
     // (undocumented)
     readonly templateFromComponent: i0.OutputEmitterRef<string | undefined>;
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<SiLivePreviewRendererComponent, "si-live-preview-renderer", never, { "exampleUrl": { "alias": "exampleUrl"; "required": false; }; "dataId": { "alias": "dataId"; "required": false; }; "template": { "alias": "template"; "required": false; }; }, { "templateFromComponent": "templateFromComponent"; "logClear": "logClear"; "logMessage": "logMessage"; "logRenderingError": "logRenderingError"; "inProgress": "inProgress"; "supportsLandscapeMode": "supportsLandscapeMode"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiLivePreviewRendererComponent, never>;
 }
 
 // @public (undocumented)
 class SiLivePreviewRoutingModule {
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiLivePreviewRoutingModule, never>;
-    // (undocumented)
-    static ɵinj: i0.ɵɵInjectorDeclaration<SiLivePreviewRoutingModule>;
-    // (undocumented)
-    static ɵmod: i0.ɵɵNgModuleDeclaration<SiLivePreviewRoutingModule, never, [typeof i1.RouterModule], [typeof i1.RouterModule]>;
 }
 export { SiLivePreviewRoutingModule }
 export { SiLivePreviewRoutingModule as SimplLivePreviewRoutingModule }
@@ -475,10 +407,6 @@ export abstract class SiLivePreviewWebComponentService {
     abstract destroyComponent(): void;
     // (undocumented)
     abstract injectComponent(element: ElementRef, inputs?: any, outputs?: any): any;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiLivePreviewWebComponentService, never>;
-    // (undocumented)
-    static ɵprov: i0.ɵɵInjectableDeclaration<SiLivePreviewWebComponentService>;
 }
 
 // @public (undocumented)
@@ -504,10 +432,6 @@ export class SiLivePreviewWrapperComponent {
     readonly webcomponentRenderer: i0.Signal<ElementRef<any>>;
     // (undocumented)
     webcomponentTemplateCode: string;
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<SiLivePreviewWrapperComponent, "si-live-preview-wrapper", never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiLivePreviewWrapperComponent, never>;
 }
 
 // @public

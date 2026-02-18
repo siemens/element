@@ -1,10 +1,10 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, input, OnInit } from '@angular/core';
-import { CircleChartSeries, SimplChartsNgModule } from '@siemens/charts-ng';
+import { CircleChartSeries, SiChartCircleComponent } from '@siemens/charts-ng/circle';
 import { WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 import { Observable } from 'rxjs';
@@ -13,7 +13,7 @@ import { DataService } from '../../../widgets/charts/data.service';
 
 @Component({
   selector: 'app-circle',
-  imports: [SimplChartsNgModule, SiResizeObserverDirective, AsyncPipe],
+  imports: [SiChartCircleComponent, SiResizeObserverDirective, AsyncPipe],
   templateUrl: './circle.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

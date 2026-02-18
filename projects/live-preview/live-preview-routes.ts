@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { NgModule } from '@angular/core';
@@ -57,4 +57,7 @@ export const livePreviewRoutes: Routes = [
 })
 export class SiLivePreviewRoutingModule {}
 
+/**
+ * @deprecated Use {@link SiLivePreviewRoutingModule} instead. The `Simpl` prefix is deprecated and will be removed in v51.
+ */
 export { SiLivePreviewRoutingModule as SimplLivePreviewRoutingModule };

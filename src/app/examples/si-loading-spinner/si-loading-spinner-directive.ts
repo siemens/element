@@ -1,15 +1,16 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import { SiLoadingSpinnerDirective } from '@siemens/element-ng/loading-spinner';
 
 @Component({
   selector: 'app-sample',
   imports: [SiCardComponent, SiLoadingSpinnerDirective],
-  templateUrl: './si-loading-spinner-directive.html'
+  templateUrl: './si-loading-spinner-directive.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   loading = false;

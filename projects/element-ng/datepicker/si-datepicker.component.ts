@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { getLocaleFirstDayOfWeek, WeekDay } from '@angular/common';
@@ -511,7 +511,7 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   protected timeSelected(newTime?: Date): void {
-    if (newTime == null || newTime === this.time.value) {
+    if (newTime == null) {
       return;
     }
 

@@ -1,10 +1,10 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { FocusableOption } from '@angular/cdk/a11y';
 import { CdkContextMenuTrigger, CdkMenuTrigger } from '@angular/cdk/menu';
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -13,7 +13,6 @@ import {
   DoCheck,
   ElementRef,
   HostBinding,
-  HostListener,
   inject,
   OnDestroy,
   OnInit,
@@ -49,7 +48,6 @@ import {
   imports: [
     CdkContextMenuTrigger,
     CdkMenuTrigger,
-    NgClass,
     NgTemplateOutlet,
     SiIconComponent,
     SiLoadingSpinnerComponent,
@@ -66,7 +64,9 @@ import {
     '[class.si-tree-ellipsis]': 'treeViewComponent.horizontalScrolling()',
     '[class.si-tree-view-top-level-item]':
       '!treeViewComponent.compactMode() && (treeViewComponent.flatTree() || (treeItem.level ?? 0) < 1)',
-    '[attr.aria-haspopup]': 'isContextMenuButtonVisible()'
+    '[attr.aria-haspopup]': 'isContextMenuButtonVisible()',
+    '(contextmenu)': 'onContextMenu($event)',
+    '(keydown)': 'onKeydown($event)'
   }
 })
 export class SiTreeViewItemComponent
@@ -417,12 +417,11 @@ export class SiTreeViewItemComponent
     return templateDirective ? templateDirective.template : this.templates()![0].template;
   }
 
-  @HostListener('contextmenu', ['$event']) protected onContextMenu(event: Event): boolean {
+  protected onContextMenu(event: Event): boolean {
     this.handleContextMenuEvent(event);
     return false;
   }
 
-  @HostListener('keydown', ['$event'])
   protected onKeydown(event: KeyboardEvent): void {
     const rtlCorrectedKey = correctKeyRTL(event.key);
     if (rtlCorrectedKey === 'Enter') {

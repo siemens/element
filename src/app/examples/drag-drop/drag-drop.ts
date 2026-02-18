@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import {
@@ -10,7 +10,7 @@ import {
 } from '@angular/cdk/drag-drop';
 import { CdkListbox, CdkOption } from '@angular/cdk/listbox';
 import { CdkContextMenuTrigger, CdkMenuModule } from '@angular/cdk/menu';
-import { Component, signal, viewChildren } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChildren } from '@angular/core';
 import { SiMenuModule } from '@siemens/element-ng/menu';
 
 @Component({
@@ -24,7 +24,8 @@ import { SiMenuModule } from '@siemens/element-ng/menu';
     CdkMenuModule
   ],
   standalone: true,
-  templateUrl: './drag-drop.html'
+  templateUrl: './drag-drop.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   protected listOne = [

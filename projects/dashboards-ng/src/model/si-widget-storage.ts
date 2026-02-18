@@ -1,11 +1,13 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { inject, InjectionToken } from '@angular/core';
 import { MenuItem } from '@siemens/element-ng/common';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 
+import type { SiFlexibleDashboardComponent } from '../components/flexible-dashboard/si-flexible-dashboard.component';
+import type { provideDashboardToolbarItems } from './configuration';
 import { DashboardToolbarItem } from './si-dashboard-toolbar.model';
 import { WidgetConfig } from './widgets.model';
 
@@ -56,6 +58,9 @@ export abstract class SiWidgetStorage {
   /**
    * Optional method to provide primary and secondary toolbar menu items.
    * @param dashboardId - The id of the dashboard if present to allow dashboard specific menu items.
+   *
+   * @deprecated use {@link provideDashboardToolbarItems} to provide common toolbar items.
+   * Additionally configure individual dashboard actions via {@link SiFlexibleDashboardComponent.primaryEditActions} and {@link SiFlexibleDashboardComponent.secondaryEditActions} respectively.
    */
   getToolbarMenuItems?: (dashboardId?: string) => {
     primary: Observable<(MenuItem | DashboardToolbarItem)[]>;

@@ -1,16 +1,10 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { provideLocationMocks } from '@angular/common/testing';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  HostBinding,
-  provideZonelessChangeDetection,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { SiApplicationHeaderHarness } from '@siemens/element-ng/application-header/testing/si-application-header.harness';
@@ -47,7 +41,7 @@ describe('SiNavbarPrimaryComponent', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
       imports: [TestHostComponent],
-      providers: [provideRouter([]), provideLocationMocks(), provideZonelessChangeDetection()]
+      providers: [provideRouter([]), provideLocationMocks()]
     })
   );
 

@@ -2,12 +2,16 @@
   - treeitem "Company1" [expanded] [level=1]:
     - paragraph: Company1
   - treeitem "Milano MIL" [level=2]:
+    - text: ""
     - paragraph: MIL
   - treeitem "Chicago CHI" [level=2]:
+    - text: ""
     - paragraph: CHI
   - treeitem "Pune PUN" [level=2] [selected]:
+    - text: ""
     - paragraph: PUN
   - treeitem "Zug ZG" [level=2]:
+    - text: ""
     - paragraph: ZG
   - treeitem "Company2" [level=1]:
     - paragraph: Company2

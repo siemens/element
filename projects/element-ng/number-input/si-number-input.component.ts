@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import {
@@ -28,8 +28,9 @@ import {
   ValidatorFn,
   Validators
 } from '@angular/forms';
+import { elementMinus, elementPlus } from '@siemens/element-icons';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
-import { addIcons, elementMinus, elementPlus, SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { Subscription, timer } from 'rxjs';
 
@@ -99,6 +100,7 @@ export class SiNumberInputComponent
    */
   readonly step = input<number | 'any'>(1);
   /** The value */
+  // eslint-disable-next-line @angular-eslint/prefer-signal-model
   readonly value = input<number>();
   /** Optional unit label */
   readonly unit = input<string>();

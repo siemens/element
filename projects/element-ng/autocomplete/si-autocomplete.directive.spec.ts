@@ -1,9 +1,9 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { DOWN_ARROW, ENTER, UP_ARROW } from '@angular/cdk/keycodes';
-import { Component, ErrorHandler, provideZonelessChangeDetection } from '@angular/core';
+import { Component, ErrorHandler } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -46,9 +46,6 @@ describe('SiAutocompleteDirective', () => {
   let fixture: ComponentFixture<TestHostComponent>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
     fixture = TestBed.createComponent(TestHostComponent);
     testComponent = fixture.componentInstance;
   });

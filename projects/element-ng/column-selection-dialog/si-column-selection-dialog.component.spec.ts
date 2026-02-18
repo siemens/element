@@ -1,12 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  ComponentRef,
-  provideZonelessChangeDetection
-} from '@angular/core';
+import { ChangeDetectionStrategy, ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ModalRef } from '@siemens/element-ng/modal';
 
@@ -76,7 +72,7 @@ describe('ColumnDialogComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ModalRef, provideZonelessChangeDetection()]
+      providers: [ModalRef]
     })
       .overrideComponent(SiColumnSelectionDialogComponent, {
         set: { changeDetection: ChangeDetectionStrategy.Default }

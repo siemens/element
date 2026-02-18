@@ -2,10 +2,10 @@
 
 :host {
   --avatar-size: 40px;
-  --indicator-size: 24px;
+  --indicator-size: #{variables.$si-icon-font-size};
   --background: #{variables.$element-base-0};
-  --indicator-offset-x: -12px;
-  --indicator-offset-y: -8px;
+  --indicator-offset-x: -10px;
+  --indicator-offset-y: -6px;
 
   flex: 0 0 auto;
   display: inline-flex;
@@ -67,14 +67,7 @@ img {
   inset-inline-end: var(--indicator-offset-x);
   font-size: var(--indicator-size);
 
-  .drop-shadow {
-    ::ng-deep {
-      svg {
-        filter: drop-shadow(1px 0 0 variables.$element-base-1)
-          drop-shadow(-1px 0 0 variables.$element-base-1)
-          drop-shadow(0 1px 0 variables.$element-base-1)
-          drop-shadow(0 -1px 0 variables.$element-base-1);
-      }
-    }
-  }
+  filter: drop-shadow(1px 0 0 variables.$element-base-1)
+    drop-shadow(-1px 0 0 variables.$element-base-1) drop-shadow(0 1px 0 variables.$element-base-1)
+    drop-shadow(0 -1px 0 variables.$element-base-1);
 }

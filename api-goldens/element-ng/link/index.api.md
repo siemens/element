@@ -41,10 +41,6 @@ export const SI_LINK_DEFAULT_NAVIGATION_EXTRA: InjectionToken<NavigationExtras>;
 export class SiLinkActionService {
     readonly action$: rxjs.Observable<LinkAction>;
     emit(link: Link, param: any): void;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiLinkActionService, never>;
-    // (undocumented)
-    static ɵprov: _angular_core.ɵɵInjectableDeclaration<SiLinkActionService>;
 }
 
 // @public (undocumented)
@@ -61,31 +57,15 @@ export class SiLinkDirective implements DoCheck, OnChanges, OnDestroy {
     // (undocumented)
     readonly exactMatch: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
-    ngDoCheck(): void;
-    // (undocumented)
-    ngOnChanges(): void;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
     onClick(event: any): void;
     // (undocumented)
     readonly siLink: _angular_core.InputSignal<Link | undefined>;
     // (undocumented)
     readonly siLinkDefaultTarget: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiLinkDirective, "[siLink]", ["siLink"], { "siLink": { "alias": "siLink"; "required": false; "isSignal": true; }; "siLinkDefaultTarget": { "alias": "siLinkDefaultTarget"; "required": false; "isSignal": true; }; "actionParam": { "alias": "actionParam"; "required": false; "isSignal": true; }; "activeClass": { "alias": "activeClass"; "required": false; "isSignal": true; }; "exactMatch": { "alias": "exactMatch"; "required": false; "isSignal": true; }; "ariaCurrent": { "alias": "ariaCurrent"; "required": false; "isSignal": true; }; }, { "activeChange": "activeChange"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiLinkDirective, never>;
 }
 
 // @public (undocumented)
 export class SiLinkModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiLinkModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiLinkModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiLinkModule, never, [typeof SiLinkDirective], [typeof SiLinkDirective]>;
 }
 
 // (No @packageDocumentation comment for this package)

@@ -3,8 +3,6 @@
 - combobox "search" [disabled]
 - button "clear" [disabled]
 - text: Control panel
-- checkbox "Readonly"
-- text: Readonly
 - checkbox "Disabled" [checked]
 - text: Disabled
 - checkbox "Search on input" [checked]

@@ -1,6 +1,7 @@
 @use 'sass:map';
 
 @use '@siemens/element-theme/src/styles/all-variables';
+@use '@siemens/element-theme/src/styles/bootstrap/buttons';
 
 :host {
   --si-accordion-radius: 0;
@@ -57,7 +58,7 @@
 }
 
 .fullscreen-button {
-  display: var(--fullscreen-button-display);
+  display: var(--fullscreen-button-display, inline-flex);
 }
 
 .collapse-toggle {
@@ -113,8 +114,8 @@
   :host.enable-mobile {
     // Fill space of button that is not there yet
     &:not(.collapsed):not(.expanded) si-content-action-bar {
-      // Keep in sync with $btn-circle-size-sm
-      margin-inline-end: 32px + 2 * map.get(all-variables.$spacers, 4);
+      // Keep in sync with $btn-icon-size-sm
+      margin-inline-end: buttons.$btn-icon-size-sm + 2 * map.get(all-variables.$spacers, 4);
     }
 
     &:not(.expanded) .collapse-toggle {

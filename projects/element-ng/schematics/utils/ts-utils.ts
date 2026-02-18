@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { normalize } from '@angular-devkit/core';
@@ -7,7 +7,6 @@ import { SchematicsException, Tree } from '@angular-devkit/schematics';
 import { isAbsolute } from 'path/posix';
 import ts from 'typescript';
 
-import { ComponentNamesInstruction } from '../migrations/data/component-names.js';
 import { SchematicsFileSystem } from './schematics-file-system.js';
 
 /**
@@ -198,90 +197,104 @@ export const getImportSpecifiers = (
   return matches;
 };
 
-interface ChangeInstruction {
-  start: number;
-  width: number;
-  newNode: ts.Node;
-}
+/**
+ * Calculates distance between two strings.
+ * Lower number = closer match.
+ */
+const getLevenshteinDistance = (a: string, b: string): number => {
+  const matrix: number[][] = [];
 
-export function* renameIdentifier({
-  sourceFile,
-  renamingInstructions
-}: {
-  sourceFile: ts.SourceFile;
-  renamingInstructions: ComponentNamesInstruction[];
-}): Generator<ChangeInstruction> {
-  for (const node of sourceFile.statements) {
-    if (!ts.isImportDeclaration(node) || !ts.isStringLiteral(node.moduleSpecifier)) {
-      continue;
-    }
+  for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+  for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
 
-    for (const renamingInstruction of renamingInstructions) {
-      if (!renamingInstruction.module.test(node.moduleSpecifier.text)) {
-        continue;
-      }
-
-      if (
-        !(node.importClause?.namedBindings && ts.isNamedImports(node.importClause.namedBindings))
-      ) {
-        continue;
-      }
-
-      for (const [
-        index,
-        { replace, replaceWith }
-      ] of renamingInstruction.symbolRenamings.entries()) {
-        const importSpecifiers = findImportSpecifier(
-          node.importClause.namedBindings.elements,
-          replace
+  for (let i = 1; i <= b.length; i++) {
+    for (let j = 1; j <= a.length; j++) {
+      if (b.charAt(i - 1) === a.charAt(j - 1)) {
+        matrix[i][j] = matrix[i - 1][j - 1];
+      } else {
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j - 1] + 1, // substitution
+          matrix[i][j - 1] + 1, // insertion
+          matrix[i - 1][j] + 1 // deletion
         );
-
-        if (!importSpecifiers) {
-          continue;
-        }
-
-        yield {
-          start: importSpecifiers.name.getStart(),
-          width: importSpecifiers.name.getWidth(),
-          newNode: ts.factory.createIdentifier(replaceWith)
-        };
-        if (
-          renamingInstruction.toModule &&
-          !node.moduleSpecifier.text.endsWith('@simpl/element-ng') &&
-          index === 0
-        ) {
-          const newPath = node.moduleSpecifier.text.replace(
-            renamingInstruction.module,
-            renamingInstruction.toModule
-          );
-
-          yield {
-            start: node.moduleSpecifier.getStart(),
-            width: node.moduleSpecifier.getWidth(),
-            newNode: ts.factory.createStringLiteral(newPath, true)
-          };
-        }
-
-        const visitor = function* (visitedNode: ts.Node): Generator<ChangeInstruction> {
-          if (ts.isIdentifier(visitedNode) && visitedNode.text === replace) {
-            yield {
-              start: visitedNode.getStart(),
-              width: visitedNode.getWidth(),
-              newNode: ts.factory.createIdentifier(replaceWith)
-            };
-          } else {
-            for (const child of visitedNode.getChildren()) {
-              yield* visitor(child);
-            }
-          }
-        };
-
-        for (const statement of sourceFile.statements) {
-          if (!ts.isImportDeclaration(statement)) {
-            yield* visitor(statement);
-          }
-        }
       }
     }
   }
-}
+  return matrix[b.length][a.length];
+};
+
+/**
+ * Find closest import statement.
+ *
+ * Note: the function assumes that there is at least one import in the file.
+ */
+const findClosestImport = (
+  search: string,
+  imports: ts.ImportDeclaration[]
+): ts.ImportDeclaration => {
+  return imports.reduce((closest, current) => {
+    const currentModule = (current.moduleSpecifier as ts.StringLiteral).text;
+    const closestModule = (closest.moduleSpecifier as ts.StringLiteral).text;
+    const currentDist = getLevenshteinDistance(search, currentModule);
+    const closestDist = getLevenshteinDistance(search, closestModule);
+    return currentDist < closestDist ? current : closest;
+  });
+};
+
+/** Ensures that a specific identifier is imported from the given module */
+export const applyImport = (
+  sourceFile: ts.SourceFile,
+  identifierName: string,
+  moduleSpecifier: string
+): { start: number; end: number; replacement: string } | null => {
+  const imports = sourceFile.statements
+    .filter(ts.isImportDeclaration)
+    // Filter only external module imports
+    .filter(
+      i =>
+        i.moduleSpecifier &&
+        ts.isStringLiteral(i.moduleSpecifier) &&
+        !i.moduleSpecifier.text.startsWith('.')
+    );
+  const closestImport = findClosestImport(moduleSpecifier, imports);
+
+  // Check if the module is already imported
+  if ((closestImport.moduleSpecifier as ts.StringLiteral).text === moduleSpecifier) {
+    const namedBindings = closestImport.importClause?.namedBindings;
+
+    if (namedBindings && ts.isNamedImports(namedBindings)) {
+      // Check if the identifier already exists
+      const hasIdentifier = namedBindings.elements.some(el => el.name.text === identifierName);
+      if (hasIdentifier) {
+        // Already imported, no transformation needed
+        return null;
+      }
+
+      // Add at the end
+      const elements = Array.from(namedBindings.elements);
+      const lastElement = elements.at(-1);
+      if (lastElement) {
+        return {
+          start: lastElement.getEnd(),
+          end: lastElement.getEnd(),
+          replacement: `, ${identifierName}`
+        };
+      }
+    }
+  }
+
+  const newImport = `import { ${identifierName} } from '${moduleSpecifier}';`;
+  const fullText = sourceFile.getFullText();
+  const end = closestImport.getEnd();
+
+  // Find the position after the trailing newline(s) of the closest import
+  let insertPosition = end;
+  if (fullText[insertPosition] === '\r') insertPosition++;
+  if (fullText[insertPosition] === '\n') insertPosition++;
+
+  return {
+    start: insertPosition,
+    end: insertPosition,
+    replacement: `${newImport}\n`
+  };
+};

@@ -1,11 +1,16 @@
 @let popover = popoverDirective();
 <div
   #popoverWrapper
-  class="popover position-relative focus-inside"
   role="dialog"
+  [class]="[
+    'popover',
+    'position-relative',
+    'focus-inside',
+    positionClass(),
+    popover.containerClass()
+  ]"
   [attr.aria-labelledby]="labelledBy"
   [attr.aria-describedby]="describedBy"
-  [ngClass]="[positionClass(), popover.containerClass()]"
   (keydown.escape)="hide()"
 >
   <div

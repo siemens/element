@@ -1,7 +1,7 @@
 @if (!flatTree() && expandCollapseAll()) {
   <div class="si-tree-view-expand-collapse-container p-4">
     <button
-      class="btn btn-sm btn-circle btn-tertiary element-expand-all"
+      class="btn btn-icon btn-tertiary element-expand-all"
       type="button"
       [title]="expandAllTooltip() | translate"
       [attr.aria-label]="expandAllTooltip() | translate"
@@ -9,7 +9,7 @@
     >
     </button>
     <button
-      class="btn btn-sm btn-circle btn-tertiary ms-4 element-collapse-all"
+      class="btn btn-icon btn-tertiary ms-4 element-collapse-all"
       type="button"
       [title]="collapseAllTooltip() | translate"
       [attr.aria-label]="collapseAllTooltip() | translate"
@@ -23,8 +23,8 @@
     <span
       class="si-tree-view-header-btn si-tree-view-header-root"
       tabindex="0"
+      [class]="computedIcons().headerHome"
       [class.disabled]="headerShowsRoot"
-      [ngClass]="computedIcons().headerHome"
       (click)="onFlatTreeNavigateHome()"
       (keydown.enter)="onFlatTreeNavigateHome()"
     ></span>
@@ -32,13 +32,11 @@
       <span
         class="si-tree-view-header-btn"
         tabindex="0"
+        [class]="computedIcons().headerArrow"
         [class.disabled]="headerShowsRoot"
-        [ngClass]="computedIcons().headerArrow"
         (click)="onFlatTreeNavigateUp()"
         (keydown.enter)="onFlatTreeNavigateUp()"
       ></span>
-    }
-    @if (lastBreadCrumbItem) {
       <span class="text-center text-truncate">{{ lastBreadCrumbItem.label | translate }}</span>
     }
   </div>

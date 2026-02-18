@@ -1,9 +1,10 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { CommonModule } from '@angular/common';
-import { NO_ERRORS_SCHEMA, provideZonelessChangeDetection } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { outputToObservable } from '@angular/core/rxjs-interop';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserModule } from '@angular/platform-browser';
 import {
@@ -12,7 +13,7 @@ import {
 } from '@siemens/element-ng/action-modal';
 import { MenuItem } from '@siemens/element-ng/common';
 import { MenuItemAction } from '@siemens/element-ng/menu';
-import { Observable, Subject } from 'rxjs';
+import { firstValueFrom, Observable, Subject } from 'rxjs';
 
 import {
   TEST_WIDGET,
@@ -47,8 +48,7 @@ describe('SiWidgetHostComponent', () => {
           imports: [BrowserModule, CommonModule, TestingModule, SiWidgetHostComponent],
           providers: [
             { provide: SiActionDialogService, useClass: SiActionDialogMockService },
-            SiGridService,
-            provideZonelessChangeDetection()
+            SiGridService
           ],
           schemas: [NO_ERRORS_SCHEMA]
         }).compileComponents();
@@ -99,14 +99,13 @@ describe('SiWidgetHostComponent', () => {
         expect(spy).toHaveBeenCalled();
       });
 
-      it('#onEdit() should emit #widgetConfig', (done: DoneFn) => {
+      it('#onEdit() should emit #widgetConfig', async () => {
         fixture.detectChanges();
 
-        component.edit.subscribe(emittedConfig => {
-          expect(emittedConfig).toEqual(TEST_WIDGET_CONFIG_0);
-          done();
-        });
+        const editPromise = firstValueFrom(outputToObservable(component.edit));
         component.onEdit();
+        const emittedConfig = await editPromise;
+        expect(emittedConfig).toEqual(TEST_WIDGET_CONFIG_0);
       });
 
       it('#removeAction should call onRemove', async () => {
@@ -121,18 +120,19 @@ describe('SiWidgetHostComponent', () => {
         expect(spy).toHaveBeenCalled();
       });
 
-      it('#onRemove() should restore card and emit widget config id', (done: DoneFn) => {
+      it('#onRemove() should restore card and emit widget config id', async () => {
         fixture.detectChanges();
         component.card().expand();
         const spy = spyOn(component.card(), 'restore');
 
-        component.remove.subscribe(emittedId => {
-          expect(emittedId).toEqual(TEST_WIDGET_CONFIG_0.id);
-          expect(spy).toHaveBeenCalled();
-          done();
-        });
+        const removePromise = firstValueFrom(outputToObservable(component.remove));
+
         component.onRemove();
         actionDialogService.result.next('delete');
+
+        const emittedId = await removePromise;
+        expect(emittedId).toEqual(TEST_WIDGET_CONFIG_0.id);
+        expect(spy).toHaveBeenCalled();
       });
 
       describe('#setupEditable()', () => {

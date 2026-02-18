@@ -1,8 +1,7 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ModalRef } from '@siemens/element-ng/modal';
 
@@ -17,7 +16,7 @@ describe('SiDeleteConfirmationDialogComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [SiDeleteConfirmationDialogComponent],
-      providers: [ModalRef, provideZonelessChangeDetection()]
+      providers: [ModalRef]
     });
     modalRef = TestBed.inject(ModalRef);
   });

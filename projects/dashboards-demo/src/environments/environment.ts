@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 
@@ -8,8 +8,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  mfeEsmBaseUrl: 'http://localhost:4205',
   mfeBaseUrl: 'http://localhost:4203',
-  webComponentsBaseUrl: 'http://localhost:4202'
+  webComponentsBaseUrl: 'http://localhost:4202',
+  useModuleFederation: true
 };
 
 // For easier debugging in development mode, you can import the following file

@@ -9,6 +9,7 @@
       - /url: "#/viewer/viewer/objectView"
   - link "Messages":
     - /url: "#/viewer/viewer/messages"
+    - text: ""
   - button "Help"
   - button "Jane Smith" [expanded]
   - group "Jane Smith":

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { isPlatformBrowser } from '@angular/common';
@@ -132,7 +132,10 @@ export class SiLocaleService {
     // If a user changes the language on the translate service directly,
     // we synchronize the change again.
     this.translate.translationChange.subscribe(() => {
-      this.locale = this.translate.currentLanguage;
+      const current = this.translate.currentLanguage;
+      if (current) {
+        this.locale = current;
+      }
     });
 
     if (this.config.fallbackEnabled) {

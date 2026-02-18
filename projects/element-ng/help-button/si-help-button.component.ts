@@ -1,9 +1,10 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { Component } from '@angular/core';
-import { addIcons, elementHelp, SiIconComponent } from '@siemens/element-ng/icon';
+import { elementHelp } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiPopoverDirective } from '@siemens/element-ng/popover';
 
 /**

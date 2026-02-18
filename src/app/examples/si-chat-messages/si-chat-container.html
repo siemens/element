@@ -28,7 +28,7 @@
           @for (action of message.actions; track $index) {
             <button
               type="button"
-              class="btn btn-ghost btn-circle btn-sm"
+              class="btn btn-ghost btn-circle"
               siChatMessageAction
               [attr.aria-label]="action.label"
               (click)="action.action(message, action)"
@@ -38,6 +38,16 @@
           }
         </si-chat-message>
       }
+    } @empty {
+      <si-ai-welcome-screen
+        [categories]="promptCategories"
+        [promptSuggestions]="currentPromptSuggestions()"
+        [(selectedCategory)]="selectedCategory"
+        (promptSelected)="onPromptSelected($event)"
+      >
+        <p class="h1 mb-0"> <strong>Hello</strong>, </p>
+        <p class="h1 mb-0">how can I help you today?</p>
+      </si-ai-welcome-screen>
     }
 
     @if (
@@ -46,11 +56,13 @@
       <si-ai-message content="" [loading]="true" />
     }
 
-    <si-inline-notification
-      class="mb-6 w-100 overflow-hidden"
-      severity="info"
-      message="AI responses are for demonstration purposes."
-    />
+    @if (!firstMessageSent() && messages().length) {
+      <si-inline-notification
+        class="mb-6 w-100 overflow-hidden"
+        severity="info"
+        message="AI responses are for demonstration purposes."
+      />
+    }
 
     <si-chat-input
       class="w-100"
@@ -68,7 +80,18 @@
       (send)="onMessageSent($event)"
       (interrupt)="onInterrupt()"
       (fileError)="onFileError($event)"
-    />
+    >
+      @if (messages().length) {
+        <button
+          type="button"
+          class="btn btn-tertiary btn-sm"
+          title="Show welcome screen"
+          (click)="onShowWelcomeScreen()"
+        >
+          Show Welcome Screen
+        </button>
+      }
+    </si-chat-input>
   </si-chat-container>
 </div>
 
@@ -77,7 +100,7 @@
     <h4 class="modal-title" id="sample-modal-title">{{ attachment.name }}</h4>
     <button
       type="button"
-      class="btn btn-circle btn-sm btn-ghost element-cancel"
+      class="btn btn-circle btn-ghost element-cancel"
       aria-label="Close modal"
       (click)="modalRef.hide('cancel')"
     >

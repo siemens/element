@@ -2,7 +2,7 @@
   <tr role="row">
     <!-- Typically used for week numbers -->
     @if (rowLabels()) {
-      <td class="si-calendar-row-label" [attr.data-row]="rowIndex" [ngClass]="rowLabelCssClasses()">
+      <td [class]="`si-calendar-row-label ${rowLabelCssClasses()}`" [attr.data-row]="rowIndex">
         {{ rowLabels()?.at(rowIndex) ?? '' }}
       </td>
     }
@@ -27,8 +27,8 @@
           type="button"
           [cell]="col"
           [compareAdapter]="compareAdapter()"
-          [ngClass]="cellCss(col)"
           [attr.cdkFocusInitial]="isActive(col) ? '' : null"
+          [class]="cellCss(col)"
           [class.selected]="selection().isSelected(col, startDate(), endDate())"
           [class.text-secondary]="
             col.isPreview &&

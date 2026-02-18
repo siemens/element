@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ComponentRef, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiEmptyStateComponent as TestComponent } from '.';
@@ -11,13 +11,6 @@ describe('SiEmptyStateComponent', () => {
   let componentRef: ComponentRef<TestComponent>;
   let fixture: ComponentFixture<TestComponent>;
   let element: HTMLElement;
-
-  beforeEach(() =>
-    TestBed.configureTestingModule({
-      imports: [TestComponent],
-      providers: [provideZonelessChangeDetection()]
-    })
-  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestComponent);

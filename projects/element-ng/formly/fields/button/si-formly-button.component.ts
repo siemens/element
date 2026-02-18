@@ -1,15 +1,14 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
 import { FieldType, FormlyModule } from '@ngx-formly/core';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
 @Component({
   selector: 'si-formly-button',
-  imports: [NgClass, SiTranslatePipe, FormlyModule],
+  imports: [SiTranslatePipe, FormlyModule],
   templateUrl: './si-formly-button.component.html'
 })
 export class SiFormlyButtonComponent extends FieldType {

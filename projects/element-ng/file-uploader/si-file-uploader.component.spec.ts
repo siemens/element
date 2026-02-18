@@ -1,16 +1,10 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { HttpErrorResponse, HttpHeaders, provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  provideZonelessChangeDetection,
-  SimpleChange,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, SimpleChange, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { runOnPushChangeDetection } from '../test-helpers/change-detection.helper';
@@ -88,7 +82,7 @@ describe('SiFileUploaderComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [TestHostComponent],
-      providers: [provideHttpClient(), provideHttpClientTesting(), provideZonelessChangeDetection()]
+      providers: [provideHttpClient(), provideHttpClientTesting()]
     });
     httpMock = TestBed.inject(HttpTestingController);
   });
@@ -355,13 +349,15 @@ describe('SiFileUploaderComponent', () => {
     httpMock.verify();
   });
 
-  it('should emit success response', (done: DoneFn) => {
-    component.fileUploader().uploadCompleted.subscribe(result => {
-      expect(result).toBeDefined();
-      expect(result.response).toBeDefined();
-      expect(result.error).toBeUndefined();
-      expect(result.response?.status).toBe(200);
-      done();
+  it('should emit success response', async () => {
+    const uploadResult = new Promise<void>(resolve => {
+      component.fileUploader().uploadCompleted.subscribe(result => {
+        expect(result).toBeDefined();
+        expect(result.response).toBeDefined();
+        expect(result.error).toBeUndefined();
+        expect(result.response?.status).toBe(200);
+        resolve();
+      });
     });
 
     handleFiles(createFileList(['matching.fmwr']));
@@ -372,6 +368,8 @@ describe('SiFileUploaderComponent', () => {
     const attachment = { id: 201, fileName: 'matching.fmwr' };
     const req = httpMock.expectOne('/api/attachments');
     req.flush(attachment);
+
+    await uploadResult;
     httpMock.verify();
   });
 
@@ -476,14 +474,16 @@ describe('SiFileUploaderComponent', () => {
     expect(getUploadButton().disabled).toBeFalsy();
   });
 
-  it('should retry and emit error response', (done: DoneFn) => {
-    component.fileUploader().uploadCompleted.subscribe(result => {
-      expect(result).toBeDefined();
-      expect(result.response).toBeUndefined();
-      expect(result.error).toBeDefined();
-      const errorResponse = result.error as HttpErrorResponse;
-      expect(errorResponse.status).toBe(400);
-      done();
+  it('should retry and emit error response', async () => {
+    const uploadResult = new Promise<void>(resolve => {
+      component.fileUploader().uploadCompleted.subscribe(result => {
+        expect(result).toBeDefined();
+        expect(result.response).toBeUndefined();
+        expect(result.error).toBeDefined();
+        const errorResponse = result.error as HttpErrorResponse;
+        expect(errorResponse.status).toBe(400);
+        resolve();
+      });
     });
 
     component.retries = 3;
@@ -494,6 +494,8 @@ describe('SiFileUploaderComponent', () => {
       const req = httpMock.expectOne('/api/attachments');
       req.flush({}, { status: 400, statusText: 'FAILED' });
     }
+
+    await uploadResult;
     httpMock.verify();
   });
 

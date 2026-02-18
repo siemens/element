@@ -3,6 +3,8 @@
   [heading]="'Demo Dashboard ' + dashboardId"
   [dashboardId]="dashboardId"
   [widgetCatalog]="widgetCatalog"
+  [primaryEditActions]="primaryActions()"
+  [secondaryEditActions]="secondaryActions()"
   (isModified)="appStateService.editable$.next($event)"
 >
   <app-dashboard-filters menubar filters-slot />

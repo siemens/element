@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -17,23 +17,26 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import {
+  elementCancel,
+  elementDoubleLeft,
+  elementDoubleRight,
+  elementExport,
+  elementPinch,
+  elementZoom
+} from '@siemens/element-icons';
 import { SiAccordionHCollapseService } from '@siemens/element-ng/accordion';
 import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
 import {
   ContentActionBarMainItem,
   SiContentActionBarComponent
 } from '@siemens/element-ng/content-action-bar';
-import {
-  addIcons,
-  elementCancel,
-  elementDoubleLeft,
-  elementDoubleRight,
-  SiIconComponent
-} from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLinkDirective } from '@siemens/element-ng/link';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
+import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { timer } from 'rxjs';
 
@@ -55,7 +58,8 @@ export interface StatusItem extends MenuItemLegacy {
     SiLinkDirective,
     RouterLink,
     SiSearchBarComponent,
-    SiTranslatePipe
+    SiTranslatePipe,
+    SiTooltipDirective
   ],
   templateUrl: './si-side-panel-content.component.html',
   styleUrl: './si-side-panel-content.component.scss',
@@ -204,7 +208,14 @@ export class SiSidePanelContentComponent implements OnInit {
   protected readonly focusable = computed(
     () => !this.mobileSize() || !this.enableMobile() || !this.isCollapsed()
   );
-  protected readonly icons = addIcons({ elementCancel, elementDoubleLeft, elementDoubleRight });
+  protected readonly icons = addIcons({
+    elementCancel,
+    elementDoubleLeft,
+    elementDoubleRight,
+    elementExport,
+    elementPinch,
+    elementZoom
+  });
   /**
    * The $rpanel-transition-duration in the style is 0.5 seconds.
    * For the animation we need to wait until the resize is done.

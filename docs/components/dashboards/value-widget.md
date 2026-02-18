@@ -5,7 +5,7 @@ for direct user interaction.
 
 ## Usage ---
 
-The Value Dashboard Widget displays key information, such as numerical values, and optionally include icons
+The value dashboard widget displays key information, such as numerical values, and optionally include icons
 or indicators that highlight its nature or status.
 
 It can include:

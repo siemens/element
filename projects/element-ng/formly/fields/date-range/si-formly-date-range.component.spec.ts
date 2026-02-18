@@ -1,12 +1,11 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormRecord, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
 
 import { SiFormlyWrapperComponent } from '../../wrapper/si-formly-wrapper.component';
@@ -48,7 +47,6 @@ describe('formly date range type', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        NoopAnimationsModule,
         ReactiveFormsModule,
         FormlyModule.forRoot({
           types: [
@@ -62,8 +60,7 @@ describe('formly date range type', () => {
         }),
         SiFormlyDateRangeComponent,
         FormlyTestComponent
-      ],
-      providers: [provideZonelessChangeDetection()]
+      ]
     }).compileComponents();
   });
 

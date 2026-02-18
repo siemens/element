@@ -32,12 +32,12 @@
     </label>
   </span>
   @if (maxFileSize() || accept()) {
-    <div class="allowed si-caption mt-6">
+    <div class="allowed si-caption mt-6 text-center">
       @if (maxFileSize()) {
-        {{ maxFileSizeText() | translate }}: {{ maxFileSizeString() }}.
+        {{ maxFileSizeText() | translate: { maxFileSize: maxFileSizeString() } }}
       }
       @if (accept()) {
-        {{ acceptText() | translate }}: {{ accept() }}.
+        {{ acceptText() | translate: { accept: accept() } }}
       }
     </div>
   }

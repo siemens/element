@@ -1,9 +1,11 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, input, output, signal } from '@angular/core';
-import { addIcons, elementHide, elementShow, SiIconComponent } from '@siemens/element-ng/icon';
+import { Component, contentChild, input, output, signal } from '@angular/core';
+import { NgControl } from '@angular/forms';
+import { elementHide, elementShow } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 @Component({
@@ -12,10 +14,12 @@ import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
   templateUrl: './si-password-toggle.component.html',
   styleUrl: './si-password-toggle.component.scss',
   host: {
+    class: 'form-control-wrapper',
     '[class.show-visibility-icon]': 'showVisibilityIcon()'
   }
 })
 export class SiPasswordToggleComponent {
+  protected readonly ngControl = contentChild(NgControl);
   /**
    * Whether to show the visibility toggle icon.
    *

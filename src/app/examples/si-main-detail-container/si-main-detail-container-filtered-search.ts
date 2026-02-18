@@ -1,9 +1,9 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { JsonPipe } from '@angular/common';
-import { Component, inject, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, viewChild } from '@angular/core';
 import {
   ContentActionBarMainItem,
   SiContentActionBarComponent
@@ -37,6 +37,7 @@ import { CorporateEmployee } from '../datatable/data.service';
     SiMainDetailContainerComponent
   ],
   templateUrl: './si-main-detail-container-filtered-search.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'si-layout-fixed-height'
   }

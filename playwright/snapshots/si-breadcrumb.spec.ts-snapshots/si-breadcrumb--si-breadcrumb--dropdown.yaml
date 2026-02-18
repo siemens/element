@@ -13,9 +13,11 @@
       - link "Level 3":
         - /url: "#/viewer/viewer/root/level1/level2/level3"
     - listitem:
+      - link "Level 4":
+        - /url: "#/viewer/viewer/root/level1/level2/level3/level4"
+    - listitem:
       - button "..." [expanded]
       - menu:
-        - menuitem "Level 4"
         - menuitem "Level 5"
         - menuitem "Level 6"
         - menuitem "Level 7"
@@ -38,6 +40,9 @@
     - listitem:
       - link "Level 3":
         - /url: "#/viewer/viewer/root/level1/level2/level3"
+    - listitem:
+      - link "Level 4":
+        - /url: "#/viewer/viewer/root/level1/level2/level3/level4"
     - listitem:
       - button "..."
     - listitem:

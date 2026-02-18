@@ -1,9 +1,9 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, provideZonelessChangeDetection } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiApplicationHeaderComponent } from '../si-application-header.component';
@@ -33,10 +33,7 @@ describe('SiLaunchpad', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [TestHostComponent],
-      providers: [
-        { provide: SiApplicationHeaderComponent, useValue: {} },
-        provideZonelessChangeDetection()
-      ]
+      providers: [{ provide: SiApplicationHeaderComponent, useValue: {} }]
     }).compileComponents();
   });
 
@@ -112,7 +109,7 @@ describe('SiLaunchpad', () => {
         await harness.toggleMore();
         const categories = await harness.getCategories();
         expect(categories).toHaveSize(2);
-        expect(await categories[0].getName()).toBe('Favorite apps');
+        expect(await categories[0].getName()).toBe('Favorites');
         expect(await categories[1].getName()).toBe(null);
         expect(await harness.getApp('A-1').then(app => app.isFavorite())).toBeTrue();
         expect(await harness.getFavoriteCategory().then(category => category.getApps())).toHaveSize(

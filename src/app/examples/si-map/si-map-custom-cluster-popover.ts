@@ -1,12 +1,12 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, input, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, viewChild } from '@angular/core';
+import { elementGoTo } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { LOG_EVENT } from '@siemens/live-preview';
 import { MapPoint, MapPointMetaData, SiMapComponent } from '@siemens/maps-ng';
-import { elementGoTo } from '@simpl/element-icons/ionic';
 import { mockPoints, singlePoint } from 'src/app/mocks/points.mock';
 import { environment } from 'src/environments/environment';
 
@@ -23,7 +23,7 @@ import { environment } from 'src/environments/environment';
           </div>
           <button
             type="button"
-            class="btn btn-circle btn-sm btn-ghost me-2 align-self-center"
+            class="btn btn-circle btn-ghost me-2 align-self-center"
             aria-label="Show details"
             (click)="pointClick(point)"
           >
@@ -32,7 +32,8 @@ import { environment } from 'src/environments/environment';
         </div>
       }
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CustomClusterPopoverComponent {
   readonly logEvent = inject(LOG_EVENT);

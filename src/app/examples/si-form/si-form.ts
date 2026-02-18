@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { JsonPipe } from '@angular/common';
@@ -131,15 +131,9 @@ export class SampleComponent {
   errorCodeTranslateKeyMap = new Map<string, string>([
     ['name.pattern', 'FORM.NAME_UPPERCASE'],
     ['name.required', 'FORM.NAME_REQUIRED'],
-    ['phoneNumber.invalidPhoneNumberFormat', 'FORM.INVALID_PHONE'],
-    ['required', 'FORM.REQUIRED'],
     ['termsAccepted.required', 'FORM.ACCEPT_TERMS_REQUIRED'],
-    ['minlength', 'FORM.MINLENGTH'],
     ['notEighteen', 'FORM.NOT_EIGHTEEN'],
     ['departureTime', 'FORM.DEPARTURE_AFTER_ARRIVAL'],
-    ['birthday.invalid', 'FORM.INVALID_DATE'],
-    ['travelDate.invalidStartDateFormat', 'FORM.INVALID_DATE'],
-    ['travelDate.invalidEndDateFormat', 'FORM.INVALID_DATE'],
     ['travelDate.endBeforeStart', 'FORM.END_BEFORE_START'],
     ['travelDate.required', 'FORM.TRAVEL_DATE_REQUIRED'],
     ['noEconomy', 'You deserve better!']

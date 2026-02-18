@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import {
@@ -8,12 +8,10 @@ import {
   Component,
   DebugElement,
   inject,
-  provideZonelessChangeDetection,
   viewChild
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SiLoadingSpinnerModule } from '@siemens/element-ng/loading-spinner';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { MenuItemsProvider, SiTreeViewModule } from '@siemens/element-ng/tree-view';
@@ -127,8 +125,7 @@ describe('SiTreeViewComponent', () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-      imports: [SiLoadingSpinnerModule, NoopAnimationsModule, SiTreeViewModule, WrapperComponent],
-      providers: [provideZonelessChangeDetection()]
+      imports: [SiLoadingSpinnerModule, SiTreeViewModule, WrapperComponent]
     });
   });
 

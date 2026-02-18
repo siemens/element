@@ -6,6 +6,10 @@
 
 @use 'sass:map';
 
+$btn-size-default: 32px !default;
+$btn-size-lg: 40px !default;
+$btn-size-sm: 24px !default;
+
 .btn-group {
   position: relative;
   display: inline-flex;
@@ -52,9 +56,35 @@
     margin-inline-start: -1px;
   }
 
+  .btn {
+    block-size: $btn-size-default;
+
+    &.btn-lg {
+      block-size: $btn-size-lg;
+    }
+
+    &.btn-sm {
+      block-size: $btn-size-sm;
+    }
+  }
+
+  .btn-icon,
+  // @deprecated Will be removed in a future major version, use .btn-icon instead.
+  .icon-only {
+    inline-size: $btn-size-default;
+
+    &.btn-lg {
+      inline-size: $btn-size-lg;
+    }
+
+    &.btn-sm {
+      inline-size: $btn-size-sm;
+    }
+  }
+
   // Dropdown toggle styling for split buttons
   .btn.dropdown-toggle {
-    inline-size: 24px;
+    inline-size: $btn-size-sm;
     padding: 0;
     border-start-start-radius: 0;
     border-end-start-radius: 0;
@@ -69,10 +99,11 @@
   &[inert] {
     opacity: semantic-tokens.$element-action-disabled-opacity;
   }
-}
 
-.btn-group .btn-check {
-  + .btn {
+  // Selection buttons
+  .btn-check + .btn,
+  label.btn:has(.btn-check) {
+    cursor: pointer;
     background: transparent;
     color: semantic-tokens.$element-text-primary;
     padding-block: calc(variables.$btn-padding-y - 1px);
@@ -81,11 +112,13 @@
     transition: none;
 
     &.btn-icon {
+      inline-size: auto;
       padding-inline: map.get(spacers.$spacers, 5) - 1px;
     }
 
     // @deprecated Will be removed in a future major version, use .btn-icon instead.
     &.icon-only {
+      inline-size: auto;
       min-inline-size: unset;
       padding-inline: map.get(spacers.$spacers, 5) - 1px;
 
@@ -93,16 +126,17 @@
         margin-inline: 0;
       }
     }
+
+    &:hover {
+      color: semantic-tokens.$element-ui-0-hover;
+    }
   }
 
-  &:checked + .btn,
-  + .btn:hover {
-    color: semantic-tokens.$element-action-secondary-text-hover;
-  }
-
-  &:checked + .btn {
-    background: semantic-tokens.$element-action-secondary-hover;
+  .btn-check:checked + .btn,
+  label.btn:has(.btn-check:checked) {
+    background: semantic-tokens.$element-action-secondary-active;
     border-color: semantic-tokens.$element-action-secondary-border-hover;
+    color: semantic-tokens.$element-ui-0-hover;
     z-index: 2;
 
     &:hover {
@@ -110,7 +144,8 @@
     }
   }
 
-  &:focus-visible + .btn {
+  .btn-check:focus-visible + .btn,
+  label.btn:has(.btn-check:focus-visible) {
     @include focus.make-outline-focus();
     z-index: 3;
   }

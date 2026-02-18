@@ -1,10 +1,10 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SiChartCircleComponent } from '@siemens/charts-ng';
+import { SiChartCircleComponent } from '@siemens/charts-ng/circle';
 import {
   SiAccountDetailsComponent,
   SiApplicationHeaderComponent,
@@ -48,7 +48,8 @@ import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.s
     SiHeaderLogoDirective
   ],
   templateUrl: './content-1-2-layout-fixed-height.html',
-  providers: [DataService]
+  providers: [DataService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   menuItems: NavbarVerticalItem[] = [
@@ -85,6 +86,7 @@ export class SampleComponent {
   isLoading = 0;
 
   private dataService = inject(DataService);
+  private cdRef = inject(ChangeDetectorRef);
 
   onSelect(event: CorporateEmployee[]): void {
     this.logEvent(event);
@@ -117,6 +119,7 @@ export class SampleComponent {
       this.rows = rows;
 
       this.isLoading--;
+      this.cdRef.markForCheck();
     });
   }
 }

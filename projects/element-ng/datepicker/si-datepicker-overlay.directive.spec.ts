@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import {
@@ -8,7 +8,6 @@ import {
   ComponentRef,
   HostListener,
   inject,
-  provideZonelessChangeDetection,
   signal
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -82,13 +81,6 @@ describe('SiDatepickerOverlayDirective', () => {
     fixture.detectChanges();
     await fixture.whenStable();
   };
-
-  beforeEach(() =>
-    TestBed.configureTestingModule({
-      imports: [WrapperComponent],
-      providers: [provideZonelessChangeDetection()]
-    })
-  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WrapperComponent);

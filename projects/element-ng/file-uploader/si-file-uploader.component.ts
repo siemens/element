@@ -1,8 +1,7 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import {
   HttpClient,
   HttpErrorResponse,
@@ -24,15 +23,8 @@ import {
   SimpleChanges,
   viewChild
 } from '@angular/core';
-import {
-  addIcons,
-  elementCancel,
-  elementDelete,
-  elementDocument,
-  elementRedo,
-  SiIconComponent,
-  SiStatusIconComponent
-} from '@siemens/element-ng/icon';
+import { elementCancel, elementDelete, elementDocument, elementRedo } from '@siemens/element-icons';
+import { addIcons, SiIconComponent, SiStatusIconComponent } from '@siemens/element-ng/icon';
 import { SiInlineNotificationComponent } from '@siemens/element-ng/inline-notification';
 import { SiProgressbarComponent } from '@siemens/element-ng/progressbar';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
@@ -89,7 +81,6 @@ interface ExtUploadFile extends UploadFile {
 @Component({
   selector: 'si-file-uploader',
   imports: [
-    NgClass,
     SiStatusIconComponent,
     SiFileDropzoneComponent,
     SiIconComponent,
@@ -126,33 +117,33 @@ export class SiFileUploaderComponent implements OnChanges {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Maximum upload size`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Max. {{maxFileSize}} upload size.`)
    * ```
    */
   readonly maxFileSizeText = input(
-    t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Maximum upload size`)
+    t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Max. {{maxFileSize}} upload size.`)
   );
   /**
    * Error message shown when the maximum number of files are reached.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.MAX_FILE_REACHED:Maximum number of files reached`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.MAX_FILE_REACHED:Max. {{maxFiles}} files`)
    * ```
    */
   readonly maxFilesReachedText = input(
-    t(() => $localize`:@@SI_FILE_UPLOADER.MAX_FILE_REACHED:Maximum number of files reached`)
+    t(() => $localize`:@@SI_FILE_UPLOADER.MAX_FILE_REACHED:Max. {{maxFiles}} files`)
   );
   /**
    * Text for the accepted file types.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Accepted file types`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Accepted file types: {{accept}}.`)
    * ```
    */
   readonly acceptText = input(
-    t(() => $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Accepted file types`)
+    t(() => $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Accepted file types: {{accept}}.`)
   );
   /**
    * Text used inside the upload button.

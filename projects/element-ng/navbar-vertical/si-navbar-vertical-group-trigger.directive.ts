@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { Overlay } from '@angular/cdk/overlay';
@@ -103,6 +103,7 @@ export class SiNavbarVerticalGroupTriggerDirective implements OnInit {
   hideFlyout(): void {
     if (this.flyout()) {
       this.flyout.set(false);
+      this.active.set(false);
       this.flyoutAnchorComponentRef?.destroy();
       this.flyoutAnchorComponentRef = undefined;
       this.attachInline();

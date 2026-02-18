@@ -1,10 +1,10 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, input, OnInit } from '@angular/core';
-import { SimplChartsNgModule } from '@siemens/charts-ng';
+import { SiChartGaugeComponent } from '@siemens/charts-ng/gauge';
 import { WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 import { Observable } from 'rxjs';
@@ -23,7 +23,7 @@ export type WidgetChartGaugeConfig = {
 
 @Component({
   selector: 'app-gauge',
-  imports: [SimplChartsNgModule, SiResizeObserverDirective, AsyncPipe],
+  imports: [SiChartGaugeComponent, SiResizeObserverDirective, AsyncPipe],
   templateUrl: './gauge.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

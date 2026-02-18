@@ -15,6 +15,7 @@
       - cell
       - cell "Select row Air Conditioner":
         - checkbox "Select row"
+        - text: ""
       - cell "Floor 1"
       - cell "Operational"
       - cell /\d+/
@@ -22,6 +23,7 @@
       - cell
       - cell "Select row Heater":
         - checkbox "Select row"
+        - text: ""
       - cell "Floor 2"
       - cell "Operational"
       - cell /\d+/
@@ -29,6 +31,7 @@
       - cell
       - cell "Select row Ventilation Fan":
         - checkbox "Select row"
+        - text: ""
       - cell "Roof"
       - cell "Maintenance Required"
       - cell /\d+/
@@ -39,6 +42,7 @@
       - cell
       - cell "Select row LED Panel":
         - checkbox "Select row"
+        - text: ""
       - cell "Conference Room"
       - cell "Operational"
       - cell /\d+/
@@ -46,6 +50,7 @@
       - cell
       - cell "Select row Smart Bulb":
         - checkbox "Select row"
+        - text: ""
       - cell "Office A"
       - cell "Operational"
       - cell /\d+/
@@ -53,6 +58,7 @@
       - cell
       - cell "Select row Emergency Light":
         - checkbox "Select row"
+        - text: ""
       - cell "Corridor"
       - cell "Operational"
       - cell "5"
@@ -63,6 +69,7 @@
       - cell
       - cell "Select row CCTV Camera":
         - checkbox "Select row"
+        - text: ""
       - cell "Main Entrance"
       - cell "Operational"
       - cell /\d+/
@@ -70,6 +77,7 @@
       - cell
       - cell "Select row Access Control":
         - checkbox "Select row"
+        - text: ""
       - cell "Server Room"
       - cell "Operational"
       - cell /\d+/
@@ -77,6 +85,7 @@
       - cell
       - cell "Select row Motion Sensor":
         - checkbox "Select row"
+        - text: ""
       - cell "Parking Lot"
       - cell "Operational"
       - cell /\d+/
@@ -87,6 +96,7 @@
       - cell
       - cell "Select row Smart Meter":
         - checkbox "Select row"
+        - text: ""
       - cell "Utility Room"
       - cell "Operational"
       - cell "5"
@@ -94,6 +104,7 @@
       - cell
       - cell "Select row Solar Panel":
         - checkbox "Select row"
+        - text: ""
       - cell "Rooftop"
       - cell "Operational"
       - cell /-\d+/
@@ -101,6 +112,7 @@
       - cell
       - cell "Select row Battery Storage":
         - checkbox "Select row"
+        - text: ""
       - cell "Basement"
       - cell "Operational"
       - cell /\d+/

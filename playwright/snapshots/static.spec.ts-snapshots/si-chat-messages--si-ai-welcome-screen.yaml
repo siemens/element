@@ -1,0 +1,12 @@
+- paragraph:
+  - strong: Hello
+  - text: ","
+- paragraph: how can I help you today?
+- checkbox "All prompts" [checked]
+- checkbox "Maintenance"
+- checkbox "Analytics"
+- checkbox "Troubleshooting"
+- button "How do I optimize performance for large datasets?"
+- button "What are the best practices for data validation?"
+- button "Help me troubleshoot this error message"
+- button "Explain the difference between async and sync operations"

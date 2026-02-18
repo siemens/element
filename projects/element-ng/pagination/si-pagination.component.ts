@@ -1,9 +1,10 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, computed, input, model } from '@angular/core';
-import { addIcons, elementLeft3, elementRight3, SiIconComponent } from '@siemens/element-ng/icon';
+import { elementLeft3, elementRight3 } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 @Component({

@@ -47,10 +47,6 @@ export class SiFormContainerComponent<TControl extends {
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
     get userInteractedWithForm(): boolean;
     get validFormContainerMessage(): boolean;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiFormContainerComponent<any>, "si-form-container", never, { "form": { "alias": "form"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "contentContainerBreakpoints": { "alias": "contentContainerBreakpoints"; "required": false; "isSignal": true; }; "disableContainerBreakpoints": { "alias": "disableContainerBreakpoints"; "required": false; "isSignal": true; }; "errorCodeTranslateKeyMap": { "alias": "errorCodeTranslateKeyMap"; "required": false; "isSignal": true; }; "controlNameTranslateKeyMap": { "alias": "controlNameTranslateKeyMap"; "required": false; "isSignal": true; }; "disableErrorPrinting": { "alias": "disableErrorPrinting"; "required": false; "isSignal": true; }; "labelWidth": { "alias": "labelWidth"; "required": false; "isSignal": true; }; }, {}, never, ["[si-form-container-message]", "[si-form-container-buttons]", "[si-form-container-content]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiFormContainerComponent<any>, never>;
 }
 
 // @public (undocumented)
@@ -58,13 +54,7 @@ export class SiFormFieldsetComponent implements DoCheck {
     readonly inline: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly label: _angular_core.InputSignal<TranslatableString>;
     readonly labelWidth: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    ngDoCheck(): void;
     readonly required: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiFormFieldsetComponent, "si-form-fieldset", never, { "label": { "alias": "label"; "required": true; "isSignal": true; }; "labelWidth": { "alias": "labelWidth"; "required": false; "isSignal": true; }; "required": { "alias": "required"; "required": false; "isSignal": true; }; "inline": { "alias": "inline"; "required": false; "isSignal": true; }; }, {}, never, ["[si-help-button]", "*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiFormFieldsetComponent, never>;
 }
 
 // @public (undocumented)
@@ -72,28 +62,14 @@ export class SiFormItemComponent implements AfterContentInit, AfterContentChecke
     readonly disableErrorPrinting: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     readonly formErrorMapper: _angular_core.InputSignal<SiFormValidationErrorMapper | undefined>;
-    readonly label: _angular_core.InputSignal<TranslatableString | null | undefined>;
+    readonly label: _angular_core.InputSignal<TranslatableString>;
     readonly labelWidth: _angular_core.InputSignal<string | number | undefined>;
-    // (undocumented)
-    ngAfterContentChecked(): void;
-    // (undocumented)
-    ngAfterContentInit(): void;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
     readonly requiredInput: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiFormItemComponent, "si-form-item", never, { "label": { "alias": "label"; "required": false; "isSignal": true; }; "labelWidth": { "alias": "labelWidth"; "required": false; "isSignal": true; }; "disableErrorPrinting": { "alias": "disableErrorPrinting"; "required": false; "isSignal": true; }; "formErrorMapper": { "alias": "formErrorMapper"; "required": false; "isSignal": true; }; "requiredInput": { "alias": "required"; "required": false; "isSignal": true; }; }, {}, ["fieldControlQuery", "ngControl", "controlElementRef", "requiredValidator"], ["[si-help-button]", ".warning-feedback, .info-feedback, .invalid-feedback", "*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiFormItemComponent, never>;
 }
 
 // @public
 export interface SiFormItemControl {
-    readonly errormessageId?: string | Signal<string | undefined>;
+    readonly errormessageId: string | Signal<string>;
     readonly id?: string | Signal<string | undefined>;
     readonly isFormCheck?: boolean;
     readonly labelledby?: string | Signal<string | undefined> | null;
@@ -101,15 +77,9 @@ export interface SiFormItemControl {
 
 // @public
 export class SiFormModule {
-    static withConfiguration({ validationErrorMapper }: {
+    static withConfiguration(input: {
         validationErrorMapper: SiFormValidationErrorMapper;
     }): ModuleWithProviders<SiFormModule>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiFormModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiFormModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiFormModule, never, [typeof SiFormContainerComponent, typeof SiFormFieldsetComponent, typeof SiFormItemComponent], [typeof SiFormContainerComponent, typeof SiFormFieldsetComponent, typeof SiFormItemComponent]>;
 }
 
 // @public (undocumented)
@@ -190,14 +160,6 @@ export interface SiFormValidationErrorMapper {
 export class SiFormValidationTooltipDirective implements OnDestroy, DoCheck {
     // (undocumented)
     readonly formErrorMapper: _angular_core.InputSignal<SiFormValidationErrorMapper | undefined>;
-    // (undocumented)
-    ngDoCheck(): void;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiFormValidationTooltipDirective, "[siFormValidationTooltip]", never, { "formErrorMapper": { "alias": "formErrorMapper"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiFormValidationTooltipDirective, never>;
 }
 
 // (No @packageDocumentation comment for this package)

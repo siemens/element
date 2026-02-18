@@ -12,7 +12,6 @@ import * as _angular_forms from '@angular/forms';
 import { ComponentRef } from '@angular/core';
 import { ConnectionPositionPair } from '@angular/cdk/overlay';
 import { ControlValueAccessor } from '@angular/forms';
-import { DoCheck } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { FocusOrigin } from '@angular/cdk/a11y';
 import { FormControl } from '@angular/forms';
@@ -297,18 +296,8 @@ export const previousMonth: (date: Date) => Date;
 export type RangeType = 'START' | 'END' | undefined;
 
 // @public
-export class SiCalendarButtonComponent implements OnInit, AfterContentInit, DoCheck {
+export class SiCalendarButtonComponent implements OnInit, AfterContentInit {
     readonly ariaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    // (undocumented)
-    ngAfterContentInit(): void;
-    // (undocumented)
-    ngDoCheck(): void;
-    // (undocumented)
-    ngOnInit(): void;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiCalendarButtonComponent, "si-calendar-button", never, { "ariaLabel": { "alias": "ariaLabel"; "required": false; "isSignal": true; }; }, {}, ["datepicker", "datepickerOverlay", "ngControl"], ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiCalendarButtonComponent, never>;
 }
 
 // @public
@@ -317,8 +306,6 @@ export class SiDateInputDirective implements ControlValueAccessor, OnChanges, Va
     readonly errormessageId: _angular_core.InputSignal<string>;
     // (undocumented)
     readonly id: _angular_core.InputSignal<string>;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     registerOnChange(fn: any): void;
@@ -335,10 +322,6 @@ export class SiDateInputDirective implements ControlValueAccessor, OnChanges, Va
     validate(c: AbstractControl): ValidationErrors | null;
     // (undocumented)
     writeValue(value?: Date | string): void;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiDateInputDirective, "input[siDateInput]", ["siDateInput"], { "id": { "alias": "id"; "required": false; "isSignal": true; }; "siDatepickerConfig": { "alias": "siDatepickerConfig"; "required": false; "isSignal": true; }; "disabledInput": { "alias": "disabled"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "errormessageId": { "alias": "errormessageId"; "required": false; "isSignal": true; }; }, { "siDatepickerConfig": "siDatepickerConfigChange"; "siDatepickerDisabledTime": "siDatepickerDisabledTime"; "stateChange": "stateChange"; "dateChange": "dateChange"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiDateInputDirective, never>;
 }
 
 // @public (undocumented)
@@ -356,41 +339,19 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
     readonly hideTimeToggle: _angular_core.InputSignal<boolean>;
     readonly initialFocus: _angular_core.InputSignal<boolean>;
     readonly nextLabel: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
-    ngAfterViewInit(): void;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    ngOnInit(): void;
     readonly previousLabel: _angular_core.InputSignal<TranslatableString>;
     readonly rangeType: _angular_core.ModelSignal<RangeType>;
     readonly time12h: _angular_core.InputSignalWithTransform<boolean | undefined, unknown>;
     readonly timepickerLabel: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiDatepickerComponent, "si-datepicker", never, { "focusedDate": { "alias": "focusedDate"; "required": false; "isSignal": true; }; "date": { "alias": "date"; "required": false; "isSignal": true; }; "dateRange": { "alias": "dateRange"; "required": false; "isSignal": true; }; "dateRangeRole": { "alias": "dateRangeRole"; "required": false; "isSignal": true; }; "initialFocus": { "alias": "initialFocus"; "required": false; "isSignal": true; }; "disabledTime": { "alias": "disabledTime"; "required": false; "isSignal": true; }; "config": { "alias": "config"; "required": false; "isSignal": true; }; "previousLabel": { "alias": "previousLabel"; "required": false; "isSignal": true; }; "nextLabel": { "alias": "nextLabel"; "required": false; "isSignal": true; }; "calenderWeekLabel": { "alias": "calenderWeekLabel"; "required": false; "isSignal": true; }; "calendarWeekLabel": { "alias": "calendarWeekLabel"; "required": false; "isSignal": true; }; "time12h": { "alias": "time12h"; "required": false; "isSignal": true; }; "rangeType": { "alias": "rangeType"; "required": false; "isSignal": true; }; "minMonth": { "alias": "minMonth"; "required": false; "isSignal": true; }; "maxMonth": { "alias": "maxMonth"; "required": false; "isSignal": true; }; "hideTimeToggle": { "alias": "hideTimeToggle"; "required": false; "isSignal": true; }; "hideCalendar": { "alias": "hideCalendar"; "required": false; "isSignal": true; }; "timepickerLabel": { "alias": "timepickerLabel"; "required": false; "isSignal": true; }; "activeHover": { "alias": "activeHover"; "required": false; "isSignal": true; }; }, { "focusedDate": "focusedDateChange"; "date": "dateChange"; "dateRange": "dateRangeChange"; "disabledTime": "disabledTimeChange"; "config": "configChange"; "rangeType": "rangeTypeChange"; "activeHover": "activeHoverChange"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiDatepickerComponent, never>;
 }
 
 // @public (undocumented)
 export class SiDatepickerDirective extends SiDateInputDirective implements AfterViewInit {
     readonly autoClose: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    ngAfterViewInit(): void;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiDatepickerDirective, "[siDatepicker]", ["siDatepicker"], { "autoClose": { "alias": "autoClose"; "required": false; "isSignal": true; }; }, {}, never, never, true, [{ directive: typeof SiDatepickerOverlayDirective; inputs: {}; outputs: { "siDatepickerClose": "siDatepickerClose"; }; }]>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiDatepickerDirective, never>;
 }
 
 // @public (undocumented)
 export class SiDatepickerModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiDatepickerModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiDatepickerModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiDatepickerModule, never, [typeof SiCalendarButtonComponent, typeof SiDateInputDirective, typeof SiDatepickerComponent, typeof SiDatepickerDirective, typeof SiDateRangeComponent, typeof SiTimepickerComponent], [typeof SiCalendarButtonComponent, typeof SiDateInputDirective, typeof SiDatepickerComponent, typeof SiDatepickerDirective, typeof SiDateRangeComponent, typeof SiTimepickerComponent]>;
 }
 
 // @public (undocumented)
@@ -402,18 +363,8 @@ export class SiDatepickerOverlayComponent implements OnChanges, OnInit, OnDestro
     focusActiveCell(): void;
     readonly initialFocus: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly isMobile: _angular_core.InputSignal<boolean>;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
     readonly rangeType: _angular_core.ModelSignal<"START" | "END" | undefined>;
     readonly time12h: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiDatepickerOverlayComponent, "si-datepicker-overlay", never, { "initialFocus": { "alias": "initialFocus"; "required": false; "isSignal": true; }; "config": { "alias": "config"; "required": false; "isSignal": true; }; "date": { "alias": "date"; "required": false; "isSignal": true; }; "dateRange": { "alias": "dateRange"; "required": false; "isSignal": true; }; "rangeType": { "alias": "rangeType"; "required": false; "isSignal": true; }; "time12h": { "alias": "time12h"; "required": false; "isSignal": true; }; "isMobile": { "alias": "isMobile"; "required": false; "isSignal": true; }; }, { "date": "dateChange"; "dateRange": "dateRangeChange"; "rangeType": "rangeTypeChange"; "disabledTimeChange": "disabledTimeChange"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiDatepickerOverlayComponent, never>;
 }
 
 // @public
@@ -423,15 +374,9 @@ export class SiDatepickerOverlayDirective implements OnDestroy {
     contains(element: HTMLElement): boolean;
     focus(focus?: boolean): this;
     isShown(): ComponentRef<SiDatepickerOverlayComponent> | undefined;
-    // (undocumented)
-    ngOnDestroy(): void;
     setInputs(inputs?: DatepickerInputPartial): this;
     showOverlay(focus?: boolean, inputs?: DatepickerInputPartial): ComponentRef<SiDatepickerOverlayComponent>;
     readonly siDatepickerClose: _angular_core.OutputEmitterRef<CloseCause>;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiDatepickerOverlayDirective, "[siDatepickerOverlay]", ["siDatepickerOverlay"], {}, { "siDatepickerClose": "siDatepickerClose"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiDatepickerOverlayDirective, never>;
 }
 
 // @public (undocumented)
@@ -447,10 +392,6 @@ export class SiDateRangeComponent implements ControlValueAccessor, Validator, Af
     readonly id: _angular_core.InputSignal<string>;
     // (undocumented)
     readonly labelledby: string;
-    // (undocumented)
-    ngAfterViewInit(): void;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     registerOnChange(fn: any): void;
@@ -467,10 +408,6 @@ export class SiDateRangeComponent implements ControlValueAccessor, Validator, Af
     readonly value: _angular_core.ModelSignal<DateRange | undefined>;
     // (undocumented)
     writeValue(dateRange: DateRange): void;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiDateRangeComponent, "si-date-range", never, { "id": { "alias": "id"; "required": false; "isSignal": true; }; "siDatepickerConfig": { "alias": "siDatepickerConfig"; "required": false; "isSignal": true; }; "startDatePlaceholder": { "alias": "startDatePlaceholder"; "required": false; "isSignal": true; }; "endDatePlaceholder": { "alias": "endDatePlaceholder"; "required": false; "isSignal": true; }; "ariaLabelCalendarButton": { "alias": "ariaLabelCalendarButton"; "required": false; "isSignal": true; }; "startTimeLabel": { "alias": "startTimeLabel"; "required": false; "isSignal": true; }; "endTimeLabel": { "alias": "endTimeLabel"; "required": false; "isSignal": true; }; "autoClose": { "alias": "autoClose"; "required": false; "isSignal": true; }; "disabledInput": { "alias": "disabled"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "value": { "alias": "value"; "required": false; "isSignal": true; }; "errormessageId": { "alias": "errormessageId"; "required": false; "isSignal": true; }; }, { "siDatepickerConfig": "siDatepickerConfigChange"; "siDatepickerRangeChange": "siDatepickerRangeChange"; "disabledTimeChange": "disabledTimeChange"; "value": "valueChange"; }, never, never, true, [{ directive: typeof SiDatepickerOverlayDirective; inputs: {}; outputs: { "siDatepickerClose": "siDatepickerClose"; }; }]>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiDateRangeComponent, never>;
 }
 
 // @public (undocumented)
@@ -538,10 +475,6 @@ export class SiTimepickerComponent implements ControlValueAccessor, Validator, S
     readonly showSeconds: _angular_core.InputSignalWithTransform<boolean, unknown>;
     // (undocumented)
     writeValue(obj?: Date | string): void;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiTimepickerComponent, "si-timepicker", never, { "id": { "alias": "id"; "required": false; "isSignal": true; }; "disabledInput": { "alias": "disabled"; "required": false; "isSignal": true; }; "hoursLabel": { "alias": "hoursLabel"; "required": false; "isSignal": true; }; "minutesLabel": { "alias": "minutesLabel"; "required": false; "isSignal": true; }; "secondsLabel": { "alias": "secondsLabel"; "required": false; "isSignal": true; }; "millisecondsLabel": { "alias": "millisecondsLabel"; "required": false; "isSignal": true; }; "hideLabels": { "alias": "hideLabels"; "required": false; "isSignal": true; }; "hoursAriaLabel": { "alias": "hoursAriaLabel"; "required": false; "isSignal": true; }; "minutesAriaLabel": { "alias": "minutesAriaLabel"; "required": false; "isSignal": true; }; "secondsAriaLabel": { "alias": "secondsAriaLabel"; "required": false; "isSignal": true; }; "millisecondsAriaLabel": { "alias": "millisecondsAriaLabel"; "required": false; "isSignal": true; }; "hoursPlaceholder": { "alias": "hoursPlaceholder"; "required": false; "isSignal": true; }; "minutesPlaceholder": { "alias": "minutesPlaceholder"; "required": false; "isSignal": true; }; "secondsPlaceholder": { "alias": "secondsPlaceholder"; "required": false; "isSignal": true; }; "millisecondsPlaceholder": { "alias": "millisecondsPlaceholder"; "required": false; "isSignal": true; }; "meridians": { "alias": "meridians"; "required": false; "isSignal": true; }; "meridiansLabel": { "alias": "meridiansLabel"; "required": false; "isSignal": true; }; "meridiansAriaLabel": { "alias": "meridiansAriaLabel"; "required": false; "isSignal": true; }; "showMinutes": { "alias": "showMinutes"; "required": false; "isSignal": true; }; "showSeconds": { "alias": "showSeconds"; "required": false; "isSignal": true; }; "showMilliseconds": { "alias": "showMilliseconds"; "required": false; "isSignal": true; }; "showMeridian": { "alias": "showMeridian"; "required": false; "isSignal": true; }; "min": { "alias": "min"; "required": false; "isSignal": true; }; "max": { "alias": "max"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "errormessageId": { "alias": "errormessageId"; "required": false; "isSignal": true; }; }, { "isValid": "isValid"; "meridianChange": "meridianChange"; "inputCompleted": "inputCompleted"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiTimepickerComponent, never>;
 }
 
 // @public

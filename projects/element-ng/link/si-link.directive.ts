@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-/* eslint-disable @angular-eslint/no-conflicting-lifecycle */
+
 import { LocationStrategy } from '@angular/common';
 import {
   booleanAttribute,

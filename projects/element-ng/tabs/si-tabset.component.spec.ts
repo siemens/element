@@ -1,10 +1,10 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, provideZonelessChangeDetection, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, RouterLink, RouterOutlet } from '@angular/router';
 
@@ -140,10 +140,6 @@ describe('SiTabset', () => {
 
   beforeEach(async () => {
     mockResizeObserver();
-    await TestBed.configureTestingModule({
-      imports: [TestComponent],
-      providers: [provideRouter([]), provideZonelessChangeDetection()]
-    }).compileComponents();
     fixture = TestBed.createComponent(TestComponent);
     testComponent = fixture.componentInstance;
     loader = TestbedHarnessEnvironment.loader(fixture);
@@ -411,8 +407,7 @@ describe('SiTabset Routing', () => {
             path: 'tab-route',
             component: SiTabRouteComponent
           }
-        ]),
-        provideZonelessChangeDetection()
+        ])
       ]
     }).compileComponents();
   });

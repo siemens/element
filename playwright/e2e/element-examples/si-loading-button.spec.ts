@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { expect, test } from '../../support/test-helpers';
@@ -12,8 +12,7 @@ test.describe('si-loading-button', () => {
     await si.runVisualAndA11yTests('normal state');
 
     await page.locator('input[type=checkbox]').check();
-    const spinnerCount = await page.locator('si-loading-spinner').count();
-    expect(spinnerCount).toBeGreaterThan(0);
+    await expect(page.locator('si-loading-spinner')).not.toHaveCount(0);
     await si.runVisualAndA11yTests('second-step', { maxDiffPixels: 45 });
   });
 });

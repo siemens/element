@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { NgTemplateOutlet } from '@angular/common';
@@ -8,7 +8,6 @@ import {
   ChangeDetectorRef,
   Component,
   inject,
-  provideZonelessChangeDetection,
   signal,
   viewChild,
   viewChildren
@@ -82,8 +81,7 @@ describe('SiDashboardComponent', () => {
         {
           provide: ResizeObserverService,
           useValue: resizeSpy
-        },
-        provideZonelessChangeDetection()
+        }
       ]
     }).compileComponents();
   });

@@ -1,9 +1,9 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormRecord } from '@angular/forms';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
 import { DatepickerInputConfig } from '@siemens/element-ng/datepicker';
@@ -13,7 +13,8 @@ import { SiFormlyModule } from '@siemens/element-ng/formly';
 @Component({
   selector: 'app-sample',
   imports: [CommonModule, SiFormModule, SiFormlyModule],
-  templateUrl: './si-dynamic-form-fields.html'
+  templateUrl: './si-dynamic-form-fields.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   form = new FormRecord({});
@@ -88,7 +89,7 @@ export class SampleComponent {
       props: {
         label: 'Icon input',
         icon: 'element-link',
-        iconSize: 24, // defaults to 24px
+        iconSize: 20, // defaults to 20px
         iconTooltip: 'Translatable Text like "foo.bar.SOME_KEY"'
       }
     },
@@ -287,19 +288,33 @@ export class SampleComponent {
         required: true,
         label: 'si-select',
         optionsList: [
-          { id: 'good', icon: 'element-face-happy', color: 'status-success', title: 'Good' },
           {
-            id: 'average',
-            icon: 'element-face-neutral',
-            color: 'status-warning',
-            title: 'Average'
+            type: 'option',
+            value: 'good',
+            icon: 'element-face-happy',
+            iconColor: 'status-success',
+            label: 'Good'
           },
-          { id: 'poor', icon: 'element-face-unhappy', color: 'status-danger', title: 'Poor' },
           {
-            id: 'unhealthy',
+            type: 'option',
+            value: 'average',
+            icon: 'element-face-neutral',
+            iconColor: 'status-warning',
+            label: 'Average'
+          },
+          {
+            type: 'option',
+            value: 'poor',
+            icon: 'element-face-unhappy',
+            iconColor: 'status-danger',
+            label: 'Poor'
+          },
+          {
+            type: 'option',
+            value: 'unhealthy',
             icon: 'element-face-very-unhappy',
-            color: 'status-critical',
-            title: 'Unhealthy',
+            iconColor: 'status-critical',
+            label: 'Unhealthy',
             disabled: true
           }
         ]
@@ -322,19 +337,33 @@ export class SampleComponent {
         multi: true,
         hasFilter: true,
         optionsList: [
-          { id: 'good', icon: 'element-face-happy', color: 'status-success', title: 'Good' },
           {
-            id: 'average',
-            icon: 'element-face-neutral',
-            color: 'status-warning',
-            title: 'Average'
+            type: 'option',
+            value: 'good',
+            icon: 'element-face-happy',
+            iconColor: 'status-success',
+            label: 'Good'
           },
-          { id: 'poor', icon: 'element-face-unhappy', color: 'status-danger', title: 'Poor' },
           {
-            id: 'unhealthy',
+            type: 'option',
+            value: 'average',
+            icon: 'element-face-neutral',
+            iconColor: 'status-warning',
+            label: 'Average'
+          },
+          {
+            type: 'option',
+            value: 'poor',
+            icon: 'element-face-unhappy',
+            iconColor: 'status-danger',
+            label: 'Poor'
+          },
+          {
+            type: 'option',
+            value: 'unhealthy',
             icon: 'element-face-very-unhappy',
-            color: 'status-critical',
-            title: 'Unhealthy',
+            iconColor: 'status-critical',
+            label: 'Unhealthy',
             disabled: true
           }
         ]

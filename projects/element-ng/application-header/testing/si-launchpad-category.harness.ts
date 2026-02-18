@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { ComponentHarness, HarnessPredicate } from '@angular/cdk/testing';
@@ -15,7 +15,7 @@ export class SiLaunchpadCategoryHarness extends ComponentHarness {
     );
   }
 
-  private name = this.locatorForOptional('.si-h4');
+  private name = this.locatorForOptional('.launchpad-category-title');
 
   async getName(): Promise<string | null> {
     return this.name().then(name => name?.text() ?? null);

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { NgTemplateOutlet } from '@angular/common';
@@ -20,14 +20,13 @@ import {
   viewChild
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { SiAvatarBackgroundColorDirective } from '@siemens/element-ng/avatar';
 import {
-  addIcons,
   elementCancel,
   elementCircleFilled,
-  elementStateExclamationMark,
-  SiIconComponent
-} from '@siemens/element-ng/icon';
+  elementStateExclamationMark
+} from '@siemens/element-icons';
+import { SiAvatarBackgroundColorDirective } from '@siemens/element-ng/avatar';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { ModalRef, SiModalService } from '@siemens/element-ng/modal';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { CropperPosition, ImageCroppedEvent, ImageCropperComponent } from 'ngx-image-cropper';

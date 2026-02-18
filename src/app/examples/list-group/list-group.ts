@@ -1,14 +1,15 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SiCircleStatusModule } from '@siemens/element-ng/circle-status';
 
 @Component({
   selector: 'app-sample',
   imports: [SiCircleStatusModule],
   templateUrl: './list-group.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {}

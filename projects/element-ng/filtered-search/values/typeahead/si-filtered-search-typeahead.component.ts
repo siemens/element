@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import {
@@ -133,8 +133,7 @@ export class SiFilteredSearchTypeaheadComponent
     // We should consider dropping this, but there is currently a unit test checking this behavior.
     const optionValue = this.optionValue();
     if (optionValue) {
-      // TODO: The last ?? optionValue.label is non-sense, but we have a unit test checking this behavior.
-      this.criterionValue().value = optionValue.value ?? optionValue.label;
+      this.criterionValue().value = optionValue.value;
     }
   }
 

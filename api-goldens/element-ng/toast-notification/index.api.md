@@ -31,7 +31,7 @@ export interface SiToast {
     // (undocumented)
     message: TranslatableString;
     // (undocumented)
-    state: ToastStateName;
+    state: StatusType;
     // (undocumented)
     timeout?: number;
     // (undocumented)
@@ -47,18 +47,9 @@ export class SiToastNotificationService implements OnDestroy {
     constructor();
     activeToasts: SiToast[];
     hideToastNotification(toast?: SiToast): void;
-    // (undocumented)
-    ngOnDestroy(): void;
-    queueToastNotification(state: ToastStateName, title: string, message: string, disableAutoClose?: boolean, disableManualClose?: boolean, action?: Link): SiToast;
+    queueToastNotification(state: StatusType, title: string, message: string, disableAutoClose?: boolean, disableManualClose?: boolean, action?: Link): SiToast;
     showToastNotification(toast: SiToast): SiToast;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiToastNotificationService, never>;
-    // (undocumented)
-    static ɵprov: i0.ɵɵInjectableDeclaration<SiToastNotificationService>;
 }
-
-// @public (undocumented)
-export type ToastStateName = StatusType | 'connection';
 
 // (No @packageDocumentation comment for this package)
 

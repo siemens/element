@@ -1,16 +1,18 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import {
   AfterViewInit,
   ElementRef,
   inject,
-  Input,
   Renderer2,
-  ViewChild,
   DOCUMENT,
-  Directive
+  Directive,
+  input,
+  viewChild,
+  SimpleChanges,
+  OnChanges
 } from '@angular/core';
 
 import { WidgetConfig, WidgetInstance, WidgetInstanceEditor } from '../../model/widgets.model';
@@ -18,38 +20,42 @@ import { WidgetConfig, WidgetInstance, WidgetInstanceEditor } from '../../model/
 @Directive()
 export abstract class SiWebComponentWrapperBaseComponent<
   T extends WidgetInstance | WidgetInstanceEditor
-> implements AfterViewInit {
-  private _config!: WidgetConfig;
-  get config(): WidgetConfig {
-    return this._config;
-  }
+>
+  implements AfterViewInit, OnChanges
+{
+  readonly config =
+    input.required<
+      T extends WidgetInstance ? WidgetConfig : WidgetConfig | Omit<WidgetConfig, 'id'>
+    >();
 
-  @Input() set config(config: WidgetConfig) {
-    this._config = config;
-    if (this.webComponent) {
-      this.webComponent.config = config;
-    }
-  }
+  readonly elementTagName = input.required<string>();
+  readonly url = input.required<string>();
 
-  @Input() elementTagName!: string;
-  @Input() url!: string;
-  @ViewChild('webComponentHost', { static: true, read: ElementRef })
-  protected webComponentHost!: ElementRef;
+  protected readonly webComponentHost = viewChild.required('webComponentHost', {
+    read: ElementRef
+  });
+
   protected webComponent?: HTMLElement & T;
 
   private renderer2 = inject(Renderer2);
   private document = inject(DOCUMENT);
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.config && this.webComponent) {
+      this.webComponent.config = this.config();
+    }
+  }
+
   ngAfterViewInit(): void {
-    if (!this.isScriptLoaded(this.url)) {
+    if (!this.isScriptLoaded(this.url())) {
       const script = this.renderer2.createElement('script');
-      script.src = this.url;
+      script.src = this.url();
       this.renderer2.appendChild(this.document.body, script);
     }
 
-    this.webComponent = this.renderer2.createElement(this.elementTagName);
+    this.webComponent = this.renderer2.createElement(this.elementTagName());
     if (this.webComponent) {
-      this.webComponent.config = this.config;
+      this.webComponent.config = this.config();
     }
   }
 

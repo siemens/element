@@ -1,0 +1,56 @@
+@if (iconCategory(); as category) {
+  <h2>{{ category }}</h2>
+}
+@if (hideMenu() === 'false') {
+  <app-menu
+    [displayIconSetName]="floatingMenu || displayHeading() === 'false' ? '' : displayIconSetName()"
+    [isIconCategory]="!!iconCategory()"
+    [short]="floatingMenu"
+    [class.floating]="floatingMenu"
+    [class.dark-theme]="isDarkTheme()"
+    [style.top]="floatingMenu ? floatingMenuTop : ''"
+    [style.left.px]="floatingMenu ? floatingMenuLeft : undefined"
+    [style.width.px]="floatingMenu ? floatingMenuWidth : undefined"
+    (darkToggle)="fontService.dark.set($event)"
+    (filledToggle)="fontService.filled.set($event)"
+  />
+}
+<div class="icon-content" [style.padding-top.px]="floatingMenu ? floatingMenuHeight : undefined">
+  @if (!iconCategory() && hideSidebar() === 'false') {
+    <app-sidebar
+      [class.categorized]="!hasCategory()"
+      [categories]="displayIconCategories()"
+      [idPrefix]="!iconCategory() ? idPrefix() : ''"
+    />
+  }
+  @if (!iconCategory() || foundCategoryLength()) {
+    <div class="icon-container" [class.categorized]="!hasCategory() && noScroll() === 'false'">
+      <div class="list">
+        @if (iconCategory() && foundCategory(); as category) {
+          <app-section
+            [category]="category"
+            [showTitle]="false"
+            [iconsMargin]="iconsMargin() !== 'false'"
+            [showFilled]="filled()"
+            [displayTags]="displayTags() !== 'false'"
+            [darkTheme]="isDarkTheme()"
+            [dark]="dark()"
+          />
+        }
+        @if (!iconCategory()) {
+          @for (category of displayIconCategories(); track category.id) {
+            <app-section
+              [category]="category"
+              [idPrefix]="idPrefix()"
+              [iconsMargin]="iconsMargin() !== 'false'"
+              [showFilled]="filled()"
+              [displayTags]="displayTags() !== 'false'"
+              [darkTheme]="isDarkTheme()"
+              [dark]="dark()"
+            />
+          }
+        }
+      </div>
+    </div>
+  }
+</div>

@@ -18,5 +18,6 @@
 - img "Loading"
 - button "clock" [disabled]
 - img "Loading"
+- text: Control panel
 - checkbox "Toggle loading" [checked]
 - text: Toggle loading

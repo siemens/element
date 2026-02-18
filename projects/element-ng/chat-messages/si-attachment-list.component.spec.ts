@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { DebugElement, provideZonelessChangeDetection, TemplateRef } from '@angular/core';
+import { DebugElement, TemplateRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiModalService } from '@siemens/element-ng/modal';
@@ -21,10 +21,7 @@ describe('SiAttachmentListComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [TestComponent],
-      providers: [
-        { provide: SiModalService, useValue: modalServiceSpy },
-        provideZonelessChangeDetection()
-      ]
+      providers: [{ provide: SiModalService, useValue: modalServiceSpy }]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestComponent);
@@ -87,7 +84,7 @@ describe('SiAttachmentListComponent', () => {
     fixture.componentRef.setInput('attachments', attachments);
     fixture.detectChanges();
 
-    const removeButtons = debugElement.queryAll(By.css('.btn-circle'));
+    const removeButtons = debugElement.queryAll(By.css('.btn-icon'));
     expect(removeButtons.length).toBe(0);
   });
 
@@ -98,7 +95,7 @@ describe('SiAttachmentListComponent', () => {
     fixture.componentRef.setInput('removable', true);
     fixture.detectChanges();
 
-    const removeButtons = debugElement.queryAll(By.css('.btn-circle'));
+    const removeButtons = debugElement.queryAll(By.css('.btn-icon'));
     expect(removeButtons.length).toBe(2);
   });
 
@@ -114,7 +111,7 @@ describe('SiAttachmentListComponent', () => {
     fixture.componentRef.setInput('removable', true);
     fixture.detectChanges();
 
-    const removeButton = debugElement.query(By.css('.btn-circle'));
+    const removeButton = debugElement.query(By.css('.btn-icon'));
     removeButton.nativeElement.click();
 
     expect(emittedName).toBe('file.txt');

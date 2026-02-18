@@ -1,10 +1,10 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   FormControl,
@@ -88,8 +88,7 @@ describe('SiForm', () => {
         imports: [
           TestHostComponent,
           SiFormModule.withConfiguration({ validationErrorMapper: { required: 'required' } })
-        ],
-        providers: [provideZonelessChangeDetection()]
+        ]
       }).compileComponents();
     });
 
@@ -168,13 +167,6 @@ describe('SiForm', () => {
     let fixture: ComponentFixture<TestHostComponent>;
     let loader: HarnessLoader;
 
-    beforeEach(() => {
-      TestBed.configureTestingModule({
-        imports: [TestHostComponent],
-        providers: [provideZonelessChangeDetection()]
-      }).compileComponents();
-    });
-
     beforeEach(async () => {
       fixture = TestBed.createComponent(TestHostComponent);
       fixture.detectChanges();
@@ -187,7 +179,7 @@ describe('SiForm', () => {
     it('should render globally translated validation messages', async () => {
       fixture.componentInstance.form.markAllAsTouched();
       const field = await loader.getHarness(SiFormItemHarness.with({ label: 'Input' }));
-      expect(await field.getErrorMessages()).toEqual(['A value is required.']);
+      expect(await field.getErrorMessages()).toEqual(['Required']);
     });
 
     it('should have a required indicator', async () => {
@@ -222,13 +214,6 @@ describe('SiForm', () => {
 
     let fixture: ComponentFixture<TestHostComponent>;
     let loader: HarnessLoader;
-
-    beforeEach(() => {
-      TestBed.configureTestingModule({
-        imports: [TestHostComponent],
-        providers: [provideZonelessChangeDetection()]
-      }).compileComponents();
-    });
 
     beforeEach(async () => {
       fixture = TestBed.createComponent(TestHostComponent);
@@ -275,8 +260,7 @@ describe('SiForm', () => {
         providers: [
           provideFormValidationErrorMapper({
             email: emailMapperSpy
-          }),
-          provideZonelessChangeDetection()
+          })
         ]
       }).compileComponents();
       fixture = TestBed.createComponent(TestHostComponent);
@@ -310,9 +294,6 @@ describe('SiForm', () => {
     let loader: HarnessLoader;
 
     beforeEach(() => {
-      TestBed.configureTestingModule({
-        providers: [provideZonelessChangeDetection()]
-      }).compileComponents();
       fixture = TestBed.createComponent(TestHostComponent);
       loader = TestbedHarnessEnvironment.loader(fixture);
     });

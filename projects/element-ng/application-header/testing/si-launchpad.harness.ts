@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { ComponentHarness } from '@angular/cdk/testing';
@@ -17,7 +17,7 @@ export class SiLaunchpadHarness extends ComponentHarness {
   }
 
   async getFavoriteCategory(): Promise<SiLaunchpadCategoryHarness> {
-    return this.getCategory('Favorite apps');
+    return this.getCategory('Favorites');
   }
 
   async getCategories(): Promise<SiLaunchpadCategoryHarness[]> {

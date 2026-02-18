@@ -1,10 +1,10 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, input, OnInit } from '@angular/core';
-import { SimplChartsNgModule } from '@siemens/charts-ng';
+import { SiChartCartesianComponent } from '@siemens/charts-ng/cartesian';
 import { WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import { MenuItem } from '@siemens/element-ng/menu';
@@ -21,7 +21,7 @@ export interface WidgetChartCartesianConfig {
 
 @Component({
   selector: 'app-cartesian',
-  imports: [SimplChartsNgModule, SiResizeObserverDirective, AsyncPipe],
+  imports: [SiChartCartesianComponent, SiResizeObserverDirective, AsyncPipe],
   templateUrl: './cartesian.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -28,16 +28,14 @@ providers: [
   provideRouter(routes, withHashLocation()),
   { provide: SI_WIDGET_STORE, useClass: AppWidgetStorage },
   { provide: SI_DASHBOARD_CONFIGURATION, useValue: config },
-  importProvidersFrom(
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: createTranslateLoader,
-        deps: [HttpBackend]
-      }
-    })
-  ),
-  provideAnimations(),
+  provideTranslateService({
+    loader: {
+      provide: TranslateLoader,
+      useFactory: createTranslateLoader,
+      deps: [HttpBackend]
+    },
+    missingTranslationHandler: provideMissingTranslationHandlerForElement()
+  }),
   provideNgxTranslateForElement(),
   provideHttpClient(withInterceptorsFromDi())
 ];
@@ -184,6 +182,115 @@ The Angular component should export the template as the public attribute `footer
 @ViewChild('footer', { static: true }) footer?: TemplateRef<unknown>;
 ```
 
+### Remote Widget Loading (Microfrontends)
+
+The flexible dashboard supports loading widgets as remote microfrontends, allowing widgets to be deployed and updated independently from the host application. Three integration options are available:
+
+#### Pure Module Federation (Webpack-based)
+
+Uses `@angular-architects/module-federation` to share code between host and remote applications. Both host and remotes must use Webpack as the bundler.
+
+Register the loader in your application bootstrap:
+
+```ts
+import { registerModuleFederatedWidgetLoader } from '@siemens/dashboards-ng/module-federation';
+
+registerModuleFederatedWidgetLoader();
+```
+
+```
++-------------------------+       +----------------------------------+
+| Host App                |       | @angular-architects/             |
+| Module Federation       |------>| module-federation                |
+| (webpack)               |       |                                  |
++------------+------------+       +---------------^------------------+
+             |                                    |
+  registerModuleFederatedWidgetLoader             |
+             |                                    |
++------------v------------+       +---------------+------------------+
+| @siemens/dashboards-ng/ |       | Remote Widget                    |
+| module-federation       |       | Module Federation                |
++-------------------------+       | (webpack)                        |
+                                  +----------------------------------+
+```
+
+#### Pure Native Federation (ESM-based)
+
+Uses `@angular-architects/native-federation` with ES Module-based federation, independent of the bundler. Works with any build tool (esbuild, Vite, Webpack). Recommended for modern Angular applications.
+
+Register the loader in your application bootstrap:
+
+```ts
+import { registerNativeFederatedWidgetLoader } from '@siemens/dashboards-ng/native-federation';
+
+registerNativeFederatedWidgetLoader();
+```
+
+```
++-------------------------+       +----------------------------------+
+| Host App                |       | @angular-architects/             |
+| Native Federation       |------>| native-federation                |
+| (esbuild/Vite/webpack)  |       |                                  |
++------------+------------+       +---------------^------------------+
+             |                                    |
+  registerNativeFederatedWidgetLoader             |
+             |                                    |
++------------v------------+       +---------------+------------------+
+| @siemens/dashboards-ng/ |       | Remote Widget                    |
+| native-federation       |       | Native Federation                |
++-------------------------+       | (esbuild)                        |
+                                  +----------------------------------+
+```
+
+#### Hybrid/Bridge (Native Federation + Module Federation)
+
+Enables a Native Federation shell to load Module Federation remotes using `@module-federation/runtime`. Useful for gradual migration or when integrating existing Webpack-based remotes into a modern ESM-based host.
+
+Register the loader with your Module Federation instance:
+
+```ts
+import { registerModuleFederatedWidgetLoader } from '@siemens/dashboards-ng/native-federation/mf-bridge';
+
+registerModuleFederatedWidgetLoader(mfInstance);
+```
+
+```
++-------------------------+       +----------------------------------+
+| Host App                |       | @angular-architects/             |
+| Native Federation       |------>| native-federation                |
+| (esbuild)               |       |                                  |
++------------+------------+       +----------------------------------+
+             |
+             | registerModuleFederatedWidgetLoader(mfInstance)
+             |
++------------v-----------------------+
+| @siemens/dashboards-ng/            |
+| native-federation/mf-bridge        |
++------------+-----------------------+
+             |
+             | loads
+             |
++------------v------------+       +----------------------------------+
+| @module-federation/     |       | Remote Widget                    |
+| runtime                 |------>| Module Federation                |
++-------------------------+       | (webpack)                        |
+                                  +----------------------------------+
+```
+
+For more details, refer to [Combining Native Federation and Module Federation](https://www.angulararchitects.io/blog/combining-native-federation-and-module-federation/).
+
+#### Running the Demo Application
+
+The [dashboard demo project](https://github.com/siemens/element/blob/main/projects/dashboards-demo/) includes examples of all microfrontend modes. Use these npm scripts to run locally:
+
+```sh
+# Module Federation mode (Webpack-based host and remotes)
+npm run dashboards-demo:run-all:local
+
+# Native Federation mode with Hybrid/Bridge support (ESM-based host with both Native and Module Federation remotes)
+npm run dashboards-demo:run-all:esm:local
+```
+
 ### Widget instance ID generation
 
 Each widget instance on a dashboard requires a unique ID for identification and persistence. The library
@@ -265,6 +372,6 @@ Here is the [demo](https://github.com/siemens/element/blob/main/projects/dashboa
 
 ## License
 
-Code and documentation Copyright (c) Siemens 2016 - 2025
+Code and documentation Copyright (c) Siemens 2016 - 2026
 
-See [LICENSE.md](https://github.com/siemens/element/blob/main/LICENSE.md).
+MIT, see [LICENSE.md](LICENSE.md).

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { computed, DestroyRef, Directive, inject, input } from '@angular/core';
@@ -24,7 +24,6 @@ export abstract class SiFilteredSearchOptionValueBase extends SiFilteredSearchVa
   readonly onlySelectValue = input.required<boolean>();
   readonly maxCriteriaOptions = input.required<number>();
   readonly optionsInScrollableView = input.required<number>();
-  readonly readonly = input.required<boolean>();
   readonly disableSelectionByColonAndSemicolon = input.required<boolean>();
   readonly isStrictOrOnlySelectValue = input.required<boolean>();
 

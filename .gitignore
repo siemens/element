@@ -12,6 +12,7 @@
 # icon preview documentation
 docs/_src/fonts
 docs/_src/style
+docs/_src/icon-viewer
 
 # dependencies
 /node_modules
@@ -67,3 +68,8 @@ Thumbs.db
 /.husky/post-commit
 /.husky/post-merge
 /.husky/pre-push
+
+# Native federation tsconfigs
+# Here because these are generated at runtime by native federation builder
+/projects/dashboards-demo/tsconfig.federation.json
+/projects/dashboards-demo/mfe/tsconfig.federation.json

@@ -1,4 +1,4 @@
-@let payload = config.payload;
+@let payload = config().payload;
 <h3 class="si-h1-bold" bold>{{ payload.firstName }} {{ payload.lastName }}</h3>
 <dl class="mt-6 mb-0">
   @if (payload.birthday) {

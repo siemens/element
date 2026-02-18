@@ -1,22 +1,20 @@
 @let icon = item().icon;
 @if (icon) {
-  <si-icon class="icon me-n2" [icon]="icon" />
+  <si-icon class="icon-lg" [icon]="icon" />
 }
-@if (icon && formattedBadge()) {
-  <div class="w-100 h-100 position-absolute">
-    <span class="badge-text">{{ formattedBadge() }}</span>
-  </div>
-}
-<div
-  class="item-title text-truncate si-h5"
-  [class.visually-hidden]="!this.parent && this.navbar.collapsed()"
->
+<div class="item-title text-truncate si-h5">
   <ng-content />
 </div>
-@if (formattedBadge()) {
-  <span class="badge" [ngClass]="'bg-' + item().badgeColor">
-    {{ formattedBadge() }}
-  </span>
+@if (!navbar.textOnly() && formattedBadge()) {
+  <span
+    [class]="[
+      'badge',
+      item().badgeColor ? `bg-${item().badgeColor}` : 'bg-default',
+      textOnlyBadge() ? 'badge-text-only' : '',
+      navbar.collapsed() ? 'badge-collapsed' : ''
+    ]"
+    >{{ formattedBadge() }}</span
+  >
 }
 @if (group) {
   <si-icon aria-hidden="true" class="dropdown-caret me-0 text-body" [icon]="icons.elementDown2" />

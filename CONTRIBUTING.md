@@ -5,26 +5,26 @@ We love all contributions! ❤️
 The following information should help you understand the guidelines we would
 like you to follow and help make your contributions as painless as possible.
 
-## Table of Contents
+## Table of contents
 
-- [Code of Conduct](#code-of-conduct)
-- [I Have a Question](#i-have-a-question)
-- [I Want to Contribute](#i-want-to-contribute)
-- [Reporting Bugs](#reporting-bugs)
-- [Suggesting Enhancements](#suggesting-enhancements)
-- [Your First Code Contribution](#your-first-code-contribution)
+- [Code of conduct](#code-of-conduct)
+- [I have a question](#i-have-a-question)
+- [I want to contribute](#i-want-to-contribute)
+- [Reporting bugs](#reporting-bugs)
+- [Suggesting enhancements](#suggesting-enhancements)
+- [Your first code contribution](#your-first-code-contribution)
 - [Styleguides](#styleguides)
-- [Commit Message Format](#commit-message-format)
-- [Create a New Release](#releasing)
+- [Commit message format](#commit-message-format)
+- [Create a new release](#releasing)
 
-## Code of Conduct
+## Code of conduct
 
 This project and everyone participating in it is governed by the
 [Siemens Element Code of Conduct](CODE_OF_CONDUCT.md).
 By participating, you are expected to uphold this code. Please report
 unacceptable behavior to <opensource@siemens.com>.
 
-## I Have a Question
+## I have a question
 
 > If you want to ask a question, we assume that you have read the available [Documentation](README.md).
 
@@ -43,7 +43,7 @@ recommend the following:
 
 We will then take care of the issue as soon as possible.
 
-## I Want to Contribute
+## I want to contribute
 
 > ### Legal Notice
 >
@@ -56,9 +56,9 @@ We will then take care of the issue as soon as possible.
 > The CLA assistant will automatically initiate this process when you create a
 > new pull request.
 
-### Reporting Bugs
+### Reporting bugs
 
-#### Before Submitting a Bug Report
+#### Before submitting a bug report
 
 A good bug report shouldn't leave others needing to chase you up for more
 information. Therefore, we ask you to investigate carefully, collect information
@@ -84,7 +84,7 @@ steps in advance to help us fix any potential bug as fast as possible.
   - Can you reliably reproduce the issue? And can you also reproduce it with
     older versions?
 
-#### How Do I Submit a Good Bug Report?
+#### How do I submit a good bug report?
 
 > You must never report security related issues, vulnerabilities or bugs
 > including sensitive information to the issue tracker, or elsewhere in public.
@@ -114,14 +114,14 @@ Once it's filed:
   well as possibly other tags (such as `critical`), and the issue will be left
   to be [implemented by someone](#your-first-code-contribution).
 
-### Suggesting Enhancements
+### Suggesting enhancements
 
 This section guides you through submitting an enhancement suggestion for Siemens Element,
 **including completely new features and minor improvements to existing functionality**.
 Following these guidelines will help maintainers and the community to understand
 your suggestion and find related suggestions.
 
-#### Before Submitting an Enhancement
+#### Before submitting an enhancement
 
 - Make sure that you are using the latest version.
 - Read the [documentation](README.md) carefully and find out if the functionality
@@ -135,7 +135,7 @@ your suggestion and find related suggestions.
   to the majority of our users and not just a small subset. If you're just
   targeting a minority of users, consider writing an add-on/plugin library.
 
-#### How Do I Submit a Good Enhancement Suggestion?
+#### How do I submit a good enhancement suggestion?
 
 Enhancement suggestions are tracked as [GitHub issues](https://github.com/siemens/element/issues).
 
@@ -153,7 +153,7 @@ Enhancement suggestions are tracked as [GitHub issues](https://github.com/siemen
   You may also want to point out the other projects that solved it better and
   which could serve as inspiration.
 
-### Your First Code Contribution
+### Your first code contribution
 
 Read the [developer guide](DEVELOPER.md) to get started with the development of Siemens Element.
 
@@ -224,7 +224,7 @@ npm run format
 > **Note:** Many editors/IDEs have plugin support for Prettier, check out the
 > [official IDE integration guide](https://prettier.io/docs/en/editors.html)
 
-## Commit Message Format
+## Commit message format
 
 We follow the [_Conventional Commits_](https://www.conventionalcommits.org/)
 specification to format Git commit messages. This allows us to efficiently
@@ -344,7 +344,7 @@ Some important points when adding notes in the footer:
 - The description needs to be written from a user's perspective as they have to
   be able to understand the impact of the changes.
 
-#### Breaking Change Note
+#### Breaking change note
 
 A breaking change section should start with the phrase `BREAKING CHANGE:`
 followed by a summary of the breaking change, a blank line, and a detailed
@@ -383,7 +383,7 @@ recognizable pattern to readers e.g.:
 - removed support for `xyz`
 - renamed `function` function to `new-function`
 
-#### Deprecation Note
+#### Deprecation note
 
 Similarly, a deprecation section should start with `DEPRECATED:` followed by a
 short description of what is deprecated, a blank line, and a detailed
@@ -400,7 +400,7 @@ DEPRECATED: <what is deprecated>
 Also here, multiple deprecation sections are possible (look at the example above
 for multiple breaking change sections).
 
-#### Other Important Notes
+#### Other important notes
 
 In cases where a change is neither a breaking change nor a deprecation, but something that deserves
 attention in the changelog, there's a third note type: `NOTE:`. It works exactly like the breaking
@@ -408,7 +408,7 @@ changes and the deprecations but will show in a section `NOTES` in the changelog
 
 Use this sparsely for important notes only.
 
-#### Referencing GitHub/GitLab Issues
+#### Referencing GitHub/GitLab issues
 
 Issues can be automatically marked as closed/fixed or also just referenced by
 adding a note in the footer. The following keywords are supported:

@@ -53,8 +53,8 @@
   .dropdown-caret {
     padding-inline-start: map.get(spacers.$spacers, 2);
     margin-block: -#{map.get(spacers.$spacers, 2)};
-    margin-inline: auto -#{map.get(spacers.$spacers, 4)};
-    font-size: 1.5rem !important; // stylelint-disable-line declaration-no-important
+    margin-inline: auto -#{map.get(spacers.$spacers, 2)};
+    font-size: variables.$si-icon-font-size !important; // stylelint-disable-line declaration-no-important
     transform: rotate(var(--caret-rotate));
     // adjust the origin to account for the negative margin. Otherwise the element would visually not rotate around the center.
     transform-origin: calc(50% + #{map.get(spacers.$spacers, 1)}) 50%;

@@ -93,6 +93,13 @@ If needed, use a [select](../forms-inputs/select.md) component to allow the
 user to switch between different data sets or representations within the same
 chart.
 
+#### Toolbox actions
+
+ECharts provides [toolbox](https://echarts.apache.org/en/option.html#toolbox) actions and other built-in interactions for charts.
+However, to maintain consistency with the Element design system, **please do NOT
+use the ECharts toolbox**. Instead, build custom interactions using the Element
+[si-menu-bar](../buttons-menus/menu.md) component.
+
 ## Theming ---
 
 There is no support for CSS styling. Element Charts uses EChart themes with
@@ -103,7 +110,7 @@ no theme is provided, the element theme will be loaded by default.
 The desired default theme can be loaded anywhere in your project like this:
 
 ```typescript
-import { themeSupport } from '@siemens/charts-ng';
+import { themeSupport } from '@siemens/charts-ng/common';
 import { themeNameA } from 'your/theme-a';
 import { themeNameB } from 'your/theme-b';
 

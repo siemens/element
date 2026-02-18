@@ -24,8 +24,20 @@
   "ng-add": {
     "save": "dependencies"
   },
+  "ng-update": {
+    "packageGroup": [
+      "@siemens/charts-ng",
+      "@siemens/dashboards-ng",
+      "@siemens/element-ng",
+      "@siemens/element-theme",
+      "@siemens/element-translate-ng",
+      "@siemens/live-preview",
+      "@siemens/maps-ng",
+      "@siemens/native-charts-ng"
+    ],
+    "migrations": "./schematics/migration.json"
+  },
   "peerDependencies": {
-    "@angular/animations": "21",
     "@angular/cdk": "21",
     "@angular/common": "21",
     "@angular/core": "21",
@@ -35,7 +47,7 @@
     "@ngx-formly/core": "^6.2.2",
     "@siemens/element-translate-ng": "48.9.0",
     "@siemens/element-theme": "48.9.0",
-    "@siemens/ngx-datatable": "22 - 25",
+    "@siemens/ngx-datatable": "25",
     "ag-grid-community": "^34.3.1",
     "flag-icons": "^7.3.2",
     "google-libphonenumber": "^3.2.40",

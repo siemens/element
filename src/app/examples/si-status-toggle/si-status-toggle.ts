@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { SiStatusToggleComponent, StatusToggleItem } from '@siemens/element-ng/status-toggle';
@@ -11,7 +11,8 @@ import { LOG_EVENT } from '@siemens/live-preview';
 @Component({
   selector: 'app-sample',
   imports: [ReactiveFormsModule, SiStatusToggleComponent],
-  templateUrl: './si-status-toggle.html'
+  templateUrl: './si-status-toggle.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   protected readonly logEvent = inject(LOG_EVENT);

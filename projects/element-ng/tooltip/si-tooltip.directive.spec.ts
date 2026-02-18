@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, provideZonelessChangeDetection } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiTooltipModule } from './si-tooltip.module';
@@ -15,23 +15,18 @@ describe('SiTooltipDirective', () => {
 
     @Component({
       imports: [SiTooltipModule],
-      template: `<button
-        type="button"
-        siTooltip="test tooltip"
-        [isDisabled]="isDisabled"
-        [triggers]="triggers"
-        >Test</button
-      >`
+      template: `<button type="button" [siTooltip]="tooltipText" [isDisabled]="isDisabled">
+        Test
+      </button>`
     })
     class TestHostComponent {
       isDisabled = false;
-      triggers: '' | 'focus' = '';
+      tooltipText = 'test tooltip';
     }
 
     beforeEach(async () => {
       await TestBed.configureTestingModule({
-        imports: [SiTooltipModule, TestHostComponent],
-        providers: [provideZonelessChangeDetection()]
+        imports: [SiTooltipModule, TestHostComponent]
       }).compileComponents();
     });
 
@@ -40,6 +35,7 @@ describe('SiTooltipDirective', () => {
       fixture = TestBed.createComponent(TestHostComponent);
       component = fixture.componentInstance;
       button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+      spyOn(button, 'matches').and.returnValue(true);
       fixture.detectChanges();
     });
 
@@ -49,7 +45,9 @@ describe('SiTooltipDirective', () => {
 
     it('should open on focus', () => {
       button.dispatchEvent(new Event('focus'));
-      jasmine.clock().tick(500);
+      // Focus should be immediate (no delay) but still need to tick for setTimeout(0)
+      jasmine.clock().tick(0);
+      fixture.detectChanges();
 
       expect(document.querySelector('.tooltip')).toBeTruthy();
       expect(document.querySelector('.tooltip')?.innerHTML).toContain('test tooltip');
@@ -71,21 +69,28 @@ describe('SiTooltipDirective', () => {
 
     it('should show tooltip on mouse over', () => {
       button.dispatchEvent(new MouseEvent('mouseenter'));
+      // hover should have 500ms delay
+      expect(document.querySelector('.tooltip')).toBeFalsy();
+
+      jasmine.clock().tick(500);
+      fixture.detectChanges();
       expect(document.querySelector('.tooltip')).toBeTruthy();
 
       button.dispatchEvent(new MouseEvent('mouseleave'));
       expect(document.querySelector('.tooltip')).toBeFalsy();
     });
 
-    it('should not show tooltip on mouse over with focus trigger', () => {
-      component.triggers = 'focus';
+    it('should update tooltip content while open', () => {
+      button.dispatchEvent(new Event('focus'));
+      jasmine.clock().tick(0);
+      fixture.detectChanges();
+      expect(document.querySelector('.tooltip')?.innerHTML).toContain('test tooltip');
+
+      component.tooltipText = 'updated tooltip';
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
-      ['mouseenter', 'mouseleave'].forEach(e => {
-        button.dispatchEvent(new MouseEvent(e));
-        expect(document.querySelector('.tooltip')).toBeFalsy();
-      });
+      expect(document.querySelector('.tooltip')?.innerHTML).toContain('updated tooltip');
     });
   });
 
@@ -104,17 +109,11 @@ describe('SiTooltipDirective', () => {
       tooltipContext = {};
     }
 
-    beforeEach(async () => {
-      await TestBed.configureTestingModule({
-        imports: [TestHostComponent],
-        providers: [provideZonelessChangeDetection()]
-      }).compileComponents();
-    });
-
     beforeEach(() => {
       jasmine.clock().install();
       fixture = TestBed.createComponent(TestHostComponent);
       button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
+      spyOn(button, 'matches').and.returnValue(true);
       fixture.detectChanges();
     });
 

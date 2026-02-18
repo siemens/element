@@ -1,13 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  ComponentRef,
-  provideZonelessChangeDetection,
-  SimpleChange
-} from '@angular/core';
+import { ChangeDetectionStrategy, ComponentRef, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiCircleStatusComponent, SiCircleStatusComponent as TestComponent } from './index';
@@ -23,8 +18,7 @@ describe('SiCircleStatusComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [TestComponent],
-      providers: [provideZonelessChangeDetection()]
+      imports: [TestComponent]
     })
       // because of https://github.com/angular/angular/issues/12313
       .overrideComponent(SiCircleStatusComponent, {

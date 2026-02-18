@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import type { IsActiveMatchOptions, NavigationExtras } from '@angular/router';
@@ -20,6 +20,11 @@ export interface NavbarVerticalItemBase {
    * without `bg-` prefix.
    */
   badgeColor?: string;
+  /**
+   * Hide badge when navbar is collapsed.
+   * By default, badges are always visible (both expanded and collapsed).
+   */
+  hideBadgeWhenCollapsed?: boolean;
 }
 
 /** Use this type to create a group that can hold multiple items. */

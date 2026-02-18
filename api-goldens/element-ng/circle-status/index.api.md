@@ -23,26 +23,12 @@ export class SiCircleStatusComponent implements OnChanges, OnDestroy {
     readonly eventIcon: _angular_core.InputSignal<string | undefined>;
     readonly eventOut: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly icon: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    ngOnDestroy(): void;
     readonly size: _angular_core.InputSignal<"regular" | "small">;
     readonly status: _angular_core.InputSignal<EntityStatusType | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiCircleStatusComponent, "si-circle-status", never, { "status": { "alias": "status"; "required": false; "isSignal": true; }; "color": { "alias": "color"; "required": false; "isSignal": true; }; "icon": { "alias": "icon"; "required": false; "isSignal": true; }; "size": { "alias": "size"; "required": false; "isSignal": true; }; "eventOut": { "alias": "eventOut"; "required": false; "isSignal": true; }; "eventIcon": { "alias": "eventIcon"; "required": false; "isSignal": true; }; "blink": { "alias": "blink"; "required": false; "isSignal": true; }; "blinkPulse": { "alias": "blinkPulse"; "required": false; "isSignal": true; }; "ariaLabel": { "alias": "ariaLabel"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiCircleStatusComponent, never>;
 }
 
 // @public (undocumented)
 export class SiCircleStatusModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiCircleStatusModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiCircleStatusModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiCircleStatusModule, never, [typeof SiCircleStatusComponent], [typeof SiCircleStatusComponent]>;
 }
 
 // (No @packageDocumentation comment for this package)

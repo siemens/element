@@ -1,12 +1,11 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormRecord, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
 import { SiTranslateService } from '@siemens/element-ng/translate';
 import {
@@ -51,7 +50,6 @@ describe('formly button type', () => {
     });
     await TestBed.configureTestingModule({
       imports: [
-        NoopAnimationsModule,
         ReactiveFormsModule,
         FormlyModule.forRoot({
           types: [
@@ -63,8 +61,7 @@ describe('formly button type', () => {
         }),
         SiFormlyButtonComponent,
         FormlyTestComponent
-      ],
-      providers: [provideZonelessChangeDetection()]
+      ]
     }).compileComponents();
   });
 

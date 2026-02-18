@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, provideZonelessChangeDetection } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EntityStatusType } from '@siemens/element-ng/common';
 
@@ -38,8 +38,7 @@ describe('SiAvatarComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [SiAvatarComponent, TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
+      imports: [SiAvatarComponent, TestHostComponent]
     }).compileComponents()
   );
 

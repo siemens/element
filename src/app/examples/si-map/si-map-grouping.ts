@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ColorPalette, MapPoint, SiMapComponent } from '@siemens/maps-ng';
 import { mockGroupedPoints } from 'src/app/mocks/points.mock';
@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
   selector: 'app-sample',
   imports: [FormsModule, SiMapComponent],
   templateUrl: './si-map-grouping.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'h-100 d-flex flex-column p-5' }
 })
 export class SampleComponent {

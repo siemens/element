@@ -1,0 +1,17 @@
+name: VRT Update All
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Branch name to run against (e.g., main, develop, feature/my-branch)'
+        required: true
+        default: 'main'
+        type: string
+
+jobs:
+  vrt-update-all:
+    uses: ./.github/workflows/vrt-update.yaml
+    with:
+      ref: ${{ inputs.ref }}
+      regenerate_all: true

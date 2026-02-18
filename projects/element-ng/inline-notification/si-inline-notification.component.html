@@ -1,21 +1,20 @@
 <div
-  class="alert d-flex align-items-start"
   role="alert"
   aria-atomic="true"
   aria-live="assertive"
-  [ngClass]="'alert-' + severity()"
+  [class]="`alert d-flex align-items-start ${severity() ? `alert-${severity()}` : ''}`"
   [hidden]="!severity()"
 >
   <si-status-icon class="icon me-4 flex-shrink-0" [status]="severity()" />
 
-  <div class="d-flex flex-grow-1 flex-wrap mt-1">
+  <div class="d-flex flex-grow-1 flex-wrap">
     @if (heading()) {
-      <strong class="pe-2">{{ heading() | translate: translationParams() }}: </strong>
+      <strong class="pe-2">{{ heading() | translate: translationParams() }} </strong>
     }
     <span>{{ message() | translate: translationParams() }}</span>
   </div>
   @if (action() && action()?.title) {
-    <a class="alert-link ms-4 flex-shrink-0 mt-1" [siLink]="action()">
+    <a class="alert-link ms-4 flex-shrink-0" [siLink]="action()">
       {{ action()?.title | translate: translationParams() }}
     </a>
   }

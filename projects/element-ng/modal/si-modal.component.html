@@ -15,7 +15,7 @@
     [class.show]="show()"
     [attr.aria-labelledby]="titleId"
   >
-    <div class="modal-dialog" cdkTrapFocus cdkTrapFocusAutoCapture [ngClass]="dialogClass">
+    <div cdkTrapFocus cdkTrapFocusAutoCapture [class]="`modal-dialog ${dialogClass}`">
       <div class="modal-content">
         <ng-content />
       </div>

@@ -1,10 +1,11 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { Directive, HostListener, inject, OnInit } from '@angular/core';
+import { elementDown2 } from '@siemens/element-icons';
 import { SiHeaderDropdownTriggerDirective } from '@siemens/element-ng/header-dropdown';
-import { addIcons, elementDown2 } from '@siemens/element-ng/icon';
+import { addIcons } from '@siemens/element-ng/icon';
 
 import { SiApplicationHeaderComponent } from './si-application-header.component';
 import { SiHeaderCollapsibleActionsComponent } from './si-header-collapsible-actions.component';

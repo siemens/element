@@ -1,15 +1,14 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, OnDestroy, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, viewChild } from '@angular/core';
 import {
   CartesianChartData,
   CartesianChartSeries,
-  ChartXAxis,
-  ChartYAxis,
   SiChartCartesianComponent
-} from '@siemens/charts-ng';
+} from '@siemens/charts-ng/cartesian';
+import { ChartXAxis, ChartYAxis } from '@siemens/charts-ng/common';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 import { interval, Subscription } from 'rxjs';
 
@@ -18,7 +17,8 @@ import { ChartBase, ChartData } from './chart-base';
 @Component({
   selector: 'app-sample',
   imports: [SiChartCartesianComponent, SiResizeObserverDirective],
-  templateUrl: './chart.html'
+  templateUrl: './chart.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent extends ChartBase implements OnDestroy {
   chartData: ChartData = {

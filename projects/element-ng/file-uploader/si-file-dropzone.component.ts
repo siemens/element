@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import {
@@ -11,7 +11,8 @@ import {
   output,
   viewChild
 } from '@angular/core';
-import { addIcons, elementUpload, SiIconComponent } from '@siemens/element-ng/icon';
+import { elementUpload } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { SiFileUploadDirective, FileUploadError } from './si-file-upload.directive';
@@ -50,22 +51,22 @@ export class SiFileDropzoneComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Maximum upload size`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Max. {{maxFileSize}} upload size.`)
    * ```
    */
   readonly maxFileSizeText = input(
-    t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Maximum upload size`)
+    t(() => $localize`:@@SI_FILE_UPLOADER.MAX_SIZE:Max. {{maxFileSize}} upload size.`)
   );
   /**
    * Text or translation key for accepted types.
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Accepted file types`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Accepted file types: {{accept}}.`)
    * ```
    */
   readonly acceptText = input(
-    t(() => $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Accepted file types`)
+    t(() => $localize`:@@SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES:Accepted file types: {{accept}}.`)
   );
   /**
    * Text or translation key of message title if incorrect file type is dragged / dropped.

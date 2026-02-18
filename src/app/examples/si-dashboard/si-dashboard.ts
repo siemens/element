@@ -1,16 +1,14 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { DecimalPipe, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, viewChild } from '@angular/core';
-import {
-  AxisType,
-  SiChartCartesianComponent,
-  SiChartCircleComponent,
-  SiChartGaugeComponent,
-  SiChartProgressBarComponent
-} from '@siemens/charts-ng';
+import { SiChartCartesianComponent } from '@siemens/charts-ng/cartesian';
+import { SiChartCircleComponent } from '@siemens/charts-ng/circle';
+import { AxisType } from '@siemens/charts-ng/common';
+import { SiChartGaugeComponent } from '@siemens/charts-ng/gauge';
+import { SiChartProgressBarComponent } from '@siemens/charts-ng/progress-bar';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import {
   SiDashboardCardComponent,

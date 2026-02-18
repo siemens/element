@@ -1,11 +1,12 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { KeyValuePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   HostBinding,
@@ -107,12 +108,16 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
   private jsLoaded = false;
   private delayClearTimer: any;
   private webcomponentsList: string[] = [];
+  private cdRef = inject(ChangeDetectorRef);
 
   constructor() {
     this.compileSubject
       .pipe(throttleTime(500, undefined, { leading: true, trailing: true }))
       .pipe(takeUntilDestroyed())
-      .subscribe(template => (this.template = template));
+      .subscribe(template => {
+        this.template = template;
+        this.cdRef.markForCheck();
+      });
     this.webcomponentsList = this.config.componentLoader.webcomponentsList;
   }
 
@@ -317,9 +322,15 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
       .subscribe({
         next: data => {
           this.updateTemplate(data);
-          setTimeout(() => this.handleInProgressEvent(false));
+          setTimeout(() => {
+            this.handleInProgressEvent(false);
+            this.cdRef.markForCheck();
+          });
         },
-        error: () => this.handleInProgressEvent(false)
+        error: () => {
+          this.handleInProgressEvent(false);
+          this.cdRef.markForCheck();
+        }
       });
   }
 
@@ -335,11 +346,15 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
         next: data => {
           this.updateTs(data);
           this.tsLoaded = true;
-          setTimeout(() => this.handleInProgressEvent(false));
+          setTimeout(() => {
+            this.handleInProgressEvent(false);
+            this.cdRef.markForCheck();
+          });
         },
         error: () => {
           this.tsLoaded = true;
           this.handleInProgressEvent(false);
+          this.cdRef.markForCheck();
         }
       });
   }
@@ -414,7 +429,10 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
             this.updateJs(res);
             this.jsLoaded = true;
           }
-          setTimeout(() => this.handleInProgressEvent(false));
+          setTimeout(() => {
+            this.handleInProgressEvent(false);
+            this.cdRef.markForCheck();
+          });
         },
         error: (err: any) => {
           if (framework === 'react') {
@@ -428,6 +446,7 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
             this.jsLoaded = true;
           }
           this.handleInProgressEvent(false);
+          this.cdRef.markForCheck();
         }
       });
   }
@@ -459,6 +478,7 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
       this.delayClearTimer = setTimeout(() => {
         this.delayClearTimer = undefined;
         this.doLogClear();
+        this.cdRef.markForCheck();
       }, 100);
       return;
     }
@@ -489,7 +509,10 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
 
   private showCopiedLabel(): void {
     this.showCopied = true;
-    setTimeout(() => (this.showCopied = false), 1500);
+    setTimeout(() => {
+      this.showCopied = false;
+      this.cdRef.markForCheck();
+    }, 1500);
   }
 
   toggleFullscreen(exampleOnly = false): void {
@@ -524,6 +547,7 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
         this.showEditor = true;
         this.newMsgs = false;
         window.dispatchEvent(new Event('resize'));
+        this.cdRef.markForCheck();
       }, 500);
     }
   }

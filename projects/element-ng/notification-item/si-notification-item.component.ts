@@ -1,12 +1,13 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { CommonModule } from '@angular/common';
 import { booleanAttribute, Component, inject, input } from '@angular/core';
 import { ActivatedRoute, RouterModule, type NavigationExtras } from '@angular/router';
-import { addIcons, elementOptionsVertical, SiIconComponent } from '@siemens/element-ng/icon';
+import { elementOptionsVertical } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiMenuFactoryComponent, type MenuItem } from '@siemens/element-ng/menu';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
@@ -49,9 +50,22 @@ export interface NotificationItemBase {
  * @param type - The type of the action, always 'action-circle-button'.
  * @param customClass - Optional custom CSS class for styling.
  * @param action - The action to perform when the button is clicked.
+ * @deprecated Use NotificationItemActionIconButton instead. This will be removed in a future release.
  */
 export interface NotificationItemActionCircleButton extends NotificationItemBase {
   type: 'action-circle-button';
+  customClass?: string;
+  action: (source: this) => void;
+}
+
+/**
+ * Interface for an action icon button in a notification item.
+ * @param type - The type of the action, always 'action-icon-button'.
+ * @param customClass - Optional custom CSS class for styling.
+ * @param action - The action to perform when the button is clicked.
+ */
+export interface NotificationItemActionIconButton extends NotificationItemBase {
+  type: 'action-icon-button';
   customClass?: string;
   action: (source: this) => void;
 }
@@ -107,6 +121,7 @@ export interface NotificationItemMenu {
  */
 export type NotificationItemQuickAction =
   | NotificationItemActionCircleButton
+  | NotificationItemActionIconButton
   | NotificationItemLinkIcon
   | NotificationItemRouterLinkIcon;
 
@@ -115,6 +130,7 @@ export type NotificationItemQuickAction =
  */
 export type NotificationItemPrimaryAction =
   | NotificationItemActionCircleButton
+  | NotificationItemActionIconButton
   | NotificationItemLinkIcon
   | NotificationItemRouterLinkIcon
   | NotificationItemMenu

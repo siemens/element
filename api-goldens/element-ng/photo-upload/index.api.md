@@ -19,10 +19,6 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
 export class SiImageCropperStyleComponent {
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiImageCropperStyleComponent, "si-image-cropper-style", never, {}, {}, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiImageCropperStyleComponent, never>;
 }
 
 // @public
@@ -45,10 +41,6 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
     readonly maxFileSize: _angular_core.InputSignal<number>;
     readonly modalDescription: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly modalHeader: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    ngOnDestroy(): void;
     readonly photoAltText: _angular_core.InputSignal<TranslatableString>;
     readonly placeholderAltText: _angular_core.InputSignal<TranslatableString>;
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
@@ -59,10 +51,6 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
     readonly uploadErrorTooBig: _angular_core.InputSignal<TranslatableString>;
     readonly uploadErrorWrongType: _angular_core.InputSignal<TranslatableString>;
     readonly uploadPhotoText: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiPhotoUploadComponent, "si-photo-upload", never, { "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "disabledCropping": { "alias": "disabledCropping"; "required": false; "isSignal": true; }; "acceptedUploadFormats": { "alias": "acceptedUploadFormats"; "required": false; "isSignal": true; }; "maxFileSize": { "alias": "maxFileSize"; "required": false; "isSignal": true; }; "uploadErrorWrongType": { "alias": "uploadErrorWrongType"; "required": false; "isSignal": true; }; "uploadErrorTooBig": { "alias": "uploadErrorTooBig"; "required": false; "isSignal": true; }; "photoAltText": { "alias": "photoAltText"; "required": false; "isSignal": true; }; "placeholderAltText": { "alias": "placeholderAltText"; "required": false; "isSignal": true; }; "changePhotoText": { "alias": "changePhotoText"; "required": false; "isSignal": true; }; "cropperFrameAriaLabel": { "alias": "cropperFrameAriaLabel"; "required": false; "isSignal": true; }; "uploadPhotoText": { "alias": "uploadPhotoText"; "required": false; "isSignal": true; }; "removePhotoText": { "alias": "removePhotoText"; "required": false; "isSignal": true; }; "cancelEditText": { "alias": "cancelEditText"; "required": false; "isSignal": true; }; "applyEditText": { "alias": "applyEditText"; "required": false; "isSignal": true; }; "modalHeader": { "alias": "modalHeader"; "required": false; "isSignal": true; }; "modalDescription": { "alias": "modalDescription"; "required": false; "isSignal": true; }; "cropperImageFormat": { "alias": "cropperImageFormat"; "required": false; "isSignal": true; }; "cropperAspectRatio": { "alias": "cropperAspectRatio"; "required": false; "isSignal": true; }; "cropperMaintainAspectRatio": { "alias": "cropperMaintainAspectRatio"; "required": false; "isSignal": true; }; "cropperContainWithinAspectRatio": { "alias": "cropperContainWithinAspectRatio"; "required": false; "isSignal": true; }; "cropperMinWidth": { "alias": "cropperMinWidth"; "required": false; "isSignal": true; }; "cropperMinHeight": { "alias": "cropperMinHeight"; "required": false; "isSignal": true; }; "cropperMaxWidth": { "alias": "cropperMaxWidth"; "required": false; "isSignal": true; }; "cropperMaxHeight": { "alias": "cropperMaxHeight"; "required": false; "isSignal": true; }; "roundImage": { "alias": "roundImage"; "required": false; "isSignal": true; }; "sourcePhoto": { "alias": "sourcePhoto"; "required": false; "isSignal": true; }; "sourcePhotoUrl": { "alias": "sourcePhotoUrl"; "required": false; "isSignal": true; }; "croppedPhoto": { "alias": "croppedPhoto"; "required": false; "isSignal": true; }; }, { "sourcePhoto": "sourcePhotoChange"; "croppedPhoto": "croppedPhotoChange"; }, never, never, true, [{ directive: typeof i1.SiAvatarBackgroundColorDirective; inputs: { "color": "color"; "autoColor": "autoColor"; }; outputs: {}; }]>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiPhotoUploadComponent, never>;
 }
 
 // (No @packageDocumentation comment for this package)

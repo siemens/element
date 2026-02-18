@@ -1,9 +1,10 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { booleanAttribute, Component, inject, input, output, TemplateRef } from '@angular/core';
-import { SiIconComponent } from '@siemens/element-ng/icon';
+import { elementDelete, elementDocument } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiModalService } from '@siemens/element-ng/modal';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
@@ -53,6 +54,7 @@ export interface Attachment {
 })
 export class SiAttachmentListComponent {
   protected modalService = inject(SiModalService);
+  protected readonly icons = addIcons({ elementDelete, elementDocument });
 
   /**
    * List of attachments to display
@@ -110,6 +112,6 @@ export class SiAttachmentListComponent {
 
   protected getFileIcon(name: string): string {
     // TODO: Accept map and default it in file upload directive.
-    return 'element-document';
+    return this.icons.elementDocument;
   }
 }

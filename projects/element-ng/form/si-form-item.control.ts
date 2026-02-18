@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { InjectionToken, Signal } from '@angular/core';
@@ -30,10 +30,8 @@ export interface SiFormItemControl {
    * Generated ID that the {@link SiFormItemComponent} will assign to the element containing the error messages.
    * Implementations of {@link SiFormItemControl} must generate this ID
    * and assign it to the `aria-describedby` attribute of their focusable elements.
-   *
-   * This property will be required with v48.
    */
-  readonly errormessageId?: string | Signal<string | undefined>;
+  readonly errormessageId: string | Signal<string>;
 
   /** If the control is meant to be used a checkbox. This affects the label positioning. */
   readonly isFormCheck?: boolean;

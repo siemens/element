@@ -1,9 +1,9 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, provideZonelessChangeDetection } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -69,8 +69,7 @@ describe('SiPhoneNumberInputComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SiPhoneNumberInputComponent, ReactiveFormsModule, WrapperComponent],
-      providers: [provideZonelessChangeDetection()]
+      imports: [SiPhoneNumberInputComponent, ReactiveFormsModule, WrapperComponent]
     }).compileComponents();
   });
 

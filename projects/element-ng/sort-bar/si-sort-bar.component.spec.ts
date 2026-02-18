@@ -1,14 +1,9 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { HttpParams } from '@angular/common/http';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  provideZonelessChangeDetection,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiSortBarComponent } from './si-sort-bar.component';
@@ -48,14 +43,7 @@ describe('SiSortBarComponent', () => {
     getItemByIndex(itemIndex)?.querySelector('span:not(.icon)') ?? null;
 
   const getIconByIndex = (itemIndex: number): HTMLElement | null =>
-    getItemByIndex(itemIndex)?.querySelector('.icon div') ?? null;
-
-  beforeEach(() =>
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
-    })
-  );
+    getItemByIndex(itemIndex)?.querySelector('si-icon.icon') ?? null;
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
@@ -67,7 +55,7 @@ describe('SiSortBarComponent', () => {
     fixture.detectChanges();
 
     expect(getNameByIndex(1)?.textContent).toBe('Street');
-    expect(getIconByIndex(1)?.classList).toContain('element-sort-up');
+    expect(getIconByIndex(1)?.getAttribute('data-icon')).toBe('elementSortUp');
   });
 
   it('should correctly change the active sort criteria', () => {
@@ -76,29 +64,33 @@ describe('SiSortBarComponent', () => {
     fixture.detectChanges();
 
     expect(getNameByIndex(2)?.textContent).toBe('Country');
-    expect(getIconByIndex(2)?.classList).toContain('element-sort-up');
+    expect(getIconByIndex(2)?.getAttribute('data-icon')).toBe('elementSortUp');
   });
 
   it('should correctly toggle the sort criteria', () => {
     fixture.detectChanges();
 
     expect(getNameByIndex(1)?.textContent).toBe('Street');
-    expect(getIconByIndex(1)?.classList).toContain('element-sort-up');
+    expect(getIconByIndex(1)?.getAttribute('data-icon')).toBe('elementSortUp');
     getCriteriaByKey('street')?.click();
     fixture.detectChanges();
-    expect(getIconByIndex(1)?.classList).toContain('element-sort-down');
+    expect(getIconByIndex(1)?.getAttribute('data-icon')).toBe('elementSortDown');
   });
 
-  it('should successfully trigger the sort-change event', (done: DoneFn) => {
+  it('should successfully trigger the sort-change event', async () => {
     fixture.detectChanges();
-    const sortDirectionAfter = getIconByIndex(1)?.classList.contains('element-sort-up')
-      ? 'desc'
-      : 'asc';
-    component.sortChange.subscribe((e: HttpParams) => {
-      expect(e.get('sort')).toBe('street');
-      expect(e.get('order')).toBe(sortDirectionAfter);
-      done();
+    const sortDirectionAfter =
+      getIconByIndex(1)?.getAttribute('data-icon') === 'elementSortUp' ? 'desc' : 'asc';
+
+    const sortChangeEvent = new Promise<void>(resolve => {
+      component.sortChange.subscribe((e: HttpParams) => {
+        expect(e.get('sort')).toBe('street');
+        expect(e.get('order')).toBe(sortDirectionAfter);
+        resolve();
+      });
     });
+
     getItemByIndex(1)?.click();
+    await sortChangeEvent;
   });
 });

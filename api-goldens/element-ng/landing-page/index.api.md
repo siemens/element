@@ -61,20 +61,12 @@ export class SiChangePasswordComponent implements OnInit, OnDestroy {
     readonly disableChange: _angular_core.InputSignal<boolean>;
     readonly heading: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly newPasswordLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
     readonly passwordPolicyContent: _angular_core.InputSignal<string | TemplateRef<unknown>>;
     readonly passwordPolicyTitle: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly passwordStrength: _angular_core.InputSignal<PasswordPolicy>;
     readonly passwordStrengthChanged: _angular_core.OutputEmitterRef<number | void>;
     readonly subheading: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly valueChanged: _angular_core.OutputEmitterRef<ChangePassword>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiChangePasswordComponent, "si-change-password", never, { "heading": { "alias": "heading"; "required": false; "isSignal": true; }; "subheading": { "alias": "subheading"; "required": false; "isSignal": true; }; "newPasswordLabel": { "alias": "newPasswordLabel"; "required": false; "isSignal": true; }; "confirmPasswordLabel": { "alias": "confirmPasswordLabel"; "required": false; "isSignal": true; }; "changeButtonLabel": { "alias": "changeButtonLabel"; "required": false; "isSignal": true; }; "backButtonLabel": { "alias": "backButtonLabel"; "required": false; "isSignal": true; }; "disableChange": { "alias": "disableChange"; "required": false; "isSignal": true; }; "passwordPolicyTitle": { "alias": "passwordPolicyTitle"; "required": false; "isSignal": true; }; "passwordPolicyContent": { "alias": "passwordPolicyContent"; "required": true; "isSignal": true; }; "passwordStrength": { "alias": "passwordStrength"; "required": true; "isSignal": true; }; "changePasswordAlert": { "alias": "changePasswordAlert"; "required": false; "isSignal": true; }; }, { "valueChanged": "valueChanged"; "changePasswordRequested": "changePasswordRequested"; "passwordStrengthChanged": "passwordStrengthChanged"; "back": "back"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiChangePasswordComponent, never>;
 }
 
 // @public
@@ -85,15 +77,7 @@ export class SiExplicitLegalAcknowledgeComponent implements OnInit, OnDestroy {
     readonly backButtonLabel: _angular_core.InputSignal<TranslatableString>;
     readonly disableAcceptance: _angular_core.InputSignal<boolean>;
     readonly heading: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
     readonly subheading: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiExplicitLegalAcknowledgeComponent, "si-explicit-legal-acknowledge", never, { "heading": { "alias": "heading"; "required": true; "isSignal": true; }; "subheading": { "alias": "subheading"; "required": true; "isSignal": true; }; "acceptButtonLabel": { "alias": "acceptButtonLabel"; "required": false; "isSignal": true; }; "backButtonLabel": { "alias": "backButtonLabel"; "required": false; "isSignal": true; }; "disableAcceptance": { "alias": "disableAcceptance"; "required": false; "isSignal": true; }; }, { "accept": "accept"; "back": "back"; }, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiExplicitLegalAcknowledgeComponent, never>;
 }
 
 // @public
@@ -114,20 +98,10 @@ export class SiLandingPageComponent {
     readonly subtitle: _angular_core.InputSignal<TranslatableString>;
     readonly translationKey: _angular_core.InputSignal<string>;
     readonly version: _angular_core.InputSignal<string | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiLandingPageComponent, "si-landing-page", never, { "heading": { "alias": "heading"; "required": true; "isSignal": true; }; "subheading": { "alias": "subheading"; "required": false; "isSignal": true; }; "subtitle": { "alias": "subtitle"; "required": true; "isSignal": true; }; "links": { "alias": "links"; "required": false; "isSignal": true; }; "backgroundImageUrl": { "alias": "backgroundImageUrl"; "required": false; "isSignal": true; }; "logoUrl": { "alias": "logoUrl"; "required": false; "isSignal": true; }; "translationKey": { "alias": "translationKey"; "required": false; "isSignal": true; }; "availableLanguages": { "alias": "availableLanguages"; "required": false; "isSignal": true; }; "announcement": { "alias": "announcement"; "required": false; "isSignal": true; }; "loginAlert": { "alias": "loginAlert"; "required": false; "isSignal": true; }; "liveDataWarning": { "alias": "liveDataWarning"; "required": false; "isSignal": true; }; "implicitLegalAcknowledge": { "alias": "implicitLegalAcknowledge"; "required": false; "isSignal": true; }; "version": { "alias": "version"; "required": false; "isSignal": true; }; "copyrightDetails": { "alias": "copyrightDetails"; "required": false; "isSignal": true; }; }, {}, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiLandingPageComponent, never>;
 }
 
 // @public (undocumented)
 export class SiLandingPageModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiLandingPageModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiLandingPageModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiLandingPageModule, never, [typeof SiLandingPageComponent], [typeof SiLandingPageComponent]>;
 }
 
 // @public
@@ -139,19 +113,12 @@ export class SiLoginBasicComponent implements OnInit {
     readonly login: _angular_core.OutputEmitterRef<UsernamePassword>;
     readonly loginButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly nextButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    // (undocumented)
-    ngOnInit(): void;
     readonly passwordLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    readonly registerNowIntroText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly registerNowLink: _angular_core.InputSignal<Link | undefined>;
     readonly twoStep: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly usernameLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly usernameValidation: _angular_core.OutputEmitterRef<UsernameValidationPayload>;
     readonly valueChanged: _angular_core.OutputEmitterRef<UsernamePassword>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiLoginBasicComponent, "si-login-basic", never, { "usernameLabel": { "alias": "usernameLabel"; "required": false; "isSignal": true; }; "passwordLabel": { "alias": "passwordLabel"; "required": false; "isSignal": true; }; "forgotPasswordLink": { "alias": "forgotPasswordLink"; "required": false; "isSignal": true; }; "registerNowIntroText": { "alias": "registerNowIntroText"; "required": false; "isSignal": true; }; "registerNowLink": { "alias": "registerNowLink"; "required": false; "isSignal": true; }; "loginButtonLabel": { "alias": "loginButtonLabel"; "required": false; "isSignal": true; }; "disableLogin": { "alias": "disableLogin"; "required": false; "isSignal": true; }; "twoStep": { "alias": "twoStep"; "required": false; "isSignal": true; }; "loading": { "alias": "loading"; "required": false; "isSignal": true; }; "backButtonLabel": { "alias": "backButtonLabel"; "required": false; "isSignal": true; }; "nextButtonLabel": { "alias": "nextButtonLabel"; "required": false; "isSignal": true; }; }, { "usernameValidation": "usernameValidation"; "valueChanged": "valueChanged"; "login": "login"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiLoginBasicComponent, never>;
 }
 
 // @public
@@ -159,10 +126,6 @@ export class SiLoginSingleSignOnComponent {
     readonly disableSso: _angular_core.InputSignal<boolean>;
     readonly ssoButtonLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly ssoEvent: _angular_core.OutputEmitterRef<void>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiLoginSingleSignOnComponent, "si-login-single-sign-on", never, { "ssoButtonLabel": { "alias": "ssoButtonLabel"; "required": false; "isSignal": true; }; "disableSso": { "alias": "disableSso"; "required": false; "isSignal": true; }; }, { "ssoEvent": "ssoEvent"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiLoginSingleSignOnComponent, never>;
 }
 
 // @public (undocumented)

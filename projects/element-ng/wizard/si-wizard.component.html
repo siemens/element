@@ -58,15 +58,13 @@
     @for (item of activeSteps(); track item.index) {
       <div class="step">
         <div
-          class="line previous"
+          [class]="['line', 'previous', getStateClass(item.index)]"
           [class.dashed]="$first && item.index > 0"
           [class.vertical]="verticalLayout()"
           [class.spacer]="$first && item.index === 0"
-          [ngClass]="getStateClass(item.index)"
         ></div>
         <a
-          class="focus-none"
-          [ngClass]="getStateClass(item.index)"
+          [class]="['focus-none', getStateClass(item.index)]"
           [attr.aria-current]="getAriaCurrent(item.index)"
           [attr.href]="!canActivate(item.index) || !currentStep?.isNextNavigable() ? null : '#'"
           (click)="activateStep($event, item.index)"
@@ -83,7 +81,7 @@
             </div>
           } @else {
             <si-icon
-              class="icon step-icon"
+              class="icon-lg step-icon"
               [class.status-warning]="item.step.failed()"
               [icon]="getState(item.step!, item.index)"
             />
@@ -98,9 +96,8 @@
         </a>
         @if (item.index + 1 < stepCount) {
           <div
-            class="line"
+            [class]="['line', getStateClass(item.index + 1)]"
             [class.vertical]="verticalLayout()"
-            [ngClass]="getStateClass(item.index + 1)"
             [class.dashed]="$last"
           ></div>
         }
@@ -121,7 +118,7 @@
       <div class="wizard-btn-container" (click)="wizardCancel.emit()">
         <button
           type="button"
-          class="btn btn-sm btn-circle btn-secondary mt-2 mb-4"
+          class="btn btn-circle btn-secondary mt-2 mb-4"
           [attr.aria-label]="cancelText() | translate"
         >
           <si-icon [icon]="icons.elementCancel" />
@@ -175,6 +172,7 @@
           <button
             type="button"
             class="btn btn-primary save"
+            [class.end]="hideNavigation()"
             [disabled]="!currentStep?.isValid() || !currentStep?.isNextNavigable()"
             (click)="save()"
             >{{ saveText() | translate }}</button

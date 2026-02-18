@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { CdkPortal, PortalModule } from '@angular/cdk/portal';
@@ -89,20 +89,17 @@ export class SampleComponent implements OnDestroy {
   statusActions: StatusItem[] = [
     {
       title: 'Out of Service',
-      tooltip: 'Out of Service',
       icon: 'element-out-of-service status-warning',
       action: () => this.logEvent('Out of Service')
     },
     {
       title: 'System Operator',
-      tooltip: 'System Operator',
       icon: 'element-manual-filled status-warning',
       disabled: true,
       action: () => this.logEvent('System Operator')
     },
     {
       title: 'Event source\nactive, ack',
-      tooltip: 'Event source',
       icon: 'element-alarm-background-filled status-danger',
       overlayIcon: 'element-alarm-tick text-body',
       action: () => this.logEvent('Event source, active, ack')

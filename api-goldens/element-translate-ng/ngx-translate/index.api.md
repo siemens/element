@@ -9,16 +9,13 @@ import * as i0 from '@angular/core';
 import { Provider } from '@angular/core';
 
 // @public
+export const provideMissingTranslationHandlerForElement: (missingTranslationHandlerProvider?: Provider) => Provider;
+
+// @public
 export const provideNgxTranslateForElement: () => (EnvironmentProviders | Provider)[];
 
 // @public
 export class SiTranslateNgxTModule {
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiTranslateNgxTModule, never>;
-    // (undocumented)
-    static ɵinj: i0.ɵɵInjectorDeclaration<SiTranslateNgxTModule>;
-    // (undocumented)
-    static ɵmod: i0.ɵɵNgModuleDeclaration<SiTranslateNgxTModule, never, never, never>;
 }
 
 // (No @packageDocumentation comment for this package)

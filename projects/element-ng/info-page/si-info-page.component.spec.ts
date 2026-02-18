@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ComponentRef, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
 
@@ -13,14 +13,10 @@ describe('SiInfoPageComponent', () => {
   let component: ComponentRef<TestComponent>;
   let element: HTMLElement;
 
-  beforeEach(() =>
-    TestBed.configureTestingModule({
-      imports: [TestComponent, RouterModule],
-      providers: [provideZonelessChangeDetection()]
-    })
-  );
-
   beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [TestComponent, RouterModule]
+    });
     fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentRef;
     element = fixture.nativeElement;

@@ -16,7 +16,9 @@
 - navigation:
   - button "collapse" [expanded]
   - button "Home"
+  - group "Home"
   - button "Documentation"
+  - group "Documentation"
   - link "Energy":
     - /url: "#/viewer/viewer/energy"
   - link "Test Coverage":

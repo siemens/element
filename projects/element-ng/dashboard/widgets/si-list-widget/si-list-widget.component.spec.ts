@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 import { TestScheduler } from 'rxjs/testing';
@@ -39,11 +39,6 @@ describe('SiListWidgetComponent', () => {
   beforeEach(() => {
     testScheduler = new TestScheduler((actual, expected) => {
       expect(actual).toEqual(expected);
-    });
-
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
     });
   });
 
@@ -127,12 +122,10 @@ describe('SiListWidgetComponent', () => {
     ];
     fixture.detectChanges();
 
-    let action: HTMLButtonElement | undefined = undefined;
-    element.querySelectorAll('button').forEach(btn => {
-      if (btn.getAttribute('title') === 'Sort descending') {
-        action = btn;
-      }
-    });
+    const action = element.querySelector(
+      'si-content-action-bar button[aria-label="Sort descending"]'
+    ) as HTMLButtonElement;
+
     expect(action).toBeDefined();
     action!.click();
     fixture.detectChanges();
@@ -141,11 +134,6 @@ describe('SiListWidgetComponent', () => {
     expect(items.length).toBe(4);
     expect(items.item(0).textContent).toContain('item_3');
 
-    element.querySelectorAll('button').forEach(btn => {
-      if (btn.getAttribute('title') === 'Sort ascending') {
-        action = btn;
-      }
-    });
     expect(action).toBeDefined();
     action!.click();
     fixture.detectChanges();

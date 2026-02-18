@@ -1,9 +1,7 @@
 @let valueObject = value();
 @if (!showLoadingIndicator() && valueObject) {
   @if (valueObject.badge) {
-    <span class="mx-0 badge me-4" [ngClass]="badgeColor()">{{
-      valueObject.badge | translate
-    }}</span>
+    <span class="mx-0 badge me-4" [class]="badgeColor()">{{ valueObject.badge | translate }}</span>
   }
   <span class="me-auto">
     @if (!isLink()) {
@@ -23,7 +21,7 @@
     @if (valueObject.action.action) {
       <button
         type="button"
-        class="btn btn-circle btn-sm btn-tertiary ms-4 p-2"
+        class="btn btn-icon btn-tertiary ms-4 p-2"
         [attr.aria-label]="valueObject.action.title | translate"
         [siLink]="valueObject.action"
       >

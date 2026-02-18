@@ -20,7 +20,7 @@ export interface NotificationItemActionButton {
     type: 'action-button';
 }
 
-// @public
+// @public @deprecated
 export interface NotificationItemActionCircleButton extends NotificationItemBase {
     // (undocumented)
     action: (source: this) => void;
@@ -28,6 +28,16 @@ export interface NotificationItemActionCircleButton extends NotificationItemBase
     customClass?: string;
     // (undocumented)
     type: 'action-circle-button';
+}
+
+// @public
+export interface NotificationItemActionIconButton extends NotificationItemBase {
+    // (undocumented)
+    action: (source: this) => void;
+    // (undocumented)
+    customClass?: string;
+    // (undocumented)
+    type: 'action-icon-button';
 }
 
 // @public
@@ -67,10 +77,10 @@ export interface NotificationItemMenu {
 }
 
 // @public
-export type NotificationItemPrimaryAction = NotificationItemActionCircleButton | NotificationItemLinkIcon | NotificationItemRouterLinkIcon | NotificationItemMenu | NotificationItemActionButton;
+export type NotificationItemPrimaryAction = NotificationItemActionCircleButton | NotificationItemActionIconButton | NotificationItemLinkIcon | NotificationItemRouterLinkIcon | NotificationItemMenu | NotificationItemActionButton;
 
 // @public
-export type NotificationItemQuickAction = NotificationItemActionCircleButton | NotificationItemLinkIcon | NotificationItemRouterLinkIcon;
+export type NotificationItemQuickAction = NotificationItemActionCircleButton | NotificationItemActionIconButton | NotificationItemLinkIcon | NotificationItemRouterLinkIcon;
 
 // @public
 export interface NotificationItemRouterLink {
@@ -101,10 +111,6 @@ export class SiNotificationItemComponent {
     readonly quickActions: _angular_core.InputSignal<NotificationItemQuickAction[] | undefined>;
     readonly timeStamp: _angular_core.InputSignal<TranslatableString>;
     readonly unread: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiNotificationItemComponent, "si-notification-item", never, { "timeStamp": { "alias": "timeStamp"; "required": true; "isSignal": true; }; "heading": { "alias": "heading"; "required": true; "isSignal": true; }; "description": { "alias": "description"; "required": false; "isSignal": true; }; "unread": { "alias": "unread"; "required": false; "isSignal": true; }; "itemLink": { "alias": "itemLink"; "required": false; "isSignal": true; }; "quickActions": { "alias": "quickActions"; "required": false; "isSignal": true; }; "primaryAction": { "alias": "primaryAction"; "required": false; "isSignal": true; }; }, {}, never, ["si-avatar,si-circle-status,si-icon,si-status-icon", "[action]", "[quick-actions]", "[description]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiNotificationItemComponent, never>;
 }
 
 // (No @packageDocumentation comment for this package)

@@ -1,25 +1,15 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { DestroyRef, inject, Injectable } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { SiThemeService } from '@siemens/element-ng/theme';
 
 interface RegisteredIcon {
-  content: SafeHtml | undefined;
+  content: string | undefined;
   // Count how often an icon was registered to only remove it if it is no longer in use.
   referenceCount: number;
 }
-
-const parseDataSvgIcon = (icon: string, domSanitizer: DomSanitizer): SafeHtml => {
-  const parsed = /^data:image\/svg\+xml;utf8,(.*)$/.exec(icon);
-  if (!parsed) {
-    console.error('Failed to parse icon', icon);
-    return '';
-  }
-  return domSanitizer.bypassSecurityTrustHtml(parsed[1]);
-};
 
 const registeredIcons = new Map<string, RegisteredIcon>();
 
@@ -35,8 +25,8 @@ const registeredIcons = new Map<string, RegisteredIcon>();
  *
  * @example
  * ```ts
- * import { elementIcon } from '@simpl/element-icons/ionic';
- * import { addIcons } from '@siemens/element-ng/icon'
+ * import { elementIcon } from '@siemens/element-icons';
+ * import { addIcons } from '@siemens/element-ng/icon';
  *
  * @Component({`<si-icon [icon]="icons.elementIcon"`})
  * class MyComponent {
@@ -46,10 +36,9 @@ const registeredIcons = new Map<string, RegisteredIcon>();
  */
 export const addIcons = <T extends string>(icons: Record<T, string>): Record<T, string> => {
   const iconMap = {} as Record<T, string>;
-  const domSanitizer = inject(DomSanitizer);
-  for (const [key, rawContent] of Object.entries<string>(icons)) {
+  for (const [key, content] of Object.entries<string>(icons)) {
     const registeredIcon = registeredIcons.get(key) ?? {
-      content: parseDataSvgIcon(rawContent, domSanitizer),
+      content,
       referenceCount: 0
     };
     registeredIcon.referenceCount++;
@@ -74,13 +63,13 @@ export const addIcons = <T extends string>(icons: Record<T, string>): Record<T, 
   return iconMap;
 };
 
-const getIcon = (key: string): SafeHtml | undefined => registeredIcons.get(key)?.content;
+const getIcon = (key: string): string | undefined => registeredIcons.get(key)?.content;
 
 @Injectable({ providedIn: 'root' })
 export class IconService {
   private themeService = inject(SiThemeService);
 
-  getIcon(name: string): SafeHtml | undefined {
+  getIcon(name: string): string | undefined {
     const camelCaseName = this.kebabToCamelCase(name);
     return this.themeService.themeIcons()[camelCaseName] ?? getIcon(camelCaseName);
   }

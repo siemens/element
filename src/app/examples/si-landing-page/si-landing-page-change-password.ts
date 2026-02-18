@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import {
@@ -33,7 +33,6 @@ const loginAlert = signal<AlertConfig | undefined>(undefined);
     <si-login-basic
       usernameLabel="FORM.USERNAME"
       passwordLabel="FORM.PASSWORD"
-      registerNowIntroText="FORM.REGISTER_NOW_INTRO"
       loginButtonLabel="FORM.LOGIN"
       [loading]="loading()"
       [forgotPasswordLink]="{

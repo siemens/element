@@ -2,20 +2,57 @@
   - button "Launchpad" [expanded]
   - link "Siemens logo":
     - /url: "#/"
-- paragraph: Launchpad
-- paragraph: Access all your apps
-- text: Favorite apps
-- link "Fischbach":
+- paragraph: Switch applications
+- button "Close launchpad"
+- text: Favorites
+- link "Assets System name":
   - /url: .
-- link "Rocket":
+- link "Statistics System name":
+  - /url: "#/viewer/viewer/stats"
+- link "Rocket System name":
   - /url: .
 - button "Show less"
-- link "Assets":
+- link "Assets System name":
   - /url: .
-- link "Fischbach":
+- link "Fischbach System name":
   - /url: .
-- link "Rocket":
-  - /url: .
-- link "Statistics":
+- link "Statistics System name":
   - /url: "#/viewer/viewer/stats"
-- button "Close launchpad"
+- link "Rocket System name":
+  - /url: .
+- link "This is a really long name External application System name":
+  - /url: .
+  - text: ""
+- link "App name 1 External application System name":
+  - /url: .
+  - text: ""
+- link "App name 2 System name":
+  - /url: .
+- link "App name 3 System name":
+  - /url: .
+- link "This is a really long name External application System name":
+  - /url: .
+  - text: ""
+- link "App name 4 System name":
+  - /url: .
+- link "App name 5 System name":
+  - /url: .
+- link "App name 6 This is a really long name":
+  - /url: .
+- link "App name 7 System name":
+  - /url: .
+- link "App name 8 System name":
+  - /url: .
+- link "App name 9 System name":
+  - /url: .
+- link /App name \d+ System name/:
+  - /url: .
+- heading "Launchpad Configuration" [level=2]
+- paragraph: Configure your launchpad settings and test different display modes.
+- checkbox "Enable Favorites" [checked]
+- text: Enable Favorites
+- checkbox "Enable Categories"
+- text: Enable Categories
+- paragraph:
+  - strong: "Demo note:"
+  - text: Click the header icon to open the launchpad and test your settings

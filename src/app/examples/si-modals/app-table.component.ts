@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { ModalRef } from '@siemens/element-ng/modal';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
@@ -30,6 +30,7 @@ export class AppTableComponent {
 
   isLoading = 0;
   private dataService = inject(DataService);
+  private cdRef = inject(ChangeDetectorRef);
 
   modalRef = inject(ModalRef);
 
@@ -64,6 +65,7 @@ export class AppTableComponent {
       this.rows = rows;
 
       this.isLoading--;
+      this.cdRef.markForCheck();
     });
   }
 }

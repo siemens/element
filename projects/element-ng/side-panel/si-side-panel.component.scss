@@ -7,8 +7,8 @@ $rpanel-width-extended-xl: 640px;
 $rpanel-width-extended-xxl: 720px;
 $rpanel-width-extended-xxxl: 912px;
 $rpanel-transition-duration: all-variables.$element-default-transition-duration;
-$rpanel-overlay-bg: rgba(0, 0, 0, 0.4);
 $rpanel-collapsed-width: 48px;
+$transition: opacity 0.15s linear;
 
 :host {
   --rpanel-collapsed-padding: 0;
@@ -28,8 +28,18 @@ $rpanel-collapsed-width: 48px;
   }
 
   .modal-backdrop {
+    opacity: 1;
+    transition: $transition;
     z-index: all-variables.$zindex-sidepanel;
-    opacity: 0;
+
+    @starting-style {
+      opacity: 0;
+    }
+
+    &.backdrop-leave {
+      opacity: 0;
+      transition: $transition;
+    }
   }
 
   .side-panel,

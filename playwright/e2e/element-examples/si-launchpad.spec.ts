@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { test } from '../../support/test-helpers';
@@ -13,7 +13,7 @@ test.describe('launchpad', () => {
     await page.getByText('Show more').click();
     await si.runVisualAndA11yTests();
 
-    await page.getByRole('link', { name: 'Rocket' }).locator('.favorite-icon').click();
+    await page.getByRole('link', { name: 'Fischbach' }).first().locator('.favorite-icon').click();
     await si.runVisualAndA11yTests('new favorite');
   });
 

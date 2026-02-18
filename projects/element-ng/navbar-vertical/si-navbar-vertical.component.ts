@@ -1,17 +1,7 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  animate,
-  animateChild,
-  group,
-  query,
-  state,
-  style,
-  transition,
-  trigger
-} from '@angular/animations';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { NgTemplateOutlet } from '@angular/common';
 import {
@@ -33,17 +23,13 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
+import { elementDoubleLeft, elementDoubleRight, elementSearch } from '@siemens/element-icons';
 import { MenuItem, SI_UI_STATE_SERVICE } from '@siemens/element-ng/common';
-import {
-  addIcons,
-  elementDoubleLeft,
-  elementDoubleRight,
-  elementSearch,
-  SiIconComponent
-} from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
 import { SiSkipLinkTargetDirective } from '@siemens/element-ng/skip-links';
+import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { SiNavbarVerticalDividerComponent } from './si-navbar-vertical-divider.component';
@@ -87,7 +73,8 @@ export class SiNavbarVerticalItemGuardDirective {
     SiNavbarVerticalItemLegacyComponent,
     SiSearchBarComponent,
     SiSkipLinkTargetDirective,
-    SiTranslatePipe
+    SiTranslatePipe,
+    SiTooltipDirective
   ],
   templateUrl: './si-navbar-vertical.component.html',
   styleUrl: './si-navbar-vertical.component.scss',
@@ -97,57 +84,7 @@ export class SiNavbarVerticalItemGuardDirective {
     '[class.nav-collapsed]': 'collapsed()',
     '[class.nav-text-only]': 'textOnly()',
     '[class.visible]': 'visible()'
-  },
-  animations: [
-    trigger('collapse', [
-      state('expanded', style({ 'inline-size': '240px' })),
-      state('collapsed', style({ 'inline-size': '*' })),
-      transition('collapsed => expanded', [
-        group([
-          animate('0.5s ease'),
-          query('si-navbar-vertical-group, si-navbar-vertical-header', animateChild(), {
-            optional: true
-          }),
-          query(
-            '.dropdown-caret',
-            [style({ 'opacity': '0' }), animate('0.5s ease', style({ 'opacity': '1' }))],
-            { optional: true }
-          ),
-          query(
-            '.mobile-drawer',
-            style({ 'box-shadow': 'none', background: 'var(--element-base-1)' })
-          ),
-          query('.mobile-drawer', [
-            style({ 'inline-size': '*', 'box-shadow': '*' }),
-            animate('0.5s ease', style({ 'inline-size': '240px' })),
-            style({ 'inline-size': '240px' })
-          ])
-        ])
-      ]),
-      transition('expanded => collapsed', [
-        query('.nav-search', style({ 'display': 'flex' }), { optional: true }),
-        query('.nav-scroll', style({ 'display': 'block' })),
-        group([
-          animate('0.5s ease'),
-          query('si-navbar-vertical-group, si-navbar-vertical-header', animateChild(), {
-            optional: true
-          }),
-          query('.section-item', style({ visibility: 'hidden' }), { optional: true }),
-          query('si-navbar-vertical-group', style({ visibility: 'hidden' }), { optional: true }),
-          query('.mobile-drawer', [
-            style({ 'inline-size': '240px', 'box-shadow': 'none' }),
-            animate('0.5s ease', style({ 'inline-size': '*' })),
-            style({ 'inline-size': '*' })
-          ])
-        ])
-      ])
-    ]),
-    trigger('backdrop', [
-      state('show', style({ 'opacity': '1' })),
-      state('hide', style({ 'opacity': '0' })),
-      transition('* <=> *', [animate('0.15s linear')])
-    ])
-  ]
+  }
 })
 export class SiNavbarVerticalComponent implements OnChanges, OnInit {
   protected readonly icons = addIcons({ elementDoubleLeft, elementDoubleRight, elementSearch });

@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, provideZonelessChangeDetection, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiResponsiveContainerDirective } from './index';
@@ -36,10 +36,6 @@ describe('SiResponsiveContainerDirective', () => {
 
   beforeEach(() => {
     mockResizeObserver();
-    TestBed.configureTestingModule({
-      imports: [TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
-    });
     fixture = TestBed.createComponent(TestHostComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;

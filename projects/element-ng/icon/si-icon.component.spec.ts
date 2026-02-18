@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, provideZonelessChangeDetection, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiThemeService } from '@siemens/element-ng/theme';
@@ -18,6 +18,11 @@ describe('SiSvgIconComponent', () => {
   describe('with one instance', () => {
     let component: TestHostComponent;
     let fixture: ComponentFixture<TestHostComponent>;
+
+    const getIconHostStyle = (): string =>
+      (fixture.nativeElement.querySelector('si-icon') as HTMLElement).style.getPropertyValue(
+        '--svg-element-icon'
+      );
 
     @Component({
       imports: [SiIconComponent],
@@ -36,10 +41,7 @@ describe('SiSvgIconComponent', () => {
     describe('with enabled svg icons', () => {
       beforeEach(async () => {
         TestBed.configureTestingModule({
-          providers: [
-            provideIconConfig({ disableSvgIcons: false }),
-            provideZonelessChangeDetection()
-          ]
+          providers: [provideIconConfig({ disableSvgIcons: false })]
         });
         fixture = TestBed.createComponent(TestHostComponent);
         component = fixture.componentInstance;
@@ -63,7 +65,7 @@ describe('SiSvgIconComponent', () => {
         });
 
         it('should load icon', () => {
-          expect(document.getElementById('svg-2')).toBeTruthy();
+          expect(getIconHostStyle()).toContain('svg-2');
         });
 
         it('should load icon override from theme', () => {
@@ -77,7 +79,7 @@ describe('SiSvgIconComponent', () => {
             }
           });
           fixture.detectChanges();
-          expect(document.getElementById('svg-oem')).toBeTruthy();
+          expect(getIconHostStyle()).toContain('svg-oem');
         });
       });
 
@@ -88,7 +90,7 @@ describe('SiSvgIconComponent', () => {
         });
 
         it('should load icon', () => {
-          expect(document.getElementById('svg')).toBeTruthy();
+          expect(getIconHostStyle()).toContain('svg');
         });
 
         it('should load icon override from theme', () => {
@@ -102,16 +104,16 @@ describe('SiSvgIconComponent', () => {
             }
           });
           fixture.detectChanges();
-          expect(document.getElementById('svg-oem')).toBeTruthy();
+          expect(getIconHostStyle()).toContain('svg-oem');
         });
       });
     });
 
     describe('with disabled svg icons', () => {
-      beforeEach(async () => {
+      beforeEach(() => {
         TestBed.configureTestingModule({
-          providers: [provideZonelessChangeDetection()]
-        }).compileComponents();
+          providers: [provideIconConfig({ disableSvgIcons: true })]
+        });
         fixture = TestBed.createComponent(TestHostComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -120,7 +122,7 @@ describe('SiSvgIconComponent', () => {
       it('should always use the icon-font', () => {
         component.icon.set('element-svg');
         fixture.detectChanges();
-        expect(document.getElementById('svg')).toBeFalsy();
+        expect(getIconHostStyle()).toBe('');
         expect(fixture.debugElement.query(By.css('.element-svg'))).toBeTruthy();
       });
     });
@@ -168,9 +170,6 @@ describe('SiSvgIconComponent', () => {
     let component: TestHostComponent;
     let iconService: IconService;
     beforeEach(() => {
-      TestBed.configureTestingModule({
-        providers: [provideZonelessChangeDetection()]
-      }).compileComponents();
       fixture = TestBed.createComponent(TestHostComponent);
       component = fixture.componentInstance;
       iconService = TestBed.inject(IconService);

@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ComponentRef, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -58,11 +58,6 @@ describe(`SiPhotoUploadComponent`, () => {
     Array.from(parent.querySelectorAll(`button`)).filter(e => e.innerHTML.trim().includes(text))[0];
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [SiPhotoUploadComponent],
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
-
     fixture = TestBed.createComponent(SiPhotoUploadComponent);
     component = fixture.componentInstance;
     componentRef = fixture.componentRef;

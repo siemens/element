@@ -1,8 +1,7 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import { booleanAttribute, Component, computed, input } from '@angular/core';
 import { SiCardComponent } from '@siemens/element-ng/card';
 import {
@@ -31,7 +30,7 @@ import { SiValueWidgetBodyComponent } from './si-value-widget-body.component';
  */
 @Component({
   selector: 'si-value-widget',
-  imports: [NgClass, SiCardComponent, SiLinkDirective, SiTranslatePipe, SiValueWidgetBodyComponent],
+  imports: [SiCardComponent, SiLinkDirective, SiTranslatePipe, SiValueWidgetBodyComponent],
   templateUrl: './si-value-widget.component.html'
 })
 export class SiValueWidgetComponent {

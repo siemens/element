@@ -19,12 +19,6 @@ export class SiAvatarBackgroundColorDirective implements OnChanges {
     readonly autoColor: _angular_core.InputSignalWithTransform<boolean, unknown>;
     calculateColorFromInitials(displayInitials?: string): void;
     readonly color: _angular_core.InputSignalWithTransform<number | undefined, unknown>;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiAvatarBackgroundColorDirective, "[siAvatarBackgroundColor]", never, { "color": { "alias": "color"; "required": false; "isSignal": true; }; "autoColor": { "alias": "autoColor"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiAvatarBackgroundColorDirective, never>;
 }
 
 // @public (undocumented)
@@ -38,10 +32,6 @@ export class SiAvatarComponent {
     readonly size: _angular_core.InputSignal<AvatarSize>;
     readonly status: _angular_core.InputSignal<EntityStatusType | undefined>;
     readonly statusAriaLabel: _angular_core.InputSignal<TranslatableString | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiAvatarComponent, "si-avatar", never, { "size": { "alias": "size"; "required": false; "isSignal": true; }; "imageUrl": { "alias": "imageUrl"; "required": false; "isSignal": true; }; "icon": { "alias": "icon"; "required": false; "isSignal": true; }; "initials": { "alias": "initials"; "required": false; "isSignal": true; }; "color": { "alias": "color"; "required": false; "isSignal": true; }; "altText": { "alias": "altText"; "required": true; "isSignal": true; }; "status": { "alias": "status"; "required": false; "isSignal": true; }; "statusAriaLabel": { "alias": "statusAriaLabel"; "required": false; "isSignal": true; }; }, {}, never, never, true, [{ directive: typeof SiAvatarBackgroundColorDirective; inputs: { "color": "color"; "autoColor": "autoColor"; }; outputs: {}; }]>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiAvatarComponent, never>;
 }
 
 // (No @packageDocumentation comment for this package)

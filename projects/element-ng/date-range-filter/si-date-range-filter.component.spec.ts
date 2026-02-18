@@ -1,15 +1,10 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { MediaMatcher } from '@angular/cdk/layout';
 import { formatDate } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  provideZonelessChangeDetection,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TestScheduler } from 'rxjs/testing';
@@ -90,7 +85,6 @@ describe('SiDateRangeFilterComponent', () => {
     TestBed.configureTestingModule({
       imports: [TestHostComponent],
       providers: [
-        provideZonelessChangeDetection(),
         {
           provide: MediaMatcher,
           useValue: {
@@ -269,6 +263,21 @@ describe('SiDateRangeFilterComponent', () => {
     expect(component.range.point1).toEqual('now');
     expect(component.range.point2).toEqual(twoDaysAgo);
     expect(component.range.range).toBeUndefined();
+  });
+
+  it('switches from simple mode to advanced mode', async () => {
+    const point1 = new Date('2023-05-13');
+    const point2 = new Date('2023-08-14');
+    component.range = { point1, point2 };
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    toggleMode();
+    await fixture.whenStable();
+
+    expect(date2string(component.range.point1 as Date)).toEqual(date2string(point1));
+    expect(component.range.point2).toEqual(point2.getTime() - point1.getTime());
+    expect(component.range.range).toBe('after');
   });
 
   it('allows selecting presets in simple mode', async () => {

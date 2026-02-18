@@ -5,6 +5,7 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
+import { NgControl } from '@angular/forms';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
@@ -14,20 +15,10 @@ export class SiPasswordToggleComponent {
     readonly showLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly showVisibilityIcon: _angular_core.InputSignal<boolean>;
     readonly typeChange: _angular_core.OutputEmitterRef<string>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiPasswordToggleComponent, "si-password-toggle", never, { "showVisibilityIcon": { "alias": "showVisibilityIcon"; "required": false; "isSignal": true; }; "showLabel": { "alias": "showLabel"; "required": false; "isSignal": true; }; "hideLabel": { "alias": "hideLabel"; "required": false; "isSignal": true; }; }, { "typeChange": "typeChange"; }, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiPasswordToggleComponent, never>;
 }
 
 // @public (undocumented)
 export class SiPasswordToggleModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiPasswordToggleModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiPasswordToggleModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiPasswordToggleModule, never, [typeof SiPasswordToggleComponent], [typeof SiPasswordToggleComponent]>;
 }
 
 // (No @packageDocumentation comment for this package)

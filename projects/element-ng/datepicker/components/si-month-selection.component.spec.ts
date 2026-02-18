@@ -1,14 +1,9 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { A11yModule } from '@angular/cdk/a11y';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  provideZonelessChangeDetection,
-  signal
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { getLocaleMonthNames } from '../date-time-helper';
@@ -65,9 +60,6 @@ describe('SiMonthSelectionComponent', () => {
   let helper: CalendarTestHelper;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
     fixture = TestBed.createComponent(WrapperComponent);
     wrapperComponent = fixture.componentInstance;
     element = fixture.nativeElement;

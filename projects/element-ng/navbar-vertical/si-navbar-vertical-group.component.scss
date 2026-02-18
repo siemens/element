@@ -1,0 +1,32 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+:host.component-enter .inline-group {
+  // Prevents initial animation on component load
+  transition: none;
+}
+
+.inline-group {
+  // Using CSS grid is the easiest way to animate height from 0 to auto
+  display: grid;
+  transition-property: grid-template-rows, opacity;
+  transition-duration: variables.element-transition-duration(500ms);
+  transition-timing-function: ease;
+  opacity: 1;
+  grid-template-rows: 1fr;
+  overflow: hidden;
+
+  @starting-style {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+
+  &.group-leave {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+}
+
+.dropdown-menu {
+  display: block;
+  position: static;
+}

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import {
@@ -8,7 +8,7 @@ import {
   DestroyRef,
   HostListener,
   inject,
-  Input,
+  model,
   output,
   signal
 } from '@angular/core';
@@ -41,10 +41,7 @@ import { SiFormModule } from '@siemens/element-ng/form';
   templateUrl: './contact-widget-editor.component.html'
 })
 export class ContactWidgetEditorComponent implements WidgetInstanceEditorWizard, AfterViewInit {
-  @Input({
-    required: true
-  })
-  config!: WidgetConfig;
+  readonly config = model.required<Omit<WidgetConfig, 'id'>>();
   readonly statusChanges = output<Partial<WidgetConfigStatus>>();
 
   get state(): WidgetInstanceEditorWizardState {
@@ -82,25 +79,25 @@ export class ContactWidgetEditorComponent implements WidgetInstanceEditorWizard,
     // must emit initial state
     this.stateChange.emit(this.state);
 
-    const date: Date = new Date(this.config?.payload?.birthday);
+    const date: Date = new Date(this.config()?.payload?.birthday);
     this.personal.patchValue({
-      firstName: this.config?.payload?.firstName ?? '',
-      lastName: this.config?.payload?.lastName ?? '',
+      firstName: this.config()?.payload?.firstName ?? '',
+      lastName: this.config()?.payload?.lastName ?? '',
       birthday: !isNaN(date.getTime()) ? date : ''
     });
     this.company.patchValue({
-      jobTitle: this.config?.payload?.jobTitle ?? '',
-      company: this.config?.payload?.company ?? '',
-      email: this.config?.payload?.email ?? '',
-      phone: this.config?.payload?.phone ?? ''
+      jobTitle: this.config()?.payload?.jobTitle ?? '',
+      company: this.config()?.payload?.company ?? '',
+      email: this.config()?.payload?.email ?? '',
+      phone: this.config()?.payload?.phone ?? ''
     });
 
     this.form.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(value => {
-      const config = this.config;
+      const config = this.config();
 
       Object.assign(config.payload, value.personal);
       Object.assign(config.payload, value.company);
-      this.config = { ...config };
+      this.config.set({ ...config });
       if (!this.modified) {
         this.modified = true;
         this.statusChanges.emit({ modified: this.modified });

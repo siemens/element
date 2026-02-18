@@ -1,51 +1,43 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
-import { NgClass, NgComponentOutlet, NgTemplateOutlet } from '@angular/common';
-import {
-  Component,
-  computed,
-  ElementRef,
-  inject,
-  input,
-  signal,
-  TemplateRef,
-  Type
-} from '@angular/core';
+import { NgComponentOutlet, NgTemplateOutlet } from '@angular/common';
+import { Component, computed, ElementRef, inject, signal, TemplateRef } from '@angular/core';
 import { calculateOverlayArrowPosition, OverlayArrowPosition } from '@siemens/element-ng/common';
-import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
+
+import { SI_TOOLTIP_CONFIG } from './si-tooltip.model';
 
 @Component({
   selector: 'si-tooltip',
-  imports: [NgClass, NgTemplateOutlet, SiTranslatePipe, NgComponentOutlet],
-  templateUrl: './si-tooltip.component.html'
+  imports: [NgTemplateOutlet, SiTranslatePipe, NgComponentOutlet],
+  templateUrl: './si-tooltip.component.html',
+  styleUrl: './si-tooltip.component.scss',
+  host: {
+    'animate.leave': 'tooltip-leave'
+  }
 })
 export class TooltipComponent {
-  /** @defaultValue '' */
-  readonly tooltip = input<TranslatableString | TemplateRef<any> | Type<any>>('');
-
   protected readonly tooltipPositionClass = signal('');
   protected readonly arrowPos = signal<OverlayArrowPosition | undefined>(undefined);
-  /** @internal */
-  readonly id = input('');
-  readonly tooltipContext = input();
 
-  private elementRef = inject(ElementRef);
+  protected readonly config = inject(SI_TOOLTIP_CONFIG);
+  private readonly elementRef = inject(ElementRef);
 
   protected readonly tooltipText = computed<string | null>(() => {
-    const tooltip = this.tooltip();
+    const tooltip = this.config.tooltip();
     return typeof tooltip === 'string' ? tooltip : null;
   });
 
   protected readonly tooltipTemplate = computed<TemplateRef<any> | null>(() => {
-    const tooltip = this.tooltip();
+    const tooltip = this.config.tooltip();
     return tooltip instanceof TemplateRef ? tooltip : null;
   });
 
   protected readonly tooltipComponent = computed(() => {
-    const tooltip = this.tooltip();
+    const tooltip = this.config.tooltip();
     return !(tooltip instanceof TemplateRef) && typeof tooltip !== 'string' ? tooltip : null;
   });
 

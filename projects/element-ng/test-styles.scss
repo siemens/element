@@ -14,3 +14,8 @@
   // and thus prevents a layout shift
   min-inline-size: 1em;
 }
+
+:root {
+  /* Disable animations during tests */
+  --element-animations-enabled: 0;
+}

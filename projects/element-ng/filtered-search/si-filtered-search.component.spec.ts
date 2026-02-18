@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { HarnessLoader, parallel, TestKey } from '@angular/cdk/testing';
@@ -9,12 +9,10 @@ import {
   ChangeDetectorRef,
   Component,
   inject,
-  provideZonelessChangeDetection,
   signal,
   viewChild
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule, provideNoopAnimations } from '@angular/platform-browser/animations';
 import { CriterionDefinition } from '@siemens/element-ng/filtered-search';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 import {
@@ -40,7 +38,6 @@ import { SiFilteredSearchHarness } from './testing/si-filtered-search.harness';
     [disabled]="disabled"
     [disableFreeTextSearch]="disableFreeTextSearch"
     [freeTextCriterion]="freeTextCriterion"
-    [readonly]="readonly"
     [placeholder]="placeholder"
     [lazyLoadingDebounceTime]="lazyLoadingDebounceTime"
     [lazyCriterionProvider]="lazyCriterionProvider"
@@ -67,7 +64,6 @@ class TestHostComponent {
   disabled!: boolean;
   disableFreeTextSearch = false;
   freeTextCriterion?: CriterionDefinition;
-  readonly!: boolean;
   placeholder = '';
 
   // eslint-disable-next-line @angular-eslint/prefer-signals
@@ -107,8 +103,7 @@ describe('SiFilteredSearchComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
+      imports: [TestHostComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestHostComponent);
@@ -175,14 +170,6 @@ describe('SiFilteredSearchComponent', () => {
       expect(await filteredSearch.clearButtonVisible()).toBeFalsy();
     });
 
-    it('should not show button when in read-only mode', async () => {
-      component.readonly = true;
-      component.searchCriteria.set({ criteria: [], value: 'TEXT_KEY' });
-
-      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
-      expect(await filteredSearch.clearButtonVisible()).toBeFalsy();
-    });
-
     it('should delete current criterion and edit last one', async () => {
       const spy = spyOn(component, 'doSearch');
       component.searchCriteria.set({
@@ -234,13 +221,6 @@ describe('SiFilteredSearchComponent', () => {
   describe('with delete criterion', () => {
     beforeEach(() => {
       component.searchCriteria.set({ criteria: [{ name: 'foo', value: 'bar' }], value: '' });
-    });
-
-    it('should not show button when in read-only mode', async () => {
-      component.readonly = true;
-
-      const criteria = await loader.getAllHarnesses(SiFilteredSearchCriterionHarness);
-      expect(await criteria[0].clearButtonVisible()).toBeFalsy();
     });
 
     it('should clear criterion when clicked', async () => {
@@ -1536,8 +1516,8 @@ describe('SiFilteredSearchComponent', () => {
     ]);
     component.searchCriteria.set({
       criteria: [
-        { name: 'company', label: 'Company', options: ['Foo', 'Bar'] },
-        { name: 'Location', label: 'Location', options: ['Munich', 'Zug'] }
+        { name: 'company', value: ['Foo', 'Bar'] },
+        { name: 'Location', value: ['Munich', 'Zug'] }
       ],
       value: ''
     });
@@ -1749,7 +1729,7 @@ describe('SiFilteredSearchComponent', () => {
         }
       ]);
       component.searchCriteria.set({
-        criteria: [{ name: 'highLimit', label: 'High Limit [°C]', value: '123', operator: '>' }],
+        criteria: [{ name: 'highLimit', value: '123', operator: '>' }],
         value: ''
       });
 
@@ -1799,7 +1779,7 @@ describe('SiFilteredSearchComponent', () => {
         }
       ]);
       component.searchCriteria.set({
-        criteria: [{ name: 'highLimit', label: 'High Limit [°C]', value: '123', operator: '>' }],
+        criteria: [{ name: 'highLimit', value: '123', operator: '>' }],
         value: ''
       });
       const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
@@ -2013,37 +1993,6 @@ describe('SiFilteredSearchComponent', () => {
 
       expect(component.doSearch).toHaveBeenCalledWith({
         criteria: jasmine.arrayContaining([{ name: 'country', value: 'CH' }]),
-        value: ''
-      });
-    });
-
-    // TODO: this is non-sense. Our interface does not allow empty value for options.
-    // TODO: remove with v47
-    it('should emit criterion with value = label from config', async () => {
-      component.doSearchOnInputChange = true;
-      component.criteria.set([
-        { name: 'company', label: 'Company', options: ['Foo', 'Bar'] },
-        { name: 'Location', label: 'Location', options: ['Munich', 'Zug'] },
-        {
-          name: 'country',
-          label: 'Country',
-          options: [{ value: 'DE', label: 'Germany' }, { label: 'Switzerland' } as any]
-        }
-      ]);
-      component.searchCriteria.set({
-        criteria: [{ name: 'country', value: 'Switzerland' }],
-        value: 'Max'
-      });
-      spyOn(component, 'doSearch');
-
-      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
-      const freeTextSearch = await filteredSearch.freeTextSearch();
-      await freeTextSearch.focus();
-      await freeTextSearch.sendKeys(':');
-      await tick();
-
-      expect(component.doSearch).toHaveBeenCalledWith({
-        criteria: jasmine.arrayContaining([{ name: 'country', value: 'Switzerland' }]),
         value: ''
       });
     });
@@ -2322,8 +2271,6 @@ describe('SiFilteredSearchComponent - With translation', () => {
     TestBed.configureTestingModule({
       imports: [TestHostComponent],
       providers: [
-        provideZonelessChangeDetection(),
-        provideNoopAnimations(),
         provideMockTranslateServiceBuilder(
           () =>
             ({

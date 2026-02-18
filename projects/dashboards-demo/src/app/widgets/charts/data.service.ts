@@ -1,14 +1,11 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { Injectable } from '@angular/core';
-import {
-  CartesianChartSeries,
-  ChartXAxis,
-  ChartYAxis,
-  CircleChartSeries
-} from '@siemens/charts-ng';
+import { CartesianChartSeries } from '@siemens/charts-ng/cartesian';
+import { CircleChartSeries } from '@siemens/charts-ng/circle';
+import { ChartXAxis, ChartYAxis } from '@siemens/charts-ng/common';
 import { BehaviorSubject, combineLatest, map, Observable, of, shareReplay } from 'rxjs';
 
 export interface CartesianChartData {

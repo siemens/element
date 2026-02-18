@@ -22,6 +22,20 @@
     "@angular/core": "21",
     "@siemens/element-ng": "48.9.0",
     "@siemens/element-theme": "48.9.0",
-    "gridstack": "^12.3.3"
+    "gridstack": "^12.3.3",
+    "@angular-architects/module-federation": "^20.0.0",
+    "@angular-architects/native-federation": "^21.1.0",
+    "@module-federation/enhanced": "^2.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@angular-architects/module-federation": {
+      "optional": true
+    },
+    "@angular-architects/native-federation": {
+      "optional": true
+    },
+    "@module-federation/enhanced": {
+      "optional": true
+    }
   }
 }

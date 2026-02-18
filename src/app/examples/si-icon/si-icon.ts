@@ -1,23 +1,22 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
-  addIcons,
-  element2dEditor,
+  elementAccount,
   elementAlarmFilled,
   elementAlarmTick,
   elementCancel,
-  elementUser,
-  SiIconModule,
-  SiIconComponent
-} from '@siemens/element-ng/icon';
+  elementUser
+} from '@siemens/element-icons';
+import { addIcons, SiIconModule, SiIconComponent } from '@siemens/element-ng/icon';
 
 @Component({
   selector: 'app-sample',
   imports: [SiIconModule, SiIconComponent],
   templateUrl: './si-icon.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {
@@ -25,7 +24,7 @@ export class SampleComponent {
   icons = addIcons({
     elementUser,
     elementCancel,
-    element2dEditor,
+    elementAccount,
     elementAlarmFilled,
     elementAlarmTick
   });

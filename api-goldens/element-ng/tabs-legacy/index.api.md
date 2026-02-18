@@ -12,7 +12,7 @@ import { OnDestroy } from '@angular/core';
 import { QueryList } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
-// @public (undocumented)
+// @public
 export interface SiTabDeselectionEvent {
     cancel: () => void;
     tabIndex: number;
@@ -33,12 +33,6 @@ export class SiTabLegacyComponent implements OnChanges {
     static ngAcceptInputType_closable: unknown;
     // (undocumented)
     static ngAcceptInputType_disabled: unknown;
-    // (undocumented)
-    ngOnChanges(): void;
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<SiTabLegacyComponent, "si-tab-legacy", never, { "heading": { "alias": "heading"; "required": false; }; "icon": { "alias": "icon"; "required": false; }; "iconAltText": { "alias": "iconAltText"; "required": false; }; "badgeContent": { "alias": "badgeContent"; "required": false; }; "badgeColor": { "alias": "badgeColor"; "required": false; }; "disabled": { "alias": "disabled"; "required": false; }; "closable": { "alias": "closable"; "required": false; }; }, { "closeTriggered": "closeTriggered"; }, never, ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiTabLegacyComponent, never>;
 }
 
 // @public @deprecated (undocumented)
@@ -46,29 +40,15 @@ export class SiTabsetLegacyComponent implements AfterViewInit, OnDestroy {
     readonly deselect: EventEmitter<SiTabDeselectionEvent>;
     // (undocumented)
     static ngAcceptInputType_selectDefaultTab: unknown;
-    // (undocumented)
-    ngAfterViewInit(): void;
-    // (undocumented)
-    ngOnDestroy(): void;
     selectDefaultTab: boolean;
     set selectedTabIndex(tabIndex: number);
     get selectedTabIndex(): number;
     readonly selectedTabIndexChange: EventEmitter<number>;
     tabButtonMaxWidth?: number;
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<SiTabsetLegacyComponent, "si-tabset-legacy", never, { "selectDefaultTab": { "alias": "selectDefaultTab"; "required": false; }; "selectedTabIndex": { "alias": "selectedTabIndex"; "required": false; }; "tabButtonMaxWidth": { "alias": "tabButtonMaxWidth"; "required": false; }; }, { "selectedTabIndexChange": "selectedTabIndexChange"; "deselect": "deselect"; }, ["tabPanels"], ["*"], true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiTabsetLegacyComponent, never>;
 }
 
 // @public @deprecated (undocumented)
 export class SiTabsLegacyModule {
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiTabsLegacyModule, never>;
-    // (undocumented)
-    static ɵinj: i0.ɵɵInjectorDeclaration<SiTabsLegacyModule>;
-    // (undocumented)
-    static ɵmod: i0.ɵɵNgModuleDeclaration<SiTabsLegacyModule, never, [typeof SiTabsetLegacyComponent, typeof SiTabLegacyComponent], [typeof SiTabsetLegacyComponent, typeof SiTabLegacyComponent]>;
 }
 
 // (No @packageDocumentation comment for this package)

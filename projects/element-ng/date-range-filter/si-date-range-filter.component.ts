@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { CdkTrapFocus } from '@angular/cdk/a11y';
@@ -23,6 +23,7 @@ import {
   SimpleChanges
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { elementDown2 } from '@siemens/element-icons';
 import {
   DatepickerConfig,
   DatepickerInputConfig,
@@ -32,7 +33,7 @@ import {
   SiDatepickerComponent,
   SiDatepickerDirective
 } from '@siemens/element-ng/datepicker';
-import { addIcons, elementDown2, SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
@@ -301,16 +302,16 @@ export class SiDateRangeFilterComponent implements OnChanges {
   readonly datepickerConfig = input<DatepickerInputConfig>();
 
   protected readonly icons = addIcons({ elementDown2 });
-  protected advancedMode = false;
+  protected readonly advancedMode = signal(false);
   protected readonly dateRange = signal<DateRange>({ start: undefined, end: undefined });
 
-  protected point1Now = true;
-  protected point2Mode: 'duration' | 'date' = 'duration';
+  protected readonly point1Now = signal(true);
+  protected readonly point2Mode = signal<'duration' | 'date'>('duration');
 
-  protected point1date = this.getDateNow();
-  protected point2date = this.getDateNow();
-  protected point2offset = 0;
-  protected point2range: 'before' | 'after' | 'within' = 'before';
+  protected readonly point1date = signal(this.getDateNow());
+  protected readonly point2date = signal(this.getDateNow());
+  protected readonly point2offset = signal(0);
+  protected readonly point2range = signal<'before' | 'after' | 'within'>('before');
   protected readonly calculatedRange = computed<ResolvedDateRange>(() =>
     this.resolve(this.range())
   );
@@ -357,14 +358,14 @@ export class SiDateRangeFilterComponent implements OnChanges {
       changes.datepickerConfig ||
       (changes.range && this.rangeChanged(changes.range.previousValue, changes.range.currentValue))
     ) {
-      this.updateFromRange();
+      this.updateFromRange(this.range());
     }
     if (
       (changes.basicMode || changes.enableTimeSelection) &&
       this.inputMode() &&
-      !this.advancedMode
+      !this.advancedMode()
     ) {
-      this.point2Mode = 'date';
+      this.point2Mode.set('date');
       this.point2Changed();
     }
   }
@@ -379,30 +380,30 @@ export class SiDateRangeFilterComponent implements OnChanges {
 
   private rangeChanged(oldRange: DateRangeFilter | undefined, newRange: DateRangeFilter): boolean {
     return (
-      !oldRange ||
+      !oldRange || // eslint-disable-line @typescript-eslint/prefer-optional-chain
       oldRange.point1 !== newRange.point1 ||
       oldRange.point2 !== newRange.point2 ||
       oldRange.range !== newRange.range
     );
   }
 
-  private updateFromRange(): void {
-    const rangeVal = this.range();
-    this.point1Now = rangeVal.point1 === 'now';
-    this.point1date = rangeVal.point1 === 'now' ? this.getDateNow() : rangeVal.point1;
+  private updateFromRange(rangeVal: DateRangeFilter): void {
+    this.point1Now.set(rangeVal.point1 === 'now');
+    this.point1date.set(rangeVal.point1 === 'now' ? this.getDateNow() : rangeVal.point1);
     if (rangeVal.point2) {
-      this.point2Mode = rangeVal.point2 instanceof Date ? 'date' : 'duration';
-      this.point2date = rangeVal.point2 instanceof Date ? rangeVal.point2 : this.getDateNow();
-      this.point2range = rangeVal.range ?? 'before';
-      this.point2offset =
+      this.point2Mode.set(rangeVal.point2 instanceof Date ? 'date' : 'duration');
+      this.point2date.set(rangeVal.point2 instanceof Date ? rangeVal.point2 : this.getDateNow());
+      this.point2range.set(rangeVal.range ?? 'before');
+      this.point2offset.set(
         rangeVal.point2 instanceof Date
-          ? Math.round(this.point1date.getTime() - rangeVal.point2.getTime())
-          : rangeVal.point2;
+          ? Math.abs(Math.round(this.point1date().getTime() - rangeVal.point2.getTime()))
+          : rangeVal.point2
+      );
     }
-    if ((this.point1Now && this.basicMode() !== 'input') || this.point2Mode !== 'date') {
-      this.advancedMode = true;
+    if ((this.point1Now() && this.basicMode() !== 'input') || this.point2Mode() !== 'date') {
+      this.advancedMode.set(true);
     } else {
-      this.advancedMode = false;
+      this.advancedMode.set(false);
       this.updateDateRange();
     }
   }
@@ -420,11 +421,15 @@ export class SiDateRangeFilterComponent implements OnChanges {
   }
 
   protected updateOnModeChange(): void {
-    if (this.advancedMode) {
+    if (this.advancedMode()) {
       const calculatedRange = this.resolve(this.range());
-      this.point2Mode = 'duration';
-      this.point2range = 'after';
-      this.point2offset = Math.abs(calculatedRange.end.getTime() - calculatedRange.start.getTime());
+      this.point1date.set(calculatedRange.start);
+      this.point2Mode.set('duration');
+      this.point2range.set('after');
+      this.point2offset.set(
+        Math.abs(calculatedRange.end.getTime() - calculatedRange.start.getTime())
+      );
+      this.updateRange();
     } else {
       this.updateSimpleMode(this.range());
     }
@@ -432,31 +437,33 @@ export class SiDateRangeFilterComponent implements OnChanges {
 
   private updateSimpleMode(newRange: DateRangeFilter): void {
     if (this.inputMode()) {
-      this.range.update(oldRange => ({
-        ...oldRange,
-        point1: newRange.point1
-      }));
       // input mode supports `now`, so point1 needs to remain unchanged
       if (newRange.point1 === 'now') {
-        this.point1Now = true;
-        this.point1date = this.getDateNow();
+        this.point1Now.set(true);
+        this.point1date.set(this.getDateNow());
       } else {
-        this.point1Now = false;
-        this.point1date = newRange.point1;
+        this.point1Now.set(false);
+        this.point1date.set(newRange.point1);
       }
       const calculatedRange = this.resolve(newRange, true);
-      this.point2Mode = 'date';
-      this.point2date = calculatedRange.end;
-      this.range.update(oldRange => ({
-        ...oldRange,
-        range: undefined,
-        point2: calculatedRange.end
-      }));
+      this.point2Mode.set('date');
+      this.point2date.set(calculatedRange.end);
+      this.updateRange();
     } else {
-      this.point1Now = false;
+      this.point1Now.set(false);
       this.updateDateRange(newRange);
       this.updateFromDateRange();
     }
+  }
+
+  private updateRange(): void {
+    const point2isDate = this.point2Mode() === 'date';
+    const newRange: DateRangeFilter = {
+      point1: this.point1Now() ? 'now' : this.point1date(),
+      point2: point2isDate ? this.point2date() : this.point2offset(),
+      range: point2isDate ? undefined : this.point2range()
+    };
+    this.range.update(old => ({ ...old, ...newRange }));
   }
 
   protected updateFromDateRange(dateRange?: DateRange): void {
@@ -466,59 +473,39 @@ export class SiDateRangeFilterComponent implements OnChanges {
     const range = this.dateRange();
     const startDate = range.start ?? this.getDateNow();
     const endDate = range.end ?? this.getDateNow();
-    this.point1date = startDate;
-    this.point2date = startDate;
-    this.range.set({
-      point1: startDate,
-      point2: endDate,
-      range: undefined
-    });
-    this.point2Mode = 'date';
-    this.point2offset = 0;
+    this.point1date.set(startDate);
+    this.point2date.set(endDate);
+    this.point2Mode.set('date');
+    this.point2offset.set(0);
+    this.updateRange();
   }
 
   protected point1Changed(): void {
-    if (this.point1Now) {
-      this.range.update(oldRange => ({ ...oldRange, point1: 'now' }));
-      this.point1date = this.getDateNow();
-      if (this.point2Mode !== 'date') {
-        this.point2range ??= 'before';
-      }
-    } else {
-      this.range.update(oldRange => ({ ...oldRange, point1: this.point1date ?? new Date(NaN) }));
+    if (this.point1Now()) {
+      this.point1date.set(this.getDateNow());
     }
+    this.updateRange();
   }
 
   protected point2Changed(): void {
-    if (this.point2Mode === 'date') {
+    if (this.point2Mode() === 'date') {
       if (!(this.range().point2 instanceof Date)) {
         const calculatedRange = this.resolve(this.range());
         if (calculatedRange.valid) {
-          this.point2date =
-            this.point1date < calculatedRange.end ? calculatedRange.start : calculatedRange.end;
+          this.point2date.set(
+            this.point1date() < calculatedRange.end ? calculatedRange.start : calculatedRange.end
+          );
         }
       }
-      this.range.update(oldRange => ({
-        ...oldRange,
-        range: undefined,
-        point2: this.point2date
-      }));
     } else {
-      this.range.update(oldRange => ({
-        ...oldRange,
-        range: this.point2range
-      }));
       if (this.range().point2 instanceof Date) {
         const calculatedRange = this.resolve(this.range());
-        this.point2offset = Math.round(
-          calculatedRange.end.getTime() - calculatedRange.start.getTime()
+        this.point2offset.set(
+          Math.round(calculatedRange.end.getTime() - calculatedRange.start.getTime())
         );
       }
-      this.range.update(oldRange => ({
-        ...oldRange,
-        point2: this.point2offset
-      }));
     }
+    this.updateRange();
   }
 
   protected selectPresetItem(event: Event, item: DateRangePreset): void {
@@ -526,9 +513,8 @@ export class SiDateRangeFilterComponent implements OnChanges {
       item.type === 'custom'
         ? item.calculate(item, this.range())
         : { point1: 'now', range: 'before', point2: item.offset };
-    if (this.advancedMode) {
-      Object.assign(this.range(), newRange);
-      this.updateFromRange();
+    if (this.advancedMode()) {
+      this.updateFromRange(newRange);
     } else {
       this.updateSimpleMode(newRange);
     }

@@ -12,10 +12,6 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate';
 export class SiSystemBannerComponent {
     readonly message: _angular_core.InputSignal<TranslatableString>;
     readonly status: _angular_core.InputSignal<ExtendedStatusType>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSystemBannerComponent, "si-system-banner", never, { "status": { "alias": "status"; "required": false; "isSignal": true; }; "message": { "alias": "message"; "required": true; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSystemBannerComponent, never>;
 }
 
 // (No @packageDocumentation comment for this package)

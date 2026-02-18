@@ -12,7 +12,8 @@ api-goldens
 mkdocs.yml
 docs/**/dynamic-forms.md
 
+# Formatting not possible because of extra MkDocs syntax
+docs/_custom_theme/partials/toc.html
+
 # Ignore test files in schematics
 **/schematics/**/files/**
-
-docs/_src/confetti.browser.min.js

@@ -1,23 +1,15 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ComponentRef, provideZonelessChangeDetection } from '@angular/core';
+import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { SiLoadingSpinnerComponent as TestComponent } from './index';
 
 describe('SiLoadingSpinnerComponent', () => {
   let fixture: ComponentFixture<TestComponent>;
   let component: ComponentRef<TestComponent>;
-
-  beforeEach(() =>
-    TestBed.configureTestingModule({
-      imports: [TestComponent, NoopAnimationsModule],
-      providers: [provideZonelessChangeDetection()]
-    })
-  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestComponent);

@@ -21,10 +21,6 @@ export class SiSummaryWidgetComponent {
     readonly stackedIcon: _angular_core.InputSignal<string | undefined>;
     readonly status: _angular_core.InputSignal<ExtendedStatusType | undefined>;
     readonly value: _angular_core.InputSignal<TranslatableString>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSummaryWidgetComponent, "si-summary-widget", never, { "status": { "alias": "status"; "required": false; "isSignal": true; }; "icon": { "alias": "icon"; "required": false; "isSignal": true; }; "color": { "alias": "color"; "required": false; "isSignal": true; }; "stackedIcon": { "alias": "stackedIcon"; "required": false; "isSignal": true; }; "stackedColor": { "alias": "stackedColor"; "required": false; "isSignal": true; }; "label": { "alias": "label"; "required": true; "isSignal": true; }; "value": { "alias": "value"; "required": true; "isSignal": true; }; "selected": { "alias": "selected"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "disabled": { "alias": "disabled"; "required": false; "isSignal": true; }; }, { "selected": "selectedChange"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSummaryWidgetComponent, never>;
 }
 
 // (No @packageDocumentation comment for this package)

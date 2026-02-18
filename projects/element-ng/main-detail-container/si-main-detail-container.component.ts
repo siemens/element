@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -20,7 +20,8 @@ import {
   output,
   SimpleChanges
 } from '@angular/core';
-import { addIcons, elementBack, SiIconComponent } from '@siemens/element-ng/icon';
+import { elementBack } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import {
   BOOTSTRAP_BREAKPOINTS,
   ElementDimensions,
@@ -33,7 +34,6 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'si-main-detail-container',
   imports: [
-    NgClass,
     NgTemplateOutlet,
     SiSplitComponent,
     SiSplitPartComponent,

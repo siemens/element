@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import {
@@ -18,7 +18,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
-import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
+import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import { SiInputPillComponent } from './si-input-pill.component';
 import {
@@ -99,7 +99,7 @@ export class SiPillsInputComponent implements OnInit, ControlValueAccessor, SiFo
   readonly readonly = input(false, { transform: booleanAttribute });
 
   /** The placeholder to be shown if no value is currently present. */
-  readonly placeholder = input<string>();
+  readonly placeholder = input<TranslatableString>();
 
   /**
    * @defaultValue

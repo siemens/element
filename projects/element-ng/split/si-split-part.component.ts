@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 /* eslint-disable @angular-eslint/prefer-output-emitter-ref */
@@ -127,11 +127,9 @@ export class SiSplitPartComponent implements OnChanges {
    * If enabled, all split parts between this one and the end of the split in the respective direction will be collapsed if this part is collapsed.
    * If disabled, only this split part will be collapsed.
    *
-   * The default value will change to false in v48.
-   *
-   * @defaultValue true
+   * @defaultValue false
    */
-  @Input({ transform: booleanAttribute }) collapseOthers = true;
+  @Input({ transform: booleanAttribute }) collapseOthers = false;
 
   @Output() readonly collapseChanged = new EventEmitter<boolean>();
   @Output() readonly stateChange = new EventEmitter<PartState>();

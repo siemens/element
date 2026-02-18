@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, provideZonelessChangeDetection, signal, viewChildren } from '@angular/core';
+import { Component, signal, viewChildren } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import {
@@ -106,8 +106,7 @@ describe('SiAutoCollapsableListDirective', () => {
   beforeEach(async () => {
     mockResizeObserver();
     await TestBed.configureTestingModule({
-      imports: [SiAutoCollapsableListModule, TestComponent],
-      providers: [provideZonelessChangeDetection()]
+      imports: [SiAutoCollapsableListModule, TestComponent]
     }).compileComponents();
     fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;

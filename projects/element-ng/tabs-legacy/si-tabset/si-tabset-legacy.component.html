@@ -53,7 +53,7 @@
           @if (tab.badgeContent === true) {
             <span class="badge-dot"></span>
           } @else if (tab.badgeContent && tab.badgeColor) {
-            <span class="badge" [ngClass]="'bg-' + tab.badgeColor">
+            <span class="badge" [class]="`bg-${tab.badgeColor}`">
               {{ tab.badgeContent | translate }}
             </span>
           } @else if (tab.badgeContent && !tab.badgeColor) {
@@ -61,7 +61,7 @@
           }
           @if (tab.closable && !tab.disabled) {
             <si-icon
-              class="ms-2 btn btn-circle btn-xs btn-ghost close"
+              class="ms-2 btn btn-circle btn-sm btn-ghost close"
               [icon]="icons.elementCancel"
               (click)="closeTab($event, tab)"
             />

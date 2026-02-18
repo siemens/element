@@ -1,9 +1,9 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { CdkConnectedOverlay, CdkOverlayOrigin } from '@angular/cdk/overlay';
-import { LowerCasePipe, NgClass } from '@angular/common';
+import { LowerCasePipe } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -13,6 +13,7 @@ import {
   ElementRef,
   inject,
   input,
+  LOCALE_ID,
   model,
   OnChanges,
   output,
@@ -28,8 +29,9 @@ import {
   ValidationErrors,
   Validator
 } from '@angular/forms';
+import { elementDown2 } from '@siemens/element-icons';
 import { SI_FORM_ITEM_CONTROL, SiFormItemControl } from '@siemens/element-ng/form';
-import { addIcons, elementDown2, SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SelectOption, SiSelectListHasFilterComponent } from '@siemens/element-ng/select';
 import {
   injectSiTranslateService,
@@ -46,7 +48,6 @@ import { CountryInfo, PhoneDetails } from './si-phone-number-input.models';
   imports: [
     CdkOverlayOrigin,
     CdkConnectedOverlay,
-    NgClass,
     SiIconComponent,
     SiPhoneNumberInputSelectDirective,
     SiSelectListHasFilterComponent,
@@ -88,6 +89,7 @@ export class SiPhoneNumberInputComponent
 
   private phoneUtil = PhoneNumberUtil.getInstance();
   private translate = injectSiTranslateService();
+  private locale = inject(LOCALE_ID).toString();
   private changeDetectorRef = inject(ChangeDetectorRef);
   private elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
@@ -362,7 +364,7 @@ export class SiPhoneNumberInputComponent
   private getCountryName(countryCode: string): string {
     // This auto translates the given country name to the selected locale language
     return (
-      new Intl.DisplayNames([this.translate.currentLanguage], { type: 'region' }).of(
+      new Intl.DisplayNames([this.translate.currentLanguage ?? this.locale], { type: 'region' }).of(
         countryCode.toUpperCase()
       ) ?? ''
     );

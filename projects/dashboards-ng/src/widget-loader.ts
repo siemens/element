@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import {
@@ -198,8 +198,8 @@ const loadAndAttachWebComponentWrapper = (
     } else {
       widgetInstanceRef = host.createComponent(SiWebComponentEditorWrapperComponent);
     }
-    widgetInstanceRef.instance.elementTagName = factory[componentName];
-    widgetInstanceRef.instance.url = factory.url;
+    widgetInstanceRef.setInput('elementTagName', factory[componentName]);
+    widgetInstanceRef.setInput('url', factory.url);
     result.next(widgetInstanceRef);
     result.complete();
   } else {

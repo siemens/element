@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router, RouterModule, Routes } from '@angular/router';
@@ -77,8 +77,7 @@ describe('SiBreadcrumbComponent', () => {
         SiTranslateNgxTModule,
         TranslateModule.forRoot(),
         WrapperComponent
-      ],
-      providers: [provideZonelessChangeDetection()]
+      ]
     }).compileComponents();
   });
 
@@ -175,10 +174,10 @@ describe('SiBreadcrumbComponent', () => {
 
     fixture.detectChanges();
 
-    const rootClasses = element
+    const iconElement = element
       .querySelector('.breadcrumb')!
-      .querySelector('.breadcrumb li:first-child si-icon div')!.classList;
-    expect(rootClasses.contains('element-breadcrumb-root')).toBeTruthy();
+      .querySelector('.breadcrumb li:first-child si-icon[data-icon="elementBreadcrumbRoot"]');
+    expect(iconElement).toBeTruthy();
   });
 
   it('should update items on change', () => {

@@ -1,15 +1,16 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SiThemeService, ThemeType } from '@siemens/element-ng/theme';
 
 @Component({
   selector: 'app-sample',
   imports: [FormsModule],
-  templateUrl: './theme-switcher.html'
+  templateUrl: './theme-switcher.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   theme: ThemeType = 'light';

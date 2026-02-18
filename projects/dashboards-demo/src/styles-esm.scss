@@ -1,0 +1,20 @@
+@charset "UTF-8";
+
+@use '@simpl/brand/assets/fonts/styles/siemens-sans';
+
+@use '@simpl/brand/dist/element-theme-siemens-brand-light' as brand-light;
+@use '@simpl/brand/dist/element-theme-siemens-brand-dark' as brand-dark;
+
+@use '@siemens/element-theme/src/theme' with (
+  $element-theme-default: 'siemens-brand',
+  $element-themes: (
+    'siemens-brand',
+    'element'
+  )
+);
+
+@use '@siemens/element-icons/dist/style/siemens-element-icons';
+
+@use '@siemens/element-theme/src/styles/themes';
+@include themes.make-theme(brand-light.$tokens, 'siemens-brand');
+@include themes.make-theme(brand-dark.$tokens, 'siemens-brand', true);

@@ -6,12 +6,12 @@
 <div
   #thebar
   aria-busy="true"
+  [class]="responsiveMode ? `responsive-${responsiveMode}` : ''"
   [class.responsive]="responsiveMode"
   [class.expanded]="expanded()"
   [class.compact]="responsiveMode || compact()"
   [class.pulse-off]="blinkOnOff() === false"
   [class.pulse-on]="blinkOnOff()"
-  [ngClass]="responsiveMode ? 'responsive-' + responsiveMode : ''"
 >
   <div
     class="status-bar-wrapper rounded-2"
@@ -107,7 +107,7 @@
 <ng-template #muteButtonTemplate>
   <button
     type="button"
-    class="bar-item mute-button btn btn-circle btn-sm btn-tertiary ms-5"
+    class="bar-item mute-button btn btn-circle btn-tertiary ms-5"
     [attr.aria-label]="muteButtonText() | translate"
     (click)="muteToggle.emit()"
   >

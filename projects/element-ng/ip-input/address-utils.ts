@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 interface Section {
@@ -98,11 +98,14 @@ export const splitIpV4Sections = (
   };
 };
 
-export const splitIpV6Sections = (options: Ip6SplitOptions): { value: string } => {
+export const splitIpV6Sections = (
+  options: Ip6SplitOptions
+): { value: string; cursorDelta: number } => {
   const { type, input, pos, zeroCompression, cidr } = options;
   const sections: Section[] = [{ value: '' }];
+  let cursorDelta = 0;
   if (!input) {
-    return { value: '' };
+    return { value: '', cursorDelta: 0 };
   }
 
   for (let i = 0; i < input.length; i++) {
@@ -130,12 +133,17 @@ export const splitIpV6Sections = (options: Ip6SplitOptions): { value: string } =
     const { value, current } = sections[i];
     if (value.length > 4) {
       const append: Section[] = [];
+      let charsProcessed = 0;
       for (let p = 0; p < value.length; p += 4) {
         const part = value.substring(p, p + 4);
         append.push({ value: part });
         if (part.length === 4) {
           append.push({ value: ':' });
+          if (current && pos >= charsProcessed) {
+            cursorDelta++;
+          }
         }
+        charsProcessed += 4;
       }
 
       sections.splice(i, 1, ...append);
@@ -178,5 +186,5 @@ export const splitIpV6Sections = (options: Ip6SplitOptions): { value: string } =
     .splice(0, cidr ? 17 : 15)
     .map(s => s.value)
     .join('');
-  return { value };
+  return { value, cursorDelta };
 };

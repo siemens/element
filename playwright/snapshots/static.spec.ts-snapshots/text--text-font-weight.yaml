@@ -1,0 +1,7 @@
+- paragraph: Bold text.
+- paragraph: Bolder weight text (relative to the parent element).
+- paragraph: Normal weight text.
+- paragraph: Light weight text.
+- paragraph: Lighter weight text (relative to the parent element).
+- paragraph: Italic text.
+- paragraph: Text with normal font style.

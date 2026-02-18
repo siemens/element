@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import {
@@ -13,8 +13,9 @@ import {
   output,
   TemplateRef
 } from '@angular/core';
+import { elementDown2 } from '@siemens/element-icons';
 import { SiAutoCollapsableListModule } from '@siemens/element-ng/auto-collapsable-list';
-import { addIcons, elementDown2, SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
 import {

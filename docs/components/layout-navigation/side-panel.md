@@ -121,7 +121,8 @@ the accordion behavior of having only one open panel is not desired, simply use
 Within a module
 
 ```ts
-import { SiAccordionModule, SiSidePanelModule } from '@siemens/element-ng/side-panel';
+import { SiSidePanelModule } from '@siemens/element-ng/side-panel';
+import { SiAccordionModule } from '@siemens/element-ng/accordion';
 
 @NgModule({
   imports: [SiAccordionModule, SiSidePanelModule, ...]
@@ -174,5 +175,7 @@ actions, or status indicators.
 <si-docs-api component="SiSidePanelComponent"></si-docs-api>
 
 <si-docs-api component="SiSidePanelContentComponent"></si-docs-api>
+
+<si-docs-api injectable="SiSidePanelService"></si-docs-api>
 
 <si-docs-types></si-docs-types>

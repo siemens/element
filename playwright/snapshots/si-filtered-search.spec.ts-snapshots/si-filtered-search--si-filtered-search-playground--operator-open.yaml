@@ -1,15 +1,13 @@
 - text: Filtered Search Location Munich
 - button "clear"
 - text: Event
-- combobox "search"
+- combobox "search" [expanded]
 - textbox "search": /2\/\d+\/\d+, \d+:\d+:\d+ AM/
 - button "clear"
 - combobox "search"
 - button "clear"
 - button "Submit search"
 - text: Control panel
-- checkbox "Readonly"
-- text: Readonly
 - checkbox "Disabled"
 - text: Disabled
 - checkbox "Search on input" [checked]

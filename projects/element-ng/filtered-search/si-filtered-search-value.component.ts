@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { CdkMonitorFocus, FocusOrigin } from '@angular/cdk/a11y';
@@ -16,7 +16,8 @@ import {
   viewChild
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { addIcons, elementCancel, SiIconComponent } from '@siemens/element-ng/icon';
+import { elementCancel } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTypeaheadDirective } from '@siemens/element-ng/typeahead';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { Observable } from 'rxjs';
@@ -50,7 +51,6 @@ export class SiFilteredSearchValueComponent implements OnInit {
   readonly value = model.required<CriterionValue>();
   readonly definition = input.required<InternalCriterionDefinition>();
   readonly disabled = input.required<boolean>();
-  readonly readonly = input.required<boolean>();
   readonly onlySelectValue = input.required<boolean>();
   readonly maxCriteriaOptions = input.required<number>();
   readonly optionsInScrollableView = input.required<number>();
@@ -120,10 +120,6 @@ export class SiFilteredSearchValueComponent implements OnInit {
   }
 
   edit(field?: 'value' | 'operator'): void {
-    if (this.readonly()) {
-      return;
-    }
-
     this.active.set(true);
     this.hasPendingFocus = true;
 

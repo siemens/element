@@ -13,20 +13,10 @@ export type ConnectionStrength = 'none' | 'low' | 'medium' | 'strong';
 export class SiConnectionStrengthComponent {
     readonly value: i0.InputSignal<ConnectionStrength>;
     readonly wlan: i0.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<SiConnectionStrengthComponent, "si-connection-strength", never, { "wlan": { "alias": "wlan"; "required": false; "isSignal": true; }; "value": { "alias": "value"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiConnectionStrengthComponent, never>;
 }
 
 // @public (undocumented)
 export class SiConnectionStrengthModule {
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiConnectionStrengthModule, never>;
-    // (undocumented)
-    static ɵinj: i0.ɵɵInjectorDeclaration<SiConnectionStrengthModule>;
-    // (undocumented)
-    static ɵmod: i0.ɵɵNgModuleDeclaration<SiConnectionStrengthModule, never, [typeof SiConnectionStrengthComponent], [typeof SiConnectionStrengthComponent]>;
 }
 
 // (No @packageDocumentation comment for this package)

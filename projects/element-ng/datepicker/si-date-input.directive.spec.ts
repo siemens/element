@@ -1,15 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  provideZonelessChangeDetection,
-  signal,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, NgControl } from '@angular/forms';
 
@@ -61,19 +54,17 @@ describe('SiDateInputDirective', () => {
 
   const dateInput = (): HTMLInputElement => element.querySelector<HTMLInputElement>('input')!;
 
-  beforeEach(() =>
-    TestBed.configureTestingModule({
-      imports: [WrapperComponent],
-      providers: [provideZonelessChangeDetection()]
-    })
-  );
-
   beforeEach(async () => {
+    jasmine.clock().install();
     fixture = TestBed.createComponent(WrapperComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
     fixture.detectChanges();
     await fixture.whenStable();
+  });
+
+  afterEach(() => {
+    jasmine.clock().uninstall();
   });
 
   const getTestDate = (): Date => {
@@ -114,7 +105,6 @@ describe('SiDateInputDirective', () => {
   });
 
   it('should consider minDate criteria with time', async () => {
-    jasmine.clock().install();
     spyOn(component.siDateInputDirective(), 'validate').and.callThrough();
     component.date = new Date('2020-03-12T13:13:13');
     updateConfig({
@@ -129,13 +119,12 @@ describe('SiDateInputDirective', () => {
 
     expect(component.validation().errors?.minDate).toEqual({
       actual: component.date,
-      min: component.config().minDate
+      min: component.config().minDate,
+      minString: '3/12/2021, 1:13:12 PM'
     });
-    jasmine.clock().uninstall();
   });
 
   it('should consider minDate criteria only date', async () => {
-    jasmine.clock().install();
     spyOn(component.siDateInputDirective(), 'validate').and.callThrough();
     component.date = new Date('2020-03-12');
     updateConfig({
@@ -150,13 +139,12 @@ describe('SiDateInputDirective', () => {
 
     expect(component.validation().errors?.minDate).toEqual({
       actual: component.date,
-      min: component.config().minDate
+      min: component.config().minDate,
+      minString: '3/13/2021, 12:00:00 AM'
     });
-    jasmine.clock().uninstall();
   });
 
   it('should consider maxDate criteria with time', async () => {
-    jasmine.clock().install();
     spyOn(component.siDateInputDirective(), 'validate').and.callThrough();
     component.date = new Date('2024-03-12T13:13:13');
     updateConfig({
@@ -170,13 +158,12 @@ describe('SiDateInputDirective', () => {
     await fixture.whenStable();
     expect(component.validation().errors?.maxDate).toEqual({
       actual: component.date,
-      max: component.config().maxDate
+      max: component.config().maxDate,
+      maxString: '3/12/2023, 1:13:12 PM'
     });
-    jasmine.clock().uninstall();
   });
 
   it('should consider maxDate criteria only date', async () => {
-    jasmine.clock().install();
     spyOn(component.siDateInputDirective(), 'validate').and.callThrough();
     component.date = new Date('2024-03-12');
     updateConfig({
@@ -190,9 +177,9 @@ describe('SiDateInputDirective', () => {
     await fixture.whenStable();
     expect(component.validation().errors?.maxDate).toEqual({
       actual: component.date,
-      max: component.config().maxDate
+      max: component.config().maxDate,
+      maxString: '3/11/2023, 12:00:00 AM'
     });
-    jasmine.clock().uninstall();
   });
 
   it('should disable input element when setting disabled property to true', () => {

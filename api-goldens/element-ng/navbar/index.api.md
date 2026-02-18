@@ -52,27 +52,11 @@ export class SiNavbarItemComponent implements OnInit, DoCheck, OnDestroy {
     // (undocumented)
     readonly dropdownTrigger: _angular_core.Signal<SiHeaderDropdownTriggerDirective | undefined>;
     readonly item: _angular_core.InputSignal<MenuItem>;
-    // (undocumented)
-    ngDoCheck(): void;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
     readonly quickAction: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiNavbarItemComponent, "si-navbar-item", never, { "item": { "alias": "item"; "required": true; "isSignal": true; }; "quickAction": { "alias": "quickAction"; "required": false; "isSignal": true; }; }, {}, never, ["si-avatar", "*"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiNavbarItemComponent, never>;
 }
 
 // @public @deprecated (undocumented)
 export class SiNavbarModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiNavbarModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiNavbarModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiNavbarModule, never, [typeof SiNavbarItemComponent, typeof SiNavbarPrimaryComponent], [typeof SiNavbarItemComponent, typeof SiNavbarPrimaryComponent]>;
 }
 
 // @public @deprecated (undocumented)
@@ -102,10 +86,6 @@ export class SiNavbarPrimaryComponent implements OnChanges, HeaderWithDropdowns 
     readonly showLessAppsTitle: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly showMoreAppsTitle: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly toggleNavigationText: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiNavbarPrimaryComponent, "si-navbar-primary", never, { "primaryItems": { "alias": "primaryItems"; "required": false; "isSignal": true; }; "accountItems": { "alias": "accountItems"; "required": false; "isSignal": true; }; "account": { "alias": "account"; "required": false; "isSignal": true; }; "logoUrl": { "alias": "logoUrl"; "required": false; "isSignal": true; }; "appTitle": { "alias": "appTitle"; "required": false; "isSignal": true; }; "home": { "alias": "home"; "required": false; "isSignal": true; }; "appSwitcherTitle": { "alias": "appSwitcherTitle"; "required": false; "isSignal": true; }; "appSwitcherSubTitle": { "alias": "appSwitcherSubTitle"; "required": false; "isSignal": true; }; "favoriteAppsTitle": { "alias": "favoriteAppsTitle"; "required": false; "isSignal": true; }; "defaultAppsTitle": { "alias": "defaultAppsTitle"; "required": false; "isSignal": true; }; "showMoreAppsTitle": { "alias": "showMoreAppsTitle"; "required": false; "isSignal": true; }; "showLessAppsTitle": { "alias": "showLessAppsTitle"; "required": false; "isSignal": true; }; "appItems": { "alias": "appItems"; "required": false; "isSignal": true; }; "appCategoryItems": { "alias": "appCategoryItems"; "required": false; "isSignal": true; }; "appItemsFavorites": { "alias": "appItemsFavorites"; "required": false; "isSignal": true; }; "allAppsLink": { "alias": "allAppsLink"; "required": false; "isSignal": true; }; "focusOnLoad": { "alias": "focusOnLoad"; "required": false; "isSignal": true; }; "navAriaLabel": { "alias": "navAriaLabel"; "required": false; "isSignal": true; }; "closeAppSwitcherText": { "alias": "closeAppSwitcherText"; "required": false; "isSignal": true; }; "openAppSwitcherText": { "alias": "openAppSwitcherText"; "required": false; "isSignal": true; }; "toggleNavigationText": { "alias": "toggleNavigationText"; "required": false; "isSignal": true; }; "ariaLabelMainMenu": { "alias": "ariaLabelMainMenu"; "required": false; "isSignal": true; }; "ariaLabelSecondaryMenu": { "alias": "ariaLabelSecondaryMenu"; "required": false; "isSignal": true; }; }, { "appItemFavoriteChanged": "appItemFavoriteChanged"; }, never, ["*", "si-navbar-item[quickAction], element-navbar-item[quickAction='true']"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiNavbarPrimaryComponent, never>;
 }
 
 // (No @packageDocumentation comment for this package)

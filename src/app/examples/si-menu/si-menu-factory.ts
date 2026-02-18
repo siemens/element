@@ -1,9 +1,9 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { CdkContextMenuTrigger, CdkMenuTrigger } from '@angular/cdk/menu';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
   MenuItemCheckbox,
   MenuItem,
@@ -14,7 +14,8 @@ import {
 @Component({
   selector: 'app-sample',
   imports: [CdkContextMenuTrigger, CdkMenuTrigger, SiMenuFactoryComponent],
-  templateUrl: './si-menu-factory.html'
+  templateUrl: './si-menu-factory.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   items: MenuItem[] = [

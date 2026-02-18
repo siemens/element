@@ -1,14 +1,15 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SiIconComponent } from '@siemens/element-ng/icon';
 
 @Component({
   selector: 'app-sample',
   imports: [SiIconComponent],
   templateUrl: './si-icon-composite.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent {}

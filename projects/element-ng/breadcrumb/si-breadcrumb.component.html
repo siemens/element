@@ -1,11 +1,11 @@
-<nav role="navigation" [attr.aria-label]="ariaLabel() | translate">
+<nav role="navigation" class="py-2" [attr.aria-label]="ariaLabel() | translate">
   <ol #breadcrumb class="breadcrumb" (siResizeObserver)="resetBreadcrumb()">
     @for (item of itemsShown; track $index; let isFirst = $first) {
       @if (!breadcrumbShortened || item.level !== ellipsesLevel) {
         @if (item.shortened) {
           <li #breadcrumbItem class="item text-nowrap shortened">
             @if (!isFirst) {
-              <si-icon class="separator flip-rtl" [icon]="icons.elementRight2" />
+              <si-icon class="d-block separator flip-rtl" [icon]="icons.elementRight2" />
             }
             <div class="breadcrumb-dropdown-wrapper">
               <ng-container
@@ -29,7 +29,7 @@
         } @else {
           <li #breadcrumbItem class="item">
             @if (!isFirst) {
-              <si-icon class="separator flip-rtl" [icon]="icons.elementRight2" />
+              <si-icon class="d-block icon-sm separator flip-rtl" [icon]="icons.elementRight2" />
             }
             <ng-container *ngTemplateOutlet="itemTemplate; context: { item: item }" />
           </li>
@@ -38,7 +38,7 @@
       @if (breadcrumbShortened && item.level === ellipsesLevel) {
         <li class="item breadcrumb-ellipses-item">
           @if (!isFirst) {
-            <si-icon class="separator flip-rtl" [icon]="icons.elementRight2" />
+            <si-icon class="d-block icon-sm separator flip-rtl" [icon]="icons.elementRight2" />
           }
           <div class="breadcrumb-dropdown-wrapper">
             <ng-container *ngTemplateOutlet="toggleTemplate; context: { item: item, title: '' }" />
@@ -72,7 +72,7 @@
     [attr.aria-disabled]="!item.link && !item.href && !item.action"
   >
     @if (item.level === 0) {
-      <si-icon class="icon flip-rtl" [icon]="icons.elementBreadcrumbRoot" />
+      <si-icon class="d-block icon-sm flip-rtl" [icon]="icons.elementBreadcrumbRoot" />
     } @else {
       <span>{{ item.title }}</span>
     }

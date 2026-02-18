@@ -1,4 +1,4 @@
-- text: "/Drop files here or click to upload Maximum upload size: [\\d,.]+[bkmBKM]+\\. Accepted file types: image\\/\\*\\./"
+- text: "/Drop files here or click to upload Max\\. [\\d,.]+[bkmBKM]+ upload size\\. Accepted file types: image\\/\\*\\./"
 - button "Clear" [disabled]
 - button "Upload" [disabled]
 - text: si-file-uploader settings

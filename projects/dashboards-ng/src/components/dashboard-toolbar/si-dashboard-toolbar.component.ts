@@ -1,8 +1,7 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import { Component, computed, inject, input, model, output, viewChild } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MenuItem } from '@siemens/element-ng/common';
@@ -28,7 +27,6 @@ import { DashboardToolbarItem } from '../../model/si-dashboard-toolbar.model';
     SiLinkDirective,
     SiLoadingSpinnerComponent,
     RouterLink,
-    NgClass,
     SiResponsiveContainerDirective,
     SiTranslatePipe
   ],

@@ -1,65 +1,154 @@
-<div class="button-container pt-11 ps-8 d-flex flex-wrap gap-4">
-  <button
-    type="button"
-    class="btn btn-secondary"
-    siTooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
-    placement="top"
-  >
-    Tooltip on top
-  </button>
-
-  <button
-    type="button"
-    class="btn btn-secondary"
-    siTooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
-    placement="end"
-  >
-    Tooltip on end
-  </button>
-
-  <button type="button" class="btn btn-secondary" siTooltip="Vivamus." placement="auto">
-    Tooltip auto
-  </button>
-
-  <button
-    type="button"
-    class="btn btn-secondary"
-    siTooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
-    placement="start"
-  >
-    Tooltip on start
-  </button>
-
-  <button
-    type="button"
-    class="btn btn-secondary"
-    siTooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
-    placement="bottom"
-  >
-    Tooltip on bottom
-  </button>
-
-  <button
-    type="button"
-    class="btn btn-primary"
-    siTooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
-    triggers="focus"
-  >
-    Dismissible tooltip
-  </button>
-
-  <button type="button" class="btn btn-secondary" placement="top" [siTooltip]="tooltipTemplateHtml">
-    Tooltip template html
-  </button>
-  <ng-template #tooltipTemplateHtml> Hello: <div [innerHtml]="html"></div> </ng-template>
-  <button type="button" class="btn btn-secondary" placement="top" [siTooltip]="tooltipTemplate">
-    Tooltip template
-  </button>
-
-  <ng-template #tooltipTemplate>
-    <div class="text-center">
-      <si-icon class="si-display" icon="element-info" />
+<div class="p-5">
+  <section class="d-flex align-items-center gap-4 mb-5">
+    <div class="btn-group" role="group" aria-label="File operations">
+      <button
+        type="button"
+        class="btn btn-icon btn-primary"
+        siTooltip="Open file"
+        aria-label="Open file"
+      >
+        <si-icon icon="element-folder-open" />
+      </button>
+      <button type="button" class="btn btn-icon btn-primary" siTooltip="Save" aria-label="Save">
+        <si-icon icon="element-save" />
+      </button>
+      <button
+        type="button"
+        class="btn btn-icon btn-primary"
+        siTooltip="Download"
+        aria-label="Download"
+      >
+        <si-icon icon="element-download" />
+      </button>
+      <button type="button" class="btn btn-icon btn-primary" siTooltip="Share" aria-label="Share">
+        <si-icon icon="element-share" />
+      </button>
     </div>
-    <em>Hello, I'm a tooltip.</em>
-  </ng-template>
+    <div class="btn-group" role="group" aria-label="Basic actions">
+      <button type="button" class="btn btn-icon btn-secondary" siTooltip="Edit" aria-label="Edit">
+        <si-icon icon="element-edit" />
+      </button>
+      <button type="button" class="btn btn-icon btn-secondary" siTooltip="Copy" aria-label="Copy">
+        <si-icon icon="element-copy" />
+      </button>
+      <button
+        type="button"
+        class="btn btn-icon btn-secondary"
+        siTooltip="Delete"
+        aria-label="Delete"
+      >
+        <si-icon icon="element-delete" />
+      </button>
+    </div>
+    <div class="btn-group" role="group" aria-label="Template examples">
+      <button
+        #focusButton
+        type="button"
+        class="btn btn-icon btn-tertiary"
+        aria-label="Template HTML example"
+        [siTooltip]="tooltipTemplateHtml"
+      >
+        <si-icon icon="element-microwave-on" />
+      </button>
+      <button
+        type="button"
+        class="btn btn-icon btn-tertiary"
+        aria-label="Template example"
+        [siTooltip]="tooltipTemplate"
+      >
+        <si-icon icon="element-light-desk" />
+      </button>
+    </div>
+  </section>
+
+  <section class="mb-5">
+    <h4>Tooltip placement</h4>
+    <div class="btn-group" role="group" aria-label="Tooltip placement">
+      <button
+        type="button"
+        class="btn btn-icon btn-secondary"
+        siTooltip="Auto placement"
+        placement="auto"
+        aria-label="Auto placement"
+      >
+        <si-icon icon="element-language" />
+      </button>
+      <button
+        type="button"
+        class="btn btn-icon btn-secondary"
+        siTooltip="Top"
+        placement="top"
+        aria-label="Top"
+      >
+        <si-icon icon="element-up-2" />
+      </button>
+      <button
+        type="button"
+        class="btn btn-icon btn-secondary"
+        siTooltip="Bottom"
+        placement="bottom"
+        aria-label="Bottom"
+      >
+        <si-icon icon="element-down-2" />
+      </button>
+      <button
+        type="button"
+        class="btn btn-icon btn-secondary"
+        siTooltip="Start"
+        placement="start"
+        aria-label="Start"
+      >
+        <si-icon icon="element-left-2" />
+      </button>
+      <button
+        type="button"
+        class="btn btn-icon btn-secondary"
+        siTooltip="End"
+        placement="end"
+        aria-label="End"
+      >
+        <si-icon icon="element-right-2" />
+      </button>
+    </div>
+  </section>
+
+  <section class="mb-5">
+    <h4>Other examples</h4>
+    <div class="d-flex align-items-start gap-4" style="max-width: 300px">
+      <button
+        type="button"
+        class="btn btn-secondary mt-4 d-inline text-truncate"
+        siTooltip="A long time ago in a galaxy far, far away..."
+      >
+        A long time ago in a galaxy far, far away...
+      </button>
+      <si-tabset class="w-50">
+        <si-tab heading="Heading" icon="element-portfolio" siTooltip="Portfolio">
+          <p class="mt-4">Portfolio</p>
+        </si-tab>
+        <si-tab
+          heading="Heading"
+          icon="element-portfolio-kpi"
+          siTooltip="Sustainability portfolio KPI"
+        >
+          <p class="mt-4">Performance</p>
+        </si-tab>
+        <si-tab
+          heading="Heading"
+          icon="element-sustainability"
+          siTooltip="Sustainability portfolio"
+        >
+          <p class="mt-4">Sustainability</p>
+        </si-tab>
+      </si-tabset>
+    </div>
+  </section>
 </div>
+
+<ng-template #tooltipTemplateHtml> Hello, <span [innerHtml]="html"></span> </ng-template>
+<ng-template #tooltipTemplate>
+  <div>
+    <si-icon class="si-display" icon="element-light-desk-filled" />
+  </div>
+  <div>I'm the tooltip template</div>
+</ng-template>

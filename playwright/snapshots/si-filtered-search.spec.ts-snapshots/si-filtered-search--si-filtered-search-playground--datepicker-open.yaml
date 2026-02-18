@@ -8,8 +8,6 @@
 - button "clear"
 - button "Submit search"
 - text: Control panel
-- checkbox "Readonly"
-- text: Readonly
 - checkbox "Disabled"
 - text: Disabled
 - checkbox "Search on input" [checked]

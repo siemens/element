@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
   Component,
@@ -14,11 +14,11 @@ import {
   viewChildren
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { addIcons, elementDelete, elementPlus, SiIconComponent } from '@siemens/element-ng/icon';
+import { elementDelete, elementPlus } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiNumberInputComponent } from '@siemens/element-ng/number-input';
 import {
   SelectOption,
-  SelectOptionLegacy,
   SiSelectComponent,
   SiSelectSimpleOptionsDirective,
   SiSelectSingleValueDirective
@@ -43,7 +43,6 @@ export interface ThresholdStep {
   selector: 'si-threshold',
   imports: [
     FormsModule,
-    NgClass,
     NgTemplateOutlet,
     SiIconComponent,
     SiNumberInputComponent,
@@ -67,7 +66,7 @@ export class SiThresholdComponent implements OnChanges {
    *
    * @defaultValue []
    */
-  readonly options = input<SelectOptionLegacy[] | SelectOption<unknown>[]>([]);
+  readonly options = input<SelectOption<unknown>[]>([]);
   /**
    * The thresholds
    *
@@ -183,11 +182,7 @@ export class SiThresholdComponent implements OnChanges {
   protected readonly colors = computed(() => {
     const colorMap = new Map<unknown, string>();
     for (const opt of this.options()) {
-      if (opt.type === 'option') {
-        colorMap.set(opt.value, opt.iconColor ?? '');
-      } else if (!opt.type) {
-        colorMap.set(opt.id, opt.color ?? '');
-      }
+      colorMap.set(opt.value, opt.iconColor ?? '');
     }
     return this.thresholdSteps().map(ths => colorMap.get(ths.optionValue) ?? '');
   });

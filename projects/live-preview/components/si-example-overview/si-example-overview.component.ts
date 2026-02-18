@@ -1,9 +1,9 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { AsyncPipe } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
@@ -37,6 +37,7 @@ export class SiExampleOverviewComponent implements OnInit, OnDestroy {
   private componentList: string[] = [];
   private darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
   private mediaQueryListener = (): void => this.toggleDark(this.darkMediaQuery.matches);
+  private cdRef = inject(ChangeDetectorRef);
 
   protected activeExampleRoute!: Observable<string>;
   protected tree: TreeItem[] = [];
@@ -119,10 +120,12 @@ export class SiExampleOverviewComponent implements OnInit, OnDestroy {
     if (this.isCollapsed) {
       this.showContent = false;
       setTimeout(() => window.dispatchEvent(new Event('resize')), 500);
+      this.cdRef.markForCheck();
     } else {
       setTimeout(() => {
         this.showContent = true;
         window.dispatchEvent(new Event('resize'));
+        this.cdRef.markForCheck();
       }, 500);
     }
   }

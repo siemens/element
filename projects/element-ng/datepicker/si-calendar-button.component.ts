@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { FocusMonitor } from '@angular/cdk/a11y';
@@ -9,7 +9,6 @@ import {
   Component,
   contentChild,
   DestroyRef,
-  DoCheck,
   ElementRef,
   inject,
   input,
@@ -19,7 +18,8 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgControl } from '@angular/forms';
-import { addIcons, elementCalendar, SiIconComponent } from '@siemens/element-ng/icon';
+import { elementCalendar } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { SiDatepickerOverlayDirective } from './si-datepicker-overlay.directive';
@@ -48,7 +48,7 @@ import { SiDatepickerDirective } from './si-datepicker.directive';
       #calendarButton
       name="open-calendar"
       type="button"
-      class="btn btn-circle btn-tertiary btn-xs position-absolute end-0 top-0 me-2 mt-2"
+      class="btn btn-icon btn-tertiary btn-sm position-absolute end-0 top-0 me-2 mt-2"
       [attr.aria-label]="ariaLabel() | translate"
       [disabled]="disabled()"
       (click)="show()"
@@ -58,12 +58,10 @@ import { SiDatepickerDirective } from './si-datepicker.directive';
   styles: ':host {--si-action-icon-offset: 24px;}',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'd-inline-block position-relative form-control-wrapper',
-    '[class.ng-invalid]': 'showValidationMessages()',
-    '[class.ng-touched]': 'showValidationMessages()'
+    class: 'd-inline-block position-relative form-control-wrapper'
   }
 })
-export class SiCalendarButtonComponent implements OnInit, AfterContentInit, DoCheck {
+export class SiCalendarButtonComponent implements OnInit, AfterContentInit {
   /**
    * Aria label for the calendar toggle button.
    *
@@ -87,9 +85,6 @@ export class SiCalendarButtonComponent implements OnInit, AfterContentInit, DoCh
   private readonly focusMonitor = inject(FocusMonitor);
   private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
-  // Add classes here to enable error messages in si-form-item
-  protected readonly showValidationMessages = signal(false);
-
   ngOnInit(): void {
     // Monitor input state changes and update the button accordingly
     this.datepicker().stateChange.subscribe(() => this.updateState());
@@ -103,11 +98,6 @@ export class SiCalendarButtonComponent implements OnInit, AfterContentInit, DoCh
           }
         });
       });
-  }
-
-  ngDoCheck(): void {
-    const control = this.ngControl()?.control;
-    this.showValidationMessages.set(!!control?.touched && !!control?.invalid);
   }
 
   ngAfterContentInit(): void {

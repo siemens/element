@@ -7,7 +7,6 @@
 import { EventEmitter } from '@angular/core';
 import * as i0 from '@angular/core';
 import { Observable } from 'rxjs';
-import { SafeHtml } from '@angular/platform-browser';
 
 // @public (undocumented)
 export const ELEMENT_THEME_NAME = "element";
@@ -54,14 +53,10 @@ export class SiThemeService {
     get resolvedColorScheme(): ThemeType | undefined;
     setActiveTheme(name?: string, type?: ThemeType): Observable<boolean>;
     readonly themeChange: EventEmitter<Theme | undefined>;
-    readonly themeIcons: i0.WritableSignal<Record<string, SafeHtml>>;
+    readonly themeIcons: i0.WritableSignal<Record<string, string>>;
     readonly themeNames$: Observable<string[]>;
     get themeNames(): string[];
     updateProperty(name: string, value: string, type: keyof ThemeColorSchemes): void;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiThemeService, never>;
-    // (undocumented)
-    static ɵprov: i0.ɵɵInjectableDeclaration<SiThemeService>;
 }
 
 // @public

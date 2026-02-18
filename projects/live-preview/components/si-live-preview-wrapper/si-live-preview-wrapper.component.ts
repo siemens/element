@@ -1,8 +1,16 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, ElementRef, HostListener, inject, NgZone, viewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostListener,
+  inject,
+  NgZone,
+  viewChild
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { fromEvent } from 'rxjs';
 
@@ -50,6 +58,7 @@ export class SiLivePreviewWrapperComponent {
   private internalConfig = inject(SI_LIVE_PREVIEW_INTERNALS);
   private ngZone = inject(NgZone);
   private webcomponentService = inject(SiLivePreviewWebComponentService, { optional: true });
+  private cdRef = inject(ChangeDetectorRef);
 
   constructor() {
     this.themeApi
@@ -77,7 +86,10 @@ export class SiLivePreviewWrapperComponent {
     this.ngZone.runOutsideAngular(() =>
       fromEvent<MessageEvent>(window, 'message')
         .pipe(takeUntilDestroyed())
-        .subscribe(message => this.onMessage(message))
+        .subscribe(message => {
+          this.onMessage(message);
+          this.cdRef.markForCheck();
+        })
     );
   }
 

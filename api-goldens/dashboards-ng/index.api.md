@@ -26,6 +26,7 @@ import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { OutputEmitterRef } from '@angular/core';
+import { Provider } from '@angular/core';
 import { SiDashboardComponent } from '@siemens/element-ng/dashboard';
 import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SimpleChanges } from '@angular/core';
@@ -79,9 +80,15 @@ export const DEFAULT_GRIDSTACK_OPTIONS: GridStackOptions;
 // @public
 export const DEFAULT_WIDGET_STORAGE_TOKEN: InjectionToken<Storage>;
 
-// @public (undocumented)
+// @public
+export type FederatedBridgeModule = CommonFactoryFields & LoadRemoteBridgeOptions & {
+    factoryType: 'native-federation-module-bridge';
+    [index: string]: any;
+};
+
+// @public
 export type FederatedModule = CommonFactoryFields & LoadRemoteModuleOptions & {
-    factoryType: 'module-federation';
+    factoryType: 'module-federation' | 'native-federation';
     [index: string]: any;
 };
 
@@ -89,6 +96,15 @@ export type FederatedModule = CommonFactoryFields & LoadRemoteModuleOptions & {
 export interface GridConfig {
     gridStackOptions?: GridStackOptions;
 }
+
+// @public
+export type LoadRemoteBridgeOptions = {
+    id: string;
+    options?: {
+        loadFactory?: boolean | undefined;
+        from: 'build' | 'runtime';
+    } | undefined;
+};
 
 // @public (undocumented)
 export type LoadRemoteModuleEsmOptions = {
@@ -119,6 +135,12 @@ export type LoadRemoteModuleScriptOptions = {
 export type ObjectFit = 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
 
 // @public
+export const provideDashboardToolbarItems: (toolbarItems?: {
+    primary?: DashboardToolbarItem[];
+    secondary?: DashboardToolbarItem[];
+}) => Provider;
+
+// @public
 export type SetupComponentFn = <T>(factory: WidgetComponentFactory, componentName: string, host: ViewContainerRef, injector: Injector, envInjector: EnvironmentInjector) => Observable<ComponentRef<T>>;
 
 // @public (undocumented)
@@ -131,6 +153,12 @@ export const setupWidgetInstance: (widgetComponentFactory: WidgetComponentFactor
 export const SI_DASHBOARD_CONFIGURATION: InjectionToken<Config>;
 
 // @public
+export const SI_DASHBOARD_TOOLBAR_ITEMS: InjectionToken<{
+    primary: DashboardToolbarItem[];
+    secondary: DashboardToolbarItem[];
+}>;
+
+// @public
 export const SI_WIDGET_ID_PROVIDER: InjectionToken<SiWidgetIdProvider>;
 
 // @public
@@ -138,12 +166,6 @@ export const SI_WIDGET_STORE: InjectionToken<SiWidgetStorage>;
 
 // @public (undocumented)
 class SiDashboardsNgModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiDashboardsNgModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiDashboardsNgModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiDashboardsNgModule, never, [typeof SiFlexibleDashboardComponent, typeof SiGridComponent, typeof SiWidgetCatalogComponent, typeof SiWidgetInstanceEditorDialogComponent], [typeof SiFlexibleDashboardComponent, typeof SiGridComponent, typeof SiWidgetCatalogComponent, typeof SiWidgetInstanceEditorDialogComponent]>;
 }
 export { SiDashboardsNgModule }
 export { SiDashboardsNgModule as SimplDashboardsNgModule }
@@ -154,9 +176,13 @@ export class SiDefaultWidgetStorage extends SiWidgetStorage {
     // (undocumented)
     load(dashboardId?: string): Observable<WidgetConfig[]>;
     // (undocumented)
+    protected loadFromStorage(dashboardId?: string): WidgetConfig[];
+    // (undocumented)
     save(modifiedWidgets: WidgetConfig[], addedWidgets: WidgetConfig[], removedWidgets?: WidgetConfig[], dashboardId?: string): Observable<WidgetConfig[]>;
     // (undocumented)
     storage: Storage;
+    // (undocumented)
+    protected update(widgetConfigs: WidgetConfig[], dashboardId?: string): void;
 }
 
 // @public
@@ -173,25 +199,17 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
     // (undocumented)
     readonly isDashboardVisible: _angular_core.Signal<boolean>;
     readonly isModified: _angular_core.OutputEmitterRef<boolean>;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
     readonly pageTitle: _angular_core.Signal<string | undefined>;
     readonly primaryEditActions$: BehaviorSubject<(MenuItem | DashboardToolbarItem)[]>;
+    readonly primaryEditActions: _angular_core.InputSignal<DashboardToolbarItem[]>;
     readonly searchPlaceholder: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     readonly secondaryEditActions$: BehaviorSubject<(MenuItem | DashboardToolbarItem)[]>;
+    readonly secondaryEditActions: _angular_core.InputSignal<DashboardToolbarItem[]>;
     readonly showEditButtonLabel: _angular_core.InputSignal<boolean>;
     showWidgetCatalog(): void;
     readonly widgetCatalog: _angular_core.InputSignal<Widget[]>;
     readonly widgetCatalogComponent: _angular_core.InputSignal<Type<SiWidgetCatalogComponent> | undefined>;
     readonly widgetInstanceEditorDialogComponent: _angular_core.InputSignal<Type<SiWidgetInstanceEditorDialogComponent> | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiFlexibleDashboardComponent, "si-flexible-dashboard", never, { "editable": { "alias": "editable"; "required": false; "isSignal": true; }; "heading": { "alias": "heading"; "required": false; "isSignal": true; }; "widgetCatalogComponent": { "alias": "widgetCatalogComponent"; "required": false; "isSignal": true; }; "widgetInstanceEditorDialogComponent": { "alias": "widgetInstanceEditorDialogComponent"; "required": false; "isSignal": true; }; "dashboardId": { "alias": "dashboardId"; "required": false; "isSignal": true; }; "widgetCatalog": { "alias": "widgetCatalog"; "required": false; "isSignal": true; }; "hideAddWidgetInstanceButton": { "alias": "hideAddWidgetInstanceButton"; "required": false; "isSignal": true; }; "hideEditButton": { "alias": "hideEditButton"; "required": false; "isSignal": true; }; "showEditButtonLabel": { "alias": "showEditButtonLabel"; "required": false; "isSignal": true; }; "hideProgressIndicator": { "alias": "hideProgressIndicator"; "required": false; "isSignal": true; }; "config": { "alias": "config"; "required": false; "isSignal": true; }; "searchPlaceholder": { "alias": "searchPlaceholder"; "required": false; "isSignal": true; }; }, { "editable": "editableChange"; "isModified": "isModified"; }, never, ["[filters-slot]", "[empty-state]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiFlexibleDashboardComponent, never>;
 }
 
 // @public
@@ -209,46 +227,24 @@ export class SiGridComponent implements OnInit, OnChanges, OnDestroy {
     readonly hideProgressIndicator: _angular_core.InputSignal<boolean>;
     readonly isLoading: BehaviorSubject<boolean>;
     readonly isModified: _angular_core.OutputEmitterRef<boolean>;
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
     removeWidgetInstance(widgetInstanceId: string): void;
     save(): void;
     updateWidgetInstance(editedWidgetConfig: WidgetConfig): void;
     readonly widgetCatalog: _angular_core.InputSignal<Widget[]>;
     readonly widgetInstanceEdit: _angular_core.OutputEmitterRef<WidgetConfig>;
     readonly widgetInstanceEditorDialogComponent: _angular_core.InputSignal<Type<SiWidgetInstanceEditorDialogComponent> | undefined>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiGridComponent, "si-grid", never, { "gridConfig": { "alias": "gridConfig"; "required": false; "isSignal": true; }; "editable": { "alias": "editable"; "required": false; "isSignal": true; }; "dashboardId": { "alias": "dashboardId"; "required": false; "isSignal": true; }; "widgetCatalog": { "alias": "widgetCatalog"; "required": false; "isSignal": true; }; "emitWidgetInstanceEditEvents": { "alias": "emitWidgetInstanceEditEvents"; "required": false; "isSignal": true; }; "hideProgressIndicator": { "alias": "hideProgressIndicator"; "required": false; "isSignal": true; }; "widgetInstanceEditorDialogComponent": { "alias": "widgetInstanceEditorDialogComponent"; "required": false; "isSignal": true; }; }, { "editable": "editableChange"; "isModified": "isModified"; "widgetInstanceEdit": "widgetInstanceEdit"; }, never, ["[empty-state]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiGridComponent, never>;
 }
 
 // @public
 export class SiWidgetCatalogComponent implements OnInit, OnDestroy {
     readonly closed: _angular_core.OutputEmitterRef<Omit<WidgetConfig, "id"> | undefined>;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
     readonly searchPlaceholder: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
     widgetCatalog: Widget[];
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiWidgetCatalogComponent, "si-widget-catalog", never, { "searchPlaceholder": { "alias": "searchPlaceholder"; "required": false; "isSignal": true; }; }, { "closed": "closed"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiWidgetCatalogComponent, never>;
 }
 
 // @public
 export class SiWidgetDefaultIdProvider extends SiWidgetIdProvider {
     generateWidgetId(widget: Omit<WidgetConfig, 'id'>, dashboardId?: string): string;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiWidgetDefaultIdProvider, never>;
-    // (undocumented)
-    static ɵprov: _angular_core.ɵɵInjectableDeclaration<SiWidgetDefaultIdProvider>;
 }
 
 // @public
@@ -260,20 +256,13 @@ export abstract class SiWidgetIdProvider {
 export class SiWidgetInstanceEditorDialogComponent implements OnInit, OnDestroy {
     readonly closed: _angular_core.OutputEmitterRef<WidgetConfig | undefined>;
     readonly editorSetupCompleted: _angular_core.OutputEmitterRef<void>;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
     readonly widget: _angular_core.InputSignal<Widget>;
     readonly widgetConfig: _angular_core.ModelSignal<WidgetConfig>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiWidgetInstanceEditorDialogComponent, "si-widget-instance-editor-dialog", never, { "widgetConfig": { "alias": "widgetConfig"; "required": true; "isSignal": true; }; "widget": { "alias": "widget"; "required": true; "isSignal": true; }; }, { "widgetConfig": "widgetConfigChange"; "closed": "closed"; "editorSetupCompleted": "editorSetupCompleted"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiWidgetInstanceEditorDialogComponent, never>;
 }
 
 // @public
 export abstract class SiWidgetStorage {
+    // @deprecated
     getToolbarMenuItems?: (dashboardId?: string) => {
         primary: Observable<(MenuItem | DashboardToolbarItem)[]>;
         secondary: Observable<(MenuItem | DashboardToolbarItem)[]>;
@@ -305,7 +294,7 @@ export interface Widget {
 }
 
 // @public
-export type WidgetComponentFactory = WidgetComponentTypeFactory | FederatedModule | WebComponent;
+export type WidgetComponentFactory = WidgetComponentTypeFactory | FederatedModule | WebComponent | FederatedBridgeModule;
 
 // @public (undocumented)
 export type WidgetComponentTypeFactory = CommonFactoryFields & (ModuleOptions | StandaloneOptions);

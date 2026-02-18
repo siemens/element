@@ -1,9 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { A11yModule, CdkTrapFocus } from '@angular/cdk/a11y';
-import { NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -15,12 +14,13 @@ import {
   signal,
   viewChild
 } from '@angular/core';
+import { elementCancel } from '@siemens/element-icons';
 import {
   calculateOverlayArrowPosition,
   isRTL,
   OverlayArrowPosition
 } from '@siemens/element-ng/common';
-import { addIcons, elementCancel, SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 import { Subscription } from 'rxjs';
 
@@ -28,7 +28,7 @@ import { PositionChange, SI_TOUR_TOKEN, TourAction, TourStepInternal } from './s
 
 @Component({
   selector: 'si-tour',
-  imports: [A11yModule, NgClass, SiIconComponent, SiTranslatePipe],
+  imports: [A11yModule, SiIconComponent, SiTranslatePipe],
   templateUrl: './si-tour.component.html',
   styleUrl: './si-tour.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

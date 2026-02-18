@@ -1,8 +1,7 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -17,27 +16,23 @@ import { IconService } from './si-icons';
 
 /**
  * Global configuration for icons.
- *
- * @experimental
  */
 export interface IconConfig {
   /**
    * If true, the si-icon component will always render the icon font instead of the svg.
    *
-   * @defaultValue true
+   * @defaultValue false
    */
   disableSvgIcons?: boolean;
 }
 
 const ICON_CONFIG = new InjectionToken<IconConfig>('ICON_CONFIG', {
   providedIn: 'root',
-  factory: () => ({ disableSvgIcons: true })
+  factory: () => ({ disableSvgIcons: false })
 });
 
 /**
  * Configure how Element handles icons. Provide only once in your global configuration.
- *
- * @experimental
  */
 export const provideIconConfig = (config: IconConfig): Provider => ({
   provide: ICON_CONFIG,
@@ -52,34 +47,15 @@ export const provideIconConfig = (config: IconConfig): Provider => ({
  *
  * The content of this component is hidden in the a11y tree.
  * If needed, the consumer must set proper labels.
- *
- * @experimental
  */
 @Component({
   selector: 'si-icon',
-  imports: [NgClass],
-  template: ` <div
-    aria-hidden="true"
-    [ngClass]="svgIcon() ? '' : fontIcon()"
-    [innerHTML]="svgIcon()"
-  ></div>`,
-  styles: `
-    :host {
-      display: inline-flex;
-      font-weight: normal;
-      vertical-align: middle;
-      line-height: 1;
-
-      ::ng-deep svg {
-        display: block;
-        block-size: 1em;
-        fill: currentColor;
-      }
-    }
-  `,
+  template: ` <div aria-hidden="true" [class]="svgIcon() ? 'svg-element-icon' : fontIcon()"></div>`,
+  styleUrl: './si-icon.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[attr.data-icon]': 'icon()'
+    '[attr.data-icon]': 'icon()',
+    '[style.--svg-element-icon]': 'svgIcon()'
   }
 })
 export class SiIconComponent {
@@ -91,7 +67,7 @@ export class SiIconComponent {
    *
    * @example
    * ```ts
-   * import { elementUser } from '@simpl/element-icons/ionic';
+   * import { elementUser } from '@siemens/element-icons';
    *
    * @Component({template: `
    *   <si-icon [icon]="icons.elementUser" />
@@ -109,9 +85,14 @@ export class SiIconComponent {
   private readonly config = inject(ICON_CONFIG);
   private readonly iconService = inject(IconService);
 
-  protected readonly svgIcon = computed(() =>
-    this.config.disableSvgIcons ? undefined : this.iconService.getIcon(this.icon())
-  );
+  protected readonly svgIcon = computed(() => {
+    const icon = this.config.disableSvgIcons ? undefined : this.iconService.getIcon(this.icon());
+    if (!icon) {
+      return undefined;
+    }
+
+    return `url("${icon.replace(/"/g, '\\"')}")`;
+  });
 
   /** Icon class, which is ensured to be kebab-case. */
   protected readonly fontIcon = computed(() =>

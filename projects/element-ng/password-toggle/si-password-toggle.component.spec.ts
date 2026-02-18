@@ -1,12 +1,25 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, input, provideZonelessChangeDetection } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 
 import { SiPasswordToggleModule } from './si-password-toggle.module';
+
+const rgbToHex = (rgb: string): string => {
+  const result = rgb.match(/\d+/g);
+  if (!result) return rgb;
+  const [r, g, b] = result.map(Number);
+  return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+};
 
 @Component({
   imports: [FormsModule, SiPasswordToggleModule],
@@ -20,14 +33,29 @@ class TestHostComponent {
   readonly showVisibilityIcon = input(true);
 }
 
+@Component({
+  imports: [FormsModule, ReactiveFormsModule, SiPasswordToggleModule],
+  template: `
+    <form [formGroup]="form">
+      <si-password-toggle #toggle showVisibilityIcon="true">
+        <input class="form-control" formControlName="input" />
+      </si-password-toggle>
+    </form>
+  `
+})
+class FormHostComponent {
+  readonly form = new FormGroup({
+    input: new FormControl('', { updateOn: 'blur', validators: Validators.required })
+  });
+}
+
 describe('SiPasswordToggleComponent', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let element: HTMLElement;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule, SiPasswordToggleModule, TestHostComponent],
-      providers: [provideZonelessChangeDetection()]
+      imports: [FormsModule, SiPasswordToggleModule, TestHostComponent]
     });
   });
 
@@ -63,5 +91,28 @@ describe('SiPasswordToggleComponent', () => {
     expect(element.querySelector('si-password-toggle')?.classList).not.toContain(
       'show-visibility-icon'
     );
+  });
+
+  describe('as form control', () => {
+    let formFixture: ComponentFixture<FormHostComponent>;
+
+    beforeEach(() => {
+      formFixture = TestBed.createComponent(FormHostComponent);
+      formFixture.detectChanges();
+      element = formFixture.nativeElement;
+    });
+
+    it('should show invalid border on blur', () => {
+      const passwordInput = element.querySelector<HTMLElement>('input')!;
+      const defaultBorderColor = getComputedStyle(passwordInput).getPropertyValue('--element-ui-2');
+      const invalidBorderColor =
+        getComputedStyle(passwordInput).getPropertyValue('--element-status-danger');
+
+      expect(rgbToHex(getComputedStyle(passwordInput).borderColor)).toBe(defaultBorderColor);
+
+      passwordInput.dispatchEvent(new Event('blur'));
+      formFixture.detectChanges();
+      expect(rgbToHex(getComputedStyle(passwordInput).borderColor)).toBe(invalidBorderColor);
+    });
   });
 });

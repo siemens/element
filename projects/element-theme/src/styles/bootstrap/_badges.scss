@@ -125,10 +125,10 @@
   }
 
   .icon {
-    font-size: 20px;
-    margin-inline-start: -4px;
-    vertical-align: top;
     padding-block: map.get(spacers.$spacers, 1);
+    margin-inline-start: -4px;
+    margin-inline-end: map.get(spacers.$spacers, 1);
+    vertical-align: bottom;
   }
 }
 
@@ -162,8 +162,8 @@
   font-weight: typography.$si-font-weight-semibold;
 }
 
-.icon + .badge-text {
-  inset-block-start: -5px;
+:is(.icon, .icon-sm, .icon-lg) + .badge-text {
+  inset-block-start: -8px;
   inset-inline-start: -12px;
   margin-inline-end: -12px;
 }

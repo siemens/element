@@ -1,12 +1,11 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { booleanAttribute, Component, Input, provideZonelessChangeDetection } from '@angular/core';
+import { booleanAttribute, Component, Input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 import { MenuItem } from '@siemens/element-ng/menu';
 
@@ -44,8 +43,8 @@ describe('SiContentActionBarComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [BrowserAnimationsModule, TestComponent],
-      providers: [provideRouter([]), provideZonelessChangeDetection()]
+      imports: [TestComponent],
+      providers: [provideRouter([])]
     }).compileComponents();
   });
 

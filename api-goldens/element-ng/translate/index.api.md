@@ -234,9 +234,17 @@ export interface SiTranslatableKeys {
     // (undocumented)
     'SI_FORM_CONTAINER.ERROR.DATE_FORMAT'?: string;
     // (undocumented)
+    'SI_FORM_CONTAINER.ERROR.DATE_FORMAT_END'?: string;
+    // (undocumented)
+    'SI_FORM_CONTAINER.ERROR.DATE_FORMAT_START'?: string;
+    // (undocumented)
     'SI_FORM_CONTAINER.ERROR.EMAIL'?: string;
     // (undocumented)
+    'SI_FORM_CONTAINER.ERROR.END_BEFORE_START'?: string;
+    // (undocumented)
     'SI_FORM_CONTAINER.ERROR.HOURS'?: string;
+    // (undocumented)
+    'SI_FORM_CONTAINER.ERROR.INVALID_PHONE'?: string;
     // (undocumented)
     'SI_FORM_CONTAINER.ERROR.IPV4'?: string;
     // (undocumented)
@@ -265,6 +273,12 @@ export interface SiTranslatableKeys {
     'SI_FORM_CONTAINER.ERROR.NUMBER_FORMAT'?: string;
     // (undocumented)
     'SI_FORM_CONTAINER.ERROR.PATTERN'?: string;
+    // (undocumented)
+    'SI_FORM_CONTAINER.ERROR.PHONE_COUNTRY'?: string;
+    // (undocumented)
+    'SI_FORM_CONTAINER.ERROR.RANGE_AFTER_MAX_DATE'?: string;
+    // (undocumented)
+    'SI_FORM_CONTAINER.ERROR.RANGE_BEFORE_MIN_DATE'?: string;
     // (undocumented)
     'SI_FORM_CONTAINER.ERROR.REQUIRED'?: string;
     // (undocumented)
@@ -296,6 +310,8 @@ export interface SiTranslatableKeys {
     // (undocumented)
     'SI_LAUNCHPAD.DEFAULT_CATEGORY_TITLE'?: string;
     // (undocumented)
+    'SI_LAUNCHPAD.EXTERNAL_LINK'?: string;
+    // (undocumented)
     'SI_LAUNCHPAD.FAVORITE_APPS'?: string;
     // (undocumented)
     'SI_LAUNCHPAD.SHOW_LESS'?: string;
@@ -303,8 +319,6 @@ export interface SiTranslatableKeys {
     'SI_LAUNCHPAD.SHOW_MORE'?: string;
     // (undocumented)
     'SI_LAUNCHPAD.SUB_TITLE'?: string;
-    // (undocumented)
-    'SI_LAUNCHPAD.SUBTITLE'?: string;
     // (undocumented)
     'SI_LAUNCHPAD.TITLE'?: string;
     // (undocumented)
@@ -325,8 +339,6 @@ export interface SiTranslatableKeys {
     'SI_LOGIN_BASIC.NEXT'?: string;
     // (undocumented)
     'SI_LOGIN_BASIC.PASSWORD'?: string;
-    // (undocumented)
-    'SI_LOGIN_BASIC.REGISTER_NOW_INTRO'?: string;
     // (undocumented)
     'SI_LOGIN_BASIC.USERNAME'?: string;
     // (undocumented)

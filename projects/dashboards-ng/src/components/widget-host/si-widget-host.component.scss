@@ -37,16 +37,20 @@
     }
   }
 
+  /* stylelint-disable declaration-no-important */
   .ui-resizable-handle {
     // Overwrite to always show the handle in edit mode
-    display: block !important; // stylelint-disable-line declaration-no-important
+    display: block !important;
   }
 
   .ui-resizable-se {
     // Overwrite to hide the gridstack.js icon
-    background-image: none !important; // stylelint-disable-line declaration-no-important
-    transform: none !important; // stylelint-disable-line declaration-no-important
+    background-image: none !important;
+    transform: none !important;
+    inset-block-end: map.get(variables.$spacers, 3) !important;
+    inset-inline-end: map.get(variables.$spacers, 3) !important;
   }
+  /* stylelint-enable declaration-no-important */
 }
 
 .resize-handle {
@@ -60,9 +64,7 @@
 }
 
 .draggable-overlay {
-  inset-block-end: map.get(variables.$spacers, 8);
-  inset-block-start: 40px;
-  inset-inline: map.get(variables.$spacers, 8);
+  inset: map.get(variables.$spacers, 4);
   position: absolute;
   z-index: 100;
 }

@@ -1,7 +1,7 @@
 - text: Natural Gas Usage Shows the usage of natural gas
 - button "Toggle"
 - paragraph: Some quick example text to build on the card title and make up the bulk of the card's content.
-- text: FS20
+- text: Fire
 - paragraph: Too much wood is burning in the hot summer.
 - paragraph: Use Siemens sensors to detect fire and save the planet.
 - text: Overflows
@@ -18,7 +18,7 @@
   - listitem: Vestibulum at eros
   - listitem: Porta ac consectetur ac
   - listitem: Vestibulum at eros
-- text: FS20
+- text: Fire
 - paragraph: Too much wood is burning in the hot summer.
 - paragraph: Use Siemens sensors to detect fire and save the planet.
 - img "Beach in Greece"

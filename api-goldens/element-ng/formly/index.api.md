@@ -41,14 +41,8 @@ export class SiFormlyComponent<TControl extends {
     readonly formlyForm: i0.Signal<FormlyForm | undefined>;
     readonly labelWidth: i0.InputSignal<number | undefined>;
     readonly model: i0.ModelSignal<{}>;
-    // (undocumented)
-    ngOnInit(): void;
     readonly options: i0.InputSignal<FormlyFormOptions>;
     readonly schema: i0.ModelSignal<JSONSchema7 | undefined>;
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<SiFormlyComponent<any>, "si-formly", never, { "form": { "alias": "form"; "required": false; "isSignal": true; }; "model": { "alias": "model"; "required": false; "isSignal": true; }; "options": { "alias": "options"; "required": false; "isSignal": true; }; "schema": { "alias": "schema"; "required": false; "isSignal": true; }; "fields": { "alias": "fields"; "required": false; "isSignal": true; }; "labelWidth": { "alias": "labelWidth"; "required": false; "isSignal": true; }; }, { "form": "formChange"; "model": "modelChange"; "schema": "schemaChange"; "fieldsChange": "fieldsChange"; }, never, never, false, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiFormlyComponent<any>, never>;
 }
 
 // @public (undocumented)
@@ -56,12 +50,6 @@ export class SiFormlyModule {
     constructor();
     // (undocumented)
     static forRoot(formlyConfig?: ConfigOption): ModuleWithProviders<SiFormlyModule>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiFormlyModule, never>;
-    // (undocumented)
-    static ɵinj: i0.ɵɵInjectorDeclaration<SiFormlyModule>;
-    // (undocumented)
-    static ɵmod: i0.ɵɵNgModuleDeclaration<SiFormlyModule, [typeof SiFormlyComponent], [typeof i2.CommonModule, typeof i3.FormlyBootstrapModule, typeof _ngx_formly_core.FormlyModule, typeof i5.ReactiveFormsModule, typeof SiFormlyIpInputComponent, typeof SiFormlyAccordionComponent, typeof SiFormlyArrayComponent, typeof SiFormlyButtonComponent, typeof SiFormlyDateTimeComponent, typeof SiFormlyEmailComponent, typeof SiFormlyHorizontalWrapperComponent, typeof SiFormlyIconWrapperComponent, typeof SiFormlyObjectComponent, typeof SiFormlyObjectGridComponent, typeof SiFormlyObjectPlainComponent, typeof SiFormlyObjectTabsetComponent, typeof SiFormlyPasswordComponent, typeof SiFormlySelectComponent, typeof SiFormlyTextareaComponent, typeof SiFormlyTextDisplayComponent, typeof SiFormlyWrapperComponent, typeof i23.SiFormModule], [typeof SiFormlyComponent]>;
 }
 
 // (No @packageDocumentation comment for this package)

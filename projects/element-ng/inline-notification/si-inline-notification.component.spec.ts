@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, provideZonelessChangeDetection } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StatusType } from '@siemens/element-ng/common';
 import { Link } from '@siemens/element-ng/link';
@@ -42,7 +42,6 @@ describe('SiInlineNotificationComponent', () => {
     TestBed.configureTestingModule({
       imports: [TestHostComponent],
       providers: [
-        provideZonelessChangeDetection(),
         provideMockTranslateServiceBuilder(
           () =>
             ({
@@ -71,7 +70,7 @@ describe('SiInlineNotificationComponent', () => {
     fixture.detectChanges();
 
     expect(element.querySelector<HTMLElement>('.alert strong')!.innerText).toBe(
-      'translated=>MSG.HEADING-{"param":"something"}:'
+      'translated=>MSG.HEADING-{"param":"something"}'
     );
     expect(element.querySelector<HTMLElement>('div > span:not(.icon)')!.innerText).toBe(
       'translated=>MSG.MESSAGE-{"param":"something"}'

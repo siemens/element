@@ -1,15 +1,13 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { A11yModule } from '@angular/cdk/a11y';
-import { NgClass } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  HostListener,
   inject,
   OnDestroy,
   OnInit,
@@ -17,20 +15,27 @@ import {
   viewChild,
   DOCUMENT
 } from '@angular/core';
+import { areAnimationsDisabled } from '@siemens/element-ng/common';
 
 import { ModalRef } from './modalref';
 
 @Component({
   selector: 'si-modal',
-  imports: [A11yModule, NgClass],
+  imports: [A11yModule],
   templateUrl: './si-modal.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '(mousedown)': 'clickStarted($event)',
+    '(mouseup)': 'onClickStop($event)',
+    '(window:keydown.esc)': 'onEsc($event)'
+  }
 })
 export class SiModalComponent implements OnInit, AfterViewInit, OnDestroy {
-  protected modalRef = inject(ModalRef<unknown, any>);
+  protected readonly modalRef = inject(ModalRef<unknown, any>);
+  protected readonly isAnimated = !areAnimationsDisabled() && this.modalRef.data.animated !== false;
 
-  protected dialogClass = this.modalRef.dialogClass ?? '';
-  protected titleId = this.modalRef.data?.ariaLabelledBy ?? '';
+  protected readonly dialogClass = this.modalRef.dialogClass ?? '';
+  protected readonly titleId = this.modalRef.data?.ariaLabelledBy ?? '';
   protected init = false;
   protected readonly show = signal(false);
   protected readonly showBackdropClass = signal<boolean | undefined>(undefined);
@@ -40,7 +45,7 @@ export class SiModalComponent implements OnInit, AfterViewInit, OnDestroy {
   private showTimer: any;
   private backdropTimer: any;
   private backdropGhostClickPrevention = true;
-  private document = inject(DOCUMENT);
+  private readonly document = inject(DOCUMENT);
 
   private readonly modalContainerRef = viewChild.required<ElementRef>('modalContainer');
 
@@ -104,12 +109,10 @@ export class SiModalComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  @HostListener('mousedown', ['$event'])
   protected clickStarted(event: MouseEvent): void {
     this.clickStartInDialog = event.target !== this.modalContainerRef().nativeElement;
   }
 
-  @HostListener('mouseup', ['$event'])
   protected onClickStop(event: MouseEvent): void {
     const clickedInBackdrop =
       event.target === this.modalContainerRef().nativeElement && !this.clickStartInDialog;
@@ -127,7 +130,6 @@ export class SiModalComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  @HostListener('window:keydown.esc', ['$event'])
   protected onEsc(event: Event): void {
     if (this.modalRef?.data.keyboard && this.modalRef?.isCurrent()) {
       event.preventDefault();
@@ -136,6 +138,6 @@ export class SiModalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private animationTime(millis: number): number {
-    return this.modalRef?.data.animated !== false ? millis : 0;
+    return this.isAnimated ? millis : 0;
   }
 }

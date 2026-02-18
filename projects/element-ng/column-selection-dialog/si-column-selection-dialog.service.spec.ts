@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ApplicationRef, provideZonelessChangeDetection } from '@angular/core';
+import { ApplicationRef } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { SiColumnSelectionDialogService } from './si-column-selection-dialog.service';
@@ -19,9 +19,6 @@ describe('SiColumnSelectionDialogService', () => {
   };
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [provideZonelessChangeDetection()]
-    }).compileComponents();
     service = TestBed.inject(SiColumnSelectionDialogService);
     appRef = TestBed.inject(ApplicationRef);
   });

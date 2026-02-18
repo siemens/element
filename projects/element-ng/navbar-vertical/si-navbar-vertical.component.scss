@@ -28,9 +28,14 @@ nav {
   inset-block-end: 0;
   inset-inline-start: 0;
   inline-size: 0;
+  transition: inline-size all-variables.element-transition-duration(0.5s) ease;
 
   :host(.nav-collapsed) & {
     z-index: all-variables.$zindex-vertical-nav-collapsed;
+  }
+
+  &.expanded {
+    inline-size: $vertical-nav-width;
   }
 }
 
@@ -50,13 +55,22 @@ nav {
   display: block;
   text-align: end;
   border: 0;
-  inline-size: 48px;
+  inline-size: $vertical-nav-collapsed-width;
   color: all-variables.$element-text-primary;
   padding-block: 4px;
   padding-inline: 8px;
   margin-block-start: 8px;
   border-start-end-radius: all-variables.$border-radius;
   border-end-end-radius: all-variables.$border-radius;
+
+  transition:
+    inline-size all-variables.element-transition-duration(0.5s) ease,
+    background-color all-variables.element-transition-duration(0.5s) ease,
+    box-shadow all-variables.element-transition-duration(0.5s) ease;
+
+  :host(:not(.nav-collapsed)) & {
+    inline-size: $vertical-nav-width;
+  }
 }
 
 .nav-search {
@@ -97,7 +111,16 @@ si-search-bar {
 
 .modal-backdrop {
   z-index: all-variables.$zindex-vertical-nav;
-  opacity: 0;
+  transition: opacity all-variables.element-transition-duration(0.15s) linear;
+  opacity: 1;
+
+  @starting-style {
+    opacity: 0;
+  }
+
+  &.backdrop-leave {
+    opacity: 0;
+  }
 }
 
 @include all-variables.media-breakpoint-up(sm) {
@@ -140,6 +163,10 @@ si-search-bar {
   :host:not(.nav-text-only) {
     nav {
       inline-size: $vertical-nav-collapsed-width;
+
+      &.expanded {
+        inline-size: $vertical-nav-width;
+      }
     }
   }
 }

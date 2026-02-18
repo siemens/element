@@ -7,64 +7,40 @@
 import * as _angular_core from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { OnInit } from '@angular/core';
-import * as _siemens_element_translate_ng_translate from '@siemens/element-translate-ng/translate';
 import { SiFormItemControl } from '@siemens/element-ng/form';
 import { Signal } from '@angular/core';
+import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
 // @public (undocumented)
 export class SiPillsInputComponent implements OnInit, ControlValueAccessor, SiFormItemControl {
     readonly disabledInput: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly errormessageId: _angular_core.InputSignal<string>;
     readonly id: _angular_core.InputSignal<string>;
-    readonly inputElementAriaLabel: _angular_core.InputSignal<_siemens_element_translate_ng_translate.TranslatableString>;
+    readonly inputElementAriaLabel: _angular_core.InputSignal<TranslatableString>;
     // (undocumented)
     readonly labelledby: _angular_core.InputSignal<string>;
-    // (undocumented)
-    ngOnInit(): void;
-    readonly placeholder: _angular_core.InputSignal<string | undefined>;
+    readonly placeholder: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly readonly: _angular_core.InputSignalWithTransform<boolean, unknown>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiPillsInputComponent, "si-pills-input", never, { "id": { "alias": "id"; "required": false; "isSignal": true; }; "inputElementAriaLabel": { "alias": "inputElementAriaLabel"; "required": false; "isSignal": true; }; "disabledInput": { "alias": "disabled"; "required": false; "isSignal": true; }; "readonly": { "alias": "readonly"; "required": false; "isSignal": true; }; "placeholder": { "alias": "placeholder"; "required": false; "isSignal": true; }; "labelledby": { "alias": "labelledby"; "required": false; "isSignal": true; }; "errormessageId": { "alias": "errormessageId"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiPillsInputComponent, never>;
 }
 
 // @public (undocumented)
 export class SiPillsInputCsvDirective extends SiPillsInputPatternBase {
     // (undocumented)
     readonly validationRegex: _angular_core.InputSignal<RegExp | undefined>;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiPillsInputCsvDirective, "[siPillsInputCsv]", never, { "validationRegex": { "alias": "pillsInputCsvItemRegex"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiPillsInputCsvDirective, never>;
 }
 
 // @public (undocumented)
 export class SiPillsInputEmailDirective extends SiPillsInputPatternBase {
     // (undocumented)
     readonly validationRegex: _angular_core.Signal<RegExp>;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiPillsInputEmailDirective, "[siPillsInputEmail]", never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiPillsInputEmailDirective, never>;
 }
 
 // @public (undocumented)
 export class SiPillsInputModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiPillsInputModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiPillsInputModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiPillsInputModule, never, [typeof SiPillsInputComponent, typeof SiPillsInputCsvDirective, typeof SiPillsInputEmailDirective], [typeof SiPillsInputComponent, typeof SiPillsInputCsvDirective, typeof SiPillsInputEmailDirective]>;
 }
 
 // @public (undocumented)
 export abstract class SiPillsInputValueHandlerDirective {
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiPillsInputValueHandlerDirective, never, never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiPillsInputValueHandlerDirective, never>;
 }
 
 // @public (undocumented)

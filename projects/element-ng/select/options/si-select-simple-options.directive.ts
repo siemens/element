@@ -1,10 +1,10 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { computed, Directive, input } from '@angular/core';
 
-import { SelectItem, SelectOption, SelectOptionLegacy } from '../si-select.types';
+import { SelectItem } from '../si-select.types';
 import { SI_SELECT_OPTIONS_STRATEGY } from './si-select-options-strategy';
 import { SiSelectOptionsStrategyBase } from './si-select-options-strategy.base';
 
@@ -24,7 +24,7 @@ import { SiSelectOptionsStrategyBase } from './si-select-options-strategy.base';
 })
 export class SiSelectSimpleOptionsDirective<T = string> extends SiSelectOptionsStrategyBase<T> {
   /** Options to be shown in select dropdown */
-  readonly options = input<(SelectOptionLegacy | SelectItem<T>)[] | null>();
+  readonly options = input<SelectItem<T>[] | null>();
 
   /**
    * By default, values are check on referential equality. Provide a function to customize the behavior.
@@ -39,23 +39,5 @@ export class SiSelectSimpleOptionsDirective<T = string> extends SiSelectOptionsS
     alias: 'optionEqualCheckFn'
   });
 
-  override readonly allRows = computed(() => {
-    const options = this.options();
-    if (options) {
-      return options?.map(option =>
-        option.type
-          ? option
-          : ({
-              type: 'option',
-              value: option.id as T,
-              label: option.title,
-              iconColor: option.color,
-              icon: option.icon,
-              disabled: option.disabled
-            } as SelectOption<T>)
-      );
-    } else {
-      return [];
-    }
-  });
+  override readonly allRows = computed(() => this.options() ?? []);
 }

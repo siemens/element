@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
@@ -12,7 +12,8 @@ import {
   ElementRef,
   signal
 } from '@angular/core';
-import { SiIconComponent } from '@siemens/element-ng/icon';
+import { elementOptionsVertical } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { MenuItem, SiMenuFactoryComponent } from '@siemens/element-ng/menu';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
@@ -56,6 +57,7 @@ import { SiChatMessageComponent } from './si-chat-message.component';
 })
 export class SiAiMessageComponent {
   protected readonly formattedContent = viewChild<ElementRef<HTMLDivElement>>('formattedContent');
+  protected readonly icons = addIcons({ elementOptionsVertical });
 
   /**
    * The AI-generated message content

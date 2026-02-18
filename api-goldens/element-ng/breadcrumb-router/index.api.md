@@ -25,10 +25,6 @@ export const SI_BREADCRUMB_RESOLVER_SERVICE: InjectionToken<SiBreadcrumbResolver
 // @public (undocumented)
 export class SiBreadcrumbDefaultResolverService implements SiBreadcrumbResolverService {
     resolve(route: ActivatedRouteSnapshot): BreadcrumbItem[] | Observable<BreadcrumbItem[]>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiBreadcrumbDefaultResolverService, never>;
-    // (undocumented)
-    static ɵprov: i0.ɵɵInjectableDeclaration<SiBreadcrumbDefaultResolverService>;
 }
 
 // @public
@@ -40,24 +36,10 @@ export interface SiBreadcrumbResolverService {
 // @public (undocumented)
 export class SiBreadcrumbRouterComponent implements OnInit, OnDestroy {
     readonly ariaLabel: i0.InputSignal<string>;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<SiBreadcrumbRouterComponent, "si-breadcrumb-router", never, { "ariaLabel": { "alias": "ariaLabel"; "required": false; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiBreadcrumbRouterComponent, never>;
 }
 
 // @public (undocumented)
 export class SiBreadcrumbRouterModule {
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiBreadcrumbRouterModule, never>;
-    // (undocumented)
-    static ɵinj: i0.ɵɵInjectorDeclaration<SiBreadcrumbRouterModule>;
-    // (undocumented)
-    static ɵmod: i0.ɵɵNgModuleDeclaration<SiBreadcrumbRouterModule, never, [typeof SiBreadcrumbRouterComponent], [typeof SiBreadcrumbRouterComponent]>;
 }
 
 // (No @packageDocumentation comment for this package)

@@ -1,13 +1,14 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { elementDown2 } from '@siemens/element-icons';
 import {
   SI_HEADER_DROPDOWN_OPTIONS,
   SiHeaderDropdownTriggerDirective
 } from '@siemens/element-ng/header-dropdown';
-import { addIcons, elementDown2, SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 
 /** Adds a navigation item to the header. Should be located inside `.header-navigation`. */
 @Component({

@@ -1,8 +1,7 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { BlinkService } from './blink.service';
@@ -12,7 +11,7 @@ describe('BlinkService', () => {
 
   beforeEach(() => {
     jasmine.clock().install();
-    TestBed.configureTestingModule({ providers: [BlinkService, provideZonelessChangeDetection()] });
+    TestBed.configureTestingModule({ providers: [BlinkService] });
     service = TestBed.inject(BlinkService);
   });
 

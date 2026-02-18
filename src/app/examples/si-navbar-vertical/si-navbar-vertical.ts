@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
@@ -50,9 +50,7 @@ export class SampleComponent implements OnInit {
         {
           type: 'router-link',
           label: 'Sub item',
-          routerLink: 'subItem',
-          badge: 4,
-          badgeColor: 'warning'
+          routerLink: 'subItem'
         },
         { type: 'router-link', label: 'Sub item 2', routerLink: 'subItem2' },
         { type: 'router-link', label: 'Sub item 3', routerLink: 'subItem3' }
@@ -62,9 +60,7 @@ export class SampleComponent implements OnInit {
       type: 'router-link',
       label: 'Test coverage',
       icon: 'element-diagnostic',
-      routerLink: 'coverage',
-      badge: 4,
-      badgeColor: 'danger'
+      routerLink: 'coverage'
     },
     { type: 'divider' },
     {
@@ -86,10 +82,7 @@ export class SampleComponent implements OnInit {
       label: 'Action',
       icon: 'element-warning',
       active: false,
-      action: item => {
-        item.active = true;
-        this.logEvent('Callback for action called');
-      }
+      action: () => this.logEvent('Callback for action called')
     }
   ];
 

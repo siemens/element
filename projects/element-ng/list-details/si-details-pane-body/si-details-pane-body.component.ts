@@ -1,10 +1,9 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-/** @experimental */
 @Component({
   selector: 'si-details-pane-body',
   imports: [],

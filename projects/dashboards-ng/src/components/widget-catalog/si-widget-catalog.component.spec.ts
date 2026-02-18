@@ -1,11 +1,14 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { DebugElement, provideZonelessChangeDetection } from '@angular/core';
+import { DebugElement } from '@angular/core';
+import { outputToObservable } from '@angular/core/rxjs-interop';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ModalRef } from '@siemens/element-ng/modal';
+import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
+import { firstValueFrom } from 'rxjs';
 
 import { TEST_WIDGET } from '../../../test/test-widget/test-widget';
 import { createTestingWidget, TestingModule } from '../../../test/testing.module';
@@ -24,7 +27,7 @@ describe('SiWidgetCatalogComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TestingModule, SiWidgetCatalogComponent],
-      providers: [{ provide: ModalRef, useValue: new ModalRef() }, provideZonelessChangeDetection()]
+      providers: [{ provide: ModalRef, useValue: new ModalRef() }]
     }).compileComponents();
   });
 
@@ -72,16 +75,15 @@ describe('SiWidgetCatalogComponent', () => {
       expect(addButtons.length).toBe(1);
     });
 
-    it('should create and emit widget config from selected', (done: DoneFn) => {
+    it('should create and emit widget config from selected', async () => {
       component.widgetCatalog = [createTestingWidget('Hello', 'id-1234')];
       fixture.detectChanges();
 
-      component.closed.subscribe(widgetConfig => {
-        expect(widgetConfig?.widgetId).toBe('id-1234');
-        done();
-      });
+      const widgetConfigPromise = firstValueFrom(outputToObservable(component.closed));
       buttonsByName('Add')[0].nativeElement.click();
       fixture.detectChanges();
+      const widgetConfig = await widgetConfigPromise;
+      expect(widgetConfig?.widgetId).toBe('id-1234');
     });
   });
 
@@ -211,8 +213,11 @@ describe('SiWidgetCatalogComponent', () => {
       searchInput.dispatchEvent(new Event('input'));
       fixture.detectChanges();
 
+      const searchBarEl = fixture.debugElement.query(By.css('si-search-bar'));
+      const searchBarComponent = searchBarEl.componentInstance as SiSearchBarComponent;
+      const debounceTime = searchBarComponent.debounceTime();
       // cannot use jasmine.clock here.
-      await new Promise(resolve => setTimeout(resolve, 400)); // wait for debounce time
+      await new Promise(resolve => setTimeout(resolve, debounceTime + 1)); // wait for debounce time + extra 1 ms to avoid flaky test
       await fixture.whenStable();
 
       expect(buttonsByName('Next').length).toBe(1);
@@ -245,14 +250,13 @@ describe('SiWidgetCatalogComponent', () => {
     });
   });
 
-  it('Cancel button shall emit undefined on closed', (done: DoneFn) => {
+  it('Cancel button shall emit undefined on closed', async () => {
     fixture.detectChanges();
 
-    component.closed.subscribe(wd => {
-      expect(wd).toBeUndefined();
-      done();
-    });
+    const closedPromise = firstValueFrom(outputToObservable(component.closed));
     buttonsByName('Cancel')[0].nativeElement.click();
+    const wd = await closedPromise;
+    expect(wd).toBeUndefined();
   });
 
   it('Previous button shall switch to list view', async () => {

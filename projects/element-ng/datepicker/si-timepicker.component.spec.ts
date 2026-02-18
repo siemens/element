@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, provideZonelessChangeDetection, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
@@ -66,10 +66,6 @@ describe('SiTimepickerComponent', () => {
     let fixture: ComponentFixture<TestComponent>;
 
     beforeEach(async () => {
-      await TestBed.configureTestingModule({
-        imports: [TestComponent],
-        providers: [provideZonelessChangeDetection()]
-      }).compileComponents();
       fixture = TestBed.createComponent(TestComponent);
       element = fixture.nativeElement;
       fixture.detectChanges();
@@ -88,9 +84,6 @@ describe('SiTimepickerComponent', () => {
     let component: WrapperComponent;
 
     beforeEach(() => {
-      TestBed.configureTestingModule({
-        providers: [provideZonelessChangeDetection()]
-      }).compileComponents();
       fixture = TestBed.createComponent(WrapperComponent);
       component = fixture.componentInstance;
       element = fixture.nativeElement;
@@ -247,7 +240,8 @@ describe('SiTimepickerComponent', () => {
       expect(component.time.errors).toEqual({
         maxTime: {
           actual: new Date('2021-01-12 17:23:58.435'),
-          max: new Date('2021-01-12 16:23:58.435')
+          max: new Date('2021-01-12 16:23:58.435'),
+          maxString: '04:23 PM'
         }
       });
     });
@@ -263,7 +257,8 @@ describe('SiTimepickerComponent', () => {
       expect(component.time.errors).toEqual({
         maxTime: {
           actual: new Date('2021-01-12 18:23:58.500'),
-          max: new Date('2021-01-12 16:23:58.435')
+          max: new Date('2021-01-12 16:23:58.435'),
+          maxString: '04:23:58.435 PM'
         }
       });
     });
@@ -279,7 +274,8 @@ describe('SiTimepickerComponent', () => {
       expect(component.time.errors).toEqual({
         minTime: {
           actual: new Date('2021-01-12 15:23:58.435'),
-          min: new Date('2021-01-12 16:23:58.435')
+          min: new Date('2021-01-12 16:23:58.435'),
+          minString: '04:23 PM'
         }
       });
     });

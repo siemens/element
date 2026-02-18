@@ -18,3 +18,7 @@
 - link "More information about stuff":
   - /url: http://www.examples.org
 - text: License
+- button "OS"
+- region "OS"
+- button "Application"
+- region "Application"

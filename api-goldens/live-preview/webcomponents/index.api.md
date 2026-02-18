@@ -31,17 +31,11 @@ export class SiLivePreviewWebComponent implements OnChanges {
     // (undocumented)
     loadVueFromCodeTemplate(code: string): void;
     // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
     renderingDone: boolean;
     // (undocumented)
     readonly root: i0.Signal<ElementRef<any>>;
     // (undocumented)
     webcomponentTemplateCode: string;
-    // (undocumented)
-    static ɵcmp: i0.ɵɵComponentDeclaration<SiLivePreviewWebComponent, "si-live-preview-webcomponent", never, { "loadReact": { "alias": "loadReact"; "required": false; }; "loadVue": { "alias": "loadVue"; "required": false; }; "loadJs": { "alias": "loadJs"; "required": false; }; "webcomponentTemplateCode": { "alias": "webcomponentTemplateCode"; "required": false; }; "exampleUrl": { "alias": "exampleUrl"; "required": false; }; "config": { "alias": "config"; "required": false; }; }, { "inProgress": "inProgress"; }, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiLivePreviewWebComponent, never>;
 }
 
 // @public
@@ -50,12 +44,6 @@ export class SiWebComponentRenderService extends SiLivePreviewWebComponentServic
     destroyComponent(): void;
     // (undocumented)
     injectComponent(element: ElementRef, inputs: any, outputs: any): void;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiWebComponentRenderService, never>;
-    // (undocumented)
-    static ɵprov: i0.ɵɵInjectableDeclaration<SiWebComponentRenderService>;
 }
 
 // (No @packageDocumentation comment for this package)

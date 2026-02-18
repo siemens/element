@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use '@siemens/element-theme/src/styles/variables';
+@use '@siemens/element-theme/src/styles/bootstrap/mixins/visually-hidden';
 
 :host(.navbar-vertical-item) {
   display: flex;
@@ -20,16 +21,25 @@
     margin-inline-start: map.get(variables.$spacers, 5);
   }
 
-  .icon {
+  .icon-lg {
     margin-inline-start: map.get(variables.$spacers, 5);
   }
 
-  .icon + .item-title {
-    margin-inline-start: map.get(variables.$spacers, 5);
+  .icon-lg + .item-title {
+    margin-inline-start: map.get(variables.$spacers, 4);
+  }
+
+  &.show .badge:not(.badge-collapsed) {
+    display: none;
+  }
+
+  &:not(.show) .badge + .dropdown-caret {
+    margin-inline: 0;
+    padding-inline: 0;
   }
 
   &.active {
-    color: variables.$element-text-active;
+    color: variables.$element-action-primary-hover;
     background: variables.$element-base-1-selected;
 
     &::after {
@@ -38,7 +48,7 @@
       inset-block: 0;
       inset-inline-start: 0;
       inline-size: 4px;
-      background: variables.$element-ui-0;
+      background: variables.$element-action-primary-hover;
     }
   }
 
@@ -73,19 +83,40 @@
   }
 }
 
-:host-context(.nav-collapsed) :is(.badge, .dropdown-caret) {
-  display: none;
-}
+:host-context(.nav-collapsed) {
+  .badge {
+    position: absolute;
+    inset-block-start: map.get(variables.$spacers, 2);
+    inset-inline-end: map.get(variables.$spacers, 3);
+    block-size: 14px;
+    min-inline-size: 14px;
+    border-radius: 7px;
+    font-size: variables.$si-font-size-caption;
+    line-height: 14px;
+    padding-block: 0;
+    padding-inline: map.get(variables.$spacers, 2);
+    font-weight: variables.$si-font-weight-semibold;
 
-:host-context(si-navbar-vertical:not(.nav-collapsed)) .badge-text {
-  display: none;
+    &.badge-text-only {
+      color: transparent;
+      font-size: 0;
+    }
+  }
+
+  :is(.item-title, .dropdown-caret) {
+    @include visually-hidden.visually-hidden();
+  }
+
+  &.hide-badge-collapsed .badge {
+    display: none;
+  }
 }
 
 :host-context(.link-with-items) > :host(button) {
   padding-inline: map.get(variables.$spacers, 5);
 
   .item-title,
-  .icon {
+  .icon-lg {
     display: none;
   }
 
@@ -106,7 +137,7 @@
       display: block;
     }
 
-    .icon {
+    .icon-lg {
       display: block;
     }
   }
@@ -118,10 +149,4 @@
 
 .badge {
   margin-inline: auto 0;
-}
-
-.badge-text {
-  position: absolute;
-  inset-block-start: map.get(variables.$spacers, 2);
-  inset-inline-end: map.get(variables.$spacers, 3);
 }

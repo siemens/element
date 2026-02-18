@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { CdkMenuBar, CdkMenuModule } from '@angular/cdk/menu';
@@ -15,9 +15,10 @@ import {
   viewChild
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { elementCancel, elementOptionsVertical } from '@siemens/element-icons';
 import { SiAutoCollapsableListModule } from '@siemens/element-ng/auto-collapsable-list';
 import { MenuItem as MenuItemLegacy } from '@siemens/element-ng/common';
-import { addIcons, elementCancel, elementOptionsVertical } from '@siemens/element-ng/icon';
+import { addIcons } from '@siemens/element-ng/icon';
 import { SiLinkModule } from '@siemens/element-ng/link';
 import {
   MenuItem,
@@ -27,6 +28,7 @@ import {
   SiMenuActionService,
   SiMenuModule
 } from '@siemens/element-ng/menu';
+import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { SiContentActionBarToggleComponent } from './si-content-action-bar-toggle.component';
@@ -41,6 +43,7 @@ import { ContentActionBarMainItem, ViewType } from './si-content-action-bar.mode
     SiTranslatePipe,
     SiLinkModule,
     SiContentActionBarToggleComponent,
+    SiTooltipDirective,
     RouterLink
   ],
   templateUrl: './si-content-action-bar.component.html',

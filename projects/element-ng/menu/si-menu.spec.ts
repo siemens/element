@@ -1,11 +1,11 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { ComponentHarness, HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, provideZonelessChangeDetection } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiLinkActionService } from '@siemens/element-ng/link';
@@ -85,10 +85,7 @@ const withObjectType = <ItemType extends MenuItem, ComponentType extends { items
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        providers: [
-          { provide: SiLinkActionService, useValue: jasmine.createSpyObj(['emit']) },
-          provideZonelessChangeDetection()
-        ]
+        providers: [{ provide: SiLinkActionService, useValue: jasmine.createSpyObj(['emit']) }]
       });
       fixture = TestBed.createComponent(componentType);
       loader = TestbedHarnessEnvironment.loader(fixture);

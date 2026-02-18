@@ -15,10 +15,6 @@ import { ViewType } from '@siemens/element-ng/content-action-bar';
 export class SiActionCardComponent extends SiCardBaseDirective {
     readonly selectable: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly selected: _angular_core.ModelSignal<boolean>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiActionCardComponent, "button[si-action-card]", never, { "selectable": { "alias": "selectable"; "required": false; "isSignal": true; }; "selected": { "alias": "selected"; "required": false; "isSignal": true; }; }, { "selected": "selectedChange"; }, never, ["[headerIcon]", "[body]", "[footer]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiActionCardComponent, never>;
 }
 
 // @public (undocumented)
@@ -29,20 +25,10 @@ export class SiCardComponent extends SiCardBaseDirective {
     readonly displayContentActionBar: _angular_core.Signal<boolean>;
     readonly primaryActions: _angular_core.InputSignal<(MenuItem | ContentActionBarMainItem)[]>;
     readonly secondaryActions: _angular_core.InputSignal<(MenuItem | MenuItem_2)[]>;
-    // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiCardComponent, "si-card", never, { "primaryActions": { "alias": "primaryActions"; "required": false; "isSignal": true; }; "secondaryActions": { "alias": "secondaryActions"; "required": false; "isSignal": true; }; "actionParam": { "alias": "actionParam"; "required": false; "isSignal": true; }; "actionBarViewType": { "alias": "actionBarViewType"; "required": false; "isSignal": true; }; "actionBarTitle": { "alias": "actionBarTitle"; "required": false; "isSignal": true; }; }, {}, never, ["[headerIcon]", "[body]", "[footer]"], true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiCardComponent, never>;
 }
 
 // @public (undocumented)
 export class SiCardModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiCardModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiCardModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiCardModule, never, [typeof SiCardComponent], [typeof SiCardComponent]>;
 }
 
 // (No @packageDocumentation comment for this package)

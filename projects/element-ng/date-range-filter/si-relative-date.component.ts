@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import {
@@ -44,6 +44,7 @@ interface OffsetOption extends SelectOption<string> {
 })
 export class SiRelativeDateComponent implements OnChanges {
   /** @defaultValue 0 */
+  // eslint-disable-next-line @angular-eslint/prefer-signal-model
   readonly value = input(0);
   /** @defaultValue false */
   readonly enableTimeSelection = input(false, { transform: booleanAttribute });

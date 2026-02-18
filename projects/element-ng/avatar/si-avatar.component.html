@@ -14,7 +14,7 @@
 @let iconConfig = statusIcon();
 @if (iconConfig) {
   <span class="indicator-size indicator icon-stack">
-    <si-icon class="drop-shadow" [ngClass]="iconConfig.color" [icon]="iconConfig.icon" />
-    <si-icon [ngClass]="iconConfig.stackedColor" [icon]="iconConfig.stacked" />
+    <si-icon [class]="`drop-shadow ${iconConfig.color}`" [icon]="iconConfig.icon" />
+    <si-icon [class]="iconConfig.stackedColor" [icon]="iconConfig.stacked" />
   </span>
 }

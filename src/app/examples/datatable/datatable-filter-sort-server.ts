@@ -1,8 +1,15 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, inject, OnDestroy, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  OnDestroy,
+  viewChild
+} from '@angular/core';
 import { SI_DATATABLE_CONFIG, SiDatatableModule } from '@siemens/element-ng/datatable';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 import { DatatableComponent, NgxDatatableModule } from '@siemens/ngx-datatable';
@@ -15,7 +22,8 @@ import { CorporateEmployee, DataService, PageRequest } from './data.service';
   imports: [NgxDatatableModule, SiDatatableModule, SiEmptyStateComponent],
   templateUrl: './datatable-filter-sort-server.html',
   styleUrl: './datatable.scss',
-  providers: [DataService]
+  providers: [DataService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnDestroy {
   readonly table = viewChild(DatatableComponent);
@@ -29,6 +37,7 @@ export class SampleComponent implements OnDestroy {
 
   private subscription?: Subscription;
   private dataService = inject(DataService);
+  private cdRef = inject(ChangeDetectorRef);
 
   constructor() {
     this.fetchData({ offset: 0, pageSize: 50 });
@@ -53,6 +62,7 @@ export class SampleComponent implements OnDestroy {
     this.subscription = this.dataService.getResults(pageRequest).subscribe(data => {
       this.rows = data.data;
       this.isLoading = false;
+      this.cdRef.markForCheck();
     });
   }
 

@@ -61,7 +61,7 @@
     <h4 class="modal-title" [id]="titleId">{{ modalHeader() | translate }}</h4>
     <button
       type="button"
-      class="btn btn-circle btn-sm btn-ghost"
+      class="btn btn-circle btn-ghost"
       [attr.aria-label]="cancelEditText() | translate"
       (click)="imageCropperCanceled()"
     >
@@ -101,7 +101,7 @@
 <!-- Template: error message -->
 <ng-template #errorMessageTemplate>
   <div class="d-flex align-items-center">
-    <span class="icon-small icon-stack d-inline-block my-n2 me-2">
+    <span class="icon-sm icon-stack d-inline-block my-n2 me-2">
       <si-icon class="status-danger" [icon]="icons.elementCircleFilled" />
       <si-icon class="status-danger-contrast" [icon]="icons.elementStateExclamationMark" />
     </span>

@@ -29,10 +29,6 @@ export interface MatchSegment {
 // @public (undocumented)
 export class SiTypeaheadDirective implements OnChanges, OnDestroy {
     constructor();
-    // (undocumented)
-    ngOnChanges(changes: SimpleChanges): void;
-    // (undocumented)
-    ngOnDestroy(): void;
     readonly siTypeahead: _angular_core.InputSignal<Typeahead>;
     readonly typeaheadAutocompleteListLabel: _angular_core.InputSignal<TranslatableString>;
     readonly typeaheadAutoSelectIndex: _angular_core.InputSignalWithTransform<number, unknown>;
@@ -59,30 +55,16 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
     readonly typeaheadSkipSortingMatches: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly typeaheadTokenize: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly typeaheadWaitMs: _angular_core.InputSignal<number>;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiTypeaheadDirective, "[siTypeahead]", ["si-typeahead"], { "siTypeahead": { "alias": "siTypeahead"; "required": true; "isSignal": true; }; "typeaheadProcess": { "alias": "typeaheadProcess"; "required": false; "isSignal": true; }; "typeaheadScrollable": { "alias": "typeaheadScrollable"; "required": false; "isSignal": true; }; "typeaheadOptionsInScrollableView": { "alias": "typeaheadOptionsInScrollableView"; "required": false; "isSignal": true; }; "typeaheadOptionsLimit": { "alias": "typeaheadOptionsLimit"; "required": false; "isSignal": true; }; "typeaheadScrollableAdditionalHeight": { "alias": "typeaheadScrollableAdditionalHeight"; "required": false; "isSignal": true; }; "typeaheadAutoSelectIndex": { "alias": "typeaheadAutoSelectIndex"; "required": false; "isSignal": true; }; "typeaheadCloseOnEsc": { "alias": "typeaheadCloseOnEsc"; "required": false; "isSignal": true; }; "typeaheadClearValueOnSelect": { "alias": "typeaheadClearValueOnSelect"; "required": false; "isSignal": true; }; "typeaheadWaitMs": { "alias": "typeaheadWaitMs"; "required": false; "isSignal": true; }; "typeaheadMinLength": { "alias": "typeaheadMinLength"; "required": false; "isSignal": true; }; "typeaheadOptionField": { "alias": "typeaheadOptionField"; "required": false; "isSignal": true; }; "typeaheadMultiSelect": { "alias": "typeaheadMultiSelect"; "required": false; "isSignal": true; }; "typeaheadTokenize": { "alias": "typeaheadTokenize"; "required": false; "isSignal": true; }; "typeaheadMatchAllTokens": { "alias": "typeaheadMatchAllTokens"; "required": false; "isSignal": true; }; "typeaheadItemTemplate": { "alias": "typeaheadItemTemplate"; "required": false; "isSignal": true; }; "typeaheadSkipSortingMatches": { "alias": "typeaheadSkipSortingMatches"; "required": false; "isSignal": true; }; "typeaheadAutocompleteListLabel": { "alias": "typeaheadAutocompleteListLabel"; "required": false; "isSignal": true; }; "typeaheadFullWidth": { "alias": "typeaheadFullWidth"; "required": false; "isSignal": true; }; "typeaheadCreateOption": { "alias": "typeaheadCreateOption"; "required": false; "isSignal": true; }; }, { "typeaheadOnInput": "typeaheadOnInput"; "typeaheadOnSelect": "typeaheadOnSelect"; "typeaheadOnFullMatch": "typeaheadOnFullMatch"; "typeaheadOpenChange": "typeaheadOpenChange"; "typeaheadOnCreateOption": "typeaheadOnCreateOption"; }, never, never, true, [{ directive: typeof i1.SiAutocompleteDirective; inputs: {}; outputs: {}; }]>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiTypeaheadDirective, never>;
 }
 
 // @public (undocumented)
 export class SiTypeaheadItemTemplateDirective {
     // (undocumented)
     static ngTemplateContextGuard(dir: SiTypeaheadItemTemplateDirective, ctx: any): ctx is TypeaheadOptionItemContext;
-    // (undocumented)
-    static ɵdir: _angular_core.ɵɵDirectiveDeclaration<SiTypeaheadItemTemplateDirective, "[siTypeaheadItemTemplate]", never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiTypeaheadItemTemplateDirective, never>;
 }
 
 // @public (undocumented)
 export class SiTypeaheadModule {
-    // (undocumented)
-    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiTypeaheadModule, never>;
-    // (undocumented)
-    static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiTypeaheadModule>;
-    // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiTypeaheadModule, never, [typeof SiTypeaheadDirective, typeof SiTypeaheadItemTemplateDirective], [typeof SiTypeaheadDirective, typeof SiTypeaheadItemTemplateDirective]>;
 }
 
 // @public

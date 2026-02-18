@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { formatDate } from '@angular/common';
@@ -288,7 +288,13 @@ export class SiDateInputDirective
       !isValid(controlValue) ||
       (withTime ? controlValue >= min : compareDate(controlValue, min) >= 0)
       ? null
-      : { minDate: { min, actual: controlValue } };
+      : {
+          minDate: {
+            min,
+            actual: controlValue,
+            minString: formatDate(min, this.getFormat(), this.locale)
+          }
+        };
   }
 
   /** The form control validator for the min date. */
@@ -302,6 +308,12 @@ export class SiDateInputDirective
       !isValid(controlValue) ||
       (withTime ? controlValue <= max : compareDate(controlValue, max) <= 0)
       ? null
-      : { maxDate: { max, actual: controlValue } };
+      : {
+          maxDate: {
+            max,
+            actual: controlValue,
+            maxString: formatDate(max, this.getFormat(), this.locale)
+          }
+        };
   }
 }

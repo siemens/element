@@ -1,9 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { DatePipe } from '@angular/common';
-import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import {
@@ -28,7 +27,7 @@ describe('date time helper', () => {
   let dtPipe: DatePipe;
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [DatePipe, provideZonelessChangeDetection()]
+      providers: [DatePipe]
     });
     dtPipe = TestBed.inject(DatePipe);
   });

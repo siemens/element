@@ -1,9 +1,9 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { AsyncPipe } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { SiEmptyStateComponent } from '@siemens/element-ng/empty-state';
 import { SiWizardComponent, SiWizardStepComponent } from '@siemens/element-ng/wizard';
 import { LOG_EVENT } from '@siemens/live-preview';
@@ -19,6 +19,7 @@ interface StepInfo {
   selector: 'app-sample',
   imports: [AsyncPipe, SiWizardComponent, SiWizardStepComponent, SiEmptyStateComponent],
   templateUrl: './si-wizard-dynamical.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
 export class SampleComponent implements OnInit {

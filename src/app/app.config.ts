@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 /// <reference types="node" />
@@ -14,23 +14,23 @@ import {
   Injectable,
   LOCALE_ID,
   provideAppInitializer,
-  provideZoneChangeDetection,
   ɵLocaleDataIndex
 } from '@angular/core';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, provideTranslateService } from '@ngx-translate/core';
 import { provideSiAgGridConfig } from '@siemens/element-ng/ag-grid';
 import { provideSiUiState } from '@siemens/element-ng/common';
 import { provideSiDatatableConfig } from '@siemens/element-ng/datatable';
 import { SiFormlyModule } from '@siemens/element-ng/formly';
-import { provideIconConfig } from '@siemens/element-ng/icon';
 import {
   SI_LOCALE_CONFIG,
   SiLocaleConfig,
   SiLocaleId,
   SiLocaleService
 } from '@siemens/element-ng/localization';
-import { provideNgxTranslateForElement } from '@siemens/element-translate-ng/ngx-translate';
+import {
+  provideMissingTranslationHandlerForElement,
+  provideNgxTranslateForElement
+} from '@siemens/element-translate-ng/ngx-translate';
 import {
   SiLivePreviewLocaleApi,
   SiLivePreviewThemeApi,
@@ -110,13 +110,6 @@ export const appInitializerFactory =
 export const APP_CONFIG: ApplicationConfig = {
   providers: [
     importProvidersFrom(
-      // Npm dependencies
-      TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: BundlerTranslateLoader
-        }
-      }),
       SiLivePreviewRoutingModule,
       // App internal
       SiLivePreviewModule.forRoot(
@@ -153,14 +146,20 @@ export const APP_CONFIG: ApplicationConfig = {
     { provide: SiLivePreviewThemeApi, useClass: LivePreviewThemeApiService },
     { provide: SiLivePreviewLocaleApi, useClass: LivePreviewLocaleApiService },
     { provide: HTTP_INTERCEPTORS, useExisting: FileUploadInterceptor, multi: true },
-    // eslint-disable-next-line @typescript-eslint/no-deprecated
-    provideAnimationsAsync(navigator.webdriver ? 'noop' : 'animations'),
     provideHttpClient(withInterceptorsFromDi()),
+    provideTranslateService(
+      // Npm dependencies
+      {
+        missingTranslationHandler: provideMissingTranslationHandlerForElement(),
+        loader: {
+          provide: TranslateLoader,
+          useClass: BundlerTranslateLoader
+        }
+      }
+    ),
     provideNgxTranslateForElement(),
     provideSiDatatableConfig(),
-    provideIconConfig({ disableSvgIcons: false }),
     provideSiUiState(),
-    provideSiAgGridConfig(),
-    provideZoneChangeDetection()
+    provideSiAgGridConfig()
   ]
 };

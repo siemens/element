@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
   Component,
@@ -13,13 +13,14 @@ import {
   OnInit,
   viewChild
 } from '@angular/core';
+import { elementDown2 } from '@siemens/element-icons';
 import { MenuItem } from '@siemens/element-ng/common';
 import {
   SiHeaderDropdownComponent,
   SiHeaderDropdownItemsFactoryComponent,
   SiHeaderDropdownTriggerDirective
 } from '@siemens/element-ng/header-dropdown';
-import { addIcons, elementDown2, SiIconComponent } from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLinkDirective } from '@siemens/element-ng/link';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
@@ -31,7 +32,6 @@ import { SiNavbarPrimaryComponent } from '../si-navbar-primary/si-navbar-primary
   imports: [
     SiLinkDirective,
     SiTranslatePipe,
-    NgClass,
     NgTemplateOutlet,
     SiHeaderDropdownComponent,
     SiHeaderDropdownItemsFactoryComponent,

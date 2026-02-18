@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import {
@@ -8,7 +8,6 @@ import {
   Component,
   DebugElement,
   inject,
-  provideZonelessChangeDetection,
   viewChild
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -103,8 +102,7 @@ describe('MainDetailContainerComponent', () => {
         {
           provide: ResizeObserverService,
           useValue: resizeSpy
-        },
-        provideZonelessChangeDetection()
+        }
       ]
     }).compileComponents();
 

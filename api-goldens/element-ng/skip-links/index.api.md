@@ -13,14 +13,6 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate';
 export class SiSkipLinkTargetDirective implements OnInit, OnDestroy {
     jumpToThisTarget(): void;
     readonly name: i0.InputSignal<TranslatableString>;
-    // (undocumented)
-    ngOnDestroy(): void;
-    // (undocumented)
-    ngOnInit(): void;
-    // (undocumented)
-    static ɵdir: i0.ɵɵDirectiveDeclaration<SiSkipLinkTargetDirective, "[siSkipLinkTarget]", never, { "name": { "alias": "siSkipLinkTarget"; "required": true; "isSignal": true; }; }, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiSkipLinkTargetDirective, never>;
 }
 
 // (No @packageDocumentation comment for this package)

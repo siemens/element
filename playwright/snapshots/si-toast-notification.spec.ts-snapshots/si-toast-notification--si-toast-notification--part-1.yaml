@@ -8,6 +8,15 @@
 - button "Manual close only"
 - button "Auto close only"
 - button "Hide all"
+- text: Success
 - paragraph: Email sent
 - paragraph: Meeting minutes sent to Werner von Siemens
+- button "Close"
+- text: Danger
+- paragraph: Security breach
+- paragraph: Lab doors opened forcefully
+- button "Close"
+- text: Info
+- paragraph: Window closed
+- paragraph: Window in Lab 5 closed. HVAC returned to normal operation
 - button "Close"

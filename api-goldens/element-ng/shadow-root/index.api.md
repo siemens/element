@@ -9,10 +9,6 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 
 // @public
 export class SiShadowRootDirective extends OverlayContainer {
-    // (undocumented)
-    static ɵdir: i0.ɵɵDirectiveDeclaration<SiShadowRootDirective, "[siShadowRoot]", never, {}, {}, never, never, true, never>;
-    // (undocumented)
-    static ɵfac: i0.ɵɵFactoryDeclaration<SiShadowRootDirective, never>;
 }
 
 // (No @packageDocumentation comment for this package)

@@ -1,13 +1,12 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component, Injectable, provideZonelessChangeDetection } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter, Router } from '@angular/router';
 import {
   MenuItem,
@@ -86,9 +85,8 @@ describe('SiNavbarVertical', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SiNavbarVerticalComponent, NoopAnimationsModule, TestHostComponent],
+      imports: [SiNavbarVerticalComponent, TestHostComponent],
       providers: [
-        provideZonelessChangeDetection(),
         provideSiUiState({ store: SynchronousMockStore }),
         provideRouter([
           {

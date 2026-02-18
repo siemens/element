@@ -1,9 +1,9 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-/* eslint-disable @angular-eslint/no-conflicting-lifecycle */
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+
+import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -20,14 +20,9 @@ import {
   viewChild
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { elementDown2, elementSoundMute, elementSoundOn } from '@siemens/element-icons';
 import { BlinkService, STATUS_ICON, TextMeasureService } from '@siemens/element-ng/common';
-import {
-  addIcons,
-  elementDown2,
-  elementSoundMute,
-  elementSoundOn,
-  SiIconComponent
-} from '@siemens/element-ng/icon';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import {
   ResizeObserverService,
   SiResizeObserverDirective
@@ -63,7 +58,6 @@ let idCounter = 1;
 @Component({
   selector: 'si-status-bar',
   imports: [
-    NgClass,
     NgTemplateOutlet,
     SiIconComponent,
     SiStatusBarItemComponent,

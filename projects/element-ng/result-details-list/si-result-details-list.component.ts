@@ -1,17 +1,16 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import { Component, computed, input } from '@angular/core';
 import {
-  addIcons,
   elementCircleFilled,
   elementNotChecked,
   elementOutOfService,
   elementStateExclamationMark,
-  elementStateTick,
-  SiIconComponent
-} from '@siemens/element-ng/icon';
+  elementStateTick
+} from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiLoadingSpinnerComponent } from '@siemens/element-ng/loading-spinner';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 

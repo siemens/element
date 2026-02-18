@@ -1,28 +1,30 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import {
   Component,
   input,
-  Input,
   model,
   NO_ERRORS_SCHEMA,
   OnInit,
   output,
   OutputEmitterRef,
-  provideZonelessChangeDetection,
   SimpleChange,
   Type
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MenuItem } from '@siemens/element-ng/common';
 import { SiLoadingSpinnerModule } from '@siemens/element-ng/loading-spinner';
-import { Observable, of } from 'rxjs';
+import { firstValueFrom, Observable, of, zip } from 'rxjs';
 
 import { TestingModule } from '../../../test/testing.module';
-import { SI_DASHBOARD_CONFIGURATION } from '../../model/configuration';
+import {
+  provideDashboardToolbarItems,
+  SI_DASHBOARD_CONFIGURATION
+} from '../../model/configuration';
 import { GridConfig } from '../../model/gridstack.model';
+import { DashboardToolbarItemAction } from '../../model/si-dashboard-toolbar.model';
 import { SI_WIDGET_STORE, SiDefaultWidgetStorage } from '../../model/si-widget-storage';
 import { Widget, WidgetConfig } from '../../model/widgets.model';
 import { SiDashboardToolbarComponent } from '../dashboard-toolbar/si-dashboard-toolbar.component';
@@ -56,13 +58,13 @@ export class SiWidgetCatalogMockComponent extends SiWidgetCatalogComponent imple
   template: ''
 })
 export class SiDashboardToolbarStubComponent {
-  @Input() primaryEditActions: MenuItem[] = [];
-  @Input() secondaryEditActions: MenuItem[] = [];
-  @Input() disableSaveButton = false;
-  @Input() disabled = false;
-  @Input() editable = false;
-  @Input() hideEditButton = false;
-  @Input() showEditButtonLabel = false;
+  readonly primaryEditActions = input<MenuItem[]>([]);
+  readonly secondaryEditActions = input<MenuItem[]>([]);
+  readonly disableSaveButton = input(false);
+  readonly disabled = input(false);
+  readonly editable = input(false);
+  readonly hideEditButton = input(false);
+  readonly showEditButtonLabel = input(false);
 }
 
 @Component({
@@ -118,8 +120,7 @@ describe('SiFlexibleDashboardComponent', () => {
       await TestBed.configureTestingModule({
         providers: [
           { provide: SI_WIDGET_STORE, useClass: TestWidgetStorage },
-          { provide: SI_DASHBOARD_CONFIGURATION, useValue: {} },
-          provideZonelessChangeDetection()
+          { provide: SI_DASHBOARD_CONFIGURATION, useValue: {} }
         ],
         imports: [SiFlexibleDashboardComponent],
         schemas: [NO_ERRORS_SCHEMA]
@@ -136,30 +137,18 @@ describe('SiFlexibleDashboardComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should create with additional menu items with actions that can be invoked', (done: DoneFn) => {
-      let count = 0;
+    it('should create with additional menu items with actions that can be invoked', async () => {
       actionCounter = 0;
-      expect(component).toBeTruthy();
+      const [primaryMenuItems, secondaryMenuItems] = await firstValueFrom(
+        zip(component.primaryEditActions$, component.secondaryEditActions$)
+      );
 
-      component.primaryEditActions$?.subscribe(menuItems => {
-        expect(menuItems.length).toBe(2);
-        const action = (menuItems[1] as MenuItem).action as () => void;
-        action();
-        expect(actionCounter).toBe(1);
+      expect(primaryMenuItems.length).toBe(2);
+      const action = (primaryMenuItems[1] as MenuItem).action as () => void;
+      action();
+      expect(actionCounter).toBe(1);
 
-        count++;
-        if (count >= 2) {
-          done();
-        }
-      });
-
-      component.secondaryEditActions$?.subscribe(menuItems => {
-        expect(menuItems.length).toBe(2);
-        count++;
-        if (count >= 2) {
-          done();
-        }
-      });
+      expect(secondaryMenuItems.length).toBe(2);
     });
 
     it('#hideAddWidgetInstanceButton should remove the addWidgetInstanceAction action', () => {
@@ -261,6 +250,68 @@ describe('SiFlexibleDashboardComponent', () => {
       fixture.componentRef.setInput('dashboardId', '1');
       component.ngOnChanges({ dashboardId: new SimpleChange(undefined, 1, true) });
       expect(spy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('with common provider for toolbar items', () => {
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
+        providers: [
+          provideDashboardToolbarItems({
+            primary: [
+              {
+                type: 'action',
+                label: 'IncreaseCounter',
+                action: () => {
+                  actionCounter++;
+                }
+              }
+            ]
+          }),
+          { provide: SI_DASHBOARD_CONFIGURATION, useValue: {} }
+        ],
+        imports: [SiFlexibleDashboardComponent],
+        schemas: [NO_ERRORS_SCHEMA]
+      })
+        .overrideComponent(SiFlexibleDashboardComponent, {
+          remove: { imports: [SiDashboardToolbarComponent, SiGridComponent] },
+          add: { imports: [SiDashboardToolbarStubComponent, GridComponent] }
+        })
+        .compileComponents();
+      fixture = TestBed.createComponent(SiFlexibleDashboardComponent);
+      component = fixture.componentInstance;
+      grid = component.grid();
+      fixture.componentRef.setInput('heading', 'Heading');
+    });
+
+    it('should consider common menu items with actions that can be invoked', async () => {
+      actionCounter = 0;
+
+      fixture.detectChanges();
+      const menuItems = await firstValueFrom(component.primaryEditActions$);
+      expect(menuItems.length).toBe(2);
+      const action = (menuItems[1] as DashboardToolbarItemAction).action as () => void;
+      action();
+      expect(actionCounter).toBe(1);
+    });
+
+    it('should consider dashboard specific menu items together with common menu items', async () => {
+      actionCounter = 0;
+      fixture.componentRef.setInput('primaryEditActions', [
+        {
+          type: 'action',
+          label: 'IncreaseCounter',
+          action: () => {
+            actionCounter++;
+          }
+        }
+      ]);
+      fixture.detectChanges();
+      const menuItems = await firstValueFrom(component.primaryEditActions$);
+      expect(menuItems.length).toBe(3);
+      const action = (menuItems[1] as DashboardToolbarItemAction).action as () => void;
+      action();
+      expect(actionCounter).toBe(1);
     });
   });
 });

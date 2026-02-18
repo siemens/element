@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { NgClass, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
   ChangeDetectionStrategy,
@@ -17,9 +17,7 @@ import {
   untracked,
   viewChild
 } from '@angular/core';
-import { WebComponentContentChildren } from '@siemens/element-ng/common';
 import {
-  addIcons,
   elementCancel,
   elementChecked,
   elementCheckedFilled,
@@ -27,9 +25,10 @@ import {
   elementNotChecked,
   elementRadioChecked,
   elementRight4,
-  elementWarningFilled,
-  SiIconComponent
-} from '@siemens/element-ng/icon';
+  elementWarningFilled
+} from '@siemens/element-icons';
+import { WebComponentContentChildren } from '@siemens/element-ng/common';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiResizeObserverDirective } from '@siemens/element-ng/resize-observer';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
@@ -42,7 +41,7 @@ interface StepItem {
 
 @Component({
   selector: 'si-wizard',
-  imports: [NgClass, SiIconComponent, SiResizeObserverDirective, SiTranslatePipe, NgTemplateOutlet],
+  imports: [SiIconComponent, SiResizeObserverDirective, SiTranslatePipe, NgTemplateOutlet],
   templateUrl: './si-wizard.component.html',
   styleUrl: './si-wizard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

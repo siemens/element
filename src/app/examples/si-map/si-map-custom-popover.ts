@@ -1,8 +1,8 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, input, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, viewChild } from '@angular/core';
 import { MapPoint, MapPointMetaData, SiMapComponent } from '@siemens/maps-ng';
 import { mockPoints, singlePoint } from 'src/app/mocks/points.mock';
 import { environment } from 'src/environments/environment';
@@ -20,7 +20,8 @@ import { environment } from 'src/environments/environment';
         <td>{{ $any(mapPoint()).extraProps?.value ?? 'N/A' }}</td>
       </tr>
     </table>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CustomPopoverComponent {
   readonly mapPoint = input.required<MapPointMetaData>();

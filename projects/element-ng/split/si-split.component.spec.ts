@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Siemens 2016 - 2025
+ * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
 import {
@@ -7,7 +7,6 @@ import {
   Component,
   ElementRef,
   Injectable,
-  provideZonelessChangeDetection,
   TemplateRef,
   viewChild
 } from '@angular/core';
@@ -348,9 +347,7 @@ describe('SiSplitComponent', () => {
   };
 
   const setup = (useStateService = false): void => {
-    const providers = useStateService
-      ? [provideSiUiState({ store: SynchronousMockStore }), provideZonelessChangeDetection()]
-      : [provideZonelessChangeDetection()];
+    const providers = useStateService ? [provideSiUiState({ store: SynchronousMockStore })] : [];
     beforeEach(async () => {
       await TestBed.configureTestingModule({
         imports: [SiSplitModule, WrapperComponent],
