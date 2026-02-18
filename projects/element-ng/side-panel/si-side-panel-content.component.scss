@@ -25,7 +25,7 @@
 
   :host.collapsed {
     .auto-hide {
-      display: none;
+      display: none !important; // stylelint-disable-line declaration-no-important
     }
 
     .rpanel-wrapper {
@@ -58,7 +58,10 @@
 }
 
 .fullscreen-button {
-  display: var(--fullscreen-button-display, inline-flex);
+  display: var(
+    --fullscreen-button-display,
+    inline-flex
+  ) !important; // stylelint-disable-line declaration-no-important
 }
 
 .collapse-toggle {
