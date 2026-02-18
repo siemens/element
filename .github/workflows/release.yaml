@@ -80,7 +80,7 @@ jobs:
       VERSIONED_BUCKET_NAME: simpl-element-release
       CLOUDFRONT_DOMAIN: d2uqfzn4lxgtwv.cloudfront.net
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - uses: actions/download-artifact@v7
