@@ -1,5 +1,6 @@
 # [49.0.0](https://github.com/siemens/element/compare/v48.9.0...v49.0.0) (2026-02-18)
 
+[Release blog post: "Welcome Element v49!"](https://blog.siemens.com/2026/02/welcome-element-49/)
 
 ### Features
 
