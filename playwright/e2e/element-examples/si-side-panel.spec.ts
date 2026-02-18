@@ -62,4 +62,14 @@ test.describe('si-side-panel', () => {
     await expect(page.locator('si-side-panel:not(.rpanel-collapsed)')).toBeVisible();
     await si.runVisualAndA11yTests('open');
   });
+
+  test(`${example} - fullscreen button visibility`, async ({ page, si }) => {
+    await page.setViewportSize({ width: 500, height: 800 });
+    await si.visitExample(example);
+
+    await page.locator('[icon="element-menu"]').click();
+    await expect(page.locator('si-side-panel:not(.rpanel-collapsed)')).toBeVisible();
+    await expect(page.locator('si-side-panel .fullscreen-button')).toBeHidden();
+    await si.runVisualAndA11yTests();
+  });
 });
