@@ -1,7 +1,7 @@
 {
   "name": "@siemens/dashboards-ng",
   "description": "Element Dashboards library.",
-  "version": "48.9.0",
+  "version": "49.0.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -20,8 +20,8 @@
   "peerDependencies": {
     "@angular/common": "21",
     "@angular/core": "21",
-    "@siemens/element-ng": "48.9.0",
-    "@siemens/element-theme": "48.9.0",
+    "@siemens/element-ng": "49.0.0",
+    "@siemens/element-theme": "49.0.0",
     "gridstack": "^12.3.3",
     "@angular-architects/module-federation": "^20.0.0",
     "@angular-architects/native-federation": "^21.1.0",
