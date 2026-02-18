@@ -221,6 +221,26 @@ For gradual migration, use the hybrid bridge to load existing Webpack remotes fr
 
 For more details [Click here](https://github.com/siemens/element/blob/main/projects/dashboards-ng/README.md#remote-widget-loading-microfrontends)
 
+## New charts entry points
+
+`@siemens/charts-ng` is restructured into a modular architecture with separate entry points for each chart component, enabling better tree-shaking and improved performance.
+
+```ts
+// Before
+import { SiSankeyChartComponent } from '@siemens/charts-ng';
+
+// After
+import { SiSankeyChartComponent } from '@siemens/charts-ng/sankey';
+import { SiGaugeChartComponent } from '@siemens/charts-ng/gauge';
+```
+
+**Available Entry Points:**
+
+- **Chart components**: `cartesian`, `circle`, `chart`, `gauge`, `progress`, `progress-bar`, `sankey`, `sunburst`
+- **Shared modules**: `common`, `custom-legend`, `loading-spinner`
+
+Update your imports to the specific entry points to take advantage of reduced bundle sizes. The `SiChartsNgModule` is now deprecated in favor of modular imports.
+
 ## Beyond Element v49
 
 Element v49 is a major milestone in our journey towards one Siemens Design Language (SDL).
