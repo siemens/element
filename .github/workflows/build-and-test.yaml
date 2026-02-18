@@ -85,57 +85,6 @@ jobs:
           path: dist/coverage
           retention-days: 30
 
-  coverage:
-    if: ${{ !cancelled() }}
-    runs-on: ubuntu-24.04
-    permissions:
-      pull-requests: write
-      contents: read
-    needs:
-      - test
-    steps:
-      - uses: actions/checkout@v6
-      - name: Download coverage reports
-        uses: actions/download-artifact@v7
-        with:
-          name: coverage-reports
-          path: dist/coverage
-      - name: Generate coverage summary
-        uses: irongut/CodeCoverageSummary@v1.3.0
-        with:
-          filename: 'dist/coverage/*/cobertura-coverage.xml'
-          badge: true
-          format: markdown
-          output: both
-          hide_branch_rate: true
-          hide_complexity: true
-          indicators: false
-          file_coverage_mode: changes
-      - name: Extract coverage badge for PR comment
-        if: github.event_name == 'pull_request'
-        run: |
-          # Extract only the badge line and total coverage line
-          head -n 2 code-coverage-results.md > coverage-badge.md
-      - name: Add coverage badge to PR comment
-        uses: marocchino/sticky-pull-request-comment@v2
-        if: github.event_name == 'pull_request'
-        with:
-          recreate: true
-          header: coverage
-          path: coverage-badge.md
-      - name: Generate coverage summary JSON
-        run: |
-          # Extract coverage percentage from markdown and create JSON badge
-          TOTAL_COVERAGE=$(grep -E "(Summary|Total)" code-coverage-results.md | grep -oE '[0-9]+(\.[0-9]+)?%' | head -1 | sed 's/%//')
-          echo "Extracted coverage: $TOTAL_COVERAGE%"
-          echo "{\"schemaVersion\": 1, \"label\": \"coverage\", \"message\": \"$TOTAL_COVERAGE%\", \"color\": \"brightgreen\"}" > coverage-summary.json
-      - name: Upload coverage summary
-        uses: actions/upload-artifact@v6
-        with:
-          name: coverage-summary
-          path: coverage-summary.json
-          retention-days: 1
-
   aot:
     runs-on: ubuntu-24.04
     needs:
@@ -222,7 +171,6 @@ jobs:
     runs-on: ubuntu-24.04
     needs:
       - build
-      - coverage
       - test
     steps:
       - uses: actions/checkout@v6
@@ -233,12 +181,35 @@ jobs:
           path: dist
       - uses: actions/download-artifact@v7
         with:
-          name: coverage-summary
-          path: .
-      - uses: actions/download-artifact@v7
-        with:
           name: coverage-reports
           path: dist/coverage
+      - name: Generate coverage summary
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: 'dist/coverage/*/cobertura-coverage.xml'
+          badge: true
+          format: markdown
+          output: both
+          hide_branch_rate: true
+          hide_complexity: true
+          indicators: false
+          file_coverage_mode: changes
+      - name: Generate coverage summary JSON
+        run: |
+          # Extract coverage percentage from markdown and create JSON badge
+          TOTAL_COVERAGE=$(grep -E "(Summary|Total)" code-coverage-results.md | grep -oE '[0-9]+(\.[0-9]+)?%' | head -1 | sed 's/%//')
+          echo "Extracted coverage: $TOTAL_COVERAGE%"
+          echo "{\"schemaVersion\": 1, \"label\": \"coverage\", \"message\": \"$TOTAL_COVERAGE%\", \"color\": \"brightgreen\"}" > coverage-summary.json
+      - name: Extract coverage badge
+        run: |
+          # Extract only the badge line and total coverage line
+          head -n 2 code-coverage-results.md > coverage-badge.md
+      - name: Upload coverage badge
+        uses: actions/upload-artifact@v6
+        with:
+          name: coverage-badge
+          path: coverage-badge.md
+          retention-days: 1
       - uses: actions/setup-node@v6
         with:
           node-version: lts/krypton
@@ -284,7 +255,6 @@ jobs:
     needs:
       - e2e-merge-reports
       - documentation
-      - coverage
     steps:
       - uses: actions/download-artifact@v7
         with:
@@ -296,8 +266,8 @@ jobs:
           path: playwright-report
       - uses: actions/download-artifact@v7
         with:
-          name: coverage-reports
-          path: coverage-reports
+          name: coverage-badge
+          path: coverage-badge
       - uses: aws-actions/configure-aws-credentials@v6.0.0
         with:
           role-to-assume: arn:aws:iam::974483672234:role/simpl-element-preview
@@ -306,13 +276,32 @@ jobs:
       - run: |
           aws s3 cp --quiet --no-progress --recursive ./pages s3://${{ env.BUCKET_NAME }}/pr-${{ github.event.pull_request.number }}/pages
           aws s3 cp --quiet --no-progress --recursive ./playwright-report s3://${{ env.BUCKET_NAME }}/pr-${{ github.event.pull_request.number }}/playwright-report
-      - uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          message: |
-            [Documentation](https://d33c9dcnqinn2a.cloudfront.net/pr-${{ github.event.pull_request.number }}/pages/).
-            [Examples](https://d33c9dcnqinn2a.cloudfront.net/pr-${{ github.event.pull_request.number }}/pages/element-examples/).
-            [Playwright report](https://d33c9dcnqinn2a.cloudfront.net/pr-${{ github.event.pull_request.number }}/playwright-report/).
+      - name: Build PR description block
+        run: |
+          cat > pr-preview-description.md <<'EOF'
+          <!-- preview-links:start -->
+          ---
 
-            **Coverage Reports:**
-            - [element-ng](https://d33c9dcnqinn2a.cloudfront.net/pr-${{ github.event.pull_request.number }}/pages/coverage/element-ng/)
-            - [element-translate-ng](https://d33c9dcnqinn2a.cloudfront.net/pr-${{ github.event.pull_request.number }}/pages/coverage/element-translate-ng/)
+          [Documentation](https://d33c9dcnqinn2a.cloudfront.net/pr-${{ github.event.pull_request.number }}/pages/).
+          [Examples](https://d33c9dcnqinn2a.cloudfront.net/pr-${{ github.event.pull_request.number }}/pages/element-examples/).
+          [Dashboards Demo](https://d33c9dcnqinn2a.cloudfront.net/pr-${{ github.event.pull_request.number }}/pages/dashboards-demo/).
+          [Playwright report](https://d33c9dcnqinn2a.cloudfront.net/pr-${{ github.event.pull_request.number }}/playwright-report/).
+
+          **Coverage Reports:**
+
+          EOF
+          cat coverage-badge/coverage-badge.md >> pr-preview-description.md
+          cat >> pr-preview-description.md <<'EOF'
+          - [element-ng](https://d33c9dcnqinn2a.cloudfront.net/pr-${{ github.event.pull_request.number }}/pages/coverage/element-ng/)
+          - [element-translate-ng](https://d33c9dcnqinn2a.cloudfront.net/pr-${{ github.event.pull_request.number }}/pages/coverage/element-translate-ng/)
+
+          <!-- preview-links:end -->
+          EOF
+      - name: Update PR description block
+        uses: nefrob/pr-description@v1.2.0
+        with:
+          token: ${{ github.token }}
+          content: pr-preview-description.md
+          contentIsFilePath: true
+          regex: '<!-- preview-links:start -->.*?<!-- preview-links:end -->'
+          regexFlags: 'ims'
