@@ -59,16 +59,10 @@
 }
 
 .favorite-icon {
-  font-size: 20px;
   position: absolute;
-  inset-inline-end: 14px;
-  inset-block-start: 14px;
-  padding: map.get(variables.$spacers, 1);
+  inset-inline-end: map.get(variables.$spacers, 6);
+  inset-block-start: map.get(variables.$spacers, 6);
   color: variables.$element-text-primary;
-}
-
-.external-icon {
-  font-size: 16px;
 }
 
 .is-favorite {
