@@ -34,7 +34,6 @@ $transition-duration: variables.element-transition-duration(0.25s);
 }
 
 .title {
-  position: absolute;
   @extend %fade-transition;
 
   &.title-leave {
