@@ -24,3 +24,19 @@ test.describe('si-landing-page-two-step-login', () => {
     await si.runVisualAndA11yTests('second-step');
   });
 });
+
+test.describe('si-landing-page-single-sign-on-login', () => {
+  const example = 'si-landing-page/si-landing-page-single-sign-on-login';
+
+  test(example, async ({ page, si }) => {
+    await si.visitExample(example);
+    await page.setViewportSize({ width: 1000, height: 794 });
+
+    await page.locator('si-login-single-sign-on button').click();
+
+    const alert = page.getByText('Hello User! You have logged in.');
+    await expect(alert).toBeVisible();
+
+    await si.runVisualAndA11yTests('after-sso-login');
+  });
+});
