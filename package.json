@@ -1,6 +1,6 @@
 {
   "name": "siemens-element",
-  "version": "48.9.0",
+  "version": "49.0.0",
   "description": "Siemens Element open source theme",
   "license": "MIT",
   "private": true,
@@ -38,6 +38,7 @@
     "build:examples:aot": "ng build --configuration aot",
     "build:all": "npm run translate:build && npm run lib:build && npm run schematics:build && npm run live-preview:build && npm run charts:build && npm run native-charts:build && npm run dashboards:build && npm run maps:build",
     "build:all:update-translatable-keys": "npm exec update-translatable-keys",
+    "release:copy-license": "cpy LICENSE.md projects/element-theme/ && cpy LICENSE.md projects/element-translate-cli/",
     "lib:build": "ng build element-ng && cpy \"projects/element-ng/*.scss\" \"./dist/@siemens/element-ng\" && cpy \"{LICENSE.md,README.md}\" \"./dist/@siemens/element-ng/\"",
     "lib:test": "cross-env TZ=utc ng test element-ng",
     "lib:test:browser": "cross-env TZ=utc HEADLESS=0 ng test element-ng",

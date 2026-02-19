@@ -1,3 +1,596 @@
+# [49.0.0](https://github.com/siemens/element/compare/v48.9.0...v49.0.0) (2026-02-18)
+
+[Release blog post: "Welcome Element v49!"](https://blog.siemens.com/2026/02/welcome-element-49/)
+
+### Features
+
+* **ag-grid:** add Element theme for AG Grid ([0c6ad96](https://github.com/siemens/element/commit/0c6ad96bc3b8fb3d5018b612fba2dd9dbfb47708))
+* **angular:** update to Angular 21 ([1f6ff72](https://github.com/siemens/element/commit/1f6ff72c5fa88d77d42505f257167a21991e0334))
+* **buttons:** add square icon buttons ([acb4069](https://github.com/siemens/element/commit/acb40695dbc8b1d033b664d4faf28004fab7e2ef))
+* **buttons:** unify sizing across text and icon variants ([d3c42ba](https://github.com/siemens/element/commit/d3c42ba3a0fbcd69baa1978cbf3105a184fdae1e))
+* **buttons:** update selection buttons to support tooltips ([4893864](https://github.com/siemens/element/commit/4893864b2e12fb75415214bc0e3f808917e4c49c))
+* **charts:** theme change without reloading the chart ([48aee8e](https://github.com/siemens/element/commit/48aee8e97fd3c75a42b71821e594026f1779ed98))
+* **charts:** split into separate entry point ([06ca45e](https://github.com/siemens/element/commit/06ca45e6b4fc69d98f893d814fdd8c1d2c3fe8d4))
+* **chat-messages:** add ai-welcome-screen component ([1aaaf7c](https://github.com/siemens/element/commit/1aaaf7c44dd1aa23de52adfb7e14fa1385124263))
+* **content-action-bar:** add tooltip support ([8a153c3](https://github.com/siemens/element/commit/8a153c36b56ddefab93a0cbaf8ad5b3df596822c))
+* **dashboards-ng:** custom id provider for widget instance ([f815092](https://github.com/siemens/element/commit/f815092bf2c01cfacc0b120654b13caaf79d5535))
+* **dashboards:** add support for primary and secondary toolbar actions via component inputs ([bc4d0d2](https://github.com/siemens/element/commit/bc4d0d2dd18570c08ed0c024ecaac65c2dd2afe8))
+* **dashboards:** native federation ([f81c5a4](https://github.com/siemens/element/commit/f81c5a4d2381f797495dce679c37e5d2647314b4))
+* **element-ng:** replace `@angular/animations` with native CSS ([4ae0b79](https://github.com/siemens/element/commit/4ae0b795ea832f7d0b0fadc921501cfe52c108a8))
+* **element-theme:** introduce new active states ([d917006](https://github.com/siemens/element/commit/d917006ecdd3aaf29b9f15464ef9b4ce6bdff85d))
+* **file-uploader:** provide translation params to uploader messages ([d6dfadf](https://github.com/siemens/element/commit/d6dfadf581a657dae0669a5ee516ca30521053c1)), closes [#1447](https://github.com/siemens/element/issues/1447)
+* **form:** extend and align validation messages with UX guidelines ([13f8c88](https://github.com/siemens/element/commit/13f8c88782dc533dd033e05aa695086fb116f1b9)), closes [#1373](https://github.com/siemens/element/issues/1373)
+* **forms:** derive validation border via CSS on `.form-control-wrapper` ([85bcfb3](https://github.com/siemens/element/commit/85bcfb3891da97faf2de75639b90da073979728c)), closes [#1339](https://github.com/siemens/element/issues/1339)
+* **icon:** enable svg icons by default ([9093f59](https://github.com/siemens/element/commit/9093f595d8860f809248438a7561a0c7e6cba64c))
+* **icons:** use open source icons ([be23170](https://github.com/siemens/element/commit/be23170793cc2e37b5abd34a6f0d8b8823e7f7b4))
+* **landing-page:** remove registration introduction text due to ux guidelines ([10c08f8](https://github.com/siemens/element/commit/10c08f8962cdaeff80aac9b9fdf08e9e4f81d971))
+* **launchpad:** align to new style and responsive design ([643f66c](https://github.com/siemens/element/commit/643f66c290c34c993488e3aa0b4339f86cfe6a93))
+* **list-details:** stabilize APIs and remove experimental flag ([cb3ad59](https://github.com/siemens/element/commit/cb3ad59fefeee62acb0cb946ae6d2cf1a1a82e0a))
+* **live-preview:** use siemens syntax highlighting colors ([f2b77a8](https://github.com/siemens/element/commit/f2b77a82cca66f53d036b56cd3f84d8690e667e3))
+* **navbar-vertical:** update badges visibility logic ([acd4456](https://github.com/siemens/element/commit/acd44560971ea39d0a7add44ca2d075183dd0a0d))
+* **navbar-vertical:** use `siTooltip` for collapsed items ([515137a](https://github.com/siemens/element/commit/515137a35214d36e80ea75adce2ef6f5da1e82d0))
+* **npm:** add support for ngx-translate v17 ([56e04bf](https://github.com/siemens/element/commit/56e04bf1b1d2fca8ab3f3e66fc06976313f368e8))
+* **password-toggle:** support form validation for si-password-toggle ([caca09e](https://github.com/siemens/element/commit/caca09e9e330429efdf6cafb060d36b699cdd08d))
+* **schematics:** add class member replacement functionality ([f31da29](https://github.com/siemens/element/commit/f31da2963a64ab62ced865e641229aaa9cdbafa4))
+* **schematics:** add element class migration for element styling changes ([94d9bcf](https://github.com/siemens/element/commit/94d9bcfa8cab8506a191dc7b92920f26659bc744))
+* **schematics:** add icon path migration schematic to update icon imports ([0d99124](https://github.com/siemens/element/commit/0d99124da8000b3d19ceebececfbc9343ca28d51))
+* **schematics:** add migration for Simpl* to Si* module renamings ([2b28daf](https://github.com/siemens/element/commit/2b28daf501dd266ccfe9fd805769a9d1bd50a53c))
+* **schematics:** add new schematics data for version 49 ([41535ca](https://github.com/siemens/element/commit/41535cafe7fe220bfdd567bf6a321a8e9823e49e))
+* **schematics:** add ng-update schematic ([4622b60](https://github.com/siemens/element/commit/4622b60c7492b6fb096fd4921cbf90116ff74d69))
+* **schematics:** remove OSS migration schematics ([8bfc8bf](https://github.com/siemens/element/commit/8bfc8bf27b5c6667120c4f46eddd2e9ef25c5c3a))
+* **schematics:** rename output-names and component-names model ([ebbf217](https://github.com/siemens/element/commit/ebbf21772b9818a175d5c52b5607378f871346b0))
+* **schematics:** update schematics for dashboards config token migration ([ea54afb](https://github.com/siemens/element/commit/ea54afb1e6d804059c2e760205c3a56cb3e97033))
+* **side-panel:** add backdrop support ([fb9fefd](https://github.com/siemens/element/commit/fb9fefd84ab2c58de8a99e35dd9db7c1d9813e70))
+* **tooltip:** add animation ([a3e09ea](https://github.com/siemens/element/commit/a3e09eaf4122dbfdf1070db4f27f9be7acd34775))
+
+
+### Bug Fixes
+
+* **breadcrumb:** align with Figma component ([36147b6](https://github.com/siemens/element/commit/36147b6a8c4026416d6a0c6752f4d90a5c25218d))
+* **buttons:** button group sizing ([f928791](https://github.com/siemens/element/commit/f9287918f3b7c923673bce463054a677dbab735a))
+* **charts:** update progress chart colors on theme change ([be0defc](https://github.com/siemens/element/commit/be0defce4b1f119131a8f6aec353e69fa03ac781))
+* **chat-messages:** improve scroll responsiveness and expose scroll methods on si-chat-container ([58b6c2e](https://github.com/siemens/element/commit/58b6c2e42e1d5e3725dd0dc9c428574fcb36e8c5))
+* **dashboards-ng:** correctly overlap gridstack resize icon on custom resize icon ([0db47e7](https://github.com/siemens/element/commit/0db47e74f10909e29bc5763dd0726692f007b0e2))
+* **dashboards-ng:** drop ngx-translate peerDependency ([b5fa436](https://github.com/siemens/element/commit/b5fa43685fdad2b8844e0a7f60f52e24dea8f7f1))
+* **dashboards-ng:** use consistent spacing for draggable-overlay ([d73d785](https://github.com/siemens/element/commit/d73d78597ab822095eeaaeac60eebc244df95e53))
+* **date-range-filter:** correctly update range when toggling advanced mode ([287dedb](https://github.com/siemens/element/commit/287dedb877b142c5d0d6838c75f4e605217e9212))
+* **datepicker:** update date even on changing only time ([b3b3c8f](https://github.com/siemens/element/commit/b3b3c8fb66749d75aefee21217f30d30a53a1fe1)), closes [#1431](https://github.com/siemens/element/issues/1431)
+* **deps:** add missing peer dependencies for dashboards-ng, maps-ng and native-charts-ng ([1c8b49a](https://github.com/siemens/element/commit/1c8b49a14e3820f7084db6bf0fe9537afd1642f1))
+* **file-uploader:** center file types text in si-file-dropzone ([e12fff8](https://github.com/siemens/element/commit/e12fff877e65d4a9dac3f27917b28d5874d52628))
+* **filtered-search:** avoid expression change errors in zoneless apps ([025ccf9](https://github.com/siemens/element/commit/025ccf9e3da0a13d703d87ad3e5c6b3019eaed76))
+* **icon:** ng-deep styles not getting applied with webpack builds ([5bbf233](https://github.com/siemens/element/commit/5bbf23369c16554c52cf951c3b0a9880e9e877e5))
+* **inline-notification:** remove colon from heading ([800ee01](https://github.com/siemens/element/commit/800ee0171cd8e6ebbda9bd8a2b3584697b0b876f))
+* **ip-input:** retain cursor position when inserting characters ([2084039](https://github.com/siemens/element/commit/208403961cbcfbfd65b32a7f9032c1be51352ba6))
+* **list-details:** prevent half visible content ([9b43b9d](https://github.com/siemens/element/commit/9b43b9d9907a3dbcde6dd17418f8595e51adb4f0))
+* **live-preview:** support zoneless ([6d83417](https://github.com/siemens/element/commit/6d83417092d71623df3b5864833c30b17f8d9a94))
+* **navbar-vertical:** focus and active state handling ([2edbcc9](https://github.com/siemens/element/commit/2edbcc90f37e679993fbb2e2abe0bfea28ac4326))
+* **pills-input:** only show placeholder text when a string is provided ([4e1ccdf](https://github.com/siemens/element/commit/4e1ccdf230f5747a8d21affb562f931db205f710))
+* **schematics:** remove unused simpl-siemens-migration schematic ([56d5c79](https://github.com/siemens/element/commit/56d5c79e351d07497a2599ed4d39f17f88528793))
+* **select:** maintain filtered rows when updating all rows ([769a8f7](https://github.com/siemens/element/commit/769a8f72bb0a5aefafbd9e1a94cd8c0f3bf54e3c))
+* **side-panel:** set default display to inline-flex ([5317335](https://github.com/siemens/element/commit/5317335cc099d3fd8ec40ee5ef038e5bd6c5fb1d))
+* **toast-notification:** restore RTL for toast notification ([a4732be](https://github.com/siemens/element/commit/a4732beb18b25190fc46a0ce694a0800c3c42842))
+* **tooltip:** always show if hovered or focused ([b55e175](https://github.com/siemens/element/commit/b55e1751516c69a35d7e1055e85c843b5cc37cf9))
+* **tooltip:** update content while tooltip is open ([f279709](https://github.com/siemens/element/commit/f279709117cb882960b48d38ac19574196ac079b))
+* **tree-view:** use hasAnyChildren from parent to determine inline padding ([9d37335](https://github.com/siemens/element/commit/9d37335f350faf53d504c96e2ab89f4303f8bcc9))
+* **typeahead:** treat `space` as normal search text in multi select ([75f293d](https://github.com/siemens/element/commit/75f293d722db97cad863206ff1de0181fc18e731))
+* **wizard:** align save button correctly when hideNavigation is true ([4a1ec89](https://github.com/siemens/element/commit/4a1ec89f003167ee6464446151f0d7505943d34d))
+
+
+### NOTES
+
+* **icons:** We updated the icons’ underlying grid.
+  The geometry has been improved to allow proportional scaling at 16, 20, and 24 px,
+  with line thickness adjusted accordingly.
+  This also allows scaling up, if needed, in 4 px increments.
+  The new icon set also has reduced built-in margins around the icons,
+  improving visual balance with surrounding elements.
+* **navbar-vertical:** The badge behavior in the vertical navbar has been updated. Badge
+  colors are now consistent in both collapsed and expanded states, text-only
+  badges are detected and rendered as a simple dot in collapsed mode.
+  In addition, a new input property `hideBadgeWhenCollapsed` allows
+  to optionally hide the badge when the navbar is collapsed (by default,
+  badges remain visible in both states), improving flexibility and visual consistency.
+* **launchpad:** The `subtitleText` input no longer shows "Access all your apps" by default.
+  To maintain the previous behavior, explicitly set the input.
+* **buttons:** The new square icon buttons (`.btn-icon`) are introduced as the
+  new default style for icon buttons. The existing circle buttons (`.btn-circle`)
+  are now reserved for cases where a circular shape is explicitly required.
+* **buttons:** The minimum inline size for standard buttons (excluding circle, link, close, and icon variants) has been reduced from `100px` to `80px`. This provides more flexibility for compact layouts and the buttons appear narrower compared to earlier versions.
+* **side-panel:** Backdrop support has been added to the side-panel. By default, the side-panel will now render a modal backdrop that blocks background interactions
+  and closes the panel on click. To restore the previous behavior (without a backdrop), set `disableBackdrop` to `true`.
+* **typeahead:** The typeahead multi selection which is also used in the `filtered-search`
+  no longer selects values when pressing `space`.
+  Instead `space` is treated as a normal search value.
+* **angular:** The whitespace character between time and meridian in date/time formats has changed with Angular 21.
+  The format now uses a narrow no-break space (U+202F) instead of a regular space. 
+  See https://github.com/angular/angular/issues/65707 for more details.
+
+### BREAKING CHANGES
+
+* **icon:** `<si-icon>` now renders icons by default as SVG instead of using the icon-font.
+  `element-*` icon classes are not affected by this change.
+  
+  SVG icons render slightly differently so VRT snapshots may need to be updated.
+  
+  To restore the previous behavior, opt-out SVG icons.
+  ```ts
+  provideIconConfig({ disableSvgIcons: true })
+  ```
+* **landing-page:** The `registerNowIntroText` input has been removed to align with UX guidelines.
+  Remove all usages.
+* **file-uploader:** File uploader translation strings now require interpolation placeholders.
+  
+  The `SiFileUploaderComponent` and `SiFileDropzoneComponent` inputs:
+  
+  - `maxFileSizeText` requires the placeholder `{{maxFileSize}}` to display the maximum file size.
+  - `acceptText` requires the placeholder `{{accept}}` to display the accepted file types.
+  - `maxFilesReachedText` requires the placeholder `{{maxFiles}}` to display the maximum number of files allowed.
+  
+  Migration guide for english default translation keys:
+  
+  Before:
+  ```json
+  {
+    "SI_FILE_UPLOADER.MAX_SIZE": "Maximum upload size",
+    "SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES": "Accepted file types",
+    "SI_FILE_UPLOADER.MAX_FILE_REACHED": "Maximum number of files reached"
+  }
+  ```
+  
+  After:
+  ```json
+  {
+    "SI_FILE_UPLOADER.MAX_SIZE": "Max. {{maxFileSize}} upload size.",
+    "SI_FILE_UPLOADER.ACCEPTED_FILE_TYPES": "Accepted file types: {{accept}}.",
+    "SI_FILE_UPLOADER.MAX_FILE_REACHED": "Max. {{maxFiles}} files"
+  }
+  ```
+* **element-ng:** Animations can no longer be disabled using
+  `@angular/animations` specific features like:
+  - `NoopAnimationsModule`
+  - `BrowserAnimationsModule.withConfig({disableAnimations: false})`
+  - `provideNoopAnimations`
+  - `provideAnimationsAsync('noop')`
+  
+  Use CSS to disable animations. See: https://element.siemens.io/architecture/motion-animation/
+* **icons:** `@simpl/element-icons` package replaced by `@siemens/element-icons`.
+  
+  The new icon set implements the new icon style, which has a reduced margin
+  around the icons.
+  
+  Replace the package:
+  1. Uninstall `@simpl/element-icons`
+  2. Install `@siemens/element-icons`
+  3. Adjust import in style sheet.
+     Before: `@use '@simpl/element-icons/dist/style/simpl-element-icons';`
+     After: `@use '@siemens/element-icons/dist/style/siemens-element-icons';`
+  4. Adjust SVG imports:
+     Before: `import { ... } from '@simpl/element-ng/ionic';`
+     Before: `import { ... } from '@simpl/element-ng/svg';`
+     After: `import { ... } from '@siemens/element-icons';`
+  
+  Adjust styles:
+  Always use the correct classes for sizing an icon:
+  - (small: 16px): `<si-icon class="icon-sm" icon="..." />`
+  - (default: 20px): `<si-icon class="icon" icon="..." />`
+  - (large: 24px): `<si-icon class="icon-lg" icon="..." />`
+  
+  As the icons new have a reduced built-in margin, spacings must be adjusted:
+  - remove negative margins, which previously were needed to remove the spacing overhead
+  - add extra spacing-1 between icons and inline-text
+  
+  Element components have those changes automatically applied (including buttons).
+  When updating follow Element recommendations, always use the `icon` classes
+  and remove custom overrides.
+* **tooltip:** The `triggers` input has been removed to align the behavior with accessibility guidelines.
+  Remove all usages. The tooltip will always be shown if the target element is focused or hovered.
+* **buttons:** Removed the class `btn-xs`, use instead `btn-sm` for icon buttons.
+  
+  Button heights has been standardized to fix misalignment between text buttons and icon buttons.
+  
+  All button sizes now follow the same specifications:
+  - Default: 32px
+  - Large (btn-lg): 40px
+  - Small (btn-sm): 24px (reduced from 28px for text buttons)
+  
+  Changes:
+  * btn-sm reduced to 24px to preserve the 8px increment scale (24 → 32 → 40)
+  * icon buttons now match text button heights
+  
+  Update your code if it relies on previous `.btn-circle` sizing:
+  
+  Before:
+  ```html
+  <!-- Circle buttons had inconsistent height mapping -->
+  <button class="btn btn-circle">...</button> <!-- was 40px -->
+  <button class="btn btn-circle btn-sm">...</button> <!-- was 32px -->
+  <button class="btn btn-circle btn-xs">...</button> <!-- was 24px -->
+  ```
+  
+  After:
+  ```html
+  <!-- Circle buttons now align with text button sizes -->
+  <button class="btn btn-circle btn-lg">...</button> <!-- 40px - add btn-lg -->
+  <button class="btn btn-circle">...</button> <!-- 32px - now default -->
+  <button class="btn btn-circle btn-sm">...</button> <!-- 24px - now matches text btn-sm -->
+  <!-- btn-xs has been removed - use btn-sm for 24px buttons -->
+  ```
+  
+  If you were using `btn-xs`, replace it with `btn-sm` to maintain the same 24px size.
+* **npm:** `ngx-translate` now requires an explicit `missingTranslationHandler` to provide default translations for Element.
+  
+  Add `provideMissingTranslationHandlerForElement()` to your `TranslateModule` or provider configuration:
+  
+  ```ts
+  <!-- Before with TranslateModule -->
+  TranslateModule.forRoot({
+    ...
+  });
+  <!-- After -->
+  TranslateModule.forRoot({
+    // Translate configuration
+    ...,
+    missingTranslationHandler: provideMissingTranslationHandlerForElement()
+  });
+  
+  <!-- Before with TranslateModule and missing translation handler -->
+  TranslateModule.forRoot({
+    ...,
+    missingTranslationHandler: {
+      provide: MissingTranslationHandler, useClass: MyMissingTranslationHandler
+    }
+  });
+  <!-- After -->
+  TranslateModule.forRoot({
+    // Translate configuration
+    ...,
+    missingTranslationHandler: provideMissingTranslationHandlerForElement({
+      provide: MissingTranslationHandler, useClass: MyMissingTranslationHandler
+    })
+  });
+  
+  <!-- Before with provider function -->
+  provideTranslateService({
+    // Translate configuration
+    ...
+  });
+  <!-- After -->
+  provideTranslateService({
+    ...,
+    missingTranslationHandler: provideMissingTranslationHandlerForElement()
+  });
+  ```
+* **angular:** Angular 21+ is required.
+  Follow the Angular update guide to update your app: <https://angular.dev/update-guide?v=20.0-21.0>
+* **dashboards-ng:** New widgets are now assigned IDs upon creation using the `SiWidgetIdProvider.generateWidgetId`, rather than using temporary `NEW_WIDGET_PREFIX` IDs that are replaced on save.
+  
+  The `save()` method signature in the abstract class `SiWidgetStorage` has been modified to separate existing widgets from new widgets:
+  
+  Before:
+  
+  ```ts
+  abstract save(
+    widgets: (WidgetConfig | Omit<WidgetConfig, 'id'>)[],
+    removedWidgets?: WidgetConfig[],
+    dashboardId?: string
+  ): Observable<WidgetConfig[]>;
+  ```
+  
+  After:
+  ```ts
+  abstract save(
+    modifiedWidgets: WidgetConfig[],
+    addedWidgets: WidgetConfig[],
+    removedWidgets?: WidgetConfig[],
+    dashboardId?: string
+  ): Observable<WidgetConfig[]>;
+  ```
+  
+  `addedWidgets` array will contain new widgets with ids generated by `SiWidgetIdProvider.generateWidgetId`.
+* **element-ng:** Dropped support for @siemens/ngx-datatable versions 22-24. Only version 25 is now supported as a peer dependency.
+* **filtered-search:** Empty `value` fields of criterion options
+  are no longer replaced with the value from the `label`.
+  
+  Always provide a correct `value`.
+* **typescript:** Element now requires ECMA script 2024 or newer.
+  This is implemented by all evergreen browsers for more than two years.
+* **form:** The input `SiFormItemComponent.label` is now required. This change ensures that `si-form-item` components meet accessibility standards as inputs always require a label. Provide a label that describes the input properly. Do NOT provide an empty string.
+* **form:** The property `SiFormItemControl.errormessageId` is now required. All implementations of `SiFormItemControl` must provide this property to ensure proper accessibility support for error messages.
+* **split:** The default value of `SiSplitPartComponent.collapseOthers` input has been changed from `true` to `false`. Previously, when a split part was collapsed, all split parts between it and the end of the split in the respective direction would also collapse automatically. Now, by default, only the individual split part will collapse.
+* **toast-notification:** Removed type `ToastStateName`, use type `StatusType` which can be imported from `@siemens/element-ng/common` instead. The `StatusType` omits the `connection` state which was legacy code and should not be used anymore. This change affects below interfaces/apis where the above type should be adapted accordingly.
+  
+  - `SiToastNotificationService.queueToastNotification`
+  - `SiToast` interface
+  - `SiToastNotificationService.showToastNotification`
+  - `SiToastNotificationService.hideToastNotification`
+* **filtered-search:** Removed type `Criterion`. Use more specific types `CriterionValue` or `CriterionDefinition` instead for below inputs and output.
+  
+  - `SiFilteredSearchComponent.lazyCriterionProvider`
+  - `SiFilteredSearchComponent.criteria`
+  - `SiFilteredSearchComponent.doSearch`
+  
+  ```ts
+  <!-- Before -->
+    readonly lazyCriterionProvider =
+      input<(typed: string, searchCriteria?: SearchCriteria) => Observable<Criterion[] | CriterionDefinition[]>>();
+  
+  <!-- After -->
+    readonly lazyCriterionProvider =
+      input<(typed: string, searchCriteria?: SearchCriteria) => Observable<CriterionDefinition[]>>();
+  ```
+  
+  ```ts
+  <!-- Before -->
+    readonly criteria = input<Criterion[] | CriterionDefinition[]>([]);
+  
+  <!-- After -->
+    readonly criteria = input<CriterionDefinition[]>([]);
+  ```
+  
+  ```ts
+  <!-- Before -->
+    onSearch(searchCriteria: SearchCriteria) {
+      const criterionValues: Criterion[] = searchCriteria.criteria;
+    }
+  
+  <!-- After -->
+    onSearch(searchCriteria: SearchCriteria) {
+      const criterionValues: CriterionValue[] = searchCriteria.criteria;
+    }
+  ```
+* **filtered-search:** Removed `SiFilteredSearchComponent.readonly` input. Use `SiFilteredSearchComponent.disabled` instead.
+* **select:** Removed deprecated interface `SelectOptionLegacy`. Use interface `SelectOption` instead.
+  
+  The options can be converted like below:
+  
+  Before:
+  
+  ```ts
+  const options: SelectOptionLegacy[] = [
+    { id: '1', title: 'Option 1' },
+    { id: '2', title: 'Option 2', icon: 'check', color: 'text-success', disabled: false }
+  ];
+  ```
+  
+  After:
+  
+  ```ts
+  const options: SelectOption<string>[] = [
+    { type: 'option', value: '1', label: 'Option 1' },
+    { type: 'option', value: '2', label: 'Option 2', icon: 'check', iconColor: 'text-success', disabled: false }
+  ];
+  ```
+* **select:** Removed deprecated output `SiSelectComponent.dropdownClose`. Use output `SiSelectComponent.openChange` instead.
+* **unauthorized-page:** Removed the deprecated `SiUnauthorizedPageComponent` component. Use the `SiInfoPageComponent` component with the `si-info-page` element instead. The `SiInfoPageComponent` is a superset of this component and supports the same use cases and more.
+  
+  Before:
+  
+  ```html
+  <si-unauthorized-page
+    heading="Access denied"
+    subHeading="You are not authorized to access this section."
+    description="Contact your administrator"
+    [link]="{ title: 'Go back', link: '/' }"
+  />
+  ```
+  
+  After:
+  
+  ```html
+  <si-info-page
+    icon="element-warning-filled"
+    iconColor="status-warning"
+    titleText="Access denied"
+    copyText="You are not authorized to access this section."
+    instructions="Contact your administrator"
+    [link]="{ title: 'Go back', link: '/' }"
+  />
+  ```
+* **dashboards:** Removed injection token `CONFIG_TOKEN`. Use `SI_DASHBOARD_CONFIGURATION` injection token instead.
+* **dashboards-ng:** Removed property `WidgetConfig.invalid`. Use `WidgetInstanceEditor.statusChanges` emitter instead.
+  
+  Example usage:
+  ```ts
+   this.statusChanges.emit({
+      invalid: this.isInvalid
+   });
+  ```
+* **dashboards-ng:** Removed module configuration `SiDashboardsNgModule.forRoot`. Use injection tokens `SI_DASHBOARD_CONFIGURATION` and `SI_WIDGET_STORE` directly in your app configuration.
+  
+  Before:
+  
+  ```ts
+  imports: [
+    SiDashboardsNgModule.forRoot({
+      config: {},
+      dashboardApi: {
+        provide: SiWidgetStorage,
+        useClass: CustomWidgetStorage
+      }
+    })
+  ]
+  ```
+  
+  After:
+  
+  ```ts
+  imports: [SiDashboardsNgModule],
+  providers: [
+    { provide: SI_WIDGET_STORE, useClass: AppWidgetStorage },
+    { provide: SI_DASHBOARD_CONFIGURATION, useValue: config }
+  ]
+  ```
+* **modal:** Removed property `ModalOptions.initialState`. Use `ModalOptions.inputValues` instead. Note that `inputValues` only binds to component inputs, unlike `initialState`, which could set any property on the component instance.
+* **dashboards/grid:** Removed property `SiGridComponent.loadingService`. Use `SiGridComponent.isLoading` instead to indicate load and save operations.
+* **common:** Removed `buildTrackByIdentity()` function. Use Angular's new control-flow syntax instead.
+* **common:** Removed `buildTrackByIndex()` function. Use Angular's new control-flow syntax instead.
+* **buttons:** Changed selection-buttons sizing.
+  
+  The sizing has been aligned with regular buttons. The sizing classes are now consistent with standard button classes:
+  - Use `btn-lg` for large selection buttons
+  - Use `btn` (no modifier) for default size selection buttons
+  - Use `btn-sm` for small selection buttons
+  
+  This change affects the HTML structure of selection button groups. Previously, selection buttons had different size mappings compared to regular buttons.
+  
+  Before:
+  ```html
+  <!-- Small selection buttons (visually same as default regular buttons) -->
+  <div class="btn-group">
+    <label>
+      <input type="radio" class="btn-check" name="example" />
+      <span class="btn btn-sm">Option 1</span>
+    </label>
+  </div>
+  ```
+  
+  After:
+  ```html
+  <!-- Default selection buttons (now visually same as default regular buttons) -->
+  <div class="btn-group">
+    <label>
+      <input type="radio" class="btn-check" name="example" />
+      <span class="btn">Option 1</span>
+    </label>
+  </div>
+  ```
+* **maps:** Removed the deprecated `SiMapComponent.onResize()` method. It had no impact.
+* **resize-observer:** Removed following deprecated properties from `SiResponsiveContainerDirective` in favor of signal-based properties:
+  
+  `isXs` -> Use `xs` instead
+  `isSm` -> Use `sm` instead
+  `isMd` -> Use `md` instead
+  `isLg` -> Use `lg` instead
+  `isXl` -> Use `xl` instead
+  `isXxl` -> Use `xxl` instead
+* **select:** Removed the `[complexOptions]` input of `si-select`. Instead use the `[options]` input which supports
+  - grouping of options
+  - providing values of any type
+  
+  Complex options can be converted like below:
+  
+  ```html
+  <!-- Before -->
+  <si-select
+    [complexOptions]="{group1: [{myLabel: 'My Label', uniqueData: uniqueData}]}"
+    [valueProvider]="valueProvider"
+    [groupProvider]="groupProvider"
+    [optionEqualCheckFn]="uniqueDataEqual"
+  />
+  
+  <!-- After -->
+  <si-select
+    [options]="[
+      {
+        type: 'group',
+        label: 'Group-1',
+        key: 'group1 (optional)',
+        options: [{type: 'option', label: 'My Label', value: uniqueData}]
+      }
+    ]"
+    [optionEqualCheckFn]="uniqueDataEqual"
+  />
+  ```
+* **charts/gauge:** Removed input `SiChartGaugeComponent.numberOfDecimals`. Use `SiChartGaugeComponent.minNumberOfDecimals` or `SiChartGaugeComponent.maxNumberOfDecimals` inputs instead.
+* **tour:** Removed property `attachTo.on` of `TourStep` interface. It has no effect, position is automatic.
+
+### DEPRECATIONS
+
+* **dashboards:** `SiWidgetStorage.getToolbarMenuItems` is deprecated. Use `provideDashboardToolbarItems` in your app configuration for global toolbar items, and/or use the `primaryEditActions` and `secondaryEditActions` inputs on `SiFlexibleDashboardComponent` for dashboard specific toolbar items.
+  
+  Before (deprecated approach):
+  
+  ```ts
+  export class AppWidgetStorage extends SiDefaultWidgetStorage {
+    override getToolbarMenuItems = (dashboardId?: string) => ({
+      primary: of([{
+        type: 'action',
+        label: 'Custom Action',
+        action: (grid) => alert('Action!')
+      }]),
+      secondary: of([{
+        type: 'action',
+        label: 'Settings',
+        action: (grid) => this.openSettings()
+      }])
+    });
+  }
+  ```
+  
+  After
+  
+  ```ts
+  // For global toolbar items (shared across all dashboards):
+  
+  // standalone setup
+  export const appConfig: ApplicationConfig = {
+    providers: [
+      provideDashboardToolbarItems({
+        primary: [{
+          type: 'action',
+          label: 'Custom Action',
+          action: (grid) => alert('Action!')
+        }],
+        secondary: [{
+          type: 'action',
+          label: 'Settings',
+          action: (grid) => this.openSettings()
+        }]
+      })
+    ]
+  };
+  
+  // For module-based apps:
+  @NgModule({
+    providers: [
+      provideDashboardToolbarItems({
+        primary: [{
+          type: 'action',
+          label: 'Custom Action',
+          action: (grid) => alert('Action!')
+        }],
+        secondary: [{
+          type: 'action',
+          label: 'Settings',
+          action: (grid) => this.openSettings()
+        }]
+      })
+    ]
+  })
+  export class AppModule { }
+  
+  // For dashboard-specific toolbar items:
+  <si-flexible-dashboard
+    [primaryEditActions]="primaryActions"
+    [secondaryEditActions]="secondaryActions"
+  />
+  ```
+* **sort-bar:** `SiSortBarComponent` and `SiSortBarModule` are deprecated.
+  They originate from the older design system and do not align with current
+  design guidelines. No known use case exists for this component.
+  Both will be removed in v50.
+* The type alias with `Simpl` prefix are deprecated, use types with `Si` prefix instead as per below
+  
+  - `SimplLineSeriesOption` -> Use `SiLineSeriesOption` instead
+  - `SimplBarSeriesOption` -> Use `SiBarSeriesOption` instead
+  - `SimplHeatmapSeriesOption` -> Use `SiHeatmapSeriesOption` instead
+  - `SimplScatterSeriesOption` -> Use `SiScatterSeriesOption`  instead
+  - `SimplCandlestickSeriesOption` -> Use `SiCandlestickSeriesOption` instead
+* **buttons:** The `NotificationItemActionCircleButton` interface and 'action-circle-button' type are
+  deprecated. Use `NotificationItemActionIconButton` and 'action-icon-button'
+  instead. Both interfaces render square icon buttons (.btn-icon) and remain
+  fully backward compatible.
+* The type alias with `Simpl` prefix are deprecated, use types with `Si` prefix instead as per below
+  
+  `SimplChartsNgModule` -> Use `SiChartsNgModule` instead
+  `SimplSeriesOption` -> Use `SiSeriesOption` instead
+  `SimplLivePreviewRoutingModule` -> Use `SiLivePreviewRoutingModule` instead
+  `SimplLivePreviewModule` -> Use `SiLivePreviewModule`  instead
+  `SimplMapsNgModule` -> Use `SiMapsNgModule` instead
+  `SimplNativeChartsNgModule` -> Use `SiNativeChartsNgModule` instead
+* **charts:** `SiChartsNgModule` is deprecated, import individual components instead. Starting with v49, separate entry points are available for each component, allowing applications to import components from specific entry points, which helps reduce the application bundle size.
+* **chart:** The method `SiChartComponent.resetChart` is deprecated and should not be used by the consumer directly.
+
 # [48.9.0](https://github.com/siemens/element/compare/v48.8.0...v48.9.0) (2025-12-19)
 
 

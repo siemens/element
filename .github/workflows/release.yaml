@@ -16,6 +16,9 @@ jobs:
       - build-and-test
     permissions:
       id-token: write
+    outputs:
+      new_release: ${{ steps.check_release.outputs.new_release }}
+      release_tag: ${{ steps.check_release.outputs.release_tag }}
     steps:
       - uses: actions/checkout@v6
         with:
@@ -30,6 +33,11 @@ jobs:
           name: dist
           path: dist
       - run: npm ci --prefer-offline --no-audit
+      - id: before_release
+        run: |
+          BEFORE_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          echo "before_tag=$BEFORE_TAG" >> $GITHUB_OUTPUT
+      - run: npm run release:copy-license
       - run: npx semantic-release
         env:
           SKIP_COMMIT: ${{ github.ref_name == 'next' && 'true' || '' }}
@@ -38,3 +46,78 @@ jobs:
           GIT_COMMITTER_NAME: 'Siemens Element Bot'
           GIT_COMMITTER_EMAIL: 'simpl.si@siemens.com'
           GITHUB_TOKEN: ${{ secrets.ELEMENT_BOT_GITHUB_TOKEN }}
+      - id: check_release
+        run: |
+          BEFORE_TAG="${{ steps.before_release.outputs.before_tag }}"
+          AFTER_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+
+          if [[ -n "$AFTER_TAG" && "$AFTER_TAG" != "$BEFORE_TAG" ]]; then
+            echo "release_tag=$AFTER_TAG" >> $GITHUB_OUTPUT
+            echo "new_release=true" >> $GITHUB_OUTPUT
+          else
+            echo "new_release=false" >> $GITHUB_OUTPUT
+            echo "release_tag=" >> $GITHUB_OUTPUT
+          fi
+
+  # Generates the versioned documentation and publishes it to S3.
+  # This job only runs after a successful release unless the release is on the "next" branch.
+  # In general, runs on main push to /latest/, while release branches (e.g., release/48.x) push to /v48/
+  # There are two special cases:
+  # 1. Release on a release branch while there is no new major release on main.
+  #    This happens, when we already merged breaking changes, but do a release for an older version before releasing from main.
+  #    In this case, we still want to update the /latest/ although we are on a release branch.
+  # 2. The first release of a new major version.
+  #    In this case, we need to move the existing /latest/ to the previous major version folder.
+  publish-documentation-release:
+    runs-on: ubuntu-24.04
+    needs:
+      - publish
+      - build-and-test
+    if: success() && needs.publish.outputs.new_release == 'true' && github.ref_name != 'next'
+    permissions:
+      id-token: write
+    env:
+      VERSIONED_BUCKET_NAME: simpl-element-release
+      CLOUDFRONT_DOMAIN: d2uqfzn4lxgtwv.cloudfront.net
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@v7
+        with:
+          name: pages
+          path: pages
+      - uses: aws-actions/configure-aws-credentials@v5.1.1
+        with:
+          role-to-assume: arn:aws:iam::974483672234:role/simpl-element-release
+          role-session-name: element-release-docs
+          aws-region: eu-west-1
+        # Prepare gathers the necessary information:
+        # - the version / major version we are releasing
+        # - to which directory we need to deploy (latest or v123)
+        # - latest-version.txt contains the current version of the "latest" object in the S3 bucket
+        # If we create a new major version, we also move the existing latest/ to the previous major version folder.
+        # This outputs three values:
+        # - major_version: the major version we are releasing (e.g., v49)
+        # - deploy_latest: whether we need to deploy to latest/ (true/false)
+        # - latest: the current version of latest/ before this release (e.g., v48)
+      - id: prepare
+        run: >-
+          tools/release/prepare-release.sh
+          "${{ env.VERSIONED_BUCKET_NAME }}"
+          "${{ needs.publish.outputs.release_tag }}"
+
+        # Generate versions.json based on the existing versions in S3 and the new release
+      - name: Generate versions.json
+        run: >-
+          node tools/release/generate-versions.js
+          "${{ steps.prepare.outputs.deploy_latest }}"
+          "${{ steps.prepare.outputs.major_version }}"
+          "${{ steps.prepare.outputs.latest }}"
+
+        # Uploads the generated documentation to the appropriate S3 bucket and path.
+      - run: >-
+          tools/release/publish-docs.sh
+          "${{ env.VERSIONED_BUCKET_NAME }}"
+          "${{ steps.prepare.outputs.deploy_latest }}"
+          "${{ steps.prepare.outputs.major_version }}"

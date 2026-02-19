@@ -43,7 +43,7 @@ describe('SiSortBarComponent', () => {
     getItemByIndex(itemIndex)?.querySelector('span:not(.icon)') ?? null;
 
   const getIconByIndex = (itemIndex: number): HTMLElement | null =>
-    getItemByIndex(itemIndex)?.querySelector('.icon div') ?? null;
+    getItemByIndex(itemIndex)?.querySelector('si-icon.icon') ?? null;
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TestHostComponent);
@@ -55,7 +55,7 @@ describe('SiSortBarComponent', () => {
     fixture.detectChanges();
 
     expect(getNameByIndex(1)?.textContent).toBe('Street');
-    expect(getIconByIndex(1)?.classList).toContain('element-sort-up');
+    expect(getIconByIndex(1)?.getAttribute('data-icon')).toBe('elementSortUp');
   });
 
   it('should correctly change the active sort criteria', () => {
@@ -64,24 +64,23 @@ describe('SiSortBarComponent', () => {
     fixture.detectChanges();
 
     expect(getNameByIndex(2)?.textContent).toBe('Country');
-    expect(getIconByIndex(2)?.classList).toContain('element-sort-up');
+    expect(getIconByIndex(2)?.getAttribute('data-icon')).toBe('elementSortUp');
   });
 
   it('should correctly toggle the sort criteria', () => {
     fixture.detectChanges();
 
     expect(getNameByIndex(1)?.textContent).toBe('Street');
-    expect(getIconByIndex(1)?.classList).toContain('element-sort-up');
+    expect(getIconByIndex(1)?.getAttribute('data-icon')).toBe('elementSortUp');
     getCriteriaByKey('street')?.click();
     fixture.detectChanges();
-    expect(getIconByIndex(1)?.classList).toContain('element-sort-down');
+    expect(getIconByIndex(1)?.getAttribute('data-icon')).toBe('elementSortDown');
   });
 
   it('should successfully trigger the sort-change event', async () => {
     fixture.detectChanges();
-    const sortDirectionAfter = getIconByIndex(1)?.classList.contains('element-sort-up')
-      ? 'desc'
-      : 'asc';
+    const sortDirectionAfter =
+      getIconByIndex(1)?.getAttribute('data-icon') === 'elementSortUp' ? 'desc' : 'asc';
 
     const sortChangeEvent = new Promise<void>(resolve => {
       component.sortChange.subscribe((e: HttpParams) => {

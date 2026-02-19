@@ -17,6 +17,9 @@ nav:
     - Overview:                           'README.md'
     - Get started:                        'get-started/quickstart.md'
     - Build with AI:                      'get-started/element-mcp.md'
+    - Update guides:
+        - Update to v49:                  'update-guides/update-v49.md'
+    - Changelog:                          'CHANGELOG.md'
   - Fundamentals:
     - Typography:                         'fundamentals/typography.md'
     - Colors:
@@ -193,7 +196,6 @@ nav:
     - Guidelines:                         'CONTRIBUTING.md'
     - Code of conduct:                    'CODE_OF_CONDUCT.md'
     - Developer guide:                    'DEVELOPER.md'
-  - Changelog:                            'CHANGELOG.md'
 
 theme:
   name: code-siemens-code-docs-theme
@@ -228,6 +230,7 @@ extra_javascript:
   - '//w3.siemens.com/ote/ote_config.js'
   - '//w3.siemens.com/ote/sinet/ote.js'
   - 'https://assets.adobedtm.com/5dfc7d97c6fb/f16b45bec907/launch-af252bb19983.min.js'
+  - '_src/version-selector.js'
 extra:
   links:
     - name: 'GitHub'

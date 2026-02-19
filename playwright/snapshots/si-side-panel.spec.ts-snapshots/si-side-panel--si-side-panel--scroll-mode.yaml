@@ -54,5 +54,5 @@
   - text: Displays a semi-transparent overlay that blocks interactions with the main content while keeping it visible for context. Only active in over-mode (or when scroll mode is forced to over-mode on smaller screens). The backdrop can be clicked to close the side panel and can be disabled with the
   - code: disableBackdrop
   - text: input.
-- switch "disableBackdrop"
-- code: disableBackdrop
+- checkbox "disableBackdrop"
+- text: disableBackdrop

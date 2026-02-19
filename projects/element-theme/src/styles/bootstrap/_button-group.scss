@@ -99,10 +99,11 @@ $btn-size-sm: 24px !default;
   &[inert] {
     opacity: semantic-tokens.$element-action-disabled-opacity;
   }
-}
 
-.btn-group .btn-check {
-  + .btn {
+  // Selection buttons
+  .btn-check + .btn,
+  label.btn:has(.btn-check) {
+    cursor: pointer;
     background: transparent;
     color: semantic-tokens.$element-text-primary;
     padding-block: calc(variables.$btn-padding-y - 1px);
@@ -125,16 +126,17 @@ $btn-size-sm: 24px !default;
         margin-inline: 0;
       }
     }
+
+    &:hover {
+      color: semantic-tokens.$element-ui-0-hover;
+    }
   }
 
-  &:checked + .btn,
-  + .btn:hover {
-    color: semantic-tokens.$element-ui-0-hover;
-  }
-
-  &:checked + .btn {
+  .btn-check:checked + .btn,
+  label.btn:has(.btn-check:checked) {
     background: semantic-tokens.$element-action-secondary-active;
     border-color: semantic-tokens.$element-action-secondary-border-hover;
+    color: semantic-tokens.$element-ui-0-hover;
     z-index: 2;
 
     &:hover {
@@ -142,7 +144,8 @@ $btn-size-sm: 24px !default;
     }
   }
 
-  &:focus-visible + .btn {
+  .btn-check:focus-visible + .btn,
+  label.btn:has(.btn-check:focus-visible) {
     @include focus.make-outline-focus();
     z-index: 3;
   }

@@ -1,7 +1,7 @@
 {
   "name": "@siemens/element-translate-cli",
   "description": "Element translation abstraction layer CLI.",
-  "version": "48.9.0",
+  "version": "49.0.0",
   "license": "MIT",
   "type": "module",
   "repository": {
@@ -21,6 +21,6 @@
     "update-translatable-keys": "bin/update-translatable-keys.js"
   },
   "dependencies": {
-    "fast-xml-parser": "5.3.5"
+    "fast-xml-parser": "5.3.6"
   }
 }

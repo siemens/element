@@ -1,7 +1,7 @@
 {
   "name": "@siemens/native-charts-ng",
   "description": "Element Native charts library.",
-  "version": "48.9.0",
+  "version": "49.0.0",
   "license": "MIT",
   "type": "module",
   "repository": {
@@ -20,7 +20,7 @@
   "peerDependencies": {
     "@angular/common": "21",
     "@angular/core": "21",
-    "@siemens/element-theme": "48.9.0"
+    "@siemens/element-theme": "49.0.0"
   },
   "exports": {
     "./docs.json": {
