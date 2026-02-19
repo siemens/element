@@ -2,8 +2,15 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+  signal,
+  viewChild
+} from '@angular/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CopyrightDetails } from '@siemens/element-ng/copyright-notice';
 import {
   AlertConfig,
@@ -17,7 +24,8 @@ import {
   templateUrl: './si-landing-page-single-sign-on-login.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SampleComponent {
+export class SampleComponent implements OnInit {
+  private translate = inject(TranslateService);
   readonly loginSingleSignOn = viewChild.required(SiLoginSingleSignOnComponent);
   readonly loginAlert = signal<AlertConfig | undefined>(undefined);
 
@@ -27,7 +35,15 @@ export class SampleComponent {
     company: 'Example Company'
   };
 
+  ngOnInit(): void {
+    this.translate.set('DEMO.CONFIRM_LOGIN_MSG', 'Hello {{user}}! You have logged in.');
+  }
+
   ssoLogin(): void {
-    this.loginAlert.set({ severity: 'success', message: 'You have logged in!' });
+    this.loginAlert.set({
+      severity: 'success',
+      message: 'DEMO.CONFIRM_LOGIN_MSG',
+      translationParams: { user: 'User' }
+    });
   }
 }
