@@ -2,6 +2,7 @@
 
 VERSIONED_BUCKET_NAME="$1"
 DEPLOY_RELEASE="$2"
+IS_DEFAULT_BRANCH="$3"
 VERSION="${DEPLOY_RELEASE#v}"
 MAJOR_VERSION="v${VERSION%%.*}"
 
@@ -16,7 +17,7 @@ fi
 
 DEPLOY_LATEST="false"
 
-if [[ "${{ github.ref_name }}" == "${{ github.event.repository.default_branch }}" ]]; then
+if [[ "$IS_DEFAULT_BRANCH" == "true" ]]; then
   DEPLOY_LATEST="true"
   if [[ -n "$LATEST_VERSION" && "$LATEST_VERSION" != "$MAJOR_VERSION" ]]; then
     aws s3 sync --quiet --no-progress --delete \
