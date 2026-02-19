@@ -106,6 +106,7 @@ jobs:
           tools/release/prepare-release.sh
           "${{ env.VERSIONED_BUCKET_NAME }}"
           "${{ needs.publish.outputs.release_tag }}"
+          "${{ github.ref_name == github.event.repository.default_branch }}"
 
         # Generate versions.json based on the existing versions in S3 and the new release
       - name: Generate versions.json
