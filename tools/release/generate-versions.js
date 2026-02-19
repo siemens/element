@@ -1,10 +1,9 @@
-const fs = require('fs');
+import { readFileSync, writeFileSync } from 'node:fs';
 
 const [, , deployLatestArg, majorVersionArg, latestFallbackArg] = process.argv;
 const deployLatest = deployLatestArg === 'true';
 
-const rawVersions = fs
-  .readFileSync('s3-versions.txt', 'utf8')
+const rawVersions = readFileSync('s3-versions.txt', 'utf8')
   .split(/\r?\n/)
   .map(line => line.trim())
   .filter(Boolean);
@@ -24,4 +23,4 @@ if (deployLatest) {
   payload.unshift({ version: '', title: `${numericTitle}.x` });
 }
 
-fs.writeFileSync('versions.json', JSON.stringify(payload, null, 2));
+writeFileSync('versions.json', JSON.stringify(payload, null, 2));
