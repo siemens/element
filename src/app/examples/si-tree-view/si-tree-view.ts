@@ -50,7 +50,7 @@ export class SampleComponent {
       badge: this.getRandomNumber(10),
       badgeColor: this.getRandomBadgeColor(),
       icon: this.getRandomIcon(),
-      action: () => alert(`Performed action \"${option}\"`),
+      action: () => alert(`Performed action "${option}"`),
       disabled: false
     }));
   };
