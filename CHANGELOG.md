@@ -10,6 +10,7 @@
 * **buttons:** unify sizing across text and icon variants ([d3c42ba](https://github.com/siemens/element/commit/d3c42ba3a0fbcd69baa1978cbf3105a184fdae1e))
 * **buttons:** update selection buttons to support tooltips ([4893864](https://github.com/siemens/element/commit/4893864b2e12fb75415214bc0e3f808917e4c49c))
 * **charts:** theme change without reloading the chart ([48aee8e](https://github.com/siemens/element/commit/48aee8e97fd3c75a42b71821e594026f1779ed98))
+* **charts:** split into separate entry point ([06ca45e](https://github.com/siemens/element/commit/06ca45e6b4fc69d98f893d814fdd8c1d2c3fe8d4))
 * **chat-messages:** add ai-welcome-screen component ([1aaaf7c](https://github.com/siemens/element/commit/1aaaf7c44dd1aa23de52adfb7e14fa1385124263))
 * **content-action-bar:** add tooltip support ([8a153c3](https://github.com/siemens/element/commit/8a153c36b56ddefab93a0cbaf8ad5b3df596822c))
 * **dashboards-ng:** custom id provider for widget instance ([f815092](https://github.com/siemens/element/commit/f815092bf2c01cfacc0b120654b13caaf79d5535))
@@ -94,11 +95,15 @@
 * **buttons:** The new square icon buttons (`.btn-icon`) are introduced as the
   new default style for icon buttons. The existing circle buttons (`.btn-circle`)
   are now reserved for cases where a circular shape is explicitly required.
+* **buttons:** The minimum inline size for standard buttons (excluding circle, link, close, and icon variants) has been reduced from `100px` to `80px`. This provides more flexibility for compact layouts and the buttons appear narrower compared to earlier versions.
 * **side-panel:** Backdrop support has been added to the side-panel. By default, the side-panel will now render a modal backdrop that blocks background interactions
   and closes the panel on click. To restore the previous behavior (without a backdrop), set `disableBackdrop` to `true`.
 * **typeahead:** The typeahead multi selection which is also used in the `filtered-search`
   no longer selects values when pressing `space`.
   Instead `space` is treated as a normal search value.
+* **angular:** The whitespace character between time and meridian in date/time formats has changed with Angular 21.
+  The format now uses a narrow no-break space (U+202F) instead of a regular space. 
+  See https://github.com/angular/angular/issues/65707 for more details.
 
 ### BREAKING CHANGES
 
@@ -263,7 +268,7 @@
   
   Before:
   
-  ```
+  ```ts
   abstract save(
     widgets: (WidgetConfig | Omit<WidgetConfig, 'id'>)[],
     removedWidgets?: WidgetConfig[],
@@ -272,7 +277,7 @@
   ```
   
   After:
-  ```
+  ```ts
   abstract save(
     modifiedWidgets: WidgetConfig[],
     addedWidgets: WidgetConfig[],
@@ -304,7 +309,7 @@
   - `SiFilteredSearchComponent.criteria`
   - `SiFilteredSearchComponent.doSearch`
   
-  ```
+  ```ts
   <!-- Before -->
     readonly lazyCriterionProvider =
       input<(typed: string, searchCriteria?: SearchCriteria) => Observable<Criterion[] | CriterionDefinition[]>>();
@@ -314,7 +319,7 @@
       input<(typed: string, searchCriteria?: SearchCriteria) => Observable<CriterionDefinition[]>>();
   ```
   
-  ```
+  ```ts
   <!-- Before -->
     readonly criteria = input<Criterion[] | CriterionDefinition[]>([]);
   
@@ -322,7 +327,7 @@
     readonly criteria = input<CriterionDefinition[]>([]);
   ```
   
-  ```
+  ```ts
   <!-- Before -->
     onSearch(searchCriteria: SearchCriteria) {
       const criterionValues: Criterion[] = searchCriteria.criteria;
@@ -340,7 +345,7 @@
   
   Before:
   
-  ```
+  ```ts
   const options: SelectOptionLegacy[] = [
     { id: '1', title: 'Option 1' },
     { id: '2', title: 'Option 2', icon: 'check', color: 'text-success', disabled: false }
@@ -349,7 +354,7 @@
   
   After:
   
-  ```
+  ```ts
   const options: SelectOption<string>[] = [
     { type: 'option', value: '1', label: 'Option 1' },
     { type: 'option', value: '2', label: 'Option 2', icon: 'check', iconColor: 'text-success', disabled: false }
@@ -360,7 +365,7 @@
   
   Before:
   
-  ```
+  ```html
   <si-unauthorized-page
     heading="Access denied"
     subHeading="You are not authorized to access this section."
@@ -371,7 +376,7 @@
   
   After:
   
-  ```
+  ```html
   <si-info-page
     icon="element-warning-filled"
     iconColor="status-warning"
@@ -385,7 +390,7 @@
 * **dashboards-ng:** Removed property `WidgetConfig.invalid`. Use `WidgetInstanceEditor.statusChanges` emitter instead.
   
   Example usage:
-  ```
+  ```ts
    this.statusChanges.emit({
       invalid: this.isInvalid
    });
@@ -394,7 +399,7 @@
   
   Before:
   
-  ```
+  ```ts
   imports: [
     SiDashboardsNgModule.forRoot({
       config: {},
@@ -408,7 +413,7 @@
   
   After:
   
-  ```
+  ```ts
   imports: [SiDashboardsNgModule],
   providers: [
     { provide: SI_WIDGET_STORE, useClass: AppWidgetStorage },
@@ -429,7 +434,7 @@
   This change affects the HTML structure of selection button groups. Previously, selection buttons had different size mappings compared to regular buttons.
   
   Before:
-  ```
+  ```html
   <!-- Small selection buttons (visually same as default regular buttons) -->
   <div class="btn-group">
     <label>
@@ -440,7 +445,7 @@
   ```
   
   After:
-  ```
+  ```html
   <!-- Default selection buttons (now visually same as default regular buttons) -->
   <div class="btn-group">
     <label>
@@ -484,6 +489,7 @@
       }
     ]"
     [optionEqualCheckFn]="uniqueDataEqual"
+  />
   ```
 * **charts/gauge:** Removed input `SiChartGaugeComponent.numberOfDecimals`. Use `SiChartGaugeComponent.minNumberOfDecimals` or `SiChartGaugeComponent.maxNumberOfDecimals` inputs instead.
 * **tour:** Removed property `attachTo.on` of `TourStep` interface. It has no effect, position is automatic.
@@ -494,7 +500,7 @@
   
   Before (deprecated approach):
   
-  ```
+  ```ts
   export class AppWidgetStorage extends SiDefaultWidgetStorage {
     override getToolbarMenuItems = (dashboardId?: string) => ({
       primary: of([{
@@ -513,7 +519,7 @@
   
   After
   
-  ```
+  ```ts
   // For global toolbar items (shared across all dashboards):
   
   // standalone setup
@@ -574,7 +580,7 @@
   deprecated. Use `NotificationItemActionIconButton` and 'action-icon-button'
   instead. Both interfaces render square icon buttons (.btn-icon) and remain
   fully backward compatible.
-* The type alias with `Simpl` prefix are deprecated, use types with `si` prefix instead as per below
+* The type alias with `Simpl` prefix are deprecated, use types with `Si` prefix instead as per below
   
   `SimplChartsNgModule` -> Use `SiChartsNgModule` instead
   `SimplSeriesOption` -> Use `SiSeriesOption` instead
