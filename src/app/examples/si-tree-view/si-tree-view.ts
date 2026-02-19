@@ -13,14 +13,12 @@ import { MenuItemsProvider, SiTreeViewComponent, TreeItem } from '@siemens/eleme
   host: { class: 'p-5' }
 })
 export class SampleComponent {
-  
-  private contextClasses: { [key: string]: string[] }  =
-  {
-    'device' : ['Option 1', 'Option 2', 'Option 3'],
-    'geo'  : ['Option A', 'Option B', 'Option C'],
-    'infra'  : ['Analyze', 'Map', 'Restructure'],
-    'discDevices' : ['Assign all', 'Forget all'],
-    'assignedDevices' : ['Remove all', 'Update'],
+  private contextClasses: { [key: string]: string[] } = {
+    'device': ['Option 1', 'Option 2', 'Option 3'],
+    'geo': ['Option A', 'Option B', 'Option C'],
+    'infra': ['Analyze', 'Map', 'Restructure'],
+    'discDevices': ['Assign all', 'Forget all'],
+    'assignedDevices': ['Remove all', 'Update']
   };
 
   private getRandomNumber(max: number): number {
@@ -36,13 +34,16 @@ export class SampleComponent {
   }
 
   private getRandomIcon(): string {
-    return this.getRandomBoolean() ? (this.getRandomBoolean() ? 'element-light' : 'element-light-on') : '';
+    return this.getRandomBoolean()
+      ? this.getRandomBoolean()
+        ? 'element-light'
+        : 'element-light-on'
+      : '';
   }
 
-  menuItems: MenuItemsProvider = item => 
-  {
+  menuItems: MenuItemsProvider = item => {
     const key = item.dataField2 as string;
-    if(!key) return [];
+    if (!key) return [];
     const options = this.contextClasses[key] || [];
     return options.map(option => ({
       title: option,
@@ -66,16 +67,16 @@ export class SampleComponent {
           label: 'Automation station',
           dataField1: '[AS_TRA_155]',
           icon: 'element-automation-station',
-          dataField2: "device",
+          dataField2: 'device',
           state: 'leaf'
         },
         {
           label: 'Unknown device',
           dataField1: '[X3_456_dfsda]',
           icon: 'element-device-alt',
-          dataField2: "device",
+          dataField2: 'device',
           state: 'leaf'
-        },
+        }
       ]
     },
     {
@@ -110,14 +111,14 @@ export class SampleComponent {
     },
     {
       label: 'Infrastructure',
-      dataField2: "infra",
-      icon: 'element-box',
+      dataField2: 'infra',
+      icon: 'element-box'
       //state: 'leaf'
     },
     {
       label: 'Assigned Devices',
       icon: 'element-assigned',
-      dataField2: "assignedDevices",
+      dataField2: 'assignedDevices',
       badge: '5',
       badgeColor: 'info',
       stateIndicatorColor: 'green',
@@ -126,7 +127,7 @@ export class SampleComponent {
           label: 'Automation station',
           dataField1: '[AS_TRA_152]',
           icon: 'element-automation-station',
-          dataField2: "device",
+          dataField2: 'device',
           stateIndicatorColor: 'green',
           children: [
             {
@@ -166,42 +167,41 @@ export class SampleComponent {
                 {
                   label: 'Cooling coil',
                   state: 'leaf',
-                  stateIndicatorColor: 'green',
+                  stateIndicatorColor: 'green'
                 },
                 {
                   label: 'Heating coil',
                   state: 'leaf'
-                },
+                }
               ]
-            },
+            }
           ]
         },
         {
           label: 'Automation station',
           dataField1: '[AS_TRA_155]',
           icon: 'element-automation-station',
-          dataField2: "device",
+          dataField2: 'device'
         },
         {
           label: 'Automation station',
           dataField1: '[AS_TRA_TX]',
           icon: 'element-automation-station',
-          dataField2: "device",
+          dataField2: 'device'
         },
         {
           label: 'POL687 VVS11',
           dataField1: '[SaturnCB-AS01]',
           icon: 'element-automation-station',
-          dataField2: "device",
+          dataField2: 'device'
         },
         {
           label: 'PXC AS02',
           dataField1: '[TPSite ‘S02]',
           icon: 'element-automation-station',
-          dataField2: "device",
-        },
+          dataField2: 'device'
+        }
       ]
-    },
-    
+    }
   ];
 }
