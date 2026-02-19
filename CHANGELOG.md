@@ -1,3 +1,10 @@
+## [48.10.3](https://github.com/siemens/element/compare/v48.10.2...v48.10.3) (2026-02-19)
+
+
+### Bug Fixes
+
+* **schematics:** add mappings for various chart options ([18b50b5](https://github.com/siemens/element/commit/18b50b5c6d8381f5af8d8d46f34f9ded941ca660))
+
 ## [48.10.2](https://github.com/siemens/element/compare/v48.10.1...v48.10.2) (2026-02-16)
 
 
