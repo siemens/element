@@ -552,6 +552,7 @@ export const ELEMENT_NG_MAPPINGS: { [symbol: string]: string } = {
   'SiSplitComponent': '@siemens/element-ng/split',
   'SiSplitModule': '@siemens/element-ng/split',
   'SiSplitPartComponent': '@siemens/element-ng/split',
+  'SplitOrientation': '@siemens/element-ng/split',
   'SiStatusBarComponent': '@siemens/element-ng/status-bar',
   'SiStatusBarItemComponent': '@siemens/element-ng/status-bar',
   'SiStatusBarModule': '@siemens/element-ng/status-bar',
