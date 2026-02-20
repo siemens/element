@@ -7,6 +7,7 @@ import { expect, test } from '../../support/test-helpers';
 test.describe('si-tabs', () => {
   const example = 'si-tabs/si-tabs';
   const routingExample = 'si-tabs/si-tabs-routing';
+  const toolbarExample = 'si-tabs/si-tabs-toolbar';
   const iconsExample = 'si-tabs/si-tabs-icons';
 
   test(example, async ({ page, si }) => {
@@ -62,5 +63,17 @@ test.describe('si-tabs', () => {
   test(example + ' icons', async ({ page, si }) => {
     await si.visitExample(iconsExample);
     await si.runVisualAndA11yTests('tabs-icons');
+  });
+
+  test(example + ' toolbar tab', async ({ page, si }) => {
+    await si.visitExample(toolbarExample);
+    await expect(page.getByRole('tab', { name: 'Preview' })).toBeVisible();
+    await page.getByRole('tab', { name: 'Preview' }).click();
+    await si.runVisualAndA11yTests('tabs-toolbar');
+
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('Tab');
+    await expect(page.getByRole('button', { name: 'Settings' })).toBeFocused();
+    await si.runVisualAndA11yTests('tabs-toolbar-focused');
   });
 });
