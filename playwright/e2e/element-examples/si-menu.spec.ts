@@ -15,15 +15,9 @@ test.describe('si-menu', () => {
     });
   });
 
-  const example1 = 'si-menu/si-menu-full-options';
-  test(example1, async ({ page, si }) => {
-    await si.visitExample(example1);
-    await si.runVisualAndA11yTests();
-  });
-
-  const example2 = 'si-menu/si-menu-bar';
-  test(example2, async ({ page, si }) => {
-    await si.visitExample(example2);
+  const example= 'si-menu/si-menu-bar';
+  test(example, async ({ page, si }) => {
+    await si.visitExample(example);
     await page.getByText('Item 1').click();
     await si.runVisualAndA11yTests();
   });

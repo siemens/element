@@ -1,11 +1,26 @@
 - text: Default button with menu
 - button "Menu" [expanded]
 - text: Tertiary button with menu
-- button ""
+- button "Options"
 - text: Right click here to open context menu
 - menu:
-  - menuitem "Item 1"
-  - menuitem "Item 2"
-  - menuitem "Item 3"
-  - menuitem "Item 4" [disabled]
-  - menuitem "Item 5"
+  - text: Actions
+  - menuitem "Download as" [expanded]
+  - menuitem "Clear"
+  - menuitem "Hide"
+  - menuitem "Update"
+  - menuitemcheckbox "Be awesome" [checked]
+  - menuitem "Do nothing" [disabled]
+  - menuitem "Disabled menu" [disabled]
+  - menuitem "Menu with disabled children"
+  - text: Menu with disabled children
+  - menuitemradio "Beer" [checked]
+  - menuitemradio "Whisky"
+  - menuitemradio "Gin"
+  - menuitem "Import 5"
+  - menuitem "Export"
+  - menuitem "Save as"
+- menu:
+  - menuitem "Image"
+  - menuitem "File"
+  - menuitem "Other" [disabled]

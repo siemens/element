@@ -51,17 +51,13 @@ Due to this:
 - `CdkMenuTrigger` is required to open the menu
 - `CdkMenuItem` can be used directly if proper styling is applied (helpful for special use cases)
 
-### Usage of the declarative API
+### Using the declarative API
 
-<si-docs-component example="si-menu/si-menu" height="400"></si-docs-component>
+<si-docs-component example="si-menu/si-menu" height="600"></si-docs-component>
 
-### Available options (using the declarative API)
+### Using the factory API
 
-<si-docs-component example="si-menu/si-menu-full-options" height="550"></si-docs-component>
-
-### Available options (using the factory API)
-
-<si-docs-component example="si-menu/si-menu-factory" height="550"></si-docs-component>
+<si-docs-component example="si-menu/si-menu-factory" height="600"></si-docs-component>
 
 ### `si-menu-bar`
 
