@@ -10,14 +10,20 @@ test.describe('si-menu', () => {
     test(example, async ({ page, si }) => {
       await page.setViewportSize({ width: 760, height: 600 });
       await si.visitExample(example, false);
-      await page.locator('.cdk-menu-trigger').click();
+      await page.getByRole('button', { name: 'Menu' }).click();
       await si.runVisualAndA11yTests('dropdown');
     });
   });
 
-  const example = 'si-menu/si-menu-bar';
-  test(example, async ({ page, si }) => {
-    await si.visitExample(example);
+  const example1 = 'si-menu/si-menu-full-options';
+  test(example1, async ({ page, si }) => {
+    await si.visitExample(example1);
+    await si.runVisualAndA11yTests();
+  });
+
+  const example2 = 'si-menu/si-menu-bar';
+  test(example2, async ({ page, si }) => {
+    await si.visitExample(example2);
     await page.getByText('Item 1').click();
     await si.runVisualAndA11yTests();
   });
