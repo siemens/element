@@ -36,10 +36,10 @@ DISPLAY=$LOCAL_ADDRESS:0
 
 case "$OS" in
   Linux*)
-    if [ -z "$LOCAL_ADDRESS" ]; then
+    if [ x"$LOCAL_ADDRESS" = "x" ]; then
       LOCAL_ADDRESS=localhost
     fi
-    if [ -z "$NETWORK_MODE" ]; then
+    if [ x"$NETWORK_MODE" = "x" ]; then
       NETWORK_MODE=host
     fi
     ;;
