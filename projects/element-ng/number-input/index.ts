@@ -3,4 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 export * from './si-number-input.component';
+export * from './si-number-input.directive';
 export * from './si-number-input.module';
+export * from './si-spinner-buttons.component';
