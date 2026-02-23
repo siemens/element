@@ -77,8 +77,8 @@
         [optionsInScrollableView]="configForm.value.optionsInScrollableView!"
         [maxCriteria]="configForm.value.maxCriteria"
         [maxCriteriaOptions]="configForm.value.maxCriteriaOptions!"
-        (doSearch)="logEvent('doSearch:', $event)"
-        (searchCriteriaChange)="logEvent('searchCriteriaChange:', $event)"
+        (doSearch)="doSearch($event)"
+        (searchCriteriaChange)="searchCriteriaChange($event)"
       />
     </div>
   </div>
