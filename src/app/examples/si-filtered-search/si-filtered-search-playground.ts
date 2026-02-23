@@ -64,4 +64,14 @@ export class SampleComponent implements OnInit {
       this.logEvent((error as Error).message);
     }
   }
+
+  doSearch(event: SearchCriteria): void {
+    this.logEvent('doSearch:', event);
+    this.searchCriteria = event;
+  }
+
+  searchCriteriaChange(event: SearchCriteria): void {
+    this.logEvent('searchCriteriaChange:', event);
+    this.searchCriteria = event;
+  }
 }
