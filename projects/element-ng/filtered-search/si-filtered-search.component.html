@@ -30,6 +30,7 @@
     type="text"
     class="value-input ps-2 me-2 flex-grow-1"
     typeaheadOptionField="translatedLabel"
+    [size]="searchValue.length || 1"
     [siTypeahead]="dataSource"
     [typeaheadMinLength]="0"
     [typeaheadOptionsLimit]="typeaheadOptionsLimit()"
