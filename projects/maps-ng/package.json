@@ -22,7 +22,7 @@
     "@angular/core": "21",
     "@siemens/element-translate-ng": "49.0.0",
     "@siemens/element-theme": "49.0.0",
-    "ol": "~10.6.0 || ~10.7.0",
+    "ol": "~10.6.0 || ~10.7.0 || ~10.8.0",
     "ol-ext": "^4.0.24",
     "ol-mapbox-style": "^13.1.0"
   },
