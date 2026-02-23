@@ -61,7 +61,7 @@
             ]
           }
         ]"
-        [searchCriteria]="searchCriteria"
+        [searchCriteria]="searchCriteria()"
         [disableFreeTextSearch]="configForm.value.disableFreeTextSearch!"
         [freeTextCriterion]="
           configForm.value.disableFreeTextPills
@@ -77,8 +77,7 @@
         [optionsInScrollableView]="configForm.value.optionsInScrollableView!"
         [maxCriteria]="configForm.value.maxCriteria"
         [maxCriteriaOptions]="configForm.value.maxCriteriaOptions!"
-        (doSearch)="logEvent('doSearch:', $event)"
-        (searchCriteriaChange)="logEvent('searchCriteriaChange:', $event)"
+        (doSearch)="logEvent('doSearch:', $event); searchCriteria.set($event)"
       />
     </div>
   </div>

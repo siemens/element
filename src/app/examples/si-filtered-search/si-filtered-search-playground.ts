@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { SearchCriteria, SiFilteredSearchComponent } from '@siemens/element-ng/filtered-search';
 import { SiFormItemComponent } from '@siemens/element-ng/form';
@@ -45,7 +45,7 @@ export class SampleComponent implements OnInit {
 
   protected minDate = new Date(`${new Date().getFullYear() - 1}-03-12`);
   protected maxDate = new Date(`${new Date().getFullYear() + 1}-03-12`);
-  protected searchCriteria: SearchCriteria = { criteria: [], value: '' };
+  protected readonly searchCriteria = signal<SearchCriteria>({ criteria: [], value: '' });
 
   ngOnInit(): void {
     this.updateSearchCriteria(this.configForm.value.searchCriteriaText!);
@@ -58,7 +58,7 @@ export class SampleComponent implements OnInit {
     try {
       const input: SearchCriteria = JSON.parse(json) as unknown as SearchCriteria;
       if (input.criteria) {
-        this.searchCriteria = input;
+        this.searchCriteria.set(input);
       }
     } catch (error) {
       this.logEvent((error as Error).message);
