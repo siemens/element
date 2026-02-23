@@ -1431,6 +1431,25 @@ describe('SiFilteredSearchComponent', () => {
       });
     });
 
+    it('should emit doSearch once when creating criterion from selection', async () => {
+      component.criteria.set([{ name: 'company', label: 'Company' }]);
+      component.searchCriteria.set({ criteria: [], value: '' });
+      const spy = spyOn(component, 'doSearch');
+
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      const freeTextSearch = await filteredSearch.freeTextSearch();
+      await freeTextSearch.focus();
+      await tick();
+      await freeTextSearch.select({ text: 'Company' });
+      await tick();
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith({
+        criteria: [{ name: 'company', value: '' }],
+        value: ''
+      });
+    });
+
     it('and disableFreeTextSearch should emit criteria but no free text values while typing', async () => {
       component.disableFreeTextSearch = true;
       component.searchCriteria.set({
