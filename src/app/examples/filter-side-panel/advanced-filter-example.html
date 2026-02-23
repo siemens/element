@@ -1,0 +1,43 @@
+<div class="has-navbar-fixed-top si-layout-fixed-height h-100">
+  <si-application-header>
+    <si-header-brand>
+      <a siHeaderLogo routerLink="/" class="d-none d-md-flex"></a>
+      <span class="application-name">Application name</span>
+    </si-header-brand>
+  </si-application-header>
+  <si-side-panel mode="scroll" [collapsed]="!showFilters()" (collapsedChange)="toggleFilter()">
+    <div class="si-layout-fixed-height mb-6 si-layout-main-padding" siResponsiveContainer>
+      <div class="si-layout-header">
+        <h2 class="si-layout-title si-layout-top-element">
+          Title describing what page content to expect
+        </h2>
+        <p class="si-layout-subtitle">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+        </p>
+      </div>
+      <div class="d-flex flex-column gap-4">
+        <div class="d-flex gap-6">
+          <si-search-bar class="flex-grow-1" placeholder="Search..." [showIcon]="true" />
+          <button
+            type="button"
+            class="btn btn-secondary"
+            aria-label="Filters"
+            (click)="toggleFilter()"
+          >
+            <si-icon class="icon" [icon]="icons.elementFilter" />
+            Filters
+          </button>
+        </div>
+        @if (filters().length > 0) {
+          <si-filter-bar [filters]="filters()" (filtersChange)="deleteFilter($event)" />
+        }
+      </div>
+      <div class="si-layout-fixed-height align-items-stretch justify-content-center">
+        <div class="d-flex align-items-center justify-content-center">Content</div>
+      </div>
+    </div>
+    <si-side-panel-content heading="Select filters">
+      <app-filter-side-panel [showFilters]="showFilters()" (showFiltersChange)="toggleFilter()" />
+    </si-side-panel-content>
+  </si-side-panel>
+</div>
