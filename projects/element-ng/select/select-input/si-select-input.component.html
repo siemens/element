@@ -2,10 +2,9 @@
   <span class="visually-hidden" [id]="baseId() + '-aria-label'">{{ ariaLabel() }}</span>
 }
 <div
-  class="d-flex align-items-center flex-grow-1"
-  [class.overflow-hidden]="!selectionStrategy.allowMultiple"
+  class="d-flex align-items-center flex-fill overflow-hidden"
   [id]="baseId() + '-content'"
-  [siAutoCollapsableList]="selectionStrategy.allowMultiple"
+  [siAutoCollapsableList]="selectionStrategy.allowMultiple && selectedRows().length > 1"
 >
   @for (activeOption of selectedRows(); track activeOption) {
     @if (activeOption) {
@@ -13,7 +12,7 @@
         siAutoCollapsableListItem
         [option]="activeOption"
         [optionTemplate]="optionTemplate()"
-        [class.overflow-hidden]="!selectionStrategy.allowMultiple"
+        [class.overflow-hidden]="!selectionStrategy.allowMultiple || $count === 1"
       />
     }
   } @empty {
