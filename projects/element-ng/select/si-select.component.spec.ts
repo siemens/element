@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
 import { SiSelectHarness } from '@siemens/element-ng/select/testing';
 
 import { SelectOption, SelectItem, SiSelectComponent, SiSelectModule } from './index';
@@ -292,6 +293,18 @@ describe('SiSelectComponent', () => {
       expect(await selectHarness.getSelectedTexts()).toEqual([selectedOption]);
     });
 
+    it('should keep selected label visible in narrow container', async () => {
+      fixture.debugElement.query(By.css('si-select')).nativeElement.style.width = '80px';
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      const selectedOption = fixture.debugElement.query(By.css('si-select-option'));
+      expect(selectedOption).toBeTruthy();
+      expect(selectedOption.nativeElement.style.visibility).not.toBe('hidden');
+      expect(await selectHarness.getSelectedTexts()).toEqual(['Average']);
+    });
+
     it('should allow undefined options', async () => {
       hostComponent.options = undefined;
       fixture.changeDetectorRef.markForCheck();
@@ -487,6 +500,18 @@ describe('SiSelectComponent', () => {
       expect(hostComponent.values).toEqual(['average', 'poor']);
       // Ensure placeholder text is not visible when items are selected
       expect(await selectHarness.getPlaceholder()).toBeUndefined();
+    });
+
+    it('should keep single selected label visible in narrow container', async () => {
+      fixture.debugElement.query(By.css('si-select')).nativeElement.style.width = '80px';
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      const selectedOption = fixture.debugElement.query(By.css('si-select-option'));
+      expect(selectedOption).toBeTruthy();
+      expect(selectedOption.nativeElement.style.visibility).not.toBe('hidden');
+      expect(await selectHarness.getSelectedTexts()).toEqual(['Average']);
     });
 
     it('should display placeholder text when no options are selected/provided', async () => {
