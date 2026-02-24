@@ -72,7 +72,7 @@ describe('Formly translations', () => {
       }
     };
     extension.prePopulate(cfg);
-    expect(cfg.props?.['_translated']).toBeTrue(); //eslint-disable-line @typescript-eslint/dot-notation
+    expect(cfg.props?.['_translated']).toBe(true); //eslint-disable-line @typescript-eslint/dot-notation
   });
 
   it('should translate a label', () => {

@@ -43,7 +43,7 @@ describe('SiDefaultThemeStore', () => {
     it('should save theme to local storage', async () => {
       const theme: Theme = { name: 'test', schemes: {} };
       const result = await firstValueFrom(store.saveTheme(theme));
-      expect(result).toBeTrue();
+      expect(result).toBe(true);
       const stored = localStorage.getItem(SI_THEME_LOCAL_STORAGE_KEY);
       expect(stored).toBeDefined();
       expect(stored?.indexOf('test')).toBeGreaterThan(0);
@@ -71,7 +71,7 @@ describe('SiDefaultThemeStore', () => {
       localStorage.setItem(SI_THEME_LOCAL_STORAGE_KEY, JSON.stringify(storage));
 
       const result = await firstValueFrom(store.deleteTheme('test'));
-      expect(result).toBeTrue();
+      expect(result).toBe(true);
       const stored = localStorage.getItem(SI_THEME_LOCAL_STORAGE_KEY);
       expect(stored).toBeDefined();
       expect(stored?.indexOf('test')).toBeLessThan(0);
@@ -85,7 +85,7 @@ describe('SiDefaultThemeStore', () => {
       localStorage.setItem(SI_THEME_LOCAL_STORAGE_KEY, JSON.stringify(storage));
 
       const result = await firstValueFrom(store.activateTheme('test'));
-      expect(result).toBeTrue();
+      expect(result).toBe(true);
       const storage2 = JSON.parse(
         localStorage.getItem(SI_THEME_LOCAL_STORAGE_KEY)!
       ) as ThemeStorage;
@@ -101,7 +101,7 @@ describe('SiDefaultThemeStore', () => {
       localStorage.setItem(SI_THEME_LOCAL_STORAGE_KEY, JSON.stringify(storage));
 
       const result = await firstValueFrom(store.deactivateTheme());
-      expect(result).toBeTrue();
+      expect(result).toBe(true);
       const storage2 = JSON.parse(
         localStorage.getItem(SI_THEME_LOCAL_STORAGE_KEY)!
       ) as ThemeStorage;
@@ -129,7 +129,7 @@ describe('SiDefaultThemeStore', () => {
       localStorage.setItem(SI_THEME_LOCAL_STORAGE_KEY, JSON.stringify(storage));
 
       const result = await firstValueFrom(store.activateTheme('test'));
-      expect(result).toBeFalse();
+      expect(result).toBe(false);
       const storage2 = JSON.parse(
         localStorage.getItem(SI_THEME_LOCAL_STORAGE_KEY)!
       ) as ThemeStorage;
@@ -150,12 +150,12 @@ describe('SiDefaultThemeStore', () => {
 
     it('activateTheme on node shall return false', async () => {
       const result = await firstValueFrom(store.activateTheme('any'));
-      expect(result).toBeFalse();
+      expect(result).toBe(false);
     });
 
     it('deactivateTheme on node shall return false', async () => {
       const result = await firstValueFrom(store.deactivateTheme());
-      expect(result).toBeFalse();
+      expect(result).toBe(false);
     });
 
     it('loadThemeNames on node shall return []', async () => {
@@ -166,7 +166,7 @@ describe('SiDefaultThemeStore', () => {
 
     it('saveTheme on node shall return false', async () => {
       const result = await firstValueFrom(store.saveTheme({ name: 'test', schemes: {} }));
-      expect(result).toBeFalse();
+      expect(result).toBe(false);
     });
 
     it('loadTheme on node shall return undefined', async () => {
@@ -176,7 +176,7 @@ describe('SiDefaultThemeStore', () => {
 
     it('deleteTheme on node shall return false', async () => {
       const result = await firstValueFrom(store.deleteTheme('any'));
-      expect(result).toBeFalse();
+      expect(result).toBe(false);
     });
   });
 });

@@ -304,8 +304,8 @@ describe('SiSliderComponent', () => {
 
       expect(getValueIndicator().style.insetInlineStart).toBe('50%');
       expect(getThumbHandle().style.insetInlineStart).toBe('50%');
-      expect(element.querySelector<HTMLButtonElement>('.decrement-button')?.disabled).toBeTrue();
-      expect(element.querySelector<HTMLButtonElement>('.increment-button')?.disabled).toBeTrue();
+      expect(element.querySelector<HTMLButtonElement>('.decrement-button')?.disabled).toBe(true);
+      expect(element.querySelector<HTMLButtonElement>('.increment-button')?.disabled).toBe(true);
     });
   });
 
@@ -329,7 +329,7 @@ describe('SiSliderComponent', () => {
 
       fakeClick('.decrement-button');
       await fixture.whenStable();
-      expect(component.form.controls.slider.touched).toBeTrue();
+      expect(component.form.controls.slider.touched).toBe(true);
     });
 
     it('updates the value in the form', async () => {
@@ -344,8 +344,8 @@ describe('SiSliderComponent', () => {
       component.form.controls.slider.disable();
       fixture.detectChanges();
 
-      expect(element.querySelector<HTMLButtonElement>('.decrement-button')?.disabled).toBeTrue();
-      expect(element.querySelector<HTMLButtonElement>('.increment-button')?.disabled).toBeTrue();
+      expect(element.querySelector<HTMLButtonElement>('.decrement-button')?.disabled).toBe(true);
+      expect(element.querySelector<HTMLButtonElement>('.increment-button')?.disabled).toBe(true);
     });
 
     it('should handle undefined value on change', () => {

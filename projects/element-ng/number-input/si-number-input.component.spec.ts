@@ -236,7 +236,7 @@ describe('SiNumberInputComponent', () => {
 
       fakeClick('.dec');
 
-      expect(component.form.controls.input.touched).toBeTrue();
+      expect(component.form.controls.input.touched).toBe(true);
     });
 
     it('updates the value in the form', () => {
