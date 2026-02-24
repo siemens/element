@@ -148,7 +148,7 @@ describe('SiWidgetHostComponent', () => {
           expect((component.primaryActions[0] as MenuItem).title).toBe('Hello User');
           expect(component.primaryActions[1]).toBe(component.editAction);
           expect(component.primaryActions[2]).toBe(component.removeAction);
-          expect(component.widgetInstance!.editable).toBeTrue();
+          expect(component.widgetInstance!.editable).toBe(true);
           jasmine.clock().uninstall();
         });
 
@@ -163,7 +163,7 @@ describe('SiWidgetHostComponent', () => {
           expect(component.primaryActions.length).toBe(2);
           expect(component.primaryActions[0]).toBe(component.editAction);
           expect(component.primaryActions[1]).toBe(component.removeAction);
-          expect(component.widgetInstance!.editable).toBeTrue();
+          expect(component.widgetInstance!.editable).toBe(true);
           jasmine.clock().uninstall();
         });
       });

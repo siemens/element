@@ -10,17 +10,17 @@ describe('CompareAdapter', () => {
     describe('isEqualOrBetween', () => {
       it('should be true', () => {
         const current = new Date(2022, 2, 15);
-        expect(dayCompare.isEqualOrBetween(current)).toBeTrue();
-        expect(dayCompare.isEqualOrBetween(current, new Date(2022, 2, 15))).toBeTrue();
+        expect(dayCompare.isEqualOrBetween(current)).toBe(true);
+        expect(dayCompare.isEqualOrBetween(current, new Date(2022, 2, 15))).toBe(true);
         expect(
           dayCompare.isEqualOrBetween(current, new Date(2022, 2, 15), new Date(2022, 2, 15))
-        ).toBeTrue();
-        expect(dayCompare.isEqualOrBetween(current, new Date(2022, 2, 14))).toBeTrue();
+        ).toBe(true);
+        expect(dayCompare.isEqualOrBetween(current, new Date(2022, 2, 14))).toBe(true);
         expect(
           dayCompare.isEqualOrBetween(current, new Date(2022, 2, 14), new Date(2022, 2, 16))
-        ).toBeTrue();
-        expect(dayCompare.isEqualOrBetween(current, undefined, new Date(2022, 2, 15))).toBeTrue();
-        expect(dayCompare.isEqualOrBetween(current, undefined, new Date(2022, 2, 16))).toBeTrue();
+        ).toBe(true);
+        expect(dayCompare.isEqualOrBetween(current, undefined, new Date(2022, 2, 15))).toBe(true);
+        expect(dayCompare.isEqualOrBetween(current, undefined, new Date(2022, 2, 16))).toBe(true);
       });
     });
   });
@@ -30,46 +30,46 @@ describe('CompareAdapter', () => {
     describe('isAfter', () => {
       it('should be true', () => {
         const current = new Date(2022, 2, 15);
-        expect(monthCompare.isAfter(current, new Date(2022, 1, 15))).toBeTrue();
+        expect(monthCompare.isAfter(current, new Date(2022, 1, 15))).toBe(true);
       });
 
       it('should be false', () => {
         const current = new Date(2022, 2, 15);
-        expect(monthCompare.isAfter(current, new Date(2022, 2, 14))).toBeFalse();
+        expect(monthCompare.isAfter(current, new Date(2022, 2, 14))).toBe(false);
       });
     });
 
     describe('isBetween', () => {
       it('should be true', () => {
         const current = new Date(2022, 2, 15);
-        expect(monthCompare.isBetween(current)).toBeTrue();
-        expect(monthCompare.isBetween(current, new Date(2022, 1, 20))).toBeTrue();
-        expect(monthCompare.isBetween(current, undefined, new Date(2022, 3, 20))).toBeTrue();
-        expect(
-          monthCompare.isBetween(current, new Date(2022, 1, 20), new Date(2022, 3, 20))
-        ).toBeTrue();
+        expect(monthCompare.isBetween(current)).toBe(true);
+        expect(monthCompare.isBetween(current, new Date(2022, 1, 20))).toBe(true);
+        expect(monthCompare.isBetween(current, undefined, new Date(2022, 3, 20))).toBe(true);
+        expect(monthCompare.isBetween(current, new Date(2022, 1, 20), new Date(2022, 3, 20))).toBe(
+          true
+        );
       });
 
       it('should be false', () => {
         const current = new Date(2022, 2, 15);
-        expect(monthCompare.isBetween(current, new Date(2022, 2, 20))).toBeFalse();
-        expect(monthCompare.isBetween(current, undefined, new Date(2022, 2, 20))).toBeFalse();
-        expect(
-          monthCompare.isBetween(current, new Date(2022, 2, 20), new Date(2022, 3, 20))
-        ).toBeFalse();
+        expect(monthCompare.isBetween(current, new Date(2022, 2, 20))).toBe(false);
+        expect(monthCompare.isBetween(current, undefined, new Date(2022, 2, 20))).toBe(false);
+        expect(monthCompare.isBetween(current, new Date(2022, 2, 20), new Date(2022, 3, 20))).toBe(
+          false
+        );
       });
     });
 
     describe('isEqualOrBefore', () => {
       it('should be true', () => {
         const current = new Date(2022, 2, 15);
-        expect(monthCompare.isEqualOrBefore(current, new Date(2022, 2, 20))).toBeTrue();
-        expect(monthCompare.isEqualOrBefore(current, new Date(2022, 3, 20))).toBeTrue();
+        expect(monthCompare.isEqualOrBefore(current, new Date(2022, 2, 20))).toBe(true);
+        expect(monthCompare.isEqualOrBefore(current, new Date(2022, 3, 20))).toBe(true);
       });
 
       it('should be false', () => {
         const current = new Date(2022, 2, 15);
-        expect(monthCompare.isEqualOrBefore(current, new Date(2022, 1, 20))).toBeFalse();
+        expect(monthCompare.isEqualOrBefore(current, new Date(2022, 1, 20))).toBe(false);
       });
     });
   });
@@ -79,32 +79,32 @@ describe('CompareAdapter', () => {
     describe('isBetween', () => {
       it('should be true', () => {
         const current = new Date(2022, 2, 15);
-        expect(yearCompare.isBetween(current, new Date(2021, 2, 20))).toBeTrue();
-        expect(
-          yearCompare.isBetween(current, new Date(2021, 2, 20), new Date(2023, 2, 20))
-        ).toBeTrue();
+        expect(yearCompare.isBetween(current, new Date(2021, 2, 20))).toBe(true);
+        expect(yearCompare.isBetween(current, new Date(2021, 2, 20), new Date(2023, 2, 20))).toBe(
+          true
+        );
       });
 
       it('should be false', () => {
         const current = new Date(2022, 2, 15);
-        expect(yearCompare.isBetween(current, undefined, new Date(2021, 2, 20))).toBeFalse();
-        expect(
-          yearCompare.isBetween(current, new Date(2022, 2, 20), new Date(2022, 3, 20))
-        ).toBeFalse();
+        expect(yearCompare.isBetween(current, undefined, new Date(2021, 2, 20))).toBe(false);
+        expect(yearCompare.isBetween(current, new Date(2022, 2, 20), new Date(2022, 3, 20))).toBe(
+          false
+        );
       });
     });
 
     describe('isEqualOrBefore', () => {
       it('should be true', () => {
         const current = new Date(2022, 2, 15);
-        expect(yearCompare.isEqualOrBefore(current, new Date(2022, 2, 20))).toBeTrue();
-        expect(yearCompare.isEqualOrBefore(current, new Date(2023, 2, 20))).toBeTrue();
+        expect(yearCompare.isEqualOrBefore(current, new Date(2022, 2, 20))).toBe(true);
+        expect(yearCompare.isEqualOrBefore(current, new Date(2023, 2, 20))).toBe(true);
       });
 
       it('should be false', () => {
         const current = new Date(2022, 2, 15);
-        expect(yearCompare.isEqualOrBefore(current, new Date(2021, 2, 20))).toBeFalse();
-        expect(yearCompare.isEqualOrBefore(current, undefined)).toBeFalse();
+        expect(yearCompare.isEqualOrBefore(current, new Date(2021, 2, 20))).toBe(false);
+        expect(yearCompare.isEqualOrBefore(current, undefined)).toBe(false);
       });
     });
   });

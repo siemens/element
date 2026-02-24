@@ -54,7 +54,7 @@ describe('SiNavbarPrimaryComponent', () => {
   });
 
   it('should not render the launchpad trigger without app items', async () => {
-    expect(await harness.hasLaunchpad()).toBeFalse();
+    expect(await harness.hasLaunchpad()).toBe(false);
   });
 
   it('should render render launchpad with categories', async () => {

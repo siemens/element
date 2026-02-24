@@ -73,7 +73,7 @@ describe('SiYearSelectionComponent', () => {
 
   it('should mark active date', () => {
     const activeCell = helper.getEnabledCellWithText('2022');
-    expect(activeCell?.hasAttribute('cdkfocusinitial')).toBeTrue();
+    expect(activeCell?.hasAttribute('cdkfocusinitial')).toBe(true);
   });
 
   describe('with previous button', () => {
@@ -170,7 +170,7 @@ describe('SiYearSelectionComponent', () => {
       calendarBodyElement.dispatchEvent(generateKeyEvent('Escape'));
       fixture.detectChanges();
 
-      expect(wrapperComponent.cancelled).toBeTrue();
+      expect(wrapperComponent.cancelled).toBe(true);
     });
 
     it('should decrement year on left arrow press', () => {
@@ -260,7 +260,7 @@ describe('SiYearSelectionComponent', () => {
         fixture.detectChanges();
 
         const activeCell = helper.getEnabledCellWithText('2022');
-        expect(activeCell?.hasAttribute('cdkfocusinitial')).toBeTrue();
+        expect(activeCell?.hasAttribute('cdkfocusinitial')).toBe(true);
       });
     });
   });
@@ -285,7 +285,7 @@ describe('SiYearSelectionComponent', () => {
         fixture.detectChanges();
 
         const activeCell = helper.getEnabledCellWithText('2022');
-        expect(activeCell?.hasAttribute('cdkfocusinitial')).toBeTrue();
+        expect(activeCell?.hasAttribute('cdkfocusinitial')).toBe(true);
       });
     });
   });

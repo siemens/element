@@ -19,7 +19,7 @@ describe('SiDefaultLocaleStore', () => {
   it('should return a saved locale', async () => {
     const store = new SiDefaultLocaleStore(true);
     const saveSucceed = await firstValueFrom(store.saveLocale('en'));
-    expect(saveSucceed).toBeTrue();
+    expect(saveSucceed).toBe(true);
     const store2 = new SiDefaultLocaleStore(true);
     expect(store2.locale).toBe('en');
   });

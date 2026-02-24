@@ -33,13 +33,13 @@ describe('widget-loader', () => {
 
 describe('widgetFactoryRegistry', () => {
   it('#hasFactoryFn() should return false for a not existing factory function', () => {
-    expect(widgetFactoryRegistry.hasFactoryFn('nothing')).toBeFalse();
+    expect(widgetFactoryRegistry.hasFactoryFn('nothing')).toBe(false);
   });
 
   it('#register() should add a factory function to the registry', () => {
     const factoryFn = {} as SetupComponentFn;
     widgetFactoryRegistry.register('my-function', factoryFn);
-    expect(widgetFactoryRegistry.hasFactoryFn('my-function')).toBeTrue();
+    expect(widgetFactoryRegistry.hasFactoryFn('my-function')).toBe(true);
     expect(widgetFactoryRegistry.getFactoryFn('my-function')).toBe(factoryFn);
   });
 });

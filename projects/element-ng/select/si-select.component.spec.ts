@@ -346,7 +346,7 @@ describe('SiSelectComponent', () => {
         fixture.detectChanges();
         await selectHarness.open();
         const item = await selectHarness.getList().then(list => list!.getItemByText('c'));
-        expect(await item.isActive()).toBeTrue();
+        expect(await item.isActive()).toBe(true);
       });
 
       it('should apply current filter when options are applied', async () => {
@@ -457,7 +457,7 @@ describe('SiSelectComponent', () => {
 
     it('sets the disabled state', async () => {
       component.form.disable();
-      expect(component.valueDirective().disabled()).toBeTrue();
+      expect(component.valueDirective().disabled()).toBe(true);
       expect(await selectHarness.getTabindex()).toBe('-1');
     });
   });

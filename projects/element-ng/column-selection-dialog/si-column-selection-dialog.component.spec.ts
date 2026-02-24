@@ -187,7 +187,7 @@ describe('ColumnDialogComponent', () => {
 
     expect(
       Array.from(dragItems).every(dragItem => dragItem.classList.contains('cdk-drag-disabled'))
-    ).toBeFalse();
+    ).toBe(false);
   });
 
   it('should not force columns to be draggable if previous/next are', () => {
@@ -206,7 +206,7 @@ describe('ColumnDialogComponent', () => {
       dragItems
         .slice(1, dragItems.length - 1)
         .every(dragItem => !dragItem.classList.contains('cdk-drag-disabled'))
-    ).toBeFalse();
+    ).toBe(false);
   });
 
   it('should move items on drop', () => {

@@ -40,7 +40,7 @@ describe('SiExplicitLegalAcknowledgeComponent', () => {
     fixture.detectChanges();
 
     const acceptButton = fixture.nativeElement.querySelector('button[type="button"].btn-primary');
-    expect(acceptButton.disabled).toBeTrue();
+    expect(acceptButton.disabled).toBe(true);
   });
 
   it('should emit back event when the back button is clicked', () => {

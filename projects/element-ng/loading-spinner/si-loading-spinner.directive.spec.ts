@@ -54,28 +54,28 @@ describe('SiLoadingSpinnerDirective', () => {
     fixture.detectChanges();
     jasmine.clock().tick(initialDelay - 10);
     await fixture.whenStable();
-    expect(isLoading()).toBeFalse();
+    expect(isLoading()).toBe(false);
   });
 
   it('should display spinner after initial delay', async () => {
     await fixture.whenStable();
     jasmine.clock().tick(initialDelay);
     await fixture.whenStable();
-    expect(isLoading()).toBeTrue();
+    expect(isLoading()).toBe(true);
   });
 
   it('should skip showing spinner if canceled before initial delay', async () => {
     await fixture.whenStable();
     jasmine.clock().tick(initialDelay - 10);
     await fixture.whenStable();
-    expect(isLoading()).toBeFalse();
+    expect(isLoading()).toBe(false);
 
     fixture.componentInstance.loading = false;
     fixture.changeDetectorRef.markForCheck();
     jasmine.clock().tick(600);
     await fixture.whenStable();
 
-    expect(isLoading()).toBeFalse();
+    expect(isLoading()).toBe(false);
   });
 
   it('should show and hide spinner', async () => {
@@ -83,7 +83,7 @@ describe('SiLoadingSpinnerDirective', () => {
     await fixture.whenStable();
     jasmine.clock().tick(initialDelay);
     await fixture.whenStable();
-    expect(isLoading()).toBeTrue();
+    expect(isLoading()).toBe(true);
 
     fixture.componentInstance.loading = false;
     fixture.changeDetectorRef.markForCheck();
@@ -93,6 +93,6 @@ describe('SiLoadingSpinnerDirective', () => {
     jasmine.clock().tick(0);
     await fixture.whenStable();
 
-    expect(isLoading()).toBeFalse();
+    expect(isLoading()).toBe(false);
   });
 });

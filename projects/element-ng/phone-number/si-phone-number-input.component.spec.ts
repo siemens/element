@@ -152,7 +152,7 @@ describe('SiPhoneNumberInputComponent', () => {
     blurPhoneNumber();
     fixture.detectChanges();
     // Validate both the form control validity and also the final control value
-    expect(component.form.valid).toBeTrue();
+    expect(component.form.valid).toBe(true);
     expect(component.form.controls.workPhone.value).toEqual('+49 30 123456');
   });
 
@@ -196,7 +196,7 @@ describe('SiPhoneNumberInputComponent', () => {
     blurPhoneNumber();
     fixture.detectChanges();
     // Validate both the form control validity and also the final control value
-    expect(component.form.valid).toBeTrue();
+    expect(component.form.valid).toBe(true);
     expect(component.form.controls.workPhone.value).toEqual('+91 1234 567 890');
   });
 
@@ -206,7 +206,7 @@ describe('SiPhoneNumberInputComponent', () => {
     blurPhoneNumber();
     fixture.detectChanges();
     // Validate both the form control validity and also the final control value
-    expect(component.form.invalid).toBeTrue();
+    expect(component.form.invalid).toBe(true);
     expect(component.form.controls.workPhone.value).toEqual('+91 01');
   });
 

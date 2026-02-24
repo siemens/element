@@ -184,22 +184,22 @@ describe('SiTimepickerComponent', () => {
       component.time.setValue('2022-01-12 16:23:59.435');
       fixture.detectChanges();
 
-      expect(component.picker().isPM()).toBeTrue();
+      expect(component.picker().isPM()).toBe(true);
 
       component.time.setValue('2022-01-12 04:23:59.435');
       fixture.detectChanges();
-      expect(component.picker().isPM()).toBeFalse();
+      expect(component.picker().isPM()).toBe(false);
     });
 
     it('should falsify isPM when meridian is hidden', () => {
       fixture.detectChanges();
       component.time.setValue('2022-01-12 16:23:59.435');
       fixture.detectChanges();
-      expect(component.picker().isPM()).toBeTrue();
+      expect(component.picker().isPM()).toBe(true);
 
       component.showMeridian.set(false);
       fixture.detectChanges();
-      expect(component.picker().isPM()).toBeFalse();
+      expect(component.picker().isPM()).toBe(false);
     });
 
     it('should validate hours range', () => {

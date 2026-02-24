@@ -101,12 +101,12 @@ const withObjectType = <ItemType extends MenuItem, ComponentType extends { items
 
       await toggle();
       const checkMenuItem = await rootLoader.getHarness(SiMenuItemHarness.with({ text: 'check' }));
-      expect(await checkMenuItem.isChecked()).toBeTrue();
+      expect(await checkMenuItem.isChecked()).toBe(true);
       await checkMenuItem.click();
       await toggle();
       expect(
         await (await rootLoader.getHarness(SiMenuItemHarness.with({ text: 'check' }))).isChecked()
-      ).toBeFalse();
+      ).toBe(false);
       expect(spy).toHaveBeenCalledWith('action!');
     });
 
@@ -115,20 +115,20 @@ const withObjectType = <ItemType extends MenuItem, ComponentType extends { items
       let radioItems = await rootLoader.getAllHarnesses(
         SiMenuItemHarness.with({ text: /radio\d+/ })
       );
-      expect(await radioItems[0].isChecked()).toBeFalse();
-      expect(await radioItems[1].isChecked()).toBeTrue();
+      expect(await radioItems[0].isChecked()).toBe(false);
+      expect(await radioItems[1].isChecked()).toBe(true);
 
       await radioItems[0].click();
       await toggle();
       radioItems = await rootLoader.getAllHarnesses(SiMenuItemHarness.with({ text: /radio\d+/ }));
-      expect(await radioItems[0].isChecked()).toBeTrue();
-      expect(await radioItems[1].isChecked()).toBeFalse();
+      expect(await radioItems[0].isChecked()).toBe(true);
+      expect(await radioItems[1].isChecked()).toBe(false);
     });
 
     it('should have submenu', async () => {
       await toggle();
       const menuItem = await rootLoader.getHarness(SiMenuItemHarness.with({ text: 'children' }));
-      expect(await menuItem.hasSubmenu()).toBeTrue();
+      expect(await menuItem.hasSubmenu()).toBe(true);
       await menuItem.hover();
 
       const menu = await menuItem.getSubmenu();
@@ -138,7 +138,7 @@ const withObjectType = <ItemType extends MenuItem, ComponentType extends { items
     it('should have icon', async () => {
       await toggle();
       const menuItem = await rootLoader.getHarness(SiMenuItemHarness.with({ text: 'radio1' }));
-      expect(await menuItem.hasIcon('element-test-icon')).toBeTrue();
+      expect(await menuItem.hasIcon('element-test-icon')).toBe(true);
     });
 
     it('should have badge', async () => {
@@ -150,19 +150,19 @@ const withObjectType = <ItemType extends MenuItem, ComponentType extends { items
     it('should be disabled', async () => {
       await toggle();
       const menuItem = await rootLoader.getHarness(SiMenuItemHarness.with({ text: 'first item' }));
-      expect(await menuItem.isDisabled()).toBeTrue();
+      expect(await menuItem.isDisabled()).toBe(true);
     });
 
     it('should update on object mutation', async () => {
       const disabledIndex = 1;
       await toggle();
       const menuItem = await rootLoader.getHarness(SiMenuItemHarness.with({ text: 'first item' }));
-      expect(await menuItem.isDisabled()).toBeTrue();
+      expect(await menuItem.isDisabled()).toBe(true);
       if (!fixture.componentInstance.items[disabledIndex].type) {
         fixture.componentInstance.items[disabledIndex].disabled = false;
         fixture.changeDetectorRef.markForCheck();
       }
-      expect(await menuItem.isDisabled()).toBeFalse();
+      expect(await menuItem.isDisabled()).toBe(false);
     });
 
     it('should trigger an action', async () => {

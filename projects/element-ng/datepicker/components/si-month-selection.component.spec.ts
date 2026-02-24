@@ -87,7 +87,7 @@ describe('SiMonthSelectionComponent', () => {
   it('should mark active date', () => {
     const expected = wrapperComponent.months().at(wrapperComponent.focusedDate().getMonth());
     const activeCell = helper.getEnabledCellWithText(expected!);
-    expect(activeCell?.hasAttribute('cdkfocusinitial')).toBeTrue();
+    expect(activeCell?.hasAttribute('cdkfocusinitial')).toBe(true);
   });
 
   it('should focus active date', () => {
@@ -208,7 +208,7 @@ describe('SiMonthSelectionComponent', () => {
       calendarBodyElement.dispatchEvent(generateKeyEvent('Escape'));
       fixture.detectChanges();
 
-      expect(wrapperComponent.cancelled).toBeTrue();
+      expect(wrapperComponent.cancelled).toBe(true);
     });
 
     it('should decrement month on left arrow press', () => {

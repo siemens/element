@@ -77,11 +77,11 @@ describe('SiCircleStatusComponent', () => {
     });
     fixture.detectChanges();
     const statusIndication = element.querySelector('.status-indication .bg') as HTMLElement;
-    expect(statusIndication.classList.contains('pulse')).toBeFalse();
+    expect(statusIndication.classList.contains('pulse')).toBe(false);
     jasmine.clock().tick(4 * 1400);
 
     fixture.detectChanges();
-    expect(statusIndication.classList.contains('pulse')).toBeTrue();
+    expect(statusIndication.classList.contains('pulse')).toBe(true);
     component.ngOnDestroy();
     jasmine.clock().uninstall();
   });

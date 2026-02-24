@@ -187,7 +187,7 @@ describe('MainDetailContainerComponent', () => {
       expect(htmlElement.querySelector('si-main-detail-container')?.classList).not.toContain(
         'animate'
       );
-      expect(htmlElement.classList.contains('animate')).toBeFalse();
+      expect(htmlElement.classList.contains('animate')).toBe(false);
     });
   });
 
@@ -244,7 +244,7 @@ describe('MainDetailContainerComponent', () => {
       jasmine.clock().tick(0);
       fixture.detectChanges();
       // expect
-      expect(getInViewport(detailContainer)).toBeFalse();
+      expect(getInViewport(detailContainer)).toBe(false);
     });
 
     it('should set inert attribute to prevent focus hidden details when details are inactive', () => {
@@ -289,7 +289,7 @@ describe('MainDetailContainerComponent', () => {
       htmlElement.querySelector('button')?.click();
       fixture.detectChanges();
       // expect
-      expect(component.detailsActive).toBeFalse();
+      expect(component.detailsActive).toBe(false);
     });
 
     it('should not show details back button', () => {
@@ -310,7 +310,7 @@ describe('MainDetailContainerComponent', () => {
       jasmine.clock().tick(0);
       fixture.detectChanges();
       // expect
-      expect(getInViewport(mainContainer)).toBeFalse();
+      expect(getInViewport(mainContainer)).toBe(false);
     });
   });
 });

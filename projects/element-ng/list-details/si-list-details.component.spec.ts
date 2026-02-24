@@ -211,7 +211,7 @@ describe('ListDetailsComponent', () => {
       const backButton = htmlElement.querySelector('si-details-pane button')!;
       backButton.dispatchEvent(new Event('click'));
       fixture.detectChanges();
-      expect(component.detailsActive).toBeFalse();
+      expect(component.detailsActive).toBe(false);
     });
 
     it('should add host .expanded class when crossing expandBreakpoint', () => {
@@ -249,7 +249,7 @@ describe('ListDetailsComponent', () => {
       it('should change hasLargeSize to true when crossing above breakpoint', async () => {
         await fixture.whenStable();
         fixture.detectChanges();
-        expect(component.listDetails.hasLargeSize()).toBeTrue();
+        expect(component.listDetails.hasLargeSize()).toBe(true);
       });
 
       it('should change hasLargeSize to false when dropping below breakpoint', async () => {
@@ -258,7 +258,7 @@ describe('ListDetailsComponent', () => {
         resizeObserver.next({ width: component.expandBreakpoint - 1, height: 500 });
         await fixture.whenStable();
         fixture.detectChanges();
-        expect(component.listDetails.hasLargeSize()).toBeFalse();
+        expect(component.listDetails.hasLargeSize()).toBe(false);
       });
     });
 
@@ -274,15 +274,15 @@ describe('ListDetailsComponent', () => {
         await fixture.whenStable();
         fixture.detectChanges();
 
-        expect(getInViewport(getDetailsPane().firstElementChild as HTMLElement)).toBeTrue();
+        expect(getInViewport(getDetailsPane().firstElementChild as HTMLElement)).toBe(true);
 
         const backBtn = htmlElement.querySelector('si-details-pane button')!;
         backBtn.dispatchEvent(new Event('click'));
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(component.detailsActive).toBeFalse();
-        expect(getInViewport(getListPane().firstElementChild as HTMLElement)).toBeTrue();
+        expect(component.detailsActive).toBe(false);
+        expect(getInViewport(getListPane().firstElementChild as HTMLElement)).toBe(true);
       });
 
       it('should switch between split and static layouts as size & disableResizing change', async () => {
@@ -312,14 +312,14 @@ describe('ListDetailsComponent', () => {
         component.detailsActive = false;
         fixture.detectChanges();
         await fixture.whenStable();
-        expect(getInViewport(getListPane().firstElementChild as HTMLElement)).toBeTrue();
-        expect(getInViewport(getDetailsPane().firstElementChild as HTMLElement)).toBeTrue();
+        expect(getInViewport(getListPane().firstElementChild as HTMLElement)).toBe(true);
+        expect(getInViewport(getDetailsPane().firstElementChild as HTMLElement)).toBe(true);
 
         component.detailsActive = true;
         fixture.detectChanges();
         await fixture.whenStable();
-        expect(getInViewport(getListPane().firstElementChild as HTMLElement)).toBeTrue();
-        expect(getInViewport(getDetailsPane().firstElementChild as HTMLElement)).toBeTrue();
+        expect(getInViewport(getListPane().firstElementChild as HTMLElement)).toBe(true);
+        expect(getInViewport(getDetailsPane().firstElementChild as HTMLElement)).toBe(true);
       });
     });
 
@@ -356,7 +356,7 @@ describe('ListDetailsComponent', () => {
         component.detailsActive = false;
         fixture.detectChanges();
         await fixture.whenStable();
-        expect(getInViewport(getDetailsPane().firstElementChild as HTMLElement)).toBeFalse();
+        expect(getInViewport(getDetailsPane().firstElementChild as HTMLElement)).toBe(false);
       });
 
       it('should set inert attribute to prevent focus on hidden details when details are inactive on small screens', async () => {
@@ -381,7 +381,7 @@ describe('ListDetailsComponent', () => {
         fixture.detectChanges();
         htmlElement.querySelector('button')?.click();
         fixture.detectChanges();
-        expect(component.detailsActive).toBeFalse();
+        expect(component.detailsActive).toBe(false);
       });
 
       it('should not show details back button when hideBackButton is true', () => {
@@ -396,7 +396,7 @@ describe('ListDetailsComponent', () => {
         component.detailsActive = true;
         fixture.detectChanges();
         await fixture.whenStable();
-        expect(getInViewport(getListPane().firstElementChild as HTMLElement)).toBeFalse();
+        expect(getInViewport(getListPane().firstElementChild as HTMLElement)).toBe(false);
       });
     });
   });
@@ -483,7 +483,7 @@ describe('ListDetailsComponent', () => {
       await routerHarness.navigateByUrl('/list/details');
       routerHarness.detectChanges();
       expect(debugElement.query(By.css('si-details-pane-body'))).toBeTruthy();
-      expect(debugElement.query(By.css('.list-details')).classes['details-active']).toBeTrue();
+      expect(debugElement.query(By.css('.list-details')).classes['details-active']).toBe(true);
       debugElement.query(By.css('.si-details-header-back')).nativeElement.click();
       routerHarness.detectChanges();
       await routerHarness.fixture.whenStable();
@@ -504,7 +504,7 @@ describe('ListDetailsComponent', () => {
       await routerHarness.navigateByUrl('/list/details');
       routerHarness.detectChanges();
       expect(debugElement.query(By.css('si-details-pane-body'))).toBeTruthy();
-      expect(debugElement.query(By.css('.list-details')).classes['details-active']).toBeTrue();
+      expect(debugElement.query(By.css('.list-details')).classes['details-active']).toBe(true);
       await routerHarness.navigateByUrl('/list');
       routerHarness.detectChanges();
       await routerHarness.fixture.whenStable();

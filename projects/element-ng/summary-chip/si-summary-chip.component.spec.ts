@@ -47,19 +47,19 @@ describe('SiSummaryChipComponent', () => {
   it('should toggle selected state on click', () => {
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.selected()).toBeFalse();
+    expect(fixture.componentInstance.selected()).toBe(false);
 
     element.querySelector('div')?.click();
-    expect(fixture.componentInstance.selected()).toBeTrue();
+    expect(fixture.componentInstance.selected()).toBe(true);
   });
 
   it('should not toggle selected state on click when disabled', () => {
     componentRef.setInput('disabled', true);
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.selected()).toBeFalse();
+    expect(fixture.componentInstance.selected()).toBe(false);
 
     element.querySelector('div')?.click();
-    expect(fixture.componentInstance.selected()).toBeFalse();
+    expect(fixture.componentInstance.selected()).toBe(false);
   });
 });

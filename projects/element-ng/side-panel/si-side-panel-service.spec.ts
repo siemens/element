@@ -40,9 +40,9 @@ describe('SiSidePanelService', () => {
 
   it('should toggle content', () => {
     service.open();
-    expect(service.isOpen()).toBeTrue();
+    expect(service.isOpen()).toBe(true);
 
     service.toggle();
-    expect(service.isOpen()).toBeFalse();
+    expect(service.isOpen()).toBe(false);
   });
 });

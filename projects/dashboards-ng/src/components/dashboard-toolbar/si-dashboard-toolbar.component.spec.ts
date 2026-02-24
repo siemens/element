@@ -29,13 +29,13 @@ describe('SiDashboardToolbarComponent', () => {
   });
 
   it('#onEdit() shall set editable mode', async () => {
-    expect(component.editable()).toBeFalse();
+    expect(component.editable()).toBe(false);
     const button = fixture.debugElement.query(By.css('button'));
     button.triggerEventHandler('click', null);
     await fixture.whenStable();
     fixture.detectChanges();
 
-    expect(component.editable()).toBeTrue();
+    expect(component.editable()).toBe(true);
     const buttons = fixture.debugElement.queryAll(By.css('button'));
     expect(buttons.length).toBe(2);
   });
@@ -51,7 +51,7 @@ describe('SiDashboardToolbarComponent', () => {
     await fixture.whenStable();
     fixture.detectChanges();
 
-    expect(component.editable()).withContext('Cancel shall not change editable state').toBeTrue();
+    expect(component.editable()).withContext('Cancel shall not change editable state').toBe(true);
   });
 
   it('#onSave() shall cancel editable mode and emit save', async () => {
@@ -65,11 +65,11 @@ describe('SiDashboardToolbarComponent', () => {
     await fixture.whenStable();
     fixture.detectChanges();
 
-    expect(component.editable()).withContext('Save shall not change editable state').toBeTrue();
+    expect(component.editable()).withContext('Save shall not change editable state').toBe(true);
   });
 
   it('#hideEditButton shall hide the edit button', () => {
-    expect(component.editable()).toBeFalse();
+    expect(component.editable()).toBe(false);
     let editButton = fixture.debugElement.query(By.css('.element-edit'));
     expect(editButton).not.toBeNull();
     expect(editButton).toBeDefined();

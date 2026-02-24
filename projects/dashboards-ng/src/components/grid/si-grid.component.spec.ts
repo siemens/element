@@ -74,51 +74,51 @@ describe('SiGridComponent', () => {
   });
 
   it('#edit() should change editable state to true', () => {
-    expect(component.editable()).toBeFalse();
+    expect(component.editable()).toBe(false);
     component.edit();
-    expect(component.editable()).toBeTrue();
+    expect(component.editable()).toBe(true);
   });
 
   it('#cancel() should change editable state to false', () => {
     fixture.componentRef.setInput('editable', true);
     fixture.detectChanges();
-    expect(component.editable()).toBeTrue();
+    expect(component.editable()).toBe(true);
     component.cancel();
-    expect(component.editable()).toBeFalse();
+    expect(component.editable()).toBe(false);
   });
 
   describe('#save()', () => {
     it('should change editable state to false', async () => {
       fixture.componentRef.setInput('editable', true);
       fixture.detectChanges();
-      expect(component.editable()).toBeTrue();
+      expect(component.editable()).toBe(true);
       const spy = spyOn(widgetStorage, 'save').and.callThrough();
       component.save();
       expect(spy).toHaveBeenCalled();
-      expect(component.editable()).toBeFalse();
+      expect(component.editable()).toBe(false);
     });
   });
 
   it('should call edit() on setting editable to true', () => {
     const spy = spyOn(component, 'edit').and.callThrough();
-    expect(component.editable()).toBeFalse();
+    expect(component.editable()).toBe(false);
 
     fixture.componentRef.setInput('editable', true);
     component.ngOnChanges({ editable: new SimpleChange(false, true, false) });
     expect(spy).toHaveBeenCalled();
-    expect(component.editable()).toBeTrue();
+    expect(component.editable()).toBe(true);
   });
 
   it('should call cancel() on setting editable to false', () => {
     const spy = spyOn(component, 'cancel').and.callThrough();
     fixture.componentRef.setInput('editable', true);
-    expect(component.editable()).toBeTrue();
+    expect(component.editable()).toBe(true);
     expect(spy).not.toHaveBeenCalled();
 
     fixture.componentRef.setInput('editable', false);
     component.ngOnChanges({ editable: new SimpleChange(true, false, false) });
     expect(spy).toHaveBeenCalled();
-    expect(component.editable()).toBeFalse();
+    expect(component.editable()).toBe(false);
   });
 
   it('#addWidget() shall add a new WidgetConfig to the visible widgets of the grid and assign unique ids', () => {
@@ -192,7 +192,7 @@ describe('SiGridComponent', () => {
     component.edit();
 
     component.isModified.subscribe(modified => {
-      expect(modified).toBeTrue();
+      expect(modified).toBe(true);
     });
     fixture.debugElement
       .query(By.css('si-gridstack-wrapper'))

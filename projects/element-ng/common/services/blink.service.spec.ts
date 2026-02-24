@@ -63,7 +63,7 @@ describe('BlinkService', () => {
     expect(counter).toBe(1); // 1 startup
 
     service.pause();
-    expect(service.isPaused()).toBeTrue();
+    expect(service.isPaused()).toBe(true);
 
     jasmine.clock().tick(4 * 1400);
     expect(counter).toBe(2); // 2 because an "off" is forced

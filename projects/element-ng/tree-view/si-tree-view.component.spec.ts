@@ -167,7 +167,7 @@ describe('SiTreeViewComponent', () => {
   it('should contain folder state start', () => {
     component.folderStateStart = true;
     fixture.detectChanges();
-    expect(component.treeViewComponent().folderStateStart()).toBeTrue();
+    expect(component.treeViewComponent().folderStateStart()).toBe(true);
     expect(
       debugElement.query(By.css('.si-tree-view-root-ul .si-tree-view-li-item a .element-down-2'))
     ).toBeFalsy();
@@ -346,7 +346,7 @@ describe('SiTreeViewComponent', () => {
   it('should show dataField1', () => {
     component.enableDataField1 = true;
     fixture.detectChanges();
-    expect(component.treeViewComponent().enableDataField1()).toBeTrue();
+    expect(component.treeViewComponent().enableDataField1()).toBe(true);
     expect(debugElement.query(By.css('.si-tree-view-item-object-data-field-1'))).toBeTruthy();
     expect(element.querySelector('.si-tree-view-item-object-data-field-1')!.innerHTML).toContain(
       'Root1DataField1'
@@ -356,7 +356,7 @@ describe('SiTreeViewComponent', () => {
   it('should show dataField2', () => {
     component.enableDataField2 = true;
     fixture.detectChanges();
-    expect(component.treeViewComponent().enableDataField2()).toBeTrue();
+    expect(component.treeViewComponent().enableDataField2()).toBe(true);
     expect(debugElement.query(By.css('.si-tree-view-item-object-data-field-2'))).toBeTruthy();
     expect(element.querySelector('.si-tree-view-item-object-data-field-2')!.innerHTML).toContain(
       'Root1DataField2'
@@ -366,7 +366,7 @@ describe('SiTreeViewComponent', () => {
   it('should hide menu button', () => {
     component.enableContextMenuButton = false;
     fixture.detectChanges();
-    expect(component.treeViewComponent().enableContextMenuButton()).toBeFalse();
+    expect(component.treeViewComponent().enableContextMenuButton()).toBe(false);
     expect(
       debugElement.query(By.css('.si-tree-view-menu-btn.element-options-vertical'))
     ).toBeFalsy();
@@ -376,7 +376,7 @@ describe('SiTreeViewComponent', () => {
     component.contextMenuItems = [{ label: 'Title', type: 'action', action: () => {} }];
     component.enableContextMenuButton = true;
     fixture.detectChanges();
-    expect(component.treeViewComponent().enableContextMenuButton()).toBeTrue();
+    expect(component.treeViewComponent().enableContextMenuButton()).toBe(true);
     expect(
       debugElement.query(By.css('.si-tree-view-menu-btn.element-options-vertical'))
     ).toBeTruthy();
@@ -386,14 +386,14 @@ describe('SiTreeViewComponent', () => {
     component.enableStateIndicator = false;
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
-    expect(component.treeViewComponent().enableStateIndicator()).toBeFalse();
+    expect(component.treeViewComponent().enableStateIndicator()).toBe(false);
     expect(debugElement.query(By.css('.si-tree-view-state-indicator'))).toBeFalsy();
   });
 
   it('should show state pipe', () => {
     component.enableStateIndicator = true;
     fixture.detectChanges();
-    expect(component.treeViewComponent().enableStateIndicator()).toBeTrue();
+    expect(component.treeViewComponent().enableStateIndicator()).toBe(true);
     expect(debugElement.query(By.css('.si-tree-view-state-indicator'))).toBeTruthy();
     expect(
       debugElement.query(By.css('.si-tree-view-state-indicator')).styles['background-color']
@@ -438,7 +438,7 @@ describe('SiTreeViewComponent', () => {
     component.enableCheckbox = true;
     fixture.detectChanges();
     const input = debugElement.query(By.css('.form-check-input')).nativeElement;
-    expect(component.treeViewComponent().enableCheckbox()).toBeTrue();
+    expect(component.treeViewComponent().enableCheckbox()).toBe(true);
     expect(input.checked).toBeFalsy();
 
     input.click();
@@ -455,7 +455,7 @@ describe('SiTreeViewComponent', () => {
     fixture.detectChanges();
     const input = debugElement.query(By.css('.form-check-input')).nativeElement;
     expect(input.checked).toBeFalsy();
-    expect(component.treeViewComponent().inheritChecked()).toBeTrue();
+    expect(component.treeViewComponent().inheritChecked()).toBe(true);
     input.click();
     await fixture.whenStable();
     fixture.detectChanges();
@@ -473,7 +473,7 @@ describe('SiTreeViewComponent', () => {
     component.enableOptionbox = true;
     fixture.detectChanges();
     const input = fixture.debugElement.query(By.css('.form-check-input')).nativeElement;
-    expect(component.treeViewComponent().enableOptionbox()).toBeTrue();
+    expect(component.treeViewComponent().enableOptionbox()).toBe(true);
     expect(input.checked).toBeFalsy();
     expect(input.type).toBe('radio');
   });
@@ -519,7 +519,7 @@ describe('SiTreeViewComponent', () => {
   });
 
   it('should return folderStateStart true as default', () => {
-    expect(component.folderStateStart).toBeTrue();
+    expect(component.folderStateStart).toBe(true);
   });
 
   it('should call onFlatTreeNavigateUp', () => {
@@ -717,7 +717,7 @@ describe('SiTreeViewComponent', () => {
     component.expandCollapseAll = true;
     component.cdRef.markForCheck();
     fixture.detectChanges();
-    expect(component.treeViewComponent().deleteChildrenOnCollapse()).toBeTrue();
+    expect(component.treeViewComponent().deleteChildrenOnCollapse()).toBe(true);
     element.querySelectorAll('.si-tree-view-item-toggle')[0].dispatchEvent(new Event('click'));
 
     fixture.detectChanges();
@@ -846,7 +846,7 @@ describe('SiTreeViewComponent', () => {
     element.querySelector('.si-tree-view')?.scroll(0, 5000);
     element.querySelector('.si-tree-view')?.dispatchEvent(new Event('scroll'));
     runOnPushChangeDetection(fixture);
-    expect(component.treeViewComponent().groupedList()).toBeTrue();
+    expect(component.treeViewComponent().groupedList()).toBe(true);
     expect(element.querySelectorAll('si-tree-view-item').length).toBe(60);
 
     element.querySelector('.si-tree-view')?.scroll(0, 0);
@@ -1090,7 +1090,7 @@ describe('SiTreeViewComponent', () => {
   });
 
   it('default should be enableIcon', () => {
-    expect(component.treeViewComponent().enableIcon()).toBeTrue();
+    expect(component.treeViewComponent().enableIcon()).toBe(true);
   });
 
   describe('with icons', () => {

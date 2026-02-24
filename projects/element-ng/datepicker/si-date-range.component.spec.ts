@@ -88,9 +88,9 @@ describe('SiDateRangeComponent', () => {
     openCalendarButton()!.click();
     jasmine.clock().tick(0);
     await fixture.whenStable();
-    expect(fixture.componentInstance.dateRange.touched).toBeFalse();
+    expect(fixture.componentInstance.dateRange.touched).toBe(false);
     await backdropClick(fixture);
-    expect(fixture.componentInstance.dateRange.touched).toBeTrue();
+    expect(fixture.componentInstance.dateRange.touched).toBe(true);
   });
 
   it('should mark input as touched once the focused is moved outside', async () => {
@@ -102,7 +102,7 @@ describe('SiDateRangeComponent', () => {
     await calendarButton.focus();
     jasmine.clock().tick(1000);
     await fixture.whenStable();
-    expect(fixture.componentInstance.dateRange.touched).toBeFalse();
+    expect(fixture.componentInstance.dateRange.touched).toBe(false);
     await calendarButton.blur();
     expect(fixture.componentInstance.dateRange.touched).toBeTruthy();
   });
