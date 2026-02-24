@@ -198,16 +198,16 @@ describe('SiFlexibleDashboardComponent', () => {
 
     it('should call #grid.edit() on changing editable input to true', () => {
       const spy = spyOn(grid, 'edit').and.callThrough();
-      expect(component.editable()).toBeFalse();
+      expect(component.editable()).toBe(false);
       fixture.componentRef.setInput('editable', true);
       component.ngOnChanges({ editable: new SimpleChange(false, true, true) });
       expect(spy).toHaveBeenCalled();
     });
 
     it('should call #grid.cancel() on changing editable input to false', () => {
-      expect(component.editable()).toBeFalse();
+      expect(component.editable()).toBe(false);
       grid.editable.set(true);
-      expect(component.editable()).toBeTrue();
+      expect(component.editable()).toBe(true);
       const spy = spyOn(grid, 'cancel').and.callThrough();
 
       fixture.componentRef.setInput('editable', false);
@@ -217,7 +217,7 @@ describe('SiFlexibleDashboardComponent', () => {
 
     it('should emit editableChange events on changing grid editable state', () => {
       grid.editable.set(true);
-      expect(component.editable()).toBeTrue();
+      expect(component.editable()).toBe(true);
     });
 
     it('should restore the dashboard on dashboardId changes when dashboard is expanded', () => {

@@ -385,7 +385,7 @@ describe('SiFileUploaderComponent', () => {
     req.flush(attachment);
     httpMock.verify();
 
-    expect(req.request.body.has(component.uploadConfig.fieldName)).toBeTrue();
+    expect(req.request.body.has(component.uploadConfig.fieldName)).toBe(true);
   });
 
   it('should upload file as binary', () => {
@@ -400,7 +400,7 @@ describe('SiFileUploaderComponent', () => {
     req.flush(attachment);
     httpMock.verify();
 
-    expect(req.request.body instanceof Blob).toBeTrue();
+    expect(req.request.body instanceof Blob).toBe(true);
   });
 
   it('should upload file with additional fields', () => {
@@ -511,7 +511,7 @@ describe('SiFileUploaderComponent', () => {
     fixture.detectChanges();
 
     const req = httpMock.expectOne('/api/attachments');
-    expect(req.cancelled).toBeTrue();
+    expect(req.cancelled).toBe(true);
     expect(canceledSpy).toHaveBeenCalledWith(
       jasmine.objectContaining({ fileName: 'matching.fmwr', size: '4B', status: 'added' })
     );

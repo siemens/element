@@ -128,9 +128,9 @@ describe('SiTabset', () => {
     jasmine.clock().tick(1000);
     await fixture.whenStable();
 
-    expect(getActive(0)).toBeTrue();
-    expect(getActive(1)).toBeFalse();
-    expect(getActive(2)).toBeFalse();
+    expect(getActive(0)).toBe(true);
+    expect(getActive(1)).toBe(false);
+    expect(getActive(2)).toBe(false);
     expect(getLength()).toEqual(3);
   });
 

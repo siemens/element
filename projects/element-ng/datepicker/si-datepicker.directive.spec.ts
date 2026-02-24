@@ -225,9 +225,9 @@ describe('SiDatepickerDirective', () => {
       considerTime!.dispatchEvent(new Event('change'));
       await fixture.whenStable();
 
-      expect(helper.getTimeInputHours().disabled).toBeTrue();
-      expect(helper.getTimeInputMinutes().disabled).toBeTrue();
-      expect(helper.getTimeInputSeconds().disabled).toBeTrue();
+      expect(helper.getTimeInputHours().disabled).toBe(true);
+      expect(helper.getTimeInputMinutes().disabled).toBe(true);
+      expect(helper.getTimeInputSeconds().disabled).toBe(true);
       expect(disabledTime$).toHaveBeenCalledWith(true);
     });
   });

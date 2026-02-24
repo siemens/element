@@ -127,18 +127,18 @@ describe('SiBreadcrumbComponent', () => {
     fixture.detectChanges();
 
     let breadcrumb = element.querySelector('.breadcrumb')!;
-    expect(breadcrumb.querySelector('a')?.classList.contains('active')).toBeTrue();
-    expect(breadcrumb.querySelectorAll('a')[1]?.classList.contains('active')).toBeFalse();
-    expect(breadcrumb.querySelectorAll('a')[2]?.classList.contains('active')).toBeFalse();
+    expect(breadcrumb.querySelector('a')?.classList.contains('active')).toBe(true);
+    expect(breadcrumb.querySelectorAll('a')[1]?.classList.contains('active')).toBe(false);
+    expect(breadcrumb.querySelectorAll('a')[2]?.classList.contains('active')).toBe(false);
 
     await router.navigate(['pages']);
 
     fixture.detectChanges();
 
     breadcrumb = element.querySelector('.breadcrumb')!;
-    expect(breadcrumb.querySelector('a')?.classList.contains('active')).toBeFalse();
-    expect(breadcrumb.querySelectorAll('a')[1]?.classList.contains('active')).toBeTrue();
-    expect(breadcrumb.querySelectorAll('a')[2]?.classList.contains('active')).toBeFalse();
+    expect(breadcrumb.querySelector('a')?.classList.contains('active')).toBe(false);
+    expect(breadcrumb.querySelectorAll('a')[1]?.classList.contains('active')).toBe(true);
+    expect(breadcrumb.querySelectorAll('a')[2]?.classList.contains('active')).toBe(false);
   });
 
   it('should update items on translate', () => {

@@ -166,10 +166,10 @@ describe('SiDashboardCardComponent', () => {
   it('expand and restore on by expand() and restore() api', () => {
     component.card().expand();
     fixture.detectChanges();
-    expect(component.card().isExpanded()).toBeTrue();
+    expect(component.card().isExpanded()).toBe(true);
     component.card().restore();
     fixture.detectChanges();
-    expect(component.card().isExpanded()).toBeFalse();
+    expect(component.card().isExpanded()).toBe(false);
   });
 
   it('expand and restore on click', () => {
@@ -179,12 +179,12 @@ describe('SiDashboardCardComponent', () => {
       .querySelector<HTMLElement>('si-content-action-bar button[aria-label="Expand"]')!
       .click();
     fixture.detectChanges();
-    expect(component.card().isExpanded()).toBeTrue();
+    expect(component.card().isExpanded()).toBe(true);
     element
       .querySelector<HTMLElement>('si-content-action-bar button[aria-label="Restore"]')!
       .click();
     fixture.detectChanges();
-    expect(component.card().isExpanded()).toBeFalse();
+    expect(component.card().isExpanded()).toBe(false);
   });
 
   it('expand and restore on click with one primary action', () => {
@@ -196,12 +196,12 @@ describe('SiDashboardCardComponent', () => {
       .querySelector<HTMLElement>('si-content-action-bar button[aria-label="Expand"]')!
       .click();
     fixture.detectChanges();
-    expect(component.card().isExpanded()).toBeTrue();
+    expect(component.card().isExpanded()).toBe(true);
     element
       .querySelector<HTMLElement>('si-content-action-bar button[aria-label="Restore"]')!
       .click();
     fixture.detectChanges();
-    expect(component.card().isExpanded()).toBeFalse();
+    expect(component.card().isExpanded()).toBe(false);
   });
 
   it('expand and restore on click with one secondary action', () => {
@@ -212,11 +212,11 @@ describe('SiDashboardCardComponent', () => {
       .querySelector<HTMLElement>('si-content-action-bar button[aria-label="Expand"]')!
       .click();
     fixture.detectChanges();
-    expect(component.card().isExpanded()).toBeTrue();
+    expect(component.card().isExpanded()).toBe(true);
     element
       .querySelector<HTMLElement>('si-content-action-bar button[aria-label="Restore"]')!
       .click();
     fixture.detectChanges();
-    expect(component.card().isExpanded()).toBeFalse();
+    expect(component.card().isExpanded()).toBe(false);
   });
 });
