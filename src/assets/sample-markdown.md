@@ -1,4 +1,4 @@
-# AI Assistant Response
+# Sample Markdown Content
 
 Here's a **comprehensive example** of markdown content with various formatting options.
 
@@ -17,6 +17,8 @@ const result = calculateSum(5, 3);
 console.log(`Result: ${result}`);
 ```
 
+---
+
 ## Formatting Options
 
 Here's a paragraph explaining the formatting options available.
@@ -33,6 +35,8 @@ You can include links such as [Element](https://element.siemens.io) for more inf
 
 Links are also automatically detected: https://angular.io
 
+---
+
 ## Lists and Bullets
 
 Here are the key features:
@@ -44,6 +48,9 @@ Here are the key features:
 - Bullet point lists
 - Blockquote support
 
+* Or in the alternate format
+* Another bullet point
+
 This paragraph appears after the list to show proper spacing.
 
 ## Ordered Lists
@@ -53,6 +60,8 @@ Step-by-step instructions:
 1. First, analyze the requirements
 2. Then, implement the solution
 3. Finally, test the implementation
+
+---
 
 > This is a blockquote that demonstrates how quoted text appears in the markdown content component.
 
@@ -69,6 +78,16 @@ Another paragraph between the lists.
 2. Second ordered item
 
 Final paragraph to show proper spacing.
+
+---
+
+## Images
+
+Images can be included as follows:
+
+![Building Image](./assets/images/building-1.webp)
+
+---
 
 ## Tables
 
