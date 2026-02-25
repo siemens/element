@@ -12,7 +12,7 @@ test.describe('datatable selection', () => {
     await si.visitExample(example);
     const row2 = page.getByRole('row').filter({ hasText: 'First 2' }).first();
     const row3 = page.getByRole('row').filter({ hasText: 'First 3' }).first();
-    row2.click();
+    await row2.click();
     const selectionCard = page.locator('si-card').first();
     await expect(selectionCard.getByText('First 2')).not.toBeVisible();
     await expect(selectionCard.getByText('None')).toBeVisible();
@@ -20,7 +20,7 @@ test.describe('datatable selection', () => {
     const selectionDropdown = page.getByLabel('Selection type');
     await selectionDropdown.selectOption('single');
 
-    row2.click();
+    await row2.click();
     await expect(selectionCard.getByText('First 2')).toBeVisible();
 
     await si.runVisualAndA11yTests('single-selection', {
@@ -28,7 +28,7 @@ test.describe('datatable selection', () => {
     });
 
     await selectionDropdown.selectOption('checkbox');
-    row3.getByRole('checkbox').click();
+    await row3.getByRole('checkbox').click();
 
     await expect(selectionCard.getByText('First 2')).toBeVisible();
     await expect(selectionCard.getByText('First 3')).toBeVisible();

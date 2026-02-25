@@ -10,7 +10,9 @@ export default defineConfig({
   },
   files: ['**/*.ts'],
   ignores: ['**/test-helpers/*.ts'],
-
+  rules: {
+    '@typescript-eslint/no-floating-promises': ['error']
+  },
   languageOptions: {
     parserOptions: {
       project: ['playwright/tsconfig.json']
