@@ -54,6 +54,21 @@ export class SampleComponent {
     }
   ];
 
+  noPreviewAttachments: Attachment[] = [
+    {
+      name: 'budget-quarterly.pptx',
+    },
+    {
+      name: 'data.json',
+    },
+    {
+      name: 'barchart.png',
+    },
+    {
+      name: 'event.ics',
+    }
+  ];
+
   onRemoveAttachment(attachment: Attachment): void {
     this.logEvent(`Remove attachment: ${attachment.name}`);
 
