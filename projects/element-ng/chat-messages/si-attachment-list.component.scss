@@ -2,7 +2,8 @@
 @use '@siemens/element-theme/src/styles/variables';
 
 :host {
-  --attachment-list-bg: #{variables.$element-base-1-hover};
+  --attachment-list-bg: #{variables.$element-base-1};
+  --attachment-list-bg-hover: #{variables.$element-base-1-hover};
   --attachment-name-color: #{variables.$element-text-primary};
 }
 
@@ -23,6 +24,10 @@
   text-align: inherit;
   color: inherit;
   cursor: pointer;
+
+  &:hover {
+    background-color: var(--attachment-list-bg-hover);
+  }
 }
 
 .attachment-icon {
