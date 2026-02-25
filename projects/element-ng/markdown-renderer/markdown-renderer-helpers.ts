@@ -93,7 +93,8 @@ export const getCachedOrCreateElement = (
   cacheOrder: string[],
   cacheSize: number,
   key: string,
-  createHtml: () => string
+  createHtml: () => string,
+  doc: Document
 ): HTMLElement => {
   const cached = cache.get(key);
   if (cached) {
@@ -105,7 +106,7 @@ export const getCachedOrCreateElement = (
     return cached;
   }
 
-  const tempDiv = document.createElement('div');
+  const tempDiv = doc.createElement('div');
   tempDiv.innerHTML = createHtml();
   const element = tempDiv.firstElementChild as HTMLElement;
 

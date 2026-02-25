@@ -58,15 +58,26 @@ interface ProcessOptions {
 /**
  * Returns a function that transforms markdown text into a formatted HTML node.
  *
+ * **Important for SSR**: When using this function in an SSR context, you must provide the `doc` and `isBrowser` parameters.
+ * Call this within an Angular injection context and pass `inject(DOCUMENT)` and `isPlatformBrowser(inject(PLATFORM_ID))`.
+ *
  * @experimental
  * @param sanitizer - Angular DomSanitizer instance
  * @param options - Optional configuration for the markdown renderer
+ * @param doc - Document instance (optional for browser-only apps, required for SSR - pass inject(DOCUMENT))
+ * @param isBrowser - Whether running in browser (optional for browser-only apps, required for SSR - pass isPlatformBrowser(inject(PLATFORM_ID)))
  * @returns A function taking the markdown text to transform and returning a DOM div element containing the formatted HTML
  */
 export const getMarkdownRenderer = (
   sanitizer: DomSanitizer,
-  options?: MarkdownRendererOptions
+  options?: MarkdownRendererOptions,
+  doc?: Document,
+  isBrowser?: boolean
 ): ((text: string) => Node) => {
+  // Use provided document or fall back to global document for backwards compatibility
+  const docRef = doc ?? document;
+  const isInBrowser = isBrowser ?? true;
+
   // Persistent caches within this renderer instance
   const codeBlockCache = new Map<string, HTMLElement>();
   const tableCache = new Map<string, HTMLElement>();
@@ -341,7 +352,8 @@ export const getMarkdownRenderer = (
             : '';
         const wrapperClass = headerContent ? 'code-wrapper has-header' : 'code-wrapper';
         return `<div class="${wrapperClass}">${headerContent}<pre><code id="${codeId}">${sanitized}</code></pre></div>`;
-      }
+      },
+      docRef
     );
   };
 
@@ -477,110 +489,117 @@ export const getMarkdownRenderer = (
   ): HTMLElement => {
     const cacheKey = createTableCacheKey(tableLines, hasSeparator, tableIndex);
 
-    return getCachedOrCreateElement(tableCache, tableCacheOrder, CACHE_SIZE, cacheKey, () => {
-      const rows: string[] = [];
-      const cellData = tableCellData.get(tableIndex);
+    return getCachedOrCreateElement(
+      tableCache,
+      tableCacheOrder,
+      CACHE_SIZE,
+      cacheKey,
+      () => {
+        const rows: string[] = [];
+        const cellData = tableCellData.get(tableIndex);
 
-      tableLines.forEach((line, rowIndex) => {
-        if (!line.trim()) {
-          return;
-        }
-
-        const escapedPipePlaceholder = `___ESCAPED_PIPE___${Math.random().toString(36).substring(2, 15)}___`;
-        const contentWithPlaceholders = line.replace(/\\\|/g, escapedPipePlaceholder);
-        const parts = contentWithPlaceholders.split('|');
-        const cells = parts.slice(1, -1);
-
-        const processedCells = cells.map((cell, cellIndex) => {
-          // Restore escaped pipes and process cell content
-          let originalCell = cell.replace(new RegExp(escapedPipePlaceholder, 'g'), '|').trim();
-
-          // Extract inline code to protect <br> tags within code
-          const inlineCodeMap = new Map<string, string>();
-          originalCell = originalCell.replace(/(?<!\\)(?:\\\\)*`([^`]+)`/g, (match, content) => {
-            const placeholder = `___INLINE_CODE_${Math.random().toString(36).substring(2, 15)}___`;
-            inlineCodeMap.set(placeholder, match);
-            return placeholder;
-          });
-
-          // Convert <br> tags to newlines for table cells (outside of code)
-          originalCell = originalCell.replace(/<br\s*\/?>/gi, '\n');
-
-          // Restore inline code
-          inlineCodeMap.forEach((code, placeholder) => {
-            originalCell = originalCell.replace(placeholder, code);
-          });
-
-          // Store in cellData if available
-          if (cellData) {
-            const rowData = cellData.get(rowIndex) ?? new Map<number, string>();
-            rowData.set(cellIndex, originalCell);
-            cellData.set(rowIndex, rowData);
+        tableLines.forEach((line, rowIndex) => {
+          if (!line.trim()) {
+            return;
           }
 
-          // Process cell content for inline elements
-          const processedContent = processMarkdown(originalCell, {
-            allowCodeBlocks: false,
-            allowBlockquotes: false,
-            allowTables: false,
-            allowLatex: true,
-            allowInlineCode: true,
-            allowLinks: true
+          const escapedPipePlaceholder = `___ESCAPED_PIPE___${Math.random().toString(36).substring(2, 15)}___`;
+          const contentWithPlaceholders = line.replace(/\\\|/g, escapedPipePlaceholder);
+          const parts = contentWithPlaceholders.split('|');
+          const cells = parts.slice(1, -1);
+
+          const processedCells = cells.map((cell, cellIndex) => {
+            // Restore escaped pipes and process cell content
+            let originalCell = cell.replace(new RegExp(escapedPipePlaceholder, 'g'), '|').trim();
+
+            // Extract inline code to protect <br> tags within code
+            const inlineCodeMap = new Map<string, string>();
+            originalCell = originalCell.replace(/(?<!\\)(?:\\\\)*`([^`]+)`/g, (match, content) => {
+              const placeholder = `___INLINE_CODE_${Math.random().toString(36).substring(2, 15)}___`;
+              inlineCodeMap.set(placeholder, match);
+              return placeholder;
+            });
+
+            // Convert <br> tags to newlines for table cells (outside of code)
+            originalCell = originalCell.replace(/<br\s*\/?>/gi, '\n');
+
+            // Restore inline code
+            inlineCodeMap.forEach((code, placeholder) => {
+              originalCell = originalCell.replace(placeholder, code);
+            });
+
+            // Store in cellData if available
+            if (cellData) {
+              const rowData = cellData.get(rowIndex) ?? new Map<number, string>();
+              rowData.set(cellIndex, originalCell);
+              cellData.set(rowIndex, rowData);
+            }
+
+            // Process cell content for inline elements
+            const processedContent = processMarkdown(originalCell, {
+              allowCodeBlocks: false,
+              allowBlockquotes: false,
+              allowTables: false,
+              allowLatex: true,
+              allowInlineCode: true,
+              allowLinks: true
+            });
+
+            return processedContent;
           });
 
-          return processedContent;
+          const isHeader = hasSeparator && rowIndex === 0;
+          const tag = isHeader ? 'th' : 'td';
+          const rowHtml = `<tr>${processedCells.map(cell => `<${tag}>${cell}</${tag}>`).join('')}</tr>`;
+          rows.push(rowHtml);
         });
 
-        const isHeader = hasSeparator && rowIndex === 0;
-        const tag = isHeader ? 'th' : 'td';
-        const rowHtml = `<tr>${processedCells.map(cell => `<${tag}>${cell}</${tag}>`).join('')}</tr>`;
-        rows.push(rowHtml);
-      });
-
-      // Filter out empty rows (check for text content OR innerHTML content)
-      const filteredRows = rows.filter(row => {
-        // Wrap in proper table structure for correct HTML parsing
-        const tempTable = document.createElement('table');
-        tempTable.innerHTML = `<tbody>${row}</tbody>`;
-        const cells = tempTable.querySelectorAll('td, th');
-        // Check if any cell has content
-        return Array.from(cells).some(cell => {
-          const hasText = !!cell.textContent?.trim();
-          const hasHtml = !!cell.innerHTML?.trim();
-          return hasText || hasHtml;
+        // Filter out empty rows (check for text content OR innerHTML content)
+        const filteredRows = rows.filter(row => {
+          // Wrap in proper table structure for correct HTML parsing
+          const tempTable = docRef.createElement('table');
+          tempTable.innerHTML = `<tbody>${row}</tbody>`;
+          const cells = tempTable.querySelectorAll('td, th');
+          // Check if any cell has content
+          return Array.from(cells).some(cell => {
+            const hasText = !!cell.textContent?.trim();
+            const hasHtml = !!cell.innerHTML?.trim();
+            return hasText || hasHtml;
+          });
         });
-      });
 
-      if (filteredRows.length === 0) {
-        return '<div></div>';
-      }
-
-      const tableId = `table-${Math.random().toString(36).substring(2, 15)}`;
-      let tableHtml = '<table class="table table-hover" id="' + tableId + '">';
-
-      if (hasSeparator && filteredRows.length > 0) {
-        tableHtml += '<thead>' + filteredRows[0] + '</thead>';
-        if (filteredRows.length > 1) {
-          tableHtml += '<tbody>' + filteredRows.slice(1).join('') + '</tbody>';
+        if (filteredRows.length === 0) {
+          return '<div></div>';
         }
-      } else {
-        tableHtml += '<tbody>' + filteredRows.join('') + '</tbody>';
-      }
 
-      tableHtml += '</table>';
+        const tableId = `table-${Math.random().toString(36).substring(2, 15)}`;
+        let tableHtml = '<table class="table table-hover" id="' + tableId + '">';
 
-      // Add download button if enabled
-      let downloadButton = '';
-      if (options?.downloadTableButton) {
-        const translatedLabel = options.translateSync
-          ? options.translateSync(options.downloadTableButton)
-          : options.downloadTableButton;
-        const buttonLabel = escapeHtml(translatedLabel);
-        downloadButton = `<button type="button" class="btn btn-circle btn-sm btn-tertiary download-table-btn" data-table-id="${tableId}" data-table-index="${tableIndex}" aria-label="${buttonLabel}"><i class="icon element-download" aria-hidden="true"></i></button>`;
-      }
+        if (hasSeparator && filteredRows.length > 0) {
+          tableHtml += '<thead>' + filteredRows[0] + '</thead>';
+          if (filteredRows.length > 1) {
+            tableHtml += '<tbody>' + filteredRows.slice(1).join('') + '</tbody>';
+          }
+        } else {
+          tableHtml += '<tbody>' + filteredRows.join('') + '</tbody>';
+        }
 
-      return `<div class="table-wrapper"><div class="table-scroll-container">${tableHtml}</div>${downloadButton}</div>`;
-    });
+        tableHtml += '</table>';
+
+        // Add download button if enabled
+        let downloadButton = '';
+        if (options?.downloadTableButton) {
+          const translatedLabel = options.translateSync
+            ? options.translateSync(options.downloadTableButton)
+            : options.downloadTableButton;
+          const buttonLabel = escapeHtml(translatedLabel);
+          downloadButton = `<button type="button" class="btn btn-circle btn-sm btn-tertiary download-table-btn" data-table-id="${tableId}" data-table-index="${tableIndex}" aria-label="${buttonLabel}"><i class="icon element-download" aria-hidden="true"></i></button>`;
+        }
+
+        return `<div class="table-wrapper"><div class="table-scroll-container">${tableHtml}</div>${downloadButton}</div>`;
+      },
+      docRef
+    );
   };
 
   /**
@@ -753,7 +772,7 @@ export const getMarkdownRenderer = (
    * Main render function
    */
   return (text: string): HTMLElement => {
-    const div = document.createElement('div');
+    const div = docRef.createElement('div');
     div.className = 'markdown-content text-break';
 
     if (text === null || text === undefined) {
@@ -764,56 +783,60 @@ export const getMarkdownRenderer = (
     div.innerHTML = processedHtml;
 
     // Replace comment placeholders with cached elements
-    const walker = document.createTreeWalker(div, NodeFilter.SHOW_COMMENT);
+    // Only use TreeWalker in browser environment
     const commentsToReplace: { comment: Comment; element: HTMLElement }[] = [];
 
-    let currentNode = walker.nextNode();
-    while (currentNode) {
-      const comment = currentNode as Comment;
+    if (isInBrowser) {
+      const walker = docRef.createTreeWalker(div, NodeFilter.SHOW_COMMENT);
 
-      // Handle code block placeholders
-      const codeMatch = comment.textContent?.match(/CODE-BLOCK-PLACEHOLDER-(.*)/);
-      if (codeMatch) {
-        const placeholderId = codeMatch[1];
-        const cacheKey = codeBlockPlaceholderMap.get(placeholderId);
-        if (cacheKey) {
-          const parts = cacheKey.split('|||');
-          const language = parts[0];
-          const content = parts[1];
-          const isMarkdown = parts[3] === 'true';
-          const cachedElement = createCodeBlockElement(language, content, isMarkdown);
-          if (cachedElement) {
-            commentsToReplace.push({ comment, element: cachedElement });
-          }
-        }
-      }
+      let currentNode = walker.nextNode();
+      while (currentNode) {
+        const comment = currentNode as Comment;
 
-      // Handle table placeholders
-      const tableMatch = comment.textContent?.match(/TABLE-PLACEHOLDER-(.*)/);
-      if (tableMatch) {
-        const placeholderId = tableMatch[1];
-        const tableDataJson = tablePlaceholderMap.get(placeholderId);
-        if (tableDataJson) {
-          try {
-            const { tableIndex, hasSeparator, tableLines } = JSON.parse(tableDataJson);
-            const cachedElement = createTableElement(tableLines, hasSeparator, tableIndex, {
-              allowCodeBlocks: false,
-              allowBlockquotes: false,
-              allowTables: false,
-              allowLatex: true,
-              allowInlineCode: true,
-              allowLinks: true
-            });
+        // Handle code block placeholders
+        const codeMatch = comment.textContent?.match(/CODE-BLOCK-PLACEHOLDER-(.*)/);
+        if (codeMatch) {
+          const placeholderId = codeMatch[1];
+          const cacheKey = codeBlockPlaceholderMap.get(placeholderId);
+          if (cacheKey) {
+            const parts = cacheKey.split('|||');
+            const language = parts[0];
+            const content = parts[1];
+            const isMarkdown = parts[3] === 'true';
+            const cachedElement = createCodeBlockElement(language, content, isMarkdown);
             if (cachedElement) {
               commentsToReplace.push({ comment, element: cachedElement });
             }
-          } catch (e) {
-            console.warn('Failed to parse table placeholder data', e);
           }
         }
-      }
 
-      currentNode = walker.nextNode();
+        // Handle table placeholders
+        const tableMatch = comment.textContent?.match(/TABLE-PLACEHOLDER-(.*)/);
+        if (tableMatch) {
+          const placeholderId = tableMatch[1];
+          const tableDataJson = tablePlaceholderMap.get(placeholderId);
+          if (tableDataJson) {
+            try {
+              const { tableIndex, hasSeparator, tableLines } = JSON.parse(tableDataJson);
+              const cachedElement = createTableElement(tableLines, hasSeparator, tableIndex, {
+                allowCodeBlocks: false,
+                allowBlockquotes: false,
+                allowTables: false,
+                allowLatex: true,
+                allowInlineCode: true,
+                allowLinks: true
+              });
+              if (cachedElement) {
+                commentsToReplace.push({ comment, element: cachedElement });
+              }
+            } catch (e) {
+              console.warn('Failed to parse table placeholder data', e);
+            }
+          }
+        }
+
+        currentNode = walker.nextNode();
+      }
     }
 
     // Replace all comment placeholders with their cached elements
@@ -823,72 +846,74 @@ export const getMarkdownRenderer = (
       }
     });
 
-    // Add event listeners for copy buttons
-    div.querySelectorAll('.copy-code-btn').forEach(btn => {
-      btn.addEventListener('click', e => {
-        const button = e.target as HTMLButtonElement;
-        const codeId = button.getAttribute('data-code-id');
-        if (!codeId) return;
+    // Add event listeners for copy buttons (browser-only)
+    if (isBrowser) {
+      div.querySelectorAll('.copy-code-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+          const button = e.target as HTMLButtonElement;
+          const codeId = button.getAttribute('data-code-id');
+          if (!codeId) return;
 
-        const codeElement = div.querySelector(`#${codeId}`);
-        if (!codeElement) return;
+          const codeElement = div.querySelector(`#${codeId}`);
+          if (!codeElement) return;
 
-        const code = codeElement.textContent ?? '';
-        navigator.clipboard.writeText(code).catch(() => {
-          console.warn('Failed to copy code to clipboard');
+          const code = codeElement.textContent ?? '';
+          navigator.clipboard.writeText(code).catch(() => {
+            console.warn('Failed to copy code to clipboard');
+          });
         });
       });
-    });
 
-    // Add event listeners for table download buttons
-    div.querySelectorAll('.download-table-btn').forEach(btn => {
-      btn.addEventListener('click', e => {
-        const button = e.target as HTMLButtonElement;
-        const tableId = button.getAttribute('data-table-id');
-        const tableIndexStr = button.getAttribute('data-table-index');
-        if (!tableId || tableIndexStr === null) return;
+      // Add event listeners for table download buttons (browser-only)
+      div.querySelectorAll('.download-table-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+          const button = e.target as HTMLButtonElement;
+          const tableId = button.getAttribute('data-table-id');
+          const tableIndexStr = button.getAttribute('data-table-index');
+          if (!tableId || tableIndexStr === null) return;
 
-        const tableElement = div.querySelector(`#${tableId}`) as HTMLTableElement;
-        if (!tableElement) return;
+          const tableElement = div.querySelector(`#${tableId}`) as HTMLTableElement;
+          if (!tableElement) return;
 
-        const tableIndex = parseInt(tableIndexStr, 10);
-        const tableData = tableCellData.get(tableIndex);
+          const tableIndex = parseInt(tableIndexStr, 10);
+          const tableData = tableCellData.get(tableIndex);
 
-        // Convert table to CSV
-        const rows = Array.from(tableElement.querySelectorAll('tr'));
-        const csv = rows
-          .filter(row => {
-            const cells = Array.from(row.querySelectorAll('td, th'));
-            return cells.some(cell => (cell.textContent ?? '').trim().length > 0);
-          })
-          .map((row, rowIndex) => {
-            const cells = Array.from(row.querySelectorAll('td, th'));
-            return cells
-              .map((cell, columnIndex) => {
-                const cellText =
-                  tableData?.get(rowIndex)?.get(columnIndex) ?? cell.textContent ?? '';
-                if (cellText.includes(',') || cellText.includes('"') || cellText.includes('\n')) {
-                  return `"${cellText.replace(/"/g, '""')}"`;
-                }
-                return cellText;
-              })
-              .join(',');
-          })
-          .join('\n');
+          // Convert table to CSV
+          const rows = Array.from(tableElement.querySelectorAll('tr'));
+          const csv = rows
+            .filter(row => {
+              const cells = Array.from(row.querySelectorAll('td, th'));
+              return cells.some(cell => (cell.textContent ?? '').trim().length > 0);
+            })
+            .map((row, rowIndex) => {
+              const cells = Array.from(row.querySelectorAll('td, th'));
+              return cells
+                .map((cell, columnIndex) => {
+                  const cellText =
+                    tableData?.get(rowIndex)?.get(columnIndex) ?? cell.textContent ?? '';
+                  if (cellText.includes(',') || cellText.includes('"') || cellText.includes('\n')) {
+                    return `"${cellText.replace(/"/g, '""')}"`;
+                  }
+                  return cellText;
+                })
+                .join(',');
+            })
+            .join('\n');
 
-        // Create and trigger download
-        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement('a');
-        const url = URL.createObjectURL(blob);
-        link.setAttribute('href', url);
-        link.setAttribute('download', 'table.csv');
-        link.style.visibility = 'hidden';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
+          // Create and trigger download
+          const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+          const link = docRef.createElement('a');
+          const url = URL.createObjectURL(blob);
+          link.setAttribute('href', url);
+          link.setAttribute('download', 'table.csv');
+          link.style.visibility = 'hidden';
+          docRef.body.appendChild(link);
+          link.click();
+          docRef.body.removeChild(link);
+          URL.revokeObjectURL(url);
+        });
       });
-    });
+    }
 
     return div;
   };

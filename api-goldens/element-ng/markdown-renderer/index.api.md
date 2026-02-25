@@ -11,7 +11,7 @@ import { SiTranslateService } from '@siemens/element-translate-ng/translate';
 import { TranslatableString } from '@siemens/element-translate-ng/translate-types';
 
 // @public
-export const getMarkdownRenderer: (sanitizer: DomSanitizer, options?: MarkdownRendererOptions) => ((text: string) => Node);
+export const getMarkdownRenderer: (sanitizer: DomSanitizer, options?: MarkdownRendererOptions, doc?: Document, isBrowser?: boolean) => ((text: string) => Node);
 
 // @public (undocumented)
 export interface MarkdownRendererOptions {
