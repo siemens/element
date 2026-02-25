@@ -80,14 +80,14 @@ jobs:
       VERSIONED_BUCKET_NAME: simpl-element-release
       CLOUDFRONT_DOMAIN: d2uqfzn4lxgtwv.cloudfront.net
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - uses: actions/download-artifact@v7
         with:
           name: pages
           path: pages
-      - uses: aws-actions/configure-aws-credentials@v5.1.1
+      - uses: aws-actions/configure-aws-credentials@v6.0.0
         with:
           role-to-assume: arn:aws:iam::974483672234:role/simpl-element-release
           role-session-name: element-release-docs
