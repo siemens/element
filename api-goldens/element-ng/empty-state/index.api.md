@@ -11,7 +11,8 @@ import { TranslatableString } from '@siemens/element-translate-ng/translate';
 export class SiEmptyStateComponent {
     readonly content: i0.InputSignal<TranslatableString | undefined>;
     readonly heading: i0.InputSignal<TranslatableString>;
-    readonly icon: i0.InputSignal<string>;
+    readonly icon: i0.InputSignal<string | undefined>;
+    readonly responsiveBehaviour: i0.InputSignal<"auto" | "manual">;
 }
 
 // @public (undocumented)

@@ -17,7 +17,7 @@ export class SiEmptyStateComponent {
   /**
    * CSS class name of the desired icon.
    */
-  readonly icon = input.required<string>();
+  readonly icon = input<string>();
 
   /**
    * Heading of empty state content.
@@ -28,4 +28,12 @@ export class SiEmptyStateComponent {
    * Description of empty state content.
    */
   readonly content = input<TranslatableString>();
+
+  /**
+   * Controls the responsive behaviour of the empty state.
+   * - `auto`: container queries automatically hide elements based on available height.
+   * - `manual`: container queries are disabled; the consumer controls visibility.
+   * @defaultValue 'manual'
+   */
+  readonly responsiveBehaviour = input<'auto' | 'manual'>('manual');
 }
