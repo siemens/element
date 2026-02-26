@@ -74,10 +74,9 @@
   - tab "Overview" [selected]
   - tab "History"
   - tab "Advanced" [disabled]
-- tabpanel "Overview"
 - menubar:
   - menuitem "Edit"
   - menuitem "Refresh"
-- text: "{ \"id\": 1, \"name\": \"Max Meier 1\", \"role\": \"Installer\", \"company\": \"Great Company 1\", \"age\": 1 }"
+- tabpanel "Overview": "{ \"id\": 1, \"name\": \"Max Meier 1\", \"role\": \"Installer\", \"company\": \"Great Company 1\", \"age\": 1 }"
 - button "Discard"
 - button "Save"

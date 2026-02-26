@@ -27,6 +27,12 @@ export class SiTabComponent extends SiTabBaseDirective implements OnDestroy {
 }
 
 // @public
+export class SiTabContentComponent {
+    constructor();
+    readonly tabset: _angular_core.InputSignal<SiTabsetComponent>;
+}
+
+// @public
 export class SiTabLinkComponent extends SiTabBaseDirective {
     // (undocumented)
     readonly active: _angular_core.Signal<boolean | undefined>;
@@ -37,6 +43,7 @@ export class SiTabLinkComponent extends SiTabBaseDirective {
 // @public
 export class SiTabsetComponent {
     constructor();
+    readonly activeIndex: _angular_core.Signal<number>;
 }
 
 // (No @packageDocumentation comment for this package)

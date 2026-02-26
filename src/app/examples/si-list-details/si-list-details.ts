@@ -31,7 +31,7 @@ import {
   SiResizeObserverDirective
 } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
-import { SiTabComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
+import { SiTabComponent, SiTabContentComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
 import { LOG_EVENT } from '@siemens/live-preview';
 import { NgxDatatableModule } from '@siemens/ngx-datatable';
 
@@ -62,6 +62,7 @@ import { CorporateEmployee, DataService, PageRequest } from '../datatable/data.s
     CdkMenuTrigger,
     SiTabsetComponent,
     SiTabComponent,
+    SiTabContentComponent,
     SiResizeObserverDirective
   ],
   templateUrl: './si-list-details.html',

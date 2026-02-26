@@ -56,8 +56,24 @@ import { SI_TABSET } from './si-tabs-tokens';
 export class SiTabsetComponent {
   protected readonly icons = addIcons({ elementOptions });
 
+  /**
+   * Set by {@link SiTabContentComponent} to indicate that tab content is rendered externally.
+   * When `true`, the tabset will not render its own tab panel container.
+   *
+   * @internal
+   */
+  readonly hasExternalContent = signal(false);
+
   /** @internal */
   readonly activeTab = computed(() => this.tabPanels().find(tab => tab.active()));
+
+  /**
+   * The index of the currently active tab, or `-1` if no tab is active.
+   */
+  readonly activeIndex = computed(() => {
+    const active = this.activeTab();
+    return active ? this.tabPanels().indexOf(active) : -1;
+  });
 
   /** @internal */
   readonly tabPanels = contentChildren(SiTabBaseDirective);

@@ -61,10 +61,9 @@
   - tab "Overview" [selected]
   - tab "History"
   - tab "Advanced" [disabled]
-- tabpanel "Overview"
 - menubar:
   - menuitem "Edit"
   - menuitem "Refresh"
-- text: No entity selected.
+- tabpanel "Overview": No entity selected.
 - button "Discard"
 - button "Save"

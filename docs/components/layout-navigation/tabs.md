@@ -107,11 +107,35 @@ import { SiTabComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
 
 <si-docs-component example="si-tabs/si-tabs-icons"></si-docs-component>
 
+### External Tab Content
+
+Use `SiTabContentComponent` to render tab content in a different part of the DOM from the tab
+buttons. This is useful for split layouts such as
+[list-details](../layout-navigation/list-details.md) where the tabs are in a header area and the
+content is in a separate body area.
+
+Pass the `SiTabsetComponent` reference to the `tabset` input on `SiTabContentComponent`.
+Use `tabset.activeIndex()` to determine which content to render.
+
+```html
+<si-tabset #tabset>
+  <si-tab heading="Overview" [active]="true" />
+  <si-tab heading="History" />
+</si-tabset>
+
+<!-- Rendered elsewhere in the DOM -->
+<si-tab-content [tabset]="tabset">
+  @switch (tabset.activeIndex()) { @case (0) { Overview content } @case (1) { History content } }
+</si-tab-content>
+```
+
 <si-docs-api component="SiTabsetComponent"></si-docs-api>
 
 <si-docs-api component="SiTabComponent"></si-docs-api>
 
 <si-docs-api component="SiTabLinkComponent"></si-docs-api>
+
+<si-docs-api component="SiTabContentComponent"></si-docs-api>
 
 <si-docs-types></si-docs-types>
 
