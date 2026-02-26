@@ -52,7 +52,10 @@ import { UsernamePassword, UsernameValidationPayload } from '../si-landing-page.
   ],
   templateUrl: './si-login-basic.component.html',
   styleUrl: './si-login-basic.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    'animate.enter': 'component-enter'
+  }
 })
 export class SiLoginBasicComponent implements OnInit {
   private static idCounter = 0;
