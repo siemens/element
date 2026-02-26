@@ -4,13 +4,13 @@
   <si-icon class="app-icon" [icon]="iconClass()!" />
 }
 <div class="app-text">
-  <div class="si-h4 d-flex align-items-center mw-100">
+  <div class="si-h4 d-flex align-items-center mw-100 gap-1">
     <span class="text-truncate">
       <ng-content select="[app-name]" />
     </span>
     @if (external()) {
       <si-icon
-        class="icon external-icon ms-1 mt-1"
+        class="icon"
         [icon]="icons.elementExport"
         [attr.aria-label]="externalLinkText() | translate"
       />
@@ -22,7 +22,7 @@
 </div>
 @if (enableFavoriteToggle()) {
   <si-icon
-    class="favorite-icon"
+    class="icon favorite-icon"
     [class.is-favorite]="favorite()"
     [icon]="favorite() ? icons.elementFavoritesFilled : icons.elementFavorites"
     (click)="favoriteClicked($event)"
