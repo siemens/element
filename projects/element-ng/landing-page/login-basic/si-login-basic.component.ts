@@ -4,14 +4,15 @@
  */
 import {
   booleanAttribute,
+  ChangeDetectionStrategy,
   Component,
+  computed,
+  DestroyRef,
+  inject,
   input,
   OnInit,
   output,
-  signal,
-  DestroyRef,
-  inject,
-  ChangeDetectionStrategy
+  signal
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -76,10 +77,12 @@ export class SiLoginBasicComponent implements OnInit {
   readonly passwordLabel = input(t(() => $localize`:@@SI_LOGIN_BASIC.PASSWORD:Password`));
   /**
    * Config for Forgot Password link.
+   * If `title` is omitted, a default translated label is used.
    */
   readonly forgotPasswordLink = input<Link>();
   /**
    * Config for Register Now link.
+   * If `title` is omitted, a default translated label is used.
    */
   readonly registerNowLink = input<Link>();
   /**
@@ -144,6 +147,23 @@ export class SiLoginBasicComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
   protected readonly secondStepVisible = signal(false);
   protected readonly loadingNext = signal(false);
+
+  private readonly defaultForgotPasswordTitle = t(
+    () => $localize`:@@SI_LOGIN_BASIC.FORGOT_PASSWORD:Forgot password`
+  );
+  private readonly defaultRegisterNowTitle = t(
+    () => $localize`:@@SI_LOGIN_BASIC.REGISTER_NOW:Register now`
+  );
+
+  protected readonly effectiveForgotPasswordLink = computed(() => {
+    const link = this.forgotPasswordLink();
+    return !!link && link.title ? link : { ...link, title: this.defaultForgotPasswordTitle };
+  });
+
+  protected readonly effectiveRegisterNowLink = computed(() => {
+    const link = this.registerNowLink();
+    return !!link && link.title ? link : { ...link, title: this.defaultRegisterNowTitle };
+  });
 
   private readonly index = SiLoginBasicComponent.idCounter++;
   protected usernameId = `__si-login-basic-username-${this.index}`;
