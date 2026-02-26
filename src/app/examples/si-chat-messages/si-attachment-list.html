@@ -1,17 +1,26 @@
-<div class="p-2">
-  <si-attachment-list
-    alignment="start"
-    removeLabel="Remove attachment"
-    [attachments]="attachments"
-    [removable]="true"
-    (remove)="onRemoveAttachment($event)"
-  />
+<div class="m-4">
+  <div class="si-h5 mt-4">Removable attachments</div>
+  <div class="mt-5">
+    <si-attachment-list
+      alignment="start"
+      removeLabel="Remove attachment"
+      [attachments]="attachments"
+      [removable]="true"
+      (remove)="onRemoveAttachment($event)"
+    />
+
+  <div class="si-h5 mt-8">Read-only attachments</div>
 
   <div class="mt-5">
     <si-attachment-list alignment="start" [attachments]="readOnlyAttachments" [removable]="false" />
   </div>
-</div>
 
+  <div class="si-h5 mt-8">Non-previewable attachments</div>
+
+  <div class="mt-5">
+    <si-attachment-list alignment="start" [attachments]="noPreviewAttachments" [removable]="false" />
+  </div>
+</div>
 <ng-template #modalTemplate let-modalRef="modalRef" let-attachment="attachment">
   <div class="modal-header">
     <h4 class="modal-title" id="sample-modal-title">{{ attachment.name }}</h4>
@@ -25,5 +34,5 @@
   </div>
   <div class="modal-body">
     <span>This is a sample modal to demonstrate attachment preview functionality.</span>
-  </div></ng-template
->
+  </div>
+</ng-template>
