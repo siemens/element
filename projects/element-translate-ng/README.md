@@ -57,8 +57,7 @@ The config file looks like this
 
 ## Testing
 
-Run `npm run translate:test` to perform the unit tests via [Karma](https://karma-runner.github.io).
-You can set a seed for running the tests in a specific using an environment variable: `SEED=71384 npm run translate:test`
+Run `npm run translate:test` to perform the unit tests via [Vitest](https://vitest.dev/).
 
 ## License
 

@@ -15,5 +15,5 @@
     "compilationMode": "partial"
   },
   "include": ["./**/*.ts"],
-  "exclude": ["**/*.spec.ts"]
+  "exclude": ["**/*.mock.ts", "**/*.spec.ts"]
 }
