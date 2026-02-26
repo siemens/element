@@ -182,20 +182,21 @@
           "options": {
             "tsConfig": "projects/element-translate-ng/tsconfig.lib.json",
             "project": "projects/element-translate-ng/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/element-translate-ng/tsconfig.lib.json"
+            },
+            "development": {
+              "tsConfig": "projects/element-translate-ng/tsconfig.lib.json"
+            }
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/element-translate-ng/tsconfig.spec.json",
-            "karmaConfig": "projects/element-translate-ng/karma.conf.cjs",
-            "stylePreprocessorOptions": {
-              "includePaths": ["node_modules/"]
-            },
-            "codeCoverageExclude": [
-              "projects/element-translate-ng/**/*.module.ts",
-              "projects/element-translate-ng/**/testing/**/*.ts"
-            ]
+            "browsers": ["chromium"]
           }
         },
         "lint": {
