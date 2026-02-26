@@ -18,12 +18,12 @@ import { LandingPageWarning } from './si-landing-page.model';
 
 /**
  * A comprehensive landing page component that provides a standardized layout for authentication flows.
- * 
+ *
  * This component serves as a container for various authentication-related components and provides
  * a consistent layout with support for branding, internationalization, legal acknowledgments,
  * and various notification types. It includes slots for custom content and handles responsive
  * layout adjustments.
- * 
+ *
  * The component supports:
  * - Custom branding and background images
  * - Multi-language support with language switcher
@@ -31,7 +31,7 @@ import { LandingPageWarning } from './si-landing-page.model';
  * - Alert and notification systems
  * - Copyright information display
  * - Responsive layout with full-height section option
- * 
+ *
  * @example
  * ```html
  * <si-landing-page
@@ -41,7 +41,7 @@ import { LandingPageWarning } from './si-landing-page.model';
  *   [copyrightDetails]="copyright"
  *   [announcement]="announcementConfig"
  *   [loginAlert]="loginErrorConfig">
- *   
+ *
  *   <si-login-basic
  *     (login)="handleLogin($event)"
  *     (usernameValidation)="validateUsername($event)">
