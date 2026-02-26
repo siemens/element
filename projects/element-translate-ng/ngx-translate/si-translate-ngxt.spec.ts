@@ -82,7 +82,7 @@ describe('SiTranslateNgxT', () => {
             {
               path: '',
               loadChildren: () =>
-                import('./si-translate-ngxt.test-module.spec').then(m => m.TestModule)
+                import('./si-translate-ngxt.test-module.mock').then(m => m.TestModule)
             }
           ]),
           HostComponent
@@ -267,7 +267,7 @@ describe('SiTranslateNgxT', () => {
     });
 
     it('should warn about missing SiMissingTranslateService', () => {
-      const consoleWarnSpy = spyOn(console, 'warn');
+      const consoleWarnSpy = vi.spyOn(console, 'warn');
       TestBed.runInInjectionContext(() => injectSiTranslateService()) as SiTranslateNgxTService;
       expect(consoleWarnSpy).toHaveBeenCalledWith(
         'SiMissingTranslateService not provided as missingTranslateHandler, default translations will not work.'
