@@ -31,8 +31,7 @@
         <div class="file-info">
           <div class="file-name text-truncate si-h5">{{ file.fileName }}</div>
           <div class="file-size text-secondary">{{ file.size }}</div>
-        </div>
-        @if (file.errorText) {
+          @if (file.errorText) {
           <div
             class="error text-truncate d-flex align-items-center"
             [class.text-warning]="file.status === 'invalid'"
@@ -47,8 +46,8 @@
               : {{ file.httpErrorText }}
             }
           </div>
-        } @else {
-          <div class="position-relative">
+          } @else {
+          <div class="position-relative mt-1">
             <div class="position-absolute si-caption end-0 mt-n8">{{ file.progress }} %</div>
             <si-progressbar
               height="small"
@@ -56,7 +55,8 @@
               [ariaLabel]="uploadingText() | translate"
             />
           </div>
-        }
+          }
+        </div>
       </div>
       <div class="status align-self-center text-nowrap ps-4 pe-6">
         @if (file.status === 'error') {
