@@ -13,6 +13,7 @@ import {
   mockResizeObserver,
   restoreResizeObserver
 } from '../resize-observer/mock-resize-observer.spec';
+import { SiTabContentComponent } from './si-tab-content.component';
 import { SiTabLinkComponent } from './si-tab-link.component';
 import { SiTabComponent } from './si-tab.component';
 import { SiTabsetComponent } from './si-tabset.component';
@@ -436,5 +437,139 @@ describe('SiTabset Routing', () => {
     jasmine.clock().tick(100);
     fixture.detectChanges();
     expect(await (await tabsetHarness.getTabContent()).text()).toBe('Content by routing');
+  });
+});
+
+describe('SiTabset with external content', () => {
+  @Component({
+    imports: [SiTabsetComponent, SiTabComponent, SiTabContentComponent],
+    template: `
+      <div class="tab-wrapper">
+        <si-tabset #tabset [content]="tabContent">
+          @for (tab of tabsObject(); track tab) {
+            <si-tab
+              [active]="tab.active ?? false"
+              [heading]="tab.heading"
+              [disabled]="!!tab.disabled"
+            />
+          }
+        </si-tabset>
+
+        <si-tab-content #tabContent>
+          <div class="external-content">External content is rendered</div>
+        </si-tab-content>
+      </div>
+    `
+  })
+  class TestExternalContentComponent {
+    protected readonly tabsObject = signal<
+      { heading: string; active?: boolean; disabled?: boolean }[]
+    >([]);
+
+    set tabs(value: { heading: string; active?: boolean; disabled?: boolean }[]) {
+      this.tabsObject.set(value);
+    }
+
+    readonly tabSet = viewChild.required(SiTabsetComponent);
+  }
+
+  let fixture: ComponentFixture<TestExternalContentComponent>;
+  let testComponent: TestExternalContentComponent;
+  let loader: HarnessLoader;
+  let tabsetHarness: SiTabsetHarness;
+
+  beforeEach(async () => {
+    fixture = TestBed.createComponent(TestExternalContentComponent);
+    testComponent = fixture.componentInstance;
+    loader = TestbedHarnessEnvironment.loader(fixture);
+    tabsetHarness = await loader.getHarness(SiTabsetHarness);
+  });
+
+  it('should not render tabpanel via content-projection', async () => {
+    testComponent.tabs = [{ heading: '1', active: true }, { heading: '2' }];
+    fixture.detectChanges();
+
+    const internalTabpanel = fixture.nativeElement.querySelector('si-tabset [role="tabpanel"]');
+    expect(internalTabpanel).toBeNull();
+  });
+
+  it('should set correct role="tabpanel" on external content', async () => {
+    testComponent.tabs = [{ heading: '1', active: true }, { heading: '2' }];
+    fixture.detectChanges();
+
+    const contentHarness = await tabsetHarness.getExternalTabContent();
+    const tabPanel = await contentHarness!.getTabPanel();
+    expect(tabPanel).toBeTruthy();
+  });
+
+  it('should link tabpanel aria-labelledby to the active tab id', async () => {
+    testComponent.tabs = [{ heading: '1', active: true }, { heading: '2' }];
+    fixture.detectChanges();
+
+    const contentHarness = await tabsetHarness.getExternalTabContent();
+    const activeTabId = await tabsetHarness.getActiveTabId();
+    expect(await contentHarness!.getTabPanelLabelledBy()).toBe(activeTabId);
+  });
+
+  it('should set tabpanel id matching the active tab aria-controls', async () => {
+    testComponent.tabs = [{ heading: '1', active: true }, { heading: '2' }];
+    fixture.detectChanges();
+
+    const contentHarness = await tabsetHarness.getExternalTabContent();
+    const ariaControls = await tabsetHarness.getActiveTabAriaControls();
+    expect(await contentHarness!.getTabPanelId()).toBe(ariaControls);
+  });
+
+  it('should update ARIA attributes when switching tabs', async () => {
+    testComponent.tabs = [{ heading: '1', active: true }, { heading: '2' }];
+    fixture.detectChanges();
+
+    // Click second tab
+    await (await tabsetHarness.getTabItemButtonAt(1)).click();
+    fixture.detectChanges();
+
+    const contentHarness = await tabsetHarness.getExternalTabContent();
+    const activeTabId = await tabsetHarness.getActiveTabId();
+    const ariaControls = await tabsetHarness.getActiveTabAriaControls();
+
+    expect(await tabsetHarness.isTabItemActive(1)).toBe(true);
+    expect(await contentHarness!.getTabPanelLabelledBy()).toBe(activeTabId);
+    expect(await contentHarness!.getTabPanelId()).toBe(ariaControls);
+  });
+
+  it('should render projected content inside external tabpanel', async () => {
+    testComponent.tabs = [{ heading: '1', active: true }];
+    fixture.detectChanges();
+
+    const contentHarness = await tabsetHarness.getExternalTabContent();
+    expect(await contentHarness!.getTabPanelText()).toContain('External content is rendered');
+  });
+
+  it('should not render external tabpanel when no tab is active', async () => {
+    testComponent.tabs = [{ heading: '1' }, { heading: '2' }];
+    fixture.detectChanges();
+
+    const contentHarness = await tabsetHarness.getExternalTabContent();
+    expect(await contentHarness!.hasTabPanel()).toBe(false);
+  });
+
+  it('should expose activeIndex matching the active tab position', async () => {
+    testComponent.tabs = [{ heading: '1', active: true }, { heading: '2' }, { heading: '3' }];
+    fixture.detectChanges();
+
+    expect(testComponent.tabSet().activeIndex()).toBe(0);
+
+    // Click third tab
+    await (await tabsetHarness.getTabItemButtonAt(2)).click();
+    fixture.detectChanges();
+
+    expect(testComponent.tabSet().activeIndex()).toBe(2);
+  });
+
+  it('should set activeIndex to -1 when no tab is active', () => {
+    testComponent.tabs = [{ heading: '1' }, { heading: '2' }];
+    fixture.detectChanges();
+
+    expect(testComponent.tabSet().activeIndex()).toBe(-1);
   });
 });

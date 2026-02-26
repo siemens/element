@@ -13,6 +13,7 @@ import {
   effect,
   inject,
   INJECTOR,
+  input,
   signal
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
@@ -24,6 +25,7 @@ import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
 
 import { SiTabBadgeComponent } from './si-tab-badge.component';
 import { SiTabBaseDirective } from './si-tab-base.directive';
+import { SiTabContentComponent } from './si-tab-content.component';
 import { SiTabLinkComponent } from './si-tab-link.component';
 import { SI_TABSET } from './si-tabs-tokens';
 
@@ -56,8 +58,26 @@ import { SI_TABSET } from './si-tabs-tokens';
 export class SiTabsetComponent {
   protected readonly icons = addIcons({ elementOptions });
 
+  /**
+   * Optional reference to an external {@link SiTabContentComponent} where the tab panel
+   * will be rendered instead of inline within the tabset.
+   *
+   * When set, the tabset will not render its own tab panel container.
+   * The referenced `si-tab-content` component will render the `role="tabpanel"` element
+   * with proper ARIA attributes linked to the active tab.
+   */
+  readonly content = input<SiTabContentComponent>();
+
   /** @internal */
   readonly activeTab = computed(() => this.tabPanels().find(tab => tab.active()));
+
+  /**
+   * The index of the currently active tab, or `-1` if no tab is active.
+   */
+  readonly activeIndex = computed(() => {
+    const active = this.activeTab();
+    return active ? this.tabPanels().indexOf(active) : -1;
+  });
 
   /** @internal */
   readonly tabPanels = contentChildren(SiTabBaseDirective);
@@ -75,6 +95,16 @@ export class SiTabsetComponent {
   }
 
   constructor() {
+    // Push ARIA attributes to external content component when active tab changes.
+    effect(() => {
+      const contentRef = this.content();
+      const active = this.activeTab();
+      if (contentRef) {
+        contentRef.panelId.set(active ? `content-${active.tabId}` : undefined);
+        contentRef.labelledBy.set(active ? `tab-${active.tabId}` : undefined);
+      }
+    });
+
     effect(() => {
       if (this.showMenuButton() && this.activeTab()) {
         // wait for menu button to render on DOM
