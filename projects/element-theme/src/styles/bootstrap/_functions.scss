@@ -105,11 +105,11 @@ $escaped-characters: (
     @return $value1 + $value2;
   }
 
-  @return if(
-    $return-calc == true,
-    calc(#{$value1} + #{$value2}),
-    $value1 + string.unquote(' + ') + $value2
-  );
+  @if $return-calc {
+    @return calc(#{$value1} + #{$value2});
+  } @else {
+    @return $value1 + string.unquote(' + ') + $value2;
+  }
 }
 
 @function subtract($value1, $value2, $return-calc: true) {
@@ -138,15 +138,18 @@ $escaped-characters: (
     $value2: string.unquote('(') + $value2 + string.unquote(')');
   }
 
-  @return if(
-    $return-calc == true,
-    calc(#{$value1} - #{$value2}),
-    $value1 + string.unquote(' - ') + $value2
-  );
+  @if $return-calc {
+    @return calc(#{$value1} - #{$value2});
+  } @else {
+    @return $value1 + string.unquote(' - ') + $value2;
+  }
 }
 
 @function divide($dividend, $divisor, $precision: 10) {
-  $sign: if($dividend > 0 and $divisor > 0 or $dividend < 0 and $divisor < 0, 1, -1);
+  $sign: -1;
+  @if ($dividend > 0 and $divisor > 0) or ($dividend < 0 and $divisor < 0) {
+    $sign: 1;
+  }
   $dividend: math.abs($dividend);
   $divisor: math.abs($divisor);
   @if $dividend == 0 {
