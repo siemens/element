@@ -2,55 +2,47 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { inputBinding, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EntityStatusType } from '@siemens/element-ng/common';
 
 import { SiAvatarComponent } from './index';
 
-@Component({
-  imports: [SiAvatarComponent],
-  template: `<si-avatar
-    #ref
-    [altText]="altText"
-    [status]="status"
-    [icon]="icon"
-    [imageUrl]="imageUrl"
-    [initials]="initials"
-    [color]="color"
-    [autoColor]="autoColor"
-  />`
-})
-class TestHostComponent {
-  imageUrl?: string;
-  icon?: string;
-  initials?: string;
-  color?: number = undefined;
-  altText!: string;
-  status?: EntityStatusType;
-  autoColor = false;
-}
-
 describe('SiAvatarComponent', () => {
-  let host: TestHostComponent;
-  let fixture: ComponentFixture<TestHostComponent>;
+  let fixture: ComponentFixture<SiAvatarComponent>;
   let element: HTMLElement;
-
-  beforeEach(() =>
-    TestBed.configureTestingModule({
-      imports: [SiAvatarComponent, TestHostComponent]
-    }).compileComponents()
-  );
+  const imageUrl = signal<string | undefined>(undefined);
+  const icon = signal<string | undefined>(undefined);
+  const initials = signal<string | undefined>(undefined);
+  const color = signal<number | undefined>(undefined);
+  const altText = signal('Test');
+  const status = signal<EntityStatusType | undefined>(undefined);
+  const autoColor = signal(false);
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TestHostComponent);
-    host = fixture.componentInstance;
-    host.altText = 'Test';
-    element = fixture.nativeElement.querySelector('si-avatar');
+    imageUrl.set(undefined);
+    icon.set(undefined);
+    initials.set(undefined);
+    color.set(undefined);
+    altText.set('Test');
+    status.set(undefined);
+    autoColor.set(false);
+    fixture = TestBed.createComponent(SiAvatarComponent, {
+      bindings: [
+        inputBinding('altText', altText),
+        inputBinding('status', status),
+        inputBinding('icon', icon),
+        inputBinding('imageUrl', imageUrl),
+        inputBinding('initials', initials),
+        inputBinding('color', color),
+        inputBinding('autoColor', autoColor)
+      ]
+    });
+    element = fixture.nativeElement;
   });
 
   it('should show image', () => {
-    host.imageUrl = 'testImageUrl';
+    imageUrl.set('testImageUrl');
     fixture.detectChanges();
 
     const img = element.querySelector('img');
@@ -59,7 +51,7 @@ describe('SiAvatarComponent', () => {
   });
 
   it('should show icon', () => {
-    host.icon = 'element-user';
+    icon.set('element-user');
     fixture.detectChanges();
 
     const el = element.querySelector<HTMLElement>('si-icon');
@@ -68,7 +60,7 @@ describe('SiAvatarComponent', () => {
   });
 
   it('should show initials', () => {
-    host.initials = 'JD';
+    initials.set('JD');
     fixture.detectChanges();
 
     const div = element.querySelector<HTMLElement>('.initials');
@@ -78,38 +70,37 @@ describe('SiAvatarComponent', () => {
   });
 
   it('should show status icon', () => {
-    host.initials = 'JD';
-    host.status = 'success';
+    initials.set('JD');
+    status.set('success');
     fixture.detectChanges();
 
     expect(element.querySelector('.indicator')).toBeTruthy();
   });
 
   it('should show different color', () => {
-    host.initials = 'JD';
-    host.color = 14;
+    initials.set('JD');
+    color.set(14);
     fixture.detectChanges();
 
     expect(element.style.getPropertyValue('--background')).toBe('var(--element-data-14)');
   });
 
   it('should wrap data colors', () => {
-    host.initials = 'JD';
-    host.color = 21;
+    initials.set('JD');
+    color.set(21);
     fixture.detectChanges();
 
     expect(element.style.getPropertyValue('--background')).toBe('var(--element-data-4)');
   });
 
   it('should set color automatically', () => {
-    host.initials = 'JD';
-    host.autoColor = true;
+    initials.set('JD');
+    autoColor.set(true);
     fixture.detectChanges();
 
     expect(element.style.getPropertyValue('--background')).toBe('var(--element-data-4)');
 
-    host.initials = 'DJ';
-    fixture.changeDetectorRef.markForCheck();
+    initials.set('DJ');
     fixture.detectChanges();
 
     expect(element.style.getPropertyValue('--background')).toBe('var(--element-data-10)');
@@ -117,42 +108,42 @@ describe('SiAvatarComponent', () => {
 
   describe('auto-calculated initials', () => {
     it('should support account with first and last name', () => {
-      host.altText = 'Jane Smith';
+      altText.set('Jane Smith');
       fixture.detectChanges();
 
       expect(element.querySelector<HTMLElement>('.initials')?.textContent).toEqual('JS');
     });
 
     it('should support account with first, middle and last name', () => {
-      host.altText = 'Jane Aubrey Smith (stuff here) (and more stuff)';
+      altText.set('Jane Aubrey Smith (stuff here) (and more stuff)');
       fixture.detectChanges();
 
       expect(element.querySelector<HTMLElement>('.initials')?.textContent).toEqual('JS');
     });
 
     it('should support account with first, middle and last name', () => {
-      host.altText = 'Smith, Jane Aubrey (stuff here) (and more stuff)';
+      altText.set('Smith, Jane Aubrey (stuff here) (and more stuff)');
       fixture.detectChanges();
 
       expect(element.querySelector<HTMLElement>('.initials')?.textContent).toEqual('JS');
     });
 
     it('should support account with single name', () => {
-      host.altText = 'Jane';
+      altText.set('Jane');
       fixture.detectChanges();
 
       expect(element.querySelector<HTMLElement>('.initials')?.textContent).toEqual('J');
     });
 
     it('should support account with single name and space prefix', () => {
-      host.altText = ' Jane';
+      altText.set(' Jane');
       fixture.detectChanges();
 
       expect(element.querySelector<HTMLElement>('.initials')?.textContent).toEqual('J');
     });
 
     it('should support account with single name and space postfix', () => {
-      host.altText = 'Jane ';
+      altText.set('Jane ');
       fixture.detectChanges();
 
       expect(element.querySelector<HTMLElement>('.initials')?.textContent).toEqual('J');
