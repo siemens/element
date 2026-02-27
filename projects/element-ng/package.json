@@ -49,7 +49,7 @@
     "@siemens/element-translate-ng": "49.0.0",
     "@siemens/element-theme": "49.0.0",
     "@siemens/ngx-datatable": "25",
-    "ag-grid-community": "^34.3.1",
+    "ag-grid-community": "^34.3.1 || ^35.0.0",
     "flag-icons": "^7.3.2",
     "google-libphonenumber": "^3.2.40",
     "ngx-image-cropper": "^9.0.0"
