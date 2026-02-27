@@ -4,50 +4,27 @@
  */
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { inputBinding, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Link } from '@siemens/element-ng/link';
 
 import { LicenseInfo } from './si-about-data.model';
 import { SiAboutComponent } from './si-about.component';
 
-@Component({
-  imports: [SiAboutComponent],
-  template: `
-    <si-about
-      [aboutTitle]="aboutTitle"
-      [licenseInfo]="licenseInfo"
-      [icon]="icon"
-      [appName]="appName"
-      [subheading]="subheading"
-      [acceptableUsePolicyLink]="acceptableUsePolicyLink"
-      [imprintLink]="imprintLink"
-      [privacyLink]="privacyLink"
-      [cookieNoticeLink]="cookieNoticeLink"
-      [termsLink]="termsLink"
-      [links]="links"
-    />
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
-class TestHostComponent {
-  aboutTitle!: string;
-  licenseInfo!: LicenseInfo;
-  icon!: string;
-  appName!: string;
-  subheading!: string[];
-  acceptableUsePolicyLink!: Link;
-  imprintLink!: Link;
-  privacyLink!: Link;
-  cookieNoticeLink!: Link;
-  termsLink!: Link;
-  links!: Link[];
-}
-
 describe('SiAboutComponent', () => {
-  let fixture: ComponentFixture<TestHostComponent>;
-  let component: TestHostComponent;
+  let fixture: ComponentFixture<SiAboutComponent>;
   let element: HTMLElement;
+  const aboutTitle = signal('');
+  const licenseInfo = signal<LicenseInfo>({ title: '' });
+  const iconInput = signal<string | undefined>(undefined);
+  const appName = signal('');
+  const subheadingInput = signal<string[] | undefined>(undefined);
+  const acceptableUsePolicyLink = signal<Link | undefined>(undefined);
+  const imprintLink = signal<Link | undefined>(undefined);
+  const privacyLink = signal<Link | undefined>(undefined);
+  const cookieNoticeLink = signal<Link | undefined>(undefined);
+  const termsLink = signal<Link | undefined>(undefined);
+  const linksInput = signal<Link[]>([]);
 
   const toggleCollapsePanel = (e?: HTMLElement): void =>
     (e ?? element).querySelector<HTMLElement>('.collapsible-header')?.click();
@@ -60,41 +37,64 @@ describe('SiAboutComponent', () => {
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [TestHostComponent],
       providers: [provideHttpClient(), provideHttpClientTesting()]
     })
   );
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TestHostComponent);
-    component = fixture.componentInstance;
+    aboutTitle.set('');
+    licenseInfo.set({ title: '' });
+    iconInput.set(undefined);
+    appName.set('');
+    subheadingInput.set(undefined);
+    acceptableUsePolicyLink.set(undefined);
+    imprintLink.set(undefined);
+    privacyLink.set(undefined);
+    cookieNoticeLink.set(undefined);
+    termsLink.set(undefined);
+    linksInput.set([]);
+    fixture = TestBed.createComponent(SiAboutComponent, {
+      bindings: [
+        inputBinding('aboutTitle', aboutTitle),
+        inputBinding('licenseInfo', licenseInfo),
+        inputBinding('icon', iconInput),
+        inputBinding('appName', appName),
+        inputBinding('subheading', subheadingInput),
+        inputBinding('acceptableUsePolicyLink', acceptableUsePolicyLink),
+        inputBinding('imprintLink', imprintLink),
+        inputBinding('privacyLink', privacyLink),
+        inputBinding('cookieNoticeLink', cookieNoticeLink),
+        inputBinding('termsLink', termsLink),
+        inputBinding('links', linksInput)
+      ]
+    });
     element = fixture.nativeElement;
   });
 
   it('should contain set properties', () => {
-    component.aboutTitle = 'About';
-    component.licenseInfo = {
+    aboutTitle.set('About');
+    licenseInfo.set({
       title: 'License',
       text: 'This is a text for some licenses'
-    };
-    component.icon = 'https://lorempixel.com/200/200/sports/1/';
-    component.appName = 'Application title';
-    component.subheading = ['app version v0.1.2.alpha4', '© Examples.org 2016-2021'];
-    component.acceptableUsePolicyLink = {
+    });
+    appName.set('Application title');
+    iconInput.set('https://lorempixel.com/200/200/sports/1/');
+    subheadingInput.set(['app version v0.1.2.alpha4', '© Examples.org 2016-2021']);
+    acceptableUsePolicyLink.set({
       title: 'Acceptable Use Policy',
       href: 'https://www.examples.org/sw-terms/aup'
-    };
-    component.imprintLink = { title: 'Corporate Information', href: 'http://www.examples.org' };
-    component.privacyLink = { title: 'Privacy Notice', href: 'http://www.examples.org' };
-    component.cookieNoticeLink = {
+    });
+    imprintLink.set({ title: 'Corporate Information', href: 'http://www.examples.org' });
+    privacyLink.set({ title: 'Privacy Notice', href: 'http://www.examples.org' });
+    cookieNoticeLink.set({
       title: 'Cookie Notice',
       href: 'https://www.examples.org/cookie-notice'
-    };
-    component.termsLink = { title: 'Terms and Conditions', href: 'http://www.examples.org' };
-    component.links = [
+    });
+    termsLink.set({ title: 'Terms and Conditions', href: 'http://www.examples.org' });
+    linksInput.set([
       { title: 'Some other link', href: 'http://www.examples.org' },
       { title: 'More information about stuff', href: 'http://www.examples.org' }
-    ];
+    ]);
 
     fixture.detectChanges();
 
@@ -123,14 +123,14 @@ describe('SiAboutComponent', () => {
   });
 
   it('should correctly display the content when links are not provided', () => {
-    component.aboutTitle = 'About';
-    component.licenseInfo = {
+    aboutTitle.set('About');
+    licenseInfo.set({
       title: 'License',
       text: 'This is a text for some licenses'
-    };
-    component.icon = 'https://lorempixel.com/200/200/sports/1/';
-    component.appName = 'Application title';
-    component.subheading = ['app version v0.1.2.alpha4', '© Examples.org 2016-2021'];
+    });
+    appName.set('Application title');
+    iconInput.set('https://lorempixel.com/200/200/sports/1/');
+    subheadingInput.set(['app version v0.1.2.alpha4', '© Examples.org 2016-2021']);
 
     fixture.detectChanges();
 
@@ -158,23 +158,13 @@ describe('SiAboutComponent', () => {
 
   describe('with iFrame mode', () => {
     it('should not set the sanitizedUrl if iframe is not enabled', () => {
-      // Set required component input's
-      component.aboutTitle = '';
-      component.appName = '';
-      component.icon = '';
-
-      component.licenseInfo = { title: 'Test' };
+      licenseInfo.set({ title: 'Test' });
       fixture.detectChanges();
       expect(element.querySelector<HTMLIFrameElement>('iframe')).toBeFalsy();
     });
 
     it('should set the sanitizedUrl if iframe is enabled', () => {
-      // Set required component input's
-      component.aboutTitle = '';
-      component.appName = '';
-      component.icon = '';
-
-      component.licenseInfo = { title: 'Test', iframe: '/text.txt' };
+      licenseInfo.set({ title: 'Test', iframe: '/text.txt' });
       fixture.detectChanges();
       expect(element.querySelector<HTMLIFrameElement>('iframe')!.src).toContain('/text.txt');
     });
@@ -185,11 +175,7 @@ describe('SiAboutComponent', () => {
 
     beforeEach(() => {
       httpMock = TestBed.inject(HttpTestingController);
-      // Set required component input's
-      component.aboutTitle = '';
-      component.appName = '';
-      component.icon = '';
-      component.licenseInfo = { title: '', text: '', api: '/licenses.json' };
+      licenseInfo.set({ title: '', text: '', api: '/licenses.json' });
       fixture.autoDetectChanges();
     });
 
