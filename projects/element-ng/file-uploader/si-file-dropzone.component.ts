@@ -42,10 +42,12 @@ export class SiFileDropzoneComponent {
    *
    * @defaultValue
    * ```
-   * t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or`)
+   * t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or {{uploadTextFileSelect}}`)
    * ```
    */
-  readonly uploadDropText = input(t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or`));
+  readonly uploadDropText = input(
+    t(() => $localize`:@@SI_FILE_UPLOADER.DROP:Drop files here or {{uploadTextFileSelect}}`)
+  );
   /**
    * Text or translation key for max file size.
    *
