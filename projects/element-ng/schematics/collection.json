@@ -5,6 +5,11 @@
       "description": "A schematic to add the @siemens/element-ng to your project.",
       "factory": "./ng-add/index#ngAdd",
       "schema": "./ng-add/schema.json"
+    },
+    "ng-add-setup-element-styles": {
+      "description": "Configures Element styles after installation (internal schematic)",
+      "factory": "./ng-add/add-styling#ngAddSetupElementStyles",
+      "private": true
     }
   }
 }
