@@ -1,0 +1,32 @@
+<si-tabset>
+  <si-tab
+    heading="Write"
+    [active]="selectedTabIndex === 0"
+    (activeChange)="$event && (selectedTabIndex = 0)"
+  >
+    <div class="m-4">
+      <textarea
+        type="text"
+        class="form-control"
+        rows="5"
+        placeholder="Type a message..."
+        [formControl]="formControl"
+      ></textarea>
+    </div>
+  </si-tab>
+  <si-tab
+    heading="Preview"
+    [active]="selectedTabIndex === 1"
+    (activeChange)="$event && (selectedTabIndex = 1)"
+  >
+    <p class="m-4">{{ formControl.value }}</p>
+  </si-tab>
+  <div tab-actions>
+    <button type="button" class="btn btn-icon btn-tertiary" aria-label="Link">
+      <si-icon [icon]="icons.elementLink" />
+    </button>
+    <button type="button" class="btn btn-icon btn-tertiary" aria-label="Settings">
+      <si-icon [icon]="icons.elementSettings" />
+    </button>
+  </div>
+</si-tabset>

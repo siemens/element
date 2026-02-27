@@ -56,3 +56,15 @@
   scroll-behavior: smooth;
   scrollbar-width: none;
 }
+
+.tab-actions {
+  display: flex;
+  align-items: center;
+  margin-inline-start: auto;
+  padding-inline: map.get(variables.$spacers, 1) map.get(variables.$spacers, 2);
+  padding-block-end: map.get(variables.$spacers, 1);
+
+  &:empty {
+    display: none;
+  }
+}

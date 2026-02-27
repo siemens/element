@@ -107,6 +107,27 @@ import { SiTabComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
 
 <si-docs-component example="si-tabs/si-tabs-icons"></si-docs-component>
 
+### Tabs - Toolbars
+
+Positioning actions inline with tabs:
+
+```html
+<si-tabset>
+  <si-tab heading="Write"> ... </si-tab>
+  <si-tab heading="Preview"> ... </si-tab>
+  <div tab-actions>
+    <button type="button" class="btn btn-icon btn-tertiary" aria-label="Link">
+      <si-icon icon="element-link" />
+    </button>
+    <button type="button" class="btn btn-icon btn-tertiary" aria-label="Settings">
+      <si-icon icon="element-settings" />
+    </button>
+  </div>
+</si-tabset>
+```
+
+<si-docs-component example="si-tabs/si-tabs-toolbar"></si-docs-component>
+
 <si-docs-api component="SiTabsetComponent"></si-docs-api>
 
 <si-docs-api component="SiTabComponent"></si-docs-api>
