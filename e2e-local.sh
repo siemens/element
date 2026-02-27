@@ -36,9 +36,12 @@ DISPLAY=$LOCAL_ADDRESS:0
 
 case "$OS" in
   Linux*)
-    LOCAL_ADDRESS=localhost
-    NETWORK_MODE=host
-    DISPLAY=$DISPLAY
+    if [ x"$LOCAL_ADDRESS" = "x" ]; then
+      LOCAL_ADDRESS=localhost
+    fi
+    if [ x"$NETWORK_MODE" = "x" ]; then
+      NETWORK_MODE=host
+    fi
     ;;
   MINGW*)
     CWD=$(cygpath -w $CWD)
