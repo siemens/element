@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="../../../_src/siemens-element-icons.min.css" />
+
 # Frequent app functions
 
 ## Common actions

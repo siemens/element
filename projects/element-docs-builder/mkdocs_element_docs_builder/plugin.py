@@ -1,6 +1,7 @@
 import os
 from os.path import relpath
 import json
+from pathlib import PurePosixPath
 from typing import Any
 
 from mkdocs.config.base import Config
@@ -109,5 +110,6 @@ class ElementDocsBuilderPlugin(BasePlugin):
 
   def on_files(self, files: Files, config: Config):
     files.append(File('docs-builder.css', dirname(__file__), config.get('site_dir'), config.get('use_directory_urls')))
+    files.append(File('siemens-element-icons.min.css', './node_modules/@siemens/element-icons/dist/style/', (PurePosixPath(config.get('site_dir')) / 'assets').as_posix(), config.get('use_directory_urls')))
     files.append(File('docs-builder.js', dirname(__file__), config.get('site_dir'), config.get('use_directory_urls')))
     return files
