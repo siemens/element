@@ -27,7 +27,7 @@ test.describe('si-wizard-vertical', () => {
     await (await page.locator('si-wizard')).click({ position: { x: 10, y: 10 } });
     await page.keyboard.press('Tab');
     const step = await page.locator('a:focus-visible');
-    expect(step).toContainText('Step 2');
+    await expect(step).toContainText('Step 2');
 
     await si.runVisualAndA11yTests('focus');
   });

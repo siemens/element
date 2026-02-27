@@ -16,20 +16,20 @@ test.describe('si-tabs', () => {
   });
 
   test(example + ' mobile', async ({ page, si }) => {
-    page.setViewportSize({ width: 375, height: 812 });
+    await page.setViewportSize({ width: 375, height: 812 });
     await si.visitExample(example);
     await expect(page.locator('[aria-haspopup="menu"]')).toBeVisible();
     await si.runVisualAndA11yTests('tabs-mobile');
   });
 
   test(example + ' menu', async ({ page, si }) => {
-    page.setViewportSize({ width: 375, height: 812 });
+    await page.setViewportSize({ width: 375, height: 812 });
     await si.visitExample(example);
     await expect(page.locator('[aria-haspopup="menu"]')).toBeVisible();
-    page.locator('[aria-haspopup="menu"]').click();
+    await page.locator('[aria-haspopup="menu"]').click();
     await si.runVisualAndA11yTests('tabs-menu');
 
-    page.getByRole('menuitem', { name: 'Deselectable' }).click();
+    await page.getByRole('menuitem', { name: 'Deselectable' }).click();
     await si.runVisualAndA11yTests('tabs-menu-last-selected');
 
     const receptionTabVisible = await page
