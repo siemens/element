@@ -21,12 +21,27 @@ env:
   MAPTILER_URL: https://api.maptiler.com/maps/voyager/style.json?key=${{ secrets.MAPTILER_KEY }}
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
         with:
-          fetch-depth: 0 # We need this for commit-lint
+          fetch-depth: 0 # We need this for lint:commit
+      - uses: actions/setup-node@v6
+        with:
+          node-version: lts/krypton
+          cache: 'npm'
+      - run: npm ci --prefer-offline --no-audit
+      - run: npm run lint:commit
+      - run: npm run lint:format
+      - run: npm run lint:scss
+      - run: npm run lint:ng
+      - run: npm run lint:playwright:eslint
+
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: lts/krypton
@@ -35,7 +50,6 @@ jobs:
         env:
           SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
       - run: npm ci --prefer-offline --no-audit --include=optional
-      - run: npm run lint:commit
       - run: npm run build:all
       - run: npm run prepare-brand
       - run: npm run build:all:update-translatable-keys # Output is needed in dist for providing default translations
@@ -49,7 +63,8 @@ jobs:
           name: dist
           path: dist
 
-  test:
+  test-suite:
+    name: test-suite (${{ matrix.name }})
     runs-on: ubuntu-24.04
     # We use playwright browser to run karma tests
     container: mcr.microsoft.com/playwright:v1.57.0-noble
@@ -58,6 +73,28 @@ jobs:
       HOME: /root
     needs:
       - build
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: translate
+            command: npm run translate:test -- --watch=false --progress=false --code-coverage
+            has-coverage: true
+          - name: element
+            command: npm run lib:test -- --watch=false --progress=false --code-coverage
+            has-coverage: true
+          - name: schematics
+            command: npm run schematics:test
+            has-coverage: false
+          - name: charts
+            command: npm run charts:test -- --watch=false --progress=false
+            has-coverage: false
+          - name: dashboards
+            command: npm run dashboards:test -- --watch=false --progress=false
+            has-coverage: false
+          - name: maps
+            command: npm run maps:test -- --watch=false --progress=false
+            has-coverage: false
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -69,21 +106,25 @@ jobs:
           name: dist
           path: dist
       - run: npm ci --prefer-offline --no-audit
-      - run: npm run lint:format
-      - run: npm run lint:scss
-      - run: npm run lint:ng
-      - run: npm run lint:playwright:eslint
-      - run: npm run translate:test -- --watch=false --progress=false --code-coverage
-      - run: npm run lib:test -- --watch=false --progress=false --code-coverage
-      - run: npm run schematics:test
-      - run: npm run charts:test -- --watch=false --progress=false
-      - run: npm run dashboards:test -- --watch=false --progress=false
-      - run: npm run maps:test -- --watch=false --progress=false
+      - run: ${{ matrix.command }}
       - uses: actions/upload-artifact@v6
+        if: ${{ matrix.has-coverage }}
         with:
-          name: coverage-reports
+          name: coverage-report-${{ matrix.name }}
           path: dist/coverage
           retention-days: 30
+
+  test:
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-24.04
+    needs:
+      - test-suite
+    steps:
+      - run: |
+          if [[ "${{ needs.test-suite.result }}" == "failure" || "${{ needs.test-suite.result }}" == "cancelled" ]]; then
+            echo "Test suite failed or was cancelled"
+            exit 1
+          fi
 
   coverage:
     if: ${{ !cancelled() }}
@@ -92,14 +133,15 @@ jobs:
       pull-requests: write
       contents: read
     needs:
-      - test
+      - test-suite
     steps:
       - uses: actions/checkout@v6
       - name: Download coverage reports
         uses: actions/download-artifact@v7
         with:
-          name: coverage-reports
+          pattern: coverage-report-*
           path: dist/coverage
+          merge-multiple: true
       - name: Generate coverage summary
         uses: irongut/CodeCoverageSummary@v1.3.0
         with:
@@ -223,7 +265,7 @@ jobs:
     needs:
       - build
       - coverage
-      - test
+      - test-suite
     steps:
       - uses: actions/checkout@v6
       - uses: astral-sh/setup-uv@v7
@@ -237,8 +279,9 @@ jobs:
           path: .
       - uses: actions/download-artifact@v7
         with:
-          name: coverage-reports
+          pattern: coverage-report-*
           path: dist/coverage
+          merge-multiple: true
       - uses: actions/setup-node@v6
         with:
           node-version: lts/krypton
@@ -282,6 +325,7 @@ jobs:
     env:
       BUCKET_NAME: simpl-element-preview
     needs:
+      - lint
       - e2e-merge-reports
       - documentation
       - coverage
@@ -296,8 +340,9 @@ jobs:
           path: playwright-report
       - uses: actions/download-artifact@v7
         with:
-          name: coverage-reports
+          pattern: coverage-report-*
           path: coverage-reports
+          merge-multiple: true
       - uses: aws-actions/configure-aws-credentials@v6.0.0
         with:
           role-to-assume: arn:aws:iam::974483672234:role/simpl-element-preview
