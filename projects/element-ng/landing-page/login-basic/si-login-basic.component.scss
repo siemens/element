@@ -5,6 +5,11 @@
 :host {
   --animation-duration: #{variables.element-transition-duration(0.25s)};
   --animation-delay: calc(var(--animation-duration) / 2);
+
+  // Prevents initial animation on component load
+  &.component-enter {
+    --animation-duration: 0s;
+  }
 }
 
 .login-basic-second-step--container,
