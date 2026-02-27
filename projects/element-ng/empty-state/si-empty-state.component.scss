@@ -9,10 +9,11 @@
   justify-content: center;
   align-items: center;
   padding-inline: map.get(variables.$spacers, 8);
-  padding-block: map.get(variables.$spacers, 9);
+  padding-block: map.get(variables.$spacers, 6);
 }
 
 .state-icon {
   color: variables.$element-ui-2;
   font-size: 80px;
+  margin-block-end: map.get(variables.$spacers, 6);
 }

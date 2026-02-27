@@ -17,7 +17,7 @@ export class SiEmptyStateComponent {
   /**
    * CSS class name of the desired icon.
    */
-  readonly icon = input.required<string>();
+  readonly icon = input<string>();
 
   /**
    * Heading of empty state content.
