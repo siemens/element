@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { Component } from '@angular/core';
+import { inputBinding, outputBinding, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiApplicationHeaderComponent } from '../si-application-header.component';
@@ -12,44 +12,41 @@ import { FavoriteChangeEvent, SiLaunchpadFactoryComponent } from './si-launchpad
 import { App, AppCategory } from './si-launchpad.model';
 
 describe('SiLaunchpad', () => {
-  @Component({
-    imports: [SiLaunchpadFactoryComponent],
-    template: `<si-launchpad-factory
-      [enableFavorites]="enableFavorites"
-      [apps]="apps"
-      (favoriteChange)="favoriteChange($event)"
-    />`
-  })
-  class TestHostComponent {
-    apps: App[] | AppCategory[] = [];
-    enableFavorites = false;
-
-    favoriteChange(change: FavoriteChangeEvent): void {}
-  }
-
-  let fixture: ComponentFixture<TestHostComponent>;
+  let fixture: ComponentFixture<SiLaunchpadFactoryComponent>;
   let harness: SiLaunchpadHarness;
+  const apps = signal<App[] | AppCategory[]>([]);
+  const enableFavorites = signal(false);
+  const favoriteChangeSpy =
+    jasmine.createSpy<(event: FavoriteChangeEvent) => void>('favoriteChange');
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [TestHostComponent],
       providers: [{ provide: SiApplicationHeaderComponent, useValue: {} }]
-    }).compileComponents();
+    });
   });
 
   beforeEach(async () => {
-    fixture = TestBed.createComponent(TestHostComponent);
-    harness = await TestbedHarnessEnvironment.loader(fixture).getHarness(SiLaunchpadHarness);
+    apps.set([]);
+    enableFavorites.set(false);
+    favoriteChangeSpy.calls.reset();
+    fixture = TestBed.createComponent(SiLaunchpadFactoryComponent, {
+      bindings: [
+        inputBinding('apps', apps),
+        inputBinding('enableFavorites', enableFavorites),
+        outputBinding<FavoriteChangeEvent>('favoriteChange', favoriteChangeSpy)
+      ]
+    });
+    harness = await TestbedHarnessEnvironment.harnessForFixture(fixture, SiLaunchpadHarness);
   });
 
   describe('with favorites', () => {
     beforeEach(() => {
-      fixture.componentInstance.enableFavorites = true;
+      enableFavorites.set(true);
     });
 
     describe('with categories', () => {
       it('have a toggle button and section titles', async () => {
-        fixture.componentInstance.apps = [
+        apps.set([
           {
             name: 'C-1',
             apps: [
@@ -57,8 +54,7 @@ describe('SiLaunchpad', () => {
               { name: 'A-2', href: '/a-2' }
             ]
           }
-        ];
-        fixture.changeDetectorRef.markForCheck();
+        ]);
         expect(await harness.hasToggle()).toBe(true);
         expect(await harness.getCategories()).toHaveSize(1);
         await harness.toggleMore();
@@ -70,8 +66,7 @@ describe('SiLaunchpad', () => {
       });
 
       it('should fire favoriteChanged event when favorite is toggled', async () => {
-        const favoriteChangeSpy = spyOn(fixture.componentInstance, 'favoriteChange');
-        fixture.componentInstance.apps = [
+        apps.set([
           {
             name: 'C-1',
             apps: [
@@ -79,8 +74,7 @@ describe('SiLaunchpad', () => {
               { name: 'A-2', href: '/a-2' }
             ]
           }
-        ];
-        fixture.changeDetectorRef.markForCheck();
+        ]);
         expect(await harness.getFavoriteCategory().then(category => category.getApps())).toHaveSize(
           1
         );
@@ -101,11 +95,10 @@ describe('SiLaunchpad', () => {
 
     describe('without categories', () => {
       it('have a toggle button and section and only a favorite section title', async () => {
-        fixture.componentInstance.apps = [
+        apps.set([
           { name: 'A-1', href: '/a-1', favorite: true },
           { name: 'A-2', href: '/a-2' }
-        ];
-        fixture.changeDetectorRef.markForCheck();
+        ]);
         await harness.toggleMore();
         const categories = await harness.getCategories();
         expect(categories).toHaveSize(2);
@@ -122,7 +115,7 @@ describe('SiLaunchpad', () => {
   describe('without favorites', () => {
     describe('with categories', () => {
       it('have no toggle button but section titles', async () => {
-        fixture.componentInstance.apps = [
+        apps.set([
           {
             name: 'C-1',
             apps: [
@@ -130,8 +123,7 @@ describe('SiLaunchpad', () => {
               { name: 'A-2', href: '/a-2' }
             ]
           }
-        ];
-        fixture.changeDetectorRef.markForCheck();
+        ]);
         expect(await harness.hasToggle()).toBe(false);
         expect(await harness.getCategories()).toHaveSize(1);
       });
@@ -139,11 +131,10 @@ describe('SiLaunchpad', () => {
 
     describe('without categories', () => {
       it('have no toggle button and no section titles', async () => {
-        fixture.componentInstance.apps = [
+        apps.set([
           { name: 'A-1', href: '/a-1' },
           { name: 'A-2', href: '/a-2' }
-        ];
-        fixture.changeDetectorRef.markForCheck();
+        ]);
         expect(await harness.hasToggle()).toBe(false);
       });
     });

@@ -2,68 +2,66 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { inputBinding, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
 import { ContentActionBarMainItem, ViewType } from '@siemens/element-ng/content-action-bar';
 import { MenuItem } from '@siemens/element-ng/menu';
-import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 
 import { SiCardComponent } from './index';
 
-@Component({
-  imports: [SiCardComponent, RouterModule],
-  template: `
-    <div>
-      <si-card
-        [heading]="heading"
-        [primaryActions]="primaryActions"
-        [secondaryActions]="secondaryActions"
-        [actionBarViewType]="actionBarViewType"
-        [actionBarTitle]="actionBarTitle"
-        [imgSrc]="imgSrc"
-        [imgAlt]="imgAlt"
-        [imgDir]="imgDir"
-        [imgObjectFit]="imgObjectFit"
-        [imgObjectPosition]="imgObjectPosition"
-      />
-    </div>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
-class WrapperComponent {
-  heading = '';
-  primaryActions: ContentActionBarMainItem[] = [];
-  secondaryActions: MenuItem[] = [];
-  actionBarViewType: ViewType = 'collapsible';
-  actionBarTitle = '';
-
-  imgSrc?: string;
-  imgAlt?: string;
-  imgDir?: 'horizontal' | 'vertical' = 'vertical';
-  imgObjectFit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
-  imgObjectPosition?: string;
-}
-
 describe('SiCardComponent', () => {
-  let fixture: ComponentFixture<WrapperComponent>;
-  let wrapperComponent: WrapperComponent;
+  let fixture: ComponentFixture<SiCardComponent>;
   let element: HTMLElement;
+  const heading = signal('');
+  const primaryActions = signal<ContentActionBarMainItem[]>([]);
+  const secondaryActions = signal<MenuItem[]>([]);
+  const actionBarViewType = signal<ViewType>('collapsible');
+  const actionBarTitle = signal('');
+  const imgSrc = signal<string | undefined>(undefined);
+  const imgAlt = signal<string | undefined>(undefined);
+  const imgDir = signal<'horizontal' | 'vertical' | undefined>('vertical');
+  const imgObjectFit = signal<'contain' | 'cover' | 'fill' | 'none' | 'scale-down' | undefined>(
+    undefined
+  );
+  const imgObjectPosition = signal<string | undefined>(undefined);
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [RouterModule, WrapperComponent]
+      imports: [RouterModule]
     })
   );
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WrapperComponent);
-    wrapperComponent = fixture.componentInstance;
+    heading.set('');
+    primaryActions.set([]);
+    secondaryActions.set([]);
+    actionBarViewType.set('collapsible');
+    actionBarTitle.set('');
+    imgSrc.set(undefined);
+    imgAlt.set(undefined);
+    imgDir.set('vertical');
+    imgObjectFit.set(undefined);
+    imgObjectPosition.set(undefined);
+    fixture = TestBed.createComponent(SiCardComponent, {
+      bindings: [
+        inputBinding('heading', heading),
+        inputBinding('primaryActions', primaryActions),
+        inputBinding('secondaryActions', secondaryActions),
+        inputBinding('actionBarViewType', actionBarViewType),
+        inputBinding('actionBarTitle', actionBarTitle),
+        inputBinding('imgSrc', imgSrc),
+        inputBinding('imgAlt', imgAlt),
+        inputBinding('imgDir', imgDir),
+        inputBinding('imgObjectFit', imgObjectFit),
+        inputBinding('imgObjectPosition', imgObjectPosition)
+      ]
+    });
     element = fixture.nativeElement;
   });
 
   it('should have a heading', () => {
-    wrapperComponent.heading = 'TITLE_KEY';
+    heading.set('TITLE_KEY');
     fixture.detectChanges();
     expect(element.querySelector('.card-header')!.innerHTML).toContain('TITLE_KEY');
   });
@@ -71,62 +69,61 @@ describe('SiCardComponent', () => {
   describe('content action bar', () => {
     it('should not be available without actions', () => {
       fixture.detectChanges();
-      const contentActionBar =
-        fixture.debugElement.nativeElement.querySelector('si-content-action-bar');
+      const contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).toBeNull();
     });
 
     it('should be unavailable with no actions and disabled expand interaction', () => {
       fixture.detectChanges();
-      const contentActionBar = fixture.nativeElement.querySelector('si-content-action-bar');
+      const contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).toBeNull();
     });
 
     it('should be unavailable with undefined primary actions and no secondary actions and disabled expand interaction', () => {
-      wrapperComponent.primaryActions = undefined as any;
+      primaryActions.set(undefined as any);
       fixture.detectChanges();
-      const contentActionBar = fixture.nativeElement.querySelector('si-content-action-bar');
+      const contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).toBeNull();
     });
 
     it('should be available with one primary action and not secondary action and disabled expand interaction', () => {
-      wrapperComponent.primaryActions = [{ label: 'Action', type: 'action', action: () => {} }];
-      runOnPushChangeDetection(fixture);
-      const contentActionBar = fixture.nativeElement.querySelector('si-content-action-bar');
+      primaryActions.set([{ label: 'Action', type: 'action', action: () => {} }]);
+      fixture.detectChanges();
+      const contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).not.toBeNull();
     });
 
     it('should be available with one primary action added later and not secondary action', () => {
-      runOnPushChangeDetection(fixture);
-      let contentActionBar = fixture.nativeElement.querySelector('si-content-action-bar');
+      fixture.detectChanges();
+      let contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).toBeNull();
-      wrapperComponent.primaryActions = [{ label: 'Action', type: 'action', action: () => {} }];
-      runOnPushChangeDetection(fixture);
-      contentActionBar = fixture.nativeElement.querySelector('si-content-action-bar');
+      primaryActions.set([{ label: 'Action', type: 'action', action: () => {} }]);
+      fixture.detectChanges();
+      contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).not.toBeNull();
     });
 
     it('should be available with no primary action and one secondary action and disabled expand interaction', () => {
-      wrapperComponent.secondaryActions = [{ label: 'Action', type: 'action', action: () => {} }];
+      secondaryActions.set([{ label: 'Action', type: 'action', action: () => {} }]);
       fixture.detectChanges();
-      const contentActionBar = fixture.nativeElement.querySelector('si-content-action-bar');
+      const contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).not.toBeNull();
     });
 
     it('should be available with no primary action and one secondary action', () => {
-      wrapperComponent.secondaryActions = [{ label: 'Action', type: 'action', action: () => {} }];
+      secondaryActions.set([{ label: 'Action', type: 'action', action: () => {} }]);
       fixture.detectChanges();
-      const contentActionBar = fixture.nativeElement.querySelector('si-content-action-bar');
+      const contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).not.toBeNull();
     });
 
     it('should be available with one secondary action', () => {
-      runOnPushChangeDetection(fixture);
-      let contentActionBar = fixture.nativeElement.querySelector('si-content-action-bar');
+      fixture.detectChanges();
+      let contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).toBeNull();
-      wrapperComponent.secondaryActions = [{ label: 'Action', type: 'action', action: () => {} }];
-      runOnPushChangeDetection(fixture);
-      contentActionBar = fixture.nativeElement.querySelector('si-content-action-bar');
+      secondaryActions.set([{ label: 'Action', type: 'action', action: () => {} }]);
+      fixture.detectChanges();
+      contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).not.toBeNull();
     });
   });
@@ -145,14 +142,14 @@ describe('SiCardComponent', () => {
     });
 
     it('should be unavailable with one primary action and no secondary action', () => {
-      wrapperComponent.primaryActions = [{ label: 'Action', type: 'action', action: () => {} }];
+      primaryActions.set([{ label: 'Action', type: 'action', action: () => {} }]);
       fixture.detectChanges();
       const contentActionBar = element.querySelector('.element-zoom');
       expect(contentActionBar).toBeNull();
     });
 
     it('should be unavailable with no primary action and one secondary action', () => {
-      wrapperComponent.secondaryActions = [{ label: 'Action', type: 'action', action: () => {} }];
+      secondaryActions.set([{ label: 'Action', type: 'action', action: () => {} }]);
       fixture.detectChanges();
       const contentActionBar = element.querySelector('.element-zoom');
       expect(contentActionBar).toBeNull();
@@ -164,12 +161,12 @@ describe('SiCardComponent', () => {
       el ? getComputedStyle(el).getPropertyValue(prop) : undefined;
 
     it('should be added on imgSrc with vertical direction', () => {
-      runOnPushChangeDetection(fixture);
+      fixture.detectChanges();
       let img = element.querySelector('img');
       expect(img).toBeNull();
 
-      wrapperComponent.imgSrc = './assets/landing-page-steel.webp';
-      runOnPushChangeDetection(fixture);
+      imgSrc.set('./assets/landing-page-steel.webp');
+      fixture.detectChanges();
       img = element.querySelector('img');
       expect(img).not.toBeNull();
       expect(img?.classList.contains('card-img-top')).toBe(true);
@@ -177,9 +174,9 @@ describe('SiCardComponent', () => {
     });
 
     it('direction should be changed to horizontal', () => {
-      wrapperComponent.imgSrc = './assets/landing-page-steel.webp';
-      wrapperComponent.imgDir = 'horizontal';
-      runOnPushChangeDetection(fixture);
+      imgSrc.set('./assets/landing-page-steel.webp');
+      imgDir.set('horizontal');
+      fixture.detectChanges();
 
       const img = element.querySelector('img');
       expect(img).not.toBeNull();
@@ -188,43 +185,40 @@ describe('SiCardComponent', () => {
     });
 
     it('alt text should be set', () => {
-      wrapperComponent.imgSrc = './assets/landing-page-steel.webp';
-      runOnPushChangeDetection(fixture);
+      imgSrc.set('./assets/landing-page-steel.webp');
+      fixture.detectChanges();
 
-      let img = element.querySelector('img');
+      const img = element.querySelector('img');
       expect(img?.attributes.getNamedItem('alt')).toBeNull();
 
-      wrapperComponent.imgAlt = 'alt text';
-      runOnPushChangeDetection(fixture);
-      img = element.querySelector('img');
+      imgAlt.set('alt text');
+      fixture.detectChanges();
       expect(img?.attributes.getNamedItem('alt')?.value).toBe('alt text');
     });
 
     it('object fit should be scale-down as default and should be changed to cover', () => {
-      wrapperComponent.imgSrc = './assets/landing-page-steel.webp';
-      runOnPushChangeDetection(fixture);
+      imgSrc.set('./assets/landing-page-steel.webp');
+      fixture.detectChanges();
 
-      let img = element.querySelector('img');
+      const img = element.querySelector('img');
       expect(getComputedStyleProp(img, 'object-fit')?.toString()).toBe('scale-down');
 
-      wrapperComponent.imgObjectFit = 'cover';
-      runOnPushChangeDetection(fixture);
+      imgObjectFit.set('cover');
+      fixture.detectChanges();
 
-      img = element.querySelector('img');
       expect(getComputedStyleProp(img, 'object-fit')?.toString()).toBe('cover');
     });
 
     it('object position should be changed by setting left', () => {
-      wrapperComponent.imgSrc = './assets/landing-page-steel.webp';
-      runOnPushChangeDetection(fixture);
+      imgSrc.set('./assets/landing-page-steel.webp');
+      fixture.detectChanges();
 
-      let img = element.querySelector('img');
+      const img = element.querySelector('img');
       expect(getComputedStyleProp(img, 'object-position')?.toString()).toBe('50% 0%');
 
-      wrapperComponent.imgObjectPosition = 'left';
-      runOnPushChangeDetection(fixture);
+      imgObjectPosition.set('left');
+      fixture.detectChanges();
 
-      img = element.querySelector('img');
       expect(getComputedStyleProp(img, 'object-position')?.toString()).toBe('0% 50%');
     });
   });
