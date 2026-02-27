@@ -35,7 +35,8 @@ import {
   SiLivePreviewLocaleApi,
   SiLivePreviewThemeApi,
   SiLivePreviewModule,
-  SiLivePreviewRoutingModule
+  SiLivePreviewRoutingModule,
+  provideStackblitzConfig
 } from '@siemens/live-preview';
 import { lastValueFrom, Observable, take } from 'rxjs';
 
@@ -160,6 +161,7 @@ export const APP_CONFIG: ApplicationConfig = {
     provideNgxTranslateForElement(),
     provideSiDatatableConfig(),
     provideSiUiState(),
-    provideSiAgGridConfig()
+    provideSiAgGridConfig(),
+    provideStackblitzConfig()
   ]
 };

@@ -2,7 +2,7 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/@siemens/live-preview",
   "allowedNonPeerDependencies": ["."],
-  "assets": ["component-loader.cjs", "esbuild-component-loader.mjs", "styles"],
+  "assets": ["./assets", "component-loader.cjs", "esbuild-component-loader.mjs", "styles"],
   "lib": {
     "entryFile": "./public-api.ts"
   }
