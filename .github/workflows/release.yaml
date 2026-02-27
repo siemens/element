@@ -87,7 +87,7 @@ jobs:
         with:
           name: pages
           path: pages
-      - uses: aws-actions/configure-aws-credentials@v5.1.1
+      - uses: aws-actions/configure-aws-credentials@v6.0.0
         with:
           role-to-assume: arn:aws:iam::974483672234:role/simpl-element-release
           role-session-name: element-release-docs

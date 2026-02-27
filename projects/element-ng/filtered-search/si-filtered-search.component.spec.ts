@@ -354,7 +354,7 @@ describe('SiFilteredSearchComponent', () => {
       await criterionValue?.focus();
       await criterionValue?.select({ text: 'first' });
       await tick();
-      expect(await freeTextSearch.isFocused()).toBeTrue();
+      expect(await freeTextSearch.isFocused()).toBe(true);
 
       await criterionValue?.click();
       expect(await criterionValue?.getValue()).toEqual('first');
@@ -632,14 +632,14 @@ describe('SiFilteredSearchComponent', () => {
       await criterionValue?.sendKeys(TestKey.ENTER);
       await tick();
       const operator2 = await criteria[1].operator();
-      expect(await operator2!.hasFocs()).toBeTrue();
+      expect(await operator2!.hasFocs()).toBe(true);
       await operator2!.sendKeys(TestKey.ENTER);
       const value2 = await criteria[1].value();
-      expect(await value2!.hasFocs()).toBeTrue();
+      expect(await value2!.hasFocs()).toBe(true);
       await value2!.sendKeys(TestKey.ENTER);
       expect(
         await filteredSearch.freeTextSearch().then(freeTextSearch => freeTextSearch.isFocused())
-      ).toBeTrue();
+      ).toBe(true);
     });
 
     it('should be able to enter date with keyboard', async () => {
@@ -690,11 +690,11 @@ describe('SiFilteredSearchComponent', () => {
       await datepicker!.next();
       await datepicker!.selectCell({ text: '13' });
       await criterionValue.sendKeys(TestKey.ESCAPE);
-      expect(await criterionValue.isEditable()).toBeTrue();
+      expect(await criterionValue.isEditable()).toBe(true);
       expect(await criterionValue.getValue()).toBe('9/13/1999');
       await criterionValue.blur();
       await tick();
-      expect(await criterionValue.isEditable()).toBeFalse();
+      expect(await criterionValue.isEditable()).toBe(false);
       expect(await criterionValue.text()).toBe('9/13/1999');
     });
   });
@@ -1052,7 +1052,7 @@ describe('SiFilteredSearchComponent', () => {
       const criterionValue = (await criterion.value())!;
       expect(await criterionValue.getItems({ isSelected: false })).toHaveSize(2);
       await criterion.clickClearButton();
-      expect(await criterionValue.hasFocs()).toBeTrue();
+      expect(await criterionValue.hasFocs()).toBe(true);
       expect(await criterionValue.getItems({ isSelected: false })).toHaveSize(4);
 
       expect(component.filteredSearch().searchCriteria()).toEqual({
@@ -1431,6 +1431,25 @@ describe('SiFilteredSearchComponent', () => {
       });
     });
 
+    it('should emit doSearch once when creating criterion from selection', async () => {
+      component.criteria.set([{ name: 'company', label: 'Company' }]);
+      component.searchCriteria.set({ criteria: [], value: '' });
+      const spy = spyOn(component, 'doSearch');
+
+      const filteredSearch = await loader.getHarness(SiFilteredSearchHarness);
+      const freeTextSearch = await filteredSearch.freeTextSearch();
+      await freeTextSearch.focus();
+      await tick();
+      await freeTextSearch.select({ text: 'Company' });
+      await tick();
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith({
+        criteria: [{ name: 'company', value: '' }],
+        value: ''
+      });
+    });
+
     it('and disableFreeTextSearch should emit criteria but no free text values while typing', async () => {
       component.disableFreeTextSearch = true;
       component.searchCriteria.set({
@@ -1477,7 +1496,7 @@ describe('SiFilteredSearchComponent', () => {
       await tick();
       await operator?.select({ text: '<' });
       await tick();
-      expect(await criteria[0].value().then(value => value?.hasFocs())).toBeTrue();
+      expect(await criteria[0].value().then(value => value?.hasFocs())).toBe(true);
 
       expect(component.doSearch).toHaveBeenCalledWith({
         criteria: [
@@ -1691,7 +1710,7 @@ describe('SiFilteredSearchComponent', () => {
       await criteriaValue?.sendKeys(';');
       expect(
         await filteredSearch.freeTextSearch().then(freeTextSearch => freeTextSearch.isFocused())
-      ).toBeTrue();
+      ).toBe(true);
     });
 
     it('should focus value field after keyboard Enter (operator field)', async () => {
@@ -1716,7 +1735,7 @@ describe('SiFilteredSearchComponent', () => {
       await operator?.focus();
       // Skip test when browser is not focussed to prevent failures.
       await operator?.sendKeys(TestKey.ENTER);
-      expect(await criteria[0].value().then(value => value?.hasFocs())).toBeTrue();
+      expect(await criteria[0].value().then(value => value?.hasFocs())).toBe(true);
     });
 
     it('should focus operator if backspace pressed in empty criterion value', async () => {
@@ -1739,7 +1758,7 @@ describe('SiFilteredSearchComponent', () => {
       await value!.click();
       await value!.setValue('');
       await value!.sendKeys(TestKey.BACKSPACE);
-      expect(await criteria[0].operator().then(operator => operator?.hasFocs())).toBeTrue();
+      expect(await criteria[0].operator().then(operator => operator?.hasFocs())).toBe(true);
     });
 
     it('should delete criterion if backspace pressed in empty criterion value without operator', async () => {
@@ -1761,11 +1780,11 @@ describe('SiFilteredSearchComponent', () => {
         .getCriteria({ labelText: 'second' })
         .then(criteria => criteria[0].value());
       await tick();
-      expect(await value2!.hasFocs()).toBeTrue();
+      expect(await value2!.hasFocs()).toBe(true);
       await value2!.sendKeys(TestKey.BACKSPACE);
       expect(
         await filteredSearch.freeTextSearch().then(freeTextSearch => freeTextSearch.isFocused())
-      ).toBeTrue();
+      ).toBe(true);
       expect(await filteredSearch.getCriteria()).toHaveSize(0);
     });
 
@@ -1804,7 +1823,7 @@ describe('SiFilteredSearchComponent', () => {
       await freeTextSearch.sendKeys(TestKey.BACKSPACE);
       const criteria = await filteredSearch.getCriteria({ labelText: 'location' });
       await tick();
-      expect(await criteria[0].value().then(value => value?.hasFocs())).toBeTrue();
+      expect(await criteria[0].value().then(value => value?.hasFocs())).toBe(true);
     });
 
     it('should match criterion label after keyboard colon was pressed', async () => {

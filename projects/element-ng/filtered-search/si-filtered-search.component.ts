@@ -552,17 +552,13 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
 
   protected typeaheadOnSelectCriterion(event: TypeaheadOption): void {
     const criterion = event as InternalCriterionDefinition;
-
-    // Timeout is needed otherwise siTypeahead will overwrite the value
-    setTimeout(() => {
-      // Removes the focus border before creating a new criterion to prevent the impression of jumping content.
-      this.freeTextInputElement().nativeElement.blur();
-      this.searchValue = '';
-      this.addCriterion(criterion);
-      // The user selected a criterion so we remove the free text search value and add the criterion.
-      this.allowedCriteriaCache = undefined;
-      this.typeaheadInputChange.next('');
-    }, 0);
+    // Removes the focus border before creating a new criterion to prevent the impression of jumping content.
+    this.freeTextInputElement().nativeElement.blur();
+    this.addCriterion(criterion);
+    // The user selected a criterion so we remove the free text search value and add the criterion.
+    this.allowedCriteriaCache = undefined;
+    this.typeaheadInputChange.next('');
+    this.searchValue = '';
   }
 
   protected validateCriterionLabel(criterion: InternalCriterionDefinition): boolean {

@@ -55,8 +55,8 @@ describe('SiLocaleService', () => {
       expect(service.config.availableLocales!.length).toBe(1);
       expect(service.config.availableLocales![0]).toBe('en');
       expect(service.config.defaultLocale).toBe('en');
-      expect(service.config.dynamicLanguageChange).toBeFalse();
-      expect(service.config.fallbackEnabled).toBeFalse();
+      expect(service.config.dynamicLanguageChange).toBe(false);
+      expect(service.config.fallbackEnabled).toBe(false);
       expect(service.config.localeInitializer).toBeDefined();
     });
 
@@ -161,11 +161,11 @@ describe('SiLocaleService', () => {
       providers: [{ provide: SI_LOCALE_CONFIG, useValue: config }]
     });
     service = TestBed.inject(SiLocaleService);
-    expect(service.hasLocale('de')).toBeTrue();
-    expect(service.hasLocale('dex')).toBeFalse();
-    expect(service.hasLocale('')).toBeFalse();
-    expect(service.hasLocale()).toBeFalse();
-    expect(service.hasLocale(undefined)).toBeFalse();
+    expect(service.hasLocale('de')).toBe(true);
+    expect(service.hasLocale('dex')).toBe(false);
+    expect(service.hasLocale('')).toBe(false);
+    expect(service.hasLocale()).toBe(false);
+    expect(service.hasLocale(undefined)).toBe(false);
   });
 
   describe('with default configuration', () => {

@@ -59,7 +59,7 @@ describe('SiLaunchpad', () => {
           }
         ];
         fixture.changeDetectorRef.markForCheck();
-        expect(await harness.hasToggle()).toBeTrue();
+        expect(await harness.hasToggle()).toBe(true);
         expect(await harness.getCategories()).toHaveSize(1);
         await harness.toggleMore();
         expect(await harness.getCategories()).toHaveSize(2);
@@ -111,7 +111,7 @@ describe('SiLaunchpad', () => {
         expect(categories).toHaveSize(2);
         expect(await categories[0].getName()).toBe('Favorites');
         expect(await categories[1].getName()).toBe(null);
-        expect(await harness.getApp('A-1').then(app => app.isFavorite())).toBeTrue();
+        expect(await harness.getApp('A-1').then(app => app.isFavorite())).toBe(true);
         expect(await harness.getFavoriteCategory().then(category => category.getApps())).toHaveSize(
           1
         );
@@ -132,7 +132,7 @@ describe('SiLaunchpad', () => {
           }
         ];
         fixture.changeDetectorRef.markForCheck();
-        expect(await harness.hasToggle()).toBeFalse();
+        expect(await harness.hasToggle()).toBe(false);
         expect(await harness.getCategories()).toHaveSize(1);
       });
     });
@@ -144,7 +144,7 @@ describe('SiLaunchpad', () => {
           { name: 'A-2', href: '/a-2' }
         ];
         fixture.changeDetectorRef.markForCheck();
-        expect(await harness.hasToggle()).toBeFalse();
+        expect(await harness.hasToggle()).toBe(false);
       });
     });
   });

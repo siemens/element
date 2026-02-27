@@ -102,7 +102,7 @@ describe('SiDashboardComponent', () => {
 
     it('should show expand menu', () => {
       component.cardComponents().forEach(c => {
-        expect(c.enableExpandInteractionComputed()).toBeTrue();
+        expect(c.enableExpandInteractionComputed()).toBe(true);
       });
     });
 
@@ -119,7 +119,7 @@ describe('SiDashboardComponent', () => {
 
       component.cardComponents().at(-1)!.restore();
       expect(expandSpy).toHaveBeenCalled();
-      expect(component.cardComponents().at(-1)!.hide).toBeFalse();
+      expect(component.cardComponents().at(-1)!.hide).toBe(false);
     });
   });
 
@@ -137,7 +137,7 @@ describe('SiDashboardComponent', () => {
   it('#expand() shall expand a card', () => {
     let expandDiv = fixture.debugElement.queryAll(By.css('div.position-relative'))[0];
     expect(expandDiv).toBeDefined();
-    expect(expandDiv.classes['d-none']).toBeTrue();
+    expect(expandDiv.classes['d-none']).toBe(true);
 
     const card = component.cardComponents().at(-1)!;
     expect(card).toBeDefined();

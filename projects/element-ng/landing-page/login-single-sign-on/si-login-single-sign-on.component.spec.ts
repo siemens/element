@@ -34,6 +34,6 @@ describe('SiLoginSingleSignOnComponent', () => {
     component.setInput('disableSso', true);
     fixture.detectChanges();
     const button = fixture.nativeElement.querySelector('button');
-    expect(button.disabled).toBeTrue();
+    expect(button.disabled).toBe(true);
   });
 });
