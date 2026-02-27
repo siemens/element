@@ -60,7 +60,8 @@ const chromeLaunchOptions = {
     '--disable-oop-rasterization',
     '--disable-composited-antialiasing',
     '--disable-smooth-scrolling'
-  ]
+  ],
+  ignoreDefaultArgs: ['--hide-scrollbars']
 };
 
 /**
