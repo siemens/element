@@ -65,12 +65,12 @@ describe('SiCollapsiblePanel', () => {
     fixture.detectChanges();
 
     const header = element.querySelector<HTMLElement>('.collapsible-header') as HTMLElement;
-    expect(header.classList.contains('open')).toBeFalse();
+    expect(header.classList.contains('open')).toBe(false);
 
     toggleCollapsePanel();
     fixture.detectChanges();
 
-    expect(header.classList.contains('open')).toBeTrue();
+    expect(header.classList.contains('open')).toBe(true);
 
     const content = element.querySelector('.collapsible-content') as HTMLElement;
     expect(content.innerHTML).toContain('This is the content');
@@ -81,12 +81,12 @@ describe('SiCollapsiblePanel', () => {
     fixture.detectChanges();
 
     const header = element.querySelector('.collapsible-header') as HTMLElement;
-    expect(header.classList.contains('open')).toBeFalse();
+    expect(header.classList.contains('open')).toBe(false);
 
     toggleCollapsePanel();
     fixture.detectChanges();
 
-    expect(header.classList.contains('open')).toBeTrue();
+    expect(header.classList.contains('open')).toBe(true);
 
     const content = element.querySelector('.collapsible-content') as HTMLElement;
     expect(content.innerHTML).toContain('This is the content');
@@ -94,7 +94,7 @@ describe('SiCollapsiblePanel', () => {
     toggleCollapsePanel();
     fixture.detectChanges();
 
-    expect(header.classList.contains('open')).toBeFalse();
+    expect(header.classList.contains('open')).toBe(false);
   });
   it('should show show custom header selected by si-panel-heading directive', () => {
     component.heading = 'This is the highlighted heading';

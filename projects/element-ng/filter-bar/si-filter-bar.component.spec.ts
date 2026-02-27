@@ -126,7 +126,7 @@ describe('SiFilterBarComponent', () => {
 
     const resetButton = element.querySelector('button') as HTMLButtonElement;
 
-    expect(resetButton?.disabled).toBeTrue();
+    expect(resetButton?.disabled).toBe(true);
   });
 
   it('should show empty indicator when no filters are active', () => {

@@ -99,65 +99,65 @@ describe('SiFormContainerComponent', () => {
         component.form = undefined;
         component.cdRef.markForCheck();
         fixture.detectChanges();
-        expect(formContainer.userInteractedWithForm).toBeFalse();
+        expect(formContainer.userInteractedWithForm).toBe(false);
       });
 
       it('shall return true with touched control', () => {
-        expect(formContainer.userInteractedWithForm).toBeFalse();
-        expect(formContainer.userInteractedWithForm).toBeFalse();
+        expect(formContainer.userInteractedWithForm).toBe(false);
+        expect(formContainer.userInteractedWithForm).toBe(false);
         component.form!.controls.name.markAsTouched();
-        expect(formContainer.userInteractedWithForm).toBeTrue();
+        expect(formContainer.userInteractedWithForm).toBe(true);
       });
 
       it('shall return true with dirty control', () => {
-        expect(formContainer.userInteractedWithForm).toBeFalse();
-        expect(formContainer.userInteractedWithForm).toBeFalse();
+        expect(formContainer.userInteractedWithForm).toBe(false);
+        expect(formContainer.userInteractedWithForm).toBe(false);
         component.form!.controls.name.markAsDirty();
-        expect(formContainer.userInteractedWithForm).toBeTrue();
+        expect(formContainer.userInteractedWithForm).toBe(true);
       });
     });
 
     describe('validFormContainerMessage', () => {
       it('shall return false with valid form and no user interaction', () => {
         component.form!.setValue({ name: 'Peter', email: 'peter@samlple.com' });
-        expect(formContainer.validFormContainerMessage).toBeFalse();
+        expect(formContainer.validFormContainerMessage).toBe(false);
       });
 
       it('shall return false with invalid form and no user interaction', () => {
-        expect(formContainer.validFormContainerMessage).toBeFalse();
+        expect(formContainer.validFormContainerMessage).toBe(false);
       });
 
       it('shall return true with valid form and user interaction', () => {
         component.form!.setValue({ name: 'Peter', email: 'peter@samlple.com' });
         component.form!.controls.name.markAsTouched();
-        expect(formContainer.validFormContainerMessage).toBeTrue();
+        expect(formContainer.validFormContainerMessage).toBe(true);
       });
 
       it('shall return false with invalid form and user interaction', () => {
         component.form!.controls.name.markAsTouched();
-        expect(formContainer.validFormContainerMessage).toBeFalse();
+        expect(formContainer.validFormContainerMessage).toBe(false);
       });
     });
 
     describe('invalidFormContainerMessage', () => {
       it('shall return false with valid form and no user interaction', () => {
         component.form!.setValue({ name: 'Peter', email: 'peter@samlple.com' });
-        expect(formContainer.invalidFormContainerMessage).toBeFalse();
+        expect(formContainer.invalidFormContainerMessage).toBe(false);
       });
 
       it('shall return false with invalid form and no user interaction', () => {
-        expect(formContainer.invalidFormContainerMessage).toBeFalse();
+        expect(formContainer.invalidFormContainerMessage).toBe(false);
       });
       it('shall return false with valid form and user interaction', () => {
         component.form!.setValue({ name: 'Peter', email: 'peter@samlple.com' });
-        expect(formContainer.invalidFormContainerMessage).toBeFalse();
+        expect(formContainer.invalidFormContainerMessage).toBe(false);
         component.form!.controls.name.markAsTouched();
-        expect(formContainer.invalidFormContainerMessage).toBeFalse();
+        expect(formContainer.invalidFormContainerMessage).toBe(false);
       });
 
       it('shall return true with invalid form and user interaction', () => {
         component.form!.controls.name.markAsTouched();
-        expect(formContainer.invalidFormContainerMessage).toBeTrue();
+        expect(formContainer.invalidFormContainerMessage).toBe(true);
       });
     });
   });

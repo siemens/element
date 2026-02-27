@@ -95,14 +95,14 @@ describe('SiDatepickerComponent', () => {
     const spy = spyOn<any>(datePicker, 'toggleDisabledTime').and.callThrough();
 
     const toggleTimeSwitch = await picker.considerTimeSwitch();
-    expect(await toggleTimeSwitch.isChecked()).toBeTrue();
+    expect(await toggleTimeSwitch.isChecked()).toBe(true);
 
     await toggleTimeSwitch.toggle();
     expect(spy).toHaveBeenCalled();
-    expect(component.config().disabledTime).toBeTrue();
+    expect(component.config().disabledTime).toBe(true);
 
     await toggleTimeSwitch.toggle();
-    expect(component.config().disabledTime).toBeFalse();
+    expect(component.config().disabledTime).toBe(false);
   });
 
   it('should update date when only time is changed in timepicker', async () => {
@@ -140,15 +140,15 @@ describe('SiDatepickerComponent', () => {
     await fixture.whenStable();
 
     const toggleTimeSwitch = await picker.considerTimeSwitch();
-    expect(await toggleTimeSwitch.isChecked()).toBeTrue();
+    expect(await toggleTimeSwitch.isChecked()).toBe(true);
 
     // Disable consider time
     await toggleTimeSwitch.toggle();
-    expect(component.config().disabledTime).toBeTrue();
+    expect(component.config().disabledTime).toBe(true);
 
     // Re-enable consider time
     await toggleTimeSwitch.toggle();
-    expect(component.config().disabledTime).toBeFalse();
+    expect(component.config().disabledTime).toBe(false);
 
     // Verify that the original time is restored
     expect(component.changedDate).toBeDefined();

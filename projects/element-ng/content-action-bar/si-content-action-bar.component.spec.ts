@@ -115,10 +115,10 @@ describe('SiContentActionBarComponent', () => {
 
     // cannot use jasmine.clock here
     await new Promise(resolve => setTimeout(resolve, 50));
-    expect(await harness.isPrimaryExpanded()).toBeFalse();
+    expect(await harness.isPrimaryExpanded()).toBe(false);
     await harness.togglePrimary();
     await fixture.whenStable();
-    expect(await harness.isPrimaryExpanded()).toBeTrue();
+    expect(await harness.isPrimaryExpanded()).toBe(true);
   });
 
   it('should disable menu item by disabled attribute', async () => {
@@ -129,7 +129,7 @@ describe('SiContentActionBarComponent', () => {
     fixture.changeDetectorRef.markForCheck();
     await fixture.whenStable();
 
-    expect(await harness.getPrimaryAction('Item').then(item => item.isDisabled())).toBeTrue();
+    expect(await harness.getPrimaryAction('Item').then(item => item.isDisabled())).toBe(true);
   });
 
   it('should call action on item click', async () => {
@@ -152,7 +152,7 @@ describe('SiContentActionBarComponent', () => {
       await fixture.whenStable();
       expect(
         await harness.getPrimaryAction('primaryItem').then(item => item.hasIcon('element-user'))
-      ).toBeTrue();
+      ).toBe(true);
     });
 
     it('should show primary action icon in in menu', async () => {
@@ -169,7 +169,7 @@ describe('SiContentActionBarComponent', () => {
           .getMobileMenu()
           .then(menu => menu.getItem('primaryItem'))
           .then(item => item.hasIcon('element-user'))
-      ).toBeTrue();
+      ).toBe(true);
     });
 
     it('should not show primary action icon in menus with mobile view', async () => {
@@ -187,7 +187,7 @@ describe('SiContentActionBarComponent', () => {
           .getMobileMenu()
           .then(menu => menu.getItem('primaryItem'))
           .then(item => item.hasIcon('element-user'))
-      ).toBeFalse();
+      ).toBe(false);
     });
 
     it('should show secondary action icon in menu with expanded view', async () => {
@@ -207,7 +207,7 @@ describe('SiContentActionBarComponent', () => {
           .getSecondaryMenu()
           .then(menu => menu.getItem('secondaryItem'))
           .then(item => item.hasIcon('element-copy'))
-      ).toBeTrue();
+      ).toBe(true);
     });
 
     it('should not show secondary action icon in menus with expanded view', async () => {
@@ -228,7 +228,7 @@ describe('SiContentActionBarComponent', () => {
           .getMobileMenu()
           .then(menu => menu.getItem('secondaryItem'))
           .then(item => item.hasIcon('element-copy'))
-      ).toBeFalse();
+      ).toBe(false);
     });
   });
 
@@ -238,10 +238,10 @@ describe('SiContentActionBarComponent', () => {
     ];
     fixture.changeDetectorRef.markForCheck();
     await fixture.whenStable();
-    expect(await harness.isMobile()).toBeFalse();
+    expect(await harness.isMobile()).toBe(false);
     component.primaryActions = [];
     fixture.changeDetectorRef.markForCheck();
     await fixture.whenStable();
-    expect(await harness.isMobile()).toBeTrue();
+    expect(await harness.isMobile()).toBe(true);
   });
 });

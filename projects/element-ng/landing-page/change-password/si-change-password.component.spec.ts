@@ -93,7 +93,7 @@ describe('SiChangePasswordComponent', () => {
     fixture.detectChanges();
 
     const changeButton = fixture.nativeElement.querySelector('button[type="submit"].btn-primary');
-    expect(changeButton.disabled).toBeTrue();
+    expect(changeButton.disabled).toBe(true);
   });
 
   it('should emit back event on back button click and reset the form', () => {

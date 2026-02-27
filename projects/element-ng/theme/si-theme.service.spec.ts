@@ -81,7 +81,7 @@ describe('SiThemeService', () => {
     it('setActiveTheme of unknown theme should return false', async () => {
       setupTestBed();
       const result = await firstValueFrom(service.setActiveTheme('any'));
-      expect(result).toBeFalse();
+      expect(result).toBe(false);
     });
 
     it('should initially return undefined as active theme', async () => {
@@ -93,7 +93,7 @@ describe('SiThemeService', () => {
     it('should use element as initial active theme', async () => {
       setupTestBed();
       expect(service.activeThemeName).toBe(ELEMENT_THEME_NAME);
-      expect(service.hasTheme(ELEMENT_THEME_NAME)).toBeTrue();
+      expect(service.hasTheme(ELEMENT_THEME_NAME)).toBe(true);
       expect(service.themeNames.length).toBe(1);
       const result = await firstValueFrom(service.getActiveTheme());
       expect(result).toBeUndefined();
@@ -114,7 +114,7 @@ describe('SiThemeService', () => {
     it('addOrUpdateTheme should saveTheme on store', async () => {
       setupTestBed(false, store);
       const result = await firstValueFrom(service.addOrUpdateTheme(theme));
-      expect(result).toBeTrue();
+      expect(result).toBe(true);
       expect(store.saveTheme).toHaveBeenCalledTimes(1);
       expect(store.saveTheme).toHaveBeenCalledWith(theme);
     });
@@ -123,7 +123,7 @@ describe('SiThemeService', () => {
       store.saveTheme.and.callFake(() => of(false));
       setupTestBed(false, store);
       const ok = await firstValueFrom(service.addOrUpdateTheme(theme));
-      expect(ok).toBeFalse();
+      expect(ok).toBe(false);
     });
 
     it('addOrUpdateTheme should return error on storage errors', async () => {
@@ -168,7 +168,7 @@ describe('SiThemeService', () => {
       store.deleteTheme.and.callFake(() => of(true));
       setupTestBed(false, store);
       const result = await firstValueFrom(service.deleteTheme('any'));
-      expect(result).toBeFalse();
+      expect(result).toBe(false);
       expect(store.deleteTheme).not.toHaveBeenCalled();
     });
 
@@ -176,7 +176,7 @@ describe('SiThemeService', () => {
       store.deleteTheme.and.callFake(() => of(true));
       setupTestBed(false, store);
       const result = await firstValueFrom(service.deleteTheme(theme.name));
-      expect(result).toBeTrue();
+      expect(result).toBe(true);
       expect(store.deleteTheme).toHaveBeenCalledWith(theme.name);
     });
 
@@ -184,7 +184,7 @@ describe('SiThemeService', () => {
       store.deleteTheme.and.callFake(() => of(false));
       setupTestBed(false, store);
       const result = await firstValueFrom(service.deleteTheme(theme.name));
-      expect(result).toBeFalse();
+      expect(result).toBe(false);
       expect(store.deleteTheme).toHaveBeenCalledWith(theme.name);
     });
 
@@ -204,7 +204,7 @@ describe('SiThemeService', () => {
       store.deactivateTheme.and.callFake(() => of(true));
       setupTestBed(false, store);
       const result = await firstValueFrom(service.setActiveTheme(ELEMENT_THEME_NAME));
-      expect(result).toBeTrue();
+      expect(result).toBe(true);
       expect(store.deactivateTheme).toHaveBeenCalledTimes(1);
     });
 
@@ -213,7 +213,7 @@ describe('SiThemeService', () => {
       setupTestBed(false, store);
       expect(service.activeThemeName).toBe('example');
       const result = await firstValueFrom(service.setActiveTheme(ELEMENT_THEME_NAME));
-      expect(result).toBeFalse();
+      expect(result).toBe(false);
       expect(store.deactivateTheme).toHaveBeenCalledTimes(1);
     });
   });
@@ -255,13 +255,13 @@ describe('SiThemeService', () => {
 
     it('setActiveTheme should invoke activateTheme on store', async () => {
       const result = await firstValueFrom(service.setActiveTheme(theme.name));
-      expect(result).toBeTrue();
+      expect(result).toBe(true);
       expect(store.activateTheme).toHaveBeenCalledTimes(1);
     });
 
     it('setActiveTheme of current active theme should return true', async () => {
       const result = await firstValueFrom(service.setActiveTheme(ELEMENT_THEME_NAME));
-      expect(result).toBeTrue();
+      expect(result).toBe(true);
       expect(store.activateTheme).toHaveBeenCalledTimes(0);
     });
   });

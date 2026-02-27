@@ -129,7 +129,7 @@ describe('SiColorPickerComponent', () => {
     it('should not mark as dirty if the overlay is opened', () => {
       element.click();
       fixture.detectChanges();
-      expect(host.colorPickerControl.dirty).toBeFalse();
+      expect(host.colorPickerControl.dirty).toBe(false);
     });
 
     it('should mark as dirty if the input is blurred', () => {
@@ -145,7 +145,7 @@ describe('SiColorPickerComponent', () => {
 
       element.dispatchEvent(new Event('blur'));
       fixture.detectChanges();
-      expect(host.colorPickerControl.dirty).toBeTrue();
+      expect(host.colorPickerControl.dirty).toBe(true);
     });
 
     it('should read and write the form value', () => {
