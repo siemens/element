@@ -262,8 +262,6 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
     readonly pointer: _angular_core.OutputEmitterRef<AxisPointerEvent>;
     refreshSeries(isLive?: boolean, dzToSet?: DataZoomRange): void;
     readonly renderer: _angular_core.InputSignal<"canvas" | "svg">;
-    // @deprecated
-    resetChart(): void;
     resize(): void;
     readonly selectedItem: _angular_core.InputSignal<SelectedLegendItem>;
     readonly selectionChanged: _angular_core.OutputEmitterRef<any>;
