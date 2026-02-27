@@ -29,5 +29,12 @@ export const CLASS_MEMBER_REPLACEMENTS_MIGRATION: ClassMemberReplacementInstruct
       { property: 'isXl', replacement: '${expression}.xl()' },
       { property: 'isXxl', replacement: '${expression}.xxl()' }
     ]
+  },
+  {
+    module: /@(siemens|simpl)\/element-ng(\/modal)?/,
+    typeNames: ['ModalOptions'],
+    propertyReplacements: [
+      { property: 'initialState', replacement: '${expression}.inputValues' }
+    ]
   }
 ];
