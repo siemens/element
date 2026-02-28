@@ -58,10 +58,9 @@ UX writing *combines* terminology, style, and form…
 
 ### Terminology
 
-When a term is *defined*, it explains what it is (not does).
-
-Terms are defined by experts in the related fields (physicists, engineers…), universities teaching/researching specific domains, legal fields, experts at various companies worldwide specializing in specific domains (e.g. Siemens, Honeywell, etc.), standardization bodies (e.g. ISO, EN, UL, BS, DIN, ASHRAE, BACnet etc. comprised of corporate experts, universities)
-Quasi-industrial standards from individual sources (Haystack, Bric etc.) become international standards only if aligned to official organizations. If not aligned, setting a standard remains wishful thinking
+- Terms are defined by experts in the related fields (physicists, engineers…), universities teaching/researching specific domains, legal fields, experts at various companies worldwide specializing in specific domains (e.g. Siemens, Honeywell, etc.).
+- Standardization bodies (e.g., ISO, EN, UL, BS, DIN, ASHRAE, BACnet), comprised of corporate experts and universities are standardizing common terms.
+- Quasi-industrial standards from individual sources (Haystack, Bric etc.) become international standards only if aligned to official organizations. If not aligned, setting a standard remains wishful thinking.
 
 Common language serves multiple purposes:
 
