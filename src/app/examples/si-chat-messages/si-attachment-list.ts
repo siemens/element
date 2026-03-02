@@ -56,16 +56,16 @@ export class SampleComponent {
 
   noPreviewAttachments: Attachment[] = [
     {
-      name: 'budget-quarterly.pptx',
+      name: 'budget-quarterly.pptx'
     },
     {
-      name: 'data.json',
+      name: 'data.json'
     },
     {
-      name: 'barchart.png',
+      name: 'barchart.png'
     },
     {
-      name: 'event.ics',
+      name: 'event.ics'
     }
   ];
 

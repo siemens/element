@@ -9,30 +9,39 @@
       (remove)="onRemoveAttachment($event)"
     />
 
-  <div class="si-h5 mt-8">Read-only attachments</div>
+    <div class="si-h5 mt-8">Read-only attachments</div>
 
-  <div class="mt-5">
-    <si-attachment-list alignment="start" [attachments]="readOnlyAttachments" [removable]="false" />
+    <div class="mt-5">
+      <si-attachment-list
+        alignment="start"
+        [attachments]="readOnlyAttachments"
+        [removable]="false"
+      />
+    </div>
+
+    <div class="si-h5 mt-8">Non-previewable attachments</div>
+
+    <div class="mt-5">
+      <si-attachment-list
+        alignment="start"
+        [attachments]="noPreviewAttachments"
+        [removable]="false"
+      />
+    </div>
   </div>
-
-  <div class="si-h5 mt-8">Non-previewable attachments</div>
-
-  <div class="mt-5">
-    <si-attachment-list alignment="start" [attachments]="noPreviewAttachments" [removable]="false" />
-  </div>
+  <ng-template #modalTemplate let-modalRef="modalRef" let-attachment="attachment">
+    <div class="modal-header">
+      <h4 class="modal-title" id="sample-modal-title">{{ attachment.name }}</h4>
+      <button
+        type="button"
+        class="btn btn-circle btn-ghost element-cancel"
+        aria-label="Close modal"
+        (click)="modalRef.hide('cancel')"
+      >
+      </button>
+    </div>
+    <div class="modal-body">
+      <span>This is a sample modal to demonstrate attachment preview functionality.</span>
+    </div>
+  </ng-template>
 </div>
-<ng-template #modalTemplate let-modalRef="modalRef" let-attachment="attachment">
-  <div class="modal-header">
-    <h4 class="modal-title" id="sample-modal-title">{{ attachment.name }}</h4>
-    <button
-      type="button"
-      class="btn btn-circle btn-ghost element-cancel"
-      aria-label="Close modal"
-      (click)="modalRef.hide('cancel')"
-    >
-    </button>
-  </div>
-  <div class="modal-body">
-    <span>This is a sample modal to demonstrate attachment preview functionality.</span>
-  </div>
-</ng-template>
