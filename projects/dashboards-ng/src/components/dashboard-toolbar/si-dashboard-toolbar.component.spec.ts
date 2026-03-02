@@ -4,19 +4,12 @@
  */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { SiTranslateModule } from '@siemens/element-translate-ng/translate';
 
 import { SiDashboardToolbarComponent } from './si-dashboard-toolbar.component';
 
 describe('SiDashboardToolbarComponent', () => {
   let component: SiDashboardToolbarComponent;
   let fixture: ComponentFixture<SiDashboardToolbarComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [SiTranslateModule, SiDashboardToolbarComponent]
-    }).compileComponents();
-  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SiDashboardToolbarComponent);
