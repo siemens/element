@@ -18,7 +18,9 @@ Localization (l10n) or internationalization (i18n) is the process of designing a
 ## UX Writing ---
 
 <!-- markdownlint-disable MD051 -->
+
 Localization is mainly a [development task](#code) but UX writers can support developers.
+
 <!-- markdownlint-enable MD051 -->
 
 User interface texts are stand-alone, short and to the point, but without context. Thus, AI can produce a reliable translation only, the terms must be
@@ -27,13 +29,13 @@ User interface texts are stand-alone, short and to the point, but without contex
 - [Precise](#terminology)
 - [Unambiguous](#remove-ambiguity)
 
-UX writing *combines* terminology, style, and form…
+UX writing _combines_ terminology, style, and form…
 
-- to apply *consistent terms* on a UI
-- to apply a *consistent style* on a UI
-- to apply a *consistent form* on a UI
+- to apply _consistent terms_ on a UI
+- to apply a _consistent style_ on a UI
+- to apply a _consistent form_ on a UI
 
-…for specific *use cases*, fully focused on the *target audience* (personas)
+…for specific _use cases_, fully focused on the _target audience_ (personas)
 
 !!! tip "Think like a translator"
 
@@ -41,18 +43,18 @@ UX writing *combines* terminology, style, and form…
 
     <div class="dos-and-donts" markdown>
     <div class="dos" markdown>
-    
+
     #### Do's
 
     - `Delete template for tool instance IDs`
 
     </div>
     <div class="donts" markdown>
-    
+
     #### Don'ts
 
     - `Delete complete tool instance ID naming`Deleting a tool instance?<br>Naming something?<br>Is "complete" an adjective or a verb?
-    
+
     </div>
     </div>
 
@@ -64,21 +66,21 @@ UX writing *combines* terminology, style, and form…
 
 Common language serves multiple purposes:
 
-- *Clarity of communication*, common understanding between people and companies
-- *Applicability* across multiple systems/tools/hardware…
-- *Openness* to third parties, breaking up of silos
-- Foundation for *artificial intelligence*
+- _Clarity of communication_, common understanding between people and companies
+- _Applicability_ across multiple systems/tools/hardware…
+- _Openness_ to third parties, breaking up of silos
+- Foundation for _artificial intelligence_
 
 !!! warning "Usage of terminology databases"
 
     - Select the terminology of your business.
     - Identify terms not yet defined and request them.
-    
+
 #### Terms in various uses
 
 Many terms have various meanings related to a specific context or domain.
 
-*One meaning always dominates* regardless of context. That is the meaning that can be used without creating confusion. However, if that meaning does not fit the context, an alternative term (unambiguous synonym) must be used to eliminate misunderstandings
+_One meaning always dominates_ regardless of context. That is the meaning that can be used without creating confusion. However, if that meaning does not fit the context, an alternative term (unambiguous synonym) must be used to eliminate misunderstandings
 
 In addition, the alternative term increases substantially the probability of correct interpretation by artificial intelligence (as part of translation, machine learning, or any other use)
 
@@ -148,7 +150,7 @@ Reusing strings…
 !!! warning "Context-dependent strings"
 
     A single string reused across different contexts may require different translations in different languages.
-    
+
     In doubt, create a separate string for each use even if the English text looks the same.
 
 ### Use translation libraries
@@ -245,6 +247,7 @@ Keep sentence understandable even with placeholders.
 ### Avoid hard-coding formats
 
 <!-- markdownlint-disable MD051 -->
+
 Use locale-aware formatting (see [Code tab](#code)), and avoid UX writing depending on a single format.
 
 <div class="dos-and-donts" markdown>
@@ -310,20 +313,20 @@ The count 0 is handled differently in several languages.
 
 Depending on the language there might be up to 6 forms. Following language specific variability does exist:
 
-| Forms | Grammatical rules                                                                                                   | Languages       |
-|:-----:|---------------------------------------------------------------------------------------------------------------------|-----------------|
-| 1     | No distinction between the singular and plural form                                                                 | e.g. Japanese   |
-| 2     | Singular used for one only                                                                                          | e.g. English    |
-| 2     | Singular used for zero and one                                                                                      | e.g. French     |
-| 3     | Special case for zero                                                                                               | Latvian         |
-| 3     | Special cases for one and two                                                                                       | Gaelic (Irish)  |
-| 3     | Special case for numbers ending in `00` or `[2-9][0-9]`                                                             | Romanian        |
-| 3     | Special case for numbers ending in `1[2-9]`                                                                         | Lithuanian      |
-| 3     | Special cases for numbers ending in `1` and `2`, `3`, `4`, except those ending in `1[1-4]`                          | e.g. Russian    |
-| 3     | Special cases for `1` and `2`, `3`, `4`                                                                             | e.g. Czech      |
-| 3     | Special case for one and some numbers ending in `2`, `3`, or `4`                                                    | Polish          |
-| 4     | Special case for one and all numbers ending in `02`, `03`, or `04`                                                  | Slovenian       |
-| 6     | Special cases for one, two, all numbers ending in `02`, `03`, … `10`, all numbers ending in `11` … `99`, and others | Arabic          |
+| Forms | Grammatical rules                                                                                                   | Languages      |
+| :---: | ------------------------------------------------------------------------------------------------------------------- | -------------- |
+|   1   | No distinction between the singular and plural form                                                                 | e.g. Japanese  |
+|   2   | Singular used for one only                                                                                          | e.g. English   |
+|   2   | Singular used for zero and one                                                                                      | e.g. French    |
+|   3   | Special case for zero                                                                                               | Latvian        |
+|   3   | Special cases for one and two                                                                                       | Gaelic (Irish) |
+|   3   | Special case for numbers ending in `00` or `[2-9][0-9]`                                                             | Romanian       |
+|   3   | Special case for numbers ending in `1[2-9]`                                                                         | Lithuanian     |
+|   3   | Special cases for numbers ending in `1` and `2`, `3`, `4`, except those ending in `1[1-4]`                          | e.g. Russian   |
+|   3   | Special cases for `1` and `2`, `3`, `4`                                                                             | e.g. Czech     |
+|   3   | Special case for one and some numbers ending in `2`, `3`, or `4`                                                    | Polish         |
+|   4   | Special case for one and all numbers ending in `02`, `03`, or `04`                                                  | Slovenian      |
+|   6   | Special cases for one, two, all numbers ending in `02`, `03`, … `10`, all numbers ending in `11` … `99`, and others | Arabic         |
 
 #### Use localization to handle pluralization
 
