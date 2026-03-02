@@ -2,37 +2,30 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { inputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SiTimelineWidgetBodyComponent } from './si-timeline-widget-body.component';
 import { SiTimelineWidgetItem } from './si-timeline-widget-item.component';
 
-@Component({
-  imports: [SiTimelineWidgetBodyComponent],
-  template: `
-    <si-timeline-widget-body
-      [value]="items"
-      [numberOfItems]="numberOfItems"
-      [showDescription]="showDescription"
-    />
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
-class TestHostComponent {
-  items?: SiTimelineWidgetItem[];
-  numberOfItems?: number;
-  showDescription = true;
-}
-
 describe('SiTimelineWidgetBodyComponent', () => {
-  let fixture: ComponentFixture<TestHostComponent>;
-  let component: TestHostComponent;
+  let fixture: ComponentFixture<SiTimelineWidgetBodyComponent>;
   let element: HTMLElement;
+  let value: WritableSignal<SiTimelineWidgetItem[] | undefined>;
+  let numberOfItems: WritableSignal<number | undefined>;
+  let showDescription: WritableSignal<boolean>;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TestHostComponent);
-    component = fixture.componentInstance;
+    value = signal(undefined);
+    numberOfItems = signal(undefined);
+    showDescription = signal(true);
+    fixture = TestBed.createComponent(SiTimelineWidgetBodyComponent, {
+      bindings: [
+        inputBinding('value', value),
+        inputBinding('numberOfItems', numberOfItems),
+        inputBinding('showDescription', showDescription)
+      ]
+    });
     element = fixture.nativeElement;
   });
 
@@ -49,31 +42,31 @@ describe('SiTimelineWidgetBodyComponent', () => {
   });
 
   it('should show 8 si-link-widget-skeletons as default without value and without showing the description', () => {
-    component.showDescription = false;
+    showDescription.set(false);
     fixture.detectChanges();
     expect(element.querySelector('.si-link-widget-skeleton')).toBeDefined();
     expect(element.querySelectorAll('.si-link-widget-skeleton').length).toBe(8);
   });
 
   it('should enable number skeleton configuration', () => {
-    const numberOfItems = 3;
-    component.numberOfItems = numberOfItems;
+    const numItems = 3;
+    numberOfItems.set(numItems);
     fixture.detectChanges();
-    expect(element.querySelectorAll('.si-skeleton').length).toBe(numberOfItems);
-    expect(element.querySelectorAll('.si-link-widget-skeleton').length).toBe(numberOfItems * 3);
+    expect(element.querySelectorAll('.si-skeleton').length).toBe(numItems);
+    expect(element.querySelectorAll('.si-link-widget-skeleton').length).toBe(numItems * 3);
   });
 
   it('should enable number skeleton configuration without showing the description', () => {
-    const numberOfItems = 3;
-    component.numberOfItems = numberOfItems;
-    component.showDescription = false;
+    const numItems = 3;
+    numberOfItems.set(numItems);
+    showDescription.set(false);
     fixture.detectChanges();
-    expect(element.querySelectorAll('.si-skeleton').length).toBe(numberOfItems);
-    expect(element.querySelectorAll('.si-link-widget-skeleton').length).toBe(numberOfItems * 2);
+    expect(element.querySelectorAll('.si-skeleton').length).toBe(numItems);
+    expect(element.querySelectorAll('.si-link-widget-skeleton').length).toBe(numItems * 2);
   });
 
   it('should display timeline items', () => {
-    component.items = [
+    value.set([
       {
         timeStamp: 'Today 23:59',
         title: 'Title',
@@ -97,14 +90,14 @@ describe('SiTimelineWidgetBodyComponent', () => {
         title: 'Title',
         icon: 'element-plant'
       }
-    ];
+    ]);
     fixture.detectChanges();
     expect(element.querySelectorAll('.si-link-widget-skeleton').length).toBe(0);
     expect(element.querySelectorAll('si-timeline-widget-item').length).toBe(3);
   });
 
   it('should hide the lower line', () => {
-    component.items = [
+    value.set([
       {
         timeStamp: 'Today 23:59',
         title: 'Title',
@@ -115,7 +108,7 @@ describe('SiTimelineWidgetBodyComponent', () => {
         title: 'Title',
         icon: 'element-plant'
       }
-    ];
+    ]);
     fixture.detectChanges();
     const items = element.querySelectorAll('.si-timeline-widget-item-lower-line');
     const firstItemComputedStyle = window.getComputedStyle(items[0]);
