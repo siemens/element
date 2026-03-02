@@ -2,56 +2,44 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
+import { inputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
 
 import { SiDashboardCardComponent } from './index';
 
-@Component({
-  imports: [SiDashboardCardComponent, RouterModule],
-  template: `
-    <si-dashboard-card
-      [heading]="heading"
-      [enableExpandInteraction]="enableExpandInteraction"
-      [primaryActions]="primaryActions"
-      [secondaryActions]="secondaryActions"
-    />
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
-class TestHostComponent {
-  readonly card = viewChild.required(SiDashboardCardComponent);
-  primaryActions: any;
-  secondaryActions: any;
-  heading = '';
-  enableExpandInteraction = false;
-}
-
 describe('SiDashboardCardComponent', () => {
-  let fixture: ComponentFixture<TestHostComponent>;
-  let component: TestHostComponent;
+  let fixture: ComponentFixture<SiDashboardCardComponent>;
   let element: HTMLElement;
+  let heading: WritableSignal<string>;
+  let primaryActions: WritableSignal<any>;
+  let secondaryActions: WritableSignal<any>;
+  let enableExpandInteraction: WritableSignal<boolean>;
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [RouterModule, TestHostComponent]
+      imports: [RouterModule]
     })
   );
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TestHostComponent);
-    component = fixture.componentInstance;
+    heading = signal('');
+    primaryActions = signal([]);
+    secondaryActions = signal([]);
+    enableExpandInteraction = signal(false);
+    fixture = TestBed.createComponent(SiDashboardCardComponent, {
+      bindings: [
+        inputBinding('heading', heading),
+        inputBinding('primaryActions', primaryActions),
+        inputBinding('secondaryActions', secondaryActions),
+        inputBinding('enableExpandInteraction', enableExpandInteraction)
+      ]
+    });
     element = fixture.nativeElement;
-
-    // Set required component input
-    component.heading = '';
-    component.primaryActions = [];
-    component.secondaryActions = [];
   });
 
   it('should have a heading', () => {
-    component.heading = 'TITLE_KEY';
+    heading.set('TITLE_KEY');
     fixture.detectChanges();
     expect(element.querySelector('.card-header')!.innerHTML).toContain('TITLE_KEY');
   });
@@ -59,69 +47,68 @@ describe('SiDashboardCardComponent', () => {
   describe('content action bar', () => {
     it('should not be available without actions', () => {
       fixture.detectChanges();
-      const contentActionBar =
-        fixture.debugElement.nativeElement.querySelector('si-content-action-bar');
+      const contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).toBeNull();
     });
 
     it('should be unavailable with no actions and disabled expand interaction', () => {
       fixture.detectChanges();
-      const contentActionBar = fixture.nativeElement.querySelector('si-content-action-bar');
+      const contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).toBeNull();
     });
 
     it('should be unavailable with undefined primary actions and no secondary actions and disabled expand interaction', () => {
-      component.primaryActions = undefined as any;
+      primaryActions.set(undefined as any);
       fixture.detectChanges();
-      const contentActionBar = fixture.nativeElement.querySelector('si-content-action-bar');
+      const contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).toBeNull();
     });
 
     it('should be available with one primary action and not secondary action and disabled expand interaction', () => {
-      component.primaryActions = [{ title: 'Action' }];
+      primaryActions.set([{ title: 'Action' }]);
       fixture.detectChanges();
-      const contentActionBar = fixture.nativeElement.querySelector('si-content-action-bar');
+      const contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).not.toBeNull();
     });
 
     it('should be available with one primary action added later and not secondary action and disabled expand interaction', () => {
-      let contentActionBar = fixture.nativeElement.querySelector('si-content-action-bar');
+      let contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).toBeNull();
-      component.primaryActions = [{ title: 'Action' }];
+      primaryActions.set([{ title: 'Action' }]);
       fixture.detectChanges();
-      contentActionBar = fixture.nativeElement.querySelector('si-content-action-bar');
+      contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).not.toBeNull();
     });
 
     it('should be available with no primary action and one secondary action and disabled expand interaction', () => {
-      component.secondaryActions = [{ title: 'Action' }];
+      secondaryActions.set([{ title: 'Action' }]);
       fixture.detectChanges();
-      const contentActionBar = fixture.nativeElement.querySelector('si-content-action-bar');
+      const contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).not.toBeNull();
     });
 
     it('should be available with no primary action and one secondary action and enabled expand interaction', () => {
-      component.secondaryActions = [{ title: 'Action' }];
-      component.enableExpandInteraction = true;
+      secondaryActions.set([{ title: 'Action' }]);
+      enableExpandInteraction.set(true);
       fixture.detectChanges();
-      const contentActionBar = fixture.nativeElement.querySelector('si-content-action-bar');
+      const contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).not.toBeNull();
     });
 
-    it('should be available with one primary action added later and not secondary action and disabled expand interaction', () => {
-      let contentActionBar = fixture.nativeElement.querySelector('si-content-action-bar');
+    it('should be available with one secondary action added later and not primary action and disabled expand interaction', () => {
+      let contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).toBeNull();
-      component.secondaryActions = [{ title: 'Action' }];
+      secondaryActions.set([{ title: 'Action' }]);
       fixture.detectChanges();
-      contentActionBar = fixture.nativeElement.querySelector('si-content-action-bar');
+      contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).not.toBeNull();
     });
 
     it('should be unavailable with no actions and disabled expand interaction after expanding by api', () => {
       fixture.detectChanges();
-      component.card().expand();
+      fixture.componentInstance.expand();
       fixture.detectChanges();
-      const contentActionBar = fixture.nativeElement.querySelector('si-content-action-bar');
+      const contentActionBar = element.querySelector('si-content-action-bar');
       expect(contentActionBar).toBeNull();
     });
   });
@@ -140,23 +127,23 @@ describe('SiDashboardCardComponent', () => {
     });
 
     it('should be unavailable with one primary action and no secondary action', () => {
-      component.primaryActions = [{ title: 'Action' }];
+      primaryActions.set([{ title: 'Action' }]);
       fixture.detectChanges();
       const contentActionBar = element.querySelector('[aria-label="Expand"]');
       expect(contentActionBar).toBeNull();
     });
 
     it('should be unavailable with no primary action and one secondary action', () => {
-      component.secondaryActions = [{ title: 'Action' }];
+      secondaryActions.set([{ title: 'Action' }]);
       fixture.detectChanges();
       const contentActionBar = element.querySelector('[aria-label="Expand"]');
       expect(contentActionBar).toBeNull();
     });
 
     it('should be added when switching enableExpandInteraction to true', () => {
-      let contentActionBar = fixture.nativeElement.querySelector('button');
+      let contentActionBar = element.querySelector('button');
       expect(contentActionBar).toBeNull();
-      component.enableExpandInteraction = true;
+      enableExpandInteraction.set(true);
       fixture.detectChanges();
       contentActionBar = element.querySelector('[aria-label="Expand"]');
       expect(contentActionBar).not.toBeNull();
@@ -164,59 +151,59 @@ describe('SiDashboardCardComponent', () => {
   });
 
   it('expand and restore on by expand() and restore() api', () => {
-    component.card().expand();
+    fixture.componentInstance.expand();
     fixture.detectChanges();
-    expect(component.card().isExpanded()).toBe(true);
-    component.card().restore();
+    expect(fixture.componentInstance.isExpanded()).toBe(true);
+    fixture.componentInstance.restore();
     fixture.detectChanges();
-    expect(component.card().isExpanded()).toBe(false);
+    expect(fixture.componentInstance.isExpanded()).toBe(false);
   });
 
   it('expand and restore on click', () => {
-    component.enableExpandInteraction = true;
+    enableExpandInteraction.set(true);
     fixture.detectChanges();
     element
       .querySelector<HTMLElement>('si-content-action-bar button[aria-label="Expand"]')!
       .click();
     fixture.detectChanges();
-    expect(component.card().isExpanded()).toBe(true);
+    expect(fixture.componentInstance.isExpanded()).toBe(true);
     element
       .querySelector<HTMLElement>('si-content-action-bar button[aria-label="Restore"]')!
       .click();
     fixture.detectChanges();
-    expect(component.card().isExpanded()).toBe(false);
+    expect(fixture.componentInstance.isExpanded()).toBe(false);
   });
 
   it('expand and restore on click with one primary action', () => {
-    component.enableExpandInteraction = true;
-    component.primaryActions = [{ title: 'Action' }];
+    enableExpandInteraction.set(true);
+    primaryActions.set([{ title: 'Action' }]);
     fixture.detectChanges();
     // Second element in content action bar is our expand actions
     element
       .querySelector<HTMLElement>('si-content-action-bar button[aria-label="Expand"]')!
       .click();
     fixture.detectChanges();
-    expect(component.card().isExpanded()).toBe(true);
+    expect(fixture.componentInstance.isExpanded()).toBe(true);
     element
       .querySelector<HTMLElement>('si-content-action-bar button[aria-label="Restore"]')!
       .click();
     fixture.detectChanges();
-    expect(component.card().isExpanded()).toBe(false);
+    expect(fixture.componentInstance.isExpanded()).toBe(false);
   });
 
   it('expand and restore on click with one secondary action', () => {
-    component.enableExpandInteraction = true;
-    component.secondaryActions = [{ title: 'Action' }];
+    enableExpandInteraction.set(true);
+    secondaryActions.set([{ title: 'Action' }]);
     fixture.detectChanges();
     element
       .querySelector<HTMLElement>('si-content-action-bar button[aria-label="Expand"]')!
       .click();
     fixture.detectChanges();
-    expect(component.card().isExpanded()).toBe(true);
+    expect(fixture.componentInstance.isExpanded()).toBe(true);
     element
       .querySelector<HTMLElement>('si-content-action-bar button[aria-label="Restore"]')!
       .click();
     fixture.detectChanges();
-    expect(component.card().isExpanded()).toBe(false);
+    expect(fixture.componentInstance.isExpanded()).toBe(false);
   });
 });

@@ -2,38 +2,21 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { inputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
 import { TestScheduler } from 'rxjs/testing';
 
 import { SiListWidgetBodyComponent, SortOrder } from './si-list-widget-body.component';
 import { SiListWidgetItem } from './si-list-widget-item.component';
 
-@Component({
-  imports: [SiListWidgetBodyComponent],
-  template: `
-    <si-list-widget-body
-      [value]="items"
-      [numberOfLinks]="numberOfLinks"
-      [sort]="sort"
-      [search]="search"
-    />
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
-class TestHostComponent {
-  items?: SiListWidgetItem[];
-  numberOfLinks?: number;
-  sort?: SortOrder;
-  search = false;
-}
-
 describe('SiListWidgetBodyComponent', () => {
-  let fixture: ComponentFixture<TestHostComponent>;
-  let component: TestHostComponent;
+  let fixture: ComponentFixture<SiListWidgetBodyComponent>;
   let element: HTMLElement;
   let testScheduler: TestScheduler;
+  let value: WritableSignal<SiListWidgetItem[] | undefined>;
+  let numberOfLinks: WritableSignal<number | undefined>;
+  let sort: WritableSignal<SortOrder | undefined>;
+  let search: WritableSignal<boolean>;
 
   beforeEach(() => {
     testScheduler = new TestScheduler((actual, expected) => {
@@ -42,8 +25,18 @@ describe('SiListWidgetBodyComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TestHostComponent);
-    component = fixture.componentInstance;
+    value = signal(undefined);
+    numberOfLinks = signal(undefined);
+    sort = signal(undefined);
+    search = signal(false);
+    fixture = TestBed.createComponent(SiListWidgetBodyComponent, {
+      bindings: [
+        inputBinding('value', value),
+        inputBinding('numberOfLinks', numberOfLinks),
+        inputBinding('sort', sort),
+        inputBinding('search', search)
+      ]
+    });
     element = fixture.nativeElement;
   });
 
@@ -54,25 +47,25 @@ describe('SiListWidgetBodyComponent', () => {
   });
 
   it('should enable number skeleton configuration', () => {
-    component.numberOfLinks = 10;
+    numberOfLinks.set(10);
     fixture.detectChanges();
     expect(element.querySelectorAll('.si-link-widget-skeleton').length).toBe(10);
 
-    component.numberOfLinks = 12;
-    runOnPushChangeDetection(fixture);
+    numberOfLinks.set(12);
+    fixture.detectChanges();
     expect(element.querySelectorAll('.si-link-widget-skeleton').length).toBe(12);
   });
 
   it('should display list items', () => {
-    component.items = [{ label: 'item_1' }, { label: 'item_2' }, { label: 'item_3' }];
+    value.set([{ label: 'item_1' }, { label: 'item_2' }, { label: 'item_3' }]);
     fixture.detectChanges();
     expect(element.querySelectorAll('.si-link-widget-skeleton').length).toBe(0);
     expect(element.querySelectorAll('si-list-widget-item').length).toBe(3);
   });
 
   it('should support initial sorting of list items', () => {
-    component.sort = 'DSC';
-    component.items = [{ label: 'item_1' }, { label: 'item_2' }, { label: 'item_3' }];
+    sort.set('DSC');
+    value.set([{ label: 'item_1' }, { label: 'item_2' }, { label: 'item_3' }]);
     fixture.detectChanges();
     const items = element.querySelectorAll('si-list-widget-item');
     expect(items.length).toBe(3);
@@ -80,20 +73,15 @@ describe('SiListWidgetBodyComponent', () => {
   });
 
   it('should support resorting when new values are set', () => {
-    component.sort = 'DSC';
-    component.items = [{ label: 'item_1' }, { label: 'item_2' }, { label: 'item_3' }];
+    sort.set('DSC');
+    value.set([{ label: 'item_1' }, { label: 'item_2' }, { label: 'item_3' }]);
     fixture.detectChanges();
     let items = element.querySelectorAll('si-list-widget-item');
     expect(items.length).toBe(3);
     expect(items.item(0).textContent).toContain('item_3');
 
-    component.items = [
-      { label: 'item_4' },
-      { label: 'item_5' },
-      { label: 'item_6' },
-      { label: 'item_7' }
-    ];
-    runOnPushChangeDetection(fixture);
+    value.set([{ label: 'item_4' }, { label: 'item_5' }, { label: 'item_6' }, { label: 'item_7' }]);
+    fixture.detectChanges();
 
     items = element.querySelectorAll('si-list-widget-item');
     expect(items.length).toBe(4);
@@ -101,17 +89,12 @@ describe('SiListWidgetBodyComponent', () => {
   });
 
   it('should support changing sort order of list items with labels', () => {
-    component.sort = 'DSC';
-    component.items = [
-      { label: 'item_1' },
-      { label: 'item_2' },
-      { label: 'item_2' },
-      { label: 'item_3' }
-    ];
+    sort.set('DSC');
+    value.set([{ label: 'item_1' }, { label: 'item_2' }, { label: 'item_2' }, { label: 'item_3' }]);
     fixture.detectChanges();
 
-    component.sort = 'ASC';
-    runOnPushChangeDetection(fixture);
+    sort.set('ASC');
+    fixture.detectChanges();
 
     const items = element.querySelectorAll('si-list-widget-item');
     expect(items.length).toBe(4);
@@ -119,17 +102,17 @@ describe('SiListWidgetBodyComponent', () => {
   });
 
   it('should support changing sort order of list items with links', () => {
-    component.sort = 'DSC';
-    component.items = [
+    sort.set('DSC');
+    value.set([
       { label: { title: 'item_1' } },
       { label: { title: 'item_2' } },
       { label: { title: 'item_2' } },
       { label: { title: 'item_3' } }
-    ];
+    ]);
     fixture.detectChanges();
 
-    component.sort = 'ASC';
-    runOnPushChangeDetection(fixture);
+    sort.set('ASC');
+    fixture.detectChanges();
 
     const items = element.querySelectorAll('si-list-widget-item');
     expect(items.length).toBe(4);
@@ -138,20 +121,20 @@ describe('SiListWidgetBodyComponent', () => {
 
   it('should support search', () => {
     testScheduler.run(({ flush }) => {
-      component.items = [
+      value.set([
         { label: { title: 'item_1' } },
         { label: { title: 'item_2' } },
         { label: 'item_2' },
         { label: 'item_3' }
-      ];
+      ]);
       fixture.detectChanges();
 
       // No search as default
       expect(element.querySelector('si-search-bar')).toBeNull();
 
       // Show the search bar
-      component.search = true;
-      runOnPushChangeDetection(fixture);
+      search.set(true);
+      fixture.detectChanges();
       const searchBar = element.querySelector('si-search-bar');
       expect(searchBar).not.toBeNull();
 
@@ -160,7 +143,7 @@ describe('SiListWidgetBodyComponent', () => {
       searchBarInput!.value = 'item_3';
       searchBarInput!.dispatchEvent(new Event('input'));
       flush();
-      runOnPushChangeDetection(fixture);
+      fixture.detectChanges();
 
       let items = element.querySelectorAll('si-list-widget-item');
       expect(items.length).toBe(1);
@@ -171,7 +154,7 @@ describe('SiListWidgetBodyComponent', () => {
       searchBarInput!.value = '';
       searchBarInput!.dispatchEvent(new Event('input'));
       flush();
-      runOnPushChangeDetection(fixture);
+      fixture.detectChanges();
 
       items = element.querySelectorAll('si-list-widget-item');
       expect(items.length).toBe(4);
@@ -180,8 +163,8 @@ describe('SiListWidgetBodyComponent', () => {
 
   it('should not fail when searching without value', () => {
     testScheduler.run(({ flush }) => {
-      component.search = true;
-      runOnPushChangeDetection(fixture);
+      search.set(true);
+      fixture.detectChanges();
 
       // Should show 6 skeletons
       expect(element.querySelector('.si-link-widget-skeleton')).toBeDefined();
@@ -191,7 +174,7 @@ describe('SiListWidgetBodyComponent', () => {
       searchBarInput!.value = 'item_3';
       searchBarInput!.dispatchEvent(new Event('input'));
       flush();
-      runOnPushChangeDetection(fixture);
+      fixture.detectChanges();
 
       // Should show 6 skeletons after search
       let items = element.querySelectorAll('.si-link-widget-skeleton');
@@ -201,7 +184,7 @@ describe('SiListWidgetBodyComponent', () => {
       searchBarInput!.value = '';
       searchBarInput!.dispatchEvent(new Event('input'));
       flush();
-      runOnPushChangeDetection(fixture);
+      fixture.detectChanges();
 
       // Should still show 6 skeletons after clearing search
       items = element.querySelectorAll('si-list-widget-item');
