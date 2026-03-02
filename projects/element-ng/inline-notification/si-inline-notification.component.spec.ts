@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { inputBinding, signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StatusType } from '@siemens/element-ng/common';
 import { Link } from '@siemens/element-ng/link';
@@ -12,35 +12,17 @@ import { of } from 'rxjs';
 
 import { SiInlineNotificationComponent } from './index';
 
-@Component({
-  imports: [SiInlineNotificationComponent],
-  template: `
-    <si-inline-notification
-      [severity]="severity"
-      [heading]="heading"
-      [message]="message"
-      [action]="action"
-      [translationParams]="translationParams"
-    />
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
-class TestHostComponent {
-  severity!: StatusType;
-  heading = '';
-  message = '';
-  action!: Link;
-  translationParams!: { [key: string]: any };
-}
-
 describe('SiInlineNotificationComponent', () => {
-  let fixture: ComponentFixture<TestHostComponent>;
-  let component: TestHostComponent;
+  let fixture: ComponentFixture<SiInlineNotificationComponent>;
   let element: HTMLElement;
+  let severity: WritableSignal<StatusType>;
+  let heading: WritableSignal<string>;
+  let message: WritableSignal<string>;
+  let action: WritableSignal<Link | undefined>;
+  let translationParams: WritableSignal<{ [key: string]: any } | undefined>;
 
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [TestHostComponent],
       providers: [
         provideMockTranslateServiceBuilder(
           () =>
@@ -56,17 +38,29 @@ describe('SiInlineNotificationComponent', () => {
   );
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TestHostComponent);
-    component = fixture.componentInstance;
+    severity = signal('info');
+    heading = signal('');
+    message = signal('');
+    action = signal(undefined);
+    translationParams = signal(undefined);
+    fixture = TestBed.createComponent(SiInlineNotificationComponent, {
+      bindings: [
+        inputBinding('severity', severity),
+        inputBinding('heading', heading),
+        inputBinding('message', message),
+        inputBinding('action', action),
+        inputBinding('translationParams', translationParams)
+      ]
+    });
     element = fixture.nativeElement;
   });
 
   it('should display the correct data', () => {
-    component.severity = 'danger';
-    component.heading = 'MSG.HEADING';
-    component.message = 'MSG.MESSAGE';
-    component.action = { title: 'MSG.ACTION' };
-    component.translationParams = { param: 'something' };
+    severity.set('danger');
+    heading.set('MSG.HEADING');
+    message.set('MSG.MESSAGE');
+    action.set({ title: 'MSG.ACTION' });
+    translationParams.set({ param: 'something' });
     fixture.detectChanges();
 
     expect(element.querySelector<HTMLElement>('.alert strong')!.innerText).toBe(
@@ -82,8 +76,8 @@ describe('SiInlineNotificationComponent', () => {
   });
 
   it('should display empty title', () => {
-    component.severity = 'info';
-    component.message = 'There is no Title';
+    severity.set('info');
+    message.set('There is no Title');
     fixture.detectChanges();
     expect(element.querySelector('.alert strong')!).toBeNull();
   });
