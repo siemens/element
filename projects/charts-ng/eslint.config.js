@@ -36,12 +36,5 @@ export default defineConfig(
       '@typescript-eslint/no-deprecated': ['warn']
     }
   },
-  // TODO: remove this once upgraded to Angular 21
-  {
-    files: ['**/*.spec.ts'],
-    rules: {
-      '@angular-eslint/no-developer-preview': ['off']
-    }
-  },
   ...templateConfig
 );
