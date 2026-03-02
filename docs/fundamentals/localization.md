@@ -215,8 +215,8 @@ Keep sentences as one unit with placeholders.
 
 #### Don'ts
 
-- EN: `Select site ` + `{site}` + ` of ` + `{company}` + `?`
-- DE: `Standort auswählen ` + `{site}` + ` von ` + `{company}` + `?`
+- EN: `Select site ` + `{site}` + `of` + `{company}` + `?`
+- DE: `Standort auswählen ` + `{site}` + `von` + `{company}` + `?`
 
 </div>
 </div>
