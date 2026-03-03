@@ -890,11 +890,13 @@
   
   Replace `INgxDatatableConfig` imports with `NgxDatatableConfig` from @siemens/ngx-datatable:
   
+  ```ts
   // Before
   import { INgxDatatableConfig } from '@siemens/element-ng/datatable';
   
   // After
   import { NgxDatatableConfig } from '@siemens/ngx-datatable';
+  ```
 
 # [48.0.0](https://github.com/siemens/element/compare/v47.8.0...v48.0.0) (2025-08-26)
 
@@ -995,6 +997,14 @@
 
 * **accordion:** Removed `SiAccordionComponent.colorVariant` input without any replacement.
 * **action-modal:** Removed `AlertDialogResult`, `EditDiscardDialogResult`, `ConfirmationDialogResult` and `DeleteConfirmationDialogResult` as const objects. Use them only as type.
+* **action-modal:** Removed deprecated methods:
+  
+  - `SiActionDialogService.showAlertDialog`
+  - `SiActionDialogService.showConfirmationDialog`
+  - `SiActionDialogService.showEditDiscardDialog`
+  - `SiActionDialogService.showDeleteConfirmationDialog`
+  
+  Use `SiActionDialogService.showActionDialog` instead.
 * **angular:** Angular 20+ is required.
   Follow the Angular update guide to update your app: <https://angular.dev/update-guide?v=19.0-20.0>
 * **charts-ng:** The `@siemens/charts-ng` package now requires ECharts version 6.0.0 or higher. Please update your dependencies accordingly. For details on ECharts 6, see: https://github.com/apache/echarts/releases/tag/6.0.0
@@ -1019,14 +1029,7 @@
 * **form:** Removed deprecated `SiFormContainerComponent.getValidationErrors` method.
   
   Use the built-in mechanism of the `si-form-item` to show validation errors.
-  See: https://element.siemens.io/components/forms-inputs/forms/#error-messages* **action-modal:** Removed deprecated methods:
-  
-  - `SiActionDialogService.showAlertDialog`
-  - `SiActionDialogService.showConfirmationDialog`
-  - `SiActionDialogService.showEditDiscardDialog`
-  - `SiActionDialogService.showDeleteConfirmationDialog`
-  
-  Use `SiActionDialogService.showActionDialog` instead.
+  See: https://element.siemens.io/components/forms-inputs/forms/#error-messages  
 * **form:** Removed `SiFormItemComponent.inputId` and `SiFormItemComponent.readonly` inputs without any replacement.
 * **form:** Removed `siFormItemControl` directive.
   
