@@ -8,7 +8,7 @@ import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
-import { SiWidgetBaseComponent } from './si-widget-base.component';
+import { SiWidgetBaseComponent } from '../si-widget-base.component';
 
 /**
  * The `<si-link-widget>` supports an easy composition of links and actions
