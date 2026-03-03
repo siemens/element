@@ -44,7 +44,7 @@ UX writing _combines_ terminology, style, and form…
     <div class="dos-and-donts" markdown>
     <div class="dos" markdown>
 
-    #### Do's
+    #### Dos
 
     - `Delete template for tool instance IDs`
 
@@ -98,7 +98,7 @@ Group texts by use case and provide meaningful (key) names.
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
 
-#### Do's
+#### Dos
 
 - `"ACCOUNT.LOGOUT.CANCEL":` "Cancel",
 - `"ACCOUNT.LOGOUT.HEADING":` "Log out",
@@ -171,7 +171,7 @@ Provide the languages in the target language for the language switcher.
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
 
-#### Do's
+#### Dos
 
 - English
 - Deutsch
@@ -205,7 +205,7 @@ Keep sentences as one unit with placeholders.
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
 
-#### Do's
+#### Dos
 
 - EN: `Select site {site} of {company}?`
 - DE: `Standort {site} von {company} auswählen?`
@@ -230,7 +230,7 @@ Keep sentence understandable even with placeholders.
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
 
-#### Do's
+#### Dos
 
 - `Reactivating site {name} within activation period: {startDate} – {endDate}`
 
@@ -253,7 +253,7 @@ Use locale-aware formatting (see [Code tab](#code)), and avoid UX writing depend
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
 
-#### Do's
+#### Dos
 
 - Use localization framework (see [Code tab](#code))
 - Use [placeholders](#define-understandable-placeholders) in text: `Saved on {date}`
@@ -295,7 +295,7 @@ The count 0 is handled differently in several languages.
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
 
-#### Do's
+#### Dos
 
 - Ich besitze keinen Apfel. («Apfel» | `EN`: «apple» in singular)
 
@@ -335,7 +335,7 @@ Pluralization cannot be handled by product code or writing style. Use localizati
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
 
-#### Do's
+#### Dos
 
 - `{count} rows`
 
