@@ -9,6 +9,7 @@ on:
       MAPTILER_KEY:
         required: true
   pull_request:
+  merge_group:
 
 # Stops the workflow run if the PR is updated
 # https://stackoverflow.com/a/72408109
@@ -168,6 +169,7 @@ jobs:
           retention-days: 2
 
   documentation:
+    if: ${{ github.event_name != 'merge_group' }}
     runs-on: ubuntu-24.04
     needs:
       - build
@@ -244,7 +246,7 @@ jobs:
           path: dist/design
 
   preview:
-    if: ${{ !cancelled() && github.event_name == 'pull_request' }} # This must be skipped for releases and documentation builds
+    if: ${{ !cancelled() && github.event_name == 'pull_request' }} # This must be skipped for releases, documentation builds, and merge queue runs
     runs-on: ubuntu-24.04
     permissions:
       id-token: write
