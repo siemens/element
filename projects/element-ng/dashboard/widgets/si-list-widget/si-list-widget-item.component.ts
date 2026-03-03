@@ -8,7 +8,7 @@ import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
-import { SiWidgetBaseComponent } from '../si-widget-base.component';
+import { SiWidgetBaseDirective } from '../si-widget-base.directive';
 
 /**
  * Interface for objects to configure the the list widget.
@@ -46,7 +46,7 @@ export interface SiListWidgetItem {
     role: 'listitem'
   }
 })
-export class SiListWidgetItemComponent extends SiWidgetBaseComponent<SiListWidgetItem> {
+export class SiListWidgetItemComponent extends SiWidgetBaseDirective<SiListWidgetItem> {
   protected readonly isLink = computed(() => {
     return typeof this.value()?.label === 'object';
   });

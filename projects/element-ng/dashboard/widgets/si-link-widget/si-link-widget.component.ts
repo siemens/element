@@ -8,7 +8,7 @@ import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
 import { SiTranslatePipe } from '@siemens/element-translate-ng/translate';
 
-import { SiWidgetBaseComponent } from '../si-widget-base.component';
+import { SiWidgetBaseDirective } from '../si-widget-base.directive';
 
 /**
  * The `<si-link-widget>` supports an easy composition of links and actions
@@ -20,7 +20,7 @@ import { SiWidgetBaseComponent } from '../si-widget-base.component';
   templateUrl: './si-link-widget.component.html',
   host: { class: 'si-link-widget' }
 })
-export class SiLinkWidgetComponent extends SiWidgetBaseComponent<Link[]> {
+export class SiLinkWidgetComponent extends SiWidgetBaseDirective<Link[]> {
   /**
    * Option to enable trailing link arrow icons for each link.
    *

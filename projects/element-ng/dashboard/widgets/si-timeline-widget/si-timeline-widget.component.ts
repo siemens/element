@@ -12,7 +12,7 @@ import { Link, SiLinkDirective } from '@siemens/element-ng/link';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
-import { SiWidgetBaseComponent } from '../si-widget-base.component';
+import { SiWidgetBaseDirective } from '../si-widget-base.directive';
 import { SiTimelineWidgetBodyComponent } from './si-timeline-widget-body.component';
 import { SiTimelineWidgetItem } from './si-timeline-widget-item.component';
 
@@ -28,7 +28,7 @@ import { SiTimelineWidgetItem } from './si-timeline-widget-item.component';
   templateUrl: './si-timeline-widget.component.html'
 })
 export class SiTimelineWidgetComponent
-  extends SiWidgetBaseComponent<SiTimelineWidgetItem[]>
+  extends SiWidgetBaseDirective<SiTimelineWidgetItem[]>
   implements OnChanges
 {
   /**

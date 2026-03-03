@@ -7,7 +7,7 @@ import { EntityStatusType } from '@siemens/element-ng/common';
 import { SiIconComponent, SiStatusIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, TranslatableString } from '@siemens/element-translate-ng/translate';
 
-import { SiWidgetBaseComponent } from '../si-widget-base.component';
+import { SiWidgetBaseDirective } from '../si-widget-base.directive';
 
 /**
  * The body of the `<si-value-widget>`. Useful for compositions.
@@ -18,7 +18,7 @@ import { SiWidgetBaseComponent } from '../si-widget-base.component';
   templateUrl: './si-value-widget-body.component.html'
 })
 export class SiValueWidgetBodyComponent
-  extends SiWidgetBaseComponent<TranslatableString>
+  extends SiWidgetBaseDirective<TranslatableString>
   implements OnInit
 {
   /**

@@ -8,7 +8,6 @@ import { AccentLineType } from '@siemens/element-ng/common';
 import { ActivatedRoute } from '@angular/router';
 import { AfterViewInit } from '@angular/core';
 import * as _angular_core from '@angular/core';
-import { ChangeDetectorRef } from '@angular/core';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import { ElementRef } from '@angular/core';
 import { EntityStatusType } from '@siemens/element-ng/common';
@@ -67,13 +66,13 @@ export class SiDashboardService {
 }
 
 // @public
-export class SiLinkWidgetComponent extends SiWidgetBaseComponent<Link[]> {
+export class SiLinkWidgetComponent extends SiWidgetBaseDirective<Link[]> {
     readonly numberOfLinks: _angular_core.InputSignal<number>;
     readonly showLinkIcons: _angular_core.InputSignalWithTransform<boolean, unknown>;
 }
 
 // @public
-export class SiListWidgetBodyComponent extends SiWidgetBaseComponent<SiListWidgetItem[]> implements OnChanges {
+export class SiListWidgetBodyComponent extends SiWidgetBaseDirective<SiListWidgetItem[]> implements OnChanges {
     readonly compareFn: _angular_core.InputSignal<(a: SiListWidgetItem, b: SiListWidgetItem) => number | undefined>;
     readonly filterFn: _angular_core.InputSignal<(item: SiListWidgetItem, searchTerm: string) => boolean | undefined>;
     readonly link: _angular_core.InputSignal<Link | undefined>;
@@ -84,7 +83,7 @@ export class SiListWidgetBodyComponent extends SiWidgetBaseComponent<SiListWidge
 }
 
 // @public
-export class SiListWidgetComponent extends SiWidgetBaseComponent<SiListWidgetItem[]> implements OnChanges {
+export class SiListWidgetComponent extends SiWidgetBaseDirective<SiListWidgetItem[]> implements OnChanges {
     readonly accentLine: _angular_core.InputSignal<AccentLineType | undefined>;
     readonly compareFn: _angular_core.InputSignal<(a: SiListWidgetItem, b: SiListWidgetItem) => number | undefined>;
     readonly filterFn: _angular_core.InputSignal<(item: SiListWidgetItem, searchTerm: string) => boolean | undefined>;
@@ -112,17 +111,17 @@ export interface SiListWidgetItem {
 }
 
 // @public
-export class SiListWidgetItemComponent extends SiWidgetBaseComponent<SiListWidgetItem> {
+export class SiListWidgetItemComponent extends SiWidgetBaseDirective<SiListWidgetItem> {
 }
 
 // @public (undocumented)
-export class SiTimelineWidgetBodyComponent extends SiWidgetBaseComponent<SiTimelineWidgetItem[]> {
+export class SiTimelineWidgetBodyComponent extends SiWidgetBaseDirective<SiTimelineWidgetItem[]> {
     readonly numberOfItems: _angular_core.InputSignal<number>;
     readonly showDescription: _angular_core.InputSignal<boolean>;
 }
 
 // @public (undocumented)
-export class SiTimelineWidgetComponent extends SiWidgetBaseComponent<SiTimelineWidgetItem[]> implements OnChanges {
+export class SiTimelineWidgetComponent extends SiWidgetBaseDirective<SiTimelineWidgetItem[]> implements OnChanges {
     readonly accentLine: _angular_core.InputSignal<AccentLineType | undefined>;
     readonly heading: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly link: _angular_core.InputSignal<Link | undefined>;
@@ -146,13 +145,13 @@ export interface SiTimelineWidgetItem {
 }
 
 // @public
-export class SiTimelineWidgetItemComponent extends SiWidgetBaseComponent<SiTimelineWidgetItem> implements OnInit, OnChanges {
+export class SiTimelineWidgetItemComponent extends SiWidgetBaseDirective<SiTimelineWidgetItem> implements OnInit, OnChanges {
     readonly ariaLabelDropdown: TranslatableString;
     readonly showDescription: _angular_core.InputSignal<boolean>;
 }
 
 // @public
-export class SiValueWidgetBodyComponent extends SiWidgetBaseComponent<TranslatableString> implements OnInit {
+export class SiValueWidgetBodyComponent extends SiWidgetBaseDirective<TranslatableString> implements OnInit {
     readonly description: _angular_core.InputSignal<TranslatableString | undefined>;
     readonly icon: _angular_core.InputSignal<string | undefined>;
     readonly status: _angular_core.InputSignal<EntityStatusType | undefined>;

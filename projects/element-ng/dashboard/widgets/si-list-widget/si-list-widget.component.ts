@@ -11,7 +11,7 @@ import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { Link, SiLinkDirective } from '@siemens/element-ng/link';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
-import { SiWidgetBaseComponent } from '../si-widget-base.component';
+import { SiWidgetBaseDirective } from '../si-widget-base.directive';
 import { SiListWidgetBodyComponent, SortOrder } from './si-list-widget-body.component';
 import { SiListWidgetItem } from './si-list-widget-item.component';
 
@@ -32,7 +32,7 @@ import { SiListWidgetItem } from './si-list-widget-item.component';
   host: { class: 'si-list-widget' }
 })
 export class SiListWidgetComponent
-  extends SiWidgetBaseComponent<SiListWidgetItem[]>
+  extends SiWidgetBaseDirective<SiListWidgetItem[]>
   implements OnChanges
 {
   protected readonly icons = addIcons({ elementRight2, elementSortDown, elementSortUp });

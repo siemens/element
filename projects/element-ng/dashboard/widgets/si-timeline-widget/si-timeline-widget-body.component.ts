@@ -4,7 +4,7 @@
  */
 import { Component, computed, input } from '@angular/core';
 
-import { SiWidgetBaseComponent } from '../si-widget-base.component';
+import { SiWidgetBaseDirective } from '../si-widget-base.directive';
 import {
   SiTimelineWidgetItem,
   SiTimelineWidgetItemComponent
@@ -16,7 +16,7 @@ import {
   templateUrl: './si-timeline-widget-body.component.html',
   styleUrl: './si-timeline-widget-body.component.scss'
 })
-export class SiTimelineWidgetBodyComponent extends SiWidgetBaseComponent<SiTimelineWidgetItem[]> {
+export class SiTimelineWidgetBodyComponent extends SiWidgetBaseDirective<SiTimelineWidgetItem[]> {
   /**
    * Number of skeleton progress indication items.
    *
