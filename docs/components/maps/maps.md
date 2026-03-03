@@ -274,17 +274,37 @@ const points: MapPoint[] = [
 
 ![Maps - Cluster Element Colors](images/maps-cluster-element-colors.png)
 
-#### Custom MapBox style
+#### MapBox style
 
-A user can change the look of the actual map by passing a custom MapBox style to
-the component as `styleJson` input. In this case, the `maptilerKey` parameter is
-not needed as the custom style overrides it.
+Customize the map's appearance by providing a custom MapBox style through the `styleJson` input. When using a custom style, the `maptilerKey` parameter is not required as the custom style overrides it.
 
-```html
-<si-map [styleJson]="styleJson"></si-map>
+**Important:** When using a custom style, you are responsible for updating the `styleJson` input when the application theme changes to ensure proper styling.
+
+**Built-in styles:**
+
+Element maps provides the following styles:
+
+- **Default** - Available in light and dark themes
+- **Railway** - Optimized for railway infrastructure, available in light and dark themes
+
+```ts
+import { Component, signal } from '@angular/core';
+import { SiMapComponent, railwayStyle } from '@siemens/maps-ng';
+import { environment } from '../environments/environment';
+
+@Component({
+  selector: 'app-sample',
+  imports: [SiMapComponent],
+  template: `<si-map class="flex-fill" [styleJson]="style()" />`,
+  host: { class: 'h-100 d-flex p-5' }
+})
+export class SampleComponent {
+  // Build a style specification signal for railways which automatically updates on theme change
+  readonly style = railwayStyle(environment.maptilerKey);
+}
 ```
 
-More info in the official [MapBox Docs](https://docs.mapbox.com/).
+To create your own custom MapBox style, refer to the official [MapBox Style Specification](https://docs.mapbox.com/mapbox-gl-js/style-spec/).
 
 #### Customize tooltip length
 
