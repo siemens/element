@@ -8,7 +8,7 @@ import { Link } from '@siemens/element-ng/link';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
-import { SiWidgetBaseComponent } from '../si-widget-base.component';
+import { SiWidgetBaseDirective } from '../si-widget-base.directive';
 import { SiListWidgetItem, SiListWidgetItemComponent } from './si-list-widget-item.component';
 
 /** Defines the sort order. */
@@ -26,7 +26,7 @@ export type SortOrder = 'ASC' | 'DSC';
   host: { class: '' }
 })
 export class SiListWidgetBodyComponent
-  extends SiWidgetBaseComponent<SiListWidgetItem[]>
+  extends SiWidgetBaseDirective<SiListWidgetItem[]>
   implements OnChanges
 {
   /** Optional footer link for the list widget */

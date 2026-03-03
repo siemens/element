@@ -4,10 +4,8 @@
  */
 import {
   booleanAttribute,
-  ChangeDetectorRef,
-  Component,
   computed,
-  inject,
+  Directive,
   input,
   OnChanges,
   OnInit,
@@ -16,16 +14,14 @@ import {
 } from '@angular/core';
 
 /**
- * The SiWidgetBaseComponent<T> implements the timing for the skeleton loading
+ * The SiWidgetBaseDirective<T> implements the timing for the skeleton loading
  * indicator of widgets. It supports a generic value input property that represents
  * the main value to be displayed by a widget. When the value is not set, the `showLoadingIndicator`
  * changes after the `initialLoadingIndicatorDebounceTime` delay to `true` and subclasses
  * should show the skeleton loading indicator.
  */
-@Component({
-  template: ''
-})
-export abstract class SiWidgetBaseComponent<T> implements OnInit, OnChanges {
+@Directive()
+export abstract class SiWidgetBaseDirective<T> implements OnInit, OnChanges {
   /**
    * The main value to be displayed. If no value is set,
    * the skeleton indicates the loading of the value. Disable
@@ -63,7 +59,6 @@ export abstract class SiWidgetBaseComponent<T> implements OnInit, OnChanges {
    */
   readonly initialLoadingIndicatorDebounceTime = input(300);
 
-  protected cdRef = inject(ChangeDetectorRef);
   protected loadingTimer?: ReturnType<typeof setTimeout>;
 
   ngOnChanges(changes: SimpleChanges): void {
