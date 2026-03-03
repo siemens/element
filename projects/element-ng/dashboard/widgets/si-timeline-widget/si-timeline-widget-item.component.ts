@@ -10,7 +10,7 @@ import { SiIconComponent } from '@siemens/element-ng/icon';
 import { MenuItem, SiMenuModule } from '@siemens/element-ng/menu';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 
-import { SiWidgetBaseComponent } from '../si-widget-base.component';
+import { SiWidgetBaseDirective } from '../si-widget-base.directive';
 
 /** Base for action items in the timeline widget. */
 export interface TimelineWidgetActionBase {
@@ -118,7 +118,7 @@ export interface SiTimelineWidgetItem {
   }
 })
 export class SiTimelineWidgetItemComponent
-  extends SiWidgetBaseComponent<SiTimelineWidgetItem>
+  extends SiWidgetBaseDirective<SiTimelineWidgetItem>
   implements OnInit, OnChanges
 {
   /**
