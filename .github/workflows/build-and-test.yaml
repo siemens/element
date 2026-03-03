@@ -246,7 +246,7 @@ jobs:
           path: dist/design
 
   preview:
-    if: ${{ !cancelled() && github.event_name == 'pull_request' }} # This must be skipped for releases, documentation builds, and merge queue runs
+    if: ${{ !cancelled() && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository }} # This must be skipped for releases, documentation builds, and merge queue runs
     runs-on: ubuntu-24.04
     permissions:
       id-token: write
