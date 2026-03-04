@@ -19,11 +19,11 @@ Localization (l10n) or internationalization (i18n) is the process of designing a
 
 <!-- markdownlint-disable MD051 -->
 
-Localization is mainly a [development task](#code) but UX writers can support developers.
+UX writers can support [implementation of localization](#code) by understanding, applying, and sharing the following concepts with developers.
 
 <!-- markdownlint-enable MD051 -->
 
-User interface texts are stand-alone, short and to the point, but without context. Thus, AI can produce a reliable translation only, the terms must be
+User interface texts are stand-alone, short and to the point, but without context. Thus, translators and AI can produce a reliable translation only, the terms must be
 
 - [Dominant](#terms-in-various-uses)
 - [Precise](#terminology)
@@ -40,7 +40,7 @@ UX writing combines terminology, [style](ux-text-style-guide/index.md) and form 
 
     #### Dos
 
-    - `Delete template for tool instance IDs`
+    - `Delete the template for tool instance IDs`
 
     </div>
     <div class="donts" markdown>
@@ -84,6 +84,7 @@ The ambiguity can be removed by
 
 - grouping the texts into namespaces by use cases
 - only using the [dominant meaning](#terms-in-various-uses) of the term
+- annotating texts with a description (if supported by translation framework and file format)
 
 #### Grouping of texts
 
@@ -139,13 +140,13 @@ Reusing strings…
 - …reduces the volume sent to translators and lowers cost.
 - …increases the efficiency of product development and maintenance.
 - …keeps translation unique in every supported language.
-- …supports the `ONE Tech company` initiative.
 - …helps identifying duplicated functionality.
-  !!! warning "Context-dependent strings"
 
-      A single string reused across different contexts may require different translations in different languages.
+!!! warning "Context-dependent strings"
 
-      In doubt, create a separate string for each use even if the English text looks the same.
+    A single string reused across different contexts may require different translations in different languages.
+
+    In doubt, create a separate string for each use even if the English text looks the same.
 
 ### Use translation libraries
 
@@ -285,27 +286,6 @@ Strings containing numbers may be represented differently in different languages
     - 22-24 pliki
     - 25-31 plików
 
-#### Handling of zero
-
-The count 0 is handled differently in several languages.
-
-<div class="dos-and-donts" markdown>
-<div class="dos" markdown>
-
-#### Dos
-
-- Ich besitze keinen Apfel. («Apfel» | `EN`: «apple» in singular)
-
-</div>
-<div class="donts" markdown>
-
-#### Don'ts
-
-- Ich besitze 0 Äpfel («Äpfel» | `EN`: «apples» in plural)
-
-</div>
-</div>
-
 #### Linguistic rules
 
 Depending on the language there might be up to 6 forms. Following language specific variability does exist:
@@ -334,14 +314,15 @@ Pluralization cannot be handled by product code or writing style. Use localizati
 
 #### Dos
 
-- `{count} rows`
+- `Delete {count} rows?`
+- `Delete {rowName}?`
 
 </div>
 <div class="donts" markdown>
 
 #### Don'ts
 
-- `{count} row(s)`
+- `Delete {count} row(s)?`
 - if (count == 1) {`1 row`} else {`{count} rows`}
 
 </div>
