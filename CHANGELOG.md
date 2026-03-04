@@ -1,3 +1,11 @@
+## [47.12.2](https://github.com/siemens/element/compare/v47.12.1...v47.12.2) (2026-03-04)
+
+
+### Bug Fixes
+
+* **datepicker:** fix incorrect week numbers ([c43bfbe](https://github.com/siemens/element/commit/c43bfbee7852bd5ddfc196ec1c4bb44cb74236cc))
+* **tree-view:** use hasAnyChildren from parent to determine inline padding ([df648db](https://github.com/siemens/element/commit/df648db7c987d0b1aa0aae2ccee0cf067c92f0e5))
+
 ## [47.12.1](https://github.com/siemens/element/compare/v47.12.0...v47.12.1) (2025-11-26)
 
 
