@@ -1,4 +1,31 @@
-<i class="icon element-user"></i>
-<i class="si-display-xl element-plant"></i>
-<i class="si-display-xl element-security text-secondary"></i>
-<i class="si-display-xl element-alchemy-flask text-primary"></i>
+<h3>SVG with si-icon</h3>
+<div class="d-flex gap-6 align-items-center">
+  <si-icon class="icon-sm" [icon]="icons.elementUser" />
+  <si-icon class="icon" [icon]="icons.elementUser" />
+  <si-icon class="icon-lg" [icon]="icons.elementUser" />
+  <!-- Direct usage with strings. NOT RECOMMENDED! -->
+  <si-icon class="icon-sm" icon="element-account" />
+  <si-icon class="icon" icon="element-account" />
+  <!-- Icon names can also be provided as camelCase -->
+  <si-icon class="icon-lg" icon="elementAccount" />
+</div>
+
+<h3>Icon-only action</h3>
+<button class="btn btn-primary btn-icon btn-sm" type="button" aria-label="Cancel">
+  <si-icon [icon]="icons.elementCancel" />
+</button>
+
+<h3>Stacking</h3>
+<div class="d-flex gap-6 align-items-center">
+  <span class="icon icon-stack">
+    <si-icon class="status-danger" [icon]="icons.elementAlarmFilled" />
+    <si-icon class="text-secondary" [icon]="icons.elementAlarmTick" />
+  </span>
+</div>
+
+<h3>Icon font</h3>
+<div class="d-flex gap-6 align-items-center">
+  <i class="icon-sm element-user"></i>
+  <i class="icon element-user"></i>
+  <i class="icon-lg element-user"></i>
+</div>

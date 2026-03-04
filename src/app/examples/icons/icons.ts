@@ -3,11 +3,28 @@
  * SPDX-License-Identifier: MIT
  */
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  elementAccount,
+  elementAlarmFilled,
+  elementAlarmTick,
+  elementCancel,
+  elementUser
+} from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 
 @Component({
   selector: 'app-sample',
+  imports: [SiIconComponent],
   templateUrl: './icons.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
-export class SampleComponent {}
+export class SampleComponent {
+  icons = addIcons({
+    elementUser,
+    elementAccount,
+    elementAlarmFilled,
+    elementAlarmTick,
+    elementCancel
+  });
+}
