@@ -3,6 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "noEmitOnError": true,
     "rootDir": "schematics",
     "outDir": "../../dist/@siemens/element-ng/schematics",
