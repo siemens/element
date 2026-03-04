@@ -10,6 +10,8 @@ import {
   inject,
   input,
   inputBinding,
+  IterableDiffer,
+  IterableDiffers,
   NgZone,
   OnChanges,
   OnInit,
@@ -18,7 +20,8 @@ import {
   signal,
   SimpleChanges,
   viewChild,
-  ViewContainerRef
+  ViewContainerRef,
+  WritableSignal
 } from '@angular/core';
 import { GridItemHTMLElement, GridStack, GridStackNode, GridStackOptions } from 'gridstack';
 
@@ -89,33 +92,22 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges {
 
   private ngZone = inject(NgZone);
   private elementRef = inject(ElementRef);
-  private readonly widgetConfigsMap = computed(
-    () => new Map(this.widgetConfigs().map(w => [w.id, w]))
-  );
+  private iterableDiffers = inject(IterableDiffers);
+  private widgetConfigsDiffer?: IterableDiffer<WidgetConfig>;
+  private readonly widgetConfigSignals = new Map<string, WritableSignal<WidgetConfig>>();
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.widgetConfigs) {
-      const { currentValue, previousValue, firstChange } = changes.widgetConfigs;
+      const { currentValue, firstChange } = changes.widgetConfigs;
 
       this.grid?.batchUpdate(true);
       if (firstChange) {
         this.markedForRender = currentValue;
+        this.widgetConfigsDiffer = this.iterableDiffers
+          .find(currentValue)
+          .create((_, item: WidgetConfig) => item.id);
       } else {
-        const currentIds = new Set(currentValue.map((item: WidgetConfig) => item.id));
-        const previousIds = new Set(previousValue.map((item: WidgetConfig) => item.id));
-        // Get newly added items
-        const toBeAdded = currentValue.filter((item: WidgetConfig) => !previousIds.has(item.id));
-
-        // Get deleted items
-        const toBeRemoved = previousValue.filter((item: WidgetConfig) => !currentIds.has(item.id));
-
-        if (toBeAdded) {
-          this.mount(toBeAdded);
-        }
-
-        if (toBeRemoved) {
-          this.unmount(toBeRemoved);
-        }
+        this.diffWidgetConfigs(currentValue);
       }
 
       this.updateLayout(currentValue);
@@ -148,6 +140,8 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges {
     this.hookEvents(this.grid);
 
     this.mount(this.markedForRender);
+    // Run initial diff to prime the differ with the current state
+    this.widgetConfigsDiffer?.diff(this.markedForRender);
   }
 
   mount(items: WidgetConfig[]): void {
@@ -199,11 +193,12 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges {
   }
 
   private addToView(item: WidgetConfig): void {
-    // we use computed here to dynamically bind the widgetConfig to the SiWidgetHostComponent
-    const config = computed(() => this.widgetConfigsMap().get(item.id)!);
+    const configSignal = signal(item);
+    this.widgetConfigSignals.set(item.id, configSignal);
+
     const componentRef = this.gridstackContainer()!.createComponent(SiWidgetHostComponent, {
       bindings: [
-        inputBinding('widgetConfig', config),
+        inputBinding('widgetConfig', configSignal),
         outputBinding<string>('remove', widgetId => {
           this.widgetInstanceRemove.emit(widgetId);
         }),
@@ -237,8 +232,34 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges {
       this.grid.removeWidget(toRemove);
       const gridItemToRemove = this.gridItemsMap().get(widgetId);
       gridItemToRemove?.component.destroy();
+      this.widgetConfigSignals.delete(widgetId);
       this.gridItemsMap().delete(widgetId);
       this.gridItems.set(Array.from(this.gridItemsMap().values()));
+    }
+  }
+
+  /**
+   * Uses IterableDiffer to detect added, removed, and identity-changed items.
+   * Only widgets whose object reference changed get their signal updated.
+   */
+  private diffWidgetConfigs(configs: WidgetConfig[]): void {
+    const changes = this.widgetConfigsDiffer?.diff(configs);
+    if (changes) {
+      const toMount: WidgetConfig[] = [];
+      const toUnmount: WidgetConfig[] = [];
+
+      changes.forEachAddedItem(record => toMount.push(record.item));
+      changes.forEachRemovedItem(record => toUnmount.push(record.item));
+      changes.forEachIdentityChange(record =>
+        this.widgetConfigSignals.get(record.item.id)?.set(record.item)
+      );
+
+      if (toMount.length) {
+        this.mount(toMount);
+      }
+      if (toUnmount.length) {
+        this.unmount(toUnmount);
+      }
     }
   }
 
