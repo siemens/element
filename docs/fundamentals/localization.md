@@ -6,10 +6,10 @@ Localization (l10n) or internationalization (i18n) is the process of designing a
 
 ## Introduction ---
 
-!!! tip "Localization is more than just translate the text"
+!!! tip "Localization is more than just translating text"
 
     - It covers translation, but also **formats** (date/time/number), **script direction** (LTR/RTL), and UI behavior in different languages.
-    - The **same English word** can require different words in other languages depending on meaning (ambiguity).
+    -  Depending on how it is used, the **same English word** can have multiple meanings and translates to different words in another language.
     - Languages differ in **word order**, **plural rules**, and **punctuation**.
     - UI text can **grow** (sometimes a lot), wrap, or break layouts.
 
@@ -29,13 +29,7 @@ User interface texts are stand-alone, short and to the point, but without contex
 - [Precise](#terminology)
 - [Unambiguous](#remove-ambiguity)
 
-UX writing _combines_ terminology, style, and form…
-
-- to apply _consistent terms_ on a UI
-- to apply a _consistent style_ on a UI
-- to apply a _consistent form_ on a UI
-
-…for specific _use cases_, fully focused on the _target audience_ (personas)
+UX writing combines terminology, [style](ux-text-style-guide/index.md) and form to ensure a consistent UI for specific use cases of a target audience.
 
 !!! tip "Think like a translator"
 
@@ -60,8 +54,8 @@ UX writing _combines_ terminology, style, and form…
 
 ### Terminology
 
-- Terms are defined by experts in the related fields (physicists, engineers…), universities teaching/researching specific domains, legal fields, experts at various companies worldwide specializing in specific domains (e.g. Siemens, Honeywell, etc.).
-- Standardization bodies (e.g., ISO, EN, UL, BS, DIN, ASHRAE, BACnet), comprised of corporate experts and universities are standardizing common terms.
+- The terms are defined by experts (physicists, engineers, lawyers, etc.) from universities and various global companies specializing in specific domains.
+- Standardization bodies (e.g., ISO, EN, UL, BS, DIN, ASHRAE, BACnet) are standardizing common terms.
 - Quasi-industrial standards from individual sources (Haystack, Bric etc.) become international standards only if aligned to official organizations. If not aligned, setting a standard remains wishful thinking.
 
 Common language serves multiple purposes:
@@ -73,8 +67,8 @@ Common language serves multiple purposes:
 
 !!! warning "Usage of terminology databases"
 
-    - Select the terminology of your business.
-    - Identify terms not yet defined and request them.
+    - Select the terminology database of your domain.
+    - Identify terms not yet defined and request them in the terminology database or by contacting the terminology maintainers of your domain.
 
 #### Terms in various uses
 
@@ -82,14 +76,14 @@ Many terms have various meanings related to a specific context or domain.
 
 _One meaning always dominates_ regardless of context. That is the meaning that can be used without creating confusion. However, if that meaning does not fit the context, an alternative term (unambiguous synonym) must be used to eliminate misunderstandings
 
-In addition, the alternative term increases substantially the probability of correct interpretation by artificial intelligence (as part of translation, machine learning, or any other use)
+In addition, the alternative term substantially increases the probability of correct interpretation by artificial intelligence (as part of translation, machine learning, or any other use).
 
 ### Remove ambiguity
 
 The ambiguity can be removed by
 
-- grouping the texts by use cases (namespaces)
-- only using [dominant meaning](#terms-in-various-uses) of term
+- grouping the texts into namespaces by use cases
+- only using the [dominant meaning](#terms-in-various-uses) of the term
 
 #### Grouping of texts
 
@@ -100,53 +94,53 @@ Group texts by use case and provide meaningful (key) names.
 
 #### Dos
 
-- `"ACCOUNT.LOGOUT.CANCEL":` "Cancel",
-- `"ACCOUNT.LOGOUT.HEADING":` "Log out",
-- `"ACCOUNT.LOGOUT.LOG_OUT_NOW":` "Log out now?",
-- `"ACCOUNT.LOGOUT.LOGGING_OUT":` "Logging out…",
-- `"ACCOUNT.SETTINGS.HEADING":` "Settings",
-- `"ACCOUNT.SETTINGS.THEME":` "Theme",
-- `"ACCOUNT.SETTINGS.THEME_OPTIONS.AUTO":` "Auto",
-- `"ACCOUNT.SETTINGS.THEME_OPTIONS.DARK":` "Dark",
-- `"ACCOUNT.SETTINGS.THEME_OPTIONS.LIGHT":` "Light",
-- `"LEGAL.ABOUT":` "About",
-- `"LEGAL.IMPRINT":` "Corporate Information",
-- `"LEGAL.PRIVACY_POLICY":` "Privacy Notice",
-- `"LEGAL.VERSION":` "Version {{version}}"
+- `ACCOUNT.LOGOUT.CANCEL:` Cancel
+- `ACCOUNT.LOGOUT.HEADING:` Log out
+- `ACCOUNT.LOGOUT.LOG_OUT_NOW:` Log out now?
+- `ACCOUNT.LOGOUT.LOGGING_OUT:` Logging out…
+- `ACCOUNT.SETTINGS.HEADING:` Settings
+- `ACCOUNT.SETTINGS.THEME:` Theme
+- `ACCOUNT.SETTINGS.THEME_OPTIONS.AUTO:` Auto
+- `ACCOUNT.SETTINGS.THEME_OPTIONS.DARK:` Dark
+- `ACCOUNT.SETTINGS.THEME_OPTIONS.LIGHT:` Light
+- `LEGAL.ABOUT:` About
+- `LEGAL.IMPRINT:` Corporate Information
+- `LEGAL.PRIVACY_POLICY:` Privacy Notice
+- `LEGAL.VERSION:` Version `{{version}}`
 
 </div>
 <div class="donts" markdown>
 
 #### Don'ts
 
-- `"ABOUT":` "About",
-- `"AUTO":` "Auto",
-- `"CANCEL":` "Cancel",
-- `"DARK":` "Dark",
-- `"IMPRINT":` "Corporate Information",
-- `"LIGHT":` "Light",
-- `"LOG_OUT_NOW":` "Log out now?",
-- `"LOGGING_OUT":` "Logging out…",
-- `"LOGOUT":` "Log out",
-- `"PRIVACY_POLICY":` "Privacy Notice",
-- `"SETTINGS":` "Settings",
-- `"THEME":` "Theme",
-- `"VERSION":` "Version {{version}}"
+- `ABOUT:` About
+- `AUTO:` Auto
+- `CANCEL:` Cancel
+- `DARK:` Dark
+- `IMPRINT:` Corporate Information
+- `LIGHT:` Light
+- `LOG_OUT_NOW:` Log out now?
+- `LOGGING_OUT:` Logging out…
+- `LOGOUT:` Log out
+- `PRIVACY_POLICY:` Privacy Notice
+- `SETTINGS:` Settings
+- `THEME:` Theme
+- `VERSION:` Version `{{version}}`
 
 </div>
 </div>
 
 ### Reuse strings
 
-Before writing a new string, check whether one with the exact meaning already exists.
+Before writing a new string, check whether one with the exact same meaning already exists.
 
 Reusing strings…
 
 - …reduces the volume sent to translators and lowers cost.
-- …gains efficiency.
+- …increases the efficiency of product development and maintenance.
 - …keeps translation unique in every supported language.
 - …supports the `ONE Tech company` initiative.
-
+- …helps identifying duplicated functionality.
 !!! warning "Context-dependent strings"
 
     A single string reused across different contexts may require different translations in different languages.
@@ -155,18 +149,18 @@ Reusing strings…
 
 ### Use translation libraries
 
-[Unicode CLDR](https://cldr.unicode.org/) provides high quality translations for:
+Packages based on the [Unicode CLDR](https://cldr.unicode.org/) like `@angular/common` and  built-in runtime objects like `Intl` provide complete and high quality translations for:
 
 - language and script names
 - countries and regions
 - currencies
 - months, weekdays and time zones
 
-Use these sources to avoid superfluous translate effort.
+Use these sources to avoid superfluous translation efforts.
 
 ### Provide user-friendly language selection
 
-Provide the languages in the target language for the language switcher.
+Provide each language name in the target language for the language switcher.
 
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
@@ -223,9 +217,9 @@ Keep sentences as one unit with placeholders.
 
 <!-- markdownlint-enable MD038 -->
 
-### Define understandable placeholders
+### Define named placeholders
 
-Keep sentence understandable even with placeholders.
+Keep sentences understandable even with placeholders.
 
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
@@ -255,7 +249,7 @@ Use locale-aware formatting (see [Code tab](#code)), and avoid UX writing depend
 
 #### Dos
 
-- Use localization framework (see [Code tab](#code))
+- Use the localization framework (see [Code tab](#code))
 - Use [placeholders](#define-understandable-placeholders) in text: `Saved on {date}`
 
 </div>
@@ -264,7 +258,7 @@ Use locale-aware formatting (see [Code tab](#code)), and avoid UX writing depend
 #### Don'ts
 
 - `02/03/2026` (ambiguous)
-- `1,234.56` everywhere
+- `1,234` in all languages (ambiguous, is it less or greater than 2?)
 
 </div>
 </div>
@@ -273,20 +267,23 @@ Use locale-aware formatting (see [Code tab](#code)), and avoid UX writing depend
 
 ### Pluralization
 
-The correct translation of texts which relate to a count differs in different languages.
+Strings containing numbers may be represented differently in different languages.
 
-Pluralization of the `English` term «apple»:
+!!! info "Pluralization examples"
 
-- 1: «I own one apple.»
-- n: «I own four apples.»
+    Pluralization of the `English` term «apple»:
 
-Pluralization of the `Polish` term «Plik» (`English`: «file»):
+    - 0: «I own no apple.»
+    - 1: «I own one apple.»
+    - n: «I own four apples.»
 
-- 1 plik
-- 2, 3, 4 pliki
-- 5-21 plików
-- 22-24 pliki
-- 25-31 plików
+    Pluralization of the `Polish` term «Plik» (`English`: «file»):
+
+    - 1 plik
+    - 2, 3, 4 pliki
+    - 5-21 plików
+    - 22-24 pliki
+    - 25-31 plików
 
 #### Handling of zero
 
