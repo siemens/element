@@ -141,15 +141,15 @@ Reusing strings…
 - …keeps translation unique in every supported language.
 - …supports the `ONE Tech company` initiative.
 - …helps identifying duplicated functionality.
-!!! warning "Context-dependent strings"
+  !!! warning "Context-dependent strings"
 
-    A single string reused across different contexts may require different translations in different languages.
+      A single string reused across different contexts may require different translations in different languages.
 
-    In doubt, create a separate string for each use even if the English text looks the same.
+      In doubt, create a separate string for each use even if the English text looks the same.
 
 ### Use translation libraries
 
-Packages based on the [Unicode CLDR](https://cldr.unicode.org/) like `@angular/common` and  built-in runtime objects like `Intl` provide complete and high quality translations for:
+Packages based on the [Unicode CLDR](https://cldr.unicode.org/) like `@angular/common` and built-in runtime objects like `Intl` provide complete and high quality translations for:
 
 - language and script names
 - countries and regions
