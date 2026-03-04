@@ -96,16 +96,60 @@ e.g., event states or severity symbols.
 
 ## Code ---
 
-All icons start with the `element-` prefix and can be copied directly from the
-internal icon catalog.
+Icons are available as SVGs or as an icon font.
+Prefer SVGs unless you are working in an existing project that already uses the icon font. Stay consistent within a project.
+SVGs were introduced to reduce bundle size, as the icon font is already above 100KB while typically only a few icons are used.
 
-To use the icons within your HTML template, add the `<i>`-tag and define the
-desired icon name as CSS class. Besides the icon class, all other text utility
-classes such size and color can be used. The CSS class `icon` applies the default
-icon size.
+A list of icons can be found in the [icon overview](../icons.md).
 
-There is also a specific [si-icon](../components/status-notifications/icon.md)
-component, which can be used to show icons. It supports stacking of icons to build
-compositions and also supports SVG-based icons.
+### SVG
+
+Use the `si-icon` component to include SVG icons:
+
+```ts
+import { Component } from '@angular/core';
+import { elementUser } from '@siemens/element-icons';
+import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
+
+@Component({
+  selector: 'app-sample',
+  imports: [SiIconComponent],
+  template: `<si-icon class="icon" [icon]="icons.elementUser" />`
+})
+export class SampleComponent {
+  // addIcons returns a map of all names added to the library for typesafe use in the template.
+  icons = addIcons({ elementUser });
+}
+```
+
+`addIcons` registers icons for use for as long as the component is alive.
+The `icons` object enables type-safe use of added icons in the template.
+You can also provide icon names as strings in camelCase (`elementUser`) or kebab-case (`element-user`).
+If an icon is not found, the icon font class is rendered as a fallback (only works if the icon font is still loaded).
+
+### Icon font
+
+Use the CSS classes `element-*` to use the icon font with an `<i>` tag.
+
+### Styling
+
+Use the `icon` classes for the correct icon size:
+
+- `.icon-sm` (16px): Used in dense UI or compact contexts, such as labels or inline helper actions
+- `.icon` (20px): The most common size and pairs well with body and body-bold text.
+- `.icon-lg` (24px): Used for more prominent contexts, such as large buttons, and pairs well with `body-lg` and `body-bold-lg` text.
+
+Besides the `icon` classes, all other text utility classes (such as color utilities) can be used.
+
+### Stacking
+
+Use stacking with the `si-icon` component to combine multiple icons into a single symbol, such as event states or severities.
+
+```html
+<span class="icon icon-stack">
+  <si-icon class="status-danger" icon="element-alarm-filled" />
+  <si-icon class="text-secondary" icon="element-alarm-tick" />
+</span>
+```
 
 <si-docs-component example="icons/icons"></si-docs-component>
