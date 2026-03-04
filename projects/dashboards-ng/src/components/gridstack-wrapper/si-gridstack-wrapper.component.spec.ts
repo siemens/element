@@ -20,6 +20,7 @@ import { firstValueFrom, take, toArray } from 'rxjs';
 import { TestingModule } from '../../../test/testing.module';
 import { WidgetConfig } from '../../model/widgets.model';
 import { SiGridService } from '../../services/si-grid.service';
+import { SiWidgetHostComponent } from '../widget-host/si-widget-host.component';
 import { SiGridstackWrapperComponent } from './si-gridstack-wrapper.component';
 
 @Component({
@@ -124,6 +125,47 @@ describe('SiGridstackWrapperComponent', () => {
 
       expect(host.gridStackWrapper()!.unmount).toHaveBeenCalled();
       expect(host.gridStackWrapper()!.unmount).toHaveBeenCalledWith([TEST_WIDGET_CONFIG_1]);
+    });
+
+    it('should not trigger ngOnChanges on SiWidgetHostComponent when widget config reference is unchanged', async () => {
+      const widgetHosts = fixture.debugElement.queryAll(By.directive(SiWidgetHostComponent));
+      const ngOnChangesSpy = widgetHosts.map(widgetHost =>
+        spyOn(widgetHost.componentInstance, 'ngOnChanges').and.callThrough()
+      );
+
+      // Re-assign the same config references inside a new array
+      host.widgets = [TEST_WIDGET_CONFIG_0, TEST_WIDGET_CONFIG_1];
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
+
+      // to avoid injector destroyed error
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      ngOnChangesSpy.forEach(spy => expect(spy).not.toHaveBeenCalled());
+    });
+
+    it('should only trigger ngOnChanges on the resized widget, not on unchanged ones', async () => {
+      const widgetHosts = fixture.debugElement.queryAll(By.directive(SiWidgetHostComponent));
+      const widget0Host = widgetHosts.find(
+        wh => wh.componentInstance.widgetConfig().id === TEST_WIDGET_CONFIG_0.id
+      )!;
+      const widget1Host = widgetHosts.find(
+        wh => wh.componentInstance.widgetConfig().id === TEST_WIDGET_CONFIG_1.id
+      )!;
+      const spy0 = spyOn(widget0Host.componentInstance, 'ngOnChanges').and.callThrough();
+      const spy1 = spyOn(widget1Host.componentInstance, 'ngOnChanges').and.callThrough();
+
+      // Simulate resize of widget 0 by creating a new reference with updated dimensions
+      const resizedConfig0: WidgetConfig = { ...TEST_WIDGET_CONFIG_0, width: 8, height: 3 };
+      host.widgets = [resizedConfig0, TEST_WIDGET_CONFIG_1];
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
+
+      // to avoid injector destroyed error
+      await new Promise(resolve => setTimeout(resolve, 0));
+
+      expect(spy0).toHaveBeenCalledTimes(1);
+      expect(spy1).not.toHaveBeenCalled();
     });
   });
 
