@@ -38,14 +38,10 @@ UX writing combines terminology, [style](ux-text-style-guide/index.md) and form 
     <div class="dos-and-donts" markdown>
     <div class="dos" markdown>
 
-    #### Dos
-
     - `Delete the template for tool instance IDs`
 
     </div>
     <div class="donts" markdown>
-
-    #### Don'ts
 
     - `Delete complete tool instance ID naming`Deleting a tool instance?<br>Naming something?<br>Is "complete" an adjective or a verb?
 
@@ -74,7 +70,39 @@ Common language serves multiple purposes:
 
 Many terms have various meanings related to a specific context or domain.
 
-_One meaning always dominates_ regardless of context. That is the meaning that can be used without creating confusion. However, if that meaning does not fit the context, an alternative term (unambiguous synonym) must be used to eliminate misunderstandings
+!!! info "Meaning of the term `title`"
+
+    A subset of meanings of `title` (incl. dominating meaning :trophy:):
+
+    - **1 b:** a similar distinguishing name of a musical composition or a work of art
+    - **3:** :trophy: descriptive name : [appellation](https://www.merriam-webster.com/dictionary/appellation)
+    - **4 a:** :trophy: an appellation of dignity, honor, distinction, or preeminence attached to a person or family by virtue of rank, office, precedent, privilege, attainment, or lands
+    - **4 b:** :trophy: a person holding a title especially of nobility
+    - **6 c:** all the elements constituting legal ownership
+    - **7 a:** a descriptive or general heading (as of a chapter in a book)
+
+    See [Merriam Webster](https://www.merriam-webster.com/dictionary/title) for details
+
+_One meaning always dominates_ regardless of context. That is the meaning that can be used without creating confusion. However, if that meaning does not fit the context, an alternative term (unambiguous synonym) must be used to eliminate misunderstandings.
+
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+- Academic title
+- Heading
+- Name
+- Ownership
+
+</div>
+<div class="donts" markdown>
+
+- Title (professor, doctor xyz)
+- Title of a book (War and peace)
+- Title of an object (Intelligent Valve)
+- Title to an asset (Owned by Mr./Ms. xyz)
+
+</div>
+</div>
 
 In addition, the alternative term substantially increases the probability of correct interpretation by artificial intelligence (as part of translation, machine learning, or any other use).
 
@@ -93,8 +121,6 @@ Group texts by use case and provide meaningful (key) names.
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
 
-#### Dos
-
 - `ACCOUNT.LOGOUT.CANCEL:` Cancel
 - `ACCOUNT.LOGOUT.HEADING:` Log out
 - `ACCOUNT.LOGOUT.LOG_OUT_NOW:` Log out now?
@@ -111,8 +137,6 @@ Group texts by use case and provide meaningful (key) names.
 
 </div>
 <div class="donts" markdown>
-
-#### Don'ts
 
 - `ABOUT:` About
 - `AUTO:` Auto
@@ -131,6 +155,61 @@ Group texts by use case and provide meaningful (key) names.
 </div>
 </div>
 
+### Manage space for translations
+
+Consider how text will appear in different languages when designing user interfaces.
+
+1. Design UI by prioritizing flexible layouts, identify areas with limited text space, and always allocate more space than you think you'll need.
+1. Write English strings, keeping conciseness in mind from the start.
+1. Determine reasonable limits and provide it to the translation management.
+1. Request translations
+1. Test every screen with translated texts
+
+!!! warning "UI refactoring"
+
+    Revisit the UI design or the original string if a translator cannot convey the meaning within the limit.
+
+    Fixing UI issues caused by long translations late in the development cycle is expensive and time-consuming.
+
+#### Awareness for length increase
+
+Always design with translation in mind, assuming text will grow.
+
+- Layout breakage  
+  Fixed-width elements may not accommodate longer text, which can result in overflows, line breaks in awkward places, or text disappearing completely.
+- Truncation  
+  If text is truncated, important instructions or information may be invisible, which can lead to frustration and misuse.
+- UI inconsistency  
+  Different languages require different amounts of space, which makes it difficult to maintain a consistent look and feel.
+
+#### Required space for translation
+
+The exact length of a translation cannot be predicted.
+Some generally accepted rules of thumb:
+
+- Short strings (1-10 characters)  
+  These can often increase by 200-300%. (E.g., `EN:`"On" → `DE:`"Eingeschaltet")
+- Medium Strings (11-20 characters)  
+  Expect an increase of 100-200%. (E.g., `EN:`"Withdraw request" → `DE:`"Anfrage zurückziehen")
+- Longer Strings (21-50 characters)  
+  Expect an increase of 50-100%.
+- Very Long Strings (50+ characters)  
+  Depending on the conciseness of the language, the paragraphs can be 30-50% longer, but sometimes also shorter than the original.
+
+Consider worst case languages: German, Finnish, Greek, and some Slavic languages are known for their long translations.
+
+!!! tip "Provide translation limits to the translation management tool"
+
+    Set text limits on elements with truly constrained space.
+
+    - Buttons
+    - Tab labels
+    - Navigation menu items
+    - Table headers
+    - Input field labels
+
+    Texts can be limited by `Character count` or `Pixel width`.
+
 ### Reuse strings
 
 Before writing a new string, check whether one with the exact same meaning already exists.
@@ -141,6 +220,9 @@ Reusing strings…
 - …increases the efficiency of product development and maintenance.
 - …keeps translation unique in every supported language.
 - …helps identifying duplicated functionality.
+
+However, be careful when changing approved, reused strings to ensure that their meaning is preserved.
+If necessary, introduce a new string.
 
 !!! warning "Context-dependent strings"
 
@@ -159,37 +241,6 @@ Packages based on the [Unicode CLDR](https://cldr.unicode.org/) like `@angular/c
 
 Use these sources to avoid superfluous translation efforts.
 
-### Provide user-friendly language selection
-
-Provide each language name in the target language for the language switcher.
-
-<div class="dos-and-donts" markdown>
-<div class="dos" markdown>
-
-#### Dos
-
-- English
-- Deutsch
-- Français
-- Italiano
-- Ελληνικά
-- 中文
-
-</div>
-<div class="donts" markdown>
-
-#### Don'ts
-
-- 英语
-- 德语
-- 法语
-- 意大利语
-- 希腊
-- 中文
-
-</div>
-</div>
-
 ### Avoid string concatenations
 
 Building sentences from fragments prevents correct grammar in many languages.
@@ -200,15 +251,11 @@ Keep sentences as one unit with placeholders.
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
 
-#### Dos
-
 - EN: `Select site {site} of {company}?`
 - DE: `Standort {site} von {company} auswählen?`
 
 </div>
 <div class="donts" markdown>
-
-#### Don'ts
 
 - EN: `Select site ` + `{site}` + `of` + `{company}` + `?`
 - DE: `Standort auswählen ` + `{site}` + `von` + `{company}` + `?`
@@ -218,6 +265,8 @@ Keep sentences as one unit with placeholders.
 
 <!-- markdownlint-enable MD038 -->
 
+The verb (`EN:`"select" / `DE:`"auswählen") is at the begin of the sentence in English but at the end in German.
+
 ### Define named placeholders
 
 Keep sentences understandable even with placeholders.
@@ -225,14 +274,10 @@ Keep sentences understandable even with placeholders.
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
 
-#### Dos
-
 - `Reactivating site {name} within activation period: {startDate} – {endDate}`
 
 </div>
 <div class="donts" markdown>
-
-#### Don'ts
 
 - `Reactivating site {1} within activation period: {2} – {3}`
 
@@ -248,18 +293,14 @@ Use locale-aware formatting (see [Code tab](#code)), and avoid UX writing depend
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
 
-#### Dos
-
 - Use the localization framework (see [Code tab](#code))
 - Use [placeholders](#define-understandable-placeholders) in text: `Saved on {date}`
 
 </div>
 <div class="donts" markdown>
 
-#### Don'ts
-
 - `02/03/2026` (ambiguous)
-- `1,234` in all languages (ambiguous, is it less or greater than 2?)
+- `1,234` in all languages (ambiguous, less or greater than 2?)
 
 </div>
 </div>
@@ -312,18 +353,41 @@ Pluralization cannot be handled by product code or writing style. Use localizati
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
 
-#### Dos
-
 - `Delete {count} rows?`
 - `Delete {rowName}?`
 
 </div>
 <div class="donts" markdown>
 
-#### Don'ts
-
 - `Delete {count} row(s)?`
 - if (count == 1) {`1 row`} else {`{count} rows`}
+
+</div>
+</div>
+
+### Provide user-friendly language selection
+
+Provide each language name in the target language for the language switcher.
+
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+- English
+- Deutsch
+- Français
+- Italiano
+- Ελληνικά
+- 中文
+
+</div>
+<div class="donts" markdown>
+
+- 英语
+- 德语
+- 法语
+- 意大利语
+- 希腊
+- 中文
 
 </div>
 </div>
