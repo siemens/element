@@ -18,7 +18,7 @@
             "index": "src/index.html",
             "browser": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "src/favicon.png",
               "src/app/examples",

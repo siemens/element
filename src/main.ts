@@ -2,6 +2,8 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
+// Import angular compiler to enable JIT compilation in the live preview even in AOT mode.
+import '@angular/compiler';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
 

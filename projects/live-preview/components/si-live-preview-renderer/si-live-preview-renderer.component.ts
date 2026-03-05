@@ -267,7 +267,10 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
   // patches the template into the loaded component (if any), returns the template to use
   private updateDynamicTemplate(): void {
     if (this.componentTsSampleComponent) {
-      const ann = this.getAnnotation(this.componentTsSampleComponent, Component);
+      const ann = this.componentTsSampleComponent?.decorators
+        ? this.getAnnotationInAot(this.componentTsSampleComponent)
+        : this.getAnnotation(this.componentTsSampleComponent, Component);
+
       if (ann) {
         const supportsLandscape = ann.providers?.includes(LandscapeSupportService);
         this.supportsLandscapeMode.emit(supportsLandscape);
@@ -290,6 +293,10 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
 
   private getAnnotation(obj: any, type: any): any {
     return obj?.__annotations__?.find((a: any) => a instanceof type);
+  }
+
+  private getAnnotationInAot(obj: any): any {
+    return obj.decorators?.[0]?.args?.[0];
   }
 
   private createAbstractComponentClass(ionic: boolean): any {

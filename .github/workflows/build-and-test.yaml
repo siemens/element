@@ -74,6 +74,7 @@ jobs:
       - run: npm run lint:scss
       - run: npm run lint:ng
       - run: npm run lint:playwright:eslint
+      - run: npm run api-goldens:test
       - run: npm run translate:test -- --watch=false --progress=false --coverage
       - run: npm run lib:test -- --watch=false --progress=false --code-coverage
       - run: npm run schematics:test
@@ -85,28 +86,6 @@ jobs:
           name: coverage-reports
           path: dist/coverage
           retention-days: 30
-
-  aot:
-    runs-on: ubuntu-24.04
-    needs:
-      - build
-    steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v6
-        with:
-          node-version: lts/krypton
-          cache: 'npm'
-      - uses: actions/download-artifact@v8
-        with:
-          name: dist
-          path: dist
-      - run: npm config set //code.siemens.com/api/v4/packages/npm/:_authToken $SIEMENS_NPM_TOKEN
-        env:
-          SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
-      - run: npm ci --prefer-offline --no-audit --include=optional
-      - run: npm run prepare-brand
-      - run: npm run build:examples:aot -- --define="maptilerKey='$MAPTILER_KEY'" --define="maptilerUrl='$MAPTILER_URL'"
-      - run: npm run api-goldens:test
 
   e2e:
     runs-on: ubuntu-24.04
