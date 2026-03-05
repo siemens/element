@@ -5,6 +5,8 @@
 import { LEFT_ARROW, RIGHT_ARROW } from '@angular/cdk/keycodes';
 import { ComponentHarness, TestElement, TestKey } from '@angular/cdk/testing';
 
+import { SiTabContentHarness } from './si-tab-content.harness';
+
 export class SiTabsetHarness extends ComponentHarness {
   static hostSelector = '.tab-wrapper';
   private tabset = this.locatorForOptional('si-tabset');
@@ -16,6 +18,7 @@ export class SiTabsetHarness extends ComponentHarness {
   );
   private tabScrollList = this.locatorFor('div.tab-container-buttonbar-list');
   private tabContent = this.locatorFor('div.tab-content:not([hidden])');
+  private externalTabContent = this.locatorForOptional(SiTabContentHarness);
   private activeMenuItem = this.documentRootLocatorFactory().locatorFor('[role="menuitem"].active');
   private menuItems = this.documentRootLocatorFactory().locatorForAll('[role="menuitem"]');
   private tabScrollWrapper = this.locatorFor('[role="tablist"]');
@@ -48,6 +51,14 @@ export class SiTabsetHarness extends ComponentHarness {
     const tabButton = await this.getTabItemButtonAt(index);
     const isActive = await tabButton.getAttribute('aria-selected');
     return isActive === 'true';
+  }
+
+  async getActiveTabId(): Promise<string | null> {
+    return this.activeTabButton().then(tab => tab.getAttribute('id'));
+  }
+
+  async getActiveTabAriaControls(): Promise<string | null> {
+    return this.activeTabButton().then(tab => tab.getAttribute('aria-controls'));
   }
 
   async getCloseButtonForTabAt(index: number): Promise<TestElement> {
@@ -90,6 +101,10 @@ export class SiTabsetHarness extends ComponentHarness {
 
   async getTabContent(): Promise<TestElement> {
     return await this.tabContent();
+  }
+
+  async getExternalTabContent(): Promise<SiTabContentHarness | null> {
+    return await this.externalTabContent();
   }
 
   async getActiveElement(): Promise<TestElement | null> {

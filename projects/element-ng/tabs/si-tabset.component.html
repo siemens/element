@@ -28,7 +28,7 @@
   @let tabContent = this.activeTab()?.tabContent();
   @let activeTab = this.activeTab();
 
-  @if (activeTab) {
+  @if (activeTab && !content()) {
     <div
       class="tab-content"
       role="tabpanel"
