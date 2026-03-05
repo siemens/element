@@ -11,7 +11,6 @@ import { LOG_EVENT } from '@siemens/live-preview';
 @Component({
   selector: 'app-sample',
   imports: [CdkOverlayOrigin, CdkConnectedOverlay, CdkTrapFocus],
-  standalone: true,
   templateUrl: './si-shadow-root.html',
   styleUrl: 'not-element-styles.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

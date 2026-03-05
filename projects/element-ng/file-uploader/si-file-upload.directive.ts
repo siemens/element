@@ -40,7 +40,6 @@ export interface FileUploadError extends UploadFile {
  */
 @Directive({
   selector: 'input[type="file"][siFileUpload]',
-  standalone: true,
   host: {
     '[attr.accept]': 'accept()',
     '[multiple]': 'directoryUpload() || multiple()',

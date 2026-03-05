@@ -11,7 +11,6 @@ import { SiToastNotificationDrawerComponent } from './si-toast-notification-draw
 
 @Component({
   imports: [SiToastNotificationDrawerComponent],
-  standalone: true,
   template: `<si-toast-notification-drawer [toasts]="toasts" /> `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })

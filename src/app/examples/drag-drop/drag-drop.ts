@@ -23,7 +23,6 @@ import { SiMenuModule } from '@siemens/element-ng/menu';
     CdkContextMenuTrigger,
     CdkMenuModule
   ],
-  standalone: true,
   templateUrl: './drag-drop.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
