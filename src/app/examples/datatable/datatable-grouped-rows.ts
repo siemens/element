@@ -11,7 +11,6 @@ import { DatatableComponent, NgxDatatableModule, TableColumn } from '@siemens/ng
 @Component({
   selector: 'app-sample',
   imports: [NgxDatatableModule, SiDatatableModule, SiResizeObserverModule, SiIconModule],
-  standalone: true,
   templateUrl: './datatable-grouped-rows.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
