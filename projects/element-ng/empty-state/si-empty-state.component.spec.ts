@@ -28,4 +28,12 @@ describe('SiEmptyStateComponent', () => {
     expect(element.querySelector('p')!.innerText).toBe('No devices were detected. Please retry!');
     expect(element.querySelector('.element-icon')!.innerHTML).toBeDefined();
   });
+
+  it('should not render icon or description when not provided', () => {
+    componentRef.setInput('heading', 'No Devices');
+    fixture.detectChanges();
+
+    expect(element.querySelector('si-icon')).toBeNull();
+    expect(element.querySelector('p.text-pre-wrap')).toBeNull();
+  });
 });
