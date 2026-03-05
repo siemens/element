@@ -32,14 +32,8 @@ const loginAlert = signal<AlertConfig | undefined>(undefined);
       passwordLabel="FORM.PASSWORD"
       loginButtonLabel="FORM.LOGIN"
       [loading]="loading()"
-      [forgotPasswordLink]="{
-        title: 'FORM.FORGOT_PASSWORD',
-        href: 'https://myid.siemens.com/help/'
-      }"
-      [registerNowLink]="{
-        title: 'FORM.REGISTER_NOW',
-        href: 'https://myid.siemens.com/help/'
-      }"
+      [forgotPasswordLink]="{ href: 'https://myid.siemens.com/help/' }"
+      [registerNowLink]="{ href: 'https://myid.siemens.com/help/' }"
       (valueChanged)="logEvent($event)"
       (login)="login($event)"
     />

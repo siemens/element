@@ -1,5 +1,5 @@
-@let forgotPasswordLink = this.forgotPasswordLink();
-@let registerNowLink = this.registerNowLink();
+@let forgotPasswordLink = this.effectiveForgotPasswordLink();
+@let registerNowLink = this.effectiveRegisterNowLink();
 @let secondStepVisible = this.secondStepVisible();
 
 <form #loginForm [formGroup]="loginCredentials" (ngSubmit)="submit()">

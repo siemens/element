@@ -334,11 +334,15 @@ export interface SiTranslatableKeys {
     // (undocumented)
     'SI_LOGIN_BASIC.BACK'?: string;
     // (undocumented)
+    'SI_LOGIN_BASIC.FORGOT_PASSWORD'?: string;
+    // (undocumented)
     'SI_LOGIN_BASIC.LOGIN'?: string;
     // (undocumented)
     'SI_LOGIN_BASIC.NEXT'?: string;
     // (undocumented)
     'SI_LOGIN_BASIC.PASSWORD'?: string;
+    // (undocumented)
+    'SI_LOGIN_BASIC.REGISTER_NOW'?: string;
     // (undocumented)
     'SI_LOGIN_BASIC.USERNAME'?: string;
     // (undocumented)
