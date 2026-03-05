@@ -7,7 +7,6 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  HostListener,
   inject,
   input,
   model,
@@ -55,7 +54,10 @@ import { themeSupport } from './theme-support';
   selector: 'si-chart-base',
   imports: [SiCustomLegendComponent, SiChartLoadingSpinnerComponent],
   templateUrl: './si-chart-base.component.html',
-  styleUrl: './si-chart-base.component.scss'
+  styleUrl: './si-chart-base.component.scss',
+  host: {
+    '(window:theme-switch)': 'themeSwitch()'
+  }
 })
 export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, OnDestroy {
   /**
@@ -585,7 +587,6 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
   /**
    * Switch theme using echarts api, which does not need reloading the whole chart.
    */
-  @HostListener('window:theme-switch')
   themeSwitch(): void {
     if (!this.chart) {
       return;
