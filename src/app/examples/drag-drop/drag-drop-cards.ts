@@ -17,7 +17,6 @@ import { SiMenuModule } from '@siemens/element-ng/menu';
 @Component({
   selector: 'app-sample',
   imports: [DragDropModule, CdkListbox, CdkOption, SiCardComponent, SiIconModule, SiMenuModule],
-  standalone: true,
   templateUrl: './drag-drop-cards.html',
   styles: `
     .card-size {
