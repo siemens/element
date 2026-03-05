@@ -218,4 +218,41 @@ For selection-based button groups that represent different states or views, use 
 </div>
 ```
 
+**Composition variants**
+
+There are two ways to compose a selection button:
+
+**Input wrapped inside label** — nest the input directly inside a `<label>` element, removing the need for `for`/`id`.
+This variant is required for icon-only buttons to support and display **tooltips** correctly:
+
+```html
+<div class="btn-group" role="group" aria-label="Layout selection">
+  <label>
+    <input type="checkbox" class="btn-check" aria-label="One pane" siTooltip="One pane" checked />
+    <si-icon class="btn btn-icon icon" icon="element-layout-pane-1" />
+  </label>
+
+  <label>
+    <input type="checkbox" class="btn-check" aria-label="Two panes" siTooltip="Two panes" />
+    <si-icon class="btn btn-icon icon" icon="element-layout-pane-2" />
+  </label>
+</div>
+```
+
+**`for` / `id` linking** — place the input before the label and connect them via matching `for` and `id` attributes.
+This is the standard HTML pattern and works well for text labels:
+
+```html
+<div class="btn-group" role="group" aria-label="View selection">
+  <input type="radio" class="btn-check" name="view" id="view-day" checked />
+  <label class="btn" for="view-day">Day</label>
+
+  <input type="radio" class="btn-check" name="view" id="view-week" />
+  <label class="btn" for="view-week">Week</label>
+
+  <input type="radio" class="btn-check" name="view" id="view-month" />
+  <label class="btn" for="view-month">Month</label>
+</div>
+```
+
 <si-docs-component example="buttons/selection-buttons" height="350"></si-docs-component>
