@@ -7,22 +7,31 @@
   [id]="baseId() + '-content'"
   [siAutoCollapsableList]="selectionStrategy.allowMultiple"
 >
-  @for (activeOption of selectedRows(); track activeOption) {
-    @if (activeOption) {
-      <si-select-option
-        siAutoCollapsableListItem
-        [option]="activeOption"
-        [optionTemplate]="optionTemplate()"
-        [class.overflow-hidden]="!selectionStrategy.allowMultiple"
-      />
+  @let selected = selectedRows();
+  @if (selected.length === 1) {
+    <si-select-option
+      [option]="selected[0]"
+      [optionTemplate]="optionTemplate()"
+      [class.overflow-hidden]="!selectionStrategy.allowMultiple"
+    />
+  } @else {
+    @for (activeOption of selectedRows(); track activeOption) {
+      @if (activeOption) {
+        <si-select-option
+          siAutoCollapsableListItem
+          [option]="activeOption"
+          [optionTemplate]="optionTemplate()"
+          [class.overflow-hidden]="!selectionStrategy.allowMultiple"
+        />
+      }
+    } @empty {
+      <div class="text-secondary">{{ placeholder() | translate }}</div>
     }
-  } @empty {
-    <div class="text-secondary">{{ placeholder() | translate }}</div>
-  }
-  @if (selectionStrategy.allowMultiple) {
-    <div #overflowItem="siAutoCollapsableListOverflowItem" siAutoCollapsableListOverflowItem>
-      <div class="overflow-item"> {{ overflowItem.hiddenItemCount }}+</div>
-    </div>
+    @if (selectionStrategy.allowMultiple) {
+      <div #overflowItem="siAutoCollapsableListOverflowItem" siAutoCollapsableListOverflowItem>
+        <div class="overflow-item"> {{ overflowItem.hiddenItemCount }}+</div>
+      </div>
+    }
   }
 </div>
 <si-icon
