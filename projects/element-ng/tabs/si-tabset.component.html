@@ -24,6 +24,9 @@
         <si-icon class="icon m-0" [icon]="icons.elementOptions" />
       </button>
     }
+    <div class="tab-actions">
+      <ng-content select="[tab-actions]" />
+    </div>
   </div>
   @let tabContent = this.activeTab()?.tabContent();
   @let activeTab = this.activeTab();

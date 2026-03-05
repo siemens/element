@@ -1,0 +1,7 @@
+- tablist:
+  - tab "Write"
+  - tab "Preview" [selected]
+- button "Link"
+- button "Settings"
+- tabpanel "Preview":
+  - paragraph
