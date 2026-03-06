@@ -265,7 +265,7 @@ Keep sentences as one unit with placeholders.
 
 <!-- markdownlint-enable MD038 -->
 
-The verb (`EN:`"select" / `DE:`"auswählen") is at the begin of the sentence in English but at the end in German.
+The verb (`EN:`"select" / `DE:`"auswählen") is at the beginning of the sentence in English but at the end in German.
 
 ### Define named placeholders
 
