@@ -344,7 +344,7 @@ export class SiFileUploaderComponent implements OnChanges {
   });
   protected files: ExtUploadFile[] = [];
   protected pending = 0;
-  protected uploading = 0;
+  private uploading = 0;
   protected uploadEnabled = false;
   protected maxFilesReached = false;
 
