@@ -1,7 +1,398 @@
+<!-- markdownlint-disable MD024 MD033 MD046 -->
+
 # Localization
 
-Localization or internationalization (i18n) is the process of designing and preparing your app to be usable in different locales around the world.
-Localization includes the support for different languages as well as different formats for entities like dates, time, decimals, currency, etc.
+Localization (l10n) or internationalization (i18n) is the process of designing and implementing a product for a **specific language and region**.
+
+## Introduction ---
+
+!!! tip "Localization is more than just translating text"
+
+    - It covers translation, but also **formats** (date/time/number), **script direction** (LTR/RTL), and UI behavior in different languages.
+    -  Depending on how it is used, the **same English word** can have multiple meanings and translates to different words in another language.
+    - Languages differ in **word order**, **plural rules**, and **punctuation**.
+    - UI text can **grow** (sometimes a lot), wrap, or break layouts.
+
+<si-docs-component example="si-localization/si-localization" height="650"></si-docs-component>
+
+## UX Writing ---
+
+<!-- markdownlint-disable MD051 -->
+
+UX writers can support [implementation of localization](#code) by understanding, applying, and sharing the following concepts with developers.
+
+<!-- markdownlint-enable MD051 -->
+
+User interface texts are stand-alone, short, and to the point, but they provide little to no context on their own. Thus, translators and AI can only produce a reliable translation if the terms are
+
+- [Dominant](#terms-in-various-uses)
+- [Precise](#terminology)
+- [Unambiguous](#remove-ambiguity)
+
+UX writing combines terminology, [style](ux-text-style-guide/index.md) and form to ensure a consistent UI for specific use cases of a target audience.
+
+!!! tip "Think like a translator"
+
+    Every string will be translated without access to the surrounding UI. Ask yourself: is this text understandable **without visual context**?
+
+    <div class="dos-and-donts" markdown>
+    <div class="dos" markdown>
+
+    - `Delete the template for tool instance IDs`
+
+    </div>
+    <div class="donts" markdown>
+
+    - `Delete complete tool instance ID naming`Deleting a tool instance?<br>Naming something?<br>Is "complete" an adjective or a verb?
+
+    </div>
+    </div>
+
+### Terminology
+
+- The terms are defined by experts (physicists, engineers, lawyers, etc.) from universities and various global companies specializing in specific domains.
+- Standardization bodies (e.g., ISO, EN, UL, BS, DIN, ASHRAE, BACnet) are standardizing common terms.
+- Quasi-industrial standards from individual sources (Haystack, Bric etc.) become international standards only if aligned to official organizations. If not aligned, setting a standard remains wishful thinking.
+
+Common language serves multiple purposes:
+
+- _Clarity of communication_, common understanding between people and companies
+- _Applicability_ across multiple systems/tools/hardware…
+- _Openness_ to third parties, breaking up of silos
+- Foundation for _artificial intelligence_
+
+!!! warning "Usage of terminology databases"
+
+    - Select the terminology database of your domain.
+    - Identify terms not yet defined and request them in the terminology database or by contacting the terminology maintainers of your domain.
+
+#### Terms in various uses
+
+Many terms have various meanings related to a specific context or domain.
+
+!!! info "Meaning of the term `title`"
+
+    A subset of meanings of `title` (incl. dominating meaning :trophy:):
+
+    - a similar distinguishing name of a musical composition or a work of art
+    - :trophy: descriptive name : [appellation](https://www.merriam-webster.com/dictionary/appellation)
+    - :trophy: an appellation of dignity, honor, distinction, or preeminence attached to a person or family by virtue of rank, office, precedent, privilege, attainment, or lands
+    - :trophy: a person holding a title especially of nobility
+    - all the elements constituting legal ownership
+    - a descriptive or general heading (as of a chapter in a book)
+
+    See [Merriam Webster](https://www.merriam-webster.com/dictionary/title) for details
+
+_One meaning always dominates_ regardless of context. That is the meaning that can be used without creating confusion. However, if this dominating meaning does not fit the context, an alternative term (unambiguous synonym) must be used to eliminate misunderstandings.
+
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+- Academic title
+- Heading
+- Name
+- Ownership
+
+</div>
+<div class="donts" markdown>
+
+- Title (professor, doctor xyz)
+- Title of a book (War and peace)
+- Title of an object (Intelligent Valve)
+- Title to an asset (Owned by Mr./Ms. xyz)
+
+</div>
+</div>
+
+In addition, the alternative term substantially increases the probability of correct interpretation by artificial intelligence (as part of translation, machine learning, or any other use).
+
+### Remove ambiguity
+
+The ambiguity can be removed by
+
+- grouping the texts into namespaces by use cases
+- only using the [dominant meaning](#terms-in-various-uses) of the term
+- annotating texts with a description (if supported by translation framework and file format)
+
+#### Grouping of texts
+
+Group texts by use case and provide meaningful (key) names.
+
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+- `ACCOUNT.LOGOUT.CANCEL:` Cancel
+- `ACCOUNT.LOGOUT.HEADING:` Log out
+- `ACCOUNT.LOGOUT.LOG_OUT_NOW:` Log out now?
+- `ACCOUNT.LOGOUT.LOGGING_OUT:` Logging out…
+- `ACCOUNT.SETTINGS.HEADING:` Settings
+- `ACCOUNT.SETTINGS.THEME:` Theme
+- `ACCOUNT.SETTINGS.THEME_OPTIONS.AUTO:` Auto
+- `ACCOUNT.SETTINGS.THEME_OPTIONS.DARK:` Dark
+- `ACCOUNT.SETTINGS.THEME_OPTIONS.LIGHT:` Light
+- `LEGAL.ABOUT:` About
+- `LEGAL.IMPRINT:` Corporate Information
+- `LEGAL.PRIVACY_POLICY:` Privacy Notice
+- `LEGAL.VERSION:` Version `{{version}}`
+
+</div>
+<div class="donts" markdown>
+
+- `ABOUT:` About
+- `AUTO:` Auto
+- `CANCEL:` Cancel
+- `DARK:` Dark
+- `IMPRINT:` Corporate Information
+- `LIGHT:` Light
+- `LOG_OUT_NOW:` Log out now?
+- `LOGGING_OUT:` Logging out…
+- `LOGOUT:` Log out
+- `PRIVACY_POLICY:` Privacy Notice
+- `SETTINGS:` Settings
+- `THEME:` Theme
+- `VERSION:` Version `{{version}}`
+
+</div>
+</div>
+
+### Manage space for translations
+
+Consider how text will appear in different languages when designing user interfaces.
+
+1. Design UI by prioritizing flexible layouts, identify areas with limited text space, and always allocate more space than you think you'll need.
+1. Write English strings, keeping conciseness in mind from the start.
+1. Determine reasonable limits and provide it to the translation management.
+1. Request translations
+1. Test every screen with translated texts
+
+!!! warning "UI refactoring"
+
+    Revisit the UI design or the original string if a translator cannot convey the meaning within the limit.
+
+    Fixing UI issues caused by long translations late in the development cycle is expensive and time-consuming.
+
+#### Awareness for length increase
+
+Always design with translation in mind, assuming text will grow.
+
+- Layout breakage  
+  Fixed-width elements may not accommodate longer text, which can result in overflows, line breaks in awkward places, or text disappearing completely.
+- Truncation  
+  If text is truncated, important instructions or information may be invisible, which can lead to frustration and misuse.
+- UI inconsistency  
+  Different languages require different amounts of space, which makes it difficult to maintain a consistent look and feel.
+
+#### Required space for translation
+
+The exact length of a translation cannot be predicted.
+Some generally accepted rules of thumb:
+
+- Short strings (1-10 characters)  
+  These can often increase by 200-300%. (E.g., `EN:`"On" → `DE:`"Eingeschaltet")
+- Medium Strings (11-20 characters)  
+  Expect an increase of 100-200%. (E.g., `EN:`"Withdraw request" → `DE:`"Anfrage zurückziehen")
+- Longer Strings (21-50 characters)  
+  Expect an increase of 50-100%.
+- Very Long Strings (50+ characters)  
+  Depending on the conciseness of the language, the paragraphs can be 30-50% longer, but sometimes also shorter than the original.
+
+Consider worst case languages: German, Finnish, Greek, and some Slavic languages are known for their long translations.
+
+!!! tip "Provide translation limits to the translation management tool"
+
+    Set text limits on elements with truly constrained space.
+
+    - Buttons
+    - Tab labels
+    - Navigation menu items
+    - Table headers
+    - Input field labels
+
+    Texts can be limited by `Character count` or `Pixel width`.
+
+### Reuse strings
+
+Before writing a new string, check whether one with the exact same meaning already exists.
+
+Reusing strings…
+
+- …reduces the volume sent to translators and lowers cost.
+- …increases the efficiency of product development and maintenance.
+- …keeps translation unique in every supported language.
+- …helps identifying duplicated functionality.
+
+However, be careful when changing approved, reused strings to ensure that their meaning is preserved.
+If necessary, introduce a new string.
+
+!!! warning "Context-dependent strings"
+
+    A single string reused across different contexts may require different translations in different languages.
+
+    In doubt, create a separate string for each use even if the English text looks the same.
+
+### Use translation libraries
+
+Packages based on the [Unicode CLDR](https://cldr.unicode.org/) like `@angular/common` and built-in runtime objects like `Intl` provide complete and high quality translations for:
+
+- language and script names
+- countries and regions
+- currencies
+- months, weekdays and time zones
+
+Use these sources to avoid superfluous translation efforts.
+
+### Avoid string concatenations
+
+Building sentences from fragments prevents correct grammar in many languages.
+Keep sentences as one unit with placeholders.
+
+<!-- markdownlint-disable MD038 -->
+
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+- EN: `Select site {site} of {company}?`
+- DE: `Standort {site} von {company} auswählen?`
+
+</div>
+<div class="donts" markdown>
+
+- EN: `Select site ` + `{site}` + `of` + `{company}` + `?`
+- DE: `Standort auswählen ` + `{site}` + `von` + `{company}` + `?`
+
+</div>
+</div>
+
+<!-- markdownlint-enable MD038 -->
+
+The verb (`EN:`"select" / `DE:`"auswählen") is at the beginning of the sentence in English but at the end in German.
+
+### Define named placeholders
+
+Keep sentences understandable even with placeholders.
+
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+- `Reactivating site {name} within activation period: {startDate} – {endDate}`
+
+</div>
+<div class="donts" markdown>
+
+- `Reactivating site {1} within activation period: {2} – {3}`
+
+</div>
+</div>
+
+### Avoid hard-coding formats
+
+<!-- markdownlint-disable MD051 -->
+
+Use locale-aware formatting (see [Code tab](#code)), and avoid UX writing depending on a single format.
+
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+- Use the localization framework (see [Code tab](#code))
+- Use [placeholders](#define-understandable-placeholders) in text: `Saved on {date}`
+
+</div>
+<div class="donts" markdown>
+
+- `02/03/2026` (ambiguous)
+- `1,234` in all languages (ambiguous, less or greater than 2?)
+
+</div>
+</div>
+
+<!-- markdownlint-enable MD051 -->
+
+### Pluralization
+
+Strings containing numbers may be represented differently in different languages.
+
+!!! info "Pluralization examples"
+
+    Pluralization of the `English` term «apple»:
+
+    - 0: «I own no apple.»
+    - 1: «I own one apple.»
+    - n: «I own four apples.»
+
+    Pluralization of the `Polish` term «Plik» (`English`: «file»):
+
+    - 1 plik
+    - 2, 3, 4 pliki
+    - 5-21 plików
+    - 22-24 pliki
+    - 25-31 plików
+
+#### Linguistic rules
+
+Depending on the language there might be up to 6 forms. Following language specific variability does exist:
+
+| Forms | Grammatical rules                                                                                                   | Languages      |
+| :---: | ------------------------------------------------------------------------------------------------------------------- | -------------- |
+|   1   | No distinction between the singular and plural form                                                                 | e.g. Japanese  |
+|   2   | Singular used for one only                                                                                          | e.g. English   |
+|   2   | Singular used for zero and one                                                                                      | e.g. French    |
+|   3   | Special case for zero                                                                                               | Latvian        |
+|   3   | Special cases for one and two                                                                                       | Gaelic (Irish) |
+|   3   | Special case for numbers ending in `00` or `[2-9][0-9]`                                                             | Romanian       |
+|   3   | Special case for numbers ending in `1[2-9]`                                                                         | Lithuanian     |
+|   3   | Special cases for numbers ending in `1` and `2`, `3`, `4`, except those ending in `1[1-4]`                          | e.g. Russian   |
+|   3   | Special cases for `1` and `2`, `3`, `4`                                                                             | e.g. Czech     |
+|   3   | Special case for one and some numbers ending in `2`, `3`, or `4`                                                    | Polish         |
+|   4   | Special case for one and all numbers ending in `02`, `03`, or `04`                                                  | Slovenian      |
+|   6   | Special cases for one, two, all numbers ending in `02`, `03`, … `10`, all numbers ending in `11` … `99`, and others | Arabic         |
+
+#### Use localization to handle pluralization
+
+Pluralization cannot be handled by product code or writing style. Use localization (e.g., ICU or framework plural rules) instead.
+
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+- `Delete {count} rows?`
+- `Delete {rowName}?`
+
+</div>
+<div class="donts" markdown>
+
+- `Delete {count} row(s)?`
+- if (count == 1) {`1 row`} else {`{count} rows`}
+
+</div>
+</div>
+
+### Provide user-friendly language selection
+
+Provide each language name in the target language for the language switcher.
+
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+- English
+- Deutsch
+- Français
+- Italiano
+- Ελληνικά
+- 中文
+
+</div>
+<div class="donts" markdown>
+
+- 英语
+- 德语
+- 法语
+- 意大利语
+- 希腊
+- 中文
+
+</div>
+</div>
+
+## Code ---
 
 Angular supports localization as described in the [i18n](https://angular.dev/guide/i18n) guide and is supported by [pipes](https://angular.dev/guide/templates/pipes).
 Angular applies a compile time localization concept. It does not support the change of locales (language and formats) at runtime. Instead, for each locale
@@ -20,9 +411,7 @@ the inputs changes. This means they do not re-render when the `LOCALE_ID` change
 
 We recommend to follow the same behavior as users changes to locales are seldom. As a consequence we need to reload the web application on locale changes.
 
-<si-docs-component example="si-localization/si-localization" height="650"></si-docs-component>
-
-## Locales in Element
+### Locales in Element
 
 Element provides the service `SiLocaleService` to set the current locale like `en`, `fr` or a
 variant like `fr-CA` or `en-GB` as well as the available locales of the application. The service is
@@ -70,7 +459,7 @@ export const APP_CONFIG: ApplicationConfig = {
 
 In addition, `fallbackEnabled` enables ngx-translate to use the translation from the `defaultLocale` language when a translate value is missing.
 
-## Persisting locales using SiLocaleStore
+### Persisting locales using SiLocaleStore
 
 Setting the `SiLocaleService.locale = 'fr'` changes the language and forces a reload of the browser window. The service uses
 the `SiLocaleStore` to persist the new locale. After reloading the application, the service uses the `SiLocaleStore` to load
@@ -108,7 +497,7 @@ export const APP_CONFIG: ApplicationConfig = {
 
 You can also combine a Store that caches the last value in the localStore and loads in parallel the current value from a backend.
 
-## Runtime locales changes using impure pipes
+### Runtime locales changes using impure pipes
 
 If you need to support locale changes without reloading, we recommend to extend the Angular pipes and set the `pure` property to false.
 
@@ -120,13 +509,13 @@ If you need to support locale changes without reloading, we recommend to extend 
 export class DateImpurePipe extends DatePipe implements PipeTransform {}
 ```
 
-## Translation in Element
+### Translation in Element
 
 Element >= v43 includes a translation abstraction layer which allows us to support multiple translation frameworks.
 There is no hard dependency to a specific translation library anymore. Therefore, by default, translation keys
 (`TranslatableString`) will no longer be translated.
 
-### Supported Frameworks
+#### Supported Frameworks
 
 If a translation framework is used, Element must be configured to use this framework as well.
 For module-based applications, the respective module must be imported in the root module.
@@ -141,8 +530,6 @@ Supported frameworks:
 | `ngx-translate`     | `@siemens/element-translate-ng/ngx-translate`    | `SiTranslateNgxTModule`       | `provideNgxTranslateForElement` |                                                                                                                |
 | `@angular/localize` | `@siemens/element-translate-ng/angular-localize` | `SiTranslateNgLocalizeModule` | `provideNgLocalizeForElement`   | The support is experimental. Please reach out to us via an issue, if you plan to use this in a productive app. |
 
-<!-- markdownlint-enable MD013 -->
-
 Remember, this is only the activation of the respective layer for Element, you still need to import and configure
 the framework in your application as you would normally do.
 
@@ -152,13 +539,13 @@ If no framework is configured, Element will fall back to English.
 
     Support for `@ngneat/transloco` and other frameworks might be added in the future on request.
 
-### Overriding default text keys globally
+#### Overriding default text keys globally
 
 Element provides the possibility to override text keys on a global level. This can be used to change the default value of
 text keys that are used multiple times within an application but have most likely the same value. This is usually the case
 for static labels like `Close`, `Ok`, ...
 
-All keys that can be overridden can be found [here.](https://element.siemens.io/api/element-ng/types/SiTranslatableKeys)
+See [overridable strings from Element](https://element.siemens.io/api/element-ng/types/SiTranslatableKeys) for details.
 
 The overriding of text keys is available for every framework except `@angular/localize` due to technical limitations.
 
@@ -177,7 +564,7 @@ import { provideSiTranslatableOverrides } from '@siemens/element-ng/translate';
 export class AppModule {}
 ```
 
-### How it works
+#### How it works
 
 Within Element, a `TranslatableString` is declared using a syntax based on `@angular/localize`:
 
@@ -199,7 +586,7 @@ be [overridden by a global provider](#overriding-default-text-keys-globally).
 The `translate` pipe is needed for frameworks like `ngx-translate` where translation happens at runtime.
 It resolves a `TranslatableString` generated by `$localize` using an actual translation framework.
 
-### Default text with @ngx-translate/core
+#### Default text with @ngx-translate/core
 
 During application development, translations may be missing for certain translation keys, especially when adding new features or supporting additional languages. Without proper handling, missing translations can result in translation keys being displayed directly to users instead of meaningful text.
 
@@ -232,7 +619,7 @@ export const appConfig: ApplicationConfig = {
 };
 ```
 
-### Adding Cache busting feature to the translation \*.json files
+#### Adding Cache busting feature to the translation \*.json files
 
 By default, the `*.json` files used for translation, are not hashed by Webpack during the build and may cause caching issues when newer versions of the applications are deployed.
 To counter this, we can either use the bundler to load translations
@@ -261,6 +648,6 @@ Note that this hash key will only be appended to the translation based JSON file
 
 <si-docs-types></si-docs-types>
 
-### Translatable keys in Element
+#### Translatable keys in Element
 
 <si-docs-type name="SiTranslatableKeys"></si-docs-type>
