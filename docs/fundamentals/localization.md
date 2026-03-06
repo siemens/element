@@ -23,7 +23,7 @@ UX writers can support [implementation of localization](#code) by understanding,
 
 <!-- markdownlint-enable MD051 -->
 
-User interface texts are stand-alone, short and to the point, but without context. Thus, translators and AI can produce a reliable translation only, the terms must be
+User interface texts are stand-alone, short, and to the point, but they provide little to no context on their own. Thus, translators and AI can only produce a reliable translation if the terms are
 
 - [Dominant](#terms-in-various-uses)
 - [Precise](#terminology)
@@ -74,16 +74,16 @@ Many terms have various meanings related to a specific context or domain.
 
     A subset of meanings of `title` (incl. dominating meaning :trophy:):
 
-    - **1 b:** a similar distinguishing name of a musical composition or a work of art
-    - **3:** :trophy: descriptive name : [appellation](https://www.merriam-webster.com/dictionary/appellation)
-    - **4 a:** :trophy: an appellation of dignity, honor, distinction, or preeminence attached to a person or family by virtue of rank, office, precedent, privilege, attainment, or lands
-    - **4 b:** :trophy: a person holding a title especially of nobility
-    - **6 c:** all the elements constituting legal ownership
-    - **7 a:** a descriptive or general heading (as of a chapter in a book)
+    - a similar distinguishing name of a musical composition or a work of art
+    - :trophy: descriptive name : [appellation](https://www.merriam-webster.com/dictionary/appellation)
+    - :trophy: an appellation of dignity, honor, distinction, or preeminence attached to a person or family by virtue of rank, office, precedent, privilege, attainment, or lands
+    - :trophy: a person holding a title especially of nobility
+    - all the elements constituting legal ownership
+    - a descriptive or general heading (as of a chapter in a book)
 
     See [Merriam Webster](https://www.merriam-webster.com/dictionary/title) for details
 
-_One meaning always dominates_ regardless of context. That is the meaning that can be used without creating confusion. However, if that meaning does not fit the context, an alternative term (unambiguous synonym) must be used to eliminate misunderstandings.
+_One meaning always dominates_ regardless of context. That is the meaning that can be used without creating confusion. However, if this dominating meaning does not fit the context, an alternative term (unambiguous synonym) must be used to eliminate misunderstandings.
 
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
