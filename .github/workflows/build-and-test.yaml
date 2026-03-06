@@ -41,9 +41,19 @@ jobs:
       - run: npm run prepare-brand
       - run: npm run build:all:update-translatable-keys # Output is needed in dist for providing default translations
       - run: git diff --exit-code "projects/**/*-translatable-keys.interface.ts"
-      - run: npm run build:examples -- --define="maptilerKey='$MAPTILER_KEY'" --define="maptilerUrl='$MAPTILER_URL'"
-      - run: npm run dashboards-demo:build-all -- --progress=false
-      - run: npm run dashboards-demo:build-all:esm
+      - name: Build examples and dashboards demos
+        run: |
+          failed=0
+          npm run build:examples -- --define="maptilerKey='$MAPTILER_KEY'" --define="maptilerUrl='$MAPTILER_URL'" &
+          pid1=$!
+          npm run dashboards-demo:build-all -- --progress=false &
+          pid2=$!
+          npm run dashboards-demo:build-all:esm &
+          pid3=$!
+          wait $pid1 || failed=1
+          wait $pid2 || failed=1
+          wait $pid3 || failed=1
+          exit $failed
 
       - uses: actions/upload-artifact@v7
         with:
@@ -70,22 +80,59 @@ jobs:
           name: dist
           path: dist
       - run: npm ci --prefer-offline --no-audit
-      - run: npm run lint:format
-      - run: npm run lint:scss
-      - run: npm run lint:ng
-      - run: npm run lint:playwright:eslint
-      - run: npm run api-goldens:test
-      - run: npm run translate:test -- --watch=false --progress=false --coverage
-      - run: npm run lib:test -- --watch=false --progress=false --code-coverage
-      - run: npm run schematics:test
-      - run: npm run charts:test -- --watch=false --progress=false
-      - run: npm run dashboards:test -- --watch=false --progress=false
-      - run: npm run maps:test -- --watch=false --progress=false
+      - name: Run linters
+        run: |
+          failed=0
+          npm run lint:format &
+          pid1=$!
+          npm run lint:scss &
+          pid2=$!
+          npm run lint:ng &
+          pid3=$!
+          npm run lint:playwright:eslint &
+          pid4=$!
+          wait $pid1 || failed=1
+          wait $pid2 || failed=1
+          wait $pid3 || failed=1
+          wait $pid4 || failed=1
+          exit $failed
+      - name: Run tests
+        run: |
+          failed=0
+          npm run schematics:test &
+          pid1=$!
+          npm run translate:test -- --watch=false --progress=false --coverage
+          npm run lib:test -- --watch=false --progress=false --code-coverage
+          npm run charts:test -- --watch=false --progress=false
+          npm run dashboards:test -- --watch=false --progress=false
+          npm run maps:test -- --watch=false --progress=false
+          wait $pid1 || failed=1
+          exit $failed
       - uses: actions/upload-artifact@v7
         with:
           name: coverage-reports
           path: dist/coverage
           retention-days: 30
+
+  goldens:
+    runs-on: ubuntu-24.04
+    needs:
+      - build
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: lts/krypton
+          cache: 'npm'
+      - uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist
+      - run: npm config set //code.siemens.com/api/v4/packages/npm/:_authToken $SIEMENS_NPM_TOKEN
+        env:
+          SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
+      - run: npm ci --prefer-offline --no-audit --include=optional
+      - run: npm run api-goldens:test
 
   e2e:
     runs-on: ubuntu-24.04
