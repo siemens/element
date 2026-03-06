@@ -70,11 +70,6 @@ jobs:
           name: dist
           path: dist
       - run: npm ci --prefer-offline --no-audit
-      - run: npm run lint:format
-      - run: npm run lint:scss
-      - run: npm run lint:ng
-      - run: npm run lint:playwright:eslint
-      - run: npm run api-goldens:test
       - run: npm run translate:test -- --watch=false --progress=false --coverage
       - run: npm run lib:test -- --watch=false --progress=false --code-coverage
       - run: npm run schematics:test
@@ -108,6 +103,30 @@ jobs:
           path: dist/coverage
           retention-days: 30
 
+  verification:
+    runs-on: ubuntu-24.04
+    needs:
+      - build
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: lts/krypton
+          cache: 'npm'
+      - uses: actions/download-artifact@v8
+        with:
+          name: dist
+          path: dist
+      - run: npm config set //code.siemens.com/api/v4/packages/npm/:_authToken $SIEMENS_NPM_TOKEN
+        env:
+          SIEMENS_NPM_TOKEN: ${{ secrets.SIEMENS_NPM_TOKEN }}
+      - run: npm ci --prefer-offline --no-audit --include=optional
+      - run: npm run lint:format
+      - run: npm run lint:scss
+      - run: npm run lint:ng
+      - run: npm run lint:playwright:eslint
+      - run: npm run api-goldens:test
+
   e2e:
     runs-on: ubuntu-24.04
     container: mcr.microsoft.com/playwright:v1.57.0-noble
@@ -116,8 +135,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shardIndex: [1, 2]
-        shardTotal: [2]
+        shardIndex: [1, 2, 3]
+        shardTotal: [3]
     steps:
       # As we are in another container, we need to install LFS manually.
       # See: https://github.com/orgs/community/discussions/160433
