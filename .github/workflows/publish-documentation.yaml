@@ -25,6 +25,11 @@ jobs:
         with:
           name: pages
           path: dist/design
+      - uses: actions/download-artifact@v8
+        with:
+          name: coverage-reports
+          path: coverage-reports
+      - run: cp coverage-reports/coverage-summary.json dist/design/coverage-summary.json
       - uses: actions/upload-pages-artifact@v4
         with:
           path: 'dist/design'
