@@ -93,8 +93,7 @@ import {
     SiDashboardCardComponent,
     SiDashboardComponent,
     :
-  ],
-  standalone: true
+  ]
 })
 ```
 

@@ -75,7 +75,6 @@ Or simply _import_ the `SiMapComponent` in your standalone component.
 ```ts
 @Component({
   selector: 'app-map',
-  standalone: true,
   imports: [SiMapComponent],
   templateUrl: './sample.component.html',
   host: { class: 'h-100' }
