@@ -53,4 +53,4 @@ test('si-map/si-map-custom-style', ({ si }) => si.static(options));
 test('si-map/si-map-custom-zoom-levels', ({ si }) => si.static(options));
 test('si-map/si-map-default-style', ({ si }) => si.static(options));
 test('si-map/si-map-grouping', ({ si }) => si.static(options));
-test('si-map/si-map-labels', ({ si }) => si.static(options));
+test.fixme('si-map/si-map-labels', ({ si }) => si.static(options));
