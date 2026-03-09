@@ -2,7 +2,6 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-
 import { LocationStrategy } from '@angular/common';
 import {
   booleanAttribute,
