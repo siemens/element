@@ -8,7 +8,7 @@ import { SiTabComponent, SiTabsetComponent } from '@siemens/element-ng/tabs';
 @Component({
   selector: 'app-sample',
   imports: [SiTabsetComponent, SiTabComponent],
-  templateUrl: './si-tabs-arrow.html',
+  templateUrl: './si-tabs-menu.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { class: 'p-5' }
 })
