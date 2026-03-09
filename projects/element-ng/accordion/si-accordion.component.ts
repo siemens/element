@@ -72,9 +72,9 @@ export class SiAccordionComponent implements AfterContentInit, OnChanges {
   }
 
   private calcFullHeight(): void {
-    if (this.panels?.length) {
+    if (this.panels()?.length) {
       const height = (this.element.nativeElement as HTMLElement).offsetHeight;
-      this.responsive = !this.hcollapsed() && height < this.panels.length * PANEL_MIN_HEIGHT;
+      this.responsive = !this.hcollapsed() && height < this.panels().length * PANEL_MIN_HEIGHT;
       this.service.fullHeight.set(this.fullHeight() && !this.responsive);
     }
   }

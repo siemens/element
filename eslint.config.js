@@ -118,6 +118,8 @@ export const templateConfig = defineConfig({
     '@angular-eslint/template/no-inline-styles': ['off'],
     '@angular-eslint/template/interactive-supports-focus': ['off'],
     '@angular-eslint/template/prefer-template-literal': ['off'],
+    '@angular-eslint/template/no-non-null-assertion': ['off'],
+    '@angular-eslint/template/no-any': ['off'],
     '@angular-eslint/template/elements-content': [
       'error',
       {
