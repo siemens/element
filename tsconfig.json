@@ -17,6 +17,7 @@
     "strict": true,
     "allowUmdGlobalAccess": true,
     "isolatedModules": true,
+    "types": [],
     "paths": {
       "@siemens/element-ng": ["projects/element-ng/public-api.ts"],
       "@siemens/element-ng/*": ["projects/element-ng/*/index.ts"],
