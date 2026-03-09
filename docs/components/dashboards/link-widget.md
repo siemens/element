@@ -41,8 +41,7 @@ import { SiLinkWidgetComponent } from '@siemens/element-ng/dashboard';
 
 @Component({
   :
-  imports: [SiLinkWidgetComponent],
-  standalone: true
+  imports: [SiLinkWidgetComponent]
 })
 ```
 
