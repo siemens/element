@@ -164,7 +164,7 @@ export class SiDatepickerOverlayComponent implements OnChanges, OnInit, OnDestro
       const config = this.config();
 
       this.firstDatepickerConfig.set(
-        !this.isTwoMonthDateRange ? config : { ...config, hideLabels: true }
+        !this.isTwoMonthDateRange() ? config : { ...config, hideLabels: true }
       );
 
       this.secondDatepickerConfig.set({ ...config, hideLabels: true });
