@@ -71,8 +71,7 @@ The main purpose of a notification is to redirect users to the relevant page, ta
 import { SiNotificationItemComponent } from '@siemens/element-ng/notification-item';
 
 @Component({
-  imports: [SiNotificationItemComponent],
-  standalone: true
+  imports: [SiNotificationItemComponent]
 })
 ```
 

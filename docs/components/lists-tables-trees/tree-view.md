@@ -224,8 +224,7 @@ items as root elements or as children of an existing tree item:
     <si-tree-view class="vh-100" [items]="items"></si-tree-view>
   `,
   imports: [SiTreeViewModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent {
   @ViewChild(SiTreeViewComponent, { static: true })

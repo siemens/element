@@ -69,8 +69,7 @@ import { SiTimelineWidgetComponent } from '@siemens/element-ng/dashboard';
 
 @Component({
   :
-  imports: [SiTimelineWidgetComponent],
-  standalone: true
+  imports: [SiTimelineWidgetComponent]
 })
 ```
 

@@ -76,7 +76,6 @@ import { SiPhotoUploadComponent } from '@siemens/element-ng/photo-upload';
 @Component({
   selector: 'app-sample',
   template: `<si-photo-upload />`,
-  standalone: true,
   imports: [SiPhotoUploadComponent]
 })
 export class SampleComponent {}
@@ -98,7 +97,6 @@ import { SiPhotoUploadComponent } from '@siemens/element-ng/photo-upload';
 @Component({
   selector: 'app-sample',
   template: `<si-photo-upload />`,
-  standalone: true,
   imports: [SiPhotoUploadComponent],
   styles:
     'si-photo-upload { --si-photo-upload-photo-width: 300px; --si-photo-upload-photo-height: 300px; }'
@@ -134,7 +132,6 @@ import { ImageCropperComponent, ImageCroppedEvent } from 'ngx-image-cropper';
       />
     </si-image-cropper-style>
   `,
-  standalone: true,
   imports: [ImageCropperComponent, SiImageCropperStyleComponent]
 })
 export class SampleComponent {

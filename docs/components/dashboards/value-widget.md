@@ -97,8 +97,7 @@ import { SiValueWidgetComponent } from '@siemens/element-ng/dashboard';
 
 @Component({
   :
-  imports: [SiValueWidgetComponent],
-  standalone: true
+  imports: [SiValueWidgetComponent]
 })
 ```
 

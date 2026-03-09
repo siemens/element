@@ -242,7 +242,6 @@ import {
 @Component({
   selector: 'app-sample',
   template: '<si-select [optionSource]="myOptionSource" [formControl]="control" />',
-  standalone: true,
   imports: [SiSelectComponent, SiSelectSingleValueDirective, SiSelectLazyOptionsDirective]
 })
 export class SampleComponent {
@@ -259,7 +258,6 @@ Single selection:
 
 ```ts
 @Component({
-  standalone: true,
   selector: 'app-sample',
   imports: [SiSelectComponent, SiSelectSimpleOptionsDirective, SiSelectSingleValueDirective],
   template: '<si-select [options]="optionsList" [(value)]="selected" />'
@@ -285,7 +283,6 @@ Multi selection:
 
 ```ts
 @Component({
-  standalone: true,
   selector: 'app-sample',
   imports: [SiSelectComponent, SiSelectSimpleOptionsDirective, SiSelectMultiValueDirective],
   template: '<si-select multi [options]="optionsList" [(value)]="multiValue" />'
