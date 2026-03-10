@@ -2,11 +2,12 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { CartesianChartSeries } from '@siemens/charts-ng/cartesian';
 import { CircleChartSeries } from '@siemens/charts-ng/circle';
 import { ChartXAxis, ChartYAxis } from '@siemens/charts-ng/common';
-import { BehaviorSubject, combineLatest, map, Observable, of, shareReplay } from 'rxjs';
+import { EventBus, EventTypes } from '@siemens/dashboards-ng';
+import { combineLatest, map, Observable, of, shareReplay, startWith } from 'rxjs';
 
 export interface CartesianChartData {
   series: CartesianChartSeries[];
@@ -19,13 +20,16 @@ export interface Filter {
   severity?: string;
 }
 
+export type CustomEventTypes = EventTypes<Filter>;
+
 export const days = ['All week', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
 export const severity = ['All levels', 'Success', 'Warning', 'Danger'];
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
-  readonly filter = new BehaviorSubject<Filter>({});
+  eventBus = inject(EventBus<CustomEventTypes>);
 
+  readonly filter = this.eventBus.on('filter').pipe(startWith<Filter>(this.eventBus.currentEventsState?.filter ?? {}));
   private getCartesianChartData(type: string): Observable<CartesianChartData> {
     const data: CartesianChartData = {
       xAxis: {
@@ -53,17 +57,17 @@ export class DataService {
     };
 
     return combineLatest([of(data), this.filter]).pipe(
-      map<[CartesianChartData, Filter], CartesianChartData>(([result, filter]) => {
+      map<[CartesianChartData, Filter | null], CartesianChartData>(([result, filter]) => {
         const filteredData = JSON.parse(JSON.stringify(result));
         filteredData.series.forEach((seriesEntry: any) => (seriesEntry.type = type));
 
-        if (filter.severity && filter.severity !== severity[0]) {
+        if (filter?.severity && filter.severity !== severity[0]) {
           filteredData.series = filteredData.series.filter(
-            (entry: any) => entry.name === this.filter.value.severity
+            (entry: any) => entry.name === filter.severity
           );
         }
 
-        if (filter.days && !filter.days.includes(days[0])) {
+        if (filter?.days && !filter.days.includes(days[0])) {
           const index = days.indexOf(filter.days) - 1;
           filteredData.series.forEach((seriesEntry: any) => {
             seriesEntry.data = [seriesEntry.data![index]];

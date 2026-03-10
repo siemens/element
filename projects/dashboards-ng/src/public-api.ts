@@ -18,3 +18,5 @@ export * from './services/federation-loader.util';
 
 export * from '@siemens/dashboards-ng/translate';
 export * from './public-api.module';
+export * from './event-bus';
+export * from './event-bus.util';
