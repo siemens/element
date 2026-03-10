@@ -37,6 +37,7 @@ export class SiTabLinkComponent extends SiTabBaseDirective {
 // @public
 export class SiTabsetComponent {
     constructor();
+    readonly contentOverflowAuto: _angular_core.InputSignalWithTransform<boolean, unknown>;
 }
 
 // (No @packageDocumentation comment for this package)

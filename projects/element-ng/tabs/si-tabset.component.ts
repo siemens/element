@@ -6,6 +6,7 @@ import { FocusKeyManager } from '@angular/cdk/a11y';
 import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { NgTemplateOutlet } from '@angular/common';
 import {
+  booleanAttribute,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -13,6 +14,7 @@ import {
   effect,
   inject,
   INJECTOR,
+  input,
   signal
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
@@ -54,6 +56,12 @@ import { SI_TABSET } from './si-tabs-tokens';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiTabsetComponent {
+  /**
+   * When set, the overflowing content inside the tab will automatically scroll
+   * @defaultValue false
+   **/
+  readonly contentOverflowAuto = input(false, { transform: booleanAttribute });
+
   protected readonly icons = addIcons({ elementOptions });
 
   /** @internal */

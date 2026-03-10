@@ -30,9 +30,11 @@
 
   @if (activeTab) {
     <div
-      class="tab-content"
+      class="tab-content focus-inside"
       role="tabpanel"
       [id]="'content-' + activeTab.tabId"
+      [class.tab-scroll]="contentOverflowAuto()"
+      [tabIndex]="contentOverflowAuto() ? '0' : null"
       [attr.aria-labelledby]="'tab-' + activeTab.tabId"
     >
       @if (tabContent) {
