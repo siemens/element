@@ -133,6 +133,17 @@ The component includes a `selectable` input that enables selection state on the 
 
 <si-docs-api component="SiActionCardComponent"></si-docs-api>
 
+### Outline cards
+
+Outline cards are a variation of cards with a border and no background color.
+Every card can be turned into an outline card by adding the `.card-outline` class to the card container.
+
+```html
+<si-card class="card-outline"> ... </si-card>
+```
+
+<si-docs-component example="si-card/card-variants" height="300"></si-docs-component>
+
 ### Native HTML markup
 
 The pure CSS approach structures a card into three distinct sections for optimal content organization:
