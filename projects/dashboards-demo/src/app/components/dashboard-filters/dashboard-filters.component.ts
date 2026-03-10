@@ -5,8 +5,9 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SiEventBus } from '@siemens/dashboards-ng';
 
-import { DataService, days, severity } from '../../widgets/charts/data.service';
+import { days, severity } from '../../widgets/charts/data.service';
 
 @Component({
   selector: 'app-dashboard-filters',
@@ -21,7 +22,7 @@ export class DashboardFiltersComponent implements OnInit {
   readonly severity = severity;
 
   private formBuilder = inject(FormBuilder);
-  private dataService = inject(DataService);
+  private eventBus = inject(SiEventBus);
   private destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
@@ -31,7 +32,10 @@ export class DashboardFiltersComponent implements OnInit {
     };
     this.form = this.formBuilder.group(formControls);
     this.form.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(form => {
-      this.dataService.filter.next({ days: form.day, severity: form.severity });
+      this.eventBus.emit('filter', [
+        { key: 'days', value: form.day },
+        { key: 'severity', value: form.severity }
+      ]);
     });
   }
 }
