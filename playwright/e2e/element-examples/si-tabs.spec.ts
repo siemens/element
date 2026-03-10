@@ -8,6 +8,7 @@ test.describe('si-tabs', () => {
   const example = 'si-tabs/si-tabs';
   const routingExample = 'si-tabs/si-tabs-routing';
   const iconsExample = 'si-tabs/si-tabs-icons';
+  const scrollExample = 'si-tabs/si-tabs-flex';
 
   test(example, async ({ page, si }) => {
     await si.visitExample(example);
@@ -62,5 +63,11 @@ test.describe('si-tabs', () => {
   test(example + ' icons', async ({ page, si }) => {
     await si.visitExample(iconsExample);
     await si.runVisualAndA11yTests('tabs-icons');
+  });
+
+  test(example + ' scroll', async ({ page, si }) => {
+    await page.setViewportSize({ width: 800, height: 400 });
+    await si.visitExample(scrollExample);
+    await si.runVisualAndA11yTests('tabs-scroll');
   });
 });
