@@ -4,14 +4,20 @@
  */
 
 import { AsyncPipe } from '@angular/common';
-import { Component, input, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { SiChartCartesianComponent } from '@siemens/charts-ng/cartesian';
-import { WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
+import { EventBus, WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
-import { CartesianChartData } from 'projects/dashboards-demo/src/app/widgets/charts/data.service';
-import { Observable, of } from 'rxjs';
+import {
+  CartesianChartData,
+  CustomEventTypes,
+  days,
+  Filter,
+  severity
+} from 'projects/dashboards-demo/src/app/widgets/charts/data.service';
+import { combineLatest, map, Observable, of, shareReplay, startWith } from 'rxjs';
 
 export interface WidgetChartCartesianConfig {
   stacked: boolean;
@@ -39,7 +45,9 @@ export class ChartWidgetComponent implements OnInit, WidgetInstance {
   ];
 
   data!: Observable<CartesianChartData>;
+  private eventBus = inject(EventBus<CustomEventTypes>);
 
+  readonly filter = this.eventBus.on('filter').pipe(startWith<Filter>(this.eventBus.currentEventsState?.filter ?? {})); //new BehaviorSubject<Filter>({});
   ngOnInit(): void {
     this.data = this.getCartesianChartData();
   }
@@ -74,6 +82,26 @@ export class ChartWidgetComponent implements OnInit, WidgetInstance {
       ]
     };
 
-    return of(data);
+    return combineLatest([of(data), this.filter]).pipe(
+      map<[CartesianChartData, Filter | null], CartesianChartData>(([result, filter]) => {
+        const filteredData = JSON.parse(JSON.stringify(result));
+
+        if (filter?.severity && filter.severity !== severity[0]) {
+          filteredData.series = filteredData.series.filter(
+            (entry: any) => entry.name === filter.severity
+          );
+        }
+
+        if (filter?.days && !filter.days.includes(days[0])) {
+          const index = days.indexOf(filter.days) - 1;
+          filteredData.series.forEach((seriesEntry: any) => {
+            seriesEntry.data = [seriesEntry.data![index]];
+          });
+          filteredData.xAxis.data = [filteredData.xAxis.data[index]];
+        }
+        return filteredData;
+      }),
+      shareReplay()
+    );
   }
 }
