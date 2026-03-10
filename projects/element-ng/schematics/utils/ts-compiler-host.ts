@@ -55,6 +55,9 @@ export const createTreeAwareCompilerHost = (
   host.directoryExists = path => {
     const treePath = toTreePath(path);
     if (treePath) {
+      if (tree.exists(treePath) && tree.get(treePath) !== null) {
+        return false;
+      }
       const dir = tree.getDir(treePath);
       if (dir.subfiles.length || dir.subdirs.length) {
         return true;
