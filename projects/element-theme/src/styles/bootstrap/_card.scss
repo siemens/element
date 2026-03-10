@@ -127,6 +127,7 @@ button.card {
   background-color: variables.$card-cap-bg;
   line-height: typography.$si-font-size-h5;
 
+  + * .card-body, // for action cards, where we wrap the content
   + .card-body {
     margin-block-start: map.get(spacers.$spacers, 2) * -1;
     padding-block-start: map.get(spacers.$spacers, 2);
