@@ -1,0 +1,49 @@
+<div class="p-6">
+  <div class="position-relative w-100 border p-6">
+    <div class="row">
+      <div class="col-sm-6 mb-6">
+        <si-card class="card-size mb-6" heading="Normal" [primaryActions]="primaryActions">
+          <div class="card-body" body>
+            <p class="card-text"> Regular card with standard styling. </p>
+          </div>
+        </si-card>
+        <button si-action-card type="button" class="card-size mb-6 w-100" heading="Action">
+          <div class="card-body" body>
+            <p class="card-text"> Action card with selectable styling. </p>
+          </div>
+        </button>
+        <si-card class="card-size accent-info" heading="Accent">
+          <div class="card-body" body>
+            <p class="card-text"> Accent card with info marker. </p>
+          </div>
+        </si-card>
+      </div>
+      <div class="col-sm-6 mb-6">
+        <si-card
+          class="card-size card-outline mb-6"
+          heading="Normal outline"
+          [primaryActions]="primaryActions"
+        >
+          <div class="card-body" body>
+            <p class="card-text"> Regular card with outline styling. </p>
+          </div>
+        </si-card>
+        <button
+          si-action-card
+          type="button"
+          class="card-size card-outline mb-6 w-100"
+          heading="Action outline"
+        >
+          <div class="card-body" body>
+            <p class="card-text"> Action card with outline styling. </p>
+          </div>
+        </button>
+        <si-card class="card-size accent-info card-outline" heading="Accent outline">
+          <div class="card-body" body>
+            <p class="card-text"> Accent card with outline styling. </p>
+          </div>
+        </si-card>
+      </div>
+    </div>
+  </div>
+</div>
