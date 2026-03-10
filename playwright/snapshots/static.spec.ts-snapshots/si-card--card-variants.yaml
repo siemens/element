@@ -1,0 +1,14 @@
+- text: Normal
+- paragraph: Regular card with standard styling.
+- button "Action":
+  - text: ""
+  - paragraph: Action card with selectable styling.
+- text: Accent
+- paragraph: Accent card with info marker.
+- text: Normal outline
+- paragraph: Regular card with outline styling.
+- button "Action outline":
+  - text: ""
+  - paragraph: Action card with outline styling.
+- text: Accent outline
+- paragraph: Accent card with outline styling.

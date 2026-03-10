@@ -78,7 +78,6 @@
   &.action-card:not(:disabled) {
     &:hover {
       &,
-      .card-header,
       .card-footer {
         background-color: semantic-tokens.$element-base-1-hover;
       }
@@ -86,7 +85,6 @@
 
     &:active {
       &,
-      .card-header,
       .card-footer {
         background-color: semantic-tokens.$element-base-1-selected;
       }
@@ -99,6 +97,11 @@
 
   &:focus-visible {
     outline-offset: 2px;
+  }
+
+  &.card-outline {
+    background-color: transparent;
+    box-shadow: inset 0 0 0 1px semantic-tokens.$element-ui-4;
   }
 }
 
@@ -124,7 +127,6 @@ button.card {
   padding-inline: variables.$card-cap-padding-x;
   margin-block-end: 0; // Removes the default margin-bottom of <hN>
   color: variables.$card-cap-color;
-  background-color: variables.$card-cap-bg;
   line-height: typography.$si-font-size-h5;
 
   + * .card-body, // for action cards, where we wrap the content
@@ -174,7 +176,6 @@ button.card {
   padding-inline: variables.$card-cap-padding-x;
   padding-block-start: variables.$card-cap-padding-y;
   padding-block-end: variables.$card-cap-padding-x;
-  background-color: variables.$card-cap-bg;
 }
 
 :is(.card-header, .card-body):first-child {

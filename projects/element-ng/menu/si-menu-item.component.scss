@@ -97,3 +97,7 @@
     background: variables.$element-base-1;
   }
 }
+
+:host-context(.card-outline) {
+  background: transparent;
+}
