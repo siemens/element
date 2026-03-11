@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { EventBusBase, EventTypes } from './event-bus.base';
+import { EventBusBase, EventType } from './event-bus.base';
 
 const eventBusInstanceSymbol = Symbol.for('eventBusInstance');
 
@@ -24,7 +24,7 @@ const eventBusInstanceSymbol = Symbol.for('eventBusInstance');
  * eventBus.emit('languageChange', 'de');
  * ```
  */
-export const getEventBusInstance = <ET extends EventTypes = EventTypes>(): EventBusBase<ET> => {
+export const getEventBusInstance = <ET extends {name: string; data: unknown} = EventType>(): EventBusBase<ET> => {
   const win = window as unknown as Record<symbol, unknown>;
   if (!win[eventBusInstanceSymbol]) {
     Object.defineProperty(window, eventBusInstanceSymbol, {

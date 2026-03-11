@@ -19,6 +19,7 @@ export class DashboardFiltersComponent implements OnInit {
 
   readonly days = days;
   readonly severity = severity;
+  readonly timeZones = ['us', 'eu', 'asia'];
 
   private formBuilder = inject(FormBuilder);
   private eventBus = inject(EventBus<CustomEventTypes>);
@@ -26,11 +27,13 @@ export class DashboardFiltersComponent implements OnInit {
   ngOnInit(): void {
     const formControls = {
       day: [this.days[0]],
-      severity: [this.severity[0]]
+      severity: [this.severity[0]],
+      timeZone: [this.timeZones[0]]
     };
     this.form = this.formBuilder.group(formControls);
     this.form.valueChanges.subscribe(form => {
-      this.eventBus.emit('filter', { days: form.day, severity: form.severity });
+      this.eventBus.emit('filter', [{ key: 'days', value: form.day }, { key: 'severity', value: form.severity }]);
+      this.eventBus.emit('timeZoneChange', form.timeZone);
     });
   }
 }
