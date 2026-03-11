@@ -134,7 +134,7 @@
     "@commitlint/cli": "20.4.3",
     "@commitlint/config-conventional": "20.4.3",
     "@eslint/js": "9.39.4",
-    "@microsoft/api-extractor": "7.57.6",
+    "@microsoft/api-extractor": "7.57.7",
     "@playwright/test": "1.57.0",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/git": "10.0.1",
@@ -184,7 +184,7 @@
     "stylelint-use-logical-spec": "5.0.1",
     "tsx": "4.21.0",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.56.1",
+    "typescript-eslint": "8.57.0",
     "vitest": "4.0.18"
   },
   "optionalDependencies": {
