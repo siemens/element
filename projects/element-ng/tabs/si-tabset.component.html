@@ -28,22 +28,24 @@
   @let tabContent = this.activeTab()?.tabContent();
   @let activeTab = this.activeTab();
 
-  @if (activeTab) {
-    <div
-      class="tab-content focus-inside"
-      role="tabpanel"
-      [id]="'content-' + activeTab.tabId"
-      [class.tab-scroll]="contentOverflowAuto()"
-      [tabIndex]="contentOverflowAuto() ? '0' : null"
-      [attr.aria-labelledby]="'tab-' + activeTab.tabId"
-    >
-      @if (tabContent) {
-        <ng-container [ngTemplateOutlet]="tabContent" />
-      }
+  <div #contentNode class="d-contents">
+    @if (activeTab) {
+      <div
+        class="tab-content focus-inside"
+        role="tabpanel"
+        [id]="`content-${activeTab.tabId}`"
+        [class.tab-scroll]="contentOverflowAuto()"
+        [tabIndex]="contentOverflowAuto() ? '0' : null"
+        [attr.aria-labelledby]="`tab-${activeTab.tabId}`"
+      >
+        @if (tabContent) {
+          <ng-container [ngTemplateOutlet]="tabContent" />
+        }
 
-      <ng-content select="router-outlet" />
-    </div>
-  }
+        <ng-content select="router-outlet" />
+      </div>
+    }
+  </div>
 </div>
 
 <ng-template #tabsMenu>

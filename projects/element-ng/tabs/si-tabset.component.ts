@@ -4,6 +4,7 @@
  */
 import { FocusKeyManager } from '@angular/cdk/a11y';
 import { CdkMenuTrigger } from '@angular/cdk/menu';
+import { DomPortal } from '@angular/cdk/portal';
 import { NgTemplateOutlet } from '@angular/common';
 import {
   booleanAttribute,
@@ -15,7 +16,8 @@ import {
   inject,
   INJECTOR,
   input,
-  signal
+  signal,
+  viewChild
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { elementOptions } from '@siemens/element-icons';
@@ -63,6 +65,15 @@ export class SiTabsetComponent {
   readonly contentOverflowAuto = input(false, { transform: booleanAttribute });
 
   protected readonly icons = addIcons({ elementOptions });
+
+  private readonly contentNode = viewChild.required('contentNode');
+  /**
+   * A `DomPortal` wrapping the tab panel container. Used by {@link SiTabPortalComponent}
+   * to render the active tab's content at a remote location in the DOM.
+   *
+   * @internal
+   */
+  readonly contentPortal = computed(() => new DomPortal(this.contentNode()));
 
   /** @internal */
   readonly activeTab = computed(() => this.tabPanels().find(tab => tab.active()));
