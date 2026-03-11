@@ -14,6 +14,7 @@ import {
   restoreResizeObserver
 } from '../resize-observer/mock-resize-observer.spec';
 import { SiTabLinkComponent } from './si-tab-link.component';
+import { SiTabPortalComponent } from './si-tab-portal.component';
 import { SiTabComponent } from './si-tab.component';
 import { SiTabsetComponent } from './si-tabset.component';
 import { SiTabsetHarness } from './testing/si-tabset.harness';
@@ -436,5 +437,142 @@ describe('SiTabset Routing', () => {
     jasmine.clock().tick(100);
     fixture.detectChanges();
     expect(await (await tabsetHarness.getTabContent()).text()).toBe('Content by routing');
+  });
+});
+
+describe('SiTabset with portal content', () => {
+  @Component({
+    imports: [SiTabsetComponent, SiTabComponent, SiTabPortalComponent],
+    template: `
+      <div class="tab-wrapper">
+        <si-tabset #tabset>
+          @for (tab of tabsObject(); track tab) {
+            <si-tab
+              [active]="tab.active ?? false"
+              [heading]="tab.heading"
+              [disabled]="!!tab.disabled"
+            >
+              {{ tab.content }}
+            </si-tab>
+          }
+        </si-tabset>
+
+        <si-tab-portal [tabset]="tabset" />
+      </div>
+    `
+  })
+  class TestPortalContentComponent {
+    protected readonly tabsObject = signal<
+      { heading: string; content: string; active?: boolean; disabled?: boolean }[]
+    >([]);
+
+    set tabs(value: { heading: string; content: string; active?: boolean; disabled?: boolean }[]) {
+      this.tabsObject.set(value);
+    }
+
+    readonly tabSet = viewChild.required(SiTabsetComponent);
+  }
+
+  let fixture: ComponentFixture<TestPortalContentComponent>;
+  let testComponent: TestPortalContentComponent;
+  let loader: HarnessLoader;
+  let tabsetHarness: SiTabsetHarness;
+
+  beforeEach(async () => {
+    fixture = TestBed.createComponent(TestPortalContentComponent);
+    testComponent = fixture.componentInstance;
+    loader = TestbedHarnessEnvironment.loader(fixture);
+    tabsetHarness = await loader.getHarness(SiTabsetHarness);
+  });
+
+  it('should not render tabpanel inside the tabset', async () => {
+    testComponent.tabs = [
+      { heading: '1', content: 'Content 1', active: true },
+      { heading: '2', content: 'Content 2' }
+    ];
+    fixture.detectChanges();
+
+    const internalTabpanel = fixture.nativeElement.querySelector('si-tabset [role="tabpanel"]');
+    expect(internalTabpanel).toBeNull();
+  });
+
+  it('should render active tab content via the portal', async () => {
+    testComponent.tabs = [
+      { heading: '1', content: 'Content 1', active: true },
+      { heading: '2', content: 'Content 2' }
+    ];
+    fixture.detectChanges();
+
+    const portalHarness = await tabsetHarness.getExternalTabPortal();
+    expect(await portalHarness!.hasTabPanel()).toBe(true);
+    expect(await portalHarness!.getTabPanelText()).toContain('Content 1');
+  });
+
+  it('should set correct role="tabpanel" on portal content', async () => {
+    testComponent.tabs = [
+      { heading: '1', content: 'Content 1', active: true },
+      { heading: '2', content: 'Content 2' }
+    ];
+    fixture.detectChanges();
+
+    const portalHarness = await tabsetHarness.getExternalTabPortal();
+    const tabPanel = await portalHarness!.getTabPanel();
+    expect(tabPanel).toBeTruthy();
+  });
+
+  it('should link tabpanel aria-labelledby to the active tab id', async () => {
+    testComponent.tabs = [
+      { heading: '1', content: 'Content 1', active: true },
+      { heading: '2', content: 'Content 2' }
+    ];
+    fixture.detectChanges();
+
+    const portalHarness = await tabsetHarness.getExternalTabPortal();
+    const activeTabId = await tabsetHarness.getActiveTabId();
+    expect(await portalHarness!.getTabPanelLabelledBy()).toBe(activeTabId);
+  });
+
+  it('should set tabpanel id matching the active tab aria-controls', async () => {
+    testComponent.tabs = [
+      { heading: '1', content: 'Content 1', active: true },
+      { heading: '2', content: 'Content 2' }
+    ];
+    fixture.detectChanges();
+
+    const portalHarness = await tabsetHarness.getExternalTabPortal();
+    const ariaControls = await tabsetHarness.getActiveTabAriaControls();
+    expect(await portalHarness!.getTabPanelId()).toBe(ariaControls);
+  });
+
+  it('should update content and ARIA attributes when switching tabs', async () => {
+    testComponent.tabs = [
+      { heading: '1', content: 'Content 1', active: true },
+      { heading: '2', content: 'Content 2' }
+    ];
+    fixture.detectChanges();
+
+    // Click second tab
+    await (await tabsetHarness.getTabItemButtonAt(1)).click();
+    fixture.detectChanges();
+
+    const portalHarness = await tabsetHarness.getExternalTabPortal();
+    const activeTabId = await tabsetHarness.getActiveTabId();
+    const ariaControls = await tabsetHarness.getActiveTabAriaControls();
+
+    expect(await tabsetHarness.isTabItemActive(1)).toBe(true);
+    expect(await portalHarness!.getTabPanelLabelledBy()).toBe(activeTabId);
+    expect(await portalHarness!.getTabPanelId()).toBe(ariaControls);
+    expect(await portalHarness!.getTabPanelText()).toContain('Content 2');
+  });
+
+  it('should not render tabpanel when no tab is active', async () => {
+    testComponent.tabs = [
+      { heading: '1', content: 'Content 1' },
+      { heading: '2', content: 'Content 2' }
+    ];
+    fixture.detectChanges();
+
+    const portalHarness = await tabsetHarness.getExternalTabPortal();
+    expect(await portalHarness!.hasTabPanel()).toBe(false);
   });
 });
