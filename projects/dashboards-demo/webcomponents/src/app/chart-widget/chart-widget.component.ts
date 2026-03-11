@@ -47,7 +47,7 @@ export class ChartWidgetComponent implements OnInit, WidgetInstance {
   data!: Observable<CartesianChartData>;
   private eventBus = inject(EventBus<CustomEventTypes>);
 
-  readonly filter = this.eventBus.on('filter').pipe(startWith<Filter>(this.eventBus.currentEventsState?.filter ?? {})); //new BehaviorSubject<Filter>({});
+  readonly filter = this.eventBus.on('filters').pipe(startWith(this.eventBus.currentEventsState?.filters ?? []));
   ngOnInit(): void {
     this.data = this.getCartesianChartData();
   }
@@ -83,17 +83,20 @@ export class ChartWidgetComponent implements OnInit, WidgetInstance {
     };
 
     return combineLatest([of(data), this.filter]).pipe(
-      map<[CartesianChartData, Filter | null], CartesianChartData>(([result, filter]) => {
+      map<[CartesianChartData, Filter[]], CartesianChartData>(([result, filters]) => {
         const filteredData = JSON.parse(JSON.stringify(result));
 
-        if (filter?.severity && filter.severity !== severity[0]) {
+        const severityFilter = filters?.find(f => f.key === 'severity');
+        const daysFilter = filters?.find(f => f.key === 'days');
+
+        if (severityFilter?.value && severityFilter.value !== severity[0]) {
           filteredData.series = filteredData.series.filter(
-            (entry: any) => entry.name === filter.severity
+            (entry: any) => entry.name === severityFilter.value
           );
         }
 
-        if (filter?.days && !filter.days.includes(days[0])) {
-          const index = days.indexOf(filter.days) - 1;
+        if (daysFilter?.value && daysFilter.value !== days[0]) {
+          const index = days.indexOf(daysFilter.value) - 1;
           filteredData.series.forEach((seriesEntry: any) => {
             seriesEntry.data = [seriesEntry.data![index]];
           });

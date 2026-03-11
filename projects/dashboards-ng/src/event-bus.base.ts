@@ -5,17 +5,25 @@
 import type { Theme } from '@siemens/element-ng/theme';
 import { fromEvent, Observable, Subject } from 'rxjs';
 
-export interface EventTypes<Filter = unknown> {
-  filter: Filter;
-  languageChange: string;
-  themeChange: Theme;
-  dateRangeChange: { start: Date; end: Date };
-  timeZoneChange: string;
-}
+type Filter = {key: any; value: any};
+type LanguageChange = string;
+type ThemeChange = Theme;
+type DateRangeChange = { start: Date; end: Date };
+type TimeZoneChange = string;
 
+export type EventType =
+  | {name: 'filter'; data: Filter | Filter[]}
+  | {name: 'languageChange'; data: LanguageChange}
+  | {name: 'themeChange'; data: ThemeChange}
+  | {name: 'dateRangeChange'; data: DateRangeChange}
+  | {name: 'timeZoneChange'; data: TimeZoneChange};
 
-export class EventBusBase<ET extends EventTypes = EventTypes> {
-  private eventObservables: Map<keyof ET, Subject<any>> = new Map();
+export class EventBusBase<ET extends {name: string; data: unknown} = EventType> {
+  /**
+   * Technically we don't need `keyof ET` here, but it forces TypeScript to
+   * preserve the `ET` generic parameter instead of eagerly resolving it.
+   */
+  private eventObservables: Map<keyof ET | ET['name'], Subject<any>> = new Map();
 
   private customEventSuffix = 'θ';
 
@@ -51,11 +59,11 @@ export class EventBusBase<ET extends EventTypes = EventTypes> {
     return win[key] as Record<string, unknown>;
   }
 
-  get currentEventsState(): ET | undefined {
-    return this.sharedEventsState as ET;
+  get currentEventsState(): { [K in ET as K['name']]: K['data'] } | undefined {
+    return this.sharedEventsState as { [K in ET as K['name']]: K['data'] };
   }
 
-  emit<K extends keyof ET>(eventType: K, payload?: ET[K]): void {
+  emit<A extends keyof { [K in ET as K['name']]: K['data'] }>(eventType: A, payload?: { [K in ET as K['name']]: K['data'] }[A]): void {
     this.sharedEventsState[String(eventType)] = payload;
     // We just propagate this as custom event so widgets in other angular runtime contexts can also be notified
     window.dispatchEvent(
@@ -63,9 +71,9 @@ export class EventBusBase<ET extends EventTypes = EventTypes> {
     );
   }
 
-  on<K extends keyof ET>(eventType: K): Observable<ET[K]> {
+  on<A extends keyof { [K in ET as K['name']]: K['data'] }>(eventType: A): Observable<{ [K in ET as K['name']]: K['data'] }[A]> {
     if (!this.eventObservables.has(eventType)) {
-      this.eventObservables.set(eventType, new Subject<ET[K]>());
+      this.eventObservables.set(eventType, new Subject());
     }
 
     // emit will dispatch a custom event on window, we listen to that and forward to our subject
