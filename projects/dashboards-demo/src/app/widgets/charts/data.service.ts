@@ -28,7 +28,7 @@ export class DataService {
   eventBus = inject(EventBus);
   currentFilterArray = Array.isArray(this.eventBus.currentEventsState?.filter) ? this.eventBus.currentEventsState?.filter : [];
   timezone = this.eventBus.on('timeZoneChange').pipe(startWith(this.eventBus.currentEventsState?.timeZoneChange ?? 'us'));
-  readonly filter = this.eventBus.on<Filter[]>('filter').pipe(startWith(this.currentFilterArray));
+  readonly filter = this.eventBus.on<Filter[]>('filter').pipe(startWith(this.currentFilterArray), shareReplay(1));
   
   private getCartesianChartData(type: string): Observable<CartesianChartData> {
     const data: CartesianChartData = {
