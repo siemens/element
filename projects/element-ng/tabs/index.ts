@@ -5,3 +5,4 @@
 export * from './si-tabset.component';
 export * from './si-tab.component';
 export * from './si-tab-link.component';
+export * from './si-tab-portal.component';
