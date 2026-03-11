@@ -81,9 +81,27 @@
   </si-list-pane>
   <si-details-pane class="card">
     <si-details-pane-header title="Title" [hideBackButton]="false">
-      <si-tabset style="width: 0" class="flex-grow-1 flex-shrink-1">
-        <si-tab heading="Overview" [active]="true" />
-        <si-tab heading="History" />
+      <si-tabset #tabset style="width: 0" class="flex-grow-1 flex-shrink-1">
+        <si-tab heading="Overview" [active]="true">
+          <div class="si-layout-fixed-height card-body" [class.text-center]="!selectedEntity">
+            <p class="card-text">
+              @if (selectedEntity) {
+                {{ selectedEntity | json }}
+              } @else {
+                No entity selected.
+              }
+            </p>
+          </div>
+        </si-tab>
+        <si-tab heading="History">
+          <div class="mx-auto text-center">
+            @if (selectedEntity) {
+              History for {{ selectedEntity.name }}
+            } @else {
+              No entity selected.
+            }
+          </div>
+        </si-tab>
         <si-tab heading="Advanced" [disabled]="true" />
       </si-tabset>
       <si-menu-bar>
@@ -96,13 +114,7 @@
       </si-menu-bar>
     </si-details-pane-header>
     <si-details-pane-body>
-      <div class="si-layout-fixed-height card-body overflow-auto pt-4">
-        @if (selectedEntity) {
-          {{ selectedEntity | json }}
-        } @else {
-          <div class="mx-auto text-center">No entity selected.</div>
-        }
-      </div>
+      <si-tab-portal class="si-layout-fixed-height overflow-auto pt-4" [tabset]="tabset" />
     </si-details-pane-body>
     <si-details-pane-footer class="justify-content-end">
       <button type="button" class="btn btn-secondary" (click)="onDiscard()">Discard</button>
