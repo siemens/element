@@ -6,6 +6,7 @@ import { HarnessLoader, TestKey } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { provideRouter, RouterLink, RouterOutlet } from '@angular/router';
 
 import {
@@ -436,5 +437,26 @@ describe('SiTabset Routing', () => {
     jasmine.clock().tick(100);
     fixture.detectChanges();
     expect(await (await tabsetHarness.getTabContent()).text()).toBe('Content by routing');
+  });
+});
+
+describe('SiTabset Actions', () => {
+  @Component({
+    imports: [SiTabsetComponent, SiTabComponent],
+    template: `<si-tabset>
+      <si-tab heading="Tab 1">Content 1</si-tab>
+      <div tab-actions>
+        <button type="button" class="btn btn-tertiary ">Action 1</button>
+      </div>
+    </si-tabset>`
+  })
+  class TabActionsComponent {}
+
+  it('should render tab actions', () => {
+    const fixture = TestBed.createComponent(TabActionsComponent);
+    fixture.detectChanges();
+    const button = fixture.debugElement.query(By.css('.tab-actions button'));
+    expect(button).toBeTruthy();
+    expect(button.nativeElement.textContent.trim()).toBe('Action 1');
   });
 });
