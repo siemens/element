@@ -15,5 +15,13 @@
         }
       </select>
     </div>
+
+    <div class="me-3">
+      <select formControlName="timeZone" aria-label="number" class="form-select">
+        @for (tz of timeZones; track $index) {
+          <option [value]="tz">{{ tz }}</option>
+        }
+      </select>
+    </div>
   </div>
 </form>
