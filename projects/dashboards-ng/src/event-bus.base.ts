@@ -71,7 +71,7 @@ export class EventBusBase<ET extends {name: string; data: unknown} = EventType> 
     );
   }
 
-  on<A extends keyof { [K in ET as K['name']]: K['data'] }>(eventType: A): Observable<{ [K in ET as K['name']]: K['data'] }[A]> {
+  on<R = never, A extends keyof { [K in ET as K['name']]: K['data'] } = keyof { [K in ET as K['name']]: K['data'] }>(eventType: A): Observable<[R] extends [never] ? { [K in ET as K['name']]: K['data'] }[A] : R> {
     if (!this.eventObservables.has(eventType)) {
       this.eventObservables.set(eventType, new Subject());
     }

@@ -10,6 +10,6 @@ import { EventBusBase, EventType } from './event-bus.base';
 @Injectable({
   providedIn: 'root'
 })
-export class EventBus<ET extends {name: string; data: unknown} = EventType> extends EventBusBase<ET> {}
+export class EventBus<ET> extends EventBusBase<ET extends {name: string; data: unknown} ? ET : EventType> {}
 
 export type { EventType };

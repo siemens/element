@@ -12,7 +12,6 @@ import { MenuItem } from '@siemens/element-ng/menu';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
 import {
   CartesianChartData,
-  CustomEventTypes,
   days,
   Filter,
   severity
@@ -45,9 +44,10 @@ export class ChartWidgetComponent implements OnInit, WidgetInstance {
   ];
 
   data!: Observable<CartesianChartData>;
-  private eventBus = inject(EventBus<CustomEventTypes>);
+  private eventBus = inject(EventBus);
 
-  readonly filter = this.eventBus.on('filters').pipe(startWith(this.eventBus.currentEventsState?.filters ?? []));
+  currentFilterArray = Array.isArray(this.eventBus.currentEventsState?.filter) ? this.eventBus.currentEventsState?.filter : [];
+  readonly filter = this.eventBus.on<Filter[]>('filter').pipe(startWith(this.currentFilterArray));
   ngOnInit(): void {
     this.data = this.getCartesianChartData();
   }

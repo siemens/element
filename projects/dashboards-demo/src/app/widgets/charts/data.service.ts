@@ -6,7 +6,7 @@ import { inject, Injectable } from '@angular/core';
 import { CartesianChartSeries } from '@siemens/charts-ng/cartesian';
 import { CircleChartSeries } from '@siemens/charts-ng/circle';
 import { ChartXAxis, ChartYAxis } from '@siemens/charts-ng/common';
-import { EventBus, EventType } from '@siemens/dashboards-ng';
+import { EventBus } from '@siemens/dashboards-ng';
 import { combineLatest, map, Observable, of, shareReplay, startWith } from 'rxjs';
 
 export interface CartesianChartData {
@@ -20,19 +20,15 @@ export interface Filter {
   value: string;
 }
 
-export type CustomEventTypes = EventType | {
-  name: 'filters';
-  data: Filter[];
-}; 
-
 export const days = ['All week', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
 export const severity = ['All levels', 'Success', 'Warning', 'Danger'];
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
-  eventBus = inject(EventBus<CustomEventTypes>);
+  eventBus = inject(EventBus);
+  currentFilterArray = Array.isArray(this.eventBus.currentEventsState?.filter) ? this.eventBus.currentEventsState?.filter : [];
   timezone = this.eventBus.on('timeZoneChange').pipe(startWith(this.eventBus.currentEventsState?.timeZoneChange ?? 'us'));
-  readonly filter = this.eventBus.on('filters').pipe(startWith(this.eventBus.currentEventsState?.filters ?? []));
+  readonly filter = this.eventBus.on<Filter[]>('filter').pipe(startWith(this.currentFilterArray));
   
   private getCartesianChartData(type: string): Observable<CartesianChartData> {
     const data: CartesianChartData = {
