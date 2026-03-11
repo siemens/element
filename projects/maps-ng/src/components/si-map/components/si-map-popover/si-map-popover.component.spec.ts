@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MapPointMetaData } from '../../models';
@@ -12,7 +12,9 @@ import { SiMapPopoverComponent } from './si-map-popover.component';
   selector: 'si-mock-popover',
   template: '<p>Mocking custom popover component</p>'
 })
-class MockCustomPopoverComponent {}
+class MockCustomPopoverComponent {
+  readonly mapPoint = input<MapPointMetaData>();
+}
 
 describe('SiMapPopoverComponent', () => {
   let component: SiMapPopoverComponent;
@@ -41,14 +43,14 @@ describe('SiMapPopoverComponent', () => {
     };
 
     it('custom popover component if defined', () => {
-      spyOn<any>(component, 'renderCustomComponent');
+      vi.spyOn(component as any, 'renderCustomComponent');
       component.render({ component: MockCustomPopoverComponent, mapPoints });
       // eslint-disable-next-line
       expect(component['renderCustomComponent']).toHaveBeenCalled();
     });
 
     it('default popover component otherwise', () => {
-      spyOn<any>(component, 'renderDefault');
+      vi.spyOn(component as any, 'renderDefault');
       component.render({ component: undefined, mapPoints });
       // eslint-disable-next-line
       expect(component['renderDefault']).toHaveBeenCalled();

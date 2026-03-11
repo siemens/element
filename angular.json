@@ -310,14 +310,21 @@
           "options": {
             "tsConfig": "projects/maps-ng/tsconfig.lib.json",
             "project": "projects/maps-ng/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/maps-ng/tsconfig.lib.json"
+            },
+            "development": {
+              "tsConfig": "projects/maps-ng/tsconfig.lib.json"
+            }
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/maps-ng/tsconfig.spec.json",
-            "karmaConfig": "projects/maps-ng/karma.conf.cjs",
-            "codeCoverageExclude": ["projects/maps-ng/src/**/*.module.ts"]
+            "browsers": ["chromium"]
           }
         },
         "lint": {
