@@ -47,7 +47,7 @@ export class ChartWidgetComponent implements OnInit, WidgetInstance {
   private eventBus = inject(EventBus);
 
   currentFilterArray = Array.isArray(this.eventBus.currentEventsState?.filter) ? this.eventBus.currentEventsState?.filter : [];
-  readonly filter = this.eventBus.on<Filter[]>('filter').pipe(startWith(this.currentFilterArray));
+  readonly filter = this.eventBus.on<Filter[]>('filter').pipe(startWith(this.currentFilterArray), shareReplay(1));
   ngOnInit(): void {
     this.data = this.getCartesianChartData();
   }

@@ -6,7 +6,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventBus } from '@siemens/dashboards-ng';
 
-import { CustomEventTypes, days, severity } from '../../widgets/charts/data.service';
+import { days, severity } from '../../widgets/charts/data.service';
 
 @Component({
   selector: 'app-dashboard-filters',
@@ -22,7 +22,7 @@ export class DashboardFiltersComponent implements OnInit {
   readonly timeZones = ['us', 'eu', 'asia'];
 
   private formBuilder = inject(FormBuilder);
-  private eventBus = inject(EventBus<CustomEventTypes>);
+  private eventBus = inject(EventBus);
 
   ngOnInit(): void {
     const formControls = {
