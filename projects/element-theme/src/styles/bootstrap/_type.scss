@@ -33,8 +33,11 @@
 }
 
 .lead {
-  font-size: variables.$lead-font-size;
-  font-weight: variables.$lead-font-weight;
+  @include typography.si-font(
+    variables.$lead-font-size,
+    variables.$lead-line-height,
+    variables.$lead-font-weight
+  );
 }
 
 //
