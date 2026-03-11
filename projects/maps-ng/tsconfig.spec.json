@@ -2,7 +2,8 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/spec",
-    "types": ["@siemens/element-translate-ng/localize-types", "jasmine", "node"]
+    "lib": ["es2022", "dom", "esnext.disposable"],
+    "types": ["@siemens/element-translate-ng/localize-types", "vitest/globals"]
   },
   "include": ["**/*.spec.ts", "**/*.d.ts"]
 }
