@@ -262,9 +262,9 @@ jobs:
           role-session-name: element-preview
           aws-region: eu-west-1
       - run: |
-          aws s3 cp --quiet --no-progress --recursive ./pages s3://${{ env.BUCKET_NAME }}/pr-${{ github.event.pull_request.number }}/pages
-          aws s3 cp --quiet --no-progress --recursive ./playwright-report s3://${{ env.BUCKET_NAME }}/pr-${{ github.event.pull_request.number }}/playwright-report
-          aws s3 cp --quiet --no-progress --recursive ./coverage-reports s3://${{ env.BUCKET_NAME }}/pr-${{ github.event.pull_request.number }}/pages/coverage
+          aws s3 sync --quiet --no-progress ./pages s3://${{ env.BUCKET_NAME }}/pr-${{ github.event.pull_request.number }}/pages
+          aws s3 sync --quiet --no-progress ./playwright-report s3://${{ env.BUCKET_NAME }}/pr-${{ github.event.pull_request.number }}/playwright-report
+          aws s3 sync --quiet --no-progress ./coverage-reports s3://${{ env.BUCKET_NAME }}/pr-${{ github.event.pull_request.number }}/pages/coverage
       - name: Build PR description block
         run: |
           cat > pr-preview-description.md <<'EOF'
