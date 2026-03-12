@@ -22,13 +22,15 @@ type TimeZoneChange = { key: 'timeZone'; value: string };
  * - `themeChange` – the new {@link Theme}
  */
 export type EventType =
-  | { name: 'filter'; data: Filter | Filter[] }
+  | { name: 'filter'; data: Filter[] }
   | { name: 'languageChange'; data: LanguageChange }
   | { name: 'themeChange'; data: ThemeChange };
 
 type EventNameToData<ET extends { name: string; data: unknown }> = {
   [K in ET as K['name']]: K['data'];
 };
+
+type NarrowByKeys<Data, K extends string> = Data extends (infer U)[] ? (U & { key: K })[] : Data;
 
 export class EventBusBase<ET extends { name: string; data: unknown } = EventType> {
   /**
@@ -71,8 +73,37 @@ export class EventBusBase<ET extends { name: string; data: unknown } = EventType
     return win[key] as Record<string, unknown>;
   }
 
-  get currentEventsState(): EventNameToData<ET> | undefined {
-    return this.sharedEventsState as EventNameToData<ET>;
+  currentEventsState(): EventNameToData<ET>;
+  currentEventsState<A extends keyof EventNameToData<ET>, K extends string>(
+    eventName: A,
+    keys: K[]
+  ): NarrowByKeys<EventNameToData<ET>[A], K>;
+  currentEventsState<A extends keyof EventNameToData<ET>>(eventName: A): EventNameToData<ET>[A];
+  currentEventsState<A extends keyof EventNameToData<ET>, K extends string>(
+    eventName?: A,
+    keys?: K[]
+  ):
+    | EventNameToData<ET>
+    | EventNameToData<ET>[A]
+    | NarrowByKeys<EventNameToData<ET>[A], K>
+    | undefined {
+    const state = this.sharedEventsState as EventNameToData<ET>;
+
+    if (!eventName) {
+      return state;
+    }
+
+    const data = state[eventName];
+    if (!data) {
+      return undefined;
+    }
+
+    if (keys?.length) {
+      const items = Array.isArray(data) ? data : [data];
+      return items.filter(f => keys.includes(f.key)) as EventNameToData<ET>[A];
+    }
+
+    return data;
   }
 
   emit<A extends keyof EventNameToData<ET>>(eventType: A, payload?: EventNameToData<ET>[A]): void {
