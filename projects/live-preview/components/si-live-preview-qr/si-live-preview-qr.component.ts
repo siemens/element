@@ -28,7 +28,7 @@ export class SiLivePreviewQrComponent implements AfterViewInit, OnDestroy, OnCha
 
   private unlisten?: () => void;
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.url && changes.urlShort) {
       this.generateQr();
     }

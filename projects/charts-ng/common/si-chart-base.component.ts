@@ -353,7 +353,7 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
     this.updateCustomLegendMultiLineInfo();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<unknown>): void {
     if (changes.options?.currentValue) {
       this.actualOptions = this.options()!;
     }
