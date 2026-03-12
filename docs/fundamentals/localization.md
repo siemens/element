@@ -185,11 +185,11 @@ Related texts can be brought together by grouping texts based on use cases (e.g.
 Design user interfaces by following these steps to ensure that translations have space in the user interface.
 
 1. Design UI by prioritizing flexible layouts, identify areas with limited text space, and always allocate more space than you think you'll need.
-1. Write English strings, keeping conciseness in mind from the start.
+1. Write English texts, keeping conciseness in mind from the start.
 1. Determine reasonable limits and provide it to the translation management.
 1. Request translations
 1. Test every screen with translated texts  
-   Revisit the UI design or the original string if a translator cannot convey the meaning within the limit.
+   Revisit the UI design or the original texts if a translator cannot convey the meaning within the limit.
 
 Fixing UI issues caused by long translations late in the development cycle is expensive and time-consuming.
 
@@ -211,13 +211,13 @@ UX writers are ambassadors of internationalization and are asked to support UX d
 The exact length of a translation cannot be predicted.
 Some generally accepted rules of thumb:
 
-- Short strings (1-10 characters)  
+- Short texts (1-10 characters)  
   These can often increase by 200-300%. (E.g., `EN:`"On" → `DE:`"Eingeschaltet")
-- Medium Strings (11-20 characters)  
+- Medium texts (11-20 characters)  
   Expect an increase of 100-200%. (E.g., `EN:`"Withdraw request" → `DE:`"Anfrage zurückziehen")
-- Longer Strings (21-50 characters)  
+- Longer texts (21-50 characters)  
   Expect an increase of 50-100%.
-- Very Long Strings (50+ characters)  
+- Very Long texts (50+ characters)  
   Depending on the conciseness of the language, the paragraphs can be 30-50% longer, but sometimes also shorter than the original.
 
 Consider German, Finnish, Greek, and some Slavic languages, which are known for their long translations.
@@ -323,7 +323,7 @@ Use direction agnostic texts instead.
 
 <!-- markdownlint-enable MD038 -->
 
-### Avoid string concatenations
+### Avoid text concatenations
 
 Building sentences from fragments prevents correct grammar in many languages.
 Keep sentences as one unit with placeholders.
