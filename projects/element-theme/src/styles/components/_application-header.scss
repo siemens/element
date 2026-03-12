@@ -103,6 +103,18 @@
   .application-header.show-navigation & {
     @extend %collapsible-expanded;
   }
+
+  .header-item {
+    &.active {
+      --si-header-item-border: #{semantic-tokens.$element-action-primary};
+      color: semantic-tokens.$element-action-primary;
+    }
+
+    &:hover {
+      --si-header-item-border: #{semantic-tokens.$element-action-primary-hover};
+      color: semantic-tokens.$element-action-primary-hover;
+    }
+  }
 }
 
 .header-collapsible-actions {
@@ -174,8 +186,10 @@
     position: absolute;
     inset-block-end: 0;
     inset-inline: 0;
-    block-size: map.get(spacers.$spacers, 2);
     background: var(--si-header-item-border);
+
+    block-size: 100%;
+    inline-size: map.get(spacers.$spacers, 2);
   }
 
   &.header-selection-item {
@@ -208,18 +222,6 @@
         display: flex;
         flex: 1 1 33.333%;
         justify-content: center;
-
-        .header-item {
-          &.active {
-            color: semantic-tokens.$element-action-primary;
-            --si-header-item-border: #{semantic-tokens.$element-action-primary};
-          }
-
-          &:hover {
-            color: semantic-tokens.$element-action-primary-hover;
-            --si-header-item-border: #{semantic-tokens.$element-action-primary-hover};
-          }
-        }
       }
 
       .header-actions {
@@ -243,6 +245,11 @@
       .header-item {
         inline-size: auto;
         flex-basis: auto;
+
+        &::after {
+          inline-size: 100%;
+          block-size: map.get(spacers.$spacers, 2);
+        }
       }
     }
   }
