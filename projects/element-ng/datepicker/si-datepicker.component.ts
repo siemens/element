@@ -322,7 +322,7 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
     this.time.valueChanges.subscribe((newTime?: Date) => this.timeSelected(newTime));
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     const config = this.config();
     if (changes.date && !config.enableDateRange) {
       if (this.date() && !isValid(this.date())) {
@@ -475,11 +475,11 @@ export class SiDatepickerComponent implements OnInit, OnChanges, AfterViewInit {
       // eslint-disable-next-line @angular-eslint/no-lifecycle-call
       this.ngOnChanges({
         date: new SimpleChange(previousValue, date, previousValue === undefined)
-      });
+      } as SimpleChanges<this>);
       //this.dateChange.emit(date);
     } else if (!validForMinDate || !validForMaxDate) {
       // eslint-disable-next-line @angular-eslint/no-lifecycle-call
-      this.ngOnChanges({ date: new SimpleChange(undefined, date, true) });
+      this.ngOnChanges({ date: new SimpleChange(undefined, date, true) } as SimpleChanges<this>);
     }
 
     this.cdRef.markForCheck();

@@ -239,7 +239,7 @@ export class SiNavbarVerticalComponent implements OnChanges, OnInit {
       });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.collapsed) {
       this.preferCollapse = this.collapsed();
     }
