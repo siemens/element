@@ -2,18 +2,41 @@
 
 # Localization
 
-Localization (l10n) or internationalization (i18n) is the process of designing and implementing a product for a **specific language and region**.
+Internationalization (i18n) is the process of designing and developing a product for localization (l10n) into specific languages and regions.
 
 ## Introduction ---
 
-!!! tip "Localization is more than just translating text"
+### Internationalization (i18n)
 
-    - It covers translation, but also **formats** (date/time/number), **script direction** (LTR/RTL), and UI behavior in different languages.
-    -  Depending on how it is used, the **same English word** can have multiple meanings and translates to different words in another language.
-    - Languages differ in **word order**, **plural rules**, and **punctuation**.
-    - UI text can **grow** (sometimes a lot), wrap, or break layouts.
+Internationalization is the entire process of designing and developing a product that can be adapted to different languages and regions.
+Internationalization is the foundation for high-quality and efficient [localization](#localization-l10n).
+
+It is important to consider that UI text can grow significantly and thus cause line breaks or destroy the layout.
+
+### Localization (l10n)
+
+Localization is the process of adapting a product to the language and cultural norms of a specific target market so that it feels natural to local users. This goes beyond [simple translation](#translation) and includes script direction ([LTR](#ltr-left-to-right)/[RTL](#rtl-right-to-left)), formatting numbers, times, dates, and addresses, and adapting illustrations.
 
 <si-docs-component example="si-localization/si-localization" height="650"></si-docs-component>
+
+Localization requires an [internationalized](#internationalization-i18n) product and must be performed for each target market.
+
+### Translation
+
+Translation is the central linguistic component of [localization](#localization-l10n), whereby the tone must be adapted to local requirements and the meaning must be conveyed accurately.
+
+It is important to consider that languages differ in terms of word order, plural rules, and punctuation.
+In addition, an English word can have multiple meanings and be translated into other languages using different words.
+
+### LTR (Left-to-Right)
+
+LTR refers to languages (e.g., English, German, French, Spanish) and scripts that are written and read from left to right.
+
+### RTL (Right-to-Left)
+
+RTL refers to languages (e.g., Arabic, Hebrew, Persian) and writing systems that are written and read from right to left.
+
+It is important to consider that often the entire user interface must be mirrored, which imposes significant demands on [internationalization](#internationalization-i18n).
 
 ## UX Writing ---
 
@@ -33,7 +56,7 @@ UX writing combines terminology, [style](ux-text-style-guide/index.md) and form 
 
 !!! tip "Think like a translator"
 
-    Every string will be translated without access to the surrounding UI. Ask yourself: is this text understandable **without visual context**?
+    Every string will be translated without access to the surrounding UI. Ask yourself: is this text understandable without visual context?
 
     <div class="dos-and-donts" markdown>
     <div class="dos" markdown>
@@ -56,10 +79,10 @@ UX writing combines terminology, [style](ux-text-style-guide/index.md) and form 
 
 Common language serves multiple purposes:
 
-- _Clarity of communication_, common understanding between people and companies
-- _Applicability_ across multiple systems/tools/hardware…
-- _Openness_ to third parties, breaking up of silos
-- Foundation for _artificial intelligence_
+- Clarity of communication, common understanding between people and companies
+- Applicability across multiple systems/tools/hardware…
+- Openness to third parties, breaking up of silos
+- Foundation for artificial intelligence
 
 !!! warning "Usage of terminology databases"
 
@@ -83,7 +106,7 @@ Many terms have various meanings related to a specific context or domain.
 
     See [Merriam Webster](https://www.merriam-webster.com/dictionary/title) for details
 
-_One meaning always dominates_ regardless of context. That is the meaning that can be used without creating confusion. However, if this dominating meaning does not fit the context, an alternative term (unambiguous synonym) must be used to eliminate misunderstandings.
+One meaning always dominates regardless of context. That is the meaning that can be used without creating confusion. However, if this dominating meaning does not fit the context, an alternative term (unambiguous synonym) must be used to eliminate misunderstandings.
 
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
@@ -240,6 +263,29 @@ Packages based on the [Unicode CLDR](https://cldr.unicode.org/) like `@angular/c
 - months, weekdays and time zones
 
 Use these sources to avoid superfluous translation efforts.
+
+### Avoid directional terms on UI
+
+Directional terms might get incorrect if the user interface is mirrored for [RTL languages](#rtl-right-to-left).
+
+<!-- markdownlint-disable MD038 -->
+
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+- Site pane
+- Vertical navigation
+
+</div>
+<div class="donts" markdown>
+
+- Right pane
+- Left navigation
+
+</div>
+</div>
+
+<!-- markdownlint-enable MD038 -->
 
 ### Avoid string concatenations
 
