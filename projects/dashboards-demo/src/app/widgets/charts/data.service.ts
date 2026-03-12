@@ -26,13 +26,11 @@ export const severity = ['All levels', 'Success', 'Warning', 'Danger'];
 @Injectable({ providedIn: 'root' })
 export class DataService {
   eventBus = inject(EventBus);
-  currentFilterArray = (Array.isArray(this.eventBus.currentEventsState?.filter)
-    ? this.eventBus.currentEventsState.filter
-    : []
-  ).filter((f): f is Filter => f.key === 'days' || f.key === 'severity');
+
+  private currentEvents = this.eventBus.currentEventsState('filter', ['days', 'severity']);
   readonly filter = this.eventBus
     .on<Filter[]>('filter')
-    .pipe(startWith(this.currentFilterArray), shareReplay(1));
+    .pipe(startWith(this.currentEvents), shareReplay(1));
 
   private getCartesianChartData(type: string): Observable<CartesianChartData> {
     const data: CartesianChartData = {
