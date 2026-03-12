@@ -5,20 +5,32 @@
 import type { Theme } from '@siemens/element-ng/theme';
 import { fromEvent, Observable, Subject } from 'rxjs';
 
-type Filter = {key: any; value: any};
+type Filter = { key: any; value: any } | DateRangeChange | TimeZoneChange;
 type LanguageChange = string;
 type ThemeChange = Theme;
-type DateRangeChange = { start: Date; end: Date };
-type TimeZoneChange = string;
+type DateRangeChange = { key: 'dateRange'; value: { start: Date; end: Date } };
+type TimeZoneChange = { key: 'timeZone'; value: string };
 
+/**
+ * Default event type union used by `EventBus` when no generic parameter is provided.
+ * Consumers can override this by passing their own event type union as a generic argument,
+ * e.g. `inject(EventBus<MyCustomEventType>)`.
+ *
+ * The following events are available by default:
+ * - `filter` – a single {@link Filter} or an array of filters (including date range and time zone changes)
+ * - `languageChange` – the new language as a string
+ * - `themeChange` – the new {@link Theme}
+ */
 export type EventType =
-  | {name: 'filter'; data: Filter | Filter[]}
-  | {name: 'languageChange'; data: LanguageChange}
-  | {name: 'themeChange'; data: ThemeChange}
-  | {name: 'dateRangeChange'; data: DateRangeChange}
-  | {name: 'timeZoneChange'; data: TimeZoneChange};
+  | { name: 'filter'; data: Filter | Filter[] }
+  | { name: 'languageChange'; data: LanguageChange }
+  | { name: 'themeChange'; data: ThemeChange };
 
-export class EventBusBase<ET extends {name: string; data: unknown} = EventType> {
+type EventNameToData<ET extends { name: string; data: unknown }> = {
+  [K in ET as K['name']]: K['data'];
+};
+
+export class EventBusBase<ET extends { name: string; data: unknown } = EventType> {
   /**
    * Technically we don't need `keyof ET` here, but it forces TypeScript to
    * preserve the `ET` generic parameter instead of eagerly resolving it.
@@ -53,17 +65,17 @@ export class EventBusBase<ET extends {name: string; data: unknown} = EventType> 
         value: {},
         writable: false,
         enumerable: false,
-        configurable: false,
+        configurable: false
       });
     }
     return win[key] as Record<string, unknown>;
   }
 
-  get currentEventsState(): { [K in ET as K['name']]: K['data'] } | undefined {
-    return this.sharedEventsState as { [K in ET as K['name']]: K['data'] };
+  get currentEventsState(): EventNameToData<ET> | undefined {
+    return this.sharedEventsState as EventNameToData<ET>;
   }
 
-  emit<A extends keyof { [K in ET as K['name']]: K['data'] }>(eventType: A, payload?: { [K in ET as K['name']]: K['data'] }[A]): void {
+  emit<A extends keyof EventNameToData<ET>>(eventType: A, payload?: EventNameToData<ET>[A]): void {
     this.sharedEventsState[String(eventType)] = payload;
     // We just propagate this as custom event so widgets in other angular runtime contexts can also be notified
     window.dispatchEvent(
@@ -71,16 +83,23 @@ export class EventBusBase<ET extends {name: string; data: unknown} = EventType> 
     );
   }
 
-  on<R = never, A extends keyof { [K in ET as K['name']]: K['data'] } = keyof { [K in ET as K['name']]: K['data'] }>(eventType: A): Observable<[R] extends [never] ? { [K in ET as K['name']]: K['data'] }[A] : R> {
+  on<R = never, A extends keyof EventNameToData<ET> = keyof EventNameToData<ET>>(
+    eventType: A
+  ): Observable<[R] extends [never] ? EventNameToData<ET>[A] : R> {
     if (!this.eventObservables.has(eventType)) {
-      this.eventObservables.set(eventType, new Subject());
-    }
+      const eventSubject = new Subject<[R] extends [never] ? EventNameToData<ET>[A] : R>();
+      this.eventObservables.set(eventType, eventSubject);
 
-    // emit will dispatch a custom event on window, we listen to that and forward to our subject
-    fromEvent(window, `${this.customEventSuffix}${String(eventType)}`).subscribe((event: Event) => {
-      const customEvent = event as CustomEvent;
-      this.eventObservables.get(eventType)!.next(customEvent.detail);
-    });
+      // emit will dispatch a custom event on window, we listen to that and forward to our subject
+      fromEvent(window, `${this.customEventSuffix}${String(eventType)}`).subscribe(
+        (event: Event) => {
+          const customEvent = event as CustomEvent;
+          this.eventObservables.get(eventType)!.next(customEvent.detail);
+        }
+      );
+
+      return eventSubject.asObservable();
+    }
 
     return this.eventObservables.get(eventType)!.asObservable();
   }
