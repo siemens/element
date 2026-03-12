@@ -165,9 +165,11 @@ export interface SiTranslatableKeys {
   'SI_LIST_WIDGET.SORT_DESCENDING'?: string;
   'SI_LOADING_SPINNER.LABEL'?: string;
   'SI_LOGIN_BASIC.BACK'?: string;
+  'SI_LOGIN_BASIC.FORGOT_PASSWORD'?: string;
   'SI_LOGIN_BASIC.LOGIN'?: string;
   'SI_LOGIN_BASIC.NEXT'?: string;
   'SI_LOGIN_BASIC.PASSWORD'?: string;
+  'SI_LOGIN_BASIC.REGISTER_NOW'?: string;
   'SI_LOGIN_BASIC.USERNAME'?: string;
   'SI_LOGIN_SINGLE-SIGN-ON.LOGIN_SIGN_UP'?: string;
   'SI_MAIN_DETAIL_CONTAINER.BACK'?: string;
