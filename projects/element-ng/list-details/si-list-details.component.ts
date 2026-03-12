@@ -148,7 +148,7 @@ export class SiListDetailsComponent implements OnInit, OnChanges, OnDestroy {
 
   private animationDone?: () => void;
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.detailsActive) {
       this.transferFocus();
     }

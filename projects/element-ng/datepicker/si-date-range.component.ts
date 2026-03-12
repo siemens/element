@@ -242,7 +242,7 @@ export class SiDateRangeComponent
     positionTopEnd
   ];
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.siDatepickerConfig) {
       this.siDatepickerConfig.set({
         ...changes.siDatepickerConfig.currentValue,

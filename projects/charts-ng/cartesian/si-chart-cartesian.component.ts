@@ -86,7 +86,7 @@ export class SiChartCartesianComponent extends SiChartBaseComponent implements O
   readonly zoomMode = input<boolean>();
 
   // Used to toggle different chart types
-  override ngOnChanges(changes: SimpleChanges): void {
+  override ngOnChanges(changes: SimpleChanges<unknown>): void {
     if (changes.zoomMode) {
       this.setZoomMode();
     }

@@ -92,7 +92,7 @@ export class SiYearSelectionComponent extends SiInitialFocusComponent implements
     );
   });
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.startDate || changes.focusedDate || changes.maxDate || changes.minDate) {
       this.initView();
     }

@@ -352,7 +352,7 @@ export class SiFileUploaderComponent implements OnChanges {
   private cdRef = inject(ChangeDetectorRef);
   private http? = inject(HttpClient, { optional: true });
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.maxFiles || changes.disableUpload) {
       this.updateStates();
     }

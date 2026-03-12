@@ -352,7 +352,7 @@ export class SiDateRangeFilterComponent implements OnChanges {
     () => this.basicMode() === 'input' || this.enableTimeSelection()
   );
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (
       changes.enableTimeSelection ||
       changes.datepickerConfig ||

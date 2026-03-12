@@ -159,7 +159,7 @@ export class SiDatepickerOverlayComponent implements OnChanges, OnInit, OnDestro
 
   protected readonly completeAnimation = signal(false);
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.config) {
       const config = this.config();
 

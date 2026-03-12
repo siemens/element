@@ -159,7 +159,7 @@ export class SiFormItemComponent
   /** @internal */
   readonly required = computed(() => this.requiredInput() || this.hasRequiredValidator());
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.formErrorMapper) {
       this.updateValidationMessages();
     }

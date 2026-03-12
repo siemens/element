@@ -88,7 +88,7 @@ export class SiLivePreviewIframeComponent implements OnInit, OnChanges {
   protected plainUrl = '';
   protected plainUrlShort = '';
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (!this.previewIframe()) {
       return;
     }

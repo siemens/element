@@ -236,7 +236,7 @@ export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.collapsed) {
       if (this.collapsed()) {
         this.service.close();

@@ -129,7 +129,7 @@ describe('SiSidePanelComponent', () => {
     const spy = spyOn(service, 'open');
     component.collapsed.set(false);
     component.sidePanel().ngOnChanges({
-      collapsed: new SimpleChange(null, component.collapsed, false)
+      collapsed: new SimpleChange(undefined, component.collapsed(), false)
     });
 
     expect(spy).toHaveBeenCalled();

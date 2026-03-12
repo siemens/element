@@ -64,7 +64,7 @@ export class SiFilteredSearchTypeaheadComponent
     return '';
   });
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.criterionValue && this.criterionValue().value !== this.optionValue()?.value) {
       this.optionValue.set(undefined);
     }

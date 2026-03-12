@@ -122,7 +122,7 @@ export class SiLivePreviewRendererComponent implements OnChanges, OnDestroy {
   private defaultRoutes = this.activatedRoute.routeConfig?.children ?? [];
   private cdRef = inject(ChangeDetectorRef);
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.exampleUrl?.currentValue) {
       this.loadFromUrl();
     }

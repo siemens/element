@@ -96,7 +96,7 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges {
   private widgetConfigsDiffer?: IterableDiffer<WidgetConfig>;
   private readonly widgetConfigSignals = new Map<string, WritableSignal<WidgetConfig>>();
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.widgetConfigs) {
       const { currentValue, firstChange } = changes.widgetConfigs;
 

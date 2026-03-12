@@ -47,7 +47,7 @@ export class SiFilteredSearchMultiSelectComponent
     () => Array.isArray(this.criterionValue().value) && this.criterionValue().value!.length > 1
   );
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (
       changes.criterionValue &&
       this.criterionValue().value?.length !== this.optionValue().length

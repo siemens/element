@@ -177,7 +177,7 @@ export class SiNumberInputComponent
   private autoUpdateSubs?: Subscription;
   private changeDetectorRef = inject(ChangeDetectorRef);
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.value) {
       this.writeValueToInput(this.value());
     }

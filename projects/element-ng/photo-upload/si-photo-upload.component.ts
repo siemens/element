@@ -366,7 +366,7 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
   private readonly modalService = inject(SiModalService);
   private readonly autoBackgroundColorDirective = inject(SiAvatarBackgroundColorDirective);
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.readonly) {
       this.resetErrorMessage();
       this.resetFileInputValue();
@@ -386,7 +386,7 @@ export class SiPhotoUploadComponent implements OnChanges, OnDestroy {
     }
     if (
       changes.croppedPhoto &&
-      changes.croppedPhoto.previousValue?.length > 0 &&
+      (changes.croppedPhoto?.previousValue?.length ?? 0) > 0 &&
       changes.croppedPhoto.previousValue !== changes.croppedPhoto.currentValue
     ) {
       this.setPhoto(this.croppedPhoto());

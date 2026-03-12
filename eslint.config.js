@@ -100,6 +100,13 @@ export const tsConfig = defineConfig({
         'source': 'string',
         'content': 'Copyright (c) Siemens 2016 - 2026\nSPDX-License-Identifier: MIT'
       }
+    ],
+    'no-restricted-syntax': [
+      'error',
+      {
+        selector: 'TSTypeReference:not([typeArguments]) > Identifier[name="SimpleChanges"]',
+        message: 'Use SimpleChanges<this> instead of plain SimpleChanges'
+      }
     ]
   }
 });

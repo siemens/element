@@ -110,7 +110,7 @@ export class SiDashboardComponent implements OnChanges, AfterViewInit {
       .subscribe(cards => this.subscribeToCards(cards));
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.enableExpandInteractions) {
       this.initCards();
     }

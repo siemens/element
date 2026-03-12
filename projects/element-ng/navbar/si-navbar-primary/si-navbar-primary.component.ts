@@ -288,7 +288,7 @@ export class SiNavbarPrimaryComponent implements OnChanges, HeaderWithDropdowns 
   }
 
   /** @internal */
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.appItems || changes.appCategoryItems) {
       const appItems = this.appItems();
       const appCategoryItems = this.appCategoryItems();
