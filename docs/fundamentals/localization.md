@@ -1,4 +1,4 @@
-<!-- markdownlint-disable MD024 MD033 MD046 -->
+<!-- markdownlint-disable MD033 MD046 -->
 
 # Localization
 
@@ -40,36 +40,37 @@ It is important to consider that often the entire user interface must be mirrore
 
 ## UX Writing ---
 
-<!-- markdownlint-disable MD051 -->
+UX writers are the text experts in the product development team and therefore ideal ambassadors for internationalization.
+They need to be aware of the challenges of localization and understand how they can support UX designers in creating localization-friendly designs (e.g., [space for translation](#manage-space-for-translations)).
 
-UX writers can support [implementation of localization](#code) by understanding, applying, and sharing the following concepts with developers.
+In addition, translation-friendly texts should be defined by thinking like a translator: “Is the text understandable without the visual context?”
 
-<!-- markdownlint-enable MD051 -->
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+- `Delete the template for tool instance IDs`
+
+</div>
+<div class="donts" markdown>
+
+- `Delete complete tool instance ID naming`Deleting a tool instance?<br>Naming something?<br>Is "complete" an adjective or a verb?
+
+</div>
+</div>
 
 User interface texts are stand-alone, short, and to the point, but they provide little to no context on their own. Thus, translators and AI can only produce a reliable translation if the terms are
 
 - [Dominant](#terms-in-various-uses)
-- [Precise](#terminology)
-- [Unambiguous](#remove-ambiguity)
+- [Precise](#domain-terminology)
+- [Unambiguous](#avoid-misunderstandings)
 
-UX writing combines terminology, [style](ux-text-style-guide/index.md) and form to ensure a consistent UI for specific use cases of a target audience.
+UX writing combines terminology, style and form to ensure a consistent UI for specific use cases of a target audience.
 
-!!! tip "Think like a translator"
+<!-- markdownlint-disable MD051 -->
 
-    Every string will be translated without access to the surrounding UI. Ask yourself: is this text understandable without visual context?
+The handover documentation to development must include the UX writing specifications (e.g., [placeholder names](#define-named-placeholders) or [grouping of texts](#grouping-of-texts)) as a basis for [implementing internationalization](#code).
 
-    <div class="dos-and-donts" markdown>
-    <div class="dos" markdown>
-
-    - `Delete the template for tool instance IDs`
-
-    </div>
-    <div class="donts" markdown>
-
-    - `Delete complete tool instance ID naming`Deleting a tool instance?<br>Naming something?<br>Is "complete" an adjective or a verb?
-
-    </div>
-    </div>
+<!-- markdownlint-enable MD051 -->
 
 ### Domain terminology
 
@@ -84,15 +85,13 @@ Common language serves multiple purposes:
 - Openness to third parties, breaking up of silos
 - Foundation for artificial intelligence
 
-!!! warning "Usage of terminology databases"
-
-    - Select the terminology database of your domain.
-    - Identify terms not yet defined and request them in the terminology database or by contacting the terminology maintainers of your domain.
-
 #### Terms in various uses
 
 Many terms have various meanings related to a specific context or domain.
-Use the terminology database of domain, review the UI texts together with domain experts, and ensure that translations are done by translators with domain knowledge.
+
+Use the terminology database of domain to maintain a common language.
+UX writers are asked to request terms from the terminology maintainers of the domain (via the terminology database) if the term is not yet defined.
+Review the UI texts together with domain experts, and ensure that translations are done by translators with domain knowledge.
 
 !!! info "Meaning of the term `title`"
 
@@ -132,9 +131,9 @@ In addition, the alternative term substantially increases the probability of cor
 
 ### Avoid misunderstandings
 
-Avoid possible causes of misunderstandings
+Avoid possible causes of misunderstandings by
 
-- grouping the texts into namespaces by use cases
+- grouping the texts by use cases
 - only using the [dominant meaning](#terms-in-various-uses) of the term
 - annotating texts with a description (if supported by translation framework and file format)
 
@@ -142,7 +141,7 @@ Avoid possible causes of misunderstandings
 
 Translators translate texts individually.
 In order to understand the context and maintain consistency, it is necessary to have related texts close together.
-Related texts can be brought together by grouping texts based on use cases (e.g., Manage users → Arrow right) along with meaningful (key) names.
+Related texts can be brought together by grouping texts based on use cases (e.g., My account → Theme selection) along with meaningful (key) names.
 
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
@@ -183,19 +182,16 @@ Related texts can be brought together by grouping texts based on use cases (e.g.
 
 ### Manage space for translations
 
-Consider how text will appear in different languages when designing user interfaces.
+Design user interfaces by following these steps to ensure that translations have space in the user interface.
 
 1. Design UI by prioritizing flexible layouts, identify areas with limited text space, and always allocate more space than you think you'll need.
 1. Write English strings, keeping conciseness in mind from the start.
 1. Determine reasonable limits and provide it to the translation management.
 1. Request translations
-1. Test every screen with translated texts
+1. Test every screen with translated texts  
+   Revisit the UI design or the original string if a translator cannot convey the meaning within the limit.
 
-!!! warning "UI refactoring"
-
-    Revisit the UI design or the original string if a translator cannot convey the meaning within the limit.
-
-    Fixing UI issues caused by long translations late in the development cycle is expensive and time-consuming.
+Fixing UI issues caused by long translations late in the development cycle is expensive and time-consuming.
 
 #### Awareness for length increase
 
@@ -207,6 +203,8 @@ Always design with translation in mind, assuming text will grow.
   If text is truncated, important instructions or information may be invisible, which can lead to frustration and misuse.
 - UI inconsistency  
   Different languages require different amounts of space, which makes it difficult to maintain a consistent look and feel.
+
+UX writers are ambassadors of internationalization and are asked to support UX designers in creating localization-friendly designs.
 
 #### Required space for translation
 
@@ -224,37 +222,71 @@ Some generally accepted rules of thumb:
 
 Consider German, Finnish, Greek, and some Slavic languages, which are known for their long translations.
 
-!!! tip "Provide translation limits to the translation management tool"
+#### Limit space if required
 
-    Set text limits on elements with truly constrained space.
+Identify UI elements which truly offer limited space, even if a flexible design is the preferred choice.
+The following UI elements may require text length restrictions:
 
-    - Buttons
-    - Tab labels
-    - Navigation menu items
-    - Table headers
-    - Input field labels
+- Buttons
+- Tab labels
+- Navigation menu items
+- Table headers
+- Input field labels
 
-    Texts can be limited by `Character count` or `Pixel width`.
+Texts can be limited by the translation management tool in terms of character count or pixel width.
 
-### Reuse strings
+### Reuse texts
 
-Before writing a new string, check whether one with the exact same meaning already exists.
+Before writing a new text, check whether one with the exact same meaning already exists.
 
-Reusing strings…
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+- `COMMON.SAVE:` Save
+
+</div>
+<div class="donts" markdown>
+
+- `USERS.EDIT_USER.SAVE:` Save
+- `DEVICES.EDIT_DEVICE.SAVE:` Save
+
+</div>
+</div>
+
+Reusing the same instance of text…
 
 - …reduces the volume sent to translators and lowers cost.
 - …increases the efficiency of product development and maintenance.
 - …keeps translation unique in every supported language.
 - …helps identifying duplicated functionality.
 
-However, be careful when changing approved, reused strings to ensure that their meaning is preserved.
-If necessary, introduce a new string.
+However, be careful when changing approved, reused texts to ensure that their meaning is preserved.
 
-!!! warning "Context-dependent strings"
+An English text may require different translations in different contexts.
+In such cases, a separate text must be created.
 
-    A single string reused across different contexts may require different translations in different languages.
+<!-- markdownlint-disable MD038 -->
 
-    In doubt, create a separate string for each use even if the English text looks the same.
+<div class="dos-and-donts" markdown>
+<div class="dos" markdown>
+
+- `COMMON.CANCEL:` "Cancel" for processes only
+- Translation to German: "Abbrechen"
+- Add `CONTRACT.CANCEL:` "Cancel" for contracts
+- Translation to German: "Stornieren"
+
+</div>
+<div class="donts" markdown>
+
+- `CANCEL:` "Cancel" in context of process and contract
+- Translation to German: "Abbrechen" or "Stornieren"?
+
+</div>
+</div>
+
+<!-- markdownlint-enable MD038 -->
+
+If in doubt, create a separate text for each use, even if the English text appears to be identical.
 
 ### Use translation libraries
 
@@ -270,6 +302,7 @@ Use these sources to avoid superfluous translation efforts.
 ### Avoid directional terms on UI
 
 Directional terms might get incorrect if the user interface is mirrored for [RTL languages](#rtl-right-to-left).
+Use direction agnostic texts instead.
 
 <!-- markdownlint-disable MD038 -->
 
