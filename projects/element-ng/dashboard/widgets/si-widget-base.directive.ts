@@ -61,7 +61,7 @@ export abstract class SiWidgetBaseDirective<T> implements OnInit, OnChanges {
 
   protected loadingTimer?: ReturnType<typeof setTimeout>;
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (
       !this.disableAutoLoadingIndicator() &&
       !changes.value?.firstChange &&

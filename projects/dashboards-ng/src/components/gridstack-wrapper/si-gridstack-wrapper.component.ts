@@ -93,7 +93,7 @@ export class SiGridstackWrapperComponent implements OnInit, OnChanges {
     () => new Map(this.widgetConfigs().map(w => [w.id, w]))
   );
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.widgetConfigs) {
       const { currentValue, previousValue, firstChange } = changes.widgetConfigs;
 
