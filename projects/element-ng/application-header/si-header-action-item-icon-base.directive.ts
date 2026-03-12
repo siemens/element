@@ -33,8 +33,8 @@ export abstract class SiHeaderActionIconItemBase
       : undefined;
   });
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if ('badge' in changes) {
+  ngOnChanges(changes: SimpleChanges<this>): void {
+    if (changes.badge) {
       if (changes.badge.currentValue && !changes.badge.previousValue) {
         this.collapsibleActions?.badgeCount.update(count => count + 1);
       } else if (!changes.badge.currentValue && changes.badge.previousValue) {

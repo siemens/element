@@ -91,7 +91,7 @@ export class SiMonthSelectionComponent extends SiInitialFocusComponent implement
     return maxDate && (isSameYear(focusedDate, maxDate) || isAfterYear(focusedDate, maxDate));
   });
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (
       changes.maxDate ||
       changes.minDate ||

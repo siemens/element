@@ -70,8 +70,8 @@ export class SiStatusToggleComponent implements ControlValueAccessor, OnInit, On
   protected readonly animated = signal(false);
   protected readonly isDisabled = computed(() => this.disabled() || this.internalDisabled());
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.value || changes.values) {
+  ngOnChanges(changes: SimpleChanges<this>): void {
+    if (changes.value) {
       this.setValue(this.value(), true, false);
     }
   }

@@ -40,7 +40,7 @@ export abstract class SiWebComponentWrapperBaseComponent<
   private renderer2 = inject(Renderer2);
   private document = inject(DOCUMENT);
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.config && this.webComponent) {
       this.webComponent.config = this.config();
     }

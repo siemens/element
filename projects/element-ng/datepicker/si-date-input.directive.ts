@@ -120,7 +120,7 @@ export class SiDateInputDirective
   readonly errormessageId = input(`${this.id()}-errormessage`);
 
   /** @internal */
-  validatorOnChange = (): void => {};
+  validatorOnChange: () => void = () => {};
   /**
    * Date form input validator function, validating text format, min and max value.
    */
@@ -143,7 +143,7 @@ export class SiDateInputDirective
   protected readonly locale = inject(LOCALE_ID).toString();
   private format = '';
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.siDatepickerConfig && !changes.siDatepickerConfig.currentValue) {
       this.siDatepickerConfig.set({});
     }

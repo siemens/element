@@ -200,7 +200,7 @@ export class SiSplitPartComponent implements OnChanges {
     return !this.collapsedState();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.collapseToMinSize && this.collapseToMinSize) {
       this.collapsedSize.set(this.minSize ?? 40);
     } else {

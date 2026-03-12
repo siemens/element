@@ -208,7 +208,7 @@ export class SiNChartGaugeComponent implements OnInit, OnChanges {
     maximumFractionDigits: this.axisNumberOfDecimals()
   });
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     let calc = false;
     if (changes.minNumberOfDecimals || changes.maxNumberOfDecimals) {
       this.numberFormat = new Intl.NumberFormat(this.locale, {

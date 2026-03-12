@@ -142,9 +142,9 @@ export class SiSearchBarComponent implements OnInit, OnDestroy, ControlValueAcce
     this.disabledNgControl.set(disabled);
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.value) {
-      this.writeSearchValue(changes.value.currentValue);
+      this.writeSearchValue(changes.value.currentValue ?? '');
     }
   }
 

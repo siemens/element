@@ -364,7 +364,7 @@ export class SiMapComponent implements AfterViewInit, OnChanges, OnDestroy, Afte
     return name === POINTS_LAYER || name === GEOJSON_LAYER;
   };
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (!this.map) {
       return;
     }

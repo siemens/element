@@ -100,7 +100,7 @@ export class SiRelativeDateComponent implements OnChanges {
       : this.fullOffsetList.filter(item => item.offset >= ONE_DAY)
   );
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     const value = this.value();
     if (changes.value && value !== this.internalValue()) {
       this.internalValue.set(value);

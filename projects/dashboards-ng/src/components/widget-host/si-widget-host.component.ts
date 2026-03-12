@@ -138,7 +138,7 @@ export class SiWidgetHostComponent implements OnInit, OnChanges {
     return widgetConfig.accentLine ? 'accent-' + widgetConfig.accentLine : '';
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.widgetConfig) {
       if (this.widgetRef) {
         if (isSignal(this.widgetRef.instance.config)) {

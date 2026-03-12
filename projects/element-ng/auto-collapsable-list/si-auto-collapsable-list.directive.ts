@@ -88,7 +88,7 @@ export class SiAutoCollapsableListDirective implements AfterViewInit, OnChanges,
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.siAutoCollapsableList) {
       const siAutoCollapsableList = this.siAutoCollapsableList();
       if (!siAutoCollapsableList && this.resizeSubscription) {

@@ -45,7 +45,7 @@ export class SiAvatarBackgroundColorDirective implements OnChanges {
 
   protected readonly backgroundStyle = signal<string | undefined>('var(--element-data-17)');
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.color) {
       this.setColor(this.color());
     }

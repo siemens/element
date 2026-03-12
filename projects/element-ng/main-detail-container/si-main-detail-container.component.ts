@@ -226,7 +226,7 @@ export class SiMainDetailContainerComponent implements OnInit, OnChanges {
 
   protected readonly opacity = signal('0');
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.detailsActive) {
       this.updateDetailsFocusable();
       this.doAnimation(changes.detailsActive.currentValue);

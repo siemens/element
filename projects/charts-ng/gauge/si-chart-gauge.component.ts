@@ -377,7 +377,7 @@ export class SiChartGaugeComponent extends SiChartBaseComponent implements OnCha
     };
   }
 
-  override ngOnChanges(changes: SimpleChanges): void {
+  override ngOnChanges(changes: SimpleChanges<unknown>): void {
     if (this.chart && (changes.palette || changes.colors || changes.segments)) {
       this.updateColors();
     }

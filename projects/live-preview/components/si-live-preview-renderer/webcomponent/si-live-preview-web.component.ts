@@ -34,7 +34,7 @@ export class SiLivePreviewWebComponent implements OnChanges {
   private reactRoot: any;
   private vueRoot: any;
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     this.reactRoot?.unmount();
     this.vueRoot?.unmount();
     if (
