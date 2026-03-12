@@ -231,7 +231,7 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
     secondary: []
   };
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.dashboardId) {
       const dashboard = this.dashboard();
       if (dashboard.isExpanded) {

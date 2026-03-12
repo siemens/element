@@ -225,7 +225,7 @@ export class SiPhoneNumberInputComponent
   private onChange: (val: string) => void = () => {};
   private onTouched: () => void = () => {};
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.country) {
       this.writeCountry();
     }

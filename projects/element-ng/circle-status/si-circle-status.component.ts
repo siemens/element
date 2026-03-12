@@ -112,7 +112,7 @@ export class SiCircleStatusComponent implements OnChanges, OnDestroy {
 
   private blinkService = inject(BlinkService);
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (this.blinkService && changes.blink) {
       this.blinkSubs?.unsubscribe();
 
