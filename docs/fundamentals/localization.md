@@ -71,11 +71,11 @@ UX writing combines terminology, [style](ux-text-style-guide/index.md) and form 
     </div>
     </div>
 
-### Terminology
+### Domain terminology
 
 - The terms are defined by experts (physicists, engineers, lawyers, etc.) from universities and various global companies specializing in specific domains.
-- Standardization bodies (e.g., ISO, EN, UL, BS, DIN, ASHRAE, BACnet) are standardizing common terms.
-- Quasi-industrial standards from individual sources (Haystack, Bric etc.) become international standards only if aligned to official organizations. If not aligned, setting a standard remains wishful thinking.
+- Standardization bodies (e.g., [ISO](https://iso.org), [EN](https://cen.eu), [UL](https://ul.com), [IEC](https://iec.ch)) are standardizing common terms.
+- Avoid terms from quasi-industrial standards until they have been harmonized with official standardization bodies and are generally accepted.
 
 Common language serves multiple purposes:
 
@@ -92,6 +92,7 @@ Common language serves multiple purposes:
 #### Terms in various uses
 
 Many terms have various meanings related to a specific context or domain.
+Use the terminology database of domain, review the UI texts together with domain experts, and ensure that translations are done by translators with domain knowledge.
 
 !!! info "Meaning of the term `title`"
 
@@ -129,9 +130,9 @@ One meaning always dominates regardless of context. That is the meaning that can
 
 In addition, the alternative term substantially increases the probability of correct interpretation by artificial intelligence (as part of translation, machine learning, or any other use).
 
-### Remove ambiguity
+### Avoid misunderstandings
 
-The ambiguity can be removed by
+Avoid possible causes of misunderstandings
 
 - grouping the texts into namespaces by use cases
 - only using the [dominant meaning](#terms-in-various-uses) of the term
@@ -139,7 +140,9 @@ The ambiguity can be removed by
 
 #### Grouping of texts
 
-Group texts by use case and provide meaningful (key) names.
+Translators translate texts individually.
+In order to understand the context and maintain consistency, it is necessary to have related texts close together.
+Related texts can be brought together by grouping texts based on use cases (e.g., Manage users → Arrow right) along with meaningful (key) names.
 
 <div class="dos-and-donts" markdown>
 <div class="dos" markdown>
@@ -219,7 +222,7 @@ Some generally accepted rules of thumb:
 - Very Long Strings (50+ characters)  
   Depending on the conciseness of the language, the paragraphs can be 30-50% longer, but sometimes also shorter than the original.
 
-Consider worst case languages: German, Finnish, Greek, and some Slavic languages are known for their long translations.
+Consider German, Finnish, Greek, and some Slavic languages, which are known for their long translations.
 
 !!! tip "Provide translation limits to the translation management tool"
 
@@ -355,7 +358,8 @@ Use locale-aware formatting (see [Code tab](#code)), and avoid UX writing depend
 
 ### Pluralization
 
-Strings containing numbers may be represented differently in different languages.
+Each language has its own grammatical rules that specify how texts containing numbers must be presented.
+It is important to consider these different rules early in the UX writing and implementation process to ensure that the product can be localized correctly.
 
 !!! info "Pluralization examples"
 
@@ -391,6 +395,8 @@ Depending on the language there might be up to 6 forms. Following language speci
 |   3   | Special case for one and some numbers ending in `2`, `3`, or `4`                                                    | Polish         |
 |   4   | Special case for one and all numbers ending in `02`, `03`, or `04`                                                  | Slovenian      |
 |   6   | Special cases for one, two, all numbers ending in `02`, `03`, … `10`, all numbers ending in `11` … `99`, and others | Arabic         |
+
+The [plural rules specification from the Unicode CLDR project](https://cldr.unicode.org/index/cldr-spec/plural-rules) contains a detailed linguistic analysis.
 
 #### Use localization to handle pluralization
 
