@@ -24,15 +24,17 @@ const eventBusInstanceSymbol = Symbol.for('eventBusInstance');
  * eventBus.emit('languageChange', 'de');
  * ```
  */
-export const getEventBusInstance = <ET extends {name: string; data: unknown} = EventType>(): EventBusBase<ET> => {
+export const getEventBusInstance = <
+  ET extends { name: string; data: unknown } = EventType
+>(): EventBusBase<ET> => {
   const win = window as unknown as Record<symbol, unknown>;
   if (!win[eventBusInstanceSymbol]) {
     Object.defineProperty(window, eventBusInstanceSymbol, {
       value: new EventBusBase<ET>(),
       writable: false,
       enumerable: false,
-      configurable: false,
+      configurable: false
     });
   }
   return win[eventBusInstanceSymbol] as EventBusBase<ET>;
-}
+};
