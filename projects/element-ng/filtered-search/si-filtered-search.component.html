@@ -2,7 +2,7 @@
   #scrollContainer
   class="search-container d-flex align-items-center overflow-auto py-2 w-100 ps-2 pe-2"
 >
-  @for (criterion of values; track criterion) {
+  @for (criterion of values(); track criterion) {
     <si-filtered-search-value
       [editOnCreation]="autoEditCriteria"
       [definition]="criterion.config"
@@ -36,10 +36,10 @@
     [typeaheadOptionsLimit]="typeaheadOptionsLimit()"
     [typeaheadScrollable]="true"
     [typeaheadOptionsInScrollableView]="optionsInScrollableView()"
-    [typeaheadAutoSelectIndex]="searchValue ? 0 : -1"
+    [typeaheadAutoSelectIndex]="searchValue() ? 0 : -1"
     [typeaheadCreateOption]="
       freeTextCriterion() &&
-      (!maxCriteria() || values.length < maxCriteria()!) &&
+      (!maxCriteria() || values().length < maxCriteria()!) &&
       allowFreeTextCache()
         ? searchForFreeTextLabel()
         : undefined
@@ -47,7 +47,7 @@
     [disabled]="disabled()"
     [placeholder]="placeholder()"
     [attr.aria-label]="searchLabel() | translate"
-    [value]="searchValue"
+    [value]="searchValue()"
     (focus)="freeTextFocus()"
     (input)="freeTextInput($event)"
     (blur)="freeTextBlur()"
@@ -58,7 +58,7 @@
   />
 </div>
 <!-- clear all searchCriteria -->
-@if (values.length || searchValue.length) {
+@if (values().length || searchValue().length) {
   <div class="clear-button-container">
     <button
       type="button"
