@@ -84,6 +84,7 @@ export class SiMapPopoverComponent {
   private renderDefault(mapPoints: MapPointMetaData | MapPointMetaData[]): void {
     // Create an embedded view with the default content template
     const context = Array.isArray(mapPoints) ? { mapPoints } : { mapPoint: mapPoints };
-    this.contentContainer().createEmbeddedView(this.defaultCluster(), context).detectChanges();
+    const template = Array.isArray(mapPoints) ? this.defaultCluster() : this.defaultContent();
+    this.contentContainer().createEmbeddedView(template, context).detectChanges();
   }
 }

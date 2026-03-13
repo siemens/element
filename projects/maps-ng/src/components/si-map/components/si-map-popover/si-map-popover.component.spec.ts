@@ -55,5 +55,29 @@ describe('SiMapPopoverComponent', () => {
       // eslint-disable-next-line
       expect(component['renderDefault']).toHaveBeenCalled();
     });
+
+    it('default content template for a single map point', () => {
+      component.render({ component: undefined, mapPoints });
+      fixture.detectChanges();
+
+      const el: HTMLElement = fixture.nativeElement;
+      expect(el.textContent).toContain('Point 1');
+      expect(el.innerHTML).toContain('Desc 1');
+      expect(el.querySelector('.si-map-popover-list')).toBeNull();
+    });
+
+    it('default cluster template for multiple map points', () => {
+      const multiplePoints: MapPointMetaData[] = [
+        { name: 'Point A', description: 'Desc A' },
+        { name: 'Point B', description: 'Desc B' }
+      ];
+      component.render({ component: undefined, mapPoints: multiplePoints });
+      fixture.detectChanges();
+
+      const el: HTMLElement = fixture.nativeElement;
+      expect(el.querySelector('.si-map-popover-list')).not.toBeNull();
+      expect(el.textContent).toContain('Point A');
+      expect(el.textContent).toContain('Point B');
+    });
   });
 });
