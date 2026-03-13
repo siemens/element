@@ -1,6 +1,6 @@
 # AI chat history
 
-The chat history displays previous conversations between the user and the AI.
+The **chat history** displays previous conversations between the user and the AI.
 
 ## Usage ---
 
@@ -9,7 +9,7 @@ conversations across longer tasks.
 
 This pattern is a combination of list item and the [side panel](../../components/layout-navigation/side-panel.md).
 
-![AI chat](images/ai-chat.png)
+![Chat history](images/chat-history.png)
 
 ### Best practices
 
@@ -59,15 +59,14 @@ the most relevant attributes and progressively removing secondary ones to preser
 When the AI chat is integrated as a full page layout, 
 the chat history is displayed in a collapsible side panel.
 
-![AI chat in full page](images/ai-chat-full-page.png)
+![Chat history in full page](images/chat-history-full-page-layout.png)
 
 #### Side panel layout
 
-If AI the AI chat is already handled in a side panel, chat history is accessed within the same panel.
+If AI chat is already handled in a side panel, chat history is accessed within the same panel.
 Selecting a conversation replaces the current chat content inside that panel.
-Only one panel should be active at a time.
 
-![AI chat in side panel](images/ai-chat-side-panel.png)
+![Chat history in side panel](images/chat-history-side-panel-layout.png)
 
 #### Chat organization
 
@@ -80,34 +79,9 @@ Additional grouping methods can be used when further organization is needed.
 - Use [summary chips](../../components/status-notifications/summary-chip.md) to provide a
   quick overview of grouped conversations
 
-
+![Chat history organization](images/chat-history-organization.png)
 
 If additional refinement is needed, consider using filters.
 
 ## Code ---
 
-Use the chat container with the chat messages to build chat message interfaces.
-
-The **si-chat-container** component is a wrapper component, it has slots for
-[chat messages](../../components/chat-messages/chat-message.md) and a
-[chat input](../../components/chat-messages/chat-input.md).
-
-The slots are:
-
-- default -> chat messages or initial screen (`si-welcome-screen`)
-- `si-chat-input/siChatContainerInput (helper directive)` -> For the input (whether default or custom).
-- `si-inline-notification` -> Slotted above the input for displaying the status.
-
-<si-docs-component example="si-chat-messages/si-chat-container" height="600"></si-docs-component>
-
-<si-docs-api component="SiChatContainerComponent"></si-docs-api>
-
-### Initial Screen
-
-When initially displaying a chat interface use the initial **si-welcome-screen** component that displays when there are no messages. It can be slotted into the **si-chat-container** component. It accepts prompt suggestions as an input.
-
-<si-docs-component example="si-chat-messages/si-ai-welcome-screen" height="600"></si-docs-component>
-
-<si-docs-api component="SiAiWelcomeScreenComponent"></si-docs-api>
-
-<si-docs-types></si-docs-types>
