@@ -6,7 +6,7 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject, input, OnInit } from '@angular/core';
 import { SiChartCartesianComponent } from '@siemens/charts-ng/cartesian';
-import { EventBus, WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
+import { SiEventBus, WidgetConfig, WidgetInstance } from '@siemens/dashboards-ng';
 import { ContentActionBarMainItem } from '@siemens/element-ng/content-action-bar';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { SiResizeObserverModule } from '@siemens/element-ng/resize-observer';
@@ -44,9 +44,9 @@ export class ChartWidgetComponent implements OnInit, WidgetInstance {
   ];
 
   data!: Observable<CartesianChartData>;
-  private eventBus = inject(EventBus);
+  private eventBus = inject(SiEventBus);
 
-  private currentFilterArray = this.eventBus.currentEventsState('filter', ['days', 'severity']);
+  private currentFilterArray = this.eventBus.snapshot('filter', ['days', 'severity']);
 
   readonly filter = this.eventBus
     .on<Filter[]>('filter')

@@ -4,7 +4,7 @@
  */
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EventBus } from '@siemens/dashboards-ng';
+import { SiEventBus } from '@siemens/dashboards-ng';
 
 import { days, severity } from '../../widgets/charts/data.service';
 
@@ -21,7 +21,7 @@ export class DashboardFiltersComponent implements OnInit {
   readonly severity = severity;
 
   private formBuilder = inject(FormBuilder);
-  private eventBus = inject(EventBus);
+  private eventBus = inject(SiEventBus);
 
   ngOnInit(): void {
     const formControls = {
