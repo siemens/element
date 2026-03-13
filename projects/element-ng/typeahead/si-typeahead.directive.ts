@@ -2,7 +2,13 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ConnectionPositionPair, Overlay, OverlayRef } from '@angular/cdk/overlay';
+import {
+  ConnectionPositionPair,
+  Overlay,
+  OverlayConfig,
+  OverlayRef,
+  ScrollStrategy
+} from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import {
   booleanAttribute,
@@ -224,6 +230,12 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
    * @defaultValue false
    */
   readonly typeaheadFullWidth = input(false, { transform: booleanAttribute });
+
+  /**
+   * Optional CDK scroll strategy used for the typeahead overlay.
+   * If not provided, no strategy is set explicitly and CDK will apply its default behavior.
+   */
+  readonly typeaheadScrollStrategy = input<ScrollStrategy>();
 
   /**
    * This option will be shown at the end of the typeahead.
@@ -499,7 +511,8 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
   private loadComponent(): void {
     if (!this.overlayRef?.hasAttached()) {
       this.overlayRef?.dispose();
-      this.overlayRef = this.overlay.create({
+
+      const overlayConfig: OverlayConfig = {
         positionStrategy: this.overlay
           .position()
           .flexibleConnectedTo(this.elementRef.nativeElement)
@@ -507,7 +520,14 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
         minWidth: this.typeaheadFullWidth()
           ? this.elementRef.nativeElement.getBoundingClientRect().width + 2 // 2px border
           : 0
-      });
+      };
+
+      const scrollStrategy = this.typeaheadScrollStrategy();
+      if (scrollStrategy) {
+        overlayConfig.scrollStrategy = scrollStrategy;
+      }
+
+      this.overlayRef = this.overlay.create(overlayConfig);
     }
 
     if (this.overlayRef.hasAttached()) {
