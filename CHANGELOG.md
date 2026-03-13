@@ -1,3 +1,32 @@
+# [49.1.0](https://github.com/siemens/element/compare/v49.0.0...v49.1.0) (2026-03-13)
+
+
+* Revert "chore(element-ng): narrow @siemens/ngx-datatable peer dependency to v25" ([cc760f1](https://github.com/siemens/element/commit/cc760f17df13ede4d3d209c68d526e441ad3ac5a))
+
+
+### Features
+
+* **datatable:** add theming for the datatable summary row ([9f5a354](https://github.com/siemens/element/commit/9f5a354ac44b7a11d4dcabd3edad88b975cabebf))
+* **landing-page:** add default texts for forgot password and register now links ([b4dc71a](https://github.com/siemens/element/commit/b4dc71a30adafc12b1933240e6eebf7e0fb8fca8))
+* **live-preview:** allow apps to use AOT compilation with live preview ([240ed53](https://github.com/siemens/element/commit/240ed53c180de4d21eae1c50a8fc77eb4d1756d6))
+* **tabs:** add contentOverflowAuto attribute to si-tabset for auto-scrolling ([b4d22b8](https://github.com/siemens/element/commit/b4d22b81507f20968bd3b16f3d4976adba77839f))
+* **tabs:** provide the ability to render a tabpanel outside the tabset via CDK DOM Portal ([3c6a39e](https://github.com/siemens/element/commit/3c6a39e483dec471c3ce031fb5524f82f5f9de76))
+* **typeahead:** experimental option source with loading state ([a673a56](https://github.com/siemens/element/commit/a673a561c23cf75259c00191d4d81b00a107d0fa))
+
+
+### Bug Fixes
+
+* **card:** use correct spacing in `si-action-card` ([4c15dad](https://github.com/siemens/element/commit/4c15dad9e615ea980017f5200d1c46180597c1c0))
+* **dashboards-ng:** prevent unnecessary widgetRef config updates ([9032307](https://github.com/siemens/element/commit/9032307f25576228b954bc9709a17c2a6b826765))
+* **filtered-search:** only emit `doSearch` once for each change ([c75bde8](https://github.com/siemens/element/commit/c75bde810ef64e6150a0a59d46ac648bf950a7ce))
+* **landing-page:** pass loginAlert action and translationParams ([71854e6](https://github.com/siemens/element/commit/71854e631d41459d0013c6a990a14f072f926d0e)), closes [#1555](https://github.com/siemens/element/issues/1555)
+* **landing-page:** prevent initial animation ([0c9ce58](https://github.com/siemens/element/commit/0c9ce58c5aa7020294e54cf8684aecec9b0e1cad))
+* **launchpad:** align external icon size and spacing with design specs ([d04db2a](https://github.com/siemens/element/commit/d04db2a90dc47d4e0be4a9c5aa10e34f800c51e7))
+* **navbar-vertical:** remove absolute positioning from title ([b45b7a3](https://github.com/siemens/element/commit/b45b7a3560e59b7579cd58375d11de41781164c6))
+* **schematics:** distinguish files from directories during ts compilation ([e010e2c](https://github.com/siemens/element/commit/e010e2ceab3a350f0d2ee4c1ec9ab840b7c386c2))
+* **side-panel:** hide fullscreen button on smaller breakpoints#1547 ([282005b](https://github.com/siemens/element/commit/282005bb6aa6ad9ed8aa0ef2189b7001a95262f8)), closes [breakpoints#1547](https://github.com/breakpoints/issues/1547) [#1529](https://github.com/siemens/element/issues/1529)
+* **typography:** align `lead` with `body-lg` ([95cc743](https://github.com/siemens/element/commit/95cc743b0eed53cb951aaa4c0d3aa7da757b0c06))
+
 # [49.0.0](https://github.com/siemens/element/compare/v48.9.0...v49.0.0) (2026-02-18)
 
 [Release blog post: "Welcome Element v49!"](https://blog.siemens.com/2026/02/welcome-element-49/)
