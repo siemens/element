@@ -2,12 +2,12 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { EventBusBase, EventType } from './event-bus.base';
+import { SiEventBusBase, EventType } from './si-event-bus.base';
 
 const eventBusInstanceSymbol = Symbol.for('eventBusInstance');
 
 /**
- * Returns a singleton {@link EventBusBase} instance stored on `window`.
+ * Returns a singleton {@link SiEventBusBase} instance stored on `window`.
  *
  * Use this in non-Angular applications (plain JS/TS, React, Vue, etc.) that
  * need to participate in the same event bus as Angular dashboard widgets.
@@ -17,7 +17,7 @@ const eventBusInstanceSymbol = Symbol.for('eventBusInstance');
  *
  * @example
  * ```ts
- * import { getEventBusInstance } from '@siemens/dashboards-ng';
+ * import { getEventBusInstance } from '@siemens/dashboards-ng/event-bus';
  *
  * const eventBus = getEventBusInstance();
  * eventBus.on('themeChange').subscribe(theme => console.log(theme));
@@ -26,15 +26,15 @@ const eventBusInstanceSymbol = Symbol.for('eventBusInstance');
  */
 export const getEventBusInstance = <
   ET extends { name: string; data: unknown } = EventType
->(): EventBusBase<ET> => {
+>(): SiEventBusBase<ET> => {
   const win = window as unknown as Record<symbol, unknown>;
   if (!win[eventBusInstanceSymbol]) {
     Object.defineProperty(window, eventBusInstanceSymbol, {
-      value: new EventBusBase<ET>(),
+      value: new SiEventBusBase<ET>(),
       writable: false,
       enumerable: false,
       configurable: false
     });
   }
-  return win[eventBusInstanceSymbol] as EventBusBase<ET>;
+  return win[eventBusInstanceSymbol] as SiEventBusBase<ET>;
 };

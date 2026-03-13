@@ -6,7 +6,7 @@ import { inject, Injectable } from '@angular/core';
 import { CartesianChartSeries } from '@siemens/charts-ng/cartesian';
 import { CircleChartSeries } from '@siemens/charts-ng/circle';
 import { ChartXAxis, ChartYAxis } from '@siemens/charts-ng/common';
-import { EventBus } from '@siemens/dashboards-ng';
+import { SiEventBus } from '@siemens/dashboards-ng';
 import { combineLatest, map, Observable, of, shareReplay, startWith } from 'rxjs';
 
 export interface CartesianChartData {
@@ -25,7 +25,7 @@ export const severity = ['All levels', 'Success', 'Warning', 'Danger'];
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
-  eventBus = inject(EventBus);
+  eventBus = inject(SiEventBus);
 
   private currentFilterArray = this.eventBus.snapshot('filter', ['days', 'severity']);
   readonly filter = this.eventBus

@@ -372,20 +372,20 @@ Here is the [demo](https://github.com/siemens/element/blob/main/projects/dashboa
 
 ### Communicating between widgets
 
-Widgets on a dashboard can communicate with each other through the `EventBus` service.
+Widgets on a dashboard can communicate with each other through the `SiEventBus` service.
 The event bus uses a shared state on `window`, so it works across separate Angular runtimes
 (e.g. WebComponents, Module Federation remotes). Three default events are available out of the box:
 `filter`, `languageChange`, and `themeChange`.
 
 #### Angular usage
 
-Inject the `EventBus` service and use `emit()` to broadcast events and `on()` to subscribe:
+Inject the `SiEventBus` service and use `emit()` to broadcast events and `on()` to subscribe:
 
 ```ts
-import { EventBus } from '@siemens/dashboards-ng';
+import { SiEventBus } from '@siemens/dashboards-ng';
 
 // Emitting events
-private eventBus = inject(EventBus);
+private eventBus = inject(SiEventBus);
 
 this.eventBus.emit('filter', [
   { key: 'days', value: 'Mon' },
@@ -395,7 +395,7 @@ this.eventBus.emit('filter', [
 
 ```ts
 // Subscribing to events
-private eventBus = inject(EventBus);
+private eventBus = inject(SiEventBus);
 
 private currentFilterArray = this.eventBus.snapshot('filter', ['days', 'severity']);
 readonly filter = this.eventBus
@@ -409,7 +409,7 @@ For non-Angular frameworks (React, Vue, plain JS/TS), use `getEventBusInstance()
 of Angular's `inject()`:
 
 ```ts
-import { getEventBusInstance } from '@siemens/dashboards-ng';
+import { getEventBusInstance } from '@siemens/dashboards-ng/event-bus';
 
 const eventBus = getEventBusInstance();
 eventBus.on('themeChange').subscribe(theme => console.log(theme));
@@ -425,7 +425,7 @@ type MyEvent =
   | { name: 'customAction'; data: string }
   | { name: 'statusUpdate'; data: boolean };
 
-const eventBus = inject(EventBus<MyEvent>);
+const eventBus = inject(SiEventBus<MyEvent>);
 eventBus.emit('customAction', 'payload');
 eventBus.on('statusUpdate').subscribe(status => console.log(status));
 ```

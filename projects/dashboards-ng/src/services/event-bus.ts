@@ -3,12 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 import { Injectable } from '@angular/core';
+import { SiEventBusBase, EventType } from '@siemens/dashboards-ng/event-bus';
 
-import { EventBusBase, EventType } from './event-bus.base';
-
-@Injectable({
-  providedIn: 'root'
-})
 /**
  * Injectable event bus service for cross-widget communication.
  *
@@ -20,11 +16,14 @@ import { EventBusBase, EventType } from './event-bus.base';
  *   | { name: 'customAction'; data: string }
  *   | { name: 'statusUpdate'; data: boolean };
  *
- * const eventBus = inject(EventBus<MyEvent>);
+ * const eventBus = inject(SiEventBus<MyEvent>);
  * eventBus.emit('customAction', 'payload');
  * ```
  */
-export class EventBus<ET> extends EventBusBase<
+@Injectable({
+  providedIn: 'root'
+})
+export class SiEventBus<ET> extends SiEventBusBase<
   ET extends { name: string; data: unknown } ? ET : EventType
 > {}
 
