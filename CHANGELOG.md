@@ -24,7 +24,7 @@
 * **launchpad:** align external icon size and spacing with design specs ([d04db2a](https://github.com/siemens/element/commit/d04db2a90dc47d4e0be4a9c5aa10e34f800c51e7))
 * **navbar-vertical:** remove absolute positioning from title ([b45b7a3](https://github.com/siemens/element/commit/b45b7a3560e59b7579cd58375d11de41781164c6))
 * **schematics:** distinguish files from directories during ts compilation ([e010e2c](https://github.com/siemens/element/commit/e010e2ceab3a350f0d2ee4c1ec9ab840b7c386c2))
-* **side-panel:** hide fullscreen button on smaller breakpoints#1547 ([282005b](https://github.com/siemens/element/commit/282005bb6aa6ad9ed8aa0ef2189b7001a95262f8)), closes [breakpoints#1547](https://github.com/breakpoints/issues/1547) [#1529](https://github.com/siemens/element/issues/1529)
+* **side-panel:** hide fullscreen button on smaller breakpoints ([282005b](https://github.com/siemens/element/commit/282005bb6aa6ad9ed8aa0ef2189b7001a95262f8)), closes [#1529](https://github.com/siemens/element/issues/1529)
 * **typography:** align `lead` with `body-lg` ([95cc743](https://github.com/siemens/element/commit/95cc743b0eed53cb951aaa4c0d3aa7da757b0c06))
 
 # [49.0.0](https://github.com/siemens/element/compare/v48.9.0...v49.0.0) (2026-02-18)
