@@ -320,8 +320,10 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
   protected dataSource: Observable<InternalCriterionDefinition[]>;
 
   protected autoEditCriteria = false;
-  protected values: { config: InternalCriterionDefinition; value: CriterionValue }[] = [];
-  protected searchValue = '';
+  protected readonly values = signal<
+    { config: InternalCriterionDefinition; value: CriterionValue }[]
+  >([]);
+  protected readonly searchValue = signal('');
   /** Internal criteria model */
   protected internalCriterionDefinitions: InternalCriterionDefinition[] = [];
 
@@ -456,8 +458,8 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
 
   private initValue(): void {
     this.autoEditCriteria = false;
-    this.searchValue = this.searchCriteria()?.value ?? '';
-    this.values =
+    this.searchValue.set(this.searchCriteria()?.value ?? '');
+    this.values.set(
       this.searchCriteria()?.criteria.map(c => {
         const config =
           this.findCriterionConfig(c) ??
@@ -494,7 +496,8 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
           },
           config
         };
-      }) ?? [];
+      }) ?? []
+    );
     this.lastEmittedSearchCriteria = this.searchCriteria();
     this.allowedCriteriaCache = undefined;
   }
@@ -509,11 +512,11 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     event?.stopPropagation();
 
     // Reset search criteria
-    this.values = [];
-    this.searchValue = '';
+    this.values.set([]);
+    this.searchValue.set('');
     this.emitChangeEvent();
     this.allowedCriteriaCache = undefined;
-    this.typeaheadInputChange.next(this.searchValue);
+    this.typeaheadInputChange.next(this.searchValue());
     this.submit();
   }
 
@@ -530,15 +533,15 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     });
     this.cdRef.detectChanges();
 
-    this.values = this.values.filter((_, i) => i !== index);
+    this.values.update(v => v.filter((_, i) => i !== index));
     this.emitChangeEvent();
     this.allowedCriteriaCache = undefined;
-    if (this.values.length !== index) {
+    if (this.values().length !== index) {
       this.valueComponents()[index + 1].edit('value');
     } else {
       this.freeTextInputElement().nativeElement.focus();
     }
-    this.typeaheadInputChange.next(this.searchValue);
+    this.typeaheadInputChange.next(this.searchValue());
     if (event?.triggerSearch) {
       this.submit();
     }
@@ -558,7 +561,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     // The user selected a criterion so we remove the free text search value and add the criterion.
     this.allowedCriteriaCache = undefined;
     this.typeaheadInputChange.next('');
-    this.searchValue = '';
+    this.searchValue.set('');
   }
 
   protected validateCriterionLabel(criterion: InternalCriterionDefinition): boolean {
@@ -574,8 +577,8 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
    */
   private convertToExternalModel(): SearchCriteria {
     const correctedCriteria: SearchCriteria = {
-      value: this.searchValue,
-      criteria: this.values.map(v => v.value)
+      value: this.searchValue(),
+      criteria: this.values().map(v => v.value)
     };
     // When free text search is disabled or free text pills are being used,
     // we must not return any free text value.
@@ -587,21 +590,22 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
 
   private addCriterion(config: InternalCriterionDefinition, value?: string): void {
     if (config.multiSelect) {
-      this.values = [...this.values, { value: { value: [], name: config.name }, config }];
+      this.values.update(v => [...v, { value: { value: [], name: config.name }, config }]);
     } else if (config.validationType === 'date' || config.validationType === 'date-time') {
-      this.values = [
-        ...this.values,
+      const validationType = config.validationType;
+      this.values.update(v => [
+        ...v,
         {
           value: {
             dateValue: new Date(),
-            value: getISODateString(new Date(), config.validationType, this.locale),
+            value: getISODateString(new Date(), validationType, this.locale),
             name: config.name
           },
           config
         }
-      ];
+      ]);
     } else {
-      this.values = [...this.values, { value: { value: value ?? '', name: config.name }, config }];
+      this.values.update(v => [...v, { value: { value: value ?? '', name: config.name }, config }]);
     }
 
     this.autoEditCriteria = true;
@@ -614,10 +618,10 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
    * @returns list of criteria to be shown in typeahead.
    */
   private getFilteredTypeaheadCriteria(token: string): InternalCriterionDefinition[] {
-    if (this.maxCriteria() === undefined || this.values.length < this.maxCriteria()!) {
+    if (this.maxCriteria() === undefined || this.values().length < this.maxCriteria()!) {
       const allowedCriteria = !this.exclusiveCriteria()
         ? this.internalCriterionDefinitions
-        : differenceByName(this.internalCriterionDefinitions, this.values);
+        : differenceByName(this.internalCriterionDefinitions, this.values());
 
       if (allowedCriteria.length > 0 && !this.allowedCriteriaCache) {
         // Call interceptor to allow applications to customize the list of available criteria
@@ -653,17 +657,19 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     // A common case are criteria which depend on each other like Country, Site and Building. If the user change
     // the site the building options might become invalid.
     // KEEP THE REFERENCE, otherwise CD is broken
-    this.values = this.values.map(v =>
-      Object.assign(v, {
-        value: v.value,
-        config: this.findCriterionConfig(v.value) ?? v.config
-      })
+    this.values.update(currentValues =>
+      currentValues.map(v =>
+        Object.assign(v, {
+          value: v.value,
+          config: this.findCriterionConfig(v.value) ?? v.config
+        })
+      )
     );
 
-    if (this.maxCriteria() === undefined || this.values.length < this.maxCriteria()!) {
+    if (this.maxCriteria() === undefined || this.values().length < this.maxCriteria()!) {
       return !this.exclusiveCriteria()
         ? this.internalCriterionDefinitions
-        : differenceByName(this.internalCriterionDefinitions, this.values);
+        : differenceByName(this.internalCriterionDefinitions, this.values());
     }
 
     return [];
@@ -693,14 +699,14 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     const match = value.match(SiFilteredSearchComponent.criterionRegex);
     if (!this.disableSelectionByColonAndSemicolon() && !this.onlySelectValue() && match) {
       const criterionName = match[1];
-      if (this.searchValue === '') {
+      if (this.searchValue() === '') {
         // The value was empty before, so we must make angular detect a change here.
         // Otherwise, the entire value which was pasted will remain in the input.
         // This happens if the user pasts something like: 'key:value'
-        this.searchValue = value;
+        this.searchValue.set(value);
         this.cdRef.detectChanges();
       }
-      this.searchValue = '';
+      this.searchValue.set('');
       this.allowedCriteriaCache = undefined;
 
       const nameLowerCase = criterionName.toLocaleLowerCase();
@@ -715,7 +721,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
       this.typeaheadInputChange.next('');
       this.addCriterion(criterion, match[2]);
     } else {
-      this.searchValue = value;
+      this.searchValue.set(value);
 
       // Only emit a change event if free text pills are not enabled and the free text search is enabled.
       if (!this.disableFreeTextSearch() && !this.freeTextCriterion()) {
@@ -728,8 +734,8 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
 
   protected freeTextBlur(): void {
     queueMicrotask(() => {
-      if (this.freeTextCriterion() && this.searchValue.length > 0) {
-        this.createFreeTextPill(this.searchValue);
+      if (this.freeTextCriterion() && this.searchValue().length > 0) {
+        this.createFreeTextPill(this.searchValue());
       }
     });
   }
@@ -747,7 +753,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     if (next) {
       next.edit();
     } else {
-      this.searchValue = event?.freeText ?? this.searchValue;
+      this.searchValue.set(event?.freeText ?? this.searchValue());
       this.freeTextInputElement().nativeElement.focus();
     }
   }
@@ -767,11 +773,11 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
   protected createFreeTextPill(query: string): void {
     const freeTextDefinition = this.internalFreeTextCriterion();
     const maxCriteria = this.maxCriteria();
-    if (!freeTextDefinition || (maxCriteria && this.values.length >= maxCriteria)) {
+    if (!freeTextDefinition || (maxCriteria && this.values().length >= maxCriteria)) {
       return;
     }
-    this.values = [
-      ...this.values,
+    this.values.update(v => [
+      ...v,
       {
         value: {
           name: freeTextDefinition.name,
@@ -779,8 +785,8 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
         },
         config: freeTextDefinition
       }
-    ];
-    this.searchValue = '';
+    ]);
+    this.searchValue.set('');
     this.allowedCriteriaCache = undefined;
     this.emitChangeEvent();
   }
