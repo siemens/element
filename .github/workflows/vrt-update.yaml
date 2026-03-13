@@ -30,7 +30,7 @@ on:
 jobs:
   vrt-update:
     runs-on: ubuntu-24.04
-    container: mcr.microsoft.com/playwright:v1.57.0-noble
+    container: mcr.microsoft.com/playwright:v1.58.2-noble
     # PR from non-collaborators requires a manual re-run from collaborators which
     # makes run_attempt > 1 on first attempt causing the workflow to run.
     # So we always skip if the PR is not from a collaborator.
