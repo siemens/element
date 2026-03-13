@@ -147,8 +147,8 @@
     "@types/google-libphonenumber": "7.4.30",
     "@types/jasmine": "6.0.0",
     "@types/node": "24.12.0",
-    "@vitest/browser-playwright": "4.0.18",
-    "@vitest/coverage-v8": "4.0.18",
+    "@vitest/browser-playwright": "4.1.0",
+    "@vitest/coverage-v8": "4.1.0",
     "angular-eslint": "21.3.0",
     "axe-html-reporter": "2.2.11",
     "concat": "1.0.3",
@@ -185,7 +185,7 @@
     "tsx": "4.21.0",
     "typescript": "5.9.3",
     "typescript-eslint": "8.57.0",
-    "vitest": "4.0.18"
+    "vitest": "4.1.0"
   },
   "optionalDependencies": {
     "@siemens-ux/design-tokens": "^0.3.1",
