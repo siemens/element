@@ -370,6 +370,80 @@ the input property `SiFlexibleDashboardComponent.config = {...}`.
 
 Here is the [demo](https://github.com/siemens/element/blob/main/projects/dashboards-demo/src/app/pages/fixed-widgets-dashboard/fixed-widgets-dashboard.component.ts)
 
+### Communicating between widgets
+
+Widgets on a dashboard can communicate with each other through the `EventBus` service.
+The event bus uses a shared state on `window`, so it works across separate Angular runtimes
+(e.g. WebComponents, Module Federation remotes). Three default events are available out of the box:
+`filter`, `languageChange`, and `themeChange`.
+
+#### Angular usage
+
+Inject the `EventBus` service and use `emit()` to broadcast events and `on()` to subscribe:
+
+```ts
+import { EventBus } from '@siemens/dashboards-ng';
+
+// Emitting events
+private eventBus = inject(EventBus);
+
+this.eventBus.emit('filter', [
+  { key: 'days', value: 'Mon' },
+  { key: 'severity', value: 'Warning' }
+]);
+```
+
+```ts
+// Subscribing to events
+private eventBus = inject(EventBus);
+
+private currentFilterArray = this.eventBus.snapshot('filter', ['days', 'severity']);
+readonly filter = this.eventBus
+  .on<Filter[]>('filter')
+  .pipe(startWith(this.currentFilterArray), shareReplay(1));
+```
+
+#### Non-Angular usage
+
+For non-Angular frameworks (React, Vue, plain JS/TS), use `getEventBusInstance()` instead
+of Angular's `inject()`:
+
+```ts
+import { getEventBusInstance } from '@siemens/dashboards-ng';
+
+const eventBus = getEventBusInstance();
+eventBus.on('themeChange').subscribe(theme => console.log(theme));
+eventBus.emit('languageChange', 'de');
+```
+
+#### Custom event types
+
+To define application-specific events, pass a custom type union as a generic argument:
+
+```ts
+type MyEvent =
+  | { name: 'customAction'; data: string }
+  | { name: 'statusUpdate'; data: boolean };
+
+const eventBus = inject(EventBus<MyEvent>);
+eventBus.emit('customAction', 'payload');
+eventBus.on('statusUpdate').subscribe(status => console.log(status));
+```
+
+#### API
+
+| Method | Description |
+| --- | --- |
+| `emit(eventName, payload)` | Broadcasts an event to all subscribers |
+| `on(eventName)` | Returns an `Observable` that emits whenever the event is broadcast |
+| `snapshot()` | Returns the full event bus state |
+| `snapshot(eventName)` | Returns the current data for a single event |
+| `snapshot(eventName, keys)` | Narrows array-typed event data to items matching the given keys |
+
+The [dashboard demo project](https://github.com/siemens/element/blob/main/projects/dashboards-demo/) includes a
+working example with a filter component emitting events and chart widgets reacting to them.
+
+
 ## License
 
 Code and documentation Copyright (c) Siemens 2016 - 2026
