@@ -56,7 +56,7 @@ the most relevant attributes and progressively removing secondary ones to preser
 
 #### Full page layout
 
-When the AI chat is integrated as a full page layout, 
+When the AI chat is integrated as a full page layout,
 the chat history is displayed in a collapsible side panel.
 
 ![Chat history in full page](images/chat-history-full-page-layout.png)
@@ -84,4 +84,3 @@ Additional grouping methods can be used when further organization is needed.
 If additional refinement is needed, consider using filters.
 
 ## Code ---
-
