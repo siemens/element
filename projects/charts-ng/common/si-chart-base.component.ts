@@ -1910,8 +1910,8 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
     const mid = (currentDZ.rangeStart + currentDZ.rangeEnd) / 2;
     const halfRange = range / 2;
 
-    let start = 0;
-    let end = 0;
+    let start: number;
+    let end: number;
 
     if (range === 0 || range > minMax.max - minMax.min) {
       start = minMax.min;

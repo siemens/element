@@ -336,14 +336,9 @@ export class SampleComponent {
     secondary: MenuItem[];
   } {
     const actions = message.actions ?? [];
-    let primary: MessageAction[] = [];
-    let secondary: MenuItem[] = [];
 
-    const primaryActions = actions.slice(0, 3);
-    const secondaryActions = actions.slice(3);
-
-    primary = primaryActions;
-    secondary = secondaryActions.map(
+    const primary = actions.slice(0, 3);
+    const secondary = actions.slice(3).map(
       action =>
         ({
           ...action,
