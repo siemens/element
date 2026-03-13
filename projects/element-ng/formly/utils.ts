@@ -20,7 +20,7 @@ export const getKeyPath = (key?: any): string[] => {
   if (!key) {
     return [];
   }
-  let path: string[] = [];
+  let path: string[];
   if (typeof key === 'string') {
     const k = !key.includes('[') ? key : key.replace(/\[(\w+)\]/g, '.$1');
     path = k.includes('.') ? k.split('.') : [k];
