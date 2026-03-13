@@ -12,9 +12,9 @@ type DateRangeChange = { key: 'dateRange'; value: { start: Date; end: Date } };
 type TimeZoneChange = { key: 'timeZone'; value: string };
 
 /**
- * Default event type union used by `EventBus` when no generic parameter is provided.
+ * Default event type union used by `SiEventBus` when no generic parameter is provided.
  * Consumers can override this by passing their own event type union as a generic argument,
- * e.g. `inject(EventBus<MyCustomEventType>)`.
+ * e.g. `inject(SiEventBus<MyCustomEventType>)`.
  *
  * The following events are available by default:
  * - `filter` – a single {@link Filter} or an array of filters (including date range and time zone changes)
@@ -63,7 +63,7 @@ type EventNameToData<ET extends { name: string; data: unknown }> = {
  */
 type NarrowByKeys<Data, K extends string> = Data extends (infer U)[] ? (U & { key: K })[] : Data;
 
-export class EventBusBase<ET extends { name: string; data: unknown } = EventType> {
+export class SiEventBusBase<ET extends { name: string; data: unknown } = EventType> {
   private eventObservables: Map<ET['name'], Subject<any>> = new Map();
 
   private customEventSuffix = 'θ';
@@ -78,7 +78,7 @@ export class EventBusBase<ET extends { name: string; data: unknown } = EventType
   /**
    * Returns the shared events state object stored on `window`.
    *
-   * Widgets running in separate Angular runtimes each get their own `EventBusBase`
+   * Widgets running in separate Angular runtimes each get their own `SiEventBusBase`
    * instance, so per-instance state would be out of sync. By storing the state on
    * `window`, all instances share a single source of truth.
    *
@@ -88,7 +88,7 @@ export class EventBusBase<ET extends { name: string; data: unknown } = EventType
    */
   private get sharedEventsState(): Record<string, unknown> {
     const win = window as unknown as Record<symbol, unknown>;
-    const key = EventBusBase.sharedStateSymbol;
+    const key = SiEventBusBase.sharedStateSymbol;
     if (!win[key]) {
       Object.defineProperty(window, key, {
         value: {},
