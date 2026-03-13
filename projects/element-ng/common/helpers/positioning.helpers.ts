@@ -199,7 +199,7 @@ const getAbsoluteContentPosition = (params: {
   const start = rtl ? elementRect.right : elementRect.left;
   const end = rtl ? elementRect.left : elementRect.right;
 
-  let relativeLeftOffset = 0;
+  let relativeLeftOffset: number;
   if (direction === 'start' || direction === 'end') {
     relativeLeftOffset =
       placement.includes('end') || (!placement.includes('start') && direction === 'end')
@@ -218,7 +218,7 @@ const getAbsoluteContentPosition = (params: {
       }
     }
   }
-  let relativeTopOffset = 0;
+  let relativeTopOffset: number;
   if (direction === 'up') {
     relativeTopOffset = placement.includes('bottom') ? elementRect.bottom : elementRect.top;
   } else if (direction === 'start' || direction === 'end') {
