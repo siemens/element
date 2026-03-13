@@ -5,6 +5,7 @@
 ```ts
 
 import * as _angular_core from '@angular/core';
+import { DomPortal } from '@angular/cdk/portal';
 import { ElementRef } from '@angular/core';
 import { FocusableOption } from '@angular/cdk/a11y';
 import { FocusKeyManager } from '@angular/cdk/a11y';
@@ -35,8 +36,14 @@ export class SiTabLinkComponent extends SiTabBaseDirective {
 }
 
 // @public
+export class SiTabPortalComponent {
+    readonly tabset: _angular_core.InputSignal<SiTabsetComponent>;
+}
+
+// @public
 export class SiTabsetComponent {
     constructor();
+    readonly contentOverflowAuto: _angular_core.InputSignalWithTransform<boolean, unknown>;
 }
 
 // (No @packageDocumentation comment for this package)

@@ -75,7 +75,7 @@ jobs:
       - run: npm run schematics:test
       - run: npm run charts:test -- --watch=false --progress=false
       - run: npm run dashboards:test -- --watch=false --progress=false
-      - run: npm run maps:test -- --watch=false --progress=false
+      - run: npm run maps:test -- --watch=false --progress=false --coverage
       - name: Generate coverage summary
         uses: irongut/CodeCoverageSummary@v1.3.0
         with:

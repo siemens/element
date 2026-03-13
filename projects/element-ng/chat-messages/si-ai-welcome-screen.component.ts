@@ -4,7 +4,6 @@
  */
 import { Component, input, model, output } from '@angular/core';
 import { SiActionCardComponent } from '@siemens/element-ng/card';
-import { SiIconComponent } from '@siemens/element-ng/icon';
 import { SiSummaryChipComponent } from '@siemens/element-ng/summary-chip';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
 
@@ -36,7 +35,7 @@ export interface PromptSuggestion {
  */
 @Component({
   selector: 'si-ai-welcome-screen',
-  imports: [SiActionCardComponent, SiSummaryChipComponent, SiIconComponent],
+  imports: [SiActionCardComponent, SiSummaryChipComponent],
   templateUrl: './si-ai-welcome-screen.component.html',
   styleUrl: './si-ai-welcome-screen.component.scss',
   host: {

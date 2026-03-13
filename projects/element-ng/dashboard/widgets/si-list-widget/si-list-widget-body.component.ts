@@ -131,7 +131,7 @@ export class SiListWidgetBodyComponent
     const value = this.value();
     const sort = this.sort();
     const searchText = this.searchText();
-    let filteredListWidgetItems: SiListWidgetItem[] | undefined = value;
+    let filteredListWidgetItems: SiListWidgetItem[] | undefined;
     if (searchText.length > 0) {
       filteredListWidgetItems = value?.filter((item: SiListWidgetItem) =>
         this.filterFn()(item, searchText)
