@@ -10,6 +10,7 @@ import * as i1 from '@siemens/element-ng/autocomplete';
 import { Observable } from 'rxjs';
 import { OnChanges } from '@angular/core';
 import { OnDestroy } from '@angular/core';
+import { ScrollStrategy } from '@angular/cdk/overlay';
 import { SimpleChanges } from '@angular/core';
 import { TemplateRef } from '@angular/core';
 import { TranslatableString } from '@siemens/element-translate-ng/translate';
@@ -52,6 +53,7 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
     readonly typeaheadProcess: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly typeaheadScrollable: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly typeaheadScrollableAdditionalHeight: _angular_core.InputSignal<number>;
+    readonly typeaheadScrollStrategy: _angular_core.InputSignal<ScrollStrategy | undefined>;
     readonly typeaheadSkipSortingMatches: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly typeaheadTokenize: _angular_core.InputSignalWithTransform<boolean, unknown>;
     readonly typeaheadWaitMs: _angular_core.InputSignal<number>;
