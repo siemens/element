@@ -272,6 +272,8 @@ describe('SiMapComponent', () => {
   });
 
   it('update map style to light map on theme change', () => {
+    // Set initial theme to dark
+    component.onThemeSwitch(true);
     componentRef.setInput('maptilerKey', 'asdfghjkl');
     vi.spyOn(component, 'setMapStyle');
     component.onThemeSwitch(false);
