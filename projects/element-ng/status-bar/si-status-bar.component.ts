@@ -175,7 +175,7 @@ export class SiStatusBarComponent implements DoCheck, OnDestroy, OnChanges {
       .subscribe(() => this.resizeHandler());
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (this.blinkService && changes.blink) {
       this.blinkSubs?.unsubscribe();
       if (this.blink()) {

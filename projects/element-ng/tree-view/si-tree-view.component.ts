@@ -477,7 +477,7 @@ export class SiTreeViewComponent
     return this.itemsVirtualized;
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     // Compact mode change the CSS margins so it is necessary to
     // re-calc the tree item height
     if (changes.compactMode || changes.enableDataField1 || changes.enableDataField2) {

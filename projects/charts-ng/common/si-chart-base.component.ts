@@ -16,6 +16,7 @@ import {
   OnInit,
   output,
   signal,
+  SimpleChange,
   SimpleChanges,
   viewChild,
   viewChildren
@@ -245,6 +246,12 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
   /** Emitted when data zoom changes, indicating the time range in milliseconds, 0 for full range */
   readonly timeRangeChange = output<number>();
 
+  /**
+   * @internal
+   * @defaultValue false
+   * */
+  forceAll = false;
+
   /** Allow to override options specific for a chart type. */
   protected actualOptions: EChartOption = {};
 
@@ -353,7 +360,7 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
     this.updateCustomLegendMultiLineInfo();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this> & Record<string, SimpleChange | undefined>): void {
     if (changes.options?.currentValue) {
       this.actualOptions = this.options()!;
     }
@@ -383,9 +390,9 @@ export class SiChartBaseComponent implements AfterViewInit, OnChanges, OnInit, O
       this.customLegendAction() &&
       changes.options &&
       !changes.options.isFirstChange() &&
-      !changes.options.currentValue.color.length
+      !changes.options.currentValue?.color.length
     ) {
-      this.actualOptions.color = changes.options.previousValue.color;
+      this.actualOptions.color = changes.options.previousValue?.color;
     }
     if (changes.theme || changes.renderer) {
       // need to completely redo the chart for the theme change to take effect

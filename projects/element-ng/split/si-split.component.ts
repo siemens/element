@@ -106,7 +106,7 @@ export class SiSplitComponent implements AfterContentInit, OnChanges {
   // Using 10, as the sum of all fractional sizes is 1, so we need to scale them up as fr-values should be >= 1.
   private fractionalSizeToExpandedSizeFactor = 10;
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.sizes && !changes.sizes.firstChange) {
       this.sizes.forEach((size, index) => {
         const part = this.parts.get(index);

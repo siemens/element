@@ -121,7 +121,7 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
     this.webcomponentsList = this.config.componentLoader.webcomponentsList;
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges<this>): void {
     this.activeTab = this.activeTab !== 'typescript' ? 'template' : this.activeTab;
     if (changes.template?.currentValue) {
       this.skipInitialLoad = !!changes.template.isFirstChange;
@@ -130,10 +130,11 @@ export class SiLivePreviewComponent implements OnInit, AfterViewInit, OnChanges 
       this.templateVue = '';
       this.templateJs = '';
     } else {
-      this.skipInitialLoad =
+      this.skipInitialLoad = !!(
         changes.templateReact?.currentValue ??
         changes.templateVue?.currentValue ??
-        changes.templateJs?.currentValue;
+        changes.templateJs?.currentValue
+      );
     }
     if (changes.example?.currentValue) {
       this.loadFromUrl(changes.example.firstChange && this.skipInitialLoad);

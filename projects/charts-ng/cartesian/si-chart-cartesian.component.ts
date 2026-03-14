@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, input, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
 import {
   echarts,
   GridComponentOption,
@@ -86,7 +86,7 @@ export class SiChartCartesianComponent extends SiChartBaseComponent implements O
   readonly zoomMode = input<boolean>();
 
   // Used to toggle different chart types
-  override ngOnChanges(changes: SimpleChanges): void {
+  override ngOnChanges(changes: SimpleChanges<this>): void {
     if (changes.zoomMode) {
       this.setZoomMode();
     }
@@ -94,7 +94,7 @@ export class SiChartCartesianComponent extends SiChartBaseComponent implements O
       changes.forceAll = changes.stacked;
     }
     if (changes.subChartGrids) {
-      changes.forceAll = changes.subChartGrids;
+      changes.forceAll = new SimpleChange(false, true, false);
     }
     super.ngOnChanges(changes);
   }

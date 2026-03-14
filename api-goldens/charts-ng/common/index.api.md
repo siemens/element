@@ -34,6 +34,7 @@ import { PolarComponentOption } from 'echarts';
 import { SankeySeriesOption } from 'echarts';
 import { ScatterSeriesOption } from 'echarts';
 import { SiCustomLegendComponent } from '@siemens/charts-ng/custom-legend';
+import { SimpleChange } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
 import { SingleAxisComponentOption } from 'echarts';
 import { SunburstSeriesOption } from 'echarts';
