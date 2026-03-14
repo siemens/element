@@ -1,7 +1,5 @@
 - tree "Company locations":
-  - treeitem "Company1 SI" [level=1]:
-    - text: ""
-    - paragraph: SI
-  - treeitem "Company2 GG" [level=1]:
-    - text: ""
-    - paragraph: GG
+  - treeitem "Discovered Devices 2" [level=1]
+  - treeitem "Geographical" [level=1]
+  - treeitem "Infrastructure" [level=1]
+  - treeitem "Assigned Devices 5" [level=1]
