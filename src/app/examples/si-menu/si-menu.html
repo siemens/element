@@ -1,10 +1,32 @@
-<div
-  class="h-50 w-10 mb-3 d-flex align-items-center justify-content-center"
-  [cdkContextMenuTriggerFor]="contextMenu"
->
-  <span>Right click here to open context menu</span>
+<div class="si-layout-main-padding" style="height: 400px;">
+  <div class="row g-3 h-100">
+    <div class="col">
+      <div class="si-h5-bold mb-4">Default button with menu</div>
+      <button
+        type="button"
+        class="btn btn-primary"
+        [cdkMenuTriggerFor]="contextMenu">Menu
+      </button>
+    </div>
+
+    <div class="col">
+      <div class="si-h5-bold mb-4">Tertiary button with menu</div>
+      <button
+        type="button"
+        class="btn btn-circle btn-tertiary element-options-vertical"
+        aria-label="Options"
+        [cdkMenuTriggerFor]="contextMenu"
+      ></button>
+    </div>
+
+    <div
+      class="col border rounded d-flex align-items-center justify-content-center"
+      [cdkContextMenuTriggerFor]="contextMenu"
+      >
+      <span>Right click here to open context menu</span>
+    </div>
+  </div>
 </div>
-<button type="button" class="btn btn-primary" [cdkMenuTriggerFor]="contextMenu">Open menu</button>
 
 <ng-template #contextMenu>
   <si-menu>
