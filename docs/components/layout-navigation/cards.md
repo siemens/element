@@ -19,25 +19,16 @@ A card is a content container to display important and useful information, e.g. 
 
 ### Elements
 
-Every card contains the following elements:
+![Basic card elements](images/card-usage-construction.png)
 
-1. Title: The title may either be static, dynamically adapted based on the content or user defined.
-   By dragging the title bar, a user can move the card to another position.
-2. Content action (Optional): A click on the icon opens the content action menu.
-3. Content area: Cards may also contain multiple types of content (e.g. a graph and an infobox).
+**1. Header (optional):** Card header contains a title and an optional
+[content action bar](../buttons-menus/content-actions.md).
+**2. Content area:** The main area of the card. It can contain any type of content, such as text, graphs, tables.
 
-![Basic Card Elements](images/card-usage-construction.png)
+Cards can also be displayed as outline, without a background.
+Use this variant when the content should visually blend with the page background while still being grouped as a card.
 
-### Content actions (optional)
-
-The content actions component is specified on [this page](../buttons-menus/content-actions.md).
-
-The available options depend on the content, typical ones are:
-
-- Immediately available actions (e.g. expand / reduce)
-- Changing the view (e.g. toggle between data table and chart)
-- Direct actions (e.g. download, export, share)
-- Configuration (access to configuration mode)
+![Card outline](images/card-outline.png)
 
 ### Images
 
@@ -132,6 +123,17 @@ The component includes a `selectable` input that enables selection state on the 
 <si-docs-component example="si-card/si-action-card" height="300"></si-docs-component>
 
 <si-docs-api component="SiActionCardComponent"></si-docs-api>
+
+### Outline cards
+
+Outline cards are a variation of cards with a border and no background color.
+Every card can be turned into an outline card by adding the `.card-outline` class to the card container.
+
+```html
+<si-card class="card-outline"> ... </si-card>
+```
+
+<si-docs-component example="si-card/card-variants" height="300"></si-docs-component>
 
 ### Native HTML markup
 
