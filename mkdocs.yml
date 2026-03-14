@@ -185,6 +185,7 @@ nav:
     - AI:
       - Overview:                         'patterns/ai/overview.md'
       - AI chat:                          'patterns/ai/ai-chat.md'
+      - AI chat history:                  'patterns/ai/ai-chat-history.md'
   - Architecture:
     - CSS framework:                      'architecture/css-framework.md'
     - Dynamic forms:                      'architecture/dynamic-forms.md'
