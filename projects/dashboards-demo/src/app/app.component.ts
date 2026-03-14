@@ -39,7 +39,6 @@ export class AppComponent implements OnInit {
     { type: 'router-link', label: 'Routed Dashboard 2', routerLink: 'routed-dashboard/2' }
   ];
 
-  collapsed = false;
   theme: ThemeType = 'light';
 
   private translate = inject(TranslateService);
@@ -47,13 +46,10 @@ export class AppComponent implements OnInit {
   private route = inject(ActivatedRoute);
 
   constructor() {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.pipe(takeUntilDestroyed()).subscribe(params => {
       this.theme = params.theme;
       this.themeService.applyThemeType(params.theme);
     });
-    if (navigator.webdriver) {
-      this.collapsed = true;
-    }
     this.themeService.resolvedColorScheme$.pipe(takeUntilDestroyed()).subscribe(theme => {
       this.theme = theme;
     });
