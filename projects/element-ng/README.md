@@ -15,8 +15,7 @@ npm install --save @siemens/element-ng
 Also install the required peer dependencies:
 
 ```sh
-npm install --save @siemens/element-theme @siemens/element-icons @siemens/element-translate-ng
-npm install --save @angular/cdk
+npm install --save @siemens/element-theme @siemens/element-icons @siemens/element-translate-ng @angular/cdk
 ```
 
 Apply the global theme in your main stylesheet:
@@ -43,9 +42,9 @@ export class ExampleComponent {}
 Each component is available as a separate entry point under `@siemens/element-ng/<component>`.
 Browse the full component catalog at [element.siemens.io](https://element.siemens.io).
 
-### Running Unit Tests
+### Running unit tests
 
-Run `npm run lib:test` to execute the unit tests via
+Run `npm run lib:test` to run the unit tests via
 [Karma](https://karma-runner.github.io).
 
 ## License
@@ -54,3 +53,5 @@ The following applies for code and documentation of the git repository,
 unless explicitly mentioned.
 
 Copyright (c) Siemens 2016 - 2026
+
+MIT, see [LICENSE.md](LICENSE.md).

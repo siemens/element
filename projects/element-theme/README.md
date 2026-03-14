@@ -4,7 +4,7 @@ The CSS/SCSS theme package for Siemens Element, implementing the Siemens Design 
 
 ## Usage
 
-To use the Element Theme in your project, add it to your dependencies by executing:
+To use the Element Theme in your project, add it to your dependencies by running:
 
 ```sh
 npm install --save @siemens/element-theme
