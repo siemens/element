@@ -126,14 +126,15 @@ $btn-size-sm: 24px !default;
         margin-inline: 0;
       }
     }
+  }
 
-    &:hover {
-      color: semantic-tokens.$element-ui-0-hover;
-    }
+  .btn-check + .btn:hover,
+  label:has(.btn-check:not(:checked)):hover > * {
+    color: semantic-tokens.$element-ui-0-hover;
   }
 
   .btn-check:checked + .btn,
-  label.btn:has(.btn-check:checked) {
+  label:has(.btn-check:checked) > * {
     background: semantic-tokens.$element-action-secondary-active;
     border-color: semantic-tokens.$element-action-secondary-border-hover;
     color: semantic-tokens.$element-ui-0-hover;
