@@ -24,7 +24,7 @@ export class SiFormFieldsetHarness extends ComponentHarness {
     );
   }
 
-  private readonly getLabelElement = this.locatorFor('.form-label');
+  private readonly getLabelElement = this.locatorFor('.form-label, .col-form-label');
   private readonly getRequiredIndicator = this.locatorForOptional('.required');
   private readonly getInvalidFeedback = this.locatorForAll('.invalid-feedback div');
 
