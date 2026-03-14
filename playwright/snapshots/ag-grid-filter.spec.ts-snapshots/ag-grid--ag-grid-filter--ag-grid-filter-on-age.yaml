@@ -1,4 +1,3 @@
-- text: Loading...
 - grid:
   - rowgroup:
     - row "ID Name Role Age Company Date of Joining":
