@@ -421,9 +421,7 @@ eventBus.emit('languageChange', 'de');
 To define application-specific events, pass a custom type union as a generic argument:
 
 ```ts
-type MyEvent =
-  | { name: 'customAction'; data: string }
-  | { name: 'statusUpdate'; data: boolean };
+type MyEvent = { name: 'customAction'; data: string } | { name: 'statusUpdate'; data: boolean };
 
 const eventBus = inject(SiEventBus<MyEvent>);
 eventBus.emit('customAction', 'payload');
@@ -432,17 +430,16 @@ eventBus.on('statusUpdate').subscribe(status => console.log(status));
 
 #### API
 
-| Method | Description |
-| --- | --- |
-| `emit(eventName, payload)` | Broadcasts an event to all subscribers |
-| `on(eventName)` | Returns an `Observable` that emits whenever the event is broadcast |
-| `snapshot()` | Returns the full event bus state |
-| `snapshot(eventName)` | Returns the current data for a single event |
-| `snapshot(eventName, keys)` | Narrows array-typed event data to items matching the given keys |
+| Method                      | Description                                                        |
+| --------------------------- | ------------------------------------------------------------------ |
+| `emit(eventName, payload)`  | Broadcasts an event to all subscribers                             |
+| `on(eventName)`             | Returns an `Observable` that emits whenever the event is broadcast |
+| `snapshot()`                | Returns the full event bus state                                   |
+| `snapshot(eventName)`       | Returns the current data for a single event                        |
+| `snapshot(eventName, keys)` | Narrows array-typed event data to items matching the given keys    |
 
 The [dashboard demo project](https://github.com/siemens/element/blob/main/projects/dashboards-demo/) includes a
 working example with a filter component emitting events and chart widgets reacting to them.
-
 
 ## License
 

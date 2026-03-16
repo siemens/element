@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { SiEventBusBase, EventType } from './si-event-bus.base';
+import { SiEventBusBase, SiEventType } from './si-event-bus.base';
 
 const eventBusInstanceSymbol = Symbol.for('eventBusInstance');
 
@@ -25,7 +25,7 @@ const eventBusInstanceSymbol = Symbol.for('eventBusInstance');
  * ```
  */
 export const getEventBusInstance = <
-  ET extends { name: string; data: unknown } = EventType
+  ET extends { name: string; data: unknown } = SiEventType
 >(): SiEventBusBase<ET> => {
   const win = window as unknown as Record<symbol, unknown>;
   if (!win[eventBusInstanceSymbol]) {
