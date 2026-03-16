@@ -26,8 +26,8 @@
           toggleItemLabel="toggle"
           viewType="expanded"
           [disabled]="disabled()"
-          [primaryActions]="primaryEditActions()"
-          [secondaryActions]="secondaryEditActions()"
+          [primaryActions]="primaryEditActionsComputed()"
+          [secondaryActions]="secondaryEditActionsComputed()"
         />
       } @else {
         <div>
@@ -41,17 +41,13 @@
               } @else {
                 @switch (action.type) {
                   @case ('action') {
-                    <!-- eslint-disable @angular-eslint/template/no-any -->
-                    <!-- This item has a patched action which will inject the grid. But our types do not reflect this. -->
-                    <!-- TODO: make our types reflect that this item has a patched action. -->
                     <button
                       type="button"
                       class="btn btn-secondary me-4"
-                      (click)="$any(action.action)()"
+                      (click)="action.action(grid())"
                     >
                       {{ action.label! | translate }}
                     </button>
-                    <!-- eslint-disable-enable @angular-eslint/template/no-any -->
                   }
                   @case ('router-link') {
                     <a
