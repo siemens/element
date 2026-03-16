@@ -9,6 +9,7 @@ test.describe('si-tabs', () => {
   const routingExample = 'si-tabs/si-tabs-routing';
   const iconsExample = 'si-tabs/si-tabs-icons';
   const scrollExample = 'si-tabs/si-tabs-flex';
+  const toolbarExample = 'si-tabs/si-tabs-toolbar';
 
   test(example, async ({ page, si }) => {
     await si.visitExample(example);
@@ -69,5 +70,17 @@ test.describe('si-tabs', () => {
     await page.setViewportSize({ width: 800, height: 400 });
     await si.visitExample(scrollExample);
     await si.runVisualAndA11yTests('tabs-scroll');
+  });
+
+  test(example + ' toolbar tab', async ({ page, si }) => {
+    await si.visitExample(toolbarExample);
+    await expect(page.getByRole('tab', { name: 'Preview' })).toBeVisible();
+    await page.getByRole('tab', { name: 'Preview' }).click();
+    await si.runVisualAndA11yTests('tabs-toolbar');
+
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('ArrowRight');
+    await expect(page.getByRole('menuitem', { name: 'Settings' })).toBeFocused();
+    await si.runVisualAndA11yTests('tabs-toolbar-focused');
   });
 });

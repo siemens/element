@@ -124,6 +124,33 @@ Pass the `SiTabsetComponent` reference to the `tabset` input on `SiTabPortalComp
 <si-tab-portal [tabset]="tabset" />
 ```
 
+### Toolbars
+
+Tabs can be combined with toolbar actions (e.g. icon buttons) positioned inline in the tab bar. This pattern requires:
+
+1. A **wrapper container** with the classes `.nav-tabs .d-flex .align-items-center` — this ensures the tabs and toolbar buttons are rendered on the same row, vertically aligned.
+2. The `si-tabset` must have `.flex-fill .overflow-hidden` — `.flex-fill` allows the tabset to take all available space (pushing toolbar buttons to the end), and `.overflow-hidden` ensures the responsive overflow menu works correctly within the flex layout.
+3. `SiTabPortalComponent` to render tab content separately from the tab header — this ensures toolbar buttons come before the tab content in the DOM/tab order for accessible keyboard navigation.
+
+```html
+<!-- Wrapper container -->
+<div class="nav-tabs d-flex align-items-center">
+  <si-tabset #tabset class="flex-fill overflow-hidden">
+    <si-tab heading="Write" [active]="true"> ... </si-tab>
+    <si-tab heading="Preview"> ... </si-tab>
+  </si-tabset>
+  <!-- Toolbar actions placed after the tabset -->
+  <si-menu-bar>
+    <si-menu-item icon="element-link" aria-label="Link" siTooltip="Link" />
+    <si-menu-item icon="element-settings" aria-label="Settings" siTooltip="Settings" />
+  </si-menu-bar>
+</div>
+<!-- Tab content rendered separately for correct tab order -->
+<si-tab-portal [tabset]="tabset" />
+```
+
+<si-docs-component example="si-tabs/si-tabs-toolbar"></si-docs-component>
+
 <si-docs-api component="SiTabsetComponent"></si-docs-api>
 
 <si-docs-api component="SiTabComponent"></si-docs-api>
