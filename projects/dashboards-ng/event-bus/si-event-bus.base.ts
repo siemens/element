@@ -5,7 +5,7 @@
 import type { Theme } from '@siemens/element-ng/theme';
 import { fromEvent, Observable, Subject } from 'rxjs';
 
-type Filter = { key: any; value: any } | DateRangeChange | TimeZoneChange;
+type Filter = { key: unknown; value: unknown } | DateRangeChange | TimeZoneChange;
 type LanguageChange = string;
 type ThemeChange = Theme;
 type DateRangeChange = { key: 'dateRange'; value: { start: Date; end: Date } };
@@ -61,7 +61,9 @@ type EventNameToData<ET extends { name: string; data: unknown }> = {
  * // => string  (unchanged, not an array)
  * ```
  */
-type NarrowByKeys<Data, K extends string> = Data extends (infer U)[] ? (U & { key: K })[] : Data;
+type NarrowByKeys<Data, K extends string> = Data extends (infer U)[]
+  ? (U & { key: K; value: unknown })[]
+  : Data;
 
 export class SiEventBusBase<ET extends { name: string; data: unknown } = SiEventType> {
   private eventObservables: Map<ET['name'], Subject<any>> = new Map();
@@ -107,12 +109,27 @@ export class SiEventBusBase<ET extends { name: string; data: unknown } = SiEvent
    * @param eventName - Optional event name to retrieve data for a single event.
    * @param keys - Optional array of keys to narrow array-typed event data
    *   (e.g. filter items) to only those matching the given keys.
+   *   A custom return type `R` can be provided to override the inferred
+   *   payload type when keys are passed.
+   *
+   * @example
+   * ```ts
+   * // With a custom return type override
+   * eventBus.snapshot<{key: string; value: boolean}[]>('filter', ['processed', 'sent']);
+   * // => {key: 'processed' | 'sent', value: boolean}[]
+   * ```
    */
   snapshot(): EventNameToData<ET | SiEventType>;
-  snapshot<A extends keyof EventNameToData<ET | SiEventType>, K extends string>(
+  snapshot<
+    R = never,
+    A extends keyof EventNameToData<ET | SiEventType> = keyof EventNameToData<ET | SiEventType>,
+    K extends string = string
+  >(
     eventName: A,
     keys: K[]
-  ): NarrowByKeys<EventNameToData<ET | SiEventType>[A], K>;
+  ): [R] extends [never]
+    ? NarrowByKeys<EventNameToData<ET | SiEventType>[A], K>
+    : NarrowByKeys<R, K>;
   snapshot<A extends keyof EventNameToData<ET | SiEventType>>(
     eventName: A
   ): EventNameToData<ET | SiEventType>[A];
