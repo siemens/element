@@ -1,0 +1,31 @@
+<div class="card h-100">
+  <div class="card-header">
+    <div class="nav-tabs d-flex align-items-center">
+      <si-tabset #tabset class="flex-fill overflow-hidden">
+        <si-tab heading="Write" [active]="true">
+          <div class="mt-4 text-center">Write content</div>
+        </si-tab>
+        <si-tab heading="Preview">
+          <div class="mt-4 text-center">Preview content</div>
+        </si-tab>
+      </si-tabset>
+      <si-menu-bar>
+        <si-menu-item
+          icon="element-link"
+          aria-label="Link"
+          siTooltip="Link"
+          (triggered)="logEvent('link')"
+        />
+        <si-menu-item
+          icon="element-settings"
+          aria-label="Settings"
+          siTooltip="Settings"
+          (triggered)="logEvent('settings')"
+        />
+      </si-menu-bar>
+    </div>
+  </div>
+  <div class="card-body">
+    <si-tab-portal [tabset]="tabset" />
+  </div>
+</div>
