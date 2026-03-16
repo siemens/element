@@ -25,7 +25,7 @@ import { MenuItem } from '@siemens/element-ng/common';
 import { SiDashboardComponent } from '@siemens/element-ng/dashboard';
 import { t } from '@siemens/element-translate-ng/translate';
 import { BehaviorSubject, combineLatest, of, Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 import {
   Config,
@@ -323,10 +323,7 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
 
     if (secondaryMenuItems) {
       secondaryMenuItems
-        .pipe(
-          takeUntil(this.dashboardId$),
-          map(items => items.map(item => this.proxyMenuItemAction(item)))
-        )
+        .pipe(takeUntil(this.dashboardId$))
         .subscribe(items => this.secondaryEditActions$.next(items));
     }
   }
@@ -338,7 +335,7 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
     const next: (MenuItem | DashboardToolbarItem)[] = hideAddWidgetInstanceButton
       ? []
       : [this.addWidgetInstanceAction];
-    next.push(...items.map(item => this.proxyMenuItemAction(item)));
+    next.push(...items);
     this.primaryEditActions$.next(next);
   }
 
@@ -366,19 +363,6 @@ export class SiFlexibleDashboardComponent implements OnInit, OnChanges, OnDestro
         })
       ]
     });
-  }
-
-  private proxyMenuItemAction(
-    item: MenuItem | DashboardToolbarItem
-  ): MenuItem | DashboardToolbarItem {
-    if ('action' in item) {
-      if (typeof item.action === 'function') {
-        item.action = item.action.bind(this, this.grid());
-      } else {
-        return item;
-      }
-    }
-    return item;
   }
 
   private getWidget(id: string): Widget | undefined {

@@ -12,6 +12,7 @@ import { SiResponsiveContainerDirective } from '@siemens/element-ng/resize-obser
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
 
 import { DashboardToolbarItem } from '../../model/si-dashboard-toolbar.model';
+import { SiGridComponent } from '../grid/si-grid.component';
 
 /**
  * The toolbar of the flexible dashboard is either `editable` or not. When not
@@ -85,6 +86,8 @@ export class SiDashboardToolbarComponent {
    */
   readonly showEditButtonLabel = input(false);
 
+  readonly grid = input.required<SiGridComponent>();
+
   /**
    * Emits on save button click.
    */
@@ -113,6 +116,14 @@ export class SiDashboardToolbarComponent {
     ...this.secondaryEditActions()
   ]);
 
+  protected readonly primaryEditActionsComputed = computed(() => {
+    return this.primaryEditActions().map(item => this.proxyMenuItemAction(item));
+  });
+
+  protected readonly secondaryEditActionsComputed = computed(() => {
+    return this.secondaryEditActions().map(item => this.proxyMenuItemAction(item));
+  });
+
   protected onEdit(): void {
     this.editable.set(true);
   }
@@ -136,4 +147,13 @@ export class SiDashboardToolbarComponent {
   protected readonly showEditButtonLabelDesktop = computed(() => {
     return this.showEditButtonLabel() && !this.dashboardToolbarContainer()?.xs();
   });
+
+  private proxyMenuItemAction(
+    item: MenuItem | DashboardToolbarItem
+  ): MenuItem | DashboardToolbarItem {
+    if (item.type === 'action' && typeof item.action === 'function') {
+      item.action = item.action.bind(this, this.grid());
+    }
+    return item;
+  }
 }
