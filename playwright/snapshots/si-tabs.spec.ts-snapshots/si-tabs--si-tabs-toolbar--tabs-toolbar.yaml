@@ -1,0 +1,7 @@
+- tablist:
+  - tab "Write"
+  - tab "Preview" [selected]
+- menubar:
+  - menuitem "Link"
+  - menuitem "Settings"
+- tabpanel "Preview": Preview content
