@@ -27,4 +27,4 @@ export class SiEventBus<ET> extends SiEventBusBase<
   ET extends { name: string; data: unknown } ? ET : SiEventType
 > {}
 
-export type { SiEventType as SiEventType };
+export type { SiEventType };

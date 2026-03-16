@@ -46,7 +46,7 @@ export class ChartWidgetComponent implements OnInit, WidgetInstance {
   data!: Observable<CartesianChartData>;
   private eventBus = inject(SiEventBus);
 
-  private currentFilterArray = this.eventBus.snapshot('filter', ['days', 'severity']);
+  private currentFilterArray = this.eventBus.snapshot<Filter[]>('filter', ['days', 'severity']);
 
   readonly filter = this.eventBus
     .on<Filter[]>('filter')

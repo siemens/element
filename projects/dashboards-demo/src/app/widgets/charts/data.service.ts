@@ -27,7 +27,7 @@ export const severity = ['All levels', 'Success', 'Warning', 'Danger'];
 export class DataService {
   eventBus = inject(SiEventBus);
 
-  private currentFilterArray = this.eventBus.snapshot('filter', ['days', 'severity']);
+  private currentFilterArray = this.eventBus.snapshot<Filter[]>('filter', ['days', 'severity']);
   readonly filter = this.eventBus
     .on<Filter[]>('filter')
     .pipe(startWith(this.currentFilterArray), shareReplay(1));
