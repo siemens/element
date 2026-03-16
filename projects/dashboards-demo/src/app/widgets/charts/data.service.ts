@@ -25,7 +25,7 @@ export const severity = ['All levels', 'Success', 'Warning', 'Danger'];
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
-  eventBus = inject(SiEventBus);
+  private readonly eventBus = inject(SiEventBus);
 
   private currentFilterArray = this.eventBus.snapshot<Filter[]>('filter', ['days', 'severity']);
   readonly filter = this.eventBus
