@@ -21,7 +21,7 @@ import {
   viewChild,
   viewChildren
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { elementCancel, elementSearch } from '@siemens/element-icons';
 import { BackgroundColorVariant, isRTL } from '@siemens/element-ng/common';
@@ -33,7 +33,7 @@ import {
   t,
   TranslatableString
 } from '@siemens/element-translate-ng/translate';
-import { BehaviorSubject, Observable, of, Subject, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, switchMap } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
 
 import {
@@ -337,11 +337,6 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
   private readonly translateService = injectSiTranslateService();
   private readonly locale = inject(LOCALE_ID).toString();
 
-  /**
-   * The cache is used to control when the interceptDisplayedCriteria event needs to be called.
-   * Every time a criteria gain the focus we have to reset the cache to call the interceptor.
-   */
-  private allowedCriteriaCache?: string[];
   protected readonly allowFreeTextCache = signal<boolean>(true);
   // Angular also calls ngOnChanges if we emitted a change and then two-way-databinding writes back our own change.
   // We use this to ensure that we do not write our own change back to the input.
@@ -382,15 +377,31 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
   );
 
   constructor() {
-    this.dataSource = this.typeaheadInputChange.pipe(
-      switchMap(value => {
-        if (this.lazyCriterionProvider()) {
-          return this.lazyCriterionProvider()!(value, this.searchCriteria()).pipe(
-            debounceTime(this.lazyLoadingDebounceTime()),
-            map(result => this.getCriteriaToDisplayFromSubscription(result))
+    const criteriaRestrictions = toObservable(
+      computed(() => ({
+        maxCriteria: this.maxCriteria(),
+        values: this.values(),
+        exclusiveCriteria: this.exclusiveCriteria()
+      }))
+    );
+
+    this.dataSource = toObservable(this.lazyCriterionProvider).pipe(
+      switchMap(lazyCriterionProvider => {
+        if (lazyCriterionProvider) {
+          return this.typeaheadInputChange.pipe(
+            switchMap(value =>
+              this.lazyCriterionProvider()!(value, this.searchCriteria()).pipe(
+                debounceTime(this.lazyLoadingDebounceTime()),
+                map(result => this.getCriteriaToDisplayFromSubscription(result))
+              )
+            )
           );
         } else {
-          return of(this.getFilteredTypeaheadCriteria(value));
+          return criteriaRestrictions.pipe(
+            map(({ maxCriteria, values, exclusiveCriteria }) =>
+              this.getFilteredTypeaheadCriteria(maxCriteria, values, exclusiveCriteria)
+            )
+          );
         }
       }),
       switchMap(criteria => {
@@ -499,7 +510,6 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
       }) ?? []
     );
     this.lastEmittedSearchCriteria = this.searchCriteria();
-    this.allowedCriteriaCache = undefined;
   }
 
   /**
@@ -515,7 +525,6 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     this.values.set([]);
     this.searchValue.set('');
     this.emitChangeEvent();
-    this.allowedCriteriaCache = undefined;
     this.typeaheadInputChange.next(this.searchValue());
     this.submit();
   }
@@ -535,7 +544,6 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
 
     this.values.update(v => v.filter((_, i) => i !== index));
     this.emitChangeEvent();
-    this.allowedCriteriaCache = undefined;
     if (this.values().length !== index) {
       this.valueComponents()[index + 1].edit('value');
     } else {
@@ -559,7 +567,6 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     this.freeTextInputElement().nativeElement.blur();
     this.addCriterion(criterion);
     // The user selected a criterion so we remove the free text search value and add the criterion.
-    this.allowedCriteriaCache = undefined;
     this.typeaheadInputChange.next('');
     this.searchValue.set('');
   }
@@ -614,26 +621,30 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
 
   /**
    * Get criteria list to be shown in typeahead.
-   * @param token - input field value.
    * @returns list of criteria to be shown in typeahead.
    */
-  private getFilteredTypeaheadCriteria(token: string): InternalCriterionDefinition[] {
-    if (this.maxCriteria() === undefined || this.values().length < this.maxCriteria()!) {
-      const allowedCriteria = !this.exclusiveCriteria()
+  private getFilteredTypeaheadCriteria(
+    maxCriteria: number | undefined,
+    values: { config: InternalCriterionDefinition; value: CriterionValue }[],
+    exclusiveCriteria: boolean
+  ): InternalCriterionDefinition[] {
+    if (maxCriteria === undefined || values.length < maxCriteria) {
+      const allowedCriteria = !exclusiveCriteria
         ? this.internalCriterionDefinitions
-        : differenceByName(this.internalCriterionDefinitions, this.values());
+        : differenceByName(this.internalCriterionDefinitions, values);
 
-      if (allowedCriteria.length > 0 && !this.allowedCriteriaCache) {
+      let allowedCriteriaCache: string[] | undefined;
+      if (allowedCriteria.length > 0) {
         // Call interceptor to allow applications to customize the list of available criteria
         const available = allowedCriteria.map(c => c.name);
         // Ensure that all entries are allowed in case the consumer doesn't use the allow callback
-        this.allowedCriteriaCache = available;
+        allowedCriteriaCache = available;
         this.interceptDisplayedCriteria.emit({
           criteria: available,
           searchCriteria: this.convertToExternalModel(),
           allow: (criteriaNamesToDisplay, allowFreeTextSearch) => {
             if (criteriaNamesToDisplay) {
-              this.allowedCriteriaCache = criteriaNamesToDisplay;
+              allowedCriteriaCache = criteriaNamesToDisplay;
             }
             if (allowFreeTextSearch !== undefined) {
               this.allowFreeTextCache.set(allowFreeTextSearch);
@@ -642,7 +653,7 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
         });
       }
 
-      return allowedCriteria.filter(c => this.allowedCriteriaCache?.includes(c.name));
+      return allowedCriteria.filter(c => allowedCriteriaCache?.includes(c.name));
     } else {
       return [];
     }
@@ -707,7 +718,6 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
         this.cdRef.detectChanges();
       }
       this.searchValue.set('');
-      this.allowedCriteriaCache = undefined;
 
       const nameLowerCase = criterionName.toLocaleLowerCase();
       const criterion = this.internalCriterionDefinitions.find(
@@ -787,7 +797,6 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
       }
     ]);
     this.searchValue.set('');
-    this.allowedCriteriaCache = undefined;
     this.emitChangeEvent();
   }
 }
