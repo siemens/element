@@ -21,13 +21,13 @@ type TimeZoneChange = { key: 'timeZone'; value: string };
  * - `languageChange` – the new language as a string
  * - `themeChange` – the new {@link Theme}
  */
-export type EventType =
+export type SiEventType =
   | { name: 'filter'; data: Filter[] }
   | { name: 'languageChange'; data: LanguageChange }
   | { name: 'themeChange'; data: ThemeChange };
 
 /**
- * Converts the union {@link EventType} into an object type with event names as keys
+ * Converts the union {@link SiEventType} into an object type with event names as keys
  * and data types as values.
  *
  * @example
@@ -63,7 +63,7 @@ type EventNameToData<ET extends { name: string; data: unknown }> = {
  */
 type NarrowByKeys<Data, K extends string> = Data extends (infer U)[] ? (U & { key: K })[] : Data;
 
-export class SiEventBusBase<ET extends { name: string; data: unknown } = EventType> {
+export class SiEventBusBase<ET extends { name: string; data: unknown } = SiEventType> {
   private eventObservables: Map<ET['name'], Subject<any>> = new Map();
 
   private customEventSuffix = 'θ';
@@ -108,15 +108,15 @@ export class SiEventBusBase<ET extends { name: string; data: unknown } = EventTy
    * @param keys - Optional array of keys to narrow array-typed event data
    *   (e.g. filter items) to only those matching the given keys.
    */
-  snapshot(): EventNameToData<ET | EventType>;
-  snapshot<A extends keyof EventNameToData<ET | EventType>, K extends string>(
+  snapshot(): EventNameToData<ET | SiEventType>;
+  snapshot<A extends keyof EventNameToData<ET | SiEventType>, K extends string>(
     eventName: A,
     keys: K[]
-  ): NarrowByKeys<EventNameToData<ET | EventType>[A], K>;
-  snapshot<A extends keyof EventNameToData<ET | EventType>>(
+  ): NarrowByKeys<EventNameToData<ET | SiEventType>[A], K>;
+  snapshot<A extends keyof EventNameToData<ET | SiEventType>>(
     eventName: A
-  ): EventNameToData<ET | EventType>[A];
-  snapshot<A extends keyof EventNameToData<ET | EventType>, K extends string>(
+  ): EventNameToData<ET | SiEventType>[A];
+  snapshot<A extends keyof EventNameToData<ET | SiEventType>, K extends string>(
     eventName?: A,
     keys?: K[]
   ):
@@ -150,9 +150,9 @@ export class SiEventBusBase<ET extends { name: string; data: unknown } = EventTy
    * @param eventName - The name of the event to emit.
    * @param payload - The data associated with the event.
    */
-  emit<A extends keyof EventNameToData<ET | EventType>>(
+  emit<A extends keyof EventNameToData<ET | SiEventType>>(
     eventName: A,
-    payload?: EventNameToData<ET | EventType>[A]
+    payload?: EventNameToData<ET | SiEventType>[A]
   ): void {
     this.sharedEventsState[String(eventName)] = payload;
     // We just propagate this as custom event so widgets in other angular runtime contexts can also be notified
@@ -183,11 +183,11 @@ export class SiEventBusBase<ET extends { name: string; data: unknown } = EventTy
    */
   on<
     R = never,
-    A extends keyof EventNameToData<ET | EventType> = keyof EventNameToData<ET | EventType>
-  >(eventName: A): Observable<[R] extends [never] ? EventNameToData<ET | EventType>[A] : R> {
+    A extends keyof EventNameToData<ET | SiEventType> = keyof EventNameToData<ET | SiEventType>
+  >(eventName: A): Observable<[R] extends [never] ? EventNameToData<ET | SiEventType>[A] : R> {
     if (!this.eventObservables.has(eventName)) {
       const eventSubject = new Subject<
-        [R] extends [never] ? EventNameToData<ET | EventType>[A] : R
+        [R] extends [never] ? EventNameToData<ET | SiEventType>[A] : R
       >();
       this.eventObservables.set(eventName, eventSubject);
 

@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: MIT
  */
 import { Injectable } from '@angular/core';
-import { SiEventBusBase, EventType } from '@siemens/dashboards-ng/event-bus';
+import { SiEventBusBase, SiEventType } from '@siemens/dashboards-ng/event-bus';
 
 /**
  * Injectable event bus service for cross-widget communication.
  *
- * By default, uses {@link EventType} which provides `filter`, `languageChange`, and `themeChange` events.
+ * By default, uses {@link SiEventType} which provides `filter`, `languageChange`, and `themeChange` events.
  * To use custom events, pass your own event type union as a generic argument:
  *
  * ```ts
@@ -24,7 +24,7 @@ import { SiEventBusBase, EventType } from '@siemens/dashboards-ng/event-bus';
   providedIn: 'root'
 })
 export class SiEventBus<ET> extends SiEventBusBase<
-  ET extends { name: string; data: unknown } ? ET : EventType
+  ET extends { name: string; data: unknown } ? ET : SiEventType
 > {}
 
-export type { EventType };
+export type { SiEventType as SiEventType };
