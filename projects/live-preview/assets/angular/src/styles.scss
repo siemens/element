@@ -1,0 +1,16 @@
+// Use Element Theme
+@use '@siemens/element-theme/src/theme';
+
+// Use Element components
+@use '@siemens/element-ng/element-ng';
+
+@use '@siemens/element-icons/dist/style/siemens-element-icons';
+
+@use 'flag-icons/sass/flag-icons' with (
+  $flag-icons-use-square: false
+);
+
+app-sample {
+  block-size: 100%;
+  display: block;
+}
