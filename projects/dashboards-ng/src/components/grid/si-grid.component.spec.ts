@@ -2,7 +2,7 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { Component, OnInit, output, OutputEmitterRef, SimpleChange } from '@angular/core';
+import { Component, OnInit, output, OutputEmitterRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
@@ -104,7 +104,7 @@ describe('SiGridComponent', () => {
     expect(component.editable()).toBe(false);
 
     fixture.componentRef.setInput('editable', true);
-    component.ngOnChanges({ editable: new SimpleChange(false, true, false) });
+    fixture.detectChanges();
     expect(spy).toHaveBeenCalled();
     expect(component.editable()).toBe(true);
   });
@@ -116,7 +116,7 @@ describe('SiGridComponent', () => {
     expect(spy).not.toHaveBeenCalled();
 
     fixture.componentRef.setInput('editable', false);
-    component.ngOnChanges({ editable: new SimpleChange(true, false, false) });
+    fixture.detectChanges();
     expect(spy).toHaveBeenCalled();
     expect(component.editable()).toBe(false);
   });
@@ -202,10 +202,11 @@ describe('SiGridComponent', () => {
   it('should load widgets when dashboardId changes', async () => {
     const widgetConfig: WidgetConfig = { id: 'myId', widgetId: 'myWidgetId' };
     const myDashboardId = 'myDashboardId';
+    fixture.componentRef.setInput('dashboardId', undefined);
+    fixture.detectChanges();
     fixture.componentRef.setInput('dashboardId', myDashboardId);
     widgetStorage.save([widgetConfig], [], [], myDashboardId);
 
-    component.ngOnChanges({ dashboardId: new SimpleChange(undefined, myDashboardId, false) });
     await fixture.whenStable();
 
     expect(component.visibleWidgetInstances$.value[0].id).toBe('myId');

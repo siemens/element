@@ -10,7 +10,6 @@ import {
   OnInit,
   output,
   OutputEmitterRef,
-  SimpleChange,
   Type
 } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -154,7 +153,7 @@ describe('SiFlexibleDashboardComponent', () => {
     it('#hideAddWidgetInstanceButton should remove the addWidgetInstanceAction action', () => {
       expect(component.primaryEditActions$.value.length).toBe(2);
       fixture.componentRef.setInput('hideAddWidgetInstanceButton', true);
-      component.ngOnChanges({ hideAddWidgetInstanceButton: new SimpleChange(false, true, true) });
+      fixture.detectChanges();
       expect(component.primaryEditActions$.value.length).toBe(1);
     });
 
@@ -200,7 +199,7 @@ describe('SiFlexibleDashboardComponent', () => {
       const spy = spyOn(grid, 'edit').and.callThrough();
       expect(component.editable()).toBe(false);
       fixture.componentRef.setInput('editable', true);
-      component.ngOnChanges({ editable: new SimpleChange(false, true, true) });
+      fixture.detectChanges();
       expect(spy).toHaveBeenCalled();
     });
 
@@ -211,7 +210,7 @@ describe('SiFlexibleDashboardComponent', () => {
       const spy = spyOn(grid, 'cancel').and.callThrough();
 
       fixture.componentRef.setInput('editable', false);
-      component.ngOnChanges({ editable: new SimpleChange(true, false, false) });
+      fixture.detectChanges();
       expect(spy).toHaveBeenCalled();
     });
 
@@ -225,10 +224,9 @@ describe('SiFlexibleDashboardComponent', () => {
       spyOnProperty(component.dashboard(), 'isExpanded', 'get').and.returnValue(true);
 
       fixture.componentRef.setInput('dashboardId', '1');
-      component.ngOnChanges({ dashboardId: new SimpleChange(undefined, 1, true) });
+      fixture.detectChanges();
       fixture.componentRef.setInput('dashboardId', undefined);
-      component.ngOnChanges({ dashboardId: new SimpleChange(1, undefined, true) });
-
+      fixture.detectChanges();
       expect(spy).toHaveBeenCalledTimes(2);
     });
 
@@ -236,10 +234,9 @@ describe('SiFlexibleDashboardComponent', () => {
       const spy = spyOn(component.dashboard(), 'restore').and.callThrough();
 
       fixture.componentRef.setInput('dashboardId', '1');
-      component.ngOnChanges({ dashboardId: new SimpleChange(undefined, 1, true) });
+      fixture.detectChanges();
       fixture.componentRef.setInput('dashboardId', undefined);
-      component.ngOnChanges({ dashboardId: new SimpleChange(1, undefined, true) });
-
+      fixture.detectChanges();
       expect(spy).toHaveBeenCalledTimes(0);
     });
 
@@ -248,7 +245,7 @@ describe('SiFlexibleDashboardComponent', () => {
       fixture.componentRef.setInput('editable', true);
 
       fixture.componentRef.setInput('dashboardId', '1');
-      component.ngOnChanges({ dashboardId: new SimpleChange(undefined, 1, true) });
+      fixture.detectChanges();
       expect(spy).toHaveBeenCalledTimes(1);
     });
   });
