@@ -13,6 +13,7 @@ export * from './components/si-live-preview-iframe/si-live-preview-iframe.compon
 export * from './components/si-live-preview-renderer/si-live-preview-renderer.component';
 export * from './components/si-live-preview-wrapper/si-live-preview-wrapper.component';
 export * from './components/si-live-preview-qr/si-live-preview-qr.component';
+export * from './components/stackblitz/stackblitz.provider';
 
 export * from './interfaces/live-preview-config';
 export * from './interfaces/si-live-preview.api';
