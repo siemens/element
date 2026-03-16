@@ -5,8 +5,15 @@
 import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { echarts, EChartOption } from '@siemens/charts-ng/common';
+import { LineChart } from 'echarts/charts';
+import { GridComponent } from 'echarts/components';
 
 import { SiChartBaseComponent } from './si-chart-base.component';
+
+// Register chart types and components needed by the tests.
+// The base component only registers renderers + title/tooltip.
+// Without this, ECharts silently drops series with unregistered types.
+echarts.use([LineChart, GridComponent]);
 
 @Component({
   imports: [SiChartBaseComponent],
