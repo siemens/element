@@ -22,6 +22,9 @@ import { SimpleChanges } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { ViewContainerRef } from '@angular/core';
 
+// @public
+export const angularTemplateProject: () => AssetProject;
+
 // @public (undocumented)
 export class DummyAppSampleComponent {
 }
@@ -39,6 +42,9 @@ export const LOG_EVENT: InjectionToken<(...msg: any[]) => void>;
 // @public
 export const provideExampleRoutes: (routes: Route[]) => Provider;
 
+// @public
+export const provideStackblitzConfig: (config?: StackblitzConfig) => Provider;
+
 // @public (undocumented)
 export const SI_LIVE_PREVIEW_CONFIG: InjectionToken<SiLivePreviewConfig>;
 
@@ -47,6 +53,9 @@ export const SI_LIVE_PREVIEW_EXAMPLE_ROUTES: InjectionToken<Route[]>;
 
 // @public (undocumented)
 export const SI_LIVE_PREVIEW_INTERNALS: InjectionToken<SiLivePreviewInternals>;
+
+// @public
+export const SI_STACKBLITZ_CONFIG: InjectionToken<StackblitzConfig>;
 
 // @public (undocumented)
 export class SiDummyComponent {

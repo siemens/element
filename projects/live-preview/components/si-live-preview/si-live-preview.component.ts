@@ -32,10 +32,11 @@ import 'prismjs/components/prism-typescript';
 
 import { SiLivePreviewLocaleApi } from '../../interfaces/si-live-preview.api';
 import { SiLivePreviewIframeComponent } from '../si-live-preview-iframe/si-live-preview-iframe.component';
+import { SiStackblitzButtonDirective } from '../stackblitz/si-stackblitz-button.component';
 
 @Component({
   selector: 'si-live-preview',
-  imports: [KeyValuePipe, FormsModule, SiLivePreviewIframeComponent],
+  imports: [KeyValuePipe, FormsModule, SiLivePreviewIframeComponent, SiStackblitzButtonDirective],
   templateUrl: './si-live-preview.component.html',
   styleUrls: ['./si-live-preview.component.scss', './si-live-preview-codeflask.scss']
 })
