@@ -9,6 +9,7 @@
     [disabled]="(grid.isLoading | async) ?? false"
     [hideEditButton]="hideEditButton()"
     [showEditButtonLabel]="showEditButtonLabel()"
+    [grid]="grid"
     (editableChange)="grid.edit()"
     (save)="grid.save()"
     (cancel)="grid.cancel()"

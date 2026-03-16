@@ -65,6 +65,7 @@ export class SiDashboardToolbarStubComponent {
   readonly editable = input(false);
   readonly hideEditButton = input(false);
   readonly showEditButtonLabel = input(false);
+  readonly grid = input.required<SiGridComponent>();
 }
 
 @Component({
