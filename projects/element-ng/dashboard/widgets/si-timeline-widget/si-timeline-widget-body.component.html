@@ -1,7 +1,5 @@
 @let valueObject = value();
 <div
-  class="focus-inside"
-  tabindex="0"
   [attr.role]="
     (!showLoadingIndicator() && valueObject && valueObject.length > 0) || showLoadingIndicator()
       ? 'list'
