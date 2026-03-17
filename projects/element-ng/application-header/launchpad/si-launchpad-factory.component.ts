@@ -155,4 +155,12 @@ export class SiLaunchpadFactoryComponent {
   protected isCategories(items: App[] | AppCategory[]): items is AppCategory[] {
     return items.some(item => 'apps' in item);
   }
+
+  protected isFavoriteToggleDisabled(app: App): boolean {
+    if ('_noFavorite' in app) {
+      return !!app._noFavorite;
+    } else {
+      return false;
+    }
+  }
 }
