@@ -56,17 +56,15 @@
     <si-dashboard #dashboard heading="Dashboard" [sticky]="true">
       <ng-container menubar>
         <div class="d-flex">
-          <!-- eslint-disable @angular-eslint/template/no-any -->
           <select
             class="form-select d-inline w-25"
             aria-label="selection of day"
-            (change)="onChange($any($event.target).value)"
+            (change)="onChange($event)"
           >
             @for (item of items; track $index) {
               <option [value]="item.value">{{ item.title }}</option>
             }
           </select>
-          <!-- eslint-enable -->
           <button type="button" class="btn btn-secondary ms-auto">Text</button>
         </div>
       </ng-container>
