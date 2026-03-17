@@ -1,0 +1,25 @@
+<input
+  #freeTextInputElement
+  type="text"
+  class="value-input ps-2 me-2 w-100"
+  typeaheadOptionField="translatedLabel"
+  typeaheadClearValueOnSelect
+  [siTypeahead]="dataSource()"
+  [typeaheadMinLength]="0"
+  [typeaheadOptionsLimit]="typeaheadOptionsLimit()"
+  [typeaheadScrollable]="true"
+  [typeaheadOptionsInScrollableView]="optionsInScrollableView()"
+  [typeaheadAutoSelectIndex]="searchValue() ? 0 : -1"
+  [typeaheadCreateOption]="typeaheadCreateOption()"
+  [disabled]="disabled()"
+  [placeholder]="placeholder()"
+  [attr.aria-label]="searchLabel() | translate"
+  [value]="searchValue()"
+  (focus)="inputFocus.emit()"
+  (input)="freeTextInputHandler($event)"
+  (blur)="freeTextBlurHandler()"
+  (keydown.backspace)="freeTextBackspaceHandler($event)"
+  (keydown.enter)="enterSubmit.emit()"
+  (typeaheadOnSelect)="typeaheadOnSelectCriterionHandler($event.option)"
+  (typeaheadOnCreateOption)="createFreeTextPillHandler($event)"
+/>
