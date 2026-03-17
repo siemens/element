@@ -204,7 +204,10 @@ export class MapService {
           marker: point.marker,
           label: alwaysShowLabels ? ({ text: point.name } as LabelOptions) : undefined,
           group: point.group,
+          // TODO: Remove extraProps in v50
+          // For backward compatibility, extraProps is still supported, but extraProperties should be used going forward
           extraProps: point.extraProperties,
+          extraProperties: point.extraProperties,
           click: point.click
         })
     );
