@@ -27,15 +27,6 @@ $filtered-search-criteria-margin: map.get(variables.$spacers, 2);
 
   &.disabled {
     color: variables.$element-text-disabled;
-
-    input,
-    ::placeholder {
-      color: variables.$element-text-disabled;
-    }
-  }
-
-  si-filtered-search-value + input::placeholder {
-    color: transparent;
   }
 }
 
@@ -44,20 +35,6 @@ $filtered-search-criteria-margin: map.get(variables.$spacers, 2);
   border-end-start-radius: 4px;
   background-color: var(--filter-search-background-color);
   gap: map.get(variables.$spacers, 2);
-}
-
-input {
-  background: transparent;
-  border: 0;
-  padding-block: 0;
-
-  &:hover::placeholder {
-    opacity: 1;
-  }
-
-  :host(.disabled) &::placeholder {
-    opacity: variables.$element-action-disabled-opacity;
-  }
 }
 
 .clear-button-container {

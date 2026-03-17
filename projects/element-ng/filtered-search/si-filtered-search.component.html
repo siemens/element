@@ -25,36 +25,27 @@
     />
   }
   <!-- criterion input -->
-  <input
-    #freeTextInputElement
-    type="text"
-    class="value-input ps-2 me-2 flex-grow-1"
-    typeaheadOptionField="translatedLabel"
-    typeaheadClearValueOnSelect
-    [siTypeahead]="dataSource"
-    [typeaheadMinLength]="0"
+  <si-filtered-search-input
+    [dataSource]="dataSource"
     [typeaheadOptionsLimit]="typeaheadOptionsLimit()"
-    [typeaheadScrollable]="true"
-    [typeaheadOptionsInScrollableView]="optionsInScrollableView()"
-    [typeaheadAutoSelectIndex]="searchValue() ? 0 : -1"
-    [typeaheadCreateOption]="
-      freeTextCriterion() &&
-      (!maxCriteria() || values().length < maxCriteria()!) &&
-      allowFreeTextCache()
-        ? searchForFreeTextLabel()
-        : undefined
-    "
+    [optionsInScrollableView]="optionsInScrollableView()"
     [disabled]="disabled()"
     [placeholder]="placeholder()"
-    [attr.aria-label]="searchLabel() | translate"
-    [value]="searchValue()"
-    (focus)="freeTextFocus()"
-    (input)="freeTextInput($event)"
-    (blur)="freeTextBlur()"
-    (keydown.backspace)="freeTextBackspace($event)"
-    (keydown.enter)="submit()"
-    (typeaheadOnSelect)="typeaheadOnSelectCriterion($event.option)"
-    (typeaheadOnCreateOption)="createFreeTextPill($event)"
+    [searchLabel]="searchLabel()"
+    [freeTextCriterion]="!!freeTextCriterion()"
+    [maxCriteriaReached]="!!maxCriteria() && values().length >= maxCriteria()!"
+    [allowFreeText]="allowFreeTextCache()"
+    [searchForFreeTextLabel]="searchForFreeTextLabel()"
+    [disableSelectionByColonAndSemicolon]="disableSelectionByColonAndSemicolon()"
+    [onlySelectValue]="onlySelectValue()"
+    [(searchValue)]="searchValue"
+    (createCriterion)="onCreateCriterion($event)"
+    (createCriterionByName)="onCreateCriterionByName($event)"
+    (backspaceOverflow)="freeTextBackspace()"
+    (createFreeTextPill)="createFreeTextPill($event)"
+    (searchValueChange)="onSearchValueChange($event)"
+    (inputFocus)="freeTextFocus()"
+    (enterSubmit)="submit()"
   />
 </div>
 <!-- clear all searchCriteria -->
