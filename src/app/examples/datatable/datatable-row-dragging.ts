@@ -74,6 +74,11 @@ export class SampleComponent {
     }
   ];
 
+  protected isCompletedRow(row: unknown): boolean {
+    type TaskDataRow = (typeof this.taskData)[number];
+    return (row as TaskDataRow).status === 'Completed';
+  }
+
   protected drop(event: CdkDragDrop<any>): void {
     moveItemInArray(this.taskData, event.previousIndex, event.currentIndex);
     this.taskData = [...this.taskData.map((item, index) => ({ ...item, priority: index + 1 }))];

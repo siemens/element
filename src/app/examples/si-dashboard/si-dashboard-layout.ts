@@ -136,7 +136,8 @@ export class SampleComponent {
     tooltip: 'APP.CLAIM'
   };
 
-  onChange(value: string): void {
+  onChange(event: Event): void {
+    const value = (event.target as HTMLSelectElement).value;
     if (value !== 'null') {
       this.doorAccessEventsfiltered = [this.doorAccessEvents[parseInt(value, 10)]];
       this.series = [
