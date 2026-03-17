@@ -1,0 +1,20 @@
+@use '@siemens/element-theme/src/styles/variables';
+
+input {
+  background: transparent;
+  border: 0;
+  padding-block: 0;
+
+  &:hover::placeholder {
+    opacity: 1;
+  }
+
+  &:disabled,
+  &:disabled ::placeholder {
+    color: variables.$element-text-disabled;
+  }
+
+  :host-context(si-filtered-search-value + :host) &::placeholder {
+    color: transparent;
+  }
+}
