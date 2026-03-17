@@ -1,10 +1,10 @@
-- text: "/Drop files here or click to upload Max\\. [\\d,.]+[bkmBKM]+ upload size\\. Accepted file types: image\\/\\*\\. siemens-healthineers-logo\\.svg [\\d,.]+[bkmBKM]+ 0 %/"
+- text: "/Drop files here or click to upload Max\\. [\\d,.]+[bkmBKM]+ upload size\\. Accepted file types: image\\/\\*\\. siemens-healthineers-logo\\.svg [\\d,.]+[bkmBKM]+ 0%/"
 - progressbar "Uploading"
 - button "Remove"
-- text: /simpl-44x44\.png [\d,.]+[bkmBKM]+ 0 %/
+- text: /simpl-44x44\.png [\d,.]+[bkmBKM]+ 0%/
 - progressbar "Uploading"
 - button "Remove"
-- text: /simpl-logo\.svg [\d,.]+[bkmBKM]+ 0 %/
+- text: /simpl-logo\.svg [\d,.]+[bkmBKM]+ 0%/
 - progressbar "Uploading"
 - button "Remove"
 - text: /test-file-for-vrt\.txt [\d,.]+[bkmBKM]+ Warning Incorrect file type selected/
