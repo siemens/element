@@ -21,6 +21,7 @@ export default defineConfig(
     },
     rules: {
       'defaultValue/tsdoc-defaultValue-annotation': 'error',
+      '@typescript-eslint/no-deprecated': ['off'],
       '@angular-eslint/component-selector': [
         'error',
         {
