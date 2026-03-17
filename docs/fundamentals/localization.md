@@ -11,12 +11,11 @@ Internationalization (i18n) is the process of designing and developing a product
 Internationalization is the entire process of designing and developing a product that can be adapted to different languages and regions.
 Internationalization is the foundation for high-quality and efficient [localization](#localization-l10n).
 
-It is important to consider that UI text can grow significantly and thus cause line breaks or destroy the layout.
-
 ### Localization (l10n)
 
 Localization is the process of adapting a product to the language and cultural norms of a specific target market so that it feels natural to local users. This goes beyond [simple translation](#translation) and includes script direction ([LTR](#ltr-left-to-right)/[RTL](#rtl-right-to-left)), formatting numbers, times, dates, and addresses, and adapting illustrations.
 
+This example shows how values, dates, and times should be displayed after the product has been localized.
 <si-docs-component example="si-localization/si-localization" height="650"></si-docs-component>
 
 Localization requires an [internationalized](#internationalization-i18n) product and must be performed for each target market.
@@ -60,7 +59,7 @@ In addition, translation-friendly texts should be defined by thinking like a tra
 
 User interface texts are stand-alone, short, and to the point, but they provide little to no context on their own. Thus, translators and AI can only produce a reliable translation if the terms are
 
-- [Dominant](#terms-in-various-uses)
+- [Predominant](#terms-in-various-uses)
 - [Precise](#domain-terminology)
 - [Unambiguous](#avoid-misunderstandings)
 
@@ -95,12 +94,12 @@ Review the UI texts together with domain experts, and ensure that translations a
 
 !!! info "Meaning of the term `title`"
 
-    A subset of meanings of `title` (incl. dominating meaning :trophy:):
+    A subset of meanings of `title`:
 
+    - predominant meaning: an appellation of dignity, honor, distinction, or preeminence attached to a person or family by virtue of rank, office, precedent, privilege, attainment, or lands
+    - descriptive name : [appellation](https://www.merriam-webster.com/dictionary/appellation)
+    - a person holding a title especially of nobility
     - a similar distinguishing name of a musical composition or a work of art
-    - :trophy: descriptive name : [appellation](https://www.merriam-webster.com/dictionary/appellation)
-    - :trophy: an appellation of dignity, honor, distinction, or preeminence attached to a person or family by virtue of rank, office, precedent, privilege, attainment, or lands
-    - :trophy: a person holding a title especially of nobility
     - all the elements constituting legal ownership
     - a descriptive or general heading (as of a chapter in a book)
 
@@ -134,7 +133,7 @@ In addition, the alternative term substantially increases the probability of cor
 Avoid possible causes of misunderstandings by
 
 - grouping the texts by use cases
-- only using the [dominant meaning](#terms-in-various-uses) of the term
+- only using the [predominant meaning](#terms-in-various-uses) of the term
 - annotating texts with a description (if supported by translation framework and file format)
 
 #### Grouping of texts
