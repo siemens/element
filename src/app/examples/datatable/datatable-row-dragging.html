@@ -87,13 +87,11 @@
     </ngx-datatable-column>
 
     <ng-template let-row="row" rowDef>
-      <!-- eslint-disable @angular-eslint/template/no-any -->
       <datatable-row-def
         cdkDrag
         cdkDragPreviewContainer="parent"
-        [cdkDragDisabled]="$any(row).status === 'Completed'"
+        [cdkDragDisabled]="isCompletedRow(row)"
       />
-      <!-- eslint-enable @angular-eslint/template/no-any -->
     </ng-template>
   </ngx-datatable>
 </div>
