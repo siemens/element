@@ -28,6 +28,9 @@
 }
 
 .file {
+  display: flex;
+  position: relative;
+  margin-block-end: map.get(variables.$spacers, 4);
   min-block-size: map.get(variables.$spacers, 4) + map.get(variables.$spacers, 10);
   transition: opacity variables.$element-default-transition-duration;
 }
