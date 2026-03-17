@@ -16,8 +16,8 @@ import { environment } from 'src/environments/environment';
     <table>
       <thead><th>label</th><th>value</th></thead>
       <tr>
-        <td>{{ $any(mapPoint()).extraProps?.label ?? 'N/A' }}</td>
-        <td>{{ $any(mapPoint()).extraProps?.value ?? 'N/A' }}</td>
+        <td>{{ mapPoint().extraProperties?.label ?? 'N/A' }}</td>
+        <td>{{ mapPoint().extraProperties?.value ?? 'N/A' }}</td>
       </tr>
     </table>
   `,
