@@ -34,6 +34,7 @@ import { SiLinkDirective } from '@siemens/element-ng/link';
 import { MenuItem } from '@siemens/element-ng/menu';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
 import { SiSearchBarComponent } from '@siemens/element-ng/search-bar';
+import { SiTooltipDirective } from '@siemens/element-ng/tooltip';
 import { SiTranslatePipe, t, TranslatableString } from '@siemens/element-translate-ng/translate';
 import { timer } from 'rxjs';
 
@@ -41,7 +42,27 @@ import { SiSidePanelService } from './si-side-panel.service';
 import { SidePanelDisplayMode, SidePanelNavigateConfig } from './side-panel.model';
 
 /**
- * An extension of MenuItem to support combined icons
+ * An extension of MenuItem to support combined icons.
+ *
+ * @deprecated Use the {@link SiSidePanelActionsComponent} instead:
+ *
+ * ```html
+ * <si-side-panel-content>
+ *   <si-side-panel-actions>
+ *       <button
+ *         type="button"
+ *         si-side-panel-action
+ *         icon="element-alarm-background-filled"
+ *         iconColor="status-danger"
+ *         stackedIcon="element-alarm-tick"
+ *         stackedIconColor="text-body"
+ *         (click)="action()"
+ *       >
+ *         Action
+ *       </button>
+ *   </si-side-panel-actions>
+ * </si-side-panel-content>
+ * ```
  */
 export interface StatusItem extends MenuItemLegacy {
   overlayIcon?: string;
@@ -52,10 +73,11 @@ export interface StatusItem extends MenuItemLegacy {
   imports: [
     SiContentActionBarComponent,
     SiIconComponent,
-    SiLinkDirective,
     RouterLink,
     SiSearchBarComponent,
-    SiTranslatePipe
+    SiTranslatePipe,
+    SiTooltipDirective,
+    SiLinkDirective
   ],
   templateUrl: './si-side-panel-content.component.html',
   styleUrl: './si-side-panel-content.component.scss',
@@ -101,6 +123,26 @@ export class SiSidePanelContentComponent implements OnInit {
 
   /**
    * Status icons/actions
+   *
+   * @deprecated Use the {@link SiSidePanelActionsComponent} instead:
+   *
+   * ```html
+   * <si-side-panel-content>
+   *   <si-side-panel-actions>
+   *       <button
+   *         type="button"
+   *         si-side-panel-action
+   *         icon="element-alarm-background-filled"
+   *         iconColor="status-danger"
+   *         stackedIcon="element-alarm-tick"
+   *         stackedIconColor="text-body"
+   *         (click)="action()"
+   *       >
+   *         Action
+   *       </button>
+   *   </si-side-panel-actions>
+   * </si-side-panel-content>
+   * ```
    *
    * @defaultValue []
    */

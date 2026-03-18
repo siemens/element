@@ -1,19 +1,11 @@
-- paragraph: Cooling coil
-- menubar:
-  - menuitem "Path"
-  - menuitem "Edit"
-  - menuitem "Toggle"
-- button "Enter fullscreen"
 - button "Toggle"
-- button "Out of Service"
-- button "Event source active, ack"
-- textbox "Search..."
-- button "Properties 5" [expanded]
-- region "Properties 5": And here we have some content
+- link "Out of Service":
+  - /url: ""
+- link "Event source active, ack":
+  - /url: ""
+- button "Properties"
 - button "Documents"
-- region "Documents"
 - button "Graphics"
-- region "Graphics"
 - banner:
   - link "Siemens logo":
     - /url: "#/"
@@ -24,14 +16,21 @@
 - button "Close"
 - group "Size toggle button group":
   - radio "Regular" [checked]
+  - text: ""
   - radio "Wide"
+  - text: ""
   - radio "Extended"
+  - text: ""
 - group "Display mode toggle button group":
-  - radio "Navigate"
   - radio "Overlay" [checked]
+  - text: ""
+  - radio "Navigate"
+  - text: ""
 - group "Mode toggle button group":
-  - radio "Over"
-  - radio "Scroll" [checked]
+  - radio "Over" [checked]
+  - text: ""
+  - radio "Scroll"
+  - text: ""
 - separator
 - heading "Collapsible side panel" [level=2]
 - paragraph:
