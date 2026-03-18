@@ -25,8 +25,7 @@ import {
   SiSidePanelComponent,
   SiSidePanelContentComponent,
   SiSidePanelService,
-  SiSidePanelActionsComponent,
-  SiSidePanelActionComponent
+  StatusItem
 } from '@siemens/element-ng/side-panel';
 import { LOG_EVENT } from '@siemens/live-preview';
 
@@ -36,8 +35,6 @@ import { LOG_EVENT } from '@siemens/live-preview';
     PortalModule,
     SiSidePanelComponent,
     SiSidePanelContentComponent,
-    SiSidePanelActionsComponent,
-    SiSidePanelActionComponent,
     SiAccordionComponent,
     SiApplicationHeaderComponent,
     RouterLink,
@@ -47,7 +44,7 @@ import { LOG_EVENT } from '@siemens/live-preview';
     SiHeaderBrandDirective,
     SiHeaderLogoDirective
   ],
-  templateUrl: './si-side-panel-collapsible.html',
+  templateUrl: './si-side-panel-collapsible-legacy-status-actions.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SampleComponent implements OnDestroy {
@@ -87,6 +84,26 @@ export class SampleComponent implements OnDestroy {
       type: 'action',
       label: 'Some other action',
       action: () => this.logEvent('yes, you clicked it')
+    }
+  ];
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
+  statusActions: StatusItem[] = [
+    {
+      title: 'Out of Service',
+      icon: 'element-out-of-service status-warning',
+      action: () => this.logEvent('Out of Service')
+    },
+    {
+      title: 'System Operator',
+      icon: 'element-manual-filled status-warning',
+      disabled: true,
+      action: () => this.logEvent('System Operator')
+    },
+    {
+      title: 'Event source\nactive, ack',
+      icon: 'element-alarm-background-filled status-danger',
+      overlayIcon: 'element-alarm-tick text-body',
+      action: () => this.logEvent('Event source, active, ack')
     }
   ];
 

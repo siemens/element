@@ -1,0 +1,16 @@
+@use '@siemens/element-theme/src/styles/variables';
+@use 'sass:map';
+
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: map.get(variables.$spacers, 6);
+}
+
+:host-context(.collapsible .collapsed) {
+  order: 3;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+}
