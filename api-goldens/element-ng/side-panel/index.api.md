@@ -51,6 +51,27 @@ export interface SidePanelNavigateRouterLink {
 // @public
 export type SidePanelSize = 'regular' | 'wide' | 'extended';
 
+// @public
+export class SiSidePanelActionComponent {
+    readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly icon: _angular_core.InputSignal<string>;
+    readonly iconColor: _angular_core.InputSignal<string | undefined>;
+    readonly stackedIcon: _angular_core.InputSignal<string | undefined>;
+    readonly stackedIconColor: _angular_core.InputSignal<string | undefined>;
+    // (undocumented)
+    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSidePanelActionComponent, "button[si-side-panel-action], a[si-side-panel-action]", never, { "icon": { "alias": "icon"; "required": true; "isSignal": true; }; "iconColor": { "alias": "iconColor"; "required": false; "isSignal": true; }; "stackedIcon": { "alias": "stackedIcon"; "required": false; "isSignal": true; }; "stackedIconColor": { "alias": "stackedIconColor"; "required": false; "isSignal": true; }; "disabled": { "alias": "disabled"; "required": false; "isSignal": true; }; }, {}, never, ["*"], true, never>;
+    // (undocumented)
+    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSidePanelActionComponent, never>;
+}
+
+// @public
+export class SiSidePanelActionsComponent {
+    // (undocumented)
+    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSidePanelActionsComponent, "si-side-panel-actions", never, {}, {}, never, ["*"], true, never>;
+    // (undocumented)
+    static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSidePanelActionsComponent, never>;
+}
+
 // @public (undocumented)
 export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
     constructor();
@@ -142,13 +163,14 @@ export class SiSidePanelContentComponent implements OnInit {
     // (undocumented)
     protected readonly service: SiSidePanelService;
     readonly showMobileDrawerBadge: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    // @deprecated
     readonly statusActions: _angular_core.InputSignal<StatusItem[]>;
     toggleFullscreen(): void;
     readonly toggleItemLabel: _angular_core.InputSignal<TranslatableString>;
     // (undocumented)
     protected toggleSidePanel(event?: MouseEvent): void;
     // (undocumented)
-    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSidePanelContentComponent, "si-side-panel-content", never, { "collapsibleInput": { "alias": "collapsible"; "required": false; "isSignal": true; }; "heading": { "alias": "heading"; "required": false; "isSignal": true; }; "primaryActions": { "alias": "primaryActions"; "required": false; "isSignal": true; }; "secondaryActions": { "alias": "secondaryActions"; "required": false; "isSignal": true; }; "statusActions": { "alias": "statusActions"; "required": false; "isSignal": true; }; "searchable": { "alias": "searchable"; "required": false; "isSignal": true; }; "searchPlaceholder": { "alias": "searchPlaceholder"; "required": false; "isSignal": true; }; "closeButtonLabel": { "alias": "closeButtonLabel"; "required": false; "isSignal": true; }; "toggleItemLabel": { "alias": "toggleItemLabel"; "required": false; "isSignal": true; }; "enterFullscreenLabel": { "alias": "enterFullscreenLabel"; "required": false; "isSignal": true; }; "exitFullscreenLabel": { "alias": "exitFullscreenLabel"; "required": false; "isSignal": true; }; "showMobileDrawerBadge": { "alias": "showMobileDrawerBadge"; "required": false; "isSignal": true; }; "displayMode": { "alias": "displayMode"; "required": false; "isSignal": true; }; "navigateConfig": { "alias": "navigateConfig"; "required": false; "isSignal": true; }; }, { "searchEvent": "searchEvent"; }, never, ["*"], true, never>;
+    static ɵcmp: _angular_core.ɵɵComponentDeclaration<SiSidePanelContentComponent, "si-side-panel-content", never, { "collapsibleInput": { "alias": "collapsible"; "required": false; "isSignal": true; }; "heading": { "alias": "heading"; "required": false; "isSignal": true; }; "primaryActions": { "alias": "primaryActions"; "required": false; "isSignal": true; }; "secondaryActions": { "alias": "secondaryActions"; "required": false; "isSignal": true; }; "statusActions": { "alias": "statusActions"; "required": false; "isSignal": true; }; "searchable": { "alias": "searchable"; "required": false; "isSignal": true; }; "searchPlaceholder": { "alias": "searchPlaceholder"; "required": false; "isSignal": true; }; "closeButtonLabel": { "alias": "closeButtonLabel"; "required": false; "isSignal": true; }; "toggleItemLabel": { "alias": "toggleItemLabel"; "required": false; "isSignal": true; }; "enterFullscreenLabel": { "alias": "enterFullscreenLabel"; "required": false; "isSignal": true; }; "exitFullscreenLabel": { "alias": "exitFullscreenLabel"; "required": false; "isSignal": true; }; "showMobileDrawerBadge": { "alias": "showMobileDrawerBadge"; "required": false; "isSignal": true; }; "displayMode": { "alias": "displayMode"; "required": false; "isSignal": true; }; "navigateConfig": { "alias": "navigateConfig"; "required": false; "isSignal": true; }; }, { "searchEvent": "searchEvent"; }, never, ["si-side-panel-actions", "*"], true, never>;
     // (undocumented)
     static ɵfac: _angular_core.ɵɵFactoryDeclaration<SiSidePanelContentComponent, never>;
 }
@@ -160,7 +182,7 @@ export class SiSidePanelModule {
     // (undocumented)
     static ɵinj: _angular_core.ɵɵInjectorDeclaration<SiSidePanelModule>;
     // (undocumented)
-    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiSidePanelModule, never, [typeof SiSidePanelComponent, typeof SiSidePanelContentComponent], [typeof SiSidePanelComponent, typeof SiSidePanelContentComponent]>;
+    static ɵmod: _angular_core.ɵɵNgModuleDeclaration<SiSidePanelModule, never, [typeof SiSidePanelComponent, typeof SiSidePanelContentComponent, typeof SiSidePanelActionsComponent, typeof SiSidePanelActionComponent], [typeof SiSidePanelComponent, typeof SiSidePanelContentComponent, typeof SiSidePanelActionsComponent, typeof SiSidePanelActionComponent]>;
 }
 
 // @public (undocumented)
@@ -184,7 +206,7 @@ export class SiSidePanelService {
     static ɵprov: _angular_core.ɵɵInjectableDeclaration<SiSidePanelService>;
 }
 
-// @public
+// @public @deprecated
 export interface StatusItem extends MenuItem {
     // (undocumented)
     overlayIcon?: string;

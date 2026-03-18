@@ -8,7 +8,10 @@ test.describe('si-side-panel', () => {
   const example = 'si-side-panel/si-side-panel';
   const exampleCollapsible = 'si-side-panel/si-side-panel-collapsible';
 
-  test(example, async ({ page, si }) => {
+  const exampleCollapsibleLegacyStatusActions =
+    'si-side-panel/si-side-panel-collapsible-legacy-status-actions';
+
+  test(`${example} - modes and backdrop`, async ({ page, si }) => {
     await si.visitExample(example);
 
     await page.locator('.btn').getByText('Toggle side panel').click();
@@ -27,5 +30,17 @@ test.describe('si-side-panel', () => {
     await page.locator('.btn').getByText('Toggle side panel').click();
     await expect(page.locator('si-side-panel:not(.rpanel-collapsed)')).toBeVisible();
     await si.runVisualAndA11yTests('open');
+  });
+
+  test(exampleCollapsibleLegacyStatusActions, async ({ page, si }) => {
+    await si.visitExample(exampleCollapsibleLegacyStatusActions);
+
+    await page.locator('.btn').getByText('close').click();
+    await expect(page.locator('si-side-panel.rpanel-collapsed')).toBeVisible();
+    await si.runVisualAndA11yTests('legacy-closed');
+
+    await page.locator('.btn').getByText('Toggle side panel').click();
+    await expect(page.locator('si-side-panel:not(.rpanel-collapsed)')).toBeVisible();
+    await si.runVisualAndA11yTests('legacy-open');
   });
 });
