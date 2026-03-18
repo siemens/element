@@ -10,7 +10,7 @@ test.describe('si-menu', () => {
     test(example, async ({ page, si }) => {
       await page.setViewportSize({ width: 760, height: 600 });
       await si.visitExample(example, false);
-      await page.locator('.cdk-menu-trigger').click();
+      await page.getByRole('button', { name: 'Menu' }).click();
       await si.runVisualAndA11yTests('dropdown');
     });
   });

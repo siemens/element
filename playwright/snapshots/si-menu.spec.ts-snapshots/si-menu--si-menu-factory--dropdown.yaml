@@ -1,8 +1,11 @@
+- text: Default button with menu
+- button "Menu" [expanded]
+- text: Tertiary button with menu
+- button "Options"
 - text: Right click here to open context menu
-- button "Open menu" [expanded]
 - menu:
   - text: Actions
-  - menuitem "Download as"
+  - menuitem "Download as" [expanded]
   - menuitem "Clear"
   - menuitem "Hide"
   - menuitem "Update"
@@ -16,3 +19,7 @@
   - menuitem "Import 5"
   - menuitem "Export"
   - menuitem "Save as"
+- menu:
+  - menuitem "Image"
+  - menuitem "File"
+  - menuitem "Other" [disabled]

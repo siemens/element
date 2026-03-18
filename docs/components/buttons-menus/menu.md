@@ -53,11 +53,11 @@ Due to this:
 
 ### Usage of the declarative API
 
-<si-docs-component example="si-menu/si-menu" height="500"></si-docs-component>
+<si-docs-component example="si-menu/si-menu" height="600"></si-docs-component>
 
 ### Usage of the factory API
 
-<si-docs-component example="si-menu/si-menu-factory" height="500"></si-docs-component>
+<si-docs-component example="si-menu/si-menu-factory" height="600"></si-docs-component>
 
 ### `si-menu-bar`
 
