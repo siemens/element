@@ -24,7 +24,7 @@
     "@siemens/element-translate-ng": "49.1.0",
     "@siemens/live-preview": "49.1.0",
     "@siemens/maps-ng": "49.1.0",
-    "@siemens/ngx-datatable": "25.0.0",
+    "@siemens/ngx-datatable": "26.0.0",
     "ag-grid-angular": "^34.3.1",
     "ag-grid-community": "^34.3.1",
     "echarts": "6.0.0",
