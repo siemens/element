@@ -159,21 +159,21 @@ describe('SiFlexibleDashboardComponent', () => {
     });
 
     it('showWidgetCatalog() should show a widget catalog and add the widget config added to the grid', async () => {
-      jasmine.clock().install();
+      vi.useFakeTimers();
       fixture.componentRef.setInput('widgetCatalogComponent', SiWidgetCatalogMockComponent);
       fixture.detectChanges();
       component.showWidgetCatalog();
       fixture.detectChanges();
       SiWidgetCatalogMockComponent.staticClosed?.emit({ widgetId: 'widgetId' });
-      jasmine.clock().tick(200);
+      vi.advanceTimersByTime(200);
       await fixture.whenStable();
       expect(widgetConfig).toBeDefined();
       expect(widgetConfig.widgetId).toEqual('widgetId');
-      jasmine.clock().uninstall();
+      vi.useRealTimers();
     });
 
     it('addWidgetAction action shall call showWidgetCatalog()', () => {
-      const spy = spyOn(component, 'showWidgetCatalog').and.callThrough();
+      const spy = vi.spyOn(component, 'showWidgetCatalog');
       const action = (component.primaryEditActions$.value[0] as MenuItem).action as (
         param?: any
       ) => void;
@@ -183,12 +183,10 @@ describe('SiFlexibleDashboardComponent', () => {
 
     it('showWidgetCatalog() should restore the dashboard, if expanded', () => {
       fixture.componentRef.setInput('widgetCatalogComponent', SiWidgetCatalogMockComponent);
-      const isExpandedSpy = spyOnProperty(
-        component.dashboard(),
-        'isExpanded',
-        'get'
-      ).and.returnValue(true);
-      const restoreSpy = spyOn(component.dashboard(), 'restore');
+      const isExpandedSpy = vi
+        .spyOn(component.dashboard(), 'isExpanded', 'get')
+        .mockReturnValue(true);
+      const restoreSpy = vi.spyOn(component.dashboard(), 'restore');
       fixture.detectChanges();
 
       component.showWidgetCatalog();
@@ -197,7 +195,7 @@ describe('SiFlexibleDashboardComponent', () => {
     });
 
     it('should call #grid.edit() on changing editable input to true', () => {
-      const spy = spyOn(grid, 'edit').and.callThrough();
+      const spy = vi.spyOn(grid, 'edit');
       expect(component.editable()).toBe(false);
       fixture.componentRef.setInput('editable', true);
       fixture.detectChanges();
@@ -208,7 +206,7 @@ describe('SiFlexibleDashboardComponent', () => {
       expect(component.editable()).toBe(false);
       grid.editable.set(true);
       expect(component.editable()).toBe(true);
-      const spy = spyOn(grid, 'cancel').and.callThrough();
+      const spy = vi.spyOn(grid, 'cancel');
 
       fixture.componentRef.setInput('editable', false);
       fixture.detectChanges();
@@ -221,8 +219,8 @@ describe('SiFlexibleDashboardComponent', () => {
     });
 
     it('should restore the dashboard on dashboardId changes when dashboard is expanded', () => {
-      const spy = spyOn(component.dashboard(), 'restore').and.callThrough();
-      spyOnProperty(component.dashboard(), 'isExpanded', 'get').and.returnValue(true);
+      const spy = vi.spyOn(component.dashboard(), 'restore');
+      vi.spyOn(component.dashboard(), 'isExpanded', 'get').mockReturnValue(true);
 
       fixture.componentRef.setInput('dashboardId', '1');
       fixture.detectChanges();
@@ -232,7 +230,7 @@ describe('SiFlexibleDashboardComponent', () => {
     });
 
     it('should not restore the dashboard on dashboardId changes when dashboard is not expanded', () => {
-      const spy = spyOn(component.dashboard(), 'restore').and.callThrough();
+      const spy = vi.spyOn(component.dashboard(), 'restore');
 
       fixture.componentRef.setInput('dashboardId', '1');
       fixture.detectChanges();
@@ -242,7 +240,7 @@ describe('SiFlexibleDashboardComponent', () => {
     });
 
     it('should cancel edit state on dashboardId changes', () => {
-      const spy = spyOn(component.grid(), 'cancel').and.callThrough();
+      const spy = vi.spyOn(component.grid(), 'cancel');
       fixture.componentRef.setInput('editable', true);
 
       fixture.componentRef.setInput('dashboardId', '1');

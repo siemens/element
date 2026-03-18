@@ -44,7 +44,7 @@ describe('SiDashboardToolbarComponent', () => {
     await fixture.whenStable();
     fixture.detectChanges();
 
-    expect(component.editable()).withContext('Cancel shall not change editable state').toBe(true);
+    expect(component.editable(), 'Cancel shall not change editable state').toBe(true);
   });
 
   it('#onSave() shall cancel editable mode and emit save', async () => {
@@ -58,7 +58,7 @@ describe('SiDashboardToolbarComponent', () => {
     await fixture.whenStable();
     fixture.detectChanges();
 
-    expect(component.editable()).withContext('Save shall not change editable state').toBe(true);
+    expect(component.editable(), 'Save shall not change editable state').toBe(true);
   });
 
   it('#hideEditButton shall hide the edit button', () => {
