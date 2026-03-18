@@ -13,6 +13,7 @@ jobs:
       MAPTILER_KEY: ${{ secrets.MAPTILER_KEY }}
 
   publish-documentation:
+    environment: github-pages
     runs-on: ubuntu-24.04
     permissions:
       pages: write
