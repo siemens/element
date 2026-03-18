@@ -9,7 +9,7 @@ export const config: Config = {
     'projects/element-ng',
     'projects/charts-ng',
     'projects/dashboards-ng',
-    'projects/native-charts-ng',
+    { packageDir: 'projects/native-charts-ng', publicEntrypoint: 'docs.ts' },
     'projects/element-translate-ng',
     'projects/maps-ng'
   ],
