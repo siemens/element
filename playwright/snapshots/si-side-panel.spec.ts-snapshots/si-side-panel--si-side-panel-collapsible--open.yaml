@@ -5,10 +5,8 @@
   - menuitem "Toggle"
 - button "Enter fullscreen"
 - button "Toggle"
-- link "Out of Service":
-  - /url: ""
-- link "Event source active, ack":
-  - /url: ""
+- button "Out of Service"
+- button "Event source active, ack"
 - textbox "Search..."
 - button "Properties 5" [expanded]
 - region "Properties 5": And here we have some content

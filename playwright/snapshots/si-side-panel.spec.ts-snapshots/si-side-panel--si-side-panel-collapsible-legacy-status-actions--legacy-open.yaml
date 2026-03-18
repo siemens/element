@@ -1,9 +1,21 @@
+- paragraph: Cooling coil
+- menubar:
+  - menuitem "Path"
+  - menuitem "Edit"
+  - menuitem "Toggle"
+- button "Enter fullscreen"
 - button "Toggle"
-- button "Out of Service"
-- button "Event source active, ack"
-- button "Properties"
+- link "Out of Service":
+  - /url: ""
+- link "Event source active, ack":
+  - /url: ""
+- textbox "Search..."
+- button "Properties 5" [expanded]
+- region "Properties 5": And here we have some content
 - button "Documents"
+- region "Documents"
 - button "Graphics"
+- region "Graphics"
 - banner:
   - link "Siemens logo":
     - /url: "#/"
