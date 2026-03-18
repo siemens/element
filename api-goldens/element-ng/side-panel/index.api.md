@@ -51,6 +51,19 @@ export interface SidePanelNavigateRouterLink {
 // @public
 export type SidePanelSize = 'regular' | 'wide' | 'extended';
 
+// @public
+export class SiSidePanelActionComponent {
+    readonly disabled: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    readonly icon: _angular_core.InputSignal<string>;
+    readonly iconColor: _angular_core.InputSignal<string | undefined>;
+    readonly stackedIcon: _angular_core.InputSignal<string | undefined>;
+    readonly stackedIconColor: _angular_core.InputSignal<string | undefined>;
+}
+
+// @public
+export class SiSidePanelActionsComponent {
+}
+
 // @public (undocumented)
 export class SiSidePanelComponent implements OnInit, OnDestroy, OnChanges {
     constructor();
@@ -85,6 +98,7 @@ export class SiSidePanelContentComponent implements OnInit {
     readonly searchPlaceholder: _angular_core.InputSignal<TranslatableString>;
     readonly secondaryActions: _angular_core.InputSignal<(MenuItem | MenuItem_2)[]>;
     readonly showMobileDrawerBadge: _angular_core.InputSignalWithTransform<boolean, unknown>;
+    // @deprecated
     readonly statusActions: _angular_core.InputSignal<StatusItem[]>;
     toggleFullscreen(): void;
     readonly toggleItemLabel: _angular_core.InputSignal<TranslatableString>;
@@ -113,7 +127,7 @@ export class SiSidePanelService {
     toggleFullscreen(): void;
 }
 
-// @public
+// @public @deprecated
 export interface StatusItem extends MenuItem {
     // (undocumented)
     overlayIcon?: string;

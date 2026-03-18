@@ -1,0 +1,43 @@
+@use 'sass:map';
+
+@use '@siemens/element-theme/src/styles/all-variables';
+
+:host {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  border: 0;
+  background: transparent;
+  padding: 0;
+
+  .dot {
+    inline-size: all-variables.$si-icon-font-size;
+    line-height: all-variables.$si-icon-font-size;
+  }
+
+  span {
+    color: all-variables.$element-text-primary;
+  }
+
+  &:hover span {
+    color: all-variables.$element-text-active;
+  }
+}
+
+:host-context(.collapsible .collapsed) {
+  padding-block: map.get(all-variables.$spacers, 4);
+  padding-inline: map.get(all-variables.$spacers, 5);
+
+  &:not(:disabled):hover {
+    background: all-variables.$element-base-1-hover;
+  }
+
+  .dot,
+  .icon {
+    margin: map.get(all-variables.$spacers, 1);
+  }
+}
+
+:host-context(si-side-panel-content.collapsed) .auto-hide {
+  @include all-variables.visually-hidden();
+}

@@ -1,6 +1,8 @@
 - button "Toggle"
-- button "Out of Service"
-- button "Event source active, ack"
+- link "Out of Service":
+  - /url: ""
+- link "Event source active, ack":
+  - /url: ""
 - button "Properties"
 - button "Documents"
 - button "Graphics"

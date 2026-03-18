@@ -148,39 +148,9 @@
     [navigateConfig]="navigateConfig"
     [primaryActions]="primaryActions"
     [secondaryActions]="secondaryActions"
+    [statusActions]="statusActions"
     [searchable]="true"
   >
-    <si-side-panel-actions>
-      <button
-        type="button"
-        si-side-panel-action
-        icon="element-out-of-service"
-        iconColor="status-warning"
-        (click)="logEvent('Out of Service')"
-      >
-        Out of Service
-      </button>
-      <button
-        type="button"
-        si-side-panel-action
-        icon="element-manual-filled"
-        iconColor="status-warning"
-        disabled
-      >
-        System Operator
-      </button>
-      <button
-        type="button"
-        si-side-panel-action
-        icon="element-alarm-background-filled"
-        iconColor="status-danger"
-        stackedIcon="element-alarm-tick"
-        stackedIconColor="text-body"
-        (click)="logEvent('Event source, active, ack')"
-      >
-        <span>Event source<br />active, ack</span>
-      </button>
-    </si-side-panel-actions>
     <si-accordion [fullHeight]="true">
       <si-collapsible-panel
         heading="Properties"
