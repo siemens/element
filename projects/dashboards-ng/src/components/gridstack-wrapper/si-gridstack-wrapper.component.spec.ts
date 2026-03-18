@@ -25,7 +25,11 @@ import { SiGridstackWrapperComponent } from './si-gridstack-wrapper.component';
 
 @Component({
   imports: [TestingModule, SiGridstackWrapperComponent],
-  template: '<si-gridstack-wrapper [widgetConfigs]="widgets" />'
+  template: `<si-gridstack-wrapper
+    [style.width.px]="600"
+    [style.height.px]="600"
+    [widgetConfigs]="widgets"
+  />`
 })
 class HostComponent {
   readonly gridStackWrapper = viewChild(SiGridstackWrapperComponent);
@@ -62,7 +66,7 @@ describe('SiGridstackWrapperComponent', () => {
       gridService.widgetCatalog.set([TEST_WIDGET]);
       host.widgets = TEST_WIDGET_CONFIGS;
       const gridStackWrapper = host.gridStackWrapper();
-      spyOn(gridStackWrapper!, 'mount');
+      vi.spyOn(gridStackWrapper!, 'mount');
       fixture.detectChanges();
 
       expect(gridStackWrapper!.mount).toHaveBeenCalled();
@@ -96,7 +100,7 @@ describe('SiGridstackWrapperComponent', () => {
       host.widgets = [...host.widgets, TEST_WIDGET_CONFIG_2];
 
       const gridStackWrapper = host.gridStackWrapper();
-      spyOn(gridStackWrapper!, 'mount');
+      vi.spyOn(gridStackWrapper!, 'mount');
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
@@ -109,7 +113,7 @@ describe('SiGridstackWrapperComponent', () => {
 
     it('should unmount removed grid items', async () => {
       host.widgets = [TEST_WIDGET_CONFIG_1];
-      spyOn(host.gridStackWrapper()!, 'unmount').and.callThrough();
+      vi.spyOn(host.gridStackWrapper()!, 'unmount');
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
@@ -130,7 +134,7 @@ describe('SiGridstackWrapperComponent', () => {
     it('should not trigger ngOnChanges on SiWidgetHostComponent when widget config reference is unchanged', async () => {
       const widgetHosts = fixture.debugElement.queryAll(By.directive(SiWidgetHostComponent));
       const ngOnChangesSpy = widgetHosts.map(widgetHost =>
-        spyOn(widgetHost.componentInstance, 'ngOnChanges').and.callThrough()
+        vi.spyOn(widgetHost.componentInstance, 'ngOnChanges')
       );
 
       // Re-assign the same config references inside a new array
@@ -152,8 +156,8 @@ describe('SiGridstackWrapperComponent', () => {
       const widget1Host = widgetHosts.find(
         wh => wh.componentInstance.widgetConfig().id === TEST_WIDGET_CONFIG_1.id
       )!;
-      const spy0 = spyOn(widget0Host.componentInstance, 'ngOnChanges').and.callThrough();
-      const spy1 = spyOn(widget1Host.componentInstance, 'ngOnChanges').and.callThrough();
+      const spy0 = vi.spyOn(widget0Host.componentInstance, 'ngOnChanges');
+      const spy1 = vi.spyOn(widget1Host.componentInstance, 'ngOnChanges');
 
       // Simulate resize of widget 0 by creating a new reference with updated dimensions
       const resizedConfig0: WidgetConfig = { ...TEST_WIDGET_CONFIG_0, width: 8, height: 3 };

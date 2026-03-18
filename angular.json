@@ -356,13 +356,27 @@
             "project": "projects/dashboards-ng/ng-package.json"
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+        "test-target": {
+          "builder": "@angular/build:application",
           "options": {
-            "builderMode": "browser",
+            "outputPath": "dist/dashboards-ng-test",
+            "browser": "projects/dashboards-ng/src/test-main.ts",
+            "tsConfig": "projects/dashboards-ng/tsconfig.lib.json",
+            "styles": [
+              "projects/element-theme/src/theme.scss",
+              "node_modules/gridstack/dist/gridstack.css"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["node_modules/"]
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
             "tsConfig": "projects/dashboards-ng/tsconfig.spec.json",
-            "karmaConfig": "projects/dashboards-ng/karma.conf.cjs",
-            "codeCoverageExclude": ["projects/dashboards-ng/src/**/*.module.ts"]
+            "buildTarget": "dashboards-ng:test-target",
+            "browsers": ["chromium"]
           }
         },
         "lint": {

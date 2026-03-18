@@ -8,6 +8,7 @@ import { By } from '@angular/platform-browser';
 import { SiActionDialogService } from '@siemens/element-ng/action-modal';
 import { SiLoadingSpinnerModule } from '@siemens/element-ng/loading-spinner';
 import { TEST_WIDGET } from 'projects/dashboards-ng/test/test-widget/test-widget';
+import type { Mock } from 'vitest';
 
 import { TestingModule } from '../../../test/testing.module';
 import { SI_DASHBOARD_CONFIGURATION } from '../../model/configuration';
@@ -43,7 +44,7 @@ describe('SiGridComponent', () => {
   let component: SiGridComponent;
   let fixture: ComponentFixture<SiGridComponent>;
   let widgetStorage: SiWidgetStorage;
-  let widgetStorageLoadSpy: jasmine.Spy;
+  let widgetStorageLoadSpy: Mock;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -64,7 +65,7 @@ describe('SiGridComponent', () => {
     component = fixture.componentInstance;
 
     widgetStorage = TestBed.inject(SI_WIDGET_STORE);
-    widgetStorageLoadSpy = spyOn(widgetStorage, 'load').and.callThrough();
+    widgetStorageLoadSpy = vi.spyOn(widgetStorage, 'load');
     fixture.detectChanges();
   });
 
@@ -92,7 +93,7 @@ describe('SiGridComponent', () => {
       fixture.componentRef.setInput('editable', true);
       fixture.detectChanges();
       expect(component.editable()).toBe(true);
-      const spy = spyOn(widgetStorage, 'save').and.callThrough();
+      const spy = vi.spyOn(widgetStorage, 'save');
       component.save();
       expect(spy).toHaveBeenCalled();
       expect(component.editable()).toBe(false);
@@ -100,7 +101,7 @@ describe('SiGridComponent', () => {
   });
 
   it('should call edit() on setting editable to true', () => {
-    const spy = spyOn(component, 'edit').and.callThrough();
+    const spy = vi.spyOn(component, 'edit');
     expect(component.editable()).toBe(false);
 
     fixture.componentRef.setInput('editable', true);
@@ -110,7 +111,7 @@ describe('SiGridComponent', () => {
   });
 
   it('should call cancel() on setting editable to false', () => {
-    const spy = spyOn(component, 'cancel').and.callThrough();
+    const spy = vi.spyOn(component, 'cancel');
     fixture.componentRef.setInput('editable', true);
     expect(component.editable()).toBe(true);
     expect(spy).not.toHaveBeenCalled();
@@ -146,7 +147,7 @@ describe('SiGridComponent', () => {
 
   describe('#editWidgetInstance()', () => {
     it('shall open the editor and update the visible widgets with the edited configuration', async () => {
-      jasmine.clock().install();
+      vi.useFakeTimers();
       fixture.componentRef.setInput('widgetCatalog', [TEST_WIDGET]);
       fixture.detectChanges();
       component.addWidgetInstance({ widgetId: TEST_WIDGET.id });
@@ -160,10 +161,10 @@ describe('SiGridComponent', () => {
       component.editWidgetInstance(widgetConfig);
       const editedWidgetConfig: WidgetConfig = { ...widgetConfig, minHeight: 2 };
       SiWidgetEditorDialogMockComponent.staticClosed?.emit(editedWidgetConfig);
-      jasmine.clock().tick(200);
+      vi.advanceTimersByTime(200);
       fixture.detectChanges();
       expect(component.visibleWidgetInstances$.value[0].minHeight).toBe(2);
-      jasmine.clock().uninstall();
+      vi.useRealTimers();
     });
 
     it('shall emit an edit event if #emitWidgetInstanceEditEvents is set to true', async () => {
@@ -180,7 +181,7 @@ describe('SiGridComponent', () => {
       );
 
       fixture.componentRef.setInput('emitWidgetInstanceEditEvents', true);
-      const spy = spyOn(component.widgetInstanceEdit, 'emit').and.callThrough();
+      const spy = vi.spyOn(component.widgetInstanceEdit, 'emit');
       component.editWidgetInstance(widgetConfig);
       expect(spy).toHaveBeenCalledWith(widgetConfig);
     });
