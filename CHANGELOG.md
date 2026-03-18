@@ -1,3 +1,19 @@
+# [49.2.0](https://github.com/siemens/element/compare/v49.1.0...v49.2.0) (2026-03-18)
+
+
+### Features
+
+* **live-preview:** support creating a stackblitz based on an example ([e5a6877](https://github.com/siemens/element/commit/e5a687733609dda08a6cc073ec5eecd01045de37))
+* **ngx-datatable:** support `@siemens/ngx-datatable` v26 ([a872638](https://github.com/siemens/element/commit/a87263801f7414be393b88857540014d3599a843))
+* **typeahead:** make overlay scroll strategy configurable ([3bd1e5a](https://github.com/siemens/element/commit/3bd1e5a0b1a9e14137d4a8683656320e85eeaa40))
+
+
+### Bug Fixes
+
+* **maps:** add extraProperties to map feature point to match MapPointMetaData interface ([a337170](https://github.com/siemens/element/commit/a337170a416010c2a0705fd2fead307bbdce2ca8))
+* **map:** show popover with name and description on click ([21b9d2e](https://github.com/siemens/element/commit/21b9d2e91a43e748804b14262a526f3341c9baea))
+* **select:** optimize single selection rendering ([2873d0b](https://github.com/siemens/element/commit/2873d0b9e0581ab5f187dc0e3e3c02a75d488596))
+
 # [49.1.0](https://github.com/siemens/element/compare/v49.0.0...v49.1.0) (2026-03-13)
 
 
