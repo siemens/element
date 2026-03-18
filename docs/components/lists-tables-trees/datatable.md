@@ -1,16 +1,14 @@
-# Datatable (ngx-datatable)
+# ngx-datatable
 
-**Datatable** is the default solution for large and interactive tables.
+**NGXDatatable** is the default solution for large and interactive tables. It is open-source software under MIT license and maintained by Siemens.
 
 ## Usage ---
 
-Datatable (`ngx-datatable`) is the recommended solution for large datasets
-and interactive tables.
 
 It supports sorting, filtering, paging, selection, virtualization, and keyboard interaction,
 while remaining flexible about data handling.
 
-![Datatable](images/datatable.png)
+![NGX-Datatable](images/datatable.png)
 
 ### When to use
 
@@ -22,6 +20,7 @@ while remaining flexible about data handling.
 - To support grouped or tree rows
 - To support row dragging.
 - To support sticky columns.
+- When looking for a free open-source solution.
 
 ## Code ---
 

@@ -123,8 +123,8 @@ nav:
       - List Group:                       'components/lists-tables-trees/list-group.md'
       - Table & Datatable:
           - Overview:                     'components/lists-tables-trees/overview.md'
-          - Bootstrap Table:              'components/lists-tables-trees/bootstrap-table.md'
-          - Datatable:                    'components/lists-tables-trees/datatable.md'
+          - HTML Table:              'components/lists-tables-trees/bootstrap-table.md'
+          - NGX-Datatable:                    'components/lists-tables-trees/datatable.md'
           - AG Grid:                      'components/lists-tables-trees/ag-grid.md'
       - Tree View:                        'components/lists-tables-trees/tree-view.md'
     - Progress indications:
