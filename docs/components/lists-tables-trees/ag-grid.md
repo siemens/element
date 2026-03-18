@@ -4,7 +4,7 @@
 
 ## Usage ---
 
-It should be used only when requirements exceed what datatable can reasonably support,
+It should be used only when requirements exceed what [ngx-datatable](./datatable.md) can reasonably support,
 such as spreadsheet-like behavior, advanced cell logic, or highly customized interactions.
 
 **AG Grid requires a paid license and introduces higher implementation and maintenance costs**
