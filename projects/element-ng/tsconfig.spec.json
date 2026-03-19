@@ -4,6 +4,31 @@
     "outDir": "../../out-tsc/spec",
     "types": ["jasmine", "@siemens/element-translate-ng/localize-types"]
   },
-  "exclude": ["**/schematics/"],
-  "include": ["**/*.spec.ts", "**/*.d.ts"]
+  "exclude": ["**/schematics/", "**/*.vitest.spec.ts"],
+  "include": [
+    "d*/**/*.spec.ts",
+    "e*/**/*.spec.ts",
+    "f*/**/*.spec.ts",
+    "g*/**/*.spec.ts",
+    "h*/**/*.spec.ts",
+    "i*/**/*.spec.ts",
+    "j*/**/*.spec.ts",
+    "k*/**/*.spec.ts",
+    "l*/**/*.spec.ts",
+    "m*/**/*.spec.ts",
+    "n*/**/*.spec.ts",
+    "o*/**/*.spec.ts",
+    "p*/**/*.spec.ts",
+    "q*/**/*.spec.ts",
+    "r*/**/*.spec.ts",
+    "s*/**/*.spec.ts",
+    "t*/**/*.spec.ts",
+    "u*/**/*.spec.ts",
+    "v*/**/*.spec.ts",
+    "w*/**/*.spec.ts",
+    "x*/**/*.spec.ts",
+    "y*/**/*.spec.ts",
+    "z*/**/*.spec.ts",
+    "**/*.d.ts"
+  ]
 }

@@ -63,7 +63,7 @@ describe('SiAiWelcomeScreenComponent', () => {
     fixture.componentRef.setInput('promptSuggestions', [suggestion]);
     fixture.detectChanges();
 
-    const emitSpy = spyOn(component.promptSelected, 'emit');
+    const emitSpy = vi.spyOn(component.promptSelected, 'emit');
     const suggestionButton = fixture.nativeElement.querySelector('button');
     suggestionButton?.click();
 
