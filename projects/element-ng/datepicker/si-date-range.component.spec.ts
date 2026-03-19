@@ -60,15 +60,6 @@ describe('SiDateRangeComponent', () => {
     await fixture.whenStable();
   });
 
-  beforeEach(() => {
-    jasmine.clock().install();
-    jasmine.clock().mockDate();
-  });
-
-  afterEach(() => {
-    jasmine.clock().uninstall();
-  });
-
   it('should create', () => {
     component.siDatepickerConfig.set({
       dateFormat: 'dd-MM-yyyy'
@@ -86,7 +77,7 @@ describe('SiDateRangeComponent', () => {
 
   it('should mark input touched when on datepicker backdrop click', async () => {
     openCalendarButton()!.click();
-    jasmine.clock().tick(0);
+    fixture.detectChanges();
     await fixture.whenStable();
     expect(fixture.componentInstance.dateRange.touched).toBe(false);
     await backdropClick(fixture);
@@ -100,7 +91,7 @@ describe('SiDateRangeComponent', () => {
     await inputs.at(0)?.focus();
     await inputs.at(1)?.focus();
     await calendarButton.focus();
-    jasmine.clock().tick(1000);
+    fixture.detectChanges();
     await fixture.whenStable();
     expect(fixture.componentInstance.dateRange.touched).toBe(false);
     await calendarButton.blur();
@@ -119,9 +110,10 @@ describe('SiDateRangeComponent', () => {
       const helper = new CalendarTestHelper(document.querySelector('si-datepicker-overlay')!);
       helper.getEnabledCellWithText('1')!.click();
       helper.getEnabledCellWithText('3')!.click();
+      fixture.detectChanges();
       await fixture.whenStable();
-      jasmine.clock().tick(0);
-      await fixture.whenStable();
+      // The autoClose logic uses a setTimeout outside Angular's zone
+      await new Promise(resolve => setTimeout(resolve));
       expect(document.querySelector('si-datepicker-overlay')).toBeFalsy();
     });
   });
@@ -136,17 +128,15 @@ describe('SiDateRangeComponent', () => {
     // - April to December should be highlighted
     fixture.componentInstance.dateRange.setValue({ start: new Date(2023, 2, 1), end: undefined });
     openCalendarButton().click();
-    jasmine.clock().tick(1000);
-    // In case the small screen media query match we need to wait for the dialog animation
+    fixture.detectChanges();
     await fixture.whenStable();
 
     const helper = new CalendarTestHelper(document.querySelector('si-datepicker-overlay')!);
     helper.getOpenMonthViewLink().click();
-    jasmine.clock().tick(1000);
+    fixture.detectChanges();
     await fixture.whenStable();
     helper.getEnabledCellWithText('December')!.dispatchEvent(new Event('mouseover'));
-    await fixture.whenStable();
-    jasmine.clock().tick(100);
+    fixture.detectChanges();
     await fixture.whenStable();
     expect(helper.queryAsArray('.range-hover')).toHaveSize(9);
   });
@@ -166,14 +156,14 @@ describe('SiDateRangeComponent', () => {
     });
     fixture.componentInstance.dateRange.setValue({ start: new Date(2023, 2, 1), end: undefined });
     openCalendarButton().click();
-    jasmine.clock().tick(1000);
-    // In case the small screen media query match we need to wait for the dialog animation
+    fixture.detectChanges();
     await fixture.whenStable();
 
     const helper = new CalendarTestHelper(
       document.querySelectorAll<HTMLElement>('si-datepicker')[1]
     );
     helper.getEnabledCellWithText('December')!.dispatchEvent(new Event('mouseover'));
+    fixture.detectChanges();
     await fixture.whenStable();
     expect(Array.from(document.querySelectorAll<HTMLElement>('.range-hover'))).toHaveSize(21);
   });
@@ -196,13 +186,14 @@ describe('SiDateRangeComponent', () => {
       end: new Date(2023, 3, 1)
     });
     openCalendarButton().click();
-    jasmine.clock().tick(1000);
+    fixture.detectChanges();
     await fixture.whenStable();
 
     const calendars = document.querySelectorAll<HTMLElement>('si-datepicker');
     const firstCalendar = new CalendarTestHelper(calendars[0]);
     const secondCalendar = new CalendarTestHelper(calendars[1]);
     secondCalendar.getPreviousButton()!.click();
+    fixture.detectChanges();
     await fixture.whenStable();
     expect(firstCalendar.getOpenYearViewLink().textContent).toContain('2022');
   });
