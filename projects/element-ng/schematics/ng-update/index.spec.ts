@@ -27,14 +27,14 @@ describe('ng-update migration', () => {
   });
 
   it('should log migration start message', async () => {
-    const logSpy = jasmine.createSpy('log');
+    const logSpy = vi.fn();
     runner.logger.subscribe(logSpy);
 
     await runner.runSchematic('migration-v49', {}, appTree);
 
     expect(logSpy).toHaveBeenCalledWith(
-      jasmine.objectContaining({
-        message: jasmine.stringContaining('Starting update from version 48 to 49')
+      expect.objectContaining({
+        message: expect.stringContaining('Starting update from version 48 to 49')
       })
     );
   });

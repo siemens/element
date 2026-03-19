@@ -1,5 +1,5 @@
 {
   "extends": "./tsconfig.schematics.json",
-  "compilerOptions": { "types": ["jasmine", "node"] },
+  "compilerOptions": { "types": ["vitest/globals", "node"] },
   "exclude": ["schematics/*/files/**/*"]
 }
