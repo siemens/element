@@ -1,14 +1,14 @@
-# ngx-datatable
+# NGX-datatable
 
-**NGXDatatable** is the default solution for large and interactive tables. It is open-source software under MIT license and maintained by Siemens.
+**NGX-datatable** is the default solution for large and interactive tables.
+It is open-source software under MIT license and maintained by Siemens.
 
 ## Usage ---
-
 
 It supports sorting, filtering, paging, selection, virtualization, and keyboard interaction,
 while remaining flexible about data handling.
 
-![NGX-Datatable](images/datatable.png)
+![NGX-datatable](images/NGX-datatable.png)
 
 ### When to use
 
@@ -23,23 +23,6 @@ while remaining flexible about data handling.
 - When looking for a free open-source solution.
 
 ## Code ---
-
-Element provides two different approaches for the implementation of tables and data grids:
-
-1. **Bootstrap Table** based on the standard HTML `table` for small tables showing mostly static data
-2. **Datatable** (`<ngx-datatable>`) for large data sets while supporting various user interactions
-
-There are various advantages and disadvantages to each approach depending on context and requirements.
-Please check the capabilities and limitations of each approach and make sure to consider both
-architectural as well as UX requirements in your decision.
-
-Following some constraints and limitations when using the Bootstrap table approach:
-
-- Header title is not "sticky" to stay on top when using vertical scroll bars
-- Column width cannot be manually resized by the user
-- No pagination support
-- No inherent support for DOM and/or data virtualization as supported by ngx-datatable
-- Performance issues with higher number of rows (>500), but this also depends on DOM complexity and hardware specs
 
 > **Note:** The ngx-datatable implements change detection based on immutable table data.
 > E.g. when only the content of a particular cell has changed, this change is not detected by the ngx change detection.
