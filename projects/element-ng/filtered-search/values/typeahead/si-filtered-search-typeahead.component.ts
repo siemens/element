@@ -9,6 +9,7 @@ import {
   ElementRef,
   OnChanges,
   OnInit,
+  output,
   signal,
   SimpleChanges,
   untracked,
@@ -39,6 +40,8 @@ export class SiFilteredSearchTypeaheadComponent
 {
   protected override readonly valueInput = viewChild<ElementRef<HTMLInputElement>>('valueInput');
   protected readonly optionValue = signal<OptionCriterion | undefined>(undefined);
+
+  readonly typeaheadBlur = output<void>();
 
   // This must be a separate signal as it should only emit when the actual empty state changes.
   private readonly inputEmpty = computed(() => !this.criterionValue().value);

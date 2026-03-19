@@ -19,6 +19,7 @@
       [searchLabel]="searchLabel()"
       [onlySelectValue]="onlySelectValue()"
       [searchDebounceTime]="searchDebounceTime()"
+      (blurCriterion)="criterionBlur()"
       (submitCriterion)="focusNext($index, $event)"
       (deleteCriterion)="deleteCriterion($index, $event)"
       (valueChange)="valueChange($event, criterion)"

@@ -742,7 +742,12 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     }
   }
 
+  protected criterionBlur(): void {
+    this.trimWhitespaces();
+  }
+
   protected freeTextBlur(): void {
+    this.trimWhitespaces();
     queueMicrotask(() => {
       if (this.freeTextCriterion() && this.searchValue().length > 0) {
         this.createFreeTextPill(this.searchValue());
@@ -798,5 +803,15 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
     ]);
     this.searchValue.set('');
     this.emitChangeEvent();
+  }
+
+  protected trimWhitespaces(): void {
+    this.searchCriteria().value = this.searchCriteria().value.trim();
+    this.searchCriteria().criteria.forEach(c => {
+      if (typeof c.value === 'string') {
+        c.value = c.value.trim();
+      }
+    });
+    this.searchValue.set(this.searchValue().trim());
   }
 }
