@@ -73,14 +73,11 @@ describe('SiCalendarButtonComponent', () => {
   });
 
   it('should mark as touched if button is blurred', () => {
-    jasmine.clock().install();
     const touchSpy = spyOn(SiDatepickerDirective.prototype, 'touch');
     const button = calendarToggleButton();
     button.focus();
     button.blur();
-    jasmine.clock().tick(0);
     expect(touchSpy).toHaveBeenCalled();
-    jasmine.clock().uninstall();
   });
 
   it('should use default aria label', () => {
