@@ -141,12 +141,44 @@
             "project": "projects/element-ng/ng-package.json"
           }
         },
+        "test-target": {
+          "builder": "@angular/build:application",
+          "options": {
+            "outputPath": "dist/element-ng-test",
+            "browser": "projects/element-ng/test-main.ts",
+            "tsConfig": "projects/element-ng/tsconfig.lib.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/element-ng/assets/images",
+                "output": "assets"
+              }
+            ],
+            "styles": [
+              "projects/element-theme/src/theme.scss",
+              "projects/element-ng/test-styles.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["node_modules/"]
+            }
+          }
+        },
+        "test-vitest": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/element-ng/tsconfig.vitest.json",
+            "buildTarget": "element-ng:test-target",
+            "browsers": ["chromium"],
+            "exclude": ["[d-z]*/**", "schematics/**"],
+            "runnerConfig": true
+          }
+        },
         "test": {
           "builder": "@angular/build:karma",
           "options": {
             "tsConfig": "projects/element-ng/tsconfig.spec.json",
             "karmaConfig": "projects/element-ng/karma.conf.cjs",
-            "exclude": ["projects/element-ng/schematics/**"],
+            "exclude": ["**/[a-c]*/**", "schematics/**", "**/*.vitest.spec.ts"],
             "assets": [
               {
                 "glob": "**/*",
