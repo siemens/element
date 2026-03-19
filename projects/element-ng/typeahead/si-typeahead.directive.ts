@@ -246,6 +246,17 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
    * @experimental
    */
   readonly typeaheadCreateOption = input<TranslatableString>();
+
+  /**
+   * Allows to externally control the loading state of the typeahead.
+   * When set to `true`, the typeahead will show a loading spinner.
+   * Merges with the internal {@link optionSourceLoading} state via the {@link loading} computed signal.
+   *
+   * @experimental
+   * @defaultValue false
+   */
+  readonly typeaheadLoading = input(false, { transform: booleanAttribute });
+
   /**
    * Emits an Event when the input field is changed.
    */
@@ -282,6 +293,14 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
   readonly query = signal('');
 
   /**
+   * Combined loading state that is `true` when either {@link typeaheadLoading} input is `true`
+   * or the async option source ({@link optionSourceLoading}) is currently fetching.
+   *
+   * @internal
+   */
+  readonly loading = computed(() => this.optionSourceLoading() || this.typeaheadLoading());
+
+  /**
    * Indicates whether the typeahead is shown.
    */
   get typeaheadOpen(): boolean {
@@ -303,16 +322,6 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
   private loadingSubscription?: Subscription;
 
   /**
-   * Indicates whether the typeahead is currently loading.
-   * When using {@link TypeaheadOptionSource}, this is controlled by the `isLoading()` method
-   * or automatically set to `true` while fetching options.
-   *
-   * @internal
-   * @defaultValue false
-   */
-  readonly typeaheadLoading = signal(false);
-
-  /**
    * Indicates that the typeahead can be potentially open.
    * This signal is typically `true` when the input is focussed.
    * It may be overridden and set to `false` when escape is pressed
@@ -320,6 +329,7 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
    */
   private readonly canBeOpen = signal(false);
   private readonly selectionCounter = signal(0);
+  private readonly optionSourceLoading = signal(false);
   private readonly typeaheadOptions = toSignal(
     this.$typeahead.pipe(
       map(options =>
@@ -392,9 +402,7 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
         this.canBeOpen() &&
         this.query().length >= this.typeaheadMinLength() &&
         // Ensure that we have content to show: matches, create option or loading indicator
-        (matches.length ||
-          (this.typeaheadCreateOption() && this.query().length) ||
-          this.typeaheadLoading())
+        (matches.length || (this.typeaheadCreateOption() && this.query().length) || this.loading())
       ) {
         const escapedQuery = this.escapeRegex(this.query());
         const equalsExp = new RegExp(`^${escapedQuery}$`, 'i');
@@ -421,11 +429,11 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
       if (Array.isArray(typeahead)) {
         // Handle TypeaheadArray
         this.$typeahead.next(typeahead);
-        this.typeaheadLoading.set(false);
+        this.optionSourceLoading.set(false);
       } else if (isObservable(typeahead)) {
         // Handle TypeaheadObservable
         this.sourceSubscription = typeahead.subscribe(this.$typeahead);
-        this.typeaheadLoading.set(false);
+        this.optionSourceLoading.set(false);
       } else if (typeof typeahead === 'function') {
         // Handle TypeaheadOptionSource
         this.handleTypeaheadOptionSource(typeahead);
@@ -496,13 +504,13 @@ export class SiTypeaheadDirective implements OnChanges, OnDestroy {
     this.sourceSubscription.add(
       queryObservable
         .pipe(switchMap(() => timer(500).pipe(takeUntil(resultObservable))))
-        .subscribe(() => this.typeaheadLoading.set(true))
+        .subscribe(() => this.optionSourceLoading.set(true))
     );
 
     this.sourceSubscription.add(
       resultObservable.subscribe(result => {
         this.$typeahead.next(result);
-        this.typeaheadLoading.set(false);
+        this.optionSourceLoading.set(false);
       })
     );
   }
