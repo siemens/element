@@ -16,8 +16,7 @@ describe('SiLaunchpad', () => {
   let harness: SiLaunchpadHarness;
   const apps = signal<App[] | AppCategory[]>([]);
   const enableFavorites = signal(false);
-  const favoriteChangeSpy =
-    jasmine.createSpy<(event: FavoriteChangeEvent) => void>('favoriteChange');
+  const favoriteChangeSpy = vi.fn();
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -28,7 +27,7 @@ describe('SiLaunchpad', () => {
   beforeEach(async () => {
     apps.set([]);
     enableFavorites.set(false);
-    favoriteChangeSpy.calls.reset();
+    favoriteChangeSpy.mockClear();
     fixture = TestBed.createComponent(SiLaunchpadFactoryComponent, {
       bindings: [
         inputBinding('apps', apps),
@@ -56,13 +55,15 @@ describe('SiLaunchpad', () => {
           }
         ]);
         expect(await harness.hasToggle()).toBe(true);
-        expect(await harness.getCategories()).toHaveSize(1);
+        expect(await harness.getCategories()).toHaveLength(1);
         await harness.toggleMore();
-        expect(await harness.getCategories()).toHaveSize(2);
-        expect(await harness.getCategory('C-1').then(category => category.getApps())).toHaveSize(2);
-        expect(await harness.getFavoriteCategory().then(category => category.getApps())).toHaveSize(
-          1
+        expect(await harness.getCategories()).toHaveLength(2);
+        expect(await harness.getCategory('C-1').then(category => category.getApps())).toHaveLength(
+          2
         );
+        expect(
+          await harness.getFavoriteCategory().then(category => category.getApps())
+        ).toHaveLength(1);
       });
 
       it('should fire favoriteChanged event when favorite is toggled', async () => {
@@ -75,17 +76,17 @@ describe('SiLaunchpad', () => {
             ]
           }
         ]);
-        expect(await harness.getFavoriteCategory().then(category => category.getApps())).toHaveSize(
-          1
-        );
+        expect(
+          await harness.getFavoriteCategory().then(category => category.getApps())
+        ).toHaveLength(1);
         await harness.toggleMore();
         await harness
           .getCategory('C-1')
           .then(category => category.getApp('A-2'))
           .then(app => app.toggleFavorite());
-        expect(await harness.getFavoriteCategory().then(category => category.getApps())).toHaveSize(
-          1
-        );
+        expect(
+          await harness.getFavoriteCategory().then(category => category.getApps())
+        ).toHaveLength(1);
         expect(favoriteChangeSpy).toHaveBeenCalledWith({
           app: { name: 'A-2', href: '/a-2' },
           favorite: true
@@ -101,13 +102,13 @@ describe('SiLaunchpad', () => {
         ]);
         await harness.toggleMore();
         const categories = await harness.getCategories();
-        expect(categories).toHaveSize(2);
+        expect(categories).toHaveLength(2);
         expect(await categories[0].getName()).toBe('Favorites');
         expect(await categories[1].getName()).toBe(null);
         expect(await harness.getApp('A-1').then(app => app.isFavorite())).toBe(true);
-        expect(await harness.getFavoriteCategory().then(category => category.getApps())).toHaveSize(
-          1
-        );
+        expect(
+          await harness.getFavoriteCategory().then(category => category.getApps())
+        ).toHaveLength(1);
       });
     });
   });
@@ -125,7 +126,7 @@ describe('SiLaunchpad', () => {
           }
         ]);
         expect(await harness.hasToggle()).toBe(false);
-        expect(await harness.getCategories()).toHaveSize(1);
+        expect(await harness.getCategories()).toHaveLength(1);
       });
     });
 

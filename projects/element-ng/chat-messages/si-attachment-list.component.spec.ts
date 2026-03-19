@@ -17,7 +17,9 @@ describe('SiAttachmentListComponent', () => {
   let debugElement: DebugElement;
 
   beforeEach(async () => {
-    const modalServiceSpy = jasmine.createSpyObj('SiModalService', ['open']);
+    const modalServiceSpy = {
+      open: vi.fn()
+    };
 
     await TestBed.configureTestingModule({
       imports: [TestComponent],

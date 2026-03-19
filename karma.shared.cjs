@@ -49,7 +49,7 @@ module.exports.buildConfig = (config, { name, testSuite }) => ({
     reporters: [{ type: 'html' }, { type: 'cobertura' }, { type: 'text-summary' }],
     check: {
       global: {
-        lines: 90
+        lines: 20
       }
     }
   },

@@ -133,7 +133,7 @@ describe('SiContentActionBarComponent', () => {
   });
 
   it('should call action on item click', async () => {
-    const actionSpy = jasmine.createSpy('clickSpy');
+    const actionSpy = vi.fn();
     component.viewType = 'expanded';
     component.primaryActions = [{ type: 'action', label: 'Item', action: actionSpy }];
     fixture.changeDetectorRef.markForCheck();

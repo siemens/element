@@ -9,7 +9,7 @@ import {
   MockResizeObserver,
   mockResizeObserver,
   restoreResizeObserver
-} from '../resize-observer/mock-resize-observer.spec';
+} from '../resize-observer/mock-resize-observer.vitest.spec';
 import { SiAutoCollapsableListItemDirective } from './si-auto-collapsable-list-item.directive';
 import { SiAutoCollapsableListModule } from './si-auto-collapsable-list.module';
 
@@ -99,7 +99,7 @@ describe('SiAutoCollapsableListDirective', () => {
   };
 
   const tick = async (ms = 100): Promise<void> => {
-    jasmine.clock().tick(ms);
+    vi.advanceTimersByTime(ms);
     await fixture.whenStable();
   };
 
@@ -113,11 +113,11 @@ describe('SiAutoCollapsableListDirective', () => {
     hostElement = fixture.nativeElement;
   });
 
-  beforeEach(() => jasmine.clock().install());
+  beforeEach(() => vi.useFakeTimers());
 
   afterEach(() => {
     restoreResizeObserver();
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should not flicker on initial render', async () => {
