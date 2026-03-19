@@ -1,17 +1,20 @@
 # Tables & datatables
 
-Tables are used to organize and display structured information in rows and columns,
-enabling users to scan, compare, and analyze data efficiently. If tables are based
-on huge data sets and offer functionality like sorting, filtering or lazy loading,
-we call the table a datatable. 
+They are used to organize and display structured information in rows and columns,
+enabling users to scan, compare, and analyze data efficiently.
+
+When tables handle large datasets and include features such as sorting, filtering 
+or lazy loading, they are considered **datatables**.
 
 ## Usage ---
 
 Element covers three different implementations, each suited to different levels of complexity and scale:
 
-- [HTML table](../lists-tables-trees/bootstrap-table.md): simple, static, HTML-based tables.
-- [Datatable (ngx-datatable)](../lists-tables-trees/datatable.md): interactive tables for large datasets.
-- [AG Grid](../lists-tables-trees/ag-grid.md): advanced data grid for complex, enterprise-level use cases (paid license required).
+- [HTML table](../lists-tables-trees/HTML-table.md): simple, static, HTML-based tables.
+- [NGX-datatable)](../lists-tables-trees/NGX-datatable.md): datatable for medium to large datasets,
+  with built-in features like sorting and filtering.
+- [AG Grid](../lists-tables-trees/ag-grid.md): advanced datatable for complex, enterprise scenarios,
+  with extensive functionality (paid license required).
 
 ### When to use
 
@@ -49,7 +52,7 @@ The main differences lie in the features and interaction capabilities they suppo
 
 ### Row density
 
-The data table is available in different row sizes: default, small, extra-small.
+The table is available in different row sizes: default, small, extra-small.
 
 ![Row density](images/table-density.png)
 
@@ -153,5 +156,5 @@ Consider the following strategies and adapt according to the use case:
 - **Move:** Enable horizontal scrolling to accommodate more columns, allowing users to access all data.
   However, be mindful about this approach as it can make it difficult to view and compare data.
 
-For bootstrap tables, responsive behavior is limited.
+For HTML tables, responsive behavior is limited.
 The primary supported approach is horizontal scrolling by placing the table inside a scroll container.
