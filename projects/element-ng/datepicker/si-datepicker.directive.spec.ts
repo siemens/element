@@ -83,17 +83,12 @@ describe('SiDatepickerDirective', () => {
   const getTestDate = (): Date => new Date('2022-03-12T05:30:20');
 
   beforeEach(() => {
-    jasmine.clock().install();
     fixture = TestBed.createComponent(WrapperComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
     rootLoader = TestbedHarnessEnvironment.documentRootLoader(fixture);
 
     fixture.detectChanges();
-  });
-
-  afterEach(() => {
-    jasmine.clock().uninstall();
   });
 
   describe('with minDate and maxDate', () => {
@@ -247,7 +242,6 @@ describe('SiDatepickerDirective', () => {
       await fixture.whenStable();
       const picker = await rootLoader.getHarness(SiDatepickerComponentHarness);
       await picker.selectCell({ text: '1' });
-      jasmine.clock().tick(1000);
       await fixture.whenStable();
 
       expect(document.querySelector('si-datepicker-overlay')).toBeFalsy();
@@ -262,7 +256,6 @@ describe('SiDatepickerDirective', () => {
       await fixture.whenStable();
       const picker = await rootLoader.getHarness(SiDatepickerComponentHarness);
       await (await picker.considerTimeSwitch()).toggle();
-      jasmine.clock().tick(1000);
       await fixture.whenStable();
       expect(document.querySelector('si-datepicker-overlay')).toBeFalsy();
     });

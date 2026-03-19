@@ -18,8 +18,8 @@ import {
 import { outputToObservable, takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { isRTL } from '@siemens/element-ng/common';
 import { BOOTSTRAP_BREAKPOINTS } from '@siemens/element-ng/resize-observer';
-import { merge, Observable, Subject } from 'rxjs';
-import { filter, map, skip, takeUntil, tap } from 'rxjs/operators';
+import { asapScheduler, merge, Observable, Subject } from 'rxjs';
+import { filter, map, observeOn, skip, takeUntil, tap } from 'rxjs/operators';
 
 import { SiDatepickerOverlayComponent } from './si-datepicker-overlay.component';
 import { DatepickerConfig, DateRange } from './si-datepicker.model';
@@ -250,7 +250,12 @@ export class SiDatepickerOverlayDirective implements OnDestroy {
    */
   private closeStream(overlayRef: OverlayRef): Observable<CloseCause> {
     return merge(
-      this.autoCloseSelection.pipe(map(() => CloseCause.Select)),
+      this.autoCloseSelection.pipe(
+        // We have to queue the close in the another cycle since other output event
+        // emitters like rangeTypeChange can complete before we destroy the overlay.
+        observeOn(asapScheduler),
+        map(() => CloseCause.Select)
+      ),
       overlayRef.backdropClick().pipe(map(() => CloseCause.Backdrop)),
       overlayRef.detachments().pipe(map(() => CloseCause.Detach)),
       overlayRef.keydownEvents().pipe(
