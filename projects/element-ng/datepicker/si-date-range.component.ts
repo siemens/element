@@ -350,9 +350,7 @@ export class SiDateRangeComponent
     this.validateChildren();
 
     if (this.autoClose() && this.value()?.start && this.value()?.end) {
-      // We have to queue the close in the another cycle since other output event
-      // emitters like rangeTypeChange can complete before we destroy the overlay.
-      setTimeout(() => this.overlayToggle.closeAfterSelection());
+      this.overlayToggle.closeAfterSelection();
     }
   }
 

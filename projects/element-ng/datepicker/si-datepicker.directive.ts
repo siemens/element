@@ -154,8 +154,7 @@ export class SiDatepickerDirective extends SiDateInputDirective implements After
     }
     super.onDateChanged(date);
     if (this.autoClose()) {
-      // a tick later so the event won't end on the wrong element
-      setTimeout(() => this.overlayToggle.closeAfterSelection());
+      this.overlayToggle.closeAfterSelection();
     }
   }
 }
