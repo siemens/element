@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../out-tsc/spec",
+    "lib": ["es2024", "dom", "esnext.disposable"],
+    "types": ["vitest/globals", "@siemens/element-translate-ng/localize-types"]
+  },
+  "exclude": ["**/schematics/**"],
+  "include": ["a*/**/*.spec.ts", "b*/**/*.spec.ts", "c*/**/*.spec.ts", "**/*.d.ts"]
+}

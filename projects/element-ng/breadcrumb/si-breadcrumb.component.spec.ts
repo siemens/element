@@ -15,7 +15,7 @@ import {
   mockResizeObserver,
   MockResizeObserver,
   restoreResizeObserver
-} from '../resize-observer/mock-resize-observer.spec';
+} from '../resize-observer/mock-resize-observer.vitest.spec';
 import { BreadcrumbItem } from './breadcrumb-item.model';
 
 const TEST_ITEMS = [
@@ -90,13 +90,13 @@ describe('SiBreadcrumbComponent', () => {
     router = TestBed.inject(Router);
   });
 
-  beforeEach(() => jasmine.clock().install());
-  afterEach(() => jasmine.clock().uninstall());
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
 
   afterEach(() => restoreResizeObserver());
 
   const tick = async (ms = 100): Promise<void> => {
-    jasmine.clock().tick(ms);
+    vi.advanceTimersByTime(ms);
     fixture.detectChanges();
     await fixture.whenStable();
   };
