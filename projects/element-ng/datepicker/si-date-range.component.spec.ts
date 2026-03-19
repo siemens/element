@@ -112,8 +112,6 @@ describe('SiDateRangeComponent', () => {
       helper.getEnabledCellWithText('3')!.click();
       fixture.detectChanges();
       await fixture.whenStable();
-      // The autoClose logic uses a setTimeout outside Angular's zone
-      await new Promise(resolve => setTimeout(resolve));
       expect(document.querySelector('si-datepicker-overlay')).toBeFalsy();
     });
   });

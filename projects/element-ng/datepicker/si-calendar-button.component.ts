@@ -21,6 +21,7 @@ import { NgControl } from '@angular/forms';
 import { elementCalendar } from '@siemens/element-icons';
 import { addIcons, SiIconComponent } from '@siemens/element-ng/icon';
 import { SiTranslatePipe, t } from '@siemens/element-translate-ng/translate';
+import { filter } from 'rxjs';
 
 import { SiDatepickerOverlayDirective } from './si-datepicker-overlay.directive';
 import { SiDatepickerDirective } from './si-datepicker.directive';
@@ -90,13 +91,14 @@ export class SiCalendarButtonComponent implements OnInit, AfterContentInit {
     this.datepicker().stateChange.subscribe(() => this.updateState());
     this.focusMonitor
       .monitor(this.elementRef, true)
-      .pipe(takeUntilDestroyed(this.destroyerRef))
-      .subscribe(origin => {
-        setTimeout(() => {
-          if (origin === null && !this.datepickerOverlay().isShown()) {
-            this.datepicker().touch();
-          }
-        });
+      .pipe(
+        takeUntilDestroyed(this.destroyerRef),
+        filter(origin => origin === null)
+      )
+      .subscribe(() => {
+        if (!this.datepickerOverlay().isShown()) {
+          this.datepicker().touch();
+        }
       });
   }
 
