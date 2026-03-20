@@ -53,6 +53,10 @@
       &:not(.dot-outer):hover {
         background: all-variables.$element-base-1-hover;
       }
+
+      .icon {
+        padding: map.get(all-variables.$spacers, 1);
+      }
     }
   }
 }
