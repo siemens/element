@@ -13,6 +13,7 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
+import type { Mock } from 'vitest';
 
 import { SiFormFieldsetComponent } from './form-fieldset/si-form-fieldset.component';
 import { SiFormContainerComponent } from './si-form-container/si-form-container.component';
@@ -249,14 +250,11 @@ describe('SiForm', () => {
     }
     let fixture: ComponentFixture<TestHostComponent>;
     let loader: HarnessLoader;
-    let emailMapperSpy: jasmine.Spy<any>;
+    let emailMapperSpy: Mock;
 
     beforeEach(async () => {
-      emailMapperSpy = jasmine
-        .createSpy('email', (error: any) => 'email-' + error)
-        .and.callThrough();
+      emailMapperSpy = vi.fn((error: any) => 'email-' + error);
       await TestBed.configureTestingModule({
-        imports: [TestHostComponent],
         providers: [
           provideFormValidationErrorMapper({
             email: emailMapperSpy

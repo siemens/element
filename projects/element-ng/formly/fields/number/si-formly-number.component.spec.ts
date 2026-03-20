@@ -42,7 +42,6 @@ describe('formly number type', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        ReactiveFormsModule,
         FormlyModule.forRoot({
           types: [
             {
@@ -52,9 +51,7 @@ describe('formly number type', () => {
             }
           ],
           wrappers: [{ name: 'form-field', component: SiFormlyWrapperComponent }]
-        }),
-        SiFormlyNumberComponent,
-        FormlyTestComponent
+        })
       ]
     }).compileComponents();
   });
@@ -64,7 +61,7 @@ describe('formly number type', () => {
   });
 
   it('should display the number input based on props provided', async () => {
-    jasmine.clock().install();
+    vi.useFakeTimers();
     const componentInstance = fixture.componentInstance;
 
     componentInstance.model = {
@@ -86,11 +83,10 @@ describe('formly number type', () => {
     inputField.nativeElement.value = 2000;
     inputField.nativeElement.dispatchEvent(new Event('input'));
 
-    jasmine.clock().tick(200);
-    fixture.detectChanges();
+    vi.advanceTimersByTime(200);
     await fixture.whenStable();
     // Assert if input change reflects the model
     expect(componentInstance.model.cost).toBe(2000);
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 });
