@@ -2,26 +2,24 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormRecord, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import { FormlyFieldConfig, FormlyFormOptions, FormlyModule } from '@ngx-formly/core';
-import { SiDatepickerModule } from '@siemens/element-ng/datepicker';
+import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 
 import { SiFormlyDateTimeComponent } from './si-formly-datetime.component';
 
 @Component({
   selector: 'si-formly-test',
-  imports: [ReactiveFormsModule, SiDatepickerModule, FormlyModule],
-  template: ` <formly-form [form]="form" [fields]="fields" [model]="model" [options]="options" /> `,
+  imports: [ReactiveFormsModule, FormlyModule],
+  template: `<formly-form [form]="form" [fields]="fields()" [model]="model()" />`,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 class FormlyTestComponent {
-  form = new FormRecord({});
-  fields!: FormlyFieldConfig[];
-  model: any;
-  options!: FormlyFormOptions;
+  readonly form = new FormRecord({});
+  readonly fields = signal<FormlyFieldConfig[]>([]);
+  readonly model = signal<any>({});
 }
 
 let date: Date;
@@ -33,27 +31,21 @@ describe('formly datetime-type', () => {
   const startDateUTCSLong = '2021-08-26T06:45:00.000Z';
 
   let fixture: ComponentFixture<FormlyTestComponent>;
+  let component: FormlyTestComponent;
 
-  beforeAll(() => {
-    // Seems to be installed somewhere else...
-    jasmine.clock().uninstall();
-  });
+  const inputEl = (): HTMLInputElement => fixture.debugElement.query(By.css('input')).nativeElement;
 
-  beforeEach(() => {
-    jasmine.clock().install();
+  beforeEach(async () => {
+    vi.useFakeTimers();
     date = new Date(startDate);
-    jasmine.clock().mockDate(date);
+    vi.setSystemTime(date);
     const d = new Date();
 
     const pad = (n: number): string => (n > 9 ? `${n}` : `0${n}`);
-    startDateInputVal = `2021-08-${d.getDate()} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(
-      d.getSeconds()
-    )}`;
+    startDateInputVal = `2021-08-${d.getDate()} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
 
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       imports: [
-        ReactiveFormsModule,
-        SiDatepickerModule,
         FormlyModule.forRoot({
           types: [
             {
@@ -61,24 +53,19 @@ describe('formly datetime-type', () => {
               component: SiFormlyDateTimeComponent
             }
           ]
-        }),
-        SiFormlyDateTimeComponent,
-        FormlyTestComponent
+        })
       ]
     }).compileComponents();
-  });
-
-  beforeEach(() => {
     fixture = TestBed.createComponent(FormlyTestComponent);
+    component = fixture.componentInstance;
   });
 
   afterEach(() => {
-    jasmine.clock().uninstall();
+    vi.useRealTimers();
   });
 
   it('should have a timezoned display value - as short value', () => {
-    const componentInstance = fixture.componentInstance;
-    componentInstance.fields = [
+    component.fields.set([
       {
         key: 'name',
         type: 'datetime',
@@ -88,19 +75,18 @@ describe('formly datetime-type', () => {
           }
         }
       }
-    ];
-    componentInstance.model = {
+    ]);
+    component.model.set({
       name: startDateUTCShort
-    };
+    });
     fixture.detectChanges();
-    const inputField = fixture.debugElement.query(By.css('input'));
+    const inputField = inputEl();
     // The value should be timezone agnostic.
-    expect(new Date(inputField.nativeElement.value)).toEqual(new Date(startDateInputVal));
+    expect(new Date(inputField.value)).toEqual(new Date(startDateInputVal));
   });
 
   it('should handle time zone and result into value as short value', async () => {
-    const componentInstance = fixture.componentInstance;
-    componentInstance.fields = [
+    component.fields.set([
       {
         key: 'name',
         type: 'datetime',
@@ -112,23 +98,21 @@ describe('formly datetime-type', () => {
           }
         }
       }
-    ];
-    componentInstance.model = {
+    ]);
+    component.model.set({
       name: ''
-    };
+    });
     fixture.detectChanges();
-    const inputField = fixture.debugElement.query(By.css('input'));
-    inputField.nativeElement.value = startDateInputVal;
-    inputField.nativeElement.dispatchEvent(new Event('input'));
-    jasmine.clock().tick(200);
-    fixture.detectChanges();
+    const inputField = inputEl();
+    inputField.value = startDateInputVal;
+    inputField.dispatchEvent(new Event('input'));
+    vi.advanceTimersByTime(200);
     await fixture.whenStable();
-    expect(componentInstance.model.name).toEqual(new Date(startDateUTCShort));
+    expect(component.model().name).toEqual(new Date(startDateUTCShort));
   });
 
   it('should have a timezoned display value - as long value', () => {
-    const componentInstance = fixture.componentInstance;
-    componentInstance.fields = [
+    component.fields.set([
       {
         key: 'name',
         type: 'datetime',
@@ -140,19 +124,17 @@ describe('formly datetime-type', () => {
           }
         }
       }
-    ];
-    componentInstance.model = {
+    ]);
+    component.model.set({
       name: startDateUTCSLong
-    };
+    });
     fixture.detectChanges();
-    const inputField = fixture.debugElement.query(By.css('input'));
     // The value should be timezone agnostic.
-    expect(new Date(inputField.nativeElement.value)).toEqual(new Date(startDateInputVal));
+    expect(new Date(inputEl().value)).toEqual(new Date(startDateInputVal));
   });
 
   it('should handle time zone and result into value as long value', async () => {
-    const componentInstance = fixture.componentInstance;
-    componentInstance.fields = [
+    component.fields.set([
       {
         key: 'name',
         type: 'datetime',
@@ -165,24 +147,23 @@ describe('formly datetime-type', () => {
           }
         }
       }
-    ];
-    componentInstance.model = {
+    ]);
+    component.model.set({
       name: ''
-    };
+    });
     fixture.detectChanges();
-    const inputField = fixture.debugElement.query(By.css('input'));
-    inputField.nativeElement.value = startDateInputVal;
-    inputField.nativeElement.dispatchEvent(new Event('input'));
 
-    jasmine.clock().tick(200);
-    fixture.detectChanges();
+    const inputField = inputEl();
+    inputField.value = startDateInputVal;
+    inputField.dispatchEvent(new Event('input'));
+
+    vi.advanceTimersByTime(200);
     await fixture.whenStable();
-    expect(componentInstance.model.name).toEqual(new Date(startDateUTCSLong));
+    expect(component.model().name).toEqual(new Date(startDateUTCSLong));
   });
 
-  it('should have a timezoned display value - as data value', () => {
-    const componentInstance = fixture.componentInstance;
-    componentInstance.fields = [
+  it('should have a timezoned display value - as data value', async () => {
+    component.fields.set([
       {
         key: 'name',
         type: 'datetime',
@@ -194,19 +175,17 @@ describe('formly datetime-type', () => {
           }
         }
       }
-    ];
-    componentInstance.model = {
+    ]);
+    component.model.set({
       name: startDate
-    };
+    });
     fixture.detectChanges();
-    const inputField = fixture.debugElement.query(By.css('input'));
     // The value should be timezone agnostic.
-    expect(inputField.nativeElement.value).toEqual(startDateInputVal);
+    expect(inputEl().value).toEqual(startDateInputVal);
   });
 
   it('should handle time zone and result into value as date', async () => {
-    const componentInstance = fixture.componentInstance;
-    componentInstance.fields = [
+    component.fields.set([
       {
         key: 'name',
         type: 'datetime',
@@ -218,30 +197,29 @@ describe('formly datetime-type', () => {
           }
         }
       }
-    ];
-    componentInstance.model = {
+    ]);
+    component.model.set({
       name: null
-    };
+    });
     fixture.detectChanges();
-    const inputField = fixture.debugElement.query(By.css('input'));
-    inputField.nativeElement.value = startDateInputVal;
-    inputField.nativeElement.dispatchEvent(new Event('input'));
+    const inputField = inputEl();
+    inputField.value = startDateInputVal;
+    inputField.dispatchEvent(new Event('input'));
 
-    jasmine.clock().tick(200);
+    vi.advanceTimersByTime(200);
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(componentInstance.model.name.getTime()).toEqual(date.getTime());
+    expect(component.model().name.getTime()).toEqual(date.getTime());
   });
 
   it('should have calendar-button', async () => {
-    const componentInstance = fixture.componentInstance;
-    componentInstance.fields = [
+    component.fields.set([
       {
         key: 'name',
         type: 'datetime'
       }
-    ];
+    ]);
 
     fixture.detectChanges();
     const calendarButton = fixture.debugElement.query(By.css('button[name="open-calendar"]'));
