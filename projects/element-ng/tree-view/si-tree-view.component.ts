@@ -58,6 +58,7 @@ import {
   TreeViewIconSet
 } from './si-tree-view.model';
 import { SiTreeViewService } from './si-tree-view.service';
+import { SI_TREE_VIEW } from './si-tree-view.token';
 import {
   addChildItems,
   childrenLoaded,
@@ -109,7 +110,8 @@ const rootDefaults: TreeItem = {
     SiTreeViewConverterService,
     SiTreeViewItemHeightService,
     SiTreeViewService,
-    SiTreeViewVirtualizationService
+    SiTreeViewVirtualizationService,
+    { provide: SI_TREE_VIEW, useExisting: SiTreeViewComponent }
   ],
   host: {
     '(document:keyup.shift)': 'onKeyUpShift()',

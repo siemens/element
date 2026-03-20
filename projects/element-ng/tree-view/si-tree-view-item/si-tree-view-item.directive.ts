@@ -20,8 +20,8 @@ import {
 } from '@angular/core';
 
 import { TREE_ITEM_CONTEXT } from '../si-tree-view-item-context';
-import { SiTreeViewComponent } from '../si-tree-view.component';
 import { TreeItem, TreeItemContext } from '../si-tree-view.model';
+import { SI_TREE_VIEW } from '../si-tree-view.token';
 
 @Directive({
   selector: '[siTreeViewItem]'
@@ -29,7 +29,7 @@ import { TreeItem, TreeItemContext } from '../si-tree-view.model';
 export class SiTreeViewItemDirective implements AfterViewInit, OnDestroy {
   private templateRef = inject(TemplateRef);
   private viewContainerRef = inject(ViewContainerRef);
-  private parent = inject(SiTreeViewComponent);
+  private parent = inject(SI_TREE_VIEW);
   private differs = inject(IterableDiffers);
   private cdRef = inject(ChangeDetectorRef);
   private differ: IterableDiffer<TreeItem> | null = null;
