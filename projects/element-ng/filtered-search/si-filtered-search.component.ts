@@ -806,12 +806,21 @@ export class SiFilteredSearchComponent implements OnInit, OnChanges {
   }
 
   protected trimWhitespaces(): void {
-    this.searchCriteria().value = this.searchCriteria().value.trim();
-    this.searchCriteria().criteria.forEach(c => {
-      if (typeof c.value === 'string') {
-        c.value = c.value.trim();
-      }
-    });
     this.searchValue.set(this.searchValue().trim());
+    this.values.update(values =>
+      values.map(item => ({
+        ...item,
+        value: {
+          ...item.value,
+          value:
+            typeof item.value.value === 'string'
+              ? item.value.value.trim()
+              : Array.isArray(item.value.value)
+                ? item.value.value.map(s => s.trim())
+                : item.value.value,
+        },
+      }))
+    );
+    this.emitChangeEvent();
   }
 }
