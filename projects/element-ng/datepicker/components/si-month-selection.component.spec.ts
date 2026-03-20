@@ -8,8 +8,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { getLocaleMonthNames } from '../date-time-helper';
 import { SiDatepickerModule } from '../si-datepicker.module';
+import { CalendarTestHelper, generateKeyEvent } from '../testing/test-helper';
 import { SiMonthSelectionComponent as TestComponent } from './si-month-selection.component';
-import { CalendarTestHelper, generateKeyEvent } from './test-helper.spec';
 
 @Component({
   imports: [SiDatepickerModule, A11yModule, TestComponent],
@@ -37,7 +37,7 @@ class WrapperComponent {
   activeMonth?: Date;
   cancelled = false;
 
-  selectionChange(selection?: Date): void {
+  selectionChange(selection?: Date | null): void {
     if (selection) {
       this.startDate.set(selection);
       this.focusedDate.set(selection);

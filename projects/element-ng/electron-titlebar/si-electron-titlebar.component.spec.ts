@@ -85,8 +85,8 @@ describe('SiElectrontitlebarComponent', () => {
     component.canGoBack = false;
     component.canGoForward = false;
     component.menuItems = [{ label: 'Zoom in', type: 'action', action: () => alert('Zoom in') }];
-    spyOn(component, 'goForward');
-    spyOn(component, 'goBack');
+    vi.spyOn(component, 'goForward');
+    vi.spyOn(component, 'goBack');
     fixture.detectChanges();
     forwardButton().dispatchEvent(new Event('click'));
     expect(component.goForward).toHaveBeenCalled();

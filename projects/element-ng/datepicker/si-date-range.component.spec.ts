@@ -15,10 +15,10 @@ import {
   SiDateRangeComponent,
   SiDateRangeComponent as TestComponent
 } from '.';
-import { backdropClick, CalendarTestHelper, enterValue } from './components/test-helper.spec';
 import { addDays } from './date-time-helper';
 import { SiDateRangeComponentHarness } from './testing/si-date-range.harness';
 import { SiDatepickerComponentHarness } from './testing/si-datepicker.harness';
+import { backdropClick, CalendarTestHelper, enterValue } from './testing/test-helper';
 
 const startInput = (element: HTMLElement): HTMLInputElement =>
   element.querySelectorAll<HTMLInputElement>('input')[0];
@@ -29,7 +29,7 @@ const endInput = (element: HTMLElement): HTMLInputElement =>
   imports: [SiDatepickerModule, FormsModule, ReactiveFormsModule, TestComponent],
   template: `<si-date-range
     [siDatepickerConfig]="{ dateFormat: 'dd-MM-yyyy' }"
-    [autoClose]="autoClose"
+    [autoClose]="autoClose()"
     [formControl]="dateRange"
     (siDatepickerRangeChange)="rangeChanged($event)"
   />`,
@@ -38,8 +38,8 @@ const endInput = (element: HTMLElement): HTMLInputElement =>
 class WrapperComponent {
   dateRange = new FormControl<DateRange | null>(null);
   readonly siDateRangeComponent = viewChild.required(SiDateRangeComponent);
-  autoClose = false;
-  rangeChanged(event: DateRange): void {}
+  readonly autoClose = signal(false);
+  rangeChanged(event: DateRange | undefined): void {}
 }
 
 describe('SiDateRangeComponent', () => {
@@ -99,9 +99,9 @@ describe('SiDateRangeComponent', () => {
   });
 
   describe('with autoClose', () => {
-    beforeEach(() => {
-      fixture.componentInstance.autoClose = true;
-      fixture.autoDetectChanges();
+    beforeEach(async () => {
+      fixture.componentInstance.autoClose.set(true);
+      await fixture.whenStable();
       openCalendarButton().click();
     });
 
@@ -136,7 +136,7 @@ describe('SiDateRangeComponent', () => {
     helper.getEnabledCellWithText('December')!.dispatchEvent(new Event('mouseover'));
     fixture.detectChanges();
     await fixture.whenStable();
-    expect(helper.queryAsArray('.range-hover')).toHaveSize(9);
+    expect(helper.queryAsArray('.range-hover')).toHaveLength(9);
   });
 
   it('should preview month range with second calendar', async () => {
@@ -163,7 +163,7 @@ describe('SiDateRangeComponent', () => {
     helper.getEnabledCellWithText('December')!.dispatchEvent(new Event('mouseover'));
     fixture.detectChanges();
     await fixture.whenStable();
-    expect(Array.from(document.querySelectorAll<HTMLElement>('.range-hover'))).toHaveSize(21);
+    expect(Array.from(document.querySelectorAll<HTMLElement>('.range-hover'))).toHaveLength(21);
   });
 
   it('should not overlap month view with enableTwoMonthDateRange when pressing previous year button', async () => {
@@ -197,7 +197,7 @@ describe('SiDateRangeComponent', () => {
   });
 
   it('should output correct month range on keyboard input', async () => {
-    const spy = spyOn(fixture.componentInstance, 'rangeChanged');
+    const spy = vi.spyOn(fixture.componentInstance, 'rangeChanged');
     component.siDatepickerConfig.set({
       enableDateRange: true,
       enableTwoMonthDateRange: true,
@@ -209,7 +209,7 @@ describe('SiDateRangeComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const dateRange = spy.calls.mostRecent().args[0];
+    const dateRange = vi.mocked(spy).mock.lastCall![0]!;
     expect(dateRange.end).toBeNull();
     expect(dateRange.start).toEqual(new Date(2023, 4, 1));
   });

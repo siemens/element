@@ -7,8 +7,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DatepickerInputConfig, SiDatepickerDirective } from '@siemens/element-ng/datepicker';
 
-import { CalendarTestHelper, enterValue } from './components/test-helper.spec';
 import { SiCalendarButtonComponent } from './si-calendar-button.component';
+import { CalendarTestHelper, enterValue } from './testing/test-helper';
 
 @Component({
   imports: [SiCalendarButtonComponent, SiDatepickerDirective],
@@ -46,7 +46,7 @@ describe('SiCalendarButtonComponent', () => {
   };
 
   beforeEach(async () => {
-    jasmine.clock().mockDate(new Date('2023-12-31'));
+    vi.setSystemTime(new Date('2023-12-31'));
     fixture = TestBed.createComponent(WrapperComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -66,14 +66,14 @@ describe('SiCalendarButtonComponent', () => {
     const overlay = document.querySelector('si-datepicker-overlay');
     expect(overlay).toBeTruthy();
 
-    const spy = spyOn(button, 'focus');
+    const spy = vi.spyOn(button, 'focus');
     overlay?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     fixture.detectChanges();
     expect(spy).toHaveBeenCalled();
   });
 
   it('should mark as touched if button is blurred', () => {
-    const touchSpy = spyOn(SiDatepickerDirective.prototype, 'touch');
+    const touchSpy = vi.spyOn(SiDatepickerDirective.prototype, 'touch');
     const button = calendarToggleButton();
     button.focus();
     button.blur();

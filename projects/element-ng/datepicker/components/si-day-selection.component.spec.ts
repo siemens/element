@@ -16,9 +16,10 @@ import {
   isSameYear,
   daysInMonth
 } from '../date-time-helper';
+import { WeekStart } from '../si-datepicker.model';
+import { CalendarTestHelper, generateKeyEvent } from '../testing/test-helper';
 import { runOnPushChangeDetection } from './../../test-helpers/change-detection.helper';
 import { SiDaySelectionComponent as TestComponent } from './si-day-selection.component';
-import { CalendarTestHelper, generateKeyEvent } from './test-helper.spec';
 
 @Component({
   imports: [TestComponent],
@@ -43,19 +44,21 @@ import { CalendarTestHelper, generateKeyEvent } from './test-helper.spec';
 class SingleSelectComponent {
   readonly focusedDate = signal(new Date('2022-03-26'));
   readonly startDate = signal(new Date('2022-03-25'));
-  readonly endDate = signal<Date | unknown>(null);
+  readonly endDate = signal<Date | undefined>(undefined);
   readonly minDate = signal(new Date('2021-03-01'));
-  readonly maxDate = signal<Date | unknown>(new Date('2023-03-31'));
+  readonly maxDate = signal<Date | undefined>(new Date('2023-03-31'));
   readonly enableDateRange = signal(false);
   readonly hideWeekNumbers = signal(false);
-  readonly weekStartDay = signal('monday');
+  readonly weekStartDay = signal<WeekStart>('monday');
 
   activeMonth: Date | undefined;
   view?: 'month' | 'year';
 
-  selectionChange(selection: Date): void {
-    this.focusedDate.set(selection);
-    this.startDate.set(selection);
+  selectionChange(selection: Date | null): void {
+    if (selection) {
+      this.focusedDate.set(selection);
+      this.startDate.set(selection);
+    }
   }
 
   activeMonthChange(current: Date): void {
@@ -88,15 +91,18 @@ class SingleSelectComponent {
 })
 class RangeSelectComponent {
   readonly focusedDate = signal(new Date('2022-03-26'));
-  readonly startDate = signal<Date | unknown>(null);
-  readonly endDate = signal<Date | unknown>(null);
+  readonly startDate = signal<Date | undefined>(undefined);
+  readonly endDate = signal<Date | undefined>(undefined);
   readonly minDate = signal(new Date('2021-03-01'));
-  readonly maxDate = signal<Date | unknown>(new Date('2023-03-31'));
+  readonly maxDate = signal<Date | undefined>(new Date('2023-03-31'));
   readonly hideWeekNumbers = signal(false);
-  readonly weekStartDay = signal('monday');
+  readonly weekStartDay = signal<WeekStart>('monday');
   activeMonth: Date | undefined;
 
-  selectionChange(selection: Date): void {
+  selectionChange(selection: Date | null): void {
+    if (!selection) {
+      return;
+    }
     if (
       this.startDate() === undefined ||
       (this.startDate() !== undefined && this.endDate() !== undefined)
@@ -228,7 +234,7 @@ describe('SiDaySelectionComponent', () => {
         wrapperComponent.focusedDate.set(new Date(2022, month, 1));
         fixture.detectChanges();
 
-        expect(helper.getCells()).toHaveSize(cellsCount);
+        expect(helper.getCells()).toHaveLength(cellsCount);
       }
     });
 
@@ -440,7 +446,7 @@ describe('SiDaySelectionComponent', () => {
       });
 
       it('should go to today', () => {
-        const pipeSpy = spyOn(DatePipe.prototype, 'transform');
+        const pipeSpy = vi.spyOn(DatePipe.prototype, 'transform');
 
         (element.querySelector('.today-button') as HTMLElement)!.click();
         fixture.detectChanges();
@@ -449,11 +455,11 @@ describe('SiDaySelectionComponent', () => {
 
         expect(pipeSpy).toHaveBeenCalledTimes(2);
 
-        const month = pipeSpy.calls.argsFor(0);
+        const month = vi.mocked(pipeSpy).mock.calls[0];
         expect(isSameMonth(month[0] as Date, today)).toBe(true);
         expect(month[1] as string).toBe('MMMM');
 
-        const year = pipeSpy.calls.argsFor(1);
+        const year = vi.mocked(pipeSpy).mock.calls[1];
         expect(isSameYear(year[0] as Date, today)).toBe(true);
         expect(year[1] as string).toBe('yyyy');
 
