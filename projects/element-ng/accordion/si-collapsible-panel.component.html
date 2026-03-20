@@ -2,7 +2,9 @@
   role="button"
   placement="start"
   [siTooltip]="hcollapsed() && heading() ? (heading()! | translate) : ''"
-  [class]="`collapsible-header focus-inside px-6 ${headerCssClasses()}`"
+  [class]="`collapsible-header focus-inside ${headerCssClasses()}`"
+  [class.px-5]="hcollapsed()"
+  [class.px-6]="!hcollapsed()"
   [attr.tabindex]="disabled() ? '' : '0'"
   [id]="headerId"
   [class.open]="opened()"
@@ -16,7 +18,13 @@
 >
   @let headerIcon = icon();
   @if (headerIcon) {
-    <si-icon class="icon ms-n2 me-2" [icon]="headerIcon" [class.collapsed-icon]="isHCollapsible" />
+    <si-icon
+      class="icon"
+      [class.p-1]="hcollapsed()"
+      [class.pe-2]="!hcollapsed()"
+      [icon]="headerIcon"
+      [class.collapsed-icon]="isHCollapsible"
+    />
   }
   @if (icon() && badge() !== undefined && badge() !== '') {
     <span class="badge-text">
@@ -33,7 +41,7 @@
       {{ badge() }}
     </span>
   }
-  <span class="ms-auto overflow-hidden">
+  <span class="ms-auto autohide">
     <si-icon class="icon dropdown-caret" [icon]="icons.elementDown2" />
   </span>
 </div>
