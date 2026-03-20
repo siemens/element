@@ -16,6 +16,7 @@ import { SI_TOOLTIP_CONFIG } from './si-tooltip.model';
   templateUrl: './si-tooltip.component.html',
   styleUrl: './si-tooltip.component.scss',
   host: {
+    '[class.is-focus]': 'config.trigger() === "focus"',
     'animate.leave': 'tooltip-leave'
   }
 })
