@@ -137,4 +137,10 @@ export const templateConfig = defineConfig({
   }
 });
 
-export default defineConfig(...tsConfig, ...templateConfig);
+export const strictLinterOptions = defineConfig({
+  linterOptions: {
+    reportUnusedDisableDirectives: 'error'
+  }
+});
+
+export default defineConfig(...tsConfig, ...templateConfig, ...strictLinterOptions);
