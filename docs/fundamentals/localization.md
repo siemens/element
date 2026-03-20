@@ -2,18 +2,18 @@
 
 # Localization
 
-Internationalization (i18n) is the process of designing and developing a product for localization (l10n) into specific languages and regions.
+Internationalization is the process of designing and developing a product for localization into specific languages and regions.
 
 ## Introduction ---
 
 ### Internationalization (i18n)
 
-Internationalization is the entire process of designing and developing a product that can be adapted to different languages and regions.
+Internationalization (sometimes abbreviated as i18n) is the entire process of designing and developing a product that can be adapted to different languages and regions.
 Internationalization is the foundation for high-quality and efficient [localization](#localization-l10n).
 
 ### Localization (l10n)
 
-Localization is the process of adapting a product to the language and cultural norms of a specific target market so that it feels natural to local users. This goes beyond [simple translation](#translation) and includes script direction ([LTR](#ltr-left-to-right)/[RTL](#rtl-right-to-left)), formatting numbers, times, dates, and addresses, and adapting illustrations.
+Localization (sometimes abbreviated as l10n) is the process of adapting a product to the language and cultural norms of a specific target market so that it feels natural to local users. This goes beyond [simple translation](#translation) and includes script direction ([LTR](#ltr-left-to-right)/[RTL](#rtl-right-to-left)), formatting numbers, times, dates, and addresses, and adapting illustrations.
 
 This example shows how values, dates, and times should be displayed after the product has been localized.
 <si-docs-component example="si-localization/si-localization" height="650"></si-docs-component>
@@ -478,7 +478,7 @@ Provide each language name in the target language for the language switcher.
 
 ## Code ---
 
-Angular supports localization as described in the [i18n](https://angular.dev/guide/i18n) guide and is supported by [pipes](https://angular.dev/guide/templates/pipes).
+Angular supports localization as described in the [Angular Internationalization (i18n)](https://angular.dev/guide/i18n) guide and is supported by [pipes](https://angular.dev/guide/templates/pipes).
 Angular applies a compile time localization concept. It does not support the change of locales (language and formats) at runtime. Instead, for each locale
 it generates a new web application that supports exactly one locale. It replaces text in the HTML templates with the translations and sets a fixed
 [LOCALE_ID](https://angular.dev/guide/i18n/locale-id) which is used by the pipes. Changing locales is realized by changing the web application.
