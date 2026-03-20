@@ -41,6 +41,7 @@ test.describe('si-date-range-filter', () => {
     await si.runVisualAndA11yTests('mobile');
 
     await page.locator('si-date-range-filter').getByText('Presets').click();
+    await page.getByRole('option', { name: 'last 24h' }).hover(); // Ensures the hover state is gone from the presets.
     await si.runVisualAndA11yTests('mobile-presets');
   });
 });
