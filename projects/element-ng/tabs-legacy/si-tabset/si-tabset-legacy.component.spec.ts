@@ -47,7 +47,7 @@ class TestComponent {
 
   readonly tabSet = viewChild.required(SiTabsetLegacyComponent);
 
-  closeTriggered(tab: { heading: string; hidde?: boolean }): void {
+  closeTriggered(tab: { heading: string; hide?: boolean }): void {
     this.tabsObject = this.tabsObject.filter(t => t !== tab);
   }
 }

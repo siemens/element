@@ -307,7 +307,7 @@ describe('SiTabset', () => {
     expect(await (await tabsetHarness.getTabItemButtonAt(1)).isFocused()).toBe(true);
   });
 
-  it('should bring tab into visibile area if not visible on selection from menu', async () => {
+  it('should bring tab into visible area if not visible on selection from menu', async () => {
     testComponent.tabs = ['1', '2', '3', '4', '5'];
     testComponent.wrapperWidth.set(200);
     detectSizeChange();

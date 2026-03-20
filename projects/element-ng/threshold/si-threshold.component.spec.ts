@@ -86,7 +86,7 @@ describe('SiThresholdComponent', () => {
   let element: HTMLInputElement;
   let loader: HarnessLoader;
 
-  const getThreshodColors = (): string[] => {
+  const getThresholdColors = (): string[] => {
     const calculatedColors: string[] = [];
     element.querySelectorAll('.ths-option .line').forEach(item => {
       calculatedColors.push(item.classList.value.replace('line', '').trim());
@@ -176,7 +176,7 @@ describe('SiThresholdComponent', () => {
 
   it('should calculate color of steps', () => {
     fixture.detectChanges();
-    const calculatedColors: string[] = getThreshodColors();
+    const calculatedColors: string[] = getThresholdColors();
     expect(calculatedColors).toEqual([
       'status-danger',
       'status-warning',
@@ -194,7 +194,7 @@ describe('SiThresholdComponent', () => {
     ).getHarness(SiSelectHarness);
     await selectHarness.clickItemsByText('Good');
 
-    const calculatedColors: string[] = getThreshodColors();
+    const calculatedColors: string[] = getThresholdColors();
     expect(calculatedColors).toEqual([
       'status-danger',
       'status-success',
