@@ -7,17 +7,15 @@ import { ChangeDetectionStrategy, Component, DebugElement, viewChild } from '@an
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
-import {
-  removeItemFromTree,
-  reorderTreeItem,
-  SiTreeViewComponent,
-  SiTreeViewModule,
-  transferTreeItem,
-  TreeItem
-} from '@siemens/element-ng/tree-view';
+
+import { removeItemFromTree, reorderTreeItem, transferTreeItem } from '../drag-drop.util';
+import { SiTreeViewComponent } from '../si-tree-view.component';
+import { TreeItem } from '../si-tree-view.model';
+import { SiTreeViewItemComponent } from './si-tree-view-item.component';
+import { SiTreeViewItemDirective } from './si-tree-view-item.directive';
 
 @Component({
-  imports: [SiTreeViewModule, DragDropModule],
+  imports: [SiTreeViewComponent, SiTreeViewItemComponent, SiTreeViewItemDirective, DragDropModule],
   template: `<div class="d-flex" style="height: 300px">
     <si-tree-view
       #treeOne
@@ -119,12 +117,6 @@ describe('SiTreeViewComponentWithDragDrop', () => {
   let fixture: ComponentFixture<WrapperComponent>;
   let debugElement: DebugElement;
 
-  beforeEach(async () => {
-    TestBed.configureTestingModule({
-      imports: [SiTreeViewModule, DragDropModule, WrapperComponent]
-    });
-  });
-
   beforeEach(() => {
     fixture = TestBed.createComponent(WrapperComponent);
     debugElement = fixture.debugElement;
@@ -206,7 +198,7 @@ describe('SiTreeViewComponentWithDragDrop', () => {
   });
 
   it('shall not move item into its own child', () => {
-    spyOn(console, 'error');
+    vi.spyOn(console, 'error');
     fixture.componentInstance.items[0].state = 'expanded';
     fixture.detectChanges();
     runOnPushChangeDetection(fixture);

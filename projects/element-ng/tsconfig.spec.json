@@ -12,9 +12,6 @@
     "q*/**/*.spec.ts",
     "r*/**/*.spec.ts",
     "s*/**/*.spec.ts",
-    "t*/**/*.spec.ts",
-    "u*/**/*.spec.ts",
-    "v*/**/*.spec.ts",
     "**/*.d.ts"
   ]
 }
