@@ -53,7 +53,7 @@ import { DatepickerConfig, DateRange } from './si-datepicker.model';
       [(activeHover)]="activeHover"
       (dateChange)="date.set($event)"
       (dateRangeChange)="dateRange.set($event)"
-      (disabledTimeChange)="disableTime = $event; disabledTimeChange.emit($event)"
+      (disabledTimeChange)="disableTime.set($event); disabledTimeChange.emit($event)"
       (focusedDateChange)="firstDatepickerFocusDateChange($event)"
       (rangeTypeChange)="rangeType.set($event)"
     />
@@ -72,7 +72,7 @@ import { DatepickerConfig, DateRange } from './si-datepicker.model';
         [hideCalendar]="isMobile()"
         [minMonth]="minMonth()"
         [dateRange]="dateRange()"
-        [disabledTime]="disableTime"
+        [disabledTime]="disableTime()"
         [time12h]="time12h()"
         [timepickerLabel]="secondDatepickerConfig().endTimeLabel"
         [rangeType]="rangeType()"
@@ -84,7 +84,7 @@ import { DatepickerConfig, DateRange } from './si-datepicker.model';
     }
   `,
   styleUrl: './si-datepicker-overlay.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'mt-md-1 d-flex elevation-2 rounded-2 overflow-auto align-items-stretch',
     '[class.flex-wrap]': 'isMobile()',
@@ -138,10 +138,10 @@ export class SiDatepickerOverlayComponent implements OnChanges, OnInit, OnDestro
   private readonly elementRef = inject(ElementRef);
   private readonly focusMonitor = inject(FocusMonitor);
   private readonly focusTrapFactory = inject(ConfigurableFocusTrapFactory);
-  private focusTrap!: ConfigurableFocusTrap;
+  private focusTrap?: ConfigurableFocusTrap;
   private previousActiveElement?: Element | HTMLElement;
-  protected disableTime = false;
-  protected activeHover?: Cell;
+  protected readonly disableTime = signal(false);
+  protected readonly activeHover = signal<Cell | undefined>(undefined);
   protected readonly isTwoMonthDateRange = computed(
     () =>
       !!this.config().enableDateRange &&
@@ -198,7 +198,7 @@ export class SiDatepickerOverlayComponent implements OnChanges, OnInit, OnDestro
 
   ngOnDestroy(): void {
     this.focusMonitor.stopMonitoring(this.elementRef);
-    this.focusTrap.destroy();
+    this.focusTrap?.destroy();
     if (this.initialFocus() && this.previousActiveElement && 'focus' in this.previousActiveElement)
       this.previousActiveElement.focus();
   }
