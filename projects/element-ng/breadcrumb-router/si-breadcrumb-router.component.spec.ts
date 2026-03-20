@@ -4,9 +4,13 @@
  */
 import { Component, ElementRef, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router, RouterModule, RouterOutlet, Routes } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { provideRouter, Router, RouterOutlet, Routes } from '@angular/router';
+import { provideTranslateService } from '@ngx-translate/core';
 import { BreadcrumbItem } from '@siemens/element-ng/breadcrumb';
+import {
+  provideMissingTranslationHandlerForElement,
+  provideNgxTranslateForElement
+} from '@siemens/element-translate-ng/ngx-translate';
 
 import { runOnPushChangeDetection } from '../test-helpers';
 import {
@@ -72,24 +76,21 @@ describe('SiBreadcrumbRouterComponent', () => {
     }
   ];
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        TestComponent,
-        RouterModule.forRoot(routes),
-        TranslateModule.forRoot(),
-        WrapperComponent
-      ],
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       providers: [
+        provideRouter(routes),
+        provideTranslateService({
+          missingTranslationHandler: provideMissingTranslationHandlerForElement()
+        }),
+        provideNgxTranslateForElement(),
         {
           provide: SI_BREADCRUMB_RESOLVER_SERVICE,
           useClass: SiBreadcrumbDefaultResolverService
         }
       ]
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(WrapperComponent);
     wrapperComponent = fixture.componentInstance;
     component = wrapperComponent.breadcrumbResolver();

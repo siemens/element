@@ -5,7 +5,7 @@
 import { ComponentRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { TranslateModule } from '@ngx-translate/core';
+import { provideTranslateService } from '@ngx-translate/core';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 import { Layer, Vector as VectorLayer } from 'ol/layer';
@@ -14,7 +14,7 @@ import { Cluster, Vector as VectorSource } from 'ol/source';
 import { mockGeoJson } from 'src/app/mocks/geojson.mock';
 import { mockPoints, singlePoint } from 'src/app/mocks/points.mock';
 
-import { SiMapComponent, SiMapModule, SiMapPopoverComponent, SiMapTooltipComponent } from '.';
+import { SiMapComponent, SiMapPopoverComponent, SiMapTooltipComponent } from '.';
 import { MapService } from './services/map.service';
 
 const mockFeature = new Feature({
@@ -49,8 +49,7 @@ describe('SiMapComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SiMapModule, TranslateModule.forRoot()],
-      providers: [MapService]
+      providers: [MapService, provideTranslateService()]
     });
     fixture = TestBed.createComponent(SiMapComponent);
     component = fixture.componentInstance;

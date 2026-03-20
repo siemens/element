@@ -5,10 +5,13 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Router, RouterModule, Routes } from '@angular/router';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { provideRouter, Router, Routes } from '@angular/router';
+import { provideTranslateService, TranslateService } from '@ngx-translate/core';
 import { runOnPushChangeDetection } from '@siemens/element-ng/test-helpers';
-import { SiTranslateNgxTModule } from '@siemens/element-translate-ng/ngx-translate';
+import {
+  provideMissingTranslationHandlerForElement,
+  provideNgxTranslateForElement
+} from '@siemens/element-translate-ng/ngx-translate';
 
 import { SiBreadcrumbComponent as TestComponent } from '.';
 import {
@@ -38,7 +41,7 @@ const TEST_ITEMS = [
 ];
 
 @Component({
-  imports: [TestComponent, SiTranslateNgxTModule],
+  imports: [TestComponent],
   template: `<si-breadcrumb [items]="items" [showRootAsText]="showRootAsText" /> `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -70,18 +73,17 @@ describe('SiBreadcrumbComponent', () => {
     }
   ];
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        RouterModule.forRoot(routes),
-        SiTranslateNgxTModule,
-        TranslateModule.forRoot(),
-        WrapperComponent
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      providers: [
+        provideRouter(routes),
+        provideTranslateService({
+          missingTranslationHandler: provideMissingTranslationHandlerForElement()
+        }),
+        provideNgxTranslateForElement()
       ]
     }).compileComponents();
-  });
 
-  beforeEach(() => {
     mockResizeObserver();
     fixture = TestBed.createComponent(WrapperComponent);
     wrapperComponent = fixture.componentInstance;
