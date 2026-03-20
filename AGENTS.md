@@ -25,6 +25,17 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Do NOT use `ngClass`, use `class` bindings instead
 - Do NOT use `ngStyle`, use `style` bindings instead
 
+## Component Testing
+
+- Test through the component's public API and rendered DOM, not private methods or internal implementation details
+- Prefer creating the component directly with `TestBed`. Use signal `inputBinding` and `outputBinding` bindings instead of test host / wrapper components when wiring inputs and outputs
+- Only introduce a test host / wrapper component when testing content projection, template composition, or integration behavior that cannot be expressed through direct bindings
+- Keep test setup minimal. Mock only the component's direct dependencies and prefer lightweight spies or stubs over large testing modules
+- Prefer assertions on user-observable behavior such as rendered text, attributes, ARIA state, CSS classes that are part of the public contract, and emitted outputs
+- Prefer `await fixture.whenStable()` after interactions or async state changes instead of repeatedly calling `fixture.detectChanges()`. Use `fixture.detectChanges()` deliberately for the initial render or when the change detection boundary itself is under test
+- Keep each test focused on a single behavior with clear arrange / act / assert phases
+- Cover happy paths, boundary conditions, and regression-prone branches. Avoid broad snapshot-style assertions that do not explain the intended behavior
+
 ## State Management
 
 - Use signals for local component state
