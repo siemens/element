@@ -2,24 +2,23 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { inject, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { SiTreeViewItemHeightService } from './si-tree-view-item-height.service';
 import { SiTreeViewService } from './si-tree-view.service';
 
-export const main = (): void => {
-  describe('SiTreeViewItemHeightService', () => {
-    beforeEach(async () => {
-      await TestBed.configureTestingModule({
-        providers: [SiTreeViewService, SiTreeViewItemHeightService]
-      }).compileComponents();
+describe('SiTreeViewItemHeightService', () => {
+  let siTreeViewItemHeightService: SiTreeViewItemHeightService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [SiTreeViewService, SiTreeViewItemHeightService]
     });
 
-    it('should create SiTreeViewItemHeightService', inject(
-      [SiTreeViewItemHeightService],
-      (siTreeViewItemHeightService: SiTreeViewItemHeightService) => {
-        expect(siTreeViewItemHeightService instanceof SiTreeViewItemHeightService).toBe(true);
-      }
-    ));
+    siTreeViewItemHeightService = TestBed.inject(SiTreeViewItemHeightService);
   });
-};
+
+  it('should create SiTreeViewItemHeightService', () => {
+    expect(siTreeViewItemHeightService instanceof SiTreeViewItemHeightService).toBe(true);
+  });
+});

@@ -133,7 +133,7 @@ describe('SiThresholdComponent', () => {
   });
 
   it('should allow to add steps when enabled', () => {
-    spyOn(component, 'thresholdStepsChange');
+    vi.spyOn(component, 'thresholdStepsChange');
     fixture.detectChanges();
     const add2 = element.querySelectorAll<HTMLElement>('[aria-label="Add step"]')[1];
     add2.click();
@@ -146,7 +146,7 @@ describe('SiThresholdComponent', () => {
   });
 
   it('should allow to remove steps when enabled', () => {
-    spyOn(component, 'thresholdStepsChange');
+    vi.spyOn(component, 'thresholdStepsChange');
 
     fixture.detectChanges();
     const remove2 = element.querySelectorAll<HTMLElement>('[aria-label="Delete step"]')[1];
@@ -208,7 +208,7 @@ describe('SiThresholdComponent', () => {
     component.readonlyConditions = true;
     await runOnPushChangeDetection(fixture);
     const readonlyOptions = fixture.debugElement.queryAll(By.css('si-readonly-threshold-option'));
-    expect(readonlyOptions).toHaveSize(component.thresholdSteps.length);
+    expect(readonlyOptions).toHaveLength(component.thresholdSteps.length);
     component.thresholdSteps.forEach((step, index) => {
       const o = (component.options as SelectOption<unknown>[]).find(
         option => option.value === step.optionValue

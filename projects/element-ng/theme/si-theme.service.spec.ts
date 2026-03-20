@@ -5,6 +5,7 @@
 import { TestBed } from '@angular/core/testing';
 import { firstValueFrom, of, throwError } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { type Mock } from 'vitest';
 
 import { SI_THEME_LOCAL_STORAGE_KEY, SiThemeStore } from './si-theme-store';
 import { ELEMENT_THEME_NAME, Theme } from './si-theme.model';
@@ -12,18 +13,15 @@ import { SiThemeService as TestService } from './si-theme.service';
 
 describe('SiThemeService', () => {
   let service: TestService;
-  let themeSwitchSpy: jasmine.Spy;
+  let themeSwitchSpy: Mock;
 
-  const setupTestBed = (prefersDarkColor: boolean = false, store?: SiThemeStore): void => {
+  const setupTestBed = (prefersDarkColor: boolean = false, store?: Partial<SiThemeStore>): void => {
     document.documentElement.classList.remove('app--dark');
-    spyOn(window, 'matchMedia').and.callFake(
-      () =>
-        ({
-          matches: prefersDarkColor,
-          addEventListener: () => {},
-          removeEventListener: () => {}
-        }) as any
-    );
+    vi.spyOn(window, 'matchMedia').mockReturnValue({
+      matches: prefersDarkColor,
+      addEventListener: () => {},
+      removeEventListener: () => {}
+    } as any);
     TestBed.configureTestingModule({
       providers: [TestService, { provide: SiThemeStore, useValue: store }]
     });
@@ -31,7 +29,7 @@ describe('SiThemeService', () => {
     service.resolvedColorScheme$.subscribe(themeSwitchSpy);
   };
 
-  beforeEach(() => (themeSwitchSpy = jasmine.createSpy()));
+  beforeEach(() => (themeSwitchSpy = vi.fn()));
   afterEach(() => localStorage.removeItem(SI_THEME_LOCAL_STORAGE_KEY));
 
   describe('with theme type auto', () => {
@@ -68,14 +66,15 @@ describe('SiThemeService', () => {
 
   describe('without custom theme', () => {
     let theme: Theme;
-    let store: jasmine.SpyObj<SiThemeStore>;
+    let store: Record<string, Mock>;
 
     beforeEach(() => {
       theme = { name: 'example', schemes: { light: {}, dark: {} } };
-      store = jasmine.createSpyObj('store', ['loadActiveTheme', 'loadThemeNames', 'saveTheme']);
-      store.loadActiveTheme.and.callFake(() => of(undefined));
-      store.loadThemeNames.and.callFake(() => of([]));
-      store.saveTheme.and.callFake(() => of(true));
+      store = {
+        loadActiveTheme: vi.fn(() => of(undefined)),
+        loadThemeNames: vi.fn(() => of([])),
+        saveTheme: vi.fn(() => of(true))
+      };
     });
 
     it('setActiveTheme of unknown theme should return false', async () => {
@@ -120,18 +119,18 @@ describe('SiThemeService', () => {
     });
 
     it('addOrUpdateTheme should return false on storage failure', async () => {
-      store.saveTheme.and.callFake(() => of(false));
+      store.saveTheme.mockImplementation(() => of(false));
       setupTestBed(false, store);
       const ok = await firstValueFrom(service.addOrUpdateTheme(theme));
       expect(ok).toBe(false);
     });
 
     it('addOrUpdateTheme should return error on storage errors', async () => {
-      store.saveTheme.and.callFake(() => throwError(() => 'no network'));
+      store.saveTheme.mockImplementation(() => throwError(() => 'no network'));
       setupTestBed(false, store);
       try {
         await firstValueFrom(service.addOrUpdateTheme(theme));
-        fail('Should have thrown an error');
+        expect.unreachable('Should have thrown an error');
       } catch (error) {
         expect(error).toBeDefined();
         expect(error).toBe('no network');
@@ -141,20 +140,17 @@ describe('SiThemeService', () => {
 
   describe('with custom active theme', () => {
     let theme: Theme;
-    let store: jasmine.SpyObj<SiThemeStore>;
+    let store: Record<string, Mock>;
 
     beforeEach(() => {
       theme = { name: 'example', schemes: { light: {}, dark: {} } };
-      store = jasmine.createSpyObj('store', [
-        'loadActiveTheme',
-        'loadThemeNames',
-        'deleteTheme',
-        'deactivateTheme',
-        'loadTheme'
-      ]);
-      store.loadActiveTheme.and.callFake(() => of(theme));
-      store.loadThemeNames.and.callFake(() => of([theme.name]));
-      store.loadTheme.and.callFake(() => of(theme));
+      store = {
+        loadActiveTheme: vi.fn(() => of(theme)),
+        loadThemeNames: vi.fn(() => of([theme.name])),
+        deleteTheme: vi.fn(),
+        deactivateTheme: vi.fn(),
+        loadTheme: vi.fn(() => of(theme))
+      };
     });
 
     it('getActiveTheme should return other then element', async () => {
@@ -165,7 +161,7 @@ describe('SiThemeService', () => {
     });
 
     it('deleteTheme with unknown theme should return false', async () => {
-      store.deleteTheme.and.callFake(() => of(true));
+      store.deleteTheme.mockImplementation(() => of(true));
       setupTestBed(false, store);
       const result = await firstValueFrom(service.deleteTheme('any'));
       expect(result).toBe(false);
@@ -173,7 +169,7 @@ describe('SiThemeService', () => {
     });
 
     it('deleteTheme should call storage deleteTheme', async () => {
-      store.deleteTheme.and.callFake(() => of(true));
+      store.deleteTheme.mockImplementation(() => of(true));
       setupTestBed(false, store);
       const result = await firstValueFrom(service.deleteTheme(theme.name));
       expect(result).toBe(true);
@@ -181,7 +177,7 @@ describe('SiThemeService', () => {
     });
 
     it('deleteTheme should return false on storage failures', async () => {
-      store.deleteTheme.and.callFake(() => of(false));
+      store.deleteTheme.mockImplementation(() => of(false));
       setupTestBed(false, store);
       const result = await firstValueFrom(service.deleteTheme(theme.name));
       expect(result).toBe(false);
@@ -189,11 +185,11 @@ describe('SiThemeService', () => {
     });
 
     it('deleteTheme should return error on storage errors', async () => {
-      store.deleteTheme.and.callFake(() => throwError(() => 'no network'));
+      store.deleteTheme.mockImplementation(() => throwError(() => 'no network'));
       setupTestBed(false, store);
       try {
         await firstValueFrom(service.deleteTheme(theme.name));
-        fail('Should have thrown an error');
+        expect.unreachable('Should have thrown an error');
       } catch (error) {
         expect(error).toBeDefined();
         expect(error).toBe('no network');
@@ -201,7 +197,7 @@ describe('SiThemeService', () => {
     });
 
     it('setActiveTheme with element should call deactive theme on storage', async () => {
-      store.deactivateTheme.and.callFake(() => of(true));
+      store.deactivateTheme.mockImplementation(() => of(true));
       setupTestBed(false, store);
       const result = await firstValueFrom(service.setActiveTheme(ELEMENT_THEME_NAME));
       expect(result).toBe(true);
@@ -209,7 +205,7 @@ describe('SiThemeService', () => {
     });
 
     it('setActiveTheme should return false on theme on storage failure', async () => {
-      store.deactivateTheme.and.callFake(() => of(false));
+      store.deactivateTheme.mockImplementation(() => of(false));
       setupTestBed(false, store);
       expect(service.activeThemeName).toBe('example');
       const result = await firstValueFrom(service.setActiveTheme(ELEMENT_THEME_NAME));
@@ -220,20 +216,16 @@ describe('SiThemeService', () => {
 
   describe('with custom inactive theme', () => {
     let theme: Theme;
-    let store: jasmine.SpyObj<SiThemeStore>;
+    let store: Record<string, Mock>;
 
     beforeEach(() => {
       theme = { name: 'example', schemes: { light: {}, dark: {} } };
-      store = jasmine.createSpyObj('store', [
-        'loadActiveTheme',
-        'loadThemeNames',
-        'activateTheme',
-        'loadTheme'
-      ]);
-      store.loadActiveTheme.and.callFake(() => of(undefined));
-      store.loadThemeNames.and.callFake(() => of([theme.name]));
-      store.activateTheme.and.callFake(() => of(true));
-      store.loadTheme.and.callFake(() => of(theme));
+      store = {
+        loadActiveTheme: vi.fn(() => of(undefined)),
+        loadThemeNames: vi.fn(() => of([theme.name])),
+        activateTheme: vi.fn(() => of(true)),
+        loadTheme: vi.fn(() => of(theme))
+      };
 
       setupTestBed(false, store);
     });
