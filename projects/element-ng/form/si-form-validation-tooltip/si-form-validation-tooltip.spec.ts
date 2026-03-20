@@ -19,18 +19,25 @@ describe('SiFormValidationTooltipDirective', () => {
     control = new FormControl('');
   }
 
+  const hoverDelay = 500;
   let fixture: ComponentFixture<TestHostComponent>;
   let harness: SiFormValidationTooltipHarness;
 
   beforeEach(async () => {
+    jasmine.clock().install();
     fixture = TestBed.createComponent(TestHostComponent);
     harness = await TestbedHarnessEnvironment.loader(fixture).getHarness(
       SiFormValidationTooltipHarness
     );
   });
 
+  afterEach(() => {
+    jasmine.clock().uninstall();
+  });
+
   it('should show tooltip when control is hovered and becomes touched', async () => {
     await harness.hover();
+    jasmine.clock().tick(hoverDelay);
     await harness.focus();
     await harness.blur();
     expect(await harness.getTooltip()).toBe('Required');
@@ -50,6 +57,7 @@ describe('SiFormValidationTooltipDirective', () => {
   it('should hide tooltip when control becomes valid', async () => {
     fixture.componentInstance.control.markAsTouched();
     await harness.hover();
+    jasmine.clock().tick(hoverDelay);
     expect(await harness.getTooltip()).toBe('Required');
     await harness.sendKeys('Lorem ipsum');
     expect(await harness.getTooltip()).toBeFalsy();
@@ -58,6 +66,7 @@ describe('SiFormValidationTooltipDirective', () => {
   it('should hide tooltip when control becomes untouched', async () => {
     fixture.componentInstance.control.markAsTouched();
     await harness.hover();
+    jasmine.clock().tick(hoverDelay);
     expect(await harness.getTooltip()).toBe('Required');
     fixture.componentInstance.control.markAsUntouched();
     expect(await harness.getTooltip()).toBeFalsy();

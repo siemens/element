@@ -2,15 +2,14 @@
  * Copyright (c) Siemens 2016 - 2026
  * SPDX-License-Identifier: MIT
  */
-import { isPlatformBrowser } from '@angular/common';
 import {
   booleanAttribute,
   Directive,
+  effect,
   ElementRef,
   inject,
   input,
   OnDestroy,
-  PLATFORM_ID,
   TemplateRef
 } from '@angular/core';
 import { positions } from '@siemens/element-ng/common';
@@ -22,12 +21,7 @@ import { SiTooltipService, TooltipRef } from './si-tooltip.service';
   selector: '[siTooltip]',
   providers: [SiTooltipService],
   host: {
-    '[attr.aria-describedby]': 'describedBy',
-    '(focus)': 'focusIn($event)',
-    '(mouseenter)': 'show()',
-    '(touchstart)': 'hide()',
-    '(focusout)': 'hide()',
-    '(mouseleave)': 'hide()'
+    '[attr.aria-describedby]': 'describedBy'
   }
 })
 export class SiTooltipDirective implements OnDestroy {
@@ -62,57 +56,30 @@ export class SiTooltipDirective implements OnDestroy {
   protected describedBy = `__tooltip_${SiTooltipDirective.idCounter++}`;
 
   private tooltipRef?: TooltipRef;
-  private showTimeout?: ReturnType<typeof setTimeout>;
   private tooltipService = inject(SiTooltipService);
   private elementRef = inject(ElementRef);
-  private isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+
+  constructor() {
+    effect(() => {
+      const tooltip = this.siTooltip();
+      const disabled = this.isDisabled();
+
+      if (tooltip && !disabled) {
+        this.tooltipRef ??= this.tooltipService.createTooltip({
+          describedBy: this.describedBy,
+          element: this.elementRef,
+          placement: this.placement(),
+          tooltip: this.siTooltip,
+          tooltipContext: this.tooltipContext
+        });
+      } else if (this.tooltipRef) {
+        this.tooltipRef.destroy();
+        this.tooltipRef = undefined;
+      }
+    });
+  }
 
   ngOnDestroy(): void {
-    this.clearShowTimeout();
     this.tooltipRef?.destroy();
-  }
-
-  private clearShowTimeout(): void {
-    if (this.showTimeout) {
-      clearTimeout(this.showTimeout);
-      this.showTimeout = undefined;
-    }
-  }
-
-  private showTooltip(immediate = false): void {
-    const siTooltip = this.siTooltip();
-    if (this.isDisabled() || !siTooltip) {
-      return;
-    }
-
-    this.clearShowTimeout();
-
-    const delay = immediate ? 0 : 500;
-
-    this.showTimeout = setTimeout(() => {
-      this.tooltipRef ??= this.tooltipService.createTooltip({
-        describedBy: this.describedBy,
-        element: this.elementRef,
-        placement: this.placement(),
-        tooltip: this.siTooltip,
-        tooltipContext: this.tooltipContext
-      });
-      this.tooltipRef.show();
-    }, delay);
-  }
-
-  protected focusIn(event: FocusEvent): void {
-    if (this.isBrowser && (event.target as Element).matches(':focus-visible')) {
-      this.showTooltip(true);
-    }
-  }
-
-  protected show(): void {
-    this.showTooltip(false);
-  }
-
-  protected hide(): void {
-    this.clearShowTimeout();
-    this.tooltipRef?.hide();
   }
 }
